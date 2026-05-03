@@ -1,12 +1,24 @@
 # Post-Run Report — 55-Map Text HIGH Generalisation (Re-run)
 
 **Run name**: `55maps-text-high-generalisation`
-**Completed**: 2026-04-18 17:48 UTC
+**Completed (original)**: 2026-04-18 17:48 UTC
+**Recovery completed**: 2026-05-03 (proposer recovery, verifier
+cleanup, aggregate-cost rebuild, and downstream re-runs)
 **Host**: sapphire (192.168.1.150)
-**Launcher commit**: `01df51c6` (main)
+**Launcher commit**: `01df51c6` (main; original launch)
 **Launcher version**: `scripts/run_generalisation.py` v1.0.0
 **Config**: `configs/run-configs/55maps_text_high_generalisation.yaml`
 **Pre-launch audit**: `configs/run-configs/55maps_text_high_generalisation_pre_launch_audit.md`
+
+> **Recovery banner (2026-05-03)** — the canonical totals in this report
+> reflect the post-recovery state. The original run left 160 of 42,705
+> attempted proposer calls unrecovered (a magnitude correction over the
+> Obs 281 pre-audit count of 25; see Obs 318). All 160 were recovered on
+> 2026-05-02/03 at commit `731466d8`, with downstream consensus +
+> verifier cleanup + cost-manifest + evaluation + Dawid-Skene + corrected-
+> F1 + MCC + paired-permutation + attractor-pull all re-built against
+> the post-recovery candidate set. See "Recovery 2026-05-02/03"
+> subsection below for the full propagation chain.
 
 Companion to the pre-launch audit — records the actual run's cost,
 timing, quality, and results for the reproducibility kit and paper
@@ -27,17 +39,27 @@ the 2026-04-10 run; the only differences are orchestration
 
 ### Measured (against student-annotated ground truth)
 
-| Buffer | F1 | 95% CI | Precision | Recall |
-|-------:|---:|:------:|---------:|------:|
-| 20 m | 0.623 | [0.608, 0.638] | 0.670 | 0.582 |
-| 30 m | 0.753 | [0.741, 0.766] | 0.810 | 0.704 |
-| 40 m | 0.783 | [0.772, 0.795] | 0.842 | 0.731 |
-| **50 m** | **0.788** | **[0.777, 0.800]** | **0.848** | **0.737** |
+Post-recovery values (2026-05-03 rebuild against the post-recovery
+candidate set; see commit `f533fda5` and the "Recovery 2026-05-02/03"
+subsection below). Pre-recovery values are shown for transparency in
+parentheses.
 
-CIs are from 1,000-iteration tile-level bootstrap at seed 42.
+| Buffer | F1 (post-rec) | F1 (pre-rec) | Precision | Recall |
+|-------:|---:|---:|---------:|------:|
+| 20 m | 0.626 | (0.624) | 0.670 | 0.588 |
+| 30 m | 0.757 | (0.754) | 0.810 | 0.710 |
+| 40 m | 0.787 | (0.784) | 0.842 | 0.738 |
+| **50 m** | **0.792** | (0.790) | **0.847** | **0.744** |
+
+The post-recovery 50-m F1 of 0.7920 supersedes the pre-recovery 0.7896
+recorded under the original 2026-04-18 evaluation. CI bounds at the
+new (BCa N=10K) bootstrap are recorded in
+`outputs/55maps-text-high-generalisation/evaluation/evaluation.metadata.json`
+and the N=10K BCa re-run committed at `e20f3e18`.
 
 Detections at the configured vote_t=4 / prob_t=0.15 operating point:
-**4,143** across 4,770 reference mounds and 8,541 tiles.
+**4,164** (post-recovery; up from 4,143 pre-recovery, +21) across
+4,770 reference mounds and 8,541 tiles.
 
 ### Reproduction of the 2026-04-10 HIGH run
 
@@ -61,24 +83,26 @@ statistically indistinguishable.
 
 ### Corrected for annotator incompleteness (50 m buffer)
 
-Dawid-Skene latent-truth model on the shared item set of 5,400
-candidates (3,513 matched + 1,257 student-only + 630 VLM-only):
+Dawid-Skene latent-truth model, **post-recovery + post-GT-update**
+(2026-05-03; see commit `366f9c66` for the re-aggregation against the
+updated GT, and commit `a9e280a3` for the row-position bug fix that
+landed alongside):
 
 | Method | F1 | Precision | Recall |
 |--------|---:|---------:|------:|
-| Measured (vs student GT) | 0.788 | 0.848 | 0.737 |
-| Simple correction (5 % FN) | 0.807 | 0.893 | 0.737 |
-| **Dawid-Skene posterior** | **0.813** | **0.893** | **0.746** |
+| Measured (vs student GT) | 0.7896 | 0.847 | 0.7394 |
+| **Dawid-Skene posterior (post-recovery)** | **0.8142** | 0.892 | 0.7492 |
+| Dawid-Skene posterior (pre-recovery) | (0.8129) | (0.8916) | (0.7491) |
 
 Δ F1 = **+0.025** after correction — the same magnitude as the
-three prior 55-map corrections (text HIGH 2026-04-10: 0.790 → 0.814;
-image HIGH: 0.771 → 0.795; text MIN: 0.759 → 0.783). The
-correction continues to track the student ground-truth
-incompleteness rate independently of pipeline configuration.
+three sister 55-map corrections (image HIGH: 0.771 → 0.795; text MIN:
+0.759 → 0.783; T=0.3: see paired-permutation grid). The correction
+continues to track the student ground-truth incompleteness rate
+independently of pipeline configuration.
 
-D-S assigns an aggregate posterior P(true = 1) = 0.294 to the 630
-VLM-only candidates, implying ~185 are real mounds the student
-annotators missed. EM converged in 14 iterations.
+The post-recovery total VLM-only candidate set is 637 (up from 630
+pre-recovery, +7); D-S aggregate posterior P(true = 1) = 0.291,
+implying ~186 are real mounds the student annotators missed.
 
 Per-item ground truth for the 630 VLM-only candidates is obtainable
 via the human-review Streamlit app (`scripts/review_candidates.py`)
@@ -169,20 +193,34 @@ forces the model to reason entirely from descriptive cues.
 
 ## Cost accounting
 
-**Total: $69.60** (Gemini 3 Flash, Flex tier).
+**Total: $126.81** (Gemini 3 Flash, Flex tier; post-recovery aggregate).
 
-Within the pre-launch budget of ~$75.
+This exceeds the original pre-launch budget of ~$75 because of the
+$57.10 stage-2 recovery overrun on the 160 stubborn JSON-parse
+failures (see "Recovery 2026-05-02/03" subsection below for the
+overrun analysis and root-cause attribution).
 
-### By stage
+### By stage (post-recovery aggregate)
 
-| Stage | Cost | Share | Wall-clock (API) |
-|-------|-----:|------:|-----------------:|
-| Proposer (K=5) | $56.86 | 81.7 % | 156.2 min |
-| Verifier (N=1) | $12.74 | 18.3 % | 23.0 min |
-| Consensus, Extract, Evaluate | $0.00 | 0.0 % | ~22 min (local) |
-| **Total** | **$69.60** | 100 % | — |
+| Stage | Cost | Notes |
+|-------|-----:|-------|
+| Proposer (K=5, original launch) | $56.86 | 2026-04-18 |
+| Proposer (recovery 2026-05-02) | $57.10 | 160 failed-tile recovery; cost overrun (planned $0.50 cap; see Obs 319) |
+| Verifier (N=1, original launch) | $12.74 | 2026-04-18 |
+| Verifier (cleanup, 74 new candidates) | $0.10 | 2026-05-03 |
+| FP-classification (T=0.7 share) | $0.01 | T=0.7 portion of $0.5821 cross-corpus run (commit `33435aab`) |
+| Consensus, Extract, Evaluate | $0.00 | local CPU |
+| **Total** | **$126.81** | per `cost_manifest.json` (`totals.cost_usd`) |
 
-### Per proposer pass
+The cost-manifest fix at commit `7f05f529` was needed to surface the
+full total: prior to the fix, `aggregate_cost_manifest` read the
+post-cleanup `verified/run.meta.json` and silently dropped the
+original verifier meta (preserved as `*.pre-recovery-*.backup`). The
+patch teaches the script to glob for backup siblings and merge their
+costs into the totals, then records the merged backups under
+`cost_manifest._metadata.cleanup_recovery_metas_merged`.
+
+### Per proposer pass (original launch, 2026-04-18)
 
 | Pass | Wall-clock | Cost | Tiles OK | Tiles failed | Thinking tokens |
 |----:|-----------:|-----:|---------:|-------------:|----------------:|
@@ -193,44 +231,68 @@ Within the pre-launch budget of ~$75.
 | 5 | 30.6 min | $11.44 | 8,514 | 27 | 23.0 M |
 | **Sum** | **156.3 min** | **$56.86** | **42,545** | **160 (0.37 %)** | **115.0 M** |
 
+### Recovery proposer passes (2026-05-02; commit `731466d8`)
+
+160 of 160 originally-failed tile-passes recovered (100 %) across
+five sequential resume passes (`workers=30, max_retries=15,
+base_wait=30, service_tier=flex`). Per-pass: run_1 25/25, run_2
+42/42, run_3 38/38, run_4 28/28, run_5 27/27. Net new detections:
++612 across the 5 recovery passes.
+
+Recovery cost: **$57.10** (vs the planned $0.50 cap; per-tile cost
+$0.46 vs T=0.3 recovery's $0.0017/tile). Root cause is retry storms:
+14–25 retries per recovered tile, totalling 3,144 `retries_other`
+across the 5 passes. The 160 originally-failed tiles were stubborn
+JSON-parse failures whose re-execution consumed heavy thinking-token
+budgets per attempt. Cost is sunk; the recovery did succeed. See
+Obs 319 in `docs/notes/reflections/working-notes.md` for the T=0.7-
+vs-T=0.3 recovery-cost asymmetry analysis.
+
 Per-pass cost is uniform to within 1 % — expected, since tile count,
 per-tile text payload, and thinking-level ceiling are all constant.
 Contrast with the MIN run (uniform cost, 0 thinking) and the image
 HIGH run (uniform cost, ~19 M thinking tokens per pass).
 
-### Token breakdown
+### Token breakdown (post-recovery aggregate)
 
 | Field | Tokens | Share |
 |-------|-------:|------:|
-| Input (billed) | 80.5 M | 39.2 % |
+| Input (billed) | 145.0 M | 36.8 % |
 | Input (cached) | **0** | 0.0 % |
-| Output | 9.8 M | 4.8 % |
-| Thinking | **115.0 M** | **56.0 %** |
-| **Total** | **205.3 M** | 100 % |
+| Output | 18.1 M | 4.6 % |
+| Thinking | **230.5 M** | **58.6 %** |
+| **Total** | **393.6 M** | 100 % |
 
-**Thinking tokens account for 56 % of all tokens consumed.** At
-Flex-tier rates, this is cheap per token (thinking is billed at the
-same output rate), but it is the dominant cost driver in absolute
-terms: ~$48 of the $57 proposer cost is thinking. Setting
-`thinking_level: minimal` would zero this out (as the MIN run
-demonstrates at $46.72 proposer cost).
+The roughly-doubled token totals over the original run (115 M → 230 M
+thinking; 80 M → 145 M billed input) are dominated by the recovery
+passes' retry storms (≈14–25 retries per recovered tile across 160
+tiles; see Obs 319). Original-run-only token shares (115 M thinking,
+56 % share) match the values cited under the original 2026-04-18
+report, preserved here for paper-supplement transparency.
 
 **Cache hit rate: 0.0 %.** Same mechanistic explanation as the MIN
 run: the text-only prompt preamble (~393 tokens) is below Gemini
 Flash's 1,024-token minimum for context caching.
 
-### Unit costs (key publication figures)
+### Unit costs (key publication figures, post-recovery)
 
-| Metric | Value |
-|--------|------:|
-| Cost per tile | **$0.00815** |
-| Cost per map | **$1.265** |
-| Cost per detection | **$0.01681** |
-| Cost per reference mound | **$0.01459** |
-| Tile count | 8,541 |
-| Map count | 55 |
-| Reference mound count | 4,770 |
-| Final detection count (post vote + prob) | 4,143 |
+| Metric | Value (post-recovery) | Value (original 2026-04-18) |
+|--------|-----------------------:|----------------------------:|
+| Cost per tile | $0.01485 | $0.00815 |
+| Cost per map | $2.306 | $1.265 |
+| Cost per detection | $0.03045 | $0.01681 |
+| Cost per reference mound | $0.02658 | $0.01459 |
+| Tile count | 8,541 | 8,541 |
+| Map count | 55 | 55 |
+| Reference mound count | 4,770 | 4,770 |
+| Final detection count (post vote + prob) | **4,164** | 4,143 |
+
+The post-recovery per-tile cost ($0.01485) inflates over the original
+$0.00815 because the recovery overrun added $57.10 to the proposer
+budget on the same 8,541-tile denominator. Paper-citable per-tile
+cost should use the original-launch figure ($0.00815) for cross-run
+comparability, with the post-recovery figure available as a
+supplement.
 
 Text HIGH per-tile cost is **5.2× cheaper than image HIGH** ($0.0081
 vs $0.0427) and **14 % more expensive than text MIN** ($0.0081 vs
@@ -269,18 +331,28 @@ counts. Mechanism: high-candidate tiles trigger longer output and
 more thinking per call; at HIGH thinking this variance is visible.
 At MIN thinking (0 thinking tokens) this effect disappears.
 
-## Scope
+## Scope (post-recovery)
 
 | Field | Value |
 |-------|------:|
 | Maps processed | 55 |
 | Tiles processed | 8,541 (each processed 5 times) |
-| Proposer API calls (completed) | 42,545 |
-| Proposer API calls (failed) | 160 (0.37 %) |
-| Verifier API calls | 9,131 candidates extracted, verified one-pass |
-| Reference ground-truth mounds | 4,770 |
-| Consensus candidates (4-of-5) | 9,131 (pre-verifier) |
-| Final detections (prob ≥ 0.15) | 4,143 |
+| Proposer API calls (attempted, original launch) | 42,705 |
+| Proposer API calls (completed at original launch) | 42,545 |
+| Proposer API calls (failed at original launch) | 160 (0.37 % of 42,705) |
+| Proposer API calls (recovered 2026-05-02) | 160 of 160 (100 %) |
+| Proposer API calls (failed post-recovery) | **0** |
+| Verifier API calls | 9,205 candidates extracted; 9,131 original-pass + 74 cleanup-pass verified |
+| Reference ground-truth mounds | 4,770 (curator); 4,745 in updated student-GT (commit `baf1497a` adds the second of two touching mounds at K-35-064-3) |
+| Consensus candidates (4-of-5) | 9,206 features (post-recovery; up from 9,131 pre-recovery, +75) |
+| Final detections (prob ≥ 0.15) | **4,164** (post-recovery; up from 4,143, +21) |
+
+> **Magnitude correction (Obs 318)**: the original report cited the
+> failure count as "25" (drawing on Obs 281's pre-audit pass-1 count).
+> The audited total across all 5 passes is 160. See Obs 318
+> (`docs/notes/reflections/working-notes.md`, commit `f5df7a09`) for
+> the full reconciliation. The corrected denominator (42,705) and
+> failure count (160) are both reflected here.
 
 ## Timeline
 
@@ -307,12 +379,16 @@ launcher's cleanup loop and accounted for in the per-pass totals.
 ## Key scientific finding — three-way comparison closed
 
 The text HIGH re-run completes the 3-way generalisation matrix under
-the publishable launcher:
+the publishable launcher (post-recovery values 2026-05-03):
 
 1. **Image HIGH (library_plus-hp, 2026-04-18)**: F1 @ 50 m = 0.771
    (D-S 0.795). High-precision, recall-limited. **$364.70.**
-2. **Text HIGH (this re-run, 2026-04-19)**: F1 @ 50 m = 0.788
-   (D-S 0.813). Best headline F1. **$69.60.**
+2. **Text HIGH (this re-run, 2026-04-19; recovered 2026-05-02/03)**:
+   F1 @ 50 m = **0.792** (post-recovery; D-S **0.814**). Best headline
+   F1. Total cost **$126.81** (original $69.60 + recovery $57.10 +
+   verifier cleanup $0.10 + FP-classify share $0.01); paper-citable
+   per-tile cost uses the original-launch $0.00815 figure for cross-
+   run comparability.
 3. **Text MIN (2026-04-18)**: F1 @ 50 m = 0.759 (D-S 0.783).
    Cheapest; ns vs HIGH at 20 m, but significantly worse at ≥ 30 m.
    **$60.79.**
@@ -430,3 +506,90 @@ produced this run.
 - Update the paper's 3-way comparison table with this run's
   measured + D-S-corrected figures (replacing the 2026-04-10
   estimated-cost entries).
+
+## Recovery 2026-05-02/03
+
+The original 2026-04-18 run left 160 of 42,705 attempted proposer
+calls unrecovered (rate 0.37 %). Three audit findings made full
+recovery attractive: (1) Obs 318 corrected the previously-cited
+Obs 281 failure count from "25" to 160, raising the visibility of
+the issue; (2) Obs 319 surfaced the T=0.7 vs T=0.3 recovery-cost
+asymmetry as a methodological observation; and (3) the parser fix
+at commit `e3aef6fa` (3-tier JSON repair on the realtime proposer)
+identified ~92 % of historical failures as repairable patterns,
+suggesting the recovery was tractable in principle.
+
+### Propagation chain (commit-by-commit)
+
+The full propagation arc spans 2026-05-02 through 2026-05-03:
+
+| Stage | Commit | Notes |
+|------:|:-------|:------|
+| Driver script | `1ea92b9c` | Single-round recovery driver added |
+| **Proposer recovery** | **`731466d8`** | 160/160 tiles recovered (5 sequential resume passes); +612 net new detections; cost overrun $57.10 vs $0.50 cap |
+| Obs 319 | `c913b69b`, `3219aa76` | T=0.7 vs T=0.3 recovery-cost asymmetry analysis |
+| Parser fix (root cause) | **`e3aef6fa`** | 3-tier JSON repair added to realtime proposer (was batch-API-only); +163 outstanding failures across 3 other runs (image, text-MIN, GS-v2) recoverable |
+| Consensus + verifier cleanup + rebuild | **`d7f85978`** | consensus 9,131 → 9,206; 74 new candidates verified; cost-manifest rebuilt; verified geojson rebuilt |
+| Aggregate-cost fix | **`7f05f529`** | merge `*.pre-recovery-*.backup` siblings (handles cleanup-overwrite case) — surfaced full $126.81 |
+| D-S row-position fix | **`a9e280a3`** | use stable candidate_id instead of row position (safe under re-cluster) |
+| BCa N=10K eval re-run | `e20f3e18` | baseline + full-buffer + extended-buffer |
+| Curator GT mound added | `baf1497a` | 2nd of 2 touching mounds at K-35-064-3 cand 4264; GT 4,744 → 4,745 features |
+| Updated GT re-evaluation | `f533fda5` | re-eval against 4,745 features |
+| Review-app entries (T=0.7) | `9b80621e` | 7 new entries from 2026-05-03 |
+| Corrected-F1 multi-buffer | `f6eaeca9` | with 6 new reviews + 1 new GT mound; F1 corrected @50m: 0.8260 → 0.8273 |
+| Pairwise-permutation v2 | `aeb9fb7f` | 3 pairs touching T=0.7 |
+| Phase 4-6 propagation | **`33435aab`** | attractor-pull v2 + FP-classify ($0.58) + TP-localisation + per-map shell + student-GT-FN |
+| D-S re-aggregation | `366f9c66` | post-recovery + new GT |
+| **DS-vs-human cross-tab** | **`e07dae37`** | re-run on text-high (final propagation step) |
+
+### Bug discoveries surfaced during recovery
+
+1. **JSON parser realtime-vs-batch asymmetry** (fixed at `e3aef6fa`):
+   the realtime proposer in `scripts/4_detect_mounds_batch.py`
+   previously called `json.loads()` directly and treated any
+   `JSONDecodeError` as unrecoverable. The canonical Tier 1 trailing-
+   comma strip was already present at `scripts/lib_batch_api.py:920`
+   for the batch path. The patch ports it as `parse_response_with_repair()`
+   with three tiers (regex strip → permissive json5 → bracket-balance
+   fallback), recovering ~92 % of historical failures. **+163 tiles
+   outstanding across 3 other runs** (image, text-MIN, GS-v2) are
+   recoverable under the same fix and queued for follow-up.
+2. **Dawid-Skene row-position bug** (fixed at `a9e280a3`): D-S
+   indexing relied on row position, which is unsafe under re-cluster
+   (recovery added new consensus rows, shifting positions). Patched
+   to use stable `candidate_id` indexing.
+3. **`cost_manifest` cleanup-overwrites-meta** (fixed at `7f05f529`):
+   `aggregate_cost_manifest` previously read the post-cleanup
+   `verified/run.meta.json` and silently dropped the original
+   verifier meta. Patch teaches it to glob for `*.pre-recovery-*.backup`
+   and `*.pre-cleanup-*.backup` siblings and merge their costs into
+   the totals; merged backups are recorded under
+   `cost_manifest._metadata.cleanup_recovery_metas_merged`.
+4. **Obs 281 magnitude correction** (Obs 318, commit `f5df7a09`):
+   the previously-cited 25/42,545 figure was a Pass 1 only count;
+   the audit total across all 5 passes is 160/42,705.
+
+### Outcomes versus pre-recovery (50 m buffer)
+
+| Metric | Pre-recovery | Post-recovery | Δ |
+|--------|-------------:|--------------:|----:|
+| Verified detections | 4,143 | 4,164 | +21 |
+| F1 raw @50 m | 0.7896 | 0.7920 | +0.0024 |
+| F1 corrected @50 m (Approach B) | 0.8260 | 0.8273 | +0.0013 |
+| MCC @50 m | (n/a in pre-rec mirror) | 0.648 [0.633, 0.662] | — |
+| Total run cost | $69.60 | **$126.81** | +$57.21 |
+
+### Known follow-up after this recovery
+
+The parser fix surfaced **3 outstanding recoveries** that should be
+queued under the same recovery pattern:
+
+1. `outputs/55maps-image-generalisation/` — image HIGH run
+2. `outputs/55maps-text-min-generalisation/` — text MIN run
+3. `outputs/h11/gold-standard-v2/` — GS-v2 run
+
+Per the parser-fix audit (commit message of `e3aef6fa`), these three
+runs collectively lost 163 tiles to JSON-parse failures that the
+3-tier repair would now recover. None has been actioned as of
+2026-05-03; they are tracked in `planning/paper-writeup-continuity.md`
+under "Pending before paper outline".

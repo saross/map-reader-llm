@@ -12,6 +12,19 @@ results-audit-2026-04-21.md, priority-backfill.md}`.
 No reliance on `CLAUDE.md`, working-notes, or decisions-log as ground
 truth unless cited by the draft.
 
+> **Post-recovery 2026-05-03 annotation** — the verification claims
+> that touched `55maps-text-high-generalisation` (C09–C12, C44, C74–C81)
+> remain accurate **for the 2026-04-19 launch state** that the audit
+> draft documented. The same files at the same paths now record
+> post-recovery values (e.g., `totals.cost_usd: 126.8051`,
+> `tiles_failed: 0`, F1 @50m 0.7920, D-S 0.8142). The
+> verification-protocol pass/fail logic itself is unchanged — the
+> draft's claims were correct as of the verification date; the
+> source files have since been updated by a documented recovery (see
+> `configs/run-configs/55maps_text_high_generalisation_post_run_report.md`
+> "Recovery 2026-05-02/03" subsection; commit chain `731466d8` →
+> `e07dae37`).
+
 ---
 
 ## Summary
@@ -94,7 +107,7 @@ Columns: `claim_id | draft_file | claim_text | cited_source | cited_value | actu
 | C62 | results-audit-2026-04-21.md:98 | image post-run report 11,323 bytes | `configs/run-configs/55maps_image_generalisation_post_run_report.md` | 11,323 | 11323 bytes | PASS |
 | C63 | results-audit-2026-04-21.md:157-161 | retrospective buffer_sensitivity f1s 0.6232/0.7551/0.7832/0.7898 | `results/55maps-generalisation/buffer_sensitivity.json::buffers[*]` | as listed | 0.6232/0.7551/0.7832/0.7898 exact | PASS |
 | C64 | results-audit-2026-04-21.md:157-161 | retrospective CIs at 20-50 m | same::buffers[*].ci | [0.6087,0.6375]/[0.7433,0.7668]/[0.7723,0.794]/[0.7793,0.8005] | same (exact) | PASS |
-| C65 | results-audit-2026-04-21.md:163-165 | threshold 0.20 F1=0.7902 (retrospective report line 42) | `configs/run-configs/55maps_text_generalisation_retrospective_post_run_report.md:42` | 0.7902 @ 0.20 | line 42 text matches: `| v1 | **0.20 (optimum)** | **0.7902**` | PASS |
+| C65 | results-audit-2026-04-21.md:163-165 | threshold 0.20 F1=0.7902 (retrospective report line 42) | `configs/run-configs/55maps_text_generalisation_retrospective_post_run_report.md:42` | 0.7902 @ 0.20 | line 42 text matches `v1 / 0.20 (optimum) / 0.7902` | PASS |
 | C66 | results-audit-2026-04-21.md:147-148 | verifier v1 measured $12.43 | `outputs/55maps-generalisation/verified/run.meta.json::cost_estimate.total_cost_usd` | $12.43 | 12.428556 → $12.43 | PASS |
 | C67 | results-audit-2026-04-21.md:210-219 | text-min totals.cost_usd 60.7866 | `outputs/55maps-text-min-generalisation/cost_manifest.json::totals.cost_usd` | 60.7866 | 60.7866 | PASS |
 | C68 | results-audit-2026-04-21.md:214 | text-min input_tokens 82,297,662 | same::totals.input_tokens | 82297662 | 82297662 | PASS |

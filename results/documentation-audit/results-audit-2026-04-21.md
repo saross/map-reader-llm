@@ -7,6 +7,20 @@ source file and JSON key path (or Markdown line number). If a value
 appears without a citation, it is a structural statement (e.g., "no
 comparator condition in the run design") not a measurement.
 
+> **Post-recovery 2026-05-03 annotation** — the §A4
+> `55maps-text-high-generalisation` cells in this table cite the
+> 2026-04-19 launch state (cost manifest `cost_usd: 69.6017`; tiles
+> processed 42,545; tiles failed 160; F1 @50m 0.7883; D-S 0.8129).
+> Those values remain accurate for the original launch snapshot but
+> have been superseded by a 2026-05-02/03 recovery: post-recovery
+> totals are `cost_usd: 126.8051` (proposer + recovery + verifier
+> cleanup + FP-classify share); attempted tiles 42,705 (failed 0);
+> verified detections 4,164; F1 @50m 0.7920; D-S 0.8142; F1
+> corrected @50m (Approach B) 0.8273. See
+> `configs/run-configs/55maps_text_high_generalisation_post_run_report.md`
+> "Recovery 2026-05-02/03" subsection for the full propagation chain
+> (commits `731466d8` recovery → `e07dae37` final D-S re-runs).
+
 ---
 
 ## Scope exclusions

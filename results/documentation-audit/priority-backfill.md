@@ -9,6 +9,28 @@ gap that was not explicitly tracked in the prior plan.
 **Constraint** (unchanged): no re-runs; all backfill uses existing
 artefacts.
 
+> **Post-recovery annotation (2026-05-03)** — the
+> `55maps-text-high-generalisation` recovery (proposer recovery commit
+> `731466d8`; full propagation through `e07dae37`) closed a previously
+> unsurfaced backlog: 160 originally-failed tile-passes were 100 %
+> recovered; downstream consensus / verifier cleanup / cost-manifest /
+> evaluation / D-S / corrected-F1 / MCC / paired-permutation /
+> attractor-pull all rebuilt against the post-recovery candidate set.
+> Three new bugs surfaced and were fixed during the recovery (parser
+> realtime-vs-batch asymmetry at `e3aef6fa`; D-S row-position at
+> `a9e280a3`; `cost_manifest` cleanup-overwrites-meta at `7f05f529`).
+> The parser fix in turn surfaced **3 outstanding recoveries** that
+> are now backfill targets (none yet actioned as of 2026-05-03):
+>
+> - `outputs/55maps-image-generalisation/` (image HIGH)
+> - `outputs/55maps-text-min-generalisation/` (text MIN)
+> - `outputs/h11/gold-standard-v2/` (GS-v2)
+>
+> Per the parser-fix audit, these three runs collectively lost 163
+> tiles to JSON-parse failures that the 3-tier repair would now
+> recover. Tracked in `planning/paper-writeup-continuity.md` under
+> "Pending before paper outline" (Session 83 closure).
+
 ---
 
 ## Status of prior Tier 1 items

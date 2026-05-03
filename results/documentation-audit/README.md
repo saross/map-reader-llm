@@ -8,6 +8,24 @@ conflated run names, and mis-attributed Observation numbers. See
 `planning/doc-audit-rerun-plan.md` for the driver document and the
 two-agent workflow.
 
+> **Post-recovery annotation (2026-05-03)** — the T=0.7 55-map text-high
+> run was recovered on 2026-05-02/03 (commit `731466d8` proposer
+> recovery, chain through `e07dae37` for full downstream propagation).
+> The audit figures below for `55maps-text-high-generalisation` (cost
+> $69.60, F1 @50m 0.788, D-S 0.813) are the **pre-recovery 2026-04-19
+> launch state** and remain accurate for that snapshot. Post-recovery
+> canonical state is **cost $126.81, F1 raw @50m 0.792, F1 corrected
+> @50m 0.8273, D-S 0.814** (per
+> `outputs/55maps-text-high-generalisation/cost_manifest.json` and the
+> post-recovery evaluation + D-S artefacts; see
+> `configs/run-configs/55maps_text_high_generalisation_post_run_report.md`
+> "Recovery 2026-05-02/03" subsection for the full propagation chain).
+> The recovery also surfaced three bugs (parser realtime-vs-batch
+> asymmetry; D-S row-position; `cost_manifest` cleanup-overwrites-meta;
+> see Obs 318/319 and commits `e3aef6fa`/`a9e280a3`/`7f05f529`) and
+> queued **three outstanding recoveries** (image HIGH, text-MIN, GS-v2;
+> ~163 tiles total under the same realtime-parser fix).
+
 ## Why this draft exists
 
 The prior audit applied a sound structural framework but wrote several

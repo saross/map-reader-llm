@@ -1,7 +1,7 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-05-01 (Session 82 closure — 4-GS Hairy-filtered + trapezoidal-graticule FN/FP analysis vindicates Sobotkova 2023; Obs 316 + 317 added; items #14, #16 closed; items #10, #11, #12 in flight via separate agents)
+**Last updated**: 2026-05-03 (Session 83 closure — T=0.7 55-map text-high recovery completed; 160/160 failed tile-passes recovered; full downstream propagation chain through D-S re-aggregation; 3 new bugs fixed (parser realtime-vs-batch, D-S row-position, cost_manifest cleanup-overwrites-meta); Obs 318 + 319 added; 7 docs updated; 3 outstanding recoveries queued)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
@@ -1680,6 +1680,76 @@ Range `33bce297..6f15b8c9` (8 commits):
 
 - **The 4-GS Hairy filter + dedup + active-area-clipped FN/FP analysis is CANONICAL** (Obs 316 + 317; commits `a0ee28c6..6f15b8c9`); do NOT re-run. Outputs at `results/student-gt-fn-rate-analysis-gs4/` with `bootstrap_summary.json` + `per_sheet_confusion.csv` are the paper-Methods-ready references.
 - **Trapezoidal-graticule active-area bounds are the definitive sheet bounds** for the 4 GS maps (Pulkovo-1942 / EPSG:4284, datum offset ~130 m vs WGS84). Pre-fix rectangular-bounds artefacts archived; do NOT cite the retracted 3.06 % FP rate or the 9.1 % cumulative FN rate.
+
+---
+
+## Session 83 closure (2026-05-03)
+
+### Headline
+
+The T=0.7 55-map text-high generalisation run was fully recovered: **160 of 160 originally-failed proposer tile-passes recovered (100 %)**; downstream consensus / verifier cleanup / cost-manifest / evaluation / Dawid-Skene / corrected-F1 / MCC / paired-permutation / attractor-pull all rebuilt against the post-recovery candidate set. Verified detections went 4,143 → 4,164 (+21); F1 raw @50 m 0.7896 → 0.7920; F1 corrected @50 m 0.8260 → 0.8273; D-S F1 0.8129 → 0.8142; MCC @50 m 0.648 [0.633, 0.662]. **Total run cost 2026-04-18 launch ($69.60) + 2026-05-02 recovery ($57.10) + 2026-05-03 verifier cleanup ($0.10) + FP-classify share ($0.01) = $126.81** (per `outputs/55maps-text-high-generalisation/cost_manifest.json::totals.cost_usd`).
+
+The recovery propagation arc surfaced and fixed **three bugs** worth flagging at paper-Methods-Discussion-meta level (parser realtime-vs-batch asymmetry, D-S row-position, `cost_manifest` cleanup-overwrites-meta) and identified **three outstanding recoveries** under the same realtime-parser fix (image HIGH, text-MIN, GS-v2; ~163 tiles total) — now added to the "Pending before paper outline" queue.
+
+### Today's commits (2026-05-02 to 2026-05-03)
+
+The full propagation chain spans roughly 21 commits from `1ea92b9c` (recovery driver) through `e07dae37` (final D-S re-runs). Major commits, in chronological order:
+
+- `f5df7a09` — `docs(reflection): Obs 318 — T=0.7 proposer failure-rate magnitude correction` (25 → 160)
+- `1ea92b9c` — `analysis(t0.7-recovery): add T=0.7 single-round recovery driver`
+- **`731466d8`** — `analysis(t0.7-recovery): proposer recovery for 160 failed tiles + meta merge` ← stage-2 recovery (160/160 recovered; +612 net new detections; cost overrun $57.10 vs $0.50 cap)
+- `c913b69b`, `3219aa76` — Obs 319 (T=0.7 vs T=0.3 recovery-cost asymmetry)
+- **`d7f85978`** — `analysis(t0.7-recovery): consensus + verifier cleanup + cost-manifest + verified rebuild` (consensus 9,131 → 9,206; 74 new candidates verified; verified geojson rebuilt)
+- **`e3aef6fa`** — `fix(parser): add 3-tier JSON repair to realtime proposer` (root-cause fix; ports the canonical Tier 1 trailing-comma strip from batch to realtime; +163 outstanding tiles across 3 other runs recoverable)
+- `e20f3e18` — `analysis(t0.7-recovery): N=10K BCa evaluation re-run (baseline + full-buffer + extended-buffer)`
+- `aeb9fb7f` — `analysis(t0.7-recovery): pairwise-permutation v2 — 3 pairs touching T=0.7`
+- **`a9e280a3`** — `fix(dawid-skene): use stable candidate_id instead of row position (safe under re-cluster)`
+- **`7f05f529`** — `fix(aggregate-cost): merge pre-recovery verifier-meta backups (handles cleanup-overwrite case)` (surfaces the full $126.81 by reading both primary and `*.pre-recovery-*.backup` siblings)
+- `baf1497a` — `data(gt): add missing curator GT mound — second of two touching mounds at K-35-064-3 cand 4264` (GT 4,744 → 4,745 features)
+- `9b80621e` — `data(review): T=0.7 55-map review-app — 7 entries from 2026-05-03`
+- `f533fda5` — `analysis(t0.7-recovery): re-evaluate against updated GT (4745 features, baf1497a)`
+- `f6eaeca9` — `analysis(t0.7-recovery): corrected-F1 multi-buffer with 6 new reviews + 1 new GT mound`
+- **`33435aab`** — `analysis(t0.7-recovery): attractor-pull v2 + FP-classify + TP-localisation + per-map shell + student-GT-FN` (Phase 4-6 propagation; FP-classify $0.5821 across all 4 corpora)
+- `366f9c66` — `analysis(t0.7-recovery): re-aggregate D-S on text-high (post-recovery + new GT)`
+- **`e07dae37`** — `analysis(t0.7-recovery): re-run DS-vs-human cross-tab on text-high` ← final propagation step
+
+### Bug discoveries surfaced and fixed
+
+1. **JSON parser realtime-vs-batch asymmetry** — fixed at `e3aef6fa`. The realtime proposer in `scripts/4_detect_mounds_batch.py` previously called `json.loads()` directly and treated any `JSONDecodeError` as unrecoverable. The canonical Tier 1 trailing-comma strip already existed in the batch path at `scripts/lib_batch_api.py:920`. The patch ports it as a public helper `parse_response_with_repair()` with three tiers (regex strip → permissive json5 → bracket-balance fallback), recovering ~92 % of historical failures (per the audit logged in the commit message).
+2. **Dawid-Skene row-position bug** — fixed at `a9e280a3`. D-S indexing relied on row position, which is unsafe under re-cluster (the recovery added new consensus rows, shifting positions). Patched to use stable `candidate_id` indexing.
+3. **`cost_manifest` cleanup-overwrites-meta** — fixed at `7f05f529`. `aggregate_cost_manifest` previously read the post-cleanup `verified/run.meta.json` and silently dropped the original verifier meta (preserved per Session 80 convention as `*.pre-recovery-*.backup`). Patch teaches the script to glob for backup siblings of every meta file it reads (verifier and proposer per-pass) and sum costs / tokens / wall-clock / item counts across primary + backups; merged backups are recorded under `cost_manifest._metadata.cleanup_recovery_metas_merged` for audit trails.
+4. **Obs 281 magnitude correction** (Obs 318, commit `f5df7a09`) — the previously-cited 25/42,545 figure was a Pass 1 only count; the audit total across all 5 passes is 160/42,705. Documentation updates downstream propagated the corrected denominator.
+
+### Documentation updates landed today
+
+Seven docs were updated in a single commit to propagate the post-recovery state across the documentation surface:
+
+1. **`configs/run-configs/55maps_text_high_generalisation_post_run_report.md`** — refreshed top-line F1 / D-S / cost / token / unit-cost / scope tables with post-recovery values; added a "Recovery 2026-05-02/03" subsection covering the propagation chain, bug discoveries, outcomes, and outstanding recoveries.
+2. **`results/documentation-audit/README.md`** — added a 2026-05-03 post-recovery annotation flagging that the audit's `text-high` figures are pre-recovery and pointing to the post-run-report's recovery subsection.
+3. **`results/documentation-audit/audit-summary.md`** — light annotation noting the post-recovery numbers and the corrected $552.30 three-run total measured spend.
+4. **`results/documentation-audit/priority-backfill.md`** — light annotation; surfaces the 3 outstanding recoveries (image HIGH, text-MIN, GS-v2) as new backfill targets.
+5. **`results/documentation-audit/results-audit-2026-04-21.md`** — light annotation noting that §A4 cells cite pre-recovery state.
+6. **`results/documentation-audit/verification-2026-04-21.md`** — light annotation noting that the verification's claims were correct as of the verification date.
+7. **`planning/paper-writeup-continuity.md`** — this file; Session 83 closure section added.
+
+### Pending before paper outline (post-Session-83)
+
+- **Three outstanding recoveries under the realtime-parser fix** (commit `e3aef6fa` audit identified 163 tiles total recoverable; none yet actioned):
+  - `outputs/55maps-image-generalisation/` (image HIGH)
+  - `outputs/55maps-text-min-generalisation/` (text MIN)
+  - `outputs/h11/gold-standard-v2/` (GS-v2)
+
+  Each requires the same propagation pattern as the T=0.7 recovery executed today: proposer recovery driver → consensus rebuild → verifier cleanup → `aggregate_cost_manifest` (with `7f05f529`'s backup-merge) → re-evaluation → D-S re-aggregation (with `a9e280a3`'s stable-id fix) → corrected-F1 + MCC + paired-permutation + attractor-pull. Cost is expected to be modest under the 3-tier parser fix (~92 % of failures recoverable on the first attempt without retry storms; the T=0.7 $57 overrun was a worst-case scenario for stubborn parse-failures).
+
+- **Item #15 GS >125 m FP-side 6-crop manual inspection** — user-driven, deferred (carried over from Session 82).
+- **Step 6 paper outline** — the original post-Step-4 deliverable; **NOW UNBLOCKED** (post-Session 82) modulo the 3 outstanding recoveries above. Whether to outline the paper now or after the 3 recoveries is a sequencing call for the next session.
+
+### Things to NOT redo in Session 83+ (addendum)
+
+- **The T=0.7 55-map recovery is COMPLETE** (commits `731466d8..e07dae37`); do NOT re-launch the proposer or re-aggregate downstream artefacts. The 4,164 verified detections + F1 0.7920 / 0.8273-corrected / 0.8142-D-S / 0.648-MCC at 50 m are the canonical post-recovery values.
+- **The three bug fixes are COMMITTED** (`e3aef6fa` parser, `a9e280a3` D-S row-position, `7f05f529` cost-manifest backup-merge); do NOT revisit unless adding regression tests or extending the patches to new code paths.
+- **Obs 318 + 319 are COMMITTED** to working-notes; do NOT modify (refinements should come as new Obs per project policy).
+- **The pre-recovery `*.pre-recovery-*.backup` and `*.pre-gtupdate-*.backup` files in `outputs/55maps-text-high-generalisation/` and `results/55maps-text-high-generalisation/` are preserved by design** (per the cost-manifest fix's design and the project's "archive, never delete" policy); do NOT clean them up.
 
 ---
 

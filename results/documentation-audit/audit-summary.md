@@ -7,6 +7,22 @@
 2026-04-18), which contained hallucinated cost figures, a conflation of
 two distinct text-high runs, and a blanket "Obs 255" attribution.
 
+> **Post-recovery annotation (2026-05-03)** — the
+> `55maps-text-high-generalisation` row in the anchor table below cites
+> the pre-recovery 2026-04-19 launch state (cost $69.60; F1 @50m
+> 0.788; D-S 0.813; cache-hit 0.0 %). On 2026-05-02/03 the run was
+> recovered: 160 of 160 originally-failed tile-passes recovered;
+> verified detections 4,143 → 4,164; F1 raw @50m 0.7896 → 0.7920;
+> F1 corrected @50m 0.8260 → 0.8273; D-S F1 0.8129 → 0.8142; total
+> cost $69.60 → $126.81 (recovery overrun $57.10 + verifier cleanup
+> $0.10 + FP-classify share $0.01). Cache-hit remains 0.0 %. The
+> total measured-cost figure of $495.09 in §"What this means for the
+> paper" should be read as $552.30 post-recovery ($364.70 image +
+> $60.79 text-MIN + $126.81 text-HIGH). See
+> `configs/run-configs/55maps_text_high_generalisation_post_run_report.md`
+> "Recovery 2026-05-02/03" subsection for the propagation chain
+> (commits `731466d8` recovery → `e07dae37` final D-S re-runs).
+
 ---
 
 ## Headline
