@@ -247,10 +247,13 @@ def _compute_missing_candidates(
     Returns:
         Tuple of (missing_ids set, loaded probs dict).
     """
-    all_ids = {
-        _candidate_result_key(c, iterations)
-        for c in manifest.get("candidates", [])
-    }
+    # Expand to the full per-iteration key set so multi-iteration runs
+    # surface iter2..iterN gaps to ``cmd_cleanup``. Using the single
+    # iter1 proxy here masked tail-iteration failures, blocking cleanup
+    # from re-attempting them.
+    all_ids: set[str] = set()
+    for c in manifest.get("candidates", []):
+        all_ids.update(_candidate_iteration_keys(c, iterations))
 
     probs: dict = {}
     if probs_path.exists():
@@ -606,24 +609,106 @@ def _verify_batch(
 # =========================================================================
 
 
-def _candidate_result_key(candidate: dict, iterations: int) -> str:
-    """Build the result key for a candidate, matching lib_verifier.py.
+def _candidate_iteration_keys(candidate: dict, iterations: int) -> list[str]:
+    """Return every expected result key for ``candidate`` × ``iterations``.
 
-    For single-iteration runs the key is ``candidate_NNNNN``.
-    For multi-iteration consensus the key is ``candidate_NNNNN_iter1``
-    (we check for the first iteration as a proxy — if iter1 exists,
-    the candidate was at least attempted).
+    Single canonical key-expansion site: the resume filter, cleanup
+    missing-set computation, driver per-attempt logging, and the
+    completeness assertion all consume this list so they cannot drift
+    out of sync. The Layer 1 surfacing fix originally relied on
+    ``_candidate_result_key`` returning a single ``_iter1`` proxy across
+    all three call sites — that under-counted multi-iteration runs by a
+    factor of N, allowing iter2..iterN failures to slip past the resume
+    filter, the cleanup sweep, and the metadata tracker. Centralising
+    the expansion here prevents that regression from recurring.
+
+    For single-iteration runs the list contains ``["candidate_NNNNN"]``.
+    For multi-iteration consensus the list contains
+    ``["candidate_NNNNN_iter1", ..., "candidate_NNNNN_iterN"]``.
+
+    Args:
+        candidate: Candidate dict with ``candidate_id``.
+        iterations: Number of verifier iterations (1 for single-pass,
+            N for consensus).
+
+    Returns:
+        Ordered list of result keys — one per expected iteration.
+    """
+    cid = candidate["candidate_id"]
+    if iterations > 1:
+        return [
+            f"candidate_{cid:05d}_iter{i}"
+            for i in range(1, iterations + 1)
+        ]
+    return [f"candidate_{cid:05d}"]
+
+
+def _candidate_result_key(candidate: dict, iterations: int) -> str:
+    """Return the canonical *single* result-key proxy for a candidate.
+
+    Retained for back-compat with callers/tests that need a single
+    string identifier per candidate (rather than the full per-iteration
+    set). For multi-iteration runs this returns the iter1 suffix as a
+    proxy — DO NOT use it to determine "is this candidate fully
+    covered" or "what failed for this candidate" — those questions
+    require the full set from ``_candidate_iteration_keys``.
 
     Args:
         candidate: Candidate dict with ``candidate_id``.
         iterations: Number of verifier iterations.
 
     Returns:
-        Result dict key string.
+        Result dict key string (always one entry; for consensus runs
+        this is the iter1 proxy).
     """
-    cid = candidate["candidate_id"]
+    return _candidate_iteration_keys(candidate, iterations)[0]
+
+
+def _iteration_id_to_result_key(
+    iteration_id: str | None,
+    iterations: int,
+) -> str | None:
+    """Map a worker ``iteration_id`` string to its ``probabilities.json`` key.
+
+    The verifier worker tags each metadata entry with an
+    ``iteration_id`` like ``cand_0042_iter1``; the corresponding
+    persisted result-key is ``candidate_00042_iter1`` (single-pass) or
+    ``candidate_00042_iter1`` (consensus). This helper performs that
+    translation so the driver can match metadata to expected keys when
+    deciding which per-iteration ``log_success`` / ``log_failure`` call
+    to emit.
+
+    Returns ``None`` when ``iteration_id`` cannot be parsed (malformed
+    or missing) — the caller is responsible for falling back to a
+    generic identifier.
+
+    Args:
+        iteration_id: Worker-side ID like ``"cand_0042_iter1"``.
+        iterations: Number of verifier iterations (decides the key
+            shape — bare ``candidate_NNNNN`` vs ``candidate_NNNNN_iterK``).
+
+    Returns:
+        Result-dict key string, or ``None`` on parse failure.
+    """
+    if not iteration_id:
+        return None
+    # Expected shape: cand_<id4>_iter<n>
+    parts = iteration_id.split("_")
+    if len(parts) < 3 or not parts[0] == "cand":
+        return None
+    try:
+        cid = int(parts[1])
+    except ValueError:
+        return None
+    iter_part = parts[2]
+    if not iter_part.startswith("iter"):
+        return None
+    try:
+        iter_num = int(iter_part.removeprefix("iter"))
+    except ValueError:
+        return None
     if iterations > 1:
-        return f"candidate_{cid:05d}_iter1"
+        return f"candidate_{cid:05d}_iter{iter_num}"
     return f"candidate_{cid:05d}"
 
 
@@ -945,12 +1030,22 @@ def _verify_realtime(
                 "Could not parse existing probabilities.json, starting fresh"
             )
 
-    # Filter out already-verified candidates
+    # Filter out already-verified candidates. A candidate is "verified"
+    # only when *every* expected iteration key is present — for multi-
+    # iteration consensus runs (K=10, K=30) the iter1 proxy alone is
+    # insufficient: iter2..iterN may be missing and require re-attempt.
+    # The worker idempotently re-runs all iterations for any candidate
+    # we re-submit; the cost of re-running iter1 for a partial-coverage
+    # candidate is bounded and far cheaper than the silent-drop the
+    # iter1-only filter previously caused.
     if existing_results:
         original_count = len(candidates)
         candidates = [
             c for c in candidates
-            if _candidate_result_key(c, iterations) not in existing_results
+            if not all(
+                k in existing_results
+                for k in _candidate_iteration_keys(c, iterations)
+            )
         ]
         skipped = original_count - len(candidates)
         if skipped:
@@ -995,10 +1090,14 @@ def _verify_realtime(
         for future in concurrent.futures.as_completed(future_to_cand):
             completed += 1
             cand = future_to_cand[future]
-            # Canonical key — same convention as probabilities.json and
-            # _compute_missing_candidates() — so failed_items[] item_id
-            # values are directly comparable to result-set keys.
-            result_key = _candidate_result_key(cand, iterations)
+            # Expand to the full per-iteration key set so multi-iteration
+            # runs (K=10, K=30 consensus) record one log_success /
+            # log_failure entry per actual API call rather than a single
+            # iter1 proxy. The proxy under-counted items_processed by a
+            # factor of N and routed iter2..iterN failures through the
+            # generic completeness backfill rather than the rich
+            # per-attempt failure-reason path.
+            expected_keys = _candidate_iteration_keys(cand, iterations)
 
             try:
                 cand_results, metadata_list = future.result()
@@ -1008,16 +1107,38 @@ def _verify_realtime(
                     item_id = getattr(meta, "item_id", None) or "unknown"
                     metadata_tracker.log_response(item_id, meta)
 
-                if cand_results:
-                    all_results.update(cand_results)
+                # Build a parse_error map keyed by result-key so we can
+                # attribute each missing iter to its own failure reason
+                # rather than collapsing all iters under one label.
+                iter_errors: dict[str, str] = {}
+                for meta in metadata_list:
+                    err = getattr(meta, "parse_error", None)
+                    if not err:
+                        continue
+                    rk = _iteration_id_to_result_key(
+                        getattr(meta, "item_id", None), iterations,
+                    )
+                    if rk:
+                        iter_errors[rk] = str(err)
+
+                # Per-iteration accounting — drives both the audit trail
+                # and the live progress log.
+                all_results.update(cand_results)
+                fully_verified = True
+                for key in expected_keys:
+                    if key in cand_results:
+                        metadata_tracker.log_success(key)
+                    else:
+                        fully_verified = False
+                        reason = iter_errors.get(
+                            key, _summarise_failure_reason(metadata_list),
+                        )
+                        metadata_tracker.log_failure(key, reason)
+
+                if fully_verified:
                     verified_count += 1
-                    metadata_tracker.log_success(result_key)
                 else:
                     failed_count += 1
-                    metadata_tracker.log_failure(
-                        result_key,
-                        _summarise_failure_reason(metadata_list),
-                    )
 
             except Exception as e:
                 failed_count += 1
@@ -1025,10 +1146,12 @@ def _verify_realtime(
                     "Candidate %s failed: %s",
                     cand["candidate_id"], e,
                 )
-                metadata_tracker.log_failure(
-                    result_key,
-                    f"unhandled in driver: {type(e).__name__}: {e}",
-                )
+                # Mark every expected iteration key as a driver-level
+                # failure so the audit trail shows the full impact of
+                # the unhandled exception.
+                reason = f"unhandled in driver: {type(e).__name__}: {e}"
+                for key in expected_keys:
+                    metadata_tracker.log_failure(key, reason)
 
             # Log progress after counters are updated
             if completed % 10 == 0 or completed == total:
