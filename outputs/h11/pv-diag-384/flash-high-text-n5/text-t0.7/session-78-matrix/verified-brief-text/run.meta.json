@@ -1,12 +1,12 @@
 {
-  "run_id": "465274e2-6856-420d-a128-a44be20223f2",
+  "run_id": "e786dc29-736b-4dc5-a76b-6abe7efb0e1c",
   "timestamp": {
-    "start": "2026-04-25T05:35:03.968760+00:00",
-    "end": "2026-04-25T05:50:59.448650+00:00",
-    "duration_seconds": 955.47989
+    "start": "2026-05-03T14:58:33.823451+00:00",
+    "end": "2026-05-03T14:58:41.677151+00:00",
+    "duration_seconds": 7.8537
   },
   "environment": {
-    "git_commit": "50e556b76c472ac30adc200a569d4fe43e2a14d3",
+    "git_commit": "9c58721e150bce10426a0d461a2ebb6ea6b1fcde",
     "script": "run_pv.py",
     "script_version": "1.0.0"
   },
@@ -51,7 +51,7 @@
     }
   },
   "execution_stats": {
-    "items_processed": 0,
+    "items_processed": 27,
     "items_failed": 0,
     "items_skipped": 0,
     "retries_total": 0,
@@ -60,38 +60,65 @@
     "retries_timeout": 0,
     "retries_other": 0,
     "finish_reason_counts": {
-      "success": 3709,
-      "error": 818
+      "success": 27
     },
     "safety_blocks": 0,
-    "parse_failures": 818,
-    "empty_responses": 818,
-    "completed_items": [],
+    "parse_failures": 0,
+    "empty_responses": 0,
+    "completed_items": [
+      "candidate_00649",
+      "candidate_00546",
+      "candidate_00023",
+      "candidate_00102",
+      "candidate_00572",
+      "candidate_00630",
+      "candidate_00593",
+      "candidate_00553",
+      "candidate_00031",
+      "candidate_00064",
+      "candidate_01268",
+      "candidate_00655",
+      "candidate_00841",
+      "candidate_01022",
+      "candidate_01417",
+      "candidate_00770",
+      "candidate_00839",
+      "candidate_00657",
+      "candidate_01759",
+      "candidate_01335",
+      "candidate_02199",
+      "candidate_02447",
+      "candidate_02318",
+      "candidate_01940",
+      "candidate_02858",
+      "candidate_03642",
+      "candidate_02463"
+    ],
     "failed_items": [],
     "retry_details": []
   },
   "usage_stats": {
-    "total_input_tokens": 5812003,
-    "total_output_tokens": 257871,
+    "total_input_tokens": 42309,
+    "total_output_tokens": 1916,
     "total_cached_tokens": 0,
     "total_reasoning_tokens": 0,
     "total_thoughts_tokens": 0,
     "total_tool_use_tokens": 0,
-    "total_tokens": 6069874,
+    "total_tokens": 44225,
     "by_provider": {
       "google_gemini": {
-        "input_tokens": 5812003,
-        "output_tokens": 257871,
-        "total_tokens": 6069874,
-        "request_count": 4527
+        "input_tokens": 42309,
+        "output_tokens": 1916,
+        "total_tokens": 44225,
+        "request_count": 27
       }
     }
   },
   "results_summary": {},
   "cost_estimate": {
-    "input_cost_usd": 2.906001,
-    "output_cost_usd": 0.773613,
-    "total_cost_usd": 3.679615,
+    "input_cost_usd": 0.021154,
+    "output_cost_usd": 0.005748,
+    "total_cost_usd": 0.026902,
     "pricing_used": {
       "model": "gemini-3-flash-preview",
       "input_per_1m": 0.5,

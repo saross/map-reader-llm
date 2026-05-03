@@ -1,12 +1,12 @@
 {
-  "run_id": "40bc70b9-a9f5-4e92-bf36-9909c795fbe1",
+  "run_id": "c74c53ff-40fa-474a-a457-14931fcd21f0",
   "timestamp": {
-    "start": "2026-04-25T05:35:03.951185+00:00",
-    "end": "2026-04-25T05:52:08.726104+00:00",
-    "duration_seconds": 1024.774919
+    "start": "2026-05-03T14:58:16.841722+00:00",
+    "end": "2026-05-03T14:58:32.263210+00:00",
+    "duration_seconds": 15.421488
   },
   "environment": {
-    "git_commit": "50e556b76c472ac30adc200a569d4fe43e2a14d3",
+    "git_commit": "9c58721e150bce10426a0d461a2ebb6ea6b1fcde",
     "script": "run_pv.py",
     "script_version": "1.0.0"
   },
@@ -52,7 +52,7 @@
     }
   },
   "execution_stats": {
-    "items_processed": 0,
+    "items_processed": 41,
     "items_failed": 0,
     "items_skipped": 0,
     "retries_total": 0,
@@ -61,38 +61,79 @@
     "retries_timeout": 0,
     "retries_other": 0,
     "finish_reason_counts": {
-      "success": 3698,
-      "error": 929
+      "success": 41
     },
     "safety_blocks": 0,
-    "parse_failures": 932,
-    "empty_responses": 929,
-    "completed_items": [],
+    "parse_failures": 0,
+    "empty_responses": 0,
+    "completed_items": [
+      "candidate_00116",
+      "candidate_00069",
+      "candidate_00436",
+      "candidate_00012",
+      "candidate_00111",
+      "candidate_00828",
+      "candidate_00686",
+      "candidate_00325",
+      "candidate_00845",
+      "candidate_00313",
+      "candidate_01108",
+      "candidate_00939",
+      "candidate_01535",
+      "candidate_01110",
+      "candidate_01400",
+      "candidate_01137",
+      "candidate_01825",
+      "candidate_01544",
+      "candidate_02024",
+      "candidate_01934",
+      "candidate_02187",
+      "candidate_02296",
+      "candidate_02247",
+      "candidate_02627",
+      "candidate_02206",
+      "candidate_02226",
+      "candidate_02447",
+      "candidate_02630",
+      "candidate_02637",
+      "candidate_02302",
+      "candidate_02888",
+      "candidate_02655",
+      "candidate_02879",
+      "candidate_02654",
+      "candidate_02810",
+      "candidate_02670",
+      "candidate_02885",
+      "candidate_02899",
+      "candidate_03394",
+      "candidate_03127",
+      "candidate_03562"
+    ],
     "failed_items": [],
     "retry_details": []
   },
   "usage_stats": {
-    "total_input_tokens": 6626816,
-    "total_output_tokens": 585070,
+    "total_input_tokens": 73472,
+    "total_output_tokens": 6407,
     "total_cached_tokens": 0,
     "total_reasoning_tokens": 0,
     "total_thoughts_tokens": 0,
     "total_tool_use_tokens": 0,
-    "total_tokens": 7211886,
+    "total_tokens": 79879,
     "by_provider": {
       "google_gemini": {
-        "input_tokens": 6626816,
-        "output_tokens": 585070,
-        "total_tokens": 7211886,
-        "request_count": 4627
+        "input_tokens": 73472,
+        "output_tokens": 6407,
+        "total_tokens": 79879,
+        "request_count": 41
       }
     }
   },
   "results_summary": {},
   "cost_estimate": {
-    "input_cost_usd": 3.313408,
-    "output_cost_usd": 1.75521,
-    "total_cost_usd": 5.068618,
+    "input_cost_usd": 0.036736,
+    "output_cost_usd": 0.019221,
+    "total_cost_usd": 0.055957,
     "pricing_used": {
       "model": "gemini-3-flash-preview",
       "input_per_1m": 0.5,
