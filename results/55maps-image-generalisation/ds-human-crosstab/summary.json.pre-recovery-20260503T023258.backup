@@ -5,11 +5,11 @@
     "review_today": "results/55maps-image-generalisation/human-review-multi-buffer.csv"
   },
   "n_combined": 1029,
-  "n_joined": 1029,
-  "n_unjoined": 0,
-  "n_mound": 746,
+  "n_joined": 1028,
+  "n_unjoined": 1,
+  "n_mound": 745,
   "n_not_mound": 283,
-  "prevalence": 0.7249757045675413,
+  "prevalence": 0.7247081712062257,
   "n_today_uncertain_counted_as_not_mound": 0,
   "source_counts": {
     "yesterday_mound": 472,
@@ -18,17 +18,17 @@
     "today_only": 1
   },
   "unique_ds_posteriors": [
-    0.18651
+    0.186207
   ],
   "degenerate_posterior": true,
-  "ece": 0.5384655047983467,
-  "brier": 0.4893310322120767,
+  "ece": 0.5385006866301707,
+  "brier": 0.4894892272943188,
   "auc": 0.5,
   "auc_degenerate": true,
   "coarse_crosstab": {
     "tp": 0,
     "fp": 0,
-    "fn": 746,
+    "fn": 745,
     "tn": 283,
     "threshold": 0.5
   },
@@ -57,9 +57,9 @@
       "wilson_hi": NaN
     },
     "middle_band": {
-      "n": 1029,
-      "n_mound": 746,
-      "human_mound_rate": 0.7249757045675413
+      "n": 1028,
+      "n_mound": 745,
+      "human_mound_rate": 0.7247081712062257
     }
   },
   "verifier_reference_obs_269": {

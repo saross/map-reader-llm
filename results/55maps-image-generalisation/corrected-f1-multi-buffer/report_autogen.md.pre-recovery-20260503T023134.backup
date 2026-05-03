@@ -1,19 +1,19 @@
 # Corrected F1 / P / R on the 55-map image set — buffer-stratified
 
-**Timestamp**: 2026-05-03T02:44:01.856114+00:00
+**Timestamp**: 2026-04-21T09:19:22.660216+00:00
 **Methodology**: Approach B — extended-GT-at-R Hungarian matching
 **Bootstrap**: 10,000 iterations, seed 42, tile-level resampling
-**Git commit**: `da84a3d23f1e0d9803363593709802f0615057fe`
+**Git commit**: `508f76989e0c8739469950bfca415719b6712c83`
 
 ## F1 curve
 
 | R (m) | TP | FP | FN | n_ref_student | n_promoted@R | n_ref_extended | P [95 % CI] | R [95 % CI] | F1 [95 % CI] |
 |------:|---:|---:|---:|--------------:|-------------:|---------------:|:-----------:|:-----------:|:------------:|
-| 50 | 4124 | 556 | 1095 | 4745 | 474 | 5219 | 0.8812 [0.8713, 0.8905] | 0.7902 [0.7776, 0.8025] | **0.8332** [0.8240, 0.8421] |
-| 75 | 4254 | 426 | 1086 | 4745 | 595 | 5340 | 0.9090 [0.9000, 0.9173] | 0.7966 [0.7844, 0.8086] | **0.8491** [0.8403, 0.8574] |
-| 100 | 4296 | 384 | 1091 | 4745 | 642 | 5387 | 0.9179 [0.9094, 0.9260] | 0.7975 [0.7854, 0.8093] | **0.8535** [0.8449, 0.8616] |
-| 125 | 4313 | 367 | 1093 | 4745 | 661 | 5406 | 0.9216 [0.9131, 0.9295] | 0.7978 [0.7856, 0.8096] | **0.8552** [0.8468, 0.8634] |
-| 150 | 4324 | 356 | 1093 | 4745 | 672 | 5417 | 0.9239 [0.9156, 0.9317] | 0.7982 [0.7861, 0.8101] | **0.8565** [0.8480, 0.8645] |
+| 50 | 4110 | 555 | 1108 | 4744 | 474 | 5218 | 0.8810 [0.8710, 0.8904] | 0.7877 [0.7750, 0.8000] | **0.8317** [0.8225, 0.8407] |
+| 75 | 4240 | 425 | 1099 | 4744 | 595 | 5339 | 0.9089 [0.8999, 0.9173] | 0.7942 [0.7818, 0.8060] | **0.8477** [0.8388, 0.8560] |
+| 100 | 4282 | 383 | 1104 | 4744 | 642 | 5386 | 0.9179 [0.9093, 0.9259] | 0.7950 [0.7828, 0.8069] | **0.8521** [0.8434, 0.8602] |
+| 125 | 4299 | 366 | 1106 | 4744 | 661 | 5405 | 0.9215 [0.9131, 0.9294] | 0.7954 [0.7832, 0.8073] | **0.8538** [0.8453, 0.8620] |
+| 150 | 4310 | 355 | 1106 | 4744 | 672 | 5416 | 0.9239 [0.9155, 0.9317] | 0.7958 [0.7836, 0.8077] | **0.8551** [0.8466, 0.8632] |
 
 ## How to read this table
 
@@ -35,7 +35,7 @@ Yesterday's single-buffer correction (``compute_corrected_f1_human_reviewed.py``
 produced **F1 = 0.8295** at R = 50 m via an analytic adjustment to measured
 counts (moved 472 FPs into TP and added them to the GT denominator, without
 re-running Hungarian). This script's R = 50 m row
-(**F1 = 0.8332**) re-runs Hungarian over extended GT including
+(**F1 = 0.8317**) re-runs Hungarian over extended GT including
 the 2 today-corrections at 50 m. Expected ΔF1 ≈ +0.003 versus yesterday's
 number. The two numbers are methodologically close but not identical —
 Approach B allows detections to rematch optimally against the extended GT,
@@ -68,11 +68,10 @@ is completely indistinguishable.
   detections appear as FP at every R ≤ 150 m, which is the correct
   behaviour under the 150 m practitioner cap.
 
-
 ## Practitioner-useful cap: F1 at R = 125 m
 
 Recommended single-number summary for downstream quotation:
-**F1 = 0.8552** at R = 125 m (95 % CI [0.8468, 0.8634]) —
+**F1 = 0.8538** at R = 125 m (95 % CI [0.8453, 0.8620]) —
 the largest R where the attractor-pull contribution to recall is
 statistically distinguishable from within-tile random placement.
 
@@ -83,6 +82,28 @@ statistically distinguishable from within-tile random placement.
 analysis. Their detections contribute FP at every R ≤ 150 m. Rationale in
 the task brief and Obs 272.
 
+## Reconciling with the buffer-100m diagnostic
+
+The sibling `results/55maps-image-generalisation/buffer-100m-diagnostics/report.md`
+reports `total_matched_at_50m = 4,108`, while this pipeline reports
+TP = 4,110 at 50 m. The 2-pair gap is a **methodological difference in
+the ground-truth inputs**, not a bug in either pipeline:
+
+- **This corrected-F1 pipeline** uses both yesterday's single-buffer
+  review (`human-review.csv`, 472 mounds at 50 m) and today's
+  multi-buffer re-review (`human-review-multi-buffer.csv`, 2
+  additional mounds specifically confirmed at the 50 m shell during
+  the staggered re-review — candidate IDs 5641 (map K-35-075-4) and
+  5777 (map K-35-076-1)). Total: 474 phantoms at 50 m.
+- **The diagnostic** uses only yesterday's review (472 phantoms at
+  50 m) with the same Hungarian one-to-one matching.
+
+**This pipeline's 4,110 is the paper-citable count**; it underpins the
+canonical corrected-F1 headline of 0.832 at 50 m. The diagnostic's
+4,108 is descriptive only, citable for the 50 → 100 m recall-gain
+decomposition (71 new matches admitted at 100 m, 0 lost) but not as a
+stand-alone TP headline.
+
 ## Reproducibility
 
 - **Inputs**:
@@ -92,5 +113,5 @@ the task brief and Obs 272.
   - Review (yesterday): `results/55maps-image-generalisation/human-review.csv`
   - Review (today): `results/55maps-image-generalisation/human-review-multi-buffer.csv`
 - **Bootstrap**: 10,000 iterations, seed 42, tile-level resampling
-- **Git commit**: `da84a3d23f1e0d9803363593709802f0615057fe`
+- **Git commit**: `508f76989e0c8739469950bfca415719b6712c83`
 - **Script**: `scripts/compute_corrected_f1_multi_buffer.py`

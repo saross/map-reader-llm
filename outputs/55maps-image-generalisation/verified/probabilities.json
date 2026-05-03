@@ -3,7 +3,7 @@
   "mode": "realtime",
   "verifier_config": "verify_adversarial-text",
   "iterations": 1,
-  "total_results": 7877,
+  "total_results": 7878,
   "results": {
     "candidate_00012": {
       "mound_probability": 0.1,
@@ -47266,13 +47266,19 @@
       "reasoning": "The symbol exhibits the classic 'sunburst' pattern with outward-radiating rays in the correct orange-brown color used for topographic features. Unlike the benchmark at the top of the image (black square), this symbol lacks a survey marker, identifying it as a standard kurgan (burial mound). The number '3' likely indicates the height of the mound in meters. No other non-mound interpretation fits the specific geometry of a central circle with radiating hachures.",
       "best_alternative": "A standalone spot height or contour-related numbering artefact.",
       "alternative_evidence": "The symbol is rendered in the same orange-brown ink as the contour lines and is accompanied by the numeral '3'. While it has a star-like shape, the 'rays' are extremely short and could be interpreted as a stylized representation of a small natural knoll or a specific elevation point rather than a man-made burial mound."
+    },
+    "candidate_07877": {
+      "mound_probability": 0.95,
+      "reasoning": "The symbol contains a clear black square (benchmark) with a central dot. However, it is surrounded by unmistakable, short, black radiating lines forming a 'sunburst' pattern. On Soviet maps, this specific combination (a survey marker inside a sunburst) explicitly denotes a benchmark or triangulation point situated on top of a burial mound (kurgan). Because the radiating lines are present and distinct from the square itself, the non-mound interpretation is weak.",
+      "best_alternative": "A benchmark or survey marker without a mound.",
+      "alternative_evidence": "The central symbol is a distinct black square with a central dot, which is the standard representation for a benchmark. While there are radiating lines, they are somewhat irregular and could be interpreted as map noise or a complex survey symbol."
     }
   },
   "cleanup_history": [
     {
-      "timestamp": "2026-05-03T02:25:16.959107+00:00",
-      "initial_missing": 18,
-      "recovered": 18,
+      "timestamp": "2026-05-03T02:42:38.184532+00:00",
+      "initial_missing": 1,
+      "recovered": 1,
       "still_missing": 0,
       "still_missing_ids": [],
       "attempts_used": 1,

@@ -5,8 +5,8 @@
   "tiles_dir": "inputs/tiles_384_55maps",
   "padding": 75,
   "crop_dimensions": "150x150",
-  "total_detections": 7877,
-  "successful_extractions": 7877,
+  "total_detections": 7878,
+  "successful_extractions": 7878,
   "failed_extractions": 0,
   "raster_crops": 7877,
   "tile_fallback_crops": 0,
@@ -198292,6 +198292,41 @@
         "cluster_size": 3,
         "source_tile": "K-35-077-1_x2352_y3024.png"
       }
+    },
+    {
+      "candidate_id": 7877,
+      "crop_file": "crops/candidate_07877.png",
+      "source_tile": "K-35-062-4_Asenovgrad_4326_x336_y1008.png",
+      "centroid_x": 315526.1321549633,
+      "centroid_y": 4665353.703056085,
+      "cropped_from": "raster",
+      "properties": {
+        "subtype": "benchmark_mound",
+        "confidence": 0.6,
+        "vote_count": 3,
+        "total_passes": 5,
+        "contributing_passes": [
+          "run_1",
+          "run_2",
+          "run_5"
+        ],
+        "source_tiles": [
+          "K-35-062-4_Asenovgrad_4326_x336_y1008.png"
+        ],
+        "cluster_size": 3,
+        "source_tile": "K-35-062-4_Asenovgrad_4326_x336_y1008.png"
+      }
+    }
+  ],
+  "recovery_history": [
+    {
+      "timestamp": "2026-05-03T02:41:47.762664+00:00",
+      "consensus_source": "outputs/55maps-image-generalisation/consensus/consensus-3of5.geojson",
+      "existing_candidates": 7877,
+      "new_consensus_features": 7878,
+      "matched_to_existing": 7877,
+      "new_extracted": 1,
+      "new_extraction_failed": 0
     }
   ]
 }
