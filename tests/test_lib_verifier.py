@@ -1238,3 +1238,37 @@ class TestCallVerifierApi:
             if et:
                 error_types.append(et)
         assert error_types == ["rate_limit", "rate_limit", "server_error"]
+
+    def test_metadata_tracker_none_back_compat(self, patch_sleep):
+        """``metadata_tracker=None`` must not raise on retry-logging paths.
+
+        Back-compat regression guard: ``_call_verifier_api`` was
+        extended with an optional ``metadata_tracker`` parameter as
+        part of Layer 2; callers that have not yet been ported still
+        invoke the helper with ``metadata_tracker=None``. Every
+        ``log_retry`` call must be guarded so a transient-error retry
+        does not crash with ``AttributeError: 'NoneType' object has no
+        attribute 'log_retry'``.
+        """
+        good_text = '{"mound_probability": 0.6, "reasoning": "ok"}'
+        client = self._make_client([
+            Exception("429 ResourceExhausted: quota"),
+            _make_response(text=good_text),
+        ])
+
+        # No tracker — the retry path must still complete cleanly.
+        result = _call_verifier_api(
+            client=client,
+            model_name="gemini-3-flash",
+            content=None,
+            gen_config=None,
+            iteration_id="cand_0099_iter1",
+            metadata_list=[],
+            metadata_tracker=None,
+        )
+
+        assert result is not None
+        assert result["mound_probability"] == 0.6
+        # The retry happened — confirm the client was called twice
+        # (i.e. the guarded log_retry branch did not short-circuit).
+        assert client.models.generate_content.call_count == 2

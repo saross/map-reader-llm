@@ -469,6 +469,61 @@ class TestAssertCompleteness:
             "candidate_00001_iter3", "candidate_00002_iter3",
         }
 
+    def test_metadata_tracker_none(self, caplog) -> None:
+        """``metadata_tracker=None`` must not raise; gap is still surfaced.
+
+        Defensive-branch coverage: ``_assert_completeness`` may be
+        called from a code path that has no tracker (no future call
+        site does today, but the optional parameter shape needs to be
+        honoured). The function must still log the warning, return the
+        gap count, and skip the per-tracker side effects (no AttributeError
+        on tracker.stats / tracker.results_summary access).
+        """
+        manifest = _make_manifest(3)
+        # Only 1 of 3 candidates present
+        results = {"candidate_00000": {"mound_probability": 0.5}}
+
+        with caplog.at_level(logging.ERROR, logger="scripts.run_pv"):
+            gap = _assert_completeness(
+                parsed_results=results,
+                manifest=manifest,
+                iterations=1,
+                mode="realtime",
+                metadata_tracker=None,
+                strict=True,
+            )
+
+        assert gap == 2
+        # Error log fired even without a tracker — completeness gap is
+        # the primary user-visible signal.
+        assert "Completeness gap" in caplog.text
+        # No exception is enough — the assertion is the absence of one.
+
+    def test_empty_manifest(self, caplog) -> None:
+        """Zero candidates × zero results returns 0 with no side effects.
+
+        Boundary case — an empty manifest could exercise the iteration
+        helpers in unexpected ways (set-difference of empty sets, sample
+        truncation, etc.). The helper must short-circuit with no warning
+        log and no failed_items entries.
+        """
+        manifest = {"version": "1.0", "candidates": []}
+        tracker = _make_tracker()
+
+        with caplog.at_level(logging.ERROR, logger="scripts.run_pv"):
+            gap = _assert_completeness(
+                parsed_results={},
+                manifest=manifest,
+                iterations=1,
+                mode="realtime",
+                metadata_tracker=tracker,
+                strict=True,
+            )
+
+        assert gap == 0
+        assert tracker.stats.failed_items == []
+        assert "Completeness gap" not in caplog.text
+
 
 # ─────────────────────────────────────────────────────────────────────
 # L1-H, L1-I: end-to-end strict / non-strict + on-disk meta
