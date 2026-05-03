@@ -1,5 +1,13 @@
 # Dawid-Skene aggregate posterior vs. human review (55-map image generalisation)
 
+> **Post-recovery 2026-05-03 annotation** — this auto-generated report
+> reflects the post-recovery state. Pre-recovery values are preserved
+> at `report.md.pre-recovery-20260503T023258.backup` in this directory.
+> Joined-row count shifted from 1,028 to 1,029 (+1 from the new
+> consensus candidate at 3-of-5); the qualitative finding (D-S
+> aggregate underestimates VLM-only mound rate; verifier outperforms
+> on item-level discrimination) is unchanged.
+
 Cross-tabulation of the Dawid-Skene (D-S) per-item posterior against the combined human-review labels on the VLM-only candidate set. Framing: the D-S posterior is an **aggregate** probabilistic estimate derived from two noisy annotators (student digitisers and the VLM pipeline); human review is a per-candidate adjudication. This analysis quantifies where the aggregate and the individual adjudications agree or diverge.
 
 ## Input provenance

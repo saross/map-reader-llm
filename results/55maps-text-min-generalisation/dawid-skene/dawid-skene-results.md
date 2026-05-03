@@ -1,5 +1,16 @@
 # Dawid-Skene Latent Truth Model — Results
 
+> **Post-recovery 2026-05-03 annotation** — this auto-generated
+> report was re-run after the text-MIN recovery (commits
+> `a9bc85b2..6e077005`). The recovery was a proposer-level no-op
+> (per-pass geojsons bit-identical), but the consensus rebuild +
+> dedup added +39 features (10,131 → 10,170) and +4 verified
+> detections (3,861 → 3,865). Measured F1 lifted +0.0004 (0.7591 →
+> 0.7595 vs un-reviewed GT) — well within the auto-proceed gate.
+> See the run-level
+> `configs/run-configs/55maps_text_min_generalisation_post_run_report.md`
+> "Recovery 2026-05-03" subsection for the full propagation chain.
+
 ## Summary
 
 Joint model of student digitisers and VLM pipeline as noisy

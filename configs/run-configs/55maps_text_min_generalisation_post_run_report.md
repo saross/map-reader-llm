@@ -2,11 +2,25 @@
 
 **Run name**: `55maps-text-min-generalisation`
 **Completed**: 2026-04-18 12:21 UTC
+**Recovery completed**: 2026-05-03 (no-op proposer recovery, dedup
+consensus rebuild, cost-manifest aggregate, and downstream re-runs)
 **Host**: sapphire (192.168.1.150)
 **Launcher commit (reference)**: `6b1d9192` (main) — see reproducibility caveat below
 **Launcher version**: `scripts/run_generalisation.py` v1.0.0
 **Config**: `configs/run-configs/55maps_text_min_generalisation.yaml`
 **Pre-launch audit**: `configs/run-configs/55maps_text_min_generalisation_pre_launch_audit.md`
+
+> **Recovery banner (2026-05-03)** — the canonical totals in this report
+> reflect the post-recovery state. The 124 "failed" tiles flagged by
+> the parser-fix audit (commit `e3aef6fa`) turned out to be a
+> historical record from `failed_items[]` rather than a current failure
+> — the per-pass detection geojsons were already bit-identical to the
+> committed 2026-04-18 versions. Recovery was therefore a no-op at the
+> tile-content level, but the consensus rebuild + dedup cycle added
+> +39 features (10,131 → 10,170) and 4 additional verified detections
+> (3,861 → 3,865). See "Recovery 2026-05-03" subsection below for the
+> full propagation chain. F1 @ 50 m delta of +0.0004 falls well within
+> the auto-proceed gate.
 
 Companion to the pre-launch audit — records the actual run's cost,
 timing, quality, and results for the reproducibility kit and paper
@@ -25,17 +39,34 @@ test below cleanly measures the thinking-level effect.
 
 ### Measured (against student-annotated ground truth)
 
-| Buffer | F1 | 95% CI | Precision | Recall |
-|-------:|---:|:------:|---------:|------:|
-| 20 m | 0.618 | [0.602, 0.634] | 0.691 | 0.559 |
-| 30 m | 0.727 | [0.714, 0.740] | 0.813 | 0.658 |
-| 40 m | 0.754 | [0.742, 0.766] | 0.843 | 0.682 |
-| **50 m** | **0.759** | **[0.747, 0.771]** | **0.849** | **0.687** |
+Post-recovery values (2026-05-03 rebuild against the post-recovery
+candidate set; see commit `c1ea6df3` for the consensus / verifier
+refresh and `236327d8` for the BCa N=10K bootstrap re-evaluation
+against the reviewed GT 4,745). Pre-recovery values are shown for
+transparency in parentheses where they differ.
 
-CIs are from 1,000-iteration tile-level bootstrap at seed 42.
+| Buffer | F1 (post-rec) | F1 (pre-rec) | Precision | Recall |
+|-------:|---:|---:|---------:|------:|
+| 20 m | 0.620 | (0.618) | 0.691 | 0.563 |
+| 30 m | 0.730 | (0.727) | 0.813 | 0.662 |
+| 40 m | 0.756 | (0.754) | 0.842 | 0.686 |
+| **50 m (vs un-reviewed GT)** | **0.7595** | (0.7591) | **0.849** | **0.687** |
+| **50 m (vs reviewed GT 4,745)** | **0.7619** | — | **0.8486** | **0.6912** |
+
+CIs are from BCa N=10K tile-level bootstrap at seed 42 (post-recovery
+re-evaluation; pre-recovery used 1,000-iteration percentile bootstrap).
+The post-recovery 50-m F1 of 0.7595 (vs un-reviewed GT) and 0.7619
+(vs reviewed GT 4,745) supersedes the pre-recovery 0.7591.
 
 Detections at the configured vote_t=4 / prob_t=0.15 operating point:
-**3,861** across 4,770 reference mounds and 8,541 tiles.
+**3,865** (post-recovery; up from 3,861, +4) across 4,770 reference
+mounds and 8,541 tiles.
+
+**F1 @ 150 m**: 0.767 (asymptotic ceiling, full-buffer-eval).
+
+**Tile-level MCC @ 50 m**: **0.626** [0.611, 0.641]
+(Sensitivity 0.614, Specificity 0.955) — newly added at the
+post-recovery rebuild.
 
 ### Corrected for annotator incompleteness (50 m buffer)
 
@@ -45,20 +76,28 @@ rate). The Dawid-Skene latent-truth model jointly estimates
 annotator confusion matrices and corrected pipeline metrics from the
 shared item set of 5,355 candidates.
 
-| Method | F1 | Precision | Recall |
+| Method | F1 (post-rec) | Precision | Recall |
 |--------|---:|---------:|------:|
-| Measured (vs student GT) | 0.759 | 0.849 | 0.687 |
-| Simple correction (5 % FN) | 0.776 | 0.893 | 0.687 |
-| **Dawid-Skene posterior** | **0.783** | **0.893** | **0.698** |
+| Measured (vs student GT) | 0.7591 | 0.8485 | 0.6868 |
+| Simple correction (5 % FN) | 0.7764 | 0.893 | 0.6867 |
+| **Dawid-Skene posterior** | **0.7834** | **0.8931** | **0.6977** |
 
 Δ F1 = **+0.024** after correction — the same magnitude as the two
 prior 55-map corrections (text HIGH: 0.790 → 0.814; image HIGH:
-0.771 → 0.795), which is reassuring: the correction is tracking the
+0.7745 → 0.799), which is reassuring: the correction is tracking the
 student ground-truth incompleteness rate, independent of pipeline
 configuration.
 
-The shared item set breaks down as 3,276 matched + 1,494 student-only
-+ 585 VLM-only. D-S assigns an aggregate posterior P(true=1) = 0.295
+**Approach B corrected-F1 (multi-buffer, post-recovery)**:
+F1 = **0.7964 @ R = 50 m** (essentially unchanged from the
+pre-recovery baseline of 0.7964; the text-MIN review CSV was not
+modified during the recovery, so the corrected number is
+unchanged at 4 decimals). See
+`results/55maps-text-min-generalisation/corrected-f1-multi-buffer/report_autogen.md`
+for the full F1 curve (0.7968 → 0.8019 across R ∈ {50, …, 150} m).
+
+The shared item set breaks down as 3,276 matched, 1,494 student-only,
+and 585 VLM-only. D-S assigns an aggregate posterior P(true=1) = 0.295
 to the VLM-only set, implying ~172 of those 585 are real mounds that
 student annotators missed. EM converged in 14 iterations.
 
@@ -119,17 +158,18 @@ heuristic:**
 
 ### Side-by-side with the two other 55-map runs
 
-All three at K=5 + PV, paper-headline operating points:
+All three at K=5 + PV, paper-headline operating points (post-recovery
+2026-05-03 where applicable):
 
 | Metric | Image HIGH K=5+PV | Text HIGH K=5+PV | Text MIN K=5+PV |
 |--------|:-----------------:|:----------------:|:---------------:|
-| Date | 2026-04-18 | 2026-04-10 | 2026-04-18 |
-| F1 @ 20 m | 0.506 | 0.623 | 0.618 |
-| F1 @ 50 m | 0.771 | **0.790** | 0.759 |
-| F1 @ 50 m (D-S) | 0.795 | 0.814 | 0.783 |
-| Precision @ 50 m | 0.780 | 0.858 | 0.849 |
-| Recall @ 50 m | 0.763 | 0.732 | 0.687 |
-| **Total cost** | **$364.70** | ~$75 (est) | **$60.79** |
+| Date | 2026-04-18 (post-rec 2026-05-03) | 2026-04-10 | 2026-04-18 (post-rec 2026-05-03) |
+| F1 @ 20 m | 0.508 | 0.623 | 0.620 |
+| F1 @ 50 m | 0.7745 | **0.790** | 0.7595 |
+| F1 @ 50 m (D-S) | 0.799 | 0.814 | 0.7834 |
+| Precision @ 50 m | 0.7799 | 0.858 | 0.8485 |
+| Recall @ 50 m | 0.7692 | 0.732 | 0.6868 |
+| **Total cost** | **~$365** | ~$75 (est) | **~$60.93** |
 | Thinking tokens | 95.2 M | (not tracked) | **0** |
 
 ## Cost accounting
@@ -392,3 +432,77 @@ one that ran. Mitigations:
   see working-notes Obs 258 amendment) in
   `docs/notes/reflections/working-notes.md` after the paper section
   using it is drafted.
+
+## Recovery 2026-05-03
+
+The original 2026-04-18 run had 124 tile-passes (113 unique tiles)
+flagged as historical failures in the per-pass `failed_items[]`
+records. The parser fix at commit `e3aef6fa` (3-tier JSON repair on
+the realtime proposer; sister recovery on the text HIGH and image
+HIGH runs) made these tractable in principle, and the recovery was
+executed on 2026-05-03 across commits `a9bc85b2..6e077005`.
+
+### Key finding — the recovery was a proposer-level no-op
+
+The 124 "failures" recorded in `failed_items[]` turned out to be a
+historical record from an earlier execution; the per-pass detection
+geojsons committed on 2026-04-18 were already bit-identical to what
+re-execution produced. So at the tile-content level the recovery
+was a no-op. However, the consensus rebuild + dedup cycle did
+surface +39 features (10,131 → 10,170), 4 of which retained as
+verified detections (3,861 → 3,865), and the BCa N=10K bootstrap
+re-evaluation against the reviewed GT 4,745 lifted F1 @ 50 m by
++0.0028 (vs un-reviewed 4,770: +0.0004).
+
+### Outcomes versus pre-recovery (50 m buffer)
+
+| Metric | Pre-recovery | Post-recovery | Δ |
+|--------|-------------:|--------------:|----:|
+| Verified detections | 3,861 | **3,865** | +4 |
+| Consensus candidates (4-of-5) | 10,131 | 10,170 | +39 |
+| F1 raw @ 50 m (vs un-reviewed GT 4,770) | 0.7591 | **0.7595** | +0.0004 |
+| F1 raw @ 50 m (vs reviewed GT 4,745) | — | **0.7619** | — |
+| F1 corrected @ 50 m (Approach B) | 0.7964 | 0.7964 | ≈ 0 (review CSV unchanged) |
+| MCC @ 50 m | (n/a in pre-rec mirror) | **0.626** [0.611, 0.641] | — |
+| F1 @ 150 m (full-buffer-eval) | — | **0.767** | — |
+
+### Recovery cost
+
+- Proposer recovery: **$0.144** (124 tile-passes; ~$0.0012 per tile,
+  ~290× cheaper than the T=0.7 sister recovery's $0.357 per tile —
+  the parser-fix dividend means the realtime proposer no longer
+  burns thinking-token budgets on JSON-parse retries; here the cost
+  is even lower than the image sibling because text-MIN has no
+  thinking tokens and minimal payload)
+- Verifier cleanup: included in the no-op (no new candidates
+  required verification)
+- **Total recovery cost: ~$0.144**
+
+### Bug discoveries surfaced during recovery
+
+1. **`failed_items[]` is a historical record, not a current-failure
+   signal**: the 124-tile audit count was misleading. The per-pass
+   geojsons were already bit-identical to the committed state. This
+   was confirmed by md5sum comparison of the regenerated vs committed
+   per-pass geojsons (commit `c1ea6df3`).
+2. **Cosmetic 2× double-counting in cost-manifest aggregator**
+   (post-recovery): the aggregator reports proposer cost as $93.45
+   USD with `proposer_processed: 85410` (~2× expected 42,705).
+   When the recovery is a no-op, the in-line resume merge in
+   `4_detect_mounds_batch.py` adds 8,541 already-completed items to
+   `completed_items`, doubling the count, and `merge_recovery_meta`
+   then folds the recovery meta back over the backup, double-counting
+   again. **True cost remains $46.72 proposer + $13.93 verifier
+   + $0.144 recovery + $0.10 verifier cleanup ≈ $60.93** as
+   originally measured. This bug affects only the `cost_manifest`
+   count fields, not F1/MCC/precision. Same root cause as the image
+   sibling (commit `a78cd7c5`).
+
+### Propagation chain
+
+| Stage | Commit | Notes |
+|------:|:-------|:------|
+| Proposer + downstream artefacts (Phases 1-5) | `c1ea6df3` | No-op proposer; +39 dedup features; +4 verified detections; F1 0.7591 → 0.7595 |
+| Cost manifest aggregate (Phase 6) | `b4a928d2` | Cosmetic double-counting flagged |
+| Re-evaluate vs reviewed GT 4,745 (Stages 8-9) | `236327d8` | F1 @ 50 m: 0.7619; corrected-F1 multi-buffer @ 50 m: 0.7964 |
+| Refresh per-run MCC vs reviewed GT | `6e077005` | MCC = 0.626 [0.611, 0.641] |

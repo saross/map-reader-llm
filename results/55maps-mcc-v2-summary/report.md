@@ -1,6 +1,10 @@
 # 55-map corrected runs: tile-level MCC cross-run summary (v2)
 
-**Generated**: 2026-04-27 (initial 3-run); extended 2026-04-28 to add text-MIN as a fourth corrected run.
+**Generated**: 2026-04-27 (initial 3-run); extended 2026-04-28 to add
+text-MIN as a fourth corrected run; refreshed 2026-05-03 (cross-track-v2
+commit `42ed1d32`) to incorporate post-recovery numbers from all four
+corrected runs (T=0.7 + image + text-MIN re-evaluations against the
+canonical 4,745-mound updated curator ground truth; T=0.3 unchanged).
 **Scope**: tile-level Matthews Correlation Coefficient (MCC), sensitivity, and specificity for the four manually-corrected 55-map runs (T=0.3 text-HIGH, T=0.7 text-HIGH, image, text-MIN), against the canonical post-review ground truth.
 **Methodology mirror**: `scripts/evaluate_detections.py --mcc --bootstrap 1000 --seed 42`, mirroring commit `163161a4` (matrix sweep MCC re-eval).
 **Policy**: per `feedback_mcc_with_f1.md`, MCC must accompany F1 wherever inputs support it; this report closes the gap for the four corrected 55-map runs.
@@ -20,16 +24,16 @@ All four runs are evaluated against:
 
 ## 2. Per-run MCC, sensitivity, specificity
 
-Detection counts (verified): T=0.3 = 4,350; T=0.7 = 4,164; image = 4,665; text-MIN = 4,143. All four are evaluated over the same 8,541 tiles and 4,744 reference points.
+Detection counts (verified): T=0.3 = 4,350; T=0.7 = 4,164 (post-recovery; +21 from pre-recovery 4,143); image = 4,680 (post-recovery; +15 from pre-recovery 4,665, including the +1 phantom-promoted from cand 2397); text-MIN = 3,865 (post-recovery; +4 from pre-recovery 3,861; recovery was effectively no-op). All four are evaluated over the same 8,541 tiles and the canonical 4,745-mound updated curator GT.
 
 | Run | Detections | TP | TN | FP | FN | MCC [95% CI] | Sensitivity | Specificity |
 |:----|----------:|---:|---:|---:|---:|:------------:|------------:|------------:|
-| 55maps-text-high-t0.3-generalisation | 4,350 | 2,216 | 4,906 | 255 | 1,164 | **0.6538** [0.6386, 0.6704] | 0.6557 | 0.9506 |
+| 55maps-text-high-t0.3-generalisation | 4,350 | 2,216 | 4,906 | 255 | 1,164 | **0.6538** [0.6393, 0.6684] | 0.6556 | 0.9506 |
 | 55maps-text-high-generalisation (T=0.7) | 4,164 | 2,176 | 4,918 | 243 | 1,204 | **0.6476** [0.6331, 0.6620] | 0.6438 | 0.9529 |
-| 55maps-image-generalisation | 4,665 | 2,390 | 4,891 | 270 | 990 | **0.6912** [0.6753, 0.7055] | 0.7069 | 0.9477 |
-| 55maps-text-min-generalisation | 4,143 | 2,072 | 4,927 | 234 | 1,308 | **0.6253** [0.6095, 0.6413] | 0.6130 | 0.9547 |
+| 55maps-image-generalisation | 4,680 | 2,394 | 4,891 | 270 | 986 | **0.6924** [0.6784, 0.7062] | 0.7083 | 0.9477 |
+| 55maps-text-min-generalisation | 3,865 | 2,075 | 4,927 | 234 | 1,305 | **0.6260** [0.6114, 0.6408] | 0.6139 | 0.9547 |
 
-T=0.7 and image MCC values match the pre-existing `outputs/<run>/full-buffer-eval/evaluation.json` artefacts (computed against the same reviewed GT) to within rounding — the 2026-04-27 re-eval reproduced the earlier MCC and promoted the artefacts to a stable per-run path (`results/<run>/mcc/`) aligned with the corrected-F1 outputs. text-MIN is new on 2026-04-28 (commit `7b7509d5`); no prior MCC artefact existed for it. Post-recovery 2026-05-03: T=0.7 row refreshed against the post-recovery evaluation (n_detections 4143 → 4164, +21 detections); MCC shifts from 0.6472 to 0.6476 (negligible) and qualitative ranking is preserved.
+Post-recovery 2026-05-03 (cross-track-v2 commit `42ed1d32`): three rows refreshed against the canonical updated curator GT (4,745 mounds). T=0.7 row refreshed against the post-recovery evaluation (n_detections 4,143 → 4,164, +21); MCC shifts from 0.6472 to 0.6476 (negligible). image row refreshed against the cand 2397 promotion (n_detections 4,665 → 4,680; TP 2,390 → 2,394; FN 990 → 986); MCC shifts from 0.6912 to 0.6924 (negligible). text-MIN row refreshed (n_detections 3,861 → 3,865; TP 2,072 → 2,075; FN 1,308 → 1,305); MCC shifts from 0.6253 to 0.6260 (negligible). Qualitative ranking is preserved on all four rows: image leads MCC; T=0.3 and T=0.7 sit closely below; text-MIN remains last. T=0.3 row carries forward unchanged from the 2026-04-27 baseline. text-MIN was first added on 2026-04-28 (commit `7b7509d5`).
 
 ## 3. Cross-run comparison at canonical buffer R = 50 m
 
@@ -37,17 +41,17 @@ Corrected-F1 numbers come from `results/<run>/corrected-f1-multi-buffer/summary.
 
 | Run | Corrected F1 @50m [95% CI] | P @50m | R @50m | MCC [95% CI] | F1 rank | MCC rank |
 |:----|:--------------------------:|------:|-----:|:-------------:|:-------:|:--------:|
-| T=0.3 (text-HIGH) | 0.844 [0.834, 0.852] | 0.912 | 0.785 | **0.654** [0.639, 0.670] | 1 | 2 |
+| T=0.3 (text-HIGH) | 0.844 [0.834, 0.852] | 0.912 | 0.785 | **0.654** [0.639, 0.668] | 1 | 2 |
 | T=0.7 (text-HIGH) | 0.827 [0.817, 0.837] | 0.912 | 0.757 | **0.648** [0.633, 0.662] | 3 | 3 |
-| Image | 0.832 [0.822, 0.841] | 0.881 | 0.788 | **0.691** [0.675, 0.706] | 2 | 1 |
-| text-MIN | 0.796 [0.785, 0.807] | 0.913 | 0.706 | **0.625** [0.610, 0.641] | 4 | 4 |
+| Image | 0.833 [0.824, 0.842] | 0.881 | 0.790 | **0.692** [0.678, 0.706] | 2 | 1 |
+| text-MIN | 0.797 [0.786, 0.808] | 0.913 | 0.707 | **0.626** [0.611, 0.641] | 4 | 4 |
 
 ## 4. Rank-order disagreement
 
-- **F1 rank** (corrected, R = 50 m): T=0.3 (0.844) > Image (0.832) > T=0.7 (0.827) > text-MIN (0.796).
-- **MCC rank**: Image (0.691) > T=0.3 (0.654) > T=0.7 (0.648) > text-MIN (0.625).
+- **F1 rank** (corrected, R = 50 m): T=0.3 (0.8437) > Image (0.8332) > T=0.7 (0.8273) > text-MIN (0.7968).
+- **MCC rank**: Image (0.6924) > T=0.3 (0.6538) > T=0.7 (0.6476) > text-MIN (0.6260).
 
-The F1 leader (T=0.3) is **not** the MCC leader (image). The disagreement concentrates on the T=0.3-vs-image swap at the top. **Both metrics agree text-MIN is bottom and T=0.7 sits in the middle of the text-track**; the divergence is confined to the T=0.3-vs-image positions. text-MIN's joint-bottom result confirms HIGH thinking earns its tokens at 55-map scope on both metrics — the in-corpus extension of Obs 284's 4-map matrix finding.
+The F1 leader (T=0.3) is **not** the MCC leader (image). The disagreement concentrates on the T=0.3-vs-image swap at the top. **Both metrics agree text-MIN is bottom and T=0.7 sits in the middle of the text-track**; the divergence is confined to the T=0.3-vs-image positions. text-MIN's joint-bottom result confirms HIGH thinking earns its tokens at 55-map scope on both metrics — the in-corpus extension of Obs 284's 4-map matrix finding. The post-recovery 2026-05-03 refresh leaves all four rank positions and both rank orderings unchanged.
 
 This is exactly the pattern documented in **Obs 280** (working-notes.md L13642, 2026-04-26): "Pervasive F1 / MCC tier-leader divergence ... text track wins F1 (saturating, high-recall detection profile); image track wins MCC (selective profile with high TN)." The corrected 55-map runs reproduce that pattern under the post-review GT and the corrected-F1 pipeline:
 
@@ -62,17 +66,17 @@ The F1 rank order is **not stable across R**. Image catches up to (and overtakes
 
 | R (m) | T=0.3 F1 | T=0.7 F1 | Image F1 | text-MIN F1 | Leader |
 |:-----:|:--------:|:--------:|:--------:|:--------:|:------:|
-| 50 | **0.844** | 0.827 | 0.832 | 0.796 | T=0.3 |
-| 75 | 0.847 | 0.830 | **0.848** | 0.799 | image |
-| 100 | 0.849 | 0.832 | **0.852** | 0.800 | image |
-| 125 (practitioner cap) | 0.850 | 0.834 | **0.854** | 0.801 | image |
-| 150 (upper bound) | 0.851 | 0.835 | **0.855** | 0.802 | image |
+| 50 | **0.844** | 0.827 | 0.833 | 0.797 | T=0.3 |
+| 75 | 0.847 | 0.830 | **0.849** | 0.799 | image |
+| 100 | 0.849 | 0.832 | **0.854** | 0.801 | image |
+| 125 (practitioner cap) | 0.850 | 0.834 | **0.855** | 0.801 | image |
+| 150 (upper bound) | 0.851 | 0.835 | **0.857** | 0.802 | image |
 
-text-MIN is bottom at every buffer; its precision-leaning profile (P=0.913, R=0.706) compounds less with buffer relaxation than the HIGH-thinking conditions (~0.04 absolute F1 gain from R=50 m to R=150 m, vs ~0.007 for HIGH conditions whose F1 already sits near the corpus ceiling).
+text-MIN is bottom at every buffer; its precision-leaning profile (P=0.913, R=0.707) compounds less with buffer relaxation than the HIGH-thinking conditions (~0.005 absolute F1 gain from R=50 m to R=150 m, vs ~0.007 for HIGH text conditions whose F1 already sits near the corpus ceiling, and ~0.023 for the image track whose buffer elasticity remains the largest of the four).
 
 Source: `results/<run>/corrected-f1-multi-buffer/summary.json`.
 
-At R = 125 m (the practitioner-useful cap per Obs 272 — beyond which the attractor-pull effect is statistically indistinguishable from within-tile random placement), image leads F1 by ~0.004 over T=0.3. MCC, being buffer-invariant, gives a single image-leads-by-0.037 verdict that holds regardless of buffer.
+At R = 125 m (the practitioner-useful cap per Obs 272 — beyond which the attractor-pull effect is statistically indistinguishable from within-tile random placement), image leads F1 by ~0.005 over T=0.3. MCC, being buffer-invariant, gives a single image-leads-by-0.039 verdict that holds regardless of buffer.
 
 ## 6. Practical implication
 
@@ -91,14 +95,15 @@ This is exactly the pattern Obs 280 anticipated: paper structure should report b
 - **Obs 280**: F1/MCC tier-leader divergence pattern (text wins F1, image wins MCC) — confirmed here for the corrected 55-map runs.
 - **Commit `163161a4`** (matrix sweep MCC re-eval): methodology mirror — same `evaluate_detections.py --mcc --bootstrap 1000 --seed 42` invocation pattern.
 - **Commit `bdd61bcc`** (MCC rendering fix): MCC now appears in `evaluation.md` and `evaluation.csv` alongside `evaluation.json`.
-- **Commit `98b128ae`** (this re-eval data commit): the per-run MCC artefacts this report summarises.
+- **Commit `98b128ae`** (initial 3-run re-eval data commit): the per-run MCC artefacts that grounded the 2026-04-27 baseline of this report.
+- **Commit `42ed1d32`** (cross-track-v2): post-recovery image / T=0.7 / text-MIN re-evaluations against the 4,745-mound updated curator GT — the source of the 2026-05-03 row refreshes in §2.
 
 ### Per-run MCC artefact locations
 
-- `results/55maps-text-high-t0.3-generalisation/mcc/evaluation.{json,csv,md}` — new (commit `98b128ae`).
-- `results/55maps-text-high-generalisation/mcc/evaluation.{json,csv,md}` — new (commit `98b128ae`); MCC value matches existing `outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json` to within rounding (0.647 vs 0.6472).
-- `results/55maps-image-generalisation/mcc/evaluation.{json,csv,md}` — new (commit `98b128ae`); MCC value matches existing `outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json` to within rounding (0.691 vs 0.6912).
-- `results/55maps-text-min-generalisation/mcc/evaluation.{json,csv,md}` — new (commit `7b7509d5`, 2026-04-28); first MCC artefact for text-MIN.
+- `results/55maps-text-high-t0.3-generalisation/mcc/evaluation.{json,csv,md}` — new (commit `98b128ae`); unchanged in 2026-05-03 refresh.
+- `results/55maps-text-high-generalisation/mcc/evaluation.{json,csv,md}` — new (commit `98b128ae`); refreshed post-recovery 2026-05-03 (commit `42ed1d32`); MCC matches `outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json` (0.6476).
+- `results/55maps-image-generalisation/mcc/evaluation.{json,csv,md}` — new (commit `98b128ae`); refreshed post-recovery 2026-05-03 (commit `42ed1d32`); MCC matches `outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json` (0.6924).
+- `results/55maps-text-min-generalisation/mcc/evaluation.{json,csv,md}` — new (commit `7b7509d5`, 2026-04-28); refreshed post-recovery 2026-05-03 (commit `42ed1d32`); MCC matches `outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json` (0.6260).
 
 Reproducibility command (run on sapphire):
 

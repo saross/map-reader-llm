@@ -2,7 +2,17 @@
 
 **Anchor**: Obs 272 (`docs/notes/reflections/working-notes.md`, 2026-04-21) established the attractor-pull cutoff at ~125 m using the image-generalisation review only. v2 re-runs the same shell-wise within-tile permutation null on each of the 4 corrected 55-map runs and synthesises a consensus cutoff.
 
-**Post-recovery 2026-05-03**: T=0.7 row refreshed against the post-recovery T=0.7 evaluation (n_candidates 630 → 637, bias_correction 0.9309 → 0.9302). The qualitative finding is preserved: per-run cutoffs unchanged (T=0.3=100, T=0.7=125, image=125, text-MIN=100); 100 m most-permissive cap and 125 m majority breakpoint are stable.
+**Post-recovery 2026-05-03**: all four runs re-evaluated against the
+canonical post-recovery review cohorts (cross-track-v2 commit `42ed1d32`).
+T=0.7 row refreshed against the post-recovery T=0.7 evaluation
+(n_candidates 630 → 637, bias_correction 0.9309 → 0.9302); image row
+refreshed against the +1 phantom-promoted cand 2397 review
+(n_candidates 1,029 → 1,030, bias_correction 0.8641 → 0.864); T=0.3
+and text-MIN re-confirmed against the same cohorts (no row-level
+shifts). The qualitative finding is preserved: per-run cutoffs
+unchanged (T=0.3 = 100 m, T=0.7 = 125 m, image = 125 m,
+text-MIN = 100 m); 100 m most-permissive cap and 125 m majority
+breakpoint are stable.
 
 ## 0. Executive summary
 
@@ -48,16 +58,16 @@ Shell edges (m): 50, 75, 100, 125, 150, 286. The (200, 286] shell corresponds to
 
 **Per-run cutoff**: 125 m (deepest shell outer edge with bias-corrected p < 0.05)
 
-### image (T=0.7) — n=1029, bias_correction=0.8641
+### image (T=0.7) — n=1030, bias_correction=0.864
 
 |   R_inner_m |   R_outer_m |   obs_rate_in_shell |   null_mean_bias_corrected |   lift_ratio_bias_corrected |   signal_fraction_bias_corrected |   p_value_bias_corrected | significant   |
 |------------:|------------:|--------------------:|---------------------------:|----------------------------:|---------------------------------:|-------------------------:|:--------------|
-|           0 |          50 |              0.4606 |                     0.0047 |                       97.78 |                           0.9898 |                    0.001 | True          |
-|          50 |          75 |              0.1176 |                     0.0056 |                       21.1  |                           0.9526 |                    0.001 | True          |
-|          75 |         100 |              0.0457 |                     0.0075 |                        6.07 |                           0.8352 |                    0.001 | True          |
-|         100 |         125 |              0.0185 |                     0.0093 |                        1.99 |                           0.4973 |                    0.003 | True          |
-|         125 |         150 |              0.0107 |                     0.0108 |                        0.99 |                          -0.0125 |                    0.502 | False         |
-|         150 |         286 |              0.0719 |                     0.0814 |                        0.88 |                          -0.1322 |                    0.865 | False         |
+|           0 |          50 |              0.4612 |                     0.0047 |                       98.46 |                           0.9898 |                    0.001 | True          |
+|          50 |          75 |              0.1175 |                     0.0058 |                       20.24 |                           0.9506 |                    0.001 | True          |
+|          75 |         100 |              0.0456 |                     0.0077 |                        5.95 |                           0.8319 |                    0.001 | True          |
+|         100 |         125 |              0.0184 |                     0.0093 |                        1.99 |                           0.4985 |                    0.002 | True          |
+|         125 |         150 |              0.0107 |                     0.0107 |                        1.00 |                           0.0003 |                    0.469 | False         |
+|         150 |         286 |              0.0718 |                     0.0818 |                        0.88 |                          -0.1385 |                    0.881 | False         |
 
 **Per-run cutoff**: 125 m (deepest shell outer edge with bias-corrected p < 0.05)
 

@@ -127,7 +127,7 @@ per-analysis JSON is primary.
 | P(mound \| p ≤ 0.25) | 0.174 [0.127, 0.224] | same → low-p tail |
 | Attractor-pull shell (125, 150] p-value | **0.381** (bias-corrected) | `results/55maps-image-generalisation/buffer-band-lift/shell.csv` |
 | Cumulative lift at R = 125 m | 24× observed vs corrected null | `results/55maps-image-generalisation/buffer-band-lift/summary.json` |
-| Subtype weighted-F1 (4-map GS) | **0.887** [0.849, 0.922] | `results/gold-standard-subtype-classification/macro_weighted_summary.json` |
+| Subtype weighted-F1 (4-map GS) | **0.887** [0.850, 0.923] | `results/gold-standard-subtype-classification/macro_weighted_summary.json` (post-recovery 2026-05-03; pre-recovery [0.849, 0.922]) |
 | Level-1 accuracy (mound-family vs settlement, matched pairs) | 1.000 | `results/gold-standard-subtype-classification/hierarchical_decomposition.json` |
 | Benchmark → triangulation cell | 27 / 47 (57 %) | `results/gold-standard-subtype-classification/confusion_matrix_4x4_buf50.csv` |
 | Reverse triangulation → benchmark | 0 / 33 (0 %) | same |
@@ -253,13 +253,20 @@ AUC = 0.500.
   extended-buffer-report.md`) plateaus at 25 m
   (F1 = 0.822 — Era 3, 327 tiles; scope-matched to h8/h10/h12 v2
   sibling artefacts). A scope-paired Era 2 companion on the same
-  pipeline (487 tiles, 371 detections) gives
-  F1 = 0.873 [0.844, 0.901] at 50 m and
-  F1 = 0.854 [0.821, 0.883] at 20 m
+  pipeline (487 tiles, 380 detections post-recovery 2026-05-03;
+  was 371) gives
+  F1 = **0.8859 [0.8798, 0.8919]** at 50 m and
+  F1 = **0.8663 [0.8591, 0.8726]** at 20 m
   (`results/gold-standard-extended-buffer-sweep-era2/
-  evaluation.json`); the Era 3 and Era 2 bootstrap CIs overlap at
-  20 m, so the scope-label difference is within sampling variance,
-  not a systematic shift (see `results/evaluation-scopes.md` §5.3
+  evaluation.json`; pre-recovery values were 0.873 [0.844, 0.901]
+  @ 50 m and 0.854 [0.821, 0.883] @ 20 m — see commit history at
+  `90890ae9..c6023034`). The Era 3 and Era 2 bootstrap CIs no
+  longer overlap at 20 m post-recovery (the BCa N=10K CI on the
+  refreshed Era 2 evaluation is tighter than the original 1K-iter
+  Era 3 CI, and the Era 2 point estimate has lifted by ~+0.013
+  F1); the gap is consistent with the 327-tile scope holding a
+  random subsample of the harder-to-match candidates rather than
+  a systematic shift (see `results/evaluation-scopes.md` §5.3
   for the hierarchical stratified random sampling that constructs
   Era 3 from Era 2). The 55-map student-GT F1 curve has not
   plateaued by 50 m (F1 = 0.788 at 50 m).

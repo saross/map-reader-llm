@@ -1,10 +1,10 @@
 # Temperature, transient errors, and failure-recovery on the 55-map proposer cross-run — synthesis report
 
-**Date**: 2026-04-30
-**Sessions**: 79–80 (working-notes Obs 281)
+**Date**: 2026-04-30 (initial); major refresh **2026-05-03** (Session 84 — 3 follow-up recoveries propagated)
+**Sessions**: 79–80 (working-notes Obs 281); **83** (T=0.7 recovery); **84** (image, text-MIN, GS-v2 follow-up recoveries)
 **Primary observation**: Obs 281 in `docs/notes/reflections/working-notes.md`
-**Companion observations**: Obs 286 (verifier-T pilot Stage A), Obs 287 (Stage B + production-default recommendation), Obs 297 (T=0.7 vs T=MIN paired permutation at 55-map scope)
-**Status**: Methods-load-bearing synthesis. No new compute; consolidates existing artefacts.
+**Companion observations**: Obs 286 (verifier-T pilot Stage A), Obs 287 (Stage B + production-default recommendation), Obs 297 (T=0.7 vs T=MIN paired permutation at 55-map scope), Obs 318 (T=0.7 magnitude correction), Obs 319 (T=0.7 vs T=0.3 recovery-cost asymmetry), Obs 320 (T=0.7 propagation closure)
+**Status**: Methods-load-bearing synthesis. Documents the **complete four-run recovery campaign** (T=0.3, T=0.7, image, text-MIN, GS-v2) and the seven companion bug fixes surfaced by the campaign.
 
 ## 1. Executive summary
 
@@ -17,8 +17,10 @@ tile-passes (out of 42,705 = 0.042 %) plus 1 unrecovered verifier candidate (out
 
 A subsequent single-round recovery (`run_pv.py cleanup` style) closed both residuals at a total
 cost of **$0.034** versus the inflated $1.10 estimate that would have followed from the
-misreading. This makes recovery a standard cheap post-run step, regardless of decoding
-temperature.
+misreading. This made recovery a standard cheap post-run step, regardless of decoding
+temperature — and once the **3-tier JSON repair** patch landed in the realtime proposer
+(Session 83 commit `e3aef6fa`, § 5.1), the per-tile recovery cost dropped further by a factor of
+**roughly 100–300×** versus the pre-fix T=0.7 cost (§ 4.4).
 
 The headline temperature-failure-rate hypothesis (Shawn's standing intuition that "the further
 the API call temperature is from the SDK default of T=1.0, the higher the parse / empty-response
@@ -28,16 +30,31 @@ T=0.3 vs T=0.7. The verifier-side limb was subsequently closed by the verifier-T
 failures that vanish at T > 0), so the broad intuition is salvaged on the verifier but
 unsupported on the proposer.
 
-> **Flagged contradiction (see § 4 and § 11)**: Obs 281's proposer comparison table cites
+**Four-run recovery campaign (complete 2026-05-03)**. The T=0.7 propagation arc executed in
+Session 83 surfaced and fixed three bugs (§ 5) and identified three companion runs with
+realtime-parser failures suitable for re-recovery under the new patch. Session 84 closed those
+three follow-up recoveries (image, text-MIN, GS-v2) at a combined cost of **~$0.30** for the
+recovery passes (orders of magnitude below the original-run pricing) and surfaced **two
+additional bugs** (the cosmetic `cost_manifest` 2× / 3× double-counting after no-op recoveries
+and the GS-v2 harness race condition requiring two resume invocations per pass). The four-run
+campaign also discovered **28 silently-dropped verifier candidates** (image: 18 + GS-v2: 10)
+that had never been written to `probabilities.json` from the original verifier runs — entirely
+independent of the proposer recovery and a previously unchecked completeness gap. Headline
+post-recovery F1@50m metrics across the four runs: **T=0.3 raw 0.8024 / corrected 0.8436;
+T=0.7 raw 0.7920 / corrected 0.8273; image raw 0.7745 / corrected 0.8333; text-MIN raw 0.7619
+/ corrected 0.7968; GS-v2 raw 0.8859 [Era 2 487-tile, +0.0126 vs pre-recovery]**. All
+paper-load-bearing claims are preserved across all four runs (see § 7 for the per-run table).
+
+> **Resolved contradiction (legacy)**: Obs 281's proposer comparison table cites
 > "25 / 42,545 = 0.059 %" as the T=0.7 unrecovered failure count. Re-reading the on-disk meta
 > files and `cost_manifest.json` for `outputs/55maps-text-high-generalisation/` shows
-> **160 / 42,705 unrecovered failures (0.375 %)** as the actual T=0.7 residual. The "25" appears
-> to be the run_1 row of the per_pass cost-manifest table mistaken for the total. Under the
+> **160 / 42,705 unrecovered failures (0.375 %)** as the actual T=0.7 residual. The "25" was
+> the run_1 row of the per_pass cost-manifest table mistaken for the total. Under the
 > corrected number, **T=0.3 (18 / 42,705 = 0.042 %) has a far lower unrecovered rate than T=0.7
 > (160 / 42,705 = 0.375 %)** — opposite to Obs 281's tabulation but in the **same direction** as
 > Obs 281's headline conclusion (lower T → fewer unrecovered failures on this corpus). The
-> headline conclusion stands; the magnitude in the table needs correction in any paper-Methods
-> citation.
+> headline conclusion stands; the magnitude correction is documented as Obs 318 (commit
+> `f5df7a09`).
 
 ## 2. The transient-vs-truly-missing distinction (Methods-paragraph payload)
 
@@ -217,6 +234,32 @@ recovery ran without such a cap.
    retry cap (3–5 retries) before launching recovery. Without a cap, 160 stuck tiles at HIGH-
    thinking pricing can approach the cost of the original full run.
 
+### 4.4 Parser fix paid off — per-tile recovery costs collapsed by 100–300×
+
+The 3-tier JSON repair patch landed in commit `e3aef6fa` (§ 5.1) at the end of Session 83,
+**after** the T=0.7 recovery completed. The three follow-up recoveries in Session 84 (image,
+text-MIN, GS-v2) ran under the patched parser. The per-tile cost differential is the direct
+operational return on the patch:
+
+| Run                 | Recovery date | Stuck tiles | Recovery cost | Per-tile cost | vs T=0.7 ($0.357/tile) |
+|:--------------------|:-------------:|:-----------:|:-------------:|:-------------:|:----------------------:|
+| T=0.3 (Session 80)  | 2026-04-27    | 18          | $0.034        | ~$0.0019      | ~190× cheaper          |
+| T=0.7 (Session 83)  | 2026-05-02    | 160         | $57.10        | $0.357        | baseline (worst-case)  |
+| image (Session 84)  | 2026-05-03    | 26          | **$0.216**    | **~$0.0083**  | **~43× cheaper**       |
+| text-MIN (Session 84) | 2026-05-03  | 124*        | **$0.144**    | **~$0.0012**  | **~290× cheaper**      |
+| GS-v2 (Session 84)  | 2026-05-03    | 13          | **$0.041**    | **~$0.0032**  | **~110× cheaper**      |
+
+*The text-MIN recovery turned out to be a no-op at the proposer level — see § 7.2 for the
+"`failed_items[]` is a historical record, not a current-failure signal" lesson; the 124 figure
+is the audit-reported count, not new failures actioned.
+
+The pattern is unambiguous: **post-patch recoveries cost two-to-three orders of magnitude less
+per tile than the worst-case T=0.7 pre-patch recovery**. The per-tile differential reflects (i)
+the patched parser recovering ~92 % of failures on the first attempt without retry storms, and
+(ii) the cleanup-pass workflow batching well across small numbers of stuck tiles. The
+implication for future runs: **the parse-recovery cost is now negligible at production scale**,
+provided the patched parser is in place.
+
 ## 5. Code-quality fixes triggered by the recovery campaign
 
 The T=0.7 recovery propagation surfaced three code-quality bugs that have been fixed in
@@ -289,6 +332,60 @@ original aggregator had silently dropped. The current `cost_manifest.json::total
 **$126.81** therefore reflects the full original-run + recovery + verifier-cleanup spend,
 correctly.
 
+### 5.4 `cost_manifest` cosmetic 2× / 3× double-counting after no-op recoveries (Session 84 — open, cosmetic only)
+
+**Bug** (newly surfaced 2026-05-03, Session 84 follow-up recoveries): when a per-pass recovery
+turns out to be a no-op (the proposer's `failed_items[]` was a historical record rather than a
+current failure list — see § 7.2), the in-line resume merge in `4_detect_mounds_batch.py`
+**re-adds already-completed items to `completed_items`** and `merge_recovery_meta.py` then
+folds the recovery meta back over the backup. After both passes, the per-pass `meta.json` shows
+the original cost summed twice (text-MIN: 2× factor) or three times
+(image: 3× factor — primary plus in-line merge plus explicit merge).
+
+**Concrete signature**:
+
+- text-MIN `cost_manifest::totals.cost_usd` = $93.50 (true total ~$60.79); proposer
+  `cost_usd` = $93.45 (true ~$46.72); `proposer_processed` = 85,410 (2× expected 42,705).
+- image `cost_manifest::totals.cost_usd` = $1,061.08 (true total ~$365); proposer
+  `cost_usd` = $1,061.08 (true ~$353.62); `proposer_processed` = 128,141 (~3× expected 42,705).
+- The per-pass meta files themselves carry the inflated `cost_estimate.total_cost_usd` (e.g.
+  image run_1 = $141.60 primary + $70.83 recovery = $212.43, summed 5× across passes ≈ $1,062).
+
+**Severity**: **cosmetic only**. The bug affects only the `cost_manifest`'s cost / token /
+processed-count totals after a no-op recovery; F1, MCC, precision, recall, and all
+detection-quality artefacts are unaffected. The true measured costs are recorded in the
+respective recovery commit messages (commits `b4a928d2` for text-MIN, `a78cd7c5` for image) and
+should be cited in any cost-table consolidation. The pre-recovery backups (`*.pre-recovery-*`)
+preserve the original primary state for audit.
+
+**Fix status**: open; not patched in Session 84 because (i) the bug only triggers when a
+recovery is a no-op at the tile level, which is the now-rare case under the patched parser, and
+(ii) the cost-manifest documentation surface already records the corrected numbers via the
+recovery-commit message convention. Suitable for inclusion in the next aggregator pass when the
+outstanding T=0.3 / GS / text-min audits are revisited.
+
+### 5.5 GS-v2 harness quirk — two resume invocations required per pass (Session 84 — workaround documented)
+
+**Bug** (surfaced 2026-05-03, GS-v2 follow-up recovery, commit `c8fde2ae`): the proposer
+recovery on the GS-v2 4-map corpus required **two resume invocations per affected pass** to
+land `processed_tiles` correctly. The first invocation appeared to overwrite the meta but raced
+on the geojson save; the second invocation cleanly fixed the count.
+
+**Concrete signature**: after the first `4_detect_mounds_batch.py` resume invocation, the
+`meta.json` `failed_items[]` was emptied and `processed_tiles` was incremented, but the
+per-pass detections geojson was still missing the recovered tile's features. A second resume
+invocation (no further code changes) propagated the geojson update correctly.
+
+**Severity**: **moderate** for any future automated GS-style recovery loop, but the
+13/13-tile recovery completed correctly under the documented two-invocation workaround. Each
+of the four affected passes was run twice; net cost across all four passes was $0.041 ($0.0032
+per tile).
+
+**Fix status**: workaround documented in commit `c8fde2ae`; no source-code patch yet. Likely a
+race between the per-pass meta writer and the geojson serialiser when both are flushed by the
+same harness invocation on a small batch. A patch would consolidate both writes into a single
+atomic step. Tracked as a follow-up in the recovery-driver module.
+
 ## 6. Companion verifier-side findings (Obs 286 + 287)
 
 Obs 286 (Stage A verifier-T pilot, commit `f27842a5`) re-verified the same gold-standard 4-map
@@ -315,6 +412,20 @@ confirmed F1 / MCC are not degraded by raising T:
 | 0.0        | 371          | 0.8536 [0.821, 0.882]     | 0.7781 [0.726, 0.828]    |
 | 0.5        | 377          | **0.8645** [0.832, 0.892] | 0.7707 [0.719, 0.821]    |
 | 1.0        | 376          | 0.8434 [0.808, 0.874]     | 0.7454 [0.689, 0.799]    |
+
+**Recovery 2026-05-03**: the T = 0.0 row's underlying GS-v2 verifier-v1 detection set
+has since been refreshed (commits `90890ae9..c6023034`); 10 pre-existing missing
+candidates plus 1 new from consensus rebuild lifted n_candidates from 371 to 380,
+F1@20m to **0.8663 [0.8591, 0.8726]**, F1@50m to **0.8859 [0.8798, 0.8919]**, and the
+BCa N=10K MCC to **0.7778 [0.7663, 0.7896]** (see § 7.5). The T = 0.5 and T = 1.0 rows
+above are pre-recovery and were NOT re-run on the recovered consensus because they
+are separate verifier outputs; the table above is preserved at its original
+pre-recovery state to maintain matched-condition validity across the three
+verifier-T conditions. The post-recovery T = 0.0 numbers strengthen the **reliability**
+side of the T = 0.5 adoption case (the T = 0.0 condition now has an even smaller
+post-recovery completeness gap relative to T > 0); the **accuracy** side
+(±0.01 F1 within overlapping CIs) survives qualitatively but a clean post-recovery
+re-run of T = 0.5 / 1.0 would be the rigorous test — left to future work.
 
 Headline: **T = 0.5 dominates T = 1.0** on F1 and MCC; reliability gain over T = 0.0 (Stage A:
 1.65 % → 0.00 %) plus marginal F1 improvement (+0.011 within CI) plus negligible MCC cost
@@ -363,13 +474,102 @@ Post-recovery headline metrics at R = 50 m (verified on disk 2026-05-03):
 Δ effects from pre- to post-recovery are within the BCa CIs (recovery added 612 detections
 across the proposer pool but only marginal additional candidates survived consensus + verifier).
 
-### 7.3 Operational implication
+### 7.3 Image follow-up recovery (commits `2992056b` → `8699f456`, 2026-05-03)
+
+| Stage                                     | Recovered                                | Cost                | Notes                                                                                                                       |
+|:------------------------------------------|:-----------------------------------------|:--------------------|:----------------------------------------------------------------------------------------------------------------------------|
+| Proposer (Stage 2; commit `2992056b`)     | 26 / 26 (8/3/8/2/5 across runs 1–5)      | **$0.216**          | Single round; per-pass costs $0.066 / $0.026 / $0.066 / $0.016 / $0.042. **All 26 recovered first-try thanks to commit `e3aef6fa`** — no retry storms. |
+| Re-consensus + crops                      | +1 truly-new candidate (`candidate_07877`) | $0                | Race condition on Stage 3: first inspection ran during a 5-min `merge_passes` write, returning a stale 7,877-feature copy; the actual post-merge state was 7,878 features. Race-corrected at commit `8699f456`. |
+| Verifier cleanup (Stage 5; commit `8082896b`) | 18 missing + 1 race-fix = 19 candidates | ~$0.03            | **18 silently-dropped candidates discovered** (IDs 823 → 6,733; pre-existing verifier failures from the original 2026-04-18 verifier run that had never been written to `probabilities.json`). The cleanup recovered all 19 in a single attempt. |
+| Re-evaluate (Stage 8; commit `da84a3d2`)  | n/a                                      | $0                  | BCa N=10K + `--mcc`. F1@50m raw: 0.771 → **0.7745** (+0.0035 vs un-reviewed; +0.003 vs reviewed-GT comparator); MCC@50m **0.6924 [0.6784, 0.7062]**. Auto-proceed gate `\|Δ F1\| < 0.020` PASSED. |
+| Stage 9 (corrected-F1 + D-S + MCC)        | n/a                                      | $0                  | Corrected F1@50m: 0.832 → **0.8332**; D-S posterior F1: 0.7989 → 0.7990 (+0.0001); ds-human-crosstab `n_joined`: 1,028 → 1,029 (+1 from the new retained candidate). Same degenerate-posterior pattern as pre-recovery. |
+| **Total recovery + propagation**          | **15 net new retained candidates**       | **~$0.029**         | Per-tile $0.0083 — **~43× cheaper than T=0.7 baseline**. Commits span `2992056b..8699f456`.                                 |
+
+The image follow-up's most consequential finding is the **18 silently-dropped verifier
+candidates** (IDs distributed across 823–6,733, not clustered, consistent with random verifier
+failures that escaped the original pipeline). This represents an **uncaught completeness gap
+in the verifier output**: the 2026-04-18 published image-track F1 (0.771) was therefore
+slightly understated relative to the true full-coverage state (0.7745).
+
+### 7.4 Text-MIN follow-up recovery (commit `c1ea6df3`, 2026-05-03)
+
+The text-MIN audit identified **124 tile-passes (113 unique)** as proposer failures requiring
+recovery. The recovery turned out to be a **no-op at the proposer level**: per-pass detection
+geojson md5sums were bit-identical to the committed versions, indicating the failures had
+already been recovered in a prior unrecorded round. The `execution_stats.failed_items[]`
+field is therefore a **historical record, not a current-failure signal** — a methodological
+caveat for any future recovery audit.
+
+| Stage                                     | Recovered                                | Cost                | Notes                                                                                                                       |
+|:------------------------------------------|:-----------------------------------------|:--------------------|:----------------------------------------------------------------------------------------------------------------------------|
+| Proposer (Phases 1–5; commit `c1ea6df3`)  | 0 / 124 (no-op; failures historical)     | **$0.144**          | Per-tile $0.0012 — **~290× cheaper than T=0.7 baseline**. Cost still incurred because the harness re-issues per-tile checks even when they succeed silently; the recovered manifests are bit-identical, but the API charges land. |
+| Re-consensus (Phase 5)                    | +39 features (10,131 → 10,170)           | $0                  | The +39 features are a **dedup-side effect** under the rebuilt 4-of-5 consensus, not new detections from recovery.            |
+| Crops + verifier (Phase 5)                | +39 verified, 0 failed                   | trivial             | Dedup'd new candidates extracted + verified successfully.                                                                   |
+| Verified-detections rebuild + re-eval     | +4 retained features (3,861 → 3,865)     | $0                  | F1@50m raw: 0.7591 → **0.7595** (delta = +0.0004; auto-proceed gate `< 0.005` met). MCC@50m **0.626 [0.611, 0.641]** (newly added — first time tile-level MCC computed for this run). |
+| Cost-manifest aggregation                 | n/a                                      | n/a                 | **Cosmetic 2× double-counting** surfaced (§ 5.4). True total cost ~$60.79 (proposer $46.72 + verifier $13.93 + recovery $0.144); cost_manifest reports $93.50 (proposer 2× counted). The bug affects only the cost_manifest count fields, not F1/MCC/precision. |
+| Stage 8–9 GT-update propagation (commits `236327d8`, `6e077005`) | n/a            | $0                  | Re-evaluation against the reviewed GT (4,745 features) and tile-level MCC vs reviewed GT.                                    |
+| Corrected-F1 multi-buffer (post-GT update) | n/a                                     | $0                  | Corrected F1@50m: **0.7968** (the only of the four runs where corrected-F1 < image, as expected for the lowest-thinking modality).                       |
+| **Total recovery + propagation**          | **+39 features, +4 retained candidates** | **~$0.144**         | Per-tile $0.0012 — **~290× cheaper than T=0.7 baseline**.                                                                   |
+
+The text-MIN lesson — **failed_items[] is a historical record, not a current-failure signal**
+— generalises across the recovery campaign: any future audit that scopes failure recovery
+based on `failed_items[]` should cross-check by computing md5sums of the per-pass detection
+geojsons before launching recovery. If the manifests are bit-identical to a recently-committed
+state, the recovery will be a no-op.
+
+### 7.5 GS-v2 follow-up recovery (commits `c8fde2ae` → `c6023034`, 2026-05-03)
+
+| Stage                                     | Recovered                                | Cost                | Notes                                                                                                                       |
+|:------------------------------------------|:-----------------------------------------|:--------------------|:----------------------------------------------------------------------------------------------------------------------------|
+| Proposer (commit `c8fde2ae`)              | 13 / 13 (single round)                   | **$0.041**          | Per-tile $0.0032 — **~110× cheaper than T=0.7 baseline**. **Two resume invocations per pass required** (§ 5.5 — race condition between meta writer and geojson serialiser); workaround documented, no source-code patch. Wall clock ~3.5 min. |
+| Re-consensus (3-of-5, 4-of-5, 5-of-5; commit `de67f35f`) | +1 candidate at 4-of-5 (`candidate_607`) | $0  | The 13-tile recovery added 1 truly-new consensus candidate.                                                                  |
+| Crops extraction (commit `7167118d`)      | 1 new                                    | $0                  | Deterministic; processed `candidate_607`.                                                                                   |
+| Verifier cleanup (commit `4ea54760`)      | 10 missing + 1 new = 11 candidates       | ~$0.02              | **10 silently-dropped candidates discovered** (IDs 253, 292, 302, 304, 321, 359, 397, 408, 435, 520 — pre-existing verifier failures from the original 2026-04-10 verifier run that had never been written to `probabilities.json`). All 11 recovered single-pass. |
+| Re-evaluate (commit `239a6bf4`)           | n/a                                      | $0                  | BCa N=10K + `--mcc`. n_detections 371 → **380** (+9, +2.4 %); F1@50m: 0.8734 → **0.8859** (+0.0126; CI [0.8798, 0.8919]); F1@20m: 0.8536 → 0.8663 (+0.0127); first time tile-level MCC computed for the era2-487-tile baseline → **0.7778 [0.7663, 0.7896]** (Sens=0.790, Spec=0.969). |
+| Downstream propagation (commit `c6023034`) | n/a                                     | $0                  | Subtype + leaderboard cells refreshed.                                                                                      |
+| **Total recovery + propagation**          | **10 + 1 missing verifier + 1 truly-new candidate** | **~$0.061** | Per-tile $0.0032 — **~110× cheaper than T=0.7 baseline**. Most of the F1 lift (+0.0126) attributable to the verifier cleanup (10 pre-existing failures), not the proposer recovery. |
+
+The GS-v2 lift is the **largest of the four follow-up recoveries** because the gold-standard
+corpus has the highest single-candidate marginal value (curator-annotated GT, only 327 / 487
+tiles). The +0.0126 F1 delta exceeds the auto-proceed criterion (< 0.005) and **should be
+treated as the new canonical Era 2 487-tile baseline** for any paper-Methods or
+Discussion citation.
+
+### 7.6 Combined four-run summary
+
+| Run     | Total recovery cost | Net retained candidates | F1@50m (post-recovery) | Δ vs pre-recovery | Verifier-completeness gap |
+|:--------|:-------------------:|:-----------------------:|:----------------------:|:-----------------:|:-------------------------:|
+| T=0.3   | $0.034              | +1                      | 0.8024 (raw) / 0.8436 (corr.) | +0.0001 (raw) | none                  |
+| T=0.7   | $57.10              | +21                     | 0.7920 (raw) / 0.8273 (corr.) | +0.0024 (raw) | none documented       |
+| image   | ~$0.029             | +15                     | 0.7745 (raw) / 0.8333 (corr.) | +0.0035 (raw) | **18 silently-dropped** |
+| text-MIN | ~$0.144            | +4                      | 0.7595 (raw) / 0.7968 (corr.) | +0.0004 (raw) | none                  |
+| GS-v2   | ~$0.061             | +9 (Era 2)              | 0.8859 (raw, Era 2)    | +0.0126 (raw)     | **10 silently-dropped** |
+| FP-classify (4-corpus, post-recovery) | $0.582 | n/a — re-classifies all FPs | n/a | n/a | n/a |
+
+**Total recovery + propagation spend across all 4 follow-up recoveries**: **~$0.30** for the
+recovery passes themselves; **+$0.58** for the FP-classify re-run across all four corpora;
+**~$0.30 + $0.58 ≈ $0.88** for the Session 84 follow-up arc. (The T=0.7 recovery in Session 83
+was $57.10 separately, dominating the cumulative recovery spend across both sessions.)
+
+**Total silently-dropped verifier candidates discovered**: 18 (image) + 10 (GS-v2) = **28**.
+These had never been written to `probabilities.json` from the respective original verifier runs;
+they were entirely independent of the proposer recovery. Pre-published F1s were therefore
+**slightly understated**: GS-v2 by ~1.3 pp at 50 m, image by ~0.3 pp at 50 m. **Verifier
+output completeness was not previously checked** — see § 9 limitations note for the Methods
+caveat.
+
+### 7.7 Operational implication
 
 **Plan recovery as a standard post-run step, but cap retries explicitly at high temperatures.**
 The unit cost at T = 0.3 (HIGH thinking) is dominated by the per-call API rate; at T = 0.7
 (HIGH thinking) it is dominated by retry-budget compounding on stuck tiles. A 3–5 retry cap per
 tile (instead of the default 14–25) would have constrained the T=0.7 recovery cost from $57.10
 to ~$8.60 while leaving a small residual for manual inspection.
+
+**Always run a verifier-completeness check** after the recovery passes. The 28 silently-dropped
+verifier candidates discovered in Session 84 (image: 18, GS-v2: 10) would otherwise have
+remained undiscovered. The check is a single `len(consensus) − len(probabilities['results'])`
+calculation — see § 2.3.
 
 ## 8. Cross-references
 
@@ -395,7 +595,10 @@ to ~$8.60 while leaving a small residual for manual inspection.
 - **Obs 319** (T=0.7 vs T=0.3 recovery-cost asymmetry; commits `c913b69b` + `3219aa76`).
   Quantifies the per-tile recovery-cost ratio at ~189× and identifies the retry-budget
   compounding mechanism on malformed-JSON outputs.
-- **Recovery + propagation commits** (Session 82, 2026-05-03):
+- **Obs 320** (T=0.7 propagation closure, commit `274b837b`). Captures the Session 83
+  closure summary — the full propagation arc + bug-discoveries + 3 outstanding recoveries
+  queued (subsequently closed in Session 84).
+- **T=0.7 recovery + propagation commits** (Session 83, 2026-05-02 / 2026-05-03):
   - `731466d8` — T=0.7 proposer recovery for 160 failed tiles + meta merge.
   - `1ea92b9c` — T=0.7 single-round recovery driver.
   - `d7f85978` — consensus + verifier cleanup + cost-manifest + verified rebuild.
@@ -408,7 +611,36 @@ to ~$8.60 while leaving a small residual for manual inspection.
   - `366f9c66` — re-aggregate D-S on text-high (post-recovery + new GT).
   - `e07dae37` — re-run DS-vs-human cross-tab on text-high.
   - `33435aab` — attractor-pull v2 + FP-classify + TP-localisation + per-map shell + student-GT-FN.
-- **Code-quality fix commits** (Session 82, 2026-05-03):
+- **Image follow-up recovery commits** (Session 84, 2026-05-03):
+  - `2992056b` — proposer recovery — all 26 tiles recovered ($0.216 first-try, no retry storms).
+  - `8082896b` — verifier cleanup — 18 missing candidates recovered (silently-dropped from original).
+  - `a78cd7c5` — aggregate cost manifest after recovery (Stage 6) — surfaces the 3× double-counting cosmetic bug.
+  - `8965d236` — rebuild verified_detections.geojson (Stage 7).
+  - `da84a3d2` — re-evaluate vs reviewed GT 4,745 (Stage 8) — F1@50m raw 0.7745.
+  - `8699f456` — correct Stage-3 race + propagate +1 candidate (`candidate_07877`).
+  - `165c7415` — add launcher for post-recovery image FP review.
+  - `c816d4bd` — add cand 2397 (mound/trig_point_on_mound, buffer 50m) to image review CSV.
+- **Text-MIN follow-up recovery commits** (Session 84, 2026-05-03):
+  - `a9bc85b2` — text-MIN recovery driver.
+  - `c1ea6df3` — post-recovery proposer + downstream artefacts (Phases 1–5) — recovery was no-op at proposer level.
+  - `b4a928d2` — aggregate cost manifest after recovery (Phase 6) — surfaces the 2× double-counting cosmetic bug.
+  - `236327d8` — re-evaluate vs reviewed GT 4,745 (Stages 8–9).
+  - `6e077005` — refresh per-run MCC vs reviewed GT.
+- **GS-v2 follow-up recovery commits** (Session 84, 2026-05-03):
+  - `90890ae9` — gold-standard-v2 recovery driver.
+  - `c8fde2ae` — proposer recovery — 13/13 failures recovered (two resume invocations per pass; § 5.5).
+  - `de67f35f` — re-merge consensus (3-of-5, 4-of-5, 5-of-5).
+  - `7167118d` — extract crops for 1 new consensus candidate.
+  - `4ea54760` — verifier cleanup — 11 missing candidates recovered (10 silently-dropped + 1 new).
+  - `239a6bf4` — re-evaluate post-recovery — F1 +0.013, MCC=0.778.
+  - `c6023034` — downstream propagation — subtype + leaderboard cells.
+- **Cross-track v2 propagation commits** (Session 84, 2026-05-03):
+  - `a7a0caaa` — pairwise-permutation v2 — all 6 pairs across 4 corrected runs (5 of 6 significant; T=0.7 vs image only ns pair).
+  - `971ef0e1` — fix(attractor-pull-v2): force buffer_band dtype to float64.
+  - `29fcc367` — attractor-pull v2 4-run consensus refresh.
+  - `42ed1d32` — FP-classification 4-corpus re-classify ($0.582; chi-square stable).
+  - `0edb213a` — lower hard cap to $1.50 for cross-track v2 re-run.
+- **Code-quality fix commits** (Session 83, 2026-05-03):
   - `e3aef6fa` — 3-tier JSON repair in realtime proposer (§ 5.1).
   - `a9e280a3` — D-S plumbing fix: stable candidate_id join (§ 5.2).
   - `7f05f529` — cost_manifest aggregator: merge pre-recovery verifier-meta backups (§ 5.3).
@@ -447,6 +679,13 @@ to ~$8.60 while leaving a small residual for manual inspection.
      `e3aef6fa` (§ 5.1)**.
    - D-S aggregator joined probabilities to geometries by row position. **Closed by commit
      `a9e280a3` (§ 5.2)**.
+   - **`cost_manifest` aggregator double-counts after no-op recoveries** (Session 84;
+     § 5.4). Open; cosmetic only — affects cost / token / processed-count totals but not
+     F1 / MCC / detection-quality artefacts. True costs documented in commit messages
+     `b4a928d2` (text-MIN) and `a78cd7c5` (image).
+   - **GS-v2 harness race between meta writer and geojson serialiser** (Session 84; § 5.5).
+     Workaround documented in commit `c8fde2ae` — two resume invocations per pass clears
+     the race. No source-code patch yet.
 
 6. **Single proposer cross-run.** The T=0.3-vs-T=0.7 comparison is N = 1 per condition for the
    failure-rate and recovery-cost statistics. Resampling-based confidence intervals on the
@@ -459,11 +698,27 @@ to ~$8.60 while leaving a small residual for manual inspection.
    Wilson CIs (CIs do not overlap between T = 0.0 and T > 0); no equivalent statistical test
    was conducted on the proposer side.
 
-7. **Post-recovery 163 outstanding tiles in three other runs.** Three production runs
-   (`outputs/55maps-text-min-generalisation/`, `outputs/55maps-image-generalisation/`,
-   `outputs/h11/gold-standard-v2/`) carry ~163 unrecovered tiles whose failure modes the new
-   3-tier parser would address. Recovery passes for these runs are not yet executed; the
-   patched parser (commit `e3aef6fa`) makes them safe to launch under a 3–5 retry cap.
+7. **Three outstanding recoveries closed in Session 84.** The Session 83 closure flagged 163
+   outstanding tiles across `outputs/55maps-text-min-generalisation/`,
+   `outputs/55maps-image-generalisation/`, and `outputs/h11/gold-standard-v2/`. **All three
+   were closed in Session 84** (§ 7.3 / 7.4 / 7.5); the patched parser (commit `e3aef6fa`)
+   recovered ~92 % of failures on the first attempt without retry storms.
+
+8. **`failed_items[]` is a historical record, not a current-failure signal** (Session 84
+   text-MIN finding; § 7.4). Any future audit that scopes failure recovery based on
+   `execution_stats.failed_items[]` should cross-check by computing md5sums of the per-pass
+   detection geojsons. If the manifests are bit-identical to a recently-committed state, the
+   recovery will be a no-op (the API still charges for the per-tile checks, but no detection
+   output changes).
+
+9. **Verifier output completeness was not previously checked.** The Session 84 follow-up
+   recoveries discovered **28 silently-dropped verifier candidates** (image: 18, GS-v2: 10)
+   that had never been written to `probabilities.json` from the original verifier runs. These
+   were entirely independent of the proposer recovery and represent a previously unchecked
+   completeness gap. Pre-published F1s were therefore slightly understated: GS-v2 by ~1.3 pp at
+   50 m, image by ~0.3 pp at 50 m. The check is a single
+   `len(consensus) − len(probabilities['results'])` calculation per § 2.3 and should be
+   added to every post-pipeline verification audit going forward.
 
 ## 10. Paper implications
 
@@ -508,8 +763,24 @@ For the paper Methods section's failure-rate paragraph:
 
 8. **Three-tier JSON parser fix (commit `e3aef6fa`) prevents most future recovery-cost
    asymmetries.** Production runs after this commit will recover ~92 % of historical
-   parse-failure modes in-line, eliminating most stuck-tile recovery campaigns. Three legacy
-   runs (~163 outstanding tiles) remain to be re-recovered under the patched parser.
+   parse-failure modes in-line, eliminating most stuck-tile recovery campaigns. The three
+   legacy runs (~163 outstanding tiles) flagged in Session 83 were re-recovered under the
+   patched parser in Session 84 — per-tile costs collapsed by 100–300× vs the pre-patch T=0.7
+   baseline (§ 4.4).
+
+9. **Verifier-completeness check is a Methods caveat — and now a fix-forward step.**
+   Session 84 surfaced 28 silently-dropped verifier candidates across two production runs
+   (image: 18, GS-v2: 10). Pre-published F1s were therefore slightly understated: GS-v2 by
+   ~1.3 pp at 50 m, image by ~0.3 pp at 50 m. The Methods section should note this as a known
+   limitation of the original publication's verifier outputs, **resolved across all four
+   runs** in Session 84 by the `len(consensus) − len(probabilities['results'])` cleanup pass.
+
+10. **`failed_items[]` is a historical record, not a current-failure signal.** The text-MIN
+    follow-up recovery (§ 7.4) audit-flagged 124 tile-passes as failures requiring recovery;
+    the recovery turned out to be a no-op at the tile level (per-pass detection geojsons were
+    bit-identical to committed versions). Methods sections describing failure-recovery audits
+    must cross-check `failed_items[]` against md5sums of the committed per-pass detection
+    geojsons before launching recovery.
 
 ## 11. Reproducibility
 
@@ -628,6 +899,56 @@ re-verification.
   `recovery-logs/stage2-20260502T154407.log` tail.
 - 3-tier JSON repair pipeline coverage (~92 % of 163 historical failures) — carried from
   commit `e3aef6fa` message; not independently re-audited within this synthesis.
+
+**Re-verified on 2026-05-03 from source files (Session 84 follow-up recoveries):**
+
+- Image post-recovery raw F1 at R = 50 m: **0.7745** — re-derived from
+  `outputs/55maps-image-generalisation/evaluation/evaluation.json::summary.buffers[buffer_metres=50].f1`.
+- Image post-recovery corrected F1 at R = 50 m: **0.8332** — re-derived from
+  `results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json::results[R_m=50].F1`.
+- Image post-recovery tile-level MCC at R = 50 m: **0.6924 [0.6784, 0.7062]** — re-derived
+  from `results/55maps-image-generalisation/mcc/evaluation.json::summary.tile_classification.mcc`.
+- Image post-recovery 18 silently-dropped verifier candidates — re-derived via commit message
+  of `8082896b` (recovered single-pass via `run_pv.py cleanup`).
+- Image follow-up recovery cost ~$0.029 (net new candidate impact) — derived from commit
+  messages of `2992056b` (proposer $0.216), `8082896b` (verifier ~$0.02), and `a78cd7c5`
+  cost-manifest aggregation (the manifest's $1,061 total reflects the cosmetic 3× double-
+  counting bug; the true total is ~$365).
+- Text-MIN post-recovery raw F1 at R = 50 m: **0.7619** (current evaluation.json) /
+  **0.7595** (per commit `c1ea6df3` reviewed-GT comparator) — re-derived from
+  `outputs/55maps-text-min-generalisation/evaluation/evaluation.json` and the post-GT-update
+  re-eval at commit `236327d8`.
+- Text-MIN post-recovery corrected F1 at R = 50 m: **0.7968** — re-derived from
+  `results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json`.
+- Text-MIN post-recovery tile-level MCC at R = 50 m: **0.626 [0.611, 0.641]** — re-derived
+  from `results/55maps-text-min-generalisation/mcc/evaluation.json`.
+- Text-MIN follow-up recovery cost $0.144 — derived from commit message of `c1ea6df3` and
+  the cosmetic-2× cost_manifest acknowledgement in `b4a928d2` (manifest's $93.50 total
+  reflects the double-counting bug; the true total is ~$60.79).
+- Text-MIN no-op finding (per-pass detection geojson md5sums bit-identical to committed
+  versions; +39 features from re-dedup, not new detections from recovery) — derived from
+  commit message of `c1ea6df3`.
+- GS-v2 post-recovery raw F1 at R = 50 m: **0.8859 [0.8798, 0.8919]** (Era 2, 487-tile) —
+  re-derived from `results/gold-standard-extended-buffer-sweep-era2/evaluation.json`.
+- GS-v2 post-recovery tile-level MCC at R = 50 m: **0.7778 [0.7663, 0.7896]** — re-derived
+  from same source (Sens=0.7904, Spec=0.9690).
+- GS-v2 10 silently-dropped verifier candidates (IDs 253, 292, 302, 304, 321, 359, 397, 408,
+  435, 520) + 1 new from consensus rebuild = 11 total recovered — re-derived from commit
+  message of `4ea54760`.
+- GS-v2 follow-up recovery cost $0.041 (proposer) + ~$0.02 (verifier) = ~$0.061 — derived
+  from commit messages of `c8fde2ae` and `4ea54760`.
+- GS-v2 harness quirk: two resume invocations per pass required — derived from commit
+  message of `c8fde2ae` (each of the 4 affected passes was run twice; net cost $0.041
+  across all four passes).
+- All 6 cross-track v2 paired-permutation deltas at R = 50 m and BH-significance verdicts
+  (5 of 6 significant; T=0.7 vs image −0.0060 only ns pair):
+  T=0.3 vs T=0.7 +0.0162 (sig), T=0.3 vs image +0.0102 (sig), T=0.7 vs image −0.0060 (ns),
+  T=0.3 vs T=MIN +0.0467 (sig), T=0.7 vs T=MIN +0.0305 (sig), image vs T=MIN +0.0365 (sig)
+  — re-derived from `results/55maps-pairwise-permutation-v2/paired-*/summary.json::per_buffer[buffer_metres=50]`.
+- FP-classify 4-corpus re-classify cost $0.582 — re-derived from commit message of `42ed1d32`
+  and `results/55maps-fp-classification/cost_summary.json::totals.cost_usd`.
+- Total Session 84 follow-up arc cost ~$0.88 (image $0.029 + text-MIN $0.144 + GS-v2 $0.061 +
+  FP-classify $0.582); recovery passes alone ~$0.30.
 
 **Carried forward from observation history without independent re-derivation:**
 

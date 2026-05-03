@@ -62,16 +62,29 @@ item set 5,348 = 3,490 matched + 1,280 student-only + 578 VLM-only):
 VLM-only posterior P(true=1) = 0.318 → ~184 of 578 VLM-only items
 estimated to be real mounds missed by student annotators.
 
-### Side-by-side with the image run (Obs 256)
+### Side-by-side with the image run (Obs 256; post-recovery 2026-05-03)
 
 | Track | Completed | Measured F1 @ 50 m | D-S corrected F1 @ 50 m |
 |-------|-----------|-------------------:|------------------------:|
 | Text | 2026-04-10 | **0.790** | **0.814** |
-| Image | 2026-04-18 | 0.771 | 0.795 |
-| Δ (image − text) | | −0.019 | −0.019 |
+| Image (post-recovery 2026-05-03) | 2026-04-18 | 0.7745 | 0.799 |
+| Δ (image − text) | | −0.016 | −0.015 |
 
-The modality gap is preserved after D-S correction, consistent with
-the Era 2 cross-modality finding (Obs 250–251).
+The modality gap narrowed slightly post-recovery (image F1 lifted
+from 0.7710 to 0.7745 after the 2026-05-03 recovery surfaced 18
+pre-existing missing-from-verifier candidates plus 1 new consensus
+candidate; see `55maps_image_generalisation_post_run_report.md`,
+"Recovery 2026-05-03" subsection). The Era 2 cross-modality finding
+(Obs 250–251) is preserved: text consensus retains a small but
+consistent edge over image at 50 m.
+
+The text-MIN sister run (2026-04-18) sits at F1 = 0.7595 post-recovery
+(2026-05-03 rebuild against reviewed GT 4,770; pre-recovery 0.7591),
+**below** both the image post-recovery 0.7745 and the text HIGH 0.790
+— consistent with the paired-permutation finding that thinking-level
+helps text-pipeline approximate-match retention at ≥ 30 m buffers
+(see `55maps_text_min_generalisation_post_run_report.md` and
+`55maps_text_high_generalisation_post_run_report.md`).
 
 ## Cost accounting (partial)
 
@@ -116,10 +129,14 @@ to 8,541 tiles × 5 passes:
 - Verifier v1 (measured): **$12.43**
 - **Total estimated: ~$75** (v1-only); **~$88** including v2
 
-The image run ran at $364.70 measured (3–4 × higher than the text
-estimate) because the image pipeline sends 13 example images per
-proposer call, whereas the text pipeline sends none (text-only
-examples).
+The image run ran at ~$365 measured (post-recovery aggregate;
+3–4 × higher than the text estimate) because the image pipeline
+sends 13 example images per proposer call, whereas the text pipeline
+sends none (text-only examples). The image recovery added ~$0.05
+on top of the original $364.70 measured cost; the cost-manifest
+aggregator reports a post-recovery $1,061.08 due to a known 2×
+double-counting artefact (see image post-run report's
+"Recovery 2026-05-03" subsection for the diagnosis).
 
 ### What a future text rerun should track
 

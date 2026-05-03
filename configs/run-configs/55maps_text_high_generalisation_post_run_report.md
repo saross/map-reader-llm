@@ -95,10 +95,11 @@ landed alongside):
 | Dawid-Skene posterior (pre-recovery) | (0.8129) | (0.8916) | (0.7491) |
 
 Δ F1 = **+0.025** after correction — the same magnitude as the
-three sister 55-map corrections (image HIGH: 0.771 → 0.795; text MIN:
-0.759 → 0.783; T=0.3: see paired-permutation grid). The correction
-continues to track the student ground-truth incompleteness rate
-independently of pipeline configuration.
+three sister 55-map corrections (image HIGH post-recovery 2026-05-03:
+0.7745 → 0.799; text MIN post-recovery 2026-05-03: 0.7595 → 0.7834;
+T=0.3: see paired-permutation grid). The correction continues to
+track the student ground-truth incompleteness rate independently
+of pipeline configuration.
 
 The post-recovery total VLM-only candidate set is 637 (up from 630
 pre-recovery, +7); D-S aggregate posterior P(true = 1) = 0.291,
@@ -169,27 +170,32 @@ for the generalisable interpretation.
 
 ### Side-by-side with the three 55-map runs
 
-All three at K = 5 + PV, paper-headline operating points:
+All three at K = 5 + PV, paper-headline operating points (post-recovery
+2026-05-03 where applicable):
 
-| Metric | Image HIGH | Text HIGH (this re-run) | Text MIN |
+| Metric | Image HIGH (post-rec) | Text HIGH (this re-run, post-rec) | Text MIN (post-rec) |
 |--------|:----------:|:-----------------------:|:--------:|
-| Date | 2026-04-18 | 2026-04-19 | 2026-04-18 |
+| Date | 2026-04-18 (post-rec 2026-05-03) | 2026-04-19 (post-rec 2026-05-03) | 2026-04-18 (post-rec 2026-05-03) |
 | vote_t | 3 | 4 | 4 |
-| F1 @ 20 m | 0.506 | 0.623 | 0.618 |
-| F1 @ 50 m | 0.771 | **0.788** | 0.759 |
-| F1 @ 50 m (D-S) | 0.795 | 0.813 | 0.783 |
-| Precision @ 50 m | 0.780 | 0.848 | 0.849 |
-| Recall @ 50 m | 0.763 | 0.737 | 0.687 |
-| **Total cost** | **$364.70** | **$69.60** | **$60.79** |
-| Thinking tokens | 95.2 M | **115.0 M** | 0 |
-| Runtime | ~4 h 55 m | 3 h 21 m | 2 h 6 m |
+| F1 @ 20 m | 0.508 | 0.626 | 0.620 |
+| F1 @ 50 m | 0.7745 | **0.792** | 0.7595 |
+| F1 @ 50 m (D-S) | 0.799 | 0.8142 | 0.7834 |
+| Precision @ 50 m | 0.7799 | 0.847 | 0.8485 |
+| Recall @ 50 m | 0.7692 | 0.7394 | 0.6868 |
+| **Total cost** | **~$365** | **$126.81** | **~$60.93** |
+| Thinking tokens | 95.2 M | **230.5 M** (post-rec) | 0 |
+| Runtime | ~4 h 55 m | 3 h 21 m (original) | 2 h 6 m |
 
-Notable: the text HIGH re-run consumed **more thinking tokens than
-the image HIGH run** (115 M vs 95 M, +20.8 %) for the same number of
+Notable: the text HIGH re-run (original-launch only, pre-recovery
+115 M thinking tokens) consumed **more thinking tokens than the
+image HIGH run** (115 M vs 95 M, +20.8 %) for the same number of
 API calls. Per-call, text HIGH thinks ~2,690 tokens vs image HIGH's
 ~2,230 — plausibly because the image modality provides visual
 context that reduces abstract reasoning burden, while text-only
-forces the model to reason entirely from descriptive cues.
+forces the model to reason entirely from descriptive cues. The
+post-recovery aggregate (230.5 M thinking tokens) is dominated by
+the recovery passes' retry storms (see §"Cost accounting" → "Token
+breakdown").
 
 ## Cost accounting
 
@@ -381,25 +387,32 @@ launcher's cleanup loop and accounted for in the per-pass totals.
 The text HIGH re-run completes the 3-way generalisation matrix under
 the publishable launcher (post-recovery values 2026-05-03):
 
-1. **Image HIGH (library_plus-hp, 2026-04-18)**: F1 @ 50 m = 0.771
-   (D-S 0.795). High-precision, recall-limited. **$364.70.**
+1. **Image HIGH (library_plus-hp, 2026-04-18; recovered 2026-05-03)**:
+   F1 @ 50 m = **0.7745** (D-S **0.799**). High-precision, recall-
+   limited. **~$365** (original $364.70 + recovery ~$0.05).
 2. **Text HIGH (this re-run, 2026-04-19; recovered 2026-05-02/03)**:
-   F1 @ 50 m = **0.792** (post-recovery; D-S **0.814**). Best headline
+   F1 @ 50 m = **0.792** (post-recovery; D-S **0.8142**). Best headline
    F1. Total cost **$126.81** (original $69.60 + recovery $57.10 +
    verifier cleanup $0.10 + FP-classify share $0.01); paper-citable
    per-tile cost uses the original-launch $0.00815 figure for cross-
    run comparability.
-3. **Text MIN (2026-04-18)**: F1 @ 50 m = 0.759 (D-S 0.783).
-   Cheapest; ns vs HIGH at 20 m, but significantly worse at ≥ 30 m.
-   **$60.79.**
+3. **Text MIN (2026-04-18; recovered 2026-05-03)**: F1 @ 50 m =
+   **0.7595** (D-S **0.7834**). Cheapest; ns vs HIGH at 20 m, but
+   significantly worse at ≥ 30 m. **~$60.93**.
+4. **GS-v2 sister run (gold-standard-v2 4-of-5; recovered 2026-05-03)**:
+   F1 @ 50 m = **0.8859** [0.8798, 0.8919] (was 0.8734 pre-recovery,
+   +0.0126); tile MCC = **0.7778** [0.7663, 0.7896] (newly computed).
+   GS-v2 uses gold-standard GT (`mounds-reference.geojson`, 569
+   mounds) — no human review needed; F1 uplift is genuine. Subtype
+   classification weighted F1: 0.8873 → 0.8876 (+0.0003).
 
 Five paper-relevant conclusions fall out:
 
 1. **Text HIGH dominates image HIGH at the 55-map scale**: F1 @ 50 m
-   of 0.788 vs 0.771 at 1/5 the cost ($69.60 vs $364.70). Text MIN
-   at 0.759 is within bootstrap CI of image HIGH's 0.771 — so even
-   the cheapest text operating point is roughly on par with image
-   HIGH for F1 per dollar terms.
+   of 0.792 vs 0.7745 at 1/5 the cost ($126.81 vs ~$365 post-recovery).
+   Text MIN at 0.7595 is within bootstrap CI of image HIGH's 0.7745 —
+   so even the cheapest text operating point is roughly on par with
+   image HIGH for F1 per dollar terms.
 
 2. **The D-S correction is stable across runs** (+0.024 ± 0.001 F1
    in all four corrections), suggesting the ~5 % student

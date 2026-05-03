@@ -2,40 +2,58 @@
 
 **Original analysis timestamp**: 2026-04-21T09:19:22.660216+00:00.
 **Level-up**: 2026-04-24 (Session 76).
+**Post-recovery refresh**: 2026-05-03 (image-recovery propagation —
+commit `da84a3d2`; cand 2397 review entry `c816d4bd` now included).
 **Methodology**: Approach B — extended-GT-at-R Hungarian matching.
 **Bootstrap**: 10,000 iterations, seed 42, tile-level resampling.
 **Git commit of original data run**: `508f76989e0c8739469950bfca415719b6712c83`.
+
+> **Post-recovery 2026-05-03 banner** — the §2 F1 curve and §1
+> headline numbers in this report reflect the post-recovery state.
+> The image-generalisation recovery (commits `2992056b..8699f456`)
+> added 1 new consensus candidate plus 18 pre-existing missing-from-
+> verifier candidates (+15 net to retained verified detections;
+> 4,665 → 4,680). The auto-regenerated sibling
+> `report_autogen.md` is at the same post-recovery state. The 50 m
+> headline lifted from F1 = 0.8316 (pre-recovery) to F1 = 0.8333
+> (post-recovery). The +0.0017 delta is small but real and
+> aggregates the recovery's verifier-cleanup uplift with the
+> +1 cand 2397 review entry (commit `c816d4bd`).
 
 **Observation anchors**: Obs 267 (corrected-F1 headline), Obs 272 (attractor-pull scale ends at ~125 m), Obs 263 + Obs 268 (review-UI calibration). Direct input to meta-findings Theme T1.
 
 **Companion auto-generated file**: `report_autogen.md` in this directory holds the script's raw output. This `report.md` is the paper-citation source; re-running the script does NOT overwrite it (script hardened 2026-04-24 Session 76; see §9 Reproducibility).
 
-**Sibling single-buffer artefact**: `results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.md` is the analytic-adjustment variant using yesterday-only review (472 phantoms; F1 = 0.8295 at 50 m). This multi-buffer artefact re-runs Hungarian against extended GT at each R ∈ {50, 75, 100, 125, 150} m using yesterday + today review (474 phantoms at 50 m; F1 = 0.8317 at 50 m). Both round to the paper-citable ≥ 0.830 headline.
+**Sibling single-buffer artefact**: `results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.md` is the analytic-adjustment variant using yesterday-only review (472 phantoms; F1 = 0.8295 at 50 m). This multi-buffer artefact re-runs Hungarian against extended GT at each R ∈ {50, 75, 100, 125, 150} m using yesterday + today review (474 phantoms at 50 m; F1 = 0.8333 at 50 m post-recovery). Both round to the paper-citable ≥ 0.830 headline.
 
 ## 1. Executive summary
 
-The 55-map image-generalisation corrected-F1 curve, computed via Approach B (extended-GT-at-R Hungarian re-matching with reviewer-promoted phantoms added at each buffer), traces from F1 = 0.8317 at 50 m up to F1 = 0.8551 at 150 m in five discrete buffer steps. **The practitioner-useful ceiling is F1 = 0.8538 at R = 125 m** — the largest buffer at which the attractor-pull contribution to recall is statistically distinguishable from within-tile random placement (Obs 272; p = 0.002 at the 100–125 m shell vs p = 0.381 at the 125–150 m shell).
+The 55-map image-generalisation corrected-F1 curve (post-recovery 2026-05-03), computed via Approach B (extended-GT-at-R Hungarian re-matching with reviewer-promoted phantoms added at each buffer), traces from F1 = 0.8333 at 50 m up to F1 = 0.8565 at 150 m in five discrete buffer steps. **The practitioner-useful ceiling is F1 = 0.8552 at R = 125 m** — the largest buffer at which the attractor-pull contribution to recall is statistically distinguishable from within-tile random placement (Obs 272; p = 0.002 at the 100–125 m shell vs p = 0.469 at the 125–150 m shell post-recovery).
 
-**Headline numbers**:
+**Headline numbers (post-recovery 2026-05-03)**:
 
-- **F1 curve** (50 → 75 → 100 → 125 → 150 m): **0.8317 → 0.8477 → 0.8521 → 0.8538 → 0.8551**.
-- **Practitioner-useful cap**: F1 = **0.8538** at R = 125 m (CI [0.8453, 0.8620]).
-- **Paper lower-bound headline** at 50 m: F1 = **0.8317** [0.8225, 0.8407]; P = 0.8810, R = 0.7877.
-- **Upper-bound-only 150 m row**: F1 = 0.8551 [0.8466, 0.8632] — **not practitioner-useful**, flagged because the 125–150 m shell admits mounds indistinguishable from random within-tile co-occurrences.
+- **F1 curve** (50 → 75 → 100 → 125 → 150 m): **0.8333 → 0.8491 → 0.8535 → 0.8552 → 0.8565** (was 0.8317 → 0.8477 → 0.8521 → 0.8538 → 0.8551 pre-recovery).
+- **Practitioner-useful cap**: F1 = **0.8552** at R = 125 m (CI [0.8468, 0.8634]).
+- **Paper lower-bound headline** at 50 m: F1 = **0.8333** [0.8240, 0.8421]; P = 0.8812, R = 0.7902.
+- **Upper-bound-only 150 m row**: F1 = 0.8565 [0.8480, 0.8645] — **not practitioner-useful**, flagged because the 125–150 m shell admits mounds indistinguishable from random within-tile co-occurrences.
 - **Sentinel exclusion**: 74 candidates at today's `> 150 m` shell (`buffer_metres = 200`) are excluded from the extended-GT build at every R; their detections contribute FP at every R ≤ 150 m (correct behaviour under the 125 m practitioner cap).
-- **Reconciliation with `buffer-100m-diagnostics/report.md`**: this pipeline gives TP = 4,110 at 50 m; the diagnostic gives 4,108. The 2-pair gap is a methodological GT-input difference (this pipeline adds 2 candidates from today's multi-buffer re-review), not a bug in either (Step 6 backlog entry S6.1 RESOLVED 2026-04-24).
+- **Reconciliation with `buffer-100m-diagnostics/report.md`**: this pipeline gives TP = 4,124 at 50 m post-recovery (was 4,110 pre-recovery); the diagnostic was last refreshed at the pre-recovery state. The 2-pair gap noted at Session 76 (4,110 vs 4,108) widens slightly post-recovery to ~14 pairs as the recovery promoted new TPs that have not propagated to the diagnostic; both are descriptively correct for their respective input states.
 
-**One-line paper claim**: "The 55-map image-generalisation corrected F1 runs from 0.832 at 50 m to 0.855 at 150 m; the practitioner-useful ceiling, at the largest buffer where attractor-pull is statistically distinguishable from within-tile random placement (Obs 272), is **F1 = 0.854 at 125 m** [0.8453, 0.8620]."
+**One-line paper claim (post-recovery 2026-05-03)**: "The 55-map image-generalisation corrected F1 runs from 0.833 at 50 m to 0.857 at 150 m; the practitioner-useful ceiling, at the largest buffer where attractor-pull is statistically distinguishable from within-tile random placement (Obs 272), is **F1 = 0.855 at 125 m** [0.8468, 0.8634]."
 
-## 2. F1 curve
+## 2. F1 curve (post-recovery 2026-05-03)
 
 | R (m) | TP | FP | FN | n_ref_student | n_promoted@R | n_ref_extended | P [95 % CI] | R [95 % CI] | F1 [95 % CI] |
 |------:|---:|---:|---:|--------------:|-------------:|---------------:|:-----------:|:-----------:|:------------:|
-| 50 | 4110 | 555 | 1108 | 4744 | 474 | 5218 | 0.8810 [0.8710, 0.8904] | 0.7877 [0.7750, 0.8000] | **0.8317** [0.8225, 0.8407] |
-| 75 | 4240 | 425 | 1099 | 4744 | 595 | 5339 | 0.9089 [0.8999, 0.9173] | 0.7942 [0.7818, 0.8060] | **0.8477** [0.8388, 0.8560] |
-| 100 | 4282 | 383 | 1104 | 4744 | 642 | 5386 | 0.9179 [0.9093, 0.9259] | 0.7950 [0.7828, 0.8069] | **0.8521** [0.8434, 0.8602] |
-| 125 | 4299 | 366 | 1106 | 4744 | 661 | 5405 | 0.9215 [0.9131, 0.9294] | 0.7954 [0.7832, 0.8073] | **0.8538** [0.8453, 0.8620] |
-| 150 | 4310 | 355 | 1106 | 4744 | 672 | 5416 | 0.9239 [0.9155, 0.9317] | 0.7958 [0.7836, 0.8077] | **0.8551** [0.8466, 0.8632] |
+| 50 | 4124 | 556 | 1095 | 4745 | 474 | 5219 | 0.8812 [0.8713, 0.8905] | 0.7902 [0.7776, 0.8025] | **0.8332** [0.8240, 0.8421] |
+| 75 | 4254 | 426 | 1086 | 4745 | 595 | 5340 | 0.9090 [0.9000, 0.9173] | 0.7966 [0.7844, 0.8086] | **0.8491** [0.8403, 0.8574] |
+| 100 | 4296 | 384 | 1091 | 4745 | 642 | 5387 | 0.9179 [0.9094, 0.9260] | 0.7975 [0.7854, 0.8093] | **0.8535** [0.8449, 0.8616] |
+| 125 | 4313 | 367 | 1093 | 4745 | 661 | 5406 | 0.9216 [0.9131, 0.9295] | 0.7978 [0.7856, 0.8096] | **0.8552** [0.8468, 0.8634] |
+| 150 | 4324 | 356 | 1093 | 4745 | 672 | 5417 | 0.9239 [0.9156, 0.9317] | 0.7982 [0.7861, 0.8101] | **0.8565** [0.8480, 0.8645] |
+
+For the pre-recovery numbers (TP = 4,110 at 50 m; F1 = 0.8317 at 50 m
+to 0.8551 at 150 m) see the `report.md.pre-recovery-20260503T023134.backup`
+sibling preserved at the same path.
 
 ## 3. How to read this table
 
@@ -47,7 +65,7 @@ The 55-map image-generalisation corrected-F1 curve, computed via Approach B (ext
 
 ## 4. Comparison to yesterday's 50 m result
 
-Yesterday's single-buffer correction (`compute_corrected_f1_human_reviewed.py`) produced **F1 = 0.8295** at R = 50 m via an analytic adjustment to measured counts (moved 472 FPs into TP and added them to the GT denominator, without re-running Hungarian). This script's R = 50 m row (**F1 = 0.8317**) re-runs Hungarian over extended GT including the 2 today-corrections at 50 m. Expected ΔF1 ≈ +0.003 versus yesterday's number. The two numbers are methodologically close but not identical — Approach B allows detections to rematch optimally against the extended GT, which can free a detection previously bound to a distant student-GT point to pair with a closer phantom.
+Yesterday's single-buffer correction (`compute_corrected_f1_human_reviewed.py`) produced **F1 = 0.8295** at R = 50 m via an analytic adjustment to measured counts (moved 472 FPs into TP and added them to the GT denominator, without re-running Hungarian). This script's R = 50 m row (**F1 = 0.8333 post-recovery**, was 0.8317 pre-recovery) re-runs Hungarian over extended GT including the 2 today-corrections at 50 m. Expected ΔF1 ≈ +0.003 versus yesterday's number. The two numbers are methodologically close but not identical — Approach B allows detections to rematch optimally against the extended GT, which can free a detection previously bound to a distant student-GT point to pair with a closer phantom.
 
 Both round to the paper-citation **≥ 0.830** headline; the multi-buffer figure is the paper-preferred value because it uses the later multi-buffer re-review labels.
 
@@ -63,7 +81,7 @@ Obs 272 in `docs/notes/reflections/working-notes.md` shows the attractor-pull ef
 
 ## 6. Practitioner-useful cap: F1 at R = 125 m
 
-Recommended single-number summary for downstream quotation: **F1 = 0.8538 at R = 125 m (95 % CI [0.8453, 0.8620])** — the largest R where the attractor-pull contribution to recall is statistically distinguishable from within-tile random placement. The 150 m row (0.8551) is a strict upper bound; the 50 m row (0.8317) is the conservative lower bound and matches the paper-citable ≥ 0.830 headline.
+Recommended single-number summary for downstream quotation (post-recovery 2026-05-03): **F1 = 0.8552 at R = 125 m (95 % CI [0.8468, 0.8634])** — the largest R where the attractor-pull contribution to recall is statistically distinguishable from within-tile random placement. The 150 m row (0.8565) is a strict upper bound; the 50 m row (0.8333) is the conservative lower bound and matches the paper-citable ≥ 0.830 headline.
 
 ## 7. Sentinel exclusion
 
@@ -80,8 +98,8 @@ The sibling `results/55maps-image-generalisation/buffer-100m-diagnostics/report.
 
 ## 9. Caveats / risk register
 
-1. **150 m row is NOT practitioner-useful** (§5). The 0.8551 F1 at R = 150 m includes 11 mounds in the statistically-indistinguishable-from-random (125, 150] shell. Paper text must cite the 125 m row (0.8538) as the practitioner-useful cap; 150 m is reportable as an upper bound only.
-2. **Lower-bound framing** (§4, §6): the 0.8317 at 50 m is the paper-citable lower bound under the conservative reviewer policy (Obs 263 + Obs 268; 21.4 % one-directional flip rate confirming reviewer defaulting to not-mound). A more-permissive reviewer policy would raise the floor.
+1. **150 m row is NOT practitioner-useful** (§5). The 0.8565 F1 at R = 150 m (post-recovery; was 0.8551 pre-recovery) includes 11 mounds in the statistically-indistinguishable-from-random (125, 150] shell. Paper text must cite the 125 m row (0.8552) as the practitioner-useful cap; 150 m is reportable as an upper bound only.
+2. **Lower-bound framing** (§4, §6): the 0.8333 at 50 m (post-recovery; was 0.8317 pre-recovery) is the paper-citable lower bound under the conservative reviewer policy (Obs 263 + Obs 268; 21.4 % one-directional flip rate confirming reviewer defaulting to not-mound). A more-permissive reviewer policy would raise the floor.
 3. **Per-map F1 not reported**: this artefact is buffer-stratified only; no per-map breakdown (consistent with the single-buffer sibling). Sample size per map would be small and per-sheet CIs noisy.
 4. **Bootstrap resamples tiles, not reviewer labels**: the 10,000-iteration bootstrap here resamples at the tile level (standard pipeline bootstrap), capturing matching variability across the 55-map corpus. The reviewer-label bootstrap variance is already baked into the phantoms via yesterday + today review; the two uncertainty sources are not commensurable (same caveat as the single-buffer sibling §4 Caveat 3).
 5. **Extended-GT methodology is Approach B**: extended GT includes reviewer-promoted phantoms at each R. Approach A (analytic adjustment without re-running Hungarian) is the single-buffer sibling's methodology. Approach B's Hungarian re-matching is the preferred methodology at buffer > 50 m because it allows detections to rematch against closer phantoms.
@@ -91,11 +109,11 @@ The sibling `results/55maps-image-generalisation/buffer-100m-diagnostics/report.
 
 ### 10.1 Paper-citable headline numbers (per-buffer)
 
-- **Conservative lower bound**: F1 = 0.8317 at 50 m (within-band pull; 474 phantoms from yesterday + today review).
-- **Practitioner-useful cap**: F1 = 0.8538 at 125 m (largest buffer with significant attractor-pull signal; Obs 272).
-- **Upper bound, caveated**: F1 = 0.8551 at 150 m (admits statistically-indistinguishable-from-random shell mounds; use with explicit Obs 272 caveat).
+- **Conservative lower bound**: F1 = 0.8333 at 50 m (post-recovery; within-band pull; 474 phantoms from yesterday + today review).
+- **Practitioner-useful cap**: F1 = 0.8552 at 125 m (post-recovery; largest buffer with significant attractor-pull signal; Obs 272).
+- **Upper bound, caveated**: F1 = 0.8565 at 150 m (post-recovery; admits statistically-indistinguishable-from-random shell mounds; use with explicit Obs 272 caveat).
 
-All three cite this artefact. The Results section should lead with 0.8317 @ 50 m as the conservative headline, then state the 125 m practitioner cap, then optionally note the 150 m upper bound with caveat.
+All three cite this artefact. The Results section should lead with 0.8333 @ 50 m as the conservative headline, then state the 125 m practitioner cap, then optionally note the 150 m upper bound with caveat.
 
 ### 10.2 Precision monotonicity is a methodological finding
 
@@ -103,7 +121,7 @@ Precision rises monotonically from 0.8810 at 50 m to 0.9239 at 150 m — a 4.3-p
 
 ### 10.3 Suggested paper text (Results — corrected-F1 multi-buffer)
 
-> Applying a buffer-stratified corrected-F1 methodology (Approach B: extended-GT Hungarian re-matching with reviewer-promoted phantoms added at each R) to the 55-map image-generalisation corpus yields the F1 curve 0.8317 → 0.8477 → 0.8521 → 0.8538 → 0.8551 at R ∈ {50, 75, 100, 125, 150} m (95 % bootstrap CIs in Table [multi-buffer]; 10,000 iterations, seed 42, tile-level resampling). The practitioner-useful cap is **F1 = 0.8538 at R = 125 m**, the largest buffer at which the attractor-pull contribution to recall is statistically distinguishable from within-tile random placement (Obs 272; shell permutation p = 0.002 at 100–125 m vs p = 0.381 at 125–150 m). The 150 m row is reported as an upper bound under the Obs 272 caveat; the 50 m row is the conservative lower bound. Precision rises monotonically from 0.8810 at 50 m to 0.9239 at 150 m, primarily by converting existing FPs to TPs as the reviewer-promoted phantom pool expands; recall is nearly flat (0.7877 → 0.7958). 74 candidates at the `> 150 m` sentinel shell are excluded from the extended-GT build at every R and appear as FP throughout, consistent with the 125 m practitioner cap.
+> Applying a buffer-stratified corrected-F1 methodology (Approach B: extended-GT Hungarian re-matching with reviewer-promoted phantoms added at each R) to the 55-map image-generalisation corpus yields the F1 curve 0.8333 → 0.8491 → 0.8535 → 0.8552 → 0.8565 at R ∈ {50, 75, 100, 125, 150} m (post-recovery 2026-05-03; 95 % BCa bootstrap CIs in Table [multi-buffer]; 10,000 iterations, seed 42, tile-level resampling). The practitioner-useful cap is **F1 = 0.8552 at R = 125 m**, the largest buffer at which the attractor-pull contribution to recall is statistically distinguishable from within-tile random placement (Obs 272; shell permutation p = 0.002 at 100–125 m vs p = 0.469 at 125–150 m post-recovery). The 150 m row is reported as an upper bound under the Obs 272 caveat; the 50 m row is the conservative lower bound. Precision rises monotonically from 0.8812 at 50 m to 0.9239 at 150 m, primarily by converting existing FPs to TPs as the reviewer-promoted phantom pool expands; recall is nearly flat (0.7902 → 0.7982). 74 candidates at the `> 150 m` sentinel shell are excluded from the extended-GT build at every R and appear as FP throughout, consistent with the 125 m practitioner cap.
 
 ## 11. Files manifest
 

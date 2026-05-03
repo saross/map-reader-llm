@@ -1,5 +1,16 @@
 # Dawid-Skene Latent Truth Model — Results
 
+> **Post-recovery 2026-05-03 annotation** — this auto-generated report
+> reflects the post-recovery state. Pre-recovery values for the same
+> measurement (F1 = 0.7710, D-S F1 = 0.795) are preserved at
+> `dawid-skene-results.md.pre-recovery-20260503T023258.backup` in this
+> directory. The +0.0035 lift in measured F1 comes from the
+> verifier-cleanup pass surfacing 18 pre-existing missing-from-verifier
+> candidates plus 1 new consensus candidate; D-S posterior shifted
+> from 0.795 to 0.799 (+0.004). See the run-level
+> `configs/run-configs/55maps_image_generalisation_post_run_report.md`
+> "Recovery 2026-05-03" subsection for the full propagation chain.
+
 ## Summary
 
 Joint model of student digitisers and VLM pipeline as noisy

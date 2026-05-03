@@ -1,8 +1,21 @@
 # Subtype-classification accuracy on the 4-map gold-standard — analysis report
 
 **Date**: 2026-04-21
+**Recovery 2026-05-03**: data files refreshed against the post-recovery
+GS-v2 consensus (commits `90890ae9..c6023034`). The 4-of-5 consensus
+went from 607 to 608 detections; matched pairs at 50 m from 376 to 377
+(+1 burial_mound, raising burial total from 294 to 295). Headline
+weighted-F1 lifted from 0.8873 to **0.8876** (+0.0003) — unchanged at
+the 3-decimal precision used in this report. The 27/47 benchmark →
+triangulation cell, the asymmetric-confusion finding, and Level-1
+accuracy = 1.000 are preserved exactly. Refreshed CIs in the headline
+table; remaining confusion-matrix tables remain accurate at 3-decimal
+precision (the +1 matched burial shifts column totals from 303 to 304
+but row-normalised values are unchanged at three decimals; see source
+CSVs for 4-decimal values).
+
 **Analysis script**: `scripts/analyse_subtype_classification.py` v1.0.0
-**Git commit at run time**: `508f7698`
+**Git commit at run time**: `508f7698` (original); `c6023034` (post-recovery refresh)
 **Plan**: `planning/gold-standard-classification-accuracy-plan.md`
 **Decision record**: `planning/gold-standard-classification-metrics-decisions.md`
 **Primary observation**: Obs 270 (headline) and Obs 271 (new failure sub-pattern) in `docs/notes/reflections/working-notes.md`
@@ -10,20 +23,20 @@
 
 ## 1. Executive summary
 
-The 5-pass VLM consensus pipeline produced 607 detections at 4-of-5 consensus; 376 of these matched expert ground-truth (GT) features at a 50 m buffer across the four calibration maps. Conditional on a correct detection, the VLM assigns the correct subtype with **weighted-F1 = 0.887 [0.849, 0.922]** and **Level-1 accuracy (mound-family vs settlement) = 1.000**. The pipeline is strong on the detection-to-subtype mapping in aggregate, but an asymmetric within-compound confusion dominates the error: **benchmark_mound is misread as triangulation_mound for 27 of 47 matched benchmarks (57 %)**, while the reverse confusion is zero. This is a **new sub-pattern not anticipated by the Obs 266 failure-mode taxonomy** — see §7 and Obs 271.
+The 5-pass VLM consensus pipeline produced **608** detections at 4-of-5 consensus (post-recovery 2026-05-03; was 607); **377** of these (was 376) matched expert ground-truth (GT) features at a 50 m buffer across the four calibration maps. Conditional on a correct detection, the VLM assigns the correct subtype with **weighted-F1 = 0.887 [0.850, 0.923]** (post-recovery; pre-recovery [0.849, 0.922]) and **Level-1 accuracy (mound-family vs settlement) = 1.000**. The pipeline is strong on the detection-to-subtype mapping in aggregate, but an asymmetric within-compound confusion dominates the error: **benchmark_mound is misread as triangulation_mound for 27 of 47 matched benchmarks (57 %)**, while the reverse confusion is zero. This is a **new sub-pattern not anticipated by the Obs 266 failure-mode taxonomy** — see §7 and Obs 271.
 
 Headline metrics (50 m buffer, 4-of-5 consensus, matched-pairs 4×4):
 
 | Metric                                  |   Value | 95 % bootstrap CI    |
 |-----------------------------------------|--------:|----------------------|
-| **Weighted-F1 (HEADLINE)**              | **0.887** | [0.849, 0.922]    |
+| **Weighted-F1 (HEADLINE)**              | **0.887** | [0.850, 0.923]    |
 | Macro-F1                                |   0.772 | [0.660, 0.822]       |
 | Matched-pair accuracy                   |   0.904 | —                    |
 | Level-1 accuracy (mound-family vs tell) |   1.000 | —                    |
 | Level-2 accuracy (within mound-family)  |   0.904 | —                    |
-| Cohen's kappa (unweighted)              |   0.728 | [0.658, 0.797]       |
-| Cohen's kappa (linearly hierarchical)   |   0.736 | [0.664, 0.804]       |
-| Multi-class Matthews (MCC)              |   0.744 | [0.681, 0.807]       |
+| Cohen's kappa (unweighted)              |   0.728 | [0.659, 0.797]       |
+| Cohen's kappa (linearly hierarchical)   |   0.736 | [0.665, 0.804]       |
+| Multi-class Matthews (MCC)              |   0.744 | [0.681, 0.806]       |
 
 Bootstrap: 10 000 iterations, matched-pair-level resample, stratified by map, seed 42.
 

@@ -11,6 +11,17 @@ mounds, commit `baf1497a`). The 50 m raw F1 lands at 0.7920 (was
 0.788; +0.004), and the 50 m corrected F1 at 0.8273 (was 0.8260;
 +0.001) — gap and curve-shape conclusions are unchanged.
 
+**GS-v2 post-recovery refresh**: 2026-05-03 — the §3.1 Era 2 scope-pair
+companion is refreshed to the post-recovery GS-v2 verifier output
+(commits `90890ae9..c6023034`). 10 pre-existing missing verifier
+candidates plus 1 new from consensus rebuild lifted n_detections from
+371 to 380. Era 2 50 m F1 = **0.8859 [0.8798, 0.8919]** (was 0.873
+[0.844, 0.901]; +0.0126); Era 2 20 m F1 = **0.8663 [0.8591, 0.8726]**
+(was 0.854 [0.821, 0.883]; +0.0123); tile MCC = **0.7778 [0.7663,
+0.7896]** (was 0.778 [0.726, 0.828]; same point estimate, tighter
+BCa N=10K CI). The 55-map vs gold-standard gap argument in §6 is
+unchanged at the 4-decimal level.
+
 **Observation anchors**: Obs 260 (F1-plateau / GT-precision-noise framing on the 4-map gold-standard vs 55-map student GT). Direct input to meta-findings Theme T1 (corrected-F1 lower bound rationale) and Theme T4 (subtype classification — the gold-standard corpus is the same 4-map subset).
 
 This artefact is hand-authored (no dedicated analysis script writes it; data-generation commands are embedded in §12 Reproducibility). No script-overwrite risk.
@@ -52,17 +63,23 @@ The `gold-standard-v2` tree is the most recent clean run at this exact config an
 
 ### 3.1 Scope-pair companion (Era 2 vs Era 3)
 
-This artefact reports the text-HIGH gold-standard v2 pipeline on the **Era 3 scope (327 tiles, 250 verified detections)**, intentionally bounds-filtered for sibling-comparability with the h8-v2 / h10-v2 / h12-v2 library-design artefacts (all of which use the same 327-tile H10 test pool). A **matched Era 2 companion evaluation** of the same pipeline on the broader **487-tile Era 2 scope (371 verified detections)** was computed in Session 78 (2026-04-24) and is archived at `results/gold-standard-extended-buffer-sweep-era2/evaluation.{json,csv,md}`. The Era 2 run is the matching denominator for the Phase 3a matrix leaderboard; the Era 3 run is the matching denominator for the v2 library-design closure cells.
+This artefact reports the text-HIGH gold-standard v2 pipeline on the **Era 3 scope (327 tiles, 250 verified detections)**, intentionally bounds-filtered for sibling-comparability with the h8-v2 / h10-v2 / h12-v2 library-design artefacts (all of which use the same 327-tile H10 test pool). A **matched Era 2 companion evaluation** of the same pipeline on the broader **487-tile Era 2 scope (380 verified detections post-recovery)** was originally computed in Session 78 (2026-04-24) and refreshed after the GS-v2 recovery (Session 82, 2026-05-03, commits `90890ae9..c6023034`); the current artefact is at `results/gold-standard-extended-buffer-sweep-era2/evaluation.{json,csv,md}`. The Era 2 run is the matching denominator for the Phase 3a matrix leaderboard; the Era 3 run is the matching denominator for the v2 library-design closure cells.
 
-**Side-by-side point estimates with 95 % bootstrap CIs** (text-HIGH, vote_t = 4, prob_t = 0.15, 1,000 iterations, seed = 42):
+**Recovery 2026-05-03**: the GS-v2 verifier cleanup recovered 10 pre-existing missing candidates plus 1 new candidate from consensus rebuild (n_detections 371 → 380); the published Era 2 F1 was understated by ~1.3 pp at every buffer ≥ 20 m. The Era 3 numbers in §4 below are unchanged because Era 3 is bounds-filtered to the 327-tile h10_test pool, which excludes most of the recovered candidates.
 
-| Buffer | Era 3 (327 tiles, 250 detections) | Era 2 (487 tiles, 371 detections) |
-|-------:|-----------------------------------|-----------------------------------|
-| 20 m | F1 = 0.8155 [0.7833, 0.8586]; P = 0.936, R = 0.734 | F1 = 0.854 [0.821, 0.883]; P = 0.927, R = 0.791 |
-| 50 m | F1 = 0.826 (cached leaderboard cell) | F1 = 0.873 [0.844, 0.901]; P = 0.949, R = 0.809 |
-| Tile-level MCC | — | 0.778 [0.726, 0.828] |
+**Side-by-side point estimates with 95 % BCa bootstrap CIs** (text-HIGH, vote_t = 4, prob_t = 0.15, 10,000 iterations on the Era 2 post-recovery refresh; 1,000 iterations on the Era 3 baseline, seed = 42):
 
-**Scope-pair reading**: the 20 m bootstrap CIs [0.7833, 0.8586] (Era 3) and [0.821, 0.883] (Era 2) overlap substantially; the difference between point estimates is consistent with bootstrap sampling noise on the smaller 327-tile scope rather than a systematic shift. Era 3 was constructed by **hierarchical stratified random sampling** from Era 2 (487 total tiles minus the 160-tile pool_160 calibration pool, selected via geographic → density → random stratification with seed 42; see `results/evaluation-scopes.md` §5.3 and `scripts/select_calibration_tiles.py`), so the 327-tile complement is itself a random subsample of Era 2, not a difficulty-filtered curation. Density distributions of pool_160 vs the complement are proportional — no bias. The two reportings are therefore **scope-pair siblings**, preserved as intentional comparability choices for distinct artefact families: Era 3 matches h8/h10/h12 v2; Era 2 matches the Phase 3a matrix denominator. See `results/evaluation-scopes.md` §2 and §5.3 for the Era 2 vs Era 3 scope definitions.
+| Buffer | Era 3 (327 tiles, 250 detections) | Era 2 post-recovery (487 tiles, 380 detections) |
+|-------:|-----------------------------------|-------------------------------------------------|
+| 20 m | F1 = 0.8155 [0.7833, 0.8586]; P = 0.936, R = 0.734 | F1 = 0.8663 [0.8591, 0.8726]; P = 0.929, R = 0.812 |
+| 50 m | F1 = 0.826 (cached leaderboard cell) | F1 = 0.8859 [0.8798, 0.8919]; P = 0.950, R = 0.830 |
+| Tile-level MCC | — | 0.7778 [0.7663, 0.7896] |
+| Tile confusion (TP / TN / FP / FN) | — | 181 / 250 / 8 / 48 |
+| Sensitivity / specificity | — | 0.7904 [0.7789, 0.8017] / 0.9690 [0.9638, 0.9732] |
+
+For the pre-recovery Era 2 numbers (n = 371; F1@20m = 0.854 [0.821, 0.883], F1@50m = 0.873 [0.844, 0.901], MCC = 0.778 [0.726, 0.828]) see the archived `results/gold-standard-extended-buffer-sweep-era2/evaluation.json` history at commit `90890ae9^`.
+
+**Scope-pair reading**: the 20 m bootstrap CIs [0.7833, 0.8586] (Era 3) and [0.8591, 0.8726] (Era 2 post-recovery) abut but no longer overlap substantially after the recovery — Era 2 has tightened upward by ~+0.013 F1 and the CI half-width has narrowed (BCa N=10K). The remaining point-estimate gap is consistent with the 327-tile scope holding a random subsample of the harder-to-match candidates. Era 3 was constructed by **hierarchical stratified random sampling** from Era 2 (487 total tiles minus the 160-tile pool_160 calibration pool, selected via geographic → density → random stratification with seed 42; see `results/evaluation-scopes.md` §5.3 and `scripts/select_calibration_tiles.py`), so the 327-tile complement is itself a random subsample of Era 2, not a difficulty-filtered curation. Density distributions of pool_160 vs the complement are proportional — no bias. The two reportings are therefore **scope-pair siblings**, preserved as intentional comparability choices for distinct artefact families: Era 3 matches h8/h10/h12 v2; Era 2 matches the Phase 3a matrix denominator. See `results/evaluation-scopes.md` §2 and §5.3 for the Era 2 vs Era 3 scope definitions.
 
 ## 4. Extended-buffer F1 curve (4 gold-standard maps, n = 250 verified detections)
 
