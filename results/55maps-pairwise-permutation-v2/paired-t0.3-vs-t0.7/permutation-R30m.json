@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "timestamp": "2026-04-27T11:34:11.831223+00:00",
+    "timestamp": "2026-05-03T00:04:23.624218+00:00",
     "script": "paired_permutation_corrected_55maps.py",
     "version": "1.0.0",
-    "git_commit": "4ac60d9c68c12fe094a8caf3671951e839c499ba",
+    "git_commit": "unknown",
     "buffer_metres": 30,
     "n_permutations": 10000,
     "n_bootstrap": 10000,
@@ -12,17 +12,17 @@
   },
   "condition_a": {
     "label": "t0.3",
-    "detections": "outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson",
+    "detections": "/home/shawn/Code/map-reader-llm/outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson",
     "review_yesterday": "/tmp/empty-review-yesterday.csv",
-    "review_today": "results/55maps-text-high-t0.3-generalisation/human-review-multi-buffer.csv",
+    "review_today": "/home/shawn/Code/map-reader-llm/results/55maps-text-high-t0.3-generalisation/human-review-multi-buffer.csv",
     "n_detections": 4350
   },
   "condition_b": {
     "label": "t0.7",
-    "detections": "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
+    "detections": "/home/shawn/Code/map-reader-llm/outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
     "review_yesterday": "/tmp/empty-review-yesterday.csv",
-    "review_today": "results/55maps-text-high-generalisation/human-review-multi-buffer.csv",
-    "n_detections": 4143
+    "review_today": "/home/shawn/Code/map-reader-llm/results/55maps-text-high-generalisation/human-review-multi-buffer.csv",
+    "n_detections": 4164
   },
   "buffer_metres": 30,
   "n_phantoms_a": 0,
@@ -30,8 +30,8 @@
   "n_ref_extended_a": 4744,
   "n_ref_extended_b": 4744,
   "delta_f1_ci": {
-    "lower": 0.00016,
-    "upper": 0.017034,
+    "lower": -0.000918,
+    "upper": 0.01575,
     "n_bootstrap": 10000
   },
   "global_a": {
@@ -43,26 +43,26 @@
     "fn": 1270
   },
   "global_b": {
-    "f1": 0.755486,
-    "precision": 0.810282,
-    "recall": 0.707631,
-    "tp": 3357,
-    "fp": 786,
-    "fn": 1387
+    "f1": 0.756623,
+    "precision": 0.809318,
+    "recall": 0.710371,
+    "tp": 3370,
+    "fp": 794,
+    "fn": 1374
   },
   "permutation_test": {
-    "observed_f1_diff": 0.008535,
-    "p_value": 0.0545,
+    "observed_f1_diff": 0.007397,
+    "p_value": 0.0871,
     "n_permutations": 10000,
     "n_tiles": 8541,
-    "wins_a": 365,
-    "losses_a": 312,
-    "ties": 7864,
+    "wins_a": 361,
+    "losses_a": 314,
+    "ties": 7866,
     "null_distribution": {
-      "mean": 5.2e-05,
-      "std": 0.004388,
-      "percentile_2.5": -0.008591,
-      "percentile_97.5": 0.008723
+      "mean": 4.2e-05,
+      "std": 0.004299,
+      "percentile_2.5": -0.008451,
+      "percentile_97.5": 0.008425
     }
   }
 }

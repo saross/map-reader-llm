@@ -1,6 +1,6 @@
 # Pairwise paired-permutation tests — 55-map corrected detection sets
 
-**Timestamp**: 2026-04-28T01:00:54.886256+00:00
+**Timestamp**: 2026-05-03T00:11:23.405678+00:00
 **Pairs**: T=0.3 vs T=0.7, T=0.3 vs image, T=0.7 vs image, T=0.3 vs T=MIN, T=0.7 vs T=MIN, image vs T=MIN
 **Buffers**: 20, 25, 30, 35, 40, 45, 50, 75, 100, 125 m
 **Permutations**: 10 000 per cell, seed = 42, two-sided
@@ -13,16 +13,16 @@ permutations preserve pairing across the 8 541 evaluation tiles.
 
 ## Headline at canonical R = 50 m
 
-- **T=0.3 vs T=0.7** at R = 50 m: ΔF1 = +0.0177 [+0.0102, +0.0254]; raw p = <0.001, BH-FDR p = <0.001 (significant at q = 0.05 within pair).
+- **T=0.3 vs T=0.7** at R = 50 m: ΔF1 = +0.0165 [+0.0091, +0.0241]; raw p = <0.001, BH-FDR p = <0.001 (significant at q = 0.05 within pair).
 - **T=0.3 vs image** at R = 50 m: ΔF1 = +0.0119 [+0.0026, +0.0211]; raw p = 0.012, BH-FDR p = 0.017 (significant at q = 0.05 within pair).
-- **T=0.7 vs image** at R = 50 m: ΔF1 = -0.0057 [-0.0154, +0.0039]; raw p = 0.239, BH-FDR p = 0.239 (ns at q = 0.05 within pair).
+- **T=0.7 vs image** at R = 50 m: ΔF1 = -0.0046 [-0.0142, +0.0050]; raw p = 0.344, BH-FDR p = 0.344 (ns at q = 0.05 within pair).
 - **T=0.3 vs T=MIN** at R = 50 m: ΔF1 = +0.0473 [+0.0379, +0.0568]; raw p = <0.001, BH-FDR p = <0.001 (significant at q = 0.05 within pair).
-- **T=0.7 vs T=MIN** at R = 50 m: ΔF1 = +0.0296 [+0.0200, +0.0392]; raw p = <0.001, BH-FDR p = <0.001 (significant at q = 0.05 within pair).
+- **T=0.7 vs T=MIN** at R = 50 m: ΔF1 = +0.0308 [+0.0212, +0.0402]; raw p = <0.001, BH-FDR p = <0.001 (significant at q = 0.05 within pair).
 - **image vs T=MIN** at R = 50 m: ΔF1 = +0.0353 [+0.0245, +0.0464]; raw p = <0.001, BH-FDR p = <0.001 (significant at q = 0.05 within pair).
 
 ## Buffers surviving BH-FDR correction (q = 0.05) within pair
 
-- **T=0.3 vs T=0.7**: significant after BH-FDR (q = 0.05) at R ∈ {25 m, 35 m, 40 m, 45 m, 50 m, 75 m, 100 m, 125 m}.
+- **T=0.3 vs T=0.7**: significant after BH-FDR (q = 0.05) at R ∈ {35 m, 40 m, 45 m, 50 m, 75 m, 100 m, 125 m}.
 - **T=0.3 vs image**: significant after BH-FDR (q = 0.05) at R ∈ {20 m, 25 m, 30 m, 35 m, 40 m, 45 m, 50 m}.
 - **T=0.7 vs image**: significant after BH-FDR (q = 0.05) at R ∈ {20 m, 25 m, 30 m, 35 m, 40 m, 45 m, 75 m, 100 m, 125 m}.
 - **T=0.3 vs T=MIN**: significant after BH-FDR (q = 0.05) at R ∈ {25 m, 30 m, 35 m, 40 m, 45 m, 50 m, 75 m, 100 m, 125 m}.
@@ -33,21 +33,21 @@ permutations preserve pairing across the 8 541 evaluation tiles.
 
 Detection sets:
 
-- A (T=0.3): `outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson`
-- B (T=0.7): `outputs/55maps-text-high-generalisation/verified/verified_detections.geojson`
+- A (T=0.3): `/home/shawn/Code/map-reader-llm/outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson`
+- B (T=0.7): `/home/shawn/Code/map-reader-llm/outputs/55maps-text-high-generalisation/verified/verified_detections.geojson`
 
 | R (m) | F1 A | F1 B | ΔF1 (A−B) [95 % CI] | p (raw) | p (BH) | sig (q=0.05) | W/L/T |
 |------:|-----:|-----:|--------------------:|--------:|-------:|:------------:|------:|
-|   20 | 0.6305 | 0.6247 | +0.0058 [-0.0044, +0.0159] | 0.259 | 0.259 | ns | 390/360/7791 |
-|   25 | 0.7187 | 0.7091 | +0.0096 [+0.0008, +0.0186] | 0.037 | 0.047 | **\*** | 384/331/7826 |
-|   30 | 0.7640 | 0.7555 | +0.0085 [+0.0002, +0.0170] | 0.054 | 0.061 | ns | 365/312/7864 |
-|   35 | 0.7867 | 0.7760 | +0.0107 [+0.0025, +0.0191] | 0.014 | 0.020 | **\*** | 365/301/7875 |
-|   40 | 0.7961 | 0.7852 | +0.0109 [+0.0030, +0.0192] | 0.009 | 0.015 | **\*** | 360/297/7884 |
-|   45 | 0.8027 | 0.7888 | +0.0139 [+0.0059, +0.0221] | 0.001 | 0.002 | **\*** | 366/294/7881 |
-|   50 | 0.8437 | 0.8260 | +0.0177 [+0.0102, +0.0254] | <0.001 | <0.001 | **\*** | 383/281/7877 |
-|   75 | 0.8468 | 0.8285 | +0.0183 [+0.0108, +0.0260] | <0.001 | <0.001 | **\*** | 382/271/7888 |
-|  100 | 0.8485 | 0.8308 | +0.0177 [+0.0104, +0.0252] | <0.001 | <0.001 | **\*** | 381/269/7891 |
-|  125 | 0.8500 | 0.8322 | +0.0178 [+0.0104, +0.0254] | <0.001 | <0.001 | **\*** | 384/272/7885 |
+|   20 | 0.6305 | 0.6257 | +0.0048 [-0.0053, +0.0148] | 0.346 | 0.346 | ns | 386/363/7792 |
+|   25 | 0.7187 | 0.7099 | +0.0088 [-0.0001, +0.0179] | 0.054 | 0.068 | ns | 380/334/7827 |
+|   30 | 0.7640 | 0.7566 | +0.0074 [-0.0009, +0.0158] | 0.087 | 0.097 | ns | 361/314/7866 |
+|   35 | 0.7867 | 0.7775 | +0.0092 [+0.0010, +0.0175] | 0.029 | 0.042 | **\*** | 361/304/7876 |
+|   40 | 0.7961 | 0.7865 | +0.0096 [+0.0018, +0.0178] | 0.018 | 0.030 | **\*** | 356/300/7885 |
+|   45 | 0.8027 | 0.7901 | +0.0127 [+0.0047, +0.0208] | 0.003 | 0.005 | **\*** | 362/297/7882 |
+|   50 | 0.8437 | 0.8272 | +0.0165 [+0.0091, +0.0241] | <0.001 | <0.001 | **\*** | 379/284/7878 |
+|   75 | 0.8468 | 0.8299 | +0.0169 [+0.0096, +0.0245] | <0.001 | <0.001 | **\*** | 378/273/7890 |
+|  100 | 0.8485 | 0.8324 | +0.0161 [+0.0088, +0.0235] | <0.001 | <0.001 | **\*** | 376/271/7894 |
+|  125 | 0.8500 | 0.8338 | +0.0162 [+0.0089, +0.0236] | <0.001 | <0.001 | **\*** | 379/274/7888 |
 
 Notes — wins / losses / ties are tile-level comparisons (per-tile F1_A vs F1_B); ΔF1 is the aggregate micro-average difference; CI is a 10 000-iteration tile-level paired bootstrap.
 
@@ -77,21 +77,21 @@ Notes — wins / losses / ties are tile-level comparisons (per-tile F1_A vs F1_B
 
 Detection sets:
 
-- A (T=0.7): `outputs/55maps-text-high-generalisation/verified/verified_detections.geojson`
-- B (image): `outputs/55maps-image-generalisation/verified/verified_detections.geojson`
+- A (T=0.7): `/home/shawn/Code/map-reader-llm/outputs/55maps-text-high-generalisation/verified/verified_detections.geojson`
+- B (image): `/home/shawn/Code/map-reader-llm/outputs/55maps-image-generalisation/verified/verified_detections.geojson`
 
 | R (m) | F1 A | F1 B | ΔF1 (A−B) [95 % CI] | p (raw) | p (BH) | sig (q=0.05) | W/L/T |
 |------:|-----:|-----:|--------------------:|--------:|-------:|:------------:|------:|
-|   20 | 0.6247 | 0.5070 | +0.1178 [+0.1037, +0.1317] | <0.001 | <0.001 | **\*** | 794/415/7332 |
-|   25 | 0.7091 | 0.6196 | +0.0895 [+0.0764, +0.1027] | <0.001 | <0.001 | **\*** | 739/455/7347 |
-|   30 | 0.7555 | 0.6872 | +0.0683 [+0.0560, +0.0806] | <0.001 | <0.001 | **\*** | 666/465/7410 |
-|   35 | 0.7760 | 0.7261 | +0.0499 [+0.0384, +0.0614] | <0.001 | <0.001 | **\*** | 619/492/7430 |
-|   40 | 0.7852 | 0.7501 | +0.0351 [+0.0242, +0.0462] | <0.001 | <0.001 | **\*** | 571/515/7455 |
-|   45 | 0.7888 | 0.7644 | +0.0244 [+0.0138, +0.0349] | <0.001 | <0.001 | **\*** | 535/526/7480 |
-|   50 | 0.8260 | 0.8317 | -0.0057 [-0.0154, +0.0039] | 0.239 | 0.239 | ns | 439/602/7500 |
-|   75 | 0.8285 | 0.8477 | -0.0191 [-0.0283, -0.0099] | <0.001 | <0.001 | **\*** | 405/635/7501 |
-|  100 | 0.8308 | 0.8521 | -0.0212 [-0.0304, -0.0121] | <0.001 | <0.001 | **\*** | 394/645/7502 |
-|  125 | 0.8322 | 0.8538 | -0.0216 [-0.0307, -0.0126] | <0.001 | <0.001 | **\*** | 393/647/7501 |
+|   20 | 0.6257 | 0.5070 | +0.1188 [+0.1048, +0.1326] | <0.001 | <0.001 | **\*** | 795/412/7334 |
+|   25 | 0.7099 | 0.6196 | +0.0903 [+0.0774, +0.1034] | <0.001 | <0.001 | **\*** | 740/452/7349 |
+|   30 | 0.7566 | 0.6872 | +0.0694 [+0.0573, +0.0817] | <0.001 | <0.001 | **\*** | 666/461/7414 |
+|   35 | 0.7775 | 0.7261 | +0.0514 [+0.0401, +0.0628] | <0.001 | <0.001 | **\*** | 620/488/7433 |
+|   40 | 0.7865 | 0.7501 | +0.0364 [+0.0256, +0.0475] | <0.001 | <0.001 | **\*** | 574/510/7457 |
+|   45 | 0.7901 | 0.7644 | +0.0257 [+0.0152, +0.0362] | <0.001 | <0.001 | **\*** | 538/520/7483 |
+|   50 | 0.8272 | 0.8317 | -0.0046 [-0.0142, +0.0050] | 0.344 | 0.344 | ns | 440/598/7503 |
+|   75 | 0.8299 | 0.8477 | -0.0178 [-0.0269, -0.0086] | <0.001 | <0.001 | **\*** | 407/630/7504 |
+|  100 | 0.8324 | 0.8521 | -0.0197 [-0.0287, -0.0107] | <0.001 | <0.001 | **\*** | 397/639/7505 |
+|  125 | 0.8338 | 0.8538 | -0.0200 [-0.0289, -0.0112] | <0.001 | <0.001 | **\*** | 396/641/7504 |
 
 Notes — wins / losses / ties are tile-level comparisons (per-tile F1_A vs F1_B); ΔF1 is the aggregate micro-average difference; CI is a 10 000-iteration tile-level paired bootstrap.
 
@@ -121,21 +121,21 @@ Notes — wins / losses / ties are tile-level comparisons (per-tile F1_A vs F1_B
 
 Detection sets:
 
-- A (T=0.7): `outputs/55maps-text-high-generalisation/verified/verified_detections.geojson`
-- B (T=MIN): `outputs/55maps-text-min-generalisation/verified/verified_detections.geojson`
+- A (T=0.7): `/home/shawn/Code/map-reader-llm/outputs/55maps-text-high-generalisation/verified/verified_detections.geojson`
+- B (T=MIN): `/home/shawn/Code/map-reader-llm/outputs/55maps-text-min-generalisation/verified/verified_detections.geojson`
 
 | R (m) | F1 A | F1 B | ΔF1 (A−B) [95 % CI] | p (raw) | p (BH) | sig (q=0.05) | W/L/T |
 |------:|-----:|-----:|--------------------:|--------:|-------:|:------------:|------:|
-|   20 | 0.6247 | 0.6199 | +0.0049 [-0.0073, +0.0174] | 0.448 | 0.448 | ns | 497/463/7581 |
-|   25 | 0.7091 | 0.6922 | +0.0170 [+0.0054, +0.0287] | 0.003 | 0.004 | **\*** | 531/434/7576 |
-|   30 | 0.7555 | 0.7296 | +0.0259 [+0.0149, +0.0369] | <0.001 | <0.001 | **\*** | 534/392/7615 |
-|   35 | 0.7760 | 0.7486 | +0.0273 [+0.0170, +0.0378] | <0.001 | <0.001 | **\*** | 533/370/7638 |
-|   40 | 0.7852 | 0.7561 | +0.0291 [+0.0187, +0.0396] | <0.001 | <0.001 | **\*** | 535/361/7645 |
-|   45 | 0.7888 | 0.7598 | +0.0290 [+0.0187, +0.0393] | <0.001 | <0.001 | **\*** | 531/359/7651 |
-|   50 | 0.8260 | 0.7964 | +0.0296 [+0.0200, +0.0392] | <0.001 | <0.001 | **\*** | 545/355/7641 |
-|   75 | 0.8285 | 0.7991 | +0.0294 [+0.0199, +0.0389] | <0.001 | <0.001 | **\*** | 540/352/7649 |
-|  100 | 0.8308 | 0.8003 | +0.0305 [+0.0211, +0.0399] | <0.001 | <0.001 | **\*** | 547/348/7646 |
-|  125 | 0.8322 | 0.8007 | +0.0315 [+0.0221, +0.0409] | <0.001 | <0.001 | **\*** | 551/345/7645 |
+|   20 | 0.6257 | 0.6199 | +0.0059 [-0.0063, +0.0182] | 0.354 | 0.354 | ns | 500/460/7581 |
+|   25 | 0.7099 | 0.6922 | +0.0178 [+0.0063, +0.0293] | 0.002 | 0.002 | **\*** | 534/431/7576 |
+|   30 | 0.7566 | 0.7296 | +0.0270 [+0.0161, +0.0380] | <0.001 | <0.001 | **\*** | 536/389/7616 |
+|   35 | 0.7775 | 0.7486 | +0.0289 [+0.0185, +0.0392] | <0.001 | <0.001 | **\*** | 536/367/7638 |
+|   40 | 0.7865 | 0.7561 | +0.0304 [+0.0201, +0.0408] | <0.001 | <0.001 | **\*** | 538/358/7645 |
+|   45 | 0.7901 | 0.7598 | +0.0303 [+0.0201, +0.0404] | <0.001 | <0.001 | **\*** | 534/357/7650 |
+|   50 | 0.8272 | 0.7964 | +0.0308 [+0.0212, +0.0402] | <0.001 | <0.001 | **\*** | 548/353/7640 |
+|   75 | 0.8299 | 0.7991 | +0.0308 [+0.0214, +0.0403] | <0.001 | <0.001 | **\*** | 543/349/7649 |
+|  100 | 0.8324 | 0.8003 | +0.0321 [+0.0227, +0.0416] | <0.001 | <0.001 | **\*** | 551/344/7646 |
+|  125 | 0.8338 | 0.8007 | +0.0331 [+0.0238, +0.0425] | <0.001 | <0.001 | **\*** | 555/341/7645 |
 
 Notes — wins / losses / ties are tile-level comparisons (per-tile F1_A vs F1_B); ΔF1 is the aggregate micro-average difference; CI is a 10 000-iteration tile-level paired bootstrap.
 
@@ -160,95 +160,6 @@ Detection sets:
 |  125 | 0.8538 | 0.8007 | +0.0531 [+0.0428, +0.0637] | <0.001 | <0.001 | **\*** | 817/397/7327 |
 
 Notes — wins / losses / ties are tile-level comparisons (per-tile F1_A vs F1_B); ΔF1 is the aggregate micro-average difference; CI is a 10 000-iteration tile-level paired bootstrap.
-
-## F1 tier rankings (greedy clique, BH-FDR within-buffer family)
-
-### Methodology note
-
-Tiers built via greedy clique on BH-FDR-corrected paired-permutation tests within the 6-pair family at each buffer (matrix-tier convention from `results/leaderboard/per-architecture/README.md`). Each run is added to the current tier if it is BH-adjusted indistinguishable (q ≥ threshold) from ALL current tier members; otherwise it starts a new tier. q=0.05 is the base threshold; q=0.01 is the sensitivity pass.
-
-Source: per-pair JSONs in `paired-{t0.3-vs-t0.7,t0.3-vs-image,t0.7-vs-image,t0.3-vs-tmin,t0.7-vs-tmin,image-vs-tmin}/permutation-R{50,100}m.json`. F1 + 95 % CI from `results/<run>/corrected-f1-multi-buffer/summary.json`.
-
-### R = 50 m (canonical operating point)
-
-F1 ranking: T=0.3 > image > T=0.7 > T=MIN
-
-#### Pairwise BH-FDR-adjusted p-values (6-pair family at R = 50 m)
-
-| Pair | ΔF1 | BH-adj p | Sig at q=0.05 | Sig at q=0.01 |
-|---|---:|---:|:--:|:--:|
-| T=0.3 vs T=0.7 | +0.018 | <0.001 | ✓ | ✓ |
-| T=0.3 vs image | +0.012 | 0.014 | ✓ | ✗ |
-| T=0.7 vs image | −0.006 | 0.239 | ✗ | ✗ |
-| T=0.3 vs T=MIN | +0.047 | <0.001 | ✓ | ✓ |
-| T=0.7 vs T=MIN | +0.030 | <0.001 | ✓ | ✓ |
-| image vs T=MIN | +0.035 | <0.001 | ✓ | ✓ |
-
-#### Tier table at q = 0.05 (base)
-
-| Tier | Run | F1 [95 % CI] |
-|:---:|:---|:---|
-| **1** | T=0.3 (text-HIGH) | **0.8437** [0.8344, 0.8524] |
-| **2** | image | 0.8317 [0.8225, 0.8407] |
-| **2** | T=0.7 (text-HIGH) | 0.8260 [0.8159, 0.8357] |
-| **3** | T=MIN | 0.7964 [0.7851, 0.8072] |
-
-T=0.3 alone in Tier 1 — significantly above image, T=0.7 and T=MIN. image and T=0.7 indistinguishable at q=0.05 (BH-adj p=0.239). T=MIN significantly below all three.
-
-#### Tier table at q = 0.01 (sensitivity)
-
-| Tier | Run | F1 [95 % CI] |
-|:---:|:---|:---|
-| **1** | T=0.3 (text-HIGH) | **0.8437** [0.8344, 0.8524] |
-| **1** | image | 0.8317 [0.8225, 0.8407] |
-| **2** | T=0.7 (text-HIGH) | 0.8260 [0.8159, 0.8357] |
-| **3** | T=MIN | 0.7964 [0.7851, 0.8072] |
-
-At the stricter q=0.01, the T=0.3-vs-image distinction collapses (BH-adj p=0.014 > 0.01) — image moves up to Tier 1. T=0.7 now alone in Tier 2.
-
-### R = 100 m
-
-F1 ranking: image > T=0.3 > T=0.7 > T=MIN — rank reversal at the top vs R=50 m.
-
-#### Pairwise BH-FDR-adjusted p-values (6-pair family at R = 100 m)
-
-| Pair | ΔF1 | BH-adj p | Sig at q=0.05 | Sig at q=0.01 |
-|---|---:|---:|:--:|:--:|
-| T=0.3 vs T=0.7 | +0.018 | <0.001 | ✓ | ✓ |
-| T=0.3 vs image | −0.004 | 0.423 | ✗ | ✗ |
-| T=0.7 vs image | −0.021 | <0.001 | ✓ | ✓ |
-| T=0.3 vs T=MIN | +0.048 | <0.001 | ✓ | ✓ |
-| T=0.7 vs T=MIN | +0.030 | <0.001 | ✓ | ✓ |
-| image vs T=MIN | +0.052 | <0.001 | ✓ | ✓ |
-
-#### Tier table at q = 0.05 (and q = 0.01 — identical)
-
-| Tier | Run | F1 [95 % CI] |
-|:---:|:---|:---|
-| **1** | image | **0.8521** [0.8434, 0.8602] |
-| **1** | T=0.3 (text-HIGH) | 0.8485 [0.8394, 0.8571] |
-| **2** | T=0.7 (text-HIGH) | 0.8308 [0.8209, 0.8404] |
-| **3** | T=MIN | 0.8003 [0.7892, 0.8110] |
-
-image and T=0.3 indistinguishable at R=100 m (BH-adj p=0.423). T=0.7 significantly below both. T=MIN significantly below T=0.7. Tier structure stable across q=0.05 and q=0.01 — the only marginal pair at R=50 m has fully collapsed at R=100 m.
-
-### Tier mobility between R = 50 m and R = 100 m
-
-| Run | R=50 m tier (q=0.05) | R=100 m tier | Δ |
-|---|:---:|:---:|---|
-| **image** | 2 | **1** | promoted |
-| T=0.3 | 1 | 1 | unchanged |
-| T=0.7 | 2 | 2 | unchanged |
-| T=MIN | 3 | 3 | unchanged |
-
-The buffer-rank-reversal documented in **Obs 291** and **Obs 292** (text wins at tight buffer; image overtakes at wider buffer) shows up directly in the tier structure: image rises from Tier 2 to Tier 1 between R=50 m and R=100 m. T=0.3 holds the top throughout (joint at R=100 m); T=0.7 sits at Tier 2 throughout; T=MIN is bottom throughout.
-
-### Paper-relevant summary
-
-- **R=50 m operating point (q=0.05)**: T=0.3 is the unambiguous winner, alone in Tier 1.
-- **R=100 m practitioner-broader buffer**: image catches up to T=0.3; they share Tier 1.
-- **T=0.7 sits in Tier 2 at every buffer** — never the leader, never the bottom, statistically distinguishable from both extremes at canonical R ≥ 50 m.
-- **T=MIN is always Tier 3** — significantly below everything else at every buffer; the in-corpus confirmation that HIGH thinking earns its tokens (see Obs 297).
 
 ## Reproducibility
 
