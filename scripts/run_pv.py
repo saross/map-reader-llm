@@ -987,6 +987,7 @@ def _verify_realtime(
                 crops_base_dir=crops_base_dir,
                 iterations=iterations,
                 candidate_id_str=f"cand_{cand['candidate_id']:04d}",
+                metadata_tracker=metadata_tracker,
             ): cand
             for cand in candidates
         }

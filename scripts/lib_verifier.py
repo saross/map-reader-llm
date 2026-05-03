@@ -51,6 +51,7 @@ from __future__ import annotations
 import dataclasses
 import json
 import logging
+import random
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -70,8 +71,19 @@ _PROJECT_ROOT = Path(__file__).resolve().parent.parent
 _EXAMPLES_DIR = _PROJECT_ROOT / "inputs" / "examples"
 _INSTRUCTIONS_DIR = _PROJECT_ROOT / "prompts" / "system-instructions"
 
-# Retry configuration for real-time API calls
-_MAX_RETRIES = 3
+# Retry configuration for real-time API calls.
+# Mirrors the proposer's policy in 4_detect_mounds_batch.py:673 so the
+# verifier and proposer paths handle transient failures with the same
+# tolerance — see reports/verifier-silent-drop-root-cause-2026-05-03.md
+# for the audit that motivated raising _MAX_RETRIES from 3 to 15 and
+# adopting error-class-specific backoff with jitter.
+_MAX_RETRIES = 15
+_BASE_WAIT_SECONDS = 30
+_MAX_BACKOFF_SECONDS = 300
+
+# Preserved for back-compat with any caller still importing the legacy
+# fixed-backoff schedule. Deprecated — new code should rely on the
+# error-class branching inside _call_verifier_api.
 _RETRY_BACKOFF_SECONDS = [2, 4, 8]
 
 
@@ -696,6 +708,7 @@ def verify_candidate_realtime(
     crops_base_dir: Path,
     iterations: int = 1,
     candidate_id_str: str = "",
+    metadata_tracker: Any = None,
 ) -> tuple[dict[str, dict], list]:
     """Verify a single candidate via the real-time API.
 
@@ -718,6 +731,10 @@ def verify_candidate_realtime(
         crops_base_dir: Base directory for crop files.
         iterations: Number of verification passes (1 = single, >1 = consensus).
         candidate_id_str: Human-readable ID for logging (e.g., ``"cand_0042"``).
+        metadata_tracker: Optional ``LLMMetadataTracker``. When supplied,
+            ``_call_verifier_api`` calls ``log_retry()`` per attempt for
+            parity with the proposer pipeline. Default ``None`` keeps
+            back-compat with callers that have not been updated.
 
     Returns:
         Tuple of:
@@ -738,8 +755,25 @@ def verify_candidate_realtime(
             candidate, config, crops_base_dir, reference_items,
         )
     except FileNotFoundError as e:
+        # Propagate the failure reason via a synthetic metadata entry
+        # so run_pv.py's _summarise_failure_reason produces an
+        # informative ``failed_items[]`` reason rather than the generic
+        # "no result returned (retries exhausted)" fallback.
+        from scripts.lib_llm_metadata import (
+            LLMProvider,
+            LLMResponseMetadata,
+        )
+
         logger.warning("Skipping candidate %s: %s", cid, e)
-        return {}, []
+        synthetic = LLMResponseMetadata(
+            provider=LLMProvider.GEMINI.value,
+            model_requested=model_name,
+            item_id=f"{candidate_id_str}_iter1",
+            attempt_number=1,
+            parse_success=False,
+            parse_error=f"CROP_FILE_MISSING: {e}",
+        )
+        return {}, [synthetic]
 
     sdk_parts = content_items_to_sdk_parts(items)
     content = types.Content(parts=sdk_parts)
@@ -761,6 +795,7 @@ def verify_candidate_realtime(
             gen_config=gen_config,
             iteration_id=iteration_id,
             metadata_list=metadata_list,
+            metadata_tracker=metadata_tracker,
         )
 
         if parsed is not None:
@@ -825,11 +860,28 @@ def _call_verifier_api(
     gen_config: Any,
     iteration_id: str,
     metadata_list: list,
+    metadata_tracker: Any = None,
 ) -> dict | None:
-    """Make a single verifier API call with retry logic.
+    """Make a single verifier API call with proposer-parity retry logic.
 
-    Retries up to ``_MAX_RETRIES`` times with exponential backoff on
-    transient API errors and JSON parse failures.
+    Retries up to ``_MAX_RETRIES`` (15) times with error-class-specific
+    backoff:
+
+    - 429 / ``ResourceExhausted`` → exponential with jitter, capped at
+      ``_MAX_BACKOFF_SECONDS``.
+    - 503 / ``InternalServerError`` → 30 ± 10 s.
+    - ``DeadlineExceeded`` → 30 ± 10 s.
+    - 404 (model not found) → fatal, return None immediately.
+    - ``MAX_TOKENS`` finish reason → 5 s wait then retry (deterministic
+      truncation needs a clean attempt rather than backoff).
+    - JSON parse / ``_unwrap_verdict_payload`` failures → 30 ± 10 s.
+    - Other → 20 ± 10 s for first two attempts, then break.
+
+    Mirrors the proposer's policy in
+    ``4_detect_mounds_batch.py:process_single_tile`` so transient noise
+    does not exhaust retries faster than it does on the proposer side.
+    See ``reports/verifier-silent-drop-root-cause-2026-05-03.md`` for
+    the audit that motivated this port.
 
     Args:
         client: Initialised ``google.genai.Client``.
@@ -837,19 +889,33 @@ def _call_verifier_api(
         content: SDK ``Content`` object with prompt parts.
         gen_config: SDK ``GenerateContentConfig``.
         iteration_id: ID for metadata tracking.
-        metadata_list: Mutable list to append metadata to.
+        metadata_list: Mutable list to append per-attempt metadata to.
+        metadata_tracker: Optional ``LLMMetadataTracker`` for
+            ``log_retry`` parity with the proposer. Default ``None``
+            keeps back-compat with un-updated callers (the
+            ``metadata_list`` contract is unchanged).
 
     Returns:
-        Parsed result dict, or None if all retries failed.
+        Parsed verdict dict, or ``None`` if retries exhausted, the
+        response was deterministically refused (safety block / empty
+        response), or the model was unresolvable (404).
     """
     from scripts.lib_llm_metadata import (
-        extract_gemini_metadata,
-        create_error_metadata,
         LLMProvider,
+        create_error_metadata,
+        extract_gemini_metadata,
     )
 
     for attempt in range(1, _MAX_RETRIES + 1):
         request_start = datetime.now(timezone.utc)
+        # Backoff seconds set inside try/except, slept at end of loop
+        # body so error-class branches stay readable. Mirrors the
+        # proposer's deferred-sleep pattern.
+        backoff_seconds = 0.0
+        is_fatal = False
+        should_break = False
+        response_metadata = None  # avoid unbound warning in except
+
         try:
             response = client.models.generate_content(
                 model=model_name,
@@ -868,6 +934,37 @@ def _call_verifier_api(
                 attempt=attempt,
             )
             metadata_list.append(response_metadata)
+
+            # MAX_TOKENS finish-reason check (proposer parity, mode #9
+            # in the silent-drop taxonomy). Deterministic truncation —
+            # retry once with a small wait rather than running parsing
+            # over a guaranteed-bad prefix.
+            if (
+                hasattr(response, "candidates")
+                and response.candidates
+            ):
+                reason = response.candidates[0].finish_reason
+                reason_str = str(reason).upper()
+                if "MAX" in reason_str or "TOKEN" in reason_str:
+                    response_metadata.parse_success = False
+                    response_metadata.parse_error = (
+                        f"MAX_TOKENS (Finish Reason: {reason})"
+                    )
+                    if metadata_tracker is not None:
+                        metadata_tracker.log_retry(
+                            iteration_id,
+                            attempt,
+                            response_metadata.parse_error,
+                            error_type="other",
+                        )
+                    logger.warning(
+                        "%s attempt %d: MAX_TOKENS (%s) — retrying",
+                        iteration_id, attempt, reason,
+                    )
+                    if attempt < _MAX_RETRIES:
+                        time.sleep(5)
+                        continue
+                    return None
 
             # Access response text — raises ValueError if safety-blocked
             # or no candidates returned. Handle this distinctly from
@@ -897,15 +994,10 @@ def _call_verifier_api(
 
             # Parse JSON response. ``parse_response_with_repair``
             # applies the same three-tier malformed-JSON pipeline as
-            # the proposer (lib_batch_api.py:884) — trailing-comma
-            # repair, json5 fallback, then longest-valid-prefix scan
-            # — recovering ~92% of historical malformed responses
-            # before retry exhaustion. ``_unwrap_verdict_payload``
+            # the proposer (lib_batch_api.py:884). ``_unwrap_verdict_payload``
             # then tolerates the rare list-shaped response that
             # triggered the ``cand_01563`` parser bug (planning
-            # backlog item #10) by unwrapping a single-element list;
-            # non-conformant shapes raise ``ValueError`` and are
-            # handled like a JSON parse failure below.
+            # backlog item #10).
             txt = txt.replace("```json", "").replace("```", "").strip()
             data = parse_response_with_repair(txt)
             verdict = _unwrap_verdict_payload(data)
@@ -922,18 +1014,21 @@ def _call_verifier_api(
             }
 
         except (json.JSONDecodeError, ValueError) as e:
-            # Metadata already tracked above; mark parse failure
-            response_metadata.parse_success = False
-            response_metadata.parse_error = str(e)
-
+            # Metadata already tracked above; mark parse failure.
+            if response_metadata is not None:
+                response_metadata.parse_success = False
+                response_metadata.parse_error = str(e)
+            if metadata_tracker is not None:
+                metadata_tracker.log_retry(
+                    iteration_id, attempt, str(e), error_type="other",
+                )
             if attempt < _MAX_RETRIES:
-                backoff = _RETRY_BACKOFF_SECONDS[attempt - 1]
+                backoff_seconds = 30 + random.uniform(0, 10)
                 logger.warning(
                     "%s attempt %d: JSON parse error (%s), "
-                    "retrying in %ds",
-                    iteration_id, attempt, e, backoff,
+                    "retrying in %.1fs",
+                    iteration_id, attempt, e, backoff_seconds,
                 )
-                time.sleep(backoff)
             else:
                 logger.warning(
                     "%s: JSON parse failed after %d attempts: %s",
@@ -941,7 +1036,7 @@ def _call_verifier_api(
                 )
                 return None
 
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001 — categorised below
             # Track error metadata
             error_metadata = create_error_metadata(
                 error=e,
@@ -952,22 +1047,70 @@ def _call_verifier_api(
                 attempt=attempt,
             )
             metadata_list.append(error_metadata)
+            error_str = str(e)
 
-            if attempt < _MAX_RETRIES:
-                backoff = _RETRY_BACKOFF_SECONDS[attempt - 1]
-                logger.warning(
-                    "%s attempt %d: API error (%s), retrying in %ds",
-                    iteration_id, attempt, e, backoff,
+            # Categorise for backoff and retry tracking — mirrors the
+            # proposer's branches in 4_detect_mounds_batch.py:474–514.
+            if "429" in error_str or "ResourceExhausted" in error_str:
+                if metadata_tracker is not None:
+                    metadata_tracker.log_retry(
+                        iteration_id, attempt, error_str,
+                        error_type="rate_limit",
+                    )
+                jittered = (
+                    _BASE_WAIT_SECONDS * (2 ** (attempt - 1))
+                    + random.uniform(0, _BASE_WAIT_SECONDS)
                 )
-                time.sleep(backoff)
+                backoff_seconds = min(jittered, _MAX_BACKOFF_SECONDS)
+            elif "503" in error_str or "InternalServerError" in error_str:
+                if metadata_tracker is not None:
+                    metadata_tracker.log_retry(
+                        iteration_id, attempt, error_str,
+                        error_type="server_error",
+                    )
+                backoff_seconds = 30 + random.uniform(0, 10)
+            elif "DeadlineExceeded" in error_str:
+                if metadata_tracker is not None:
+                    metadata_tracker.log_retry(
+                        iteration_id, attempt, error_str,
+                        error_type="timeout",
+                    )
+                backoff_seconds = 30 + random.uniform(0, 10)
+            elif "404" in error_str and "models/" in error_str:
+                logger.error(
+                    "%s: model '%s' not found (404). Terminating.",
+                    iteration_id, model_name,
+                )
+                is_fatal = True
             else:
+                if metadata_tracker is not None:
+                    metadata_tracker.log_retry(
+                        iteration_id, attempt, error_str,
+                        error_type="other",
+                    )
                 logger.warning(
-                    "%s: API call failed after %d attempts: %s",
-                    iteration_id, _MAX_RETRIES, e,
+                    "%s attempt %d: unclassified API error: %s",
+                    iteration_id, attempt, e,
                 )
-                return None
+                if attempt < 2:
+                    backoff_seconds = 20 + random.uniform(0, 10)
+                else:
+                    should_break = True
 
-    return None  # Should not reach here, but satisfies type checker
+        # Fatal / break / sleep are handled outside the try/except so
+        # the control flow matches the proposer.
+        if is_fatal:
+            return None
+        if should_break:
+            break
+        if backoff_seconds > 0 and attempt < _MAX_RETRIES:
+            time.sleep(backoff_seconds)
+
+    logger.warning(
+        "%s: API call failed after %d attempts",
+        iteration_id, _MAX_RETRIES,
+    )
+    return None
 
 
 # =========================================================================
