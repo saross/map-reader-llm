@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "timestamp": "2026-05-03T00:49:24.588174+00:00",
+    "timestamp": "2026-05-03T04:22:28.623321+00:00",
     "script": "paired_permutation_corrected_55maps.py",
     "version": "1.0.0",
-    "git_commit": "f6eaeca95cf8f42df4cc739146d50b51f5ea30d9",
+    "git_commit": "c816d4bd42fb87a897698a03066dea077ccd576a",
     "buffer_metres": 35,
     "n_permutations": 10000,
     "n_bootstrap": 10000,
@@ -22,7 +22,7 @@
     "detections": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
     "review_yesterday": "results/55maps-image-generalisation/human-review.csv",
     "review_today": "results/55maps-image-generalisation/human-review-multi-buffer.csv",
-    "n_detections": 4665
+    "n_detections": 4680
   },
   "buffer_metres": 35,
   "n_phantoms_a": 0,
@@ -30,8 +30,8 @@
   "n_ref_extended_a": 4745,
   "n_ref_extended_b": 4745,
   "delta_f1_ci": {
-    "lower": 0.040334,
-    "upper": 0.063019,
+    "lower": 0.038718,
+    "upper": 0.061467,
     "n_bootstrap": 10000
   },
   "global_a": {
@@ -43,26 +43,26 @@
     "fn": 1281
   },
   "global_b": {
-    "f1": 0.726036,
-    "precision": 0.732262,
-    "recall": 0.719916,
-    "tp": 3416,
-    "fp": 1249,
-    "fn": 1329
+    "f1": 0.727639,
+    "precision": 0.732692,
+    "recall": 0.722655,
+    "tp": 3429,
+    "fp": 1251,
+    "fn": 1316
   },
   "permutation_test": {
-    "observed_f1_diff": 0.051604,
+    "observed_f1_diff": 0.050001,
     "p_value": 0.0,
     "n_permutations": 10000,
     "n_tiles": 8541,
-    "wins_a": 620,
-    "losses_a": 487,
-    "ties": 7434,
+    "wins_a": 614,
+    "losses_a": 489,
+    "ties": 7438,
     "null_distribution": {
-      "mean": 1.1e-05,
-      "std": 0.005949,
-      "percentile_2.5": -0.011761,
-      "percentile_97.5": 0.011705
+      "mean": 1.7e-05,
+      "std": 0.005942,
+      "percentile_2.5": -0.01176,
+      "percentile_97.5": 0.011537
     }
   }
 }

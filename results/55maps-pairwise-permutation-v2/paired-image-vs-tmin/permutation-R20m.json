@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "timestamp": "2026-04-28T00:59:03.760511+00:00",
+    "timestamp": "2026-05-03T04:25:29.933027+00:00",
     "script": "paired_permutation_corrected_55maps.py",
     "version": "1.0.0",
-    "git_commit": "dee80bdc97891186b07c01b4672c246a4c462d68",
+    "git_commit": "c816d4bd42fb87a897698a03066dea077ccd576a",
     "buffer_metres": 20,
     "n_permutations": 10000,
     "n_bootstrap": 10000,
@@ -15,54 +15,54 @@
     "detections": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
     "review_yesterday": "results/55maps-image-generalisation/human-review.csv",
     "review_today": "results/55maps-image-generalisation/human-review-multi-buffer.csv",
-    "n_detections": 4665
+    "n_detections": 4680
   },
   "condition_b": {
     "label": "tmin",
     "detections": "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson",
     "review_yesterday": "/tmp/empty-review-yesterday.csv",
     "review_today": "results/55maps-text-min-generalisation/human-review-multi-buffer.csv",
-    "n_detections": 3861
+    "n_detections": 3865
   },
   "buffer_metres": 20,
   "n_phantoms_a": 0,
   "n_phantoms_b": 0,
-  "n_ref_extended_a": 4744,
-  "n_ref_extended_b": 4744,
+  "n_ref_extended_a": 4745,
+  "n_ref_extended_b": 4745,
   "delta_f1_ci": {
-    "lower": -0.128618,
-    "upper": -0.096788,
+    "lower": -0.127999,
+    "upper": -0.096073,
     "n_bootstrap": 10000
   },
   "global_a": {
-    "f1": 0.506961,
-    "precision": 0.511254,
-    "recall": 0.50274,
-    "tp": 2385,
-    "fp": 2280,
-    "fn": 2359
+    "f1": 0.508011,
+    "precision": 0.511538,
+    "recall": 0.504531,
+    "tp": 2394,
+    "fp": 2286,
+    "fn": 2351
   },
   "global_b": {
-    "f1": 0.619872,
-    "precision": 0.690754,
-    "recall": 0.562184,
-    "tp": 2667,
-    "fp": 1194,
-    "fn": 2077
+    "f1": 0.620209,
+    "precision": 0.690815,
+    "recall": 0.562698,
+    "tp": 2670,
+    "fp": 1195,
+    "fn": 2075
   },
   "permutation_test": {
-    "observed_f1_diff": -0.112911,
+    "observed_f1_diff": -0.112198,
     "p_value": 0.0,
     "n_permutations": 10000,
     "n_tiles": 8541,
-    "wins_a": 516,
-    "losses_a": 795,
-    "ties": 7230,
+    "wins_a": 519,
+    "losses_a": 791,
+    "ties": 7231,
     "null_distribution": {
-      "mean": 3.3e-05,
-      "std": 0.008654,
-      "percentile_2.5": -0.017006,
-      "percentile_97.5": 0.01713
+      "mean": 3.2e-05,
+      "std": 0.008647,
+      "percentile_2.5": -0.01691,
+      "percentile_97.5": 0.016988
     }
   }
 }

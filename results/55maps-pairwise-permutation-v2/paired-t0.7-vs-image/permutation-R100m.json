@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "timestamp": "2026-05-03T00:49:59.131978+00:00",
+    "timestamp": "2026-05-03T04:23:03.096427+00:00",
     "script": "paired_permutation_corrected_55maps.py",
     "version": "1.0.0",
-    "git_commit": "f6eaeca95cf8f42df4cc739146d50b51f5ea30d9",
+    "git_commit": "c816d4bd42fb87a897698a03066dea077ccd576a",
     "buffer_metres": 100,
     "n_permutations": 10000,
     "n_bootstrap": 10000,
@@ -22,16 +22,16 @@
     "detections": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
     "review_yesterday": "results/55maps-image-generalisation/human-review.csv",
     "review_today": "results/55maps-image-generalisation/human-review-multi-buffer.csv",
-    "n_detections": 4665
+    "n_detections": 4680
   },
   "buffer_metres": 100,
   "n_phantoms_a": 308,
-  "n_phantoms_b": 642,
+  "n_phantoms_b": 643,
   "n_ref_extended_a": 5053,
-  "n_ref_extended_b": 5387,
+  "n_ref_extended_b": 5388,
   "delta_f1_ci": {
-    "lower": -0.02856,
-    "upper": -0.010516,
+    "lower": -0.030222,
+    "upper": -0.012121,
     "n_bootstrap": 10000
   },
   "global_a": {
@@ -43,26 +43,26 @@
     "fn": 1217
   },
   "global_b": {
-    "f1": 0.85197,
-    "precision": 0.917899,
-    "recall": 0.794877,
-    "tp": 4282,
+    "f1": 0.853596,
+    "precision": 0.918162,
+    "recall": 0.797513,
+    "tp": 4297,
     "fp": 383,
-    "fn": 1105
+    "fn": 1091
   },
   "permutation_test": {
-    "observed_f1_diff": -0.019595,
+    "observed_f1_diff": -0.021221,
     "p_value": 0.0,
     "n_permutations": 10000,
     "n_tiles": 8541,
-    "wins_a": 396,
-    "losses_a": 638,
-    "ties": 7507,
+    "wins_a": 389,
+    "losses_a": 640,
+    "ties": 7512,
     "null_distribution": {
-      "mean": -5e-06,
-      "std": 0.004553,
-      "percentile_2.5": -0.00889,
-      "percentile_97.5": 0.00887
+      "mean": 5e-06,
+      "std": 0.004558,
+      "percentile_2.5": -0.008911,
+      "percentile_97.5": 0.008867
     }
   }
 }

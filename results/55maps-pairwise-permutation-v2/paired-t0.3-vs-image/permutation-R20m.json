@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "timestamp": "2026-04-27T11:35:05.877382+00:00",
+    "timestamp": "2026-05-03T04:20:59.150649+00:00",
     "script": "paired_permutation_corrected_55maps.py",
     "version": "1.0.0",
-    "git_commit": "4ac60d9c68c12fe094a8caf3671951e839c499ba",
+    "git_commit": "c816d4bd42fb87a897698a03066dea077ccd576a",
     "buffer_metres": 20,
     "n_permutations": 10000,
     "n_bootstrap": 10000,
@@ -22,47 +22,47 @@
     "detections": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
     "review_yesterday": "results/55maps-image-generalisation/human-review.csv",
     "review_today": "results/55maps-image-generalisation/human-review-multi-buffer.csv",
-    "n_detections": 4665
+    "n_detections": 4680
   },
   "buffer_metres": 20,
   "n_phantoms_a": 0,
   "n_phantoms_b": 0,
-  "n_ref_extended_a": 4744,
-  "n_ref_extended_b": 4744,
+  "n_ref_extended_a": 4745,
+  "n_ref_extended_b": 4745,
   "delta_f1_ci": {
-    "lower": 0.109439,
-    "upper": 0.137699,
+    "lower": 0.108382,
+    "upper": 0.136729,
     "n_bootstrap": 10000
   },
   "global_a": {
-    "f1": 0.630526,
-    "precision": 0.65908,
-    "recall": 0.604342,
-    "tp": 2867,
-    "fp": 1483,
+    "f1": 0.630676,
+    "precision": 0.65931,
+    "recall": 0.604426,
+    "tp": 2868,
+    "fp": 1482,
     "fn": 1877
   },
   "global_b": {
-    "f1": 0.506961,
-    "precision": 0.511254,
-    "recall": 0.50274,
-    "tp": 2385,
-    "fp": 2280,
-    "fn": 2359
+    "f1": 0.508011,
+    "precision": 0.511538,
+    "recall": 0.504531,
+    "tp": 2394,
+    "fp": 2286,
+    "fn": 2351
   },
   "permutation_test": {
-    "observed_f1_diff": 0.123564,
+    "observed_f1_diff": 0.122666,
     "p_value": 0.0,
     "n_permutations": 10000,
     "n_tiles": 8541,
-    "wins_a": 808,
-    "losses_a": 397,
-    "ties": 7336,
+    "wins_a": 804,
+    "losses_a": 398,
+    "ties": 7339,
     "null_distribution": {
-      "mean": -7.2e-05,
-      "std": 0.007921,
-      "percentile_2.5": -0.015354,
-      "percentile_97.5": 0.015644
+      "mean": -7.5e-05,
+      "std": 0.007915,
+      "percentile_2.5": -0.015404,
+      "percentile_97.5": 0.015506
     }
   }
 }

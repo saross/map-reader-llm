@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "timestamp": "2026-04-28T00:57:43.299088+00:00",
+    "timestamp": "2026-05-03T04:24:09.713145+00:00",
     "script": "paired_permutation_corrected_55maps.py",
     "version": "1.0.0",
-    "git_commit": "300889746728a87a86decb5af2f9753905136d15",
+    "git_commit": "c816d4bd42fb87a897698a03066dea077ccd576a",
     "buffer_metres": 100,
     "n_permutations": 10000,
     "n_bootstrap": 10000,
@@ -22,47 +22,47 @@
     "detections": "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson",
     "review_yesterday": "/tmp/empty-review-yesterday.csv",
     "review_today": "results/55maps-text-min-generalisation/human-review-multi-buffer.csv",
-    "n_detections": 3861
+    "n_detections": 3865
   },
   "buffer_metres": 100,
   "n_phantoms_a": 346,
   "n_phantoms_b": 277,
-  "n_ref_extended_a": 5090,
-  "n_ref_extended_b": 5021,
+  "n_ref_extended_a": 5091,
+  "n_ref_extended_b": 5022,
   "delta_f1_ci": {
-    "lower": 0.039096,
-    "upper": 0.057519,
+    "lower": 0.038766,
+    "upper": 0.057172,
     "n_bootstrap": 10000
   },
   "global_a": {
-    "f1": 0.848517,
+    "f1": 0.848427,
     "precision": 0.92069,
-    "recall": 0.786837,
+    "recall": 0.786682,
     "tp": 4005,
     "fp": 345,
-    "fn": 1085
+    "fn": 1086
   },
   "global_b": {
-    "f1": 0.80027,
-    "precision": 0.920487,
-    "recall": 0.707827,
-    "tp": 3554,
-    "fp": 307,
-    "fn": 1467
+    "f1": 0.800495,
+    "precision": 0.92031,
+    "recall": 0.708284,
+    "tp": 3557,
+    "fp": 308,
+    "fn": 1465
   },
   "permutation_test": {
-    "observed_f1_diff": 0.048247,
+    "observed_f1_diff": 0.047932,
     "p_value": 0.0,
     "n_permutations": 10000,
     "n_tiles": 8541,
-    "wins_a": 607,
+    "wins_a": 605,
     "losses_a": 311,
-    "ties": 7623,
+    "ties": 7625,
     "null_distribution": {
-      "mean": -1e-06,
-      "std": 0.00475,
-      "percentile_2.5": -0.009306,
-      "percentile_97.5": 0.009262
+      "mean": -3e-06,
+      "std": 0.004743,
+      "percentile_2.5": -0.00927,
+      "percentile_97.5": 0.009285
     }
   }
 }
