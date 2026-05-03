@@ -126,6 +126,11 @@ outputs/**/*.pre-cleanup-*.backup
 # and is fully reconstructable via `git show <hash>:<path>`).
 outputs/**/*.pre-recovery-*.backup
 
+# Pre-meta-cleanup backup files written by scripts/clean_meta_failed_items.py
+# (transient: the pre-cleanup state lives in git history and is fully
+# reconstructable via `git show <hash>:<path>`).
+outputs/**/*.pre-meta-cleanup-*.backup
+
 # Verifier HTTP request logs (noise, not useful for reproducibility)
 outputs/h10/wbf/**/*.log
 outputs/h11/wbf/**/*.log

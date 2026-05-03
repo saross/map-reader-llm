@@ -1144,7 +1144,38 @@ def merge_meta(original: dict[str, Any], recovery: dict[str, Any]) -> dict[str, 
 
     # The recovery-run's failed_items represents the residual still-failing
     # tiles. The original's failed_items is now obsolete (most/all recovered).
-    r_failed = list(r_es.get("failed_items", []))
+    r_failed_raw = list(r_es.get("failed_items", []))
+
+    # Defensive cleanup: any failed_items entry whose item_id appears in the
+    # combined completed_items list is stale (the item was actually processed
+    # successfully in either the original or recovery pass). This protects
+    # against historical drift where failed_items was not refreshed after a
+    # successful retry — see docs/notes for the post-mortem.
+    combined_completed_set = set(combined_completed)
+
+    def _failed_item_id_local(entry: Any) -> str | None:
+        if isinstance(entry, dict):
+            return entry.get("item_id")
+        if isinstance(entry, str):
+            return entry
+        return None
+
+    r_failed: list[Any] = []
+    defensively_recovered_ids: list[str] = []
+    for entry in r_failed_raw:
+        item_id = _failed_item_id_local(entry)
+        if item_id is not None and item_id in combined_completed_set:
+            defensively_recovered_ids.append(item_id)
+        else:
+            r_failed.append(entry)
+
+    if defensively_recovered_ids:
+        logger.warning(
+            "merge_meta: dropped %d failed_items entry/entries whose ids "
+            "appear in completed_items (historical drift). Examples: %s",
+            len(defensively_recovered_ids),
+            defensively_recovered_ids[:5],
+        )
 
     merged["execution_stats"] = {
         "items_processed": (
@@ -1264,7 +1295,7 @@ def merge_meta(original: dict[str, Any], recovery: dict[str, Any]) -> dict[str, 
     recovered_ids = sorted(set(initial_failed_ids) - set(still_failing_ids))
 
     history = list(merged.get("recovery_history", []))
-    history.append({
+    entry: dict[str, Any] = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "initial_failed": len(initial_failed_ids),
         "recovered": len(recovered_ids),
@@ -1274,7 +1305,16 @@ def merge_meta(original: dict[str, Any], recovery: dict[str, Any]) -> dict[str, 
         "recovery_cost_usd": r_ce.get("total_cost_usd"),
         "recovery_duration_seconds": r_ts.get("duration_seconds"),
         "recovery_run_id": recovery.get("run_id"),
-    })
+    }
+    if defensively_recovered_ids:
+        entry["defensively_recovered_ids"] = sorted(set(defensively_recovered_ids))
+        entry["defensively_recovered"] = len(set(defensively_recovered_ids))
+        entry["defensive_cleanup_note"] = (
+            "merge_meta filtered failed_items entries whose ids were also "
+            "present in completed_items (historical drift). These are "
+            "treated as recovered and tracked here for the audit trail."
+        )
+    history.append(entry)
     merged["recovery_history"] = history
 
     # tpm_governor: keep original (recovery's small run governor stats not
