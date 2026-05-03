@@ -2,6 +2,8 @@
 
 **Anchor**: Obs 272 (`docs/notes/reflections/working-notes.md`, 2026-04-21) established the attractor-pull cutoff at ~125 m using the image-generalisation review only. v2 re-runs the same shell-wise within-tile permutation null on each of the 4 corrected 55-map runs and synthesises a consensus cutoff.
 
+**Post-recovery 2026-05-03**: T=0.7 row refreshed against the post-recovery T=0.7 evaluation (n_candidates 630 → 637, bias_correction 0.9309 → 0.9302). The qualitative finding is preserved: per-run cutoffs unchanged (T=0.3=100, T=0.7=125, image=125, text-MIN=100); 100 m most-permissive cap and 125 m majority breakpoint are stable.
+
 ## 0. Executive summary
 
 The shell-wise within-tile permutation null was applied independently to all four corrected 55-map runs (T=0.3 text-HIGH, T=0.7 text-HIGH, image at T=0.7, text-MIN). Two consensus operating points emerge from the cross-run synthesis (§3):
@@ -33,16 +35,16 @@ Shell edges (m): 50, 75, 100, 125, 150, 286. The (200, 286] shell corresponds to
 
 **Per-run cutoff**: 100 m (deepest shell outer edge with bias-corrected p < 0.05)
 
-### T=0.7 text-HIGH — n=630, bias_correction=0.9309
+### T=0.7 text-HIGH — n=637, bias_correction=0.9302
 
 |   R_inner_m |   R_outer_m |   obs_rate_in_shell |   null_mean_bias_corrected |   lift_ratio_bias_corrected |   signal_fraction_bias_corrected |   p_value_bias_corrected | significant   |
 |------------:|------------:|--------------------:|---------------------------:|----------------------------:|---------------------------------:|-------------------------:|:--------------|
-|           0 |          50 |              0.4254 |                     0.0028 |                      153.25 |                           0.9935 |                    0.001 | True          |
-|          50 |          75 |              0.0286 |                     0.0034 |                        8.48 |                           0.8821 |                    0.001 | True          |
-|          75 |         100 |              0.0286 |                     0.0047 |                        6.04 |                           0.8344 |                    0.001 | True          |
-|         100 |         125 |              0.0175 |                     0.0059 |                        2.96 |                           0.6617 |                    0.001 | True          |
-|         125 |         150 |              0.0079 |                     0.0069 |                        1.15 |                           0.1278 |                    0.37  | False         |
-|         150 |         286 |              0.0508 |                     0.0545 |                        0.93 |                          -0.0721 |                    0.659 | False         |
+|           0 |          50 |              0.4239 |                     0.0029 |                      146.96 |                           0.9932 |                    0.001 | True          |
+|          50 |          75 |              0.0298 |                     0.0034 |                        8.69 |                           0.8849 |                    0.001 | True          |
+|          75 |         100 |              0.0298 |                     0.0048 |                        6.27 |                           0.8406 |                    0.001 | True          |
+|         100 |         125 |              0.0173 |                     0.0061 |                        2.83 |                           0.6464 |                    0.002 | True          |
+|         125 |         150 |              0.0078 |                     0.0071 |                        1.11 |                           0.1017 |                    0.396 | False         |
+|         150 |         286 |              0.0502 |                     0.0548 |                        0.92 |                          -0.0913 |                    0.707 | False         |
 
 **Per-run cutoff**: 125 m (deepest shell outer edge with bias-corrected p < 0.05)
 
@@ -91,7 +93,7 @@ Shell edges (m): 50, 75, 100, 125, 150, 286. The (200, 286] shell corresponds to
 | run             |   n_candidates |   cutoff_m |
 |:----------------|---------------:|-----------:|
 | T=0.3 text-HIGH |            692 |        100 |
-| T=0.7 text-HIGH |            630 |        125 |
+| T=0.7 text-HIGH |            637 |        125 |
 | image (T=0.7)   |           1029 |        125 |
 | text-MIN        |            585 |        100 |
 

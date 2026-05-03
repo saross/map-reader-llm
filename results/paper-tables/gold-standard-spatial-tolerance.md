@@ -74,9 +74,9 @@ The ~25 m right-shift between the two corpora is the **signature of student-GT p
 | 20 m   | 0.816 (cached cell)             | 0.623             | +0.193 |
 | 30 m   | 0.822                           | 0.753             | +0.070 |
 | 40 m   | 0.822                           | 0.783             | +0.040 |
-| 50 m   | 0.826                           | 0.788             | +0.038 |
+| 50 m   | 0.826                           | 0.792             | +0.034 |
 
-At large buffer (50 m) the gap narrows to 0.038 F1 — closer to the "true" gold-standard-vs-unseen-maps
+At large buffer (50 m) the gap narrows to 0.034 F1 — closer to the "true" gold-standard-vs-unseen-maps
 model-quality gap. The large gap at 20 m (0.193) materially overstates the model-quality cost of
 generalisation; most of it is absorbed by GT positional noise once the tolerance exceeds the
 noise radius.

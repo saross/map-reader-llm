@@ -20,16 +20,16 @@ All four runs are evaluated against:
 
 ## 2. Per-run MCC, sensitivity, specificity
 
-Detection counts (verified): T=0.3 = 4,350; T=0.7 = 4,143; image = 4,665; text-MIN = 4,143. All four are evaluated over the same 8,541 tiles and 4,744 reference points.
+Detection counts (verified): T=0.3 = 4,350; T=0.7 = 4,164; image = 4,665; text-MIN = 4,143. All four are evaluated over the same 8,541 tiles and 4,744 reference points.
 
 | Run | Detections | TP | TN | FP | FN | MCC [95% CI] | Sensitivity | Specificity |
 |:----|----------:|---:|---:|---:|---:|:------------:|------------:|------------:|
 | 55maps-text-high-t0.3-generalisation | 4,350 | 2,216 | 4,906 | 255 | 1,164 | **0.6538** [0.6386, 0.6704] | 0.6557 | 0.9506 |
-| 55maps-text-high-generalisation (T=0.7) | 4,143 | 2,172 | 4,920 | 241 | 1,208 | **0.6472** [0.6304, 0.6632] | 0.6425 | 0.9534 |
+| 55maps-text-high-generalisation (T=0.7) | 4,164 | 2,176 | 4,918 | 243 | 1,204 | **0.6476** [0.6331, 0.6620] | 0.6438 | 0.9529 |
 | 55maps-image-generalisation | 4,665 | 2,390 | 4,891 | 270 | 990 | **0.6912** [0.6753, 0.7055] | 0.7069 | 0.9477 |
 | 55maps-text-min-generalisation | 4,143 | 2,072 | 4,927 | 234 | 1,308 | **0.6253** [0.6095, 0.6413] | 0.6130 | 0.9547 |
 
-T=0.7 and image MCC values match the pre-existing `outputs/<run>/full-buffer-eval/evaluation.json` artefacts (computed against the same reviewed GT) to within rounding — the 2026-04-27 re-eval reproduced the earlier MCC and promoted the artefacts to a stable per-run path (`results/<run>/mcc/`) aligned with the corrected-F1 outputs. text-MIN is new on 2026-04-28 (commit `7b7509d5`); no prior MCC artefact existed for it.
+T=0.7 and image MCC values match the pre-existing `outputs/<run>/full-buffer-eval/evaluation.json` artefacts (computed against the same reviewed GT) to within rounding — the 2026-04-27 re-eval reproduced the earlier MCC and promoted the artefacts to a stable per-run path (`results/<run>/mcc/`) aligned with the corrected-F1 outputs. text-MIN is new on 2026-04-28 (commit `7b7509d5`); no prior MCC artefact existed for it. Post-recovery 2026-05-03: T=0.7 row refreshed against the post-recovery evaluation (n_detections 4143 → 4164, +21 detections); MCC shifts from 0.6472 to 0.6476 (negligible) and qualitative ranking is preserved.
 
 ## 3. Cross-run comparison at canonical buffer R = 50 m
 
@@ -38,14 +38,14 @@ Corrected-F1 numbers come from `results/<run>/corrected-f1-multi-buffer/summary.
 | Run | Corrected F1 @50m [95% CI] | P @50m | R @50m | MCC [95% CI] | F1 rank | MCC rank |
 |:----|:--------------------------:|------:|-----:|:-------------:|:-------:|:--------:|
 | T=0.3 (text-HIGH) | 0.844 [0.834, 0.852] | 0.912 | 0.785 | **0.654** [0.639, 0.670] | 1 | 2 |
-| T=0.7 (text-HIGH) | 0.826 [0.816, 0.836] | 0.913 | 0.754 | **0.647** [0.630, 0.663] | 3 | 3 |
+| T=0.7 (text-HIGH) | 0.827 [0.817, 0.837] | 0.912 | 0.757 | **0.648** [0.633, 0.662] | 3 | 3 |
 | Image | 0.832 [0.822, 0.841] | 0.881 | 0.788 | **0.691** [0.675, 0.706] | 2 | 1 |
 | text-MIN | 0.796 [0.785, 0.807] | 0.913 | 0.706 | **0.625** [0.610, 0.641] | 4 | 4 |
 
 ## 4. Rank-order disagreement
 
-- **F1 rank** (corrected, R = 50 m): T=0.3 (0.844) > Image (0.832) > T=0.7 (0.826) > text-MIN (0.796).
-- **MCC rank**: Image (0.691) > T=0.3 (0.654) > T=0.7 (0.647) > text-MIN (0.625).
+- **F1 rank** (corrected, R = 50 m): T=0.3 (0.844) > Image (0.832) > T=0.7 (0.827) > text-MIN (0.796).
+- **MCC rank**: Image (0.691) > T=0.3 (0.654) > T=0.7 (0.648) > text-MIN (0.625).
 
 The F1 leader (T=0.3) is **not** the MCC leader (image). The disagreement concentrates on the T=0.3-vs-image swap at the top. **Both metrics agree text-MIN is bottom and T=0.7 sits in the middle of the text-track**; the divergence is confined to the T=0.3-vs-image positions. text-MIN's joint-bottom result confirms HIGH thinking earns its tokens at 55-map scope on both metrics — the in-corpus extension of Obs 284's 4-map matrix finding.
 
@@ -62,11 +62,11 @@ The F1 rank order is **not stable across R**. Image catches up to (and overtakes
 
 | R (m) | T=0.3 F1 | T=0.7 F1 | Image F1 | text-MIN F1 | Leader |
 |:-----:|:--------:|:--------:|:--------:|:--------:|:------:|
-| 50 | **0.844** | 0.826 | 0.832 | 0.796 | T=0.3 |
-| 75 | 0.847 | 0.829 | **0.848** | 0.799 | image |
-| 100 | 0.849 | 0.831 | **0.852** | 0.800 | image |
-| 125 (practitioner cap) | 0.850 | 0.832 | **0.854** | 0.801 | image |
-| 150 (upper bound) | 0.851 | 0.833 | **0.855** | 0.802 | image |
+| 50 | **0.844** | 0.827 | 0.832 | 0.796 | T=0.3 |
+| 75 | 0.847 | 0.830 | **0.848** | 0.799 | image |
+| 100 | 0.849 | 0.832 | **0.852** | 0.800 | image |
+| 125 (practitioner cap) | 0.850 | 0.834 | **0.854** | 0.801 | image |
+| 150 (upper bound) | 0.851 | 0.835 | **0.855** | 0.802 | image |
 
 text-MIN is bottom at every buffer; its precision-leaning profile (P=0.913, R=0.706) compounds less with buffer relaxation than the HIGH-thinking conditions (~0.04 absolute F1 gain from R=50 m to R=150 m, vs ~0.007 for HIGH conditions whose F1 already sits near the corpus ceiling).
 
