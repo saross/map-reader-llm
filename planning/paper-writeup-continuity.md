@@ -1,14 +1,88 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-05-03 (Session 84 closure — 3 follow-up recoveries (image, text-MIN, GS-v2) completed under the parser fix at per-tile costs 100–300× cheaper than T=0.7 baseline; 28 silently-dropped verifier candidates discovered and recovered; cross-track v2 paired-permutation 6-pair grid preserved (5 of 6 sig; T=0.7 vs image only ns); 2 new bugs surfaced (cost_manifest cosmetic double-counting + GS-v2 race condition); 5 docs refreshed (methods + meta + limitations + CI registry + this continuity doc); cand 2397 GT-completeness decision pending before paper outline)
+**Last updated**: 2026-05-03 (Session 85 closure — loose-ends mop-up complete; verifier silent-drop bug root-caused, fixed (Layer 1 + Layer 2), audited and re-audited (3 critical + 6 medium fixed in fix-of-fix; all 6 lows cleared); tier-1 at 980 passing on sapphire (was 926 baseline); recovery campaign planned and ready (~$1.84 expected, $10 hard cap) but execution gated on user cost approval; Step 6 paper outline UNBLOCKED for Session 86)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
 
 ---
 
-## ⚡ Start here (Session 78+ entry point)
+## ⚡⚡ Session 86 entry-point — START HERE (composed end-of-Session-85 2026-05-03 night)
+
+**You are likely on zbook**. Per the user's plan: travelling, working from zbook starting tomorrow morning. amd-tower + sapphire + zbook were all synced to the same HEAD at end of Session 85.
+
+### Read-first checklist (10 min)
+
+1. **This section** — you are reading it.
+2. **§"Session 85 closure (2026-05-03)"** below — full headline + commit chain + what's done + what's pending.
+3. **`docs/notes/reflections/working-notes.md`** — Obs 322 is the most recent (Obs 296 reframing as TP-localisation-tail; paper-Discussion-affecting). Obs 321 is the prior Session-84 closure narrative.
+4. **`planning/phase3a-verifier-recovery-runbook.md`** — only if the user asks about the recovery campaign tomorrow. Sentinel-gated; all software prerequisites are now satisfied.
+
+### Verify environment
+
+```bash
+cd ~/Code/map-reader-llm
+git status   # working tree should be clean
+git log --oneline -3   # most recent should be ee658e72 (or further if work continued)
+ssh sapphire 'cd ~/Code/map-reader-llm && git log --oneline -1'   # should match
+```
+
+If any drift: `git pull --ff-only` on the lagging machine.
+
+### Tier-1 sanity (optional, ~30 s on sapphire)
+
+```bash
+ssh sapphire 'cd ~/Code/map-reader-llm && source .venv/bin/activate && pytest -m tier1 --tb=short' | tail -3
+# expect: 980 passed, 1 skipped, 3 xfailed
+```
+
+### What's done as of 2026-05-03 (Session 85)
+
+- **A1 Phase3a verifier-completeness audit** (commit `adf95dbf`) — 30 cells, 835 candidates dropped. 19 paper-feeding (Tier 1: 8, Tier 2: 7); 11 derived cells regenerate for free; 8 unrecoverable. The gap=460 standout is non-paper-cited.
+- **A3 verifier silent-drop fix arc** — root-cause (`0808cb91`) → plan (`036c6f44`) → implementation `ca0940de..685ad8e6` (Layer 1 + Layer 2; 7 commits) → audit-and-fix-of-fix `30dbe3a7..808689d1` (5 commits) → low-severity cleanup `eb2b00f3..ee658e72` (6 commits). Tier-1 at 980 passing (+54 from baseline). All 18 commits pushed to `origin/main`.
+- **Recovery campaign plan** (commit `d636f952`) — runbook + driver template at `planning/phase3a-verifier-recovery-runbook.md` + `planning/run-phase3a-recovery.sh.template`. Sentinel-gated; all prerequisites now satisfied. Ready to launch on user cost approval.
+- **#7 K-consensus heterogeneity footnote** (`325878b2`) — `results/k-consensus-heterogeneity-footnote.md`. 5 strata documented.
+- **#9 TP-only sub-band check** (`207ec7b5`) → **Obs 322** (`c8ccc73d`) — Obs 296 reframed as TP-localisation-tail, FPs well-separated. Paper-Discussion-affecting.
+- **A5/#15 GS 6-crop staging** (`586a22ed`) — at `results/gs-125m-fp-side-6-crop-review/index.md`. Ready for user inspection (~20 min).
+- **#4 + #6 detector-confidence → `planning/future-work.md`** (`116399fc`).
+- **B6 methods note on Approach B vs corrected-F1** (`c22a2808`) — `results/methods-approach-b-vs-corrected-f1-nuance.md`.
+- **B7 limitations note on curator GT incompleteness** (`9eeb2272`) — `results/methods-curator-gt-incompleteness-limitation.md`.
+
+### What's pending (priority order for Session 86)
+
+1. **Phase3a recovery campaign EXECUTION** (gated on user cost approval). Best $1.23 / expected $1.84 / worst $3.70; hard cap $10. Plan + driver template ready. **Recommend launching this first** — it firms up the leaderboard numbers before any paper-text drafting locks them in.
+2. **A2 image re-evaluation (post-cand-2397 GT addition)** — mechanical work; can run on zbook. Expected impact < 0.0005 absolute F1; sign + significance preserved on cross-track grid.
+3. **A4 + B8 post_run_report convention decision** — three reports affected (text-MIN, image, h11 GS-v2). Three options: refresh in place / add forward-pointer banner / leave as historical snapshot. **Needs user input**, ~5-min discussion.
+4. **GS 6-crop manual review** (item A5/#15) — staged at `results/gs-125m-fp-side-6-crop-review/`. ~20 min user wall-time. Outcome strengthens or softens the curator-GT-incompleteness Limitations narrative (B7).
+5. **Step 6 paper outline** — the actual deliverable. UNBLOCKED. Map each section (Methods / Results / Discussion / Limitations) to 1–3 interim docs. Strengthened post-Session-85 by Obs 322 (Discussion reframing) + B6 methods supplement + B7 limitations content.
+
+### Awaiting user input
+
+- **Recovery campaign cost approval** (1 above). The driver script will not run without explicit approval; cost gate per project convention.
+- **post_run_report convention** (3 above). Three-line decision; affects three reports.
+
+### Things to NOT redo
+
+- The 18 commits in the verifier silent-drop fix arc are COMPLETE and TESTED (`ca0940de..ee658e72`); do NOT re-implement, re-audit, or re-test unless a regression surfaces.
+- The Phase3a audit (`adf95dbf`) is canonical for the 30-cell list. Do NOT re-run unless new verifier runs land between Session 85 and Session 86.
+- Obs 322's reframing of Obs 296 STANDS. Future paper-Discussion drafts cite Obs 322 + Obs 302 for the two-phenomenon framing (TP localisation tail vs FP composition).
+- The recovery runbook (`d636f952`) is canonical. When the user approves cost, execute the driver — do NOT re-plan.
+- B6, B7 paper-text drafts at `results/methods-*` are paper-prep drafts, not final manuscript text. Refine during outlining.
+
+### Three-machine state at end of Session 85
+
+- **amd-tower** (192.168.1.70): at HEAD `ee658e72`, working tree clean, all commits pushed.
+- **sapphire** (192.168.1.150): at HEAD `ee658e72`, working tree clean, tier-1 verified at 980 passing.
+- **zbook** (192.168.1.80): at HEAD `ee658e72`, working tree clean (synced end-of-session, ~120 commits pulled).
+
+**Pre-recovery / pre-cleanup / pre-meta-cleanup `*.backup` files** are gitignored (`.gitignore:121–132`). Each machine has its own; cost-manifest aggregation depends on them locally. Reconstructable from git history via `git show <hash>:<path>` if needed.
+
+For "outstanding statistical work" on zbook (bootstrap, permutation, corrected-F1, leaderboard rebuilds): **all required inputs are tracked in git** (evaluation.json, detection geojsons, review CSVs, GT references, bounds files). No rsync of artefacts needed beyond the git pull.
+
+---
+
+## ⚡ Start here (Session 78+ entry point — preserved for reference)
 
 **You are on: Step 6 (paper outline)**. Step 4 (14 items) and Step 5
 (mark-superseded sweep) are both DONE. Batch A Session-77 follow-ups
@@ -1847,9 +1921,9 @@ These items surfaced during Session 84 work but were not in the original "Pendin
 
 ### Headline
 
-Loose-ends mop-up before the Step 6 paper outline. Five Session-84-deferred items resolved (A1 audit, #7 footnote, #9 sub-band, A5 6-crop staging, #4+#6 → future-work). Two paper-text drafts landed (B6 methods nuance, B7 curator-GT limitations). One new corrective Obs published (322 — Obs 296 reframed as TP-localisation-tail). One sequential agent chain *in flight* fixing the verifier silent-drop root cause (Agent 1 root-cause + Agent 2 plan complete; Agent 3 implementation running). Full Phase3a recovery campaign planned (~$1.84 expected, ~30 min API + 3–6 h propagation). Two material framing corrections to the audit's headline: the gap=460 cell is non-paper-cited; 11 of 30 cells are derived (not verifier outputs) and regenerate for free.
+Loose-ends mop-up before the Step 6 paper outline. Five Session-84-deferred items resolved (A1 audit, #7 footnote, #9 sub-band, A5 6-crop staging, #4+#6 → future-work). Two paper-text drafts landed (B6 methods nuance, B7 curator-GT limitations). One new corrective Obs published (322 — Obs 296 reframed as TP-localisation-tail). **Verifier silent-drop bug fully resolved** (root-cause → plan → Layer 1 + Layer 2 implementation → /audit found 3 critical + 6 medium → all fixed → re-/audit clean → 6 low items cleared; 18 commits across the arc; tier-1 at 980 passing on sapphire, +54 from 926 baseline). Full Phase3a recovery campaign planned (~$1.84 expected, ~30 min API + 3–6 h propagation); execution gated on user cost approval. Two material framing corrections to the audit's headline: the gap=460 cell is non-paper-cited; 11 of 30 cells are derived (not verifier outputs) and regenerate for free.
 
-### Today's commit chain (~12 commits, range `116399fc..` to current)
+### Today's commit chain (~30 commits, range `116399fc..ee658e72`)
 
 - `116399fc` — `docs(future-work): migrate detector-confidence items #4 + #6 to future-work register` (creates `planning/future-work.md`).
 - `325878b2` — `docs(paper): add K-consensus heterogeneity footnote` (B-series item #7; `results/k-consensus-heterogeneity-footnote.md`; 5 strata documented).
@@ -1862,6 +1936,10 @@ Loose-ends mop-up before the Step 6 paper outline. Five Session-84-deferred item
 - `d636f952` — `docs(plan): Phase3a verifier recovery runbook + executable driver template` (full 30-cell campaign; `planning/phase3a-verifier-recovery-runbook.md` + `planning/run-phase3a-recovery.sh.template`).
 - `036c6f44` — `docs(plan): verifier silent-drop fix plan (Layer 1 + Layer 2 + optional Layer 3)` (Agent 2; `planning/verifier-silent-drop-fix-plan.md`).
 - `9eeb2272` — `docs(paper): B7 limitations note on curator GT incompleteness` (B7; `results/methods-curator-gt-incompleteness-limitation.md`).
+- `aadb9b61` — `docs(continuity): Session 85 closure section — loose-ends mop-up + verifier-fix arc in flight` (this section, initial draft).
+- **A3 fix arc — implementation (Agent 3) `ca0940de..685ad8e6`** (7 commits, all on sapphire-tier-1-green): `ca0940de` `feat(run_pv): add completeness-assertion helper` → `9dd5cde7` `fix(run_pv): record per-candidate verifier failures via metadata_tracker` → `c456cb3c` `fix(run_pv): assert verifier completeness before exit; add --no-strict opt-out` → `c21d3b7a` `test(run_pv): tier-1 coverage for completeness assertion + failure logging` → `94b4ca49` `fix(lib_verifier): use parse_response_with_repair to recover malformed JSON` → `4bb33b7e` `fix(lib_verifier): mirror proposer retry policy for parity` → `685ad8e6` `test(lib_verifier): tier-1 coverage for retry parity`.
+- **A3 fix-of-fix arc — `30dbe3a7..808689d1`** (5 commits) addressing /audit's 3 critical + 2 medium: `30dbe3a7` `fix(run_pv): correct multi-iteration key handling in resume + cleanup + driver paths` (C1+C2+C3) → `e8a6be65` `fix(run_pv): drop dead error_type branch in _summarise_failure_reason` (M2) → `d34d9596` `feat(run_generalisation): thread --no-strict through pipeline config` (M1) → `fa79dd43` `test(run_pv_completeness): cover multi-iteration resume + cleanup + partial-success paths` → `808689d1` `test(run_pv): cover metadata_tracker=None defensive branch + empty-manifest boundary`.
+- **A3 low-severity cleanup — `eb2b00f3..ee658e72`** (6 commits) addressing /re-audit's 6 lows: `eb2b00f3` `refactor(run_pv): use _candidate_iteration_keys helper in _assert_completeness (DRY)` (L1) → `6e901613` `fix(run_pv): defensive raise on iterations<1 in _candidate_iteration_keys + docstring fix` (L4 + L3) → `0e3f2f97` `test(run_pv_completeness): unit tests for _iteration_id_to_result_key (+ iterations=0 raises)` (L2 + L4-test) → `ebe4292a` `test(run_pv_completeness): retitle multi-iter resume sanity test` (L5; option-b retitle, partial-resume test already discriminates) → `3ec0d8a1` `chore(scripts): add --no-strict to overnight verifier launcher scripts (preserve prior behaviour)` (L6; expanded scope: 9 scripts / 25 invocations vs audit's 3 scripts / 14 invocations) → `ee658e72` `test(run_pv_completeness): mark TestIterationIdToResultKey as tier1` (fixup — class needed explicit decorator).
 
 ### Loose-ends mop-up (Session-84 deferred → Session-85 resolved)
 
@@ -1890,25 +1968,28 @@ Loose-ends mop-up before the Step 6 paper outline. Five Session-84-deferred item
    - **Regression provenance**: legacy `scripts/5_verify_crops.py:647/651` *did* call `log_failure` correctly; March 2026 dual-mode refactor `5d725930` lost it.
 3. **Obs 322** (corrective; commit `c8ccc73d`) — Obs 296's `obs_rate_in_shell` is TP-only by construction; the (50, 75] m signal is TP-localisation-tail not FP-anchoring. FPs are well-separated from real mounds (87–95 % beyond 286 m). Strengthens the failure-of-generalisation reading; clarifies the prose framing for paper Discussion.
 
-### In flight as Session 85 ends
+### A3 fix arc — fully complete at end of Session 85
 
-- **A3 Agent 3 (verifier fix implementation)** — running in background. Implementing Layer 1 + Layer 2 of the fix plan at `planning/verifier-silent-drop-fix-plan.md`. Expected ~12 working hours (~7–8 commits, 26 new tier-1 tests). Calling session will run `/audit` after Agent 3 lands.
-- **Phase3a recovery campaign** — runbook + driver template ready (`planning/phase3a-verifier-recovery-runbook.md`, `planning/run-phase3a-recovery.sh.template`). Sentinel-gated: cannot execute until the fix lands. Expected cost $1.23–3.70; hard cap $10. Awaits user approval before launch.
+- **Implementation** (Agent 3, `ca0940de..685ad8e6`): 7 commits, Layer 1 + Layer 2 landed on sapphire-tier-1-green. 32 new tier-1 tests added.
+- **/audit** (4 parallel sub-audits across `scripts/run_pv.py`, `scripts/lib_verifier.py`, `tests/test_run_pv_completeness.py`, `tests/test_lib_verifier.py`): found 3 critical (multi-iteration key construction broken at 3 sites — same root cause), 6 medium, and several lows.
+- **Fix-of-fix** (`30dbe3a7..808689d1`): 5 commits addressing all critical + 2 highest-priority mediums + 7 missing-coverage tests. Re-/audit clean (0 critical, 0 medium, 6 low).
+- **Low-severity cleanup** (`eb2b00f3..ee658e72`): 6 commits clearing all 6 low items. L6 scope expanded during cleanup (9 scripts / 25 invocations vs audit's 3 / 14). Tier-1 at 980 passing on sapphire.
+- **Recovery campaign** ready to launch on user cost approval. Sentinel gate satisfied.
 
-### Pending after Session 85
+### Pending after Session 85 (for Session 86 on zbook)
 
-- **A2 image re-evaluation (post-cand-2397)** — DEFERRED. Expected impact < 0.0005 absolute F1. Schedule alongside the Phase3a recovery campaign post-fix; mechanical work.
+- **Phase3a recovery campaign EXECUTION** — gated on user cost approval. Plan + driver template ready. Expected cost $1.23–3.70; hard cap $10.
+- **A2 image re-evaluation (post-cand-2397)** — mechanical work; can run on zbook. Expected impact < 0.0005 absolute F1; sign + significance preserved.
 - **A4 + B8 post_run_report convention** — three reports (text-MIN, image, h11 GS-v2) need a refresh / banner / leave decision. Awaits user call.
-- **A3 software fix landing + `/audit`** — gated on Agent 3 completion. The implementing agent does not run `/audit` itself; the calling session does.
-- **Phase3a recovery execution** — gated on (a) software fix landing, (b) user cost-gate approval. Plan ready.
-- **Step 6 paper outline** — UNBLOCKED post-fix-and-recovery. The actual deliverable.
+- **GS 6-crop manual review** (A5/#15) — staged at `results/gs-125m-fp-side-6-crop-review/`. ~20 min user wall-time.
+- **Step 6 paper outline** — UNBLOCKED. The actual deliverable.
 
 ### Things to NOT redo in Session 86+
 
 - **The Session-84 four-run state stands** unchanged. No re-recovery on T=0.7, T=0.3, image, text-MIN, or GS-v2 unless a downstream finding warrants it.
 - **The Phase3a audit (commit `adf95dbf`) is canonical** — do NOT re-run unless new verifier runs land. The 30-cell list + 11-derived clarification + 8-unrecoverable list is authoritative.
-- **The recovery runbook + driver template are complete** (commit `d636f952`). When the fix lands and the user approves cost, execute the driver. Do NOT re-plan.
-- **The fix plan is complete** (commit `036c6f44`). Agent 3 should follow it without re-architecting.
+- **The recovery runbook + driver template are complete** (commit `d636f952`). When the user approves cost, execute the driver. Do NOT re-plan.
+- **The verifier silent-drop fix is COMPLETE** across 18 commits `ca0940de..ee658e72`. Tier-1 at 980 passing on sapphire. Do NOT re-implement, re-audit, or re-test unless a regression surfaces.
 - **Obs 322 stands** as the canonical reframing of Obs 296. Future paper-Discussion drafts cite Obs 322 + Obs 302 for the two-phenomenon framing (TP localisation tail vs FP composition).
 - **B6 + B7 paper-text drafts are at `results/methods-*-nuance.md` / `*-limitation.md`**. These are paper-prep drafts, not final manuscript text. Refine during outlining.
 
