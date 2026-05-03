@@ -590,6 +590,194 @@ def _candidate_result_key(candidate: dict, iterations: int) -> str:
     return f"candidate_{cid:05d}"
 
 
+def _summarise_failure_reason(metadata_list: list) -> str:
+    """Summarise the terminal failure reason from a metadata list.
+
+    Walks the list back-to-front, returning the most recent ``parse_error``
+    or ``error_type`` annotation. Falls back to a generic string when the
+    list is empty (e.g. the ``FileNotFoundError`` early-return path that
+    pre-dates the Layer 2 synthetic-metadata propagation).
+
+    Args:
+        metadata_list: Mutable metadata list populated by
+            ``_call_verifier_api()`` with ``LLMResponseMetadata`` (and/or
+            error-metadata) entries.
+
+    Returns:
+        Human-readable failure reason suitable for ``log_failure``'s
+        ``reason`` field.
+    """
+    for meta in reversed(metadata_list):
+        err = getattr(meta, "parse_error", None)
+        if err:
+            return str(err)
+        err_type = getattr(meta, "error_type", None)
+        if err_type:
+            return f"{err_type}: retries exhausted"
+    return "no result returned (retries exhausted)"
+
+
+def _assert_completeness(
+    parsed_results: dict[str, dict],
+    manifest: dict,
+    iterations: int,
+    mode: str,
+    metadata_tracker: Any,
+    strict: bool,
+) -> int:
+    """Assert that ``parsed_results`` covers every candidate × iteration key.
+
+    Computes the expected key set from the manifest (single-iteration:
+    ``candidate_NNNNN``; consensus: ``candidate_NNNNN_iter1``…
+    ``candidate_NNNNN_iterN``), takes the difference against
+    ``parsed_results.keys()``, and — when a gap exists — backfills
+    ``failed_items[]`` with one entry per missing key (idempotent against
+    pre-existing entries) and stores a ``completeness_gap`` summary on the
+    tracker's ``results_summary``.
+
+    The helper is non-destructive: it never deletes results, never modifies
+    crops, never rewrites prior ``run.meta.json`` content. It exists so
+    every retry-exhausted candidate appears in the per-run audit trail —
+    closing the silent-drop surfacing gap that allowed 30 cells to lose
+    835 candidates between commit ``5d725930`` (March 2026) and 2026-05-03.
+
+    Args:
+        parsed_results: Mapping of candidate-result keys to parsed result
+            dicts (the contents of ``probabilities.json:results``).
+        manifest: Candidate manifest dict — read for the canonical input
+            cardinality.
+        iterations: Number of verifier passes per candidate (1 or N).
+        mode: Execution mode (``"realtime"`` or ``"batch"``) — included in
+            log output for forensic context only.
+        metadata_tracker: ``LLMMetadataTracker`` instance whose
+            ``stats.failed_items`` and ``results_summary`` are mutated.
+            May be ``None`` (defensive — no-op for tracker side effects).
+        strict: If True, log a guidance message pointing the operator at
+            ``run_pv.py cleanup``; the caller is responsible for
+            propagating a non-zero exit code based on the return value.
+
+    Returns:
+        Gap count — ``0`` when complete, otherwise the number of missing
+        candidate keys.
+    """
+    expected: set[str] = set()
+    for cand in manifest.get("candidates", []):
+        cid = cand["candidate_id"]
+        if iterations > 1:
+            for i in range(1, iterations + 1):
+                expected.add(f"candidate_{cid:05d}_iter{i}")
+        else:
+            expected.add(f"candidate_{cid:05d}")
+
+    actual = set(parsed_results.keys())
+    gap = expected - actual
+
+    if not gap:
+        return 0
+
+    logger.error(
+        "Completeness gap: %d candidates missing from results "
+        "(mode=%s, expected=%d, actual=%d)",
+        len(gap), mode, len(expected), len(parsed_results),
+    )
+    sample = sorted(gap)[:10]
+    logger.warning("First %d missing IDs: %s", len(sample), sample)
+
+    if metadata_tracker is not None:
+        existing_ids = {
+            f["item_id"] for f in metadata_tracker.stats.failed_items
+        }
+        for mid in sorted(gap):
+            if mid not in existing_ids:
+                metadata_tracker.log_failure(
+                    mid,
+                    "absent from results — completeness assertion",
+                )
+        metadata_tracker.results_summary["completeness_gap"] = {
+            "expected": len(expected),
+            "actual": len(parsed_results),
+            "missing_count": len(gap),
+            "missing_ids_sample": sorted(gap)[:100],
+        }
+
+    if strict:
+        logger.error(
+            "Strict mode: returning non-zero exit code due to "
+            "completeness gap. Run `run_pv.py cleanup` to retry "
+            "missing candidates, or pass --no-strict to suppress.",
+        )
+
+    return len(gap)
+
+
+def _log_cleanup_failures_to_meta(
+    verified_dir: Path,
+    missing: set[str],
+) -> None:
+    """Append residual cleanup-loop failures to ``run.meta.json``.
+
+    Loads ``verified_dir/run.meta.json`` (if present), ensures every ID in
+    ``missing`` appears in ``execution_stats.failed_items[]`` exactly once,
+    and writes the file back. Idempotent: pre-existing entries are
+    preserved verbatim and never duplicated.
+
+    No-op if ``run.meta.json`` does not exist (older runs that pre-date
+    the metadata-tracker integration; also covers the ``--dry-run`` path
+    where the meta file is never written).
+
+    Args:
+        verified_dir: Directory containing ``run.meta.json`` (the same
+            ``--verified-dir`` argument passed to ``cmd_cleanup``).
+        missing: Set of candidate IDs that remain absent from
+            ``probabilities.json`` after the cleanup loop's
+            ``max_attempts`` exhausted.
+    """
+    meta_path = verified_dir / "run.meta.json"
+    if not meta_path.exists():
+        return
+
+    try:
+        with open(meta_path) as f:
+            meta = json.load(f)
+    except (json.JSONDecodeError, OSError) as exc:
+        logger.warning(
+            "Could not read %s for cleanup-failure logging: %s",
+            meta_path, exc,
+        )
+        return
+
+    exec_stats = meta.setdefault("execution_stats", {})
+    failed_items = exec_stats.setdefault("failed_items", [])
+    existing_ids = {
+        f.get("item_id") for f in failed_items if isinstance(f, dict)
+    }
+
+    timestamp = datetime.now(timezone.utc).isoformat()
+    added = 0
+    for mid in sorted(missing):
+        if mid in existing_ids:
+            continue
+        failed_items.append({
+            "item_id": mid,
+            "reason": "absent after cleanup max_attempts",
+            "timestamp": timestamp,
+        })
+        added += 1
+
+    if added == 0:
+        return
+
+    # Atomic write — tmp + rename — to avoid corruption mid-write.
+    tmp_path = meta_path.with_suffix(".json.tmp")
+    with open(tmp_path, "w") as f:
+        json.dump(meta, f, indent=2)
+    tmp_path.rename(meta_path)
+    logger.info(
+        "Logged %d residual cleanup failures to %s",
+        added, meta_path.name,
+    )
+
+
 def _save_probabilities_incremental(
     results: dict[str, dict],
     output_dir: Path,
