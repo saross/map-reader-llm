@@ -950,6 +950,11 @@ def _verify_realtime(
 
         for future in concurrent.futures.as_completed(future_to_cand):
             completed += 1
+            cand = future_to_cand[future]
+            # Canonical key — same convention as probabilities.json and
+            # _compute_missing_candidates() — so failed_items[] item_id
+            # values are directly comparable to result-set keys.
+            result_key = _candidate_result_key(cand, iterations)
 
             try:
                 cand_results, metadata_list = future.result()
@@ -962,15 +967,23 @@ def _verify_realtime(
                 if cand_results:
                     all_results.update(cand_results)
                     verified_count += 1
+                    metadata_tracker.log_success(result_key)
                 else:
                     failed_count += 1
+                    metadata_tracker.log_failure(
+                        result_key,
+                        _summarise_failure_reason(metadata_list),
+                    )
 
             except Exception as e:
                 failed_count += 1
-                cand = future_to_cand[future]
                 logger.error(
                     "Candidate %s failed: %s",
                     cand["candidate_id"], e,
+                )
+                metadata_tracker.log_failure(
+                    result_key,
+                    f"unhandled in driver: {type(e).__name__}: {e}",
                 )
 
             # Log progress after counters are updated
