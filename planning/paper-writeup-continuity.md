@@ -59,8 +59,44 @@ ssh sapphire 'cd ~/Code/map-reader-llm && source .venv/bin/activate && pytest -m
 
 ### Awaiting user input
 
-- **Recovery campaign cost approval** (1 above). The driver script will not run without explicit approval; cost gate per project convention.
-- **post_run_report convention** (3 above). Three-line decision; affects three reports.
+- ✅ **Recovery campaign cost approved 2026-05-03 night** — launching overnight on sapphire. See "🌙 Overnight recovery campaign in flight" below.
+- 🔔 **GS 6-crop manual review** — staged at `results/gs-125m-fp-side-6-crop-review/index.md` on **zbook**. Files are tracked in git (Markdown index + 6 PNG crops, ~310–402 KB each); no setup needed beyond opening the index. Open with VS Code preview, GitHub web view, `glow`, or `mdcat`. Per-candidate `verdict:` blocks ready for in-place edits. **Outcome strengthens or softens the curator-GT-incompleteness Limitations narrative (B7).** ~20 min wall-time. **Please flag this to the user when they next start a session — they want to be reminded.**
+- 🗣️ **post_run_report convention — needs discussion**. Three reports affected: `outputs/55maps-text-min-generalisation/post_run_report.md`, `outputs/55maps-image-generalisation/post_run_report.md`, `outputs/h11/gold-standard-v2/...` post-run analogue (verify path on next session). Each contains pre-recovery values from the original 2026-04-18 / earlier launches. Three options:
+  1. **Refresh in place** — replace pre-recovery numbers with current canonical values from `results/55maps-*-generalisation/corrected-f1-multi-buffer/summary.json` etc. Risks erasing historical context that may matter for the paper's narrative.
+  2. **Add a forward-pointer banner** at the top of each report — "**Note:** This report captures pre-recovery state at <date>; post-recovery canonical values live at <path>." Preserves history; one banner per report.
+  3. **Leave as historical snapshots** — make no change; treat the post-run reports as a frozen artefact of the original launch. Future paper-citation queries route to the canonical post-recovery `results/` outputs directly.
+  **The user wants to discuss this in Session 86 before any action.** Don't auto-pick an option; raise it explicitly.
+
+### 🌙 Overnight recovery campaign in flight (launched end-of-Session-85, 2026-05-03 night)
+
+The Phase3a verifier-completeness recovery campaign is running on **sapphire** in the background. Driver: `planning/run-phase3a-recovery.sh` (stripped from `.template` after sentinel check). Runbook: `planning/phase3a-verifier-recovery-runbook.md`.
+
+**Expected outcome by Session 86 morning**:
+
+- 20 `run_pv.py cleanup` invocations (Tier 1: 8 paper-cited cells, 205 candidates; Tier 2: 7 sweep / v2-policy / scale-4 cells, 478 candidates incl. the gap=460 non-paper-cited offender; Tier 3: 5 legacy diagnostic cells incl. the user-requested 11 `pv-diag-384/` set, 41 candidates).
+- 11 derived cells regenerated for free via `scripts/derive_vote_threshold_results.py`.
+- Cost: best $1.23 / expected $1.84 / worst $3.70 / hard cap $10. The driver halts at the cap.
+- Wall clock: ~30 min API + 3–6 h propagation.
+- Per-cell or per-tier commits pushed to `origin/main` from sapphire.
+
+**Verification on Session 86 start**:
+
+```bash
+ssh sapphire 'cd ~/Code/map-reader-llm && git log --oneline 711d57e3..HEAD | head -30'
+# expect: a chain of recovery commits, the most recent being a campaign-summary doc
+```
+
+If the campaign halted partway (cost cap hit, sanity-check failure, network blip), the runbook's per-cell logs at `logs/phase3a-recovery-<timestamp>/` will show where it stopped. Resume from the next cell; do NOT re-run cells already cleaned up.
+
+**Then sync amd-tower + zbook** to whatever HEAD sapphire pushed to:
+
+```bash
+ssh amd-tower 'cd ~/Code/map-reader-llm && git pull --ff-only'
+# zbook (your current machine):
+git pull --ff-only
+```
+
+**After sync**, run the automatic A2 image re-evaluation if it didn't already happen as part of the propagation — check the recovery campaign's commit chain for image re-eval commits before running again.
 
 ### Things to NOT redo
 
