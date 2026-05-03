@@ -161,6 +161,103 @@ Detection sets:
 
 Notes — wins / losses / ties are tile-level comparisons (per-tile F1_A vs F1_B); ΔF1 is the aggregate micro-average difference; CI is a 10 000-iteration tile-level paired bootstrap.
 
+## F1 tier rankings (greedy clique, BH-FDR within-buffer family)
+
+_Hand-authored prose section — re-added 2026-05-03 after the
+cross-track-v2 (commit `42ed1d32`) auto-regeneration. Numbers refresh
+the Apr 28 commit `e2ceef58` tables against the 4 post-recovery
+corrected runs. The auto-tables above the Reproducibility section
+will overwrite this section if `build_pairwise_perm_v2_summary.py`
+is re-run; preserve when refreshing._
+
+### Methodology note
+
+Tiers built via greedy clique on BH-FDR-corrected paired-permutation tests within the 6-pair family at each buffer (matrix-tier convention from `results/leaderboard/per-architecture/README.md`). Each run is added to the current tier if it is BH-adjusted indistinguishable (q ≥ threshold) from ALL current tier members; otherwise it starts a new tier. q=0.05 is the base threshold; q=0.01 is the sensitivity pass.
+
+Source: per-pair JSONs in `paired-{t0.3-vs-t0.7,t0.3-vs-image,t0.7-vs-image,t0.3-vs-tmin,t0.7-vs-tmin,image-vs-tmin}/permutation-R{50,100}m.json`. F1 + 95 % CI from `results/<run>/corrected-f1-multi-buffer/summary.json`.
+
+### R = 50 m (canonical operating point)
+
+F1 ranking: T=0.3 > image > T=0.7 > T=MIN
+
+#### Pairwise BH-FDR-adjusted p-values (6-pair family at R = 50 m)
+
+| Pair | ΔF1 | BH-adj p | Sig at q=0.05 | Sig at q=0.01 |
+|---|---:|---:|:--:|:--:|
+| T=0.3 vs T=0.7 | +0.016 | <0.001 | yes | yes |
+| T=0.3 vs image | +0.010 | 0.045 | yes | no |
+| T=0.7 vs image | −0.006 | 0.215 | no | no |
+| T=0.3 vs T=MIN | +0.047 | <0.001 | yes | yes |
+| T=0.7 vs T=MIN | +0.030 | <0.001 | yes | yes |
+| image vs T=MIN | +0.037 | <0.001 | yes | yes |
+
+#### Tier table at q = 0.05 (base)
+
+| Tier | Run | F1 [95 % CI] |
+|:---:|:---|:---|
+| **1** | T=0.3 (text-HIGH) | **0.8437** [0.8344, 0.8524] |
+| **2** | image | 0.8332 [0.8240, 0.8421] |
+| **2** | T=0.7 (text-HIGH) | 0.8273 [0.8173, 0.8370] |
+| **3** | T=MIN | 0.7968 [0.7856, 0.8077] |
+
+T=0.3 alone in Tier 1 — significantly above image, T=0.7 and T=MIN. image and T=0.7 indistinguishable at q=0.05 (BH-adj p = 0.215). T=MIN significantly below all three.
+
+#### Tier table at q = 0.01 (sensitivity)
+
+| Tier | Run | F1 [95 % CI] |
+|:---:|:---|:---|
+| **1** | T=0.3 (text-HIGH) | **0.8437** [0.8344, 0.8524] |
+| **1** | image | 0.8332 [0.8240, 0.8421] |
+| **2** | T=0.7 (text-HIGH) | 0.8273 [0.8173, 0.8370] |
+| **3** | T=MIN | 0.7968 [0.7856, 0.8077] |
+
+At the stricter q=0.01, the T=0.3-vs-image distinction collapses (BH-adj p = 0.045 > 0.01) — image moves up to Tier 1. T=0.7 now alone in Tier 2.
+
+### R = 100 m
+
+F1 ranking: image > T=0.3 > T=0.7 > T=MIN — rank reversal at the top vs R=50 m.
+
+#### Pairwise BH-FDR-adjusted p-values (6-pair family at R = 100 m)
+
+| Pair | ΔF1 | BH-adj p | Sig at q=0.05 | Sig at q=0.01 |
+|---|---:|---:|:--:|:--:|
+| T=0.3 vs T=0.7 | +0.016 | <0.001 | yes | yes |
+| T=0.3 vs image | −0.005 | 0.269 | no | no |
+| T=0.7 vs image | −0.021 | <0.001 | yes | yes |
+| T=0.3 vs T=MIN | +0.048 | <0.001 | yes | yes |
+| T=0.7 vs T=MIN | +0.032 | <0.001 | yes | yes |
+| image vs T=MIN | +0.053 | <0.001 | yes | yes |
+
+#### Tier table at q = 0.05 (and q = 0.01 — identical)
+
+| Tier | Run | F1 [95 % CI] |
+|:---:|:---|:---|
+| **1** | image | **0.8536** [0.8449, 0.8616] |
+| **1** | T=0.3 (text-HIGH) | 0.8485 [0.8394, 0.8571] |
+| **2** | T=0.7 (text-HIGH) | 0.8324 [0.8225, 0.8418] |
+| **3** | T=MIN | 0.8005 [0.7895, 0.8112] |
+
+image and T=0.3 indistinguishable at R = 100 m (BH-adj p = 0.269). T=0.7 significantly below both. T=MIN significantly below T=0.7. Tier structure stable across q=0.05 and q=0.01.
+
+### Tier mobility between R = 50 m and R = 100 m
+
+| Run | R=50 m tier (q=0.05) | R=100 m tier | Δ |
+|---|:---:|:---:|---|
+| **image** | 2 | **1** | promoted |
+| T=0.3 | 1 | 1 | unchanged |
+| T=0.7 | 2 | 2 | unchanged |
+| T=MIN | 3 | 3 | unchanged |
+
+The buffer-rank-reversal documented in **Obs 291** and **Obs 292** (text wins at tight buffer; image overtakes at wider buffer) shows up directly in the tier structure: image rises from Tier 2 to Tier 1 between R=50 m and R=100 m. T=0.3 holds the top throughout (joint at R=100 m); T=0.7 sits at Tier 2 throughout; T=MIN is bottom throughout.
+
+### Paper-relevant summary
+
+- **R=50 m operating point (q=0.05)**: T=0.3 is the unambiguous winner, alone in Tier 1.
+- **R=100 m practitioner-broader buffer**: image catches up to T=0.3; they share Tier 1.
+- **T=0.7 sits in Tier 2 at every buffer** — never the leader, never the bottom, statistically distinguishable from both extremes at canonical R ≥ 50 m.
+- **T=MIN is always Tier 3** — significantly below everything else at every buffer; the in-corpus confirmation that HIGH thinking earns its tokens (see Obs 297).
+- **Post-recovery stability**: all six pairs preserve sign and significance vs the pre-recovery baseline at R = 50 m (per cross-track-v2 commit `42ed1d32` headline; see top of file). Tier rankings carry forward unchanged.
+
 ## Reproducibility
 
 - Driver: `scripts/paired_permutation_corrected_55maps.py`
