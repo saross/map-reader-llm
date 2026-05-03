@@ -122,11 +122,11 @@ Tile-level classification metrics complement mound-level F1: they answer "does e
 
 | Track | MCC | MCC 95% CI | Sensitivity | Specificity | TP / TN / FP / FN |
 |-------|:---:|:---:|:---:|:---:|:---:|
-| image | **0.691** | [0.675, 0.706] | 0.707 | 0.948 | 2,390 / 4,891 / 270 / 990 |
+| image | **0.692** | [0.678, 0.706] | 0.708 | 0.948 | 2,394 / 4,891 / 270 / 986 |
 | text-HIGH | 0.648 | [0.633, 0.662] | 0.644 | 0.953 | 2,176 / 4,918 / 243 / 1,204 |
-| text-MIN | 0.625 | [0.610, 0.641] | 0.613 | 0.955 | 2,072 / 4,927 / 234 / 1,308 |
+| text-MIN | 0.626 | [0.611, 0.641] | 0.614 | 0.955 | 2,075 / 4,927 / 234 / 1,305 |
 
-**Tile-level MCC ordering inverts the mound-level F1 ordering.** Image leads on tile-level MCC (0.691) while text-HIGH leads on mound-level corrected F1 (0.827). Image's tile-level sensitivity (0.707) is notably higher than the text tracks' (0.644 / 0.613) — image catches a higher fraction of mound-bearing tiles, then localises within them imprecisely (the source of its tight-buffer F1 penalty). Text tracks achieve marginally higher tile-level specificity (≈0.95 vs 0.95) but sacrifice sensitivity. The cross-metric tension is the same pattern flagged in the leaderboard-20m-annotated Tier 5 analysis (row #15 "Image baseline + PV" has the highest tile-level MCC of any condition, 0.877, alongside low mound-level F1=0.717 at 20 m).
+**Tile-level MCC ordering inverts the mound-level F1 ordering.** Image leads on tile-level MCC (0.692, post-recovery) while text-HIGH leads on mound-level corrected F1 (0.827). Image's tile-level sensitivity (0.708) is notably higher than the text tracks' (0.644 / 0.614) — image catches a higher fraction of mound-bearing tiles, then localises within them imprecisely (the source of its tight-buffer F1 penalty). Text tracks achieve marginally higher tile-level specificity (≈0.95 vs 0.95) but sacrifice sensitivity. The cross-metric tension is the same pattern flagged in the leaderboard-20m-annotated Tier 5 analysis (row #15 "Image baseline + PV" has the highest tile-level MCC of any condition, 0.877, alongside low mound-level F1=0.717 at 20 m).
 
 **Paper-framing implication**: a track-selection recommendation based on mound-level F1 alone would pick text-HIGH (or T=0.3 text-HIGH; see `results/55maps-mcc-v2-summary/report.md`); a recommendation based on tile-level coverage (e.g. "flag every mound-bearing tile for human inspection") would pick image. Both are defensible and serve different downstream use cases.
 
@@ -134,13 +134,13 @@ Tile-level classification metrics complement mound-level F1: they answer "does e
 
 ## 4. Corrected-F1 availability
 
-**Both the image and text-HIGH tracks have now been human-reviewed** (text-HIGH human review completed 2026-04-24, Session 78; corrected-F1 artefact at `results/55maps-text-high-generalisation/corrected-f1-multi-buffer/`). Only text-MIN remains unreviewed.
+**All three tracks have now been human-reviewed** (text-HIGH human review completed 2026-04-24, Session 78; corrected-F1 artefact at `results/55maps-text-high-generalisation/corrected-f1-multi-buffer/`. text-MIN multi-buffer review added in cross-track-v2 commit `42ed1d32`; 586-row review CSV at `results/55maps-text-min-generalisation/human-review-multi-buffer.csv`).
 
 | Track | Corrected F1 @ 50 m | Multi-buffer corrected F1 | n human-reviewed | Source |
 |-------|--------------------:|:-------------------------:|-----------------:|--------|
-| image | **0.832** [0.822, 0.841] | 0.832 → 0.855 @ 50 → 150 m | 1,028 candidates (calibrated UI, 50 m single-buffer) + same 1,028 re-reviewed multi-buffer with 74 sentinel additions | `corrected-f1-human-reviewed.md` + `corrected-f1-multi-buffer/report.md` |
+| image | **0.833** [0.824, 0.842] | 0.833 → 0.857 @ 50 → 150 m | 1,028 candidates (calibrated UI, 50 m single-buffer) + 557 re-reviewed multi-buffer + 74 sentinel additions + 1 cand 2397 promoted in cross-track-v2 | `corrected-f1-human-reviewed.md` + `corrected-f1-multi-buffer/report.md` |
 | text-HIGH | **0.827** [0.817, 0.837] | 0.827 → 0.835 @ 50 → 150 m | 630 candidates (multi-buffer review; 32 `>150 m` sentinels excluded; refreshed post-recovery 2026-05-03) | `results/55maps-text-high-generalisation/corrected-f1-multi-buffer/` |
-| text-MIN | — | — | 0 | — |
+| text-MIN | **0.797** [0.786, 0.808] | 0.797 → 0.802 @ 50 → 150 m | 586 candidates (multi-buffer review added in cross-track-v2; 250 reviewer-promoted at R=50 m) | `results/55maps-text-min-generalisation/corrected-f1-multi-buffer/` |
 
 ### 4.1 Text-HIGH multi-buffer corrected F1 (Session 78 2026-04-24; refreshed post-recovery 2026-05-03)
 
