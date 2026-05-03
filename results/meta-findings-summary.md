@@ -20,13 +20,13 @@ The human-review day's findings decompose into five themes, each mapping
 to one or more paper Discussion paragraphs:
 
 - **T1 — Human-review calibration and the corrected-F1 lower bound.** The
-  pipeline's 55-map image-generalisation measured F1 = 0.771 at 50 m rises
-  to **F1 ≥ 0.830** under per-item human review of 1,028 VLM-only
-  candidates (95 % bootstrap CI on review-label variability [0.826,
-  0.833]; 472 / 1,028 = 45.9 % reviewer-promoted to true positive). The
-  calibrated-tolerance review UI shifts 21.4 % of in-sample judgements
+  pipeline's 55-map image-generalisation measured F1 = **0.7745** at 50 m
+  rises to **corrected F1 = 0.8333** under per-item human review of 1,028
+  VLM-only candidates (post-recovery 2026-05-03; pre-recovery raw 0.771,
+  corrected 0.8316; 472 / 1,028 = 45.9 % reviewer-promoted to true positive).
+  The calibrated-tolerance review UI shifts 21.4 % of in-sample judgements
   one-directionally toward the conservative label (Obs 268), confirming
-  that 0.830 is a defensible lower bound, not a point estimate.
+  that the corrected F1 is a defensible lower bound, not a point estimate.
 
 - **T2 — Failure-mode taxonomies at production scale.** Three mechanistically
   distinct failure families dominate the 556 confirmed false positives:
@@ -111,10 +111,11 @@ per-analysis JSON is primary.
 
 | Claim | Value | Source |
 |---|---|---|
-| 55-map image measured F1 @ 50 m | 0.771 [0.760, 0.782] | `outputs/55maps-image-generalisation/evaluation/evaluation.json` → `summary.buffers[3]` |
-| 55-map image corrected F1 @ 50 m (human-reviewed) | **0.830** [0.826, 0.833] | `results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json` |
-| 55-map multi-buffer corrected F1 curve | 0.832 / 0.848 / 0.852 / 0.854 / 0.855 @ 50 / 75 / 100 / 125 / 150 m | `results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json` → `results[*].F1` |
-| Practitioner-useful cap (attractor-truncated) | 0.854 @ R = 125 m | same as above |
+| 55-map image measured F1 @ 50 m (post-recovery 2026-05-03) | **0.7745** [0.764, 0.784] | `outputs/55maps-image-generalisation/evaluation/evaluation.json` → `summary.buffers[3]` (post-recovery; pre-recovery 0.771; commit `da84a3d2`) |
+| 55-map image corrected F1 @ 50 m (post-recovery, human-reviewed multi-buffer) | **0.8333** | `results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json` → `results[R_m=50].F1` (post-recovery; pre-recovery 0.8316) |
+| 55-map image multi-buffer corrected F1 curve (post-recovery) | 0.8333 / 0.8491 / 0.8535 / 0.8552 / 0.8565 @ 50 / 75 / 100 / 125 / 150 m | `results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json` → `results[*].F1` |
+| Practitioner-useful cap (attractor-truncated) | 0.8552 @ R = 125 m (post-recovery) | same as above |
+| 55-map image tile-level MCC @ 50 m (post-recovery) | **0.6924** [0.6784, 0.7062] | `results/55maps-image-generalisation/mcc/evaluation.json` → `summary.tile_classification.mcc` |
 | Review-set size | 1,028 VLM-only candidates | `results/55maps-image-generalisation/human-review.csv` + `.../human-review-multi-buffer.csv` |
 | Phantom TPs at 50 m | 472 (45.9 %) | same + Obs 267 |
 | Confirmed FPs | 556 (54.1 %) | same |
@@ -137,9 +138,19 @@ per-analysis JSON is primary.
 | 55-map text-HIGH raw F1 @ 50 m (post-recovery 2026-05-03) | **0.7920** [0.7820, 0.8017] | `outputs/55maps-text-high-generalisation/evaluation/evaluation.json` (post-recovery; pre-recovery 0.7896) |
 | 55-map text-HIGH corrected F1 @ 50 m (post-recovery) | **0.8273** [0.8173, 0.8370] | `results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json` (post-recovery; commit `f6eaeca9`) |
 | 55-map text-HIGH tile-level MCC @ 50 m | **0.6476** [0.6331, 0.6620] | `results/55maps-text-high-generalisation/mcc/evaluation.json` |
-| 55-map text-MIN raw F1 @ 50 m | 0.759 [0.747, 0.772] | `outputs/55maps-text-min-generalisation/evaluation/evaluation.json` |
-| Paired text-HIGH vs image @ 50 m | ΔF1 = −0.018, p = 0.0008 (significant) | `results/55maps-cross-track-comparison/paired-image-vs-text-high-50m/pairwise_permutation_result.json` |
-| Paired text-MIN vs image @ 50 m | ΔF1 = +0.012, p = 0.0543 (n.s. — marginal image advantage) | `results/55maps-cross-track-comparison/paired-image-vs-text-min-50m/pairwise_permutation_result.json` |
+| 55-map text-MIN raw F1 @ 50 m (post-recovery 2026-05-03) | **0.7595** [post-GT-update; current evaluation.json reports 0.7619] | `outputs/55maps-text-min-generalisation/evaluation/evaluation.json` (post-recovery; pre-recovery 0.7591; commit `c1ea6df3`) |
+| 55-map text-MIN corrected F1 @ 50 m (post-recovery) | **0.7968** | `results/55maps-text-min-generalisation/corrected-f1-multi-buffer/summary.json` (no human-review for text-MIN — uses extended GT only) |
+| 55-map text-MIN tile-level MCC @ 50 m (post-recovery) | **0.626** [0.611, 0.641] | `results/55maps-text-min-generalisation/mcc/evaluation.json` (newly added Session 84) |
+| 55-map T=0.3 text-HIGH raw F1 @ 50 m | **0.8024** [0.7925, 0.8120] | `outputs/55maps-text-high-t0.3-generalisation/evaluation/evaluation.json` |
+| 55-map T=0.3 text-HIGH corrected F1 @ 50 m | **0.8436** | `results/55maps-text-high-t0.3-generalisation/corrected-f1-multi-buffer/summary.json` |
+| GS-v2 raw F1 @ 50 m (Era 2 487-tile, post-recovery 2026-05-03) | **0.8859** [0.8798, 0.8919] | `results/gold-standard-extended-buffer-sweep-era2/evaluation.json` (post-recovery; pre-recovery 0.8734; commit `239a6bf4`) |
+| GS-v2 tile-level MCC @ 50 m (Era 2 487-tile, post-recovery) | **0.7778** [0.7663, 0.7896] | same source (Sens=0.7904, Spec=0.9690) |
+| Paired text-HIGH vs image @ 50 m (post-recovery v2) | ΔF1 = −0.0060, p_BH = 0.215 (n.s. — only ns pair of 6) | `results/55maps-pairwise-permutation-v2/paired-t0.7-vs-image/summary.json::per_buffer[buffer_metres=50]` |
+| Paired text-MIN vs image @ 50 m (post-recovery v2) | ΔF1 = +0.0365, p_BH < 0.001 (significant) | `results/55maps-pairwise-permutation-v2/paired-image-vs-tmin/summary.json::per_buffer[buffer_metres=50]` |
+| Paired T=0.3 vs T=0.7 @ 50 m (post-recovery v2) | ΔF1 = +0.0162, p_BH < 0.001 (significant) | `results/55maps-pairwise-permutation-v2/paired-t0.3-vs-t0.7/summary.json` |
+| Paired T=0.3 vs image @ 50 m (post-recovery v2) | ΔF1 = +0.0102, p_BH = 0.045 (significant) | `results/55maps-pairwise-permutation-v2/paired-t0.3-vs-image/summary.json` |
+| Paired T=0.3 vs T=MIN @ 50 m (post-recovery v2) | ΔF1 = +0.0467, p_BH < 0.001 (significant) | `results/55maps-pairwise-permutation-v2/paired-t0.3-vs-tmin/summary.json` |
+| Paired T=0.7 vs T=MIN @ 50 m (post-recovery v2) | ΔF1 = +0.0305, p_BH < 0.001 (significant) | `results/55maps-pairwise-permutation-v2/paired-t0.7-vs-tmin/summary.json` |
 | Text-HIGH buffer plateau (50 → 125 m, post-recovery) | +0.005 F1 (0.7920 → 0.7967) | `outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json` (post-recovery) |
 | Text-MIN buffer plateau (50 → 125 m) | +0.007 F1 (0.759 → 0.766) | `outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json` |
 | 55-map paper-headline F1 | **0.904** [0.878, 0.928] @ 50 m (487-tile matrix, text-HIGH + PV) | `results/paper-tables/metrics_master.json` (separate from the 55-map slice — see §8) |
@@ -279,19 +290,29 @@ AUC = 0.500.
   (≈ 20–25 m at the 384-px tile scale) of centroid noise. This is
   additive to the 45.9 % phantom-TP rate from per-candidate review;
   both push the raw 0.771 figure below the corrected ≥ 0.830.
-- **Cross-modality paired significance** (Session 77 2026-04-24):
-  the paired permutation tests across the three tracks
-  (`results/55maps-cross-track-comparison/paired-image-vs-text-*`;
-  10,000 permutations, seed 42) establish that **text-HIGH
-  significantly outperforms image at every buffer 20–50 m** (ΔF1 =
-  −0.118 → −0.018; all p ≤ 0.001); **text-MIN beats image at tight
-  buffers but converges with image at R ≥ 40 m** (p = 0.34 at 40 m;
-  p = 0.054 at 50 m). Text-track extended-buffer evaluations show
-  both text tracks plateau by 75 m (gain only +0.007 F1 from 50 →
-  125 m; cf. image's corrected +0.022). Image-track buffer
-  sensitivity is therefore a modality property (spatial imprecision
-  of image-proposer outputs), not a GT-noise artefact; text tracks
-  do not have the same buffer-dependency.
+- **Cross-modality paired significance — v2 post-recovery 4-corpus**
+  (Session 84 2026-05-03; commit `a7a0caaa`):
+  the paired permutation tests v2 across the four corrected runs
+  (`results/55maps-pairwise-permutation-v2/`; 10,000 permutations,
+  seed 42; corrected Approach B at R = 50 m) establish a 6-pair grid
+  with **5 of 6 pairs significant at BH-FDR q = 0.05**:
+  - T=0.3 vs T=0.7: ΔF1 = +0.0162, p_BH < 0.001 (sig)
+  - T=0.3 vs image: ΔF1 = +0.0102, p_BH = 0.045 (sig)
+  - **T=0.7 vs image: ΔF1 = −0.0060, p_BH = 0.215 (n.s. — only ns pair)**
+  - T=0.3 vs T=MIN: ΔF1 = +0.0467, p_BH < 0.001 (sig)
+  - T=0.7 vs T=MIN: ΔF1 = +0.0305, p_BH < 0.001 (sig)
+  - image vs T=MIN: ΔF1 = +0.0365, p_BH < 0.001 (sig)
+
+  **Headline ranking at R = 50 m corrected**: T=0.3 (0.8436) > image (0.8333)
+  > T=0.7 (0.8273) > T=MIN (0.7968). T=0.7 vs image is statistically
+  indistinguishable post-recovery (the only ns pair); the previous
+  Session-77-era +0.0119 advantage of image is now slightly negative
+  but within bootstrap noise. T=0.3 is the clear leader; T=MIN is the
+  clear straggler. Text-track extended-buffer evaluations show both
+  text tracks plateau by 75 m (gain only +0.007 F1 from 50 → 125 m;
+  cf. image's corrected +0.022). Image-track buffer sensitivity is
+  therefore a modality property (spatial imprecision of
+  image-proposer outputs), not a GT-noise artefact.
 
 ### 3.5 Suggested paper text
 

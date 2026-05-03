@@ -1,7 +1,7 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-05-03 (Session 83 closure — T=0.7 55-map text-high recovery completed; 160/160 failed tile-passes recovered; full downstream propagation chain through D-S re-aggregation; 3 new bugs fixed (parser realtime-vs-batch, D-S row-position, cost_manifest cleanup-overwrites-meta); Obs 318 + 319 added; 7 docs updated; 3 outstanding recoveries queued)
+**Last updated**: 2026-05-03 (Session 84 closure — 3 follow-up recoveries (image, text-MIN, GS-v2) completed under the parser fix at per-tile costs 100–300× cheaper than T=0.7 baseline; 28 silently-dropped verifier candidates discovered and recovered; cross-track v2 paired-permutation 6-pair grid preserved (5 of 6 sig; T=0.7 vs image only ns); 2 new bugs surfaced (cost_manifest cosmetic double-counting + GS-v2 race condition); 5 docs refreshed (methods + meta + limitations + CI registry + this continuity doc); cand 2397 GT-completeness decision pending before paper outline)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
@@ -1750,6 +1750,84 @@ Seven docs were updated in a single commit to propagate the post-recovery state 
 - **The three bug fixes are COMMITTED** (`e3aef6fa` parser, `a9e280a3` D-S row-position, `7f05f529` cost-manifest backup-merge); do NOT revisit unless adding regression tests or extending the patches to new code paths.
 - **Obs 318 + 319 are COMMITTED** to working-notes; do NOT modify (refinements should come as new Obs per project policy).
 - **The pre-recovery `*.pre-recovery-*.backup` and `*.pre-gtupdate-*.backup` files in `outputs/55maps-text-high-generalisation/` and `results/55maps-text-high-generalisation/` are preserved by design** (per the cost-manifest fix's design and the project's "archive, never delete" policy); do NOT clean them up.
+
+---
+
+## Session 84 closure (2026-05-03)
+
+### Headline
+
+The three outstanding recoveries flagged in Session 83 (image, text-MIN, GS-v2) were **all closed in Session 84** under the Session-83-landed 3-tier JSON repair patch (commit `e3aef6fa`). Combined recovery cost ~$0.30 across all three follow-up arcs (image $0.029 + text-MIN $0.144 + GS-v2 $0.061; FP-classify 4-corpus $0.582 separately). **28 silently-dropped verifier candidates discovered** (image: 18 + GS-v2: 10) — pre-published F1s were therefore slightly understated; GS-v2 by ~1.3 pp at 50 m, image by ~0.3 pp at 50 m. **All paper-load-bearing claims preserved across the four corrected runs**; cross-track v2 paired-permutation grid (6 pairs) shows 5 of 6 pairs significant at BH-FDR q=0.05, with **T=0.7 vs image (Δ=−0.0060, p_BH=0.215) the only ns pair** post-recovery.
+
+**Total Session-83 + Session-84 spend**: ~$58 (T=0.7 recovery $57.10 dominates; Session 84 follow-up arc ~$0.88 in API spend; the rest is documentation).
+
+### Today's commit chain (~50 commits in range `f5df7a09..` to current)
+
+The full Session-83 + Session-84 propagation arc spans roughly 50 commits from `f5df7a09` (Obs 318) through `42ed1d32` (FP-classify 4-corpus re-classify). Major commits, in chronological order (Session 83 commits abbreviated; full list in §"Session 83 closure" above):
+
+- **Session 83 chain**: `f5df7a09 → 731466d8 → d7f85978 → e3aef6fa → e20f3e18 → aeb9fb7f → a9e280a3 → 7f05f529 → baf1497a → 9b80621e → f533fda5 → f6eaeca9 → 33435aab → 366f9c66 → e07dae37` (T=0.7 recovery + 3 bug fixes; see §"Session 83 closure" for the full list).
+- **Session-83 closing docs (4 commits)**: `ae50d94d` (DS-summary + sub-corpora + extended-buffer); `6b4326f0` → `01b5441f` (headline-results docs); `11a6ac34` (methods/limitations docs); `274b837b` (Obs 320 — closure observation).
+- **Session 84 follow-up recovery drivers**: `a9bc85b2` (text-MIN); `90890ae9` (GS-v2).
+- **Image follow-up recovery**: `2992056b` → `8082896b` → `a78cd7c5` → `8965d236` → `da84a3d2` → `8699f456` → `165c7415` → `c816d4bd` (proposer recovery → verifier cleanup → cost-manifest aggregation → verified rebuild → re-evaluate → race-fix → review-app launcher → cand 2397 added).
+- **Text-MIN follow-up recovery**: `c1ea6df3` → `b4a928d2` → `236327d8` → `6e077005` (proposer + downstream → cost manifest → re-eval → MCC).
+- **GS-v2 follow-up recovery**: `c8fde2ae` → `de67f35f` → `7167118d` → `4ea54760` → `239a6bf4` → `c6023034` (proposer recovery → re-merge consensus → extract crops → verifier cleanup → re-evaluate → downstream propagation).
+- **Cross-track v2 propagation**: `0edb213a` (cap reset) → `a7a0caaa` (paired-permutation v2 — all 6 pairs) → `971ef0e1` (dtype fix) → `29fcc367` (attractor-pull v2) → `42ed1d32` (FP-classification 4-corpus re-classify).
+
+### Per-run outcome table (post-recovery 2026-05-03)
+
+| Run     | Recovery cost | Net new candidates | F1@50m raw → post-recovery | F1@50m corrected post-recovery | MCC@50m post-recovery | Verifier completeness gap |
+|:--------|:-------------:|:------------------:|:---------------------------:|:------------------------------:|:---------------------:|:-------------------------:|
+| T=0.3   | $0.034        | +1                 | 0.8023 → **0.8024**         | **0.8436**                     | n/a                   | none                      |
+| T=0.7   | $57.10        | +21                | 0.7896 → **0.7920**         | 0.8260 → **0.8273**            | **0.6476** [0.6331, 0.6620] | none documented      |
+| image   | ~$0.029       | +15                | 0.771 → **0.7745**          | 0.8316 → **0.8333**            | **0.6924** [0.6784, 0.7062] | **18 silently-dropped** |
+| text-MIN | ~$0.144      | +4                 | 0.7591 → **0.7595**         | **0.7968** (unchanged)         | **0.626** [0.611, 0.641] (newly added) | none           |
+| GS-v2   | ~$0.061       | +9 (Era 2)         | 0.8734 → **0.8859** (Era 2) | n/a                            | **0.7778** [0.7663, 0.7896] (newly added) | **10 silently-dropped** |
+
+### Cross-track outcomes (6 pairs preserved; 100/125 cap preserved; chi-square stable)
+
+- **All 6 paired-permutation pairs preserved at BH-FDR q=0.05**: 5 of 6 significant (T=0.3 vs T=0.7 +0.0162; T=0.3 vs image +0.0102; T=0.3 vs T=MIN +0.0467; T=0.7 vs T=MIN +0.0305; image vs T=MIN +0.0365). **T=0.7 vs image (Δ=−0.0060, p_BH=0.215) is the only ns pair** post-recovery — qualitatively unchanged from pre-recovery state. Headline corrected-F1 ranking: T=0.3 (0.8436) > image (0.8333) > T=0.7 (0.8273) > T=MIN (0.7968).
+- **Attractor-pull 100/125 m cap preserved**: post-recovery attractor-pull v2 (commit `29fcc367`) confirms the practitioner-useful cap remains at R = 125 m for image-track.
+- **Chi-square (image vs text) stable**: post-recovery FP-classify 4-corpus re-classify (commit `42ed1d32`) gives χ²=31.28, p=0.0018 (qualitatively unchanged from pre-recovery χ²=31.81, p=0.0015). Image's 'number' overrepresentation persists; image's 'none' category stands out (n=11 vs 5 expected; residual +3.47).
+
+### Bug discoveries (cumulative: 7 total)
+
+1. **Obs 281 magnitude correction** (Obs 318, commit `f5df7a09`) — T=0.7 unrecovered failures: 25 → 160; documented as a magnitude correction not a hypothesis change.
+2. **T=0.7 vs T=0.3 recovery-cost asymmetry** (Obs 319, commits `c913b69b` + `3219aa76`) — per-tile recovery cost ratio ~189× (T=0.7 $0.357/tile vs T=0.3 $0.0019/tile), driven by retry-budget compounding at HIGH-thinking pricing.
+3. **3-tier JSON repair fix in realtime proposer** (commit `e3aef6fa`) — recovers ~92 % of historical parse failures inline; prevents future stuck-tile recovery campaigns.
+4. **D-S aggregator row-position bug** (commit `a9e280a3`) — joined verifier probabilities to consensus features by row position; broke under partial-recovery re-clustering. Fixed to use stable candidate_id.
+5. **`cost_manifest` aggregator backup-merge** (commit `7f05f529`) — silently dropped pre-cleanup verifier-meta cost; fixed to glob and sum across pre-recovery / pre-cleanup backup siblings.
+6. **`cost_manifest` cosmetic 2× / 3× double-counting after no-op recoveries** (Session 84; § 5.4 of the temperature-failure-recovery report). Open; cosmetic only — affects cost / token / processed-count totals but not F1 / MCC / detection-quality artefacts. True costs documented in commit messages `b4a928d2` (text-MIN) and `a78cd7c5` (image).
+7. **GS-v2 harness race condition** (Session 84; § 5.5) — proposer recovery on GS-v2 required two resume invocations per affected pass; first invocation overwrote meta but raced on geojson save. Workaround documented in commit `c8fde2ae`; no source-code patch yet.
+
+### Cost summary across the 3 follow-up recoveries
+
+- Image: ~$0.029 (proposer $0.216 in-line per commit `2992056b` + verifier ~$0.02 + ~$0.03 net new candidate impact)
+- Text-MIN: ~$0.144 (proposer recovery, no-op at tile level — see § 7.4 in the temperature-failure-recovery report)
+- GS-v2: ~$0.061 ($0.041 proposer + ~$0.02 verifier)
+- FP-classify 4-corpus: $0.582
+- **Combined Session 84 follow-up arc: ~$0.88** (recovery passes alone ~$0.30; FP-classify $0.58)
+
+**Total Session-83 + Session-84 spend**: $57.10 (T=0.7 recovery) + ~$0.88 (Session 84 follow-up arc) + ~$0.10 (T=0.7 verifier cleanup + propagation) = **~$58**.
+
+### Pending before paper outline
+
+- **Cand 2397 GT-completeness decision (TBC)**. The 2026-05-03 image FP-review identified `candidate_2397` as `mound / trig_point_on_mound` at buffer 50 m (commit `c816d4bd`); this ought to bump the curator GT count from 4,745 → 4,746. **Decision pending** on whether to integrate as a GT mound (which would shift all four corpora's F1 by a small amount, would require re-running the corrected-F1 pipelines, and would refresh the cross-track v2 outcomes by ~+0.0001 F1).
+- **Item #15 GS >125 m FP-side 6-crop manual inspection** — user-driven, deferred (carried over from Session 83).
+- **Step 6 paper outline** — the original post-Step-4 deliverable; **NOW UNBLOCKED** (post-Session 84 modulo the cand 2397 decision above). All four corrected runs are in their final post-recovery state; all cross-track v2 grids preserved; all bug discoveries documented in the temperature-failure-recovery synthesis report.
+
+### Things to NOT redo in Session 85+
+
+- **The four follow-up recoveries are COMPLETE** (image commits `2992056b..8699f456`; text-MIN `c1ea6df3..6e077005`; GS-v2 `c8fde2ae..c6023034`); do NOT re-launch any proposer recovery or re-aggregate downstream artefacts. The post-recovery values in the per-run outcome table above are canonical.
+- **The cross-track v2 paired-permutation grid is COMPLETE** (commit `a7a0caaa`); do NOT re-run unless cand 2397 lands as a new GT mound (which would shift the underlying detection sets).
+- **The FP-classify 4-corpus re-classify is COMPLETE** (commit `42ed1d32`); do NOT re-run.
+- **The 28 silently-dropped verifier candidates have all been recovered**; future audits should still run a `len(consensus) − len(probabilities['results'])` check as a standard step but the four current runs are clean.
+- **The two new bugs (cost_manifest cosmetic double-counting + GS-v2 race condition) are documented but NOT yet fixed**; revisit only when revising the harness or aggregator code paths. The cosmetic-double-counting bug affects only count fields, not F1 / MCC / detection-quality.
+
+### Step 6 paper outline status
+
+- **Pending; UNBLOCKED post-Session 84** modulo the cand 2397 GT decision above.
+- All paper-headline numbers refreshed across the 5 docs touched in this commit (temperature-failure-recovery, limitations-consolidation, meta-findings-summary, ci-metadata-registry, paper-writeup-continuity).
+- The paper Discussion's "what to NOT redo" list now reflects the complete four-run + 7-bug state; the Methods section's failure-rate paragraph should cite both the parse-failure recovery campaign and the verifier-completeness gap as known operational limitations resolved during the project.
 
 ---
 
