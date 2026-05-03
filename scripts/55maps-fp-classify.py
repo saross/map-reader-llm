@@ -214,7 +214,7 @@ GS_FAILURE_MODE_CATEGORIES: set[str] = {"water-feature"}
 
 # Hard cap on cumulative API spend (USD). The driver halts and reports
 # actuals if exceeded mid-run.
-COST_HARD_CAP_USD: float = 5.00
+COST_HARD_CAP_USD: float = 1.50
 
 # Gemini 3 Flash pricing (USD per 1 M tokens). Verified against
 # ``scripts/lib_llm_metadata.py`` (PRICING table, 2026-03-27).
