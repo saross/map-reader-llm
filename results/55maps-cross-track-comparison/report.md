@@ -112,7 +112,7 @@ Added Session 77 2026-04-24 to fill the acute buffer-comparison gap. `evaluate_d
 | 100 m | 0.796 [0.786, 0.805] | 0.851 | 0.747 | 0.765 [0.753, 0.777] | 0.852 | 0.694 |
 | 125 m | 0.797 [0.787, 0.806] | 0.852 | 0.748 | 0.766 [0.754, 0.778] | 0.854 | 0.695 |
 
-Both text tracks **plateau strongly above 50 m**: text-HIGH gains only +0.005 F1 from 50 m (0.792) to 125 m (0.797); text-MIN gains +0.007 from 50 m (0.759) to 125 m (0.766). This is sharply different from the image track's multi-buffer behaviour (corrected F1 0.832 → 0.854 from 50 m → 125 m; ΔF1 = +0.022, i.e., **4× the text-track buffer sensitivity**). The finding confirms that image-track buffer sensitivity is a modality property (image-proposer outputs have lower spatial precision), not a GT-noise artefact. Text-proposer outputs saturate their spatial-matching contribution by 50 m.
+Both text tracks **plateau strongly above 50 m**: text-HIGH gains only +0.005 F1 from 50 m (0.792) to 125 m (0.797); text-MIN gains +0.005 from 50 m (0.762) to 125 m (0.767). This is sharply different from the image track's multi-buffer behaviour (corrected F1 0.832 → 0.854 from 50 m → 125 m; ΔF1 = +0.022, i.e., **4× the text-track buffer sensitivity**). The finding confirms that image-track buffer sensitivity is a modality property (image-proposer outputs have lower spatial precision), not a GT-noise artefact. Text-proposer outputs saturate their spatial-matching contribution by 50 m.
 
 **Source**: `outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json` and `outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json`.
 
