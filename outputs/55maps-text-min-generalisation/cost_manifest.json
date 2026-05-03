@@ -1,119 +1,128 @@
 {
   "run_name": "55maps-text-min-generalisation",
-  "generated_at": "2026-04-18T12:21:23Z",
+  "generated_at": "2026-05-03T02:01:50Z",
   "script_version": "1.0.0",
+  "_metadata": {
+    "cleanup_recovery_metas_merged": [
+      "proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-18.meta.json.pre-recovery-20260503T014926.backup",
+      "proposer/detect_brief-text/run_2/detections-detect_brief-text-3-flash-2026-04-18.meta.json.pre-recovery-20260503T014926.backup",
+      "proposer/detect_brief-text/run_3/detections-detect_brief-text-3-flash-2026-04-18.meta.json.pre-recovery-20260503T014926.backup",
+      "proposer/detect_brief-text/run_4/detections-detect_brief-text-3-flash-2026-04-18.meta.json.pre-recovery-20260503T014926.backup",
+      "proposer/detect_brief-text/run_5/detections-detect_brief-text-3-flash-2026-04-18.meta.json.pre-recovery-20260503T014926.backup"
+    ]
+  },
   "totals": {
-    "cost_usd": 60.7866,
-    "input_tokens": 82297662,
-    "output_tokens": 6545914,
+    "cost_usd": 93.4995,
+    "input_tokens": 128355708,
+    "output_tokens": 9773875,
     "cached_tokens": 0,
     "thinking_tokens": 0,
-    "total_tokens": 88843576,
+    "total_tokens": 138129583,
     "cache_hit_rate": 0.0,
-    "wall_clock_seconds": 6953.106
+    "wall_clock_seconds": 10629.459
   },
   "by_stage": {
     "proposer": {
-      "cost_usd": 46.7233,
-      "wall_clock_seconds": 5311.156,
+      "cost_usd": 93.4466,
+      "wall_clock_seconds": 10622.311,
       "tokens": {
-        "input_tokens": 64142910,
-        "output_tokens": 4883954,
+        "input_tokens": 128285820,
+        "output_tokens": 9767908,
         "cached_tokens": 0,
         "thinking_tokens": 0,
-        "total_tokens": 69026864
+        "total_tokens": 138053728
       },
-      "tiles_processed": 42705,
-      "tiles_failed": 124,
+      "tiles_processed": 85410,
+      "tiles_failed": 248,
       "failure_rate": 0.0029,
       "per_pass": [
         {
           "pass": 1,
-          "cost_usd": 9.3354,
-          "duration_seconds": 951.633119,
+          "cost_usd": 18.6709,
+          "duration_seconds": 1903.266238,
           "tokens": {
-            "input_tokens": 12828582,
-            "output_tokens": 973718,
+            "input_tokens": 25657164,
+            "output_tokens": 1947436,
             "cached_tokens": 0,
             "thinking_tokens": 0,
-            "total_tokens": 13802300
+            "total_tokens": 27604600
           },
-          "tiles_processed": 8541,
-          "tiles_failed": 22
+          "tiles_processed": 17082,
+          "tiles_failed": 44
         },
         {
           "pass": 2,
-          "cost_usd": 9.3476,
-          "duration_seconds": 1496.675695,
+          "cost_usd": 18.6952,
+          "duration_seconds": 2993.35139,
           "tokens": {
-            "input_tokens": 12828582,
-            "output_tokens": 977773,
+            "input_tokens": 25657164,
+            "output_tokens": 1955546,
             "cached_tokens": 0,
             "thinking_tokens": 0,
-            "total_tokens": 13806355
+            "total_tokens": 27612710
           },
-          "tiles_processed": 8541,
-          "tiles_failed": 25
+          "tiles_processed": 17082,
+          "tiles_failed": 50
         },
         {
           "pass": 3,
-          "cost_usd": 9.3555,
-          "duration_seconds": 965.698588,
+          "cost_usd": 18.7111,
+          "duration_seconds": 1931.397176,
           "tokens": {
-            "input_tokens": 12828582,
-            "output_tokens": 980412,
+            "input_tokens": 25657164,
+            "output_tokens": 1960824,
             "cached_tokens": 0,
             "thinking_tokens": 0,
-            "total_tokens": 13808994
+            "total_tokens": 27617988
           },
-          "tiles_processed": 8541,
-          "tiles_failed": 32
+          "tiles_processed": 17082,
+          "tiles_failed": 64
         },
         {
           "pass": 4,
-          "cost_usd": 9.3323,
-          "duration_seconds": 947.189301,
+          "cost_usd": 18.6646,
+          "duration_seconds": 1894.378602,
           "tokens": {
-            "input_tokens": 12828582,
-            "output_tokens": 972669,
+            "input_tokens": 25657164,
+            "output_tokens": 1945338,
             "cached_tokens": 0,
             "thinking_tokens": 0,
-            "total_tokens": 13801251
+            "total_tokens": 27602502
           },
-          "tiles_processed": 8541,
-          "tiles_failed": 26
+          "tiles_processed": 17082,
+          "tiles_failed": 52
         },
         {
           "pass": 5,
-          "cost_usd": 9.3524,
-          "duration_seconds": 949.958837,
+          "cost_usd": 18.7049,
+          "duration_seconds": 1899.917674,
           "tokens": {
-            "input_tokens": 12828582,
-            "output_tokens": 979382,
+            "input_tokens": 25657164,
+            "output_tokens": 1958764,
             "cached_tokens": 0,
             "thinking_tokens": 0,
-            "total_tokens": 13807964
+            "total_tokens": 27615928
           },
-          "tiles_processed": 8541,
-          "tiles_failed": 19
+          "tiles_processed": 17082,
+          "tiles_failed": 38
         }
       ]
     },
     "verifier": {
-      "cost_usd": 14.0633,
-      "wall_clock_seconds": 1641.951,
+      "cost_usd": 0.0528,
+      "wall_clock_seconds": 7.148,
       "tokens": {
-        "input_tokens": 18154752,
-        "output_tokens": 1661960,
+        "input_tokens": 69888,
+        "output_tokens": 5967,
         "cached_tokens": 0,
         "thinking_tokens": 0,
-        "total_tokens": 19816712
+        "total_tokens": 75855
       },
       "candidates_processed": 0,
       "candidates_failed": 0
     },
     "extract_crops": {
-      "candidates_extracted": 10131
+      "candidates_extracted": 10170
     },
     "consensus": {},
     "evaluate": {
@@ -121,14 +130,14 @@
     }
   },
   "unit_costs": {
-    "cost_per_tile": 0.007117,
-    "cost_per_map": 1.1052,
-    "cost_per_detection": 0.015744,
-    "cost_per_reference_mound": 0.012744,
+    "cost_per_tile": 0.010947,
+    "cost_per_map": 1.7,
+    "cost_per_detection": 0.024191,
+    "cost_per_reference_mound": 0.019602,
     "tile_count": 8541,
     "map_count": 55,
     "reference_mound_count": 4770,
-    "final_detection_count": 3861
+    "final_detection_count": 3865
   },
   "per_map": [
     {
@@ -136,495 +145,495 @@
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 138,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.1916,
-      "total_cost_usd": 1.045
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0007,
+      "total_cost_usd": 1.7075
     },
     {
       "map_id": "K-35-050-4",
       "tiles": 780,
       "tiles_failed": 0,
-      "candidates": 218,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.3026,
-      "total_cost_usd": 1.156
+      "candidates": 219,
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0011,
+      "total_cost_usd": 1.7079
     },
     {
       "map_id": "K-35-051-3",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 219,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.304,
-      "total_cost_usd": 1.1574
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0011,
+      "total_cost_usd": 1.7079
     },
     {
       "map_id": "K-35-051-4",
       "tiles": 780,
       "tiles_failed": 0,
-      "candidates": 191,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2651,
-      "total_cost_usd": 1.1185
+      "candidates": 192,
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.001,
+      "total_cost_usd": 1.7078
     },
     {
       "map_id": "K-35-052-2",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 152,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.211,
-      "total_cost_usd": 1.0644
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0008,
+      "total_cost_usd": 1.7076
     },
     {
       "map_id": "K-35-052-3",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 184,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2554,
-      "total_cost_usd": 1.1088
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.001,
+      "total_cost_usd": 1.7077
     },
     {
       "map_id": "K-35-053-1",
       "tiles": 780,
       "tiles_failed": 0,
-      "candidates": 161,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2235,
-      "total_cost_usd": 1.0769
+      "candidates": 162,
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0008,
+      "total_cost_usd": 1.7076
     },
     {
       "map_id": "K-35-053-2",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 185,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2568,
-      "total_cost_usd": 1.1102
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.001,
+      "total_cost_usd": 1.7077
     },
     {
       "map_id": "K-35-053-4_Boyadzhik",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 172,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2388,
-      "total_cost_usd": 1.0922
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0009,
+      "total_cost_usd": 1.7077
     },
     {
       "map_id": "K-35-054-1_Straldzha_4326",
       "tiles": 780,
       "tiles_failed": 0,
-      "candidates": 214,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2971,
-      "total_cost_usd": 1.1505
+      "candidates": 216,
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0011,
+      "total_cost_usd": 1.7079
     },
     {
       "map_id": "K-35-054-2_Atolov_4326",
       "tiles": 780,
       "tiles_failed": 0,
-      "candidates": 193,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2679,
-      "total_cost_usd": 1.1213
+      "candidates": 196,
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.001,
+      "total_cost_usd": 1.7078
     },
     {
       "map_id": "K-35-054-3_Yambol",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 171,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2374,
-      "total_cost_usd": 1.0908
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0009,
+      "total_cost_usd": 1.7077
     },
     {
       "map_id": "K-35-054-4_Voynika",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 201,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.279,
-      "total_cost_usd": 1.1324
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.001,
+      "total_cost_usd": 1.7078
     },
     {
       "map_id": "K-35-055-1",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 169,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2346,
-      "total_cost_usd": 1.088
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0009,
+      "total_cost_usd": 1.7077
     },
     {
       "map_id": "K-35-055-2",
       "tiles": 780,
       "tiles_failed": 0,
-      "candidates": 198,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2749,
-      "total_cost_usd": 1.1282
+      "candidates": 199,
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.001,
+      "total_cost_usd": 1.7078
     },
     {
       "map_id": "K-35-055-3",
       "tiles": 780,
       "tiles_failed": 0,
-      "candidates": 168,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2332,
-      "total_cost_usd": 1.0866
+      "candidates": 170,
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0009,
+      "total_cost_usd": 1.7077
     },
     {
       "map_id": "K-35-055-4",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 149,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2068,
-      "total_cost_usd": 1.0602
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0008,
+      "total_cost_usd": 1.7076
     },
     {
       "map_id": "K-35-056-3",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 122,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.1694,
-      "total_cost_usd": 1.0227
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0006,
+      "total_cost_usd": 1.7074
     },
     {
       "map_id": "K-35-062-4_Asenovgrad_4326",
       "tiles": 780,
       "tiles_failed": 0,
-      "candidates": 165,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.229,
-      "total_cost_usd": 1.0824
+      "candidates": 169,
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0009,
+      "total_cost_usd": 1.7077
     },
     {
       "map_id": "K-35-063-1_Granit_4326",
       "tiles": 780,
       "tiles_failed": 0,
-      "candidates": 282,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.3915,
-      "total_cost_usd": 1.2448
+      "candidates": 283,
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0015,
+      "total_cost_usd": 1.7083
     },
     {
       "map_id": "K-35-063-2_Chirpan_4326",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 251,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.3484,
-      "total_cost_usd": 1.2018
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0013,
+      "total_cost_usd": 1.7081
     },
     {
       "map_id": "K-35-063-3_Tatarevo_4326",
       "tiles": 780,
       "tiles_failed": 0,
-      "candidates": 203,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2818,
-      "total_cost_usd": 1.1352
+      "candidates": 206,
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0011,
+      "total_cost_usd": 1.7079
     },
     {
       "map_id": "K-35-063-4_Skobelevo_4326",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 198,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2749,
-      "total_cost_usd": 1.1282
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.001,
+      "total_cost_usd": 1.7078
     },
     {
       "map_id": "K-35-064-1_Sredets_4326",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 258,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.3581,
-      "total_cost_usd": 1.2115
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0013,
+      "total_cost_usd": 1.7081
     },
     {
       "map_id": "K-35-064-2_Radnevo_4326",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 165,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.229,
-      "total_cost_usd": 1.0824
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0009,
+      "total_cost_usd": 1.7076
     },
     {
       "map_id": "K-35-064-3_Dimitrovgrad_4326",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 169,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2346,
-      "total_cost_usd": 1.088
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0009,
+      "total_cost_usd": 1.7077
     },
     {
       "map_id": "K-35-064-4_Galabovo_4326",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 159,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2207,
-      "total_cost_usd": 1.0741
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0008,
+      "total_cost_usd": 1.7076
     },
     {
       "map_id": "K-35-065-1_Radetski_4326",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 174,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2415,
-      "total_cost_usd": 1.0949
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0009,
+      "total_cost_usd": 1.7077
     },
     {
       "map_id": "K-35-065-2_GManastir_4326",
       "tiles": 780,
       "tiles_failed": 0,
-      "candidates": 159,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2207,
-      "total_cost_usd": 1.0741
+      "candidates": 161,
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0008,
+      "total_cost_usd": 1.7076
     },
     {
       "map_id": "K-35-065-3_Glavan_4326",
       "tiles": 780,
       "tiles_failed": 0,
-      "candidates": 160,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2221,
-      "total_cost_usd": 1.0755
+      "candidates": 161,
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0008,
+      "total_cost_usd": 1.7076
     },
     {
       "map_id": "K-35-065-4",
       "tiles": 780,
       "tiles_failed": 0,
-      "candidates": 155,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2152,
-      "total_cost_usd": 1.0686
+      "candidates": 156,
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0008,
+      "total_cost_usd": 1.7076
     },
     {
       "map_id": "K-35-066-1",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 212,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2943,
-      "total_cost_usd": 1.1477
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0011,
+      "total_cost_usd": 1.7079
     },
     {
       "map_id": "K-35-066-2",
       "tiles": 715,
       "tiles_failed": 0,
-      "candidates": 167,
-      "proposer_cost_usd": 0.7823,
-      "verifier_cost_usd": 0.2318,
-      "total_cost_usd": 1.0141
+      "candidates": 170,
+      "proposer_cost_usd": 1.5646,
+      "verifier_cost_usd": 0.0009,
+      "total_cost_usd": 1.5654
     },
     {
       "map_id": "K-35-066-3",
       "tiles": 780,
       "tiles_failed": 0,
-      "candidates": 196,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2721,
-      "total_cost_usd": 1.1255
+      "candidates": 197,
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.001,
+      "total_cost_usd": 1.7078
     },
     {
       "map_id": "K-35-066-4",
       "tiles": 715,
       "tiles_failed": 0,
-      "candidates": 168,
-      "proposer_cost_usd": 0.7823,
-      "verifier_cost_usd": 0.2332,
-      "total_cost_usd": 1.0155
+      "candidates": 169,
+      "proposer_cost_usd": 1.5646,
+      "verifier_cost_usd": 0.0009,
+      "total_cost_usd": 1.5654
     },
     {
       "map_id": "K-35-067-1",
       "tiles": 780,
       "tiles_failed": 0,
-      "candidates": 147,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2041,
-      "total_cost_usd": 1.0575
+      "candidates": 148,
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0008,
+      "total_cost_usd": 1.7076
     },
     {
       "map_id": "K-35-067-2",
       "tiles": 780,
       "tiles_failed": 0,
-      "candidates": 183,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.254,
-      "total_cost_usd": 1.1074
+      "candidates": 184,
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.001,
+      "total_cost_usd": 1.7077
     },
     {
       "map_id": "K-35-067-3",
       "tiles": 715,
       "tiles_failed": 0,
       "candidates": 208,
-      "proposer_cost_usd": 0.7823,
-      "verifier_cost_usd": 0.2887,
-      "total_cost_usd": 1.071
+      "proposer_cost_usd": 1.5646,
+      "verifier_cost_usd": 0.0011,
+      "total_cost_usd": 1.5656
     },
     {
       "map_id": "K-35-067-4",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 209,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2901,
-      "total_cost_usd": 1.1435
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0011,
+      "total_cost_usd": 1.7079
     },
     {
       "map_id": "K-35-074-1",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 140,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.1943,
-      "total_cost_usd": 1.0477
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0007,
+      "total_cost_usd": 1.7075
     },
     {
       "map_id": "K-35-074-2",
       "tiles": 780,
       "tiles_failed": 0,
-      "candidates": 131,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.1818,
-      "total_cost_usd": 1.0352
+      "candidates": 132,
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0007,
+      "total_cost_usd": 1.7075
     },
     {
       "map_id": "K-35-074-3",
       "tiles": 780,
       "tiles_failed": 0,
-      "candidates": 173,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2401,
-      "total_cost_usd": 1.0935
+      "candidates": 174,
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0009,
+      "total_cost_usd": 1.7077
     },
     {
       "map_id": "K-35-074-4",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 161,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2235,
-      "total_cost_usd": 1.0769
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0008,
+      "total_cost_usd": 1.7076
     },
     {
       "map_id": "K-35-075-1",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 210,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2915,
-      "total_cost_usd": 1.1449
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0011,
+      "total_cost_usd": 1.7079
     },
     {
       "map_id": "K-35-075-2",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 201,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.279,
-      "total_cost_usd": 1.1324
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.001,
+      "total_cost_usd": 1.7078
     },
     {
       "map_id": "K-35-075-3",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 223,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.3096,
-      "total_cost_usd": 1.1629
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0012,
+      "total_cost_usd": 1.7079
     },
     {
       "map_id": "K-35-075-4",
       "tiles": 780,
       "tiles_failed": 0,
-      "candidates": 176,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2443,
-      "total_cost_usd": 1.0977
+      "candidates": 179,
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0009,
+      "total_cost_usd": 1.7077
     },
     {
       "map_id": "K-35-076-1",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 181,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2513,
-      "total_cost_usd": 1.1046
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0009,
+      "total_cost_usd": 1.7077
     },
     {
       "map_id": "K-35-076-2",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 204,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2832,
-      "total_cost_usd": 1.1366
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0011,
+      "total_cost_usd": 1.7078
     },
     {
       "map_id": "K-35-076-3",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 163,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2263,
-      "total_cost_usd": 1.0797
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0008,
+      "total_cost_usd": 1.7076
     },
     {
       "map_id": "K-35-076-4",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 166,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2304,
-      "total_cost_usd": 1.0838
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0009,
+      "total_cost_usd": 1.7077
     },
     {
       "map_id": "K-35-077-1",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 198,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2749,
-      "total_cost_usd": 1.1282
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.001,
+      "total_cost_usd": 1.7078
     },
     {
       "map_id": "K-35-077-2",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 224,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.3109,
-      "total_cost_usd": 1.1643
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.0012,
+      "total_cost_usd": 1.708
     },
     {
       "map_id": "K-35-077-3",
       "tiles": 780,
       "tiles_failed": 0,
       "candidates": 190,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2637,
-      "total_cost_usd": 1.1171
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.001,
+      "total_cost_usd": 1.7078
     },
     {
       "map_id": "K-35-077-4",
       "tiles": 780,
       "tiles_failed": 0,
-      "candidates": 197,
-      "proposer_cost_usd": 0.8534,
-      "verifier_cost_usd": 0.2735,
-      "total_cost_usd": 1.1269
+      "candidates": 201,
+      "proposer_cost_usd": 1.7068,
+      "verifier_cost_usd": 0.001,
+      "total_cost_usd": 1.7078
     }
   ]
 }
