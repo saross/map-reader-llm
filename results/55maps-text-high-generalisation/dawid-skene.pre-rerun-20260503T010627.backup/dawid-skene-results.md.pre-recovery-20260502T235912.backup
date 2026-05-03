@@ -9,23 +9,23 @@ annotators, estimating latent true mound locations via EM.
 
 | Category | Count |
 |----------|-------|
-| Matched (student=1, vlm=1) | 3,527 |
-| Student-only (student=1, vlm=0) | 1,243 |
-| VLM-only (student=0, vlm=1) | 637 |
-| **Total** | **5,407** |
+| Matched (student=1, vlm=1) | 3,513 |
+| Student-only (student=1, vlm=0) | 1,257 |
+| VLM-only (student=0, vlm=1) | 630 |
+| **Total** | **5,400** |
 
 ## Corrected Metrics Comparison
 
 | Method | F1 | Precision | Recall | Notes |
 |--------|----|-----------|--------|-------|
-| Measured (vs student GT) | 0.7896 | 0.847 | 0.7394 | Baseline |
-| Simple correction (5% FN) | 0.8085 | 0.8917 | 0.7395 | Assumes uniform FN |
-| **Dawid-Skene posterior** | **0.8142** | **0.8916** | **0.7492** | Model-based |
+| Measured (vs student GT) | 0.7883 | 0.8479 | 0.7365 | Baseline |
+| Simple correction (5% FN) | 0.8071 | 0.8926 | 0.7365 | Assumes uniform FN |
+| **Dawid-Skene posterior** | **0.8129** | **0.8926** | **0.7463** | Model-based |
 
 ## D-S Model Details
 
 - **Converged**: True (14 iterations)
-- **Estimated prevalence**: 0.9165 (fraction of items that are true mounds)
+- **Estimated prevalence**: 0.9176 (fraction of items that are true mounds)
 
 ### Estimated Annotator Confusion Matrices
 
@@ -36,16 +36,16 @@ annotators, estimating latent true mound locations via EM.
 
 **VLM pipeline:**
 
-- Sensitivity: 0.7492
+- Sensitivity: 0.7463
 - Specificity: 0.0000
 
 ### Reclassification of VLM-Only Items
 
-- Total VLM-only items: 637
-- Per-item posterior P(true=1): 0.2914
-- Expected reclassified (soft): 185.6
+- Total VLM-only items: 630
+- Per-item posterior P(true=1): 0.2935
+- Expected reclassified (soft): 184.9
 - Hard-threshold (≥0.5) reclassified: 0
-- Total latent positives (expected): 4955.6
+- Total latent positives (expected): 4954.9
 
 **Note on 2-annotator identifiability:** With only two binary
 annotators, D-S assigns the same posterior to all VLM-only
