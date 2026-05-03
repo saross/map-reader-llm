@@ -67,28 +67,51 @@ ssh sapphire 'cd ~/Code/map-reader-llm && source .venv/bin/activate && pytest -m
   3. **Leave as historical snapshots** — make no change; treat the post-run reports as a frozen artefact of the original launch. Future paper-citation queries route to the canonical post-recovery `results/` outputs directly.
   **The user wants to discuss this in Session 86 before any action.** Don't auto-pick an option; raise it explicitly.
 
-### 🌙 Overnight recovery campaign in flight (launched end-of-Session-85, 2026-05-03 night)
+### 🌙 Overnight recovery campaign — RELAUNCHED with 3 cells skipped (2026-05-03 night)
 
-The Phase3a verifier-completeness recovery campaign is running on **sapphire** in the background. Driver: `planning/run-phase3a-recovery.sh` (stripped from `.template` after sentinel check). Runbook: `planning/phase3a-verifier-recovery-runbook.md`.
+The Phase3a verifier-completeness recovery campaign was launched and **halted on cell 7** of 20 (`e47-flash-high-text-1of5`) due to a discoverable structural gap: **3 cells have missing crop PNGs** (gitignored bulk intermediates that were never committed). 6 of 8 Tier-1 cells succeeded before the halt. The campaign was then resumed on sapphire with the 3 problem cells skipped, processing the remaining 10 cells through Tiers 1–3.
 
-**Expected outcome by Session 86 morning**:
+**Status at Session 86 morning** — all of the following landed on `origin/main`:
 
-- 20 `run_pv.py cleanup` invocations (Tier 1: 8 paper-cited cells, 205 candidates; Tier 2: 7 sweep / v2-policy / scale-4 cells, 478 candidates incl. the gap=460 non-paper-cited offender; Tier 3: 5 legacy diagnostic cells incl. the user-requested 11 `pv-diag-384/` set, 41 candidates).
-- 11 derived cells regenerated for free via `scripts/derive_vote_threshold_results.py`.
-- Cost: best $1.23 / expected $1.84 / worst $3.70 / hard cap $10. The driver halts at the cap.
-- Wall clock: ~30 min API + 3–6 h propagation.
-- Per-cell or per-tier commits pushed to `origin/main` from sapphire.
+- **Tier 1, 6 cells committed + initial propagation** at `414ee8a4b` (cleanup data) + `b3ed509e6` (propagation: 6 GeoJSONs + matrix-registry.json + 6 calibration.json + Session-78 matrix calibration summary). AUC deltas 0.0001–0.001 (within runbook expectation; 3 of 6 went *down* slightly because cleaned candidates are predominantly low-probability — moves AUC unpredictably; documented in commit message).
+- **Driver skip-list edit** at `e174390e4` + gitignore update at `cebe5fed6` (driver's `git status --porcelain` pre-flight needed the new log dir paths gitignored).
+- **Resume launch summary** at `0ceac93fa` (`logs/phase3a-recovery-overnight-resume/launch-summary.md`).
+- **Campaign continued running unattended** from PID `259394` on sapphire, processing the remaining cells in Tiers 1–3 with per-cell commits pushed.
+
+**Three cells SKIPPED** (logged with `reason: missing_crops_gitignored`):
+
+1. `e47-flash-high-text-1of5` (Tier 1, gap=57)
+2. `55maps-gen-verified-v2` (Tier 2)
+3. `proposer-verifier-384-adversarial-text-v1-prompt` (Tier 3)
+
+**🚨 Data-integrity finding requiring morning user attention** (NOT yet acted on; restored from backup, no commit):
+
+The previous failed cleanup of `e47-flash-high-text-1of5` *transformed the file's schema* from derived (`source/derived_from/vote_threshold`) to canonical (`version/mode/...`) with `cleanup_history` showing 0/57 recovered. The HEAD version was *already* in derived schema with a self-reference — suggesting the canonical source was overwritten earlier (possibly during the original Session-83/84 work). The follow-up agent restored the file from the `.pre-cleanup-20260503T145925.backup` sibling and `git checkout`-ed the run.meta.json, so sapphire's working tree is clean — but the deeper question is **whether the e47 cell's history is consistent across all machines**. **Read `logs/phase3a-recovery-overnight-resume/launch-summary.md` § "Surprise" for the full diagnostic before deciding what to do with this cell.** The other 2 skipped cells are clean-cut: regenerate crops via `scripts/extract_candidates.py` (CPU-only, no API), then re-run the campaign for those cells.
+
+**🛑 Heavy propagation deliberately deferred to morning user** (per follow-up agent decision):
+
+- Per-architecture leaderboard rebuilds + combined leaderboard updates: estimated ~2–3 hours sapphire CPU
+- Cross-track propagation downstream of any cells that had material F1 / MCC shifts
+- Final campaign-summary doc
 
 **Verification on Session 86 start**:
 
 ```bash
-ssh sapphire 'cd ~/Code/map-reader-llm && git log --oneline 711d57e3..HEAD | head -30'
-# expect: a chain of recovery commits, the most recent being a campaign-summary doc
+ssh sapphire 'cd ~/Code/map-reader-llm && git log --oneline 1d9be35c..HEAD | head -40'
+# expect: ~15-25 commits — Tier 1 + Tier 2 + Tier 3 cleanups + per-cell propagation + skip-list edit
 ```
 
-If the campaign halted partway (cost cap hit, sanity-check failure, network blip), the runbook's per-cell logs at `logs/phase3a-recovery-<timestamp>/` will show where it stopped. Resume from the next cell; do NOT re-run cells already cleaned up.
+```bash
+# Check if the campaign is still running:
+ssh sapphire 'ps -p $(cat ~/Code/map-reader-llm/logs/phase3a-recovery-overnight-resume/pid.txt) 2>/dev/null && echo "STILL RUNNING" || echo "FINISHED"'
+```
 
-**Then sync amd-tower + zbook** to whatever HEAD sapphire pushed to:
+```bash
+# Read the resume launch summary:
+ssh sapphire 'cat ~/Code/map-reader-llm/logs/phase3a-recovery-overnight-resume/launch-summary.md'
+```
+
+**Then sync amd-tower + zbook** to the post-campaign HEAD:
 
 ```bash
 ssh amd-tower 'cd ~/Code/map-reader-llm && git pull --ff-only'
@@ -96,7 +119,13 @@ ssh amd-tower 'cd ~/Code/map-reader-llm && git pull --ff-only'
 git pull --ff-only
 ```
 
-**After sync**, run the automatic A2 image re-evaluation if it didn't already happen as part of the propagation — check the recovery campaign's commit chain for image re-eval commits before running again.
+**Morning user decisions**:
+
+1. **Heavy propagation (~2–3 h sapphire CPU)** — kick off the per-arch + combined leaderboard rebuilds. No API cost; pure CPU work; can run in background while you do other tasks.
+2. **3 skipped cells** —
+   - For `55maps-gen-verified-v2` and `proposer-verifier-384-adversarial-text-v1-prompt`: regenerate crops + re-run cleanup. Total addtl wall-clock ~30 min crops + ~10 min cleanup + ~30 min propagation per cell. CPU-only crop regen + small API spend (well under $1 each).
+   - For `e47-flash-high-text-1of5`: read the launch-summary.md "Surprise" section first. The data-integrity question may take precedence over re-running cleanup.
+3. **A2 image re-evaluation (post-cand-2397)** — may have been picked up by the campaign's propagation if image-cells were touched. Verify by checking image-track post-recovery files; re-run if not.
 
 ### Things to NOT redo
 
