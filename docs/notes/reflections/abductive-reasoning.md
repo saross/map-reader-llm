@@ -4637,3 +4637,37 @@ Each sequence opened the door for the next:
 The arc isn't "six independent discoveries"; it's **one underlying class of issue (silent metadata drift / silent pipeline failures) probed from six different angles**. The most important lesson for future-self: when a single class-level issue is the underlying cause, multiple independent probes will surface it via different symptoms. **The class-level frame is the load-bearing one** — focusing on the symptom-level fix (text-MIN recovery → "no-op, weird") misses the deeper diagnosis (failed_items[] is historical → systemic across all runs).
 
 A practical heuristic: **when you find a bug-like surprise, ask "what's the underlying class of issue?" before fixing the symptom**. Today's metadata-cleanup workflow operationalises that lesson at the meta-file layer; the verifier-completeness root-cause fix and phase3a audit will operationalise it at the verifier-output layer.
+
+## 2026-05-03 (Session 85, map-reader-llm): Two belief-revisions across the audit + recovery arc
+
+### Sequence A (Session 85): Obs 296's "FP-anchoring" framing was wrong
+
+**Surprising fact**: the #9 sub-band agent, dispatched to test whether the (50, 75] m FP-anchoring signal in Obs 296 could be confounded by mis-localised TPs, surfaced a methodological clarification that was MORE useful than the test itself: the metric Obs 296 reports — `obs_rate_in_shell` from `scripts/analyse_attractor_pull_v2.py` — is computed from `buffer_band`, which is finite ONLY for `human_label == 'mound'` rows (TPs). FPs sit at `buffer_band = inf` and contribute 0 to every (0, 286] m shell. The (50, 75] m signal that Obs 296 framed as "FP-anchoring" is therefore **already TP-only by construction** — it measures TP-localisation tail, not FP behaviour.
+
+**Probe**: routine inspection of the metric's construction during the sub-band diagnostic. The probe was applied because the agent's prompt asked for a TP-only analysis to disambiguate the FP-anchoring signal. The discovery emerged from "what is the metric actually measuring?" rather than from "what does the data show?".
+
+**Belief revision**: **Obs 296's prose label "FP-anchoring at R ≈ 75 m" is misleading**. The underlying numbers are correct; the failure-of-generalisation reading stands. But the prose framing implies an FP-side phenomenon, which is not what the metric measures. The cleaner framing: TPs land in the (50, 75] m mis-localisation tail 5–16 % of the time on 55-map vs ~1 % on GS. FPs cluster on non-mound features (contour-rings per Obs 302), well-separated from real mounds (87–95 % beyond 286 m). Two distinct phenomena, both real, both paper-worthy — but Obs 296 was conflating them. Obs 322 captures the corrective two-phenomenon framing.
+
+**Probe-type**: methodological inspection (not data analysis). The agent's prompt encouraged questioning the metric's construction; the framing finding emerged at a layer above the data. Future-self lesson: when an Obs's prose framing seems robust but the metric's construction has assumptions worth re-checking, dispatch a "what is this measuring?" diagnostic alongside the data-level probe. The framing-level finding is sometimes more consequential than the data-level one.
+
+### Sequence B (Session 85): Three audit-introduced bugs from a single "centralise the helper" refactor
+
+**Surprising fact**: Agent 3's verifier silent-drop fix (Layer 1 + Layer 2) added a `_candidate_iteration_keys` helper that correctly expanded to per-iteration keys (`candidate_NNNNN_iter1` ... `_iterN`) when computing the *expected* set in `_assert_completeness`. The /audit found that **three other call sites** still used the old `_iter1`-only proxy: the `_verify_realtime` resume filter (line ~953), `_compute_missing_candidates` (line ~235), and the `_verify_realtime` driver's per-candidate `log_success` / `log_failure` calls (lines ~1014–1028). The result was three distinct semantic bugs, all stemming from the same underlying inconsistency between the new helper and three legacy callers.
+
+**Probe**: line-by-line audit inspection with cross-module-consistency check. The audit prompt explicitly instructed "presuppose bugs exist" and "look for inconsistencies between the new helper and its callers". The audit found the bugs by tracing key-set construction at every call site and comparing against the helper's output.
+
+**Belief revision**: **a "centralised helper" refactor doesn't actually centralise the logic until every site that constructs the same kind of key uses the helper**. Agent 3 introduced the helper but didn't audit every call site that should have been updated. The fix-of-fix agent corrected this by editing all three sites to use the helper consistently, and the L1 cleanup added an additional refactor where `_assert_completeness` itself replaced its inline expansion with a call to the helper. **The full DRY discipline takes two passes**: implementing the helper + ensuring every legacy caller is migrated.
+
+**Probe-type**: structural / cross-module audit. Future-self lesson: when reviewing a "centralise the helper" refactor, the highest-leverage check is "find every site that constructs the same kind of value via the old logic; verify each is migrated to the new helper". The audit's anti-satisficing framing surfaces these by treating the refactor as suspect rather than verified.
+
+### Meta-pattern: the audit-cascade uncovers bug strata, not bug counts
+
+Across this session's three audit rounds:
+
+- **Round 1** caught the multi-iteration key bugs (semantic, three sites, paper-Methods-relevant)
+- **Round 2** caught the dead-code `error_type` branch and DRY violation in `_assert_completeness` (post-correctness cleanup)
+- **Round 3** (implicit; the L1-L6 cleanup itself was its own quality pass) caught style + edge-case items
+
+Each round's findings would have been MISSED by a single-pass audit because the round's-eye perspective is conditional on the prior round's correctness. Round 1 finds bugs that prevent the code from being correct; round 2 finds bugs that prevent the code from being clean; round 3 finds bugs that prevent the code from being maintainable. **The bugs at each layer are real; conflating layers misses some at each level.**
+
+This complements the prior arc's "revision cascading" meta-pattern (Sessions 82–84) — that cascade was driven by the underlying class of issue (silent metadata drift) probed from six angles. This session's cascade is the inverse: a single change, audited at progressively deeper layers, surfaces qualitatively different bug classes. **Both patterns benefit from explicit multi-pass discipline**.

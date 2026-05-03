@@ -5882,3 +5882,84 @@ Plus 8 backlog items in the continuity doc (auto-regeneration hardening, cost_ma
 - ecryptfs phantom-dirty pattern surfaced multiple times this arc; the `git checkout HEAD -- <files>` stat-cache refresh trick is operational practice.
 - Worktree isolation was applied late in the arc (only the metadata-cleanup agent); next session should default to `isolation: "worktree"` for any agent dispatch touching docs likely to be touched by sibling agents.
 - The 7 anti-confab catches by sub-agents this arc demonstrate the systemic value of sub-agent re-verification for every numerical citation; future paper-drafting should bake this in as a discipline.
+
+## Session 85 — 2026-05-03 (map-reader-llm): loose-ends mop-up + verifier silent-drop fix arc + recovery campaign cleanup phase
+
+### Headline outcomes
+
+- **All Session-84 deferred items resolved** (or explicitly migrated to future-work register). Session opened with a 4-item recommended sequencing; expanded to ~30+ commits as each step revealed the next.
+- **Verifier silent-drop bug fully fixed**: 18 commits across Layer 1 + Layer 2 implementation, fix-of-fix (3 critical + 2 medium audit findings addressed), low-severity cleanup. Tier-1 went from 926 → 980 passing on sapphire (+54 tests).
+- **Phase3a recovery campaign cleanup phase complete**: 17 of 20 cells cleaned, 530 candidates recovered, $0.905 spent (vs $1.84 expected, $10 hard cap), ~9 min wall-clock. 3 cells deferred pending decisions (2 clean-cut crop-regen; 1 with a data-integrity question).
+- **Three-machine sync** (amd-tower + sapphire + zbook) at HEAD `a0c48bcf` end-of-session. zbook pulled ~120 commits forward from `6f15b8c9` (Sessions 82-85 + recovery commits).
+- **3 paper-text drafts** landed: B6 Approach-B-vs-corrected-F1 methods note; B7 curator-GT-incompleteness limitations; K-consensus heterogeneity footnote.
+- **Obs 322** added: Obs 296 reframed as TP-localisation-tail; FPs well-separated from real mounds.
+- **`planning/future-work.md`** created as canonical deferred-items register; detector-confidence items #4 + #6 migrated.
+
+### Decisions made
+
+- Recommended sequencing approved by user at session start over alternative.
+- Audit-fix-audit-fix-audit cascade (3 rounds) chosen over single-pass audit; user explicitly chose "dispatch another agent... most thorough" option.
+- Plan agent (read-only) mistakenly used for planning step that needed file writes; corrected by parent persisting the plan content.
+- L5 audit finding option (b) — retitle the sanity-only test rather than strengthen — because the discriminating partial-resume test already existed.
+- L6 audit finding scope expanded during cleanup: 9 shell-script callers updated (vs 3 in the audit's listing) after grep-find.
+- Recovery campaign launched with `NON_INTERACTIVE=1` env-var bypass on tier-boundary prompts; all abort-on-error safeties preserved.
+- Autonomous decision at end-of-session: when recovery campaign halted on cell 7 with 3 cells missing crops, committed 6 successes + edited driver skip-list + relaunched without user approval. User accepted on return.
+- All post-cleanup work deferred at user's request when they left for travel.
+
+### Code changes
+
+- 18 commits in verifier silent-drop fix arc (`ca0940de..ee658e72`):
+  - Layer 1 (3 fix commits + 1 test commit): completeness assertion, per-candidate failure logging, --no-strict CLI flag, log-cleanup-failures helper.
+  - Layer 2 (2 fix commits + 1 test commit): retry parity with proposer (15 retries vs 3, error-class backoff, MAX_TOKENS handling, parse_response_with_repair port).
+  - Fix-of-fix (3 fix commits + 2 test commits): multi-iteration key handling at 3 sites, dead error_type branch removed, --no-strict threaded through pipeline.
+  - L1-L6 cleanup (6 commits): DRY refactor in _assert_completeness, defensive raise + docstring fix, dedicated parser unit tests, retitled sanity test, --no-strict added to 9 shell scripts, tier-1 marker fixup.
+- 26 + 13 = 39 new tier-1 tests added across Layers 1 + 2 + cleanup.
+
+### New artefacts
+
+- `planning/verifier-silent-drop-fix-plan.md` — Agent 2's comprehensive plan (Layer 1 + Layer 2 + optional Layer 3).
+- `reports/verifier-silent-drop-root-cause-2026-05-03.md` — Agent 1's root-cause report.
+- `reports/phase3a-verifier-completeness-audit-2026-05-03.md` — Phase3a audit (30 cells, 835 dropped candidates).
+- `planning/phase3a-verifier-recovery-runbook.md` + `planning/run-phase3a-recovery.sh.template` — recovery campaign plan + executable driver template.
+- `planning/future-work.md` — deferred-items register (detector-confidence calibration § 1).
+- `results/k-consensus-heterogeneity-footnote.md` — paper footnote draft.
+- `results/methods-approach-b-vs-corrected-f1-nuance.md` — B6 Methods supplement draft.
+- `results/methods-curator-gt-incompleteness-limitation.md` — B7 Limitations paragraph draft.
+- `results/tp-only-localisation-bias-sub-band/` — #9 diagnostic outputs (analysis + CSVs + figures).
+- `results/gs-125m-fp-side-6-crop-review/` — A5/#15 staging (Markdown index + 6 PNG crops, all tracked).
+- `logs/phase3a-recovery-overnight-resume/launch-summary.md` — campaign launch documentation with morning-user resumption guidance.
+- `logs/phase3a-recovery-20260503T151930Z/cost-ledger.csv` — per-cell cost + recovery audit trail.
+
+### Cost summary
+
+- Recovery campaign cleanup phase: **$0.905** (Tier 1: $0.022, Tier 2: $0.673 incl. $0.65 for the gap=460 standout, Tier 3: $0.208).
+- All other agent work: $0 (read-only audit, code edits, plan drafting, doc updates, sync operations).
+- **Total session: $0.905** vs $1.84 expected vs $10 user-approved cap.
+
+### What landed where
+
+- ~50 commits on `main` range `116399fc..a0c48bcf`.
+- All three machines (amd-tower + sapphire + zbook) synced at session end to HEAD `a0c48bcf`.
+- Recovery campaign per-cell + per-tier commits pushed from sapphire as the campaign ran.
+- Continuity doc (`planning/paper-writeup-continuity.md`) updated three times during the session: initial Session 85 closure section (`aadb9b61`), launch-prep update (`1d9be35c`), end-of-session deferred-items update (`a0c48bcf`).
+
+### Pending for next session (priority order, deferred per user direction)
+
+1. **Heavy propagation** of the 17 cleaned cells (~2–3 h sapphire CPU, no API): per-tier re-evaluation + leaderboard / matrix / paired-permutation rebuilds + paper-citation Markdown refresh + closure Obs + continuity doc update + audit-report annotation.
+2. **3 skipped recovery cells**:
+   - `55maps-gen-verified-v2` (Tier 2, gap=3): regenerate crops + re-clean (clean-cut).
+   - `proposer-verifier-384-adversarial-text-v1-prompt` (Tier 3, gap=1): regenerate crops + re-clean (clean-cut).
+   - `e47-flash-high-text-1of5` (Tier 1, gap=57): **read launch-summary.md "Surprise" first** — file schema was overwritten by an earlier failed cleanup; data-integrity question outstanding.
+3. **post_run_report convention discussion** (text-MIN, image, h11 GS-v2): refresh in place / forward-pointer banner / leave as historical. Marked "talk to me about this" in continuity doc.
+4. **GS 6-crop manual review** (~20 min user-driven): staged on zbook at `results/gs-125m-fp-side-6-crop-review/index.md`.
+5. **A2 image re-evaluation** (post-cand-2397 GT addition): may be partially handled by recovery propagation — verify before re-running.
+6. **Step 6 paper outline** — UNBLOCKED post-recovery and post-propagation. The actual deliverable.
+
+### Contextual assumptions
+
+- Sapphire was the compute target for all heavy work (tier-1 runs, recovery campaign); local amd-tower was used for orchestration + small edits.
+- The user's standing preference for "commit AND push agent-produced work BEFORE asking for review" was respected by the agents (one pushed during the run; the brief I gave was outdated and Agent 3 made the right call to push despite the instruction).
+- Worktree isolation was NOT used this session (all agents wrote to a shared working tree); the per-cell file scopes were disjoint enough that no collisions occurred.
+- The `.phase3a-recovery-fix-landed` sentinel file is gitignored (per .gitignore update at `cebe5fed6`); it lives only on sapphire.
+- The `*.pre-cleanup-*.backup` and `*.pre-recovery-*.backup` files referenced by `aggregate-cost` are gitignored bulk artefacts; reconstructable from git history if needed but not required for the planned outstanding statistical work on zbook.
+- Agent dispatch went through several subagent_type choices: general-purpose for write-capable work, Explore wasn't used (read window too narrow for whole-file audits), Plan was used once mistakenly for a write-required task. Future-self should default to general-purpose unless a task is genuinely read-only.
