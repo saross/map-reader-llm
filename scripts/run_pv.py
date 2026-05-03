@@ -629,11 +629,21 @@ def _candidate_iteration_keys(candidate: dict, iterations: int) -> list[str]:
     Args:
         candidate: Candidate dict with ``candidate_id``.
         iterations: Number of verifier iterations (1 for single-pass,
-            N for consensus).
+            N for consensus). Must be ``>= 1``.
 
     Returns:
         Ordered list of result keys — one per expected iteration.
+
+    Raises:
+        ValueError: If ``iterations < 1``. The CLI parser enforces a
+            positive iteration count, so this branch should be
+            unreachable in practice; the explicit raise prevents
+            silent misuse if a future caller omits validation.
     """
+    if iterations < 1:
+        raise ValueError(
+            f"iterations must be >= 1, got {iterations}",
+        )
     cid = candidate["candidate_id"]
     if iterations > 1:
         return [
@@ -672,7 +682,7 @@ def _iteration_id_to_result_key(
 
     The verifier worker tags each metadata entry with an
     ``iteration_id`` like ``cand_0042_iter1``; the corresponding
-    persisted result-key is ``candidate_00042_iter1`` (single-pass) or
+    persisted result-key is ``candidate_00042`` (single-pass) or
     ``candidate_00042_iter1`` (consensus). This helper performs that
     translation so the driver can match metadata to expected keys when
     deciding which per-iteration ``log_success`` / ``log_failure`` call
