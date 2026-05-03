@@ -1843,6 +1843,84 @@ These items surfaced during Session 84 work but were not in the original "Pendin
 
 ---
 
+## Session 85 closure (2026-05-03 — same calendar day as Session 84)
+
+### Headline
+
+Loose-ends mop-up before the Step 6 paper outline. Five Session-84-deferred items resolved (A1 audit, #7 footnote, #9 sub-band, A5 6-crop staging, #4+#6 → future-work). Two paper-text drafts landed (B6 methods nuance, B7 curator-GT limitations). One new corrective Obs published (322 — Obs 296 reframed as TP-localisation-tail). One sequential agent chain *in flight* fixing the verifier silent-drop root cause (Agent 1 root-cause + Agent 2 plan complete; Agent 3 implementation running). Full Phase3a recovery campaign planned (~$1.84 expected, ~30 min API + 3–6 h propagation). Two material framing corrections to the audit's headline: the gap=460 cell is non-paper-cited; 11 of 30 cells are derived (not verifier outputs) and regenerate for free.
+
+### Today's commit chain (~12 commits, range `116399fc..` to current)
+
+- `116399fc` — `docs(future-work): migrate detector-confidence items #4 + #6 to future-work register` (creates `planning/future-work.md`).
+- `325878b2` — `docs(paper): add K-consensus heterogeneity footnote` (B-series item #7; `results/k-consensus-heterogeneity-footnote.md`; 5 strata documented).
+- `207ec7b5` — `analysis(tp-only-subband): TP fraction in (50, 75] m sub-band diagnostic` (item #9; `results/tp-only-localisation-bias-sub-band/`; surfaces the Obs-296 framing finding).
+- `586a22ed` — `chore(staging): set up 6-crop review for GS strict (>125 m) burial-mound FPs` (item #15 / A5; `results/gs-125m-fp-side-6-crop-review/`; ready for user inspection).
+- `adf95dbf` — `reports(audit): Phase3a verifier-completeness audit — 30 cells, 835 candidates dropped` (A1; `reports/phase3a-verifier-completeness-audit-2026-05-03.md`).
+- `0808cb91` — `reports(root-cause): verifier silent-drop one-bug-three-mechanisms` (Agent 1; `reports/verifier-silent-drop-root-cause-2026-05-03.md`).
+- `c8ccc73d` — `docs(reflection): Obs 322 — Obs 296 reframed as TP-localisation-tail, FPs well-separated` (corrective Obs based on item #9 finding).
+- `c22a2808` — `docs(paper): B6 methods note on Approach B vs corrected-F1 implementations` (B6; `results/methods-approach-b-vs-corrected-f1-nuance.md`).
+- `d636f952` — `docs(plan): Phase3a verifier recovery runbook + executable driver template` (full 30-cell campaign; `planning/phase3a-verifier-recovery-runbook.md` + `planning/run-phase3a-recovery.sh.template`).
+- `036c6f44` — `docs(plan): verifier silent-drop fix plan (Layer 1 + Layer 2 + optional Layer 3)` (Agent 2; `planning/verifier-silent-drop-fix-plan.md`).
+- `9eeb2272` — `docs(paper): B7 limitations note on curator GT incompleteness` (B7; `results/methods-curator-gt-incompleteness-limitation.md`).
+
+### Loose-ends mop-up (Session-84 deferred → Session-85 resolved)
+
+| Item | Status |
+|:---|:---|
+| **A1 Phase3a verifier-completeness audit** | ✅ DONE. 30 cells, 835 dropped candidates. 19 paper-feeding cells; the gap=460 standout is non-paper-cited per recovery-plan agent grep-check. |
+| **A5 / #15 GS >125 m 6-crop manual inspection** | ✅ STAGED (commit `586a22ed`); user inspection pending. |
+| **#4 detector-confidence calibration pilot** | ✅ DEFERRED to `planning/future-work.md` § 1. |
+| **#6 multi-condition vote-fraction calibration** | ✅ DEFERRED to `planning/future-work.md` § 1. |
+| **#7 K-consensus SD heterogeneity footnote** | ✅ DRAFTED (commit `325878b2`). |
+| **#9 TP-only localisation bias check** | ✅ COMPLETE; surfaced Obs-296 framing clarification → Obs 322 (commit `c8ccc73d`). |
+
+### New findings during Session 85
+
+1. **Phase3a verifier-completeness audit (A1)** — 30 cells, 835 candidates dropped. Tier breakdown (after de-duplicating derivative cells):
+   - Tier 1 (paper-cited verifier outputs): 8 cells, 205 candidates.
+   - Tier 2 (sweep / v2-policy / scale-4): 7 cells, 478 candidates (the gap=460 image-t0.0 cell dominates here; **non-paper-cited per repo-wide grep**).
+   - Tier 3 (legacy diagnostic incl. user-requested 11 `pv-diag-384/`): 5 cells, 41 candidates.
+   - 11 derivative cells regenerate for free from upstream sources via `scripts/derive_vote_threshold_results.py`.
+   - 8 cells unrecoverable (no traceable input manifest; out of scope).
+   - Effective recovery work: 20 `cleanup` invocations + 11 derivative regenerations.
+2. **Verifier silent-drop root cause (A3 — Agent 1)** — one bug, three mechanisms:
+   - **Mechanism A (load-bearing)**: `run_pv.py:_verify_realtime` (lines 763–793) increments local `failed_count` integer but **never calls `metadata_tracker.log_failure`**, **never compares `len(results)` vs `len(manifest)`** before exit. Empirically confirmed against `outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/run.meta.json`: `parse_failures=1147`, `empty_responses=1147`, `failed_items=[]`.
+   - **Mechanism B (amplifier)**: `lib_verifier.py:_call_verifier_api` weak retry policy — 3 retries, 2/4/8s backoff, single bare `except Exception`, no `MAX_TOKENS`, no `parse_response_with_repair`. Amplifies how often Mechanism A fires.
+   - **Mechanism C (already fixed)**: `cand_01563` list-shape bug — historical instance.
+   - **Regression provenance**: legacy `scripts/5_verify_crops.py:647/651` *did* call `log_failure` correctly; March 2026 dual-mode refactor `5d725930` lost it.
+3. **Obs 322** (corrective; commit `c8ccc73d`) — Obs 296's `obs_rate_in_shell` is TP-only by construction; the (50, 75] m signal is TP-localisation-tail not FP-anchoring. FPs are well-separated from real mounds (87–95 % beyond 286 m). Strengthens the failure-of-generalisation reading; clarifies the prose framing for paper Discussion.
+
+### In flight as Session 85 ends
+
+- **A3 Agent 3 (verifier fix implementation)** — running in background. Implementing Layer 1 + Layer 2 of the fix plan at `planning/verifier-silent-drop-fix-plan.md`. Expected ~12 working hours (~7–8 commits, 26 new tier-1 tests). Calling session will run `/audit` after Agent 3 lands.
+- **Phase3a recovery campaign** — runbook + driver template ready (`planning/phase3a-verifier-recovery-runbook.md`, `planning/run-phase3a-recovery.sh.template`). Sentinel-gated: cannot execute until the fix lands. Expected cost $1.23–3.70; hard cap $10. Awaits user approval before launch.
+
+### Pending after Session 85
+
+- **A2 image re-evaluation (post-cand-2397)** — DEFERRED. Expected impact < 0.0005 absolute F1. Schedule alongside the Phase3a recovery campaign post-fix; mechanical work.
+- **A4 + B8 post_run_report convention** — three reports (text-MIN, image, h11 GS-v2) need a refresh / banner / leave decision. Awaits user call.
+- **A3 software fix landing + `/audit`** — gated on Agent 3 completion. The implementing agent does not run `/audit` itself; the calling session does.
+- **Phase3a recovery execution** — gated on (a) software fix landing, (b) user cost-gate approval. Plan ready.
+- **Step 6 paper outline** — UNBLOCKED post-fix-and-recovery. The actual deliverable.
+
+### Things to NOT redo in Session 86+
+
+- **The Session-84 four-run state stands** unchanged. No re-recovery on T=0.7, T=0.3, image, text-MIN, or GS-v2 unless a downstream finding warrants it.
+- **The Phase3a audit (commit `adf95dbf`) is canonical** — do NOT re-run unless new verifier runs land. The 30-cell list + 11-derived clarification + 8-unrecoverable list is authoritative.
+- **The recovery runbook + driver template are complete** (commit `d636f952`). When the fix lands and the user approves cost, execute the driver. Do NOT re-plan.
+- **The fix plan is complete** (commit `036c6f44`). Agent 3 should follow it without re-architecting.
+- **Obs 322 stands** as the canonical reframing of Obs 296. Future paper-Discussion drafts cite Obs 322 + Obs 302 for the two-phenomenon framing (TP localisation tail vs FP composition).
+- **B6 + B7 paper-text drafts are at `results/methods-*-nuance.md` / `*-limitation.md`**. These are paper-prep drafts, not final manuscript text. Refine during outlining.
+
+### Cross-references
+
+- Session 84 closure (immediately above) — the 3-recovery arc whose forensic audit triggered the verifier-fix work today.
+- Recovery runbook: `planning/phase3a-verifier-recovery-runbook.md`.
+- Fix plan: `planning/verifier-silent-drop-fix-plan.md`.
+- Future work register: `planning/future-work.md`.
+
+---
+
 ## Session 82 entry-point queue (composed end-of-Session-81-review 2026-04-30)
 
 > **⚠️ Largely superseded 2026-05-01** — the FN-rate thread that this section was scoped around closed today via Obs 316 + 317 (4-GS trapezoidal-graticule correction → Sobotkova 2023 vindicated; cross-corpus heterogeneity small; gap dominated by inter-student-skill variance). The read-first list and recommended Session-82 sequence (A–C) below are RESOLVED. See §"Session 82 closure (2026-05-01)" immediately above for the headline + commit chain. Open questions 1–3 are CLOSED inline below; questions 4–5 are non-blocking.
