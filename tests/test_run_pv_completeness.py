@@ -51,6 +51,7 @@ from scripts.run_pv import (  # noqa: E402
     _candidate_iteration_keys,
     _candidate_result_key,
     _compute_missing_candidates,
+    _iteration_id_to_result_key,
     _log_cleanup_failures_to_meta,
     _summarise_failure_reason,
     _verify_realtime,
@@ -1290,3 +1291,102 @@ class TestMultiIterationKeyHandling:
             "candidate_00007_iter3",
             "candidate_00007_iter4",
         ]
+
+    def test_candidate_iteration_keys_zero_raises(self) -> None:
+        """``iterations=0`` must raise rather than silently coerce to 1.
+
+        The CLI parser enforces a positive iteration count, so this
+        branch is defensive — a future caller that bypasses the parser
+        (e.g. a downstream library wrapper) should fail loud rather
+        than receive a single-pass key for what it thinks is a
+        zero-iteration request.
+        """
+        cand = {"candidate_id": 7}
+        with pytest.raises(ValueError, match="iterations must be >= 1"):
+            _candidate_iteration_keys(cand, 0)
+
+    def test_candidate_iteration_keys_negative_raises(self) -> None:
+        """Negative ``iterations`` must also raise."""
+        cand = {"candidate_id": 7}
+        with pytest.raises(ValueError, match="iterations must be >= 1"):
+            _candidate_iteration_keys(cand, -3)
+
+
+class TestIterationIdToResultKey:
+    """Direct unit tests for ``_iteration_id_to_result_key``.
+
+    Coverage was previously incidental via
+    ``test_multi_iter_partial_success_logs_per_iter``; this class
+    provides a dedicated set of cases for the well-formed-input,
+    multi-iter, and malformed-input edge cases. The audit
+    (2026-05-03) confirmed by inspection that the parser already
+    returns ``None`` on every malformed shape exercised below — these
+    tests pin that behaviour as a regression boundary.
+    """
+
+    # --- Well-formed inputs -----------------------------------------
+
+    def test_single_iter_collapses_suffix(self) -> None:
+        """Single-pass runs strip the ``_iterN`` suffix from the key."""
+        assert (
+            _iteration_id_to_result_key("cand_0042_iter1", iterations=1)
+            == "candidate_00042"
+        )
+
+    def test_multi_iter_preserves_iter1_suffix(self) -> None:
+        """Multi-iteration runs preserve the ``_iter1`` suffix."""
+        assert (
+            _iteration_id_to_result_key("cand_0042_iter1", iterations=3)
+            == "candidate_00042_iter1"
+        )
+
+    def test_multi_iter_preserves_iter3_suffix(self) -> None:
+        """Multi-iteration runs preserve arbitrary iter suffixes."""
+        assert (
+            _iteration_id_to_result_key("cand_0042_iter3", iterations=3)
+            == "candidate_00042_iter3"
+        )
+
+    # --- Malformed inputs return None -------------------------------
+
+    def test_none_input_returns_none(self) -> None:
+        """``iteration_id=None`` must return ``None``."""
+        assert _iteration_id_to_result_key(None, iterations=1) is None
+
+    def test_empty_string_returns_none(self) -> None:
+        """``iteration_id=""`` must return ``None``."""
+        assert _iteration_id_to_result_key("", iterations=1) is None
+
+    def test_two_part_string_returns_none(self) -> None:
+        """A string with fewer than three ``_``-segments returns ``None``."""
+        assert _iteration_id_to_result_key("foo_bar", iterations=1) is None
+
+    def test_no_iter_suffix_returns_none(self) -> None:
+        """Missing the ``_iterN`` segment entirely returns ``None``."""
+        assert _iteration_id_to_result_key("cand_42", iterations=1) is None
+
+    def test_non_integer_cid_returns_none(self) -> None:
+        """A non-integer candidate-id segment returns ``None``."""
+        assert (
+            _iteration_id_to_result_key("cand_xx_iter1", iterations=1) is None
+        )
+
+    def test_alpha_cid_returns_none(self) -> None:
+        """Alphabetic candidate-id (``cand_abc_iter1``) returns ``None``."""
+        assert (
+            _iteration_id_to_result_key("cand_abc_iter1", iterations=1)
+            is None
+        )
+
+    def test_third_segment_missing_iter_prefix_returns_none(self) -> None:
+        """Third segment lacking the ``iter`` prefix returns ``None``."""
+        assert (
+            _iteration_id_to_result_key("cand_42_blah1", iterations=1)
+            is None
+        )
+
+    def test_iter_segment_without_integer_returns_none(self) -> None:
+        """``cand_42_iter`` (no integer suffix) returns ``None``."""
+        assert (
+            _iteration_id_to_result_key("cand_42_iter", iterations=1) is None
+        )
