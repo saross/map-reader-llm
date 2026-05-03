@@ -1041,12 +1041,21 @@ class TestMultiIterationKeyHandling:
             )
         return exit_code, output_dir
 
-    def test_multi_iter_resume_no_spurious_gap(self, tmp_path: Path) -> None:
-        """All 9 iter keys present → exit 0, no failed_items, no gap.
+    def test_multi_iter_resume_complete_state_no_op(
+        self, tmp_path: Path,
+    ) -> None:
+        """Fully-seeded multi-iter state → no worker calls, no gap, exit 0.
 
-        Regression for C1: the resume filter must treat a candidate as
-        complete only when *every* iter key is in the existing result
-        set, not just iter1.
+        Non-regression sanity check: when every (cid × iter) key is
+        already present, the driver must not re-submit any candidate
+        and must not surface a completeness gap. This case does NOT
+        discriminate the C1 bug (both buggy iter1-only filter and
+        fixed full-set filter produce ``worker_calls == []`` for fully
+        seeded input); the discriminating case is covered by the
+        sibling test ``test_multi_iter_resume_partial_iter_re_attempted``,
+        which seeds iter1+iter2 only and asserts the candidate IS
+        re-submitted (something the buggy iter1-only filter would not
+        do because it considers iter1's presence sufficient).
         """
         manifest = _make_manifest(3)
         iterations = 3
