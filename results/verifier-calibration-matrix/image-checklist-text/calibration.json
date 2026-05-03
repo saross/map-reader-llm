@@ -4,38 +4,38 @@
   "prob_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/probabilities.json",
   "buffer_metres": 20.0,
   "scope_tiles": 487,
-  "n_total": 1998,
-  "n_mound": 429,
-  "n_not_mound": 1569,
-  "prevalence": 0.2147147147147147,
+  "n_total": 2017,
+  "n_mound": 434,
+  "n_not_mound": 1583,
+  "prevalence": 0.2151710461080813,
   "auc": {
-    "point": 0.8530621704617881,
-    "ci_lower": 0.8386759089999896,
-    "ci_upper": 0.8668106875366163
+    "point": 0.8524341287469688,
+    "ci_lower": 0.8386388244701,
+    "ci_upper": 0.8664413308949216
   },
   "brier": {
-    "point": 0.24470505505505505,
-    "ci_lower": 0.22606607857857858,
-    "ci_upper": 0.26354486986986986
+    "point": 0.24434590976698065,
+    "ci_lower": 0.22589557387208725,
+    "ci_upper": 0.2626982957362419
   },
   "ece": {
-    "point": 0.2663113113113113,
-    "ci_lower": 0.24787762762762766,
-    "ci_upper": 0.2849964964964965
+    "point": 0.26583539910758547,
+    "ci_lower": 0.24755019831432812,
+    "ci_upper": 0.28382858205255335
   },
   "p_mound_low_tail": {
     "threshold": 0.25,
-    "mean": 0.0037071362372567192,
-    "ci_lower": 0.0009017132551848512,
-    "ci_upper": 0.007662835249042145
+    "mean": 0.0036730945821854912,
+    "ci_lower": 0.0008952351285948338,
+    "ci_upper": 0.007483804738931338
   },
   "calibration_bins": [
     {
       "lo": 0.0,
       "hi": 0.1,
-      "count": 861,
-      "mean_predicted": 0.03507549361207897,
-      "empirical_p_mound": 0.003484320557491289
+      "count": 871,
+      "mean_predicted": 0.035017221584385756,
+      "empirical_p_mound": 0.003444316877152698
     },
     {
       "lo": 0.1,
@@ -96,9 +96,9 @@
     {
       "lo": 0.9,
       "hi": 1.0,
-      "count": 919,
-      "mean_predicted": 0.9892165397170837,
-      "empirical_p_mound": 0.4624591947769314
+      "count": 928,
+      "mean_predicted": 0.9891056034482758,
+      "empirical_p_mound": 0.46336206896551724
     }
   ],
   "bootstrap": {

@@ -4,45 +4,45 @@
   "prob_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/probabilities.json",
   "buffer_metres": 20.0,
   "scope_tiles": 487,
-  "n_total": 1998,
-  "n_mound": 425,
-  "n_not_mound": 1573,
-  "prevalence": 0.21271271271271272,
+  "n_total": 2017,
+  "n_mound": 434,
+  "n_not_mound": 1583,
+  "prevalence": 0.2151710461080813,
   "auc": {
-    "point": 0.8365610859728507,
-    "ci_lower": 0.8176231463732979,
-    "ci_upper": 0.8550831731718193
+    "point": 0.837647120470669,
+    "ci_lower": 0.818860446711443,
+    "ci_upper": 0.855755896369917
   },
   "brier": {
-    "point": 0.2323646146146146,
-    "ci_lower": 0.21469096346346342,
-    "ci_upper": 0.2499656231231231
+    "point": 0.23113014377788793,
+    "ci_lower": 0.21342443604362915,
+    "ci_upper": 0.2491159357957362
   },
   "ece": {
-    "point": 0.22154654654654646,
-    "ci_lower": 0.20484984984984989,
-    "ci_upper": 0.24158258258258256
+    "point": 0.2203520079325732,
+    "ci_lower": 0.20411936043629147,
+    "ci_upper": 0.2407791274169558
   },
   "p_mound_low_tail": {
     "threshold": 0.25,
-    "mean": 0.02530541012216405,
+    "mean": 0.02512998266897747,
     "ci_lower": 0.016492697943769875,
-    "ci_upper": 0.034782608695652174
+    "ci_upper": 0.03436123348017621
   },
   "calibration_bins": [
     {
       "lo": 0.0,
       "hi": 0.1,
-      "count": 1032,
-      "mean_predicted": 0.020833333333333332,
-      "empirical_p_mound": 0.02131782945736434
+      "count": 1039,
+      "mean_predicted": 0.020789220404234844,
+      "empirical_p_mound": 0.021174205967276226
     },
     {
       "lo": 0.1,
       "hi": 0.2,
-      "count": 114,
+      "count": 115,
       "mean_predicted": 0.1,
-      "empirical_p_mound": 0.06140350877192982
+      "empirical_p_mound": 0.06086956521739131
     },
     {
       "lo": 0.2,
@@ -96,9 +96,9 @@
     {
       "lo": 0.9,
       "hi": 1.0,
-      "count": 851,
-      "mean_predicted": 0.9787309048178612,
-      "empirical_p_mound": 0.46533490011750883
+      "count": 862,
+      "mean_predicted": 0.97877030162413,
+      "empirical_p_mound": 0.46983758700696054
     }
   ],
   "bootstrap": {
