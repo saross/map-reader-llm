@@ -139,3 +139,16 @@ outputs/h11/wbf/**/*.log
 # outputs/test-phase2b/ as its output_dir). Test runs may leave residual
 # artefacts that aren't paper-relevant and shouldn't surface as dirty.
 outputs/test-*/
+
+# Phase 3a recovery campaign — local-only sentinel + transient driver logs.
+# The sentinel records the software-fix commit hash; the timestamped log
+# directories under logs/phase3a-recovery-<UTC>/ are written by the driver
+# (per-cell logs + cost ledger CSV) and are runtime artefacts, not
+# paper-relevant. The launch-summary.md and committed nohup logs under
+# logs/phase3a-recovery-overnight/ remain tracked for transparency, but
+# stdout.log / stderr.log inside that dir are runtime tails.
+.phase3a-recovery-fix-landed
+logs/phase3a-recovery-2[0-9]*/
+logs/phase3a-recovery-overnight/stdout.log
+logs/phase3a-recovery-overnight/stderr.log
+logs/phase3a-recovery-overnight/pid.txt
