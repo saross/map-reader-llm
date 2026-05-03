@@ -158,10 +158,10 @@ Approach B (extended-GT-at-R Hungarian matching); 10,000-iter bootstrap; seed 42
 
 | R (m) | Image F1 (corrected) | text-HIGH F1 (corrected) | ΔF1 (image − text-HIGH) | CI overlap? |
 |---:|---:|---:|---:|:---:|
-| 50 | 0.832 [0.822, 0.841] | 0.827 [0.817, 0.837] | +0.005 | yes (substantial) |
-| 100 | 0.852 [0.843, 0.860] | 0.832 [0.823, 0.842] | +0.020 | yes (partial) |
+| 50 | 0.833 [0.824, 0.842] | 0.827 [0.817, 0.837] | +0.006 | yes (substantial) |
+| 100 | 0.854 [0.845, 0.862] | 0.832 [0.823, 0.842] | +0.022 | yes (partial) |
 
-**Convergence finding**: after per-candidate human review, both tracks reach **F1 ≈ 0.83 at 50 m** — the image track's single-buffer headline (0.832) and text-HIGH's multi-buffer 50 m value (0.827) differ by only +0.005 F1, well inside overlapping bootstrap 95 % CIs. This cross-track convergence under human review is a substantive finding: it indicates that the uncorrected-F1 gap between modalities (text-HIGH > image at ≤ 50 m; see §3) largely reflects student-GT incompleteness and attractor-pull differences, **not** a modality-intrinsic detection-quality gap. At wider buffers (100 m) the image track pulls ahead by +0.020 F1, consistent with its larger buffer-sensitivity (see §3.5).
+**Convergence finding**: after per-candidate human review, both tracks reach **F1 ≈ 0.83 at 50 m** — the image track's single-buffer headline (0.833, post-recovery) and text-HIGH's multi-buffer 50 m value (0.827) differ by only +0.006 F1, well inside overlapping bootstrap 95 % CIs. This cross-track convergence under human review is a substantive finding: it indicates that the uncorrected-F1 gap between modalities (text-HIGH > image at ≤ 50 m; see §3) largely reflects student-GT incompleteness and attractor-pull differences, **not** a modality-intrinsic detection-quality gap. At wider buffers (100 m) the image track pulls ahead by +0.022 F1, consistent with its larger buffer-sensitivity (see §3.5). The corrected-GT v2 paired-permutation test confirms the no-significant-difference reading at R=50 m (T=0.7 vs image ΔF1 = −0.0060 ns; image marginally edges by 0.006).
 
 ### 4.3 Verifier calibration — cross-track
 
@@ -180,9 +180,8 @@ Both tracks share the same verifier (`flash-adversarial-v1`); Obs 269-equivalent
 
 ### 4.4 Paper citation rule (updated)
 
-- The **paper's detection-performance headline** for the 55-map corpus can now cite **two convergent corrected-F1 values at 50 m**: image = 0.832 [0.822, 0.841] and text-HIGH = 0.827 [0.817, 0.837] (post-recovery 2026-05-03).
-- Cross-track **uncorrected** F1 comparisons (§3 tables) remain the apples-to-apples ΔF1 source for paired-permutation significance claims.
-- The text-MIN track remains uncorrected; cross-track claims involving text-MIN must still cite uncorrected F1.
+- The **paper's detection-performance headline** for the 55-map corpus can now cite **three convergent corrected-F1 values at 50 m**: image = 0.833 [0.824, 0.842], text-HIGH = 0.827 [0.817, 0.837], text-MIN = 0.797 [0.786, 0.808] (all refreshed post-recovery 2026-05-03 via cross-track-v2 commit `42ed1d32`). For corrected-GT cross-track significance, cite the v2 paired-permutation results (`results/55maps-pairwise-permutation-v2/summary.md`) — image and text-HIGH are statistically indistinguishable at R = 50 m; both significantly exceed text-MIN.
+- Cross-track **uncorrected** F1 comparisons (§3 tables) remain the apples-to-apples ΔF1 source for **v1** paired-permutation significance claims (§5.1 – §5.3), not for paper headlines (use v2 corrected-GT results instead).
 - Calibration metrics (AUC, Brier, ECE) must be cited per-track — the verifier is the same prompt but its behaviour varies markedly by candidate pool.
 
 ## 5. Paired permutation tests
