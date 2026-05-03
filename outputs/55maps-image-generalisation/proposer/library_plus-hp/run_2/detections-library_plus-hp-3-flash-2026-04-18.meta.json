@@ -2,8 +2,8 @@
   "run_id": "193ed976-b7ac-4be5-90c3-b0d3e086a205",
   "timestamp": {
     "start": "2026-04-18T01:11:01.635403+00:00",
-    "end": "2026-04-18T02:05:26.194159+00:00",
-    "duration_seconds": 3264.558756
+    "end": "2026-05-03T01:51:15.934096+00:00",
+    "duration_seconds": 6558.378283
   },
   "environment": {
     "git_commit": "b57cf6c22bd58325b554a3e64abfc629a7063914",
@@ -114,16 +114,16 @@
     }
   },
   "execution_stats": {
-    "items_processed": 8541,
-    "items_failed": 3,
+    "items_processed": 17085,
+    "items_failed": 0,
     "items_skipped": 0,
-    "retries_total": 449,
+    "retries_total": 898,
     "retries_rate_limit": 0,
     "retries_server_error": 0,
     "retries_timeout": 0,
-    "retries_other": 449,
+    "retries_other": 898,
     "finish_reason_counts": {
-      "success": 8541
+      "success": 17085
     },
     "safety_blocks": 0,
     "parse_failures": 0,
@@ -8671,24 +8671,3151 @@
       "K-35-077-4_x672_y2352.png",
       "K-35-077-3_x0_y1008.png"
     ],
-    "failed_items": [
+    "failed_items": [],
+    "retry_details": [
       {
-        "item_id": "K-35-051-4_x336_y2352.png",
-        "reason": "JSON Parse Error: Illegal trailing comma before end of array: line 8 column 12 (char 94)",
-        "timestamp": "2026-04-18T01:14:47.654955+00:00"
+        "item_id": "K-35-042-3_x1680_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:11:54.186781+00:00"
       },
       {
-        "item_id": "K-35-064-1_Sredets_4326_x672_y336.png",
-        "reason": "JSON Parse Error: Illegal trailing comma before end of array: line 8 column 12 (char 94)",
-        "timestamp": "2026-04-18T01:32:55.570080+00:00"
+        "item_id": "K-35-042-3_x2016_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:11:55.578270+00:00"
+      },
+      {
+        "item_id": "K-35-042-3_x1008_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:11:57.667382+00:00"
+      },
+      {
+        "item_id": "K-35-042-3_x2688_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:12:06.295579+00:00"
+      },
+      {
+        "item_id": "K-35-042-3_x2352_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:12:06.536871+00:00"
+      },
+      {
+        "item_id": "K-35-042-3_x3360_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:12:11.831226+00:00"
+      },
+      {
+        "item_id": "K-35-042-3_x336_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:12:25.161935+00:00"
+      },
+      {
+        "item_id": "K-35-042-3_x672_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:12:33.390601+00:00"
+      },
+      {
+        "item_id": "K-35-042-3_x672_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:12:33.405262+00:00"
+      },
+      {
+        "item_id": "K-35-050-4_x1008_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:12:42.735149+00:00"
+      },
+      {
+        "item_id": "K-35-050-4_x1344_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:12:48.903676+00:00"
+      },
+      {
+        "item_id": "K-35-050-4_x1344_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:12:51.205431+00:00"
+      },
+      {
+        "item_id": "K-35-050-4_x2016_y3696.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:13:02.706884+00:00"
+      },
+      {
+        "item_id": "K-35-050-4_x2688_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:13:08.352089+00:00"
+      },
+      {
+        "item_id": "K-35-050-4_x3696_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:13:26.584315+00:00"
+      },
+      {
+        "item_id": "K-35-051-3_x0_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:13:38.129101+00:00"
+      },
+      {
+        "item_id": "K-35-051-3_x1008_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:13:44.661182+00:00"
+      },
+      {
+        "item_id": "K-35-051-3_x2016_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:13:59.367199+00:00"
+      },
+      {
+        "item_id": "K-35-051-3_x3024_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:14:10.407504+00:00"
+      },
+      {
+        "item_id": "K-35-051-3_x3360_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:14:11.533850+00:00"
+      },
+      {
+        "item_id": "K-35-051-3_x336_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:14:19.610504+00:00"
+      },
+      {
+        "item_id": "K-35-051-3_x672_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:14:31.719400+00:00"
+      },
+      {
+        "item_id": "K-35-051-4_x1008_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:14:36.649876+00:00"
+      },
+      {
+        "item_id": "K-35-051-4_x1008_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:14:39.001739+00:00"
+      },
+      {
+        "item_id": "K-35-051-4_x2016_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:14:49.393938+00:00"
+      },
+      {
+        "item_id": "K-35-051-4_x3360_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:15:11.582370+00:00"
+      },
+      {
+        "item_id": "K-35-051-4_x3696_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:15:12.015277+00:00"
+      },
+      {
+        "item_id": "K-35-051-4_x3696_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:15:16.301204+00:00"
+      },
+      {
+        "item_id": "K-35-051-4_x4032_y3696.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:15:23.186556+00:00"
+      },
+      {
+        "item_id": "K-35-052-2_x0_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:15:25.053029+00:00"
+      },
+      {
+        "item_id": "K-35-052-2_x1008_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:15:31.125452+00:00"
+      },
+      {
+        "item_id": "K-35-052-2_x1344_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:15:36.892026+00:00"
+      },
+      {
+        "item_id": "K-35-052-2_x1344_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:15:37.121869+00:00"
+      },
+      {
+        "item_id": "K-35-052-2_x1680_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:15:42.985308+00:00"
+      },
+      {
+        "item_id": "K-35-052-2_x3696_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:16:12.449536+00:00"
+      },
+      {
+        "item_id": "K-35-052-2_x3696_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:16:12.569459+00:00"
+      },
+      {
+        "item_id": "K-35-052-2_x3696_y3696.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:16:17.142009+00:00"
+      },
+      {
+        "item_id": "K-35-052-2_x672_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:16:24.501877+00:00"
+      },
+      {
+        "item_id": "K-35-052-2_x1344_y3024.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:16:32.144184+00:00"
+      },
+      {
+        "item_id": "K-35-052-3_x1008_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:16:35.329651+00:00"
+      },
+      {
+        "item_id": "K-35-052-3_x1008_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:16:37.546782+00:00"
+      },
+      {
+        "item_id": "K-35-052-3_x1680_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:16:38.754871+00:00"
+      },
+      {
+        "item_id": "K-35-052-3_x1344_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:16:40.754957+00:00"
+      },
+      {
+        "item_id": "K-35-052-3_x2688_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:16:51.009825+00:00"
+      },
+      {
+        "item_id": "K-35-052-3_x2688_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:16:59.971267+00:00"
+      },
+      {
+        "item_id": "K-35-052-3_x3360_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:17:08.742940+00:00"
+      },
+      {
+        "item_id": "K-35-052-3_x336_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:17:12.615184+00:00"
+      },
+      {
+        "item_id": "K-35-052-3_x4032_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:17:19.094425+00:00"
+      },
+      {
+        "item_id": "K-35-052-3_x672_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:17:22.431689+00:00"
+      },
+      {
+        "item_id": "K-35-052-3_x1008_y2352.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:17:29.082150+00:00"
+      },
+      {
+        "item_id": "K-35-053-1_x1344_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:17:43.707520+00:00"
+      },
+      {
+        "item_id": "K-35-053-1_x2016_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:17:51.475736+00:00"
+      },
+      {
+        "item_id": "K-35-053-1_x2688_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:17:59.526734+00:00"
+      },
+      {
+        "item_id": "K-35-053-1_x3360_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:18:07.055280+00:00"
+      },
+      {
+        "item_id": "K-35-053-1_x336_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:18:16.626868+00:00"
+      },
+      {
+        "item_id": "K-35-053-1_x3696_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:18:17.058565+00:00"
+      },
+      {
+        "item_id": "K-35-053-1_x336_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:18:17.729557+00:00"
+      },
+      {
+        "item_id": "K-35-053-1_x672_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:18:26.529980+00:00"
+      },
+      {
+        "item_id": "K-35-053-2_x0_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:18:35.365576+00:00"
+      },
+      {
+        "item_id": "K-35-053-2_x2688_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:18:56.550346+00:00"
+      },
+      {
+        "item_id": "K-35-053-1_x336_y336.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:19:10.664436+00:00"
+      },
+      {
+        "item_id": "K-35-053-1_x336_y1344.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:19:11.648872+00:00"
+      },
+      {
+        "item_id": "K-35-053-2_x672_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:19:20.230706+00:00"
+      },
+      {
+        "item_id": "K-35-053-4_Boyadzhik_x0_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:19:23.656264+00:00"
+      },
+      {
+        "item_id": "K-35-053-4_Boyadzhik_x1680_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:19:40.168861+00:00"
+      },
+      {
+        "item_id": "K-35-053-4_Boyadzhik_x2016_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:19:42.804418+00:00"
+      },
+      {
+        "item_id": "K-35-053-4_Boyadzhik_x2688_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:19:52.507229+00:00"
+      },
+      {
+        "item_id": "K-35-054-1_Straldzha_4326_x1008_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:20:15.531359+00:00"
+      },
+      {
+        "item_id": "K-35-054-1_Straldzha_4326_x1344_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:20:26.091632+00:00"
+      },
+      {
+        "item_id": "K-35-054-1_Straldzha_4326_x2688_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:20:34.009224+00:00"
+      },
+      {
+        "item_id": "K-35-054-1_Straldzha_4326_x2688_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:20:34.978182+00:00"
+      },
+      {
+        "item_id": "K-35-054-1_Straldzha_4326_x336_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:20:43.742901+00:00"
+      },
+      {
+        "item_id": "K-35-054-1_Straldzha_4326_x3360_y3696.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:20:46.834461+00:00"
+      },
+      {
+        "item_id": "K-35-054-2_Atolov_4326_x1344_y3696.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:21:15.203255+00:00"
+      },
+      {
+        "item_id": "K-35-054-2_Atolov_4326_x672_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:21:47.056799+00:00"
+      },
+      {
+        "item_id": "K-35-054-3_Yambol_x2016_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:22:05.497635+00:00"
+      },
+      {
+        "item_id": "K-35-054-3_Yambol_x2688_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:22:11.634125+00:00"
+      },
+      {
+        "item_id": "K-35-054-3_Yambol_x3696_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:22:27.928316+00:00"
+      },
+      {
+        "item_id": "K-35-054-3_Yambol_x4032_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:22:31.401416+00:00"
+      },
+      {
+        "item_id": "K-35-054-4_Voynika_x1008_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:22:42.288815+00:00"
+      },
+      {
+        "item_id": "K-35-054-4_Voynika_x1680_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:22:52.077878+00:00"
+      },
+      {
+        "item_id": "K-35-054-4_Voynika_x2688_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:23:01.944243+00:00"
+      },
+      {
+        "item_id": "K-35-054-4_Voynika_x2352_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:23:02.086053+00:00"
+      },
+      {
+        "item_id": "K-35-054-4_Voynika_x3360_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:23:09.808171+00:00"
+      },
+      {
+        "item_id": "K-35-054-4_Voynika_x336_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:23:13.125101+00:00"
+      },
+      {
+        "item_id": "K-35-054-4_Voynika_x336_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:23:14.117449+00:00"
+      },
+      {
+        "item_id": "K-35-055-1_x1344_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:23:37.846171+00:00"
+      },
+      {
+        "item_id": "K-35-055-1_x1680_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:23:43.515631+00:00"
+      },
+      {
+        "item_id": "K-35-055-1_x1680_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:23:44.784821+00:00"
+      },
+      {
+        "item_id": "K-35-055-1_x2688_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:23:51.633538+00:00"
+      },
+      {
+        "item_id": "K-35-054-4_Voynika_x2352_y1680.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:23:56.493807+00:00"
+      },
+      {
+        "item_id": "K-35-055-1_x3024_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:24:01.477002+00:00"
+      },
+      {
+        "item_id": "K-35-055-1_x3360_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:24:04.176893+00:00"
+      },
+      {
+        "item_id": "K-35-055-1_x336_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:24:11.170888+00:00"
+      },
+      {
+        "item_id": "K-35-055-1_x4032_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:24:15.263574+00:00"
+      },
+      {
+        "item_id": "K-35-055-2_x1680_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:24:35.023286+00:00"
+      },
+      {
+        "item_id": "K-35-055-2_x2352_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:24:39.119844+00:00"
+      },
+      {
+        "item_id": "K-35-055-2_x2352_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:24:45.247377+00:00"
+      },
+      {
+        "item_id": "K-35-055-2_x2688_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:24:45.953814+00:00"
+      },
+      {
+        "item_id": "K-35-055-2_x336_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:25:00.345653+00:00"
+      },
+      {
+        "item_id": "K-35-055-2_x2352_y0.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:25:34.050092+00:00"
+      },
+      {
+        "item_id": "K-35-055-3_x3024_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:25:42.779670+00:00"
+      },
+      {
+        "item_id": "K-35-055-3_x2688_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:25:44.687835+00:00"
+      },
+      {
+        "item_id": "K-35-055-2_x336_y672.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:25:53.366652+00:00"
+      },
+      {
+        "item_id": "K-35-055-3_x3696_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:25:54.626410+00:00"
+      },
+      {
+        "item_id": "K-35-055-3_x3696_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:25:54.745357+00:00"
+      },
+      {
+        "item_id": "K-35-055-3_x4032_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:26:01.381433+00:00"
+      },
+      {
+        "item_id": "K-35-055-4_x0_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:26:09.981371+00:00"
+      },
+      {
+        "item_id": "K-35-055-4_x2016_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:26:23.544935+00:00"
+      },
+      {
+        "item_id": "K-35-055-4_x2352_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:26:30.226285+00:00"
+      },
+      {
+        "item_id": "K-35-055-4_x2688_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:26:33.761754+00:00"
+      },
+      {
+        "item_id": "K-35-056-3_x1008_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:26:57.471987+00:00"
+      },
+      {
+        "item_id": "K-35-056-3_x1008_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:26:59.425801+00:00"
+      },
+      {
+        "item_id": "K-35-056-3_x1344_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:27:01.133074+00:00"
+      },
+      {
+        "item_id": "K-35-056-3_x2016_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:27:08.715249+00:00"
+      },
+      {
+        "item_id": "K-35-056-3_x1680_y3696.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:27:08.981125+00:00"
+      },
+      {
+        "item_id": "K-35-056-3_x3024_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:27:23.032130+00:00"
+      },
+      {
+        "item_id": "K-35-056-3_x3360_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:27:25.305643+00:00"
+      },
+      {
+        "item_id": "K-35-055-4_x2352_y672.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:27:25.756408+00:00"
+      },
+      {
+        "item_id": "K-35-055-4_x2688_y1008.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:27:26.434492+00:00"
+      },
+      {
+        "item_id": "K-35-056-3_x672_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:27:40.505222+00:00"
+      },
+      {
+        "item_id": "K-35-062-4_Asenovgrad_4326_x1008_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:27:41.521865+00:00"
+      },
+      {
+        "item_id": "K-35-062-4_Asenovgrad_4326_x1008_y3696.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:27:46.711735+00:00"
+      },
+      {
+        "item_id": "K-35-062-4_Asenovgrad_4326_x1344_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:27:48.534563+00:00"
+      },
+      {
+        "item_id": "K-35-062-4_Asenovgrad_4326_x2352_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:28:02.629174+00:00"
+      },
+      {
+        "item_id": "K-35-056-3_x3024_y2688.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:28:17.860616+00:00"
+      },
+      {
+        "item_id": "K-35-062-4_Asenovgrad_4326_x336_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:28:23.286871+00:00"
+      },
+      {
+        "item_id": "K-35-062-4_Asenovgrad_4326_x336_y3696.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:28:26.393046+00:00"
+      },
+      {
+        "item_id": "K-35-062-4_Asenovgrad_4326_x3696_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:28:28.246901+00:00"
+      },
+      {
+        "item_id": "K-35-062-4_Asenovgrad_4326_x336_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:28:28.818274+00:00"
+      },
+      {
+        "item_id": "K-35-062-4_Asenovgrad_4326_x672_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:28:35.352226+00:00"
+      },
+      {
+        "item_id": "K-35-062-4_Asenovgrad_4326_x672_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:28:39.427135+00:00"
+      },
+      {
+        "item_id": "K-35-062-4_Asenovgrad_4326_x3696_y0.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:29:21.277421+00:00"
+      },
+      {
+        "item_id": "K-35-063-1_Granit_4326_x3696_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:29:24.553376+00:00"
+      },
+      {
+        "item_id": "K-35-063-1_Granit_4326_x4032_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:29:30.103390+00:00"
+      },
+      {
+        "item_id": "K-35-062-4_Asenovgrad_4326_x672_y3024.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:29:34.212587+00:00"
+      },
+      {
+        "item_id": "K-35-063-2_Chirpan_4326_x0_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:29:41.769675+00:00"
+      },
+      {
+        "item_id": "K-35-063-2_Chirpan_4326_x1008_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:29:43.880479+00:00"
+      },
+      {
+        "item_id": "K-35-063-2_Chirpan_4326_x1344_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:29:54.679075+00:00"
+      },
+      {
+        "item_id": "K-35-063-2_Chirpan_4326_x2016_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:29:57.209502+00:00"
+      },
+      {
+        "item_id": "K-35-063-2_Chirpan_4326_x2688_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:30:07.657903+00:00"
+      },
+      {
+        "item_id": "K-35-063-2_Chirpan_4326_x3024_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:30:10.391542+00:00"
+      },
+      {
+        "item_id": "K-35-063-2_Chirpan_4326_x336_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:30:20.875691+00:00"
+      },
+      {
+        "item_id": "K-35-063-2_Chirpan_4326_x336_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:30:22.807206+00:00"
+      },
+      {
+        "item_id": "K-35-063-2_Chirpan_4326_x4032_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:30:28.622878+00:00"
+      },
+      {
+        "item_id": "K-35-063-2_Chirpan_4326_x672_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:30:29.956887+00:00"
+      },
+      {
+        "item_id": "K-35-063-3_Tatarevo_4326_x2352_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:30:52.934301+00:00"
+      },
+      {
+        "item_id": "K-35-063-3_Tatarevo_4326_x2352_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:30:56.619027+00:00"
+      },
+      {
+        "item_id": "K-35-063-3_Tatarevo_4326_x672_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:31:24.864360+00:00"
+      },
+      {
+        "item_id": "K-35-063-3_Tatarevo_4326_x672_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:31:27.902047+00:00"
+      },
+      {
+        "item_id": "K-35-063-4_Skobelevo_4326_x1008_y3696.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:31:35.334902+00:00"
+      },
+      {
+        "item_id": "K-35-063-4_Skobelevo_4326_x2352_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:31:51.634511+00:00"
+      },
+      {
+        "item_id": "K-35-063-4_Skobelevo_4326_x3696_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:32:07.511948+00:00"
+      },
+      {
+        "item_id": "K-35-063-4_Skobelevo_4326_x4032_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:32:16.569384+00:00"
+      },
+      {
+        "item_id": "K-35-063-4_Skobelevo_4326_x4032_y3696.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:32:22.896644+00:00"
+      },
+      {
+        "item_id": "K-35-064-1_Sredets_4326_x1008_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:32:26.116171+00:00"
+      },
+      {
+        "item_id": "K-35-063-4_Skobelevo_4326_x1008_y3696.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:32:26.223119+00:00"
+      },
+      {
+        "item_id": "K-35-064-1_Sredets_4326_x2016_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:32:38.944753+00:00"
+      },
+      {
+        "item_id": "K-35-064-1_Sredets_4326_x2016_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:32:39.531326+00:00"
+      },
+      {
+        "item_id": "K-35-064-1_Sredets_4326_x1680_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:32:43.420279+00:00"
+      },
+      {
+        "item_id": "K-35-064-1_Sredets_4326_x336_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:32:59.937361+00:00"
+      },
+      {
+        "item_id": "K-35-064-1_Sredets_4326_x3696_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:33:07.810292+00:00"
+      },
+      {
+        "item_id": "K-35-064-2_Radnevo_4326_x1008_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:33:18.751373+00:00"
       },
       {
         "item_id": "K-35-064-2_Radnevo_4326_x1008_y1008.png",
-        "reason": "JSON Parse Error: Expecting ',' delimiter: line 8 column 12 (char 91)",
-        "timestamp": "2026-04-18T01:33:44.447188+00:00"
-      }
-    ],
-    "retry_details": [
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:33:19.786626+00:00"
+      },
+      {
+        "item_id": "K-35-064-2_Radnevo_4326_x2016_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:33:27.821475+00:00"
+      },
+      {
+        "item_id": "K-35-064-2_Radnevo_4326_x2016_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:33:32.604588+00:00"
+      },
+      {
+        "item_id": "K-35-064-2_Radnevo_4326_x2688_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:33:40.628458+00:00"
+      },
+      {
+        "item_id": "K-35-064-2_Radnevo_4326_x2688_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:33:42.677079+00:00"
+      },
+      {
+        "item_id": "K-35-064-2_Radnevo_4326_x336_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:33:51.908858+00:00"
+      },
+      {
+        "item_id": "K-35-064-3_Dimitrovgrad_4326_x1008_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:34:11.095882+00:00"
+      },
+      {
+        "item_id": "K-35-064-3_Dimitrovgrad_4326_x1680_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:34:26.964595+00:00"
+      },
+      {
+        "item_id": "K-35-064-3_Dimitrovgrad_4326_x2016_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:34:28.980828+00:00"
+      },
+      {
+        "item_id": "K-35-064-3_Dimitrovgrad_4326_x2352_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:34:31.806903+00:00"
+      },
+      {
+        "item_id": "K-35-064-2_Radnevo_4326_x2688_y2688.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:34:34.542610+00:00"
+      },
+      {
+        "item_id": "K-35-064-3_Dimitrovgrad_4326_x3024_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:34:42.021536+00:00"
+      },
+      {
+        "item_id": "K-35-064-3_Dimitrovgrad_4326_x3696_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:34:53.086919+00:00"
+      },
+      {
+        "item_id": "K-35-064-3_Dimitrovgrad_4326_x4032_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:34:59.175802+00:00"
+      },
+      {
+        "item_id": "K-35-064-4_Galabovo_4326_x0_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:35:09.386390+00:00"
+      },
+      {
+        "item_id": "K-35-064-3_Dimitrovgrad_4326_x672_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:35:09.959766+00:00"
+      },
+      {
+        "item_id": "K-35-064-4_Galabovo_4326_x2016_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:35:29.204807+00:00"
+      },
+      {
+        "item_id": "K-35-064-4_Galabovo_4326_x2352_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:35:30.762581+00:00"
+      },
+      {
+        "item_id": "K-35-064-2_Radnevo_4326_x2688_y2688.png",
+        "attempt": 3,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:35:31.880972+00:00"
+      },
+      {
+        "item_id": "K-35-064-4_Galabovo_4326_x2688_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:35:39.088419+00:00"
+      },
+      {
+        "item_id": "K-35-064-4_Galabovo_4326_x3360_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:35:39.406195+00:00"
+      },
+      {
+        "item_id": "K-35-064-4_Galabovo_4326_x2688_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:35:41.975198+00:00"
+      },
+      {
+        "item_id": "K-35-064-4_Galabovo_4326_x3360_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:35:44.505382+00:00"
+      },
+      {
+        "item_id": "K-35-064-4_Galabovo_4326_x3360_y3696.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:35:45.609990+00:00"
+      },
+      {
+        "item_id": "K-35-064-4_Galabovo_4326_x336_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:35:49.367494+00:00"
+      },
+      {
+        "item_id": "K-35-064-4_Galabovo_4326_x4032_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:35:58.139626+00:00"
+      },
+      {
+        "item_id": "K-35-064-4_Galabovo_4326_x4032_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:36:00.523853+00:00"
+      },
+      {
+        "item_id": "K-35-064-4_Galabovo_4326_x672_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:36:04.400595+00:00"
+      },
+      {
+        "item_id": "K-35-064-3_Dimitrovgrad_4326_x672_y2016.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:36:06.807566+00:00"
+      },
+      {
+        "item_id": "K-35-065-1_Radetski_4326_x0_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:36:11.892391+00:00"
+      },
+      {
+        "item_id": "K-35-064-4_Galabovo_4326_x2352_y0.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:36:25.737851+00:00"
+      },
+      {
+        "item_id": "K-35-065-1_Radetski_4326_x2352_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:36:34.381453+00:00"
+      },
+      {
+        "item_id": "K-35-065-1_Radetski_4326_x3024_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:36:39.006752+00:00"
+      },
+      {
+        "item_id": "K-35-065-1_Radetski_4326_x336_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:36:51.837160+00:00"
+      },
+      {
+        "item_id": "K-35-065-1_Radetski_4326_x4032_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:36:53.841481+00:00"
+      },
+      {
+        "item_id": "K-35-065-1_Radetski_4326_x4032_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:36:55.628217+00:00"
+      },
+      {
+        "item_id": "K-35-065-1_Radetski_4326_x672_y3696.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:37:03.760104+00:00"
+      },
+      {
+        "item_id": "K-35-065-2_GManastir_4326_x0_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:37:05.705067+00:00"
+      },
+      {
+        "item_id": "K-35-065-2_GManastir_4326_x0_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:37:06.032788+00:00"
+      },
+      {
+        "item_id": "K-35-065-2_GManastir_4326_x1008_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:37:07.921089+00:00"
+      },
+      {
+        "item_id": "K-35-065-2_GManastir_4326_x1680_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:37:17.198257+00:00"
+      },
+      {
+        "item_id": "K-35-065-2_GManastir_4326_x2688_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:37:29.189219+00:00"
+      },
+      {
+        "item_id": "K-35-065-2_GManastir_4326_x2688_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:37:30.214118+00:00"
+      },
+      {
+        "item_id": "K-35-065-2_GManastir_4326_x3024_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:37:32.755551+00:00"
+      },
+      {
+        "item_id": "K-35-065-2_GManastir_4326_x3024_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:37:35.308095+00:00"
+      },
+      {
+        "item_id": "K-35-065-2_GManastir_4326_x672_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:37:55.737030+00:00"
+      },
+      {
+        "item_id": "K-35-065-3_Glavan_4326_x0_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:37:59.727255+00:00"
+      },
+      {
+        "item_id": "K-35-065-3_Glavan_4326_x1008_y3696.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:38:07.470541+00:00"
+      },
+      {
+        "item_id": "K-35-065-3_Glavan_4326_x1344_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:38:10.950901+00:00"
+      },
+      {
+        "item_id": "K-35-065-3_Glavan_4326_x2352_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:38:17.703260+00:00"
+      },
+      {
+        "item_id": "K-35-065-3_Glavan_4326_x1680_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:38:17.814458+00:00"
+      },
+      {
+        "item_id": "K-35-065-3_Glavan_4326_x336_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:38:44.704366+00:00"
+      },
+      {
+        "item_id": "K-35-065-3_Glavan_4326_x3696_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:38:46.720288+00:00"
+      },
+      {
+        "item_id": "K-35-065-4_x1344_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:39:09.866477+00:00"
+      },
+      {
+        "item_id": "K-35-065-4_x2016_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:39:18.765146+00:00"
+      },
+      {
+        "item_id": "K-35-065-4_x2352_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:39:32.240426+00:00"
+      },
+      {
+        "item_id": "K-35-065-4_x3024_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:39:32.629610+00:00"
+      },
+      {
+        "item_id": "K-35-065-4_x2688_y3696.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:39:33.813886+00:00"
+      },
+      {
+        "item_id": "K-35-065-4_x3360_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:39:34.722569+00:00"
+      },
+      {
+        "item_id": "K-35-065-4_x3024_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:39:37.109158+00:00"
+      },
+      {
+        "item_id": "K-35-065-4_x336_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:39:43.067388+00:00"
+      },
+      {
+        "item_id": "K-35-065-4_x3360_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:39:43.293341+00:00"
+      },
+      {
+        "item_id": "K-35-065-4_x336_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:39:43.727417+00:00"
+      },
+      {
+        "item_id": "K-35-065-4_x3696_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:39:46.678610+00:00"
+      },
+      {
+        "item_id": "K-35-065-4_x672_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:39:53.094607+00:00"
+      },
+      {
+        "item_id": "K-35-065-4_x672_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:39:55.768860+00:00"
+      },
+      {
+        "item_id": "K-35-065-4_x672_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:39:58.161181+00:00"
+      },
+      {
+        "item_id": "K-35-066-1_x1680_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:40:15.958780+00:00"
+      },
+      {
+        "item_id": "K-35-066-1_x2688_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:40:28.292612+00:00"
+      },
+      {
+        "item_id": "K-35-066-1_x336_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:40:48.236690+00:00"
+      },
+      {
+        "item_id": "K-35-066-1_x4032_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:40:53.347087+00:00"
+      },
+      {
+        "item_id": "K-35-066-2_x1008_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:41:02.852070+00:00"
+      },
+      {
+        "item_id": "K-35-066-2_x1344_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:41:06.772034+00:00"
+      },
+      {
+        "item_id": "K-35-066-2_x1344_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:41:07.232942+00:00"
+      },
+      {
+        "item_id": "K-35-066-2_x2016_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:41:09.085341+00:00"
+      },
+      {
+        "item_id": "K-35-066-2_x2352_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:41:15.526737+00:00"
+      },
+      {
+        "item_id": "K-35-066-2_x2352_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:41:18.988971+00:00"
+      },
+      {
+        "item_id": "K-35-066-2_x3696_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:41:38.761161+00:00"
+      },
+      {
+        "item_id": "K-35-066-3_x0_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:41:45.943585+00:00"
+      },
+      {
+        "item_id": "K-35-066-3_x1008_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:41:50.851091+00:00"
+      },
+      {
+        "item_id": "K-35-066-3_x1008_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:41:54.824084+00:00"
+      },
+      {
+        "item_id": "K-35-066-2_x2016_y2352.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:42:00.335360+00:00"
+      },
+      {
+        "item_id": "K-35-066-3_x2688_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:42:11.591196+00:00"
+      },
+      {
+        "item_id": "K-35-066-3_x2688_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:42:16.480178+00:00"
+      },
+      {
+        "item_id": "K-35-066-3_x336_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:42:32.299033+00:00"
+      },
+      {
+        "item_id": "K-35-066-3_x0_y1680.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:42:35.898223+00:00"
+      },
+      {
+        "item_id": "K-35-066-3_x672_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:42:41.067267+00:00"
+      },
+      {
+        "item_id": "K-35-066-4_x1344_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:42:52.572057+00:00"
+      },
+      {
+        "item_id": "K-35-066-4_x1344_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:42:53.136422+00:00"
+      },
+      {
+        "item_id": "K-35-066-4_x1680_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:42:59.141686+00:00"
+      },
+      {
+        "item_id": "K-35-066-4_x2688_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:43:07.440795+00:00"
+      },
+      {
+        "item_id": "K-35-066-4_x3360_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:43:15.140550+00:00"
+      },
+      {
+        "item_id": "K-35-066-4_x4032_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:43:27.503209+00:00"
+      },
+      {
+        "item_id": "K-35-066-4_x4032_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:43:27.961342+00:00"
+      },
+      {
+        "item_id": "K-35-066-4_x672_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:43:28.415484+00:00"
+      },
+      {
+        "item_id": "K-35-067-1_x2016_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:43:52.025698+00:00"
+      },
+      {
+        "item_id": "K-35-067-1_x2016_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:43:53.898337+00:00"
+      },
+      {
+        "item_id": "K-35-067-1_x2688_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:44:00.864090+00:00"
+      },
+      {
+        "item_id": "K-35-067-1_x3696_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:44:15.715726+00:00"
+      },
+      {
+        "item_id": "K-35-067-1_x3696_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:44:16.165938+00:00"
+      },
+      {
+        "item_id": "K-35-067-1_x672_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:44:20.989790+00:00"
+      },
+      {
+        "item_id": "K-35-067-1_x672_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:44:24.703390+00:00"
+      },
+      {
+        "item_id": "K-35-067-2_x1008_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:44:31.363035+00:00"
+      },
+      {
+        "item_id": "K-35-067-2_x2016_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:44:44.948902+00:00"
+      },
+      {
+        "item_id": "K-35-067-2_x2016_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:44:47.232451+00:00"
+      },
+      {
+        "item_id": "K-35-067-1_x2016_y2016.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:44:50.077143+00:00"
+      },
+      {
+        "item_id": "K-35-067-2_x2688_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:44:50.760122+00:00"
+      },
+      {
+        "item_id": "K-35-067-2_x336_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:45:08.194062+00:00"
+      },
+      {
+        "item_id": "K-35-067-2_x3696_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:45:10.337755+00:00"
+      },
+      {
+        "item_id": "K-35-067-2_x4032_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:45:16.356352+00:00"
+      },
+      {
+        "item_id": "K-35-067-3_x2688_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:45:47.975313+00:00"
+      },
+      {
+        "item_id": "K-35-067-3_x336_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:46:01.104751+00:00"
+      },
+      {
+        "item_id": "K-35-067-3_x4032_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:46:03.432804+00:00"
+      },
+      {
+        "item_id": "K-35-067-4_x1344_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:46:21.655371+00:00"
+      },
+      {
+        "item_id": "K-35-067-4_x3696_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:46:53.909596+00:00"
+      },
+      {
+        "item_id": "K-35-067-4_x3696_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:46:56.035331+00:00"
+      },
+      {
+        "item_id": "K-35-067-4_x4032_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:46:56.318106+00:00"
+      },
+      {
+        "item_id": "K-35-067-4_x4032_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:46:57.630858+00:00"
+      },
+      {
+        "item_id": "K-35-074-1_x1680_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:47:15.442112+00:00"
+      },
+      {
+        "item_id": "K-35-074-1_x2352_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:47:24.674030+00:00"
+      },
+      {
+        "item_id": "K-35-074-1_x3024_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:47:37.114349+00:00"
+      },
+      {
+        "item_id": "K-35-074-1_x3360_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:47:39.501957+00:00"
+      },
+      {
+        "item_id": "K-35-067-4_x4032_y3024.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:47:48.742757+00:00"
+      },
+      {
+        "item_id": "K-35-074-1_x672_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:47:59.718006+00:00"
+      },
+      {
+        "item_id": "K-35-074-2_x1344_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:48:13.344776+00:00"
+      },
+      {
+        "item_id": "K-35-074-2_x1344_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:48:13.636750+00:00"
+      },
+      {
+        "item_id": "K-35-074-2_x1680_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:48:14.297287+00:00"
+      },
+      {
+        "item_id": "K-35-074-2_x2688_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:48:31.072983+00:00"
+      },
+      {
+        "item_id": "K-35-074-2_x3024_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:48:37.400287+00:00"
+      },
+      {
+        "item_id": "K-35-074-2_x3360_y3696.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:48:40.379068+00:00"
+      },
+      {
+        "item_id": "K-35-074-2_x336_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:48:42.516687+00:00"
+      },
+      {
+        "item_id": "K-35-074-2_x3696_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:48:47.035651+00:00"
+      },
+      {
+        "item_id": "K-35-074-2_x1344_y336.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:49:04.919427+00:00"
+      },
+      {
+        "item_id": "K-35-074-3_x2688_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:49:29.503453+00:00"
+      },
+      {
+        "item_id": "K-35-074-3_x3360_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:49:34.515150+00:00"
+      },
+      {
+        "item_id": "K-35-074-2_x3360_y3696.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:49:36.515300+00:00"
+      },
+      {
+        "item_id": "K-35-074-3_x3696_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:49:45.797812+00:00"
+      },
+      {
+        "item_id": "K-35-074-3_x3696_y3696.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:49:48.705334+00:00"
+      },
+      {
+        "item_id": "K-35-074-3_x4032_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:49:51.601233+00:00"
+      },
+      {
+        "item_id": "K-35-074-2_x1344_y336.png",
+        "attempt": 3,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:49:58.520556+00:00"
+      },
+      {
+        "item_id": "K-35-074-4_x1008_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:50:06.326993+00:00"
+      },
+      {
+        "item_id": "K-35-074-4_x2016_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:50:18.269532+00:00"
+      },
+      {
+        "item_id": "K-35-074-4_x2016_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:50:19.507221+00:00"
+      },
+      {
+        "item_id": "K-35-074-4_x2688_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:50:25.234378+00:00"
+      },
+      {
+        "item_id": "K-35-074-3_x3360_y0.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:50:25.943107+00:00"
+      },
+      {
+        "item_id": "K-35-074-4_x3024_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:50:30.467166+00:00"
+      },
+      {
+        "item_id": "K-35-074-4_x3024_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:50:31.032779+00:00"
+      },
+      {
+        "item_id": "K-35-074-4_x3024_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:50:34.426879+00:00"
+      },
+      {
+        "item_id": "K-35-074-4_x3360_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:50:39.241398+00:00"
+      },
+      {
+        "item_id": "K-35-075-1_x1344_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:51:12.965457+00:00"
+      },
+      {
+        "item_id": "K-35-074-3_x3360_y0.png",
+        "attempt": 3,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:51:20.045502+00:00"
+      },
+      {
+        "item_id": "K-35-074-4_x2688_y1008.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:51:21.285558+00:00"
+      },
+      {
+        "item_id": "K-35-075-1_x2688_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:51:23.427444+00:00"
+      },
+      {
+        "item_id": "K-35-075-1_x2688_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:51:25.386931+00:00"
+      },
+      {
+        "item_id": "K-35-075-1_x3024_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:51:29.481410+00:00"
+      },
+      {
+        "item_id": "K-35-075-1_x2688_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:51:30.346954+00:00"
+      },
+      {
+        "item_id": "K-35-075-2_x0_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:52:03.719710+00:00"
+      },
+      {
+        "item_id": "K-35-075-2_x1008_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:52:06.612376+00:00"
+      },
+      {
+        "item_id": "K-35-075-2_x1344_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:52:07.911092+00:00"
+      },
+      {
+        "item_id": "K-35-075-2_x1008_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:52:10.229600+00:00"
+      },
+      {
+        "item_id": "K-35-075-2_x1344_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:52:14.017095+00:00"
+      },
+      {
+        "item_id": "K-35-074-3_x3360_y0.png",
+        "attempt": 4,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:52:16.105887+00:00"
+      },
+      {
+        "item_id": "K-35-075-2_x2016_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:52:21.599173+00:00"
+      },
+      {
+        "item_id": "K-35-075-1_x3024_y2688.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:52:21.821367+00:00"
+      },
+      {
+        "item_id": "K-35-075-2_x2688_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:52:27.129048+00:00"
+      },
+      {
+        "item_id": "K-35-075-2_x3024_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:52:34.220045+00:00"
+      },
+      {
+        "item_id": "K-35-075-2_x672_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:52:58.225412+00:00"
+      },
+      {
+        "item_id": "K-35-075-2_x1008_y3360.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:53:04.508388+00:00"
+      },
+      {
+        "item_id": "K-35-075-3_x1008_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:53:05.596907+00:00"
+      },
+      {
+        "item_id": "K-35-074-3_x3360_y0.png",
+        "attempt": 5,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:53:07.503858+00:00"
+      },
+      {
+        "item_id": "K-35-075-3_x1344_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:53:07.708654+00:00"
+      },
+      {
+        "item_id": "K-35-075-3_x1344_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:53:12.549220+00:00"
+      },
+      {
+        "item_id": "K-35-075-3_x1680_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:53:14.962261+00:00"
+      },
+      {
+        "item_id": "K-35-075-1_x3024_y2688.png",
+        "attempt": 3,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:53:15.241804+00:00"
+      },
+      {
+        "item_id": "K-35-075-3_x1680_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:53:16.870443+00:00"
+      },
+      {
+        "item_id": "K-35-075-3_x2352_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:53:21.782874+00:00"
+      },
+      {
+        "item_id": "K-35-075-3_x2688_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:53:28.364806+00:00"
+      },
+      {
+        "item_id": "K-35-075-3_x3024_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:53:32.460450+00:00"
+      },
+      {
+        "item_id": "K-35-075-3_x3024_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:53:36.335236+00:00"
+      },
+      {
+        "item_id": "K-35-075-3_x3024_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:53:36.453992+00:00"
+      },
+      {
+        "item_id": "K-35-075-3_x3360_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:53:42.563880+00:00"
+      },
+      {
+        "item_id": "K-35-075-3_x3360_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:53:44.094551+00:00"
+      },
+      {
+        "item_id": "K-35-075-3_x4032_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:53:54.547298+00:00"
+      },
+      {
+        "item_id": "K-35-075-3_x1344_y1680.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:54:06.824124+00:00"
+      },
+      {
+        "item_id": "K-35-075-3_x1680_y672.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:54:08.599364+00:00"
+      },
+      {
+        "item_id": "K-35-075-4_x1344_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:54:17.707454+00:00"
+      },
+      {
+        "item_id": "K-35-075-4_x1680_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:54:20.424393+00:00"
+      },
+      {
+        "item_id": "K-35-075-3_x2688_y1680.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:54:20.775790+00:00"
+      },
+      {
+        "item_id": "K-35-075-4_x2016_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:54:24.764001+00:00"
+      },
+      {
+        "item_id": "K-35-075-4_x1680_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:54:25.239878+00:00"
+      },
+      {
+        "item_id": "K-35-075-4_x1680_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:54:25.481283+00:00"
+      },
+      {
+        "item_id": "K-35-075-4_x2016_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:54:27.500310+00:00"
+      },
+      {
+        "item_id": "K-35-075-3_x3024_y2688.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:54:28.767557+00:00"
+      },
+      {
+        "item_id": "K-35-075-4_x3024_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:54:45.382924+00:00"
+      },
+      {
+        "item_id": "K-35-075-4_x3024_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:54:47.518749+00:00"
+      },
+      {
+        "item_id": "K-35-075-4_x3360_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:54:50.801423+00:00"
+      },
+      {
+        "item_id": "K-35-075-4_x336_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:54:54.747357+00:00"
+      },
+      {
+        "item_id": "K-35-075-4_x3696_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:55:01.950292+00:00"
+      },
+      {
+        "item_id": "K-35-075-4_x3696_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:55:02.654226+00:00"
+      },
+      {
+        "item_id": "K-35-075-4_x4032_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:55:05.503169+00:00"
+      },
+      {
+        "item_id": "K-35-075-4_x1344_y3360.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:55:10.722593+00:00"
+      },
+      {
+        "item_id": "K-35-075-4_x1680_y1008.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:55:13.770952+00:00"
+      },
+      {
+        "item_id": "K-35-075-4_x672_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:55:14.226045+00:00"
+      },
+      {
+        "item_id": "K-35-076-1_x0_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:55:17.426301+00:00"
+      },
+      {
+        "item_id": "K-35-075-4_x336_y3360.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:55:46.586343+00:00"
+      },
+      {
+        "item_id": "K-35-075-4_x3696_y1680.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:55:57.681437+00:00"
+      },
+      {
+        "item_id": "K-35-076-1_x3696_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:56:07.248408+00:00"
+      },
+      {
+        "item_id": "K-35-076-1_x672_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:56:17.311374+00:00"
+      },
+      {
+        "item_id": "K-35-076-2_x1008_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:56:23.103536+00:00"
+      },
+      {
+        "item_id": "K-35-076-2_x1008_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:56:24.001638+00:00"
+      },
+      {
+        "item_id": "K-35-076-2_x1344_y3696.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:56:28.988690+00:00"
+      },
+      {
+        "item_id": "K-35-076-2_x1680_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:56:30.438389+00:00"
+      },
+      {
+        "item_id": "K-35-076-2_x2352_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:56:39.033121+00:00"
+      },
+      {
+        "item_id": "K-35-075-4_x336_y3360.png",
+        "attempt": 3,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:56:39.678122+00:00"
+      },
+      {
+        "item_id": "K-35-076-2_x2352_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:56:40.016080+00:00"
+      },
+      {
+        "item_id": "K-35-076-2_x3024_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:56:48.472219+00:00"
+      },
+      {
+        "item_id": "K-35-076-2_x3024_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:56:50.034913+00:00"
+      },
+      {
+        "item_id": "K-35-076-3_x0_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:57:19.632370+00:00"
+      },
+      {
+        "item_id": "K-35-076-3_x1344_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:57:30.309076+00:00"
+      },
+      {
+        "item_id": "K-35-076-3_x1344_y3696.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:57:34.051100+00:00"
+      },
+      {
+        "item_id": "K-35-076-3_x1680_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:57:35.502036+00:00"
+      },
+      {
+        "item_id": "K-35-076-3_x1344_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:57:37.063396+00:00"
+      },
+      {
+        "item_id": "K-35-076-3_x1680_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:57:40.282666+00:00"
+      },
+      {
+        "item_id": "K-35-076-2_x3024_y672.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:57:41.384800+00:00"
+      },
+      {
+        "item_id": "K-35-076-3_x2352_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:57:43.607820+00:00"
+      },
+      {
+        "item_id": "K-35-076-3_x2352_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:57:43.848973+00:00"
+      },
+      {
+        "item_id": "K-35-076-3_x2352_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:57:46.124257+00:00"
+      },
+      {
+        "item_id": "K-35-076-3_x2688_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:57:49.718082+00:00"
+      },
+      {
+        "item_id": "K-35-076-3_x336_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:58:02.009418+00:00"
+      },
+      {
+        "item_id": "K-35-076-3_x4032_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:58:13.112944+00:00"
+      },
+      {
+        "item_id": "K-35-076-3_x1344_y2016.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:58:25.458636+00:00"
+      },
+      {
+        "item_id": "K-35-076-4_x1008_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:58:30.123834+00:00"
+      },
+      {
+        "item_id": "K-35-076-2_x3024_y672.png",
+        "attempt": 3,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:58:33.202728+00:00"
+      },
+      {
+        "item_id": "K-35-076-4_x1344_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:58:34.907464+00:00"
+      },
+      {
+        "item_id": "K-35-076-4_x2352_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:58:45.472230+00:00"
+      },
+      {
+        "item_id": "K-35-076-4_x2352_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:58:51.861439+00:00"
+      },
+      {
+        "item_id": "K-35-076-4_x2688_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:58:53.627549+00:00"
+      },
+      {
+        "item_id": "K-35-076-4_x2688_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:58:54.051915+00:00"
+      },
+      {
+        "item_id": "K-35-076-4_x3360_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:58:58.034466+00:00"
+      },
+      {
+        "item_id": "K-35-076-4_x336_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:59:11.744816+00:00"
+      },
+      {
+        "item_id": "K-35-076-4_x1008_y3360.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:59:19.929974+00:00"
+      },
+      {
+        "item_id": "K-35-077-1_x1008_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:59:33.583402+00:00"
+      },
+      {
+        "item_id": "K-35-077-1_x1344_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:59:36.786892+00:00"
+      },
+      {
+        "item_id": "K-35-077-1_x1680_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:59:40.328988+00:00"
+      },
+      {
+        "item_id": "K-35-077-1_x1680_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:59:42.092368+00:00"
+      },
+      {
+        "item_id": "K-35-076-4_x2688_y3360.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:59:49.174482+00:00"
+      },
+      {
+        "item_id": "K-35-077-1_x2688_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T01:59:52.803417+00:00"
+      },
+      {
+        "item_id": "K-35-077-1_x2688_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:00:01.675951+00:00"
+      },
+      {
+        "item_id": "K-35-077-1_x3360_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:00:06.664383+00:00"
+      },
+      {
+        "item_id": "K-35-077-1_x3360_y672.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:00:08.075458+00:00"
+      },
+      {
+        "item_id": "K-35-077-1_x336_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:00:11.697156+00:00"
+      },
+      {
+        "item_id": "K-35-077-1_x336_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:00:11.929852+00:00"
+      },
+      {
+        "item_id": "K-35-077-1_x3696_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:00:17.538534+00:00"
+      },
+      {
+        "item_id": "K-35-077-1_x3696_y2016.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:00:18.190484+00:00"
+      },
+      {
+        "item_id": "K-35-077-1_x672_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:00:25.785553+00:00"
+      },
+      {
+        "item_id": "K-35-077-1_x672_y3024.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:00:31.623892+00:00"
+      },
+      {
+        "item_id": "K-35-077-2_x1008_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:00:41.078613+00:00"
+      },
+      {
+        "item_id": "K-35-077-2_x1008_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:00:43.070997+00:00"
+      },
+      {
+        "item_id": "K-35-077-2_x1344_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:00:43.733263+00:00"
+      },
+      {
+        "item_id": "K-35-077-2_x2016_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:00:49.512561+00:00"
+      },
+      {
+        "item_id": "K-35-077-2_x2016_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:00:51.938918+00:00"
+      },
+      {
+        "item_id": "K-35-077-2_x2352_y1680.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:01:00.851009+00:00"
+      },
+      {
+        "item_id": "K-35-077-1_x336_y336.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:01:02.244977+00:00"
+      },
+      {
+        "item_id": "K-35-077-2_x2688_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:01:03.898206+00:00"
+      },
+      {
+        "item_id": "K-35-077-2_x3024_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:01:10.543518+00:00"
+      },
+      {
+        "item_id": "K-35-077-2_x3024_y1344.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:01:12.160862+00:00"
+      },
+      {
+        "item_id": "K-35-077-2_x3024_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:01:15.503008+00:00"
+      },
+      {
+        "item_id": "K-35-077-1_x672_y1344.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:01:17.050155+00:00"
+      },
+      {
+        "item_id": "K-35-077-2_x3696_y2688.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:01:28.178438+00:00"
+      },
+      {
+        "item_id": "K-35-077-2_x1344_y336.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:01:36.095875+00:00"
+      },
+      {
+        "item_id": "K-35-077-2_x672_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:01:41.314482+00:00"
+      },
+      {
+        "item_id": "K-35-077-2_x2016_y3360.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:01:45.424566+00:00"
+      },
+      {
+        "item_id": "K-35-077-3_x0_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:01:49.454055+00:00"
+      },
+      {
+        "item_id": "K-35-077-3_x1008_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:01:51.244320+00:00"
+      },
+      {
+        "item_id": "K-35-077-3_x1344_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:01:58.578103+00:00"
+      },
+      {
+        "item_id": "K-35-077-3_x2016_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:02:03.632084+00:00"
+      },
+      {
+        "item_id": "K-35-077-3_x2016_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:02:04.588232+00:00"
+      },
+      {
+        "item_id": "K-35-077-3_x2688_y0.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:02:07.494377+00:00"
+      },
+      {
+        "item_id": "K-35-077-3_x3024_y1008.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:02:15.694550+00:00"
+      },
+      {
+        "item_id": "K-35-077-3_x3024_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:02:18.508233+00:00"
+      },
+      {
+        "item_id": "K-35-077-3_x336_y336.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:02:29.850607+00:00"
+      },
+      {
+        "item_id": "K-35-077-3_x0_y1008.png",
+        "attempt": 2,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:02:41.539519+00:00"
+      },
+      {
+        "item_id": "K-35-077-4_x336_y3360.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:03:25.895438+00:00"
+      },
+      {
+        "item_id": "K-35-077-4_x672_y2352.png",
+        "attempt": 1,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:03:33.191060+00:00"
+      },
+      {
+        "item_id": "K-35-077-3_x0_y1008.png",
+        "attempt": 3,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:03:33.416069+00:00"
+      },
+      {
+        "item_id": "K-35-077-3_x0_y1008.png",
+        "attempt": 4,
+        "reason": "MAX_TOKENS (Finish Reason: FinishReason.MAX_TOKENS)",
+        "error_type": "other",
+        "timestamp": "2026-04-18T02:04:27.813402+00:00"
+      },
       {
         "item_id": "K-35-042-3_x1680_y2016.png",
         "attempt": 1,
@@ -11835,19 +14962,19 @@
     ]
   },
   "usage_stats": {
-    "total_input_tokens": 133743519,
-    "total_output_tokens": 1289970,
-    "total_cached_tokens": 124263009,
+    "total_input_tokens": 267534012,
+    "total_output_tokens": 2580631,
+    "total_cached_tokens": 248534147,
     "total_reasoning_tokens": 0,
-    "total_thoughts_tokens": 19162510,
+    "total_thoughts_tokens": 38334485,
     "total_tool_use_tokens": 0,
-    "total_tokens": 154195999,
+    "total_tokens": 308449128,
     "by_provider": {
       "google_gemini": {
-        "input_tokens": 133743519,
-        "output_tokens": 1289970,
-        "total_tokens": 154195999,
-        "request_count": 8541
+        "input_tokens": 267534012,
+        "output_tokens": 2580631,
+        "total_tokens": 308449128,
+        "request_count": 17085
       }
     }
   },
@@ -50546,13 +53673,13 @@
       "model_version": "gemini-3-flash-preview",
       "system_fingerprint": null,
       "tokens": {
-        "input_tokens": 15659,
-        "output_tokens": 136,
-        "total_tokens": 18898,
-        "cached_input_tokens": 14549,
+        "input_tokens": 15658,
+        "output_tokens": 198,
+        "total_tokens": 18216,
+        "cached_input_tokens": 8129,
         "cache_creation_tokens": 0,
         "reasoning_tokens": 0,
-        "thoughts_tokens": 3103,
+        "thoughts_tokens": 2360,
         "tool_use_tokens": 0,
         "audio_input_tokens": 0,
         "audio_output_tokens": 0,
@@ -50563,7 +53690,7 @@
         "prompt": [
           {
             "modality": "MediaModality.TEXT",
-            "count": 427
+            "count": 426
           },
           {
             "modality": "MediaModality.IMAGE",
@@ -50572,12 +53699,12 @@
         ],
         "cache": [
           {
-            "modality": "MediaModality.TEXT",
-            "count": 406
+            "modality": "MediaModality.IMAGE",
+            "count": 7908
           },
           {
-            "modality": "MediaModality.IMAGE",
-            "count": 14143
+            "modality": "MediaModality.TEXT",
+            "count": 221
           }
         ]
       },
@@ -50592,15 +53719,15 @@
       "grounding_used": false,
       "grounding_queries": [],
       "grounding_sources": [],
-      "request_timestamp": "2026-04-18T01:14:23.083577+00:00",
-      "response_timestamp": "2026-04-18T01:14:47.654869+00:00",
-      "latency_ms": 24571,
+      "request_timestamp": "2026-05-03T01:50:47.072887+00:00",
+      "response_timestamp": "2026-05-03T01:51:05.122431+00:00",
+      "latency_ms": 18049,
       "attempt_number": 1,
       "retry_reason": null,
       "response_empty": false,
       "parse_success": true,
       "parse_error": null,
-      "raw_response_length": 317
+      "raw_response_length": 470
     },
     {
       "request_id": null,
@@ -257441,13 +260568,13 @@
       "model_version": "gemini-3-flash-preview",
       "system_fingerprint": null,
       "tokens": {
-        "input_tokens": 15659,
-        "output_tokens": 201,
-        "total_tokens": 20244,
-        "cached_input_tokens": 14549,
+        "input_tokens": 15658,
+        "output_tokens": 176,
+        "total_tokens": 19835,
+        "cached_input_tokens": 0,
         "cache_creation_tokens": 0,
         "reasoning_tokens": 0,
-        "thoughts_tokens": 4384,
+        "thoughts_tokens": 4001,
         "tool_use_tokens": 0,
         "audio_input_tokens": 0,
         "audio_output_tokens": 0,
@@ -257458,21 +260585,11 @@
         "prompt": [
           {
             "modality": "MediaModality.TEXT",
-            "count": 427
+            "count": 426
           },
           {
             "modality": "MediaModality.IMAGE",
             "count": 15232
-          }
-        ],
-        "cache": [
-          {
-            "modality": "MediaModality.TEXT",
-            "count": 406
-          },
-          {
-            "modality": "MediaModality.IMAGE",
-            "count": 14143
           }
         ]
       },
@@ -257487,15 +260604,15 @@
       "grounding_used": false,
       "grounding_queries": [],
       "grounding_sources": [],
-      "request_timestamp": "2026-04-18T01:32:23.943516+00:00",
-      "response_timestamp": "2026-04-18T01:32:55.569992+00:00",
-      "latency_ms": 31626,
+      "request_timestamp": "2026-05-03T01:50:47.095224+00:00",
+      "response_timestamp": "2026-05-03T01:51:15.296728+00:00",
+      "latency_ms": 28201,
       "attempt_number": 1,
       "retry_reason": null,
       "response_empty": false,
       "parse_success": true,
       "parse_error": null,
-      "raw_response_length": 471
+      "raw_response_length": 347
     },
     {
       "request_id": null,
@@ -265956,13 +269073,13 @@
       "model_version": "gemini-3-flash-preview",
       "system_fingerprint": null,
       "tokens": {
-        "input_tokens": 15659,
-        "output_tokens": 196,
-        "total_tokens": 17924,
-        "cached_input_tokens": 14549,
+        "input_tokens": 15658,
+        "output_tokens": 317,
+        "total_tokens": 19079,
+        "cached_input_tokens": 0,
         "cache_creation_tokens": 0,
         "reasoning_tokens": 0,
-        "thoughts_tokens": 2069,
+        "thoughts_tokens": 3104,
         "tool_use_tokens": 0,
         "audio_input_tokens": 0,
         "audio_output_tokens": 0,
@@ -265972,22 +269089,12 @@
       "modality_breakdown": {
         "prompt": [
           {
+            "modality": "MediaModality.TEXT",
+            "count": 426
+          },
+          {
             "modality": "MediaModality.IMAGE",
             "count": 15232
-          },
-          {
-            "modality": "MediaModality.TEXT",
-            "count": 427
-          }
-        ],
-        "cache": [
-          {
-            "modality": "MediaModality.TEXT",
-            "count": 406
-          },
-          {
-            "modality": "MediaModality.IMAGE",
-            "count": 14143
           }
         ]
       },
@@ -266002,15 +269109,15 @@
       "grounding_used": false,
       "grounding_queries": [],
       "grounding_sources": [],
-      "request_timestamp": "2026-04-18T01:33:24.786904+00:00",
-      "response_timestamp": "2026-04-18T01:33:44.447102+00:00",
-      "latency_ms": 19660,
-      "attempt_number": 2,
+      "request_timestamp": "2026-05-03T01:50:47.078206+00:00",
+      "response_timestamp": "2026-05-03T01:51:10.977413+00:00",
+      "latency_ms": 23899,
+      "attempt_number": 1,
       "retry_reason": null,
       "response_empty": false,
       "parse_success": true,
       "parse_error": null,
-      "raw_response_length": 461
+      "raw_response_length": 753
     },
     {
       "request_id": null,
@@ -567029,9 +570136,9 @@
     }
   ],
   "cost_estimate": {
-    "input_cost_usd": 66.871759,
-    "output_cost_usd": 3.86991,
-    "total_cost_usd": 70.74167,
+    "input_cost_usd": 133.76700499999998,
+    "output_cost_usd": 7.741893,
+    "total_cost_usd": 141.50889999999998,
     "pricing_used": {
       "model": "gemini-3-flash-preview",
       "input_per_1m": 0.5,
@@ -567057,5 +570164,56 @@
     "avg_latency_seconds": 20.55,
     "peak_wait_seconds": 0.0,
     "elapsed_seconds": 3261.9
-  }
+  },
+  "recovery_history": [
+    {
+      "timestamp": "2026-05-03T01:54:10.623416+00:00",
+      "initial_failed": 3,
+      "recovered": 3,
+      "still_failing": 0,
+      "still_failing_ids": [],
+      "recovered_ids": [
+        "K-35-051-4_x336_y2352.png",
+        "K-35-064-1_Sredets_4326_x672_y336.png",
+        "K-35-064-2_Radnevo_4326_x1008_y1008.png"
+      ],
+      "recovery_cost_usd": 70.76723,
+      "recovery_duration_seconds": 3293.819527,
+      "recovery_run_id": "193ed976-b7ac-4be5-90c3-b0d3e086a205"
+    }
+  ],
+  "tpm_governor_recovery": [
+    {
+      "governor_type": "token_bucket",
+      "rpm_limit": 20000,
+      "tpm_limit": 20000000,
+      "target_rpm": 14400,
+      "target_tpm": 14400000,
+      "target_utilisation": 0.72,
+      "current_tpm": 3033135,
+      "available_request_capacity": 14400.0,
+      "available_token_capacity": 14400000.0,
+      "cooldown_seconds": 15.0,
+      "tokens_per_request": 20000,
+      "total_tokens": 164898577,
+      "total_requests": 8990,
+      "total_rate_limits": 0,
+      "total_cooldown_seconds": 0.0,
+      "avg_latency_seconds": 20.55,
+      "peak_wait_seconds": 0.0,
+      "elapsed_seconds": 3261.9
+    }
+  ],
+  "results_summary_recovery": [
+    {
+      "total_detections": 19463,
+      "class_counts": {
+        "benchmark_mound": 2285,
+        "burial_mound": 15110,
+        "settlement_mound": 907,
+        "triangulation_mound": 1160,
+        "settle_mound": 1
+      }
+    }
+  ]
 }
