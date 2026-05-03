@@ -681,7 +681,21 @@ def run_extract(rcfg: ResolvedRunConfig) -> dict[str, Any]:
 
 
 def run_verify(rcfg: ResolvedRunConfig) -> dict[str, Any]:
-    """Score candidates via the adversarial verifier."""
+    """Score candidates via the adversarial verifier.
+
+    Honours the optional ``verify.strict`` config flag (default True).
+    When True (the documented contract), ``run_pv.py verify`` exits 1 on
+    any completeness gap — a ``FileNotFoundError`` on a crop, a malformed
+    batch response, or a multi-iter resume miss halts the pipeline at
+    ``_run_subprocess``. The operator must invoke ``run_pv.py cleanup``
+    before the pipeline can advance.
+
+    When False, the flag passes ``--no-strict`` through, allowing the
+    pipeline to continue past a completeness gap. Reserved for recovery
+    campaigns and deliberate sub-corpus runs where partial completion is
+    acceptable. ``failed_items[]`` in ``run.meta.json`` is populated
+    either way — the difference is only the exit code.
+    """
     v = rcfg.verify
     crops_dir = rcfg.output_dir / "crops"
     verified_dir = rcfg.output_dir / "verified"
@@ -695,6 +709,13 @@ def run_verify(rcfg: ResolvedRunConfig) -> dict[str, Any]:
         "--workers", str(v.get("workers", 20)),
         "--service-tier", v.get("service_tier", "flex"),
     ]
+    # Default strict=True matches the run_pv.py default; an operator
+    # must explicitly opt out via ``verify.strict: false`` in the
+    # pipeline config. Threading the flag through the subprocess CLI
+    # rather than relying on the run_pv default keeps the contract
+    # explicit and reviewable in the merged config.
+    if not v.get("strict", True):
+        cmd.append("--no-strict")
     start = time.monotonic()
     _run_subprocess(cmd, log_path=rcfg.output_dir / "run.log")
     return {
