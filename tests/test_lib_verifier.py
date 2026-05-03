@@ -863,3 +863,378 @@ class TestParseVerifierEdgeCases:
         parsed = parse_verifier_results(matched)
         # Empty candidates → silently skipped
         assert "candidate_00000" not in parsed
+
+
+# =========================================================================
+# Layer 2: _call_verifier_api retry parity
+# =========================================================================
+
+# Tests cover the retry-policy port that mirrors the proposer
+# (4_detect_mounds_batch.py:process_single_tile). Per
+# planning/verifier-silent-drop-fix-plan.md § 3.2 the goals are:
+# error-class-specific backoff (429 / 503 / DeadlineExceeded), MAX_TOKENS
+# finish-reason handling, parse_response_with_repair adoption, and
+# _MAX_RETRIES = 15.
+
+from unittest.mock import MagicMock, call as mock_call  # noqa: E402
+
+from scripts.lib_verifier import (  # noqa: E402
+    _MAX_RETRIES,
+    _call_verifier_api,
+)
+
+
+def _make_response(
+    text: str | None = None,
+    text_raises: Exception | None = None,
+    finish_reason: str = "STOP",
+    has_candidates: bool = True,
+) -> MagicMock:
+    """Build a minimal MagicMock standing in for a Gemini response.
+
+    The shape is just enough to satisfy ``extract_gemini_metadata`` and
+    the post-call MAX_TOKENS check in ``_call_verifier_api``.
+    """
+    response = MagicMock()
+    # usage_metadata: none of these are exercised in the retry tests,
+    # but the helper reads them via getattr so they need integer-ish
+    # defaults to avoid mocked-attribute pollution.
+    response.usage_metadata = None
+
+    if has_candidates:
+        candidate = MagicMock()
+        candidate.finish_reason = finish_reason
+        candidate.content = MagicMock()
+        candidate.content.parts = [MagicMock()]
+        response.candidates = [candidate]
+    else:
+        response.candidates = []
+
+    # response.text — either a value, or a property that raises.
+    if text_raises is not None:
+        type(response).text = property(
+            lambda self: (_ for _ in ()).throw(text_raises),
+        )
+    else:
+        response.text = text
+
+    return response
+
+
+@pytest.mark.tier1
+class TestCallVerifierApi:
+    """Layer 2 retry-parity tests for ``_call_verifier_api``."""
+
+    @pytest.fixture
+    def patch_sleep(self):
+        """Patch ``time.sleep`` so backoffs do not slow the test suite."""
+        with patch("scripts.lib_verifier.time.sleep") as mock:
+            yield mock
+
+    @pytest.fixture
+    def tracker(self):
+        """A bare MagicMock tracker — only ``log_retry`` is exercised."""
+        t = MagicMock()
+        return t
+
+    def _make_client(self, side_effects: list) -> MagicMock:
+        """Build a client whose ``models.generate_content`` walks ``side_effects``.
+
+        Each entry may be either an Exception (raised) or a response
+        object (returned). Mirrors the proposer's test helper.
+        """
+        client = MagicMock()
+        client.models.generate_content = MagicMock(side_effect=side_effects)
+        return client
+
+    def test_429_retries_with_jitter_backoff(self, patch_sleep, tracker):
+        """L2-A: 429s retry with jittered exponential backoff, eventually succeed."""
+        good_text = '{"mound_probability": 0.7, "reasoning": "ok"}'
+        client = self._make_client([
+            Exception("429 ResourceExhausted: quota"),
+            Exception("429 ResourceExhausted: quota"),
+            _make_response(text=good_text),
+        ])
+
+        result = _call_verifier_api(
+            client=client,
+            model_name="gemini-3-flash",
+            content=None,
+            gen_config=None,
+            iteration_id="cand_0001_iter1",
+            metadata_list=[],
+            metadata_tracker=tracker,
+        )
+
+        assert result is not None
+        assert result["mound_probability"] == 0.7
+        assert client.models.generate_content.call_count == 3
+        # Two retries → two log_retry calls with rate_limit
+        retry_calls = [
+            c for c in tracker.log_retry.call_args_list
+            if c.kwargs.get("error_type") == "rate_limit"
+            or (len(c.args) >= 4 and c.args[3] == "rate_limit")
+        ]
+        assert len(retry_calls) == 2
+        # Backoff bounds: jitter on top of exponential up to _MAX_BACKOFF_SECONDS.
+        # Attempt 1 -> base * 2^0 + jitter ∈ [30, 60]
+        # Attempt 2 -> base * 2^1 + jitter ∈ [60, 90]
+        sleep_calls = [c.args[0] for c in patch_sleep.call_args_list]
+        assert any(30 <= s <= 60 for s in sleep_calls), (
+            f"expected an attempt-1 backoff in [30,60], got {sleep_calls}"
+        )
+
+    def test_503_uses_30s_backoff(self, patch_sleep, tracker):
+        """L2-B: 503 errors back off with 30 +/- 10s jitter."""
+        good_text = '{"mound_probability": 0.5, "reasoning": "ok"}'
+        client = self._make_client([
+            Exception("503 InternalServerError"),
+            _make_response(text=good_text),
+        ])
+
+        result = _call_verifier_api(
+            client=client,
+            model_name="gemini-3-flash",
+            content=None,
+            gen_config=None,
+            iteration_id="cand_0002_iter1",
+            metadata_list=[],
+            metadata_tracker=tracker,
+        )
+
+        assert result is not None
+        # Sleep should have been [30,40] for the 503 retry
+        sleep_args = [c.args[0] for c in patch_sleep.call_args_list]
+        assert any(30 <= s <= 40 for s in sleep_args), (
+            f"expected a 30-40s backoff, got {sleep_args}"
+        )
+        # tracker recorded a server_error retry
+        assert any(
+            (c.kwargs.get("error_type") == "server_error")
+            or (len(c.args) >= 4 and c.args[3] == "server_error")
+            for c in tracker.log_retry.call_args_list
+        )
+
+    def test_deadline_exceeded_uses_30s_backoff(self, patch_sleep, tracker):
+        """L2-C: DeadlineExceeded errors use the 30 +/- 10s timeout backoff."""
+        good_text = '{"mound_probability": 0.6, "reasoning": "ok"}'
+        client = self._make_client([
+            Exception("DeadlineExceeded: timeout"),
+            _make_response(text=good_text),
+        ])
+
+        result = _call_verifier_api(
+            client=client,
+            model_name="gemini-3-flash",
+            content=None,
+            gen_config=None,
+            iteration_id="cand_0003_iter1",
+            metadata_list=[],
+            metadata_tracker=tracker,
+        )
+
+        assert result is not None
+        sleep_args = [c.args[0] for c in patch_sleep.call_args_list]
+        assert any(30 <= s <= 40 for s in sleep_args), (
+            f"expected a 30-40s backoff, got {sleep_args}"
+        )
+        # tracker recorded a timeout retry
+        assert any(
+            (c.kwargs.get("error_type") == "timeout")
+            or (len(c.args) >= 4 and c.args[3] == "timeout")
+            for c in tracker.log_retry.call_args_list
+        )
+
+    def test_404_model_is_fatal(self, patch_sleep, tracker):
+        """L2-D: 404 with 'models/' substring is fatal — return None on first attempt."""
+        client = self._make_client([
+            Exception("404 NotFound: models/foo not found"),
+        ])
+
+        result = _call_verifier_api(
+            client=client,
+            model_name="models/foo",
+            content=None,
+            gen_config=None,
+            iteration_id="cand_0004_iter1",
+            metadata_list=[],
+            metadata_tracker=tracker,
+        )
+
+        assert result is None
+        assert client.models.generate_content.call_count == 1
+        # No sleep — fatal exit before backoff
+        assert patch_sleep.call_count == 0
+
+    def test_max_tokens_retries(self, patch_sleep, tracker):
+        """L2-E: MAX_TOKENS finish reason triggers retry rather than parse-failure path."""
+        good_text = '{"mound_probability": 0.8, "reasoning": "ok"}'
+        client = self._make_client([
+            _make_response(text=None, finish_reason="MAX_TOKENS"),
+            _make_response(text=good_text, finish_reason="STOP"),
+        ])
+
+        result = _call_verifier_api(
+            client=client,
+            model_name="gemini-3-flash",
+            content=None,
+            gen_config=None,
+            iteration_id="cand_0005_iter1",
+            metadata_list=[],
+            metadata_tracker=tracker,
+        )
+
+        assert result is not None
+        assert result["mound_probability"] == 0.8
+        # tracker recorded a MAX_TOKENS retry
+        max_token_calls = [
+            c for c in tracker.log_retry.call_args_list
+            if any("MAX_TOKENS" in str(arg) for arg in c.args)
+            or any("MAX_TOKENS" in str(v) for v in c.kwargs.values())
+        ]
+        assert len(max_token_calls) >= 1
+        # 5s sleep for MAX_TOKENS branch
+        assert mock_call(5) in patch_sleep.call_args_list
+
+    def test_parse_repair_recovers_trailing_comma(self, patch_sleep, tracker):
+        """L2-F: parse_response_with_repair recovers trailing-comma malformed JSON."""
+        bad_then_good = '{"mound_probability": 0.7, "reasoning": "ok",}'
+        client = self._make_client([
+            _make_response(text=bad_then_good),
+        ])
+
+        result = _call_verifier_api(
+            client=client,
+            model_name="gemini-3-flash",
+            content=None,
+            gen_config=None,
+            iteration_id="cand_0006_iter1",
+            metadata_list=[],
+            metadata_tracker=tracker,
+        )
+
+        assert result is not None
+        assert result["mound_probability"] == 0.7
+        # First attempt succeeded — no retries
+        assert client.models.generate_content.call_count == 1
+
+    def test_parse_repair_recovers_extra_data(self, patch_sleep, tracker):
+        """L2-G: parse_response_with_repair (Tier 3) recovers extra-data malformed JSON."""
+        bad_with_trailing_prose = (
+            '{"mound_probability": 0.5, "reasoning": "ok"}\nextra prose'
+        )
+        client = self._make_client([
+            _make_response(text=bad_with_trailing_prose),
+        ])
+
+        result = _call_verifier_api(
+            client=client,
+            model_name="gemini-3-flash",
+            content=None,
+            gen_config=None,
+            iteration_id="cand_0007_iter1",
+            metadata_list=[],
+            metadata_tracker=tracker,
+        )
+
+        assert result is not None
+        assert result["mound_probability"] == 0.5
+        assert client.models.generate_content.call_count == 1
+
+    def test_parse_repair_exhausts_retries_returns_none(
+        self, patch_sleep, tracker,
+    ):
+        """L2-H: unrecoverable garbage returns None after _MAX_RETRIES attempts."""
+        # Each tier of parse_response_with_repair will fail on this input.
+        garbage = "this is not JSON at all !"
+        client = self._make_client(
+            [_make_response(text=garbage)] * _MAX_RETRIES,
+        )
+
+        result = _call_verifier_api(
+            client=client,
+            model_name="gemini-3-flash",
+            content=None,
+            gen_config=None,
+            iteration_id="cand_0008_iter1",
+            metadata_list=[],
+            metadata_tracker=tracker,
+        )
+
+        assert result is None
+        assert client.models.generate_content.call_count == _MAX_RETRIES
+
+    def test_safety_block_returns_none_immediately(self, patch_sleep, tracker):
+        """L2-I: BLOCKED responses return None on first attempt — no retry."""
+        blocked_response = _make_response(
+            text=None,
+            text_raises=ValueError("BLOCKED: harm"),
+        )
+        client = self._make_client([blocked_response])
+
+        result = _call_verifier_api(
+            client=client,
+            model_name="gemini-3-flash",
+            content=None,
+            gen_config=None,
+            iteration_id="cand_0009_iter1",
+            metadata_list=[],
+            metadata_tracker=tracker,
+        )
+
+        assert result is None
+        assert client.models.generate_content.call_count == 1
+        # No backoff sleep — deterministic refusal
+        assert patch_sleep.call_count == 0
+
+    def test_max_retries_respects_constant(self, patch_sleep, tracker):
+        """L2-J: continuous 429s exhaust at exactly _MAX_RETRIES attempts."""
+        client = self._make_client(
+            [Exception("429 ResourceExhausted")] * (_MAX_RETRIES + 5),
+        )
+
+        result = _call_verifier_api(
+            client=client,
+            model_name="gemini-3-flash",
+            content=None,
+            gen_config=None,
+            iteration_id="cand_0010_iter1",
+            metadata_list=[],
+            metadata_tracker=tracker,
+        )
+
+        assert result is None
+        assert client.models.generate_content.call_count == _MAX_RETRIES
+
+    def test_logs_retry_per_attempt_with_error_type(
+        self, patch_sleep, tracker,
+    ):
+        """L2-K: log_retry called with the correct error_type per attempt."""
+        good_text = '{"mound_probability": 0.4, "reasoning": "ok"}'
+        client = self._make_client([
+            Exception("429 ResourceExhausted"),
+            Exception("429 ResourceExhausted"),
+            Exception("503 InternalServerError"),
+            _make_response(text=good_text),
+        ])
+
+        result = _call_verifier_api(
+            client=client,
+            model_name="gemini-3-flash",
+            content=None,
+            gen_config=None,
+            iteration_id="cand_0011_iter1",
+            metadata_list=[],
+            metadata_tracker=tracker,
+        )
+
+        assert result is not None
+        # Extract error_types from log_retry calls in order
+        error_types: list[str] = []
+        for c in tracker.log_retry.call_args_list:
+            et = c.kwargs.get("error_type")
+            if et is None and len(c.args) >= 4:
+                et = c.args[3]
+            if et:
+                error_types.append(et)
+        assert error_types == ["rate_limit", "rate_limit", "server_error"]
