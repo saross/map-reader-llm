@@ -67,7 +67,71 @@ ssh sapphire 'cd ~/Code/map-reader-llm && source .venv/bin/activate && pytest -m
   3. **Leave as historical snapshots** — make no change; treat the post-run reports as a frozen artefact of the original launch. Future paper-citation queries route to the canonical post-recovery `results/` outputs directly.
   **The user wants to discuss this in Session 86 before any action.** Don't auto-pick an option; raise it explicitly.
 
-### 🌙 Overnight recovery campaign — RELAUNCHED with 3 cells skipped (2026-05-03 night)
+### 🛫 DEFERRED until post-travel work resumes — recovery propagation + skipped-cell decisions (2026-05-04 morning, user travelling)
+
+**The recovery campaign cleanup phase is COMPLETE.** Cleanup-only spend: **$0.905** (vs $1.84 expected, $10 cap). 17 of 20 cells cleaned, 530 candidates recovered. 3 cells skipped pending decisions. Wall clock for the cleanup phase: ~9 minutes.
+
+**The post-cleanup work is DEFERRED** — user announced 2026-05-04 morning that all of the following should wait until they resume work post-travel:
+
+#### 1. Heavy propagation (per-cell + per-tier post-cleanup work; ~2–3 h sapphire CPU; no API cost)
+
+Per the runbook § 6 + § 7, the driver only handles cleanup. The downstream work is:
+
+1. **Re-evaluate affected cells** (per-tier batched) using `scripts/evaluate_detections.py` etc. — point estimates change deterministically given the new candidate sets; CIs need a re-run.
+2. **Rebuild leaderboard / matrix / paired-permutation outputs**:
+   - `results/leaderboard/per-architecture/`
+   - `results/leaderboard/combined/`
+   - `results/verifier-calibration-matrix/`
+   - Cross-track paired-permutation v2 grid (if any cleaned cells affect those pairs).
+3. **Refresh paper-citation Markdown** if any cell shows F1 movement > 0.001:
+   - `results/leaderboard/per-architecture/*/summary.md`
+   - `results/leaderboard/combined/summary.md`
+   - `results/cross-track-comparison/report.md` (image cost row already known stale per Session-84 backlog item)
+   - Any other doc that quotes a numerical F1 / MCC for the affected cells (grep `grep -rn "F1=0\." results/ docs/` style).
+4. **Append closure Obs to `docs/notes/reflections/working-notes.md`** — "Obs 323: Phase3a recovery campaign closure" or similar. Should record: total cells cleaned (17), total candidates recovered (530), cost ($0.905), AUC deltas (initial 6 cells: 0.0001–0.001 with 3 going down — see commit `b3ed509e6` message), the gap=460 cell outcome, and any post-propagation F1 movement.
+5. **Update this continuity doc** with a "Session 86 closure (post-travel)" section.
+6. **Annotate `reports/phase3a-verifier-completeness-audit-2026-05-03.md`** with a closing note: "post-recovery state at <commit>; 17 of 20 cells cleaned; 3 deferred (see launch-summary.md)".
+
+Trigger via the runbook's per-tier checklists; can be batched + scripted. Suggested order of execution: per-tier re-evaluation → per-tier leaderboard refresh → cross-track propagation → docs refresh → closure Obs → continuity update → audit annotation. One commit per logical group, push at tier boundaries.
+
+#### 2. Three skipped cells — decisions then re-cleanup
+
+Logged with `reason: missing_crops_gitignored` in `logs/phase3a-recovery-20260503T151930Z/cost-ledger.csv`.
+
+**(a) `55maps-gen-verified-v2`** (Tier 2, gap=3) — clean-cut. Regenerate crops via `scripts/extract_candidates.py` (or `run_pv.py extract` — verify which is the canonical entry-point on this run) for the 3 missing candidates only. CPU-only, no API. Then re-run `bash planning/run-phase3a-recovery.sh tier2` and let it pick up the cell now that crops exist (the SKIP_CELLS array can be edited to remove this cell from the skip list before relaunch). Total addtl wall-clock: ~30 min crops + ~1 min cleanup (3 cands).
+
+**(b) `proposer-verifier-384-adversarial-text-v1-prompt`** (Tier 3, gap=1) — clean-cut, same pattern. Single candidate; trivial. ~30 min crops + ~10 s cleanup.
+
+**(c) `e47-flash-high-text-1of5`** (Tier 1, gap=57) — **DATA-INTEGRITY QUESTION FIRST**. The first failed cleanup *transformed the file's schema* from derived (`source/derived_from/vote_threshold`) to canonical (`version/mode/...`) with `cleanup_history` showing 0/57 recovered. The HEAD version was already in derived schema with a self-reference, suggesting the canonical source was overwritten earlier (possibly during Session-83/84 work). The follow-up agent restored sapphire's working tree from `.pre-cleanup-20260503T145925.backup` and `git checkout`-ed the run.meta.json. **Read `logs/phase3a-recovery-overnight-resume/launch-summary.md` § "Surprise" for the full diagnostic before deciding what to do.** Possible paths:
+
+- **(c.i)** Verify e47's history is consistent across all 3 machines + git. If yes, regenerate crops and re-run cleanup as in (a) and (b).
+- **(c.ii)** If history is inconsistent, decide whether to restore from the canonical source elsewhere, recompute from scratch, or document e47 as a known-incomplete cell and exclude from the leaderboard claims.
+
+#### 3. post_run_report convention — needs discussion before action
+
+🗣️ **Three reports affected**: `outputs/55maps-text-min-generalisation/post_run_report.md`, `outputs/55maps-image-generalisation/post_run_report.md`, `outputs/h11/gold-standard-v2/...` post-run analogue (verify path on next session). Each contains pre-recovery values from the original 2026-04-18 / earlier launches. Three options:
+
+1. **Refresh in place** — replace pre-recovery numbers with current canonical values from `results/55maps-*-generalisation/corrected-f1-multi-buffer/summary.json` etc. Risks erasing historical context that may matter for the paper's narrative.
+2. **Add a forward-pointer banner** at the top of each report — "**Note:** This report captures pre-recovery state at <date>; post-recovery canonical values live at <path>." Preserves history; one banner per report.
+3. **Leave as historical snapshots** — make no change; treat the post-run reports as a frozen artefact of the original launch. Future paper-citation queries route to the canonical post-recovery `results/` outputs directly.
+
+**Talk to me about this when you resume — do not auto-pick.**
+
+#### 4. GS 6-crop manual review — user task
+
+🔔 Staged at `results/gs-125m-fp-side-6-crop-review/index.md` on **zbook**. ~20 min wall-time. Outcome strengthens or softens B7 limitations narrative.
+
+#### 5. A2 image re-evaluation (post-cand-2397 GT addition) — may already be partially handled
+
+The recovery campaign's propagation (deferred above, item 1) likely picks up image-track cells and re-evaluates them. Verify by checking image-track post-recovery files for cand-2397 inclusion before running A2 separately. If propagation didn't catch it, run separately as previously specced (~30 min sapphire CPU + ~15 min docs).
+
+#### 6. Step 6 paper outline — the actual deliverable
+
+UNBLOCKED post-recovery and post-propagation. Resume the user's original priority once items 1–5 above are addressed (or explicitly deferred further).
+
+---
+
+### 🌙 Overnight recovery campaign — completed cleanup phase (2026-05-03 night → 2026-05-04 morning)
 
 The Phase3a verifier-completeness recovery campaign was launched and **halted on cell 7** of 20 (`e47-flash-high-text-1of5`) due to a discoverable structural gap: **3 cells have missing crop PNGs** (gitignored bulk intermediates that were never committed). 6 of 8 Tier-1 cells succeeded before the halt. The campaign was then resumed on sapphire with the 3 problem cells skipped, processing the remaining 10 cells through Tiers 1–3.
 
