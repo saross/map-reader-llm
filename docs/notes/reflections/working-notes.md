@@ -16087,3 +16087,102 @@ Search terms: T=0.7 recovery cost 57 dollars, T=0.3 vs T=0.7 per-tile recovery c
 - **Obs 297** (HIGH thinking earns its tokens at 55-map scope): needs cost-context update — HIGH is efficient, but T=0.3 is substantially more cost-efficient than T=0.7 for HIGH-thinking runs.
 - **Follow-up Obs (likely Obs 320 or later)**: will document the full propagation cost and headline-metric outcome (Δ F1@50m, Δ MCC@50m, paired-test sign retention) once propagation completes.
 - **Artefacts**: `outputs/55maps-text-high-generalisation/cost_manifest.json` (original run costs and tile counts); `outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_{1..5}/detections-detect_brief-text-3-flash-2026-04-18.meta.json` (merged original + recovery stats); `outputs/55maps-text-high-generalisation/recovery-logs/stage2-20260502T154407.log` (per-pass recovery counts and estimated costs); recovery commit `731466d84`; T=0.3 recovery commit `548604d9`.
+
+## Observation 320: T=0.7 55-map recovery + propagation closure — 160/160 tiles recovered, +21 net verified detections, all paper-load-bearing claims preserved; four bugs surfaced and fixed during propagation (2026-05-03)
+
+### The finding
+
+**Recovery succeeded; all paper-load-bearing claims preserved.** The 160 failed tiles from `outputs/55maps-text-high-generalisation/` were fully recovered (2026-05-02 to 2026-05-03), the detection set was rebuilt from scratch, and the downstream pipeline (D-S, corrected F1, pairwise permutation v2, FP classification, attractor-pull) was re-propagated against an updated ground-truth set (4,745 features, +1 mound vs pre-recovery). The result is a clean, fully analysed T=0.7 run.
+
+**Verified headline metrics at R = 50 m, post-recovery (source files read 2026-05-03):**
+
+| Metric | Pre-recovery | Post-recovery | Source |
+|:-------|:---:|:---:|:-------|
+| Raw F1 (evaluation.json) | 0.7883 | **0.792** | `outputs/…/evaluation/evaluation.json` |
+| Corrected F1 (Approach B) | 0.8260 | **0.8273** | `results/…/corrected-f1-multi-buffer/summary.json` |
+| Corrected F1 @ R = 125 m | 0.8322 | **0.8338** | same |
+| MCC (BCa 95 % CI) | — | **0.6476 [0.6331, 0.6620]** | `outputs/…/evaluation/evaluation.json` |
+| D-S corrected F1 | 0.8129 | **0.8142** | `results/…/dawid-skene/dawid-skene-results.json` |
+| Verified detections | 4,143 | **4,164** (+21) | `outputs/…/evaluation/evaluation.json` |
+| Curator GT (post mound-add) | 4,744 | **4,745** (+1) | `corrected-f1-multi-buffer/summary.json` |
+
+**Pairwise permutation v2 — three pairs touching T=0.7 (R = 50 m, 10,000 permutations, seed 42):**
+
+| Pair | Pre-recovery ΔF1 | Post-recovery ΔF1 [95 % CI] | p | Sig? |
+|:-----|:---:|:---:|:---:|:---:|
+| T=0.3 vs T=0.7 | +0.0177 | **+0.0162 [+0.0089, +0.0238]** | < 0.001 | **yes** |
+| T=0.7 vs image | −0.0057 | **−0.0043 [−0.0139, +0.0052]** | 0.373 | ns |
+| T=0.7 vs T=MIN | +0.0296 | **+0.0308 [+0.0214, +0.0403]** | < 0.001 | **yes** |
+
+The sign and significance of all three pairs are preserved. Obs 297's headline claim — HIGH thinking earns its tokens; T=0.7 vs T=MIN Δ +0.0296, BH p < 0.001 — **strengthens slightly to +0.0308** post-recovery.
+
+**Total cost of the T=0.7 55-map run (all stages, verified from `cost_manifest.json`):**
+
+| Stage | Cost |
+|:------|-----:|
+| Original run: proposer ($56.86) + verifier ($12.74) | $69.60 |
+| Recovery proposer (160 tiles × 5 passes, HIGH thinking) | $57.10 |
+| Recovery verifier cleanup | $0.10 |
+| **Run total (`cost_manifest.json::totals.cost_usd`)** | **$126.81** |
+| FP-classification re-run (4 corpora, separate) | $0.58 |
+| **Grand total (run + FP-classification)** | **$127.39** |
+
+Note: the spec provided in the session summary listed a total of $126.81 for a table that included the $0.58 FP-classification line; those four figures sum to $127.38. The $126.81 figure is the cost_manifest total (run costs only); the grand total including FP-classification is $127.39. Figures above are verified from `cost_manifest.json` (run) and `results/55maps-fp-classification/cost_summary.json` (FP-classification).
+
+### The test
+
+The 160 failed tiles were recovered in a 5-pass retry campaign (commit `731466d84`, 2026-05-02). After recovery:
+
+1. Consensus was rebuilt from the merged proposer outputs.
+2. Verifier cleanup re-ran on the new candidates (commit `d7f85978`).
+3. GT was updated: one new curator mound added at K-35-064-3\_Dimitrovgrad\_4326 (commit `baf1497a`), second of two touching mounds the student curator had missed; surfaced when the recovery's consensus re-merge brought in candidate 9159 (24.3 m from candidate 4264).
+4. Six new human FP-reviews were conducted: candidates 9142, 9155, 9161, 9184, 9202, 9203. Three phantom-FPs rescued (real mounds students missed); three genuine FPs confirmed (off-cartography artefacts).
+5. Corrected-F1 multi-buffer, D-S, pairwise permutation v2, FP-classification, and attractor-pull were all re-run (commits `f6eaeca9` through `aeb9fb7f`, `33435aab`, `e07dae37`).
+6. Downstream documentation propagated across results/, docs/, and planning/ (commits `ae50d94d` through `11a6ac34`).
+
+### Why this matters
+
+1. **T=0.7 paper claims are now clean.** The run is fully recovered, the GT is updated, and all downstream analyses have been propagated. The metric shifts are small (≤ 0.002 F1 at R = 50 m), so no hypothesis conclusions change.
+
+2. **T=0.3 dominates T=0.7 on both axes.** T=0.3 corrected F1 = 0.8436 (Obs 291) vs T=0.7 corrected F1 = 0.8273. T=0.7 is now also demonstrated to be ~9× less reliable (Obs 318) and ~189× more expensive per failed-tile to recover (Obs 319). The operational-default case for T=0.3 is unambiguous and multidimensional.
+
+3. **Four bugs surfaced and fixed during propagation** (see Caveats for details). The parser fix (commit `e3aef6fa`) recovers 92 % of historical parse failures at zero future API cost. The D-S row-position bug (commit `a9e280a3`) was silent before partial recovery; it will recur on any future partial-recovery run without the fix. Both are paper-Methods-adjacent.
+
+4. **"Try very hard to recover failed tiles" policy is now satisfied for the T=0.7 55-map run.** Three other runs still have unrecovered failures (see Caveats).
+
+### Caveats / methodological notes
+
+**Pre-recovery vs post-recovery F1 table note.** The "pre-recovery" column in the headline table above uses the original evaluation (4,143 detections, 4,744 GT). The DS backup from before the rerun shows measured.f1 = 0.7883 at these settings; the session spec cited 0.7896 as the pre-recovery figure, which is actually the post-recovery/pre-GT-update intermediate (4,164 detections, 4,744 GT). The largest single shift (+0.0013 raw F1) comes from the GT update (4,744 → 4,745), not the recovery itself. Both shifts are negligible relative to CI widths.
+
+**Four bugs fixed during propagation:**
+
+1. **Obs 318 magnitude correction** (commit `f5df7a09`): Obs 281's T=0.7 row cited 25/42,545 = 0.059 % failure rate; verified figure is 160/42,705 = 0.375 %. Two compounding errors: pass-1-only numerator, successful-tiles-only denominator. Documented in Obs 318 before recovery commenced.
+2. **Realtime parser missing 3-tier repair** (commit `e3aef6fa`): `scripts/4_detect_mounds_batch.py` had only Tier-1 trailing-comma repair while `scripts/lib_batch_api.py` had the full 3-tier pipeline (regex / json5 / longest-valid-prefix). Patched. 92 % of the 163 historical parse failures (150 tiles) recoverable on future runs at zero API cost. Tests added.
+3. **D-S row-position bug** (commit `a9e280a3`): `scripts/analyse_dawid_skene.py` derived candidate IDs from row position in `consensus-4of5.geojson`. Under partial recovery, row order shifts when re-clustering adds new tiles. Fixed to use stable `candidate_id` from `candidate_manifest.json`. Tests added (including reversed-order regression). The v2 D-S script was unaffected (imports v1's `load_detections`).
+4. **Cost-manifest aggregator under-count** (commit `7f05f529`): the `aggregate-cost` subcommand read only the post-cleanup `verified/run.meta.json`, missing the original verifier cost (~$12.74 for T=0.7). Patched to merge pre-recovery/pre-cleanup backups. Tests added. Caveat: backup files are gitignored under `outputs/`, so cross-machine reproduction requires the backup to be locally restored from git history; logged as a backlog item.
+
+**Outstanding unrecovered failures in other runs:**
+
+| Run | Unrecovered failures |
+|:----|:---:|
+| `55maps-text-min-generalisation` | 124 tiles |
+| `55maps-image-generalisation` | 26 tiles |
+| `outputs/h11/gold-standard-v2/` | 13 tiles |
+
+Estimated recovery cost is low (~$5–10 total) given that T=MIN and image runs use standard (non-HIGH) thinking. These are queued but not yet scheduled.
+
+**Attractor-pull qualitative cap.** The attractor-pull v2 re-run post-recovery confirms the qualitative cap is stable; no structural change to the FP-anchoring mechanism framing.
+
+### Findable later
+
+Search terms: T=0.7 recovery closure 160 tiles, 55maps-text-high-generalisation recovery outcome, post-recovery F1 0.792 MCC 0.6476, corrected F1 0.8273 post-recovery R=50m, D-S corrected F1 0.8142, pairwise permutation v2 post-recovery three pairs, T=0.3 vs T=0.7 0.0162 BH p<0.001 post-recovery, T=0.7 vs T=MIN 0.0308 strengthens Obs 297, four bugs surfaced propagation, parser 3-tier repair e3aef6fa, dawid-skene row-position bug a9e280a3, cost-manifest aggregator under-count 7f05f529, K-35-064-3 two-touching-mounds curator GT baf1497a, phantom-FP rescued 9142 9155 9161, corrected F1 4745 GT, total cost 126.81 run 127.39 grand total, recovery closure narrative propagation arc Obs 318 Obs 319, outstanding failures T=MIN 124 image 26 h11 gold-standard-v2 13.
+
+### Related observations and artefacts
+
+- **Obs 281** (temperature failure-rate hypothesis test; T=0.3 < T=0.7 unrecovered failures): qualitative finding preserved; magnitude corrected by Obs 318; recovery outcome documented here. Obs 281's T=0.7 row is now fully resolved.
+- **Obs 291** (T=0.3 operationally optimal at R=50m, paired Δ +0.018, BH p < 0.001): bolstered by both the cost-asymmetry framing (Obs 319) and the confirmed post-recovery quality gap (corrected F1 0.8436 vs 0.8273).
+- **Obs 297** (HIGH thinking earns its tokens; T=0.7 vs T=MIN paired Δ +0.0296): headline strengthens to +0.0308 [+0.0214, +0.0403] post-recovery. The pre-recovery figure in Obs 297's table should be understood as pre-recovery-propagation; the post-recovery figure is now the canonical one.
+- **Obs 318** (Obs 281 magnitude correction — 0.059 % was wrong; 0.375 % verified): closed by this Obs; recovery proves the corrected magnitude was the right anchor.
+- **Obs 319** (T=0.7 vs T=0.3 recovery-cost asymmetry — ~189×): closed in narrative; this Obs adds the full propagation outcome and the cost reconciliation note.
+- **Commit chain (recovery + propagation)**: `731466d84` (recovery), `baf1497a` (GT mound add), `d7f85978` (consensus + verifier rebuild), `e3aef6fa` (parser fix), `a9e280a3` (D-S fix), `7f05f529` (cost-manifest fix), `f6eaeca9` + `f533fda5` (corrected-F1 + evaluation re-run), `aeb9fb7f` (pairwise-permutation v2), `33435aab` (attractor-pull v2 + FP-classify), `11a6ac34` (documentation propagation).
+- **Artefacts**: `outputs/55maps-text-high-generalisation/evaluation/evaluation.json` (post-recovery baseline metrics + MCC); `results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json` (Approach B corrected F1 at R = 50 m and R = 125 m); `results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json` (D-S corrected F1); `results/55maps-pairwise-permutation-v2/` (three T=0.7-touching permutation results); `outputs/55maps-text-high-generalisation/cost_manifest.json` (run total $126.81); `results/55maps-fp-classification/cost_summary.json` (FP-classification $0.58).
