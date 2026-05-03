@@ -210,9 +210,9 @@ These are preregistered-vs-executed deviations documented as errata. Each is a s
 
 **Resolution (2026-04-24, Session 78; refreshed 2026-05-03, Session 82)**: text-HIGH human review completed; corrected F1 at 50 m = **0.8273 [0.8173, 0.8370]** post-recovery (pre-recovery 0.8260 [0.8159, 0.8357]; updated 2026-05-03 with 6 additional review entries + 1 new GT mound from the T=0.7 recovery propagation, commit `f6eaeca9`; `results/55maps-text-high-generalisation/corrected-f1-multi-buffer/`). This limitation is **partially resolved** — only text-MIN remains uncorrected.
 
-**Finding (residual)**: per-candidate human review is now available for two of the three tracks (image: 1,028 candidates; text-HIGH: 630 candidates). text-MIN has no corrected F1 — its raw F1 (0.759 at 50 m) is the paper-citable figure.
+**Finding (residual)**: per-candidate human review is now available for two of the three tracks (image: 1,028 candidates; text-HIGH: 630 candidates + 7 added 2026-05-03). text-MIN has no corrected F1 — its raw F1 (**0.7619 at 50 m vs reviewed GT 4,746**, post-recovery 2026-05-03; was 0.759 pre-recovery vs un-reviewed GT) is the paper-citable figure.
 
-**Paper implication**: cross-track claims involving image vs text-HIGH can now cite **convergent corrected F1** at 50 m (image 0.832, text-HIGH 0.8273 post-recovery; ΔF1 ≈ +0.005 with overlapping CIs) — a cross-modality consistency finding. Any comparison involving text-MIN must still use uncorrected F1 to be apples-to-apples; do not cite image or text-HIGH corrected F1 against text-MIN uncorrected 0.759 as a "cross-track leader" claim.
+**Paper implication**: cross-track claims involving image vs text-HIGH can now cite **convergent corrected F1** at 50 m (image **0.8333**, text-HIGH 0.8273 post-recovery; ΔF1 ≈ −0.006 with overlapping CIs — paired permutation v2 ns) — a cross-modality consistency finding. Any comparison involving text-MIN must still use uncorrected F1 to be apples-to-apples; do not cite image or text-HIGH corrected F1 against text-MIN uncorrected 0.7619 as a "cross-track leader" claim.
 
 ### 5.3 Phase 3a matrix coverage gaps
 
