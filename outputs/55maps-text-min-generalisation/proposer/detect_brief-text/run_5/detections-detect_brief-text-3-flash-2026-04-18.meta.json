@@ -126,7 +126,7 @@
   },
   "execution_stats": {
     "items_processed": 8541,
-    "items_failed": 19,
+    "items_failed": 0,
     "items_skipped": 0,
     "retries_total": 26,
     "retries_rate_limit": 0,
@@ -8682,103 +8682,7 @@
       "K-35-077-4_x3696_y336.png",
       "K-35-077-4_x3024_y3024.png"
     ],
-    "failed_items": [
-      {
-        "item_id": "K-35-050-4_x2352_y672.png",
-        "reason": "JSON Parse Error: Extra data: line 21 column 1 (char 379)",
-        "timestamp": "2026-04-18T11:28:18.932916+00:00"
-      },
-      {
-        "item_id": "K-35-050-4_x2016_y2688.png",
-        "reason": "JSON Parse Error: Illegal trailing comma before end of array: line 8 column 12 (char 94)",
-        "timestamp": "2026-04-18T11:28:22.150293+00:00"
-      },
-      {
-        "item_id": "K-35-051-3_x2352_y2688.png",
-        "reason": "JSON Parse Error: Extra data: line 25 column 1 (char 380)",
-        "timestamp": "2026-04-18T11:28:25.113862+00:00"
-      },
-      {
-        "item_id": "K-35-053-2_x336_y336.png",
-        "reason": "JSON Parse Error: Illegal trailing comma before end of array: line 8 column 12 (char 94)",
-        "timestamp": "2026-04-18T11:28:51.984910+00:00"
-      },
-      {
-        "item_id": "K-35-053-4_Boyadzhik_x1344_y2352.png",
-        "reason": "JSON Parse Error: Extra data: line 16 column 1 (char 180)",
-        "timestamp": "2026-04-18T11:28:54.293602+00:00"
-      },
-      {
-        "item_id": "K-35-053-4_Boyadzhik_x2688_y1344.png",
-        "reason": "JSON Parse Error: Illegal trailing comma before end of array: line 8 column 12 (char 94)",
-        "timestamp": "2026-04-18T11:28:56.343941+00:00"
-      },
-      {
-        "item_id": "K-35-054-4_Voynika_x2016_y672.png",
-        "reason": "JSON Parse Error: Expecting ',' delimiter: line 9 column 16 (char 111)",
-        "timestamp": "2026-04-18T11:29:18.943071+00:00"
-      },
-      {
-        "item_id": "K-35-063-2_Chirpan_4326_x2016_y3360.png",
-        "reason": "JSON Parse Error: Illegal trailing comma before end of array: line 8 column 12 (char 94)",
-        "timestamp": "2026-04-18T11:30:01.111032+00:00"
-      },
-      {
-        "item_id": "K-35-063-2_Chirpan_4326_x2688_y672.png",
-        "reason": "JSON Parse Error: Illegal trailing comma before end of array: line 8 column 12 (char 94)",
-        "timestamp": "2026-04-18T11:30:04.348711+00:00"
-      },
-      {
-        "item_id": "K-35-064-2_Radnevo_4326_x3024_y3024.png",
-        "reason": "JSON Parse Error: Extra data: line 16 column 1 (char 176)",
-        "timestamp": "2026-04-18T11:30:21.960223+00:00"
-      },
-      {
-        "item_id": "K-35-064-3_Dimitrovgrad_4326_x2016_y2352.png",
-        "reason": "JSON Parse Error: Illegal trailing comma before end of array: line 8 column 12 (char 94)",
-        "timestamp": "2026-04-18T11:30:26.023814+00:00"
-      },
-      {
-        "item_id": "K-35-066-3_x1344_y336.png",
-        "reason": "JSON Parse Error: Illegal trailing comma before end of array: line 8 column 12 (char 94)",
-        "timestamp": "2026-04-18T11:31:12.436401+00:00"
-      },
-      {
-        "item_id": "K-35-067-2_x3360_y1344.png",
-        "reason": "JSON Parse Error: Extra data: line 13 column 1 (char 154)",
-        "timestamp": "2026-04-18T11:31:25.384246+00:00"
-      },
-      {
-        "item_id": "K-35-067-3_x1680_y2688.png",
-        "reason": "JSON Parse Error: Illegal trailing comma before end of array: line 8 column 12 (char 93)",
-        "timestamp": "2026-04-18T11:31:28.599360+00:00"
-      },
-      {
-        "item_id": "K-35-067-4_x672_y3024.png",
-        "reason": "JSON Parse Error: Illegal trailing comma before end of array: line 8 column 12 (char 94)",
-        "timestamp": "2026-04-18T11:31:39.279182+00:00"
-      },
-      {
-        "item_id": "K-35-074-2_x2352_y672.png",
-        "reason": "JSON Parse Error: Extra data: line 48 column 1 (char 837)",
-        "timestamp": "2026-04-18T11:31:46.767975+00:00"
-      },
-      {
-        "item_id": "K-35-075-4_x0_y2016.png",
-        "reason": "JSON Parse Error: Extra data: line 12 column 1 (char 148)",
-        "timestamp": "2026-04-18T11:32:15.331882+00:00"
-      },
-      {
-        "item_id": "K-35-077-4_x2688_y336.png",
-        "reason": "JSON Parse Error: Illegal trailing comma before end of array: line 8 column 12 (char 94)",
-        "timestamp": "2026-04-18T11:32:59.501185+00:00"
-      },
-      {
-        "item_id": "K-35-077-4_x336_y3360.png",
-        "reason": "JSON Parse Error: Illegal trailing comma before end of array: line 8 column 12 (char 94)",
-        "timestamp": "2026-04-18T11:33:01.798686+00:00"
-      }
-    ],
+    "failed_items": [],
     "retry_details": [
       {
         "item_id": "K-35-054-4_Voynika_x2352_y3024.png",
@@ -478776,5 +478680,37 @@
     "avg_latency_seconds": 8.32,
     "peak_wait_seconds": 0.02,
     "elapsed_seconds": 949.8
-  }
+  },
+  "recovery_history": [
+    {
+      "timestamp": "2026-05-03T05:45:27.604599+00:00",
+      "source": "retrospective_cleanup",
+      "initial_failed": 19,
+      "recovered": 19,
+      "still_failing": 0,
+      "recovered_ids": [
+        "K-35-050-4_x2016_y2688.png",
+        "K-35-050-4_x2352_y672.png",
+        "K-35-051-3_x2352_y2688.png",
+        "K-35-053-2_x336_y336.png",
+        "K-35-053-4_Boyadzhik_x1344_y2352.png",
+        "K-35-053-4_Boyadzhik_x2688_y1344.png",
+        "K-35-054-4_Voynika_x2016_y672.png",
+        "K-35-063-2_Chirpan_4326_x2016_y3360.png",
+        "K-35-063-2_Chirpan_4326_x2688_y672.png",
+        "K-35-064-2_Radnevo_4326_x3024_y3024.png",
+        "K-35-064-3_Dimitrovgrad_4326_x2016_y2352.png",
+        "K-35-066-3_x1344_y336.png",
+        "K-35-067-2_x3360_y1344.png",
+        "K-35-067-3_x1680_y2688.png",
+        "K-35-067-4_x672_y3024.png",
+        "K-35-074-2_x2352_y672.png",
+        "K-35-075-4_x0_y2016.png",
+        "K-35-077-4_x2688_y336.png",
+        "K-35-077-4_x336_y3360.png"
+      ],
+      "still_failing_ids": [],
+      "note": "Cleaned by scripts/clean_meta_failed_items.py \u2014 historical drift between failed_items[] and completed_items[]; no new API calls were made. Cumulative-historical counters (parse_failures, empty_responses, finish_reason_counts, safety_blocks, retries_*) intentionally unchanged."
+    }
+  ]
 }
