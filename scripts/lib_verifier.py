@@ -62,6 +62,7 @@ logger = logging.getLogger(__name__)
 from scripts.lib_batch_api import (
     _encode_image_base64,
     _mime_type_for,
+    parse_response_with_repair,
 )
 
 # Project paths
@@ -894,14 +895,19 @@ def _call_verifier_api(
                 )
                 return None
 
-            # Parse JSON response. ``_unwrap_verdict_payload`` tolerates
-            # the rare list-shaped response that triggered the
-            # ``cand_01563`` parser bug (planning backlog item #10) by
-            # unwrapping a single-element list; non-conformant shapes
-            # raise ``ValueError`` and are handled like a JSON parse
-            # failure below.
+            # Parse JSON response. ``parse_response_with_repair``
+            # applies the same three-tier malformed-JSON pipeline as
+            # the proposer (lib_batch_api.py:884) — trailing-comma
+            # repair, json5 fallback, then longest-valid-prefix scan
+            # — recovering ~92% of historical malformed responses
+            # before retry exhaustion. ``_unwrap_verdict_payload``
+            # then tolerates the rare list-shaped response that
+            # triggered the ``cand_01563`` parser bug (planning
+            # backlog item #10) by unwrapping a single-element list;
+            # non-conformant shapes raise ``ValueError`` and are
+            # handled like a JSON parse failure below.
             txt = txt.replace("```json", "").replace("```", "").strip()
-            data = json.loads(txt)
+            data = parse_response_with_repair(txt)
             verdict = _unwrap_verdict_payload(data)
 
             return {
