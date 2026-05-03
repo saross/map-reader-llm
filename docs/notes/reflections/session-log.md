@@ -5813,3 +5813,72 @@ Phases (numbered for cross-reference; each landed before the next started):
 - The bet-test inspection's 0/177 result validates the user's review-pass labels as a clean ground truth; the FN-rate analysis (Obs 305) is therefore unbiased by review-pass mislabelling.
 - Step 6 paper outline still pending — but the failure-mode catalogue is mechanism-level paper-Discussion-ready, and the FN-rate framing is paper-Methods-ready (4-map / 55-map convergence at 9-11 %; Sobotkova correction note).
 - Session 82 has a focused 1-2 hour pickup before returning to Step 6: non-Hairy provenance (~30 min), K-35-062-2 outlier investigation (~20 min), Obs 305 amendment with cross-validation finding (~15 min).
+
+## Sessions 82–84 — 2026-04-30 / 2026-05-02 / 2026-05-03 (map-reader-llm): the FN/FP-correction + recovery arc
+
+**Note on scope**: Sessions 82 and 83 didn't get standalone session-log entries written. This entry covers the three-session arc together. Session 82 = trapezoidal-bounds correction + Sobotkova vindication (Obs 316/317). Session 83 = T=0.7 recovery + parser fix (Obs 318/319/320). Session 84 = three follow-up recoveries + verifier-completeness discovery + metadata cleanup (Obs 321).
+
+### Headline outcomes
+
+- **3 follow-up recoveries (image, text-MIN, GS-v2)** completed Session 84 for $0.29 total (vs T=0.7's $57.10 in Session 83) — parser fix paid off ~100-300× per tile
+- **28 silently-dropped verifier candidates discovered + recovered** across image (18) and GS-v2 (10); GS-v2 published F1 understated by 0.0126 absolute
+- **All paper-load-bearing claims preserved**: 6/6 pairwise pairs preserve sign + significance; attractor cap consensus 100m/125m holds; T=0.3 remains operationally optimal at R=50m
+- **Sobotkova 2023 vindicated** (Session 82): 4-GS FN/FP under proper trapezoidal bounds = 5.27 % FN / 0.00 % FP, matching Sobotkova's 5.0 % / 0.1 % within sampling error
+- **Metadata cleanup workflow** added (retrospective + prospective): `failed_items[]` no longer drifts as a historical-frozen log; future audits surface real outstanding failures
+
+### Decisions made
+
+- **Cost cap renegotiation**: T=0.7 recovery overran the $0.50 stage cap to $57.10. User approved continuing at a $65 total cap rather than reverting; sunk cost was sunk and downstream value > $0.60 of remaining work.
+- **Cand 4264 GT addition (commit `baf1497a`)**: K-35-064-3 two-touching-mounds case rescued via human review; added to curator GT for paper-Methods completeness.
+- **Cand 2397 GT addition (commit `2e075eb9`)**: K-35-062-4 isolated-region-missed case; same precedent as cand 4264. GT now at 4,746 features.
+- **Image re-evaluation deferred** (post-cand-2397 GT addition): expected raw F1@50m shift ~0.0002 — below 0.005 paper-claim sensitivity threshold; opportunistic refresh next session.
+- **Phase3a verifier-completeness audit deferred**: critical paper-Methods follow-up; could affect leaderboard tier rankings if phase3a cells have the same verifier-completeness gap as image + GS-v2.
+- **Worktree isolation lesson**: applied to the metadata-cleanup agent after Shawn's mid-session reminder; the 4-agent doc-update wave that ran without isolation experienced parallel-write contention and one silent overwrite (audit-caught + fixed).
+
+### Code changes
+
+- `e3aef6fa` — `scripts/lib_batch_api.py` + `scripts/4_detect_mounds_batch.py`: added 3-tier JSON repair pipeline (regex / json5 / longest-valid-prefix) to realtime proposer, ported from existing batch API Tier-1 trailing-comma repair. 15 new tier-1 tests; recovers ~92 % of historical parse failures at zero API cost.
+- `a9e280a3` — `scripts/analyse_dawid_skene.py`: refactored to use stable `candidate_id` from manifest instead of row-position-derived synthetic IDs; safe under partial recovery / re-clustering. 5 new tier-1 regression tests.
+- `7f05f529` — `scripts/run_generalisation.py::aggregate_cost_manifest`: defensive merge of pre-recovery / pre-cleanup verifier-meta backups; recovers ~$12.74 of T=0.7 verifier cost previously lost to cleanup-overwrites-meta. 4 new tier-1 tests.
+- `7f328c62` — `scripts/lib_llm_metadata.py::merge_meta`: defensive filter for `failed_items[]` ensures future merges cannot leave stale entries even if upstream code regresses.
+- `368f652d` — `scripts/clean_meta_failed_items.py`: retrospective cleanup tool for `failed_items[]`; cleaned 124 stale entries across 5 text-MIN per-pass metas. 14 new tier-1 tests.
+
+### New artefacts
+
+- `inputs/vectors/bounds/gs-4maps-active-area-bounds.geojson` (Session 82) — Pulkovo-1942 trapezoidal active-area bounds for the 4 GS maps
+- `inputs/vectors/references/student-mounds-55maps-reviewed.geojson` (extended) — added 2 missing curator GT mounds; now 4,746 features
+- Full propagation chain across `outputs/55maps-text-high-generalisation/`, `outputs/55maps-image-generalisation/`, `outputs/55maps-text-min-generalisation/`, `outputs/h11/gold-standard-v2/`
+- `results/temperature-failure-recovery-analysis/report.md` — major rewrite (~+522 / -138 lines) integrating all 3 follow-up recoveries + 4 bug-discoveries + cost-asymmetry framing
+- 6 new Obs entries (316–321) covering: trapezoidal-bounds correction (316), per-map-variance reframe (317), Obs 281 magnitude correction (318), T=0.3 vs T=0.7 cost asymmetry (319), T=0.7 propagation closure (320), Session 84 closure (321)
+
+### Cost summary
+
+- Session 82: ~$0.50 (4-GS FN/FP analysis API spend; FP-classification re-runs)
+- Session 83: $57.10 (T=0.7 proposer recovery, retry-storm dominated) + $0.10 (verifier cleanup)
+- Session 84: $0.29 (three follow-up recoveries combined) + $0.58 (cross-track FP-classify 4-corpus) + ~$0.10 (verifier cleanups)
+- **Total: ~$58 across the arc**
+
+### What landed where
+
+- ~140 commits on `main` across the arc (range from `33bce297` Session 82 start through `971c5cef` Session 84 final close-out)
+- Both reachable machines (amd-tower + sapphire) synced at session end
+- zbook offline (Windows-booted) — ~50 commits behind; will sync on next Linux boot
+- Continuity doc Session 84 closure section (`planning/paper-writeup-continuity.md` line ~1755+) has 5 deferred items + 8 backlog items + Step 6 status
+
+### Pending for next session (priority order)
+
+1. **Phase3a verifier-completeness audit** (READ-ONLY, ~10 min, no API). **CRITICAL paper-Methods follow-up**. Could affect leaderboard tier rankings.
+2. **Image re-evaluation** post-cand-2397 GT addition (~30 min sapphire CPU). Opportunistic.
+3. **Verifier-completeness root-cause fix** (auto-audit at end of every verifier run). Backlog.
+4. **`outputs/<run>/post_run_report.md` historical snapshot decision** (refresh in place / banner / leave). Convention question.
+5. **Item #15 GS 6-crop FP-side manual inspection** (~20 min user-driven, carry-over from Session 83).
+6. **Step 6 paper outline** — UNBLOCKED; the actual goal.
+
+Plus 8 backlog items in the continuity doc (auto-regeneration hardening, cost_manifest 2× double-counting fix, GS-v2 harness quirk, cross-machine backup-files gotcha, Approach B vs corrected-F1 nuance Methods note, curator-GT-incompleteness sample, image+GS-v2 post_run_report.md decisions).
+
+### Contextual assumptions
+
+- Sapphire was the compute target throughout (project policy); local amd-tower was used for code patches + doc updates only.
+- ecryptfs phantom-dirty pattern surfaced multiple times this arc; the `git checkout HEAD -- <files>` stat-cache refresh trick is operational practice.
+- Worktree isolation was applied late in the arc (only the metadata-cleanup agent); next session should default to `isolation: "worktree"` for any agent dispatch touching docs likely to be touched by sibling agents.
+- The 7 anti-confab catches by sub-agents this arc demonstrate the systemic value of sub-agent re-verification for every numerical citation; future paper-drafting should bake this in as a discipline.

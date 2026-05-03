@@ -5719,3 +5719,62 @@ This session was about the ladder from analysis findings to durable artefacts: f
 The compounding effect: errors at lower rungs cascade up if not caught; errors at higher rungs (Methods text) are typically caught by external review (peer review for paper, user review here for Obs entries). Session 81's lesson is that **the discipline at each rung is distinct, and the orchestration value-add is identifying which discipline applies to which rung at the moment the failure mode first surfaces**.
 
 The strongest single observation: **dispatch is not completion — for agents that orchestrate parallel work, the parent must explicitly own the wait-and-commit downstream phase**. This generalises to any system where agents delegate to external processes (sapphire compute, batch APIs, scheduled jobs); the agent's "I'm done" is reliably a "setup is done", not "the work is done".
+
+## Sessions 82–84 Observations (2026-04-30 / 2026-05-02 / 2026-05-03, map-reader-llm) — the recovery-arc
+
+**Note on scope**: Sessions 82 and 83 didn't get standalone llm-observations entries written; this entry covers the three-session arc together (Session 82 = trapezoidal-bounds correction + Sobotkova vindication; Session 83 = T=0.7 recovery + parser fix; Session 84 = three follow-up recoveries + verifier-completeness discovery + metadata cleanup).
+
+### Anti-confab catches by sub-agents kept becoming the most informative artefacts
+
+The pattern from Session 80 onward — sub-agents catching parent-level numerical errors during their verification passes — accelerated across the recovery arc. **Counted across Sessions 82-84**: sub-agents corrected the parent (me) on at least 7 numerical citations:
+
+1. Obs 317 writer corrected my "9.7 % FN headline" → source-verified `8.87 %` (the "9.7" was a loose rounding between the 8.87 % lower-bound and 11.15 % recall-adjusted)
+2. Obs 318 writer flagged that my spec's table-row formatting was off
+3. Obs 319 writer corrected `retries_other = 3,144` → source-verified `3,139` (5-attempt arithmetic error in my spec)
+4. Doc-update agent #4 corrected my "vlm_only=630" → source-verified 637 (post-recovery state)
+5. Obs 320 writer corrected my "F1 raw pre-recovery = 0.7896" → source-verified the true pre-recovery raw F1 is `0.7883` (0.7896 was an intermediate post-recovery / pre-GT-update value)
+6. Obs 320 writer corrected cost total `$126.81` (run-costs only) vs `$127.39` (grand total including FP-classify)
+7. Obs 321 writer corrected my "T=MIN F1 = 0.7969" → source-verified `0.7968`
+
+**The structural mechanism is the same in every case**: the parent (me) holds approximate-correct numbers in working memory across many turns; the sub-agent re-verifies against on-disk source and catches drift. The catches are reliably small (single decimal places, occasional misattribution) but they're systemic — every Obs entry I've prompted has had at least one corrected value. **The implication for future paper-drafting**: every numerical citation in the paper should go through a sub-agent re-verification pass, not be trusted from working memory alone. The cost is small (~5 min per Obs); the bug-prevention is real.
+
+### The "failed_items[]" history-vs-current pattern is a class of bug, not a one-off
+
+Today's text-MIN finding — that `execution_stats.failed_items[]` is a frozen historical record that's never cleared after subsequent recovery — is one instance of a broader pattern: **append-only metadata fields that look like current-state fields**. The metadata cleanup contract from today's worktree-isolated agent (commits `7f328c62` + `368f652d`) handled this distinction explicitly: `failed_items[]` is item-state and gets cleaned; counter fields (`parse_failures`, `finish_reason_counts.error`, `retry_details[]`) are cumulative-historical and are intentionally not mutated. The `recovery_history[]` field is the audit trail and gets appended (not mutated). **This contract is now codified in tests and the prospective fix prevents regression.**
+
+The broader lesson for any system with metadata that records "things that happened" alongside "current state": **the schema should distinguish these explicitly via field naming or a documented convention**. Conflating them creates exactly the audit-misleading drift we saw with the 124-phantom-failure text-MIN audit. Future schema design should follow the contract: names ending in `_history[]` for append-only audit trails, names without that suffix for current-state collections that get cleaned on resolution.
+
+### Worktree isolation is the right answer for parallel doc-update agents — but only when explicitly invoked
+
+The 4-agent doc-update wave today produced collisions across overlapping files (`results/55maps-cross-track-comparison/report.md`, `results/55maps-pairwise-permutation-v2/summary.md` were touched by 3 of the 4 agents). The collisions resolved via stash/pop dances; one agent silently dropped F1 tier rankings prose via auto-regeneration; a sibling agent re-added them with a "preservation note" inline comment. **Net outcome was OK** — but the parallel-write contention slowed every agent and required a post-wave audit to catch one stale-text omission.
+
+**Worktree isolation** (the `isolation: "worktree"` parameter on Agent dispatch) would have prevented every collision: each agent gets a temporary git worktree, works in isolation, and the merge-back surfaces conflicts cleanly. The metadata-cleanup agent later in the session was dispatched with worktree isolation per Shawn's mid-session reminder; that agent ran without any of the parallel-write friction the doc-update agents experienced.
+
+**Operational rule**: **for any agent dispatch that touches docs likely to be touched by sibling agents, default to `isolation: "worktree"`**. The cost is minimal (worktree creation is fast; the merge-back is automatic if no conflict); the benefit is that "silent overwrites" become impossible. The cost calculus is asymmetric — when worktree isolation is unnecessary you lose nothing; when it's necessary and you skip it you risk silent data loss that's expensive to audit later.
+
+### Sub-agents that "complete" prematurely is a real failure mode, distinct from confabulation
+
+Two agents this session returned "completed" status with thin reports that suggested they'd halted mid-execution rather than finishing the work:
+
+1. **Image-recovery continuation agent** returned "Let me wait — my consensus merge should finish" as its terminal message, with `tool_uses: 0`. The work HAD progressed (Phase 2 commit landed at `2992056b`) but Phases 3-9 were unstarted. I had to dispatch a continuation.
+2. **Parser-fix agent** earlier returned "Still 0 lines — pytest hasn't written anything yet" suggesting it timed out waiting for tests. The work had actually completed (`e3aef6fa` landed cleanly with 15 new tests passing) but the agent couldn't surface its own commit hash.
+
+**The pattern**: these are NOT confabulation cases (the agents weren't inventing fake completion); they're **exhaustion or harness-disconnect** cases where the agent's output stream truncates before its self-summary completes. The work itself is reliably present in git; the report is unreliable.
+
+**Detection heuristic for the parent**: if an agent reports completion but its summary is suspiciously thin (no commit hash, no per-stage outcomes, terminal sentence is a wait/loop statement), **don't trust the completion claim** — verify via `git log` and file-state inspection before deciding whether to dispatch a continuation. Both cases this session resolved cleanly with this heuristic; both would have been failure-modes if I'd taken the completion claim at face value.
+
+### The "phase3a-cells-qualify-for-leaderboards" question Shawn asked is the highest-leverage question I missed
+
+Throughout the doc-updates wave, I'd been confident that "the leaderboard is not affected by today's recoveries because it references phase3a cells, not the recovered runs". Shawn's single question — "don't phase3a matrix cells qualify for consideration when calculating leaderboards?" — exposed that this framing was half-right. The leaderboard cells DON'T reference today's recovered runs, but the leaderboard cells THEMSELVES might have the same verifier-completeness issue we just discovered in image + GS-v2. **My confidence had been miscalibrated** — I was confident about the right thing (today's recovered runs aren't in the leaderboard) and missed the wrong thing (the leaderboard cells could have similar gaps).
+
+**The lesson on confidence calibration**: when a finding generalises (here: verifier output incompleteness), the parent should explicitly ask "what other artefacts could have the same root-cause symptom?" before declaring "X is not affected". I'd treated each affected run (image, GS-v2) as a one-off rather than recognising the class. Shawn's question reframed the class correctly; the phase3a verifier-completeness audit is now the deferred most-paper-Methods-load-bearing follow-up.
+
+This pattern compounds with the anti-confab catches above: sub-agents reliably catch numerical drift; the user reliably catches scope-of-implication drift. **Different errors, different catchers, both essential**.
+
+### The orchestration cost-curve has a knee at "5 parallel agents"
+
+Empirically across this arc, **2-3 parallel agents** is the sweet spot for parent-orchestrated work — each agent is independently dispatchable, the per-agent reports are short enough to digest sequentially, and the file-collision risk is low when scopes are disjoint. **4 parallel agents** (today's doc-updates wave) crossed into stash/pop friction territory; the per-agent reports started overlapping in time and required active disambiguation. **5+ parallel agents** would have been unmanageable without worktree isolation.
+
+The cost curve isn't linear — the marginal cognitive load of agent N+1 grows faster than 1/N for the parent because completion-notification interleaving requires re-establishing context for each agent's scope. **Worktree isolation flattens this curve** by eliminating the file-collision dimension; without it, the practical limit is ~3 agents on overlapping scopes.
+
+The recovery-wave today (3 parallel recovery agents on disjoint runs) worked smoothly — no overlap, no friction — because the scopes were genuinely disjoint (each agent owned one `outputs/<run>/` subtree). The doc-updates wave (4 agents on overlapping `results/55maps-*/report.md` files) was the harder case. **Future operational rule**: parallelism is cheap when scopes are disjoint; expensive when they overlap. Match the parallelism strategy to the scope-overlap structure, not just the count.

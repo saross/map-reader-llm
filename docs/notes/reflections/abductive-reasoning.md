@@ -4558,3 +4558,82 @@ The four sequences were resolved by **four different probe-types**, each appropr
 This is a different texture from Session 80, where all three sequences were resolved by agent-level discipline operating below the prompt level. Session 81 shows the converse pattern: **probe diversity matters; different abductive failure-modes need different probe-types, and matching probe to failure-mode is itself a craft skill**. Encoding "always re-read source" into agent definitions (Session 80 lesson) is high-leverage but doesn't resolve probe-type-mismatch — Sequence C in particular required user-as-domain-expert, and no agent-internal rule could substitute.
 
 A meta-pattern across both Session 80 and Session 81: when a probe-type and a failure-mode are matched, belief revision is fast and clean; when they're mismatched, the wrong hypothesis can persist for some time even under repeated agent dispatches (the Cat 2 = Item 472 mistake was repeated by two agents before the user's domain expertise resolved it). **Future-self should remember: probe-type selection is upstream of agent-orchestration quality**.
+
+## 2026-04-30 / 2026-05-02 / 2026-05-03 (Sessions 82–84, map-reader-llm): Six belief-revisions across the recovery arc
+
+The three-session recovery arc surfaced six distinct belief-revision sequences. **Probe diversity** (the Session 81 lesson) is again on display, but the more striking pattern across this arc is **revision cascading** — each belief-revision exposed the next one. The arc is structured as a chain, not as parallel discoveries.
+
+### Sequence A (Session 82): Sobotkova reframe
+
+**Surprising fact**: the Session 81 framing ("Sobotkova's published 5.0 % FN rate was likely a calculation error; we re-derived 9.1 %") was wrong.
+
+**Probe**: trapezoidal-graticule active-area correction (Pulkovo-1942 datum) on the 4-GS student-vs-curator analysis. The probe was triggered by Shawn's observation that "all 17 [putative FPs] appeared on a black background" — visual confirmation that the rectangular raster envelopes I'd used as bounds were not the cartographic active areas.
+
+**Belief revision**: the 4-GS FN/FP under proper trapezoidal bounds is **5.27 % FN / 0.00 % FP** — Sobotkova was right. The 9.1 % figure was an artefact of using rectangular raster bounds (which include the trapezoidal collar where curator GT correctly has no entries). **Obs 316** captures the methodological correction; **Obs 317** captures the per-map-variance reframe.
+
+**Probe-type**: methodological audit driven by visual evidence. The user's observation was the trigger; the trapezoidal-graticule check was the probe; the 17/17 outside-trapezoid result was the confirming evidence.
+
+### Sequence B (Session 83): Cost-aggregator under-count
+
+**Surprising fact**: the cost manifest reported only $0.10 verifier cost for the T=0.7 cleanup, but the actual verifier cost across the original run + cleanup was $12.84.
+
+**Probe**: cost_manifest aggregator audit. When an agent inspected `verified/run.meta.json` it found the cleanup had overwritten the original verifier meta with only its own (small) entry; the aggregator was reading only that.
+
+**Belief revision**: `aggregate-cost` doesn't merge pre-cleanup meta backups. Patched at `7f05f529` to defensively glob `*.pre-recovery-*.backup` and `*.pre-cleanup-*.backup` files and sum costs across them. **The aggregator's silent under-counting had been masking the true verifier costs of every recovered run.**
+
+**Probe-type**: code audit of an aggregator function whose output had been trusted as canonical. The bug was structural (aggregator design assumed no pre-existing meta backup); the probe required reading the aggregator code, not just the output.
+
+### Sequence C (Session 84): The "failed_items[] is historical, not current" pattern
+
+**Surprising fact**: the text-MIN recovery agent reported that re-running the proposer on 124 "failed" tiles produced **bit-identical post-recovery per-pass GeoJSONs**.
+
+**Probe**: md5sum comparison of post-recovery vs committed GeoJSONs by the recovery agent itself. The recovery did the API calls (cost $0.144), wrote the meta files, but produced no actual changes to the detection sets — meaning the "124 failures" had already been recovered in some prior unrecorded round.
+
+**Belief revision**: `execution_stats.failed_items[]` is an **append-only historical log**, not a current-failure signal. The pipeline never clears it after recovery. The 124-tile audit count was a frozen record from the original 2026-04-18 run; current-state was actually 0 outstanding failures. The metadata-cleanup workflow at commits `7f328c62` + `368f652d` operationalises the contract (failed_items[] is now defensively cleaned on every merge, with stale entries moved to `recovery_history[]`).
+
+**Probe-type**: empirical bit-comparison of input vs output. The probe was uniquely well-suited to surfacing the issue — no amount of meta-file reading would have detected the historical-frozen pattern; only running the recovery and observing "no actual changes happened" exposed it.
+
+### Sequence D (Session 84): The image cross-track sign-flip alarm
+
+**Surprising fact**: a cross-track agent re-running pairwise-permutation v2 reported `T=0.7 vs image: ΔF1 = +0.0525 BH p < 0.001` (was -0.0046 ns) — a sign flip + significance change. The agent halted per its STOP-on-sign-flip protocol.
+
+**Probe**: methodology comparison between the pair script and the corrected-F1-multi-buffer pipeline. I compared image's F1 numbers from three sources: pair-script `f1_b = 0.7748`, corrected-f1.csv `F1 = 0.8332`, raw evaluation.json `F1 = 0.7745`. The pair-script number matched RAW F1, not the CORRECTED F1.
+
+**Belief revision**: `paired_permutation_corrected_55maps.py`'s "Approach B — extended-GT-at-R Hungarian matching" is **distinct from** `compute_corrected_f1_multi_buffer.py`'s pipeline. Approach B augments the GT with reviewed-mound detections from the human-review CSVs; un-reviewed candidates default to FP. The 15 new image candidates from recovery weren't in the human-review CSV, so they all defaulted to FP, inflating image's FP count by 15 → F1 dropped by ~0.057 absolute. **The "drop" was a missing-review artefact, not a real F1 shift.** Resolved by Shawn reviewing the 1 FP candidate (cand 2397) and re-running the pair script (post-review: ΔF1 = -0.0060 ns, sign + significance preserved).
+
+**Probe-type**: triangulation across multiple methodology sources for the same underlying pair. The two methodologies' divergence is a real paper-Methods caveat (now in the deferred backlog).
+
+### Sequence E (Session 84): The leaderboard-not-affected claim
+
+**Surprising fact**: in summarising "what's not affected by today's recoveries", I confidently said "the leaderboards are not affected because they reference phase3a cells, not the recovered runs". Shawn's single question — "don't phase3a matrix cells qualify for consideration when calculating leaderboards?" — exposed the framing as half-right.
+
+**Probe**: user-as-domain-expert intervention. No agent-level audit could have surfaced this; the issue was **scope-of-implication**, not numerical or methodological.
+
+**Belief revision**: today's discovery (28 silently-dropped verifier candidates in image + GS-v2) is a **class-level finding**, not a run-specific one. Phase3a cells use the same verifier pipeline; they could have the same gap. **My confidence had been miscalibrated** — confident about the right thing (today's recovered runs aren't in the leaderboard) and missed the wrong thing (the leaderboard cells could have similar gaps). The phase3a verifier-completeness audit is now the deferred most-paper-Methods-load-bearing follow-up.
+
+**Probe-type**: scope-of-implication question. Sequence E is the only one in this arc where the probe was a single short user question rather than an agent dispatch or empirical check. **The user's "what other artefacts could have the same root-cause symptom?" question is upstream of agent-orchestration quality**, mirroring the Session 81 meta-pattern.
+
+### Sequence F (Session 84): GS-v2 published F1 understatement
+
+**Surprising fact**: GS-v2 recovery surfaced 10 silently-dropped verifier candidates; F1 shifted from 0.8734 → 0.8859 (+0.0126) — an unexpectedly large shift for a "small recovery". Image's parallel recovery surfaced 18.
+
+**Probe**: routine post-recovery `run_pv.py cleanup` pass on the GS-v2 verifier output. The probe was applied because the recovery agent's prompt instructed it to run cleanup as a standard step; the dropped-candidate count was an empirical surface from running a cleanup that should have produced near-zero work.
+
+**Belief revision**: **the verifier output was not previously known to be incomplete**. The pipeline reported success; consensus had 380 candidates; probabilities.json had 370. Nothing in the production pipeline checked this. The cleanup script existed but was manual-trigger only. **All paper-Methods claims about GS-v2 accuracy had been quoting an incorrect (understated) number for months**. Obs 321 captures the closure narrative; the root-cause fix (automated audit at end of every verifier run) is deferred.
+
+**Probe-type**: routine post-action sanity check that revealed a previously-undetected systemic issue. The probe wasn't designed to find this — it was a hygiene step bundled into the recovery prompt. The discovery was incidental but consequential. **Future-self lesson**: bundle hygiene-step verifications into every dispatch, even when not specifically expected to surface anything; the cost is small, the discovery odds are non-trivial, and the GS-v2 case shows that systemic issues can persist undetected for months.
+
+### Meta-pattern: revision cascading
+
+Each sequence opened the door for the next:
+
+- **Sequence A** (trapezoidal-bounds correction) created the methodological mood: "our published numbers may be wrong in subtle ways"
+- **Sequence B** (cost-aggregator under-count) confirmed the mood at the cost-manifest layer
+- **Sequence C** (failed_items[] historical) confirmed the mood at the meta-file layer
+- **Sequence D** (cross-track sign-flip alarm) confirmed the mood at the pair-script methodology layer
+- **Sequence E** (leaderboard scope-of-implication) generalised: the mood applies to the LEADERBOARD CELLS, not just the recovered runs
+- **Sequence F** (GS-v2 published F1 understatement) closed the loop: the mood was right, the verifier-completeness gap is real, and the deferred phase3a audit is the next paper-Methods-load-bearing follow-up
+
+The arc isn't "six independent discoveries"; it's **one underlying class of issue (silent metadata drift / silent pipeline failures) probed from six different angles**. The most important lesson for future-self: when a single class-level issue is the underlying cause, multiple independent probes will surface it via different symptoms. **The class-level frame is the load-bearing one** — focusing on the symptom-level fix (text-MIN recovery → "no-op, weird") misses the deeper diagnosis (failed_items[] is historical → systemic across all runs).
+
+A practical heuristic: **when you find a bug-like surprise, ask "what's the underlying class of issue?" before fixing the symptom**. Today's metadata-cleanup workflow operationalises that lesson at the meta-file layer; the verifier-completeness root-cause fix and phase3a audit will operationalise it at the verifier-output layer.
