@@ -70,6 +70,43 @@ COST_HARD_CAP=10.00
 CUMULATIVE_COST=0
 
 # -----------------------------------------------------------------------------
+# Skip list — cells whose crops are missing (gitignored bulk intermediates)
+# and so cannot be cleaned up without first regenerating crops.
+#
+# These three cells were identified during the 2026-05-03 overnight run when
+# `run_pv.py cleanup` reported "Crop file not found" for every candidate
+# (see logs/phase3a-recovery-20260503T145815Z/tier1-e47-flash-high-text-1of5.log
+# for the e47 case). They are skipped here so the rest of the campaign can
+# complete unattended. Recovery requires a separate `extract_candidates.py`
+# (or equivalent) pass to regenerate the crop PNGs before cleanup can succeed.
+#
+# When a cell is skipped, a `gap_after=$gap_before, recovered=0,
+# reason=missing_crops_gitignored` row is written to the cost-ledger so the
+# operator has an explicit record by morning.
+# -----------------------------------------------------------------------------
+SKIP_CELLS=(
+    "e47-flash-high-text-1of5"
+    "55maps-gen-verified-v2"
+    "proposer-verifier-384-adversarial-text-v1-prompt"
+)
+declare -A SKIP_REASON
+SKIP_REASON["e47-flash-high-text-1of5"]="missing_crops_gitignored"
+SKIP_REASON["55maps-gen-verified-v2"]="missing_crops_gitignored"
+SKIP_REASON["proposer-verifier-384-adversarial-text-v1-prompt"]="missing_crops_gitignored"
+
+# Returns 0 (true) if the supplied cell name is in SKIP_CELLS.
+is_cell_skipped() {
+    local needle="$1"
+    local c
+    for c in "${SKIP_CELLS[@]}"; do
+        if [[ "$c" == "$needle" ]]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+# -----------------------------------------------------------------------------
 # Sentinel check — refuse to proceed if software fix has not landed
 # -----------------------------------------------------------------------------
 
@@ -125,6 +162,25 @@ recover_cell() {
     local extra_args="${6:-}"  # for --model / --thinking-level overrides
 
     local cell_log="$LOG_DIR/${tier}-${cell_name//\//_}.log"
+
+    # Skip-list short-circuit: if a cell is in SKIP_CELLS (e.g. crops missing),
+    # log a placeholder ledger row and return cleanly without invoking cleanup.
+    if is_cell_skipped "$cell_name"; then
+        local skip_reason="${SKIP_REASON[$cell_name]:-deferred}"
+        echo ""
+        echo "================================================================"
+        echo "  [$tier] $cell_name  [SKIP]"
+        echo "  reason: $skip_reason"
+        echo "================================================================"
+        local gap_skip="?"
+        if [[ -d "$crops_dir" ]] && [[ -f "$crops_dir/candidate_manifest.json" ]] \
+                && [[ -f "$verified_dir/probabilities.json" ]]; then
+            gap_skip=$(compute_gap "$crops_dir" "$verified_dir" 2>/dev/null || echo "?")
+        fi
+        echo "$tier,$cell_name,$gap_skip,$gap_skip,0,0.000000,0,$(date -u +%FT%TZ),SKIP:${skip_reason}" >> "$COST_LOG"
+        return 0
+    fi
+
     local gap_before
     gap_before=$(compute_gap "$crops_dir" "$verified_dir")
 
