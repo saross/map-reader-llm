@@ -45,7 +45,6 @@ from lib_advanced_metrics import (  # noqa: E402
     match_detections_to_references,
     scope_references_to_tiles,
 )
-from lib_consensus import ensure_utm_crs  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
@@ -93,60 +92,144 @@ DEFAULT_BUFFER = 50
 # =========================================================================
 
 
+def _derive_manifest_path(consensus_path: Path) -> Path:
+    """Derive the candidate manifest path from the consensus path.
+
+    Convention (see ``scripts/extract_candidates.py`` and
+    ``scripts/55maps-t0.3-extract-new-candidates.py``):
+
+        <run-root>/consensus/consensus-NofM.geojson  →
+        <run-root>/crops/candidate_manifest.json
+
+    Args:
+        consensus_path: Path to consensus geojson.
+
+    Returns:
+        Path to the sibling ``crops/candidate_manifest.json``.
+    """
+    return consensus_path.parent.parent / "crops" / "candidate_manifest.json"
+
+
 def load_detections(
     consensus_path: Path,
     probabilities_path: Path,
     threshold: float,
     target_crs: str = _TARGET_CRS,
+    manifest_path: Path | None = None,
 ) -> gpd.GeoDataFrame:
-    """Load consensus candidates, join verifier probabilities, filter.
+    """Load candidates from the manifest, join probabilities, filter.
 
-    Reads the consensus GeoJSON (all candidates passing the vote
-    threshold) and the verifier probabilities JSON, joins them by
-    candidate index, and returns only candidates whose probability
+    Uses the **candidate manifest** (``crops/candidate_manifest.json``)
+    as the canonical source of (candidate_id, centroid, source_tile)
+    tuples, then joins verifier probabilities by the stable
+    ``candidate_id`` key. Returns only candidates whose probability
     meets or exceeds the given threshold.
 
+    The manifest is preferred over the consensus geojson because
+    partial-recovery workflows (e.g. ``55maps-t0.3-extract-new-
+    candidates.py``) preserve manifest IDs across re-clustering, while
+    the consensus geojson row order can shift when new pass detections
+    are merged in. The previous implementation derived candidate IDs
+    by row position in the consensus geojson — that assumption silently
+    breaks under partial recovery (see the T=0.7 propagation incident
+    in May 2026 where row-position lookup produced D-S F1=0.4392 vs
+    the correct ~0.78 baseline).
+
     Args:
-        consensus_path: Path to consensus-4of5.geojson.
+        consensus_path: Path to consensus-NofM.geojson. Used only to
+            derive the default manifest path (and as a sanity-check
+            log line). The geojson itself is **not** read for IDs.
         probabilities_path: Path to probabilities.json from verifier.
         threshold: Minimum mound_probability to accept a candidate.
-        target_crs: Target CRS for reprojection (default EPSG:32635).
+        target_crs: Target CRS for the output GeoDataFrame
+            (default EPSG:32635). The manifest centroids are assumed
+            to be in EPSG:32635 already (see extract_candidates.py
+            line 352, which projects to UTM during extraction).
+        manifest_path: Optional explicit path to candidate_manifest.json.
+            Defaults to the sibling crops/candidate_manifest.json.
 
     Returns:
         GeoDataFrame with columns: source_tile, mound_probability,
         candidate_id, geometry. CRS is target_crs.
     """
-    gdf = gpd.read_file(consensus_path)
-    # Handle both legacy (UTM-in-4326) and spec-compliant (real 4326)
-    # consensus GeoJSON files
-    gdf = ensure_utm_crs(gdf, source_label=str(consensus_path))
+    if manifest_path is None:
+        manifest_path = _derive_manifest_path(consensus_path)
+
+    if not manifest_path.exists():
+        raise FileNotFoundError(
+            f"Candidate manifest not found at {manifest_path}. "
+            f"Pass --manifest explicitly if it lives elsewhere."
+        )
+
+    with open(manifest_path, encoding="utf-8") as f:
+        manifest = json.load(f)
+
+    candidates = manifest.get("candidates", [])
+    if not candidates:
+        raise ValueError(
+            f"Manifest at {manifest_path} contains no candidates."
+        )
 
     with open(probabilities_path, encoding="utf-8") as f:
         prob_data = json.load(f)
     results = prob_data.get("results", {})
 
-    # Candidate IDs are 0-based sequential, matching GeoDataFrame rows
-    probabilities = []
-    for i in range(len(gdf)):
-        key = f"candidate_{i:05d}"
-        entry = results.get(key, {})
-        probabilities.append(entry.get("mound_probability", 0.0))
+    # Build rows from the manifest, joining probabilities by stable
+    # candidate_id (NOT by row position).
+    rows: list[dict] = []
+    missing_probs = 0
+    for cand in candidates:
+        cid = cand["candidate_id"]
+        key = f"candidate_{cid:05d}"
+        entry = results.get(key)
+        if entry is None:
+            # Probability missing for this candidate — treat as 0 so
+            # the threshold filter excludes it, but log the count.
+            mound_prob = 0.0
+            missing_probs += 1
+        else:
+            mound_prob = float(entry.get("mound_probability", 0.0))
 
-    gdf["mound_probability"] = probabilities
-    gdf["candidate_id"] = range(len(gdf))
+        # source_tile may live at the top level (older manifests) or
+        # under properties (after partial-recovery normalisation).
+        source_tile = cand.get("source_tile")
+        if source_tile is None:
+            props = cand.get("properties", {}) or {}
+            source_tile = props.get("source_tile")
+            if source_tile is None:
+                tiles = props.get("source_tiles") or []
+                source_tile = tiles[0] if tiles else "unknown"
 
-    # Derive a single source_tile from the first element of source_tiles
-    gdf["source_tile"] = gdf["source_tiles"].apply(
-        lambda tiles: tiles[0] if hasattr(tiles, '__len__') and len(tiles) > 0
-        else "unknown"
+        rows.append({
+            "candidate_id": cid,
+            "mound_probability": mound_prob,
+            "source_tile": source_tile,
+            "centroid_x": float(cand["centroid_x"]),
+            "centroid_y": float(cand["centroid_y"]),
+        })
+
+    df = pd.DataFrame(rows)
+    gdf = gpd.GeoDataFrame(
+        df.drop(columns=["centroid_x", "centroid_y"]),
+        geometry=gpd.points_from_xy(df["centroid_x"], df["centroid_y"]),
+        crs=target_crs,
     )
+
+    if missing_probs:
+        logger.warning(
+            "%d candidate(s) in manifest had no entry in probabilities.json; "
+            "they were assigned mound_probability=0.0 and will be filtered out.",
+            missing_probs,
+        )
 
     # Filter by probability threshold
     gdf_filtered = gdf[gdf["mound_probability"] >= threshold].copy()
 
     logger.info(
-        "Loaded %d candidates, %d accepted at threshold %.2f",
-        len(gdf), len(gdf_filtered), threshold,
+        "Loaded %d candidates from manifest %s "
+        "(consensus reference: %s); %d accepted at threshold %.2f",
+        len(gdf), manifest_path, consensus_path,
+        len(gdf_filtered), threshold,
     )
 
     return gdf_filtered[
@@ -948,6 +1031,14 @@ def main(argv: list[str] | None = None) -> None:
         help="Evaluation bounds GeoJSON (default: 55maps bounds).",
     )
     parser.add_argument(
+        "--manifest", type=Path, default=None,
+        help="Candidate manifest JSON (default: derived as "
+             "<consensus-dir>/../crops/candidate_manifest.json). "
+             "The manifest is the canonical source of stable "
+             "candidate_ids; the consensus geojson is used only as "
+             "a path anchor when --manifest is not given.",
+    )
+    parser.add_argument(
         "--verbose", "-v", action="store_true",
         help="Enable verbose logging",
     )
@@ -979,6 +1070,7 @@ def main(argv: list[str] | None = None) -> None:
 
     gdf_det = load_detections(
         consensus_path, probs_path, args.threshold,
+        manifest_path=args.manifest,
     )
     gdf_ref = gpd.read_file(gt_path)
     if gdf_ref.crs != _TARGET_CRS:

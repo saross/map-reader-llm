@@ -3,9 +3,13 @@ Tier 1 unit tests for analyse_dawid_skene.py.
 
 Tests the Dawid-Skene EM algorithm, shared item set construction,
 corrected metrics computation, and simple correction — all with
-synthetic data. No file I/O, no API calls.
+synthetic data. The ``load_detections`` regression suite at the
+bottom uses temporary JSON files on disk to reproduce the exact
+manifest/probabilities pairing produced by the production
+pipeline; no API calls.
 """
 
+import json
 import sys
 from pathlib import Path
 
@@ -23,6 +27,7 @@ from analyse_dawid_skene import (  # noqa: E402
     compute_corrected_metrics,
     compute_simple_correction,
     dawid_skene_em,
+    load_detections,
 )
 
 
@@ -539,3 +544,325 @@ class TestBuildSharedItemSet:
         # At 3m, only D0↔R0 (5m) should NOT match,
         # so fewer matches than at 50m
         assert matched_tight < matched_wide
+
+
+# ---------------------------------------------------------------------------
+# load_detections — regression suite for the row-position bug
+# ---------------------------------------------------------------------------
+#
+# Background
+# ----------
+# Before the May 2026 fix, ``load_detections`` joined verifier
+# probabilities to consensus features by *row position* — assuming the
+# i-th feature in ``consensus-NofM.geojson`` corresponded to the
+# ``candidate_{i:05d}`` key in ``probabilities.json``. That assumption
+# silently broke under partial recovery (see
+# ``scripts/55maps-t0.3-extract-new-candidates.py``), where the new
+# consensus geojson can be re-clustered into a different row order
+# while the candidate manifest preserves the stable IDs that
+# ``probabilities.json`` is keyed by.
+#
+# The fix loads candidates from the manifest directly, joining
+# probabilities by the stable ``candidate_id``. These tests pin that
+# behaviour by writing a tiny manifest + probabilities pair to disk
+# and exercising both orderings.
+# ---------------------------------------------------------------------------
+
+
+def _write_manifest(
+    path: Path,
+    candidates: list[dict],
+) -> None:
+    """Write a minimal candidate_manifest.json fixture to *path*."""
+    payload = {
+        "version": "2.0",
+        "source_geojson": "test/fixture",
+        "rasters_dir": "test/fixture",
+        "tiles_dir": "test/fixture",
+        "padding": 75,
+        "crop_dimensions": "150x150",
+        "total_detections": len(candidates),
+        "successful_extractions": len(candidates),
+        "failed_extractions": 0,
+        "candidates": candidates,
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload), encoding="utf-8")
+
+
+def _write_probabilities(path: Path, by_id: dict[int, float]) -> None:
+    """Write a minimal probabilities.json keyed by ``candidate_NNNNN``."""
+    results = {
+        f"candidate_{cid:05d}": {"mound_probability": prob}
+        for cid, prob in by_id.items()
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps({"results": results}),
+        encoding="utf-8",
+    )
+
+
+def _make_candidate(
+    cid: int,
+    cx: float,
+    cy: float,
+    source_tile: str = "test_map_x0_y0.png",
+) -> dict:
+    """Return a manifest candidate dict with the canonical schema."""
+    return {
+        "candidate_id": cid,
+        "crop_file": f"crops/candidate_{cid:05d}.png",
+        "source_tile": source_tile,
+        "centroid_x": cx,
+        "centroid_y": cy,
+        "cropped_from": "raster",
+        "properties": {
+            "vote_count": 5,
+            "source_tile": source_tile,
+            "source_tiles": [source_tile],
+        },
+    }
+
+
+@pytest.mark.tier1
+class TestLoadDetections:
+    """Regression suite for the row-position vs candidate_id bug."""
+
+    @pytest.fixture
+    def baseline_manifest(self, tmp_path: Path) -> tuple[Path, Path]:
+        """Write a 5-candidate manifest + matching probabilities.json.
+
+        Layout mirrors the production convention:
+
+            <run-root>/crops/candidate_manifest.json
+            <run-root>/verified/probabilities.json
+            <run-root>/consensus/consensus-4of5.geojson  (just an anchor)
+
+        Probabilities are deliberately unequal so a wrong join would
+        produce a wrong filtered set.
+        """
+        run_root = tmp_path / "run_root"
+        crops_dir = run_root / "crops"
+        verified_dir = run_root / "verified"
+        consensus_dir = run_root / "consensus"
+        consensus_dir.mkdir(parents=True, exist_ok=True)
+        consensus_path = consensus_dir / "consensus-4of5.geojson"
+        consensus_path.write_text(
+            json.dumps({"type": "FeatureCollection", "features": []}),
+            encoding="utf-8",
+        )
+
+        # 5 candidates with distinct IDs and centroids
+        candidates = [
+            _make_candidate(0, 100.0, 100.0),
+            _make_candidate(1, 200.0, 200.0),
+            _make_candidate(2, 300.0, 300.0),
+            _make_candidate(3, 400.0, 400.0),
+            _make_candidate(4, 500.0, 500.0),
+        ]
+        _write_manifest(crops_dir / "candidate_manifest.json", candidates)
+
+        probabilities = {
+            0: 0.10,  # below threshold
+            1: 0.95,  # above
+            2: 0.20,  # above
+            3: 0.05,  # below
+            4: 0.80,  # above
+        }
+        _write_probabilities(
+            verified_dir / "probabilities.json", probabilities,
+        )
+
+        return consensus_path, verified_dir / "probabilities.json"
+
+    def test_baseline_load_filters_by_threshold(self, baseline_manifest):
+        """Sanity: the basic load filters correctly by probability."""
+        consensus_path, probs_path = baseline_manifest
+        gdf = load_detections(
+            consensus_path, probs_path, threshold=0.15,
+        )
+
+        # IDs 1, 2, 4 should pass (probs 0.95, 0.20, 0.80)
+        assert sorted(gdf["candidate_id"].tolist()) == [1, 2, 4]
+        # CRS should be the documented target
+        assert gdf.crs.to_string() == "EPSG:32635"
+
+    def test_load_uses_stable_candidate_id_not_row_position(
+        self, tmp_path: Path,
+    ):
+        """Reversed manifest order → identical filtered result.
+
+        Reproduces the bug surface: if ``load_detections`` looked up
+        probabilities by *row position* in the manifest, reversing the
+        candidate order would re-pair every probability with the wrong
+        candidate. With the manifest-id-based join, the result must be
+        identical regardless of row order.
+        """
+        run_root = tmp_path / "run_root"
+        crops_dir = run_root / "crops"
+        verified_dir = run_root / "verified"
+        consensus_path = run_root / "consensus" / "consensus-4of5.geojson"
+        consensus_path.parent.mkdir(parents=True, exist_ok=True)
+        consensus_path.write_text(
+            json.dumps({"type": "FeatureCollection", "features": []}),
+            encoding="utf-8",
+        )
+
+        # Forward order: ids 0, 1, 2, 3, 4
+        forward = [
+            _make_candidate(0, 100.0, 100.0),
+            _make_candidate(1, 200.0, 200.0),
+            _make_candidate(2, 300.0, 300.0),
+            _make_candidate(3, 400.0, 400.0),
+            _make_candidate(4, 500.0, 500.0),
+        ]
+        # Reversed order: ids 4, 3, 2, 1, 0 — but each candidate keeps
+        # its own centroid + ID, so the stable join must still pair
+        # probability[1]=0.95 with the (200,200) point, etc.
+        reversed_cands = list(reversed(forward))
+
+        probabilities = {0: 0.10, 1: 0.95, 2: 0.20, 3: 0.05, 4: 0.80}
+        _write_probabilities(
+            verified_dir / "probabilities.json", probabilities,
+        )
+
+        # Forward run
+        _write_manifest(
+            crops_dir / "candidate_manifest.json", forward,
+        )
+        gdf_forward = load_detections(
+            consensus_path,
+            verified_dir / "probabilities.json",
+            threshold=0.15,
+        )
+
+        # Reversed run — overwrite manifest in place
+        _write_manifest(
+            crops_dir / "candidate_manifest.json", reversed_cands,
+        )
+        gdf_reversed = load_detections(
+            consensus_path,
+            verified_dir / "probabilities.json",
+            threshold=0.15,
+        )
+
+        # Sort both by candidate_id and compare
+        f = gdf_forward.sort_values("candidate_id").reset_index(drop=True)
+        r = gdf_reversed.sort_values("candidate_id").reset_index(drop=True)
+
+        assert f["candidate_id"].tolist() == r["candidate_id"].tolist()
+        assert (
+            f["mound_probability"].tolist()
+            == r["mound_probability"].tolist()
+        )
+
+        # And, critically, the (id → probability) pairing must match
+        # the source of truth — probabilities indexed by id.
+        for _, row in f.iterrows():
+            cid = int(row["candidate_id"])
+            assert row["mound_probability"] == probabilities[cid], (
+                f"Candidate {cid} got probability "
+                f"{row['mound_probability']} but expected "
+                f"{probabilities[cid]}; the join is using the wrong key."
+            )
+
+    def test_partial_recovery_with_high_id_gap(self, tmp_path: Path):
+        """Manifest with non-contiguous IDs from partial recovery.
+
+        Simulates the production scenario: the original manifest had
+        IDs 0-2, then a recovery cycle appended new candidates with
+        IDs 9131, 9132 (jumping to keep IDs stable for old crops).
+        Row position 3 in the manifest does NOT correspond to
+        candidate_00003 — the buggy lookup would use the wrong key.
+        """
+        run_root = tmp_path / "run_root"
+        crops_dir = run_root / "crops"
+        verified_dir = run_root / "verified"
+        consensus_path = run_root / "consensus" / "consensus-4of5.geojson"
+        consensus_path.parent.mkdir(parents=True, exist_ok=True)
+        consensus_path.write_text(
+            json.dumps({"type": "FeatureCollection", "features": []}),
+            encoding="utf-8",
+        )
+
+        # Original 3 candidates + 2 recovered with high IDs
+        candidates = [
+            _make_candidate(0, 100.0, 100.0),
+            _make_candidate(1, 200.0, 200.0),
+            _make_candidate(2, 300.0, 300.0),
+            _make_candidate(9131, 400.0, 400.0),  # recovered
+            _make_candidate(9132, 500.0, 500.0),  # recovered
+        ]
+        _write_manifest(crops_dir / "candidate_manifest.json", candidates)
+
+        # Probabilities only exist for the actual IDs — NOT row positions.
+        # candidate_00003 / candidate_00004 do not exist.
+        probabilities = {
+            0: 0.50,
+            1: 0.05,
+            2: 0.95,
+            9131: 0.80,
+            9132: 0.10,
+        }
+        _write_probabilities(
+            verified_dir / "probabilities.json", probabilities,
+        )
+
+        gdf = load_detections(
+            consensus_path,
+            verified_dir / "probabilities.json",
+            threshold=0.15,
+        )
+
+        # Threshold 0.15 should keep IDs 0, 2, 9131
+        assert sorted(gdf["candidate_id"].tolist()) == [0, 2, 9131]
+
+        # And each retained probability should match the source of truth
+        for _, row in gdf.iterrows():
+            cid = int(row["candidate_id"])
+            assert row["mound_probability"] == probabilities[cid]
+
+    def test_explicit_manifest_path_override(self, tmp_path: Path):
+        """``manifest_path`` argument should override the derived path."""
+        # Place manifest in a non-standard location
+        odd_dir = tmp_path / "elsewhere"
+        candidates = [
+            _make_candidate(7, 700.0, 700.0),
+            _make_candidate(8, 800.0, 800.0),
+        ]
+        manifest_path = odd_dir / "candidate_manifest.json"
+        _write_manifest(manifest_path, candidates)
+
+        verified_dir = tmp_path / "verified"
+        probabilities = {7: 0.90, 8: 0.05}
+        probs_path = verified_dir / "probabilities.json"
+        _write_probabilities(probs_path, probabilities)
+
+        # Consensus path that does NOT have a sibling crops dir
+        bogus_consensus = (
+            tmp_path / "no-crops" / "consensus" / "fake.geojson"
+        )
+        bogus_consensus.parent.mkdir(parents=True, exist_ok=True)
+        bogus_consensus.write_text("{}", encoding="utf-8")
+
+        gdf = load_detections(
+            bogus_consensus, probs_path,
+            threshold=0.15,
+            manifest_path=manifest_path,
+        )
+
+        assert gdf["candidate_id"].tolist() == [7]
+
+    def test_missing_manifest_raises(self, tmp_path: Path):
+        """A missing manifest should raise FileNotFoundError."""
+        consensus_path = tmp_path / "consensus" / "consensus-4of5.geojson"
+        consensus_path.parent.mkdir(parents=True, exist_ok=True)
+        consensus_path.write_text("{}", encoding="utf-8")
+
+        verified_dir = tmp_path / "verified"
+        probs_path = verified_dir / "probabilities.json"
+        _write_probabilities(probs_path, {0: 0.5})
+
+        with pytest.raises(FileNotFoundError, match="manifest not found"):
+            load_detections(consensus_path, probs_path, threshold=0.15)
