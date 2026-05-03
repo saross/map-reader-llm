@@ -134,11 +134,13 @@ per-analysis JSON is primary.
 | D-S VLM-only posterior (v1, fixed prior 0.05) | 0.1862 (degenerate single value) | `results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json` + Obs 273 |
 | D-S AUC (any prior, VLM-only slice) | **0.500** (prior-invariant) | `results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/summary.json` + Obs 273 |
 | Empirical mound rate on VLM-only slice | 0.7247 (745 / 1,028) | `results/55maps-image-generalisation/ds-human-crosstab/summary.json` |
-| 55-map text-HIGH raw F1 @ 50 m | 0.788 [0.777, 0.800] | `outputs/55maps-text-high-generalisation/evaluation/evaluation.json` |
+| 55-map text-HIGH raw F1 @ 50 m (post-recovery 2026-05-03) | **0.7920** [0.7820, 0.8017] | `outputs/55maps-text-high-generalisation/evaluation/evaluation.json` (post-recovery; pre-recovery 0.7896) |
+| 55-map text-HIGH corrected F1 @ 50 m (post-recovery) | **0.8273** [0.8173, 0.8370] | `results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json` (post-recovery; commit `f6eaeca9`) |
+| 55-map text-HIGH tile-level MCC @ 50 m | **0.6476** [0.6331, 0.6620] | `results/55maps-text-high-generalisation/mcc/evaluation.json` |
 | 55-map text-MIN raw F1 @ 50 m | 0.759 [0.747, 0.772] | `outputs/55maps-text-min-generalisation/evaluation/evaluation.json` |
 | Paired text-HIGH vs image @ 50 m | ΔF1 = −0.018, p = 0.0008 (significant) | `results/55maps-cross-track-comparison/paired-image-vs-text-high-50m/pairwise_permutation_result.json` |
 | Paired text-MIN vs image @ 50 m | ΔF1 = +0.012, p = 0.0543 (n.s. — marginal image advantage) | `results/55maps-cross-track-comparison/paired-image-vs-text-min-50m/pairwise_permutation_result.json` |
-| Text-HIGH buffer plateau (50 → 125 m) | +0.007 F1 (0.788 → 0.795) | `outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json` |
+| Text-HIGH buffer plateau (50 → 125 m, post-recovery) | +0.005 F1 (0.7920 → 0.7967) | `outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json` (post-recovery) |
 | Text-MIN buffer plateau (50 → 125 m) | +0.007 F1 (0.759 → 0.766) | `outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json` |
 | 55-map paper-headline F1 | **0.904** [0.878, 0.928] @ 50 m (487-tile matrix, text-HIGH + PV) | `results/paper-tables/metrics_master.json` (separate from the 55-map slice — see §8) |
 
