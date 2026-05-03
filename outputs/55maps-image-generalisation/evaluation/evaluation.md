@@ -1,12 +1,14 @@
 # Evaluation: 55maps-image-generalisation
 
-**Generated**: 2026-04-18T05:10:24.255198+00:00  
-**Detections**: 4665  
+**Generated**: 2026-05-03T02:29:39.683733+00:00  
+**Detections**: 4679  
 
-| Buffer | F1 | F1 CI | P | P CI | R | R CI |
-|---|---|---|---|---|---|---|
-| 20m | 0.506 | [0.492, 0.520] | 0.512 | [0.496, 0.526] | 0.500 | [0.485, 0.517] |
-| 30m | 0.685 | [0.672, 0.697] | 0.693 | [0.678, 0.707] | 0.678 | [0.663, 0.693] |
-| 40m | 0.748 | [0.737, 0.759] | 0.757 | [0.742, 0.771] | 0.740 | [0.726, 0.754] |
-| 50m | 0.771 | [0.760, 0.782] | 0.780 | [0.766, 0.792] | 0.762 | [0.749, 0.776] |
+| Buffer | F1 | F1 CI | P | P CI | R | R CI | MCC | MCC CI | Sens | Spec |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 20m | 0.508 | N/A * | 0.512 | N/A * | 0.504 | N/A * | 0.692 | N/A * | 0.708 | 0.948 |
+| 30m | 0.689 | N/A * | 0.694 | N/A * | 0.684 | N/A * | 0.692 | N/A * | 0.708 | 0.948 |
+| 40m | 0.752 | N/A * | 0.757 | N/A * | 0.747 | N/A * | 0.692 | N/A * | 0.708 | 0.948 |
+| 50m | 0.774 | N/A * | 0.780 | N/A * | 0.769 | N/A * | 0.692 | N/A * | 0.708 | 0.948 |
+
+\* Bootstrap CI suppressed for sparse-coverage buffers (64.1%, 64.9%, 65.1%, 65.2% of evaluation tiles have zero TP/FP/FN counts; threshold > 50 %). Numeric bounds remain in `evaluation.json` and `evaluation.csv` for downstream tooling. The point estimate (F1, P, R, MCC) is unaffected. See `archive/planning-completed-session-81-82/pairwise-bootstrap-ci-fix-plan-2026-04-29.md` for the underlying methodology decision.
 
