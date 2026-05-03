@@ -1,0 +1,85 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-04-23T22:00:21.250777+00:00",
+  "summary": {
+    "label": "text-min-K5-PV-extended",
+    "n_detections": 3861,
+    "buffers": [
+      {
+        "buffer_metres": 75,
+        "f1": 0.7642,
+        "f1_ci_lower": 0.7525,
+        "f1_ci_upper": 0.7765,
+        "precision": 0.8516,
+        "p_ci_lower": 0.8379,
+        "p_ci_upper": 0.8641,
+        "recall": 0.6931,
+        "r_ci_lower": 0.677,
+        "r_ci_upper": 0.7086
+      },
+      {
+        "buffer_metres": 100,
+        "f1": 0.7649,
+        "f1_ci_lower": 0.7532,
+        "f1_ci_upper": 0.7771,
+        "precision": 0.8524,
+        "p_ci_lower": 0.8389,
+        "p_ci_upper": 0.8649,
+        "recall": 0.6937,
+        "r_ci_lower": 0.6777,
+        "r_ci_upper": 0.7092
+      },
+      {
+        "buffer_metres": 125,
+        "f1": 0.7661,
+        "f1_ci_lower": 0.754,
+        "f1_ci_upper": 0.7781,
+        "precision": 0.8537,
+        "p_ci_lower": 0.8403,
+        "p_ci_upper": 0.866,
+        "recall": 0.6948,
+        "r_ci_lower": 0.6787,
+        "r_ci_upper": 0.7102
+      }
+    ]
+  },
+  "_metadata": {
+    "metadata_version": "1.0",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "ad3695a0",
+    "script_git_status": "dirty",
+    "generated_at_utc": "2026-04-23T21:56:36.033968+00:00",
+    "cli_args": {
+      "detections": [
+        "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson"
+      ],
+      "detections_dir": null,
+      "batch": null,
+      "glob": "*/detections_*.geojson",
+      "buffers": [
+        75,
+        100,
+        125
+      ],
+      "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "bootstrap": 1000,
+      "seed": 42,
+      "output_dir": "outputs/55maps-text-min-generalisation/extended-buffer-eval",
+      "label": "text-min-K5-PV-extended",
+      "mcc": false
+    },
+    "bootstrap": {
+      "n_iterations": 1000,
+      "seed": 42,
+      "resampling_unit": "tile_level"
+    },
+    "input_files": {
+      "detections": [
+        "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson"
+      ],
+      "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+    }
+  }
+}

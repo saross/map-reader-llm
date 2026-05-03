@@ -1,11 +1,13 @@
 # Evaluation: text-min-K5-PV-extended
 
-**Generated**: 2026-04-23T22:00:21.251052+00:00  
-**Detections**: 3861  
+**Generated**: 2026-05-03T02:08:47.255022+00:00  
+**Detections**: 3865  
 
-| Buffer | F1 | F1 CI | P | P CI | R | R CI |
-|---|---|---|---|---|---|---|
-| 75m | 0.764 | [0.752, 0.776] | 0.852 | [0.838, 0.864] | 0.693 | [0.677, 0.709] |
-| 100m | 0.765 | [0.753, 0.777] | 0.852 | [0.839, 0.865] | 0.694 | [0.678, 0.709] |
-| 125m | 0.766 | [0.754, 0.778] | 0.854 | [0.840, 0.866] | 0.695 | [0.679, 0.710] |
+| Buffer | F1 | F1 CI | P | P CI | R | R CI | MCC | MCC CI | Sens | Spec |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 75m | 0.765 | N/A * | 0.852 | N/A * | 0.694 | N/A * | 0.626 | N/A * | 0.614 | 0.955 |
+| 100m | 0.765 | N/A * | 0.853 | N/A * | 0.694 | N/A * | 0.626 | N/A * | 0.614 | 0.955 |
+| 125m | 0.767 | N/A * | 0.854 | N/A * | 0.696 | N/A * | 0.626 | N/A * | 0.614 | 0.955 |
+
+\* Bootstrap CI suppressed for sparse-coverage buffers (66.6%, 66.6%, 66.6% of evaluation tiles have zero TP/FP/FN counts; threshold > 50 %). Numeric bounds remain in `evaluation.json` and `evaluation.csv` for downstream tooling. The point estimate (F1, P, R, MCC) is unaffected. See `archive/planning-completed-session-81-82/pairwise-bootstrap-ci-fix-plan-2026-04-29.md` for the underlying methodology decision.
 
