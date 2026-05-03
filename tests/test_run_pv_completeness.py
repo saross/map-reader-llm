@@ -1321,6 +1321,7 @@ class TestMultiIterationKeyHandling:
             _candidate_iteration_keys(cand, -3)
 
 
+@pytest.mark.tier1
 class TestIterationIdToResultKey:
     """Direct unit tests for ``_iteration_id_to_result_key``.
 
