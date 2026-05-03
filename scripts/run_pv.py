@@ -799,14 +799,14 @@ def _assert_completeness(
         Gap count — ``0`` when complete, otherwise the number of missing
         candidate keys.
     """
+    # Defer key expansion to ``_candidate_iteration_keys`` so this assertion
+    # cannot drift out of sync with the resume filter, cleanup missing-set
+    # computation, and the per-iteration logging path. All four sites must
+    # consume the same canonical key list — the helper is the single source
+    # of truth for "what does completeness look like for candidate × N".
     expected: set[str] = set()
     for cand in manifest.get("candidates", []):
-        cid = cand["candidate_id"]
-        if iterations > 1:
-            for i in range(1, iterations + 1):
-                expected.add(f"candidate_{cid:05d}_iter{i}")
-        else:
-            expected.add(f"candidate_{cid:05d}")
+        expected.update(_candidate_iteration_keys(cand, iterations))
 
     actual = set(parsed_results.keys())
     gap = expected - actual
