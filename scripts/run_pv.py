@@ -715,10 +715,20 @@ def _iteration_id_to_result_key(
 def _summarise_failure_reason(metadata_list: list) -> str:
     """Summarise the terminal failure reason from a metadata list.
 
-    Walks the list back-to-front, returning the most recent ``parse_error``
-    or ``error_type`` annotation. Falls back to a generic string when the
-    list is empty (e.g. the ``FileNotFoundError`` early-return path that
-    pre-dates the Layer 2 synthetic-metadata propagation).
+    Walks the list back-to-front, returning the most recent
+    ``parse_error`` annotation, or — when no ``parse_error`` is set — a
+    ``finish_reason``-based label for entries that recorded a terminal
+    error (e.g. ``error``, ``max_tokens``, ``safety``). Falls back to a
+    generic string when the list is empty (the ``FileNotFoundError``
+    early-return path before Layer 2 propagated a synthetic metadata
+    entry).
+
+    The ``finish_reason`` branch handles the case where
+    ``_call_verifier_api`` synthesises an error-metadata entry on a
+    terminal exception (``finish_reason=error``,
+    ``raw_finish_reason=<ExceptionClassName>``) but does not populate
+    ``parse_error`` — without this branch the helper would fall through
+    to the generic fallback and lose the discriminating diagnostic.
 
     Args:
         metadata_list: Mutable metadata list populated by
@@ -733,9 +743,16 @@ def _summarise_failure_reason(metadata_list: list) -> str:
         err = getattr(meta, "parse_error", None)
         if err:
             return str(err)
-        err_type = getattr(meta, "error_type", None)
-        if err_type:
-            return f"{err_type}: retries exhausted"
+        # ``LLMResponseMetadata`` exposes ``finish_reason`` (normalised
+        # enum value, e.g. ``"error"``, ``"max_tokens"``, ``"safety"``)
+        # plus ``raw_finish_reason`` (the original API/exception type
+        # name). Surface both when the entry signals a terminal failure.
+        finish = getattr(meta, "finish_reason", None)
+        if finish and finish not in ("success", "unknown"):
+            raw = getattr(meta, "raw_finish_reason", "") or ""
+            if raw:
+                return f"{finish}: {raw}"
+            return f"{finish}: retries exhausted"
     return "no result returned (retries exhausted)"
 
 
