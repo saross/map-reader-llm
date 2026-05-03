@@ -225,9 +225,12 @@ def load_combined_candidates(spec: RunSpec) -> pd.DataFrame:
         # T=0.3 / T=0.7 path — single multi-buffer CSV, all rows
         # already carry buffer_metres (possibly empty for not_mound).
         df = pd.read_csv(spec.review_csvs[0]).copy()
+        # Force float64 so np.inf can be assigned even when every row
+        # carries a finite integer-valued buffer (post-2026-05-03 CSV
+        # format where empty cells were normalised to 50).
         df["buffer_band"] = pd.to_numeric(
             df.get("buffer_metres"), errors="coerce"
-        )
+        ).astype("float64")
         df.loc[df["human_label"] != "mound", "buffer_band"] = np.inf
         return df[keep].reset_index(drop=True)
     # image run — yesterday + today merge.
@@ -236,9 +239,10 @@ def load_combined_candidates(spec: RunSpec) -> pd.DataFrame:
     y_mound = yesterday[yesterday["human_label"] == "mound"].copy()
     y_mound["buffer_band"] = 50.0
     today = today.copy()
+    # Force float64 — see comment in single-CSV branch above.
     today["buffer_band"] = pd.to_numeric(
         today.get("buffer_metres"), errors="coerce"
-    )
+    ).astype("float64")
     today.loc[today["human_label"] != "mound", "buffer_band"] = np.inf
     combined = pd.concat([y_mound[keep], today[keep]], ignore_index=True)
     combined = combined.drop_duplicates(
