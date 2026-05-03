@@ -28,7 +28,8 @@ python3 scripts/run_pv.py verify \
     --crops-dir "$CROPS_BASE/flash-high-image-1of5" \
     --verifier-config "$VERIFIER_CONFIG" \
     --output-dir "$VERIFIED_BASE/flash-high-image-1of5" \
-    --mode batch
+    --mode batch \
+    --no-strict
 echo "Completed: $(date)"
 echo ""
 
@@ -39,7 +40,8 @@ python3 scripts/run_pv.py verify \
     --crops-dir "$CROPS_BASE/flash-high-text-1of10" \
     --verifier-config "$VERIFIER_CONFIG" \
     --output-dir "$VERIFIED_BASE/flash-high-text-1of10" \
-    --mode batch
+    --mode batch \
+    --no-strict
 echo "Completed: $(date)"
 echo ""
 
@@ -50,7 +52,8 @@ python3 scripts/run_pv.py verify \
     --crops-dir "$CROPS_BASE/flash-high-text-1of30" \
     --verifier-config "$VERIFIER_CONFIG" \
     --output-dir "$VERIFIED_BASE/flash-high-text-1of30" \
-    --mode batch
+    --mode batch \
+    --no-strict
 echo "Completed: $(date)"
 echo ""
 
@@ -61,7 +64,8 @@ python3 scripts/run_pv.py verify \
     --crops-dir "$CROPS_BASE/flash-minimal-text-t07-1of5" \
     --verifier-config "$VERIFIER_CONFIG" \
     --output-dir "$VERIFIED_BASE/flash-minimal-text-t07-1of5" \
-    --mode batch
+    --mode batch \
+    --no-strict
 echo "Completed: $(date)"
 echo ""
 

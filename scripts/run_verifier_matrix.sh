@@ -72,7 +72,8 @@ run_verifier_pipeline() {
             --output-dir "$verified_dir" \
             --mode realtime \
             --workers 20 \
-            --service-tier flex || rc=$?
+            --service-tier flex \
+            --no-strict || rc=$?
         if [ "$rc" -ne 0 ]; then
             echo "  [verify] WARNING: exit code $rc"
         fi

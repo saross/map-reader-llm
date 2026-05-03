@@ -107,7 +107,8 @@ python3 scripts/run_pv.py verify \
     --output-dir "$OUTDIR/verified-v1" \
     --mode realtime \
     --service-tier flex \
-    --workers 20
+    --workers 20 \
+    --no-strict
 echo "=== Stage 4 complete: $(date) ==="
 echo ""
 
@@ -121,7 +122,8 @@ python3 scripts/run_pv.py verify \
     --output-dir "$OUTDIR/verified-v2" \
     --mode realtime \
     --service-tier flex \
-    --workers 20
+    --workers 20 \
+    --no-strict
 echo "=== Stage 5 complete: $(date) ==="
 echo ""
 

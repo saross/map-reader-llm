@@ -34,7 +34,8 @@ python3 scripts/run_pv.py verify \
     --verifier-config "$VERIFIER_CONFIG" \
     --output-dir "$VERIFIED_BASE/pro-high-text-1of5-pro-verifier" \
     --model gemini-3.1-pro --thinking-level medium \
-    --mode batch
+    --mode batch \
+    --no-strict
 echo "Completed: $(date)"
 echo ""
 
@@ -45,7 +46,8 @@ python3 scripts/run_pv.py verify \
     --crops-dir "$CROPS_BASE/pro-high-text-1of5" \
     --verifier-config "$VERIFIER_CONFIG" \
     --output-dir "$VERIFIED_BASE/pro-high-text-1of5-flash-minimal-verifier" \
-    --mode batch
+    --mode batch \
+    --no-strict
 echo "Completed: $(date)"
 echo ""
 
@@ -66,7 +68,8 @@ python3 scripts/run_pv.py verify \
     --verifier-config "$VERIFIER_CONFIG" \
     --output-dir "$VERIFIED_BASE/flash-high-text-1of5-flash-medium-verifier" \
     --thinking-level medium \
-    --mode batch &
+    --mode batch \
+    --no-strict &
 W46_PID=$!
 echo "W4.6 PID: $W46_PID"
 
@@ -81,7 +84,8 @@ python3 scripts/run_pv.py verify \
     --verifier-config "$VERIFIER_CONFIG" \
     --output-dir "$VERIFIED_BASE/flash-high-text-1of5-flash-high-verifier" \
     --thinking-level high \
-    --mode batch &
+    --mode batch \
+    --no-strict &
 W49_PID=$!
 echo "W4.9 PID: $W49_PID"
 

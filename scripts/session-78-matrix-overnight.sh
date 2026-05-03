@@ -176,6 +176,7 @@ run_phase_a_pool() {
             --mode realtime \
             --workers "$WORKERS" \
             --service-tier "$SERVICE_TIER" \
+            --no-strict \
             > "$var_log" 2>&1 &
 
         pids+=($!)

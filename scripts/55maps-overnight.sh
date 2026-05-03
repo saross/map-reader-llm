@@ -150,7 +150,8 @@ python3 scripts/run_pv.py verify \
     --verifier-config "$VERIFIER_CONFIG" \
     --output-dir "$OUTDIR/verified" \
     --mode realtime \
-    --service-tier flex
+    --service-tier flex \
+    --no-strict
 
 echo "=== Stage 4 complete: $(date) ==="
 echo ""

@@ -32,7 +32,8 @@ python3 scripts/run_pv.py verify \
     --verifier-config "$VERIFIER_CONFIG" \
     --output-dir "$VERIFIED_BASE/pro-high-image-1of5-pro-verifier" \
     --model gemini-3.1-pro --thinking-level medium \
-    --mode batch
+    --mode batch \
+    --no-strict
 echo "Completed: $(date)"
 echo ""
 
@@ -46,7 +47,8 @@ python3 scripts/run_pv.py verify \
     --verifier-config "$VERIFIER_CONFIG" \
     --output-dir "$VERIFIED_BASE/text-baseline-pro-verifier" \
     --model gemini-3.1-pro --thinking-level medium \
-    --mode batch
+    --mode batch \
+    --no-strict
 echo "Completed: $(date)"
 echo ""
 
@@ -58,7 +60,8 @@ python3 scripts/run_pv.py verify \
     --verifier-config "$VERIFIER_CONFIG" \
     --output-dir "$VERIFIED_BASE/image-baseline-pro-verifier" \
     --model gemini-3.1-pro --thinking-level medium \
-    --mode batch
+    --mode batch \
+    --no-strict
 echo "Completed: $(date)"
 echo ""
 
@@ -70,7 +73,8 @@ python3 scripts/run_pv.py verify \
     --verifier-config "$VERIFIER_CONFIG" \
     --output-dir "$VERIFIED_BASE/pro-medium-text-baseline-pro-verifier" \
     --model gemini-3.1-pro --thinking-level medium \
-    --mode batch
+    --mode batch \
+    --no-strict
 echo "Completed: $(date)"
 echo ""
 
@@ -82,7 +86,8 @@ python3 scripts/run_pv.py verify \
     --verifier-config "$VERIFIER_CONFIG" \
     --output-dir "$VERIFIED_BASE/pro-medium-image-baseline-pro-verifier" \
     --model gemini-3.1-pro --thinking-level medium \
-    --mode batch
+    --mode batch \
+    --no-strict
 echo "Completed: $(date)"
 echo ""
 
@@ -94,7 +99,8 @@ python3 scripts/run_pv.py verify \
     --verifier-config "$VERIFIER_CONFIG" \
     --output-dir "$VERIFIED_BASE/flash-high-text-1of5-pro-verifier" \
     --model gemini-3.1-pro --thinking-level medium \
-    --mode batch
+    --mode batch \
+    --no-strict
 echo "Completed: $(date)"
 echo ""
 
@@ -106,7 +112,8 @@ python3 scripts/run_pv.py verify \
     --verifier-config "$VERIFIER_CONFIG" \
     --output-dir "$VERIFIED_BASE/flash-high-text-1of5-flash-medium-verifier" \
     --thinking-level medium \
-    --mode batch
+    --mode batch \
+    --no-strict
 echo "Completed: $(date)"
 echo ""
 
@@ -118,7 +125,8 @@ python3 scripts/run_pv.py verify \
     --verifier-config "$VERIFIER_CONFIG" \
     --output-dir "$VERIFIED_BASE/pro-high-text-1of5-pro-verifier" \
     --model gemini-3.1-pro --thinking-level medium \
-    --mode batch
+    --mode batch \
+    --no-strict
 echo "Completed: $(date)"
 echo ""
 
@@ -129,7 +137,8 @@ python3 scripts/run_pv.py verify \
     --crops-dir "$CROPS_BASE/pro-high-text-1of5" \
     --verifier-config "$VERIFIER_CONFIG" \
     --output-dir "$VERIFIED_BASE/pro-high-text-1of5-flash-minimal-verifier" \
-    --mode batch
+    --mode batch \
+    --no-strict
 echo "Completed: $(date)"
 echo ""
 
@@ -141,7 +150,8 @@ python3 scripts/run_pv.py verify \
     --verifier-config "$VERIFIER_CONFIG" \
     --output-dir "$VERIFIED_BASE/flash-high-text-1of5-flash-high-verifier" \
     --thinking-level high \
-    --mode batch
+    --mode batch \
+    --no-strict
 echo "Completed: $(date)"
 echo ""
 
