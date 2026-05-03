@@ -1,0 +1,68 @@
+{
+  "metadata": {
+    "timestamp": "2026-05-03T00:09:20.063718+00:00",
+    "script": "paired_permutation_corrected_55maps.py",
+    "version": "1.0.0",
+    "git_commit": "unknown",
+    "buffer_metres": 50,
+    "n_permutations": 10000,
+    "n_bootstrap": 10000,
+    "seed": 42,
+    "methodology": "Approach B \u2014 extended-GT-at-R Hungarian matching, tile-swap paired permutation test on micro-average F1"
+  },
+  "condition_a": {
+    "label": "t0.7",
+    "detections": "/home/shawn/Code/map-reader-llm/outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
+    "review_yesterday": "/tmp/empty-review-yesterday.csv",
+    "review_today": "/home/shawn/Code/map-reader-llm/results/55maps-text-high-generalisation/human-review-multi-buffer.csv",
+    "n_detections": 4164
+  },
+  "condition_b": {
+    "label": "image",
+    "detections": "/home/shawn/Code/map-reader-llm/outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+    "review_yesterday": "/home/shawn/Code/map-reader-llm/results/55maps-image-generalisation/human-review.csv",
+    "review_today": "/home/shawn/Code/map-reader-llm/results/55maps-image-generalisation/human-review-multi-buffer.csv",
+    "n_detections": 4665
+  },
+  "buffer_metres": 50,
+  "n_phantoms_a": 268,
+  "n_phantoms_b": 474,
+  "n_ref_extended_a": 5012,
+  "n_ref_extended_b": 5218,
+  "delta_f1_ci": {
+    "lower": -0.014186,
+    "upper": 0.004985,
+    "n_bootstrap": 10000
+  },
+  "global_a": {
+    "f1": 0.827158,
+    "precision": 0.911383,
+    "recall": 0.757183,
+    "tp": 3795,
+    "fp": 369,
+    "fn": 1217
+  },
+  "global_b": {
+    "f1": 0.831731,
+    "precision": 0.881029,
+    "recall": 0.787658,
+    "tp": 4110,
+    "fp": 555,
+    "fn": 1108
+  },
+  "permutation_test": {
+    "observed_f1_diff": -0.004573,
+    "p_value": 0.3444,
+    "n_permutations": 10000,
+    "n_tiles": 8541,
+    "wins_a": 440,
+    "losses_a": 598,
+    "ties": 7503,
+    "null_distribution": {
+      "mean": 1.8e-05,
+      "std": 0.004862,
+      "percentile_2.5": -0.009553,
+      "percentile_97.5": 0.009501
+    }
+  }
+}
