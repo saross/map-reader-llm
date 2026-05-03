@@ -16186,3 +16186,90 @@ Search terms: T=0.7 recovery closure 160 tiles, 55maps-text-high-generalisation 
 - **Obs 319** (T=0.7 vs T=0.3 recovery-cost asymmetry — ~189×): closed in narrative; this Obs adds the full propagation outcome and the cost reconciliation note.
 - **Commit chain (recovery + propagation)**: `731466d84` (recovery), `baf1497a` (GT mound add), `d7f85978` (consensus + verifier rebuild), `e3aef6fa` (parser fix), `a9e280a3` (D-S fix), `7f05f529` (cost-manifest fix), `f6eaeca9` + `f533fda5` (corrected-F1 + evaluation re-run), `aeb9fb7f` (pairwise-permutation v2), `33435aab` (attractor-pull v2 + FP-classify), `11a6ac34` (documentation propagation).
 - **Artefacts**: `outputs/55maps-text-high-generalisation/evaluation/evaluation.json` (post-recovery baseline metrics + MCC); `results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json` (Approach B corrected F1 at R = 50 m and R = 125 m); `results/55maps-text-high-generalisation/dawid-skene/dawid-skene-results.json` (D-S corrected F1); `results/55maps-pairwise-permutation-v2/` (three T=0.7-touching permutation results); `outputs/55maps-text-high-generalisation/cost_manifest.json` (run total $126.81); `results/55maps-fp-classification/cost_summary.json` (FP-classification $0.58).
+
+## Observation 321: Session 84 closure — 3 follow-up recoveries completed, 28 silently-dropped verifier candidates surfaced and recovered, metadata pipeline hardened; cross-track v2 all 6 pairs preserved (2026-05-03)
+
+### The finding
+
+**Three follow-up recoveries (image, text-MIN, GS-v2) completed; 28 silently-dropped verifier candidates discovered and recovered; metadata cleanup workflow added; all 6 cross-track pairs preserved. Major open item: phase3a verifier-completeness audit deferred.**
+
+**Recovery outcomes at R = 50 m (sources read 2026-05-03):**
+
+| Run | Raw F1 before | Raw F1 after | Corrected F1 after | Verifier gap recovered | Biggest shift |
+|:----|:---:|:---:|:---:|:---:|:---|
+| Image | 0.7710 | **0.7745** (+0.0035) | **0.8333** | 18 silently-dropped | verifier completeness gap surfaced |
+| Text-MIN | 0.7591 (un-reviewed GT) | **0.7619** (reviewed GT 4,746) | **0.7968** (unchanged) | 0 (no missing) | no-op at tile-content level |
+| GS-v2 | **0.8734** | **0.8859** (+0.0126) | n/a (gold-standard GT) | 10 silently-dropped + 1 new | biggest single shift in session |
+
+GS-v2 tile MCC newly computed from `results/gold-standard-extended-buffer-sweep-era2/evaluation.json`: **0.7778 [0.7663, 0.7896]** (BCa N = 10K, seed 42). The pre-recovery published F1 of 0.8734 was understated by ~1.3 percentage points.
+
+Text-MIN recovery was operationally a no-op: `failed_items[]` was a historical-frozen record from the original 2026-04-18 run, never cleared after subsequent recoveries. Tile-content was already complete; the "124 outstanding failures" reported by prior audits were phantoms.
+
+**Cross-track v2 — all 6 pairs at R = 50 m (BCa N = 10K, BH q = 0.05; sources: `results/55maps-pairwise-permutation-v2/*/summary.json` read 2026-05-03):**
+
+| Pair (A vs B) | Corrected F1 A | Corrected F1 B | ΔF1 | Sig? |
+|:---|:---:|:---:|:---:|:---:|
+| T=0.3 vs T=0.7 | 0.8436 | 0.8273 | +0.0162 | *** |
+| T=0.3 vs image | 0.8436 | 0.8333 | +0.0102 | * |
+| T=0.7 vs image | 0.8273 | 0.8333 | −0.0060 | ns |
+| T=0.3 vs T=MIN | 0.8436 | 0.7968 | +0.0467 | *** |
+| T=0.7 vs T=MIN | 0.8273 | 0.7968 | +0.0305 | *** |
+| image vs T=MIN | 0.8333 | 0.7968 | +0.0365 | *** |
+
+All 6 pairs preserve sign and significance vs pre-recovery baselines. Attractor-pull v2 4-run consensus cap (100 m permissive / 125 m majority) preserved.
+
+**Parser fix payoff (`e3aef6fa`, Session 83):** 3 follow-up recoveries totalled ~$0.29 (~$0.001–0.003 per tile) vs T=0.7's pre-fix $57.10 at $0.357 per tile — approximately 100–300× cheaper per tile. The fix amortises across every future recovery pass.
+
+### The verifier-completeness discovery
+
+**28 verifier candidates were silently dropped from `probabilities.json` during the original production runs** (image: 18 missing; GS-v2: 10 pre-existing + 1 new-from-consensus). The runtime reported success even though `len(probabilities) < len(consensus)`. Today's `run_pv.py cleanup` (commit `8082896b` for image; `4ea54760` for GS-v2) recovered all 28.
+
+Root cause not yet investigated — the recovery was a workaround, not a pipeline-level guard. **Phase3a matrix cells (which populate the leaderboards) may carry the same problem.** A phase3a verifier-completeness audit was logged as a critical paper-Methods follow-up for the next session; it could affect leaderboard tier rankings if significant gaps are found.
+
+### The metadata cleanup
+
+Commits `7f328c62` (prospective fix) and `368f652d` (retrospective cleanup):
+
+- **Root cause**: `execution_stats.failed_items[]` was a historical-frozen log from the original run, never cleared after recoveries. Audits reading this field naively produced phantom counts (124 outstanding failures for text-MIN when the true count was 0).
+- **Retrospective fix** (`scripts/clean_meta_failed_items.py`): cleared 124 stale entries across 5 text-MIN per-pass metas; stale entries moved to `recovery_history[]` with `source: "retrospective_cleanup"` tag. The other four corpora (T=0.7, image, GS-v2, T=0.3) were already clean.
+- **Prospective fix** (`scripts/lib_llm_metadata.py::merge_meta`): now defensively filters any `failed_items[]` entry whose `item_id` appears in the merged `combined_completed` set. Future recoveries cannot leave stale entries even if upstream code regresses.
+- 14 new tier-1 tests added; full tier-1 suite green (926 passed).
+
+### The GT additions
+
+- `baf1497a` — candidate 4264 / K-35-064-3 (second of two touching mounds; student curator had missed it); surfaced by T=0.7 propagation.
+- `2e075eb9` — candidate 2397 / K-35-062-4 (isolated mound / trig point on mound; curator omission in image corpus); surfaced by image recovery.
+
+Curator GT is now at 4,746 features (was 4,744). Both additions are instances of a paper-Methods limitation: **curator GT is high-quality but not complete**; human review of model FPs catches some omissions, but cannot catch curator omissions outside reviewed regions.
+
+### Why this matters
+
+1. **Verifier-completeness is a previously-unmonitored class of pipeline failure.** Today surfaced 28 instances; the underlying transient-verifier-failure mechanism remains unfixed. Phase3a audit is critical before any further leaderboard claims can be considered settled.
+
+2. **GS-v2 published F1 was understated by ~1.3 pp** (0.8734 → 0.8859). This is the paper's gold-standard accuracy claim; the upward correction is favourable and material.
+
+3. **`failed_items[]` is a historical-frozen log, not a current-failure signal.** Future audit code must use `completed_items` as the canonical "done" record. The lesson is paper-Methods-relevant.
+
+4. **Parser fix `e3aef6fa` has demonstrated ~100–300× per-tile cost leverage** across 3 follow-up recoveries. Total Session 84 recovery cost ~$0.29 vs a counterfactual ~$28 at T=0.7-era per-tile rates.
+
+5. **All paper-load-bearing cross-track claims are preserved.** The 5-paper-hypothesis structure (T=0.3 > T=0.7 > T=MIN; image competitive with T=0.7) is intact.
+
+### Caveats / methodological notes
+
+- Text-MIN corrected F1 is reported as 0.7968 (from permutation test source: 0.79684 rounded to 4 dp); the spec cited 0.7969 in one place, which is a rounding artefact. All cross-track ΔF1 figures are verified from on-disk permutation summaries.
+- The "text-MIN recovery was a no-op" characterisation applies at tile-content level only. The audit was not wasted: it revealed the `failed_items[]` staleness pattern and precipitated the metadata cleanup, which is independently valuable.
+- Seven bugs were surfaced across the Session 83–84 propagation arc total: 3 fixed (parser `e3aef6fa`; D-S row-position `a9e280a3`; cost-manifest cleanup-overwrites-meta `7f05f529`); 4 documented as deferred (cost-manifest 2× double-counting; GS-v2 harness 2-resume race; verifier-completeness root-cause; auto-regeneration-overwrites-hand-authored-prose).
+- Session total spend: ~$58 (T=0.7 recovery $57.10 + 3 follow-up recoveries $0.29 + FP-classify $0.58 + cleanup ~$0.10).
+
+### Findable later
+
+Search terms: Session 84 closure 3 follow-up recoveries, 28 silently-dropped verifier candidates, image 18 missing verifier, GS-v2 10 missing verifier, text-MIN failed_items phantom 124, verifier completeness pipeline gap, GS-v2 F1 0.8734 corrected to 0.8859, GS-v2 MCC 0.7778, cross-track v2 all 6 pairs R=50m BH, image corrected F1 0.8333, T=0.3 vs T=MIN 0.0467, T=0.7 vs T=MIN 0.0305, image vs T=MIN 0.0365, parser fix amortised 100-300x cost, metadata cleanup failed_items historical frozen, clean_meta_failed_items.py 124 stale entries, merge_meta defensive cleanup 7f328c62 368f652d, curator GT 4746 candidate 4264 K-35-064-3, candidate 2397 K-35-062-4, phase3a verifier-completeness audit deferred leaderboard tier rankings, 14 new tier-1 tests 926 passed, session spend 58 dollars.
+
+### Related observations and artefacts
+
+- **Obs 318** (T=0.7 magnitude correction — 0.375 % failure rate): parent context for the recovery arc this Obs closes.
+- **Obs 319** (T=0.7 vs T=0.3 recovery-cost asymmetry — ~189×): parent cost context; parser fix payoff quantified here.
+- **Obs 320** (T=0.7 55-map recovery + propagation closure, Session 83): sibling; this Obs documents the three follow-up recoveries that came after the T=0.7 closure.
+- **Obs 297** (HIGH thinking earns its tokens; T=0.7 vs T=MIN paired Δ +0.0296): figure strengthened to Δ +0.0305 post-recovery (source: `results/55maps-pairwise-permutation-v2/paired-t0.7-vs-tmin/summary.json`).
+- **Obs 280, 277, 291, 292, 296, 298, 299**: all preserved across recoveries; no qualitative changes.
+- **Artefacts**: `outputs/55maps-image-generalisation/evaluation/evaluation.json` (post-recovery image raw F1 0.7745, MCC 0.6924); `results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json` (image corrected F1 0.8333 at R = 50 m); `results/gold-standard-extended-buffer-sweep-era2/evaluation.json` (GS-v2 raw F1 0.8859, MCC 0.7778); `outputs/55maps-text-min-generalisation/evaluation/evaluation.json` (text-MIN raw F1 0.7619); `results/55maps-pairwise-permutation-v2/` (all 6 cross-track pair summaries); `scripts/clean_meta_failed_items.py` (retrospective cleanup CLI); `scripts/lib_llm_metadata.py` (prospective merge_meta defensive patch); verifier-recovery commits `8082896b` (image, 18 recovered) and `4ea54760` (GS-v2, 11 recovered); metadata-cleanup commits `7f328c62` + `368f652d`; GT-addition commits `baf1497a` (K-35-064-3) and `2e075eb9` (K-35-062-4).
