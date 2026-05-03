@@ -1,5 +1,16 @@
 # Student GT False-Negative Rate — 55-Map Review-Based Estimate
 
+_T=0.7 post-recovery refresh: 2026-05-03. The text-HIGH-generalisation
+review CSV grew from 630 → 637 rows after the T=0.7 single-round
+recovery (commits `731466d8`, `d7f85978`, `e20f3e18`, `9b80621e`),
+and the curator GT denominator picked up +1 mound at K-35-064-3
+(commit `baf1497a`, 4,744 → 4,745). This report's headline numbers
+were re-derived against the updated inputs as part of the same
+recovery analysis (commit `33435aab`); the recall denominator for
+text-HIGH-generalisation in the per-run table below is updated
+accordingly. Pre-update artefacts preserved as
+`*.pre-gtupdate-20260503T005643.backup` siblings._
+
 Tightened estimate of the false-negative (FN) rate of the 55-map
 student / participatory-GIS ground truth, derived from human review
 of detection candidates produced by four corrected 55-map runs

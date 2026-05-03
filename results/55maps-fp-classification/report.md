@@ -1,6 +1,13 @@
 # 55-map FP-class classification — Obs 296 Diagnostic Test #2 (v2)
 
-_Generated 2026-05-03 00:56 UTC_
+_Generated 2026-05-03 00:56 UTC — full re-run on all four 55-map corpora
+following the T=0.7 single-round recovery (commits `d7f85978`,
+`e20f3e18`, `f533fda5`). T=0.7's FP cohort is now sourced from the
+recovered 4,164-detection set against the updated 4,745-mound curator
+GT (was 4,143 / 4,744 pre-recovery); the other three corpora's FP cohorts
+were re-classified as part of the same pass for cross-corpus consistency.
+Pre-update artefacts preserved as `*.pre-gtupdate-20260503T005315.backup`
+siblings._
 
 Tests Shawn's hypothesis (Obs 296) that 55-map false positives concentrate on numbers / benchmarks (distractor-pull failure mode), while the gold-standard (GS) calibration corpus surfaces a different mode (spot-heights / water features). The original Test #2 was blocked by the review CSV's collapsed `symbol_type` column (Obs 300); this run substitutes a Vision Language Model (VLM) classification pass on rendered 150 m crops, asking Gemini 3 Flash to apply Soviet-1980s topographic-symbol categories directly.
 
@@ -147,4 +154,3 @@ v1 and v2 verdicts agree on the headline question: Shawn's distractor-pull-on-te
 ## Findable later
 
 Search terms: 55-map FP-class classification, Obs 296 Test #2, cartographic-naming approach, Gemini 3 Flash 150 m crop classification, distractor-pull text-track number benchmark, chi-square image vs text-track, water-feature spot-height GS failure mode, Soviet 1980s topographic categories closed list, rendered crop in-memory base64, flex tier classification single-pass, confidence-weighted distribution sensitivity, 55-map FP v2 burial-mound closed list, cross-corpus consistency with parallel GS re-run, review-pass false-FP labels.
-

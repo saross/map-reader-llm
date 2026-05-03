@@ -2,6 +2,15 @@
 
 **Date**: 2026-04-28 (text-MIN added to the previous three-run summary
 of 2026-04-27).
+**T=0.7 post-recovery refresh**: 2026-05-03 (T=0.7 row re-derived against
+the recovered single-round consensus + verifier and the updated curator GT;
+see commits `366f9c66`, `e07dae37`, `f533fda5`. Pre-recovery T=0.7 numbers
+preserved as `*.pre-recovery-20260502T235912.backup` siblings under
+`results/55maps-text-high-generalisation/dawid-skene/` and
+`ds-human-crosstab/`. The T=0.7 shifts are small — D-S F1 0.8129 → 0.8142,
+VLM-only posterior 0.2935 → 0.2914, item counts 3,513/1,257/630 →
+3,527/1,243/637 — and do not change T=0.7's relative position in any §4
+ranking; see §4.1 / §4.2 footnotes.)
 **Runs analysed**: T=0.3 (`55maps-text-high-t0.3-generalisation`), T=0.7
 (`55maps-text-high-generalisation`), image (`55maps-image-generalisation`),
 text-MIN (`55maps-text-min-generalisation`).
@@ -39,25 +48,29 @@ nearly indistinguishable from T=0.7 on every calibration metric.
 | Run | Matched | Student-only | VLM-only | Total | VLM-only / matched |
 |-----|--------:|-------------:|---------:|------:|-------------------:|
 | text-MIN | 3,276 | 1,494 | 585 | 5,355 | 0.179 |
-| T=0.7 | 3,513 | 1,257 | 630 | 5,400 | 0.179 |
+| T=0.7 | 3,527 | 1,243 | 637 | 5,407 | 0.181 |
 | T=0.3 | 3,531 | 1,239 | 819 | 5,589 | 0.232 |
 | Image | 3,637 | 1,133 | 1,028 | 5,798 | 0.283 |
 
 Sorted by VLM-only / matched ratio. text-MIN and T=0.7 produce nearly
-identical ratios (0.179 each) — the conservative end. T=0.3 sits in
-the middle (0.232). Image is the most permissive on the VLM side
+identical ratios (0.179 vs 0.181) — the conservative end. T=0.3 sits
+in the middle (0.232). Image is the most permissive on the VLM side
 (0.283). text-MIN has the smallest absolute matched count (3,276 — the
 smallest of the four) and the largest student-only count (1,494 —
 i.e. the largest count of references the VLM missed), reflecting that
 text-MIN is the lowest-recall of the four runs at the measured-F1
 stage.
 
+*Post-recovery 2026-05-03 — T=0.7 counts shifted by +14 matched, −14
+student-only, +7 VLM-only against the pre-recovery row (3,513 / 1,257 /
+630); the run's relative position remains second-most conservative.*
+
 ### 2.2 Worker accuracy (D-S confusion matrix estimates)
 
 | Run | Student sensitivity | Student specificity | VLM sensitivity | VLM specificity | Estimated prevalence |
 |-----|--------------------:|--------------------:|----------------:|----------------:|---------------------:|
 | T=0.3 | 0.9500 (fixed) | 1.0000 (fixed) | 0.7500 | 0.0000 | 0.8867 |
-| T=0.7 | 0.9500 (fixed) | 1.0000 (fixed) | 0.7463 | 0.0000 | 0.9176 |
+| T=0.7 | 0.9500 (fixed) | 1.0000 (fixed) | 0.7492 | 0.0000 | 0.9165 |
 | Image | 0.9500 (fixed) | 1.0000 (fixed) | 0.7716 | 0.0000 | 0.8557 |
 | text-MIN | 0.9500 (fixed) | 1.0000 (fixed) | 0.6977 | 0.0000 | 0.9230 |
 
@@ -84,7 +97,7 @@ locations.
 | Run | Measured F1 | Measured P | Measured R | D-S F1 | D-S P | D-S R | Δ F1 (D-S − measured) |
 |-----|------------:|-----------:|-----------:|-------:|------:|------:|----------------------:|
 | T=0.3 | 0.7743 | 0.8117 | 0.7403 | 0.7988 | 0.8544 | 0.7500 | **+0.0245** |
-| T=0.7 | 0.7883 | 0.8479 | 0.7365 | 0.8129 | 0.8926 | 0.7463 | **+0.0246** |
+| T=0.7 | 0.7896 | 0.8470 | 0.7394 | 0.8142 | 0.8916 | 0.7492 | **+0.0246** |
 | Image | 0.7710 | 0.7796 | 0.7625 | 0.7954 | 0.8207 | 0.7716 | **+0.0244** |
 | text-MIN | 0.7591 | 0.8485 | 0.6868 | 0.7834 | 0.8931 | 0.6977 | **+0.0243** |
 
@@ -102,12 +115,12 @@ distribution).
 | Run | VLM-only n | VLM-only posterior P(true=1) | Expected reclassified (soft) | Hard-threshold reclassified |
 |-----|-----------:|-----------------------------:|------------------------------:|----------------------------:|
 | T=0.3 | 819 | 0.2269 | 185.8 | 0 |
-| T=0.7 | 630 | 0.2935 | 184.9 | 0 |
+| T=0.7 | 637 | 0.2914 | 185.6 | 0 |
 | Image | 1,028 | 0.1862 | 191.4 | 0 |
 | text-MIN | 585 | 0.2947 | 172.4 | 0 |
 
 text-MIN produces the **highest** VLM-only posterior of the four
-(0.2947), narrowly above T=0.7 (0.2935) — both reflect that their
+(0.2947), narrowly above T=0.7 (0.2914) — both reflect that their
 VLM-only sets are smallest in proportion to the matched set, so D-S
 attributes a larger fraction of those items to true student false
 negatives. Image produces the **lowest** posterior (0.1862) because
@@ -138,7 +151,7 @@ slice.
 | Run | Joined / unjoined | Empirical rate | D-S posterior | Gap (emp − D-S) | Ratio (emp / D-S) | ECE | Brier | AUC |
 |-----|------------------:|---------------:|--------------:|----------------:|------------------:|----:|------:|----:|
 | text-MIN | 585 / 0 | 0.5538 (324/585) | 0.2947 | +0.259 | 1.88× | 0.2591 | 0.3142 | 0.500 |
-| T=0.7 | 630 / 0 | 0.5587 (352/630) | 0.2935 | +0.265 | 1.90× | 0.2652 | 0.3169 | 0.500 |
+| T=0.7 | 637 / 0 | 0.5589 (356/637) | 0.2914 | +0.267 | 1.92× | 0.2675 | 0.3181 | 0.500 |
 | T=0.3 | 628 / 64 | 0.5748 (361/628) | 0.2269 | +0.348 | 2.53× | 0.3479 | 0.3655 | 0.500 |
 | Image | 1,028 / 1 | 0.7247 (745/1,028) | 0.1862 | +0.539 | 3.89× | 0.5385 | 0.4895 | 0.500 |
 
@@ -159,7 +172,7 @@ Sorted by calibration gap. Notes:
   student GT at multi-buffer rings while D-S uses the legacy student
   GT at 50 m).
 - **text-MIN's empirical mound rate (0.5538) is the lowest** of the
-  four, just below T=0.7 (0.5587), well below T=0.3 (0.5748) and
+  four, just below T=0.7 (0.5589), well below T=0.3 (0.5748) and
   image (0.7247). The four runs span 0.55–0.72 on this metric.
 
 ## 4. Cross-run comparison — extending Obs 293's headline
@@ -168,11 +181,11 @@ Sorted by calibration gap. Notes:
 
 | Metric | Best | 2nd | 3rd | Worst |
 |--------|------|-----|-----|-------|
-| Measured F1 | T=0.7 (0.7883) | T=0.3 (0.7743) | Image (0.7710) | text-MIN (0.7591) |
-| D-S corrected F1 | T=0.7 (0.8129) | T=0.3 (0.7988) | Image (0.7954) | text-MIN (0.7834) |
-| Corrected-F1-multi-buffer F1 (R=50 m) | T=0.3 (0.8437) | Image (0.8317) | T=0.7 (0.8260) | text-MIN (0.7964) |
-| D-S calibration ECE (lower = better) | text-MIN (0.259) | T=0.7 (0.265) | T=0.3 (0.348) | Image (0.539) |
-| D-S calibration Brier (lower = better) | text-MIN (0.314) | T=0.7 (0.317) | T=0.3 (0.366) | Image (0.490) |
+| Measured F1 | T=0.7 (0.7896) | T=0.3 (0.7743) | Image (0.7710) | text-MIN (0.7591) |
+| D-S corrected F1 | T=0.7 (0.8142) | T=0.3 (0.7988) | Image (0.7954) | text-MIN (0.7834) |
+| Corrected-F1-multi-buffer F1 (R=50 m) | T=0.3 (0.8437) | Image (0.8317) | T=0.7 (0.8273) | text-MIN (0.7964) |
+| D-S calibration ECE (lower = better) | text-MIN (0.259) | T=0.7 (0.267) | T=0.3 (0.348) | Image (0.539) |
+| D-S calibration Brier (lower = better) | text-MIN (0.314) | T=0.7 (0.318) | T=0.3 (0.366) | Image (0.490) |
 
 The D-S F1 ranking and the measured F1 ranking are **identical**
 across all four runs (T=0.7 > T=0.3 > image > text-MIN). The
@@ -184,8 +197,10 @@ agree only that text-MIN is last.
 The calibration ECE / Brier ranking puts **text-MIN narrowly first**,
 T=0.7 second, T=0.3 third, image last. This is consistent with §4.2 —
 calibration ranks by VLM-only / matched ratio, and text-MIN's ratio
-(0.179) is the lowest by a hair over T=0.7 (0.179 to four decimal
-places: text-MIN 0.1786 vs T=0.7 0.1793).
+(0.179) remains marginally lower than T=0.7's (0.181) after the
+T=0.7 post-recovery refresh: text-MIN 0.1786 vs T=0.7 0.1806 (was
+T=0.7 0.1793 pre-recovery). text-MIN's narrow lead on the
+calibration ranking is preserved.
 
 ### 4.2 Calibration gap scales monotonically with VLM-only / matched ratio
 
@@ -197,7 +212,7 @@ the three-run pattern reported in Obs 293:
 | Run | VLM-only / matched ratio | Posterior:empirical ratio (= 1 / underestimate) |
 |-----|-------------------------:|-------------------------------------------------:|
 | text-MIN | 0.1786 (585 / 3,276) | 1.88× |
-| T=0.7 | 0.1793 (630 / 3,513) | 1.90× |
+| T=0.7 | 0.1806 (637 / 3,527) | 1.92× |
 | T=0.3 | 0.232 (819 / 3,531) | 2.53× |
 | Image | 0.283 (1,028 / 3,637) | 3.89× |
 
@@ -224,7 +239,7 @@ ground truth:
 | Run | D-S corrected F1 | corrected-F1-multi-buffer F1 (R=50 m) | Δ |
 |-----|-----------------:|--------------------------------------:|---:|
 | T=0.3 | 0.7988 | 0.8437 | +0.045 |
-| T=0.7 | 0.8129 | 0.8260 | +0.013 |
+| T=0.7 | 0.8142 | 0.8273 | +0.013 |
 | Image | 0.7954 | 0.8317 | +0.036 |
 | text-MIN | 0.7834 | 0.7964 | +0.013 |
 
@@ -266,12 +281,12 @@ diagnostics:
 
 | Metric | text-MIN | T=0.7 | Difference |
 |--------|---------:|------:|-----------:|
-| VLM-only / matched | 0.1786 | 0.1793 | −0.0007 |
-| VLM-only posterior | 0.2947 | 0.2935 | +0.0012 |
-| Empirical rate | 0.5538 | 0.5587 | −0.0049 |
-| Calibration gap (emp − D-S) | 0.259 | 0.265 | −0.006 |
-| ECE | 0.2591 | 0.2652 | −0.0061 |
-| Brier | 0.3142 | 0.3169 | −0.0027 |
+| VLM-only / matched | 0.1786 | 0.1806 | −0.0020 |
+| VLM-only posterior | 0.2947 | 0.2914 | +0.0033 |
+| Empirical rate | 0.5538 | 0.5589 | −0.0051 |
+| Calibration gap (emp − D-S) | 0.259 | 0.267 | −0.008 |
+| ECE | 0.2591 | 0.2675 | −0.0084 |
+| Brier | 0.3142 | 0.3181 | −0.0039 |
 
 The two runs converge on essentially the same calibration metrics
 despite very different prompt configurations (text-MIN minimises
@@ -325,7 +340,7 @@ the four to do so on the headline corrected metric.
 | Run | Measured | D-S | Corrected-F1-multi-buffer | Spread |
 |-----|---------:|----:|--------------------------:|-------:|
 | T=0.3 | 0.7743 | 0.7988 | 0.8437 | 0.069 |
-| T=0.7 | 0.7883 | 0.8129 | 0.8260 | 0.038 |
+| T=0.7 | 0.7896 | 0.8142 | 0.8273 | 0.038 |
 | Image | 0.7710 | 0.7954 | 0.8317 | 0.061 |
 | text-MIN | 0.7591 | 0.7834 | 0.7964 | 0.037 |
 
@@ -341,7 +356,7 @@ size rather than a confidence signal about the underlying F1.
 ### 5.5 64 unjoined T=0.3 review rows — a methodology-divergence diagnostic
 
 T=0.3 has 64 / 692 = 9.2 % unjoined review rows, vs 1 / 1,029 = 0.1 %
-for image, 0 / 630 = 0 % for T=0.7, and **0 / 585 = 0 % for
+for image, 0 / 637 = 0 % for T=0.7, and **0 / 585 = 0 % for
 text-MIN**. The cause is documented in §3 (legacy GT in D-S vs
 reviewed-extended-GT in corrected-F1) but the rate is substantially
 worse for T=0.3 than the other runs. T=0.3 was run with single-round
@@ -373,41 +388,48 @@ Per-run consensus and verifier probabilities:
 | Run | Consensus | Probabilities |
 |-----|-----------|---------------|
 | T=0.3 | `outputs/55maps-text-high-t0.3-generalisation/consensus/consensus-4of5.geojson` | `outputs/55maps-text-high-t0.3-generalisation/verified/probabilities.json` |
-| T=0.7 | `outputs/55maps-generalisation/consensus/consensus-4of5.geojson` (legacy default; not the T=0.7-specific consensus — see §6.1) | `outputs/55maps-generalisation/verified/probabilities.json` |
+| T=0.7 | `outputs/55maps-text-high-generalisation/consensus/consensus-4of5.geojson` | `outputs/55maps-text-high-generalisation/verified/probabilities.json` |
 | Image | `outputs/55maps-image-generalisation/consensus/consensus-3of5.geojson` | `outputs/55maps-image-generalisation/verified/probabilities.json` |
 | text-MIN | `outputs/55maps-text-min-generalisation/consensus/consensus-4of5.geojson` | `outputs/55maps-text-min-generalisation/verified/probabilities.json` |
 
-### 6.1 Caveat — T=0.7 D-S used legacy consensus paths
+### 6.1 Resolved — T=0.7 D-S now uses T=0.7-specific paths (post-recovery 2026-05-03)
 
-The existing T=0.7 D-S sibling (Apr 19) was run with the analyse-script's
-**default** legacy consensus (`outputs/55maps-generalisation/...`),
-**not** the T=0.7-specific run output
-(`outputs/55maps-text-high-generalisation/...`). At threshold 0.15 the
-two paths produce 4,068 vs 4,143 VLM positives respectively, and by
-coincidence the 630 VLM-only items align exactly across (map_name, x, y)
-keys with the T=0.7 human-review CSV (which itself was generated against
-the T=0.7-specific corrected-F1 pipeline using
-`outputs/55maps-text-high-generalisation/verified/verified_detections.geojson`).
+The earlier (Apr 19) T=0.7 D-S sibling was run against the analyse-script's
+**default** legacy consensus (`outputs/55maps-generalisation/...`) rather
+than the T=0.7-specific run output. The post-recovery re-aggregation on
+2026-05-03 (commit `366f9c66`) re-runs D-S against the T=0.7-specific
+paths shown in the table above, alongside the recovered single-round
+proposer + verifier passes (commits `731466d8`, `d7f85978`, `e20f3e18`)
+and the canonical updated curator GT (4,745 mounds, including the
++1 added at K-35-064-3 in `baf1497a`). The pre-recovery D-S artefacts
+are preserved as `*.pre-recovery-20260502T235912.backup` siblings under
+`results/55maps-text-high-generalisation/dawid-skene/` and
+`ds-human-crosstab/`.
 
-The fact that the keys align across the two consensus paths is a
-coincidence — the legacy consensus and the T=0.7 verified detections
-share the same threshold-0.15 cut. If the T=0.7 D-S were re-run on
-T=0.7-specific paths the matched / vlm-only counts would shift by a
-modest amount (~75 additional VLM positives) and the calibration ECE /
-Brier would change accordingly. For the cross-run comparison reported
-here, the legacy-path T=0.7 D-S is preserved because it was the basis of
-the published Apr 19 result; a run on T=0.7-specific paths is
-recommended for future work but is not blocking the cross-run comparison.
+Item-set deltas vs the legacy-path Apr 19 result:
+
+- matched: 3,513 → 3,527 (+14)
+- student-only: 1,257 → 1,243 (−14)
+- VLM-only: 630 → 637 (+7)
+- VLM-only posterior: 0.2935 → 0.2914
+- D-S F1: 0.8129 → 0.8142
+
+Shifts are smaller than expected from the legacy/canonical path divergence
+because the post-recovery T=0.7 verified set lands at 4,164 detections
+(vs the pre-recovery 4,143; +21) and the new GT mound is matched, not
+left dangling. T=0.7's relative position vs the other three runs is
+preserved on every §4 ranking — see §4.1 / §4.2.
 
 The T=0.3, image, and text-MIN D-S aggregations all use their
-run-specific paths.
+run-specific paths and were not re-run; their numbers carry forward
+unchanged from the previous summary.
 
 ### 6.2 Per-run human-review files
 
 | Run | Yesterday review | Today review |
 |-----|------------------|--------------|
 | T=0.3 | (none — empty placeholder used) | `results/55maps-text-high-t0.3-generalisation/human-review-multi-buffer.csv` (692 rows) |
-| T=0.7 | (none — empty placeholder used) | `results/55maps-text-high-generalisation/human-review-multi-buffer.csv` (630 rows) |
+| T=0.7 | (none — empty placeholder used) | `results/55maps-text-high-generalisation/human-review-multi-buffer.csv` (637 rows) |
 | Image | `results/55maps-image-generalisation/human-review.csv` (1,028 rows) | `results/55maps-image-generalisation/human-review-multi-buffer.csv` (557 rows) |
 | text-MIN | (none — empty placeholder used) | `results/55maps-text-min-generalisation/human-review-multi-buffer.csv` (586 rows) |
 

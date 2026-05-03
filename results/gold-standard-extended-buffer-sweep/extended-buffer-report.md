@@ -2,6 +2,14 @@
 
 **Date of analysis**: 2026-04-18 (Sydney).
 **Level-up**: 2026-04-24 (Session 76).
+**T=0.7 post-recovery refresh**: 2026-05-03 — the 55-map text-HIGH
+T=0.7 numbers cited in §6, §6.2, §7.5, §8.1, §8.2 are refreshed to
+match the recovered single-round T=0.7 detection set (verified
+detections 4,143 → 4,164 after recovery, commits `731466d8`,
+`d7f85978`, `e20f3e18`) and the updated curator GT (4,744 → 4,745
+mounds, commit `baf1497a`). The 50 m raw F1 lands at 0.7920 (was
+0.788; +0.004), and the 50 m corrected F1 at 0.8273 (was 0.8260;
++0.001) — gap and curve-shape conclusions are unchanged.
 
 **Observation anchors**: Obs 260 (F1-plateau / GT-precision-noise framing on the 4-map gold-standard vs 55-map student GT). Direct input to meta-findings Theme T1 (corrected-F1 lower bound rationale) and Theme T4 (subtype classification — the gold-standard corpus is the same 4-map subset).
 
@@ -18,10 +26,10 @@ This report characterises the F1 curve behaviour at **tighter-than-primary** (5 
 - **Sharp penalty below 15 m**: dropping from 15 m to 10 m costs ~0.123 F1; from 10 m to 5 m another ~0.40 F1. At 5 m, only 22–28 % of verified detections land within GT distance.
 - **Precision-limited at 5 m**: P = 0.284 at 5 m vs 0.936 at ≥ 25 m; R = 0.223 at 5 m vs 0.734 at ≥ 25 m. The 5 m drop is a spatial-matching penalty, not model error.
 - **55-map vs 4-map gap at 20 m**: 0.8155 (gold-standard) − 0.623 (55-map student) = **+0.193 F1** — most of which is GT-precision noise on the 55-map student corpus, not model-quality loss.
-- **55-map vs 4-map gap at 50 m**: 0.826 (gold-standard) − 0.788 (55-map student) = **+0.038 F1** — closer to the "true" model-quality gap; the 55-map curve has not plateaued at 50 m.
+- **55-map vs 4-map gap at 50 m**: 0.826 (gold-standard) − 0.792 (55-map student, post-recovery 2026-05-03; was 0.788) = **+0.034 F1** — closer to the "true" model-quality gap; the 55-map curve has not plateaued at 50 m.
 - The **~ 25–35 m rightward shift** of the 55-map curve relative to the gold-standard curve is the signature of student-annotation position noise on the 55-map GT (each annotator-map combination contributes several metres; the combined shift suggests ~25–35 m position noise on the 55-map GT centroids).
 
-**One-line paper claim**: "On the 4-map gold-standard corpus with curator-quality GT, the text-HIGH pipeline's F1 curve plateaus from 25 m upward at F1 = 0.8225; on the 55-map student-annotated generalisation corpus the same pipeline's curve has not plateaued even at 50 m. The ~25 m rightward shift of the 55-map curve is the signature of student-GT position noise, not model-quality loss — it dragged the 55-map 20 m F1 down by ~0.19 and the 50 m F1 down by ~0.04, the latter being closer to the true model-quality gap."
+**One-line paper claim**: "On the 4-map gold-standard corpus with curator-quality GT, the text-HIGH pipeline's F1 curve plateaus from 25 m upward at F1 = 0.8225; on the 55-map student-annotated generalisation corpus the same pipeline's curve has not plateaued even at 50 m. The ~25 m rightward shift of the 55-map curve is the signature of student-GT position noise, not model-quality loss — it dragged the 55-map 20 m F1 down by ~0.19 and the 50 m F1 down by ~0.03, the latter being closer to the true model-quality gap."
 
 ## 2. Canonical run selected
 
@@ -81,7 +89,7 @@ This artefact reports the text-HIGH gold-standard v2 pipeline on the **Era 3 sco
 
 **Corpus disjointness**: the 4 gold-standard maps and the 55 generalisation maps are **disjoint sheet-sets** (zero map-sheet intersection; confirmed 2026-04-24 via `inputs/vectors/bounds/384/*.geojson` + `inputs/vectors/references/*.geojson` audit). Total project coverage is 59 sheets (4 GS + 55 generalisation). The curve-shift comparison below therefore compares pipeline F1 on two independent sheet populations; it cannot be confounded by shared-sheet contamination between the curator-GT and student-GT references. See `results/evaluation-scopes.md` §11.
 
-User-supplied 55-map text-HIGH F1 values at 20 / 30 / 40 / 50 m: 0.623 / 0.753 / 0.783 / 0.788.
+User-supplied 55-map text-HIGH F1 values at 20 / 30 / 40 / 50 m: 0.623 / 0.753 / 0.783 / 0.792 (50 m updated post-recovery 2026-05-03; was 0.788 — see top-of-file note).
 
 | Buffer | Gold-std 4 maps (569 mounds, curator GT) | 55-map student GT | Gap |
 |-------:|------------------------------------------|-------------------|-------:|
@@ -91,22 +99,22 @@ User-supplied 55-map text-HIGH F1 values at 20 / 30 / 40 / 50 m: 0.623 / 0.753 /
 | 35 m* | 0.8225 | (~0.77 interp) | ~+0.05 |
 | 40 m | 0.8225 (cached cell) | 0.783 | +0.040 |
 | 45 m* | 0.8225 | (~0.79 interp) | ~+0.03 |
-| 50 m | 0.8260 (cached cell) | 0.788 | +0.038 |
+| 50 m | 0.8260 (cached cell) | 0.792 (was 0.788 pre-recovery) | +0.034 |
 
 *\* = buffer values NOT in the 55-map sweep; 55-map gaps estimated by linear interpolation between adjacent points.*
 
 ### 6.1 Interpretation
 
-- **The 55-map curve has NOT plateaued at 50 m** — each +10 m buffer step still buys a few F1 points (20 → 30: +0.130; 30 → 40: +0.030; 40 → 50: +0.005). Plateau likely falls somewhere between 50 and 80 m.
+- **The 55-map curve has NOT plateaued at 50 m** — each +10 m buffer step still buys a few F1 points (20 → 30: +0.130; 30 → 40: +0.030; 40 → 50: +0.009 post-recovery; was +0.005 pre-recovery). Plateau likely falls somewhere between 50 and 80 m.
 - **The gold-standard curve plateaus at 25 m**, ~25 m earlier than the 55-map curve.
 - **The ~40 m shift** (gold plateau at ~20–25 m; 55-map plateau likely beyond 50 m) is the signature of student-annotation position error on the 55-map GT. It is not a model-quality gap — it is a GT-precision gap.
-- **At large buffer (50 m)**, the gap narrows to 0.038 F1, which is closer to the "true" model-quality gap between the two corpuses (gold-standard vs 55-map unseen-maps generalisation).
+- **At large buffer (50 m)**, the gap narrows to 0.034 F1 (post-recovery 2026-05-03; was 0.038 pre-recovery), which is closer to the "true" model-quality gap between the two corpuses (gold-standard vs 55-map unseen-maps generalisation).
 - **At the preregistered 20 m buffer**, the 55-map result is dragged ~0.19 F1 below the gold-standard result, most of which is GT-noise, not model-quality loss.
 - **Below 15 m the gold-standard F1 also crashes**, so this is a spatial noise problem on both corpuses, just shifted in magnitude.
 
 ### 6.2 Implication for publication framing
 
-The 55-map F1 at 20 m materially understates model quality because the student GT has position noise that shifts the saturating buffer from ~25 m to > 50 m. When reporting generalisation, either (a) quote the 50 m result (0.788) as closest to model-quality ceiling, or (b) explicitly quantify the annotation-precision offset using the curve shape comparison shown here (the 55-map curve is approximately the gold-standard curve shifted right by ~25–35 m).
+The 55-map F1 at 20 m materially understates model quality because the student GT has position noise that shifts the saturating buffer from ~25 m to > 50 m. When reporting generalisation, either (a) quote the 50 m result (0.792 post-recovery; was 0.788) as closest to model-quality ceiling, or (b) explicitly quantify the annotation-precision offset using the curve shape comparison shown here (the 55-map curve is approximately the gold-standard curve shifted right by ~25–35 m).
 
 ## 7. Caveats / risk register
 
@@ -114,7 +122,7 @@ The 55-map F1 at 20 m materially understates model quality because the student G
 2. **Only 4 maps in gold-standard corpus**: the 0.8225 plateau value is specific to these 4 maps (K-35-052-4, K-35-053-3, K-35-062-2, K-35-078-1); generalisation to maps with different symbol density or print fidelity is untested here. The 55-map generalisation run is the formal out-of-sample test.
 3. **n = 250 verified detections is modest**. Bootstrap CIs at ±0.04–0.05 F1 reflect this sample size. The plateau direction (F1 ≥ 25 m identical to three decimal places) is unambiguous, but per-cell CI overlap between 25 m and 50 m is substantial.
 4. **5 m crash is not model error**. Below-15 m F1 crashes on both corpuses — spatial-matching floors at tight buffers are a methodological property, not a finding about model quality.
-5. **The 55-map 20 m = 0.623 figure is user-supplied and not directly re-derived** in this artefact. It comes from `results/55maps-text-high-generalisation/evaluation/evaluation.json` (see §8). Recomputed 2026-04-24 for this level-up: the 20 m F1 at `.summary.buffers[0]` is 0.6227 — consistent with the 0.623 cited.
+5. **The 55-map 20 m = 0.623 figure is user-supplied and not directly re-derived** in this artefact. It comes from `results/55maps-text-high-generalisation/evaluation/evaluation.json` (see §8). Recomputed 2026-04-24 for this level-up: the 20 m F1 at `.summary.buffers[0]` is 0.6227 — consistent with the 0.623 cited. Post-recovery 2026-05-03: only the 50 m row was re-derived from the recovered T=0.7 detection set (raw F1 0.7920); the 20 / 30 / 40 m rows in the table above carry forward from the pre-recovery evaluation pending a full multi-buffer re-run.
 6. **Calibration_bounds.geojson broken**. The task brief cited `inputs/vectors/bounds/384/calibration_bounds.geojson` which contains 0 features. The comparison used `h10_test_bounds.geojson` (327 tiles) to maintain scoring comparability with the canonical leaderboard; this deviation is documented in §3.
 7. **Verifier v1 only** — this run used verifier-v1. v2 (quarantined under `archive/v2-verifier-contamination/`) is not cited for any gold-standard figure. See `docs/methodology/v2-verifier-contamination-policy.md` for the quarantine rationale.
 
@@ -125,12 +133,12 @@ The 55-map F1 at 20 m materially understates model quality because the student G
 The paper's text-HIGH Results section should cite **both** corpuses with a shared interpretive lens:
 
 - On the 4-map gold-standard (curator GT, 569 mounds across 327 tiles at 384 px), text-HIGH plateaus at **F1 = 0.822** from R = 25 m onward.
-- On the 55-map generalisation corpus (student GT, 4,744 mounds across 8,541 tiles at 384 px), text-HIGH does not plateau at 50 m (F1 = 0.788; corrected F1 = 0.8317 at 50 m after human-review rescue).
-- The gap at matched buffer narrows from +0.193 at 20 m to +0.038 at 50 m; the ~0.155 absolute gap narrowing is the empirical signature of student-GT position noise (~25 m) on the 55-map corpus.
+- On the 55-map generalisation corpus (student GT, 4,745 mounds across 8,541 tiles at 384 px; +1 mound from `baf1497a` post-recovery), text-HIGH does not plateau at 50 m (F1 = 0.792 post-recovery; was 0.788; corrected F1 = 0.8273 at 50 m after human-review rescue, was 0.8260).
+- The gap at matched buffer narrows from +0.193 at 20 m to +0.034 at 50 m (post-recovery; was +0.038); the ~0.159 absolute gap narrowing is the empirical signature of student-GT position noise (~25 m) on the 55-map corpus.
 
 ### 8.2 Why corrected F1 lifts the 55-map headline above the raw comparison
 
-The corrected-F1 multi-buffer analysis (`results/55maps-image-generalisation/corrected-f1-multi-buffer/report.md`) recovers F1 = 0.8317 at 50 m on the 55-map image corpus — higher than the text-HIGH 0.788 at 50 m. The corrected-F1 uplift (+0.044) comes from re-classifying 474 VLM-only candidates as mounds; this is independent of the GT-precision-noise effect documented here. The two corrections (human-review rescue + GT-precision-noise accounting) both act to move the 55-map F1 toward the gold-standard plateau; combined, they close most of the +0.038 – +0.193 gap at matched buffers.
+The corrected-F1 multi-buffer analysis (`results/55maps-image-generalisation/corrected-f1-multi-buffer/report.md`) recovers F1 = 0.8317 at 50 m on the 55-map image corpus — higher than the text-HIGH 0.792 at 50 m (post-recovery; was 0.788). The corrected-F1 uplift on the image side (+0.040) comes from re-classifying ~474 VLM-only candidates as mounds; this is independent of the GT-precision-noise effect documented here. The two corrections (human-review rescue + GT-precision-noise accounting) both act to move the 55-map F1 toward the gold-standard plateau; combined, they close most of the +0.034 – +0.193 gap at matched buffers (50 m gap post-recovery; was +0.038).
 
 ### 8.3 Methodological contribution
 
@@ -138,7 +146,7 @@ The **extended-buffer curve shape is a free diagnostic** for GT-precision-noise 
 
 ### 8.4 Suggested paper text (Results — extended-buffer comparison)
 
-> An extended-buffer F1 curve on the 4-map gold-standard corpus (569 mounds, 327 evaluation tiles at 384 px, text-HIGH pipeline with `gemini-3-flash`, K = 5 consensus at vote_t = 4, prob_t = 0.15, verifier-v1) plateaus at F1 = 0.8225 [0.7833, 0.8586] from R = 25 m upward. Below 15 m, F1 crashes sharply (F1 = 0.2496 at 5 m) due to the combined spatial-matching floor of detection centroiding, annotation placement, and GT digitising noise. On the 55-map generalisation corpus, the same pipeline's F1 curve has not plateaued at R = 50 m (F1 = 0.788 at 50 m; compared to 0.826 on the gold-standard corpus at 50 m). The ~25–35 m rightward shift of the 55-map curve relative to the gold-standard curve is the empirical signature of student-GT position noise on the 55-map corpus. The matched-buffer gap narrows from +0.193 F1 at 20 m (gold 0.8155 − student 0.623) to +0.038 F1 at 50 m (gold 0.826 − student 0.788); the latter is closer to the true model-quality gap between the two corpuses. This curve-shape analysis is the empirical basis for quoting generalisation performance at 50 m and / or citing the human-review-corrected F1 ≥ 0.830 at 50 m (`corrected-f1-multi-buffer/report.md`) rather than the raw 0.623 at 20 m.
+> An extended-buffer F1 curve on the 4-map gold-standard corpus (569 mounds, 327 evaluation tiles at 384 px, text-HIGH pipeline with `gemini-3-flash`, K = 5 consensus at vote_t = 4, prob_t = 0.15, verifier-v1) plateaus at F1 = 0.8225 [0.7833, 0.8586] from R = 25 m upward. Below 15 m, F1 crashes sharply (F1 = 0.2496 at 5 m) due to the combined spatial-matching floor of detection centroiding, annotation placement, and GT digitising noise. On the 55-map generalisation corpus, the same pipeline's F1 curve has not plateaued at R = 50 m (F1 = 0.792 at 50 m post-recovery 2026-05-03, was 0.788; compared to 0.826 on the gold-standard corpus at 50 m). The ~25–35 m rightward shift of the 55-map curve relative to the gold-standard curve is the empirical signature of student-GT position noise on the 55-map corpus. The matched-buffer gap narrows from +0.193 F1 at 20 m (gold 0.8155 − student 0.623) to +0.034 F1 at 50 m (gold 0.826 − student 0.792 post-recovery; was +0.038 with student 0.788); the latter is closer to the true model-quality gap between the two corpuses. This curve-shape analysis is the empirical basis for quoting generalisation performance at 50 m and / or citing the human-review-corrected F1 ≥ 0.827 at 50 m (`corrected-f1-multi-buffer/report.md`; post-recovery T=0.7 corrected F1 0.8273) rather than the raw 0.623 at 20 m.
 
 ## 9. Files manifest
 
