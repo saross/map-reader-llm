@@ -2,16 +2,16 @@
 
 **Question.** Is the cross-corpus (GS vs 55-map) gap in the (50, 75] m mid-distance pull rate (≤ 1.7 % on GS, 5–10× higher on 55-map per Obs 296) **structural** (a failure-of-generalisation effect) or **sampling** (the 4 GS maps happen to be a low-distractor subset of the 55-map universe)?
 
-**Method.** Per-detection nearest-reference distance is computed via geometric KDTree against `inputs/vectors/references/student-mounds-55maps-reviewed.geojson` (4744 reviewed reference points), matching the GS attractor-pull methodology (`analyse_attractor_pull_gs.py`). Detections are grouped by `map_name` (55 maps); per-map (50, 75] m rate is n_in_shell / n_detections. Bootstrap: 1,000 random samples of 4 maps from 55, detection-weighted mean per sample, P(mean ≤ GS yardstick) reported.
+**Method.** Per-detection nearest-reference distance is computed via geometric KDTree against `inputs/vectors/references/student-mounds-55maps-reviewed.geojson` (4745 reviewed reference points), matching the GS attractor-pull methodology (`analyse_attractor_pull_gs.py`). Detections are grouped by `map_name` (55 maps); per-map (50, 75] m rate is n_in_shell / n_detections. Bootstrap: 1,000 random samples of 4 maps from 55, detection-weighted mean per sample, P(mean ≤ GS yardstick) reported.
 
 ## Per-run summary
 
 | Run | n_det (corpus) | n_in_shell | corpus rate | per-map mean | per-map median | per-map SD | per-map min | per-map max | maps with > 0 dets |
 |:---|--:|--:|--:|--:|--:|--:|--:|--:|--:|
 | T=0.3 text-HIGH | 692 | 30 | 4.34 % | 4.81 % | 0.00 % | 8.56 % | 0.00 % | 42.86 % | 55 / 55 |
-| T=0.7 text-HIGH | 630 | 21 | 3.33 % | 4.77 % | 0.00 % | 12.05 % | 0.00 % | 75.00 % | 55 / 55 |
+| T=0.7 text-HIGH | 637 | 22 | 3.45 % | 4.72 % | 0.00 % | 11.77 % | 0.00 % | 75.00 % | 55 / 55 |
 | image (T=0.7) | 1029 | 163 | 15.84 % | 15.68 % | 15.38 % | 12.45 % | 0.00 % | 50.00 % | 55 / 55 |
-| text-MIN | 585 | 24 | 4.10 % | 5.06 % | 0.00 % | 10.27 % | 0.00 % | 50.00 % | 55 / 55 |
+| text-MIN | 585 | 23 | 3.93 % | 4.88 % | 0.00 % | 10.27 % | 0.00 % | 50.00 % | 55 / 55 |
 
 ## Per-map fraction below the GS yardstick
 
@@ -22,7 +22,7 @@ Of the maps with > 0 detections, what fraction have a per-map (50, 75] m rate �
 | T=0.3 text-HIGH | text | 55 | 34 | 61.8 % | 0.51 % | 34 | 61.8 % |
 | T=0.7 text-HIGH | text | 55 | 40 | 72.7 % | 0.51 % | 40 | 72.7 % |
 | image (T=0.7) | image | 55 | 10 | 18.2 % | 1.21 % | 10 | 18.2 % |
-| text-MIN | text | 55 | 37 | 67.3 % | 0.51 % | 37 | 67.3 % |
+| text-MIN | text | 55 | 38 | 69.1 % | 0.51 % | 38 | 69.1 % |
 
 ## Bootstrap 4-map random samples vs GS yardstick (headline)
 
@@ -31,9 +31,9 @@ Each row reports 1,000 bootstrap samples of 4 maps drawn without replacement fro
 | Run | bootstrap mean | bootstrap SD | bootstrap p05 | bootstrap p95 | P(mean ≤ 1.7 %) | same-track yardstick | P(mean ≤ same-track) |
 |:---|--:|--:|--:|--:|--:|--:|--:|
 | T=0.3 text-HIGH | 4.34 % | 3.26 % | 0.00 % | 10.26 % | 19.1 % | 0.51 % | 15.2 % |
-| T=0.7 text-HIGH | 3.89 % | 3.82 % | 0.00 % | 11.37 % | 29.8 % | 0.51 % | 23.2 % |
+| T=0.7 text-HIGH | 4.02 % | 3.86 % | 0.00 % | 11.43 % | 28.9 % | 0.51 % | 23.2 % |
 | image (T=0.7) | 15.79 % | 5.14 % | 7.50 % | 23.94 % | 0.0 % | 1.21 % | 0.0 % |
-| text-MIN | 4.78 % | 4.52 % | 0.00 % | 14.64 % | 22.3 % | 0.51 % | 17.5 % |
+| text-MIN | 4.61 % | 4.54 % | 0.00 % | 14.30 % | 24.3 % | 0.51 % | 19.6 % |
 
 ## Verdict
 
@@ -47,7 +47,7 @@ Each row reports 1,000 bootstrap samples of 4 maps drawn without replacement fro
 
 ## Provenance
 
-- Reference: `inputs/vectors/references/student-mounds-55maps-reviewed.geojson` (4744 reviewed reference points)
+- Reference: `inputs/vectors/references/student-mounds-55maps-reviewed.geojson` (4745 reviewed reference points)
 - Bounds: `inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson` (8,541 tiles, 55 maps)
 - Bootstrap iterations: 1000
 - RNG seed: 42

@@ -10,35 +10,35 @@
   "bootstrap_n": 10000,
   "bootstrap_seed": 42,
   "n_maps": 55,
-  "n_review_rows_total": 3499,
-  "n_mound_rows_total": 1821,
+  "n_review_rows_total": 3492,
+  "n_mound_rows_total": 1817,
   "tier_counts": {
     "high_confidence_fn": 1008,
-    "likely_matching_collision": 497,
+    "likely_matching_collision": 495,
     "highest_confidence_fn": 173,
-    "marginal": 143
+    "marginal": 141
   },
   "strata": {
     "headline": {
       "fn_count": 462,
-      "student_gt_count": 4745,
-      "point_estimate": 0.08872671403879392,
-      "ci_low": 0.06923879971989322,
-      "ci_high": 0.11351482810051709
+      "student_gt_count": 4744,
+      "point_estimate": 0.08874375720322704,
+      "ci_low": 0.06926361588140789,
+      "ci_high": 0.1135278573594422
     },
     "inclusive": {
       "fn_count": 560,
-      "student_gt_count": 4745,
-      "point_estimate": 0.1055607917059378,
-      "ci_low": 0.08571416520041457,
-      "ci_high": 0.1302447150987473
+      "student_gt_count": 4744,
+      "point_estimate": 0.10558069381598793,
+      "ci_low": 0.08573030374897647,
+      "ci_high": 0.1302859296482412
     },
     "permissive": {
       "fn_count": 942,
-      "student_gt_count": 4745,
-      "point_estimate": 0.16564093546685424,
-      "ci_low": 0.14777788075981643,
-      "ci_high": 0.1871767251598964
+      "student_gt_count": 4744,
+      "point_estimate": 0.16567006683081253,
+      "ci_low": 0.14780725052643615,
+      "ci_high": 0.187213915444024
     }
   },
   "recall_adjusted_central": {
@@ -47,9 +47,9 @@
     "recall": 0.7957902511078286,
     "recall_ci_low": 0.7836019553875435,
     "recall_ci_high": 0.8076784189055327,
-    "point_estimate": 0.1114951005183545,
-    "ci_low": 0.08572570233301169,
-    "ci_high": 0.14486286987935912,
+    "point_estimate": 0.111516517172315,
+    "ci_low": 0.08575642763275203,
+    "ci_high": 0.14487949727396365,
     "ci_method": "Conservative ratio CI: head_lo/recall_hi to head_hi/recall_lo (ignores covariance)."
   },
   "all_recall_runs": [
@@ -63,9 +63,9 @@
     {
       "run": "text-high-generalisation",
       "R_m": 150,
-      "recall": 0.7601104754389426,
-      "recall_ci_low": 0.746153736451797,
-      "recall_ci_high": 0.7738545687736796
+      "recall": 0.757306477093207,
+      "recall_ci_low": 0.7431264924966617,
+      "recall_ci_high": 0.7712350429105244
     },
     {
       "run": "text-high-t0.3-generalisation",

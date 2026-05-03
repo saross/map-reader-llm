@@ -6,34 +6,34 @@
 
 For each run, observed shell rates are taken directly from the reviewer's ``buffer_metres`` label (the band at which a real mound is visible inside the buffer; ``not_mound`` rows are mapped to the > 286 m shell). The null distribution is M = 1,000 within-tile permutations (seed 42) of student GT distances. Bias correction divides the null rate by the student-GT fraction of the real-mound universe to account for the reviewer-promoted phantoms absent from student GT. Per-shell significance is the one-sided permutation p-value against the bias-corrected null (P(null_corrected ≥ obs)), alpha = 0.05.
 
-Student-GT reference set: 4745 mounds (4-corner of the corrected reviewed reference).
+Student-GT reference set: 4744 mounds (4-corner of the corrected reviewed reference).
 Shell edges (m): 50, 75, 100, 125, 150, 286. The (200, 286] shell corresponds to the >150-m / not_mound review label, with effective tolerance 286 m (200 × √2 + 5 display-pixels on the 400 m × 400 m crop).
 
 ## 2. Per-run shell tables
 
-### T=0.3 text-HIGH — n=692, bias_correction=0.9232
+### T=0.3 text-HIGH — n=692, bias_correction=0.9231
 
 |   R_inner_m |   R_outer_m |   obs_rate_in_shell |   null_mean_bias_corrected |   lift_ratio_bias_corrected |   signal_fraction_bias_corrected |   p_value_bias_corrected | significant   |
 |------------:|------------:|--------------------:|---------------------------:|----------------------------:|---------------------------------:|-------------------------:|:--------------|
-|           0 |          50 |              0.4451 |                     0.0031 |                      145.74 |                           0.9931 |                    0.001 | True          |
+|           0 |          50 |              0.4451 |                     0.0031 |                      145.88 |                           0.9931 |                    0.001 | True          |
 |          50 |          75 |              0.0347 |                     0.0038 |                        9.23 |                           0.8917 |                    0.001 | True          |
-|          75 |         100 |              0.0202 |                     0.005  |                        4.04 |                           0.7522 |                    0.001 | True          |
-|         100 |         125 |              0.0101 |                     0.0059 |                        1.71 |                           0.4155 |                    0.093 | False         |
-|         125 |         150 |              0.0145 |                     0.0069 |                        2.08 |                           0.5199 |                    0.013 | True          |
-|         150 |         286 |              0.0462 |                     0.0552 |                        0.84 |                          -0.193  |                    0.842 | False         |
+|          75 |         100 |              0.0202 |                     0.005  |                        4.03 |                           0.7521 |                    0.001 | True          |
+|         100 |         125 |              0.0101 |                     0.0059 |                        1.71 |                           0.416  |                    0.093 | False         |
+|         125 |         150 |              0.0145 |                     0.0069 |                        2.08 |                           0.5203 |                    0.013 | True          |
+|         150 |         286 |              0.0462 |                     0.0552 |                        0.84 |                          -0.1931 |                    0.842 | False         |
 
 **Per-run cutoff**: 100 m (deepest shell outer edge with bias-corrected p < 0.05)
 
-### T=0.7 text-HIGH — n=637, bias_correction=0.9302
+### T=0.7 text-HIGH — n=630, bias_correction=0.9309
 
 |   R_inner_m |   R_outer_m |   obs_rate_in_shell |   null_mean_bias_corrected |   lift_ratio_bias_corrected |   signal_fraction_bias_corrected |   p_value_bias_corrected | significant   |
 |------------:|------------:|--------------------:|---------------------------:|----------------------------:|---------------------------------:|-------------------------:|:--------------|
-|           0 |          50 |              0.4239 |                     0.0029 |                      146.96 |                           0.9932 |                    0.001 | True          |
-|          50 |          75 |              0.0298 |                     0.0034 |                        8.69 |                           0.8849 |                    0.001 | True          |
-|          75 |         100 |              0.0298 |                     0.0048 |                        6.27 |                           0.8406 |                    0.001 | True          |
-|         100 |         125 |              0.0173 |                     0.0061 |                        2.83 |                           0.6464 |                    0.002 | True          |
-|         125 |         150 |              0.0078 |                     0.0071 |                        1.11 |                           0.1017 |                    0.396 | False         |
-|         150 |         286 |              0.0502 |                     0.0548 |                        0.92 |                          -0.0913 |                    0.707 | False         |
+|           0 |          50 |              0.4254 |                     0.0028 |                      153.25 |                           0.9935 |                    0.001 | True          |
+|          50 |          75 |              0.0286 |                     0.0034 |                        8.48 |                           0.8821 |                    0.001 | True          |
+|          75 |         100 |              0.0286 |                     0.0047 |                        6.04 |                           0.8344 |                    0.001 | True          |
+|         100 |         125 |              0.0175 |                     0.0059 |                        2.96 |                           0.6617 |                    0.001 | True          |
+|         125 |         150 |              0.0079 |                     0.0069 |                        1.15 |                           0.1278 |                    0.37  | False         |
+|         150 |         286 |              0.0508 |                     0.0545 |                        0.93 |                          -0.0721 |                    0.659 | False         |
 
 **Per-run cutoff**: 125 m (deepest shell outer edge with bias-corrected p < 0.05)
 
@@ -41,12 +41,12 @@ Shell edges (m): 50, 75, 100, 125, 150, 286. The (200, 286] shell corresponds to
 
 |   R_inner_m |   R_outer_m |   obs_rate_in_shell |   null_mean_bias_corrected |   lift_ratio_bias_corrected |   signal_fraction_bias_corrected |   p_value_bias_corrected | significant   |
 |------------:|------------:|--------------------:|---------------------------:|----------------------------:|---------------------------------:|-------------------------:|:--------------|
-|           0 |          50 |              0.4606 |                     0.0048 |                       95.61 |                           0.9895 |                    0.001 | True          |
-|          50 |          75 |              0.1176 |                     0.0056 |                       20.97 |                           0.9523 |                    0.001 | True          |
-|          75 |         100 |              0.0457 |                     0.0076 |                        6.01 |                           0.8337 |                    0.001 | True          |
-|         100 |         125 |              0.0185 |                     0.0093 |                        1.98 |                           0.4941 |                    0.005 | True          |
-|         125 |         150 |              0.0107 |                     0.0109 |                        0.98 |                          -0.0157 |                    0.497 | False         |
-|         150 |         286 |              0.0719 |                     0.0818 |                        0.88 |                          -0.1375 |                    0.873 | False         |
+|           0 |          50 |              0.4606 |                     0.0047 |                       97.78 |                           0.9898 |                    0.001 | True          |
+|          50 |          75 |              0.1176 |                     0.0056 |                       21.1  |                           0.9526 |                    0.001 | True          |
+|          75 |         100 |              0.0457 |                     0.0075 |                        6.07 |                           0.8352 |                    0.001 | True          |
+|         100 |         125 |              0.0185 |                     0.0093 |                        1.99 |                           0.4973 |                    0.003 | True          |
+|         125 |         150 |              0.0107 |                     0.0108 |                        0.99 |                          -0.0125 |                    0.502 | False         |
+|         150 |         286 |              0.0719 |                     0.0814 |                        0.88 |                          -0.1322 |                    0.865 | False         |
 
 **Per-run cutoff**: 125 m (deepest shell outer edge with bias-corrected p < 0.05)
 
@@ -54,12 +54,12 @@ Shell edges (m): 50, 75, 100, 125, 150, 286. The (200, 286] shell corresponds to
 
 |   R_inner_m |   R_outer_m |   obs_rate_in_shell |   null_mean_bias_corrected |   lift_ratio_bias_corrected |   signal_fraction_bias_corrected |   p_value_bias_corrected | significant   |
 |------------:|------------:|--------------------:|---------------------------:|----------------------------:|---------------------------------:|-------------------------:|:--------------|
-|           0 |          50 |              0.4274 |                     0.0026 |                      166.8  |                           0.994  |                    0.001 | True          |
-|          50 |          75 |              0.0342 |                     0.0033 |                       10.33 |                           0.9032 |                    0.001 | True          |
-|          75 |         100 |              0.012  |                     0.0046 |                        2.61 |                           0.6174 |                    0.012 | True          |
-|         100 |         125 |              0.0085 |                     0.0054 |                        1.57 |                           0.3637 |                    0.165 | False         |
-|         125 |         150 |              0.012  |                     0.0066 |                        1.81 |                           0.448  |                    0.083 | False         |
-|         150 |         286 |              0.0598 |                     0.0525 |                        1.14 |                           0.1218 |                    0.216 | False         |
+|           0 |          50 |              0.4274 |                     0.0028 |                      151.76 |                           0.9934 |                    0.001 | True          |
+|          50 |          75 |              0.0342 |                     0.0034 |                       10.08 |                           0.9008 |                    0.001 | True          |
+|          75 |         100 |              0.012  |                     0.0045 |                        2.68 |                           0.6262 |                    0.015 | True          |
+|         100 |         125 |              0.0085 |                     0.0056 |                        1.54 |                           0.3486 |                    0.199 | False         |
+|         125 |         150 |              0.012  |                     0.0068 |                        1.76 |                           0.433  |                    0.082 | False         |
+|         150 |         286 |              0.0598 |                     0.0527 |                        1.14 |                           0.1193 |                    0.254 | False         |
 
 **Per-run cutoff**: 100 m (deepest shell outer edge with bias-corrected p < 0.05)
 
@@ -82,7 +82,7 @@ Shell edges (m): 50, 75, 100, 125, 150, 286. The (200, 286] shell corresponds to
 | run             |   n_candidates |   cutoff_m |
 |:----------------|---------------:|-----------:|
 | T=0.3 text-HIGH |            692 |        100 |
-| T=0.7 text-HIGH |            637 |        125 |
+| T=0.7 text-HIGH |            630 |        125 |
 | image (T=0.7)   |           1029 |        125 |
 | text-MIN        |            585 |        100 |
 

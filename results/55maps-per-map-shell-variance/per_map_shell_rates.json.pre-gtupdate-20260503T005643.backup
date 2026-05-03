@@ -3,7 +3,7 @@
   "shell_inner_m": 50,
   "shell_outer_m": 75,
   "reference_path": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
-  "n_reference_points": 4745,
+  "n_reference_points": 4744,
   "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
   "map_universe_size": 55,
   "runs": {
@@ -362,9 +362,9 @@
     "t0.7": {
       "label": "T=0.7 text-HIGH",
       "aggregate": {
-        "n_detections": 637,
-        "n_in_shell": 22,
-        "corpus_rate": 0.034537
+        "n_detections": 630,
+        "n_in_shell": 21,
+        "corpus_rate": 0.033333
       },
       "per_map_p_le_gs_yardstick": {
         "n_active_maps": 55,
@@ -393,9 +393,9 @@
         },
         {
           "map_name": "K-35-051-3",
-          "n_detections": 4,
+          "n_detections": 3,
           "n_in_shell": 1,
-          "shell_rate": 0.25
+          "shell_rate": 0.333333
         },
         {
           "map_name": "K-35-051-4",
@@ -411,7 +411,7 @@
         },
         {
           "map_name": "K-35-052-3",
-          "n_detections": 9,
+          "n_detections": 8,
           "n_in_shell": 0,
           "shell_rate": 0.0
         },
@@ -513,9 +513,9 @@
         },
         {
           "map_name": "K-35-063-4_Skobelevo_4326",
-          "n_detections": 16,
-          "n_in_shell": 2,
-          "shell_rate": 0.125
+          "n_detections": 15,
+          "n_in_shell": 1,
+          "shell_rate": 0.066667
         },
         {
           "map_name": "K-35-064-1_Sredets_4326",
@@ -531,7 +531,7 @@
         },
         {
           "map_name": "K-35-064-3_Dimitrovgrad_4326",
-          "n_detections": 9,
+          "n_detections": 8,
           "n_in_shell": 0,
           "shell_rate": 0.0
         },
@@ -561,7 +561,7 @@
         },
         {
           "map_name": "K-35-065-4",
-          "n_detections": 7,
+          "n_detections": 6,
           "n_in_shell": 0,
           "shell_rate": 0.0
         },
@@ -687,7 +687,7 @@
         },
         {
           "map_name": "K-35-077-1",
-          "n_detections": 15,
+          "n_detections": 13,
           "n_in_shell": 0,
           "shell_rate": 0.0
         },
@@ -1067,20 +1067,20 @@
       "label": "text-MIN",
       "aggregate": {
         "n_detections": 585,
-        "n_in_shell": 23,
-        "corpus_rate": 0.039316
+        "n_in_shell": 24,
+        "corpus_rate": 0.041026
       },
       "per_map_p_le_gs_yardstick": {
         "n_active_maps": 55,
-        "n_le": 38,
-        "fraction_le": 0.690909
+        "n_le": 37,
+        "fraction_le": 0.672727
       },
       "per_map_p_le_same_track_yardstick": {
         "track": "text",
         "yardstick": 0.0051,
         "n_active_maps": 55,
-        "n_le": 38,
-        "fraction_le": 0.690909
+        "n_le": 37,
+        "fraction_le": 0.672727
       },
       "per_map": [
         {
@@ -1236,8 +1236,8 @@
         {
           "map_name": "K-35-064-3_Dimitrovgrad_4326",
           "n_detections": 10,
-          "n_in_shell": 0,
-          "shell_rate": 0.0
+          "n_in_shell": 1,
+          "shell_rate": 0.1
         },
         {
           "map_name": "K-35-064-4_Galabovo_4326",

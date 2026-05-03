@@ -4,7 +4,7 @@
   "tp_cutoff_m": 25.0,
   "histogram_bin_m": 5.0,
   "n_gs_reference_mounds": 569,
-  "n_55map_reference_mounds": 4745,
+  "n_55map_reference_mounds": 4744,
   "conditions": [
     {
       "key": "gs-text-high-t0.7",
@@ -57,23 +57,23 @@
       "label": "55-map T=0.3 text-HIGH",
       "corpus": "55map",
       "n_detections": 692,
-      "n_tp_at_25m": 31,
-      "tp_rate_at_25m": 0.0448,
+      "n_tp_at_25m": 30,
+      "tp_rate_at_25m": 0.0434,
       "descriptors": {
-        "n_tp": 31,
-        "mean_m": 14.529,
-        "median_m": 12.833,
-        "std_m": 7.203,
-        "p25_m": 8.962,
-        "p50_m": 12.833,
-        "p75_m": 21.826,
-        "p90_m": 23.126,
-        "p95_m": 24.044,
+        "n_tp": 30,
+        "mean_m": 14.888,
+        "median_m": 14.429,
+        "std_m": 7.039,
+        "p25_m": 9.269,
+        "p50_m": 14.429,
+        "p75_m": 21.859,
+        "p90_m": 23.216,
+        "p95_m": 24.046,
         "histogram_5m_bins": [
           {
             "bin_lo_m": 0.0,
             "bin_hi_m": 5.0,
-            "count": 3
+            "count": 2
           },
           {
             "bin_lo_m": 5.0,
@@ -102,24 +102,24 @@
       "key": "55map-t0.7",
       "label": "55-map T=0.7 text-HIGH",
       "corpus": "55map",
-      "n_detections": 637,
-      "n_tp_at_25m": 21,
-      "tp_rate_at_25m": 0.033,
+      "n_detections": 630,
+      "n_tp_at_25m": 20,
+      "tp_rate_at_25m": 0.0317,
       "descriptors": {
-        "n_tp": 21,
-        "mean_m": 13.109,
-        "median_m": 12.751,
-        "std_m": 7.134,
-        "p25_m": 8.865,
-        "p50_m": 12.751,
-        "p75_m": 18.835,
-        "p90_m": 24.127,
-        "p95_m": 24.256,
+        "n_tp": 20,
+        "mean_m": 13.765,
+        "median_m": 12.832,
+        "std_m": 6.638,
+        "p25_m": 8.921,
+        "p50_m": 12.832,
+        "p75_m": 19.363,
+        "p90_m": 24.14,
+        "p95_m": 24.277,
         "histogram_5m_bins": [
           {
             "bin_lo_m": 0.0,
             "bin_hi_m": 5.0,
-            "count": 2
+            "count": 1
           },
           {
             "bin_lo_m": 5.0,
@@ -195,18 +195,18 @@
       "label": "55-map text-MIN",
       "corpus": "55map",
       "n_detections": 585,
-      "n_tp_at_25m": 25,
-      "tp_rate_at_25m": 0.0427,
+      "n_tp_at_25m": 24,
+      "tp_rate_at_25m": 0.041,
       "descriptors": {
-        "n_tp": 25,
-        "mean_m": 13.471,
-        "median_m": 14.682,
-        "std_m": 6.735,
-        "p25_m": 8.847,
-        "p50_m": 14.682,
-        "p75_m": 19.364,
-        "p90_m": 20.893,
-        "p95_m": 21.999,
+        "n_tp": 24,
+        "mean_m": 13.333,
+        "median_m": 14.408,
+        "std_m": 6.844,
+        "p25_m": 7.912,
+        "p50_m": 14.408,
+        "p75_m": 19.556,
+        "p90_m": 20.952,
+        "p95_m": 22.053,
         "histogram_5m_bins": [
           {
             "bin_lo_m": 0.0,
@@ -226,7 +226,7 @@
           {
             "bin_lo_m": 15.0,
             "bin_hi_m": 20.0,
-            "count": 6
+            "count": 5
           },
           {
             "bin_lo_m": 20.0,
@@ -241,8 +241,8 @@
     {
       "pair": "gs-text-high-t0.7 vs 55map-t0.3",
       "gs_n": 365,
-      "other_n": 31,
-      "ks_statistic": 0.4972,
+      "other_n": 30,
+      "ks_statistic": 0.5237,
       "p_value": 0.0,
       "significant_alpha_0.05": true,
       "significant_bonferroni_4pairs": true
@@ -250,9 +250,9 @@
     {
       "pair": "gs-text-high-t0.7 vs 55map-t0.7",
       "gs_n": 365,
-      "other_n": 21,
-      "ks_statistic": 0.4852,
-      "p_value": 8.1e-05,
+      "other_n": 20,
+      "ks_statistic": 0.5233,
+      "p_value": 2.4e-05,
       "significant_alpha_0.05": true,
       "significant_bonferroni_4pairs": true
     },
@@ -268,9 +268,9 @@
     {
       "pair": "gs-text-high-t0.7 vs 55map-text-min",
       "gs_n": 365,
-      "other_n": 25,
-      "ks_statistic": 0.5441,
-      "p_value": 1e-06,
+      "other_n": 24,
+      "ks_statistic": 0.5291,
+      "p_value": 2e-06,
       "significant_alpha_0.05": true,
       "significant_bonferroni_4pairs": true
     }
