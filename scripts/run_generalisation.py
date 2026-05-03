@@ -23,6 +23,8 @@ Subcommands
 - ``verify`` — score candidates via ``run_pv.py verify``
 - ``evaluate`` — compute F1 at multiple buffers via ``evaluate_detections.py``
 - ``aggregate-cost`` — (re)build ``cost_manifest.json`` by scanning meta files
+  (also sums any ``*.pre-recovery-*.backup`` / ``*.pre-cleanup-*.backup``
+  sibling metas so cost lost to cleanup-overwrites is recovered)
 - ``all`` — run every stage in order (default)
 
 Design
@@ -826,6 +828,170 @@ def _read_meta(path: Path) -> dict[str, Any]:
         return {}
 
 
+# Backup-suffix patterns for meta files produced by recovery / cleanup
+# workflows. Each entry is a glob fragment appended directly to the
+# primary meta filename (e.g. ``run.meta.json`` →
+# ``run.meta.json.pre-recovery-20260502T235106.backup``):
+#
+# - ``.pre-recovery-*.backup`` — written by Session 80 recovery drivers
+#   (e.g., the T=0.3 single-round recovery driver in commit ``06f994d0``)
+#   when re-running a stage on top of an existing artefact.
+# - ``.pre-cleanup-*.backup`` — written by ``run_pv.py cleanup`` for
+#   ``probabilities.json``. Reserved here so a future patch that backs up
+#   ``run.meta.json`` from cleanup will be picked up automatically.
+#
+# Both are ``.gitignored`` (see ``.gitignore`` lines 121-127) so they
+# only ever exist on the runner that produced them. The aggregator must
+# therefore degrade gracefully when no backup is present (the common case
+# for a freshly-launched run that never needed recovery).
+_META_BACKUP_SUFFIX_GLOBS: tuple[str, ...] = (
+    ".pre-recovery-*.backup",
+    ".pre-cleanup-*.backup",
+)
+
+
+def _find_meta_backups(meta_path: Path) -> list[Path]:
+    """Return any backup variants of ``meta_path`` produced by recovery.
+
+    The cleanup pass in ``scripts/run_pv.py`` (and any future analogue
+    for proposer per-pass meta files) overwrites the original meta with
+    only the cleanup-batch statistics. To preserve cost auditability,
+    Session 80 introduced the convention of copying the original to
+    ``<name>.pre-recovery-<TIMESTAMP>.backup`` (or ``.pre-cleanup-…``)
+    before the overwrite. This helper enumerates those siblings.
+
+    Args:
+        meta_path: Path to the primary ``run.meta.json`` (or per-pass
+            ``*.meta.json``). The function looks in ``meta_path.parent``
+            for siblings whose name is ``meta_path.name`` followed by
+            one of the recognised backup-suffix patterns.
+
+    Returns:
+        Sorted list of backup paths (lexicographic, which is also
+        chronological because the timestamp is ISO-style YYYYMMDDTHHMMSS).
+        Empty list if the directory does not exist or no matches are found.
+    """
+    parent = meta_path.parent
+    if not parent.is_dir():
+        return []
+    matches: list[Path] = []
+    for suffix_glob in _META_BACKUP_SUFFIX_GLOBS:
+        # ``run.meta.json`` + ``.pre-recovery-*.backup`` →
+        # ``run.meta.json.pre-recovery-*.backup``. Concatenated directly
+        # because ``suffix_glob`` already begins with ``.``.
+        pattern = f"{meta_path.name}{suffix_glob}"
+        matches.extend(sorted(parent.glob(pattern)))
+    # Deduplicate while preserving order — the two glob patterns are
+    # disjoint (different infixes) so this is defensive only.
+    seen: set[Path] = set()
+    deduped: list[Path] = []
+    for m in matches:
+        if m not in seen:
+            deduped.append(m)
+            seen.add(m)
+    return deduped
+
+
+def _read_meta_with_backups(meta_path: Path) -> tuple[dict[str, Any], list[Path]]:
+    """Read a meta file and return ``(merged_dict, backup_paths_used)``.
+
+    For the cost-aggregation use case, the merge collapses the primary
+    meta and any backups into a single dict whose ``cost_estimate``,
+    ``usage_stats``, ``timestamp.duration_seconds``, and
+    ``execution_stats.{items_processed,items_failed}`` fields sum across
+    all sources. Other top-level fields (``configuration``, ``run_id``,
+    …) are taken from the primary meta — only the cost-bearing fields
+    matter for ``aggregate_cost_manifest``.
+
+    This avoids invoking the heavier ``lib_llm_metadata.merge_meta``
+    (which also tracks ``recovery_history``, dedupes ``completed_items``
+    by id, and preserves ``per_item_metadata``) — those concerns belong
+    to the original recovery pipeline, not the read-only aggregator.
+
+    Args:
+        meta_path: Path to the primary meta file.
+
+    Returns:
+        Tuple ``(merged, backup_paths)``:
+            - ``merged`` — combined dict with summed cost/tokens/duration.
+              Empty dict if the primary file is absent and there are no
+              backups.
+            - ``backup_paths`` — list of backup paths that contributed.
+              Empty if no backups were merged.
+    """
+    primary = _read_meta(meta_path)
+    backups = _find_meta_backups(meta_path)
+    if not backups:
+        return primary, []
+
+    # Start from primary so non-numeric fields (configuration, run_id,
+    # environment, …) are preserved verbatim. Then add backup values to
+    # the cost-bearing fields. We mutate a deep-enough copy to avoid
+    # surprising the caller if they hold a reference to ``primary``.
+    merged: dict[str, Any] = dict(primary) if primary else {}
+    merged_cost = dict(primary.get("cost_estimate", {}) or {})
+    merged_usage = dict(primary.get("usage_stats", {}) or {})
+    merged_ts = dict(primary.get("timestamp", {}) or {})
+    merged_exec = dict(primary.get("execution_stats", {}) or {})
+
+    used: list[Path] = []
+    for backup_path in backups:
+        backup = _read_meta(backup_path)
+        if not backup:
+            # Unreadable backup — skip but log so audits surface it.
+            logger.warning(
+                "Skipping unreadable meta backup: %s", backup_path,
+            )
+            continue
+        used.append(backup_path)
+
+        # Sum cost fields. ``cost_estimate`` is a flat dict of floats
+        # plus a ``pricing_used`` sub-dict (kept from the primary).
+        b_cost = backup.get("cost_estimate", {}) or {}
+        for cost_key in ("input_cost_usd", "output_cost_usd", "total_cost_usd"):
+            merged_cost[cost_key] = (
+                (merged_cost.get(cost_key) or 0.0)
+                + (b_cost.get(cost_key) or 0.0)
+            )
+
+        # Sum token fields used by ``_read_token_counts``.
+        b_usage = backup.get("usage_stats", {}) or {}
+        for usage_key in _USAGE_STAT_FIELDS.values():
+            merged_usage[usage_key] = (
+                int(merged_usage.get(usage_key) or 0)
+                + int(b_usage.get(usage_key) or 0)
+            )
+
+        # Sum wall-clock duration. ``start``/``end`` are intentionally
+        # left as the primary's values — they identify the most-recent
+        # run rather than the union timeline; downstream consumers only
+        # use ``duration_seconds`` for cost-rate normalisation.
+        b_ts = backup.get("timestamp", {}) or {}
+        merged_ts["duration_seconds"] = (
+            (merged_ts.get("duration_seconds") or 0.0)
+            + (b_ts.get("duration_seconds") or 0.0)
+        )
+
+        # Sum item counts. ``items_processed`` is the right field to add:
+        # the cleanup pass's primary meta records only its own (small)
+        # batch; the original backup records the full pre-cleanup batch.
+        b_exec = backup.get("execution_stats", {}) or {}
+        merged_exec["items_processed"] = (
+            int(merged_exec.get("items_processed") or 0)
+            + int(b_exec.get("items_processed") or 0)
+        )
+        merged_exec["items_failed"] = (
+            int(merged_exec.get("items_failed") or 0)
+            + int(b_exec.get("items_failed") or 0)
+        )
+
+    merged["cost_estimate"] = merged_cost
+    merged["usage_stats"] = merged_usage
+    merged["timestamp"] = merged_ts
+    merged["execution_stats"] = merged_exec
+    return merged, used
+
+
 # Mapping from our token-bucket keys to the actual field names in
 # usage_stats (as written by lib_llm_metadata.AggregatedUsage). Gemini
 # thinking tokens are stored as ``total_thoughts_tokens`` (not
@@ -876,11 +1042,29 @@ def aggregate_cost_manifest(rcfg: ResolvedRunConfig) -> Path:
     per_map_tile_count: dict[str, int] = {}
     per_map_failed: dict[str, int] = {}
 
+    # Provenance: list of meta-backup paths that were summed into the
+    # aggregation. Surfaced on the output ``cost_manifest._metadata`` so
+    # auditors can see whether a recovery's pre-overwrite backup was
+    # picked up. Paths are stringified relative to the run output dir
+    # for portability across machines.
+    cleanup_recovery_metas_merged: list[str] = []
+
+    def _record_backups(used: list[Path]) -> None:
+        for path in used:
+            try:
+                rel = str(path.relative_to(rcfg.output_dir))
+            except ValueError:
+                # Backup outside the run dir — record absolute path
+                # rather than failing.
+                rel = str(path)
+            cleanup_recovery_metas_merged.append(rel)
+
     for run_dir in sorted(proposer_output.glob("run_*")):
         meta_files = sorted(run_dir.glob("*.meta.json"))
         if not meta_files:
             continue
-        meta = _read_meta(meta_files[0])
+        meta, used_backups = _read_meta_with_backups(meta_files[0])
+        _record_backups(used_backups)
         cost = (
             meta.get("cost_estimate", {}).get("total_cost_usd", 0.0) or 0.0
         )
@@ -917,7 +1101,20 @@ def aggregate_cost_manifest(rcfg: ResolvedRunConfig) -> Path:
         })
 
     # ---- Verifier aggregation ----
-    verifier_meta = _read_meta(verified_dir / "run.meta.json")
+    # The verifier ``run.meta.json`` is the most common victim of the
+    # cleanup-overwrite pattern surfaced during the T=0.7 recovery
+    # (Session 82). When ``scripts/run_pv.py cleanup`` re-runs the
+    # verifier on a small set of missed candidates, it overwrites
+    # ``run.meta.json`` with only its own ($0.10-ish) entry. The
+    # original meta — recording the original ~$13 verifier batch — is
+    # preserved (under the Session 80 convention) as
+    # ``run.meta.json.pre-recovery-<TIMESTAMP>.backup``. The helper
+    # below sums both into a single virtual meta so the cost manifest
+    # accurately reflects total verifier spend.
+    verifier_meta, verifier_backups_used = _read_meta_with_backups(
+        verified_dir / "run.meta.json",
+    )
+    _record_backups(verifier_backups_used)
     verifier_cost = (
         verifier_meta.get("cost_estimate", {}).get("total_cost_usd", 0.0)
         or 0.0
@@ -1032,6 +1229,17 @@ def aggregate_cost_manifest(rcfg: ResolvedRunConfig) -> Path:
         "run_name": rcfg.run_name,
         "generated_at": now_iso(),
         "script_version": __version__,
+        # Audit-trail metadata. ``cleanup_recovery_metas_merged`` lists
+        # any ``*.pre-recovery-*.backup`` / ``*.pre-cleanup-*.backup``
+        # meta files that were summed into the totals above (paths are
+        # relative to the run output dir). An empty list means no
+        # backups were found — the common case for a fresh run that
+        # never needed recovery. A non-empty list means at least one
+        # cleanup pass overwrote a primary meta and the aggregator
+        # successfully recovered the lost cost from a sibling backup.
+        "_metadata": {
+            "cleanup_recovery_metas_merged": cleanup_recovery_metas_merged,
+        },
         "totals": {
             "cost_usd": total_cost,
             **total_tokens,
@@ -1074,6 +1282,15 @@ def aggregate_cost_manifest(rcfg: ResolvedRunConfig) -> Path:
         json.dumps(manifest_out, indent=2), encoding="utf-8",
     )
     logger.info("Cost manifest: %s", out_path)
+    if cleanup_recovery_metas_merged:
+        # Surface the backup-merge fact prominently — operators reading
+        # the log expect to see when the aggregator's totals include
+        # spend from a pre-recovery backup that would otherwise be lost.
+        logger.info(
+            "Merged %d meta backup(s) into cost aggregation: %s",
+            len(cleanup_recovery_metas_merged),
+            ", ".join(cleanup_recovery_metas_merged),
+        )
     return out_path
 
 
