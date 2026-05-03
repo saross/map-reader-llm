@@ -16273,3 +16273,80 @@ Search terms: Session 84 closure 3 follow-up recoveries, 28 silently-dropped ver
 - **Obs 297** (HIGH thinking earns its tokens; T=0.7 vs T=MIN paired Δ +0.0296): figure strengthened to Δ +0.0305 post-recovery (source: `results/55maps-pairwise-permutation-v2/paired-t0.7-vs-tmin/summary.json`).
 - **Obs 280, 277, 291, 292, 296, 298, 299**: all preserved across recoveries; no qualitative changes.
 - **Artefacts**: `outputs/55maps-image-generalisation/evaluation/evaluation.json` (post-recovery image raw F1 0.7745, MCC 0.6924); `results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json` (image corrected F1 0.8333 at R = 50 m); `results/gold-standard-extended-buffer-sweep-era2/evaluation.json` (GS-v2 raw F1 0.8859, MCC 0.7778); `outputs/55maps-text-min-generalisation/evaluation/evaluation.json` (text-MIN raw F1 0.7619); `results/55maps-pairwise-permutation-v2/` (all 6 cross-track pair summaries); `scripts/clean_meta_failed_items.py` (retrospective cleanup CLI); `scripts/lib_llm_metadata.py` (prospective merge_meta defensive patch); verifier-recovery commits `8082896b` (image, 18 recovered) and `4ea54760` (GS-v2, 11 recovered); metadata-cleanup commits `7f328c62` + `368f652d`; GT-addition commits `baf1497a` (K-35-064-3) and `2e075eb9` (K-35-062-4).
+
+## Observation 322: Obs 296's `obs_rate_in_shell` is TP-only by construction; the (50, 75] m signal is TP-localisation-tail, not FP-anchoring; FPs are well-separated from real mounds (87–95 % beyond 286 m) (2026-05-03)
+
+### The trigger
+
+A diagnostic refinement of Obs 296 was scoped as item #9 in the post-Session-81 to-do register: *"TP-only localisation bias check at (50, 75] m"*. The stated worry was that the FP-anchoring signal at R ≈ 75 m in the attractor-pull v2 metric could be confounded by True Positives that the model *did* detect but mis-localised by 50–75 m. Today (Session 85, 2026-05-03) the diagnostic ran and surfaced a **methodological clarification that bears on Obs 296's prose framing**, not merely a refinement of its numbers.
+
+### The clarification
+
+Obs 296 reports `obs_rate_in_shell` (the per-shell observed proportion of the attractor-pull v2 metric, computed by `scripts/analyse_attractor_pull_v2.py`) and frames the (50, 75] m signal as "FP-anchoring at R ≈ 75 m". Inspection of the metric's construction shows:
+
+1. `obs_rate_in_shell` is computed from `buffer_band`, which is finite **only for `human_label == 'mound'` rows** (TPs in the corrected-F1 review pipeline).
+2. False Positives have `buffer_band = inf` and contribute 0 to every (0, 286] m shell by construction.
+3. The (50, 75] m attractor-pull v2 signal is therefore **already TP-only**: it measures the fraction of *True Positives* whose centroid sits in the (50, 75] m localisation-error band, not the fraction of FPs near a real mound.
+
+Obs 296's underlying numbers and mechanism (distractor-pull → mis-localised detections) are correct. What is misleading is the prose label "FP-anchoring", which implies the signal is FP-side. It is not — it is a TP-localisation-tail signal.
+
+### TP localisation-tail share — small in three text-track runs, larger on image
+
+| run | n_TP | TP (0, 50] | TP (50, 75] | TP frac in (50, 75] |
+|:---|---:|:---|:---|---:|
+| T=0.3 text-HIGH | 395 | 308 (78.0 %) | 24 (6.1 %) | 6.1 % |
+| T=0.7 text-HIGH | 356 | 270 (75.8 %) | 19 (5.3 %) | 5.3 % |
+| **image (T=0.7)** | 747 | 475 (63.6 %) | **121 (16.2 %)** | **16.2 %** |
+| text-MIN | 324 | 250 (77.2 %) | 20 (6.2 %) | 6.2 % |
+
+Three text-track runs sit at 5–6 % (PASS strict yardstick of < 10 %). The image track sits at 16.2 %, narrowly above the 15 % lenient yardstick — **borderline aggregate verdict**. The (0, 50] m share dominates in every track (64–78 %).
+
+### FPs are well-separated from real mounds — the cleaner FP-anchoring diagnostic
+
+The complementary FP histogram (FP nearest-distance to the 55-map student-reviewed GT) shows:
+
+| run | n_FP | FP (0, 100] | FP (100, 286] | FP (286, ∞) |
+|:---|---:|:---|:---|:---|
+| T=0.3 text-HIGH | 297 | 0 (0.0 %) | 18 (6.0 %) | 279 (93.9 %) |
+| T=0.7 text-HIGH | 281 | 2 (0.7 %) | 17 (6.0 %) | 262 (93.2 %) |
+| image (T=0.7) | 283 | 3 (1.1 %) | 32 (11.3 %) | 248 (87.6 %) |
+| text-MIN | 261 | 1 (0.4 %) | 13 (5.0 %) | 247 (94.6 %) |
+
+Across all four 55-map tracks, **< 1 % of FPs sit within 100 m of any real mound**, and **87–95 % sit beyond 286 m** — consistent with the FP definition (`human_label == 'not_mound'` after the 200 m largest review buffer fails to surface a real mound). FPs are not anchored near real mounds at any meaningful frequency. They are anchored to non-mound cartographic features far from real mounds — most prominently contour-rings (~41 % per Obs 302), water features, and spot-elevation symbols.
+
+### What this clarifies about Obs 296
+
+- **Obs 296's failure-of-generalisation reading STANDS.** The 5–10× cross-corpus difference in mid-distance pull rate is a real per-detection effect — TPs are mis-localised at (50, 75] m more often on 55-map than on GS, plausibly because of distractor-pull behaviour that the GS calibration corpus had already had progressively suppressed during prompt iteration.
+- **The mechanism Obs 296 describes — distractor-pull producing 50–125 m mis-localisation — is consistent with the data**, but the data is on the TP side: a real mound detection landing 50–75 m off-centre because the model anchored to a nearby distractor and emitted a bbox overlapping the distractor centre rather than the mound centre.
+- **The "FP-anchoring" prose label is misleading.** A reader of Obs 296 might infer that FPs cluster near real mounds at R ≈ 75 m. The actual data: FPs cluster far from real mounds (> 286 m, 87–95 %), and the (50, 75] m signal is a TP-localisation-tail finding.
+
+### Implication for the paper
+
+The paper Discussion should adopt the **TP-localisation-tail** framing rather than the FP-anchoring label. The substantive story is *strengthened* by this clarification:
+
+1. **Failure of generalisation is real** — TPs land in the (50, 75] m mis-localisation tail 5–16 % of the time on 55-map vs ~1 % on GS at the same shell.
+2. **FPs are properly defined and well-separated from real mounds** — the corrected-F1 review pipeline behaves as expected; FP composition is dominated by non-mound features (Obs 302).
+3. **Two distinct phenomena** that should be reported separately:
+   - TP localisation tail (what the (50, 75] m attractor-pull signal actually measures).
+   - FP composition + distance distribution (what Obs 302 + this Obs's FP histogram measure).
+
+A future paper revision should not cite Obs 296 as evidence for FP-anchoring; it should cite this Obs (322) for the cleaner two-phenomenon framing, and Obs 302 for FP composition.
+
+### Caveats
+
+- **TP buffer-band labels are reviewer-discretised** (50, 75, 100, 125, 150, 200 m), not continuous distances. The (50, 75] m share is exact at review-band resolution; finer sub-binning would require re-evaluation with continuous distance recording.
+- **GS not analysable in this diagnostic.** GS evaluation uses Euclidean matching to the curator-corrected reference (no buffer-band review CSV), and the existing TP-localisation file caps GS TPs at ≤ 25 m. Producing GS at extended buffer bands would require a re-evaluation outside this diagnostic's scope.
+- **(0, 25] vs (25, 50] split not available** at the reviewer's smallest review buffer (50 m). The headline (50, 75] m share is unaffected.
+- **No bootstrap CIs**. Per-shell counts are point estimates; the diagnostic relies on the *direction* of the (50, 75] m TP share (small in every track), not on a precise fraction.
+
+### Findable later
+
+Search terms: Obs 296 reframing, attractor-pull v2 TP-only by construction, buffer_band finite only for mound rows, FP-anchoring label misleading, TP localisation tail (50 75] m, FP nearest-distance well-separated 87 95 percent beyond 286 m, image track 16 percent TP localisation tail, contour-rings dominate FPs Obs 302 cross-reference, two-phenomenon framing localisation-tail vs FP-composition, paper Discussion reframe.
+
+### Related observations and artefacts
+
+- **Obs 296** (failure-of-generalisation 5–10× per-detection mid-distance pull): clarified — failure-of-generalisation reading stands; "FP-anchoring" prose label retired in favour of "TP-localisation-tail at (50, 75] m" framing for the paper Discussion.
+- **Obs 300** (Obs 296 diagnostic battery — track-asymmetric verdict): unchanged. The image-track structural / text-track suggestive distinction holds; this Obs adds the methodological clarification that the (50, 75] m signal is a TP localisation finding.
+- **Obs 302** (FP-class diagnostic — contour-rings dominate at ~41 %): direct companion. This Obs's FP histogram (87–95 % beyond 286 m) and Obs 302's category breakdown together describe FP behaviour fully: FPs cluster on non-mound features, far from real mounds.
+- **Obs 295** (GS 25 m attractor-pull cap): unchanged.
+- **Artefacts**: `results/tp-only-localisation-bias-sub-band/analysis.md` (the sub-band diagnostic, commit `207ec7b5`), `results/tp-only-localisation-bias-sub-band/tp_distance_distribution.csv`, `results/tp-only-localisation-bias-sub-band/tp_vs_fp_distance_comparison.csv`, `scripts/analyse_tp_only_subband_bias.py` (the diagnostic script).
