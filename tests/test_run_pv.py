@@ -169,7 +169,7 @@ class TestCleanupSubcommand:
         # Mock _verify_realtime to simulate recovering 2 of 3 missing
         def side_effect(*, manifest, config, crops_base_dir, output_dir,
                         workers, iterations, temperature, model_override,
-                        service_tier):
+                        service_tier, strict=True):
             probs_path = output_dir / "probabilities.json"
             probs = json.load(open(probs_path))
             # "Recover" candidates 7 and 9 (leave 8 missing)
@@ -239,7 +239,7 @@ class TestCleanupSubcommand:
 
         def side_effect(*, manifest, config, crops_base_dir, output_dir,
                         workers, iterations, temperature, model_override,
-                        service_tier):
+                        service_tier, strict=True):
             captured_configs.append(dict(config))
             return 0
 

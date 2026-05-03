@@ -195,6 +195,10 @@ def cmd_verify(args: argparse.Namespace) -> int:
         )
         return 0
 
+    # Default strict=True for direct ``verify`` invocations so silent
+    # drops fail loud. The ``--no-strict`` flag is the explicit opt-out.
+    strict = getattr(args, "strict", True)
+
     # Dispatch to mode-specific path
     if args.mode == "batch":
         return _verify_batch(
@@ -206,6 +210,7 @@ def cmd_verify(args: argparse.Namespace) -> int:
             temperature=args.temperature,
             dry_run=args.dry_run,
             model_override=args.model,
+            strict=strict,
         )
     else:
         return _verify_realtime(
@@ -218,6 +223,7 @@ def cmd_verify(args: argparse.Namespace) -> int:
             temperature=args.temperature,
             model_override=args.model,
             service_tier=getattr(args, "service_tier", None),
+            strict=strict,
         )
 
 
@@ -351,6 +357,10 @@ def cmd_cleanup(args: argparse.Namespace) -> int:
 
         # Call _verify_realtime() — resume logic skips verified candidates,
         # incremental write saves progress, so this is safe to interrupt.
+        # Pass strict=False: cleanup owns its own audit trail via
+        # cleanup_history (and _log_cleanup_failures_to_meta below), so
+        # the inner completeness assertion must not short-circuit our
+        # post-loop tally with a non-zero return.
         _verify_realtime(
             manifest=manifest,
             config=attempt_config,
@@ -361,6 +371,7 @@ def cmd_cleanup(args: argparse.Namespace) -> int:
             temperature=args.temperature,
             model_override=args.model,
             service_tier=getattr(args, "service_tier", None),
+            strict=False,
         )
 
     # Final tally
@@ -384,6 +395,13 @@ def cmd_cleanup(args: argparse.Namespace) -> int:
 
     with open(probs_path, "w") as f:
         json.dump(probs, f, indent=2)
+
+    # Mirror still-missing IDs into run.meta.json:execution_stats.failed_items[]
+    # so downstream consumers (clean_meta_failed_items.py, run_generalisation.py
+    # retry path, future audit sweeps) see the residual gap without parsing
+    # cleanup_history. Idempotent — pre-existing entries are preserved.
+    if final_missing:
+        _log_cleanup_failures_to_meta(args.verified_dir, final_missing)
 
     # Report
     logger.info("=" * 50)
@@ -415,6 +433,7 @@ def _verify_batch(
     temperature: float | None,
     dry_run: bool,
     model_override: str | None = None,
+    strict: bool = True,
 ) -> int:
     """Batch API verification path.
 
@@ -431,9 +450,12 @@ def _verify_batch(
         temperature: Temperature override for consensus.
         dry_run: If True, build JSONL without submitting.
         model_override: Optional model name override from CLI.
+        strict: If True, surface non-zero exit code on completeness
+            gaps detected by the post-run assertion. Mirrors the
+            ``--no-strict`` flag plumbed through ``_verify_realtime``.
 
     Returns:
-        Exit code (0=success, 1=error).
+        Exit code (0=success, 1=error or completeness gap in strict mode).
     """
     from scripts.lib_batch_api import (
         poll_batch_job,
@@ -476,6 +498,22 @@ def _verify_batch(
         logger.warning("No valid candidates — nothing to submit")
         return 0
 
+    # Hoist metadata tracker construction above the lifecycle so the
+    # `missing` set computed from validate_batch_results() can be logged
+    # into failed_items[] before _write_verification_outputs runs the
+    # completeness assertion. The Batch API does not return per-response
+    # metadata, so the tracker captures run config only — but the
+    # failed_items[] audit trail is the load-bearing piece of the
+    # silent-drop surfacing fix.
+    from scripts.lib_llm_metadata import LLMMetadataTracker
+    batch_metadata = LLMMetadataTracker(
+        config=config,
+        system_instruction=load_system_instruction(config),
+        script_name="run_pv.py",
+        script_version=__version__,
+        model_override=model_override,
+    )
+
     # Batch lifecycle
     try:
         from google import genai
@@ -495,6 +533,8 @@ def _verify_batch(
         model_name = _resolve_model_name(client, model_name)
         if model_name is None:
             return 1
+        # Update tracker now that the model is resolved.
+        batch_metadata.model_override = model_name
 
         batch_job = submit_batch_job(
             client, model_name, uploaded_file, display_name,
@@ -526,6 +566,13 @@ def _verify_batch(
         matched, missing, errored = validate_batch_results(
             expected_keys, raw_results,
         )
+        # Surface every missing result as a failed_items[] entry so the
+        # batch path matches realtime parity. _assert_completeness in
+        # _write_verification_outputs is idempotent against these IDs.
+        for mid in sorted(missing):
+            batch_metadata.log_failure(
+                mid, "absent from batch response",
+            )
         if missing:
             logger.warning(
                 "%d missing results (of %d expected)",
@@ -538,19 +585,8 @@ def _verify_batch(
         logger.error("Batch verification failed: %s", e)
         return 1
 
-    # Create a minimal metadata tracker for batch runs — no per-response
-    # data (the Batch API doesn't return it), but captures run config.
-    from scripts.lib_llm_metadata import LLMMetadataTracker
-    batch_metadata = LLMMetadataTracker(
-        config=config,
-        system_instruction=load_system_instruction(config),
-        script_name="run_pv.py",
-        script_version=__version__,
-        model_override=model_name,
-    )
-
-    # Write outputs
-    _write_verification_outputs(
+    # Write outputs (also runs the completeness assertion).
+    gap_count = _write_verification_outputs(
         parsed_results=parsed,
         manifest=manifest,
         config=config,
@@ -559,9 +595,10 @@ def _verify_batch(
         mode="batch",
         metadata_tracker=batch_metadata,
         model_name=model_name,
+        strict=strict,
     )
 
-    return 0
+    return 1 if gap_count > 0 and strict else 0
 
 
 # =========================================================================
@@ -828,6 +865,7 @@ def _verify_realtime(
     temperature: float | None,
     model_override: str | None,
     service_tier: str | None = None,
+    strict: bool = True,
 ) -> int:
     """Real-time API verification path.
 
@@ -843,9 +881,14 @@ def _verify_realtime(
         iterations: Number of verifier passes per candidate.
         temperature: Temperature override for consensus.
         model_override: Optional model name override.
+        service_tier: Optional service tier ("standard" or "flex").
+        strict: If True, surface non-zero exit code when the post-run
+            completeness assertion identifies a gap. Defaults to True
+            so silent drops fail loud; ``cmd_cleanup`` overrides to
+            False because it owns its own audit trail.
 
     Returns:
-        Exit code (0=success, 1=error).
+        Exit code (0=success, 1=completeness gap in strict mode).
     """
     from google import genai
 
@@ -1006,8 +1049,8 @@ def _verify_realtime(
         verified_count, total,
     )
 
-    # Write outputs
-    _write_verification_outputs(
+    # Write outputs (also runs the completeness assertion).
+    gap_count = _write_verification_outputs(
         parsed_results=all_results,
         manifest=manifest,
         config=config,
@@ -1016,9 +1059,10 @@ def _verify_realtime(
         mode="realtime",
         metadata_tracker=metadata_tracker,
         model_name=model_name,
+        strict=strict,
     )
 
-    return 0
+    return 1 if gap_count > 0 and strict else 0
 
 
 # =========================================================================
@@ -1036,13 +1080,20 @@ def _write_verification_outputs(
     metadata_tracker: Any = None,
     threshold: float = 0.5,
     model_name: str | None = None,
-) -> None:
+    strict: bool = True,
+) -> int:
     """Write verification outputs shared by both modes.
 
     Produces:
     - ``probabilities.json`` — per-candidate parsed results
     - ``consensus.json`` — aggregated votes (if iterations > 1)
     - ``run.meta.json`` — LLM metadata (if tracker provided)
+
+    Before writing, runs ``_assert_completeness()`` over
+    ``parsed_results`` against the manifest's candidate × iterations key
+    set; any gap is backfilled to ``metadata_tracker.stats.failed_items``
+    so the resulting ``run.meta.json`` carries a per-candidate audit
+    trail rather than the silent-drop pattern the Layer 1 fix targets.
 
     Args:
         parsed_results: Dict mapping candidate key to parsed result.
@@ -1053,8 +1104,28 @@ def _write_verification_outputs(
         mode: Execution mode ("batch" or "realtime").
         metadata_tracker: LLM metadata tracker (optional).
         threshold: Probability threshold for consensus voting.
+        model_name: Resolved model name (recorded in cost estimate).
+        strict: If True, surface non-zero exit code on gap. Cleanup
+            paths set this False — they own their own audit trail via
+            ``cleanup_history`` and would otherwise short-circuit before
+            writing it.
+
+    Returns:
+        Completeness gap count (0 when complete). The caller decides
+        whether to propagate this as a non-zero process exit.
     """
     output_dir.mkdir(parents=True, exist_ok=True)
+
+    # Completeness assertion — must run before file writes so that
+    # backfilled failed_items[] entries land in run.meta.json.
+    gap_count = _assert_completeness(
+        parsed_results=parsed_results,
+        manifest=manifest,
+        iterations=iterations,
+        mode=mode,
+        metadata_tracker=metadata_tracker,
+        strict=strict,
+    )
 
     # Probabilities
     prob_path = output_dir / "probabilities.json"
@@ -1131,6 +1202,8 @@ def _write_verification_outputs(
                 sum(probs) / len(probs), threshold,
                 above, len(probs), 100 * above / len(probs),
             )
+
+    return gap_count
 
 
 # =========================================================================
@@ -1310,6 +1383,18 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Service tier for real-time API calls. 'flex' gives 50%% "
         "discount with 1-15 min latency. Ignored in batch mode. "
         "Default: flex.",
+    )
+    verify_parser.add_argument(
+        "--no-strict",
+        dest="strict",
+        action="store_false",
+        default=True,
+        help=(
+            "Allow incomplete results without exit-1. Default behaviour "
+            "fails loud on completeness gaps so silent drops surface; "
+            "pass --no-strict for deliberate sub-corpus runs or recovery "
+            "campaigns where partial completion is acceptable."
+        ),
     )
     verify_parser.set_defaults(func=cmd_verify)
 
