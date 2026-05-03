@@ -48,7 +48,9 @@ from scripts.lib_llm_metadata import (
 from scripts.run_pv import (  # noqa: E402
     _assert_completeness,
     _build_parser,
+    _candidate_iteration_keys,
     _candidate_result_key,
+    _compute_missing_candidates,
     _log_cleanup_failures_to_meta,
     _summarise_failure_reason,
     _verify_realtime,
@@ -905,3 +907,331 @@ def test_candidate_result_key_multi_iter() -> None:
     cand = {"candidate_id": 42}
     # Multi-iter resolves to the first iteration as the canonical proxy
     assert _candidate_result_key(cand, 5) == "candidate_00042_iter1"
+
+
+# ─────────────────────────────────────────────────────────────────────
+# Multi-iteration coverage (audit follow-up: C1 + C2 + C3 regression)
+# ─────────────────────────────────────────────────────────────────────
+
+
+@pytest.mark.tier1
+class TestMultiIterationKeyHandling:
+    """Multi-iteration runs must surface iter2..iterN gaps end-to-end.
+
+    These tests guard against the regression introduced by the original
+    Layer 1 fix, where the resume filter, cleanup missing-set, and
+    driver per-attempt logging all collapsed onto an iter1 proxy. The
+    centralised ``_candidate_iteration_keys`` helper closes that gap;
+    these tests verify each call site.
+    """
+
+    def _seed_probabilities(
+        self,
+        output_dir: Path,
+        results: dict[str, dict],
+        iterations: int = 3,
+    ) -> None:
+        """Pre-populate ``probabilities.json`` with a partial result set."""
+        output_dir.mkdir(parents=True, exist_ok=True)
+        with open(output_dir / "probabilities.json", "w") as f:
+            json.dump({
+                "version": "1.0",
+                "mode": "realtime",
+                "verifier_config": "test-v1",
+                "iterations": iterations,
+                "total_results": len(results),
+                "results": results,
+            }, f)
+
+    def _run_with_worker(
+        self,
+        tmp_path: Path,
+        manifest: dict,
+        worker,
+        iterations: int,
+        strict: bool = True,
+        output_dir: Path | None = None,
+    ) -> tuple[int, Path]:
+        """Drive ``_verify_realtime`` against a mocked worker."""
+        config = _make_config()
+        crops_dir = tmp_path / "crops"
+        crops_dir.mkdir(exist_ok=True)
+        if output_dir is None:
+            output_dir = tmp_path / "verified"
+
+        with (
+            _patch_get_api_key(),
+            _patch_genai_client(),
+            _patch_resolve_model_name(),
+            patch(
+                "scripts.run_pv.verify_candidate_realtime",
+                side_effect=worker,
+            ),
+            patch("scripts.run_pv.load_system_instruction", return_value=""),
+            patch("scripts.run_pv.build_reference_items", return_value=[]),
+            patch("scripts.run_pv.build_generation_config", return_value={}),
+            patch("scripts.run_pv.gen_config_to_sdk", return_value=None),
+        ):
+            exit_code = _verify_realtime(
+                manifest=manifest,
+                config=config,
+                crops_base_dir=crops_dir,
+                output_dir=output_dir,
+                workers=1,
+                iterations=iterations,
+                temperature=None,
+                model_override="gemini-3-flash",
+                strict=strict,
+            )
+        return exit_code, output_dir
+
+    def test_multi_iter_resume_no_spurious_gap(self, tmp_path: Path) -> None:
+        """All 9 iter keys present → exit 0, no failed_items, no gap.
+
+        Regression for C1: the resume filter must treat a candidate as
+        complete only when *every* iter key is in the existing result
+        set, not just iter1.
+        """
+        manifest = _make_manifest(3)
+        iterations = 3
+        # Pre-populate every (cid × iter) key so no candidate should be
+        # re-submitted by the worker.
+        seeded = {
+            f"candidate_{cid:05d}_iter{i}": {"mound_probability": 0.5}
+            for cid in range(3) for i in range(1, iterations + 1)
+        }
+        output_dir = tmp_path / "verified"
+        self._seed_probabilities(output_dir, seeded, iterations=iterations)
+
+        worker_calls: list[int] = []
+
+        def worker(*, candidate, **kwargs):
+            worker_calls.append(candidate["candidate_id"])
+            # If the resume filter is correct this branch is unreached.
+            return {}, []
+
+        exit_code, _ = self._run_with_worker(
+            tmp_path, manifest, worker,
+            iterations=iterations, strict=True, output_dir=output_dir,
+        )
+
+        assert exit_code == 0, "no gap in seeded results — exit must be 0"
+        assert worker_calls == [], (
+            "resume filter incorrectly re-submitted complete candidates: "
+            f"{worker_calls}"
+        )
+        meta = json.load(open(output_dir / "run.meta.json"))
+        assert meta["execution_stats"]["failed_items"] == []
+        assert "completeness_gap" not in meta.get("results_summary", {})
+
+    def test_multi_iter_resume_partial_iter_re_attempted(
+        self, tmp_path: Path,
+    ) -> None:
+        """Partial coverage → candidate is re-submitted; missing iters recovered.
+
+        Regression for C1: when iter1+iter2 exist but iter3 is missing,
+        the candidate must be re-submitted (not skipped). The mocked
+        worker confirms it received the candidate, and after the run
+        every iter key is present.
+        """
+        manifest = _make_manifest(1)
+        iterations = 3
+        # Pre-populate iter1 + iter2 only.
+        seeded = {
+            "candidate_00000_iter1": {"mound_probability": 0.5},
+            "candidate_00000_iter2": {"mound_probability": 0.5},
+        }
+        output_dir = tmp_path / "verified"
+        self._seed_probabilities(output_dir, seeded, iterations=iterations)
+
+        worker_calls: list[int] = []
+
+        def worker(*, candidate, **kwargs):
+            cid = candidate["candidate_id"]
+            worker_calls.append(cid)
+            # Worker re-runs *all* iterations idempotently; that is the
+            # documented contract of ``verify_candidate_realtime``.
+            return (
+                {
+                    f"candidate_{cid:05d}_iter{i}": {"mound_probability": 0.7}
+                    for i in range(1, iterations + 1)
+                },
+                [
+                    _make_response_metadata(f"cand_{cid:04d}_iter{i}")
+                    for i in range(1, iterations + 1)
+                ],
+            )
+
+        exit_code, _ = self._run_with_worker(
+            tmp_path, manifest, worker,
+            iterations=iterations, strict=True, output_dir=output_dir,
+        )
+
+        assert exit_code == 0, "all iters now present — exit must be 0"
+        assert worker_calls == [0], (
+            "candidate with partial coverage must be re-submitted; "
+            f"worker_calls={worker_calls}"
+        )
+        # All 3 iter keys must be in the persisted probabilities.json.
+        probs = json.load(open(output_dir / "probabilities.json"))
+        for i in range(1, iterations + 1):
+            assert f"candidate_00000_iter{i}" in probs["results"]
+
+    def test_multi_iter_partial_success_logs_per_iter(
+        self, tmp_path: Path,
+    ) -> None:
+        """iter1+iter2 succeed, iter3 fails → per-iter audit trail.
+
+        Regression for C3: ``log_success`` and ``log_failure`` must be
+        emitted per *iteration*, not once per candidate using an iter1
+        proxy. The audit trail must show iter1+iter2 succeeded and
+        iter3 failed with its own ``parse_error`` reason.
+        """
+        manifest = _make_manifest(1)
+        iterations = 3
+
+        def worker(*, candidate, **kwargs):
+            cid = candidate["candidate_id"]
+            return (
+                # iter3 is silently absent (matches the gap=57 cell shape
+                # for a single iter rather than the whole candidate).
+                {
+                    f"candidate_{cid:05d}_iter1": {"mound_probability": 0.5},
+                    f"candidate_{cid:05d}_iter2": {"mound_probability": 0.5},
+                },
+                [
+                    _make_response_metadata(f"cand_{cid:04d}_iter1"),
+                    _make_response_metadata(f"cand_{cid:04d}_iter2"),
+                    _make_response_metadata(
+                        f"cand_{cid:04d}_iter3",
+                        parse_error="EMPTY_RESPONSE",
+                        parse_success=False,
+                    ),
+                ],
+            )
+
+        captured: list[LLMMetadataTracker] = []
+        original_init = LLMMetadataTracker.__init__
+
+        def init_spy(self, *args, **kwargs):
+            original_init(self, *args, **kwargs)
+            captured.append(self)
+
+        with patch.object(LLMMetadataTracker, "__init__", init_spy):
+            self._run_with_worker(
+                tmp_path, manifest, worker,
+                iterations=iterations, strict=False,
+            )
+
+        tracker = captured[0]
+        completed = set(tracker.stats.completed_items)
+        failed_ids = {f["item_id"] for f in tracker.stats.failed_items}
+
+        # Per-iteration log_success calls — iter1 + iter2.
+        assert "candidate_00000_iter1" in completed
+        assert "candidate_00000_iter2" in completed
+        # Per-iteration log_failure call — iter3 only.
+        assert "candidate_00000_iter3" in failed_ids
+        # iter1/iter2 must NOT appear in failed_items.
+        assert "candidate_00000_iter1" not in failed_ids
+        assert "candidate_00000_iter2" not in failed_ids
+        # The failure reason must reflect iter3's parse_error rather
+        # than collapsing under a generic candidate-level label.
+        match = next(
+            f for f in tracker.stats.failed_items
+            if f["item_id"] == "candidate_00000_iter3"
+        )
+        assert "EMPTY_RESPONSE" in match["reason"]
+
+    def test_multi_iter_cleanup_re_attempts_tail_iters(
+        self, tmp_path: Path,
+    ) -> None:
+        """``cmd_cleanup`` must surface and re-attempt iter2..iterN gaps.
+
+        Regression for C2: ``_compute_missing_candidates`` previously
+        returned only iter1 gaps for multi-iter runs. After this fix the
+        ``missing`` set must include the specific tail-iteration keys
+        that are absent.
+        """
+        manifest = _make_manifest(1)
+        iterations = 3
+        # Pre-populate iter1 + iter3 (skipping iter2).
+        seeded = {
+            "candidate_00000_iter1": {"mound_probability": 0.5},
+            "candidate_00000_iter3": {"mound_probability": 0.5},
+        }
+        verified_dir = tmp_path / "verified"
+        self._seed_probabilities(
+            verified_dir, seeded, iterations=iterations,
+        )
+
+        # Direct-test the missing-set helper — this is the call site
+        # that ``cmd_cleanup`` consumes.
+        missing, _ = _compute_missing_candidates(
+            manifest, verified_dir / "probabilities.json", iterations,
+        )
+        assert missing == {"candidate_00000_iter2"}, (
+            "iter2-specific gap must surface; "
+            f"got missing={missing}"
+        )
+
+        # End-to-end through cmd_cleanup with a stub worker that "fixes"
+        # iter2. The stub must receive candidate 0 even though iter1
+        # exists — proving the cleanup loop is no longer iter1-only.
+        crops_dir = tmp_path / "crops"
+        crops_dir.mkdir()
+        with open(crops_dir / "candidate_manifest.json", "w") as f:
+            json.dump(manifest, f)
+        config_path = tmp_path / "verifier.json"
+        with open(config_path, "w") as f:
+            json.dump(_make_config(), f)
+
+        captured_calls: list[dict] = []
+
+        def fake_verify(*args, **kwargs):
+            captured_calls.append(dict(kwargs))
+            # Simulate iter2 recovery: write the missing key into
+            # probabilities.json so the cleanup loop's post-attempt
+            # missing check sees zero gaps.
+            probs_path = verified_dir / "probabilities.json"
+            probs = json.load(open(probs_path))
+            probs["results"]["candidate_00000_iter2"] = {
+                "mound_probability": 0.42,
+            }
+            with open(probs_path, "w") as f:
+                json.dump(probs, f)
+            return 0
+
+        with patch("scripts.run_pv._verify_realtime", side_effect=fake_verify):
+            args = _make_args(
+                crops_dir=crops_dir,
+                verified_dir=verified_dir,
+                verifier_config=config_path,
+                iterations=iterations,
+                max_attempts=2,
+            )
+            rc = cmd_cleanup(args)
+
+        assert rc == 0, "cleanup must succeed once iter2 is recovered"
+        assert captured_calls, "cmd_cleanup must invoke _verify_realtime"
+        # Confirm the residual after recovery is empty.
+        post, _ = _compute_missing_candidates(
+            manifest, verified_dir / "probabilities.json", iterations,
+        )
+        assert post == set()
+
+    def test_candidate_iteration_keys_single_pass(self) -> None:
+        """The helper returns one key for single-iteration runs."""
+        cand = {"candidate_id": 7}
+        assert _candidate_iteration_keys(cand, 1) == ["candidate_00007"]
+
+    def test_candidate_iteration_keys_consensus(self) -> None:
+        """The helper expands to N keys for consensus runs."""
+        cand = {"candidate_id": 7}
+        keys = _candidate_iteration_keys(cand, 4)
+        assert keys == [
+            "candidate_00007_iter1",
+            "candidate_00007_iter2",
+            "candidate_00007_iter3",
+            "candidate_00007_iter4",
+        ]
