@@ -1462,11 +1462,7 @@ Identified by an Explore agent surveying planning docs, working-notes (Obs 282�
 
 #### 4. Detector-confidence calibration pilot (vote-fraction-as-proxy validation)
 
-- **Source**: `planning/detector-confidence-calibration-pilot.md` (spec'd in Wave 1; not yet executed).
-- **Description**: H-a (Obs 283) proposed vote-fraction as a behavioural proxy for detector confidence. The pilot (zero API cost; uses an existing K=30 cell on the 4-map gold-standard corpus) tests whether Spearman ρ between `vote_count` and observed P(TP) ≥ 0.7 (proxy sound) vs < 0.5 (proxy unreliable; escalate to flag-scoping per `planning/detector-confidence-flag-scoping.md`).
-- **Cost**: ~1 hour compute; $0 API.
-- **Conditional**: only execute if the paper plans to discuss detector confidence as a graded quantity.
-- **Unblocks**: vote-fraction reportability decision; H-a paper scope.
+✅ **DEFERRED to `planning/future-work.md` § 1 Detector confidence (graded)** (Session 85, 2026-05-03). Detailed spec preserved at `planning/detector-confidence-calibration-pilot.md`; trigger conditions for revisiting documented in `planning/future-work.md`.
 
 #### 5. Verify citation metadata in secondary-effects / phase3a-image-matrix reports
 
@@ -1479,10 +1475,7 @@ Identified by an Explore agent surveying planning docs, working-notes (Obs 282�
 
 #### 6. Multi-condition vote-fraction calibration extension
 
-- **Source**: `planning/detector-confidence-calibration-pilot.md` line 92.
-- **Description**: A single-condition pilot (item #4) does not guarantee vote-fraction soundness on image conditions or low-T deterministic regimes. A multi-condition extension would characterise K-dependence and condition-family generality.
-- **Cost**: 2–4 hours per condition; varies.
-- **Defer unless**: pilot passes AND the paper wants to scope calibration robustness across conditions.
+✅ **DEFERRED to `planning/future-work.md` § 1 Detector confidence (graded)** (Session 85, 2026-05-03). Pre-condition (#4 pilot) and trigger conditions for revisiting documented there.
 
 #### 7. K-consensus SD shrinkage heterogeneity footnote
 
@@ -1544,9 +1537,9 @@ Identified by an Explore agent surveying planning docs, working-notes (Obs 282�
 | 1 | GS-side FP classification | ✅ **DONE Session 81** |
 | 2 | `with-mcc/` citation audit | ✅ **DONE Session 81** — clean (zero surviving off-matrix citations) |
 | 3 | High-pull FP map characterisation | ✅ **DONE 2026-04-29** (Obs 304 — strong shared-feature hypothesis REJECTED) |
-| 4 | Detector-confidence calibration pilot | Pending; conditional |
+| 4 | Detector-confidence calibration pilot | ✅ **DEFERRED to `planning/future-work.md` § 1** (Session 85, 2026-05-03) |
 | 5 | Broader MCC citation audit | ✅ **DONE Session 81** — clean (0 of 6 spot-checked diverged) |
-| 6 | Multi-condition vote-fraction calibration | Pending; conditional |
+| 6 | Multi-condition vote-fraction calibration | ✅ **DEFERRED to `planning/future-work.md` § 1** (Session 85, 2026-05-03) |
 | 7 | K-consensus SD heterogeneity footnote | Pending |
 | 8 | Durable metadata mitigation | Pending; partly superseded (BCa fix added schema 1.1 with `_metadata.bootstrap.method`, `coverage_status`, etc.) |
 | 9 | TP-only localisation bias check | Pending |
