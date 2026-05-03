@@ -1,17 +1,17 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-05-02T23:56:30.210388+00:00",
+  "timestamp": "2026-05-03T00:43:36.337846+00:00",
   "methodology": "Approach B \u2014 extended-GT-at-R Hungarian matching",
   "metadata": {
     "seed": 42,
     "bootstrap_n": 10000,
-    "git_commit": "unknown",
+    "git_commit": "f533fda5fb1528106f4a7b22ea41d1f046cf25ca",
     "input_paths": {
-      "detections": "/home/shawn/Code/map-reader-llm/outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
-      "student_gt": "/home/shawn/Code/map-reader-llm/inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
-      "bounds": "/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "detections": "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
+      "student_gt": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
       "review_yesterday": "/tmp/empty-review-yesterday.csv",
-      "review_today": "/home/shawn/Code/map-reader-llm/results/55maps-text-high-generalisation/human-review-multi-buffer.csv"
+      "review_today": "results/55maps-text-high-generalisation/human-review-multi-buffer.csv"
     }
   },
   "exclusions": {
@@ -23,122 +23,122 @@
   "results": [
     {
       "R_m": 50,
-      "TP": 3795,
-      "FP": 369,
-      "FN": 1217,
-      "n_ref_student_only": 4744,
-      "n_reviewer_promoted_at_R": 268,
-      "n_ref_extended": 5012,
-      "precision": 0.9113832853025937,
+      "TP": 3797,
+      "FP": 367,
+      "FN": 1218,
+      "n_ref_student_only": 4745,
+      "n_reviewer_promoted_at_R": 270,
+      "n_ref_extended": 5015,
+      "precision": 0.9118635926993276,
       "precision_CI": [
-        0.9021163217938782,
-        0.9205159794681809
+        0.9025829200985419,
+        0.9209966012046449
       ],
-      "recall": 0.7571827613727055,
+      "recall": 0.7571286141575274,
       "recall_CI": [
-        0.7431682602776801,
-        0.7710063816729014
+        0.7431103546253911,
+        0.7709620721165991
       ],
-      "F1": 0.8271578029642547,
+      "F1": 0.8273232378254711,
       "F1_CI": [
-        0.8171850423576106,
-        0.8367753691080311
+        0.817282096835989,
+        0.8369912990270613
       ]
     },
     {
       "R_m": 75,
-      "TP": 3815,
-      "FP": 349,
-      "FN": 1215,
-      "n_ref_student_only": 4744,
-      "n_reviewer_promoted_at_R": 286,
-      "n_ref_extended": 5030,
-      "precision": 0.9161863592699327,
+      "TP": 3817,
+      "FP": 347,
+      "FN": 1217,
+      "n_ref_student_only": 4745,
+      "n_reviewer_promoted_at_R": 289,
+      "n_ref_extended": 5034,
+      "precision": 0.9166666666666666,
       "precision_CI": [
-        0.9070405163081061,
-        0.9250672453802213
+        0.9075364744749876,
+        0.9255223524776048
       ],
-      "recall": 0.7584493041749503,
+      "recall": 0.7582439411998411,
       "recall_CI": [
-        0.7444274702033561,
-        0.7722320920351824
+        0.7442231509345075,
+        0.7720603336496694
       ],
-      "F1": 0.8298890580813575,
+      "F1": 0.8299630354424874,
       "F1_CI": [
-        0.8199114392894399,
-        0.8394164348085874
+        0.8199120959629395,
+        0.8395014519977596
       ]
     },
     {
       "R_m": 100,
-      "TP": 3834,
-      "FP": 330,
-      "FN": 1214,
-      "n_ref_student_only": 4744,
-      "n_reviewer_promoted_at_R": 304,
-      "n_ref_extended": 5048,
-      "precision": 0.920749279538905,
+      "TP": 3836,
+      "FP": 328,
+      "FN": 1217,
+      "n_ref_student_only": 4745,
+      "n_reviewer_promoted_at_R": 308,
+      "n_ref_extended": 5053,
+      "precision": 0.9212295869356388,
       "precision_CI": [
-        0.9117354120572352,
-        0.9294801325823365
+        0.9122475539541439,
+        0.9299290420001465
       ],
-      "recall": 0.7595087163232963,
+      "recall": 0.7591529784286563,
       "recall_CI": [
-        0.7455561324679129,
-        0.773187370059232
+        0.7451983406773097,
+        0.7729318877561407
       ],
-      "F1": 0.8323925314806774,
+      "F1": 0.8323749593143105,
       "F1_CI": [
-        0.8225184532334472,
-        0.8418586950318789
+        0.8224684536698276,
+        0.8418323389563586
       ]
     },
     {
       "R_m": 125,
-      "TP": 3845,
-      "FP": 319,
-      "FN": 1214,
-      "n_ref_student_only": 4744,
-      "n_reviewer_promoted_at_R": 315,
-      "n_ref_extended": 5059,
-      "precision": 0.9233909702209414,
+      "TP": 3847,
+      "FP": 317,
+      "FN": 1217,
+      "n_ref_student_only": 4745,
+      "n_reviewer_promoted_at_R": 319,
+      "n_ref_extended": 5064,
+      "precision": 0.9238712776176753,
       "precision_CI": [
-        0.9145235343270527,
-        0.932073256131721
+        0.9150009343866272,
+        0.9325633321005123
       ],
-      "recall": 0.7600316268037162,
+      "recall": 0.7596761453396524,
       "recall_CI": [
-        0.7461179118527338,
-        0.7736504137352805
+        0.7456849502274933,
+        0.773424802283071
       ],
-      "F1": 0.8337851024612383,
+      "F1": 0.8337667967056783,
       "F1_CI": [
-        0.8239434001330946,
-        0.843224630978887
+        0.8239534746037995,
+        0.8431630223076045
       ]
     },
     {
       "R_m": 150,
-      "TP": 3852,
-      "FP": 312,
-      "FN": 1212,
-      "n_ref_student_only": 4744,
-      "n_reviewer_promoted_at_R": 320,
-      "n_ref_extended": 5064,
-      "precision": 0.9250720461095101,
+      "TP": 3853,
+      "FP": 311,
+      "FN": 1216,
+      "n_ref_student_only": 4745,
+      "n_reviewer_promoted_at_R": 324,
+      "n_ref_extended": 5069,
+      "precision": 0.925312199807877,
       "precision_CI": [
-        0.9162982544436561,
-        0.9335760446646902
+        0.9165075875357365,
+        0.9338218224685733
       ],
-      "recall": 0.7606635071090048,
+      "recall": 0.7601104754389426,
       "recall_CI": [
-        0.7467652923560458,
-        0.7742851908990963
+        0.746153736451797,
+        0.7738545687736796
       ],
-      "F1": 0.8348504551365411,
+      "F1": 0.834614968049388,
       "F1_CI": [
-        0.8250372749594382,
-        0.8442275300188748
+        0.8248377328909333,
+        0.8439787136095697
       ]
     }
   ]

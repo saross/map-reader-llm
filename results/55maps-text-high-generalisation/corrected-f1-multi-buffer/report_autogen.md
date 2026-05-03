@@ -1,19 +1,19 @@
 # Corrected F1 / P / R on the 55-map image set — buffer-stratified
 
-**Timestamp**: 2026-05-02T23:56:30.212048+00:00
+**Timestamp**: 2026-05-03T00:43:36.339475+00:00
 **Methodology**: Approach B — extended-GT-at-R Hungarian matching
 **Bootstrap**: 10,000 iterations, seed 42, tile-level resampling
-**Git commit**: `unknown`
+**Git commit**: `f533fda5fb1528106f4a7b22ea41d1f046cf25ca`
 
 ## F1 curve
 
 | R (m) | TP | FP | FN | n_ref_student | n_promoted@R | n_ref_extended | P [95 % CI] | R [95 % CI] | F1 [95 % CI] |
 |------:|---:|---:|---:|--------------:|-------------:|---------------:|:-----------:|:-----------:|:------------:|
-| 50 | 3795 | 369 | 1217 | 4744 | 268 | 5012 | 0.9114 [0.9021, 0.9205] | 0.7572 [0.7432, 0.7710] | **0.8272** [0.8172, 0.8368] |
-| 75 | 3815 | 349 | 1215 | 4744 | 286 | 5030 | 0.9162 [0.9070, 0.9251] | 0.7584 [0.7444, 0.7722] | **0.8299** [0.8199, 0.8394] |
-| 100 | 3834 | 330 | 1214 | 4744 | 304 | 5048 | 0.9207 [0.9117, 0.9295] | 0.7595 [0.7456, 0.7732] | **0.8324** [0.8225, 0.8419] |
-| 125 | 3845 | 319 | 1214 | 4744 | 315 | 5059 | 0.9234 [0.9145, 0.9321] | 0.7600 [0.7461, 0.7737] | **0.8338** [0.8239, 0.8432] |
-| 150 | 3852 | 312 | 1212 | 4744 | 320 | 5064 | 0.9251 [0.9163, 0.9336] | 0.7607 [0.7468, 0.7743] | **0.8349** [0.8250, 0.8442] |
+| 50 | 3797 | 367 | 1218 | 4745 | 270 | 5015 | 0.9119 [0.9026, 0.9210] | 0.7571 [0.7431, 0.7710] | **0.8273** [0.8173, 0.8370] |
+| 75 | 3817 | 347 | 1217 | 4745 | 289 | 5034 | 0.9167 [0.9075, 0.9255] | 0.7582 [0.7442, 0.7721] | **0.8300** [0.8199, 0.8395] |
+| 100 | 3836 | 328 | 1217 | 4745 | 308 | 5053 | 0.9212 [0.9122, 0.9299] | 0.7592 [0.7452, 0.7729] | **0.8324** [0.8225, 0.8418] |
+| 125 | 3847 | 317 | 1217 | 4745 | 319 | 5064 | 0.9239 [0.9150, 0.9326] | 0.7597 [0.7457, 0.7734] | **0.8338** [0.8240, 0.8432] |
+| 150 | 3853 | 311 | 1216 | 4745 | 324 | 5069 | 0.9253 [0.9165, 0.9338] | 0.7601 [0.7462, 0.7739] | **0.8346** [0.8248, 0.8440] |
 
 ## How to read this table
 
@@ -35,7 +35,7 @@ Yesterday's single-buffer correction (``compute_corrected_f1_human_reviewed.py``
 produced **F1 = 0.8295** at R = 50 m via an analytic adjustment to measured
 counts (moved 472 FPs into TP and added them to the GT denominator, without
 re-running Hungarian). This script's R = 50 m row
-(**F1 = 0.8272**) re-runs Hungarian over extended GT including
+(**F1 = 0.8273**) re-runs Hungarian over extended GT including
 the 2 today-corrections at 50 m. Expected ΔF1 ≈ +0.003 versus yesterday's
 number. The two numbers are methodologically close but not identical —
 Approach B allows detections to rematch optimally against the extended GT,
@@ -72,7 +72,7 @@ is completely indistinguishable.
 ## Practitioner-useful cap: F1 at R = 125 m
 
 Recommended single-number summary for downstream quotation:
-**F1 = 0.8338** at R = 125 m (95 % CI [0.8239, 0.8432]) —
+**F1 = 0.8338** at R = 125 m (95 % CI [0.8240, 0.8432]) —
 the largest R where the attractor-pull contribution to recall is
 statistically distinguishable from within-tile random placement.
 
@@ -86,11 +86,11 @@ the task brief and Obs 272.
 ## Reproducibility
 
 - **Inputs**:
-  - Detections: `/home/shawn/Code/map-reader-llm/outputs/55maps-text-high-generalisation/verified/verified_detections.geojson`
-  - Student GT: `/home/shawn/Code/map-reader-llm/inputs/vectors/references/student-mounds-55maps-reviewed.geojson`
-  - Bounds: `/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson`
+  - Detections: `outputs/55maps-text-high-generalisation/verified/verified_detections.geojson`
+  - Student GT: `inputs/vectors/references/student-mounds-55maps-reviewed.geojson`
+  - Bounds: `inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson`
   - Review (yesterday): `/tmp/empty-review-yesterday.csv`
-  - Review (today): `/home/shawn/Code/map-reader-llm/results/55maps-text-high-generalisation/human-review-multi-buffer.csv`
+  - Review (today): `results/55maps-text-high-generalisation/human-review-multi-buffer.csv`
 - **Bootstrap**: 10,000 iterations, seed 42, tile-level resampling
-- **Git commit**: `unknown`
+- **Git commit**: `f533fda5fb1528106f4a7b22ea41d1f046cf25ca`
 - **Script**: `scripts/compute_corrected_f1_multi_buffer.py`
