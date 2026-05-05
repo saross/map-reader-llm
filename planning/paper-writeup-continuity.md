@@ -1,10 +1,78 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-05-03 (Session 85 closure — loose-ends mop-up complete; verifier silent-drop bug root-caused, fixed (Layer 1 + Layer 2), audited and re-audited (3 critical + 6 medium fixed in fix-of-fix; all 6 lows cleared); tier-1 at 980 passing on sapphire (was 926 baseline); recovery campaign planned and ready (~$1.84 expected, $10 hard cap) but execution gated on user cost approval; Step 6 paper outline UNBLOCKED for Session 86)
+**Last updated**: 2026-05-05 (Session 86 PARTIAL — Tier-1 propagation halted at Step 3 due to tier-build regression in Era-2-pv; investigation in flight overnight; see beacon below)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
+
+---
+
+## 🚨 Session 87 (morning) — START HERE — PARTIAL PROGRESS, REGRESSION UNDER INVESTIGATION
+
+**Posted**: 2026-05-05 evening, just before user went to sleep.
+
+### Read-first (5 min)
+
+1. **`planning/session-86-tier-regression-investigation.md`** — overnight agent's report. **This is your canonical entry point — do not re-derive what the agent already covered.** Written by an investigation agent launched 2026-05-05 evening with unlimited time and read-only constraints.
+2. **This section** (you are reading it).
+3. The Session 86 entry-point section below — historical context for what was attempted before the halt.
+
+### What happened in Session 86
+
+The user authorised the Tier-1 6-cell propagation. Steps completed cleanly:
+
+- Pre-flight: tier-1 sanity 980/1/3 (after a one-line `skipif` predicate fix at commit `365c54d4`).
+- Document Revision Policy added to `CLAUDE.md` (commits `c1070cad`, scope-extended to `outputs/**/post_run_report.md` at `849a55e5`).
+- Step 2: `run_per_arch_leaderboards.sh` ran in 24 min, all 7 strata complete, no errors.
+- Step 3: `finalise_per_arch_leaderboard.sh` ran clean, 14 rows verified, 0 fails.
+
+Then a sanity check on the Era-2-pv tier outputs surfaced: **pre-recovery `b4c28d5b` had 44 conditions / 6 tiers; post-recovery rebuild has 26 / 3**. Eighteen conditions disappeared, including 2 of the 6 cleaned cells (`session-78-image-adversarial-text`, was Tier 4 → dropped; `session-78-image-brief-text`, was Tier 5 → dropped). All 44 conditions are still evaluated in `leaderboard_all_evaluations.json` — thinning happens at tier-build / top-N filter, not at evaluation. **Halt criterion per plan §3.3 triggered.**
+
+Neither the cleanup commits (`414ee8a4` + `b3ed509e` from 2026-05-03) nor the inventory (`condition-inventory-with-s78.json`, last touched `03bf71c8` on 2026-04-25) changed between `b4c28d5b` and HEAD. So the regression is either a script change or a data-driven filter cascade — the overnight investigation is identifying which.
+
+### Working tree state on resume
+
+The per-arch + finalise outputs are **uncommitted** in `results/leaderboard/per-architecture/`. **Do not commit** until you've read the investigation report and the user has chosen a remediation path. Pre-recovery tier files are recoverable from commit `b4c28d5b` if surgical restoration is preferred.
+
+To inspect a pre-recovery tier file: `git show b4c28d5b:<path-to-file>`.
+
+### Commits in Session 86 that ARE clean (do not revert)
+
+| Hash | Description |
+|---|---|
+| `b2a3cf0e` | GS 6-crop manual verdicts (6/6 v2_overclaim — flips paper Discussion narrative; supports Obs 307) |
+| `ede5f80b` | Tier-1 propagation execution plan |
+| `365c54d4` | Test fix — `skipif` predicate for phase2a image-only |
+| `c1070cad` | Document Revision Policy in `CLAUDE.md` |
+| `849a55e5` | Policy scope extended to `outputs/**/post_run_report.md` |
+
+### Session 86 untracked artefacts (not commit-pending; informational)
+
+- `planning/session-86-tier1-propagation-plan.md` — the plan Document (committed at `ede5f80b`)
+- `planning/obs-323-skeleton.md` — Obs 323 fill-in skeleton drafted by an agent. Untracked. Will be populated and committed via `/observe` once tier outputs are accepted.
+- `planning/session-86-tier-regression-investigation.md` — overnight agent's report (in flight at this commit, landed by morning)
+
+### Decision Point 5 resolution (from Session 86)
+
+The 55-map `post_run_report.md` files do NOT cite the cleaned cells (verified by Agent A recon). Resolution: leave as historical snapshots, no edit. Policy scope was extended to `outputs/**/post_run_report.md` so future post_run_reports that DO move can carry the changelog pattern.
+
+### Steps NOT to launch on resume
+
+- `bash scripts/build_combined_leaderboard.sh 2` — consumes the suspect tier files; would propagate the regression
+- `bash scripts/build_combined_tier_stability.sh 2` — same reason
+- Any closure docs work (Obs 323, audit annotation, continuity doc finalisation) — wait until tier files are accepted
+
+### What's likely safe regardless of remediation
+
+- The cleanup commits themselves (`414ee8a4`, `b3ed509e`) — they only changed candidate sets for 6 cells, not the build pipeline
+- The 5 Session 86 commits listed above
+- The GS 6-crop manual verdicts → paper Discussion text (Obs 307 evidence)
+- Document Revision Policy — orthogonal to the regression
+
+### Sapphire status
+
+Unreachable during user travel (off-network). All CPU work continues local on zbook. Tier-2/3 cleanup status remains unverifiable; that is a separate deferred item, NOT related to this regression.
 
 ---
 
@@ -63,7 +131,7 @@ ssh sapphire 'cd ~/Code/map-reader-llm && source .venv/bin/activate && pytest -m
 - 🔔 **GS 6-crop manual review** — staged at `results/gs-125m-fp-side-6-crop-review/index.md` on **zbook**. Files are tracked in git (Markdown index + 6 PNG crops, ~310–402 KB each); no setup needed beyond opening the index. Open with VS Code preview, GitHub web view, `glow`, or `mdcat`. Per-candidate `verdict:` blocks ready for in-place edits. **Outcome strengthens or softens the curator-GT-incompleteness Limitations narrative (B7).** ~20 min wall-time. **Please flag this to the user when they next start a session — they want to be reminded.**
 - 🗣️ **post_run_report convention — needs discussion**. Three reports affected: `outputs/55maps-text-min-generalisation/post_run_report.md`, `outputs/55maps-image-generalisation/post_run_report.md`, `outputs/h11/gold-standard-v2/...` post-run analogue (verify path on next session). Each contains pre-recovery values from the original 2026-04-18 / earlier launches. Three options:
   1. **Refresh in place** — replace pre-recovery numbers with current canonical values from `results/55maps-*-generalisation/corrected-f1-multi-buffer/summary.json` etc. Risks erasing historical context that may matter for the paper's narrative.
-  2. **Add a forward-pointer banner** at the top of each report — "**Note:** This report captures pre-recovery state at <date>; post-recovery canonical values live at <path>." Preserves history; one banner per report.
+  2. **Add a forward-pointer banner** at the top of each report — "**Note:** This report captures pre-recovery state at `<date>`; post-recovery canonical values live at `<path>`." Preserves history; one banner per report.
   3. **Leave as historical snapshots** — make no change; treat the post-run reports as a frozen artefact of the original launch. Future paper-citation queries route to the canonical post-recovery `results/` outputs directly.
   **The user wants to discuss this in Session 86 before any action.** Don't auto-pick an option; raise it explicitly.
 
@@ -90,7 +158,7 @@ Per the runbook § 6 + § 7, the driver only handles cleanup. The downstream wor
    - Any other doc that quotes a numerical F1 / MCC for the affected cells (grep `grep -rn "F1=0\." results/ docs/` style).
 4. **Append closure Obs to `docs/notes/reflections/working-notes.md`** — "Obs 323: Phase3a recovery campaign closure" or similar. Should record: total cells cleaned (17), total candidates recovered (530), cost ($0.905), AUC deltas (initial 6 cells: 0.0001–0.001 with 3 going down — see commit `b3ed509e6` message), the gap=460 cell outcome, and any post-propagation F1 movement.
 5. **Update this continuity doc** with a "Session 86 closure (post-travel)" section.
-6. **Annotate `reports/phase3a-verifier-completeness-audit-2026-05-03.md`** with a closing note: "post-recovery state at <commit>; 17 of 20 cells cleaned; 3 deferred (see launch-summary.md)".
+6. **Annotate `reports/phase3a-verifier-completeness-audit-2026-05-03.md`** with a closing note: "post-recovery state at `<commit>`; 17 of 20 cells cleaned; 3 deferred (see launch-summary.md)".
 
 Trigger via the runbook's per-tier checklists; can be batched + scripted. Suggested order of execution: per-tier re-evaluation → per-tier leaderboard refresh → cross-track propagation → docs refresh → closure Obs → continuity update → audit annotation. One commit per logical group, push at tier boundaries.
 
@@ -112,7 +180,7 @@ Logged with `reason: missing_crops_gitignored` in `logs/phase3a-recovery-2026050
 🗣️ **Three reports affected**: `outputs/55maps-text-min-generalisation/post_run_report.md`, `outputs/55maps-image-generalisation/post_run_report.md`, `outputs/h11/gold-standard-v2/...` post-run analogue (verify path on next session). Each contains pre-recovery values from the original 2026-04-18 / earlier launches. Three options:
 
 1. **Refresh in place** — replace pre-recovery numbers with current canonical values from `results/55maps-*-generalisation/corrected-f1-multi-buffer/summary.json` etc. Risks erasing historical context that may matter for the paper's narrative.
-2. **Add a forward-pointer banner** at the top of each report — "**Note:** This report captures pre-recovery state at <date>; post-recovery canonical values live at <path>." Preserves history; one banner per report.
+2. **Add a forward-pointer banner** at the top of each report — "**Note:** This report captures pre-recovery state at `<date>`; post-recovery canonical values live at `<path>`." Preserves history; one banner per report.
 3. **Leave as historical snapshots** — make no change; treat the post-run reports as a frozen artefact of the original launch. Future paper-citation queries route to the canonical post-recovery `results/` outputs directly.
 
 **Talk to me about this when you resume — do not auto-pick.**
