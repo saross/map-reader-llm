@@ -20,6 +20,36 @@ from shapely.geometry import Point, box
 
 PROJECT_ROOT = Path(__file__).parent.parent
 
+
+def _phase2a_image_only_detections_present() -> bool:
+    """Return True only if at least one Phase 2a image-only run directory
+    contains a detection file (not just metadata).
+
+    Checking for the run_1 directory alone is insufficient: a fresh checkout
+    on a machine that lacks the gitignored bulk detection outputs may have
+    the run skeleton (created by the API harness) without any detections,
+    and the integration test would then fail rather than skip.
+    """
+    base = PROJECT_ROOT / "outputs" / "phase2a" / "image-only"
+    if not base.exists():
+        return False
+    for run_dir in base.glob("run_*"):
+        if not run_dir.is_dir():
+            continue
+        for f in run_dir.iterdir():
+            if not f.is_file():
+                continue
+            if f.name.endswith((".meta.json", ".tiles.json")):
+                continue
+            if "_fp." in f.name or "_fn." in f.name:
+                continue
+            stem = f.stem if "." in f.name else f.name
+            if stem.endswith(("_fp", "_fn")):
+                continue
+            return True
+    return False
+
+
 from scripts.analyse_phase2_results import apply_fdr_correction, load_condition_results
 from scripts.lib_advanced_metrics import (
     aggregate_tile_metrics,
@@ -516,8 +546,8 @@ class TestLoadConditionResultsIntegration:
     """Integration test against existing image-only runs (if available)."""
 
     @pytest.mark.skipif(
-        not (PROJECT_ROOT / "outputs" / "phase2a" / "image-only" / "run_1").exists(),
-        reason="Existing Phase 2a image-only runs not available",
+        not _phase2a_image_only_detections_present(),
+        reason="Existing Phase 2a image-only detection files not available",
     )
     def test_loads_existing_image_only_runs(self) -> None:
         """Load existing image-only runs from outputs/phase2a/."""
