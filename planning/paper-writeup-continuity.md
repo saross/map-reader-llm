@@ -1,22 +1,32 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-05-05 (Session 86 PARTIAL — Tier-1 propagation halted at Step 3 due to tier-build regression in Era-2-pv; investigation in flight overnight; see beacon below)
+**Last updated**: 2026-05-05 (Session 86 PARTIAL — Tier-1 propagation halted at Step 3; overnight investigation RESOLVED root cause as wrong-driver convention-propagation failure, not a real regression; see beacon below)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
 
 ---
 
-## 🚨 Session 87 (morning) — START HERE — PARTIAL PROGRESS, REGRESSION UNDER INVESTIGATION
+## 🚨 Session 87 (morning) — START HERE — INVESTIGATION RESOLVED, REMEDIATION PENDING
 
-**Posted**: 2026-05-05 evening, just before user went to sleep.
+**Posted**: 2026-05-05 evening, updated late-evening after the investigation agent finished.
+
+### Root cause (TL;DR)
+
+The "regression" was a wrong-driver mistake, not a real regression. Tier-1 propagation Step 2 ran `scripts/run_per_arch_leaderboards.sh` (default `--top-n 20`, top-20 union filter) instead of the canonical `scripts/build_per_arch_redesign.sh` (`--top-n 0`, no filter). The runbook directed the wrong driver — a convention-propagation failure inherited from commit `03bf71c8`. Three strata thinned: era1/consensus (72→37), era2/consensus (29→22), era2/pv (44→26). The cleanup itself (commits `414ee8a4`, `b3ed509e`) is correct; all-evaluations data is intact; only tier composition was wrongly thinned.
 
 ### Read-first (5 min)
 
-1. **`planning/session-86-tier-regression-investigation.md`** — overnight agent's report. **This is your canonical entry point — do not re-derive what the agent already covered.** Written by an investigation agent launched 2026-05-05 evening with unlimited time and read-only constraints.
+1. **`planning/session-86-tier-regression-investigation.md`** — overnight agent's full report (~360 lines). **Canonical entry point.** Three remediation options enumerated; agent recommends Option 1 (tier-only re-build with `--top-n 0 --skip-evaluation` against existing cache, ~30–90 min CPU, no API).
 2. **This section** (you are reading it).
 3. The Session 86 entry-point section below — historical context for what was attempted before the halt.
+
+### Three user decisions surfaced by the agent
+
+1. **Option 1 vs Option 2.** Option 1 = clean re-tier with `--top-n 0`. Option 2 = restore from `b4c28d5b` and surgically re-run only the six cleaned cells (preserves provenance for the 38 unchanged conditions but mixes pre/post-recovery pairwise tests). Agent recommends Option 1.
+2. **Whether to also rebuild q01 and MCC variants.** Their JSONs date from May 2 — composition is correct (top-n=0) but scores are slightly stale (≤0.010 F1 delta on the six cells).
+3. **Whether to fix `run_per_arch_leaderboards.sh`** (add `--top-n 0` default) versus archive it as deprecated.
 
 ### What happened in Session 86
 
