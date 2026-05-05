@@ -95,6 +95,20 @@ The file `docs/notes/reflections/working-notes.md` captures observations about r
 - Unexpected findings or edge cases worth noting
 - Reflections on tool/harness behaviour relevant to reproducibility
 
+## Document Revision Policy
+
+Markdown reports under `results/**.md` and `reports/**.md` are mutable working documents that get cited in paper text and cross-referenced from other artefacts. When refreshing one of these documents (e.g. after a recovery campaign, methodological change, or data-pipeline rerun), edit the body in place AND attach a revision trail so consumers can answer "is this current?" without running `git log`.
+
+**The pattern**:
+
+1. **Top-of-doc banner** (immediately below the H1): `> **Last revised**: <YYYY-MM-DD> (<short reason>). See [§ Changelog](#changelog) for revision history.`
+2. **Bottom-of-doc `## Changelog` section** with one dated entry per revision (newest first). Each entry should give: refresh trigger (the upstream change), a small before→after table for any numerical claims that moved, what did NOT change (e.g. tier rankings preserved), and the commit hash that landed the refresh.
+3. **Body edits in place** — readers always see current truth on first read. Git is the canonical history; the in-doc changelog is the human-readable summary.
+
+**Scope**: applies to any document under `results/**.md` or `reports/**.md`. Back-fill on touch only — when you change a document, attach the pattern; do not bulk back-fill unchanged documents.
+
+**First entry** for a doc that has no prior changelog should also include an `### <original-date> — Original publication` stub describing the doc's initial state, so future revisions have a baseline to diff against.
+
 ## Experiment Execution
 
 - **Never hard-code worker counts in study YAML files.** Parallelisation is the job of the TPM governor in `4_detect_mounds_batch.py`, not the study definition. When running experiments, pass `--workers N` via the CLI to set concurrency; the governor will dynamically manage throughput within API limits. Study YAML files should set `workers: 1` as the safe default and let the operator choose the appropriate parallelism at runtime.
