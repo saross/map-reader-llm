@@ -45,8 +45,8 @@ Note: "TP-side @ 50 m" = detections within 50 m of any curator GT mound (a proxy
 **Verdict**:
 
 ```text
-verdict: <real_mound_curator_omission | v2_overclaim | edge_case_ambiguous>
-note: <optional one-liner>
+verdict: v2_overclaim
+note: triangulation point on closed contour line
 ```
 
 ---
@@ -69,8 +69,8 @@ note: <optional one-liner>
 **Verdict**:
 
 ```text
-verdict: <real_mound_curator_omission | v2_overclaim | edge_case_ambiguous>
-note: <optional one-liner>
+verdict: v2_overclaim
+note: triangulation point on closed contour line
 ```
 
 ---
@@ -93,8 +93,8 @@ note: <optional one-liner>
 **Verdict**:
 
 ```text
-verdict: <real_mound_curator_omission | v2_overclaim | edge_case_ambiguous>
-note: <optional one-liner>
+verdict: v2_overclaim
+note: spot-height (small black circle)
 ```
 
 ---
@@ -117,8 +117,8 @@ note: <optional one-liner>
 **Verdict**:
 
 ```text
-verdict: <real_mound_curator_omission | v2_overclaim | edge_case_ambiguous>
-note: <optional one-liner>
+verdict: v2_overclaim
+note: unknown black circular feature
 ```
 
 ---
@@ -141,8 +141,8 @@ note: <optional one-liner>
 **Verdict**:
 
 ```text
-verdict: <real_mound_curator_omission | v2_overclaim | edge_case_ambiguous>
-note: <optional one-liner>
+verdict: v2_overclaim
+note: black dot on closed contour line
 ```
 
 ---
@@ -165,8 +165,8 @@ note: <optional one-liner>
 **Verdict**:
 
 ```text
-verdict: <real_mound_curator_omission | v2_overclaim | edge_case_ambiguous>
-note: <optional one-liner>
+verdict: v2_overclaim
+note: black dots near contour lines
 ```
 
 ---
