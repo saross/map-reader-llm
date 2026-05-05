@@ -105,7 +105,7 @@ Markdown reports under `results/**.md` and `reports/**.md` are mutable working d
 2. **Bottom-of-doc `## Changelog` section** with one dated entry per revision (newest first). Each entry should give: refresh trigger (the upstream change), a small before→after table for any numerical claims that moved, what did NOT change (e.g. tier rankings preserved), and the commit hash that landed the refresh.
 3. **Body edits in place** — readers always see current truth on first read. Git is the canonical history; the in-doc changelog is the human-readable summary.
 
-**Scope**: applies to any document under `results/**.md` or `reports/**.md`. Back-fill on touch only — when you change a document, attach the pattern; do not bulk back-fill unchanged documents.
+**Scope**: applies to any document under `results/**.md`, `reports/**.md`, or `outputs/**/post_run_report.md` (and analogous post-run summary docs under `outputs/`). Back-fill on touch only — when you change a document, attach the pattern; do not bulk back-fill unchanged documents.
 
 **First entry** for a doc that has no prior changelog should also include an `### <original-date> — Original publication` stub describing the doc's initial state, so future revisions have a baseline to diff against.
 
