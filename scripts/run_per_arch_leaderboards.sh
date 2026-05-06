@@ -2,10 +2,29 @@
 # ---------------------------------------------------------------------------
 # run_per_arch_leaderboards.sh
 # ---------------------------------------------------------------------------
-# Orchestrate the per-architecture leaderboard build across 12 (era, arch)
-# strata × 5 buffers (20, 30, 40, 50, 100 m).
+# Lightweight per-architecture leaderboard builder — F1 q=0.05 single pass.
+# Produces the same comprehensive (--top-n 0) tier coverage as the canonical
+# multi-pass redesign driver, but for one metric / FDR threshold only.
 #
-# Runs `build_tiered_leaderboard.py` once per stratum, writing to
+# When to use this script:
+#   - Quick iteration when you only need to refresh F1 q=0.05 numbers
+#     (e.g. after a recovery campaign that only updates F1-feeding probs)
+#   - Single-stratum debugging without re-running 4 passes per stratum
+#
+# When to use `scripts/build_per_arch_redesign.sh` instead:
+#   - Full canonical paper-table build: F1 q=0.05 + F1 q=0.01 +
+#     MCC q=0.05 + MCC q=0.01, plus stage-3 tier-stability, stage-4
+#     cross-arch tables, stage-5 documentation. Roughly 4× the cost.
+#
+# Both drivers MUST pass `--top-n 0` to match the leaderboard construction
+# plan's "comprehensive paper-table coverage" decision (see
+# `planning/leaderboard-construction-plan.md` § 7). Historical defect:
+# this driver was missing `--top-n 0` until commit <fix-per-arch-top-n>;
+# the default `DEFAULT_TOP_N = 20` in `build_tiered_leaderboard.py` then
+# silently thinned the tier output.
+#
+# Orchestrates `build_tiered_leaderboard.py` across 12 (era, arch) strata
+# × 5 buffers (20, 30, 40, 50, 100 m); writes to
 # `results/leaderboard/per-architecture/era<N>/<arch>/`.
 #
 # Inputs:
@@ -19,15 +38,15 @@
 # Each per-stratum invocation runs:
 #   - Evaluation at 5 buffers (20/30/40/50/100 m), 1000 bootstrap iters
 #   - Threshold selection at 20 m primary buffer
-#   - Top-20 filter (union across buffers)
-#   - 10,000 pairwise permutation tests at 20 m
+#   - No top-N filter — comprehensive coverage (--top-n 0)
+#   - 10,000 pairwise permutation tests at 20 m, seed 42
 #   - BH-FDR correction at q=0.05
 #   - Tier grouping
 #
 # Usage:
 #   bash scripts/run_per_arch_leaderboards.sh
 #
-# Run on sapphire. Total wall-clock ~2-3 hours for the full matrix.
+# Total wall-clock ~25 min on zbook (cache-warm) to ~3 h (cache-cold).
 # ---------------------------------------------------------------------------
 
 set -euo pipefail
@@ -52,6 +71,8 @@ PRIMARY_BUFFER=20
 WORKERS=8
 N_PERMUTATIONS=10000
 BOOTSTRAP=1000
+SEED=42
+TOP_N=0  # 0 = no filter; comprehensive coverage per leaderboard-construction-plan.md § 7
 
 # Which status values to accept per architecture:
 #   consensus       -> READY
@@ -87,6 +108,8 @@ run_stratum() {
         --bootstrap "$BOOTSTRAP" \
         --n-permutations "$N_PERMUTATIONS" \
         --workers "$WORKERS" \
+        --top-n "$TOP_N" \
+        --seed "$SEED" \
         --output-dir "$out_dir" \
         --dry-run 2>&1 | head -60 | tee -a "$log"
 
@@ -100,6 +123,8 @@ run_stratum() {
         --bootstrap "$BOOTSTRAP" \
         --n-permutations "$N_PERMUTATIONS" \
         --workers "$WORKERS" \
+        --top-n "$TOP_N" \
+        --seed "$SEED" \
         --output-dir "$out_dir" 2>&1 | tee -a "$log"
 
     echo "DONE: era${era}-${arch}"
