@@ -1,12 +1,12 @@
 {
-  "run_id": "d7a8fba9-a8a3-4f1b-bf42-6d659a950387",
+  "run_id": "c2d48fee-1d84-4c4d-a188-7ed7d5e27fd0",
   "timestamp": {
-    "start": "2026-04-10T04:40:42.879663+00:00",
-    "end": "2026-04-10T05:38:23.564098+00:00",
-    "duration_seconds": 3460.684435
+    "start": "2026-05-06T08:35:38.043901+00:00",
+    "end": "2026-05-06T08:35:42.523827+00:00",
+    "duration_seconds": 4.479926
   },
   "environment": {
-    "git_commit": "d59798ac7f32c0f6a4a050eb40824fffea8ec029",
+    "git_commit": "1b2842d0b155808e9399560eaa392b18eb06c908",
     "script": "run_pv.py",
     "script_version": "1.0.0"
   },
@@ -52,7 +52,7 @@
     }
   },
   "execution_stats": {
-    "items_processed": 0,
+    "items_processed": 3,
     "items_failed": 0,
     "items_skipped": 0,
     "retries_total": 0,
@@ -61,38 +61,41 @@
     "retries_timeout": 0,
     "retries_other": 0,
     "finish_reason_counts": {
-      "success": 8939,
-      "error": 448
+      "success": 3
     },
     "safety_blocks": 0,
-    "parse_failures": 448,
-    "empty_responses": 448,
-    "completed_items": [],
+    "parse_failures": 0,
+    "empty_responses": 0,
+    "completed_items": [
+      "candidate_02113",
+      "candidate_04047",
+      "candidate_04437"
+    ],
     "failed_items": [],
     "retry_details": []
   },
   "usage_stats": {
-    "total_input_tokens": 16885771,
-    "total_output_tokens": 1481768,
+    "total_input_tokens": 5667,
+    "total_output_tokens": 496,
     "total_cached_tokens": 0,
     "total_reasoning_tokens": 0,
     "total_thoughts_tokens": 0,
     "total_tool_use_tokens": 0,
-    "total_tokens": 18367539,
+    "total_tokens": 6163,
     "by_provider": {
       "google_gemini": {
-        "input_tokens": 16885771,
-        "output_tokens": 1481768,
-        "total_tokens": 18367539,
-        "request_count": 9387
+        "input_tokens": 5667,
+        "output_tokens": 496,
+        "total_tokens": 6163,
+        "request_count": 3
       }
     }
   },
   "results_summary": {},
   "cost_estimate": {
-    "input_cost_usd": 8.442885,
-    "output_cost_usd": 4.445304,
-    "total_cost_usd": 12.888189,
+    "input_cost_usd": 0.002834,
+    "output_cost_usd": 0.001488,
+    "total_cost_usd": 0.004322,
     "pricing_used": {
       "model": "gemini-3-flash-preview",
       "input_per_1m": 0.5,

@@ -3,7 +3,7 @@
   "mode": "realtime",
   "verifier_config": "verify_adversarial-text",
   "iterations": 1,
-  "total_results": 571,
+  "total_results": 572,
   "results": {
     "candidate_00003": {
       "mound_probability": 0.0,
@@ -3430,6 +3430,24 @@
       "reasoning": "The symbols in the center are simple hollow circles. While they are in the correct color family, they do not possess the 'gear' or 'sunburst' rays that indicate a mound. Their proximity to a linear feature suggests they are more likely related to land-use or boundary markers rather than topographic elevations.",
       "best_alternative": "Vegetation or land-use boundary markers",
       "alternative_evidence": "The symbols are small, hollow circles located along or near a linear boundary feature (the dark diagonal line). They lack the characteristic outward-radiating rays (sunburst pattern) required for a burial mound."
+    },
+    "candidate_00567": {
+      "mound_probability": 0.05,
+      "reasoning": "The symbols are simple hollow circles without any outward-pointing hachures or 'sunburst' patterns. Their alignment with the dashed linear feature suggests they are part of a boundary or specific land-use classification rather than individual topographic mounds.",
+      "best_alternative": "Vegetation or land-use boundary markers",
+      "alternative_evidence": "The small circles are distributed along a dashed blue/grey line representing a boundary or path. They lack the characteristic orange-brown radiating rays of a burial mound."
     }
-  }
+  },
+  "cleanup_history": [
+    {
+      "timestamp": "2026-05-06T08:35:23.144003+00:00",
+      "initial_missing": 1,
+      "recovered": 1,
+      "still_missing": 0,
+      "still_missing_ids": [],
+      "attempts_used": 1,
+      "max_attempts": 3,
+      "safe_mode_used": false
+    }
+  ]
 }
