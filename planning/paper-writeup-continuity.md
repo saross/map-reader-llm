@@ -1,88 +1,83 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-05-05 (Session 86 PARTIAL — Tier-1 propagation halted at Step 3; overnight investigation RESOLVED root cause as wrong-driver convention-propagation failure, not a real regression; see beacon below)
+**Last updated**: 2026-05-06 (Session 86–87 — Tier-1 propagation COMPLETE; Obs 323 landed; q01+MCC rebuild running in background as user is AFK)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
 
 ---
 
-## 🚨 Session 87 (morning) — START HERE — INVESTIGATION RESOLVED, REMEDIATION PENDING
+## ✅ Session 88 (next) — START HERE — TIER-1 CLOSED, MULTIPLE LOOSE THREADS
 
-**Posted**: 2026-05-05 evening, updated late-evening after the investigation agent finished.
+**Posted**: 2026-05-06 mid-morning, after the closure-docs commit landed.
 
-### Root cause (TL;DR)
+### Headline
 
-The "regression" was a wrong-driver mistake, not a real regression. Tier-1 propagation Step 2 ran `scripts/run_per_arch_leaderboards.sh` (default `--top-n 20`, top-20 union filter) instead of the canonical `scripts/build_per_arch_redesign.sh` (`--top-n 0`, no filter). The runbook directed the wrong driver — a convention-propagation failure inherited from commit `03bf71c8`. Three strata thinned: era1/consensus (72→37), era2/consensus (29→22), era2/pv (44→26). The cleanup itself (commits `414ee8a4`, `b3ed509e`) is correct; all-evaluations data is intact; only tier composition was wrongly thinned.
+Tier-1 propagation arc closed. The Phase3a Session-78 6-cell cleanup propagated cleanly through per-architecture and combined Era-2 leaderboards. **Obs 323** at commit `64974ec5` is the canonical narrative; **`reports/phase3a-verifier-completeness-audit-2026-05-03.md`** has a "Recovery status (annotated post-execution, partial — 2026-05-06)" section appended.
+
+The detour story matters and is recorded: the rebuild **failed first** because the Phase3a recovery runbook directed the wrong driver (`run_per_arch_leaderboards.sh` instead of `build_per_arch_redesign.sh`, default `--top-n 20` vs `--top-n 0`), silently thinning three strata. An overnight investigation agent traced the cause to a convention-propagation failure inherited from commit `03bf71c8` (E19/E20 lineage). Fixes: `baa271bf` (runner default), `ef3ec4fe` (runbook). Investigation report at `planning/session-86-tier-regression-investigation.md`.
 
 ### Read-first (5 min)
 
-1. **`planning/session-86-tier-regression-investigation.md`** — overnight agent's full report (~360 lines). **Canonical entry point.** Three remediation options enumerated; agent recommends Option 1 (tier-only re-build with `--top-n 0 --skip-evaluation` against existing cache, ~30–90 min CPU, no API).
-2. **This section** (you are reading it).
-3. The Session 86 entry-point section below — historical context for what was attempted before the halt.
+1. **`docs/notes/reflections/working-notes.md`** Obs 323 — full Tier-1 closure narrative.
+2. **`reports/phase3a-verifier-completeness-audit-2026-05-03.md`** — last section "Recovery status (annotated post-execution, partial)" lists outstanding work.
+3. **This section** (you are reading it).
 
-### Three user decisions surfaced by the agent
+### Headline numbers (Tier-1, combined Era-2 F1@20m)
 
-1. **Option 1 vs Option 2.** Option 1 = clean re-tier with `--top-n 0`. Option 2 = restore from `b4c28d5b` and surgically re-run only the six cleaned cells (preserves provenance for the 38 unchanged conditions but mixes pre/post-recovery pairwise tests). Agent recommends Option 1.
-2. **Whether to also rebuild q01 and MCC variants.** Their JSONs date from May 2 — composition is correct (top-n=0) but scores are slightly stale (≤0.010 F1 delta on the six cells).
-3. **Whether to fix `run_per_arch_leaderboards.sh`** (add `--top-n 0` default) versus archive it as deprecated.
+| Cell | Pre F1 → Post F1 | ΔF1 | Tier |
+|---|---|---:|---|
+| session-78-image-adversarial-text | 0.7725 → 0.7718 | −0.0007 | 5→5 |
+| session-78-image-brief-text | 0.7679 → 0.7782 | +0.0103 | 5→4 ⬆ |
+| session-78-image-checklist-text | 0.7805 → 0.7852 | +0.0047 | 4→4 |
+| session-78-text-adversarial-text | 0.8575 → 0.8603 | +0.0028 | 3→3 |
+| session-78-text-brief-text | 0.8456 → 0.8519 | +0.0063 | 3→3 |
+| session-78-text-checklist-text | 0.8599 → 0.8639 | +0.0040 | 3→3 |
 
-### What happened in Session 86
+One tier flip (image-brief-text 5→4, an improvement). Audit anchor: 38 unchanged Era-2-pv cells byte-identical F1 vs pre-recovery `b4c28d5b`. Cleanup did not leak into untouched cells.
 
-The user authorised the Tier-1 6-cell propagation. Steps completed cleanly:
+### What's pending — priority order
 
-- Pre-flight: tier-1 sanity 980/1/3 (after a one-line `skipif` predicate fix at commit `365c54d4`).
-- Document Revision Policy added to `CLAUDE.md` (commits `c1070cad`, scope-extended to `outputs/**/post_run_report.md` at `849a55e5`).
-- Step 2: `run_per_arch_leaderboards.sh` ran in 24 min, all 7 strata complete, no errors.
-- Step 3: `finalise_per_arch_leaderboard.sh` ran clean, 14 rows verified, 0 fails.
-
-Then a sanity check on the Era-2-pv tier outputs surfaced: **pre-recovery `b4c28d5b` had 44 conditions / 6 tiers; post-recovery rebuild has 26 / 3**. Eighteen conditions disappeared, including 2 of the 6 cleaned cells (`session-78-image-adversarial-text`, was Tier 4 → dropped; `session-78-image-brief-text`, was Tier 5 → dropped). All 44 conditions are still evaluated in `leaderboard_all_evaluations.json` — thinning happens at tier-build / top-N filter, not at evaluation. **Halt criterion per plan §3.3 triggered.**
-
-Neither the cleanup commits (`414ee8a4` + `b3ed509e` from 2026-05-03) nor the inventory (`condition-inventory-with-s78.json`, last touched `03bf71c8` on 2026-04-25) changed between `b4c28d5b` and HEAD. So the regression is either a script change or a data-driven filter cascade — the overnight investigation is identifying which.
-
-### Working tree state on resume
-
-The per-arch + finalise outputs are **uncommitted** in `results/leaderboard/per-architecture/`. **Do not commit** until you've read the investigation report and the user has chosen a remediation path. Pre-recovery tier files are recoverable from commit `b4c28d5b` if surgical restoration is preferred.
-
-To inspect a pre-recovery tier file: `git show b4c28d5b:<path-to-file>`.
-
-### Commits in Session 86 that ARE clean (do not revert)
-
-| Hash | Description |
-|---|---|
-| `b2a3cf0e` | GS 6-crop manual verdicts (6/6 v2_overclaim — flips paper Discussion narrative; supports Obs 307) |
-| `ede5f80b` | Tier-1 propagation execution plan |
-| `365c54d4` | Test fix — `skipif` predicate for phase2a image-only |
-| `c1070cad` | Document Revision Policy in `CLAUDE.md` |
-| `849a55e5` | Policy scope extended to `outputs/**/post_run_report.md` |
-
-### Session 86 untracked artefacts (not commit-pending; informational)
-
-- `planning/session-86-tier1-propagation-plan.md` — the plan Document (committed at `ede5f80b`)
-- `planning/obs-323-skeleton.md` — Obs 323 fill-in skeleton drafted by an agent. Untracked. Will be populated and committed via `/observe` once tier outputs are accepted.
-- `planning/session-86-tier-regression-investigation.md` — overnight agent's report (in flight at this commit, landed by morning)
-
-### Decision Point 5 resolution (from Session 86)
-
-The 55-map `post_run_report.md` files do NOT cite the cleaned cells (verified by Agent A recon). Resolution: leave as historical snapshots, no edit. Policy scope was extended to `outputs/**/post_run_report.md` so future post_run_reports that DO move can carry the changelog pattern.
-
-### Steps NOT to launch on resume
-
-- `bash scripts/build_combined_leaderboard.sh 2` — consumes the suspect tier files; would propagate the regression
-- `bash scripts/build_combined_tier_stability.sh 2` — same reason
-- Any closure docs work (Obs 323, audit annotation, continuity doc finalisation) — wait until tier files are accepted
-
-### What's likely safe regardless of remediation
-
-- The cleanup commits themselves (`414ee8a4`, `b3ed509e`) — they only changed candidate sets for 6 cells, not the build pipeline
-- The 5 Session 86 commits listed above
-- The GS 6-crop manual verdicts → paper Discussion text (Obs 307 evidence)
-- Document Revision Policy — orthogonal to the regression
+1. **q01+MCC variant rebuild via `build_per_arch_redesign.sh`** — was running in background as of this beacon's posting; if a commit landed after `64974ec5` mentioning q01/MCC, the rebuild completed. Check `git log --oneline 64974ec5..HEAD`. If completed, no action needed. If not completed (e.g. crashed), restart per the redesign driver's signature.
+2. **Tier-2/3 propagation** when sapphire is reachable. Verify whatever local commits sapphire holds beyond `b3ed509e`; pull and propagate. Three strata likely affected.
+3. **3 skipped cells**:
+   - `e47-flash-high-text-1of5` (Tier 1, gap 57): **schema-transformation diagnostic first** (see `logs/phase3a-recovery-overnight-resume/launch-summary.md` § "Surprise"). Data-integrity question, not just a crop-regen.
+   - `55maps-gen-verified-v2` (Tier 2, gap 3): clean-cut, regen crops + re-run cleanup.
+   - `proposer-verifier-384-adversarial-text-v1-prompt` (Tier 3, gap 1): clean-cut, same pattern.
+4. **Campaign-wide closure Obs** (Obs 324 or later) once Tier-2/3 lands.
+5. **Step 6 paper outline** — the actual deliverable, now unblocked. Map each section (Methods / Results / Discussion / Limitations) to 1–3 interim docs. Strengthened by Obs 322 (TP-localisation-tail reframing — Discussion content), Obs 323 (campaign closure), and the GS 6-crop review (Obs 307 prompt-bias evidence: 6/6 v2_overclaim, narrative-flipping).
 
 ### Sapphire status
 
-Unreachable during user travel (off-network). All CPU work continues local on zbook. Tier-2/3 cleanup status remains unverifiable; that is a separate deferred item, NOT related to this regression.
+Still off-network during user travel as of 2026-05-06 morning. All CPU work continues local on zbook. Tier-2/3 deferred until home network is reachable.
+
+### Session 86–87 commit ledger (in chronological order)
+
+| Hash | Description |
+|---|---|
+| `b2a3cf0e` | GS 6-crop manual verdicts (6/6 v2_overclaim — paper Discussion narrative-flipping) |
+| `ede5f80b` | Tier-1 propagation execution plan |
+| `365c54d4` | Test fix — `skipif` predicate for phase2a image-only |
+| `c1070cad` | Document Revision Policy added to `CLAUDE.md` |
+| `849a55e5` | Policy scope extended to `outputs/**/post_run_report.md` |
+| `7a7146bf` | Continuity doc Session 87 morning beacon (initial, since superseded) |
+| `08ae343f` | Investigation report committed; beacon updated with resolved root cause |
+| `baa271bf` | `fix(per-arch)`: `--top-n 0` + `--seed 42` in runner |
+| `ef3ec4fe` | `docs(runbook)`: tier-rebuild separated from finalise across 4 runbook sections |
+| `c067bca4` | Per-arch tier composition restored with `--top-n 0` |
+| `a8f4b7f8` | Combined Era-2 leaderboard + tier stability (Steps 4 + 5) |
+| `64974ec5` | Obs 323 — Phase3a Tier-1 propagation closure |
+| (TBD) | Closure docs: continuity beacon refresh + audit annotation (this commit) |
+| (TBD) | q01+MCC variant rebuild from `build_per_arch_redesign.sh` |
+
+### Decision Point 5 resolution (carry-forward)
+
+55-map `post_run_report.md` files do NOT cite the cleaned cells (verified by recon). Resolution: leave as historical snapshots, no edit. Document Revision Policy scope was extended to `outputs/**/post_run_report.md` so future post_run_reports that DO move can carry the changelog pattern.
+
+### GS 6-crop manual review (carry-forward)
+
+User completed 2026-05-05. **All 6 candidates labelled `v2_overclaim`** — none are real missed mounds. Strengthens Obs 307's prompt-bias caveat enormously: at the strictest stratum (>125 m from any curator GT), the v2 classifier's precision was 0%. Flips the headline interpretation of `results/gs-fp-classification/report.md`'s "6 / 14 = 42.9%" framing. Notes captured in commit `b2a3cf0e`.
 
 ---
 

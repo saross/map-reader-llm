@@ -601,3 +601,68 @@ elapsed time but is still small relative to a fresh full verifier pass.
 - Run on amd-tower (cwd `/home/shawn/Code/map-reader-llm`) at the start of
   Session 85, immediately after the GS-v2 / 55-maps cleanup landed in
   Session 84.
+
+## Recovery status (annotated post-execution, partial — 2026-05-06)
+
+Annotated after the Tier-1 propagation closure landed in Session 86 / 87
+(zbook, post-travel). See **Obs 323** (commit `64974ec5`) for the full
+campaign-closure write-up.
+
+### Cleanup phase — completed 2026-05-03 / 04 overnight
+
+- **17 of 20 cells cleaned** during the unattended sapphire run, 530
+  candidates recovered, total cleanup-phase API spend $0.905. Ground truth
+  in `logs/phase3a-recovery-overnight-resume/launch-summary.md`.
+- **3 cells skipped**, all with `reason: missing_crops_gitignored` (the
+  bulk crop PNGs are gitignored intermediates not present on every machine):
+  - `e47-flash-high-text-1of5` (Tier 1, gap 57) — schema-transformation
+    diagnostic in the launch-summary § "Surprise"; data-integrity question
+    first.
+  - `55maps-gen-verified-v2` (Tier 2, gap 3) — clean-cut; regenerate crops
+    + re-run.
+  - `proposer-verifier-384-adversarial-text-v1-prompt` (Tier 3, gap 1) —
+    clean-cut; regenerate crops + re-run.
+
+### Propagation status
+
+- **Tier 1 (Session-78 6 cells)**: COMPLETE. Per-arch tier composition
+  rebuilt (commit `c067bca4`); combined Era-2 leaderboard + tier stability
+  rebuilt (commit `a8f4b7f8`). Audit anchor: 38 unchanged Era-2-pv cells
+  byte-identical F1 vs pre-recovery `b4c28d5b`; 6 cleaned cells show
+  expected ΔF1 in range −0.0007 to +0.0103 absolute. One tier flip in
+  combined view (`session-78-image-brief-text` 5→4, an improvement); other
+  13 Session-78 cells preserved tier rank.
+- **Tier 2 / Tier 3 propagation**: NOT LANDED on `origin/main`. Beyond
+  `b3ed509e` (Tier-1 materialise + calibration on 2026-05-03), no further
+  recovery commits exist on origin. Sapphire was off-network during user
+  travel; whatever local state sapphire holds is unknown. **Campaign-wide
+  closure deferred** until sapphire is reachable and Tier-2/3 propagation
+  can be confirmed or re-run.
+
+### Methodological note — wrong-driver detour
+
+The Tier-1 per-architecture rebuild on 2026-05-05 evening initially used
+`scripts/run_per_arch_leaderboards.sh` (default `--top-n 20`) instead of
+the canonical `scripts/build_per_arch_redesign.sh` (`--top-n 0`),
+silently thinning three strata (era1/consensus 72→37, era2/consensus
+29→22, era2/pv 44→26). The operator caught this via spot-check; an
+overnight investigation agent traced the cause to a convention-propagation
+failure inherited from commit `03bf71c8`. Fixes landed in commits
+`baa271bf` (runner now passes `--top-n 0` + `--seed 42`) and `ef3ec4fe`
+(runbook § 6.1 / 6.2 corrected: tier rebuild now separated from
+post-processing). Investigation report at
+`planning/session-86-tier-regression-investigation.md`. Another instance
+of the project's documented "convention-propagation failure" pattern
+(E19/E20 lineage). Worth flagging because the original Phase3a recovery
+runbook itself directed the wrong driver — readers of this audit who
+follow the runbook should ensure they invoke the corrected runner.
+
+### Outstanding work
+
+1. **Reach sapphire and verify Tier-2/3 cleanup status** — whatever was
+   committed locally on sapphire during the unattended overnight run.
+2. **Resolve the 3 skipped cells**: e47 needs the schema-integrity
+   investigation first; the other two are clean-cut crop-regen + cleanup.
+3. **Tier-2 + Tier-3 propagation** through their leaderboard strata once
+   their cleanup state is known.
+4. **Campaign-wide closure Obs** (Obs 324 or later) once the above lands.
