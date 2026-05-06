@@ -1,0 +1,102 @@
+{
+  "run_id": "0506139e-e1bd-4e10-a5ce-f02f95be9373",
+  "timestamp": {
+    "start": "2026-04-09T12:15:59.334902+00:00",
+    "end": "2026-04-09T12:22:21.658298+00:00",
+    "duration_seconds": 382.323396
+  },
+  "environment": {
+    "git_commit": "d59798ac7f32c0f6a4a050eb40824fffea8ec029",
+    "script": "run_pv.py",
+    "script_version": "1.0.0"
+  },
+  "configuration": {
+    "version": "verify_adversarial-text_v2",
+    "model": "gemini-3-flash-preview",
+    "instruction_file": "verify_adversarial_v2.md",
+    "system_instruction_hash": "c4c9184199a2b37387135c744a0907b9589ef769acf8f91a277649dae4204643",
+    "system_instruction_text": "# Two-Stage Detection: Adversarial Verifier\n\nA detection system has identified the symbol at the centre of this crop as a\npossible burial mound. Your task is to **find reasons it is NOT a burial mound**.\n\nAssume the detection system made an error. Argue for the strongest non-mound\ninterpretation of this symbol. Only confirm it as a burial mound if you cannot\nfind a plausible alternative explanation.\n\n## What burial mounds look like\n\nBurial mound symbols have **short lines (rays) radiating OUTWARD** from a\ncentral shape, forming a \"sunburst\" or \"gear\" pattern. The rays point away\nfrom the centre, indicating elevated terrain. The central shape is typically\na small circle or oval in orange-brown, or a triangle or square in black\n(when a survey marker sits on a mound).\n\n## Common false alarms \u2014 argue for these first\n\nBefore confirming a mound, check whether the symbol could instead be:\n\n- **A triangulation point without a mound**: A solid black triangle, possibly\n  with a central dot \u2014 but with NO outward-radiating rays around it. These\n  are extremely common on Soviet maps and frequently confused with mounds.\n- **A benchmark without a mound**: A solid black square, possibly with a\n  central dot \u2014 but with NO outward-radiating rays around it.\n- **A contour feature**: Lines that approach or converge on a point, but the\n  lines point INWARD (downhill flow) rather than radiating OUTWARD. These\n  can appear in the same orange-brown colour family as mound symbols.\n- **A vegetation or land-use boundary**: Small marks along a boundary line\n  that may resemble rays but are actually boundary indicators.\n- **Text or numbering artefact**: Partial Cyrillic characters or elevation\n  numbers that coincidentally resemble radiating lines.\n- **A spot height marker**: A small black dot (~5-7 pixels diameter) with a\n  nearby elevation number. These are roughly half the size of the smallest\n  mound symbol (\u226512 pixels). If the symbol is smaller than ~10 pixels\n  diameter, it is a spot height, not a mound.\n- **A well or spring**: A blue circle, sometimes with concentric blue rings.\n  Mound symbols are only orange-brown or black \u2014 never blue. Any blue\n  circular symbol is a water feature.\n\n## Decision process\n\n1. Identify the strongest non-mound interpretation of the symbol.\n2. Describe the specific visual evidence supporting that interpretation.\n3. Only if NO non-mound interpretation is plausible, confirm as a mound.\n\n## Output Format\n\nReturn JSON:\n\n{\n    \"best_alternative\": \"The strongest non-mound interpretation of this symbol.\",\n    \"alternative_evidence\": \"Specific visual features supporting the non-mound interpretation.\",\n    \"reasoning\": \"Why you accept or reject the non-mound interpretation.\",\n    \"mound_probability\": 0.0\n}\n\n## Scoring Guide\n\n- **0.9-1.0**: No plausible alternative \u2014 clear sunburst with outward rays\n- **0.6-0.8**: The non-mound interpretation is weak but not impossible\n- **0.3-0.5**: Genuinely ambiguous \u2014 mound and non-mound are equally plausible\n- **0.0-0.2**: Strong non-mound interpretation \u2014 symbol is most likely something else\n",
+    "library_hash": "no_examples",
+    "temperature": 0.0,
+    "max_output_tokens": 8192,
+    "thinking_level": "minimal",
+    "tile_size": null,
+    "include_example_images": true,
+    "example_count": 0,
+    "full_config_snapshot": {
+      "version": "verify_adversarial-text_v2",
+      "description": "Two-Stage Verifier (Stage 2) v2. Adds explicit size criterion for spot heights and colour exclusion for water features.",
+      "hypothesis": "H2",
+      "model": "gemini-3-flash",
+      "instruction_file": "verify_adversarial_v2.md",
+      "temperature": 0.0,
+      "max_output_tokens": 8192,
+      "thinking_level": "minimal",
+      "_config_notes": {
+        "source": "v2 of adversarial verifier. Based on QGIS sanity check (2026-04-08) which identified spot heights (29 FPs) and water features (3 FPs) as the main addressable FP categories.",
+        "changes_from_v1": "Added spot height size criterion (~5-7px vs >=12px mounds) and water feature colour exclusion (blue = never a mound) to confusable list.",
+        "temperature": "0.0 \u2014 unchanged from v1.",
+        "thinking_level": "Fixed at minimal \u2014 unchanged from v1.",
+        "track": "Track 2 \u2014 text-only."
+      },
+      "examples": [],
+      "text_only_labels": [
+        "Positive: Burial Mound (Kurgan)",
+        "Positive: Settlement Mound",
+        "Positive: Triangulation Point ON Mound",
+        "Positive: Benchmark ON Mound",
+        "Negative: Triangulation Point ALONE",
+        "Negative: Benchmark ALONE"
+      ],
+      "crop_label": "Now classify the candidate symbol at the centre of this crop:"
+    }
+  },
+  "execution_stats": {
+    "items_processed": 0,
+    "items_failed": 0,
+    "items_skipped": 0,
+    "retries_total": 0,
+    "retries_rate_limit": 0,
+    "retries_server_error": 0,
+    "retries_timeout": 0,
+    "retries_other": 0,
+    "finish_reason_counts": {
+      "error": 1,
+      "success": 1
+    },
+    "safety_blocks": 0,
+    "parse_failures": 1,
+    "empty_responses": 1,
+    "completed_items": [],
+    "failed_items": [],
+    "retry_details": []
+  },
+  "usage_stats": {
+    "total_input_tokens": 1889,
+    "total_output_tokens": 151,
+    "total_cached_tokens": 0,
+    "total_reasoning_tokens": 0,
+    "total_thoughts_tokens": 0,
+    "total_tool_use_tokens": 0,
+    "total_tokens": 2040,
+    "by_provider": {
+      "google_gemini": {
+        "input_tokens": 1889,
+        "output_tokens": 151,
+        "total_tokens": 2040,
+        "request_count": 2
+      }
+    }
+  },
+  "results_summary": {},
+  "cost_estimate": {
+    "input_cost_usd": 0.000945,
+    "output_cost_usd": 0.000453,
+    "total_cost_usd": 0.001398,
+    "pricing_used": {
+      "model": "gemini-3-flash-preview",
+      "input_per_1m": 0.5,
+      "output_per_1m": 3.0
+    }
+  }
+}

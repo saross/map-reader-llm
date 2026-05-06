@@ -25,6 +25,7 @@ from scripts.audit_verifier_completeness import (
     audit_one,
     audit_repo,
     count_unique_candidates,
+    find_manifest,
     is_exempt,
 )
 
@@ -179,9 +180,55 @@ class TestAuditOne:
         )
         audit = audit_one(prob, tmp_path)
         assert audit.verdict == "REVIEW"
-        assert "no_sibling_manifest" in audit.review_reasons
+        assert "no_manifest_or_matching_consensus_found" in audit.review_reasons
         assert audit.expected is None
         assert audit.actual == 5
+
+    def test_pass_via_consensus_fallback(self, tmp_path: Path) -> None:
+        # Cell with no manifest, but a sibling consensus dir whose
+        # consensus_t1.geojson feature count matches the result count.
+        parent = tmp_path / "campaign"
+        cell = parent / "verified-v1-n5"
+        cell.mkdir(parents=True)
+        # Build a probabilities.json with 7 results, no manifest sibling.
+        prob_data = {
+            "results": {f"candidate_{i:05d}": {"score": 0.5} for i in range(7)}
+        }
+        prob = cell / "probabilities.json"
+        prob.write_text(json.dumps(prob_data))
+        # Build a consensus-n5 sibling with 7 features.
+        consensus_dir = parent / "consensus-n5"
+        consensus_dir.mkdir()
+        features = [{"type": "Feature", "properties": {}, "geometry": None} for _ in range(7)]
+        (consensus_dir / "consensus_t1.geojson").write_text(
+            json.dumps({"type": "FeatureCollection", "features": features})
+        )
+        audit = audit_one(prob, tmp_path)
+        assert audit.verdict == "PASS"
+        assert audit.actual == 7
+        assert audit.expected == 7
+        assert audit.gap == 0
+
+    def test_review_when_consensus_count_mismatches(self, tmp_path: Path) -> None:
+        # No manifest AND no consensus dir whose feature count matches.
+        parent = tmp_path / "campaign"
+        cell = parent / "verified-v1-n5"
+        cell.mkdir(parents=True)
+        prob_data = {
+            "results": {f"candidate_{i:05d}": {"score": 0.5} for i in range(7)}
+        }
+        prob = cell / "probabilities.json"
+        prob.write_text(json.dumps(prob_data))
+        # Sibling consensus dir but with WRONG feature count (5, not 7).
+        consensus_dir = parent / "consensus-n5"
+        consensus_dir.mkdir()
+        features = [{"type": "Feature", "properties": {}, "geometry": None} for _ in range(5)]
+        (consensus_dir / "consensus_t1.geojson").write_text(
+            json.dumps({"type": "FeatureCollection", "features": features})
+        )
+        audit = audit_one(prob, tmp_path)
+        assert audit.verdict == "REVIEW"
+        assert "no_manifest_or_matching_consensus_found" in audit.review_reasons
 
     def test_review_surplus_results(self, tmp_path: Path) -> None:
         prob = make_cell(
@@ -244,6 +291,108 @@ class TestAuditOne:
         audit = audit_one(prob, tmp_path)
         assert audit.verdict == "PASS"
         assert audit.actual == 4  # 4 unique base IDs after stripping _iterK
+
+
+# ----------------------------------------------------------------------------
+# find_manifest — five project-conventional manifest locations
+# ----------------------------------------------------------------------------
+
+
+@pytest.mark.tier1
+class TestFindManifest:
+    """The manifest lookup walker covers five project-conventional layouts."""
+
+    def _write_manifest(self, p: Path, n: int) -> Path:
+        p.parent.mkdir(parents=True, exist_ok=True)
+        manifest = {
+            "candidates": [
+                {"candidate_id": i, "crop_file": f"crops/candidate_{i:05d}.png"}
+                for i in range(n)
+            ]
+        }
+        p.write_text(json.dumps(manifest))
+        return p
+
+    def test_pattern1_same_dir(self, tmp_path: Path) -> None:
+        # <cell>/candidate_manifest.json
+        cell = tmp_path / "cell-A"
+        cell.mkdir()
+        prob = cell / "probabilities.json"
+        prob.write_text("{}")
+        m = self._write_manifest(cell / "candidate_manifest.json", 3)
+        assert find_manifest(prob) == m
+
+    def test_pattern2_crops_subdir(self, tmp_path: Path) -> None:
+        # <cell>/crops/candidate_manifest.json
+        cell = tmp_path / "cell-B"
+        cell.mkdir()
+        prob = cell / "probabilities.json"
+        prob.write_text("{}")
+        m = self._write_manifest(cell / "crops" / "candidate_manifest.json", 5)
+        assert find_manifest(prob) == m
+
+    def test_pattern3_parent_crops(self, tmp_path: Path) -> None:
+        # <parent>/crops/candidate_manifest.json (55maps-like)
+        parent = tmp_path / "campaign"
+        cell = parent / "verified-v2"
+        cell.mkdir(parents=True)
+        prob = cell / "probabilities.json"
+        prob.write_text("{}")
+        m = self._write_manifest(parent / "crops" / "candidate_manifest.json", 7)
+        assert find_manifest(prob) == m
+
+    def test_pattern4_parent_candidates(self, tmp_path: Path) -> None:
+        # <parent>/candidates/candidate_manifest.json (proposer-verifier-384)
+        parent = tmp_path / "proposer-verifier"
+        cell = parent / "verified-adversarial-text-v1-prompt"
+        cell.mkdir(parents=True)
+        prob = cell / "probabilities.json"
+        prob.write_text("{}")
+        m = self._write_manifest(parent / "candidates" / "candidate_manifest.json", 9)
+        assert find_manifest(prob) == m
+
+    def test_pattern5_parent_shared_crops(self, tmp_path: Path) -> None:
+        # <parent>/shared-crops/candidate_manifest.json (session-78 matrix)
+        parent = tmp_path / "session-78-matrix"
+        cell = parent / "verified-adversarial-text"
+        cell.mkdir(parents=True)
+        prob = cell / "probabilities.json"
+        prob.write_text("{}")
+        m = self._write_manifest(
+            parent / "shared-crops" / "candidate_manifest.json", 11
+        )
+        assert find_manifest(prob) == m
+
+    def test_pattern6_parent_crops_basename(self, tmp_path: Path) -> None:
+        # <parent>/crops/<basename>/candidate_manifest.json (e47-style)
+        parent = tmp_path / "e47-propose-brief"
+        cell = parent / "verified" / "flash-high-text-1of5"
+        cell.mkdir(parents=True)
+        prob = cell / "probabilities.json"
+        prob.write_text("{}")
+        m = self._write_manifest(
+            parent / "verified" / "crops" / "flash-high-text-1of5" / "candidate_manifest.json",
+            13,
+        )
+        assert find_manifest(prob) == m
+
+    def test_no_manifest_returns_none(self, tmp_path: Path) -> None:
+        cell = tmp_path / "cell-empty"
+        cell.mkdir()
+        prob = cell / "probabilities.json"
+        prob.write_text("{}")
+        assert find_manifest(prob) is None
+
+    def test_same_dir_takes_precedence(self, tmp_path: Path) -> None:
+        # If multiple patterns match, the same-dir candidate wins (most specific).
+        parent = tmp_path / "p"
+        cell = parent / "verified"
+        cell.mkdir(parents=True)
+        prob = cell / "probabilities.json"
+        prob.write_text("{}")
+        same = self._write_manifest(cell / "candidate_manifest.json", 1)
+        self._write_manifest(parent / "shared-crops" / "candidate_manifest.json", 99)
+        assert find_manifest(prob) == same
 
 
 # ----------------------------------------------------------------------------

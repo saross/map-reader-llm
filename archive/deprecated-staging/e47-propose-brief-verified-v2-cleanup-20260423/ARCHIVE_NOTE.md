@@ -1,0 +1,1 @@
+Archive note: April-23 v2-cleanup staging from before the formal v2 quarantine (commit 3ec25e68). Two failed/retry subdirs with no manifest. Not part of any current pipeline. Archived 2026-05-06 during Tier-2/3 closure audit.

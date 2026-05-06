@@ -1,0 +1,1 @@
+Archive note: 26 of 8942 (gap=8916) April-10 partial-cleanup staging dir, never run through run_pv.py cleanup (no cleanup_history field). Superseded by outputs/55maps-generalisation/verified-v2/ which was cleaned 2026-05-06. Archived 2026-05-06 during Tier-2/3 closure audit (Session 87).
