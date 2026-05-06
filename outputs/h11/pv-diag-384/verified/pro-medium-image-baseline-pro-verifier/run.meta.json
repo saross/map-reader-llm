@@ -1,12 +1,12 @@
 {
-  "run_id": "4694f0c8-deee-4152-b5c4-8e44dfd28570",
+  "run_id": "96baa191-eb94-4f91-9c71-64cf2be2e38a",
   "timestamp": {
-    "start": "2026-03-25T14:17:39.331418+00:00",
-    "end": "2026-03-25T14:17:39.335073+00:00",
-    "duration_seconds": 0.003655
+    "start": "2026-05-06T09:25:06.037061+00:00",
+    "end": "2026-05-06T09:25:17.410227+00:00",
+    "duration_seconds": 11.373166
   },
   "environment": {
-    "git_commit": "e55c9c3adcbd27215a919e38c9daa461c907f617",
+    "git_commit": "79daf93e08316b9f10c519f963145d4d8afd2de7",
     "script": "run_pv.py",
     "script_version": "1.0.0"
   },
@@ -52,7 +52,7 @@
     }
   },
   "execution_stats": {
-    "items_processed": 0,
+    "items_processed": 10,
     "items_failed": 0,
     "items_skipped": 0,
     "retries_total": 0,
@@ -60,29 +60,49 @@
     "retries_server_error": 0,
     "retries_timeout": 0,
     "retries_other": 0,
-    "finish_reason_counts": {},
+    "finish_reason_counts": {
+      "success": 10
+    },
     "safety_blocks": 0,
     "parse_failures": 0,
     "empty_responses": 0,
-    "completed_items": [],
+    "completed_items": [
+      "candidate_00452",
+      "candidate_00459",
+      "candidate_00203",
+      "candidate_00178",
+      "candidate_00294",
+      "candidate_00134",
+      "candidate_00271",
+      "candidate_00224",
+      "candidate_00147",
+      "candidate_00237"
+    ],
     "failed_items": [],
     "retry_details": []
   },
   "usage_stats": {
-    "total_input_tokens": 0,
-    "total_output_tokens": 0,
+    "total_input_tokens": 17920,
+    "total_output_tokens": 1507,
     "total_cached_tokens": 0,
     "total_reasoning_tokens": 0,
-    "total_thoughts_tokens": 0,
+    "total_thoughts_tokens": 4013,
     "total_tool_use_tokens": 0,
-    "total_tokens": 0,
-    "by_provider": {}
+    "total_tokens": 23440,
+    "by_provider": {
+      "google_gemini": {
+        "input_tokens": 17920,
+        "output_tokens": 1507,
+        "total_tokens": 23440,
+        "request_count": 10
+      }
+    }
   },
   "results_summary": {},
   "cost_estimate": {
-    "input_cost_usd": 0.0,
-    "output_cost_usd": 0.0,
-    "total_cost_usd": 0.0,
+    "input_cost_usd": 0.03584,
+    "output_cost_usd": 0.018084,
+    "total_cost_usd": 0.053924,
     "pricing_used": {
       "model": "gemini-3.1-pro-preview",
       "input_per_1m": 2.0,

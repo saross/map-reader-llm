@@ -1,9 +1,9 @@
 {
   "version": "1.0",
-  "mode": "batch",
+  "mode": "realtime",
   "verifier_config": "verify_adversarial-text",
   "iterations": 1,
-  "total_results": 509,
+  "total_results": 519,
   "results": {
     "candidate_00000": {
       "mound_probability": 0.95,
@@ -3058,6 +3058,78 @@
       "reasoning": "Although the symbol is black, its morphology\u2014a central circle with short, distinct lines radiating outward in a 'sunburst' or 'gear' pattern\u2014is the exact standard topographic representation of a burial mound (kurgan). The non-mound interpretation is very weak because no other common map feature uses this specific radiating pattern.",
       "best_alternative": "A different point landmark, such as a well or mill, due to the black ink.",
       "alternative_evidence": "The symbol is printed in black ink, whereas terrain features like burial mounds are often printed in the same orange-brown color as the contour lines."
+    },
+    "candidate_00452": {
+      "mound_probability": 0.95,
+      "reasoning": "The symbol perfectly matches the standard topographic map symbol for a burial mound (kurgan). It consists of a central circle with short, outward-pointing rays, creating a sunburst effect. The adjacent number '2' likely indicates the mound's height. There are no plausible alternative interpretations.",
+      "best_alternative": "None. The symbol is a distinct circle with outward-radiating rays.",
+      "alternative_evidence": "N/A"
+    },
+    "candidate_00459": {
+      "mound_probability": 0.95,
+      "reasoning": "While the central black square could represent a building or a benchmark, the presence of distinct, short lines radiating outward in a 'sunburst' pattern is the specific cartographic convention for a mound. Since these rays are clearly visible and point outward from the square, the symbol is definitively a benchmark situated on a mound. The alternative interpretation fails to account for the radiating lines.",
+      "best_alternative": "A building, ruin, or industrial structure with a fenced enclosure or specific map symbol.",
+      "alternative_evidence": "The central shape is a solid black square, which is often used to denote buildings or structures on topographic maps."
+    },
+    "candidate_00203": {
+      "mound_probability": 0.95,
+      "reasoning": "While the symbol shares the colour of contour lines, its specific geometry\u2014a central circle with distinct, short, outward-radiating lines forming a 'sunburst' pattern\u2014is the standard topographic representation of a burial mound (kurgan). The presence of the number '1' immediately adjacent to it indicates its relative height (1 metre), which is typical for mound symbols. The alternative interpretations are not plausible given this clear and specific visual evidence.",
+      "best_alternative": "A small circular contour line or vegetation marker.",
+      "alternative_evidence": "The symbol is drawn in brown, which is the same colour used for contour lines and some terrain features."
+    },
+    "candidate_00178": {
+      "mound_probability": 1.0,
+      "reasoning": "While the symbol is adjacent to an elevation value, the visual evidence strongly contradicts any non-mound interpretation. The symbol is a distinct brown 'sunburst' with clear outward-radiating hachures, which is the standard topographic representation of a mound. Furthermore, the symbol is immediately followed by the Cyrillic abbreviation '\u043a\u0443\u0440\u0433.' (kurg.), which stands for 'kurgan' (burial mound). Therefore, there is no plausible alternative explanation.",
+      "best_alternative": "A spot height marker with printing artifacts or a small localized depression.",
+      "alternative_evidence": "The symbol is located next to an elevation number (175.3), which is typical for spot heights. The brown color is also shared with contour lines and other topographic features."
+    },
+    "candidate_00294": {
+      "mound_probability": 0.99,
+      "reasoning": "While drawn in orange-brown, the symbol perfectly matches the standard topographic representation of a burial mound: a central circle with short, outward-radiating rays forming a 'sunburst' pattern. Furthermore, the adjacent text '\u043a\u0443\u0440\u0433.' is the standard abbreviation for 'kurgan' (burial mound), confirming its identity. The alternative interpretation is not plausible.",
+      "best_alternative": "A small, isolated contour feature or vegetation mark.",
+      "alternative_evidence": "The symbol is drawn in the same orange-brown ink used for contour lines and some terrain features."
+    },
+    "candidate_00134": {
+      "mound_probability": 0.95,
+      "reasoning": "The symbol at the centre is a small orange-brown circle with short lines radiating outward, forming a clear 'sunburst' or 'gear' pattern. This is the standard topographic representation of a burial mound (kurgan). The adjacent number '2' likely indicates the height of the mound in meters. I cannot find a plausible alternative explanation.",
+      "best_alternative": "None. The symbol perfectly matches the visual characteristics of a burial mound.",
+      "alternative_evidence": "There are no visual features that strongly support a non-mound interpretation. The symbol is isolated and distinct."
+    },
+    "candidate_00271": {
+      "mound_probability": 0.95,
+      "reasoning": "While the 'sunburst' shape could theoretically resemble a vegetation marker, vegetation symbols on these maps are typically printed in green or black. This symbol is printed in orange-brown, which is reserved for terrain and relief features. The distinct orange-brown circle with outward-pointing rays is the exact, standard cartographic representation of a burial mound (kurgan). There is no plausible alternative interpretation.",
+      "best_alternative": "Vegetation symbol (e.g., scrub or bush)",
+      "alternative_evidence": "The symbol features a central circle with radiating lines, a pattern that can sometimes be used to depict isolated bushes or scrub vegetation."
+    },
+    "candidate_00224": {
+      "mound_probability": 0.95,
+      "reasoning": "While the color matches natural terrain features, the specific shape\u2014a small central circle with distinct, short lines radiating outward in a 'sunburst' pattern\u2014is the standard cartographic symbol for a burial mound (kurgan) on these maps. The adjacent number '3' likely indicates its relative height in meters. The outward-pointing rays clearly indicate elevated terrain, and the highly stylized, compact nature of the symbol strongly points to an artificial mound rather than a general contour line.",
+      "best_alternative": "A small, natural hill or circular contour feature.",
+      "alternative_evidence": "The symbol is drawn in the same orange-brown ink used for contour lines and natural terrain features, suggesting it might just be a small, naturally occurring bump in the landscape rather than an artificial burial mound."
+    },
+    "candidate_00147": {
+      "mound_probability": 0.95,
+      "reasoning": "While the rays are black, a central black square surrounded by outward-pointing rays is the standard cartographic representation for a benchmark situated on a burial mound. The 'sunburst' pattern is clear and unambiguous, making non-mound interpretations highly unlikely.",
+      "best_alternative": "A benchmark with map-specific decorative markings or a small fort/enclosure symbol.",
+      "alternative_evidence": "The radiating lines are black rather than the typical orange-brown used for topographic features like mounds. This could suggest the entire symbol is a distinct man-made feature rather than a topographic mound."
+    },
+    "candidate_00237": {
+      "mound_probability": 1.0,
+      "reasoning": "There is no plausible non-mound interpretation. The visual features perfectly match the standard topographic symbol for a burial mound, and the adjacent text explicitly labels it as such.",
+      "best_alternative": "None. The symbol is a clear sunburst pattern with outward-radiating rays.",
+      "alternative_evidence": "The symbol consists of a central brown circle with distinct, short lines radiating outward in all directions. The accompanying text '\u041c\u043e\u0433\u0438\u043b\u0430' (grave/mound) further confirms its identity."
     }
-  }
+  },
+  "cleanup_history": [
+    {
+      "timestamp": "2026-05-06T09:25:17.415582+00:00",
+      "initial_missing": 10,
+      "recovered": 10,
+      "still_missing": 0,
+      "still_missing_ids": [],
+      "attempts_used": 1,
+      "max_attempts": 3,
+      "safe_mode_used": true
+    }
+  ]
 }
