@@ -1,16 +1,15 @@
-2026-04-26 02:16:23,196 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git 60778f8a
-2026-04-26 02:16:23,201 - INFO - __main__ - Resolved 87 conditions from inventory (era=2, track=None)
-2026-04-26 02:16:23,201 - INFO - __main__ - Resolved 87 conditions
-2026-04-26 02:16:23,201 - INFO - __main__ - Skipping evaluation (--skip-evaluation)
-2026-04-26 02:16:23,215 - INFO - __main__ - Threshold selection at 20m; pairwise + tiering at 50m (Option A semantics)
-2026-04-26 02:16:23,215 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 87 conditions
-2026-04-26 02:16:23,215 - INFO - __main__ - Selected 87 conditions (best F1=0.890 at 20m)
-2026-04-26 02:16:23,215 - INFO - __main__ - Skipping pairwise (--skip-pairwise)
-2026-04-26 02:16:23,303 - INFO - __main__ - FDR: 2511/3741 pairs significant at q=0.01 → 23 tiers
-2026-04-26 02:16:23,303 - INFO - __main__ - Markdown leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/combined/era2/leaderboard_tiers_q01_20m.md
-2026-04-26 02:16:23,303 - INFO - __main__ - Markdown leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/combined/era2/leaderboard_tiers_q01_50m.md
-2026-04-26 02:16:23,328 - INFO - __main__ - JSON leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/combined/era2/leaderboard_tiers_q01_50m.json
-2026-04-26 02:16:23,338 - INFO - __main__ - All evaluations written to /home/shawn/Code/map-reader-llm/results/leaderboard/combined/era2/leaderboard_all_evaluations.json
+2026-05-06 08:58:15,783 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git c067bca4
+2026-05-06 08:58:15,788 - INFO - __main__ - Resolved 87 conditions from inventory (era=2, track=None)
+2026-05-06 08:58:15,789 - INFO - __main__ - Resolved 87 conditions
+2026-05-06 08:58:15,789 - INFO - __main__ - Skipping evaluation (--skip-evaluation)
+2026-05-06 08:58:15,801 - INFO - __main__ - Threshold selection at 20m; pairwise + tiering at 50m (Option A semantics)
+2026-05-06 08:58:15,801 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 87 conditions
+2026-05-06 08:58:15,801 - INFO - __main__ - Selected 87 conditions (best F1=0.890 at 20m)
+2026-05-06 08:58:15,801 - INFO - __main__ - Skipping pairwise (--skip-pairwise)
+2026-05-06 08:58:15,864 - INFO - __main__ - FDR: 2516/3741 pairs significant at q=0.01 → 23 tiers
+2026-05-06 08:58:15,865 - INFO - __main__ - Markdown leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/combined/era2/leaderboard_tiers_q01_50m.md
+2026-05-06 08:58:15,889 - INFO - __main__ - JSON leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/combined/era2/leaderboard_tiers_q01_50m.json
+2026-05-06 08:58:15,903 - INFO - __main__ - All evaluations written to /home/shawn/Code/map-reader-llm/results/leaderboard/combined/era2/leaderboard_all_evaluations.json
 
 ========================================================================
 LEADERBOARD TIERS (F1, 50m buffer)
@@ -34,12 +33,12 @@ Tier 1 (F1: 0.889–0.911, 15 conditions)
    15. pv-min-text-t0.3-n10                     F1=0.890  t=1
 
 Tier 2 (F1: 0.854–0.891, 8 conditions)
-   16. pv-high-text-t0.7-n5                     F1=0.887  t=1
-   17. pv-min-text-t0.0-n3                      F1=0.891  t=1
-   18. pv-high-text-t1.0-n5                     F1=0.880  t=1
-   19. session-78-text-checklist-text           F1=0.886  t=1
-   20. session-78-text-adversarial-text         F1=0.884  t=1
-   21. session-78-text-brief-text               F1=0.870  t=1
+   16. session-78-text-checklist-text           F1=0.890  t=1
+   17. pv-high-text-t0.7-n5                     F1=0.887  t=1
+   18. pv-min-text-t0.0-n3                      F1=0.891  t=1
+   19. pv-high-text-t1.0-n5                     F1=0.880  t=1
+   20. session-78-text-adversarial-text         F1=0.887  t=1
+   21. session-78-text-brief-text               F1=0.879  t=1
    22. h11-pvd-pro-high-text-n5                 F1=0.854  t=6
    23. pv-high-text-t0.0-n3                     F1=0.857  t=1
 
@@ -48,32 +47,32 @@ Tier 3 (F1: 0.810–0.826, 3 conditions)
    25. p3a-high-text-t0.3                       F1=0.810  t=10
    26. p3a-high-text-t0.3-n5                    F1=0.810  t=10
 
-Tier 4 (F1: 0.862–0.895, 9 conditions)
+Tier 4 (F1: 0.868–0.895, 8 conditions)
    27. pv-min-image-t0.7-n10                    F1=0.876  t=1
    28. pv-high-image-t0.7-n5                    F1=0.881  t=1
    29. session-78-image-adversarial             F1=0.895  t=1
    30. session-78-image-comparative             F1=0.894  t=1
-   31. session-78-image-brief                   F1=0.892  t=1
-   32. session-78-image-checklist               F1=0.891  t=1
-   33. pv-min-image-t0.3-n10                    F1=0.868  t=1
-   34. session-78-image-checklist-text          F1=0.887  t=1
-   35. pv-min-image-t0.3-n5                     F1=0.862  t=1
+   31. session-78-image-checklist-text          F1=0.894  t=1
+   32. session-78-image-brief                   F1=0.892  t=1
+   33. session-78-image-checklist               F1=0.891  t=1
+   34. pv-min-image-t0.3-n10                    F1=0.868  t=1
 
-Tier 5 (F1: 0.845–0.845, 1 conditions)
-   36. pv-high-image-t0.7-n10                   F1=0.845  t=1
+Tier 5 (F1: 0.845–0.873, 3 conditions)
+   35. session-78-image-brief-text              F1=0.873  t=1
+   36. pv-min-image-t0.3-n5                     F1=0.862  t=1
+   37. pv-high-image-t0.7-n10                   F1=0.845  t=1
 
 Tier 6 (F1: 0.881–0.881, 1 conditions)
-   37. pv-min-image-t0.7-n5                     F1=0.881  t=1
+   38. pv-min-image-t0.7-n5                     F1=0.881  t=1
 
 Tier 7 (F1: 0.789–0.789, 2 conditions)
-   38. p3a-high-text-t1.0                       F1=0.789  t=9
-   39. p3a-high-text-t1.0-n5                    F1=0.789  t=9
+   39. p3a-high-text-t1.0                       F1=0.789  t=9
+   40. p3a-high-text-t1.0-n5                    F1=0.789  t=9
 
-Tier 8 (F1: 0.858–0.874, 6 conditions)
-   40. session-78-image-adversarial-text        F1=0.870  t=1
-   41. pv-high-image-t0.3-n10                   F1=0.874  t=1
-   42. pv-scale4-optimal-n10                    F1=0.858  t=1
-   43. session-78-image-brief-text              F1=0.864  t=1
+Tier 8 (F1: 0.858–0.874, 5 conditions)
+   41. session-78-image-adversarial-text        F1=0.868  t=1
+   42. pv-high-image-t0.3-n10                   F1=0.874  t=1
+   43. pv-scale4-optimal-n10                    F1=0.858  t=1
    44. pv-n1-image-t0-n3                        F1=0.872  t=1
    45. pv-high-image-t1.0-n10                   F1=0.858  t=1
 
