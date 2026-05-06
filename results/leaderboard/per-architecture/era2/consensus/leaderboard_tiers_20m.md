@@ -1,6 +1,6 @@
 # Leaderboard (F1 tiers) — 20m buffer
 
-**Generated**: 2026-05-06T02:59:00.401609+00:00
+**Generated**: 2026-05-06T09:33:36.774184+00:00
 **Tiering metric**: F1
 **FDR q**: 0.05
 **Conditions**: 29 in 7 tier(s)

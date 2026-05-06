@@ -59,8 +59,8 @@ Note: ties (all conditions in one tier) make Spearman's rho undefined; the rho c
 | `h9-track2-text-h9-A-p4` | 0.495 | 3 | 3 | 3 | 3 | 3 | stable |
 | `h9-track2-text-h9-A-p2` | 0.488 | 3 | 3 | 3 | 3 | 3 | stable |
 | `h9-track2-text-h9-D-t1` | 0.476 | 3 | 3 | 3 | 3 | 3 | stable |
-| `h3-track1-image-T1.0` | 0.475 | 3 | 3 | 3 | 3 | 3 | stable |
 | `h9-track2-text-h9-E-p1` | 0.475 | 3 | 3 | 3 | 3 | 3 | stable |
+| `h3-track1-image-T1.0` | 0.475 | 3 | 3 | 3 | 3 | 3 | stable |
 | `h9-track2-text-h9-D-t2` | 0.473 | 3 | 3 | 3 | 3 | 3 | stable |
 | `h9-track2-text-h9-E-p3` | 0.469 | 3 | 3 | 3 | 3 | 3 | stable |
 | `h9-track2-text-h9-D-t3` | 0.445 | 3 | 3 | 3 | 3 | 3 | stable |

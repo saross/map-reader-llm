@@ -39,8 +39,8 @@ Note: ties (all conditions in one tier) make Spearman's rho undefined; the rho c
 | `h11-pvd-pro-high-image-n5` | 0.700 | 3 | 4 | 4 | 5 | 6 | shift |
 | `h11-pvd-image-n5` | 0.680 | 4 | 5 | 5 | 6 | 7 | shift |
 | `h11-n1-image-t03` | 0.677 | 4 | 5 | 5 | 6 | 7 | shift |
-| `p3a-minimal-text-t1.0-n5` | 0.667 | 4 | 6 | 6 | 7 | 8 | shift |
 | `p3a-minimal-text-t1.0` | 0.667 | 4 | 6 | 6 | 7 | 8 | shift |
+| `p3a-minimal-text-t1.0-n5` | 0.667 | 4 | 6 | 6 | 7 | 8 | shift |
 | `h11-pvd-flash-minimal-text-n30-t07` | 0.661 | 4 | 6 | 6 | 7 | 8 | shift |
 | `p3a-min-image-t0.3` | 0.660 | 4 | 6 | 7 | 8 | 9 | shift |
 | `p3a-min-image-t1.0` | 0.646 | 4 | 6 | 7 | 8 | 9 | shift |

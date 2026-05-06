@@ -1,17 +1,17 @@
-2026-05-06 10:55:40,721 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git a8f4b7f8
-2026-05-06 10:55:40,729 - INFO - __main__ - Resolved 72 conditions from inventory (era=1, track=None)
-2026-05-06 10:55:40,729 - INFO - __main__ - Resolved 72 conditions
-2026-05-06 10:55:40,810 - INFO - __main__ - Evaluation: 610 cached, 0 to compute (8 workers)
-2026-05-06 10:55:40,810 - INFO - __main__ - Stage 2 complete in 0.1s
-2026-05-06 10:55:40,811 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 72 conditions
-2026-05-06 10:55:40,811 - INFO - __main__ - Selected 72 conditions (best F1=0.775 at 20m)
-2026-05-06 10:55:40,836 - INFO - __main__ - Pairwise tests (f1): 2556 pairs at 20m (10000 permutations, 8 workers)
-2026-05-06 10:55:40,875 - INFO - __main__ - Pairwise: 2556 cached, 0 computed
-2026-05-06 10:55:40,876 - INFO - __main__ - Stage 4 complete in 0.1s
-2026-05-06 10:55:40,878 - INFO - __main__ - FDR: 1052/2556 pairs significant at q=0.05 → 6 tiers
-2026-05-06 10:55:40,878 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era1/consensus/leaderboard_tiers_20m.md
-2026-05-06 10:55:40,904 - INFO - __main__ - JSON leaderboard written to results/leaderboard/per-architecture/era1/consensus/leaderboard_tiers_20m.json
-2026-05-06 10:55:40,960 - INFO - __main__ - All evaluations written to results/leaderboard/per-architecture/era1/consensus/leaderboard_all_evaluations.json
+2026-05-06 17:33:30,870 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git 005e6c71
+2026-05-06 17:33:30,877 - INFO - __main__ - Resolved 72 conditions from inventory (era=1, track=None)
+2026-05-06 17:33:30,877 - INFO - __main__ - Resolved 72 conditions
+2026-05-06 17:33:30,957 - INFO - __main__ - Evaluation: 610 cached, 0 to compute (8 workers)
+2026-05-06 17:33:30,957 - INFO - __main__ - Stage 2 complete in 0.1s
+2026-05-06 17:33:30,958 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 72 conditions
+2026-05-06 17:33:30,958 - INFO - __main__ - Selected 72 conditions (best F1=0.775 at 20m)
+2026-05-06 17:33:30,983 - INFO - __main__ - Pairwise tests (f1): 2556 pairs at 20m (10000 permutations, 8 workers)
+2026-05-06 17:33:31,022 - INFO - __main__ - Pairwise: 2556 cached, 0 computed
+2026-05-06 17:33:31,022 - INFO - __main__ - Stage 4 complete in 0.1s
+2026-05-06 17:33:31,025 - INFO - __main__ - FDR: 1052/2556 pairs significant at q=0.05 → 6 tiers
+2026-05-06 17:33:31,025 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era1/consensus/leaderboard_tiers_20m.md
+2026-05-06 17:33:31,047 - INFO - __main__ - JSON leaderboard written to results/leaderboard/per-architecture/era1/consensus/leaderboard_tiers_20m.json
+2026-05-06 17:33:31,101 - INFO - __main__ - All evaluations written to results/leaderboard/per-architecture/era1/consensus/leaderboard_all_evaluations.json
 
 ========================================================================
 LEADERBOARD TIERS (F1, 20m buffer)

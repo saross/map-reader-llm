@@ -35,15 +35,15 @@ Note: ties (all conditions in one tier) make Spearman's rho undefined; the rho c
 | `h4-canonical-first` | 0.093 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h8-track1-image-plus-hp` | 0.093 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h8-track1-image-canonical` | 0.092 | 2 | 2 | 2 | 2 | 2 | stable |
-| `h8-track1-image-exploratory-pure-positive-canon` | 0.091 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h8-track1-image-pure-positive-canon` | 0.091 | 2 | 2 | 2 | 2 | 2 | stable |
+| `h8-track1-image-exploratory-pure-positive-canon` | 0.091 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h4-random` | 0.065 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h5-track2-text-verbose` | 0.062 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h8-track2-text-pure-positive-canon` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
-| `h8-track1-image-exploratory-pure-positive-2hp` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
-| `h8-track2-text-scale-4` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
-| `h8-track2-text-scale-8` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
-| `h8-track2-text-canonical` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h5-track2-text-terse` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
+| `h8-track2-text-scale-4` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
+| `h8-track1-image-exploratory-pure-positive-2hp` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
+| `h8-track2-text-canonical` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h8-track2-text-plus-hp` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
+| `h8-track2-text-scale-8` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
 

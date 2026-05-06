@@ -34,8 +34,8 @@ Note: ties (all conditions in one tier) make Spearman's rho undefined; the rho c
 | `h8-track2-text-canonical` | 0.605 | 1 | 1 | 4 | 4 | 4 | shift |
 | `h5-track1-image-verbose` | 0.603 | 1 | 1 | 5 | 5 | 5 | shift |
 | `h8-track1-image-exploratory-pure-positive-4hp` | 0.599 | 1 | 1 | 5 | 5 | 5 | shift |
-| `h8-track1-image-plus-hp` | 0.599 | 1 | 1 | 5 | 5 | 5 | shift |
 | `h4-canonical-first` | 0.599 | 1 | 1 | 5 | 5 | 5 | shift |
+| `h8-track1-image-plus-hp` | 0.599 | 1 | 1 | 5 | 5 | 5 | shift |
 | `h5-track2-text-terse` | 0.598 | 1 | 1 | 6 | 6 | 6 | shift |
 | `h8-track2-text-plus-hp` | 0.597 | 1 | 1 | 6 | 6 | 6 | shift |
 | `h8-track1-image-scale-8` | 0.587 | 1 | 1 | 6 | 6 | 7 | shift |

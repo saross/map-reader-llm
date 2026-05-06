@@ -60,8 +60,8 @@ Note: ties (all conditions in one tier) make Spearman's rho undefined; the rho c
 | `pv-high-text-t0.3-n5` | 0.776 | 1 | 1 | 1 | 1 | 1 | stable |
 | `pv-high-text-t0.0-n3` | 0.774 | 1 | 1 | 1 | 1 | 1 | stable |
 | `session-78-text-checklist` | 0.774 | 1 | 1 | 1 | 1 | 1 | stable |
-| `pv-min-text-t0.3-n10` | 0.772 | 1 | 1 | 1 | 1 | 1 | stable |
 | `pv-min-text-t0.3-n5` | 0.772 | 1 | 1 | 1 | 1 | 1 | stable |
+| `pv-min-text-t0.3-n10` | 0.772 | 1 | 1 | 1 | 1 | 1 | stable |
 | `pv-high-text-t0.7-n5` | 0.767 | 1 | 1 | 1 | 1 | 1 | stable |
 | `session-78-text-brief` | 0.765 | 1 | 1 | 1 | 1 | 1 | stable |
 | `pv-high-text-t0.7-n10` | 0.763 | 1 | 1 | 1 | 1 | 1 | stable |

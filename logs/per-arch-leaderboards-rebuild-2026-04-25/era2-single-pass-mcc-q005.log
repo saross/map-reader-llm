@@ -1,47 +1,16 @@
-2026-05-06 10:58:57,414 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git a8f4b7f8
-2026-05-06 10:58:57,415 - INFO - __main__ - Resolved 6 conditions from inventory (era=2, track=None)
-2026-05-06 10:58:57,416 - INFO - __main__ - Resolved 6 conditions
-2026-05-06 10:58:57,416 - INFO - __main__ - Skipping evaluation (--skip-evaluation)
-2026-05-06 10:58:57,416 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 6 conditions
-2026-05-06 10:58:57,416 - INFO - __main__ - Selected 6 conditions (best F1=0.763 at 20m)
-2026-05-06 10:58:57,444 - INFO - __main__ - Pairwise tests (mcc): 15 pairs at 20m (10000 permutations, 8 workers)
-2026-05-06 10:58:57,488 - INFO - pairwise_permutation_test - GeoJSON: 430 detections from detections_text-t0.0_run01.geojson
-2026-05-06 10:58:57,489 - INFO - pairwise_permutation_test - GeoJSON: 430 detections from detections_text-t0.0_run01.geojson
-2026-05-06 10:58:57,494 - INFO - pairwise_permutation_test - GeoJSON: 519 detections from detections_image-t0.0_run01.geojson
-2026-05-06 10:58:57,494 - INFO - pairwise_permutation_test - GeoJSON: 430 detections from detections_text-t0.0_run01.geojson
-2026-05-06 10:58:57,494 - INFO - pairwise_permutation_test - GeoJSON: 430 detections from detections_text-t0.0_run01.geojson
-2026-05-06 10:58:57,495 - INFO - pairwise_permutation_test - GeoJSON: 519 detections from detections_image-t0.0_run01.geojson
-2026-05-06 10:58:57,495 - INFO - pairwise_permutation_test - GeoJSON: 519 detections from detections_image-t0.0_run01.geojson
-2026-05-06 10:58:57,496 - INFO - pairwise_permutation_test - GeoJSON: 430 detections from detections_text-t0.0_run01.geojson
-2026-05-06 10:58:57,497 - INFO - pairwise_permutation_test - GeoJSON: 519 detections from detections_image-t0.0_run01.geojson
-2026-05-06 10:58:57,500 - INFO - pairwise_permutation_test - GeoJSON: 1047 detections from detections_text-t0.0_run01.geojson
-2026-05-06 10:58:57,510 - INFO - pairwise_permutation_test - GeoJSON: 746 detections from detections_image-t0.0_run01.geojson
-2026-05-06 10:58:57,510 - INFO - pairwise_permutation_test - GeoJSON: 746 detections from detections_image-t0.0_run01.geojson
-2026-05-06 10:58:57,514 - INFO - pairwise_permutation_test - GeoJSON: 941 detections from detections_pro-image-medium-t07_run01.geojson
-2026-05-06 10:58:57,517 - INFO - pairwise_permutation_test - GeoJSON: 941 detections from detections_pro-image-medium-t07_run01.geojson
-2026-05-06 10:58:57,523 - INFO - pairwise_permutation_test - GeoJSON: 1445 detections from detections_pro-text-medium-t07_run01.geojson
-2026-05-06 10:58:57,523 - INFO - pairwise_permutation_test - GeoJSON: 1445 detections from detections_pro-text-medium-t07_run01.geojson
-2026-05-06 10:58:58,271 - INFO - pairwise_permutation_test - GeoJSON: 519 detections from detections_image-t0.0_run01.geojson
-2026-05-06 10:58:58,278 - INFO - pairwise_permutation_test - GeoJSON: 941 detections from detections_pro-image-medium-t07_run01.geojson
-2026-05-06 10:58:58,284 - INFO - pairwise_permutation_test - GeoJSON: 1047 detections from detections_text-t0.0_run01.geojson
-2026-05-06 10:58:58,284 - INFO - pairwise_permutation_test - GeoJSON: 941 detections from detections_pro-image-medium-t07_run01.geojson
-2026-05-06 10:58:58,288 - INFO - pairwise_permutation_test - GeoJSON: 746 detections from detections_image-t0.0_run01.geojson
-2026-05-06 10:58:58,300 - INFO - pairwise_permutation_test - GeoJSON: 746 detections from detections_image-t0.0_run01.geojson
-2026-05-06 10:58:58,302 - INFO - pairwise_permutation_test - GeoJSON: 941 detections from detections_pro-image-medium-t07_run01.geojson
-2026-05-06 10:58:58,302 - INFO - pairwise_permutation_test - GeoJSON: 1445 detections from detections_pro-text-medium-t07_run01.geojson
-2026-05-06 10:58:58,315 - INFO - pairwise_permutation_test - GeoJSON: 1047 detections from detections_text-t0.0_run01.geojson
-2026-05-06 10:58:58,318 - INFO - pairwise_permutation_test - GeoJSON: 1445 detections from detections_pro-text-medium-t07_run01.geojson
-2026-05-06 10:58:58,326 - INFO - pairwise_permutation_test - GeoJSON: 746 detections from detections_image-t0.0_run01.geojson
-2026-05-06 10:58:58,339 - INFO - pairwise_permutation_test - GeoJSON: 1047 detections from detections_text-t0.0_run01.geojson
-2026-05-06 10:58:58,375 - INFO - pairwise_permutation_test - GeoJSON: 1445 detections from detections_pro-text-medium-t07_run01.geojson
-2026-05-06 10:58:58,388 - INFO - pairwise_permutation_test - GeoJSON: 1047 detections from detections_text-t0.0_run01.geojson
-2026-05-06 10:58:59,090 - INFO - __main__ - [15/15] pairwise done
-2026-05-06 10:58:59,097 - INFO - __main__ - Pairwise: 0 cached, 15 computed
-2026-05-06 10:58:59,098 - INFO - __main__ - Stage 4 complete in 1.7s
-2026-05-06 10:58:59,098 - INFO - __main__ - FDR: 13/15 pairs significant at q=0.05 → 4 tiers
-2026-05-06 10:58:59,098 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/single-pass/leaderboard_tiers_mcc_20m.md
-2026-05-06 10:58:59,102 - INFO - __main__ - JSON leaderboard written to results/leaderboard/per-architecture/era2/single-pass/leaderboard_tiers_mcc_20m.json
-2026-05-06 10:58:59,103 - INFO - __main__ - All evaluations written to results/leaderboard/per-architecture/era2/single-pass/leaderboard_all_evaluations.json
+2026-05-06 17:33:35,385 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git 005e6c71
+2026-05-06 17:33:35,386 - INFO - __main__ - Resolved 6 conditions from inventory (era=2, track=None)
+2026-05-06 17:33:35,386 - INFO - __main__ - Resolved 6 conditions
+2026-05-06 17:33:35,386 - INFO - __main__ - Skipping evaluation (--skip-evaluation)
+2026-05-06 17:33:35,387 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 6 conditions
+2026-05-06 17:33:35,387 - INFO - __main__ - Selected 6 conditions (best F1=0.763 at 20m)
+2026-05-06 17:33:35,415 - INFO - __main__ - Pairwise tests (mcc): 15 pairs at 20m (10000 permutations, 8 workers)
+2026-05-06 17:33:35,416 - INFO - __main__ - Pairwise: 15 cached, 0 computed
+2026-05-06 17:33:35,416 - INFO - __main__ - Stage 4 complete in 0.0s
+2026-05-06 17:33:35,416 - INFO - __main__ - FDR: 13/15 pairs significant at q=0.05 → 4 tiers
+2026-05-06 17:33:35,416 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/single-pass/leaderboard_tiers_mcc_20m.md
+2026-05-06 17:33:35,420 - INFO - __main__ - JSON leaderboard written to results/leaderboard/per-architecture/era2/single-pass/leaderboard_tiers_mcc_20m.json
+2026-05-06 17:33:35,420 - INFO - __main__ - All evaluations written to results/leaderboard/per-architecture/era2/single-pass/leaderboard_all_evaluations.json
 
 ========================================================================
 LEADERBOARD TIERS (MCC, 20m buffer)

@@ -1,8 +1,8 @@
 {
   "script": "build_tiered_leaderboard.py",
   "version": "1.0.0",
-  "timestamp": "2026-05-06T02:58:59.099017+00:00",
-  "git_commit": "a8f4b7f8",
+  "timestamp": "2026-05-06T09:33:35.416845+00:00",
+  "git_commit": "005e6c71",
   "metadata": {
     "name": "",
     "primary_buffer": 20,
@@ -932,19 +932,6 @@
   "pairwise_tests": [
     {
       "label_a": "h11-pvd-pro-medium-text-baseline",
-      "label_b": "h11-pvd-text-baseline",
-      "metric": "mcc",
-      "mcc_a": 0.751519,
-      "mcc_b": -0.003831,
-      "delta_mcc": 0.755349,
-      "p_value": 0.0,
-      "n_permutations": 10000,
-      "n_tiles": 487,
-      "bh_adjusted_p": 0.0,
-      "significant": true
-    },
-    {
-      "label_a": "h11-pvd-pro-medium-text-baseline",
       "label_b": "h11-pvd-pro-medium-image-baseline",
       "metric": "mcc",
       "mcc_a": 0.751519,
@@ -970,38 +957,12 @@
       "significant": true
     },
     {
-      "label_a": "h11-pvd-pro-medium-image-baseline",
-      "label_b": "h11-pvd-image-baseline",
-      "metric": "mcc",
-      "mcc_a": 0.733581,
-      "mcc_b": 0.312414,
-      "delta_mcc": 0.421167,
-      "p_value": 0.0,
-      "n_permutations": 10000,
-      "n_tiles": 487,
-      "bh_adjusted_p": 0.0,
-      "significant": true
-    },
-    {
       "label_a": "h11-pvd-pro-medium-text-baseline",
       "label_b": "h11-pvd-image-baseline",
       "metric": "mcc",
       "mcc_a": 0.751519,
       "mcc_b": 0.312414,
       "delta_mcc": 0.439105,
-      "p_value": 0.0,
-      "n_permutations": 10000,
-      "n_tiles": 487,
-      "bh_adjusted_p": 0.0,
-      "significant": true
-    },
-    {
-      "label_a": "h11-pvd-pro-medium-image-baseline",
-      "label_b": "h11-n1-pro-text-medium-t07",
-      "metric": "mcc",
-      "mcc_a": 0.733581,
-      "mcc_b": 0.310469,
-      "delta_mcc": 0.423112,
       "p_value": 0.0,
       "n_permutations": 10000,
       "n_tiles": 487,
@@ -1022,6 +983,19 @@
       "significant": true
     },
     {
+      "label_a": "h11-pvd-pro-medium-text-baseline",
+      "label_b": "h11-pvd-text-baseline",
+      "metric": "mcc",
+      "mcc_a": 0.751519,
+      "mcc_b": -0.003831,
+      "delta_mcc": 0.755349,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
       "label_a": "h11-pvd-pro-medium-image-baseline",
       "label_b": "h11-n1-pro-image-medium-t07",
       "metric": "mcc",
@@ -1032,6 +1006,32 @@
       "n_permutations": 10000,
       "n_tiles": 487,
       "bh_adjusted_p": 0.001375,
+      "significant": true
+    },
+    {
+      "label_a": "h11-pvd-pro-medium-image-baseline",
+      "label_b": "h11-pvd-image-baseline",
+      "metric": "mcc",
+      "mcc_a": 0.733581,
+      "mcc_b": 0.312414,
+      "delta_mcc": 0.421167,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "label_a": "h11-pvd-pro-medium-image-baseline",
+      "label_b": "h11-n1-pro-text-medium-t07",
+      "metric": "mcc",
+      "mcc_a": 0.733581,
+      "mcc_b": 0.310469,
+      "delta_mcc": 0.423112,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "bh_adjusted_p": 0.0,
       "significant": true
     },
     {
