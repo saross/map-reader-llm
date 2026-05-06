@@ -445,14 +445,24 @@ After all 6 Session-78 cells are clean:
 3. `python scripts/build_tiered_leaderboard.py` **(auto)** — rebuilds the 6
    `session-78-{image,text}-{adversarial,brief,checklist}-text-487tile.json`
    leaderboard cells under `results/leaderboard/cells/`.
-4. `bash scripts/finalise_per_arch_leaderboard.sh` **(auto)** — regenerates
-   `results/leaderboard/per-architecture/era2/consensus/leaderboard_tiers_*.{json,md}`.
-5. `bash scripts/build_combined_leaderboard.sh` **(auto)** — combined
-   architecture leaderboard.
-6. `bash scripts/build_combined_tier_stability.sh` **(auto)** — tier
-   stability tables.
-7. **(manual)** Refresh paper-citation Markdown referencing session-78 tier
-   numbers — locate via `grep -rl session-78 docs/ planning/`.
+4. `bash scripts/run_per_arch_leaderboards.sh` **(auto)** — re-runs the
+   per-architecture tier build for all 7 strata. Cache-warm strata are
+   no-ops; the affected `era2/pv` stratum (where Session-78 cells live)
+   is re-tiered with the post-cleanup F1 values. The runner uses
+   `--top-n 0` (comprehensive coverage) and `--seed 42` for
+   reproducibility. For a full multi-pass canonical build (F1 q05/q01 +
+   MCC q05/q01 + stage 3-5 documentation), use
+   `bash scripts/build_per_arch_redesign.sh` instead.
+5. `bash scripts/finalise_per_arch_leaderboard.sh` **(auto)** —
+   post-processes the per-arch tier files: MCC augmentation, Markdown
+   enrichment, cross-architecture comparison table, per-stratum
+   headlines, spot-check verification. Does NOT rebuild tier composition.
+6. `bash scripts/build_combined_leaderboard.sh 2` **(auto)** — combined
+   architecture leaderboard for Era 2 (only era containing Session-78 cells).
+7. `bash scripts/build_combined_tier_stability.sh 2` **(auto)** — tier
+   stability tables for Era 2.
+8. **(manual)** Refresh paper-citation Markdown referencing session-78 tier
+   numbers — locate via `grep -rl session-78 docs/ planning/ results/`.
 
 #### e47-propose-brief (1 cell + 4 derivatives)
 
@@ -462,10 +472,13 @@ After all 6 Session-78 cells are clean:
 2. `python scripts/compare_wbf_vs_greedy_production.py` **(auto)** —
    refreshes the WBF-vs-greedy comparison output.
 3. `python scripts/build_tiered_leaderboard.py` **(auto)** for e47 cells.
-4. `bash scripts/finalise_per_arch_leaderboard.sh` **(auto)** — re-rolls
-   the per-arch consensus leaderboard cells (`leaderboard_tiers_*.{json,md}`
-   under `era2/consensus/`).
-5. **(manual)** Spot-check `results/leaderboard/per-architecture/mc-precision-flags.md`
+4. `bash scripts/run_per_arch_leaderboards.sh` **(auto)** — re-runs the
+   per-architecture tier build; the affected `era2/consensus` stratum is
+   re-tiered with the post-cleanup F1 values.
+5. `bash scripts/finalise_per_arch_leaderboard.sh` **(auto)** —
+   post-processes the per-arch tier files (see § 6.1 step 5 for what this
+   actually does).
+6. **(manual)** Spot-check `results/leaderboard/per-architecture/mc-precision-flags.md`
    for any newly-flagged tests after the rebuild.
 
 #### h8-v2 WBF scale-4 (1 cell)
@@ -485,8 +498,11 @@ After all 6 Session-78 cells are clean:
 2. `python scripts/build_tiered_leaderboard.py` **(auto)** — rebuilds
    `flash-high-image-n5-t{0.3,0.7,1.0}-greedy-v1-487tile.json` (note: t0.0
    produces no leaderboard cell per § 0.2).
-3. `bash scripts/finalise_per_arch_leaderboard.sh` **(auto)**.
-4. `python scripts/analyse_secondary_effects.py`,
+3. `bash scripts/run_per_arch_leaderboards.sh` **(auto)** — re-runs the
+   per-arch tier build; cache-warm for unaffected strata.
+4. `bash scripts/finalise_per_arch_leaderboard.sh` **(auto)** —
+   post-processes the per-arch tier files (see § 6.1 step 5).
+5. `python scripts/analyse_secondary_effects.py`,
    `analyse_consensus_sd_shrinkage_v2.py`,
    `analyse_inter_pass_agreement.py`,
    `analyse_token_efficiency.py`,
@@ -498,7 +514,10 @@ After all 6 Session-78 cells are clean:
 1. `evaluate_detections.py` **(auto)**.
 2. `build_tiered_leaderboard.py` **(auto)** — rebuilds
    `scale4-optimal-greedy-v1-487tile.json`.
-3. `finalise_per_arch_leaderboard.sh` **(auto)**.
+3. `run_per_arch_leaderboards.sh` **(auto)** — re-runs the per-arch tier
+   build; cache-warm for unaffected strata.
+4. `finalise_per_arch_leaderboard.sh` **(auto)** — post-processes the
+   per-arch tier files (see § 6.1 step 5).
 
 #### verified-v2 (1 cell)
 
