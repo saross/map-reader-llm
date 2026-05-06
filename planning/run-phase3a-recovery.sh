@@ -364,8 +364,13 @@ run_tier1() {
     # benefit from operator review of the rebuilt leaderboard tier output.
 
     # Group 1B — e47-propose-brief (1 cell + 4 derivatives regenerate)
+    # Path bug fixed (Session 87 — see planning/three-skipped-cells-investigation.md):
+    # both --crops-dir and --verified-dir previously pointed at
+    # `verified/flash-high-text-1of5/`, which has no PNGs. Canonical crops
+    # directory is `crops/flash-high-text-1of5/` (with manifest + 4358 PNGs
+    # under `crops/flash-high-text-1of5/crops/`).
     recover_cell tier1 "e47-flash-high-text-1of5" \
-        "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5" \
+        "outputs/h11/e47-propose-brief/crops/flash-high-text-1of5" \
         "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5" \
         "$CONFIG_DIR/verify_adversarial-text.json"
 
