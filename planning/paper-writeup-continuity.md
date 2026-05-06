@@ -1,14 +1,97 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-05-06 (Session 86–87 — Tier-1 propagation COMPLETE; Obs 323 landed; q01+MCC rebuild COMPLETE at commit `ca0567d3`)
+**Last updated**: 2026-05-06 (Session 86–87 — **Phase3a recovery campaign FULLY CLOSED**: Tier-1 (Obs 323) + Tier-2/3 (Obs 324) + 3 previously-skipped cells; all 14 cells gap=0; tracked audit script in CI infrastructure; 168 PASS / 0 FAIL / 43 REVIEW)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
 
 ---
 
-## ✅ Session 88 (next) — START HERE — TIER-1 CLOSED, MULTIPLE LOOSE THREADS
+## 🎯 Session 88 (next) — START HERE — RECOVERY CAMPAIGN CLOSED, ON TO PAPER OUTLINE
+
+**Posted**: 2026-05-06 evening, after Obs 324 landed.
+
+### TL;DR
+
+**The Phase3a verifier-completeness recovery campaign is fully closed.** All 14 outstanding cells have gap=0; the 3 originally-skipped cells (e47, 55maps, proposer-verifier-384) and the 11 Tier-2/3 cells from the resume batch were all closed on zbook locally without sapphire dependency. Total Session 86–87 cleanup spend: **$1.89** (vs $1.84 expected, $10 hard cap). Era-2-pv leaderboard composition remained 44 conditions / 6 tiers throughout (no tier flips post-cleanup).
+
+A tracked, reproducible verifier-completeness audit script (`scripts/audit_verifier_completeness.py`, 32 tier-1 tests) is now CI infrastructure. Final audit: **168 PASS / 0 FAIL / 43 REVIEW** — the 43 REVIEW are documented as a future-audit-enhancement class (consensus-driven `pv-diag-384/verified/*` flat-layout cells), not recovery loose ends.
+
+### Read-first
+
+1. **`docs/notes/reflections/working-notes.md`** Obs 323 + Obs 324 — the Tier-1 + Tier-2/3 closure narratives.
+2. **`reports/verifier-completeness-audit-2026-05-06.json`** — final audit verdict.
+3. **`reports/phase3a-verifier-completeness-audit-2026-05-03.md`** — original audit doc with Recovery status annotation (last updated 2026-05-06; could now be updated to "fully closed" given Obs 324).
+4. This section.
+
+### What's pending — priority order for Session 88+
+
+1. **Step 6 paper outline** — *the actual deliverable*. Recovery campaign is no longer blocking. Map paper sections (Methods / Results / Discussion / Limitations) to interim docs. Strengthened by:
+   - **Obs 322** (TP-localisation-tail reframing) → Discussion
+   - **Obs 323 + 324** (campaign closure) → Methods
+   - **GS 6-crop review** (6/6 v2_overclaim) → Discussion (Obs 307 prompt-bias evidence)
+   - **Document Revision Policy** (commit `c1070cad`) → reproducibility section
+2. **`compare_wbf_vs_greedy_production.py` repair** (small follow-up) — script is broken by pre-existing v2 quarantine at commit `3ec25e68`. Either point at `verified-v2-cleanup/` (no longer exists, archived) or document v2 path as removed. Per the Tier-2/3 investigation, e47 cells have zero era2/pv leaderboard impact, so this is research-artefact-only, not paper-citation-load-bearing.
+3. **Audit-enhancement follow-ups** (small):
+   - 7th manifest-location pattern for `outputs/h11/pv-diag-384/verified/*` flat-layout cells (currently REVIEW; could be PASS with directory-walk extension).
+   - Promote audit script to tier-2 pytest marker as a regression guard.
+4. **Pro flex tier 503 incident note** — executor agent flagged that Pro flex returned 503 Service Unavailable on essentially every call this session. Consider updating `feedback_flex_mode.md` to add a Pro-tier-fallback note (use `--service-tier standard` if flex 503s).
+
+### Sapphire status
+
+Still off-network during user travel. **No longer a blocker** for any pending work — all recovery work has been completed on zbook locally. Tier-2/3 cleanup data that may exist on sapphire's local working tree is now superseded by today's zbook cleanup.
+
+### Session 86–87 commit ledger (the big ledger)
+
+Tier-1 arc (Session 86–87 morning, commits `b2a3cf0e..9b0e7d43`):
+
+| Hash | Description |
+|---|---|
+| `b2a3cf0e` | GS 6-crop manual verdicts (paper Discussion narrative-flipping) |
+| `ede5f80b` | Tier-1 propagation execution plan |
+| `365c54d4` | Test fix — `skipif` predicate for phase2a image-only |
+| `c1070cad` | Document Revision Policy in `CLAUDE.md` |
+| `849a55e5` | Policy scope to `outputs/**/post_run_report.md` |
+| `7a7146bf` | Initial continuity beacon |
+| `08ae343f` | Investigation report + beacon update |
+| `baa271bf` | `fix(per-arch)`: `--top-n 0` + `--seed 42` in runner |
+| `ef3ec4fe` | `docs(runbook)`: tier rebuild separated from finalise |
+| `c067bca4` | Per-arch tier composition restored |
+| `a8f4b7f8` | Combined Era-2 leaderboard + tier stability |
+| `64974ec5` | **Obs 323** — Tier-1 propagation closure |
+| `d78601b6` | Closure docs (continuity + audit annotation) |
+| `ca0567d3` | Full redesign rebuild — q01 + MCC + stage 3-5 |
+| `9b0e7d43` | Beacon refresh — q01+MCC marked complete |
+
+Tier-2/3 arc (Session 87 afternoon, commits `1b2842d0..970be491`):
+
+| Hash | Description |
+|---|---|
+| `1b2842d0` | Driver e47 path-bug fix |
+| `6683952a` | 3 skipped cells cleanup + e47 5-of-5 derivatives |
+| `79daf93e` | Audit script + 22 tier-1 tests (initial) |
+| `b2bfc446` | Cell 1 (warm-up, flash-medium-verifier) |
+| `ff475e81` | Cell 1 derivative regen |
+| `6f8bc714` | h8v2-wbf-scale-4 cleanup |
+| `c6b5e6b1` | 6 Tier-2 cells cleanup |
+| `49703010` | 3 Tier-3 Pro-medium cells cleanup |
+| `005e6c71` | Cell 11 derivative regen |
+| `d6cdb648` | Global redesign rebuild post-Tier-2/3 |
+| `38892df9` | Audit script enhancements + 2 archive moves + final audit JSON |
+| `970be491` | **Obs 324** — Tier-2/3 closure (this session's terminus) |
+
+### Decision Point 5 resolution (carry-forward, unchanged)
+
+55-map `post_run_report.md` files do NOT cite the cleaned cells. Resolution: leave as historical snapshots, no edit. Document Revision Policy scope was extended to `outputs/**/post_run_report.md` for future post_run_reports that DO move.
+
+### GS 6-crop manual review (carry-forward, unchanged)
+
+User completed 2026-05-05. **All 6 candidates labelled `v2_overclaim`** — none are real missed mounds. Strengthens Obs 307's prompt-bias caveat enormously: at the strictest stratum (>125 m from any curator GT), the v2 classifier's precision was 0%. Notes captured in commit `b2a3cf0e`.
+
+---
+
+## ✅ Earlier Session 88 beacon — TIER-1 CLOSED, MULTIPLE LOOSE THREADS (superseded by the headline above)
 
 **Posted**: 2026-05-06 mid-morning, after the closure-docs commit landed.
 
