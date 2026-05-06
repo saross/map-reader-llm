@@ -3,7 +3,7 @@
   "mode": "realtime",
   "verifier_config": "verify_adversarial-text",
   "iterations": 1,
-  "total_results": 3735,
+  "total_results": 3736,
   "results": {
     "candidate_00009": {
       "mound_probability": 0.1,
@@ -22414,6 +22414,24 @@
       "reasoning": "While the symbol perfectly matches the description of a burial mound (sunburst pattern with outward rays), it is located in a complex terrain area with many contour lines. In such contexts, small natural elevations are sometimes depicted with similar hachures. However, the distinct 'sunburst' geometry is the specific cartographic convention for a kurgan (burial mound) on Soviet-style maps, and there are no other symbols (like a benchmark or triangulation point) directly overlaid on it to suggest it is merely a survey point.",
       "best_alternative": "A small natural knoll or micro-relief feature represented by a closed contour and hachures.",
       "alternative_evidence": "The symbol consists of a small orange-brown circle with short lines radiating outward, which is the standard representation for a small hill or knoll in topographic mapping."
+    },
+    "candidate_03486": {
+      "mound_probability": 0.1,
+      "reasoning": "The symbol is a classic representation of a triangulation station. According to the provided guidelines, a burial mound symbol must have outward-radiating rays to indicate elevated terrain. Since these rays are entirely absent, the symbol is identified as a standalone survey marker, which is a common false alarm for mound detection.",
+      "best_alternative": "Triangulation point without a mound",
+      "alternative_evidence": "The symbol consists of a solid black triangle with a central dot. It is positioned on a ridge as indicated by the surrounding orange-brown contour lines. Crucially, there are no short black lines (rays) radiating outward from the triangle."
     }
-  }
+  },
+  "cleanup_history": [
+    {
+      "timestamp": "2026-05-06T08:59:38.892140+00:00",
+      "initial_missing": 1,
+      "recovered": 1,
+      "still_missing": 0,
+      "still_missing_ids": [],
+      "attempts_used": 1,
+      "max_attempts": 3,
+      "safe_mode_used": true
+    }
+  ]
 }
