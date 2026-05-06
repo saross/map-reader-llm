@@ -16350,3 +16350,119 @@ Search terms: Obs 296 reframing, attractor-pull v2 TP-only by construction, buff
 - **Obs 302** (FP-class diagnostic — contour-rings dominate at ~41 %): direct companion. This Obs's FP histogram (87–95 % beyond 286 m) and Obs 302's category breakdown together describe FP behaviour fully: FPs cluster on non-mound features, far from real mounds.
 - **Obs 295** (GS 25 m attractor-pull cap): unchanged.
 - **Artefacts**: `results/tp-only-localisation-bias-sub-band/analysis.md` (the sub-band diagnostic, commit `207ec7b5`), `results/tp-only-localisation-bias-sub-band/tp_distance_distribution.csv`, `results/tp-only-localisation-bias-sub-band/tp_vs_fp_distance_comparison.csv`, `scripts/analyse_tp_only_subband_bias.py` (the diagnostic script).
+
+## Observation 323: Phase3a Tier-1 propagation closure — Session-78 6 cells cleaned, materialised, calibrated, and propagated; 1 combined-Era-2 tier flip (image-brief-text 5→4, an improvement); all paper-load-bearing claims preserved (2026-05-06)
+
+### The finding
+
+**Tier-1 propagation closed on zbook (Session 86, 2026-05-06). The six Session-78 verifier-calibration matrix cells — the highest-priority subset of the 2026-05-03 phase3a verifier-completeness audit — were cleaned, materialised, calibrated, and propagated through per-architecture and combined Era-2 leaderboards. All paper-load-bearing tier rankings are preserved. One tier flip occurred in the combined Era-2 view: `session-78-image-brief-text` moved from Tier 5 to Tier 4 (+0.0103 F1 at 20 m) — an improvement. All other 13 Session-78 cells preserved their tier rank.**
+
+**Cleanup-phase ground truth (verified from commit `414ee8a4`):**
+
+| Cell | Recovered | Pre → post probability count |
+|:-----|---:|:---|
+| text-t0.7 / verified-adversarial-text | 41 | 3,695 → 3,736 |
+| text-t0.7 / verified-brief-text | 27 | 3,709 → 3,736 |
+| text-t0.7 / verified-checklist-text | 21 | 3,715 → 3,736 |
+| image-t0.7 / verified-adversarial-text | 26 | 1,991 → 2,017 |
+| image-t0.7 / verified-checklist-text | 19 | 1,998 → 2,017 |
+| image-t0.7 / verified-brief-text | 19 | 1,998 → 2,017 |
+| **Total** | **153** | — |
+
+Cleanup cost: **$0.1951** (sapphire `cost-ledger.csv`, `logs/phase3a-recovery-20260503T145815Z/`).
+
+**AUC deltas pre/post calibration (verified from commit `b3ed509e`):**
+
+| Cell | AUC pre | AUC post | Δ |
+|:-----|:---:|:---:|:---:|
+| image-adversarial-text | 0.8574 | 0.8578 | **+0.0004** |
+| image-brief-text | 0.8366 | 0.8376 | **+0.0010** |
+| image-checklist-text | 0.8531 | 0.8524 | **−0.0006** |
+| text-adversarial-text | 0.9561 | 0.9560 | **−0.0001** |
+| text-brief-text | 0.9374 | 0.9381 | **+0.0007** |
+| text-checklist-text | 0.9502 | 0.9500 | **−0.0002** |
+
+All movements within the runbook's expected magnitude (< 0.005 absolute AUC for cleanup gaps of 19–41 against pools of 2,000–3,700). Three of six cells went slightly down — consistent with the runbook's prediction that recovered candidates are predominantly low-probability and shift AUC unpredictably.
+
+**F1@20m deltas at the per-architecture Era-2-pv leaderboard (commit `c067bca4`):**
+
+| Cell | F1 pre | F1 post | ΔF1 | Tier pre | Tier post |
+|:-----|:---:|:---:|:---:|:---:|:---:|
+| session-78-image-adversarial-text | 0.7725 | 0.7718 | −0.0007 | — | — |
+| session-78-image-brief-text | 0.7679 | 0.7782 | **+0.0103** | — | — |
+| session-78-image-checklist-text | 0.7805 | 0.7852 | +0.0047 | — | — |
+| session-78-text-adversarial-text | 0.8575 | 0.8603 | +0.0028 | — | — |
+| session-78-text-brief-text | 0.8456 | 0.8519 | +0.0063 | — | — |
+| session-78-text-checklist-text | 0.8599 | 0.8639 | +0.0040 | — | — |
+
+Note: per-architecture stratum uses BH-FDR-sensitivity tier boundaries; 8 tier flips were observed across the era2/pv stratum (3 cleaned-cell flips, 5 non-cleaned BH-FDR-sensitivity boundary flips, all in lower tiers). Tier pre/post columns are not filled here because the per-arch tier boundaries are not directly paper-cited; see combined Era-2 table below for the paper-canonical tier stability result.
+
+**F1@20m deltas and tier stability at the combined Era-2 leaderboard (commit `a8f4b7f8`):**
+
+| Cell | F1 pre | F1 post | ΔF1 | Tier pre | Tier post |
+|:-----|:---:|:---:|:---:|:---:|:---:|
+| session-78-image-adversarial-text | 0.7725 | 0.7718 | −0.0007 | preserved | preserved |
+| session-78-image-brief-text | 0.7679 | 0.7782 | **+0.0103** | **5** | **4** |
+| session-78-image-checklist-text | 0.7805 | 0.7852 | +0.0047 | preserved | preserved |
+| session-78-text-adversarial-text | 0.8575 | 0.8603 | +0.0028 | preserved | preserved |
+| session-78-text-brief-text | 0.8456 | 0.8519 | +0.0063 | preserved | preserved |
+| session-78-text-checklist-text | 0.8599 | 0.8639 | +0.0040 | preserved | preserved |
+
+The `session-78-image-brief-text` Tier 5→4 flip is an improvement; no configuration dropped in tier rank. All other 13 Session-78 cells preserved tier rank in the combined view.
+
+**Audit anchor (byte-identical verification):** The 38 unchanged cells in era2/pv have byte-identical F1@20m between pre-recovery (commit `b4c28d5b`) and post-recovery (commit `c067bca4`). Verified by direct JSON diff. The six cleaned cells show the expected ΔF1 in the table above. This confirms the cleanup did not leak into untouched cells.
+
+### The test
+
+The six Session-78 cells were cleaned in a single `run-phase3a-recovery.sh` pass (commit `414ee8a4`, 2026-05-03 overnight). After cleanup:
+
+1. **Materialisation + calibration matrix recompute** (commit `b3ed509e`, sapphire): `python scripts/materialise_session78_geojsons.py` produced six refreshed GeoJSONs; `python scripts/compute_session78_calibration_matrix.py` refreshed six `calibration.json` files.
+2. **Per-architecture leaderboard rebuild** (commit `c067bca4`, zbook 2026-05-06): `bash scripts/build_per_arch_redesign.sh` (the canonical driver, with `--top-n 0` and `--seed 42` — see Caveats). The dominant wall-clock step.
+3. **Combined Era-2 leaderboard rebuild** (commit `a8f4b7f8`, zbook 2026-05-06): `bash scripts/build_combined_leaderboard.sh 2`. Era 1 and Era 3 not rebuilt (no Session-78 cells; cache-only no-ops).
+4. **Combined tier-stability tables** (same commit `a8f4b7f8`): `bash scripts/build_combined_tier_stability.sh 2`.
+5. **Step 6 — paper-citation refresh**: no human-authored Markdown files hard-code F1 numbers for the six cleaned cells (the paper has not been written yet). The auto-generated leaderboard tables refreshed automatically as part of Steps 2–4. **No manual citation refresh was applied in this campaign.** The citation-refresh trigger (F1 movement > 0.001) was crossed by `image-brief-text` (+0.0103), but the relevant artefacts are auto-generated, not hand-authored prose.
+
+### Why this matters
+
+1. **Verifier-completeness recovery loop closed at the Tier-1 stratum.** The six Session-78 cells were the highest-priority subset of the audit (they directly populate the Era-2 verifier-calibration matrix and the per-architecture leaderboard tier rankings). The cleanup → materialise → calibrate → leaderboard chain ran end-to-end with deltas within the runbook's predicted envelope.
+
+2. **Paper-load-bearing leaderboard claims survive intact.** With one beneficial tier flip (image-brief-text 5→4, ΔF1 +0.0103) and all other 13 Session-78 cells tier-preserved, none of the combined-Era-2 tier rankings shift downward. The Tier-1 recovery outcome is conservative: the cleaned data is slightly better than the incomplete data, not worse.
+
+3. **Recovery-side cost was negligible.** Cleanup-phase API cost was $0.1951 for 153 candidates across six cells (~$0.0013 per candidate) — the parser-fix amortisation pattern documented in Obs 321 continues to hold for verifier-side recovery.
+
+4. **Tier-1 closure is the smaller of two arcs.** This Obs documents only the six Session-78 cells. Tier-2/3 propagation remains unverified (see Caveats). Campaign-wide closure deferred to a future Obs once sapphire is reachable.
+
+### Caveats / methodological notes
+
+**Wrong-driver detour — a convention-propagation failure.** Today's Tier-1 propagation **failed on its first attempt**. The Phase3a recovery runbook directed `scripts/run_per_arch_leaderboards.sh` (a wrapper script), which was missing the `--top-n 0` flag. This caused the driver to apply a top-N cut before building the leaderboard, thinning three strata (era1/consensus 72→37, era2/consensus 29→22, era2/pv 44→26). The operator caught the thinning via spot-check. An overnight investigation agent (read-only) traced the cause to a convention-propagation failure inherited from commit `03bf71c8` — the wrapper was never updated when `--top-n 0` became the canonical default. Fix: commit `baa271bf` (runner now passes `--top-n 0` and `--seed 42`); runbook fix: commit `ef3ec4fe` (§ 6.1 / § 6.2 corrected to separate the tier-rebuild step from the finalise step); investigation report saved at `planning/session-86-tier-regression-investigation.md` (commit `08ae343f`). The propagation was then re-run cleanly using the canonical driver `scripts/build_per_arch_redesign.sh` directly. This is another instance of the project's documented convention-propagation failure pattern (cf. E19/E20; the gap between the runbook's wrapper-call assumption and the canonical driver's interface).
+
+**Tier-2/3 propagation status: NEVER LANDED ON ORIGIN.** Verified by `git log --oneline --all | grep -iE 'p3a-recovery|phase3a'` — only `414ee8a4` (Session-78 6-cell Tier-1 cleanup) and `b3ed509e` (materialise + calibration) are present on `origin/main`. There are **no Tier-2 or Tier-3 cleanup commits** beyond those. Sapphire is currently off-network; whatever local state sapphire holds is unknown until it is reachable again. **Campaign-wide closure is therefore deferred.** This Obs is Tier-1-only by design (per Decision Point 4, Option A in `planning/session-86-tier1-propagation-plan.md` § 8).
+
+**Per-architecture tier flips (8 total) are not paper-cited.** The 8 tier flips in the per-arch era2/pv stratum — 3 cleaned-cell boundary crossings and 5 non-cleaned BH-FDR-sensitivity boundary crossings — all occur in lower tiers not cited in the paper. The combined Era-2 view (one improvement flip, no degradations) is the paper-canonical tier stability result.
+
+**Three cells remain skipped, pending decisions:**
+
+| Cell | Tier | Gap | Note |
+|:-----|:---:|:---:|:-----|
+| `e47-flash-high-text-1of5` | 1 | 57 | Schema-transformation diagnostic first — data-integrity question |
+| `55maps-gen-verified-v2` | 2 | 3 | Clean-cut: regenerate crops, re-run cleanup |
+| `proposer-verifier-384-adversarial-text-v1-prompt` | 3 | 1 | Clean-cut: regenerate crops, re-run cleanup |
+
+**Three of six cells went down in AUC.** As noted in the skeleton, this is the runbook's predicted behaviour: recovered candidates are predominantly low-probability (the verifier originally dropped them silently because they were borderline), so adding them to the calibration pool can shift AUC down depending on how their distribution interacts with the existing pool's TP/FP balance. The magnitudes (−0.0001 to −0.0006) are well below the 0.005-absolute action threshold, carrying no tier-flip risk.
+
+### Findable later
+
+Search terms: Obs 323, Phase3a Tier-1 propagation closure, Session-78 6 cells matrix verifier-completeness, AUC deltas pre/post calibration 0.0001-0.0010, 153 candidates recovered, cleanup cost $0.1951, image-adversarial-text +0.0004, image-brief-text +0.0010, image-checklist-text −0.0006, text-adversarial-text −0.0001, text-brief-text +0.0007, text-checklist-text −0.0002, combined Era-2 one tier flip image-brief-text Tier 5 to 4 improvement, 8 tier flips per-arch BH-FDR-sensitivity, all paper-load-bearing claims preserved, materialise_session78_geojsons.py, compute_session78_calibration_matrix.py, build_per_arch_redesign.sh canonical driver, build_combined_leaderboard.sh 2, build_combined_tier_stability.sh 2, wrong-driver detour run_per_arch_leaderboards.sh missing top-n 0 flag, convention-propagation failure E19 E20 lineage, commit baa271bf runner fix top-n 0 seed 42, commit ef3ec4fe runbook fix section 6.1 6.2, commit 08ae343f investigation report, commit c067bca4 per-arch rebuild, commit a8f4b7f8 combined Era-2 leaderboard, Tier-2 Tier-3 deferred sapphire unreachable off-network, 3 skipped cells e47-flash-high-text-1of5 55maps-gen-verified-v2 proposer-verifier-384-adversarial-text-v1-prompt, no manual citation refresh auto-generated tables only, byte-identical audit 38 unchanged cells, Decision Point 4 Option A, Session 86 zbook post-travel propagation, commit 414ee8a4 cleanup commit b3ed509e materialise calibration.
+
+### Related observations and artefacts
+
+- **Obs 320** (T=0.7 55-map recovery + propagation closure, Session 83): closely analogous precedent — same campaign-closure shape (cleanup → re-evaluate → propagate downstream → close with explicit deltas and caveats). The Tier-1 6-cell closure here is the smaller-scoped sibling.
+- **Obs 321** (Session 84 closure: 3 follow-up recoveries completed, 28 silently-dropped verifier candidates surfaced and recovered): direct parent. Obs 321 § "The verifier-completeness discovery" surfaced the failure mode; the audit dispatched in Obs 321's wake (commit `adf95dbf`) produced the 20-cell audit list of which the 6 Session-78 cells closed here are the Tier-1 subset.
+- **Obs 322** (TP-localisation-tail reframing of Obs 296, Session 85): paper-Discussion adjacent; mentioned because it lands chronologically in the same session-cluster.
+- **`planning/phase3a-verifier-recovery-runbook.md`**: canonical procedure for the cleanup → materialise → calibrate → leaderboard arc executed here. Sections 6.1, 7.1, 7.2, 7.3, 7.4 directly governed this propagation; §§ 6.1 / 6.2 were corrected by commit `ef3ec4fe` following the wrong-driver detour.
+- **`planning/session-86-tier1-propagation-plan.md`**: this session's execution plan. Decision Point 4 Option A justified the Tier-1-only scope.
+- **`planning/session-86-tier-regression-investigation.md`** (commit `08ae343f`): overnight agent report tracing the wrong-driver detour to the `03bf71c8` convention-propagation failure.
+- **`logs/phase3a-recovery-overnight-resume/launch-summary.md`**: cleanup-phase ground truth (17 / 20 cells cleaned, 530 candidates total, $0.905 spend, 3 skip reasons).
+- **`reports/phase3a-verifier-completeness-audit-2026-05-03.md`**: audit document; the Session-78 Tier-1 subset closed here is its highest-priority cluster.
+- **Commit chain (this Obs)**: `414ee8a4` (cleanup data, sapphire overnight), `b3ed509e` (materialise + calibration, sapphire), `baa271bf` (runner fix: add `--top-n 0` + `--seed 42`), `ef3ec4fe` (runbook fix: §§ 6.1 / 6.2), `08ae343f` (investigation report: wrong-driver traced to `03bf71c8`), `c067bca4` (per-arch rebuild, Steps 2–3, zbook), `a8f4b7f8` (combined Era-2 leaderboard + tier-stability, Steps 4–5, zbook).
+- **Artefacts**: `results/leaderboard/era2/pv-materialised/session-78-{image,text}-{adversarial,brief,checklist}-text.geojson` (6 GeoJSONs); `results/leaderboard/era2/pv-materialised/session-78-matrix-registry.json`; `results/verifier-calibration-matrix/{image,text}-{adversarial,brief,checklist}-text/calibration.json` (6 calibration files); `planning/session-78-matrix-calibration-summary.md`; `results/leaderboard/per-architecture/era2/leaderboard_tiers_f1_{20,30,40,50,100}m.json`; `results/leaderboard/combined/era2/leaderboard_tiers_f1_{20,30,40,50,100}m.json`; `results/leaderboard/combined/era2/tier-stability*.{md,json}`.
