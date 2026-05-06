@@ -1,7 +1,7 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-05-06 (Session 86–87 — Tier-1 propagation COMPLETE; Obs 323 landed; q01+MCC rebuild running in background as user is AFK)
+**Last updated**: 2026-05-06 (Session 86–87 — Tier-1 propagation COMPLETE; Obs 323 landed; q01+MCC rebuild COMPLETE at commit `ca0567d3`)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
@@ -39,7 +39,7 @@ One tier flip (image-brief-text 5→4, an improvement). Audit anchor: 38 unchang
 
 ### What's pending — priority order
 
-1. **q01+MCC variant rebuild via `build_per_arch_redesign.sh`** — was running in background as of this beacon's posting; if a commit landed after `64974ec5` mentioning q01/MCC, the rebuild completed. Check `git log --oneline 64974ec5..HEAD`. If completed, no action needed. If not completed (e.g. crashed), restart per the redesign driver's signature.
+1. ~~q01+MCC variant rebuild~~ — **COMPLETE** at commit `ca0567d3` (~48 min CPU, no API). Audit anchor verified: F1 q05 era2/pv tier composition byte-identical to `c067bca4`. q01 + MCC q05 + MCC q01 variants now current for all 7 strata; stage 3-5 documentation refreshed.
 2. **Tier-2/3 propagation** when sapphire is reachable. Verify whatever local commits sapphire holds beyond `b3ed509e`; pull and propagate. Three strata likely affected.
 3. **3 skipped cells**:
    - `e47-flash-high-text-1of5` (Tier 1, gap 57): **schema-transformation diagnostic first** (see `logs/phase3a-recovery-overnight-resume/launch-summary.md` § "Surprise"). Data-integrity question, not just a crop-regen.
@@ -68,8 +68,8 @@ Still off-network during user travel as of 2026-05-06 morning. All CPU work cont
 | `c067bca4` | Per-arch tier composition restored with `--top-n 0` |
 | `a8f4b7f8` | Combined Era-2 leaderboard + tier stability (Steps 4 + 5) |
 | `64974ec5` | Obs 323 — Phase3a Tier-1 propagation closure |
-| (TBD) | Closure docs: continuity beacon refresh + audit annotation (this commit) |
-| (TBD) | q01+MCC variant rebuild from `build_per_arch_redesign.sh` |
+| `d78601b6` | Closure docs (continuity beacon refresh + audit annotation) |
+| `ca0567d3` | Full redesign rebuild — q01 + MCC + stage 3-5 (~48 min) |
 
 ### Decision Point 5 resolution (carry-forward)
 
