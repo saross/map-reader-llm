@@ -4671,3 +4671,29 @@ Across this session's three audit rounds:
 Each round's findings would have been MISSED by a single-pass audit because the round's-eye perspective is conditional on the prior round's correctness. Round 1 finds bugs that prevent the code from being correct; round 2 finds bugs that prevent the code from being clean; round 3 finds bugs that prevent the code from being maintainable. **The bugs at each layer are real; conflating layers misses some at each level.**
 
 This complements the prior arc's "revision cascading" meta-pattern (Sessions 82–84) — that cascade was driven by the underlying class of issue (silent metadata drift) probed from six angles. This session's cascade is the inverse: a single change, audited at progressively deeper layers, surfaces qualitatively different bug classes. **Both patterns benefit from explicit multi-pass discipline**.
+
+## 2026-05-04 / 2026-05-06 (Sessions 86–87, map-reader-llm): Three belief-revisions across the recovery-campaign full-closure arc
+
+### Sequence 1 — "The 3 skipped cells need sapphire"
+
+**Surprising fact**: First investigation agent (read-only, scoped narrowly to the 3 originally-skipped cells) reported that all three cells' crops were physically present on zbook locally. The "missing_crops_gitignored" diagnosis from the 2026-05-03 launch summary was sapphire-specific, not universal.
+
+**Probe**: The agent ran `ls outputs/.../crops/...` for each cell and confirmed the PNGs were on disk locally. Cross-checked with the canonical `candidate_manifest.json` candidate counts. Confirmed the relevant `--crops-dir` paths held real content.
+
+**Belief revised**: I had carried into Session 87 the assumption that the 3 skipped cells couldn't be cleaned without sapphire reachability. That assumption came from the launch-summary's diagnostic prose, written from sapphire's vantage point. The replacement belief: when an obstacle's diagnosis is written from one machine's view, treat the diagnosis as *machine-relative* until re-tested locally. Generalises beyond this incident: handoffs between machines that use phrases like "X is missing" should trigger a local re-test, not just inheritance of the prior diagnosis.
+
+### Sequence 2 — "The redesign rebuild caught everything"
+
+**Surprising fact**: After the executor agent finished cleaning all 11 Tier-2/3 cells and I kicked off `build_per_arch_redesign.sh`, the rebuild finished in ~50 seconds. That was suspicious — yesterday's same rebuild took ~50 minutes cache-warm.
+
+**Probe**: Ran `ls -la results/leaderboard/era2/pv-materialised/pv-high-image-t0.{3,7,1.0}-n5.geojson results/leaderboard/era2/pv-materialised/pv-scale4-optimal-n10.geojson`. All four were dated 2026-04-19 — pre-cleanup, weeks-old. The rebuild had read stale materialised geojsons because the executor agent had only run `materialise_session78_geojsons.py` (per its brief) and not `materialise_pv_geojson.py` for the four affected non-Session78 pv cells. The fast wall-clock was a side effect of the build_tiered_leaderboard.py cache being keyed on materialised-geojson hashes — unchanged inputs → trivial cache hits.
+
+**Belief revised**: Wall-clock that's "too good" is a positive signal that something didn't run, not that everything ran fast. Adjacent generalisation: pipeline-completeness can't be inferred from exit codes alone; it requires output-mtime checks at boundaries between stages where a stage *should have* invalidated downstream caches. Concretely: the Project's pipeline has an obligatory `materialise_pv_geojson.py` step between cleanup and leaderboard rebuild for non-Session-78 pv cells; that step is currently in operator knowledge, not in the runbook or the executor's recipe template. Worth a runbook update as follow-up.
+
+### Sequence 3 — "The audit script as written would catch all gaps"
+
+**Surprising fact**: First real-data audit run produced 109 REVIEW entries — a lot. All had the same reason: `no_sibling_manifest`. After investigating, the manifests were in 4 *other* project-conventional locations (parent's `crops/`, parent's `shared-crops/`, parent's `candidates/`, parent's `crops/<basename>/`) plus a fifth class of cells with no manifest at all (consensus-driven verifier outputs).
+
+**Probe**: Sampled 8 REVIEW cells, ran `find <parent-dir> -name candidate_manifest.json`, traced each to its actual manifest location, characterised the pattern. Found 5 distinct location patterns + the no-manifest case. Cross-checked one no-manifest cell against `consensus-n5/consensus_t1.geojson` — 3736 features = 3736 results: confirmed consensus-driven hypothesis.
+
+**Belief revised**: Initial audit logic was anchored on one mental model ("manifests are sibling files"). Real data exposed at least 5 conventions and a sixth case where manifests don't exist by design. The replacement model is now codified: 6 lookup patterns + a consensus-feature-count fallback for cells that aren't manifest-keyed at all. Generalises: when designing a "universal" audit on top of a research codebase, the audit's first real-data run is itself a discovery exercise about the codebase's structural conventions. Next time, start by characterising the layout-pattern set *before* writing the audit, rather than discovering it under fire.

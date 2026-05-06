@@ -5835,3 +5835,35 @@ The complementary observation: parallel sub-audits (4 agents, 1 per file, dispat
 Today's session used a stable pattern: amd-tower (current local) → push → sapphire pulls before any compute work → zbook pulls at user-defined moments (start/end of session, after substantive arcs). The continuity doc's "⚡⚡ Session 86 entry-point" section explicitly documents the verification commands for any morning machine ("ssh sapphire 'git rev-parse HEAD'", "ssh zbook 'git log --oneline'"). The pattern works because all three machines now agree on `~/Code/map-reader-llm` as the canonical repo path and `git pull --ff-only` as the canonical sync command. Worktree state under `.claude/worktrees/` is gitignored and per-machine.
 
 The pattern's durability is tested by today's late-session pivot: at "I'm leaving now", I had to commit + push from amd-tower, then `ssh zbook 'git pull --ff-only'` — total wall-clock ~30 seconds. Six months ago this would have been an interactive multi-step workflow with risk of asymmetric drift. Now it's two commands.
+
+## Sessions 86–87 Observations (2026-05-04 / 2026-05-06, map-reader-llm) — agent-orchestration-at-scale + audit-infrastructure
+
+### Agent delegation across a multi-hour AFK gap was the structural enabler
+
+User was AFK for most of Session 87 (travelling). Four agents dispatched in sequence + parallel covered work that would otherwise have required them to be present:
+
+1. **Three-skipped-cells investigation agent** (read-only, ~14 min) — produced `planning/three-skipped-cells-investigation.md`. Critical finding: "missing crops gitignored" was sapphire-specific; all 3 cells zbook-tractable. Saved a planned sapphire-pull effort.
+2. **Tier-2/3 sapphire-state investigation agent** (read-only, ~13 min, parallel with #3) — produced `planning/tier23-sapphire-state-investigation.md`. Found 11 cells (not 10), all zbook-recoverable via crop-regen. Verified gap=460 cell has zero downstream consumers.
+3. **11-cell crop-regen + cleanup executor** (compute, ~30 min) — closed all 11 cells with $0.904 spend. Caught Pro flex 503 issue and worked around it autonomously with `--service-tier standard`. Did per-cell post-processing (derivatives + materialise + calibration) per investigation report's recipe.
+4. **Obs 324 writer** (~3 min, very fast) — appended Obs 324 with full closure narrative; correct cross-references; matched Obs 320/323 prose style auto-detected from the file.
+
+The orchestration pattern that worked: each agent had a self-contained brief (the investigation reports were treated as canonical recipe inputs by the executor); the user's $5 spend cap was a clear escalation criterion that bounded autonomy without requiring my presence; commits at logical boundaries kept progress recoverable across any failure mode.
+
+What didn't work, mildly: I had to manually catch the materialise-step gap after the first global rebuild ran in 50 seconds (signalling stale inputs). The executor agent's recipe was complete for the cells it was scoped to handle but didn't extend to the materialise step for non-Session-78 cells. A future agent brief should explicitly enumerate the full per-cell propagation chain rather than hand-wave at "per § 4 task instructions".
+
+### "Investigation-then-execution" as a separable two-agent pattern
+
+Today's executor agent brief was strong specifically because it had the investigation report as its canonical input. The investigation agent had time to read whole files, follow caveats, and characterise edge cases. The executor inherited a recipe rather than re-deriving one under time pressure. This composition pattern is worth repeating: dispatch read-only investigation agent → produce report → brief executor with report as input. Total agent count goes up but each agent's brief is sharper, and the user-facing artefacts (the reports) are durable.
+
+### The audit script as durable infrastructure, not as one-off
+
+The original `/tmp/verifier_audit.py` was a one-shot ad-hoc — it caught the cells the auditor knew about, then disappeared. The replacement at `scripts/audit_verifier_completeness.py` (32 tier-1 tests, 6 manifest-location patterns, consensus fallback) is structured to outlive any specific campaign. Lesson worth holding onto: when an LLM-produced diagnostic is going to need re-running, push it from `/tmp/` to `scripts/` *immediately*, not when it's needed again. The cost of porting at first-write is a few minutes; the cost of reconstructing weeks later is hours and the loss of the original's nuance.
+
+### What the audit run revealed about the project's pipeline coverage
+
+Running the audit on real data surfaced a cell-layout-pattern catalogue I hadn't anticipated:
+- 6 distinct manifest-location patterns across the project (same-dir, crops/-subdir, parent's crops/, parent's candidates/, parent's shared-crops/, parent's crops/<basename>/)
+- Plus a consensus-driven cell class with no separate manifest at all (the `pv-diag-384/.../verified-v1-nN` cells)
+- Plus a deprecated-staging class needing archive treatment (verified-cleanup, verified-v2-cleanup)
+
+Until I tried to write the universal audit, this catalogue was implicit in operator knowledge. Now it's documented in the script's `find_manifest()` docstring + tests. Future documentation work could pull this catalogue out into `docs/methodology/cell-layout-patterns.md` for newcomers; it's currently scattered across runbook, driver, and audit script.

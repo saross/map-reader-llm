@@ -5963,3 +5963,50 @@ Plus 8 backlog items in the continuity doc (auto-regeneration hardening, cost_ma
 - The `.phase3a-recovery-fix-landed` sentinel file is gitignored (per .gitignore update at `cebe5fed6`); it lives only on sapphire.
 - The `*.pre-cleanup-*.backup` and `*.pre-recovery-*.backup` files referenced by `aggregate-cost` are gitignored bulk artefacts; reconstructable from git history if needed but not required for the planned outstanding statistical work on zbook.
 - Agent dispatch went through several subagent_type choices: general-purpose for write-capable work, Explore wasn't used (read window too narrow for whole-file audits), Plan was used once mistakenly for a write-required task. Future-self should default to general-purpose unless a task is genuinely read-only.
+
+## Sessions 86–87 — 2026-05-04 / 2026-05-06 (map-reader-llm): Phase3a recovery campaign full closure + audit infrastructure
+
+**Outcome**: Phase3a verifier-completeness recovery campaign fully closed. 14 cells cleaned today (3 originally-skipped + 11 Tier-2/3 from the resume batch); all gap=0; era2/pv leaderboard composition stable at 44/6 (zero tier flips). A tracked, reproducible verifier-completeness audit script (`scripts/audit_verifier_completeness.py`) is now CI infrastructure with 32 tier-1 tests. Final audit verdict: 168 PASS / 0 FAIL / 43 REVIEW (REVIEW cells documented as a future-audit-enhancement class). Tier-1 sanity went from 980 → 1012.
+
+**Total cleanup spend across Session 86–87**: $1.89 (3 skipped: $0.084 + 11 Tier-2/3: $0.904 + earlier campaign: $0.905). Vs $1.84 expected, $10 hard cap.
+
+**Session 86 (2026-05-04 morning + 2026-05-05 evening, zbook post-travel)**:
+
+- 2026-05-04 morning: Tier-1 propagation chain launched per `planning/session-86-tier1-propagation-plan.md`. Steps 2 + 3 (per-arch leaderboards + finalise) ran cleanly.
+- 2026-05-05 evening: spot-check on Era-2-pv tier outputs surfaced a regression — pre-recovery 44 conditions / 6 tiers vs post-recovery 26 / 3. 18 conditions disappeared, including 2 of the 6 cleaned cells. Halt criterion triggered.
+- Overnight investigation agent dispatched (read-only). Root cause: wrong driver. `run_per_arch_leaderboards.sh` defaults to `--top-n 20`; canonical is `--top-n 0`. Convention-propagation failure inherited from commit `03bf71c8`.
+- Fix landed in two commits: `baa271bf` (runner default) + `ef3ec4fe` (runbook section 6.1 / 6.2 corrected across 4 sub-sections).
+- Re-ran per-arch with `--top-n 0`: 44/6 restored, 38 unchanged cells byte-identical F1 vs `b4c28d5b` baseline.
+- Step 4 (combined Era-2 leaderboard) + Step 5 (tier stability) committed at `a8f4b7f8`.
+- Obs 323 closure committed at `64974ec5`; closure-docs at `d78601b6`; full redesign rebuild (q01 + MCC + stage 3-5) at `ca0567d3`.
+
+**Session 87 (2026-05-06)**:
+
+- Investigation agent dispatched on the 3 originally-skipped cells. Headline finding: all 3 cells' crops physically present on zbook locally; "missing_crops_gitignored" was sapphire-specific. e47 specifically was diagnosed as a one-line `--crops-dir` path bug in the recovery driver.
+- Driver path-bug fix at commit `1b2842d0`. 3 cells cleaned + e47 5-of-5 derivatives regenerated at `6683952a`.
+- Audit script + 22 tier-1 tests landed at `79daf93e` as a parallel infrastructure investment.
+- Investigation agent dispatched on the broader Tier-2/3 sapphire-state question. Finding: 11 cells (not 10), all zbook-recoverable. Gap=460 cell verified zero downstream impact.
+- Executor agent dispatched on 11-cell crop-regen + cleanup. All 11 closed at $0.904 total spend. Pro flex tier returned 503 service unavailable; agent worked around with `--service-tier standard`. 6 commits landed (`b2bfc446..005e6c71`).
+- Materialise-step gap caught when the first global rebuild ran in ~50 seconds: 4 affected non-Session-78 pv cells had stale Apr-19 materialised geojsons. Re-ran `materialise_pv_geojson.py` for each + re-ran global redesign. Zero tier flips.
+- Audit script enhancements landed at `38892df9`: added `<parent>/candidates/` pattern (proposer-verifier-384), consensus-driven-cell fallback, plus tests. Archive moves for 2 deprecated staging dirs. Final audit JSON committed.
+- Obs 324 closure committed at `970be491`. Continuity beacon refreshed at `a07d9cb9`.
+
+**Decisions of note**:
+
+- Approved API spend up to $5 hard cap (used $0.99 in Session 87, well under).
+- Re-running cells that may already be cleaned on sapphire was deemed acceptable risk at this cost level.
+- Archive moves chose `archive/deprecated-staging/` as the categorical subdirectory.
+- `compare_wbf_vs_greedy_production.py` deferred (broken by pre-existing v2 quarantine at commit `3ec25e68`; e47 cells have zero era2/pv leaderboard impact per the Tier-2/3 investigation).
+- 4 follow-ups noted for Session 88+: paper outline (the deliverable), WBF script repair, audit-script tier-2 promotion + 7th manifest pattern, Pro flex 503 fallback note.
+
+**Commit ranges**:
+
+- Session 86: `b2a3cf0e..9b0e7d43` (15 commits, final shape recorded by Obs 323)
+- Session 87: `1b2842d0..a07d9cb9` (13 commits, final shape recorded by Obs 324)
+
+**Contextual assumptions**:
+
+- The user was AFK travelling for most of Session 87. Decisions were made in batched go/no-go exchanges at boundaries (cost approval, scope choice, framing) with the user trusting bounded autonomy between exchanges.
+- Sapphire was off-network throughout (user travelling). All recovery work completed on zbook locally.
+- The `feedback_recompute_tolerance.md` memory ("don't agonise over cache hit rates if no API spend") was load-bearing: it allowed me to re-run heavy compute without escalating to the user when cache reuse was partial or imperfect.
+- The audit script was treated as parallel infrastructure work — landed mid-campaign alongside the cleanup commits — rather than after-the-fact tooling. Future operators will see it as woven into the campaign closure rather than appended.
