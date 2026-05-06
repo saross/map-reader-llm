@@ -9,7 +9,7 @@ Per-cell calibration metrics (AUC, Brier, ECE) for the Session 78 verifier promp
 | image | adversarial | 2017 | 0.215 | 0.858 (0.844–0.872) | 0.211 (0.194–0.228) | 0.217 (0.202–0.237) | 0.012 |
 | image | brief | 2017 | 0.215 | 0.858 (0.845–0.871) | 0.250 (0.232–0.268) | 0.267 (0.249–0.286) | 0.001 |
 | image | brief-text | 2017 | 0.215 | 0.838 (0.819–0.856) | 0.231 (0.213–0.249) | 0.220 (0.204–0.241) | 0.025 |
-| image | checklist | 2016 | 0.215 | 0.860 (0.847–0.872) | 0.238 (0.219–0.256) | 0.263 (0.245–0.281) | 0.002 |
+| image | checklist | 2017 | 0.215 | 0.859 (0.847–0.872) | 0.238 (0.220–0.256) | 0.264 (0.246–0.281) | 0.002 |
 | image | checklist-text | 2017 | 0.215 | 0.852 (0.839–0.866) | 0.244 (0.226–0.263) | 0.266 (0.248–0.284) | 0.004 |
 | image | comparative | 2017 | 0.215 | 0.855 (0.844–0.867) | 0.235 (0.217–0.254) | 0.251 (0.233–0.269) | 0.002 |
 | image | adversarial-text | 2017 | 0.215 | 0.858 (0.842–0.874) | 0.190 (0.175–0.206) | 0.179 (0.163–0.198) | 0.040 |
@@ -39,7 +39,7 @@ Note: Obs 269 scope is 55 maps; this run's scope is the four-map gold-standard c
 
 - Best ECE: `adversarial-text` (ECE = 0.179, AUC = 0.858)
 - Worst ECE: `brief` (ECE = 0.267, AUC = 0.858)
-- Best AUC: `checklist` (AUC = 0.860, ECE = 0.263)
+- Best AUC: `checklist` (AUC = 0.859, ECE = 0.264)
 
 **text track**
 

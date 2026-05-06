@@ -3,7 +3,7 @@
   "mode": "realtime",
   "verifier_config": "verify_adversarial-text",
   "iterations": 1,
-  "total_results": 2179,
+  "total_results": 2190,
   "results": {
     "candidate_00002": {
       "mound_probability": 1.0,
@@ -13078,6 +13078,84 @@
       "reasoning": "The symbol lacks the characteristic 'sunburst' or 'gear' pattern of outward-radiating rays required for a burial mound. The presence of a fraction (9/3.1) and blue dotted lines suggests hydrological or land-use data rather than a topographic mound.",
       "best_alternative": "A combination of a spot height marker and a vegetation/land-use boundary.",
       "alternative_evidence": "The central feature is a small blue/black dot associated with the number '9' over '3.1'. There are no orange-brown radiating rays. The blue dotted lines nearby represent a land-use boundary or a seasonal water feature, not a mound."
+    },
+    "candidate_00213": {
+      "mound_probability": 0.1,
+      "reasoning": "The primary black symbol is a benchmark (square with dot). The orange-brown mark identified as a potential mound lacks the 'sunburst' ray pattern required for a kurgan. It appears more like a small contour feature or a digit '1' associated with the survey point. No outward-pointing hachures are visible.",
+      "best_alternative": "A benchmark or survey marker without a mound.",
+      "alternative_evidence": "There is a distinct black square with a central dot located at elevation 207.6, which is a standard benchmark symbol. The orange-brown symbol above it lacks the characteristic outward-radiating rays of a burial mound and instead appears as a small, closed geometric shape or a numeric annotation '1'."
+    },
+    "candidate_00811": {
+      "mound_probability": 1.0,
+      "reasoning": "I attempted to find a non-mound interpretation, such as a triangulation point or a simple contour feature. However, the symbol lacks the black geometric shapes (triangle/square) of survey markers and possesses the specific orange-brown outward-radiating rays that define a burial mound in Soviet cartography. There is no plausible alternative that explains the 'gear' shape in this specific color.",
+      "best_alternative": "Burial Mound (Kurgan)",
+      "alternative_evidence": "The symbol consists of a small orange-brown circle with distinct, short lines radiating outward in a 'sunburst' pattern. It is located on a local topographic high point near a spot height (193.3)."
+    },
+    "candidate_00922": {
+      "mound_probability": 0.05,
+      "reasoning": "The symbol lacks the characteristic 'sunburst' or 'gear' pattern of a burial mound. Instead, the marks are arranged linearly along a transport or drainage corridor, indicating a change in elevation (slope) associated with the road or canal bank.",
+      "best_alternative": "Embankment or road cutting feature",
+      "alternative_evidence": "The short black lines (hachures) are perpendicular to a linear orange-brown feature (likely a road or embankment) and point inward toward a blue line (water/ditch), rather than radiating outward from a central point."
+    },
+    "candidate_01817": {
+      "mound_probability": 0.0,
+      "reasoning": "There is no sunburst or gear-like pattern with outward-radiating rays at the center. The visual elements are clearly identifiable as standard map features: a road, a numerical elevation marker (306), and scattered vegetation dots. The proximity of these features likely triggered a false positive in the detection system.",
+      "best_alternative": "A combination of a road symbol, a spot height, and a vegetation boundary.",
+      "alternative_evidence": "The central area contains a thick orange-brown line representing a road, a black number '306' indicating a spot height, and several small black dots and dashed lines representing vegetation or land-use boundaries."
+    },
+    "candidate_01593": {
+      "mound_probability": 0.0,
+      "reasoning": "The symbols lack the characteristic 'sunburst' or 'gear' pattern of a burial mound. There are no outward-radiating lines in the orange-brown contour color. Instead, these are distinct black cartographic symbols (crosses and dots) typically used to denote specific types of vegetation or land use on Soviet-style topographic maps.",
+      "best_alternative": "Vegetation or land-use boundary markers (orchard or vineyard symbols).",
+      "alternative_evidence": "The symbols consist of small black 'x' shapes and clusters of dots arranged in a linear or grid-like fashion along the slope, rather than a central point with radiating orange-brown rays."
+    },
+    "candidate_01645": {
+      "mound_probability": 0.4,
+      "reasoning": "The symbol is primarily a black survey marker (square with dot). In Soviet cartography, these are frequently placed on high points. While there are small ticks around the square, they are very short and form a rigid geometric box rather than the organic 'sunburst' pattern of a kurgan. However, because the ticks are present and the elevation 212.0 is noted, it is difficult to completely rule out a mound, but the survey marker is the dominant feature.",
+      "best_alternative": "A triangulation point or survey marker without a mound.",
+      "alternative_evidence": "The central symbol is a black square with a central dot, which is the standard representation for a benchmark or survey point. While there are small marks around it, they appear more like a stylized border or a square frame rather than the distinct, outward-radiating hachures (rays) typical of a burial mound symbol."
+    },
+    "candidate_00896": {
+      "mound_probability": 0.1,
+      "reasoning": "The symbol is located directly on a linear blue feature (likely a canal or drainage ditch). The 'rays' are actually part of the symbology for the line itself, indicating a specific type of embankment or boundary. Furthermore, the text '\u043a\u0443\u0440\u0433. \u041c\u043e\u0433\u0438\u043b\u0430' (Mound Mogila) is located above this feature, but the actual mound symbol associated with that text is likely the orange-brown contour feature further up, not the blue linear mark at the center of the crop.",
+      "best_alternative": "A vegetation or land-use boundary marker (specifically a fence or embankment line).",
+      "alternative_evidence": "The symbol consists of a blue line with small, thin cross-hatched marks or 'ticks' that appear to follow the linear path of the feature rather than radiating from a central point."
+    },
+    "candidate_00095": {
+      "mound_probability": 0.1,
+      "reasoning": "The symbol lacks the specific geometric 'gear' pattern required for a mound. The proximity to other large brown blocks suggests an urban or built-up area where contour lines are interacting with man-made structures, creating a visual cluster that mimics a mound's complexity without its specific symbology.",
+      "best_alternative": "A combination of contour line features and building/structure outlines.",
+      "alternative_evidence": "The central area contains irregular black shapes and orange-brown contour lines that form closed loops, but they lack the distinct, short, outward-radiating 'sunburst' rays characteristic of a burial mound. The black shapes appear more like building footprints or structural ruins rather than a survey marker (triangle/square)."
+    },
+    "candidate_02138": {
+      "mound_probability": 0.1,
+      "reasoning": "While the triangulation point is located on a summit, there are no short, outward-radiating 'sunburst' rays surrounding the triangle. The orange lines present are continuous contour lines defining the shape of the hill, not the specific hachures used to denote a man-made burial mound (kurgan). The presence of a triangulation point on a natural high point is a standard mapping convention and does not imply the presence of an artificial mound without the specific radiating ray symbology.",
+      "best_alternative": "Triangulation point on a natural hilltop",
+      "alternative_evidence": "The central symbol is a clear black triangle with an internal dot, which is the standard Soviet map symbol for a triangulation point. It is situated within a small, closed orange contour line that represents the natural peak of a hill (elevation 461.6)."
+    },
+    "candidate_01811": {
+      "mound_probability": 1.0,
+      "reasoning": "The symbols perfectly match the cartographic definition of a burial mound: orange-brown color, central shape, and outward-radiating rays. There is no evidence of a black triangle or square that would suggest a standalone triangulation point or benchmark, and the rays are clearly outward-facing, ruling out inward-pointing contour features.",
+      "best_alternative": "None. The symbols are classic representations of burial mounds (kurgans).",
+      "alternative_evidence": "The symbols consist of orange-brown circular centers with distinct, short lines radiating outward in a sunburst pattern. They are accompanied by small numbers (3 and 2), which typically denote the height of the mound in meters."
+    },
+    "candidate_00886": {
+      "mound_probability": 0.1,
+      "reasoning": "The symbol lacks the characteristic orange-brown central circle or the black survey marker (triangle/square) required for a mound. Furthermore, the text '\u043a\u0443\u0440\u0433. \u041c\u043e\u0433\u0438\u043b\u0430' (Mound Mogila) is located above the symbol, but the actual symbol at the center of the crop is a series of boundary ticks along a blue line. The text likely refers to a feature elsewhere, while the central symbol is clearly a linear boundary indicator.",
+      "best_alternative": "A vegetation or land-use boundary marker.",
+      "alternative_evidence": "The symbol consists of small, thin black ticks or 'rays' that are aligned along a linear boundary feature (a blue line representing a canal or road) rather than radiating from a central point."
     }
-  }
+  },
+  "cleanup_history": [
+    {
+      "timestamp": "2026-05-06T09:03:42.528175+00:00",
+      "initial_missing": 11,
+      "recovered": 11,
+      "still_missing": 0,
+      "still_missing_ids": [],
+      "attempts_used": 1,
+      "max_attempts": 3,
+      "safe_mode_used": true
+    }
+  ]
 }

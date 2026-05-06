@@ -3,7 +3,7 @@
   "mode": "realtime",
   "verifier_config": "verify_adversarial-text",
   "iterations": 1,
-  "total_results": 2839,
+  "total_results": 2840,
   "results": {
     "candidate_00000": {
       "mound_probability": 0.0,
@@ -17038,6 +17038,24 @@
       "reasoning": "The symbol is a standard Soviet map representation for a triangulation point. While it is located on a topographic rise indicated by contour lines, it lacks the specific 'sunburst' or 'gear' pattern of outward-radiating hachures required to identify it as being situated on a man-made burial mound.",
       "best_alternative": "A triangulation point without a mound.",
       "alternative_evidence": "The symbol consists of a solid black triangle with a central white dot. There are no orange-brown radiating lines (rays) surrounding the triangle."
+    },
+    "candidate_01169": {
+      "mound_probability": 0.1,
+      "reasoning": "The symbol lacks the characteristic central circle or survey marker of a burial mound. The 'rays' are oriented along a linear path, suggesting they represent a slope or a specific type of fence/boundary line rather than a localized mound. The proximity to a road and water feature further suggests these are embankment indicators.",
+      "best_alternative": "Vegetation or land-use boundary markers",
+      "alternative_evidence": "The radiating lines are not arranged in a circular 'sunburst' pattern around a central point. Instead, they appear as small tick marks or 'teeth' attached to a linear boundary or embankment feature (indicated by the thick orange-brown line)."
     }
-  }
+  },
+  "cleanup_history": [
+    {
+      "timestamp": "2026-05-06T09:01:27.374537+00:00",
+      "initial_missing": 1,
+      "recovered": 1,
+      "still_missing": 0,
+      "still_missing_ids": [],
+      "attempts_used": 1,
+      "max_attempts": 3,
+      "safe_mode_used": true
+    }
+  ]
 }

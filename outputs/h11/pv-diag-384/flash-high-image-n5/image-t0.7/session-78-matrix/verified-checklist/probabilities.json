@@ -3,7 +3,7 @@
   "mode": "realtime",
   "verifier_config": "verify_checklist",
   "iterations": 1,
-  "total_results": 2016,
+  "total_results": 2017,
   "results": {
     "candidate_00003": {
       "mound_probability": 1.0,
@@ -12100,6 +12100,24 @@
       "reasoning": "The symbol is a solid black triangle accompanied by the number 7. It lacks the diagnostic outward-radiating rays required to identify it as a burial mound. It matches the profile of a standalone triangulation point.",
       "best_alternative": "",
       "alternative_evidence": ""
+    },
+    "candidate_01563": {
+      "mound_probability": 1.0,
+      "reasoning": "The symbol at the center (and several others nearby) clearly displays the diagnostic features of a burial mound: an orange-brown central circle with short lines radiating outward. It is distinct from the nearby elevation text '150,1' and other terrain markers.",
+      "best_alternative": "",
+      "alternative_evidence": ""
     }
-  }
+  },
+  "cleanup_history": [
+    {
+      "timestamp": "2026-05-06T09:02:28.924588+00:00",
+      "initial_missing": 1,
+      "recovered": 1,
+      "still_missing": 0,
+      "still_missing_ids": [],
+      "attempts_used": 1,
+      "max_attempts": 3,
+      "safe_mode_used": true
+    }
+  ]
 }

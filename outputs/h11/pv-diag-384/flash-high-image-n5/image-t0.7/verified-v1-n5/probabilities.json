@@ -3,7 +3,7 @@
   "mode": "realtime",
   "verifier_config": "verify_adversarial-text",
   "iterations": 1,
-  "total_results": 2016,
+  "total_results": 2017,
   "results": {
     "candidate_00003": {
       "mound_probability": 1.0,
@@ -12100,6 +12100,24 @@
       "reasoning": "The symbol perfectly matches the cartographic definition of a burial mound (kurgan). The outward-radiating rays are the primary diagnostic feature. The presence of multiple similar symbols in the vicinity, some with associated numbers (e.g., '2', '3'), is consistent with a group of burial mounds being documented in a survey.",
       "best_alternative": "None",
       "alternative_evidence": "The symbol consists of a distinct orange-brown central circle with clear, short lines radiating outward in a sunburst pattern. There is no black triangle or square that would indicate a standalone triangulation point or benchmark, and the lines are too symmetrical and radial to be contour features or vegetation boundaries."
+    },
+    "candidate_00070": {
+      "mound_probability": 0.2,
+      "reasoning": "While the text explicitly names a kurgan ('\u043a\u0443\u0440\u0433.'), the actual cartographic symbol for a mound (the orange sunburst) is not clearly visible at the center. The 'radiating' appearance is an illusion created by the intersection of the text, a dashed boundary line, and the blue linear feature. The label identifies the feature, but the symbol itself is obscured or absent in this specific crop.",
+      "best_alternative": "A combination of text characters and a linear boundary/infrastructure marker.",
+      "alternative_evidence": "The central area contains the Cyrillic text '\u043a\u0443\u0440\u0433. \u041c\u043e\u0433\u0438\u043b\u0430' (kurgan Mogila). The visual 'rays' are actually parts of the letters '\u0433' and '\u041c' or are small tick marks associated with the blue linear feature (likely a canal or road) and the dashed black boundary line passing through the text."
     }
-  }
+  },
+  "cleanup_history": [
+    {
+      "timestamp": "2026-05-06T09:01:49.952236+00:00",
+      "initial_missing": 1,
+      "recovered": 1,
+      "still_missing": 0,
+      "still_missing_ids": [],
+      "attempts_used": 1,
+      "max_attempts": 3,
+      "safe_mode_used": true
+    }
+  ]
 }

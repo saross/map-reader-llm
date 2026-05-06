@@ -4,30 +4,30 @@
   "prob_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/probabilities.json",
   "buffer_metres": 20.0,
   "scope_tiles": 487,
-  "n_total": 2016,
+  "n_total": 2017,
   "n_mound": 434,
-  "n_not_mound": 1582,
-  "prevalence": 0.2152777777777778,
+  "n_not_mound": 1583,
+  "prevalence": 0.2151710461080813,
   "auc": {
-    "point": 0.8597251918180918,
-    "ci_lower": 0.8471267500825386,
-    "ci_upper": 0.8724878951840895
+    "point": 0.8594746602001101,
+    "ci_lower": 0.8470605045203424,
+    "ci_upper": 0.8719607825743179
   },
   "brier": {
-    "point": 0.23759320436507936,
-    "ci_lower": 0.2192000086805555,
-    "ci_upper": 0.2561596130952381
+    "point": 0.23797119484382745,
+    "ci_lower": 0.21991191993058998,
+    "ci_upper": 0.2563538101140307
   },
   "ece": {
-    "point": 0.26315972222222217,
-    "ci_lower": 0.2449849950396825,
-    "ci_upper": 0.28139930555555553
+    "point": 0.2635250371839365,
+    "ci_lower": 0.2456767476450173,
+    "ci_upper": 0.28138844819038167
   },
   "p_mound_low_tail": {
     "threshold": 0.25,
     "mean": 0.001813236627379873,
     "ci_lower": 0.0,
-    "ci_upper": 0.004583056534279634
+    "ci_upper": 0.004578754578754579
   },
   "calibration_bins": [
     {
@@ -96,9 +96,9 @@
     {
       "lo": 0.9,
       "hi": 1.0,
-      "count": 911,
-      "mean_predicted": 0.9940504939626783,
-      "empirical_p_mound": 0.47420417124039516
+      "count": 912,
+      "mean_predicted": 0.9940570175438596,
+      "empirical_p_mound": 0.47368421052631576
     }
   ],
   "bootstrap": {
