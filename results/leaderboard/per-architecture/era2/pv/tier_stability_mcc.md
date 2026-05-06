@@ -36,8 +36,8 @@ Note: ties (all conditions in one tier) make Spearman's rho undefined; the rho c
 | `session-78-image-brief` | 0.829 | 1 | 1 | 1 | 1 | 1 | stable |
 | `pv-high-image-t1.0-n5` | 0.822 | 1 | 1 | 1 | 1 | 1 | stable |
 | `pv-min-image-t0.7-n10` | 0.821 | 1 | 1 | 1 | 1 | 1 | stable |
+| `session-78-image-checklist-text` | 0.821 | 1 | 1 | 1 | 1 | 1 | stable |
 | `session-78-image-brief-text` | 0.819 | 1 | 1 | 1 | 1 | 1 | stable |
-| `session-78-image-checklist-text` | 0.817 | 1 | 1 | 1 | 1 | 1 | stable |
 | `session-78-image-checklist` | 0.816 | 1 | 1 | 1 | 1 | 1 | stable |
 | `pv-scale4-optimal-n10` | 0.815 | 1 | 1 | 1 | 1 | 1 | stable |
 | `pv-high-image-t0.3-n10` | 0.815 | 1 | 1 | 1 | 1 | 1 | stable |
@@ -45,9 +45,9 @@ Note: ties (all conditions in one tier) make Spearman's rho undefined; the rho c
 | `pv-high-image-t0.3-n5` | 0.804 | 1 | 1 | 1 | 1 | 1 | stable |
 | `pv-min-image-t1.0-n5` | 0.802 | 1 | 1 | 1 | 1 | 1 | stable |
 | `pv-high-image-t1.0-n10` | 0.800 | 1 | 1 | 1 | 1 | 1 | stable |
+| `session-78-image-adversarial-text` | 0.797 | 1 | 1 | 1 | 1 | 1 | stable |
 | `pv-high-image-t0.7-n10` | 0.796 | 1 | 1 | 1 | 1 | 1 | stable |
 | `session-78-text-comparative` | 0.793 | 1 | 1 | 1 | 1 | 1 | stable |
-| `session-78-image-adversarial-text` | 0.793 | 1 | 1 | 1 | 1 | 1 | stable |
 | `session-78-text-adversarial` | 0.793 | 1 | 1 | 1 | 1 | 1 | stable |
 | `pv-high-text-t1.0-n10` | 0.790 | 1 | 1 | 1 | 1 | 1 | stable |
 | `pv-flash-high-text-16of30` | 0.789 | 1 | 1 | 1 | 1 | 1 | stable |
@@ -60,8 +60,8 @@ Note: ties (all conditions in one tier) make Spearman's rho undefined; the rho c
 | `pv-high-text-t0.3-n5` | 0.776 | 1 | 1 | 1 | 1 | 1 | stable |
 | `pv-high-text-t0.0-n3` | 0.774 | 1 | 1 | 1 | 1 | 1 | stable |
 | `session-78-text-checklist` | 0.774 | 1 | 1 | 1 | 1 | 1 | stable |
-| `pv-min-text-t0.3-n5` | 0.772 | 1 | 1 | 1 | 1 | 1 | stable |
 | `pv-min-text-t0.3-n10` | 0.772 | 1 | 1 | 1 | 1 | 1 | stable |
+| `pv-min-text-t0.3-n5` | 0.772 | 1 | 1 | 1 | 1 | 1 | stable |
 | `pv-high-text-t0.7-n5` | 0.767 | 1 | 1 | 1 | 1 | 1 | stable |
 | `session-78-text-brief` | 0.765 | 1 | 1 | 1 | 1 | 1 | stable |
 | `pv-high-text-t0.7-n10` | 0.763 | 1 | 1 | 1 | 1 | 1 | stable |

@@ -1,8 +1,8 @@
 {
   "script": "build_tiered_leaderboard.py",
   "version": "1.0.0",
-  "timestamp": "2026-05-06T00:21:44.599901+00:00",
-  "git_commit": "ef3ec4fe",
+  "timestamp": "2026-05-06T02:59:42.788181+00:00",
+  "git_commit": "a8f4b7f8",
   "metadata": {
     "name": "",
     "primary_buffer": 20,
@@ -20,7 +20,7 @@
     "metric": "f1",
     "bootstrap": 1000,
     "seed": 42,
-    "bounds": "/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
     "n_conditions_input": 8
   },
   "n_conditions": 8,
@@ -63,14 +63,7 @@
                 "coverage_status": "sparse_cross_grid"
               },
               "coverage_status": "sparse_cross_grid",
-              "ci_unreliable": true,
-              "mcc": 0.030797558374291604,
-              "mcc_ci_lower": -0.0347693673088809,
-              "mcc_ci_upper": 0.09270898671569264,
-              "tile_tp": 116,
-              "tile_tn": 135,
-              "tile_fp": 123,
-              "tile_fn": 113
+              "ci_unreliable": true
             },
             "30": {
               "buffer_metres": 30,
@@ -217,14 +210,7 @@
                 "coverage_status": "normal"
               },
               "coverage_status": "normal",
-              "ci_unreliable": false,
-              "mcc": 0.030797558374291604,
-              "mcc_ci_lower": -0.0347693673088809,
-              "mcc_ci_upper": 0.09270898671569264,
-              "tile_tp": 116,
-              "tile_tn": 135,
-              "tile_fp": 123,
-              "tile_fn": 113
+              "ci_unreliable": false
             },
             "30": {
               "buffer_metres": 30,
@@ -371,14 +357,7 @@
                 "coverage_status": "sparse_cross_grid"
               },
               "coverage_status": "sparse_cross_grid",
-              "ci_unreliable": true,
-              "mcc": 0.030797558374291604,
-              "mcc_ci_lower": -0.0347693673088809,
-              "mcc_ci_upper": 0.09270898671569264,
-              "tile_tp": 116,
-              "tile_tn": 135,
-              "tile_fp": 123,
-              "tile_fn": 113
+              "ci_unreliable": true
             },
             "30": {
               "buffer_metres": 30,
@@ -525,14 +504,7 @@
                 "coverage_status": "sparse_cross_grid"
               },
               "coverage_status": "sparse_cross_grid",
-              "ci_unreliable": true,
-              "mcc": 0.030797558374291604,
-              "mcc_ci_lower": -0.0347693673088809,
-              "mcc_ci_upper": 0.09270898671569264,
-              "tile_tp": 116,
-              "tile_tn": 135,
-              "tile_fp": 123,
-              "tile_fn": 113
+              "ci_unreliable": true
             },
             "30": {
               "buffer_metres": 30,
@@ -679,14 +651,7 @@
                 "coverage_status": "sparse_cross_grid"
               },
               "coverage_status": "sparse_cross_grid",
-              "ci_unreliable": true,
-              "mcc": 0.4186406329018257,
-              "mcc_ci_lower": 0.3600625431050361,
-              "mcc_ci_upper": 0.465774581175413,
-              "tile_tp": 102,
-              "tile_tn": 237,
-              "tile_fp": 21,
-              "tile_fn": 127
+              "ci_unreliable": true
             },
             "30": {
               "buffer_metres": 30,
@@ -833,14 +798,7 @@
                 "coverage_status": "sparse_cross_grid"
               },
               "coverage_status": "sparse_cross_grid",
-              "ci_unreliable": true,
-              "mcc": 0.38774041556349964,
-              "mcc_ci_lower": 0.3319600329166304,
-              "mcc_ci_upper": 0.4343906567684063,
-              "tile_tp": 109,
-              "tile_tn": 226,
-              "tile_fp": 32,
-              "tile_fn": 120
+              "ci_unreliable": true
             },
             "30": {
               "buffer_metres": 30,
@@ -987,14 +945,7 @@
                 "coverage_status": "sparse_cross_grid"
               },
               "coverage_status": "sparse_cross_grid",
-              "ci_unreliable": true,
-              "mcc": 0.030797558374291604,
-              "mcc_ci_lower": -0.0347693673088809,
-              "mcc_ci_upper": 0.09270898671569264,
-              "tile_tp": 116,
-              "tile_tn": 135,
-              "tile_fp": 123,
-              "tile_fn": 113
+              "ci_unreliable": true
             },
             "30": {
               "buffer_metres": 30,
@@ -1141,14 +1092,7 @@
                 "coverage_status": "sparse_cross_grid"
               },
               "coverage_status": "sparse_cross_grid",
-              "ci_unreliable": true,
-              "mcc": 0.030797558374291604,
-              "mcc_ci_lower": -0.0347693673088809,
-              "mcc_ci_upper": 0.09270898671569264,
-              "tile_tp": 116,
-              "tile_tn": 135,
-              "tile_fp": 123,
-              "tile_fn": 113
+              "ci_unreliable": true
             },
             "30": {
               "buffer_metres": 30,

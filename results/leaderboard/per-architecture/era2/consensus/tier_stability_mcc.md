@@ -26,7 +26,7 @@ Note: ties (all conditions in one tier) make Spearman's rho undefined; the rho c
 | condition | MCC@20m | tier@20m | tier@30m | tier@40m | tier@50m | tier@100m | spearman vs 20m |
 |:---|---:| ---: | ---: | ---: | ---: | ---: |---:|
 | `h11-pvd-pro-high-image-n5` | 0.761 | 1 | 1 | 1 | 1 | 1 | stable |
-| `scale4-optimal-487` | 0.745 | 1 | 1 | 1 | 1 | 1 | stable |
+| `scale4-optimal-487` | 0.746 | 1 | 1 | 1 | 1 | 1 | stable |
 | `h11-pvd-pro-high-text-n5` | 0.727 | 1 | 1 | 1 | 1 | 1 | stable |
 | `p3a-high-image-t0.3` | 0.682 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h11-pvd-flash-high-image-n5` | 0.676 | 2 | 2 | 2 | 2 | 2 | stable |
@@ -46,8 +46,8 @@ Note: ties (all conditions in one tier) make Spearman's rho undefined; the rho c
 | `h11-pvd-image-n5` | 0.404 | 5 | 5 | 5 | 5 | 5 | stable |
 | `h11-n1-pro-text-high-t0` | 0.395 | 5 | 5 | 5 | 5 | 5 | stable |
 | `h11-pvd-flash-minimal-text-n30-t07` | 0.380 | 5 | 5 | 5 | 5 | 5 | stable |
-| `h11-n1-image-t03` | 0.348 | 6 | 6 | 6 | 6 | 6 | stable |
-| `p3a-min-image-t0.3` | 0.339 | 6 | 6 | 6 | 6 | 6 | stable |
+| `h11-n1-image-t03` | 0.349 | 6 | 6 | 6 | 6 | 6 | stable |
+| `p3a-min-image-t0.3` | 0.340 | 6 | 6 | 6 | 6 | 6 | stable |
 | `h11-pvd-text-n10` | 0.316 | 6 | 6 | 6 | 6 | 6 | stable |
 | `p3a-minimal-text-t0.3-n5` | 0.311 | 6 | 6 | 6 | 6 | 6 | stable |
 | `p3a-minimal-text-t0.3` | 0.311 | 6 | 6 | 6 | 6 | 6 | stable |

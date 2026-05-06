@@ -1,8 +1,8 @@
 {
   "script": "build_tiered_leaderboard.py",
   "version": "1.0.0",
-  "timestamp": "2026-05-06T00:21:14.122369+00:00",
-  "git_commit": "ef3ec4fe",
+  "timestamp": "2026-05-06T02:55:22.798255+00:00",
+  "git_commit": "a8f4b7f8",
   "metadata": {
     "name": "",
     "primary_buffer": 20,
@@ -20,7 +20,7 @@
     "metric": "f1",
     "bootstrap": 1000,
     "seed": 42,
-    "bounds": "/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/full_evaluation_bounds.geojson",
+    "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
     "n_conditions_input": 21
   },
   "n_conditions": 21,
@@ -63,14 +63,7 @@
                 "coverage_status": "normal"
               },
               "coverage_status": "normal",
-              "ci_unreliable": false,
-              "mcc": 0.21376865002654497,
-              "mcc_ci_lower": 0.16910493583267192,
-              "mcc_ci_upper": 0.24894556828962497,
-              "tile_tp": 204,
-              "tile_tn": 10,
-              "tile_fp": 126,
-              "tile_fn": 0
+              "ci_unreliable": false
             },
             "30": {
               "buffer_metres": 30,
@@ -217,14 +210,7 @@
                 "coverage_status": "normal"
               },
               "coverage_status": "normal",
-              "ci_unreliable": false,
-              "mcc": 0.0,
-              "mcc_ci_lower": 0.0,
-              "mcc_ci_upper": 0.0,
-              "tile_tp": 204,
-              "tile_tn": 0,
-              "tile_fp": 136,
-              "tile_fn": 0
+              "ci_unreliable": false
             },
             "30": {
               "buffer_metres": 30,
@@ -371,14 +357,7 @@
                 "coverage_status": "normal"
               },
               "coverage_status": "normal",
-              "ci_unreliable": false,
-              "mcc": 0.0,
-              "mcc_ci_lower": 0.0,
-              "mcc_ci_upper": 0.0,
-              "tile_tp": 204,
-              "tile_tn": 0,
-              "tile_fp": 136,
-              "tile_fn": 0
+              "ci_unreliable": false
             },
             "30": {
               "buffer_metres": 30,
@@ -525,14 +504,7 @@
                 "coverage_status": "normal"
               },
               "coverage_status": "normal",
-              "ci_unreliable": false,
-              "mcc": 0.21575685265078248,
-              "mcc_ci_lower": 0.1695461857684924,
-              "mcc_ci_upper": 0.24707311636282467,
-              "tile_tp": 204,
-              "tile_tn": 10,
-              "tile_fp": 126,
-              "tile_fn": 0
+              "ci_unreliable": false
             },
             "30": {
               "buffer_metres": 30,
@@ -679,14 +651,7 @@
                 "coverage_status": "normal"
               },
               "coverage_status": "normal",
-              "ci_unreliable": false,
-              "mcc": 0.22425284611586496,
-              "mcc_ci_lower": 0.18698987749606533,
-              "mcc_ci_upper": 0.26100209660879015,
-              "tile_tp": 204,
-              "tile_tn": 11,
-              "tile_fp": 125,
-              "tile_fn": 0
+              "ci_unreliable": false
             },
             "30": {
               "buffer_metres": 30,
@@ -833,14 +798,7 @@
                 "coverage_status": "normal"
               },
               "coverage_status": "normal",
-              "ci_unreliable": false,
-              "mcc": 0.0,
-              "mcc_ci_lower": 0.0,
-              "mcc_ci_upper": 0.0,
-              "tile_tp": 204,
-              "tile_tn": 0,
-              "tile_fp": 136,
-              "tile_fn": 0
+              "ci_unreliable": false
             },
             "30": {
               "buffer_metres": 30,
@@ -987,14 +945,7 @@
                 "coverage_status": "normal"
               },
               "coverage_status": "normal",
-              "ci_unreliable": false,
-              "mcc": 0.0,
-              "mcc_ci_lower": 0.0,
-              "mcc_ci_upper": 0.0,
-              "tile_tp": 204,
-              "tile_tn": 0,
-              "tile_fp": 136,
-              "tile_fn": 0
+              "ci_unreliable": false
             },
             "30": {
               "buffer_metres": 30,
@@ -1141,14 +1092,7 @@
                 "coverage_status": "normal"
               },
               "coverage_status": "normal",
-              "ci_unreliable": false,
-              "mcc": 0.28175154068827635,
-              "mcc_ci_lower": 0.24329947276130814,
-              "mcc_ci_upper": 0.318129879463276,
-              "tile_tp": 204,
-              "tile_tn": 17,
-              "tile_fp": 119,
-              "tile_fn": 0
+              "ci_unreliable": false
             },
             "30": {
               "buffer_metres": 30,
@@ -1295,14 +1239,7 @@
                 "coverage_status": "normal"
               },
               "coverage_status": "normal",
-              "ci_unreliable": false,
-              "mcc": 0.09330544348214923,
-              "mcc_ci_lower": 0.03749579081533858,
-              "mcc_ci_upper": 0.12183304675647015,
-              "tile_tp": 204,
-              "tile_tn": 2,
-              "tile_fp": 134,
-              "tile_fn": 0
+              "ci_unreliable": false
             },
             "30": {
               "buffer_metres": 30,
@@ -1449,14 +1386,7 @@
                 "coverage_status": "normal"
               },
               "coverage_status": "normal",
-              "ci_unreliable": false,
-              "mcc": 0.16441302832128316,
-              "mcc_ci_lower": 0.11740994664993926,
-              "mcc_ci_upper": 0.20317161247477164,
-              "tile_tp": 204,
-              "tile_tn": 6,
-              "tile_fp": 130,
-              "tile_fn": 0
+              "ci_unreliable": false
             },
             "30": {
               "buffer_metres": 30,
@@ -1603,14 +1533,7 @@
                 "coverage_status": "normal"
               },
               "coverage_status": "normal",
-              "ci_unreliable": false,
-              "mcc": 0.09330544348214923,
-              "mcc_ci_lower": 0.03749579081533858,
-              "mcc_ci_upper": 0.12183304675647015,
-              "tile_tp": 204,
-              "tile_tn": 2,
-              "tile_fp": 134,
-              "tile_fn": 0
+              "ci_unreliable": false
             },
             "30": {
               "buffer_metres": 30,
@@ -1757,14 +1680,7 @@
                 "coverage_status": "normal"
               },
               "coverage_status": "normal",
-              "ci_unreliable": false,
-              "mcc": 0.0,
-              "mcc_ci_lower": 0.0,
-              "mcc_ci_upper": 0.0,
-              "tile_tp": 204,
-              "tile_tn": 0,
-              "tile_fp": 136,
-              "tile_fn": 0
+              "ci_unreliable": false
             },
             "30": {
               "buffer_metres": 30,
@@ -1911,14 +1827,7 @@
                 "coverage_status": "normal"
               },
               "coverage_status": "normal",
-              "ci_unreliable": false,
-              "mcc": 0.0,
-              "mcc_ci_lower": 0.0,
-              "mcc_ci_upper": 0.0,
-              "tile_tp": 204,
-              "tile_tn": 0,
-              "tile_fp": 136,
-              "tile_fn": 0
+              "ci_unreliable": false
             },
             "30": {
               "buffer_metres": 30,
@@ -2065,14 +1974,7 @@
                 "coverage_status": "normal"
               },
               "coverage_status": "normal",
-              "ci_unreliable": false,
-              "mcc": 0.14902628375138224,
-              "mcc_ci_lower": 0.09830453984052034,
-              "mcc_ci_upper": 0.1763894460714846,
-              "tile_tp": 204,
-              "tile_tn": 5,
-              "tile_fp": 131,
-              "tile_fn": 0
+              "ci_unreliable": false
             },
             "30": {
               "buffer_metres": 30,
@@ -2219,14 +2121,7 @@
                 "coverage_status": "normal"
               },
               "coverage_status": "normal",
-              "ci_unreliable": false,
-              "mcc": 0.13366842001577758,
-              "mcc_ci_lower": 0.08803278351867924,
-              "mcc_ci_upper": 0.16753293383897438,
-              "tile_tp": 204,
-              "tile_tn": 4,
-              "tile_fp": 132,
-              "tile_fn": 0
+              "ci_unreliable": false
             },
             "30": {
               "buffer_metres": 30,
@@ -2373,14 +2268,7 @@
                 "coverage_status": "normal"
               },
               "coverage_status": "normal",
-              "ci_unreliable": false,
-              "mcc": 0.06198284780343051,
-              "mcc_ci_lower": 0.0,
-              "mcc_ci_upper": 0.0913625090836298,
-              "tile_tp": 204,
-              "tile_tn": 1,
-              "tile_fp": 135,
-              "tile_fn": 0
+              "ci_unreliable": false
             },
             "30": {
               "buffer_metres": 30,
@@ -2527,14 +2415,7 @@
                 "coverage_status": "normal"
               },
               "coverage_status": "normal",
-              "ci_unreliable": false,
-              "mcc": 0.09207804645073414,
-              "mcc_ci_lower": 0.03739639959647545,
-              "mcc_ci_upper": 0.12299346577776787,
-              "tile_tp": 204,
-              "tile_tn": 2,
-              "tile_fp": 134,
-              "tile_fn": 0
+              "ci_unreliable": false
             },
             "30": {
               "buffer_metres": 30,
@@ -2681,14 +2562,7 @@
                 "coverage_status": "normal"
               },
               "coverage_status": "normal",
-              "ci_unreliable": false,
-              "mcc": 0.0,
-              "mcc_ci_lower": 0.0,
-              "mcc_ci_upper": 0.0,
-              "tile_tp": 204,
-              "tile_tn": 0,
-              "tile_fp": 136,
-              "tile_fn": 0
+              "ci_unreliable": false
             },
             "30": {
               "buffer_metres": 30,
@@ -2835,14 +2709,7 @@
                 "coverage_status": "normal"
               },
               "coverage_status": "normal",
-              "ci_unreliable": false,
-              "mcc": 0.06538156721268655,
-              "mcc_ci_lower": 0.0,
-              "mcc_ci_upper": 0.09181780639111782,
-              "tile_tp": 204,
-              "tile_tn": 1,
-              "tile_fp": 135,
-              "tile_fn": 0
+              "ci_unreliable": false
             },
             "30": {
               "buffer_metres": 30,
@@ -2989,14 +2856,7 @@
                 "coverage_status": "normal"
               },
               "coverage_status": "normal",
-              "ci_unreliable": false,
-              "mcc": 0.0910000968597575,
-              "mcc_ci_lower": 0.052870784904900686,
-              "mcc_ci_upper": 0.1252859959155083,
-              "tile_tp": 204,
-              "tile_tn": 2,
-              "tile_fp": 134,
-              "tile_fn": 0
+              "ci_unreliable": false
             },
             "30": {
               "buffer_metres": 30,
@@ -3143,14 +3003,7 @@
                 "coverage_status": "normal"
               },
               "coverage_status": "normal",
-              "ci_unreliable": false,
-              "mcc": 0.0910000968597575,
-              "mcc_ci_lower": 0.052870784904900686,
-              "mcc_ci_upper": 0.1252859959155083,
-              "tile_tp": 204,
-              "tile_tn": 2,
-              "tile_fp": 134,
-              "tile_fn": 0
+              "ci_unreliable": false
             },
             "30": {
               "buffer_metres": 30,

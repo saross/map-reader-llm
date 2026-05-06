@@ -1,18 +1,14 @@
-2026-04-25 14:37:39,693 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git ad38ffbd
-2026-04-25 14:37:39,694 - INFO - __main__ - Resolved 44 conditions from inventory (era=2, track=None)
-2026-04-25 14:37:39,694 - INFO - __main__ - Resolved 44 conditions
-2026-04-25 14:37:39,694 - INFO - __main__ - Skipping evaluation (--skip-evaluation)
-2026-04-25 14:37:39,699 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 44 conditions
-2026-04-25 14:37:39,699 - INFO - __main__ - Selected 44 conditions (best F1=0.777 at 20m)
-2026-04-25 14:37:39,699 - INFO - __main__ - Skipping pairwise (--skip-pairwise)
-2026-04-25 14:37:39,719 - INFO - __main__ - FDR: 2/946 pairs significant at q=0.01 → 2 tiers
-2026-04-25 14:37:39,719 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/pv/leaderboard_tiers_mcc_q01_20m.md
-2026-04-25 14:37:39,720 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/pv/leaderboard_tiers_mcc_q01_30m.md
-2026-04-25 14:37:39,720 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/pv/leaderboard_tiers_mcc_q01_40m.md
-2026-04-25 14:37:39,720 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/pv/leaderboard_tiers_mcc_q01_50m.md
-2026-04-25 14:37:39,720 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/pv/leaderboard_tiers_mcc_q01_100m.md
-2026-04-25 14:37:39,729 - INFO - __main__ - JSON leaderboard written to results/leaderboard/per-architecture/era2/pv/leaderboard_tiers_mcc_q01_20m.json
-2026-04-25 14:37:39,731 - INFO - __main__ - All evaluations written to results/leaderboard/per-architecture/era2/pv/leaderboard_all_evaluations.json
+2026-05-06 11:01:20,670 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git 64974ec5
+2026-05-06 11:01:20,672 - INFO - __main__ - Resolved 44 conditions from inventory (era=2, track=None)
+2026-05-06 11:01:20,672 - INFO - __main__ - Resolved 44 conditions
+2026-05-06 11:01:20,672 - INFO - __main__ - Skipping evaluation (--skip-evaluation)
+2026-05-06 11:01:20,676 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 44 conditions
+2026-05-06 11:01:20,676 - INFO - __main__ - Selected 44 conditions (best F1=0.777 at 20m)
+2026-05-06 11:01:20,676 - INFO - __main__ - Skipping pairwise (--skip-pairwise)
+2026-05-06 11:01:20,692 - INFO - __main__ - FDR: 2/946 pairs significant at q=0.01 → 2 tiers
+2026-05-06 11:01:20,692 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/pv/leaderboard_tiers_mcc_q01_20m.md
+2026-05-06 11:01:20,701 - INFO - __main__ - JSON leaderboard written to results/leaderboard/per-architecture/era2/pv/leaderboard_tiers_mcc_q01_20m.json
+2026-05-06 11:01:20,707 - INFO - __main__ - All evaluations written to results/leaderboard/per-architecture/era2/pv/leaderboard_all_evaluations.json
 
 ========================================================================
 LEADERBOARD TIERS (MCC, 20m buffer)
@@ -30,8 +26,8 @@ Tier 1 (MCC: 0.755–0.841, 43 conditions)
     9. session-78-image-brief                   MCC=0.829  t=1
    10. pv-high-image-t1.0-n5                    MCC=0.822  t=1
    11. pv-min-image-t0.7-n10                    MCC=0.821  t=1
-   12. session-78-image-brief-text              MCC=0.819  t=1
-   13. session-78-image-checklist-text          MCC=0.817  t=1
+   12. session-78-image-checklist-text          MCC=0.821  t=1
+   13. session-78-image-brief-text              MCC=0.819  t=1
    14. session-78-image-checklist               MCC=0.816  t=1
    15. pv-scale4-optimal-n10                    MCC=0.815  t=1
    16. pv-high-image-t0.3-n10                   MCC=0.815  t=1
@@ -39,9 +35,9 @@ Tier 1 (MCC: 0.755–0.841, 43 conditions)
    18. pv-high-image-t0.3-n5                    MCC=0.804  t=1
    19. pv-min-image-t1.0-n5                     MCC=0.802  t=1
    20. pv-high-image-t1.0-n10                   MCC=0.800  t=1
-   21. pv-high-image-t0.7-n10                   MCC=0.796  t=1
-   22. session-78-text-comparative              MCC=0.793  t=1
-   23. session-78-image-adversarial-text        MCC=0.793  t=1
+   21. session-78-image-adversarial-text        MCC=0.797  t=1
+   22. pv-high-image-t0.7-n10                   MCC=0.796  t=1
+   23. session-78-text-comparative              MCC=0.793  t=1
    24. session-78-text-adversarial              MCC=0.793  t=1
    25. pv-high-text-t1.0-n10                    MCC=0.790  t=1
    26. pv-flash-high-text-16of30                MCC=0.789  t=1

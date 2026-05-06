@@ -1,6 +1,6 @@
 # Per-architecture x per-era tier leaderboards
 
-**Generated**: 2026-04-26 (Session 79 redesign)
+**Generated**: 2026-05-06 (Session 79 redesign)
 **Scope**: 12-stratum matrix (3 eras x 4 architectures)
 
 ## Overview
@@ -50,7 +50,7 @@ MCC tiers are identical across buffers by methodology — the tile-level MCC per
 
 **Headline F1 tier-stability summary** (across the 7 populated strata x 4 non-primary buffers; 22/28 buffer comparisons yielded a defined Spearman rho):
 
-- Median Spearman rho: **+0.956**
+- Median Spearman rho: **+0.969**
 - Range: +0.909 (`era2/single-pass` vs 30_vs_20) to +1.000 (`era1/single-pass` vs 30_vs_20)
 - Strata with the largest cross-buffer F1 tier reorganisation (lowest per-stratum median rho): `era2/single-pass` (median rho = +0.909), `era1/consensus` (median rho = +0.944). (6 of 28 buffer comparisons returned undefined rho — one or both rank vectors had all ties; see the per-stratum tables.)
 
@@ -112,7 +112,6 @@ Within each Era, proposer-config tuples (model, config_version, instruction_file
 
 ## See also
 
-- **Combined / cross-architecture tier tables**: `../combined/` — same per-buffer F1 + MCC + q=0.05/0.01 sensitivity machinery, but pooled across all architectures within each Era so a single Era-wide tier table identifies the overall best conditions regardless of architecture. Complements (does not replace) the within-architecture stratified tables in this directory.
 - `planning/leaderboard-construction-plan.md` -- methodology rationale and the 2026-04-25 redesign addendum
 - `docs/methodology/mcc-permutation-validation-2026-04-25.md` -- proof that the MCC null distribution is valid
 - `docs/methodology/data-reproduction-2026-04-25.md` -- Session 78 shared-crops re-derivation provenance (prerequisite for the Era 2 PV stratum)

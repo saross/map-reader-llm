@@ -1,6 +1,6 @@
 # Per-stratum leaderboard — Era 1 single-pass
 
-**Generated**: 2026-04-26 (Session 79 redesign)
+**Generated**: 2026-05-06 (Session 79 redesign)
 **Era**: 1 (340 tiles, 512 px, full Era-1 evaluation bounds)
 **Architecture**: single-pass — One stochastic detection pass per tile (K=1). No consensus, no verifier.
 **Conditions**: 21
@@ -50,17 +50,17 @@
 
 | # | Condition | F1 [95% CI] | MCC |
 |--:|:---|:---|---:|
-| 1 | `h4-canonical-last` | 0.631 [0.587, 0.672] | +0.212 |
-| 2 | `h8-track2-text-scale-4` | 0.609 [0.553, 0.659] | +0.000 |
-| 3 | `h8-track2-text-scale-8` | 0.607 [0.548, 0.656] | +0.000 |
+| 1 | `h4-canonical-last` | 0.631 [0.609, 0.657] | +0.214 |
+| 2 | `h8-track2-text-scale-4` | 0.609 [0.577, 0.641] | +0.000 |
+| 3 | `h8-track2-text-scale-8` | 0.607 [0.574, 0.638] | +0.000 |
 
 ## Top-3 by MCC (Tier 1)
 
 | # | Condition | MCC | F1@20 m |
 |--:|:---|---:|---:|
-| 1 | `h5-track1-image-verbose` | +0.281 | 0.603 |
-| 2 | `h5-track1-image-terse` | +0.223 | 0.605 |
-| 3 | `h4-config-default` | +0.214 | 0.606 |
+| 1 | `h5-track1-image-verbose` | +0.282 | 0.603 |
+| 2 | `h5-track1-image-terse` | +0.224 | 0.605 |
+| 3 | `h4-config-default` | +0.216 | 0.606 |
 
 ## See also
 

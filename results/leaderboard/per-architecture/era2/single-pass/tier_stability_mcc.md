@@ -29,6 +29,6 @@ Note: ties (all conditions in one tier) make Spearman's rho undefined; the rho c
 | `h11-pvd-pro-medium-image-baseline` | 0.734 | 1 | 1 | 1 | 1 | 1 | stable |
 | `h11-n1-pro-image-medium-t07` | 0.597 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h11-pvd-image-baseline` | 0.311 | 3 | 3 | 3 | 3 | 3 | stable |
-| `h11-n1-pro-text-medium-t07` | 0.309 | 3 | 3 | 3 | 3 | 3 | stable |
+| `h11-n1-pro-text-medium-t07` | 0.310 | 3 | 3 | 3 | 3 | 3 | stable |
 | `h11-pvd-text-baseline` | -0.001 | 4 | 4 | 4 | 4 | 4 | stable |
 

@@ -1,18 +1,14 @@
-2026-04-25 14:40:52,290 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git ad38ffbd
-2026-04-25 14:40:52,292 - INFO - __main__ - Resolved 14 conditions from inventory (era=3, track=None)
-2026-04-25 14:40:52,292 - INFO - __main__ - Resolved 14 conditions
-2026-04-25 14:40:52,292 - INFO - __main__ - Skipping evaluation (--skip-evaluation)
-2026-04-25 14:40:52,299 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 14 conditions
-2026-04-25 14:40:52,299 - INFO - __main__ - Selected 14 conditions (best F1=0.733 at 20m)
-2026-04-25 14:40:52,299 - INFO - __main__ - Skipping pairwise (--skip-pairwise)
-2026-04-25 14:40:52,302 - INFO - __main__ - FDR: 1/91 pairs significant at q=0.01 → 2 tiers
-2026-04-25 14:40:52,302 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era3/consensus/leaderboard_tiers_mcc_q01_20m.md
-2026-04-25 14:40:52,302 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era3/consensus/leaderboard_tiers_mcc_q01_30m.md
-2026-04-25 14:40:52,302 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era3/consensus/leaderboard_tiers_mcc_q01_40m.md
-2026-04-25 14:40:52,302 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era3/consensus/leaderboard_tiers_mcc_q01_50m.md
-2026-04-25 14:40:52,302 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era3/consensus/leaderboard_tiers_mcc_q01_100m.md
-2026-04-25 14:40:52,305 - INFO - __main__ - JSON leaderboard written to results/leaderboard/per-architecture/era3/consensus/leaderboard_tiers_mcc_q01_20m.json
-2026-04-25 14:40:52,309 - INFO - __main__ - All evaluations written to results/leaderboard/per-architecture/era3/consensus/leaderboard_all_evaluations.json
+2026-05-06 11:01:29,960 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git 64974ec5
+2026-05-06 11:01:29,962 - INFO - __main__ - Resolved 14 conditions from inventory (era=3, track=None)
+2026-05-06 11:01:29,962 - INFO - __main__ - Resolved 14 conditions
+2026-05-06 11:01:29,962 - INFO - __main__ - Skipping evaluation (--skip-evaluation)
+2026-05-06 11:01:29,970 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 14 conditions
+2026-05-06 11:01:29,970 - INFO - __main__ - Selected 14 conditions (best F1=0.733 at 20m)
+2026-05-06 11:01:29,970 - INFO - __main__ - Skipping pairwise (--skip-pairwise)
+2026-05-06 11:01:29,972 - INFO - __main__ - FDR: 1/91 pairs significant at q=0.01 → 2 tiers
+2026-05-06 11:01:29,972 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era3/consensus/leaderboard_tiers_mcc_q01_20m.md
+2026-05-06 11:01:29,977 - INFO - __main__ - JSON leaderboard written to results/leaderboard/per-architecture/era3/consensus/leaderboard_tiers_mcc_q01_20m.json
+2026-05-06 11:01:29,983 - INFO - __main__ - All evaluations written to results/leaderboard/per-architecture/era3/consensus/leaderboard_all_evaluations.json
 
 ========================================================================
 LEADERBOARD TIERS (MCC, 20m buffer)
@@ -30,7 +26,7 @@ Tier 1 (MCC: 0.640–0.772, 13 conditions)
     9. h12v2-r2-balanced                        MCC=0.718  t=4
    10. h10v2-pool_080_hp4hn4                    MCC=0.691  t=3
    11. h10v2-pool_020_hp4hn4                    MCC=0.686  t=3
-   12. h8v2-canonical                           MCC=0.680  t=4
+   12. h8v2-canonical                           MCC=0.681  t=4
    13. h10v2-pool_040_hp4hn4                    MCC=0.640  t=3
 
 Tier 2 (MCC: 0.599–0.599, 1 conditions)

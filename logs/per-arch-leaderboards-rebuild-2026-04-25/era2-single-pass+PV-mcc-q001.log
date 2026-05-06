@@ -1,18 +1,14 @@
-2026-04-25 14:31:11,613 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git ad38ffbd
-2026-04-25 14:31:11,613 - INFO - __main__ - Resolved 8 conditions from inventory (era=2, track=None)
-2026-04-25 14:31:11,613 - INFO - __main__ - Resolved 8 conditions
-2026-04-25 14:31:11,614 - INFO - __main__ - Skipping evaluation (--skip-evaluation)
-2026-04-25 14:31:11,615 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 8 conditions
-2026-04-25 14:31:11,615 - INFO - __main__ - Selected 8 conditions (best F1=0.504 at 20m)
-2026-04-25 14:31:11,615 - INFO - __main__ - Skipping pairwise (--skip-pairwise)
-2026-04-25 14:31:11,615 - INFO - __main__ - FDR: 5/28 pairs significant at q=0.01 → 2 tiers
-2026-04-25 14:31:11,615 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/single-pass+PV/leaderboard_tiers_mcc_q01_20m.md
-2026-04-25 14:31:11,616 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/single-pass+PV/leaderboard_tiers_mcc_q01_30m.md
-2026-04-25 14:31:11,616 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/single-pass+PV/leaderboard_tiers_mcc_q01_40m.md
-2026-04-25 14:31:11,616 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/single-pass+PV/leaderboard_tiers_mcc_q01_50m.md
-2026-04-25 14:31:11,616 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/single-pass+PV/leaderboard_tiers_mcc_q01_100m.md
-2026-04-25 14:31:11,618 - INFO - __main__ - JSON leaderboard written to results/leaderboard/per-architecture/era2/single-pass+PV/leaderboard_tiers_mcc_q01_20m.json
-2026-04-25 14:31:11,619 - INFO - __main__ - All evaluations written to results/leaderboard/per-architecture/era2/single-pass+PV/leaderboard_all_evaluations.json
+2026-05-06 10:59:47,873 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git a8f4b7f8
+2026-05-06 10:59:47,874 - INFO - __main__ - Resolved 8 conditions from inventory (era=2, track=None)
+2026-05-06 10:59:47,874 - INFO - __main__ - Resolved 8 conditions
+2026-05-06 10:59:47,874 - INFO - __main__ - Skipping evaluation (--skip-evaluation)
+2026-05-06 10:59:47,875 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 8 conditions
+2026-05-06 10:59:47,875 - INFO - __main__ - Selected 8 conditions (best F1=0.504 at 20m)
+2026-05-06 10:59:47,875 - INFO - __main__ - Skipping pairwise (--skip-pairwise)
+2026-05-06 10:59:47,876 - INFO - __main__ - FDR: 5/28 pairs significant at q=0.01 → 2 tiers
+2026-05-06 10:59:47,876 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/single-pass+PV/leaderboard_tiers_mcc_q01_20m.md
+2026-05-06 10:59:47,879 - INFO - __main__ - JSON leaderboard written to results/leaderboard/per-architecture/era2/single-pass+PV/leaderboard_tiers_mcc_q01_20m.json
+2026-05-06 10:59:47,881 - INFO - __main__ - All evaluations written to results/leaderboard/per-architecture/era2/single-pass+PV/leaderboard_all_evaluations.json
 
 ========================================================================
 LEADERBOARD TIERS (MCC, 20m buffer)
@@ -20,14 +16,14 @@ LEADERBOARD TIERS (MCC, 20m buffer)
 
 Tier 1 (MCC: 0.388–0.432, 6 conditions)
     1. pv-cascade-adversarial-checklist         MCC=0.432  t=1
-    2. pv-adversarial-text                      MCC=0.431  t=1
+    2. pv-adversarial-text                      MCC=0.432  t=1
     3. pv-adversarial-image                     MCC=0.416  t=1
-    4. pv-cascade-checklist-adversarial         MCC=0.412  t=1
-    5. pv-brief-text                            MCC=0.396  t=1
+    4. pv-cascade-checklist-adversarial         MCC=0.413  t=1
+    5. pv-brief-text                            MCC=0.397  t=1
     6. pv-checklist-image                       MCC=0.388  t=1
 
-Tier 2 (MCC: 0.315–0.340, 2 conditions)
-    7. pv-brief-image                           MCC=0.340  t=1
+Tier 2 (MCC: 0.315–0.341, 2 conditions)
+    7. pv-brief-image                           MCC=0.341  t=1
     8. pv-checklist-text                        MCC=0.315  t=1
 
 ========================================================================

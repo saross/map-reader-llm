@@ -25,24 +25,24 @@ Note: ties (all conditions in one tier) make Spearman's rho undefined; the rho c
 
 | condition | MCC@20m | tier@20m | tier@30m | tier@40m | tier@50m | tier@100m | spearman vs 20m |
 |:---|---:| ---: | ---: | ---: | ---: | ---: |---:|
-| `h5-track1-image-verbose` | 0.281 | 1 | 1 | 1 | 1 | 1 | stable |
-| `h5-track1-image-terse` | 0.223 | 1 | 1 | 1 | 1 | 1 | stable |
-| `h4-config-default` | 0.214 | 1 | 1 | 1 | 1 | 1 | stable |
-| `h4-canonical-last` | 0.212 | 1 | 1 | 1 | 1 | 1 | stable |
-| `h8-track1-image-exploratory-pure-positive-4hp` | 0.162 | 2 | 2 | 2 | 2 | 2 | stable |
-| `h8-track1-image-scale-8` | 0.147 | 2 | 2 | 2 | 2 | 2 | stable |
-| `h8-track1-image-scale-4` | 0.133 | 2 | 2 | 2 | 2 | 2 | stable |
-| `h4-canonical-first` | 0.098 | 2 | 2 | 2 | 2 | 2 | stable |
-| `h8-track1-image-plus-hp` | 0.098 | 2 | 2 | 2 | 2 | 2 | stable |
-| `h8-track1-image-canonical` | 0.098 | 2 | 2 | 2 | 2 | 2 | stable |
-| `h8-track1-image-exploratory-pure-positive-canon` | 0.097 | 2 | 2 | 2 | 2 | 2 | stable |
-| `h8-track1-image-pure-positive-canon` | 0.097 | 2 | 2 | 2 | 2 | 2 | stable |
-| `h4-random` | 0.084 | 2 | 2 | 2 | 2 | 2 | stable |
-| `h5-track2-text-verbose` | 0.081 | 2 | 2 | 2 | 2 | 2 | stable |
+| `h5-track1-image-verbose` | 0.282 | 1 | 1 | 1 | 1 | 1 | stable |
+| `h5-track1-image-terse` | 0.224 | 1 | 1 | 1 | 1 | 1 | stable |
+| `h4-config-default` | 0.216 | 1 | 1 | 1 | 1 | 1 | stable |
+| `h4-canonical-last` | 0.214 | 1 | 1 | 1 | 1 | 1 | stable |
+| `h8-track1-image-exploratory-pure-positive-4hp` | 0.164 | 2 | 2 | 2 | 2 | 2 | stable |
+| `h8-track1-image-scale-8` | 0.149 | 2 | 2 | 2 | 2 | 2 | stable |
+| `h8-track1-image-scale-4` | 0.134 | 2 | 2 | 2 | 2 | 2 | stable |
+| `h4-canonical-first` | 0.093 | 2 | 2 | 2 | 2 | 2 | stable |
+| `h8-track1-image-plus-hp` | 0.093 | 2 | 2 | 2 | 2 | 2 | stable |
+| `h8-track1-image-canonical` | 0.092 | 2 | 2 | 2 | 2 | 2 | stable |
+| `h8-track1-image-exploratory-pure-positive-canon` | 0.091 | 2 | 2 | 2 | 2 | 2 | stable |
+| `h8-track1-image-pure-positive-canon` | 0.091 | 2 | 2 | 2 | 2 | 2 | stable |
+| `h4-random` | 0.065 | 2 | 2 | 2 | 2 | 2 | stable |
+| `h5-track2-text-verbose` | 0.062 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h8-track2-text-pure-positive-canon` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
-| `h8-track2-text-scale-8` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
-| `h8-track2-text-scale-4` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h8-track1-image-exploratory-pure-positive-2hp` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
+| `h8-track2-text-scale-4` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
+| `h8-track2-text-scale-8` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h8-track2-text-canonical` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h5-track2-text-terse` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h8-track2-text-plus-hp` | 0.000 | 2 | 2 | 2 | 2 | 2 | stable |

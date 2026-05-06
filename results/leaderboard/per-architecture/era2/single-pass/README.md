@@ -1,6 +1,6 @@
 # Per-stratum leaderboard — Era 2 single-pass
 
-**Generated**: 2026-04-26 (Session 79 redesign)
+**Generated**: 2026-05-06 (Session 79 redesign)
 **Era**: 2 (487 tiles, 384 px, full Era-2 evaluation bounds)
 **Architecture**: single-pass — One stochastic detection pass per tile (K=1). No consensus, no verifier.
 **Conditions**: 6
@@ -50,7 +50,7 @@
 
 | # | Condition | F1 [95% CI] | MCC |
 |--:|:---|:---|---:|
-| 1 | `h11-pvd-pro-medium-text-baseline` | 0.763 [0.713, 0.806] | +0.752 |
+| 1 | `h11-pvd-pro-medium-text-baseline` | 0.763 [0.732, 0.797] | +0.752 |
 
 ## Top-3 by MCC (Tier 1)
 

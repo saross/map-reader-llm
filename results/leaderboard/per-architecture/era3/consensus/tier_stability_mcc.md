@@ -32,11 +32,11 @@ Note: ties (all conditions in one tier) make Spearman's rho undefined; the rho c
 | `h8v2-scale-16` | 0.726 | 1 | 1 | 1 | 1 | 1 | stable |
 | `h12v2-r1-hn-heavy` | 0.725 | 1 | 1 | 1 | 1 | 1 | stable |
 | `h8v2-scale-32` | 0.718 | 1 | 1 | 1 | 1 | 1 | stable |
-| `h10v2-pool_160_hp4hn4` | 0.718 | 1 | 1 | 1 | 1 | 1 | stable |
 | `h12v2-r2-balanced` | 0.718 | 1 | 1 | 1 | 1 | 1 | stable |
+| `h10v2-pool_160_hp4hn4` | 0.718 | 1 | 1 | 1 | 1 | 1 | stable |
 | `h10v2-pool_080_hp4hn4` | 0.691 | 1 | 1 | 1 | 1 | 1 | stable |
 | `h10v2-pool_020_hp4hn4` | 0.686 | 1 | 1 | 1 | 1 | 1 | stable |
-| `h8v2-canonical` | 0.680 | 1 | 1 | 1 | 1 | 1 | stable |
+| `h8v2-canonical` | 0.681 | 1 | 1 | 1 | 1 | 1 | stable |
 | `h10v2-pool_040_hp4hn4` | 0.640 | 2 | 2 | 2 | 2 | 2 | stable |
 | `h8v2-pure-positive-canon` | 0.599 | 2 | 2 | 2 | 2 | 2 | stable |
 

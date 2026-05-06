@@ -1,6 +1,6 @@
 # Per-stratum leaderboard — Era 2 single-pass+PV
 
-**Generated**: 2026-04-26 (Session 79 redesign)
+**Generated**: 2026-05-06 (Session 79 redesign)
 **Era**: 2 (487 tiles, 384 px, full Era-2 evaluation bounds)
 **Architecture**: single-pass+PV — One detection pass + one verifier pass. The detection GeoJSON is post-thresholded by the verifier's binary cut.
 **Conditions**: 8
@@ -50,16 +50,16 @@
 
 | # | Condition | F1 [95% CI] | MCC |
 |--:|:---|:---|---:|
-| 1 | `pv-checklist-image` | 0.531 [0.444, 0.597] | +0.388 |
-| 2 | `pv-checklist-text` | 0.521 [0.434, 0.588] | +0.315 |
-| 3 | `pv-brief-image` | 0.520 [0.438, 0.589] | +0.340 |
+| 1 | `pv-checklist-image` | 0.531 [0.473, 0.580] | +0.388 |
+| 2 | `pv-checklist-text` | 0.521 [0.463, 0.569] | +0.315 |
+| 3 | `pv-brief-image` | 0.520 [0.463, 0.569] | +0.341 |
 
 ## Top-3 by MCC (Tier 1)
 
 | # | Condition | MCC | F1@20 m |
 |--:|:---|---:|---:|
 | 1 | `pv-cascade-adversarial-checklist` | +0.432 | 0.504 |
-| 2 | `pv-adversarial-text` | +0.431 | 0.471 |
+| 2 | `pv-adversarial-text` | +0.432 | 0.471 |
 | 3 | `pv-adversarial-image` | +0.416 | 0.494 |
 
 ## See also

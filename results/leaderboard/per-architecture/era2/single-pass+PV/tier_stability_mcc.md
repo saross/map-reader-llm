@@ -26,11 +26,11 @@ Note: ties (all conditions in one tier) make Spearman's rho undefined; the rho c
 | condition | MCC@20m | tier@20m | tier@30m | tier@40m | tier@50m | tier@100m | spearman vs 20m |
 |:---|---:| ---: | ---: | ---: | ---: | ---: |---:|
 | `pv-cascade-adversarial-checklist` | 0.432 | 1 | 1 | 1 | 1 | 1 | stable |
-| `pv-adversarial-text` | 0.431 | 1 | 1 | 1 | 1 | 1 | stable |
+| `pv-adversarial-text` | 0.432 | 1 | 1 | 1 | 1 | 1 | stable |
 | `pv-adversarial-image` | 0.416 | 1 | 1 | 1 | 1 | 1 | stable |
-| `pv-cascade-checklist-adversarial` | 0.412 | 1 | 1 | 1 | 1 | 1 | stable |
-| `pv-brief-text` | 0.396 | 1 | 1 | 1 | 1 | 1 | stable |
+| `pv-cascade-checklist-adversarial` | 0.413 | 1 | 1 | 1 | 1 | 1 | stable |
+| `pv-brief-text` | 0.397 | 1 | 1 | 1 | 1 | 1 | stable |
 | `pv-checklist-image` | 0.388 | 1 | 1 | 1 | 1 | 1 | stable |
-| `pv-brief-image` | 0.340 | 2 | 2 | 2 | 2 | 2 | stable |
+| `pv-brief-image` | 0.341 | 2 | 2 | 2 | 2 | 2 | stable |
 | `pv-checklist-text` | 0.315 | 2 | 2 | 2 | 2 | 2 | stable |
 

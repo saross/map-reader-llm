@@ -1,18 +1,14 @@
-2026-04-25 14:12:19,920 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git ad38ffbd
-2026-04-25 14:12:19,921 - INFO - __main__ - Resolved 6 conditions from inventory (era=2, track=None)
-2026-04-25 14:12:19,921 - INFO - __main__ - Resolved 6 conditions
-2026-04-25 14:12:19,921 - INFO - __main__ - Skipping evaluation (--skip-evaluation)
-2026-04-25 14:12:19,922 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 6 conditions
-2026-04-25 14:12:19,922 - INFO - __main__ - Selected 6 conditions (best F1=0.763 at 20m)
-2026-04-25 14:12:19,922 - INFO - __main__ - Skipping pairwise (--skip-pairwise)
-2026-04-25 14:12:19,923 - INFO - __main__ - FDR: 13/15 pairs significant at q=0.01 → 4 tiers
-2026-04-25 14:12:19,923 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/single-pass/leaderboard_tiers_mcc_q01_20m.md
-2026-04-25 14:12:19,923 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/single-pass/leaderboard_tiers_mcc_q01_30m.md
-2026-04-25 14:12:19,923 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/single-pass/leaderboard_tiers_mcc_q01_40m.md
-2026-04-25 14:12:19,923 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/single-pass/leaderboard_tiers_mcc_q01_50m.md
-2026-04-25 14:12:19,923 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/single-pass/leaderboard_tiers_mcc_q01_100m.md
-2026-04-25 14:12:19,925 - INFO - __main__ - JSON leaderboard written to results/leaderboard/per-architecture/era2/single-pass/leaderboard_tiers_mcc_q01_20m.json
-2026-04-25 14:12:19,926 - INFO - __main__ - All evaluations written to results/leaderboard/per-architecture/era2/single-pass/leaderboard_all_evaluations.json
+2026-05-06 10:58:59,747 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git a8f4b7f8
+2026-05-06 10:58:59,748 - INFO - __main__ - Resolved 6 conditions from inventory (era=2, track=None)
+2026-05-06 10:58:59,748 - INFO - __main__ - Resolved 6 conditions
+2026-05-06 10:58:59,748 - INFO - __main__ - Skipping evaluation (--skip-evaluation)
+2026-05-06 10:58:59,749 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 6 conditions
+2026-05-06 10:58:59,749 - INFO - __main__ - Selected 6 conditions (best F1=0.763 at 20m)
+2026-05-06 10:58:59,749 - INFO - __main__ - Skipping pairwise (--skip-pairwise)
+2026-05-06 10:58:59,749 - INFO - __main__ - FDR: 13/15 pairs significant at q=0.01 → 4 tiers
+2026-05-06 10:58:59,749 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era2/single-pass/leaderboard_tiers_mcc_q01_20m.md
+2026-05-06 10:58:59,753 - INFO - __main__ - JSON leaderboard written to results/leaderboard/per-architecture/era2/single-pass/leaderboard_tiers_mcc_q01_20m.json
+2026-05-06 10:58:59,754 - INFO - __main__ - All evaluations written to results/leaderboard/per-architecture/era2/single-pass/leaderboard_all_evaluations.json
 
 ========================================================================
 LEADERBOARD TIERS (MCC, 20m buffer)
@@ -25,9 +21,9 @@ Tier 1 (MCC: 0.734–0.752, 2 conditions)
 Tier 2 (MCC: 0.597–0.597, 1 conditions)
     3. h11-n1-pro-image-medium-t07              MCC=0.597  t=1
 
-Tier 3 (MCC: 0.309–0.311, 2 conditions)
+Tier 3 (MCC: 0.310–0.311, 2 conditions)
     4. h11-pvd-image-baseline                   MCC=0.311  t=1
-    5. h11-n1-pro-text-medium-t07               MCC=0.309  t=1
+    5. h11-n1-pro-text-medium-t07               MCC=0.310  t=1
 
 Tier 4 (MCC: -0.001–-0.001, 1 conditions)
     6. h11-pvd-text-baseline                    MCC=-0.001  t=1

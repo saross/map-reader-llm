@@ -9,8 +9,8 @@ Each row shows the best Tier-1 representative of one architecture within Era. Th
 
 | Architecture | Best condition | MCC | F1 95% CI (at 20 m) | Tier (within stratum) | K | t | Track |
 |:---|:---|---:|:---:|---:|---:|---:|:---|
-| single-pass | `h11-pvd-pro-medium-text-baseline` | +0.752 | [0.713, 0.806] | 1 | 1 | 1 | text |
-| consensus | `h11-pvd-pro-high-image-n5` | +0.761 | [0.653, 0.741] | 1 | 5 | 3 | image |
-| single-pass+PV | `pv-cascade-adversarial-checklist` | +0.432 | [0.420, 0.574] | 1 | 1 | 1 | text |
-| pv | `pv-min-image-t0.3-n5` | +0.841 | [0.735, 0.810] | 1 | 5 | 1 | image |
+| single-pass | `h11-pvd-pro-medium-text-baseline` | +0.752 | [0.732, 0.797] | 1 | 1 | 1 | text |
+| consensus | `h11-pvd-pro-high-image-n5` | +0.761 | [0.667, 0.732] | 1 | 5 | 3 | image |
+| single-pass+PV | `pv-cascade-adversarial-checklist` | +0.432 | [0.446, 0.549] | 1 | 1 | 1 | text |
+| pv | `pv-min-image-t0.3-n5` | +0.841 | [0.750, 0.803] | 1 | 5 | 1 | image |
 

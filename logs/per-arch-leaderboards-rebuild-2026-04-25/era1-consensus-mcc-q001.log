@@ -1,18 +1,14 @@
-2026-04-25 14:11:43,334 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git ad38ffbd
-2026-04-25 14:11:43,342 - INFO - __main__ - Resolved 72 conditions from inventory (era=1, track=None)
-2026-04-25 14:11:43,342 - INFO - __main__ - Resolved 72 conditions
-2026-04-25 14:11:43,342 - INFO - __main__ - Skipping evaluation (--skip-evaluation)
-2026-04-25 14:11:43,406 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 72 conditions
-2026-04-25 14:11:43,406 - INFO - __main__ - Selected 72 conditions (best F1=0.632 at 20m)
-2026-04-25 14:11:43,406 - INFO - __main__ - Skipping pairwise (--skip-pairwise)
-2026-04-25 14:11:43,461 - INFO - __main__ - FDR: 1475/2556 pairs significant at q=0.01 → 5 tiers
-2026-04-25 14:11:43,461 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era1/consensus/leaderboard_tiers_mcc_q01_20m.md
-2026-04-25 14:11:43,462 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era1/consensus/leaderboard_tiers_mcc_q01_30m.md
-2026-04-25 14:11:43,462 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era1/consensus/leaderboard_tiers_mcc_q01_40m.md
-2026-04-25 14:11:43,462 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era1/consensus/leaderboard_tiers_mcc_q01_50m.md
-2026-04-25 14:11:43,462 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era1/consensus/leaderboard_tiers_mcc_q01_100m.md
-2026-04-25 14:11:43,481 - INFO - __main__ - JSON leaderboard written to results/leaderboard/per-architecture/era1/consensus/leaderboard_tiers_mcc_q01_20m.json
-2026-04-25 14:11:43,512 - INFO - __main__ - All evaluations written to results/leaderboard/per-architecture/era1/consensus/leaderboard_all_evaluations.json
+2026-05-06 10:58:55,465 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git a8f4b7f8
+2026-05-06 10:58:55,471 - INFO - __main__ - Resolved 72 conditions from inventory (era=1, track=None)
+2026-05-06 10:58:55,471 - INFO - __main__ - Resolved 72 conditions
+2026-05-06 10:58:55,471 - INFO - __main__ - Skipping evaluation (--skip-evaluation)
+2026-05-06 10:58:55,526 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 72 conditions
+2026-05-06 10:58:55,526 - INFO - __main__ - Selected 72 conditions (best F1=0.632 at 20m)
+2026-05-06 10:58:55,527 - INFO - __main__ - Skipping pairwise (--skip-pairwise)
+2026-05-06 10:58:55,569 - INFO - __main__ - FDR: 1475/2556 pairs significant at q=0.01 → 5 tiers
+2026-05-06 10:58:55,569 - INFO - __main__ - Markdown leaderboard written to results/leaderboard/per-architecture/era1/consensus/leaderboard_tiers_mcc_q01_20m.md
+2026-05-06 10:58:55,590 - INFO - __main__ - JSON leaderboard written to results/leaderboard/per-architecture/era1/consensus/leaderboard_tiers_mcc_q01_20m.json
+2026-05-06 10:58:55,645 - INFO - __main__ - All evaluations written to results/leaderboard/per-architecture/era1/consensus/leaderboard_all_evaluations.json
 
 ========================================================================
 LEADERBOARD TIERS (MCC, 20m buffer)
@@ -50,18 +46,18 @@ Tier 2 (MCC: 0.469–0.580, 13 conditions)
    27. h3-high-track2-text-T0.3                 MCC=0.576  t=23
    28. h3-high-track2-text-T0.7                 MCC=0.571  t=22
    29. h3-rep-high                              MCC=0.545  t=21
-   30. h9-track2-text-h9-A-p1                   MCC=0.501  t=4
-   31. h9-track2-text-h9-B-v3                   MCC=0.499  t=4
+   30. h9-track2-text-h9-A-p1                   MCC=0.502  t=4
+   31. h9-track2-text-h9-B-v3                   MCC=0.500  t=4
    32. h9-track2-text-h9-A-p4                   MCC=0.495  t=4
-   33. h9-track2-text-h9-A-p2                   MCC=0.487  t=4
+   33. h9-track2-text-h9-A-p2                   MCC=0.488  t=4
    34. h9-track2-text-h9-D-t1                   MCC=0.476  t=4
    35. h3-track1-image-T1.0                     MCC=0.475  t=19
    36. h9-track2-text-h9-E-p1                   MCC=0.475  t=5
    37. h9-track2-text-h9-D-t2                   MCC=0.473  t=4
    38. h9-track2-text-h9-E-p3                   MCC=0.469  t=4
 
-Tier 3 (MCC: 0.312–0.444, 19 conditions)
-   39. h9-track2-text-h9-D-t3                   MCC=0.444  t=4
+Tier 3 (MCC: 0.312–0.445, 19 conditions)
+   39. h9-track2-text-h9-D-t3                   MCC=0.445  t=4
    40. h3-track1-image-T0.7                     MCC=0.443  t=18
    41. h9-track2-text-h9-A-p5                   MCC=0.440  t=4
    42. h9-track2-text-h9-D-t5                   MCC=0.440  t=4
@@ -77,11 +73,11 @@ Tier 3 (MCC: 0.312–0.444, 19 conditions)
    52. h7-track2-text-T1.3                      MCC=0.379  t=3
    53. h7-track1-image-T1.3                     MCC=0.367  t=2
    54. h9-track2-text-h9-B-v4                   MCC=0.353  t=4
-   55. h7-track1-image-T1.0                     MCC=0.332  t=2
+   55. h7-track1-image-T1.0                     MCC=0.333  t=2
    56. h3-track2-text-T1.0                      MCC=0.331  t=22
    57. h3-rep-minimal                           MCC=0.312  t=25
 
-Tier 4 (MCC: 0.180–0.302, 12 conditions)
+Tier 4 (MCC: 0.181–0.302, 12 conditions)
    58. h1-brief-text-image                      MCC=0.302  t=2
    59. h7-track2-text-T1.0                      MCC=0.284  t=3
    60. h7-track2-text-T0.7                      MCC=0.283  t=3
@@ -91,9 +87,9 @@ Tier 4 (MCC: 0.180–0.302, 12 conditions)
    64. h1-brief-text                            MCC=0.258  t=3
    65. h1-image-only                            MCC=0.251  t=2
    66. h7-track1-image-T0.7                     MCC=0.229  t=2
-   67. h7-track2-text-T0.3                      MCC=0.214  t=3
+   67. h7-track2-text-T0.3                      MCC=0.215  t=3
    68. h1-verbose-text                          MCC=0.203  t=2
-   69. h3-track2-text-T0.3                      MCC=0.180  t=23
+   69. h3-track2-text-T0.3                      MCC=0.181  t=23
 
 Tier 5 (MCC: 0.088–0.118, 3 conditions)
    70. h7-track1-image-T0.0                     MCC=0.118  t=3

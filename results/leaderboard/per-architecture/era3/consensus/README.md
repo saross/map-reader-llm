@@ -1,6 +1,6 @@
 # Per-stratum leaderboard — Era 3 consensus
 
-**Generated**: 2026-04-26 (Session 79 redesign)
+**Generated**: 2026-05-06 (Session 79 redesign)
 **Era**: 3 (327 tiles, 384 px, h10 test bounds (subset of Era 2))
 **Architecture**: consensus — K stochastic passes + greedy-voting consensus at threshold vote_t. No verifier.
 **Conditions**: 14
@@ -50,9 +50,9 @@
 
 | # | Condition | F1 [95% CI] | MCC |
 |--:|:---|:---|---:|
-| 1 | `h8v2-scale-4` | 0.733 [0.680, 0.777] | +0.772 |
-| 2 | `h12v2-r1-hn-heavy` | 0.731 [0.682, 0.776] | +0.725 |
-| 3 | `h8v2-scale-8` | 0.730 [0.676, 0.776] | +0.739 |
+| 1 | `h8v2-scale-4` | 0.733 [0.699, 0.760] | +0.772 |
+| 2 | `h12v2-r1-hn-heavy` | 0.731 [0.700, 0.753] | +0.725 |
+| 3 | `h8v2-scale-8` | 0.730 [0.703, 0.757] | +0.739 |
 
 ## Top-3 by MCC (Tier 1)
 

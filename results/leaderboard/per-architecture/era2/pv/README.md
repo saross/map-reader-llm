@@ -1,6 +1,6 @@
 # Per-stratum leaderboard — Era 2 pv
 
-**Generated**: 2026-04-26 (Session 79 redesign)
+**Generated**: 2026-05-06 (Session 79 redesign)
 **Era**: 2 (487 tiles, 384 px, full Era-2 evaluation bounds)
 **Architecture**: pv — K passes + greedy consensus + verifier pass, materialised at the 20 m-optimal (vote_t, prob_t) pair per cell.
 **Conditions**: 44
@@ -50,9 +50,9 @@
 
 | # | Condition | F1 [95% CI] | MCC |
 |--:|:---|:---|---:|
-| 1 | `pv-flash-high-text-16of30` | 0.890 [0.863, 0.915] | +0.789 |
-| 2 | `pv-high-text-t0.3-n5` | 0.886 [0.856, 0.913] | +0.776 |
-| 3 | `session-78-text-comparative` | 0.885 [0.855, 0.912] | +0.793 |
+| 1 | `pv-flash-high-text-16of30` | 0.890 [0.874, 0.910] | +0.789 |
+| 2 | `pv-high-text-t0.3-n5` | 0.886 [0.868, 0.905] | +0.776 |
+| 3 | `session-78-text-comparative` | 0.885 [0.863, 0.904] | +0.793 |
 
 ## Top-3 by MCC (Tier 1)
 

@@ -16,10 +16,10 @@ Note: ties (all conditions in one tier) make Spearman's rho undefined; the rho c
 
 | vs buffer | Spearman rho | p-value |
 |---:|---:|---:|
-| 30 m | +0.9317 | 0.0000 |
-| 40 m | +0.9555 | 0.0000 |
-| 50 m | +0.9556 | 0.0000 |
-| 100 m | +0.9556 | 0.0000 |
+| 30 m | +0.9372 | 0.0000 |
+| 40 m | +0.9693 | 0.0000 |
+| 50 m | +0.9718 | 0.0000 |
+| 100 m | +0.9718 | 0.0000 |
 
 ## Per-condition tier assignments
 
@@ -40,33 +40,33 @@ Note: ties (all conditions in one tier) make Spearman's rho undefined; the rho c
 | `pv-high-text-t0.3-n10` | 0.872 | 2 | 2 | 2 | 2 | 2 | stable |
 | `pv-min-text-t1.0-n5` | 0.871 | 2 | 2 | 2 | 2 | 2 | stable |
 | `pv-min-text-t0.3-n10` | 0.868 | 2 | 2 | 2 | 2 | 2 | stable |
+| `session-78-text-checklist-text` | 0.864 | 2 | 3 | 2 | 2 | 2 | shift |
 | `pv-high-text-t0.7-n5` | 0.863 | 2 | 2 | 2 | 2 | 2 | stable |
 | `pv-min-text-t0.0-n3` | 0.862 | 2 | 3 | 2 | 2 | 2 | shift |
 | `pv-high-text-t1.0-n5` | 0.861 | 2 | 3 | 2 | 2 | 2 | shift |
-| `session-78-text-checklist-text` | 0.860 | 3 | 3 | 2 | 2 | 2 | shift |
-| `session-78-text-adversarial-text` | 0.858 | 3 | 3 | 2 | 2 | 2 | shift |
-| `session-78-text-brief-text` | 0.846 | 3 | 3 | 2 | 3 | 3 | shift |
+| `session-78-text-adversarial-text` | 0.860 | 3 | 3 | 2 | 2 | 2 | shift |
+| `session-78-text-brief-text` | 0.852 | 3 | 3 | 2 | 3 | 3 | shift |
 | `pv-high-text-t0.0-n3` | 0.823 | 3 | 3 | 3 | 3 | 3 | stable |
 | `pv-min-image-t0.7-n10` | 0.788 | 4 | 3 | 3 | 3 | 3 | shift |
 | `pv-high-image-t0.7-n5` | 0.787 | 4 | 3 | 3 | 3 | 3 | shift |
 | `session-78-image-adversarial` | 0.787 | 4 | 3 | 3 | 3 | 3 | shift |
 | `session-78-image-comparative` | 0.786 | 4 | 3 | 3 | 3 | 3 | shift |
+| `session-78-image-checklist-text` | 0.785 | 4 | 3 | 3 | 3 | 3 | shift |
 | `session-78-image-brief` | 0.784 | 4 | 3 | 3 | 3 | 3 | shift |
 | `session-78-image-checklist` | 0.783 | 4 | 3 | 3 | 3 | 3 | shift |
 | `pv-min-image-t0.3-n10` | 0.782 | 4 | 3 | 3 | 3 | 3 | shift |
-| `session-78-image-checklist-text` | 0.780 | 4 | 3 | 3 | 3 | 3 | shift |
+| `session-78-image-brief-text` | 0.778 | 4 | 4 | 4 | 5 | 5 | shift |
 | `pv-min-image-t0.3-n5` | 0.777 | 4 | 4 | 3 | 3 | 3 | shift |
 | `pv-high-image-t0.7-n10` | 0.776 | 4 | 4 | 4 | 4 | 4 | stable |
 | `pv-min-image-t0.7-n5` | 0.773 | 4 | 4 | 4 | 5 | 5 | shift |
-| `session-78-image-adversarial-text` | 0.772 | 4 | 4 | 4 | 5 | 5 | shift |
-| `pv-high-image-t0.3-n10` | 0.769 | 4 | 4 | 4 | 5 | 5 | shift |
-| `pv-scale4-optimal-n10` | 0.768 | 4 | 4 | 4 | 5 | 5 | shift |
-| `session-78-image-brief-text` | 0.768 | 5 | 4 | 4 | 5 | 5 | shift |
+| `session-78-image-adversarial-text` | 0.772 | 5 | 4 | 4 | 5 | 5 | shift |
+| `pv-high-image-t0.3-n10` | 0.769 | 5 | 4 | 4 | 5 | 5 | shift |
+| `pv-scale4-optimal-n10` | 0.768 | 5 | 4 | 4 | 5 | 5 | shift |
 | `pv-n1-image-t0-n3` | 0.767 | 5 | 4 | 4 | 5 | 5 | shift |
 | `pv-high-image-t1.0-n10` | 0.763 | 5 | 4 | 4 | 5 | 5 | shift |
 | `pv-scale4-optimal-n5` | 0.763 | 5 | 4 | 4 | 5 | 5 | shift |
-| `pv-high-image-t0.3-n5` | 0.746 | 5 | 4 | 5 | 6 | 6 | shift |
-| `pv-min-image-t1.0-n10` | 0.741 | 5 | 4 | 5 | 6 | 6 | shift |
-| `pv-min-image-t1.0-n5` | 0.738 | 5 | 5 | 5 | 6 | 6 | shift |
+| `pv-high-image-t0.3-n5` | 0.746 | 6 | 4 | 5 | 6 | 6 | shift |
+| `pv-min-image-t1.0-n10` | 0.741 | 6 | 4 | 5 | 6 | 6 | shift |
+| `pv-min-image-t1.0-n5` | 0.738 | 6 | 5 | 5 | 6 | 6 | shift |
 | `pv-high-image-t1.0-n5` | 0.734 | 6 | 5 | 5 | 6 | 6 | shift |
 

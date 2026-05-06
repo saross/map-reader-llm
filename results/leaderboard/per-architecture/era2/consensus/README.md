@@ -1,6 +1,6 @@
 # Per-stratum leaderboard — Era 2 consensus
 
-**Generated**: 2026-04-26 (Session 79 redesign)
+**Generated**: 2026-05-06 (Session 79 redesign)
 **Era**: 2 (487 tiles, 384 px, full Era-2 evaluation bounds)
 **Architecture**: consensus — K stochastic passes + greedy-voting consensus at threshold vote_t. No verifier.
 **Conditions**: 29
@@ -50,15 +50,15 @@
 
 | # | Condition | F1 [95% CI] | MCC |
 |--:|:---|:---|---:|
-| 1 | `h11-pvd-pro-high-text-n5` | 0.836 [0.797, 0.872] | +0.727 |
-| 2 | `h11-pvd-flash-high-text-n5` | 0.814 [0.778, 0.846] | +0.620 |
+| 1 | `h11-pvd-pro-high-text-n5` | 0.836 [0.810, 0.859] | +0.727 |
+| 2 | `h11-pvd-flash-high-text-n5` | 0.814 [0.792, 0.839] | +0.620 |
 
 ## Top-3 by MCC (Tier 1)
 
 | # | Condition | MCC | F1@20 m |
 |--:|:---|---:|---:|
 | 1 | `h11-pvd-pro-high-image-n5` | +0.761 | 0.700 |
-| 2 | `scale4-optimal-487` | +0.745 | 0.742 |
+| 2 | `scale4-optimal-487` | +0.746 | 0.742 |
 | 3 | `h11-pvd-pro-high-text-n5` | +0.727 | 0.836 |
 
 ## See also
