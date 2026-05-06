@@ -16466,3 +16466,104 @@ Search terms: Obs 323, Phase3a Tier-1 propagation closure, Session-78 6 cells ma
 - **`reports/phase3a-verifier-completeness-audit-2026-05-03.md`**: audit document; the Session-78 Tier-1 subset closed here is its highest-priority cluster.
 - **Commit chain (this Obs)**: `414ee8a4` (cleanup data, sapphire overnight), `b3ed509e` (materialise + calibration, sapphire), `baa271bf` (runner fix: add `--top-n 0` + `--seed 42`), `ef3ec4fe` (runbook fix: §§ 6.1 / 6.2), `08ae343f` (investigation report: wrong-driver traced to `03bf71c8`), `c067bca4` (per-arch rebuild, Steps 2–3, zbook), `a8f4b7f8` (combined Era-2 leaderboard + tier-stability, Steps 4–5, zbook).
 - **Artefacts**: `results/leaderboard/era2/pv-materialised/session-78-{image,text}-{adversarial,brief,checklist}-text.geojson` (6 GeoJSONs); `results/leaderboard/era2/pv-materialised/session-78-matrix-registry.json`; `results/verifier-calibration-matrix/{image,text}-{adversarial,brief,checklist}-text/calibration.json` (6 calibration files); `planning/session-78-matrix-calibration-summary.md`; `results/leaderboard/per-architecture/era2/leaderboard_tiers_f1_{20,30,40,50,100}m.json`; `results/leaderboard/combined/era2/leaderboard_tiers_f1_{20,30,40,50,100}m.json`; `results/leaderboard/combined/era2/tier-stability*.{md,json}`.
+
+## Observation 324: Phase3a Tier-2/3 closure — 3 skipped + 11 Tier-2/3 cells, $0.99 spend, 0 FAIL on tracked completeness audit (Session 87, 2026-05-06)
+
+### The finding
+
+**All 14 outstanding cells from the Phase3a verifier-completeness recovery campaign are now closed at gap=0. Combined with the Tier-1 closure (Obs 323), the campaign-wide arc is complete except for documented deferrals. A tracked, reproducible audit script (`scripts/audit_verifier_completeness.py`) verifies zero gaps across the active corpus.**
+
+**3 skipped cells from the original 2026-05-03 overnight campaign** (commits `1b2842d0` driver patch + `6683952a` cleanup + derivative regen):
+
+| Cell | Tier | Gap | Recovered | Cost |
+|:-----|:----:|----:|----------:|-----:|
+| `proposer-verifier-384-adversarial-text-v1-prompt` | 3 | 1 | 1 | $0.001 |
+| `55maps-gen-verified-v2` | 2 | 3 | 3 | $0.003 |
+| `e47-flash-high-text-1of5` | 1 | 57 | 57 | $0.08 |
+
+e47 5-of-5 derivatives regenerated via `derive_vote_threshold_results.py` — candidate counts: 1,654 / 1,072 / 753 / 487 for 2-of-5 / 3-of-5 / 4-of-5 / 5-of-5.
+
+**11 Tier-2/3 cells from the resume batch that never reached origin** (executor agent commits `b2bfc446`..`005e6c71`):
+
+| Cell | Tier | Gap | Cost |
+|:-----|:----:|----:|-----:|
+| `flash-high-text-1of5-flash-medium-verifier` | 3 | 1 | $0.001 |
+| `image-n5-t1.0-v1-n5` | 2 | 1 | $0.001 |
+| `image-n5-t0.7-v1-n5` | 2 | 1 | $0.002 |
+| `session78-image-checklist` | 2 | 1 | $0.005 |
+| `scale-4-optimal-487-v1-n10` | 2 | 1 | $0.001 |
+| `image-n5-t0.3-v1-n5` | 2 | 11 | $0.016 |
+| `h8v2-wbf-scale-4` | 1 | 15 | $0.022 |
+| `image-n5-t0.0-v1-n10` | 2 | 460 | $0.649 |
+| `text-baseline-pro-verifier` | 3 | 21 | $0.112 |
+| `pro-medium-image-baseline-pro-verifier` | 3 | 10 | $0.054 |
+| `pro-high-image-1of5-pro-verifier` | 3 | 8 | $0.041 |
+
+**Total Session 87 API spend: $0.99** (3 skipped: $0.084 + 11 Tier-2/3: $0.904; well under the $5 cap user-approved at session start).
+
+**Audit verdict** (`reports/verifier-completeness-audit-2026-05-06.json`): 211 `probabilities.json` files audited (post-exemption); **168 PASS, 0 FAIL, 43 REVIEW** (all REVIEW are flat-layout `pv-diag-384/verified/*` cells whose consensus inputs live outside the immediate parent — a future-audit-enhancement class, not a recovery loose end).
+
+**Era-2-pv leaderboard impact**: zero tier flips post-Tier-2/3 cleanup. Leaderboard composition remained 44 conditions / 6 tiers (sizes 8 / 11 / 3 / 12 / 6 / 4) — identical to the pre-Tier-2/3 state at commit `ca0567d3`. The recovery added precision without disrupting rankings.
+
+### The test
+
+Sequential closure across multiple sub-tasks:
+
+1. **e47 driver path-bug fix** (commit `1b2842d0`): the recovery driver's `recover_cell` invocation for `e47-flash-high-text-1of5` passed the same `verified/` path to both `--crops-dir` and `--verified-dir`, but `verified/` has no PNGs — canonical crops live at `crops/flash-high-text-1of5/crops/`. One-line fix.
+
+2. **3 skipped cells cleanup + e47 derivatives** (commit `6683952a`): cleanup ran sequentially Cell 3 → 2 → 1; all reached gap=0 in seconds. e47 5-of-5 derivatives regenerated immediately after.
+
+3. **Investigation report on the broader 11-cell bucket** (`planning/tier23-sapphire-state-investigation.md`, 706 lines): confirmed all 11 cells were sapphire-local-but-not-pushed and could be reconstructed on zbook via crop-regen + cleanup. The gap=460 cell (`image-n5-t0.0-v1-n10`) was explicitly verified to have zero downstream leaderboard impact before proceeding.
+
+4. **Executor agent — 11-cell crop-regen + cleanup + per-cell propagation** (commits `b2bfc446` / `ff475e81` / `6f8bc714` / `c6b5e6b1` / `49703010` / `005e6c71`): all 11 closed. Pro flex tier returned 503 Service Unavailable on essentially every call for the Tier-3 Pro cells; executor relaunched those three with `--service-tier standard` and succeeded.
+
+5. **Materialise-step gap caught** (4 affected pv cells): the executor initially materialised only `session78-image-checklist`; the other 4 affected era2/pv cells (`image-t0.3-n5`, `image-t0.7-n5`, `image-t1.0-n5`, `scale-4-optimal-n10`) also required `materialise_pv_geojson.py` invocations. Done; `pv-scale-4-optimal-n10` unchanged at 411 features (gap=1 candidate did not cross thresholds); the other three updated to 373 / 414 / 410 features.
+
+6. **Global redesign rebuild** (commit `d6cdb648`): `build_per_arch_redesign.sh` end-to-end. Zero tier flips; F1 q05 era2/pv composition byte-identical to pre-Tier-2/3 baseline modulo the 6 cleaned-cell ΔF1 already documented in Obs 323.
+
+7. **Audit infrastructure landed** (commits `79daf93e` initial + `38892df9` enhancements): `scripts/audit_verifier_completeness.py` + 32 tier-1 tests. Six manifest-location patterns + consensus-driven-cell fallback. Final audit run produced 168 / 0 / 43.
+
+8. **2 deprecated staging directories archived** (in commit `38892df9`): `outputs/55maps-generalisation/verified-cleanup/` (April-10, 26/8942, never ran through cleanup) → `archive/deprecated-staging/55maps-generalisation-verified-cleanup-20260410/`; `outputs/h11/e47-propose-brief/verified-v2-cleanup/` (April-23 pre-quarantine) → `archive/deprecated-staging/e47-propose-brief-verified-v2-cleanup-20260423/`.
+
+### Why this matters
+
+1. **Campaign closure is complete and verified.** Every cell from the original 30-cell verifier-completeness audit is either cleaned (gap=0) or explicitly archived as deprecated. The "no loose ends" goal is achieved within the cells the campaign was scoped to address.
+
+2. **Audit infrastructure is reproducible.** The 2026-05-03 ad-hoc audit script (`/tmp/verifier_audit.py`, no longer recoverable) is replaced by `scripts/audit_verifier_completeness.py` — tracked, tested (32 tier-1 tests), runnable at any time. Future "is anything missing?" questions are answered by running the script, not by ad-hoc enumeration.
+
+3. **Spend was cheap relative to original budget.** Session 87 spend $0.99 + Session 86 cleanup $0.905 = $1.89 total cleanup spend, against the campaign's original $1.84 expected and $10 hard cap. Pro-tier costs (3 cells, $0.21) were the dominant non-Flash component.
+
+4. **Leaderboard rankings are stable.** The combined 14-cell cleanup did not flip any era2/pv tier ranking. The campaign added precision — no missing candidates — without disrupting any paper-citation surface.
+
+5. **Detour-as-evidence** (worth recording as a research-process note): two unexpected findings during execution were absorbed without escalating spend or scope. The executor caught a Pro flex 503 issue and worked around it with `--service-tier standard` — worth flagging to update the project's flex-mode-default policy for Pro models (see Caveats). `compare_wbf_vs_greedy_production.py` was found broken by the pre-existing v2 quarantine at commit `3ec25e68` — pre-existing breakage, not introduced by this recovery; tracked as a follow-up.
+
+### Caveats / methodological notes
+
+**Tier-2/3 propagation completeness**: all 11 Tier-2/3 cells are now cleaned and propagated through per-architecture + combined Era-2 leaderboards. The execution path used `build_per_arch_redesign.sh` (the canonical multi-pass driver, NOT `run_per_arch_leaderboards.sh`, which had the wrong-driver bug fixed in `baa271bf` / `ef3ec4fe`). `build_combined_leaderboard.sh 2` and `build_combined_tier_stability.sh 2` ran as part of stage 3 of the redesign driver; combined Era-2 outputs are current.
+
+**Materialise-step gap is a project structural finding**: the cleanup → leaderboard chain has an obligatory `materialise_pv_geojson.py` step in between for non-Session-78 pv-arch cells. The recovery runbook documents `materialise_session78_geojsons.py` for Session-78 cells but does not name the equivalent for non-Session-78 pv cells. Worth a future runbook fix to make this explicit; tracked as a follow-up.
+
+**43 REVIEW cells in the audit are a documented class**: all are `outputs/h11/pv-diag-384/verified/*` (flat layout) cells where consensus GeoJSONs live outside the immediate parent directory. The audit's 6 manifest patterns + consensus-fallback covers most of the project; the flat-layout cells need a 7th pattern that walks further up the directory tree. Not a recovery loose end; a future-audit-enhancement opportunity.
+
+**`compare_wbf_vs_greedy_production.py` deferred**: the script is broken by the pre-existing v2 quarantine at commit `3ec25e68`. Per the Tier-2/3 investigation (`planning/tier23-sapphire-state-investigation.md`), the e47 cells have zero era2/pv leaderboard impact, so the WBF-vs-greedy summary is a research-artefact concern, not paper-citation-load-bearing. Update is tracked as a follow-up — either point the script at `verified-v2-cleanup/` or document the v2 path as removed.
+
+**Pro flex tier 503 incident**: the executor agent's run on Tier-3 Pro-medium cells (`text-baseline-pro-verifier`, `pro-medium-image-baseline-pro-verifier`, `pro-high-image-1of5-pro-verifier`) initially failed with 75+ retries returning 503 Service Unavailable on flex tier. Re-launching with `--service-tier standard` succeeded immediately at standard pricing. This is a Google-side capacity issue, not a project bug, but suggests the project's flex-mode-default policy (per `feedback_flex_mode.md`) should add a Pro-tier-fallback note.
+
+**`reports/phase3a-verifier-completeness-audit-2026-05-03.md` annotation is stale**: the "Recovery status (annotated post-execution, partial)" section reads as fully-closed for Tier-1, partially closed for Tier-2/3 deferred-until-sapphire-reachable. With Obs 324 completing the Tier-2/3 arc, that annotation should be updated to "fully closed". Tracked as a future operator note; the authoritative closure record is this Obs + `reports/verifier-completeness-audit-2026-05-06.json`.
+
+### Findable later
+
+Search terms: Obs 324, Phase3a Tier-2/3 closure, 14-cell campaign closure, 3 skipped cells e47 55maps proposer-verifier-384, 11 Tier-2/3 cells closure, Session 87 cleanup, $0.99 API spend, audit_verifier_completeness.py 168 PASS 0 FAIL 43 REVIEW, manifest location patterns crops candidates shared-crops, consensus fallback verifier-driven, materialise_pv_geojson.py gap, build_per_arch_redesign.sh redesign driver, e47 path bug --crops-dir verified --crops-dir crops, archive deprecated-staging verified-cleanup verified-v2-cleanup, Pro flex 503 service-tier standard fallback, compare_wbf_vs_greedy_production.py broken v2 quarantine 3ec25e68, era2/pv leaderboard zero tier flips 44 conditions 6 tiers, executor agent batched cleanup, gap=460 image-t0.0-v1-n10 zero downstream impact, commit chain 1b2842d0 6683952a b2bfc446 ff475e81 6f8bc714 c6b5e6b1 49703010 005e6c71 d6cdb648 38892df9.
+
+### Related observations and artefacts
+
+- **Obs 323** (Phase3a Tier-1 propagation closure, Session 86, commit `64974ec5`): direct parent. Obs 323 closed the 6 Session-78 Tier-1 cells; this Obs closes the remaining 14. Together they complete the campaign.
+- **Obs 321** (Session 84 closure — 28 silently-dropped verifier candidates surfaced, metadata pipeline hardened): the observation that first surfaced the verifier-completeness failure mode and produced the 30-cell audit list.
+- **Obs 320** (T=0.7 55-map recovery + propagation closure, Session 83): analogous campaign-closure shape — cleanup → re-evaluate → propagate downstream → close with explicit deltas and caveats.
+- **`planning/three-skipped-cells-investigation.md`** (sibling investigation): per-cell diagnosis of the 3 skipped cells. The agent-recommended Cell-3 → 2 → 1 execution order was followed verbatim.
+- **`planning/tier23-sapphire-state-investigation.md`** (sibling investigation, 706 lines): confirmed zbook-tractability of all 11 Tier-2/3 cells; explicitly verified zero downstream leaderboard impact for the gap=460 cell before committing API spend.
+- **`planning/session-86-tier-regression-investigation.md`** (overnight investigation report from Session 86): canonical record of the wrong-driver convention-propagation failure that preceded today's work.
+- **`reports/verifier-completeness-audit-2026-05-06.json`**: machine-readable audit verdict; 211 files audited, 168 PASS / 0 FAIL / 43 REVIEW.
+- **`reports/phase3a-verifier-completeness-audit-2026-05-03.md`**: original audit document. Its "Recovery status" annotation remains partially stale (see Caveats).
+- **Commit chain (Session 87 only)**: `1b2842d0` (e47 path-bug fix) → `6683952a` (3 skipped cells + derivatives) → `79daf93e` (initial audit script) → `b2bfc446`..`005e6c71` (executor agent — 6 commits) → `d6cdb648` (global redesign post-Tier-2/3) → `38892df9` (audit-script enhancements + 2 archive moves + final audit JSON) → this Obs.
+- **Artefacts**: `scripts/audit_verifier_completeness.py`; `reports/verifier-completeness-audit-2026-05-06.json`; `planning/tier23-sapphire-state-investigation.md`; `planning/three-skipped-cells-investigation.md`; `outputs/h11/e47-flash-high-text-1of5/verified/probabilities.json` (gap=57 recovered); `outputs/55maps-generalisation/verified-v2/probabilities.json` (gap=3 recovered); `archive/deprecated-staging/55maps-generalisation-verified-cleanup-20260410/`; `archive/deprecated-staging/e47-propose-brief-verified-v2-cleanup-20260423/`.
