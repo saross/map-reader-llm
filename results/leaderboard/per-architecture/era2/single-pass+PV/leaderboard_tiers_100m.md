@@ -1,19 +1,32 @@
-# Leaderboard (F1 tiers) — 100m buffer
+# Leaderboard — Era 2, Single-pass + PV, 100 m buffer
 
-**Generated**: 2026-04-26T07:18:22.540754+00:00
-**Tiering metric**: F1
-**FDR q**: 0.05
-**Conditions**: 8 in 1 tier(s)
+**Generated**: 2026-05-06T00:25:57.080718+00:00
+**Source tier JSON**: `results/leaderboard/per-architecture/era2/single-pass+PV/leaderboard_tiers_20m.json`
+**Git commit**: `ef3ec4fe`
+**Conditions**: 8 in 1 tier(s). Bounds: `/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/full_evaluation_bounds.geojson`.
+
+Tiering at 20 m: greedy-clique BH-FDR on tile-level paired permutation tests (10,000 permutations, seed 42) at q=0.05. Bootstrap 95% CIs (1,000 iterations) recomputed per buffer.
 
 ## Tier 1 (F1: 0.486–0.552)
 
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 1 | pv-checklist-image | 1-pass+PV | 2 | image | 1 | 1 | 0.552 | [0.468, 0.617] | 0.644 | 0.483 | 0.388 |
-| 2 | pv-checklist-text | 1-pass+PV | 2 | text | 1 | 1 | 0.542 | [0.460, 0.606] | 0.622 | 0.480 | 0.315 |
-| 3 | pv-brief-image | 1-pass+PV | 2 | image | 1 | 1 | 0.541 | [0.462, 0.610] | 0.632 | 0.474 | 0.340 |
-| 4 | pv-brief-text | 1-pass+PV | 2 | text | 1 | 1 | 0.534 | [0.455, 0.599] | 0.699 | 0.432 | 0.396 |
-| 5 | pv-cascade-adversarial-checklist | 1-pass+PV | 2 | text | 1 | 1 | 0.526 | [0.447, 0.593] | 0.697 | 0.423 | 0.432 |
-| 6 | pv-cascade-checklist-adversarial | 1-pass+PV | 2 | text | 1 | 1 | 0.518 | [0.440, 0.585] | 0.692 | 0.414 | 0.412 |
-| 7 | pv-adversarial-image | 1-pass+PV | 2 | image | 1 | 1 | 0.517 | [0.439, 0.583] | 0.690 | 0.414 | 0.416 |
-| 8 | pv-adversarial-text | 1-pass+PV | 2 | text | 1 | 1 | 0.486 | [0.405, 0.559] | 0.735 | 0.363 | 0.431 |
+| # | Condition | Track | K | Vote t | Proposer | Config | Verifier | Prob t | F1 [95% CI] | P | R | MCC |
+|--:|-----------|:-----:|--:|:-----:|:---------|:-------|:--------:|:-----:|:-----------:|---:|---:|---:|
+| 1 | pv-checklist-image | image | 1 | 1 | gemini-3-flash | verified-checklist-image | checklist-image | — | 0.552 [0.494, 0.599] | 0.644 | 0.483 | — |
+| 2 | pv-checklist-text | text | 1 | 1 | gemini-3-flash | verified-checklist-text | checklist-text | — | 0.542 [0.487, 0.591] | 0.622 | 0.480 | — |
+| 3 | pv-brief-image | image | 1 | 1 | gemini-3-flash | verified-brief-image | brief-image | — | 0.541 [0.485, 0.589] | 0.632 | 0.474 | — |
+| 4 | pv-brief-text | text | 1 | 1 | gemini-3-flash | verified-brief-text | brief-text | — | 0.534 [0.483, 0.584] | 0.699 | 0.432 | — |
+| 5 | pv-cascade-adversarial-checklist | text | 1 | 1 | gemini-3-flash | verified-cascade-adversarial-checklist | cascade-adversarial-checklist | — | 0.526 [0.474, 0.575] | 0.697 | 0.423 | — |
+| 6 | pv-cascade-checklist-adversarial | text | 1 | 1 | gemini-3-flash | verified-cascade-checklist-adversarial | cascade-checklist-adversarial | — | 0.518 [0.462, 0.566] | 0.692 | 0.414 | — |
+| 7 | pv-adversarial-image | image | 1 | 1 | gemini-3-flash | verified-adversarial-image | adversarial-image | — | 0.517 [0.460, 0.564] | 0.690 | 0.414 | — |
+| 8 | pv-adversarial-text | text | 1 | 1 | gemini-3-flash | verified-adversarial-text | adversarial-text | — | 0.486 [0.431, 0.533] | 0.735 | 0.363 | — |
+
+---
+
+### Column reference
+
+- **Vote t** — proposer-consensus vote threshold selected (the `t` value at which this condition's F1 at 20 m is maximal; for `single-pass` and `single-pass+PV` this is always 1).
+- **Proposer** — proposer model (Gemini 3 Flash for the vast majority of the corpus).
+- **Config** — the `config_version` string from the condition inventory — identifies the prompt library and major variant.
+- **Verifier** — for PV pipelines, the verifier prompt label (`v1` = the canonical adversarial-text verifier; `session-78-<variant>` = one of the 7 S78 matrix verifiers).
+- **Prob t** — verifier probability threshold (optimal at 20 m for each PV cell; `—` for non-PV architectures).
+- **MCC** — Matthews Correlation Coefficient at the buffer. `—` when `evaluate_detections.py` did not emit MCC for this condition (legacy evaluation outputs, primarily Era 1).

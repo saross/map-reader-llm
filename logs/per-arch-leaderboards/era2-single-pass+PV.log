@@ -1228,3 +1228,265 @@ Tier 1 (F1: 0.000–0.000, 8 conditions)
 ========================================================================
 Total: 8 conditions in 1 tiers
 ========================================================================
+2026-05-05 19:34:36,706 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git c1070cad
+2026-05-05 19:34:36,707 - INFO - __main__ - Resolved 8 conditions from inventory (era=2, track=None)
+2026-05-05 19:34:36,707 - INFO - __main__ - Resolved 8 conditions
+
+Dry run: 8 conditions
+Label                                         Era Track    K Thresholds
+--------------------------------------------------------------------------------
+pv-adversarial-image                            2 image    1 t=1
+pv-adversarial-text                             2 text     1 t=1
+pv-brief-image                                  2 image    1 t=1
+pv-brief-text                                   2 text     1 t=1
+pv-cascade-adversarial-checklist                2 text     1 t=1
+pv-cascade-checklist-adversarial                2 text     1 t=1
+pv-checklist-image                              2 image    1 t=1
+pv-checklist-text                               2 text     1 t=1
+2026-05-05 19:34:37,253 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git c1070cad
+2026-05-05 19:34:37,254 - INFO - __main__ - Resolved 8 conditions from inventory (era=2, track=None)
+2026-05-05 19:34:37,254 - INFO - __main__ - Resolved 8 conditions
+2026-05-05 19:34:37,255 - INFO - __main__ - Evaluation: 0 cached, 8 to compute (8 workers)
+2026-05-05 19:34:37,988 - INFO - evaluate_detections -   20m: F1=0.471 [0.408, 0.517], P=0.712 [0.605, 0.793], R=0.352 [0.299, 0.397] [sparse coverage: 56.5% zero-tiles]
+2026-05-05 19:34:38,072 - INFO - evaluate_detections -   20m: F1=0.504 [0.446, 0.549], P=0.667 [0.574, 0.738], R=0.405 [0.352, 0.452] [sparse coverage: 54.2% zero-tiles]
+2026-05-05 19:34:38,077 - INFO - evaluate_detections -   20m: F1=0.494 [0.434, 0.539], P=0.659 [0.566, 0.734], R=0.395 [0.344, 0.443] [sparse coverage: 53.8% zero-tiles]
+2026-05-05 19:34:38,086 - INFO - evaluate_detections -   20m: F1=0.495 [0.436, 0.540], P=0.662 [0.568, 0.735], R=0.395 [0.344, 0.443] [sparse coverage: 54.0% zero-tiles]
+2026-05-05 19:34:38,099 - INFO - evaluate_detections -   20m: F1=0.514 [0.456, 0.560], P=0.673 [0.595, 0.734], R=0.416 [0.364, 0.467] [sparse coverage: 53.8% zero-tiles]
+2026-05-05 19:34:38,199 - INFO - evaluate_detections -   20m: F1=0.520 [0.463, 0.569], P=0.607 [0.532, 0.673], R=0.455 [0.400, 0.505] [sparse coverage: 50.1% zero-tiles]
+2026-05-05 19:34:38,224 - INFO - evaluate_detections -   20m: F1=0.531 [0.473, 0.580], P=0.620 [0.543, 0.685], R=0.464 [0.409, 0.516] [sparse coverage: 51.1% zero-tiles]
+2026-05-05 19:34:38,261 - INFO - evaluate_detections -   20m: F1=0.521 [0.463, 0.569], P=0.598 [0.529, 0.664], R=0.462 [0.402, 0.514]
+2026-05-05 19:34:38,624 - INFO - evaluate_detections -   30m: F1=0.477 [0.417, 0.524], P=0.721 [0.614, 0.802], R=0.356 [0.307, 0.403] [sparse coverage: 56.7% zero-tiles]
+2026-05-05 19:34:38,800 - INFO - evaluate_detections -   30m: F1=0.523 [0.465, 0.573], P=0.684 [0.603, 0.745], R=0.423 [0.370, 0.475] [sparse coverage: 54.0% zero-tiles]
+2026-05-05 19:34:38,801 - INFO - evaluate_detections -   30m: F1=0.515 [0.460, 0.563], P=0.682 [0.587, 0.754], R=0.414 [0.361, 0.462] [sparse coverage: 54.4% zero-tiles]
+2026-05-05 19:34:38,801 - INFO - evaluate_detections -   30m: F1=0.506 [0.450, 0.556], P=0.674 [0.580, 0.752], R=0.405 [0.352, 0.452] [sparse coverage: 54.0% zero-tiles]
+2026-05-05 19:34:38,825 - INFO - evaluate_detections -   30m: F1=0.506 [0.451, 0.557], P=0.677 [0.582, 0.754], R=0.405 [0.352, 0.452] [sparse coverage: 54.2% zero-tiles]
+2026-05-05 19:34:39,054 - INFO - evaluate_detections -   30m: F1=0.531 [0.473, 0.578], P=0.620 [0.540, 0.686], R=0.464 [0.411, 0.514] [sparse coverage: 50.3% zero-tiles]
+2026-05-05 19:34:39,086 - INFO - evaluate_detections -   30m: F1=0.541 [0.482, 0.590], P=0.632 [0.554, 0.701], R=0.474 [0.419, 0.525] [sparse coverage: 51.3% zero-tiles]
+2026-05-05 19:34:39,118 - INFO - evaluate_detections -   30m: F1=0.532 [0.475, 0.580], P=0.610 [0.541, 0.677], R=0.471 [0.414, 0.523]
+2026-05-05 19:34:39,260 - INFO - evaluate_detections -   40m: F1=0.480 [0.422, 0.527], P=0.726 [0.621, 0.808], R=0.359 [0.309, 0.407] [sparse coverage: 56.7% zero-tiles]
+2026-05-05 19:34:39,495 - INFO - evaluate_detections -   40m: F1=0.526 [0.472, 0.575], P=0.688 [0.608, 0.748], R=0.425 [0.370, 0.476] [sparse coverage: 54.0% zero-tiles]
+2026-05-05 19:34:39,528 - INFO - evaluate_detections -   40m: F1=0.509 [0.451, 0.558], P=0.678 [0.581, 0.756], R=0.407 [0.354, 0.454] [sparse coverage: 54.0% zero-tiles]
+2026-05-05 19:34:39,531 - INFO - evaluate_detections -   40m: F1=0.518 [0.464, 0.568], P=0.686 [0.590, 0.761], R=0.416 [0.362, 0.464] [sparse coverage: 54.4% zero-tiles]
+2026-05-05 19:34:39,558 - INFO - evaluate_detections -   40m: F1=0.509 [0.452, 0.558], P=0.681 [0.584, 0.759], R=0.407 [0.354, 0.454] [sparse coverage: 54.2% zero-tiles]
+2026-05-05 19:34:39,897 - INFO - evaluate_detections -   50m: F1=0.483 [0.428, 0.531], P=0.730 [0.626, 0.814], R=0.361 [0.313, 0.409] [sparse coverage: 56.9% zero-tiles]
+2026-05-05 19:34:39,909 - INFO - evaluate_detections -   40m: F1=0.534 [0.476, 0.582], P=0.623 [0.546, 0.691], R=0.467 [0.413, 0.515] [sparse coverage: 50.3% zero-tiles]
+2026-05-05 19:34:39,948 - INFO - evaluate_detections -   40m: F1=0.544 [0.486, 0.591], P=0.635 [0.558, 0.704], R=0.476 [0.420, 0.527] [sparse coverage: 51.3% zero-tiles]
+2026-05-05 19:34:40,001 - INFO - evaluate_detections -   40m: F1=0.534 [0.478, 0.583], P=0.613 [0.541, 0.678], R=0.474 [0.415, 0.525]
+2026-05-05 19:34:40,199 - INFO - evaluate_detections -   50m: F1=0.528 [0.475, 0.578], P=0.691 [0.608, 0.750], R=0.428 [0.373, 0.478] [sparse coverage: 54.2% zero-tiles]
+2026-05-05 19:34:40,242 - INFO - evaluate_detections -   50m: F1=0.511 [0.453, 0.559], P=0.682 [0.585, 0.759], R=0.409 [0.356, 0.457] [sparse coverage: 54.2% zero-tiles]
+2026-05-05 19:34:40,261 - INFO - evaluate_detections -   50m: F1=0.521 [0.467, 0.569], P=0.689 [0.594, 0.767], R=0.418 [0.364, 0.466] [sparse coverage: 54.6% zero-tiles]
+2026-05-05 19:34:40,291 - INFO - evaluate_detections -   50m: F1=0.512 [0.455, 0.560], P=0.685 [0.589, 0.763], R=0.409 [0.356, 0.457] [sparse coverage: 54.4% zero-tiles]
+2026-05-05 19:34:40,533 - INFO - evaluate_detections -   100m: F1=0.486 [0.431, 0.533], P=0.735 [0.634, 0.814], R=0.363 [0.315, 0.410] [sparse coverage: 56.9% zero-tiles]
+2026-05-05 19:34:40,760 - INFO - evaluate_detections -   50m: F1=0.536 [0.480, 0.584], P=0.626 [0.552, 0.694], R=0.469 [0.415, 0.518] [sparse coverage: 50.5% zero-tiles]
+2026-05-05 19:34:40,804 - INFO - evaluate_detections -   50m: F1=0.547 [0.488, 0.594], P=0.638 [0.562, 0.706], R=0.478 [0.422, 0.529] [sparse coverage: 51.5% zero-tiles]
+2026-05-05 19:34:40,860 - INFO - evaluate_detections -   50m: F1=0.537 [0.479, 0.586], P=0.616 [0.544, 0.681], R=0.476 [0.418, 0.527]
+2026-05-05 19:34:40,899 - INFO - evaluate_detections -   100m: F1=0.534 [0.483, 0.584], P=0.699 [0.620, 0.757], R=0.432 [0.379, 0.484] [sparse coverage: 54.2% zero-tiles]
+2026-05-05 19:34:40,965 - INFO - evaluate_detections -   100m: F1=0.517 [0.460, 0.564], P=0.690 [0.597, 0.764], R=0.414 [0.359, 0.462] [sparse coverage: 54.2% zero-tiles]
+2026-05-05 19:34:40,999 - INFO - evaluate_detections -   100m: F1=0.526 [0.474, 0.575], P=0.697 [0.605, 0.772], R=0.423 [0.366, 0.469] [sparse coverage: 54.6% zero-tiles]
+2026-05-05 19:34:41,027 - INFO - evaluate_detections -   100m: F1=0.518 [0.462, 0.566], P=0.692 [0.601, 0.768], R=0.414 [0.359, 0.462] [sparse coverage: 54.4% zero-tiles]
+2026-05-05 19:34:41,065 - INFO - evaluate_detections -   MCC=0.431 [0.379, 0.476], Sens=0.393, Spec=0.957
+2026-05-05 19:34:41,068 - INFO - __main__ - [1/8] pv-adversarial-text t=1 done
+2026-05-05 19:34:41,413 - INFO - evaluate_detections -   MCC=0.395 [0.334, 0.446], Sens=0.432, Spec=0.911
+2026-05-05 19:34:41,416 - INFO - __main__ - [2/8] pv-brief-text t=1 done
+2026-05-05 19:34:41,475 - INFO - evaluate_detections -   MCC=0.416 [0.361, 0.463], Sens=0.437, Spec=0.922
+2026-05-05 19:34:41,477 - INFO - __main__ - [3/8] pv-adversarial-image t=1 done
+2026-05-05 19:34:41,509 - INFO - evaluate_detections -   MCC=0.431 [0.372, 0.477], Sens=0.441, Spec=0.930
+2026-05-05 19:34:41,511 - INFO - __main__ - [4/8] pv-cascade-adversarial-checklist t=1 done
+2026-05-05 19:34:41,530 - INFO - evaluate_detections -   MCC=0.412 [0.357, 0.460], Sens=0.432, Spec=0.922
+2026-05-05 19:34:41,532 - INFO - __main__ - [5/8] pv-cascade-checklist-adversarial t=1 done
+2026-05-05 19:34:41,577 - INFO - evaluate_detections -   100m: F1=0.541 [0.485, 0.588], P=0.632 [0.560, 0.698], R=0.474 [0.418, 0.522] [sparse coverage: 50.5% zero-tiles]
+2026-05-05 19:34:41,616 - INFO - evaluate_detections -   100m: F1=0.552 [0.494, 0.599], P=0.644 [0.570, 0.713], R=0.483 [0.425, 0.534] [sparse coverage: 51.5% zero-tiles]
+2026-05-05 19:34:41,663 - INFO - evaluate_detections -   100m: F1=0.542 [0.487, 0.591], P=0.622 [0.552, 0.686], R=0.480 [0.422, 0.531]
+2026-05-05 19:34:42,037 - INFO - evaluate_detections -   MCC=0.340 [0.281, 0.394], Sens=0.463, Spec=0.849
+2026-05-05 19:34:42,039 - INFO - __main__ - [6/8] pv-brief-image t=1 done
+2026-05-05 19:34:42,064 - INFO - evaluate_detections -   MCC=0.387 [0.332, 0.434], Sens=0.476, Spec=0.876
+2026-05-05 19:34:42,066 - INFO - __main__ - [7/8] pv-checklist-image t=1 done
+2026-05-05 19:34:42,111 - INFO - evaluate_detections -   MCC=0.315 [0.257, 0.374], Sens=0.467, Spec=0.826
+2026-05-05 19:34:42,112 - INFO - __main__ - [8/8] pv-checklist-text t=1 done
+2026-05-05 19:34:42,121 - INFO - __main__ - Stage 2 complete in 4.9s
+2026-05-05 19:34:42,121 - INFO - __main__ - Selected 8 conditions (best F1=0.531 at 20m)
+2026-05-05 19:34:42,148 - INFO - __main__ - Pairwise tests (f1): 28 pairs at 20m (10000 permutations, 8 workers)
+2026-05-05 19:34:42,194 - INFO - pairwise_permutation_test - PV repair: 336 verified detections retained from verified-checklist-text.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:42,195 - INFO - pairwise_permutation_test - GeoJSON: 336 detections from verified-checklist-text.geojson
+2026-05-05 19:34:42,201 - INFO - pairwise_permutation_test - PV repair: 326 verified detections retained from verified-checklist-image.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:42,201 - INFO - pairwise_permutation_test - PV repair: 326 verified detections retained from verified-checklist-image.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:42,201 - INFO - pairwise_permutation_test - PV repair: 326 verified detections retained from verified-checklist-image.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:42,201 - INFO - pairwise_permutation_test - PV repair: 326 verified detections retained from verified-checklist-image.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:42,201 - INFO - pairwise_permutation_test - GeoJSON: 326 detections from verified-checklist-image.geojson
+2026-05-05 19:34:42,201 - INFO - pairwise_permutation_test - GeoJSON: 326 detections from verified-checklist-image.geojson
+2026-05-05 19:34:42,201 - INFO - pairwise_permutation_test - GeoJSON: 326 detections from verified-checklist-image.geojson
+2026-05-05 19:34:42,201 - INFO - pairwise_permutation_test - GeoJSON: 326 detections from verified-checklist-image.geojson
+2026-05-05 19:34:42,201 - INFO - pairwise_permutation_test - PV repair: 326 verified detections retained from verified-checklist-image.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:42,201 - INFO - pairwise_permutation_test - GeoJSON: 326 detections from verified-checklist-image.geojson
+2026-05-05 19:34:42,201 - INFO - pairwise_permutation_test - PV repair: 326 verified detections retained from verified-checklist-image.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:42,201 - INFO - pairwise_permutation_test - GeoJSON: 326 detections from verified-checklist-image.geojson
+2026-05-05 19:34:42,201 - INFO - pairwise_permutation_test - PV repair: 326 verified detections retained from verified-checklist-image.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:42,201 - INFO - pairwise_permutation_test - GeoJSON: 326 detections from verified-checklist-image.geojson
+2026-05-05 19:34:42,208 - INFO - pairwise_permutation_test - PV repair: 326 verified detections retained from verified-brief-image.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:42,208 - INFO - pairwise_permutation_test - GeoJSON: 326 detections from verified-brief-image.geojson
+2026-05-05 19:34:42,211 - INFO - pairwise_permutation_test - PV repair: 264 verified detections retained from verified-cascade-adversarial-checklist.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:42,211 - INFO - pairwise_permutation_test - GeoJSON: 264 detections from verified-cascade-adversarial-checklist.geojson
+2026-05-05 19:34:42,213 - INFO - pairwise_permutation_test - PV repair: 260 verified detections retained from verified-cascade-checklist-adversarial.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:42,213 - INFO - pairwise_permutation_test - GeoJSON: 260 detections from verified-cascade-checklist-adversarial.geojson
+2026-05-05 19:34:42,217 - INFO - pairwise_permutation_test - PV repair: 215 verified detections retained from verified-adversarial-text.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:42,217 - INFO - pairwise_permutation_test - GeoJSON: 215 detections from verified-adversarial-text.geojson
+2026-05-05 19:34:42,219 - INFO - pairwise_permutation_test - PV repair: 269 verified detections retained from verified-brief-text.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:42,219 - INFO - pairwise_permutation_test - GeoJSON: 269 detections from verified-brief-text.geojson
+2026-05-05 19:34:42,219 - INFO - pairwise_permutation_test - PV repair: 326 verified detections retained from verified-brief-image.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:42,219 - INFO - pairwise_permutation_test - GeoJSON: 326 detections from verified-brief-image.geojson
+2026-05-05 19:34:42,219 - INFO - pairwise_permutation_test - PV repair: 336 verified detections retained from verified-checklist-text.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:42,219 - INFO - pairwise_permutation_test - GeoJSON: 336 detections from verified-checklist-text.geojson
+2026-05-05 19:34:42,219 - INFO - pairwise_permutation_test - PV repair: 261 verified detections retained from verified-adversarial-image.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:42,219 - INFO - pairwise_permutation_test - GeoJSON: 261 detections from verified-adversarial-image.geojson
+2026-05-05 19:34:43,000 - INFO - pairwise_permutation_test - PV repair: 336 verified detections retained from verified-checklist-text.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,001 - INFO - pairwise_permutation_test - GeoJSON: 336 detections from verified-checklist-text.geojson
+2026-05-05 19:34:43,016 - INFO - pairwise_permutation_test - PV repair: 269 verified detections retained from verified-brief-text.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,016 - INFO - pairwise_permutation_test - GeoJSON: 269 detections from verified-brief-text.geojson
+2026-05-05 19:34:43,064 - INFO - pairwise_permutation_test - PV repair: 336 verified detections retained from verified-checklist-text.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,065 - INFO - pairwise_permutation_test - GeoJSON: 336 detections from verified-checklist-text.geojson
+2026-05-05 19:34:43,065 - INFO - pairwise_permutation_test - PV repair: 336 verified detections retained from verified-checklist-text.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,065 - INFO - pairwise_permutation_test - GeoJSON: 336 detections from verified-checklist-text.geojson
+2026-05-05 19:34:43,074 - INFO - pairwise_permutation_test - PV repair: 264 verified detections retained from verified-cascade-adversarial-checklist.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,074 - INFO - pairwise_permutation_test - GeoJSON: 264 detections from verified-cascade-adversarial-checklist.geojson
+2026-05-05 19:34:43,076 - INFO - pairwise_permutation_test - PV repair: 260 verified detections retained from verified-cascade-checklist-adversarial.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,076 - INFO - pairwise_permutation_test - GeoJSON: 260 detections from verified-cascade-checklist-adversarial.geojson
+2026-05-05 19:34:43,081 - INFO - pairwise_permutation_test - PV repair: 336 verified detections retained from verified-checklist-text.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,081 - INFO - pairwise_permutation_test - GeoJSON: 336 detections from verified-checklist-text.geojson
+2026-05-05 19:34:43,083 - INFO - pairwise_permutation_test - PV repair: 336 verified detections retained from verified-checklist-text.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,083 - INFO - pairwise_permutation_test - GeoJSON: 336 detections from verified-checklist-text.geojson
+2026-05-05 19:34:43,086 - INFO - pairwise_permutation_test - PV repair: 326 verified detections retained from verified-brief-image.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,086 - INFO - pairwise_permutation_test - GeoJSON: 326 detections from verified-brief-image.geojson
+2026-05-05 19:34:43,092 - INFO - pairwise_permutation_test - PV repair: 326 verified detections retained from verified-brief-image.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,092 - INFO - pairwise_permutation_test - GeoJSON: 326 detections from verified-brief-image.geojson
+2026-05-05 19:34:43,098 - INFO - pairwise_permutation_test - PV repair: 261 verified detections retained from verified-adversarial-image.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,098 - INFO - pairwise_permutation_test - GeoJSON: 261 detections from verified-adversarial-image.geojson
+2026-05-05 19:34:43,100 - INFO - pairwise_permutation_test - PV repair: 215 verified detections retained from verified-adversarial-text.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,100 - INFO - pairwise_permutation_test - GeoJSON: 215 detections from verified-adversarial-text.geojson
+2026-05-05 19:34:43,101 - INFO - pairwise_permutation_test - PV repair: 264 verified detections retained from verified-cascade-adversarial-checklist.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,101 - INFO - pairwise_permutation_test - GeoJSON: 264 detections from verified-cascade-adversarial-checklist.geojson
+2026-05-05 19:34:43,102 - INFO - pairwise_permutation_test - PV repair: 269 verified detections retained from verified-brief-text.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,102 - INFO - pairwise_permutation_test - GeoJSON: 269 detections from verified-brief-text.geojson
+2026-05-05 19:34:43,133 - INFO - pairwise_permutation_test - PV repair: 326 verified detections retained from verified-brief-image.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,133 - INFO - pairwise_permutation_test - GeoJSON: 326 detections from verified-brief-image.geojson
+2026-05-05 19:34:43,143 - INFO - pairwise_permutation_test - PV repair: 260 verified detections retained from verified-cascade-checklist-adversarial.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,143 - INFO - pairwise_permutation_test - GeoJSON: 260 detections from verified-cascade-checklist-adversarial.geojson
+2026-05-05 19:34:43,827 - INFO - pairwise_permutation_test - PV repair: 326 verified detections retained from verified-brief-image.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,827 - INFO - pairwise_permutation_test - GeoJSON: 326 detections from verified-brief-image.geojson
+2026-05-05 19:34:43,843 - INFO - pairwise_permutation_test - PV repair: 261 verified detections retained from verified-adversarial-image.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,843 - INFO - pairwise_permutation_test - GeoJSON: 261 detections from verified-adversarial-image.geojson
+2026-05-05 19:34:43,889 - INFO - pairwise_permutation_test - PV repair: 326 verified detections retained from verified-brief-image.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,889 - INFO - pairwise_permutation_test - GeoJSON: 326 detections from verified-brief-image.geojson
+2026-05-05 19:34:43,894 - INFO - pairwise_permutation_test - PV repair: 269 verified detections retained from verified-brief-text.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,894 - INFO - pairwise_permutation_test - GeoJSON: 269 detections from verified-brief-text.geojson
+2026-05-05 19:34:43,895 - INFO - pairwise_permutation_test - PV repair: 269 verified detections retained from verified-brief-text.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,895 - INFO - pairwise_permutation_test - GeoJSON: 269 detections from verified-brief-text.geojson
+2026-05-05 19:34:43,899 - INFO - pairwise_permutation_test - PV repair: 269 verified detections retained from verified-brief-text.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,899 - INFO - pairwise_permutation_test - GeoJSON: 269 detections from verified-brief-text.geojson
+2026-05-05 19:34:43,903 - INFO - pairwise_permutation_test - PV repair: 264 verified detections retained from verified-cascade-adversarial-checklist.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,903 - INFO - pairwise_permutation_test - GeoJSON: 264 detections from verified-cascade-adversarial-checklist.geojson
+2026-05-05 19:34:43,906 - INFO - pairwise_permutation_test - PV repair: 260 verified detections retained from verified-cascade-checklist-adversarial.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,906 - INFO - pairwise_permutation_test - GeoJSON: 260 detections from verified-cascade-checklist-adversarial.geojson
+2026-05-05 19:34:43,906 - INFO - pairwise_permutation_test - PV repair: 215 verified detections retained from verified-adversarial-text.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,906 - INFO - pairwise_permutation_test - GeoJSON: 215 detections from verified-adversarial-text.geojson
+2026-05-05 19:34:43,907 - INFO - pairwise_permutation_test - PV repair: 264 verified detections retained from verified-cascade-adversarial-checklist.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,908 - INFO - pairwise_permutation_test - GeoJSON: 264 detections from verified-cascade-adversarial-checklist.geojson
+2026-05-05 19:34:43,911 - INFO - pairwise_permutation_test - PV repair: 269 verified detections retained from verified-brief-text.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,911 - INFO - pairwise_permutation_test - GeoJSON: 269 detections from verified-brief-text.geojson
+2026-05-05 19:34:43,915 - INFO - pairwise_permutation_test - PV repair: 261 verified detections retained from verified-adversarial-image.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,915 - INFO - pairwise_permutation_test - GeoJSON: 261 detections from verified-adversarial-image.geojson
+2026-05-05 19:34:43,918 - INFO - pairwise_permutation_test - PV repair: 260 verified detections retained from verified-cascade-checklist-adversarial.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,918 - INFO - pairwise_permutation_test - GeoJSON: 260 detections from verified-cascade-checklist-adversarial.geojson
+2026-05-05 19:34:43,929 - INFO - pairwise_permutation_test - PV repair: 215 verified detections retained from verified-adversarial-text.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,929 - INFO - pairwise_permutation_test - GeoJSON: 215 detections from verified-adversarial-text.geojson
+2026-05-05 19:34:43,954 - INFO - pairwise_permutation_test - PV repair: 264 verified detections retained from verified-cascade-adversarial-checklist.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,954 - INFO - pairwise_permutation_test - GeoJSON: 264 detections from verified-cascade-adversarial-checklist.geojson
+2026-05-05 19:34:43,970 - INFO - pairwise_permutation_test - PV repair: 261 verified detections retained from verified-adversarial-image.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:43,970 - INFO - pairwise_permutation_test - GeoJSON: 261 detections from verified-adversarial-image.geojson
+2026-05-05 19:34:44,646 - INFO - pairwise_permutation_test - PV repair: 264 verified detections retained from verified-cascade-adversarial-checklist.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:44,646 - INFO - pairwise_permutation_test - GeoJSON: 264 detections from verified-cascade-adversarial-checklist.geojson
+2026-05-05 19:34:44,653 - INFO - pairwise_permutation_test - PV repair: 260 verified detections retained from verified-cascade-checklist-adversarial.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:44,653 - INFO - pairwise_permutation_test - GeoJSON: 260 detections from verified-cascade-checklist-adversarial.geojson
+2026-05-05 19:34:44,661 - INFO - pairwise_permutation_test - PV repair: 260 verified detections retained from verified-cascade-checklist-adversarial.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:44,661 - INFO - pairwise_permutation_test - GeoJSON: 260 detections from verified-cascade-checklist-adversarial.geojson
+2026-05-05 19:34:44,662 - INFO - pairwise_permutation_test - PV repair: 215 verified detections retained from verified-adversarial-text.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:44,662 - INFO - pairwise_permutation_test - GeoJSON: 215 detections from verified-adversarial-text.geojson
+2026-05-05 19:34:44,669 - INFO - pairwise_permutation_test - PV repair: 261 verified detections retained from verified-adversarial-image.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:44,669 - INFO - pairwise_permutation_test - GeoJSON: 261 detections from verified-adversarial-image.geojson
+2026-05-05 19:34:44,674 - INFO - pairwise_permutation_test - PV repair: 261 verified detections retained from verified-adversarial-image.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:44,674 - INFO - pairwise_permutation_test - GeoJSON: 261 detections from verified-adversarial-image.geojson
+2026-05-05 19:34:44,676 - INFO - pairwise_permutation_test - PV repair: 215 verified detections retained from verified-adversarial-text.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:44,676 - INFO - pairwise_permutation_test - GeoJSON: 215 detections from verified-adversarial-text.geojson
+2026-05-05 19:34:44,689 - INFO - pairwise_permutation_test - PV repair: 215 verified detections retained from verified-adversarial-text.geojson (CRS overridden to EPSG:32635, polygons → centroids)
+2026-05-05 19:34:44,689 - INFO - pairwise_permutation_test - GeoJSON: 215 detections from verified-adversarial-text.geojson
+2026-05-05 19:34:45,303 - INFO - __main__ - [28/28] pairwise done
+2026-05-05 19:34:45,311 - INFO - __main__ - Pairwise: 0 cached, 28 computed
+2026-05-05 19:34:45,312 - INFO - __main__ - Stage 4 complete in 3.2s
+2026-05-05 19:34:45,312 - INFO - __main__ - FDR: 0/28 pairs significant at q=0.05 → 1 tiers
+2026-05-05 19:34:45,312 - INFO - __main__ - Markdown leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era2/single-pass+PV/leaderboard_tiers_20m.md
+2026-05-05 19:34:45,316 - INFO - __main__ - JSON leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era2/single-pass+PV/leaderboard_tiers_20m.json
+2026-05-05 19:34:45,317 - INFO - __main__ - All evaluations written to /home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era2/single-pass+PV/leaderboard_all_evaluations.json
+
+========================================================================
+LEADERBOARD TIERS (F1, 20m buffer)
+========================================================================
+
+Tier 1 (F1: 0.471–0.531, 8 conditions)
+    1. pv-checklist-image                       F1=0.531  t=1
+    2. pv-checklist-text                        F1=0.521  t=1
+    3. pv-brief-image                           F1=0.520  t=1
+    4. pv-brief-text                            F1=0.514  t=1
+    5. pv-cascade-adversarial-checklist         F1=0.504  t=1
+    6. pv-cascade-checklist-adversarial         F1=0.495  t=1
+    7. pv-adversarial-image                     F1=0.494  t=1
+    8. pv-adversarial-text                      F1=0.471  t=1
+
+========================================================================
+Total: 8 conditions in 1 tiers
+========================================================================
+2026-05-06 08:21:43,989 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git ef3ec4fe
+2026-05-06 08:21:43,990 - INFO - __main__ - Resolved 8 conditions from inventory (era=2, track=None)
+2026-05-06 08:21:43,990 - INFO - __main__ - Resolved 8 conditions
+
+Dry run: 8 conditions
+Label                                         Era Track    K Thresholds
+--------------------------------------------------------------------------------
+pv-adversarial-image                            2 image    1 t=1
+pv-adversarial-text                             2 text     1 t=1
+pv-brief-image                                  2 image    1 t=1
+pv-brief-text                                   2 text     1 t=1
+pv-cascade-adversarial-checklist                2 text     1 t=1
+pv-cascade-checklist-adversarial                2 text     1 t=1
+pv-checklist-image                              2 image    1 t=1
+pv-checklist-text                               2 text     1 t=1
+2026-05-06 08:21:44,572 - INFO - __main__ - build_tiered_leaderboard.py v1.0.0 — git ef3ec4fe
+2026-05-06 08:21:44,573 - INFO - __main__ - Resolved 8 conditions from inventory (era=2, track=None)
+2026-05-06 08:21:44,573 - INFO - __main__ - Resolved 8 conditions
+2026-05-06 08:21:44,574 - INFO - __main__ - Evaluation: 8 cached, 0 to compute (8 workers)
+2026-05-06 08:21:44,574 - INFO - __main__ - Stage 2 complete in 0.0s
+2026-05-06 08:21:44,574 - INFO - __main__ - Top-N filter disabled (top_n=0); including all 8 conditions
+2026-05-06 08:21:44,574 - INFO - __main__ - Selected 8 conditions (best F1=0.531 at 20m)
+2026-05-06 08:21:44,598 - INFO - __main__ - Pairwise tests (f1): 28 pairs at 20m (10000 permutations, 8 workers)
+2026-05-06 08:21:44,599 - INFO - __main__ - Pairwise: 28 cached, 0 computed
+2026-05-06 08:21:44,599 - INFO - __main__ - Stage 4 complete in 0.0s
+2026-05-06 08:21:44,599 - INFO - __main__ - FDR: 0/28 pairs significant at q=0.05 → 1 tiers
+2026-05-06 08:21:44,599 - INFO - __main__ - Markdown leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era2/single-pass+PV/leaderboard_tiers_20m.md
+2026-05-06 08:21:44,604 - INFO - __main__ - JSON leaderboard written to /home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era2/single-pass+PV/leaderboard_tiers_20m.json
+2026-05-06 08:21:44,605 - INFO - __main__ - All evaluations written to /home/shawn/Code/map-reader-llm/results/leaderboard/per-architecture/era2/single-pass+PV/leaderboard_all_evaluations.json
+
+========================================================================
+LEADERBOARD TIERS (F1, 20m buffer)
+========================================================================
+
+Tier 1 (F1: 0.471–0.531, 8 conditions)
+    1. pv-checklist-image                       F1=0.531  t=1
+    2. pv-checklist-text                        F1=0.521  t=1
+    3. pv-brief-image                           F1=0.520  t=1
+    4. pv-brief-text                            F1=0.514  t=1
+    5. pv-cascade-adversarial-checklist         F1=0.504  t=1
+    6. pv-cascade-checklist-adversarial         F1=0.495  t=1
+    7. pv-adversarial-image                     F1=0.494  t=1
+    8. pv-adversarial-text                      F1=0.471  t=1
+
+========================================================================
+Total: 8 conditions in 1 tiers
+========================================================================

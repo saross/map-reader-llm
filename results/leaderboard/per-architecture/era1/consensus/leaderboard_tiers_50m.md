@@ -1,248 +1,121 @@
-# Leaderboard (F1 tiers) — 50m buffer
+# Leaderboard — Era 1, Consensus (no PV), 50 m buffer
 
-**Generated**: 2026-04-26T07:18:22.427660+00:00
-**Tiering metric**: F1
-**FDR q**: 0.05
-**Conditions**: 72 in 34 tier(s)
+**Generated**: 2026-05-06T00:25:57.058617+00:00
+**Source tier JSON**: `results/leaderboard/per-architecture/era1/consensus/leaderboard_tiers_20m.json`
+**Git commit**: `ef3ec4fe`
+**Conditions**: 72 in 6 tier(s). Bounds: `/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/full_evaluation_bounds.geojson`.
+
+Tiering at 20 m: greedy-clique BH-FDR on tile-level paired permutation tests (10,000 permutations, seed 42) at q=0.05. Bootstrap 95% CIs (1,000 iterations) recomputed per buffer.
 
 ## Tier 1 (F1: 0.809–0.814)
 
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 1 | h3-high-track2-text-T1.0 | greedy | 1 | text | 30 | 23 | 0.809 | [0.766, 0.849] | 0.898 | 0.737 | 0.641 |
-| 2 | h3-high-track2-text-T0.3 | greedy | 1 | text | 30 | 23 | 0.813 | [0.772, 0.849] | 0.850 | 0.779 | 0.576 |
-| 3 | h3-high-track2-text-T0.7 | greedy | 1 | text | 30 | 22 | 0.814 | [0.771, 0.848] | 0.866 | 0.768 | 0.571 |
-| 4 | h3-rep-high | greedy | 1 | text | 30 | 21 | 0.812 | [0.768, 0.848] | 0.827 | 0.798 | 0.545 |
-
-## Tier 2 (F1: 0.772–0.781)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 5 | h9-track2-text-h9-D-t4 | greedy | 1 | text | 5 | 4 | 0.778 | [0.734, 0.816] | 0.786 | 0.770 | 0.431 |
-| 6 | h9-track2-text-h9-D-t1 | greedy | 1 | text | 5 | 4 | 0.781 | [0.739, 0.818] | 0.753 | 0.811 | 0.476 |
-| 7 | h9-track2-text-h9-A-p4 | greedy | 1 | text | 5 | 4 | 0.772 | [0.726, 0.813] | 0.755 | 0.790 | 0.495 |
-| 8 | h9-track2-text-h9-A-p1 | greedy | 1 | text | 5 | 4 | 0.778 | [0.734, 0.817] | 0.776 | 0.779 | 0.501 |
-| 9 | h9-track2-text-h9-A-p2 | greedy | 1 | text | 5 | 4 | 0.778 | [0.737, 0.817] | 0.766 | 0.790 | 0.487 |
-
-## Tier 3 (F1: 0.739–0.780)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 10 | h9-track2-text-h9-E-p1 | greedy | 1 | text | 5 | 5 | 0.739 | [0.692, 0.780] | 0.792 | 0.692 | 0.475 |
-| 11 | h9-track2-text-h9-D-t2 | greedy | 1 | text | 5 | 4 | 0.770 | [0.723, 0.811] | 0.749 | 0.792 | 0.473 |
-| 12 | h9-track2-text-h9-A-p5 | greedy | 1 | text | 5 | 4 | 0.752 | [0.704, 0.794] | 0.737 | 0.768 | 0.440 |
-| 13 | h9-track2-text-h9-D-t3 | greedy | 1 | text | 5 | 4 | 0.780 | [0.732, 0.819] | 0.765 | 0.796 | 0.444 |
-| 14 | h9-track2-text-h9-D-t5 | greedy | 1 | text | 5 | 4 | 0.756 | [0.713, 0.796] | 0.774 | 0.738 | 0.440 |
-| 15 | h9-track2-text-h9-A-p3 | greedy | 1 | text | 5 | 4 | 0.764 | [0.716, 0.802] | 0.746 | 0.783 | 0.410 |
-
-## Tier 4 (F1: 0.727–0.740)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 16 | h3-rep-minimal | greedy | 1 | text | 30 | 25 | 0.735 | [0.686, 0.777] | 0.703 | 0.770 | 0.312 |
-| 17 | h9-track2-text-h9-B-v1 | greedy | 1 | text | 5 | 4 | 0.740 | [0.693, 0.781] | 0.699 | 0.785 | 0.403 |
-| 18 | h3-track2-text-T0.3 | greedy | 1 | text | 30 | 23 | 0.727 | [0.678, 0.769] | 0.658 | 0.813 | 0.180 |
-| 19 | h3-track2-text-T0.7 | greedy | 1 | text | 30 | 24 | 0.728 | [0.677, 0.773] | 0.683 | 0.779 | 0.267 |
-
-## Tier 5 (F1: 0.790–0.793)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 20 | h3-track1-image-T0.7 | greedy | 1 | image | 30 | 18 | 0.790 | [0.757, 0.821] | 0.792 | 0.787 | 0.443 |
-| 21 | h9-track1-image-h9-C-img5 | greedy | 1 | image | 5 | 3 | 0.793 | [0.752, 0.828] | 0.824 | 0.764 | 0.657 |
-
-## Tier 6 (F1: 0.722–0.729)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 22 | h7-track2-text-T0.7 | greedy | 1 | text | 3 | 3 | 0.722 | [0.672, 0.766] | 0.681 | 0.768 | 0.283 |
-| 23 | h3-track2-text-T1.0 | greedy | 1 | text | 30 | 22 | 0.723 | [0.672, 0.767] | 0.685 | 0.764 | 0.331 |
-| 24 | h7-track2-text-T0.3 | greedy | 1 | text | 3 | 3 | 0.729 | [0.684, 0.772] | 0.669 | 0.801 | 0.214 |
-
-## Tier 7 (F1: 0.802–0.806)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 25 | h9-track1-image-h9-A-p1 | greedy | 1 | image | 5 | 3 | 0.802 | [0.762, 0.838] | 0.824 | 0.781 | 0.661 |
-| 26 | h9-track1-image-h9-A-p5 | greedy | 1 | image | 5 | 3 | 0.806 | [0.763, 0.842] | 0.832 | 0.781 | 0.694 |
-
-## Tier 8 (F1: 0.762–0.762)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 27 | h3-track1-image-T1.0 | greedy | 1 | image | 30 | 19 | 0.762 | [0.724, 0.800] | 0.817 | 0.714 | 0.475 |
-
-## Tier 9 (F1: 0.807–0.807)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 28 | h9-track1-image-h9-E-p2 | greedy | 1 | image | 5 | 3 | 0.807 | [0.775, 0.836] | 0.820 | 0.794 | 0.654 |
-
-## Tier 10 (F1: 0.707–0.707)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 29 | h9-track2-text-h9-B-v2 | greedy | 1 | text | 5 | 4 | 0.707 | [0.658, 0.753] | 0.707 | 0.707 | 0.437 |
-
-## Tier 11 (F1: 0.795–0.802)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 30 | h9-track1-image-h9-D-t2 | greedy | 1 | image | 5 | 3 | 0.795 | [0.756, 0.830] | 0.797 | 0.794 | 0.638 |
-| 31 | h9-track1-image-h9-C-img4 | greedy | 1 | image | 5 | 3 | 0.802 | [0.764, 0.834] | 0.815 | 0.790 | 0.580 |
-| 32 | h9-track1-image-h9-D-t5 | greedy | 1 | image | 5 | 3 | 0.795 | [0.757, 0.830] | 0.830 | 0.762 | 0.632 |
-
-## Tier 12 (F1: 0.763–0.763)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 33 | h9-track1-image-h9-D-t1 | greedy | 1 | image | 5 | 4 | 0.763 | [0.721, 0.802] | 0.887 | 0.670 | 0.685 |
-
-## Tier 13 (F1: 0.717–0.717)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 34 | h9-track2-text-h9-B-v5 | greedy | 1 | text | 5 | 4 | 0.717 | [0.670, 0.762] | 0.742 | 0.694 | 0.435 |
-
-## Tier 14 (F1: 0.771–0.792)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 35 | h3-track1-image-T0.3 | greedy | 1 | image | 30 | 22 | 0.771 | [0.737, 0.803] | 0.755 | 0.788 | 0.271 |
-| 36 | h9-track1-image-h9-A-p4 | greedy | 1 | image | 5 | 3 | 0.792 | [0.753, 0.829] | 0.802 | 0.783 | 0.685 |
-
-## Tier 15 (F1: 0.790–0.807)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 37 | h9-track1-image-h9-A-p2 | greedy | 1 | image | 5 | 3 | 0.807 | [0.770, 0.840] | 0.810 | 0.805 | 0.645 |
-| 38 | h9-track1-image-h9-B-v1 | greedy | 1 | image | 5 | 3 | 0.790 | [0.752, 0.823] | 0.780 | 0.801 | 0.661 |
-| 39 | h9-track1-image-h9-C-img3 | greedy | 1 | image | 5 | 3 | 0.801 | [0.757, 0.837] | 0.805 | 0.798 | 0.672 |
-| 40 | h9-track1-image-h9-D-t3 | greedy | 1 | image | 5 | 3 | 0.793 | [0.750, 0.829] | 0.808 | 0.779 | 0.669 |
-| 41 | h9-track1-image-h9-C-img2 | greedy | 1 | image | 5 | 3 | 0.796 | [0.758, 0.830] | 0.831 | 0.764 | 0.678 |
-
-## Tier 16 (F1: 0.709–0.718)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 42 | h9-track2-text-h9-E-p2 | greedy | 1 | text | 5 | 4 | 0.718 | [0.667, 0.765] | 0.705 | 0.731 | 0.426 |
-| 43 | h9-track2-text-h9-B-v4 | greedy | 1 | text | 5 | 4 | 0.709 | [0.658, 0.755] | 0.722 | 0.698 | 0.353 |
-| 44 | h9-track2-text-h9-E-p4 | greedy | 1 | text | 5 | 4 | 0.711 | [0.660, 0.755] | 0.722 | 0.699 | 0.404 |
-
-## Tier 17 (F1: 0.772–0.790)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 45 | h9-track1-image-h9-D-t4 | greedy | 1 | image | 5 | 3 | 0.772 | [0.731, 0.808] | 0.798 | 0.748 | 0.631 |
-| 46 | h9-track1-image-h9-E-p5 | greedy | 1 | image | 5 | 3 | 0.783 | [0.742, 0.818] | 0.812 | 0.755 | 0.605 |
-| 47 | h9-track1-image-h9-B-v2 | greedy | 1 | image | 5 | 3 | 0.790 | [0.752, 0.823] | 0.810 | 0.770 | 0.630 |
-| 48 | h9-track1-image-h9-E-p1 | greedy | 1 | image | 5 | 3 | 0.775 | [0.735, 0.811] | 0.738 | 0.816 | 0.643 |
-
-## Tier 18 (F1: 0.705–0.705)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 49 | h9-track2-text-h9-E-p5 | greedy | 1 | text | 5 | 4 | 0.705 | [0.656, 0.747] | 0.748 | 0.666 | 0.423 |
-
-## Tier 19 (F1: 0.787–0.787)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 50 | h9-track1-image-h9-B-v5 | greedy | 1 | image | 5 | 3 | 0.787 | [0.754, 0.820] | 0.789 | 0.785 | 0.657 |
-
-## Tier 20 (F1: 0.693–0.693)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 51 | h1-brief-text | greedy | 1 | text | 3 | 3 | 0.693 | [0.640, 0.739] | 0.674 | 0.712 | 0.258 |
-
-## Tier 21 (F1: 0.779–0.779)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 52 | h9-track1-image-h9-A-p3 | greedy | 1 | image | 5 | 3 | 0.779 | [0.743, 0.813] | 0.777 | 0.781 | 0.691 |
-
-## Tier 22 (F1: 0.687–0.696)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 53 | h7-track2-text-T0.0 | greedy | 1 | text | 3 | 3 | 0.696 | [0.639, 0.745] | 0.584 | 0.861 | 0.088 |
-| 54 | h7-track2-text-T1.0 | greedy | 1 | text | 3 | 3 | 0.687 | [0.634, 0.734] | 0.676 | 0.698 | 0.284 |
-
-## Tier 23 (F1: 0.774–0.785)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 55 | h9-track1-image-h9-E-p4 | greedy | 1 | image | 5 | 3 | 0.774 | [0.736, 0.809] | 0.799 | 0.751 | 0.642 |
-| 56 | h9-track1-image-h9-C-img1 | greedy | 1 | image | 5 | 3 | 0.785 | [0.745, 0.821] | 0.794 | 0.777 | 0.670 |
-
-## Tier 24 (F1: 0.682–0.682)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 57 | h7-track2-text-T1.3 | greedy | 1 | text | 3 | 3 | 0.682 | [0.626, 0.728] | 0.686 | 0.677 | 0.379 |
-
-## Tier 25 (F1: 0.760–0.785)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 58 | h9-track1-image-h9-B-v3 | greedy | 1 | image | 5 | 3 | 0.785 | [0.743, 0.821] | 0.785 | 0.785 | 0.638 |
-| 59 | h7-track1-image-T1.0 | greedy | 1 | image | 3 | 2 | 0.760 | [0.723, 0.793] | 0.708 | 0.820 | 0.332 |
-
-## Tier 26 (F1: 0.685–0.685)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 60 | h9-track2-text-h9-B-v3 | greedy | 1 | text | 5 | 4 | 0.685 | [0.632, 0.733] | 0.682 | 0.688 | 0.499 |
-
-## Tier 27 (F1: 0.751–0.751)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 61 | h7-track1-image-T0.3 | greedy | 1 | image | 3 | 3 | 0.751 | [0.712, 0.784] | 0.736 | 0.766 | 0.270 |
-
-## Tier 28 (F1: 0.756–0.788)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 62 | h9-track1-image-h9-B-v4 | greedy | 1 | image | 5 | 3 | 0.788 | [0.749, 0.825] | 0.790 | 0.787 | 0.714 |
-| 63 | h9-track1-image-h9-E-p3 | greedy | 1 | image | 5 | 3 | 0.773 | [0.735, 0.806] | 0.775 | 0.772 | 0.654 |
-| 64 | h1-verbose-text-image | greedy | 1 | image | 3 | 2 | 0.763 | [0.723, 0.797] | 0.719 | 0.813 | 0.395 |
-| 65 | h1-brief-text-image | greedy | 1 | image | 3 | 2 | 0.758 | [0.722, 0.789] | 0.707 | 0.816 | 0.302 |
-| 66 | h7-track1-image-T0.7 | greedy | 1 | image | 3 | 2 | 0.756 | [0.717, 0.789] | 0.684 | 0.844 | 0.229 |
-
-## Tier 29 (F1: 0.737–0.737)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 67 | h7-track1-image-T0.0 | greedy | 1 | image | 3 | 3 | 0.737 | [0.700, 0.768] | 0.649 | 0.852 | 0.118 |
-
-## Tier 30 (F1: 0.676–0.676)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 68 | h9-track2-text-h9-E-p3 | greedy | 1 | text | 5 | 4 | 0.676 | [0.616, 0.723] | 0.665 | 0.686 | 0.469 |
-
-## Tier 31 (F1: 0.755–0.755)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 69 | h7-track1-image-T1.3 | greedy | 1 | image | 3 | 2 | 0.755 | [0.720, 0.787] | 0.721 | 0.794 | 0.367 |
-
-## Tier 32 (F1: 0.674–0.674)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 70 | h1-verbose-text | greedy | 1 | text | 3 | 2 | 0.674 | [0.621, 0.722] | 0.577 | 0.811 | 0.203 |
-
-## Tier 33 (F1: 0.736–0.736)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 71 | h1-image-only | greedy | 1 | image | 3 | 2 | 0.736 | [0.696, 0.770] | 0.684 | 0.796 | 0.251 |
-
-## Tier 34 (F1: 0.529–0.529)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 72 | h11-bridge-brief-text-t0 | greedy | 1 | text | 10 | 10 | 0.529 | [0.462, 0.589] | 0.423 | 0.707 | 0.095 |
+| # | Condition | Track | K | Vote t | Proposer | Config | Verifier | Prob t | F1 [95% CI] | P | R | MCC |
+|--:|-----------|:-----:|--:|:-----:|:---------|:-------|:--------:|:-----:|:-----------:|---:|---:|---:|
+| 1 | h3-high-track2-text-T1.0 | text | 30 | 23 | gemini-3-flash | detect_brief-text-high | — | — | 0.809 [0.784, 0.832] | 0.898 | 0.737 | — |
+| 2 | h3-high-track2-text-T0.3 | text | 30 | 23 | gemini-3-flash | detect_brief-text-high | — | — | 0.813 [0.794, 0.836] | 0.850 | 0.779 | — |
+| 3 | h3-high-track2-text-T0.7 | text | 30 | 22 | gemini-3-flash | detect_brief-text-high | — | — | 0.814 [0.792, 0.834] | 0.866 | 0.768 | — |
+| 4 | h3-rep-high | text | 30 | 21 | gemini-3-flash | detect_brief-text-high | — | — | 0.812 [0.791, 0.831] | 0.827 | 0.798 | — |
+
+## Tier 2 (F1: 0.735–0.781)
+
+| # | Condition | Track | K | Vote t | Proposer | Config | Verifier | Prob t | F1 [95% CI] | P | R | MCC |
+|--:|-----------|:-----:|--:|:-----:|:---------|:-------|:--------:|:-----:|:-----------:|---:|---:|---:|
+| 5 | h9-track2-text-h9-D-t4 | text | 5 | 4 | gemini-3-flash | phase3c-t2-h9A | — | — | 0.778 [0.752, 0.800] | 0.786 | 0.770 | — |
+| 6 | h9-track2-text-h9-D-t1 | text | 5 | 4 | gemini-3-flash | phase3c-t2-h9A | — | — | 0.781 [0.760, 0.802] | 0.753 | 0.811 | — |
+| 7 | h9-track2-text-h9-A-p4 | text | 5 | 4 | gemini-3-flash | phase3c-t2-h9A | — | — | 0.772 [0.750, 0.796] | 0.755 | 0.790 | — |
+| 8 | h9-track2-text-h9-A-p1 | text | 5 | 4 | gemini-3-flash | phase3c-t2-h9A | — | — | 0.778 [0.753, 0.798] | 0.776 | 0.779 | — |
+| 9 | h9-track2-text-h9-A-p2 | text | 5 | 4 | gemini-3-flash | phase3c-t2-h9A | — | — | 0.778 [0.755, 0.803] | 0.766 | 0.790 | — |
+| 10 | h9-track2-text-h9-E-p1 | text | 5 | 5 | gemini-3-flash | phase3c-t2-h9B-v1 | — | — | 0.739 [0.714, 0.764] | 0.792 | 0.692 | — |
+| 11 | h9-track2-text-h9-D-t2 | text | 5 | 4 | gemini-3-flash | phase3c-t2-h9A | — | — | 0.770 [0.745, 0.793] | 0.749 | 0.792 | — |
+| 12 | h9-track2-text-h9-A-p5 | text | 5 | 4 | gemini-3-flash | phase3c-t2-h9A | — | — | 0.752 [0.725, 0.777] | 0.737 | 0.768 | — |
+| 13 | h9-track2-text-h9-D-t3 | text | 5 | 4 | gemini-3-flash | phase3c-t2-h9A | — | — | 0.780 [0.753, 0.804] | 0.765 | 0.796 | — |
+| 14 | h9-track2-text-h9-D-t5 | text | 5 | 4 | gemini-3-flash | phase3c-t2-h9A | — | — | 0.756 [0.731, 0.777] | 0.774 | 0.738 | — |
+| 15 | h9-track2-text-h9-A-p3 | text | 5 | 4 | gemini-3-flash | phase3c-t2-h9A | — | — | 0.764 [0.740, 0.786] | 0.746 | 0.783 | — |
+| 16 | h3-rep-minimal | text | 30 | 25 | gemini-3-flash | detect_brief-text | — | — | 0.735 [0.710, 0.759] | 0.703 | 0.770 | — |
+
+## Tier 3 (F1: 0.707–0.807)
+
+| # | Condition | Track | K | Vote t | Proposer | Config | Verifier | Prob t | F1 [95% CI] | P | R | MCC |
+|--:|-----------|:-----:|--:|:-----:|:---------|:-------|:--------:|:-----:|:-----------:|---:|---:|---:|
+| 17 | h9-track2-text-h9-B-v1 | text | 5 | 4 | gemini-3-flash | phase3c-t2-h9B-v1 | — | — | 0.740 [0.712, 0.765] | 0.699 | 0.785 | — |
+| 18 | h3-track2-text-T0.3 | text | 30 | 23 | gemini-3-flash | detect_brief-text | — | — | 0.727 [0.699, 0.753] | 0.658 | 0.813 | — |
+| 19 | h3-track2-text-T0.7 | text | 30 | 24 | gemini-3-flash | detect_brief-text | — | — | 0.728 [0.702, 0.753] | 0.683 | 0.779 | — |
+| 20 | h3-track1-image-T0.7 | image | 30 | 18 | gemini-3-flash | library_plus-hp | — | — | 0.790 [0.771, 0.809] | 0.792 | 0.787 | — |
+| 21 | h9-track1-image-h9-C-img5 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9C-img5 | — | — | 0.793 [0.774, 0.817] | 0.824 | 0.764 | — |
+| 22 | h7-track2-text-T0.7 | text | 3 | 3 | gemini-3-flash | detect_brief-text | — | — | 0.722 [0.695, 0.746] | 0.681 | 0.768 | — |
+| 23 | h3-track2-text-T1.0 | text | 30 | 22 | gemini-3-flash | detect_brief-text | — | — | 0.723 [0.694, 0.749] | 0.685 | 0.764 | — |
+| 24 | h7-track2-text-T0.3 | text | 3 | 3 | gemini-3-flash | detect_brief-text | — | — | 0.729 [0.699, 0.753] | 0.669 | 0.801 | — |
+| 25 | h9-track1-image-h9-A-p1 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9A | — | — | 0.802 [0.778, 0.824] | 0.824 | 0.781 | — |
+| 26 | h9-track1-image-h9-A-p5 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9A | — | — | 0.806 [0.781, 0.828] | 0.832 | 0.781 | — |
+| 27 | h3-track1-image-T1.0 | image | 30 | 19 | gemini-3-flash | library_plus-hp | — | — | 0.762 [0.742, 0.786] | 0.817 | 0.714 | — |
+| 28 | h9-track1-image-h9-E-p2 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9E-p2 | — | — | 0.807 [0.790, 0.826] | 0.820 | 0.794 | — |
+| 29 | h9-track2-text-h9-B-v2 | text | 5 | 4 | gemini-3-flash | phase3c-t2-h9B-v2 | — | — | 0.707 [0.678, 0.734] | 0.707 | 0.707 | — |
+| 30 | h9-track1-image-h9-D-t2 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9A | — | — | 0.795 [0.774, 0.815] | 0.797 | 0.794 | — |
+| 31 | h9-track1-image-h9-C-img4 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9C-img4 | — | — | 0.802 [0.784, 0.823] | 0.815 | 0.790 | — |
+| 32 | h9-track1-image-h9-D-t5 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9A | — | — | 0.795 [0.774, 0.816] | 0.830 | 0.762 | — |
+| 33 | h9-track1-image-h9-D-t1 | image | 5 | 4 | gemini-3-flash | phase3c-t1-h9A | — | — | 0.763 [0.740, 0.785] | 0.887 | 0.670 | — |
+| 34 | h9-track2-text-h9-B-v5 | text | 5 | 4 | gemini-3-flash | phase3c-t2-h9B-v5 | — | — | 0.717 [0.692, 0.744] | 0.742 | 0.694 | — |
+| 35 | h3-track1-image-T0.3 | image | 30 | 22 | gemini-3-flash | library_plus-hp | — | — | 0.771 [0.753, 0.794] | 0.755 | 0.788 | — |
+| 36 | h9-track1-image-h9-A-p4 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9A | — | — | 0.792 [0.770, 0.816] | 0.802 | 0.783 | — |
+| 37 | h9-track1-image-h9-A-p2 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9A | — | — | 0.807 [0.790, 0.827] | 0.810 | 0.805 | — |
+| 38 | h9-track1-image-h9-B-v1 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9B-v1 | — | — | 0.790 [0.772, 0.811] | 0.780 | 0.801 | — |
+| 39 | h9-track1-image-h9-C-img3 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9C-img3 | — | — | 0.801 [0.779, 0.822] | 0.805 | 0.798 | — |
+| 40 | h9-track1-image-h9-D-t3 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9A | — | — | 0.793 [0.772, 0.816] | 0.808 | 0.779 | — |
+| 41 | h9-track1-image-h9-C-img2 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9C-img2 | — | — | 0.796 [0.775, 0.817] | 0.831 | 0.764 | — |
+| 42 | h9-track2-text-h9-E-p2 | text | 5 | 4 | gemini-3-flash | phase3c-t2-h9B-v2 | — | — | 0.718 [0.693, 0.745] | 0.705 | 0.731 | — |
+| 43 | h9-track2-text-h9-B-v4 | text | 5 | 4 | gemini-3-flash | phase3c-t2-h9B-v4 | — | — | 0.709 [0.681, 0.734] | 0.722 | 0.698 | — |
+| 44 | h9-track2-text-h9-E-p4 | text | 5 | 4 | gemini-3-flash | phase3c-t2-h9B-v4 | — | — | 0.711 [0.685, 0.738] | 0.722 | 0.699 | — |
+| 45 | h9-track1-image-h9-D-t4 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9A | — | — | 0.772 [0.750, 0.796] | 0.798 | 0.748 | — |
+| 46 | h9-track1-image-h9-E-p5 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9E-p5 | — | — | 0.783 [0.760, 0.803] | 0.812 | 0.755 | — |
+| 47 | h9-track1-image-h9-B-v2 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9B-v2 | — | — | 0.790 [0.767, 0.809] | 0.810 | 0.770 | — |
+
+## Tier 4 (F1: 0.676–0.788)
+
+| # | Condition | Track | K | Vote t | Proposer | Config | Verifier | Prob t | F1 [95% CI] | P | R | MCC |
+|--:|-----------|:-----:|--:|:-----:|:---------|:-------|:--------:|:-----:|:-----------:|---:|---:|---:|
+| 48 | h9-track1-image-h9-E-p1 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9E-p1 | — | — | 0.775 [0.757, 0.797] | 0.738 | 0.816 | — |
+| 49 | h9-track2-text-h9-E-p5 | text | 5 | 4 | gemini-3-flash | phase3c-t2-h9B-v5 | — | — | 0.705 [0.673, 0.730] | 0.748 | 0.666 | — |
+| 50 | h9-track1-image-h9-B-v5 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9B-v5 | — | — | 0.787 [0.767, 0.805] | 0.789 | 0.785 | — |
+| 51 | h1-brief-text | text | 3 | 3 | gemini-3-flash | detect_brief-text | — | — | 0.693 [0.666, 0.720] | 0.674 | 0.712 | — |
+| 52 | h9-track1-image-h9-A-p3 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9A | — | — | 0.779 [0.757, 0.801] | 0.777 | 0.781 | — |
+| 53 | h7-track2-text-T0.0 | text | 3 | 3 | gemini-3-flash | detect_brief-text | — | — | 0.696 [0.665, 0.724] | 0.584 | 0.861 | — |
+| 54 | h7-track2-text-T1.0 | text | 3 | 3 | gemini-3-flash | detect_brief-text | — | — | 0.687 [0.661, 0.714] | 0.676 | 0.698 | — |
+| 55 | h9-track1-image-h9-E-p4 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9E-p4 | — | — | 0.774 [0.754, 0.798] | 0.799 | 0.751 | — |
+| 56 | h9-track1-image-h9-C-img1 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9C-img1 | — | — | 0.785 [0.765, 0.809] | 0.794 | 0.777 | — |
+| 57 | h7-track2-text-T1.3 | text | 3 | 3 | gemini-3-flash | detect_brief-text | — | — | 0.682 [0.656, 0.713] | 0.686 | 0.677 | — |
+| 58 | h9-track1-image-h9-B-v3 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9B-v3 | — | — | 0.785 [0.764, 0.808] | 0.785 | 0.785 | — |
+| 59 | h7-track1-image-T1.0 | image | 3 | 2 | gemini-3-flash | detect_brief-text-image | — | — | 0.760 [0.737, 0.779] | 0.708 | 0.820 | — |
+| 60 | h9-track2-text-h9-B-v3 | text | 5 | 4 | gemini-3-flash | phase3c-t2-h9B-v3 | — | — | 0.685 [0.657, 0.711] | 0.682 | 0.688 | — |
+| 61 | h7-track1-image-T0.3 | image | 3 | 3 | gemini-3-flash | detect_brief-text-image | — | — | 0.751 [0.730, 0.773] | 0.736 | 0.766 | — |
+| 62 | h9-track1-image-h9-B-v4 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9B-v4 | — | — | 0.788 [0.766, 0.809] | 0.790 | 0.787 | — |
+| 63 | h9-track1-image-h9-E-p3 | image | 5 | 3 | gemini-3-flash | phase3c-t1-h9E-p3 | — | — | 0.773 [0.755, 0.794] | 0.775 | 0.772 | — |
+| 64 | h1-verbose-text-image | image | 3 | 2 | gemini-3-flash | detect_verbose-text-image | — | — | 0.763 [0.741, 0.784] | 0.719 | 0.813 | — |
+| 65 | h1-brief-text-image | image | 3 | 2 | gemini-3-flash | detect_brief-text-image | — | — | 0.758 [0.737, 0.779] | 0.707 | 0.816 | — |
+| 66 | h7-track1-image-T0.7 | image | 3 | 2 | gemini-3-flash | detect_brief-text-image | — | — | 0.756 [0.736, 0.780] | 0.684 | 0.844 | — |
+| 67 | h7-track1-image-T0.0 | image | 3 | 3 | gemini-3-flash | detect_brief-text-image | — | — | 0.737 [0.717, 0.757] | 0.649 | 0.852 | — |
+| 68 | h9-track2-text-h9-E-p3 | text | 5 | 4 | gemini-3-flash | phase3c-t2-h9B-v3 | — | — | 0.676 [0.645, 0.702] | 0.665 | 0.686 | — |
+
+## Tier 5 (F1: 0.674–0.755)
+
+| # | Condition | Track | K | Vote t | Proposer | Config | Verifier | Prob t | F1 [95% CI] | P | R | MCC |
+|--:|-----------|:-----:|--:|:-----:|:---------|:-------|:--------:|:-----:|:-----------:|---:|---:|---:|
+| 69 | h7-track1-image-T1.3 | image | 3 | 2 | gemini-3-flash | detect_brief-text-image | — | — | 0.755 [0.736, 0.776] | 0.721 | 0.794 | — |
+| 70 | h1-verbose-text | text | 3 | 2 | gemini-3-flash | detect_verbose-text | — | — | 0.674 [0.642, 0.705] | 0.577 | 0.811 | — |
+| 71 | h1-image-only | image | 3 | 2 | gemini-3-flash | detect_image-only | — | — | 0.736 [0.712, 0.760] | 0.684 | 0.796 | — |
+
+## Tier 6 (F1: 0.529–0.529)
+
+| # | Condition | Track | K | Vote t | Proposer | Config | Verifier | Prob t | F1 [95% CI] | P | R | MCC |
+|--:|-----------|:-----:|--:|:-----:|:---------|:-------|:--------:|:-----:|:-----------:|---:|---:|---:|
+| 72 | h11-bridge-brief-text-t0 | text | 10 | 10 | gemini-3-flash-preview | detect_brief-text | — | — | 0.529 [0.486, 0.563] | 0.423 | 0.707 | — |
+
+---
+
+### Column reference
+
+- **Vote t** — proposer-consensus vote threshold selected (the `t` value at which this condition's F1 at 20 m is maximal; for `single-pass` and `single-pass+PV` this is always 1).
+- **Proposer** — proposer model (Gemini 3 Flash for the vast majority of the corpus).
+- **Config** — the `config_version` string from the condition inventory — identifies the prompt library and major variant.
+- **Verifier** — for PV pipelines, the verifier prompt label (`v1` = the canonical adversarial-text verifier; `session-78-<variant>` = one of the 7 S78 matrix verifiers).
+- **Prob t** — verifier probability threshold (optimal at 20 m for each PV cell; `—` for non-PV architectures).
+- **MCC** — Matthews Correlation Coefficient at the buffer. `—` when `evaluate_detections.py` did not emit MCC for this condition (legacy evaluation outputs, primarily Era 1).

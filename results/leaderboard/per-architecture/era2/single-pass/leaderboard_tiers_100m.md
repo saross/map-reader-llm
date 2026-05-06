@@ -1,32 +1,45 @@
-# Leaderboard (F1 tiers) — 100m buffer
+# Leaderboard — Era 2, Single-pass (raw), 100 m buffer
 
-**Generated**: 2026-04-26T07:18:22.512108+00:00
-**Tiering metric**: F1
-**FDR q**: 0.05
-**Conditions**: 6 in 4 tier(s)
+**Generated**: 2026-05-06T00:25:57.067641+00:00
+**Source tier JSON**: `results/leaderboard/per-architecture/era2/single-pass/leaderboard_tiers_20m.json`
+**Git commit**: `ef3ec4fe`
+**Conditions**: 6 in 4 tier(s). Bounds: `/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/full_evaluation_bounds.geojson`.
 
-## Tier 1 (F1: 0.794–0.807)
+Tiering at 20 m: greedy-clique BH-FDR on tile-level paired permutation tests (10,000 permutations, seed 42) at q=0.05. Bootstrap 95% CIs (1,000 iterations) recomputed per buffer.
 
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 1 | h11-pvd-pro-medium-text-baseline | 1-pass | 2 | text | 1 | 1 | 0.807 | [0.765, 0.845] | 0.812 | 0.802 | 0.752 |
-| 2 | h11-pvd-pro-medium-image-baseline | 1-pass | 2 | image | 1 | 1 | 0.794 | [0.755, 0.829] | 0.730 | 0.871 | 0.734 |
+## Tier 1 (F1: 0.807–0.807)
 
-## Tier 2 (F1: 0.689–0.689)
+| # | Condition | Track | K | Vote t | Proposer | Config | Verifier | Prob t | F1 [95% CI] | P | R | MCC |
+|--:|-----------|:-----:|--:|:-----:|:---------|:-------|:--------:|:-----:|:-----------:|---:|---:|---:|
+| 1 | h11-pvd-pro-medium-text-baseline | text | 1 | 1 | gemini-3-flash | detect_brief-text | — | — | 0.807 [0.773, 0.834] | 0.812 | 0.802 | — |
 
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 3 | h11-pvd-image-baseline | 1-pass | 2 | image | 1 | 1 | 0.689 | [0.644, 0.722] | 0.546 | 0.936 | 0.311 |
+## Tier 2 (F1: 0.689–0.794)
 
-## Tier 3 (F1: 0.538–0.593)
+| # | Condition | Track | K | Vote t | Proposer | Config | Verifier | Prob t | F1 [95% CI] | P | R | MCC |
+|--:|-----------|:-----:|--:|:-----:|:---------|:-------|:--------:|:-----:|:-----------:|---:|---:|---:|
+| 2 | h11-pvd-pro-medium-image-baseline | image | 1 | 1 | gemini-3-flash | library_plus-hp | — | — | 0.794 [0.771, 0.817] | 0.730 | 0.871 | — |
+| 3 | h11-pvd-image-baseline | image | 1 | 1 | gemini-3-flash | library_plus-hp | — | — | 0.689 [0.665, 0.720] | 0.546 | 0.936 | — |
 
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 4 | h11-pvd-text-baseline | 1-pass | 2 | text | 1 | 1 | 0.538 | [0.478, 0.597] | 0.381 | 0.917 | -0.001 |
-| 5 | h11-n1-pro-image-medium-t07 | 1-pass | 2 | image | 1 | 1 | 0.593 | [0.533, 0.639] | 0.434 | 0.938 | 0.597 |
+## Tier 3 (F1: 0.538–0.538)
 
-## Tier 4 (F1: 0.432–0.432)
+| # | Condition | Track | K | Vote t | Proposer | Config | Verifier | Prob t | F1 [95% CI] | P | R | MCC |
+|--:|-----------|:-----:|--:|:-----:|:---------|:-------|:--------:|:-----:|:-----------:|---:|---:|---:|
+| 4 | h11-pvd-text-baseline | text | 1 | 1 | gemini-3-flash | detect_brief-text | — | — | 0.538 [0.492, 0.572] | 0.381 | 0.917 | — |
 
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 6 | h11-n1-pro-text-medium-t07 | 1-pass | 2 | text | 1 | 1 | 0.432 | [0.374, 0.485] | 0.281 | 0.933 | 0.309 |
+## Tier 4 (F1: 0.432–0.593)
+
+| # | Condition | Track | K | Vote t | Proposer | Config | Verifier | Prob t | F1 [95% CI] | P | R | MCC |
+|--:|-----------|:-----:|--:|:-----:|:---------|:-------|:--------:|:-----:|:-----------:|---:|---:|---:|
+| 5 | h11-n1-pro-image-medium-t07 | image | 1 | 1 | gemini-3-flash-preview | library_plus-hp | — | — | 0.593 [0.560, 0.630] | 0.434 | 0.938 | — |
+| 6 | h11-n1-pro-text-medium-t07 | text | 1 | 1 | gemini-3-flash-preview | detect_brief-text | — | — | 0.432 [0.398, 0.474] | 0.281 | 0.933 | — |
+
+---
+
+### Column reference
+
+- **Vote t** — proposer-consensus vote threshold selected (the `t` value at which this condition's F1 at 20 m is maximal; for `single-pass` and `single-pass+PV` this is always 1).
+- **Proposer** — proposer model (Gemini 3 Flash for the vast majority of the corpus).
+- **Config** — the `config_version` string from the condition inventory — identifies the prompt library and major variant.
+- **Verifier** — for PV pipelines, the verifier prompt label (`v1` = the canonical adversarial-text verifier; `session-78-<variant>` = one of the 7 S78 matrix verifiers).
+- **Prob t** — verifier probability threshold (optimal at 20 m for each PV cell; `—` for non-PV architectures).
+- **MCC** — Matthews Correlation Coefficient at the buffer. `—` when `evaluate_detections.py` did not emit MCC for this condition (legacy evaluation outputs, primarily Era 1).

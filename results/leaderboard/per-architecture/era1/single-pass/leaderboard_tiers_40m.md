@@ -1,57 +1,45 @@
-# Leaderboard (F1 tiers) — 40m buffer
+# Leaderboard — Era 1, Single-pass (raw), 40 m buffer
 
-**Generated**: 2026-04-26T07:18:22.387095+00:00
-**Tiering metric**: F1
-**FDR q**: 0.05
-**Conditions**: 21 in 6 tier(s)
+**Generated**: 2026-05-06T00:25:57.031195+00:00
+**Source tier JSON**: `results/leaderboard/per-architecture/era1/single-pass/leaderboard_tiers_20m.json`
+**Git commit**: `ef3ec4fe`
+**Conditions**: 21 in 1 tier(s). Bounds: `/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/full_evaluation_bounds.geojson`.
 
-## Tier 1 (F1: 0.718–0.718)
+Tiering at 20 m: greedy-clique BH-FDR on tile-level paired permutation tests (10,000 permutations, seed 42) at q=0.05. Bootstrap 95% CIs (1,000 iterations) recomputed per buffer.
 
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 1 | h4-canonical-last | 1-pass | 1 | image | 1 | 1 | 0.718 | [0.676, 0.753] | 0.605 | 0.881 | 0.212 |
+## Tier 1 (F1: 0.644–0.718)
 
-## Tier 2 (F1: 0.649–0.652)
+| # | Condition | Track | K | Vote t | Proposer | Config | Verifier | Prob t | F1 [95% CI] | P | R | MCC |
+|--:|-----------|:-----:|--:|:-----:|:---------|:-------|:--------:|:-----:|:-----------:|---:|---:|---:|
+| 1 | h4-canonical-last | image | 1 | 1 | gemini-3-flash | library_plus-hp | — | — | 0.718 [0.696, 0.742] | 0.605 | 0.881 | — |
+| 2 | h8-track2-text-scale-4 | text | 1 | 1 | gemini-3-flash | library_scale-4-text | — | — | 0.649 [0.615, 0.678] | 0.523 | 0.855 | — |
+| 3 | h8-track2-text-scale-8 | text | 1 | 1 | gemini-3-flash | library_scale-8-text | — | — | 0.652 [0.618, 0.681] | 0.525 | 0.859 | — |
+| 4 | h4-config-default | image | 1 | 1 | gemini-3-flash | library_plus-hp | — | — | 0.713 [0.693, 0.732] | 0.612 | 0.853 | — |
+| 5 | h5-track1-image-terse | image | 1 | 1 | gemini-3-flash | library_plus-hp_terse | — | — | 0.695 [0.672, 0.718] | 0.590 | 0.846 | — |
+| 6 | h8-track2-text-canonical | text | 1 | 1 | gemini-3-flash | library_canonical-text | — | — | 0.646 [0.615, 0.676] | 0.517 | 0.861 | — |
+| 7 | h8-track2-text-pure-positive-canon | text | 1 | 1 | gemini-3-flash | library_pure-positive-canon-text | — | — | 0.651 [0.616, 0.680] | 0.523 | 0.861 | — |
+| 8 | h5-track1-image-verbose | image | 1 | 1 | gemini-3-flash | library_plus-hp_verbose | — | — | 0.710 [0.687, 0.732] | 0.613 | 0.844 | — |
+| 9 | h4-canonical-first | image | 1 | 1 | gemini-3-flash | library_plus-hp | — | — | 0.715 [0.692, 0.737] | 0.607 | 0.868 | — |
+| 10 | h8-track1-image-exploratory-pure-positive-4hp | image | 1 | 1 | gemini-3-flash | library_pure-positive-4hp | — | — | 0.699 [0.678, 0.728] | 0.594 | 0.850 | — |
+| 11 | h8-track1-image-plus-hp | image | 1 | 1 | gemini-3-flash | library_plus-hp | — | — | 0.715 [0.692, 0.737] | 0.607 | 0.868 | — |
+| 12 | h5-track2-text-terse | text | 1 | 1 | gemini-3-flash | detect_brief-text_terse | — | — | 0.644 [0.613, 0.678] | 0.522 | 0.840 | — |
+| 13 | h8-track2-text-plus-hp | text | 1 | 1 | gemini-3-flash | library_plus-hp-text | — | — | 0.649 [0.617, 0.678] | 0.522 | 0.857 | — |
+| 14 | h8-track1-image-scale-8 | image | 1 | 1 | gemini-3-flash | library_scale-8 | — | — | 0.688 [0.666, 0.709] | 0.584 | 0.835 | — |
+| 15 | h8-track1-image-scale-4 | image | 1 | 1 | gemini-3-flash | library_scale-4 | — | — | 0.670 [0.639, 0.694] | 0.557 | 0.839 | — |
+| 16 | h5-track2-text-verbose | text | 1 | 1 | gemini-3-flash | detect_brief-text_verbose | — | — | 0.655 [0.625, 0.689] | 0.549 | 0.813 | — |
+| 17 | h8-track1-image-canonical | image | 1 | 1 | gemini-3-flash | library_canonical | — | — | 0.680 [0.654, 0.702] | 0.594 | 0.794 | — |
+| 18 | h8-track1-image-exploratory-pure-positive-2hp | image | 1 | 1 | gemini-3-flash | library_pure-positive-2hp | — | — | 0.665 [0.636, 0.697] | 0.550 | 0.840 | — |
+| 19 | h4-random | image | 1 | 1 | gemini-3-flash | library_plus-hp | — | — | 0.673 [0.645, 0.702] | 0.558 | 0.850 | — |
+| 20 | h8-track1-image-exploratory-pure-positive-canon | image | 1 | 1 | gemini-3-flash | library_pure-positive-canon | — | — | 0.680 [0.658, 0.708] | 0.592 | 0.800 | — |
+| 21 | h8-track1-image-pure-positive-canon | image | 1 | 1 | gemini-3-flash | library_pure-positive-canon | — | — | 0.676 [0.651, 0.703] | 0.586 | 0.800 | — |
 
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 2 | h8-track2-text-scale-4 | 1-pass | 1 | text | 1 | 1 | 0.649 | [0.594, 0.698] | 0.523 | 0.855 | 0.000 |
-| 3 | h8-track2-text-scale-8 | 1-pass | 1 | text | 1 | 1 | 0.652 | [0.596, 0.701] | 0.525 | 0.859 | 0.000 |
+---
 
-## Tier 3 (F1: 0.695–0.713)
+### Column reference
 
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 4 | h4-config-default | 1-pass | 1 | image | 1 | 1 | 0.713 | [0.674, 0.747] | 0.612 | 0.853 | 0.214 |
-| 5 | h5-track1-image-terse | 1-pass | 1 | image | 1 | 1 | 0.695 | [0.654, 0.729] | 0.590 | 0.846 | 0.223 |
-
-## Tier 4 (F1: 0.646–0.651)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 6 | h8-track2-text-canonical | 1-pass | 1 | text | 1 | 1 | 0.646 | [0.587, 0.698] | 0.517 | 0.861 | 0.000 |
-| 7 | h8-track2-text-pure-positive-canon | 1-pass | 1 | text | 1 | 1 | 0.651 | [0.596, 0.701] | 0.523 | 0.861 | 0.000 |
-
-## Tier 5 (F1: 0.699–0.715)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 8 | h5-track1-image-verbose | 1-pass | 1 | image | 1 | 1 | 0.710 | [0.669, 0.746] | 0.613 | 0.844 | 0.281 |
-| 9 | h4-canonical-first | 1-pass | 1 | image | 1 | 1 | 0.715 | [0.674, 0.749] | 0.607 | 0.868 | 0.098 |
-| 10 | h8-track1-image-exploratory-pure-positive-4hp | 1-pass | 1 | image | 1 | 1 | 0.699 | [0.654, 0.738] | 0.594 | 0.850 | 0.162 |
-| 11 | h8-track1-image-plus-hp | 1-pass | 1 | image | 1 | 1 | 0.715 | [0.674, 0.749] | 0.607 | 0.868 | 0.098 |
-
-## Tier 6 (F1: 0.644–0.688)
-
-| # | Condition | Arch | Era | Track | K | t | F1 | 95% CI | P | R | MCC |
-|--:|-----------|:----:|:---:|:-----:|--:|--:|---:|:------:|---:|---:|---:|
-| 12 | h5-track2-text-terse | 1-pass | 1 | text | 1 | 1 | 0.644 | [0.585, 0.698] | 0.522 | 0.840 | 0.000 |
-| 13 | h8-track2-text-plus-hp | 1-pass | 1 | text | 1 | 1 | 0.649 | [0.595, 0.698] | 0.522 | 0.857 | 0.000 |
-| 14 | h8-track1-image-scale-8 | 1-pass | 1 | image | 1 | 1 | 0.688 | [0.646, 0.722] | 0.584 | 0.835 | 0.147 |
-| 15 | h8-track1-image-scale-4 | 1-pass | 1 | image | 1 | 1 | 0.670 | [0.617, 0.718] | 0.557 | 0.839 | 0.133 |
-| 16 | h5-track2-text-verbose | 1-pass | 1 | text | 1 | 1 | 0.655 | [0.600, 0.704] | 0.549 | 0.813 | 0.081 |
-| 17 | h8-track1-image-canonical | 1-pass | 1 | image | 1 | 1 | 0.680 | [0.635, 0.719] | 0.594 | 0.794 | 0.098 |
-| 18 | h8-track1-image-exploratory-pure-positive-2hp | 1-pass | 1 | image | 1 | 1 | 0.665 | [0.613, 0.710] | 0.550 | 0.840 | 0.000 |
-| 19 | h4-random | 1-pass | 1 | image | 1 | 1 | 0.673 | [0.626, 0.714] | 0.558 | 0.850 | 0.084 |
-| 20 | h8-track1-image-exploratory-pure-positive-canon | 1-pass | 1 | image | 1 | 1 | 0.680 | [0.637, 0.718] | 0.592 | 0.800 | 0.097 |
-| 21 | h8-track1-image-pure-positive-canon | 1-pass | 1 | image | 1 | 1 | 0.676 | [0.631, 0.714] | 0.586 | 0.800 | 0.097 |
+- **Vote t** — proposer-consensus vote threshold selected (the `t` value at which this condition's F1 at 20 m is maximal; for `single-pass` and `single-pass+PV` this is always 1).
+- **Proposer** — proposer model (Gemini 3 Flash for the vast majority of the corpus).
+- **Config** — the `config_version` string from the condition inventory — identifies the prompt library and major variant.
+- **Verifier** — for PV pipelines, the verifier prompt label (`v1` = the canonical adversarial-text verifier; `session-78-<variant>` = one of the 7 S78 matrix verifiers).
+- **Prob t** — verifier probability threshold (optimal at 20 m for each PV cell; `—` for non-PV architectures).
+- **MCC** — Matthews Correlation Coefficient at the buffer. `—` when `evaluate_detections.py` did not emit MCC for this condition (legacy evaluation outputs, primarily Era 1).
