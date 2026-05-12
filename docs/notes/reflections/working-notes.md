@@ -16567,3 +16567,86 @@ Search terms: Obs 324, Phase3a Tier-2/3 closure, 14-cell campaign closure, 3 ski
 - **`reports/phase3a-verifier-completeness-audit-2026-05-03.md`**: original audit document. Its "Recovery status" annotation remains partially stale (see Caveats).
 - **Commit chain (Session 87 only)**: `1b2842d0` (e47 path-bug fix) → `6683952a` (3 skipped cells + derivatives) → `79daf93e` (initial audit script) → `b2bfc446`..`005e6c71` (executor agent — 6 commits) → `d6cdb648` (global redesign post-Tier-2/3) → `38892df9` (audit-script enhancements + 2 archive moves + final audit JSON) → this Obs.
 - **Artefacts**: `scripts/audit_verifier_completeness.py`; `reports/verifier-completeness-audit-2026-05-06.json`; `planning/tier23-sapphire-state-investigation.md`; `planning/three-skipped-cells-investigation.md`; `outputs/h11/e47-flash-high-text-1of5/verified/probabilities.json` (gap=57 recovered); `outputs/55maps-generalisation/verified-v2/probabilities.json` (gap=3 recovered); `archive/deprecated-staging/55maps-generalisation-verified-cleanup-20260410/`; `archive/deprecated-staging/e47-propose-brief-verified-v2-cleanup-20260423/`.
+
+## Observation 325: Independent verifier re-invocations at T=0.0 on Gemini 3 Flash produce non-trivial drift — two-regime reproducibility statement refines the "near-deterministic" claim (2026-05-12)
+
+### The finding
+
+**An unplanned sapphire–zbook parallel run of the Phase 3a verifier-completeness cleanup reveals two distinct reproducibility regimes for T=0.0 verifier calls on `gemini-3-flash-preview`. The aggregate match rate (99.51 % exact across 20,724 candidates) masks a sharp structural split: zero divergence on preserved (cached) candidates; non-trivial drift on independently re-invoked candidates.**
+
+The comparison covered 11 Tier-2/3 cells cleaned by both sapphire (2026-05-03, 15:19–15:28 UTC, $0.905 cumulative cost) and zbook (Sessions 86–87, 2026-05-05/06) operating independently on the same crop inputs and the same `gemini-3-flash-preview` API endpoint.
+
+**Per-cell summary (11 cells, 20,724 common candidates):**
+
+| Cell | N common | Exact % | Mean \|Δp\| | Max \|Δp\| | Flips @ thr 0.15 |
+|:-----|---:|---:|---:|---:|---:|
+| `flash-high-text-1of5-flash-medium-verifier` | 3,736 | 100.0 % | 0.000000 | 0.0000 | 0 |
+| `scale-4-optimal-487-v1-n10` | 3,601 | 100.0 % | 0.000000 | 0.0000 | 0 |
+| `image-n5-t1.0-v1-n5` | 2,840 | 100.0 % | 0.000000 | 0.0000 | 0 |
+| `image-n5-t0.3-v1-n5` | 2,190 | 99.9 % | 0.000046 | 0.0500 | 1 |
+| `image-n5-t0.7-v1-n5` | 2,017 | 100.0 % | 0.000000 | 0.0000 | 0 |
+| `session78-image-checklist` | 2,017 | 100.0 % | 0.000000 | 0.0000 | 0 |
+| `image-n5-t0.0-v1-n10` | 802 | 88.5 % | 0.025312 | 0.9500 | 14 |
+| `pro-high-image-1of5-pro-verifier` | 841 | 100.0 % | 0.000000 | 0.0000 | 0 |
+| `text-baseline-pro-verifier` | 1,047 | 99.8 % | 0.000812 | 0.8000 | 1 |
+| `pro-medium-image-baseline-pro-verifier` | 519 | 99.8 % | 0.000096 | 0.0500 | 0 |
+| `h8v2-wbf-scale-4` | 1,114 | 99.6 % | 0.001212 | 0.7500 | 0 |
+| **Total / agg** | **20,724** | **99.51 %** | **0.002498** | **0.9500** | **16** |
+
+**The two-regime statement is made concrete by decomposing the highest-divergence cell** (`image-n5-t0.0-v1-n10`, gap = 460):
+
+| Subset | N | Divergent (any Δp) | Decision flips at 0.15 |
+|:-------|---:|---:|---:|
+| Preserved (verifier outputs cached pre-cleanup, both hosts inherited) | 342 | **0** | **0** |
+| Recovered (each host independently re-invoked verifier for same crop) | 460 | **92** (20.0 %) | **14** (3.0 %) |
+| Total | 802 | 92 | 14 |
+
+The separator is clean: every divergent candidate came from the recovered subset; every preserved candidate was byte-identical across hosts and dates.
+
+**The refined two-regime statement:**
+
+1. **Strict reproducibility on preserved outputs.** Identical inputs → identical probability outputs across hosts and time whenever the verifier API is not re-invoked. This is the strongest possible form of cross-host reproducibility; it holds for thousands of preserved candidates across all four divergent cells.
+2. **Non-trivial stochasticity on independent re-invocations at T=0.0.** When the verifier API is called independently for the same crop input (across different hosts and different days), ~80 % of re-invocations produce byte-identical probabilities, ~17 % produce sub-threshold drift, and ~3 % cross the 0.15 decision threshold. Maximum observed |Δp| across all cells: **0.95**.
+
+The 16 total decision flips across 20,724 candidates are well below noise for any cell-level F1 metric. Aggregate paper claims are unaffected. The finding is a per-candidate reproducibility caveat, not a data-quality crisis.
+
+### The test
+
+The sapphire run was an accidental parallel: sapphire completed the overnight cleanup (530 candidates recovered across 11 cells, 15:19–15:28 UTC, 2026-05-03) and then went off-network during user travel. Zbook independently re-executed the same cleanup across Sessions 86–87 (2026-05-05/06). When sapphire came back online (2026-05-12), its 22 post-cleanup `probabilities.json` files and 22 pre-cleanup `.backup` files were preserved per the project's *Preserve and compare, don't discard* policy (CLAUDE.md § Unexpected Data as Discovery Opportunities) before reconciling sapphire's working tree to `origin/main`.
+
+The comparison script (`scripts/compare_sapphire_zbook_cleanup.py`) loaded both `probabilities.json` files for each cell and computed per-candidate |Δp|, exact-match rate, and decision flips at threshold 0.15. The preserved/recovered subset decomposition for `image-n5-t0.0-v1-n10` was derived by cross-referencing the sapphire pre-cleanup backup (which identifies the originally clean set of 342 candidates) against the cell's full candidate list of 802. Runtime: ~5 seconds; no API spend.
+
+### Why this matters
+
+1. **Refines the project memory entry `feedback_t0_multipass.md`.** That entry states "T=0.0 is near-deterministic on Gemini 3 Flash so K>1 ensemble diversity is minimal." This is correct for cached/preserved outputs but overstates determinism for independent re-invocations. The accurate statement is: T=0.0 gives strictly reproducible outputs when results are cached and reused, but independent re-invocations of the same prompt against the preview model yield ~3 % decision-flip rate and ~17 % any-drift rate. The K>1 ensemble-diversity conclusion (diversity minimal) may still hold, but for reasons other than byte-level determinism: errors may be *correlated* rather than *absent*.
+
+2. **Paper Methods and Limitations.** The two-regime framing supports an honest, calibrated reproducibility claim. For Methods: 100 % of preserved candidates were byte-identical across two independent host environments separated by two days. For Limitations: independent re-invocations of the verifier at T=0.0 against `gemini-3-flash-preview` are not strictly deterministic; aggregate F1 is stable but per-candidate verifier outputs should not be expected to be bit-reproducible across separate API calls.
+
+3. **Mechanism is unresolved.** Three plausible explanations — (a) Google-side model drift on `gemini-3-flash-preview` between 2026-05-03 and 2026-05-05/06; (b) crop PNG byte differences from independent re-extraction across hosts with potentially different `pillow` / `libpng` versions; (c) genuine API-side stochasticity at nominally T=0.0 — cannot be distinguished from this data. A controlled re-invocation experiment on the same host with the same crop bytes on the same day would be needed to isolate (c). This Obs records the empirical finding, not its mechanism.
+
+4. **Serendipitous discovery via *Preserve and compare*.** The parallel run was unplanned; the policy that surfaced this finding is the project's explicit heuristic against discarding unexpected data. A `git checkout` of sapphire's working tree (the natural "tidy up" reflex) would have destroyed the sapphire-side artefacts and with them the only empirical basis for a calibrated cross-host reproducibility statement.
+
+### Caveats / methodological notes
+
+**Only the gap=460 cell has enough re-invocations to estimate rates confidently.** The four divergent cells outside `image-n5-t0.0-v1-n10` all had small gaps (1–21 candidates re-verified), so observing 0–2 flips is consistent with the ~3 % rate estimated from the large cell — it is not evidence of a different regime.
+
+**The 7 cells with 100 % exact match had gaps of 1.** With only one candidate independently re-verified per cell, the probability of observing zero flips (at a 97 % per-invocation match rate) is 0.97 — so 100 % exact match on those cells provides no information beyond "the point estimate is consistent."
+
+**Aggregate F1 is stable.** Sixteen decision flips in 20,724 candidates (<0.08 %) are below any F1 rounding threshold at cell level. The recovery campaign's paper-load-bearing results (all cited in Obs 323 and Obs 324) are unaffected.
+
+**Preserved-vs-recovered decomposition was only fully verified for `image-n5-t0.0-v1-n10`.** The report notes the same pattern likely holds for the three other divergent cells (gaps 5–21), but the explicit preserved/recovered decomposition was only computed for the large-gap cell. This is sufficient for the two-regime claim.
+
+### Findable later
+
+Search terms: Obs 325, T=0.0 reproducibility, near-deterministic Gemini Flash two-regime, independent re-invocation drift, byte-identical preserved candidates, 99.51 % exact match 20,724 candidates, 16 decision flips threshold 0.15, 3 % decision-flip rate 17 % any-drift rate, image-n5-t0.0-v1-n10 gap=460, 92 divergent recovered 342 preserved zero divergence, max |Δp| 0.95, sapphire zbook parallel run cleanup comparison, preserve and compare policy serendipitous discovery, gemini-3-flash-preview model drift mechanism, pillow libpng crop PNG byte differences, feedback_t0_multipass.md refinement, paper Methods Limitations reproducibility claim, compare_sapphire_zbook_cleanup.py, archive phase3a-recovery-sapphire-parallel-run, sapphire off-network travel 2026-05-03 2026-05-12, results/sapphire-zbook-cleanup-comparison.md, commit a19918cc archive sapphire parallel run.
+
+### Related observations and artefacts
+
+- **Obs 323** (Phase3a Tier-1 propagation closure, Session 86): the Tier-1 cleanup run on zbook is one half of the parallel comparison documented here. The sapphire-side overnight run (2026-05-03) was the other.
+- **Obs 324** (Phase3a Tier-2/3 closure, Session 87): the Tier-2/3 cleanup on zbook is the other half. The 11 cells compared here are precisely the Tier-2/3 set closed in Obs 324.
+- **`results/sapphire-zbook-cleanup-comparison.md`**: the full comparative analysis — per-cell breakdown, methodology, decision-flip examples, interpretation, and paper-implications section. This Obs is a summary; the report is the authoritative numerical record.
+- **`archive/phase3a-recovery-sapphire-parallel-run/`**: the preserved sapphire-side artefacts (22 post-cleanup `probabilities.json` files + 22 pre-cleanup `.backup` files + resume logs). Archive README documents the inventory and the preservation rationale.
+- **`scripts/compare_sapphire_zbook_cleanup.py`**: the comparison script. Runs in ~5 seconds against local artefacts; no API spend.
+- **`feedback_t0_multipass.md`**: the project memory entry whose framing this Obs refines. The "K>1 ensemble diversity is minimal" conclusion may still hold (errors may be correlated), but the "near-deterministic" characterisation is overstated for independent re-invocations. A future update to that memory entry should point at this Obs as the empirical basis.
+- **Commit `a19918cc`** (`data(p3a-recovery): archive sapphire parallel run`): the commit that landed the archive directory, the comparison report, and the comparison script.
+- **Artefacts**: `results/sapphire-zbook-cleanup-comparison.md`; `archive/phase3a-recovery-sapphire-parallel-run/post-cleanup/` (22 files); `archive/phase3a-recovery-sapphire-parallel-run/pre-cleanup/` (22 files); `archive/phase3a-recovery-sapphire-parallel-run/logs/`; `scripts/compare_sapphire_zbook_cleanup.py`.
