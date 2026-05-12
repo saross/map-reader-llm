@@ -1,10 +1,81 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-05-06 (Session 86–87 — **Phase3a recovery campaign FULLY CLOSED**: Tier-1 (Obs 323) + Tier-2/3 (Obs 324) + 3 previously-skipped cells; all 14 cells gap=0; tracked audit script in CI infrastructure; 168 PASS / 0 FAIL / 43 REVIEW)
+**Last updated**: 2026-05-08 (Session 88 — doc audit plan drafted, sapphire reconciliation + comparative analysis (Obs 325), repo tidied; **backlog now firmly on user side** — see "What user owes" below)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
+
+---
+
+## ⏳ Session 89 (next) — START HERE — USER BACKLOG ITEMISED, PAPER OUTLINE GATED ON STAGE GATE 1
+
+**Posted**: 2026-05-08 evening, end of Session 88 (~before user steps away for ANU class prep).
+
+### TL;DR
+
+**The Session 88 work is done; the backlog is now firmly on the user's side.** Three blocking decisions + one memory update are listed below in priority order. Until the blocking items are resolved, paper outline drafting is gated and no new substantive analytical work is unblocked.
+
+Session 88 closed three things on top of the Session 86–87 recovery-campaign baseline:
+
+1. **Documentation audit plan** drafted and committed (`planning/documentation-audit-plan.md`, commit `ae0e0655`). 954 lines, ~25–38 hr remediation estimate, two stage gates. Awaiting Stage Gate 1 approval before execution.
+2. **Sapphire-state reconciliation** — sapphire came back online divergent by 32 commits + 22 modified files representing an unmerged parallel-run cleanup. Archived per *Preserve-and-compare* policy (`archive/phase3a-recovery-sapphire-parallel-run/`), compared against zbook (`results/sapphire-zbook-cleanup-comparison.md`), refined the T=0.0 near-determinism memory claim into a two-regime statement (**Obs 325**, commit `c6bd3576`); sapphire synced clean to origin/main.
+3. **Repo cleanup** — 13 previously-untracked items dispositioned per project conventions; new `archive/investigations/` category established; `archive/planning/` reserved for completed plans only per user principle (commit `2c00a531`).
+
+### Read-first
+
+1. **`planning/documentation-audit-plan.md`** (954 lines) — the main thing waiting for review. Stage Gate 1 is the entry point; § 3 (proposed spec upgrades) and § 7 (templating decision) are the key sections.
+2. **`results/sapphire-zbook-cleanup-comparison.md`** (Obs 325 / sapphire reconciliation deliverable) — short, paper-relevant; informs Methods/Reproducibility/Limitations sections of Paper-B.
+3. **This section** (you are reading it).
+
+### What user (Shawn) owes the next session — priority order
+
+**Blocking** (must be decided before non-trivial new work):
+
+1. **Doc audit plan approval (Stage Gate 1)** — review `planning/documentation-audit-plan.md`, focus on § 3 (proposed spec upgrades — concrete diffs to `docs/methodology/output-directory-standard.md`) and § 7 (templating-vs-hand-authoring decision for the 24 missing post-run reports). Accept / revise / reject the upgraded spec. Without this, the audit cannot execute and paper outline drafting is gated behind it.
+2. **Doc audit staging decision** — given the ~25–38 hr estimate, choose: (a) all-at-once over 2–3 days, (b) interleave with outline drafting (write outline, hit a gap, fill the gap, continue), or (c) front-load post-run report generation only and defer back-fill on touch. Without this, can't sequence the next two weeks of work.
+3. **Other-investigations cleanup decision** — by user's own "planning/ is for active plans" principle, the two other completed investigations still in `planning/` should also move to `archive/investigations/`:
+   - `planning/three-skipped-cells-investigation.md` (tracked, 35 KB)
+   - `planning/session-86-tier-regression-investigation.md` (tracked, the wrong-driver root-cause investigation referenced from Obs 324)
+
+   Confirm scope (it involves `git mv` of tracked content + reference updates in tracked docs that cite them). Small commit, ~10 min execution once approved.
+
+**Optional / nice-to-have** (not blocking; numbered separately from the blocking list above):
+
+1. **Memory update** — `feedback_t0_multipass.md` should be updated to cite Obs 325 as the empirical refinement of the near-determinism claim (and to articulate the preserved-vs-recovered two-regime split). User-controlled memory; not directly assistant-editable. The Obs 325 entry in working-notes is the empirical anchor.
+2. **Session 87 follow-ups** (carry-forward from prior beacon, unchanged):
+   - `compare_wbf_vs_greedy_production.py` repair (small; broken by v2 quarantine `3ec25e68`; research-artefact-only).
+   - 7th manifest-location pattern in `scripts/audit_verifier_completeness.py` (would convert the 43 REVIEW cells to PASS).
+   - Promote audit script to tier-2 pytest marker as regression guard.
+   - Pro flex tier 503 incident note in `feedback_flex_mode.md` (Pro flex returned 503 on essentially every call in Session 87; add Pro-tier-fallback to standard-tier in the memory).
+
+### Session 88 commit ledger (2026-05-08, in order)
+
+| Hash | Description |
+|---|---|
+| `ae0e0655` | docs(planning): documentation audit plan |
+| `a19918cc` | data(p3a-recovery): archive sapphire parallel run |
+| `c6bd3576` | docs(reflection): Obs 325 — T=0.0 reproducibility regimes |
+| `2c00a531` | chore(repo): tidy untracked logs + investigation |
+
+### Sapphire status
+
+Online and synced to `origin/main` (HEAD: `2c00a531`). Working tree clean. No outstanding sapphire-only state. Connectivity verified end-of-Session-88; LUKS unlock will be required if user reboots between now and Session 89.
+
+### User context (for assistant prompting cadence)
+
+- **2026-05-08 evening onwards**: user stepping away for ANU HUMN8031 class preparation.
+- **Through 2026-05-09 morning**: user unavailable for project work.
+- **2026-05-09 afternoon onwards** (approximately): user available to address backlog.
+- **Recommended prompting**: when user returns, gently surface the three blocking items in priority order. Item 1 (Stage Gate 1 doc audit review) is the highest-leverage unlock — it gates both items 2 and the entire paper-outline workstream.
+
+### Decision Point 5 resolution (carry-forward, unchanged)
+
+55-map `post_run_report.md` files do NOT cite the cleaned cells. Resolution: leave as historical snapshots, no edit. Document Revision Policy scope was extended to `outputs/**/post_run_report.md` for future post_run_reports that DO move.
+
+### GS 6-crop manual review (carry-forward, unchanged)
+
+User completed 2026-05-05. **All 6 candidates labelled `v2_overclaim`** — none are real missed mounds. Strengthens Obs 307's prompt-bias caveat enormously: at the strictest stratum (>125 m from any curator GT), the v2 classifier's precision was 0%. Notes captured in commit `b2a3cf0e`.
 
 ---
 
