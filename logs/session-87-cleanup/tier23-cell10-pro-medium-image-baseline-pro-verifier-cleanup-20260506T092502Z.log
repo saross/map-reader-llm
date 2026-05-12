@@ -1,0 +1,40 @@
+2026-05-06 17:25:05,613 - INFO - Cleanup: 10 candidates missing from outputs/h11/pv-diag-384/verified/pro-medium-image-baseline-pro-verifier/probabilities.json
+2026-05-06 17:25:05,613 - INFO - Backup: probabilities.json.pre-cleanup-20260506T092505.backup
+2026-05-06 17:25:05,614 - INFO - Attempt 1/3: 10 candidates remaining
+2026-05-06 17:25:06,033 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models "HTTP/1.1 200 OK"
+2026-05-06 17:25:06,037 - INFO - Resuming: 509 candidates already verified
+2026-05-06 17:25:06,038 - INFO - Skipping 509 already-verified candidates, 10 remaining
+2026-05-06 17:25:06,038 - INFO - Starting real-time verification: 10 candidates × 1 iterations, 10 workers
+2026-05-06 17:25:06,039 - INFO - AFC is enabled with max remote calls: 10.
+2026-05-06 17:25:06,041 - INFO - AFC is enabled with max remote calls: 10.
+2026-05-06 17:25:06,041 - INFO - AFC is enabled with max remote calls: 10.
+2026-05-06 17:25:06,041 - INFO - AFC is enabled with max remote calls: 10.
+2026-05-06 17:25:06,041 - INFO - AFC is enabled with max remote calls: 10.
+2026-05-06 17:25:06,045 - INFO - AFC is enabled with max remote calls: 10.
+2026-05-06 17:25:06,048 - INFO - AFC is enabled with max remote calls: 10.
+2026-05-06 17:25:06,050 - INFO - AFC is enabled with max remote calls: 10.
+2026-05-06 17:25:06,050 - INFO - AFC is enabled with max remote calls: 10.
+2026-05-06 17:25:06,050 - INFO - AFC is enabled with max remote calls: 10.
+2026-05-06 17:25:12,829 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-05-06 17:25:13,989 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-05-06 17:25:14,295 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-05-06 17:25:14,408 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-05-06 17:25:14,909 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-05-06 17:25:15,730 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-05-06 17:25:16,058 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-05-06 17:25:16,755 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-05-06 17:25:16,838 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-05-06 17:25:17,405 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 200 OK"
+2026-05-06 17:25:17,406 - INFO - Progress: 10/10 (verified: 10, failed: 0)
+2026-05-06 17:25:17,407 - INFO - Verification complete: 10/10 candidates succeeded
+2026-05-06 17:25:17,410 - INFO - Probabilities written: outputs/h11/pv-diag-384/verified/pro-medium-image-baseline-pro-verifier/probabilities.json
+2026-05-06 17:25:17,412 - INFO - Metadata written: outputs/h11/pv-diag-384/verified/pro-medium-image-baseline-pro-verifier/run.meta.json
+2026-05-06 17:25:17,412 - INFO - Score summary: mean=0.845, above threshold (0.5): 459/519 (88.4%)
+2026-05-06 17:25:17,420 - INFO - ==================================================
+2026-05-06 17:25:17,420 - INFO - Cleanup Report
+2026-05-06 17:25:17,420 - INFO - ==================================================
+2026-05-06 17:25:17,420 - INFO - Initial missing: 10
+2026-05-06 17:25:17,420 - INFO - Recovered:       10
+2026-05-06 17:25:17,420 - INFO - Still missing:   0
+2026-05-06 17:25:17,420 - INFO - Attempts used:   1
+2026-05-06 17:25:17,420 - INFO - Backup:          probabilities.json.pre-cleanup-20260506T092505.backup

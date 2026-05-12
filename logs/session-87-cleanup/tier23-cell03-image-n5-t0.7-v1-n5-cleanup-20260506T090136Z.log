@@ -1,0 +1,23 @@
+2026-05-06 17:01:45,904 - INFO - Cleanup: 1 candidates missing from outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/probabilities.json
+2026-05-06 17:01:45,905 - INFO - Backup: probabilities.json.pre-cleanup-20260506T090145.backup
+2026-05-06 17:01:45,909 - INFO - Attempt 1/3: 1 candidates remaining
+2026-05-06 17:01:46,348 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models "HTTP/1.1 200 OK"
+2026-05-06 17:01:46,351 - INFO - Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+2026-05-06 17:01:46,354 - INFO - Resuming: 2016 candidates already verified
+2026-05-06 17:01:46,356 - INFO - Skipping 2016 already-verified candidates, 1 remaining
+2026-05-06 17:01:46,356 - INFO - Starting real-time verification: 1 candidates × 1 iterations, 10 workers
+2026-05-06 17:01:46,357 - INFO - AFC is enabled with max remote calls: 10.
+2026-05-06 17:01:49,882 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-05-06 17:01:49,883 - INFO - Progress: 1/1 (verified: 1, failed: 0)
+2026-05-06 17:01:49,884 - INFO - Verification complete: 1/1 candidates succeeded
+2026-05-06 17:01:49,892 - INFO - Probabilities written: outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/probabilities.json
+2026-05-06 17:01:49,894 - INFO - Metadata written: outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/run.meta.json
+2026-05-06 17:01:49,895 - INFO - Score summary: mean=0.390, above threshold (0.5): 738/2017 (36.6%)
+2026-05-06 17:01:49,959 - INFO - ==================================================
+2026-05-06 17:01:49,960 - INFO - Cleanup Report
+2026-05-06 17:01:49,960 - INFO - ==================================================
+2026-05-06 17:01:49,960 - INFO - Initial missing: 1
+2026-05-06 17:01:49,960 - INFO - Recovered:       1
+2026-05-06 17:01:49,960 - INFO - Still missing:   0
+2026-05-06 17:01:49,960 - INFO - Attempts used:   1
+2026-05-06 17:01:49,960 - INFO - Backup:          probabilities.json.pre-cleanup-20260506T090145.backup

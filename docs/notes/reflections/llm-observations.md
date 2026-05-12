@@ -5843,7 +5843,7 @@ The pattern's durability is tested by today's late-session pivot: at "I'm leavin
 User was AFK for most of Session 87 (travelling). Four agents dispatched in sequence + parallel covered work that would otherwise have required them to be present:
 
 1. **Three-skipped-cells investigation agent** (read-only, ~14 min) — produced `planning/three-skipped-cells-investigation.md`. Critical finding: "missing crops gitignored" was sapphire-specific; all 3 cells zbook-tractable. Saved a planned sapphire-pull effort.
-2. **Tier-2/3 sapphire-state investigation agent** (read-only, ~13 min, parallel with #3) — produced `planning/tier23-sapphire-state-investigation.md`. Found 11 cells (not 10), all zbook-recoverable via crop-regen. Verified gap=460 cell has zero downstream consumers.
+2. **Tier-2/3 sapphire-state investigation agent** (read-only, ~13 min, parallel with #3) — produced `archive/investigations/tier23-sapphire-state-investigation.md`. Found 11 cells (not 10), all zbook-recoverable via crop-regen. Verified gap=460 cell has zero downstream consumers.
 3. **11-cell crop-regen + cleanup executor** (compute, ~30 min) — closed all 11 cells with $0.904 spend. Caught Pro flex 503 issue and worked around it autonomously with `--service-tier standard`. Did per-cell post-processing (derivatives + materialise + calibration) per investigation report's recipe.
 4. **Obs 324 writer** (~3 min, very fast) — appended Obs 324 with full closure narrative; correct cross-references; matched Obs 320/323 prose style auto-detected from the file.
 

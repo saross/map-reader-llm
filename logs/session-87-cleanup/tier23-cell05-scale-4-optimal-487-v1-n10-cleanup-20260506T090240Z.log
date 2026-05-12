@@ -1,0 +1,23 @@
+2026-05-06 17:02:57,929 - INFO - Cleanup: 1 candidates missing from outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10/probabilities.json
+2026-05-06 17:02:57,930 - INFO - Backup: probabilities.json.pre-cleanup-20260506T090257.backup
+2026-05-06 17:02:57,938 - INFO - Attempt 1/3: 1 candidates remaining
+2026-05-06 17:02:58,408 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models "HTTP/1.1 200 OK"
+2026-05-06 17:02:58,412 - INFO - Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+2026-05-06 17:02:58,418 - INFO - Resuming: 3600 candidates already verified
+2026-05-06 17:02:58,420 - INFO - Skipping 3600 already-verified candidates, 1 remaining
+2026-05-06 17:02:58,420 - INFO - Starting real-time verification: 1 candidates × 1 iterations, 10 workers
+2026-05-06 17:02:58,422 - INFO - AFC is enabled with max remote calls: 10.
+2026-05-06 17:03:02,775 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-05-06 17:03:02,777 - INFO - Progress: 1/1 (verified: 1, failed: 0)
+2026-05-06 17:03:02,777 - INFO - Verification complete: 1/1 candidates succeeded
+2026-05-06 17:03:02,790 - INFO - Probabilities written: outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10/probabilities.json
+2026-05-06 17:03:02,793 - INFO - Metadata written: outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10/run.meta.json
+2026-05-06 17:03:02,793 - INFO - Score summary: mean=0.314, above threshold (0.5): 1030/3601 (28.6%)
+2026-05-06 17:03:02,886 - INFO - ==================================================
+2026-05-06 17:03:02,886 - INFO - Cleanup Report
+2026-05-06 17:03:02,886 - INFO - ==================================================
+2026-05-06 17:03:02,886 - INFO - Initial missing: 1
+2026-05-06 17:03:02,886 - INFO - Recovered:       1
+2026-05-06 17:03:02,886 - INFO - Still missing:   0
+2026-05-06 17:03:02,886 - INFO - Attempts used:   1
+2026-05-06 17:03:02,886 - INFO - Backup:          probabilities.json.pre-cleanup-20260506T090257.backup

@@ -1,0 +1,24 @@
+Loading GT and bounds...
+  569 GT mounds, 487 tile bounds
+
+Loading greedy baseline + v1 verifier probs...
+  4358 greedy candidates with v1 probs
+
+Loading greedy baseline + v2 verifier probs...
+Traceback (most recent call last):
+  File "/home/shawn/Code/map-reader-llm/scripts/compare_wbf_vs_greedy_production.py", line 332, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/shawn/Code/map-reader-llm/scripts/compare_wbf_vs_greedy_production.py", line 175, in main
+    greedy_v2 = load_candidates_with_probs(GREEDY_MANIFEST, GREEDY_PROBS_V2)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/shawn/Code/map-reader-llm/scripts/compare_wbf_vs_greedy_production.py", line 76, in load_candidates_with_probs
+    probs = json.loads(probs_path.read_text())["results"]
+                       ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1029, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/shawn/Code/map-reader-llm/outputs/h11/e47-propose-brief/verified-v2/flash-high-text-1of5/probabilities.json'

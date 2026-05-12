@@ -1,0 +1,27 @@
+2026-05-06 16:35:37,532 - INFO - Cleanup: 3 candidates missing from outputs/55maps-generalisation/verified-v2/probabilities.json
+2026-05-06 16:35:37,534 - INFO - Backup: probabilities.json.pre-cleanup-20260506T083537.backup
+2026-05-06 16:35:37,551 - INFO - Attempt 1/3: 3 candidates remaining
+2026-05-06 16:35:38,040 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models "HTTP/1.1 200 OK"
+2026-05-06 16:35:38,043 - INFO - Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+2026-05-06 16:35:38,055 - INFO - Resuming: 8939 candidates already verified
+2026-05-06 16:35:38,061 - INFO - Skipping 8939 already-verified candidates, 3 remaining
+2026-05-06 16:35:38,061 - INFO - Starting real-time verification: 3 candidates × 1 iterations, 10 workers
+2026-05-06 16:35:38,062 - INFO - AFC is enabled with max remote calls: 10.
+2026-05-06 16:35:38,064 - INFO - AFC is enabled with max remote calls: 10.
+2026-05-06 16:35:38,065 - INFO - AFC is enabled with max remote calls: 10.
+2026-05-06 16:35:41,169 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-05-06 16:35:41,307 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-05-06 16:35:42,489 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+2026-05-06 16:35:42,490 - INFO - Progress: 3/3 (verified: 3, failed: 0)
+2026-05-06 16:35:42,491 - INFO - Verification complete: 3/3 candidates succeeded
+2026-05-06 16:35:42,523 - INFO - Probabilities written: outputs/55maps-generalisation/verified-v2/probabilities.json
+2026-05-06 16:35:42,525 - INFO - Metadata written: outputs/55maps-generalisation/verified-v2/run.meta.json
+2026-05-06 16:35:42,526 - INFO - Score summary: mean=0.412, above threshold (0.5): 3455/8942 (38.6%)
+2026-05-06 16:35:42,656 - INFO - ==================================================
+2026-05-06 16:35:42,656 - INFO - Cleanup Report
+2026-05-06 16:35:42,656 - INFO - ==================================================
+2026-05-06 16:35:42,656 - INFO - Initial missing: 3
+2026-05-06 16:35:42,656 - INFO - Recovered:       3
+2026-05-06 16:35:42,656 - INFO - Still missing:   0
+2026-05-06 16:35:42,656 - INFO - Attempts used:   1
+2026-05-06 16:35:42,656 - INFO - Backup:          probabilities.json.pre-cleanup-20260506T083537.backup
