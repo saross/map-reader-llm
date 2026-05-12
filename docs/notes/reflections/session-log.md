@@ -6010,3 +6010,76 @@ Plus 8 backlog items in the continuity doc (auto-regeneration hardening, cost_ma
 - Sapphire was off-network throughout (user travelling). All recovery work completed on zbook locally.
 - The `feedback_recompute_tolerance.md` memory ("don't agonise over cache hit rates if no API spend") was load-bearing: it allowed me to re-run heavy compute without escalating to the user when cache reuse was partial or imperfect.
 - The audit script was treated as parallel infrastructure work — landed mid-campaign alongside the cleanup commits — rather than after-the-fact tooling. Future operators will see it as woven into the campaign closure rather than appended.
+
+## Session 88 — 2026-05-12 (map-reader-llm): doc audit plan + sapphire reconciliation + Obs 325 + repo tidy
+
+**Outcome**: Three workstreams closed in a single ~4–5 hour interactive session. (1) Documentation audit plan drafted and committed at 954 lines / ~25–38 hr remediation estimate (`planning/documentation-audit-plan.md`, commit `ae0e0655`); awaiting user Stage Gate 1 approval. (2) Sapphire-state reconciliation: 32-commit-divergent / 22-modified-file working tree archived under `archive/phase3a-recovery-sapphire-parallel-run/` with companion analysis at `results/sapphire-zbook-cleanup-comparison.md`; **Obs 325** written by obs-writer agent (commit `c6bd3576`); sapphire synced clean to origin/main. (3) Repo cleanup: 13 previously-untracked items dispositioned per project conventions; new `archive/investigations/` category established; Session 89 continuity beacon written.
+
+**Total session API spend: $0** (zero new model calls; comparison ran against archived data; obs-writer agent ran on local context).
+
+### What landed (5 commits, in order)
+
+| Hash | Title |
+|---|---|
+| `ae0e0655` | docs(planning): documentation audit plan |
+| `a19918cc` | data(p3a-recovery): archive sapphire parallel run |
+| `c6bd3576` | docs(reflection): Obs 325 — T=0.0 two-regime reproducibility |
+| `2c00a531` | chore(repo): tidy untracked logs + investigation |
+| `b86b49ea` | docs(continuity): Session 89 beacon — user backlog |
+
+### Documentation audit plan workstream
+
+- General-purpose agent dispatched with detailed brief (audience priority, scope inclusion/exclusion, step ordering, output structure, stage gates).
+- Agent produced `planning/documentation-audit-plan.md` (954 lines, 12 sections + Changelog) including: spec/best-in-class reconciliation, gap inventory against the spec, remediation triage with effort estimates, templating-vs-hand-authoring decision for the ~24 missing post-run reports, cross-reference graph requirement, meta-gap check.
+- Headline findings flagged by the agent: (a) both reported "phantom" missing-doc gaps (Phase 2b summary, Phase 3b documentation) are labelling artefacts — Phase 2b summary exists at `results/retest/phase2b/analysis_summary.md`, Phase 3b absorbed into Phase 2e in v2.9 preregistration; (b) prior audit infrastructure exists at `results/documentation-audit/` (2026-04-22) and the plan extends rather than re-derives it; (c) the four 55-map post-run reports are the canonical exemplar for spec upgrade; (d) Era 1 runs predate `cost_manifest.json` so generator must leave stubs rather than fabricate costs.
+- Stage Gate 1 (spec upgrade approval) deferred to user; agent recommended ~6–9 hr of hand-authoring + remainder templated extraction across two stage gates.
+
+### Sapphire-state reconciliation workstream
+
+- Sapphire came back online (3-minute uptime at connectivity check) after user travel. Initial connectivity check via amd-tower failed; user identified the issue was sapphire-side (powered off / suspended); after physical intervention sapphire returned at `192.168.1.150`.
+- Investigation found sapphire HEAD at `0ceac93f` (32 commits behind origin); working-tree dirty with 22 modified files (11 cells × `probabilities.json` + `run.meta.json` each), all under `outputs/h11/pv-diag-384/...` and `outputs/h8-v2/wbf/scale-4/...`.
+- **Wrong-file inference reversal** during confirmation step: initial `jq` of `run.meta.json::cleanup_history` returned `NO_CLEANUP_HISTORY` on three sample cells, leading to a transient "partial run" inference. Reversed when stdout log was found to end with `Recovery driver complete. Cumulative cost: $0.904930` at 15:28:14 UTC and diff line counts scaled with audit gap counts (+2,774 lines for the gap=460 cell). The actual issue: `cleanup_history` is written to `probabilities.json`, not `run.meta.json`. See abductive-reasoning.md § Sequence 1.
+- Archive strategy executed per user approval ("archive + compare + sync"):
+  - Staged on sapphire: 22 post-cleanup files + 22 pre-cleanup `.backup` files + 4 resume-run log files into `/tmp/sapphire-parallel-run/`, tarred to 9.1 MB.
+  - Transferred to amd-tower via `scp`; extracted to `archive/phase3a-recovery-sapphire-parallel-run/`.
+  - Wrote `archive/phase3a-recovery-sapphire-parallel-run/README.md` documenting provenance.
+  - Wrote `scripts/compare_sapphire_zbook_cleanup.py` (~280 lines, 11 cells × per-cell stats).
+  - Comparison output: 20,724 candidates compared, 99.51 % exact match, 16 decision flips at threshold 0.15, max |Δp| = 0.95.
+  - Follow-up subpopulation check on the high-divergence cell: all 92 divergent candidates and all 14 decision flips fall in the 460-candidate recovered subset; 0 divergence in the 342-candidate preserved subset.
+  - Wrote `results/sapphire-zbook-cleanup-comparison.md` with TL;DR / Method / per-cell summary / key finding / interpretation / paper implications / changelog. Post-script Edit applied to add the recovered-vs-preserved analysis and refine the interpretation section.
+- Reconciliation: `git restore --source=HEAD` on the 22 modified files (after 22 modifications matched expectation; safety check before destructive operation), then `git pull --ff-only origin main`. Sapphire HEAD now at `a19918ccb` matching origin.
+- Obs 325 written by obs-writer agent with full cross-references and prose-style auto-match against Obs 320/323/324; agent flagged one numerical discrepancy in the spec (max |Δp| attribution) and resolved by deferring to the source report.
+
+### Repo cleanup workstream
+
+- 13 previously-untracked items dispositioned:
+  - **`planning/obs-323-skeleton.md`** deleted per its own header ("NOT for commit").
+  - **`planning/tier23-sapphire-state-investigation.md`** (706 lines, referenced from 2 tracked docs) moved to `archive/investigations/`; 5 cross-references updated across `docs/notes/reflections/llm-observations.md` and `docs/notes/reflections/working-notes.md`.
+  - **10 standalone session-86/87 logs** grouped into `logs/session-86-rebuild/` (7 files) and `logs/session-87-followups/` (3 files), filename `session-NN-` prefix stripped per the Session 78 precedent.
+  - **`logs/session-87-cleanup/`** (1 dir, 18 files) committed as-is per the Session 78 precedent.
+- **Mid-course correction**: initial recommendation was to *delete* the 10 standalone session logs (no inbound references). User pushed back with "have we been saving them? I'd like to be consistent" — `git log --oneline --diff-filter=A -- "**/session-*.log"` surfaced commits `7d15507b` and `770b32e8` (Session 78 precedent for committing session-named log dirs). Recommendation reversed; logs grouped and committed instead. See abductive-reasoning.md § Sequence 2.
+- New archive category `archive/investigations/` established with its own README; first occupant is the Tier23 investigation.
+- Two other completed investigations (`planning/three-skipped-cells-investigation.md`, `planning/session-86-tier-regression-investigation.md`) identified as similarly mis-located but deferred to user-approved scope (flagged in Session 89 continuity beacon as a pending decision).
+
+### Continuity workstream
+
+- Session 89 continuity beacon written and appended at the top of `planning/paper-writeup-continuity.md` (the prior Session 88 beacon preserved beneath).
+- Beacon structure: TL;DR / read-first / what-user-owes (3 blocking + 2 optional) / Session 88 commit ledger / sapphire status / user-context for prompting cadence / carry-forward items.
+- User backlog itemised: (1) doc audit plan Stage Gate 1 approval; (2) doc audit staging decision (all-at-once / interleave / front-load); (3) other-investigations cleanup scope; plus optional follow-ups for memory update and Session 87 carry-forward items.
+- Markdown lint passed across all new and modified files (ruff: clean on the comparison script; markdownlint: 0 errors across the new READMEs, comparison report, and continuity-doc update after one ordered-list-numbering fix).
+
+### Pending for next session (priority order, user-side blocking)
+
+1. **Doc audit plan approval at Stage Gate 1** (`planning/documentation-audit-plan.md`, focus § 3 spec upgrades and § 7 templating decision).
+2. **Doc audit staging decision** (a/b/c options enumerated in § 6 of the plan).
+3. **Other-investigations cleanup scope** (whether to move `three-skipped-cells-investigation.md` and `session-86-tier-regression-investigation.md` to `archive/investigations/` in a follow-up commit).
+4. **Memory update** (optional): `feedback_t0_multipass.md` to cite Obs 325 as the empirical refinement of the near-determinism claim.
+5. **Session 87 follow-ups** (carry-forward, all small): `compare_wbf_vs_greedy_production.py` repair, 7th manifest-location pattern in audit script, audit script tier-2 pytest promotion, Pro flex tier 503 fallback note in `feedback_flex_mode.md`.
+
+### Contextual assumptions
+
+- User context: Slot 1 Paper-B (day 18), Slot 2 ANU HUMN8031 (day 16, OVERDUE by 13 days). User stepping away for ANU class prep through 2026-05-09 morning per the continuity beacon (note: the beacon was written when "today" was 2026-05-08; the `/reflect` invocation happened on 2026-05-12 — the prompting cadence in the beacon is now stale by 4 days but the priority ordering remains valid).
+- Sapphire was on-network and reachable for the second half of the session (after user physical intervention); first half had no sapphire dependency.
+- The "Preserve and compare, don't discard" CLAUDE.md policy was load-bearing for the entire sapphire reconciliation arc — without it, the default `git checkout .` + `git pull` workflow would have lost the parallel-run data and Obs 325 would never have surfaced.
+- The obs-writer agent was used for Obs 325 specifically because its specialisation pressure (auto-detect format, collision-check Obs number, cross-reference outward, commit-and-push) made the writing reliable; a self-written Obs would have propagated one numerical inconsistency in my brief that the agent caught and flagged.
+- $0 API spend was a deliberate design choice: the comparison ran against already-collected data; the agent dispatches (general-purpose for the audit plan, obs-writer for Obs 325) didn't require new model calls beyond the agents' own internal reasoning.

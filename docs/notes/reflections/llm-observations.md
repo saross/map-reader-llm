@@ -5867,3 +5867,41 @@ Running the audit on real data surfaced a cell-layout-pattern catalogue I hadn't
 - Plus a deprecated-staging class needing archive treatment (verified-cleanup, verified-v2-cleanup)
 
 Until I tried to write the universal audit, this catalogue was implicit in operator knowledge. Now it's documented in the script's `find_manifest()` docstring + tests. Future documentation work could pull this catalogue out into `docs/methodology/cell-layout-patterns.md` for newcomers; it's currently scattered across runbook, driver, and audit script.
+
+## Session 88 Observations (2026-05-12, map-reader-llm) — framing-pivot-respect, precedent-check-before-disposition, and negative-evidence inference
+
+### When the user reframes after I cite documentation, the documentation is probably scope-limited
+
+Mid-session, the user asked about sapphire-side loose ends. I had just refreshed myself on the most-recent continuity beacon, which said sapphire was "no longer a blocker — all recovery work has been completed on zbook locally". I quoted this back and framed the question as already-answered. Shawn re-framed: he wanted to know about *data and outputs* on sapphire, not about whether sapphire blocked anything. The investigation found 22 modified files representing a complete parallel-run cleanup that had never reached origin; the comparison produced Obs 325 (T=0.0 two-regime reproducibility), a paper-Methods-relevant finding.
+
+**The structural pattern**: continuity-beacon claims like "X is no longer a blocker" are *scoped to a question* — usually "what gates the next deliverable?". Treating them as scope-universal misses adjacent questions ("what data is sitting unmerged?") that the beacon never addressed. The user's reframing was a signal that the beacon was scope-limited. **Operational rule**: when the user pushes back after I cite documentation back at them, treat the reframing as the real question and re-investigate. Citing documentation correctly at the wrong question is a category error that feels like rigour while being defensiveness.
+
+### The anti-confabulation rule applies to inferences from negative evidence, not only to invented identifiers
+
+When inspecting sapphire's 22 modified files, I `jq`-grepped three `run.meta.json` files for `cleanup_history` and got `NO_CLEANUP_HISTORY` from all three. Within two minutes I had built a coherent "the sapphire run halted partway" narrative and drafted a reframing message to the user. The narrative was wrong — `cleanup_history` is written to `probabilities.json`, not `run.meta.json` (per `scripts/run_pv.py:387`'s `probs.setdefault("cleanup_history", [])`). Two pieces of countervailing evidence broke the inference quickly: (1) the stdout log explicitly ended with `Recovery driver complete. Cumulative cost: $0.904930` at 15:28:14; (2) the diff line counts scaled with audit gap counts (+2,774 lines for the gap=460 cell, ~6 lines per candidate).
+
+**The CLAUDE.md anti-confabulation rule** warns about confidently asserting invented specifics. The Session 88 lesson is that the same conviction pattern emerges from *negative* evidence: an absence of a field, an empty file, a zero count. The reasoning ran "I checked and field X is absent → field X is meaningful → its absence means halted run". Each step felt sound; the chain produced a confident inference within seconds; only stepping back to test against orthogonal evidence (stdout log content, diff scaling) broke it. **Operational rule**: when forming a structural inference from a single piece of evidence — especially negative evidence — pause to identify at least one orthogonal source that should agree or disagree. If the inference doesn't anchor on multiple orthogonal sources, it's a one-shot conviction and should be flagged rather than asserted.
+
+### Check git precedent before recommending file deletion or archival
+
+During the untracked-items disposition discussion, I drafted clean recommendations including "delete the 10 standalone session-86/87 logs (no inbound references, per CLAUDE.md throwaway-files clause)". The user's single-question reply — "have we been saving them? I'd like to be consistent" — reversed it. A 30-second `git log --oneline -- "logs/session-*.log"` found commits `7d15507b logs(s78-rerun): Phase A re-run logs (15 files, 12 MB)` and `770b32e8 logs(s78-rerun): Phase B/C/D logs`. The precedent was to **commit** session-named log directories, not delete them.
+
+I had checked `.gitignore` patterns and inbound references; I had NOT run a git-log-by-pattern check to see whether similar files had been committed before. **The "check precedent" step is a 30-second action that catches a class of consistency errors that other checks miss**: a file may pass the `.gitignore` test (not ignored), pass the inbound-reference test (no tracked file cites it), and still be the kind of artefact that the project has historically committed. The git-log-by-pattern check is the only one that surfaces project convention as it has actually been practised.
+
+**Operational rule, sharper than the existing "trust precedent" instinct**: before recommending deletion or archival of any file, run `git log --oneline --diff-filter=A -- "<glob>"` for the file's path pattern. If similar files have been added in past commits, the precedent is the default and any deviation needs explicit justification. This rule applies even when the file has no inbound references and is not in `.gitignore`.
+
+### Specialised subagent (obs-writer) handoff was smooth and worth repeating
+
+For Obs 325, I dispatched the obs-writer agent with a brief that included the empirical finding, the cross-references to make, and the existing Obs format (matching Obs 320/323/324). The agent picked the next free Obs number (325) after a collision check, matched the prose style of recent entries, wrote 83 lines, included all cross-references I'd listed plus relevant ones I'd missed (e.g., to commit `a19918cc`), committed and pushed autonomously, and flagged one numerical discrepancy in my brief (I had attributed the max |Δp| = 0.95 to a specific candidate pair when the per-candidate examples don't show that pair). That last move — flagging my brief's numerical inconsistency rather than silently propagating it — is the kind of behaviour that makes specialised subagents worth dispatching even for tasks I could do myself.
+
+**The pattern worth holding onto**: specialised subagents are valuable not just for parallelism or context isolation; they're valuable for the **anti-confabulation pressure** they apply on the calling session's brief. The obs-writer's report ended with "Deviations from spec: one numerical discrepancy flagged...". A self-written Obs entry would have just propagated the inconsistency. The specialised subagent's value here was not speed; it was *another set of eyes on the brief itself*.
+
+### The "dual-axis archive" decision exists because both axes are real
+
+When organising the new untracked items into `archive/`, the user asked for an organisational principle that respected "planning/ is for active plans only". I proposed:
+
+- `archive/phase3a-recovery-sapphire-parallel-run/` (campaign-axis: a sibling to other Phase 3a-related archives)
+- `archive/phase3a-recovery-cleanup-logs/` (campaign-axis: same family)
+- `archive/investigations/` (type-axis: a generic category for completed read-only diagnostic reports)
+
+The split looks ad hoc but it's intentional: the cleanup logs only make sense in the context of the Phase 3a campaign (they're useless outside it), while the Tier-2/3 investigation is one of N investigations the project will produce over time and benefits from being findable as "the investigations folder" rather than "the Phase 3a folder". **The rule emerging**: archive things by the axis under which a future reader will most naturally search for them. If that axis is the campaign, use a campaign-named top-level directory. If that axis is the artefact type, use a type-named top-level directory. The same project can legitimately use both axes — the cost of mixing them is small (a flat-namespace archive root, easy to scan), the benefit is that each artefact lives where it will be found.
