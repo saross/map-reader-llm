@@ -47,6 +47,13 @@ outputs/.active_files.*
 # Ephemeral lock files
 .claude/*.lock
 
+# Claude Code subagent worktrees (per-developer transient state; not
+# project content). Worktree-archive transcripts that were canonical
+# under LFS pointer-stub conditions are now resolved into the per-project
+# archive/cc-sessions/ (verified via SHA-256 parity, 2026-05-21) and
+# will move to the consolidated rpi-shares store in Phase 0.
+.claude/worktrees/
+
 # ─────────────────────────────────────────────────
 # Global rules: locally regenerable artefacts (no API cost)
 # ─────────────────────────────────────────────────
