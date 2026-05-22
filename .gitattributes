@@ -3,6 +3,4 @@
 # CC session JSONL files can grow to 10MB+ and should be tracked with LFS
 # to avoid bloating the repository.
 
-archive/cc-sessions/**/*.jsonl filter=lfs diff=lfs merge=lfs -text
-archive/cc-sessions/**/*.jsonl.gz filter=lfs diff=lfs merge=lfs -text
 archive/deprecated-cc-sessions/*.jsonl filter=lfs diff=lfs merge=lfs -text
