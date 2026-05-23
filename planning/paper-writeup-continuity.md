@@ -170,7 +170,7 @@ User completed 2026-05-05. **All 6 candidates labelled `v2_overclaim`** — none
 
 Tier-1 propagation arc closed. The Phase3a Session-78 6-cell cleanup propagated cleanly through per-architecture and combined Era-2 leaderboards. **Obs 323** at commit `64974ec5` is the canonical narrative; **`reports/phase3a-verifier-completeness-audit-2026-05-03.md`** has a "Recovery status (annotated post-execution, partial — 2026-05-06)" section appended.
 
-The detour story matters and is recorded: the rebuild **failed first** because the Phase3a recovery runbook directed the wrong driver (`run_per_arch_leaderboards.sh` instead of `build_per_arch_redesign.sh`, default `--top-n 20` vs `--top-n 0`), silently thinning three strata. An overnight investigation agent traced the cause to a convention-propagation failure inherited from commit `03bf71c8` (E19/E20 lineage). Fixes: `baa271bf` (runner default), `ef3ec4fe` (runbook). Investigation report at `planning/session-86-tier-regression-investigation.md`.
+The detour story matters and is recorded: the rebuild **failed first** because the Phase3a recovery runbook directed the wrong driver (`run_per_arch_leaderboards.sh` instead of `build_per_arch_redesign.sh`, default `--top-n 20` vs `--top-n 0`), silently thinning three strata. An overnight investigation agent traced the cause to a convention-propagation failure inherited from commit `03bf71c8` (E19/E20 lineage). Fixes: `baa271bf` (runner default), `ef3ec4fe` (runbook). Investigation report at `archive/investigations/session-86-tier-regression-investigation.md`.
 
 ### Read-first (5 min)
 

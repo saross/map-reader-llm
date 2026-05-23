@@ -651,7 +651,7 @@ failure inherited from commit `03bf71c8`. Fixes landed in commits
 `baa271bf` (runner now passes `--top-n 0` + `--seed 42`) and `ef3ec4fe`
 (runbook § 6.1 / 6.2 corrected: tier rebuild now separated from
 post-processing). Investigation report at
-`planning/session-86-tier-regression-investigation.md`. Another instance
+`archive/investigations/session-86-tier-regression-investigation.md`. Another instance
 of the project's documented "convention-propagation failure" pattern
 (E19/E20 lineage). Worth flagging because the original Phase3a recovery
 runbook itself directed the wrong driver — readers of this audit who

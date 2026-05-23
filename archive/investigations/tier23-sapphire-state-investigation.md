@@ -638,7 +638,7 @@ The user's final say on which option to pick.
 | `logs/phase3a-recovery-overnight-resume/launch-summary.md` (full, especially § "Three skipped cells" and § "Estimated wall-clock to overnight completion") | Resume launch metadata; sapphire-side $0.905 ledger |
 | `planning/run-phase3a-recovery.sh` (lines 87–95 SKIP_CELLS, lines 311–544 per-cell invocations) | Driver source of truth for cell list |
 | `planning/phase3a-verifier-recovery-runbook.md` (§ 0–4, especially § 0.1 derived cells and § 1.1 cell inventory) | Cell-by-cell tier breakdown + propagation chain |
-| `planning/three-skipped-cells-investigation.md` (full; especially § 2.5 Option A, § 5.3 Sapphire requirement) | Sibling investigation referenced for Cell 1/2/3; not duplicated |
+| `archive/investigations/three-skipped-cells-investigation.md` (full; especially § 2.5 Option A, § 5.3 Sapphire requirement) | Sibling investigation referenced for Cell 1/2/3; not duplicated |
 | `reports/phase3a-verifier-completeness-audit-2026-05-03.md` (§ "Recovery status" lines 605–667) | "17 of 20 cleaned" annotation; outstanding-work list |
 | `outputs/h8-v2/wbf/scale-4/{crops,verified}/` | Cell 1 manifest + verified state |
 | `outputs/h11/pv-diag-384/flash-high-image-n5/image-t{0.0,0.3,0.7,1.0}/{verified-*,consensus-n5}/` | Cells 2–5 |
@@ -685,8 +685,8 @@ The user's final say on which option to pick.
 ### 9.3 Out of scope
 
 - The 3 skipped cells themselves (e47, 55maps-v2, proposer-verifier-384) —
-  covered by `planning/three-skipped-cells-investigation.md` and already
-  cleaned on zbook today.
+  covered by `archive/investigations/three-skipped-cells-investigation.md`
+  and already cleaned on zbook today.
 - Whether sapphire's local working tree has these 11 cells in a cleaned
   state. Cannot be verified from zbook; the answer determines whether
   Decision 2's Option II (wait for sapphire) is viable as a reproducible
