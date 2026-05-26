@@ -119,6 +119,76 @@ outputs/
 - **Verified files**: `verified-{verifier-variant}.geojson`
   (e.g., `verified-adversarial-text.geojson`)
 
+## Post-Run Report Schema
+
+Every `outputs/<run-id>/` directory representing a completed experimental
+run must contain a `post_run_report.md` conforming to the schema below.
+The schema is lifted from the four 55-map generalisation reports (Exemplar
+A: `outputs/55maps-image-generalisation/post_run_report.md`), which were
+the first to instantiate this template and remain the canonical reference
+for new authors.
+
+**Applies to**: experimental runs (proposer / verifier / consensus
+pipelines, scaling studies, threshold sweeps where the sweep itself was
+the experiment).
+
+**Does not apply to**: QGIS inspection layers (`qgis-dedup-check`,
+`qgis-sanity-check`, `qgis-wbf-check`), generated figure directories
+(`figures/`), or exploratory directories explicitly archived under
+`archive/`.
+
+### Required sections, in order
+
+1. **Front-matter block** (REQUIRED) — run name; completed timestamp
+   (UTC); host; launcher commit (40-char SHA); launcher version; config
+   path; pre-launch audit path (if applicable).
+2. **Top-line result** (REQUIRED) — F1 / P / R at the project's
+   standard buffer radii (20/30/40/50 m) with bootstrap 95% CIs (1,000
+   iterations, seed 42, tile-level resampling). Bolded operating point
+   `(vote_t, prob_t)`.
+3. **Corrected-for-incompleteness result** (REQUIRED if Dawid–Skene
+   applicable) — method × F1 / P / R table; explicit Δ F1 attribution.
+4. **Cost accounting** (REQUIRED) — overall total + budget-band check;
+   by stage (proposer / verifier / consensus / extract / evaluate); per
+   pass (workers, wall-clock, tiles OK/failed, retries, thinking tokens);
+   token breakdown (input billed, input cached, output, thinking, total);
+   unit costs (per tile, per map, per detection, per reference mound).
+5. **Per-map extrema** (REQUIRED if multi-map run) — top-5 / bottom-5 by
+   cost; mean cost-per-tile dispersion comment.
+6. **Scope** (REQUIRED) — map count; tile count; API call counts
+   (success / fail); reference mound count; candidate count; final-
+   detection count.
+7. **Timeline** (REQUIRED if material) — launch → per-stage → complete
+   (UTC).
+8. **Operational issues and recoveries** (CONDITIONAL — include only if
+   there were any).
+9. **Reproducibility recipe** (REQUIRED) — literal bash block; expected
+   cost ± tolerance; expected runtime.
+10. **Artefacts for the paper** (REQUIRED) — file → purpose table for
+    tracked artefacts; list of large intermediate artefacts available in
+    the companion data release.
+11. **See also / lineage block** (REQUIRED — see "Cross-reference /
+    lineage block" section below).
+12. **Changelog** (REQUIRED on revision — see the Document Revision
+    Policy in `/CLAUDE.md`).
+
+### Worked exemplar
+
+Authors back-filling a post-run report for an Era 1 run should open
+`outputs/55maps-image-generalisation/post_run_report.md` alongside their
+draft and mirror its section structure. Numeric formatting, table
+conventions, and prose register are all canonical there.
+
+### Templated generator
+
+A generator script (`scripts/generate_post_run_report.py`) is the
+recommended starting point for Era 1 back-fills: it auto-populates the
+deterministic sections (front-matter, cost accounting, scope, timeline)
+from `*.meta.json` and `evaluation/*.json`, leaving narrative sections
+(operational issues, lineage prose) marked with `<!-- TODO: human-author -->`
+for completion. See the documentation audit plan, § 7, for the
+templating-vs-hand-authoring rationale.
+
 ## Immediate TODOs
 
 ### 1. Track pv-diag-384 in git (requires sapphire access)
