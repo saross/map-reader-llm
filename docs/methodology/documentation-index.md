@@ -29,7 +29,7 @@ where information lives and how sources relate.
 |:------|:-----------|:--------|:-----------|:--------------|:-----------|:-----------------|
 | 1 | — | `phase1-library/` | `phase1-library.yaml` | D1, D2 | E1–E6 | Obs 21–31 |
 | 2a | H1 | `phase2a-*.md` | `phase2a-h1-modality.yaml` | D16 | E7–E8 | Obs 66–70 |
-| 2b | H7 | `phase2b-*.md` | `phase2b-h7-temperature*.yaml` | — | — | Obs 71–75 |
+| 2b | H7 | `phase2b-*.md` + `retest/phase2b/analysis_summary.md` (paper-citation source) | `phase2b-h7-temperature*.yaml` | — | — | Obs 71–75 |
 | 2c | H8 | `phase2c-*.md` | `phase2c-h8-library*.yaml` | D8, D11 | E9–E14 | Obs 76–82 |
 | 2d | H5 | `phase2d-*.md` | `phase2d-h5-negtext*.yaml` | D17 | E28 | Obs 103 |
 | 2e | H4 | `phase2e-*.md` | `phase2e-h4-ordering.yaml` | D18 | E29–E30 | — |
@@ -107,3 +107,23 @@ where information lives and how sources relate.
   covering work from Sessions 26-43)
 - Session log has gaps at Sessions 6-26 and 45-47; information from
   these sessions is captured in results files and working notes
+- **Phase 2b — split location is intentional, not a gap**: the
+  carry-forward parameters live at
+  `results/phase2b-carry-forward-parameters.md`, but the paper-citation
+  analysis lives at `results/retest/phase2b/analysis_summary.md`
+  (Session 75 closure, commit `e8c46809`). Phase 2b numbers also appear
+  in `results/retest/retest-production-summary.md` § 4 for
+  cross-reference. There is no top-level
+  `results/phase2b-analysis-summary.md` — the analysis is under
+  `retest/` rather than at the top level. Prior audits flagged this as
+  "Phase 2b summary missing"; the file is not missing, it's at a
+  non-obvious location.
+- **Phase 3b — does not exist**: the original v2.0 stranded-factorial
+  design had a Phase 3b (H9 Diversity, exploratory). The v2.9
+  preregistration redesign absorbed Phase 3b into Phase 2e; H9
+  Diversity work was subsequently redirected into the exploratory
+  Phase 3c matrix at `results/phase3c-diversity/`. See
+  `docs/methodology/preregistration/execution-plan.md` line 516
+  ("Phase 3b: (Absorbed into Phase 2e)") and line 810 (v2.9 changelog).
+  Prior audits flagged "Phase 3b absent"; the phase was retired, not
+  forgotten.
