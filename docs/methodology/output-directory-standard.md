@@ -8,12 +8,22 @@ browsing the repository on GitHub — no tribal knowledge required.
 
 ## Status
 
-- **Current state**: Organic growth from 10+ experimental phases; naming
-  inconsistent across phases
-- **Target**: Standardised layout with clear README, consistent naming,
-  and explicit gitignore policy
-- **Tracking gap**: `outputs/h11/pv-diag-384/` (top-tier F1=0.89 results)
-  is gitignored and only exists on sapphire
+- **Current state**: The directory structure reflects organic growth
+  across 10+ experimental phases. A documentation audit and remediation
+  campaign is in progress (see
+  `planning/documentation-audit-plan.md`) to align existing artefacts
+  to this spec. The Post-Run Report Schema and Cross-reference / Lineage
+  Block sections below were codified as part of that campaign; Era 1
+  back-fill of `outputs/<run-id>/post_run_report.md` and lineage blocks
+  is staged work (audit plan § 6).
+- **Target**: standardised layout with consistent naming, the schemas
+  defined below applied across all run directories, and explicit
+  gitignore policy.
+- **Tracking state for `outputs/h11/pv-diag-384/`**: structurally
+  important artefacts (geojsons, JSON metadata, manifests) are tracked
+  in git; bulk log files (`**/*.log`) are gitignored. The directory
+  exists on both zbook and sapphire. The earlier "only exists on
+  sapphire" status is obsolete.
 
 ## Artefact Types
 
