@@ -179,6 +179,45 @@ Authors back-filling a post-run report for an Era 1 run should open
 draft and mirror its section structure. Numeric formatting, table
 conventions, and prose register are all canonical there.
 
+### Dual-location convention
+
+Some runs have a post-run report at **two** paths:
+
+- `outputs/<run-id>/post_run_report.md` — alongside the run artefacts
+  (model outputs, evaluation JSON, cost manifests).
+- `configs/run-configs/<run-id>_post_run_report.md` — alongside the
+  YAML run config.
+
+When this duplication exists, the two copies drift inevitably unless one
+is canonical. The convention is:
+
+- The **`outputs/<run-id>/post_run_report.md` copy is canonical**. All
+  edits land there.
+- The `configs/run-configs/<run-id>_post_run_report.md` copy, when
+  present, must be replaced with a **one-line stub**:
+
+  ```markdown
+  # <run-name> — post-run report
+
+  Canonical version: [`outputs/<run-id>/post_run_report.md`](../../outputs/<run-id>/post_run_report.md)
+  ```
+
+- New runs must not author both copies. Author the canonical at
+  `outputs/...` and (optionally) create the stub at `configs/...` only
+  if a config-side breadcrumb is wanted.
+
+**Current state (2026-05-26)**: 2 of the 4 55-map runs are dual-located
+(`55maps-image-generalisation`, `55maps-text-min-generalisation`). The
+others are asymmetric — `55maps-text-high-generalisation` exists only at
+`configs/...`; `55maps-text-high-t0.3-generalisation` exists at neither;
+the retrospective text run uses divergent filename suffixes across sides
+(`post_run_report_retrospective.md` at `outputs/...`,
+`..._retrospective_post_run_report.md` at `configs/...`). Aligning these
+to the convention is back-fill work tracked in
+`planning/documentation-audit-plan.md` § 5.1 and § 6.3 (Bucket iii); it
+is **not** a spec violation in the present moment, but the spec is the
+target state once back-fill lands.
+
 ### Templated generator
 
 A generator script (`scripts/generate_post_run_report.py`) is the
