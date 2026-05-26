@@ -228,6 +228,71 @@ from `*.meta.json` and `evaluation/*.json`, leaving narrative sections
 for completion. See the documentation audit plan, § 7, for the
 templating-vs-hand-authoring rationale.
 
+## Cross-reference / Lineage Block
+
+Every results document (`results/**.md` anchor docs — see "anchor doc"
+definition in `planning/documentation-audit-plan.md` § 5.2) and every
+post-run report (`outputs/<run-id>/post_run_report.md`) must end with a
+`## See also` block in the structured format below.
+
+This codifies a new canonical format. Current best-in-class docs have
+inconsistent inline pointers (a `**Cross-reference**` bold tag in
+`results/phase3a-image-matrix/consensus-analysis-summary.md`; mixed
+inline prose and a numbered `## 13. Observation cross-references` H2 in
+`results/retest/retest-production-summary.md`; nothing at all in the
+55-map post-run reports). The structured `## See also` format replaces
+these patterns going forward.
+
+### Required format
+
+```markdown
+## See also
+
+- **Preceding experiment(s)**: `results/<phase-X>/<doc>.md` — one-line
+  gloss of what carried forward into this run.
+- **Follow-up experiment(s)**: `results/<phase-Y>/<doc>.md` — one-line
+  gloss of what this run handed off.
+- **Run output directory**: `outputs/<run-id>/` (link the directory; or
+  list specific artefact paths if the run is fragmented across
+  subdirectories).
+- **Working-notes Observations**: Obs N — short title (one bullet per
+  Obs; omit line numbers, they drift).
+- **Decisions / Errata**: D N or E N — one-line gloss (refer to
+  `docs/methodology/preregistration/decisions-log.md` and
+  `protocol-errata.md`).
+```
+
+### Conventions
+
+- **Heading**: always `## See also`. One canonical form; agents and
+  grep tools depend on it. Do not use `## Lineage`, `## Cross-reference`,
+  or other variants.
+- **Position**: last section of the document, immediately before
+  `## Changelog` (when present per the Document Revision Policy).
+- **Affirmative `None`**: every bullet must be present. If a category
+  genuinely does not apply (e.g., the first run in a phase has no
+  preceding experiment), write `**Preceding experiment(s)**: None.`
+  rather than omitting the bullet. Affirmative `None` distinguishes
+  "no preceding experiment exists" from "author forgot to record one";
+  the omission-is-signal alternative loses that distinction.
+- **Working-notes Observations**: anchor by `Obs N — title` only. Line
+  numbers drift as the working notes grow.
+- **Multiple entries**: when more than one preceding or follow-up
+  experiment exists, repeat the bullet:
+
+  ```markdown
+  - **Preceding experiment(s)**: `results/phase2a-...md` — gloss.
+  - **Preceding experiment(s)**: `results/phase2c-...md` — gloss.
+  ```
+
+### Rationale
+
+Once this format is propagated across the anchor-doc set (Phase 4 of
+the audit remediation), the project gets a machine-greppable lineage
+graph "for free". A validator script can parse the `## See also` blocks
+to produce `results/lineage-graph.json`, supporting paper-writing
+cross-reference workflows and consistency checks.
+
 ## Immediate TODOs
 
 ### 1. Track pv-diag-384 in git (requires sapphire access)
