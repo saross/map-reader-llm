@@ -1,5 +1,11 @@
 # Output Directory Standard
 
+> **Last revised**: 2026-05-26 (Phase 0 of documentation audit —
+> codified Post-Run Report Schema, dual-location convention,
+> Cross-reference / Lineage Block format, Documents in Revision Policy
+> Scope; refreshed stale Status section). See [§ Changelog](#changelog)
+> for revision history.
+
 ## Purpose
 
 This document defines the standard structure for experimental outputs.
@@ -392,3 +398,59 @@ Plus any remaining specific entries with explanatory comments.
 Before running the 55-map production run, create the `outputs/production/`
 directory with a README documenting the run configuration, cost, and
 the ground truth filtering applied (hairy-only symbols from student data).
+
+## Changelog
+
+### 2026-05-26 — Phase 0 of documentation audit
+
+**Refresh trigger**: Stage Gate 1 approval of
+`planning/documentation-audit-plan.md` (2026-05-26). Codified four
+previously unwritten conventions and refreshed one stale status note.
+
+**Changes**:
+
+| Section | Change | Commit |
+|---|---|---|
+| `## Post-Run Report Schema` (new) | Codified the 12-section post-run-report template lifted from Exemplar A (`outputs/55maps-image-generalisation/post_run_report.md`); added applicability carve-out, worked-exemplar pointer, templated-generator forward reference. Bootstrap CI params verified against Exemplar A lines 19, 26 pre-commit. | `c611c573` |
+| `## Post-Run Report Schema → ### Dual-location convention` (new) | Codified outputs/-canonical, configs/-stub rule for runs with duplicated reports; added dated snapshot of asymmetric reality (2/4 dual-located, 1 configs-only, 1 neither, 1 retrospective with divergent suffixes). | `1aaece11` |
+| `## Cross-reference / Lineage Block` (new) | New canonical `## See also` format for results docs and post-run reports; affirmative `None` required for inapplicable categories; no line-number anchors for working-notes Obs (drift-prone). | `593d60f3` |
+| `## Status` (refreshed) | Replaced stale "outputs/h11/pv-diag-384/ is gitignored and only on sapphire" with verified-against-filesystem replacement (1,497 of 48,666 files tracked; only **/*.log gitignored; present on both machines). Dropped stale "F1=0.89" parenthetical. | `d9cc2501` |
+| `## Documents in Revision Policy Scope` (new) | Authoritative enumeration of the six in-scope path patterns with 2026-05-26 file counts (139 experiment_intent, 11 evaluation, 1 pre_launch_audit, etc.) + post-audit target counts + compliance notes. CLAUDE.md cross-references back. | `c30ce58a` |
+
+**Before → after table for numerical claims that moved**:
+
+| Claim | Before | After |
+|---|---|---|
+| `outputs/h11/pv-diag-384/` tracking state | "gitignored, only exists on sapphire" | "1,497 of 48,666 files tracked; **/*.log gitignored; present on zbook and sapphire" |
+| Stale F1 reference | "top-tier F1=0.89 results" | Parenthetical dropped (spec docs shouldn't carry canonical headline numbers) |
+
+**What did NOT change**:
+
+- The doc's purpose ("standard structure for experimental outputs").
+- The Artefact Types table.
+- The Gitignore Policy section.
+- The Proposed Directory Structure tree.
+- The Naming Conventions section.
+- The Immediate TODOs section (items 1–4 still pending).
+
+**Open items flagged during this revision** (to be addressed in
+`planning/documentation-audit-plan.md` Changelog after Phase 0 lands —
+TaskList #13):
+
+- § 3.2 of the audit plan assumed all four 55-map runs were
+  dual-located; actually 2 are.
+- § 3.3 vs § 6.1 internal contradiction about which file Edit 5 touches
+  (resolved: both, per § 3.3's reasoning).
+- `experiment_intent.md` count: plan said ~50; actual 139.
+
+### 2026-04-08 — Original publication
+
+Spec doc authored at commit `287123ca` as part of the project's first
+attempt to standardise the `outputs/` directory layout. Defined the
+directory structure, artefact types, gitignore policy, naming
+conventions, and immediate-TODO list for further alignment work.
+Schema and convention sections that codify implicit templates
+(Post-Run Report Schema, Dual-location convention, Cross-reference /
+Lineage Block, Documents in Revision Policy Scope) were not present in
+the original publication; they were added in the 2026-05-26 revision
+above.
