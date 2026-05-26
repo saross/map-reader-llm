@@ -303,6 +303,35 @@ graph "for free". A validator script can parse the `## See also` blocks
 to produce `results/lineage-graph.json`, supporting paper-writing
 cross-reference workflows and consistency checks.
 
+## Documents in Revision Policy Scope
+
+The Document Revision Policy (defined in `/CLAUDE.md` § "Document
+Revision Policy") applies to the document classes enumerated below. The
+CLAUDE.md wording covers these via "analogous post-run summary docs
+under `outputs/`"; this section is the authoritative enumeration —
+CLAUDE.md cross-references back here for the canonical path list.
+
+| Path pattern | Class | Count (2026-05-26) | Count (post-audit target) | Compliance |
+|---|---|---:|---:|---|
+| `results/**.md` (anchor docs only — see audit plan § 5.2) | Paper-citation working docs | ~35–50 | ~35–50 | Mostly non-compliant; back-fill on touch |
+| `reports/**.md` | Internal reports authored by Claude Code | varies | varies | Mostly compliant |
+| `outputs/**/post_run_report.md` | Per-run post-run reports | 4 + 1 retrospective | ~22 | 4 compliant; 14 missing entirely; back-fill in audit Phase 3 |
+| `outputs/**/experiment_intent.md` | Per-pass / per-run intent files | 139 | 139 | Informal; in scope going forward |
+| `outputs/**/evaluation.md` | Per-run evaluation summaries | 11 | 11 | Informal; in scope going forward |
+| `outputs/**/pre_launch_audit.md` | audit-config skill outputs | 1 (`55maps-text-high-t0.3-generalisation`) | varies | In scope going forward |
+
+**Back-fill rule**: per CLAUDE.md, "back-fill on touch only" — when you
+edit one of these documents, attach the banner + Changelog stub. Do not
+bulk back-fill unchanged documents. The "Count (post-audit target)"
+column is the expected file count once Phase 3 authoring lands, not a
+compliance target; banner compliance follows the back-fill-on-touch
+rule.
+
+**Out of scope**: `docs/notes/reflections/*.md` (append-only historical
+records), `docs/methodology/preregistration/*.md` (governed separately
+by the preregistration process), `docs/methodology/research/*.md`
+(third-party Deep Research reports), and `archive/**` (frozen state).
+
 ## Immediate TODOs
 
 ### 1. Track pv-diag-384 in git (requires sapphire access)
