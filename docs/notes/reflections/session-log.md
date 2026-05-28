@@ -6083,3 +6083,68 @@ Plus 8 backlog items in the continuity doc (auto-regeneration hardening, cost_ma
 - The "Preserve and compare, don't discard" CLAUDE.md policy was load-bearing for the entire sapphire reconciliation arc — without it, the default `git checkout .` + `git pull` workflow would have lost the parallel-run data and Obs 325 would never have surfaced.
 - The obs-writer agent was used for Obs 325 specifically because its specialisation pressure (auto-detect format, collision-check Obs number, cross-reference outward, commit-and-push) made the writing reliable; a self-written Obs would have propagated one numerical inconsistency in my brief that the agent caught and flagged.
 - $0 API spend was a deliberate design choice: the comparison ran against already-collected data; the agent dispatches (general-purpose for the audit plan, obs-writer for Obs 325) didn't require new model calls beyond the agents' own internal reasoning.
+
+## Session 90 — 2026-05-26 to 2026-05-28 (map-reader-llm) — documentation audit Phase 0, manifest direction, H11 principle
+
+First substantive return since Session 88 (2026-05-12); intervening fortnight was other projects. One continuous conversation across three calendar days. $0 API spend.
+
+### Backlog clearance
+
+- Archived two completed investigations out of `planning/` into `archive/investigations/` (`three-skipped-cells-investigation.md`, `session-86-tier-regression-investigation.md`), with README table + reference repathing in 3 active docs; reflection logs left untouched as historical record. Commit `d4722105`.
+
+### Documentation audit — Phase 0 (Bucket (i) spec reconciliation), Stage Gate 1 approved 2026-05-26
+
+Eight spec edits, executed one-at-a-time (propose / approve / commit / push):
+
+1. `c611c573` — Post-Run Report Schema codified in `output-directory-standard.md` (12 required sections).
+2. `1aaece11` — Dual-location convention (outputs/-canonical, configs/-stub).
+3. `593d60f3` — Cross-reference / Lineage Block format (one canonical `## See also`; affirmative `None`; no line-number Obs anchors).
+4. `d9cc2501` — `## Status` section refreshed (pv-diag-384 tracking state corrected; stale F1=0.89 dropped).
+5. `c30ce58a` — Documents in Revision Policy Scope codified (spec doc + `CLAUDE.md` cross-reference).
+6. `ee0d7aa1` — Revision Policy banner + Changelog applied to the spec doc itself (voluntary; not in enumerated scope).
+7. `0e697c77` — Phase 2b split-location + Phase 3b absorption clarifications in `documentation-index.md`.
+8. `2ef592c8` — `results/README.md` full rewrite (62 subdirs grouped; "Era" retired; pre-v2.9 stranded-factorial scaffold removed).
+
+- `b31d3e36` — audit-plan Changelog correction: recorded 3 errors caught during Phase 0 (§ 3.2 "all four dual-located" false → only 2; `experiment_intent.md` ~50 → 139 actual; § 3.3 vs § 6.1 internal contradiction) + the 8-commit ledger.
+
+### Manifest direction (mid-session reframe by user)
+
+- Decided to retire "Era 1/2/3" terminology going forward in favour of three JSON-canonical / MD-rendered manifests under `results/`: runs, analyses, passes (passes + analyses foreign-keyed to runs). `historical_aliases` field preserves "Era" usage for traceability.
+- Sequencing: schema-first (option III) — design + commit schemas, defer population to Phase 1 generator.
+- Schema-design brief written: `planning/manifest-schema-design.md` (9 locked decisions, proposed field lists, 8 open decisions). Commit `9d85a64a`.
+
+### Agent investigations (two, both read-only, both verified)
+
+- `reports/gs-tile-pool-mapping-2026-05-28.md` (commit `9a959a59`): mapped 9 GS subdirs to tile pools. Confirmed canonical taxonomy at `results/evaluation-scopes.md` (Era 1=340×512, Era 2=487×384, Era 3=327×384). User's "~60 tile" = pre-Era pool, retired 2026-03-15, used by none of the 9.
+- `reports/h11-reorganisation-cost-estimate-2026-05-28.md` (commit `6585345b`): cost/risk estimate for moving misplaced `outputs/h11/` subdirs. 4.5–7.5h confident set; SPECIAL_CONFIGS coupling + 6 .gitignore rules + ~13 paper-cited docs flagged.
+
+### H11 scope principle + reorganisation decision
+
+- Principle (memory `3be9d3066363`, commit `e2abe41d`): H11 = tile-size study + the 384px approach-characterisation that fed the leaderboard. STAY: pv-diag-256/384, proposer-verifier-384/512, n1-outstanding-384, e47-propose-brief. MOVE (TaskList #17, ~5–6h, blocked by schema #15): gold-standard-v2, v2-proposer-test, wbf, propose-brief-v1-test. No inventory edit / no leaderboard regen (e47 stays).
+
+### Memories captured (4)
+
+- `56afd23f91c8` (methodology) — `## See also` canonical lineage heading.
+- `ef713179f902` (methodology) — post-run-report schema location.
+- `3be9d3066363` (decision) — H11 scope principle.
+- `6d0c01fd6dc7` (feedback) — epicycles → reframe.
+
+### Handoff + reflection
+
+- `/handoff` run: continuity beacon (Session 91) updated; user-observations 24–28 added (`78603036`); 2 inbox flags + 4 memories written to pa-data (left for daily-sync — that store has cross-project accumulation from other sessions this week). Working-notes Obs: empty (planning work, no empirical finding).
+- `/reflect` run (this entry + session-reflection, llm-observations, working-notes methodological note, abductive-reasoning Session 90 sequences).
+
+### Pending for next session (priority order)
+
+1. **Schema design** (TaskList #15) — read `planning/manifest-schema-design.md` first; resolve 8 open decisions; deliver 3 committed JSON Schema files.
+2. **H11 reorganisation** (#17, blocked by #15) — move 4 subdirs, archive 2 UNINTENDED-T1.0 runs, ~5–6h.
+3. **Phase 1 generator** (`scripts/generate_post_run_report.py`) — extended to also emit manifest rows.
+4. **Archive GS report** (#16) once runs manifest carries its content.
+
+### Contextual assumptions
+
+- This was pure documentation/planning/agent-orchestration work; $0 API spend, no detection runs, no API Call Review Gate triggered.
+- The README rewrite (Edit 8) is committed but deliberately frozen pending manifest population — a future reader should not re-touch it before the manifests exist (per Session 91 beacon).
+- The manifest direction emerged *after* Edit 8 had landed; the partial supersession of the README is a known, accepted cost (Observation 26), not thrash.
+- pa-data (memories + inbox flags) intentionally left uncommitted: the store had accumulated cross-project writes from the user's other sessions this week, so manual commit would have swept up unrelated work — the daily-sync handles it.
+- The H11 reorganisation cost estimate assumes `e47-propose-brief/` stays (the principled outcome); the estimate's "Strategy C" (moving e47) is moot under the adopted principle.
