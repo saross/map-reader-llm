@@ -453,7 +453,7 @@ prefix-reference, no M:N lineage table needed.
 
 **Deliverable landed**: JSON Schema (draft 2020-12) files under
 `docs/methodology/manifest-schemas/` (runs, conditions, passes, analyses,
-run-registry). Commit hash: *pending*.
+run-registry). Commit hash: `3204993e`.
 
 ### 2026-05-28 — Original publication
 
