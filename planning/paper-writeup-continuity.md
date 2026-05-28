@@ -1,14 +1,68 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-05-28 (Session 90 — Phase 0 of doc audit complete; manifest approach adopted to replace "Era" terminology going forward; runs/analyses manifests in design; README revision deferred to post-manifest population)
+**Last updated**: 2026-05-28 (Session 91 — manifest schema design RESOLVED: 4-entity model + JSON Schema files authored; session crashed mid-conversation on a `thinking`-block API error and was recovered from transcript with no decision lost)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
 
 ---
 
-## ⏳ Session 91 (next) — START HERE — MANIFEST SCHEMA DESIGN NEXT; PHASE 0 OF AUDIT CLOSED
+## ✅ Session 91 (this session) — START HERE — MANIFEST SCHEMA RESOLVED + RECOVERED FROM CRASH
+
+**Posted**: 2026-05-28, after recovering the crashed schema-design session.
+
+### TL;DR
+
+**The manifest schema design is resolved and the JSON Schema files are authored.** The schema-design session (the work the Session 90 beacon below pointed at) crashed mid-conversation on an unrecoverable API error (`thinking` blocks in the latest assistant message cannot be modified) and could not be resumed. It was **recovered from the session transcript** (`8529ef59-9d20-4d03-a3a1-01193d026c4e`); no design decision was lost. The decisions were re-confirmed with the user and committed.
+
+**Key outcome — the design grew from 3 flat manifests to a normalised 4-entity model**, after walking the proposal against the real filesystem (three Explore agents + direct `*.meta.json` re-reads):
+
+- Chain: `study → run → condition → pass`, analyses over conditions.
+- **run / condition / pass / analysis** are entities (each its own manifest). **study** is a grouping tag on runs (`primary_hypothesis` + `also_informs[]`), not an entity — promotable later. A **run registry** (`run_id → directory_path`) is the enumeration mechanism.
+- **Passes moved up to the run** (they own the generation config + cost); a **condition** is one *evaluable scored result* (a leaderboard cell) that owns the **metrics** and *references* the first N passes of its proposer pool.
+- `run_id` = **stable flat slug** + **mutable `directory_path`** → the H11 reorg edits one field per run, no FK/lineage cascade.
+- Headline metric: **human-designated** `headline_condition_id` + rationale (no auto-"best"); statistical ties recorded as analyses.
+- Analyses compare **`conditions_compared`** (not `runs_compared`) and gain **preregistration linkage** (`hypothesis_refs`, `preregistered` status, `deviations`).
+
+Full worked rationale is in `planning/manifest-schema-design.md` § 1A; the resolved field lists are § 2; the eight original open decisions are resolved in § 3 (several mechanical sub-decisions are marked **(proposed)** — assistant defaults, flagged for veto: `pass_id`/`condition_id`/`analysis_id` conventions, schema-file location, required-vs-optional/lenient validation).
+
+### The load-bearing finding that simplified the model
+
+**Cross-config / cross-model fusion was NEVER executed.** A focused git-history + working-notes investigation confirmed every entry in `SPECIAL_CONFIGS` (`scripts/fuse_detections_wbf.py`) fuses passes from a single proposer config; the H9 "diversity dividend" (Obs 140–148) was diversity *within* one config's passes. **Consequence**: condition → pass is a simple prefix-reference (`proposer_pool` + `n_passes`), not a many-to-many lineage table, and no fifth "proposer-pass-set" entity is needed.
+
+### Model-provenance findings (recorded; recovery deferred)
+
+While verifying field placement, the model metadata was scanned authoritatively (2,413 `*.meta.json` across `outputs/` + `archive/`):
+
+- **The project runs Gemini 3 / 3.1, never 2.5.** Flash dominant (`gemini-3-flash`, `gemini-3-flash-preview`). The session-start memory citing "Gemini 2.5 quotas" is stale — do not carry forward.
+- **Pro genuinely ran but is sparse** (~30 meta files) and its string **varies**: `gemini-3.1-pro-preview` (in `outputs/`) vs `gemini-3-pro-preview` (archive only). Plus a flash-lite variant and 2 legacy `gemini-2.5-flash` stragglers in archive.
+- **⚠ Anomaly**: `pro-`named conditions in `outputs/h11/n1-outstanding-384/` (`pro-text-high-t0`, `pro-image-high-t0`) actually **ran Flash** — `per_item_metadata.model_used = gemini-3-flash-preview` for all 487 items. **Lesson baked into the schema**: read `model_used` from metadata, never infer from the directory name. Deeper recovery (which conditions truly used Pro, reconcile with billing) is **deferred**.
+- Captured in memories `2026-05-28-d9601cd610c0`, `2026-05-28-f57100dfb759` (provenance), `2026-05-28-b6bc50ca773e` (gotcha: model-from-metadata). A near-duplicate `2026-05-28-183835fe9bfc` (auto-extractor) can be pruned.
+
+### Deliverables this session
+
+- `planning/manifest-schema-design.md` — rewritten to record the resolved decisions (§ 1A rationale, § 2 field lists, § 3 resolutions, Changelog with before→after).
+- `docs/methodology/manifest-schemas/` — five JSON Schema files (draft 2020-12): runs, conditions, passes, analyses, run-registry.
+- This beacon.
+
+### What's pending — priority order for Session 92+
+
+1. **Confirm the `(proposed)` mechanical sub-decisions** (brief § 3) — the user may want to veto any of the ID conventions / schema-file location / lenient-validation calls. Cheap to revise.
+2. **(optional) Normative `manifest-standard.md`** — promote the § 1A level-definitions + entity-vs-grouping rule to a standalone spec for *future projects*. Deferred; not part of the schema session's deliverable.
+3. **H11 reorganisation** (TaskList #17 — see the Session 90 beacon below for the stay/move classification). Now safe to do: the stable-slug `run_id` means the reorg edits only `directory_path`.
+4. **Phase 1 generator** (`scripts/generate_post_run_report.py`) — extend it to emit manifest rows from the same extraction pass that fills the post-run-report template. ~4–6 h pair-programmed.
+5. **Then in order**: Phase 2 pilot → Phase 3 fan-out → Phase 4 lineage back-fill → Phase 5 hand-author hard cases → Phase 6 conformance sweep.
+
+### Sapphire status
+
+No compute ran this session (pure design + recovery). Sapphire unchanged; LUKS unlock required if rebooted between sessions.
+
+---
+
+## ⏳ Session 91 (next) — MANIFEST SCHEMA DESIGN NEXT; PHASE 0 OF AUDIT CLOSED
+
+> Superseded by the Session 91 closure beacon above. Retained for the H11 stay/move classification and the Phase 0 commit ledger.
 
 **Posted**: 2026-05-28, mid-Session 90.
 
