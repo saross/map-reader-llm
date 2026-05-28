@@ -1,11 +1,13 @@
 # Documentation Audit and Remediation Plan — Intermediate Run Documentation
 
-> **Last revised**: 2026-05-06 (initial publication; planning artefact for the
-> paper-writing-readiness audit). See [§ Changelog](#changelog) for revision
-> history.
+> **Last revised**: 2026-05-28 (Phase 0 execution complete; Stage Gate 1
+> approved 2026-05-26; corrections noted for § 3.2 framing, § 3.3/§ 6.1
+> internal contradiction, and `experiment_intent.md` count undercount).
+> See [§ Changelog](#changelog) for revision history.
 
 **Author**: Claude Code (research-agent run, Session 87+1)
-**Status**: Draft — pending user approval at the Stage Gate after § 3.
+**Status**: Stage Gate 1 approved 2026-05-26; Phase 0 (spec edits)
+complete 2026-05-26; Phase 1 (templated generator) next.
 **Scope**: `results/**.md`, `outputs/**/post_run_report.md` (plus analogous
 post-run summary docs under `outputs/`), and the canonical specs at
 `docs/methodology/output-directory-standard.md`,
@@ -68,8 +70,7 @@ brief.
 
 ### 2.1 What the canonical spec actually requires
 
-#### `docs/methodology/output-directory-standard.md` (158 lines, last touched
-during Phase 2e era)
+#### `docs/methodology/output-directory-standard.md` (158 lines, last touched during Phase 2e era)
 
 - Defines artefact types (detections, meta, tile-status, candidate manifest,
   probabilities, verified detections, threshold sweeps).
@@ -931,6 +932,68 @@ ordering is already correct.
 ---
 
 ## Changelog
+
+### 2026-05-28 — Phase 0 execution complete; corrections to original framing
+
+**Refresh trigger**: Phase 0 of the audit (Bucket (i) — spec
+reconciliation) was executed 2026-05-26 across 8 sequential edits under
+the cadence "propose / approve / commit / push, one at a time". Stage
+Gate 1 was approved by the user 2026-05-26 with the answers in § 12
+locked. Three internal-contradiction / accuracy issues with the
+original plan were caught during execution and are recorded here so
+future readers do not re-derive them.
+
+**Phase 0 commit ledger** (in order):
+
+| Edit | Section | Commit | Touched |
+|---|---|---|---|
+| 1 | `## Post-Run Report Schema` codified | `c611c573` | `output-directory-standard.md` |
+| 2 | Dual-location convention codified | `1aaece11` | `output-directory-standard.md` |
+| 3 | `## Cross-reference / Lineage Block` codified (one canonical heading `## See also`; affirmative `None`; no line-number anchors) | `593d60f3` | `output-directory-standard.md` |
+| 4 | `## Status` refreshed (verified-against-filesystem) | `d9cc2501` | `output-directory-standard.md` |
+| 5 | `## Documents in Revision Policy Scope` codified | `c30ce58a` | `output-directory-standard.md`, `CLAUDE.md` |
+| 6 | Revision Policy banner + Changelog applied to spec doc | `ee0d7aa1` | `output-directory-standard.md` |
+| 7 | Phase 2b / 3b clarifications | `0e697c77` | `documentation-index.md` |
+| 8 | `results/README.md` full rewrite | `2ef592c8` | `results/README.md` |
+
+**Corrections to the original plan** (issues caught during execution):
+
+| Issue | Original plan claim | Verified reality | Resolution |
+|---|---|---|---|
+| § 3.2 framing | "The four 55-map runs each have a post-run report at two paths." | Only 2 of 4 are dual-located: `55maps-image-generalisation` and `55maps-text-min-generalisation`. `55maps-text-high-generalisation` exists only at `configs/run-configs/...`; `55maps-text-high-t0.3-generalisation` exists at neither (has `pre_launch_audit.md` + `experiment_intent.md` only). The retrospective text run uses divergent filename suffixes across sides. § 5.1 of this plan actually knew about the asymmetry (it flagged `55maps-text-high-generalisation` as "Minor" and `55maps-text-high-t0.3-` as "Major") — § 3.2 just oversold the universality of dual-location. | The spec wording in commit `1aaece11` says "when this duplication exists" rather than asserting universality. The asymmetric runs are now back-fill scope tracked under Bucket (iii) / § 6.3. |
+| § 3.3 vs § 6.1 row 5 internal contradiction | § 3.3 said: "No content change needed to CLAUDE.md... but the spec should enumerate the candidate paths explicitly." § 6.1 row 5 said: "Tighten Document Revision Policy scope in CLAUDE.md (§ 3.3) \| 0.25 h \| **1 file** \| Trivial back-fill" — implying the edit IS to CLAUDE.md. | The two statements contradict on which file the edit lands in. | Resolved in commit `c30ce58a` (Edit 5) by touching both files: the authoritative enumeration is in the spec doc (per § 3.3's clearer reasoning); CLAUDE.md cross-references the spec and lists the paths inline so Claude doesn't need to fetch the spec for routine revision checks. |
+| `experiment_intent.md` count | § 3.3 said "~50 of these exist". | 139 files exist (verified via `find outputs -name experiment_intent.md \| wc -l` pre-commit on 2026-05-26). | The spec doc's Documents in Revision Policy Scope table records the correct count (139). The back-fill cost estimate in Bucket (iii) is conservatively under-counted; if the project chooses to back-fill experiment_intent banners en masse the effort doubles vs. the original plan's estimate. The back-fill-on-touch rule means this does not become a separate work stream. |
+
+**Additional discoveries during execution** (not corrections — additive
+findings):
+
+- The Document Revision Policy as originally written did not include
+  `docs/methodology/*.md` spec docs in scope. The audit plan's § 6.1
+  row 6 asked for the banner to be applied to
+  `output-directory-standard.md` anyway. Resolved as a voluntary
+  application (commit `ee0d7aa1`) rather than extending canonical
+  scope to all methodology spec docs — keeps the policy commitment
+  narrow.
+- Edit 3 (`## Cross-reference / Lineage Block`) made three deliberate
+  deviations from § 3.4's literal wording, all of which strengthen
+  the convention: (a) one canonical heading instead of "or `## Lineage`"
+  to keep grep tooling unambiguous; (b) affirmative `None` required
+  for inapplicable categories (distinguishes "no preceding experiment
+  exists" from "author forgot"); (c) no line-number anchors on
+  working-notes Obs references (working-notes.md grows daily; line
+  numbers drift).
+- Edit 8 (results/README.md rewrite) retired "Era 1 / Era 2 / Era 3"
+  terminology entirely. The shorthand was overloaded between
+  OFAT-vs-generalisation and tile-pool senses. Descriptive labels are
+  used in the new README. Empirical mapping of gold-standard
+  sub-directories to their evaluation tile pool (~60-tile subset vs.
+  full 4-map minus 20-tile calibration) is deferred — tracked as
+  TaskList follow-up.
+
+**What did NOT change in this revision**: the plan's substantive
+recommendations, effort estimates, and Bucket (i)-(iii) structure are
+unchanged. The Stage Gate 1 approval covered the plan as written; the
+corrections above are accuracy notes, not scope shifts.
 
 ### 2026-05-06 — Original publication
 
