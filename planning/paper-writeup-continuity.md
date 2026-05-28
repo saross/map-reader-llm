@@ -45,9 +45,26 @@ project state.
 - Schema versioning (v1.0) + JSON Schema validation file at `docs/methodology/runs-manifest-schema.json`
 - Provenance fields (`source_file`, `last_extracted_at`, `extractor_version`)
 
-**After schema lock**: resume Phase 1 (generator script `scripts/generate_post_run_report.py`), now extended to also write to the manifest. ~4–6 h pair-programmed.
+**After schema lock**: (a) H11 reorganisation (see below), then (b) resume Phase 1 (generator script `scripts/generate_post_run_report.py`), now extended to also write to the manifest. ~4–6 h pair-programmed.
 
 **Then in order**: Phase 2 pilot (`phase3d-pilot` proposer-verifier dry-run) → Phase 3 fan-out → Phase 4 lineage back-fill (where `## See also` blocks gain manifest-ID references) → Phase 5 hand-author hard cases → Phase 6 conformance sweep.
+
+### H11 reorganisation — decided 2026-05-28, scheduled after schema lock
+
+**The H11 scope principle** (memory `2026-05-28-3be9d3066363`): H11 = the tile-size study (384px vs 512px) PLUS the 384px detection-approach characterisation that fed the H11 leaderboard. Dividing test for `outputs/h11/` subdirs: "does this characterise a detection approach at 384px that fed the H11 leaderboard?"
+
+- **STAY under `outputs/h11/`**: `pv-diag-256/`, `pv-diag-384/`, `proposer-verifier-384/`, `proposer-verifier-512/`, `n1-outstanding-384/`, **`e47-propose-brief/`** (e47 is a proposer-prompt approach at 384px, already tagged `hypothesis=H11` in `condition-inventory.json`).
+- **MOVE OUT** (the reorganisation, ~5–6 h, TaskList #17, blocked by schema #15): `gold-standard-v2/` (corpus-validation question), `v2-proposer-test/` (dev/debug), `wbf/` (aggregation-methodology axis), `propose-brief-v1-test/` (superseded test precursor — possibly archive rather than relocate).
+- **ARCHIVE separately**: the two `*-UNINTENDED-T1.0/` runs → `archive/h11-unintended-t1.0/` (known audit-plan § 5.1 item).
+
+This is "Strategy B" from `reports/h11-reorganisation-cost-estimate-2026-05-28.md`, now principled rather than cost-driven. Because e47 STAYS, the inventory tag is correct → **no inventory edit and no sapphire leaderboard regen needed**. SPECIAL_CONFIGS in `scripts/fuse_detections_wbf.py` needs partial update (gold-standard-v2 inputs + wbf outputs; e47 inputs unchanged). Plus 6 `.gitignore` rules and ~13 paper-cited docs for `gold-standard-v2/` (Document Revision Policy banners).
+
+**Open decisions for the reorganisation session** (from the cost-estimate report § "Hidden questions"): (1) `gold-standard-v2/` target — flat `outputs/gold-standard-v2/` vs new `outputs/gs/` umbrella; (2) whether to rename `n1-outstanding-384/` in place (it stays, but the name reads like a one-off task); (3) check for a `raw-outputs/` mirror tree that the agent did not investigate.
+
+**Reports produced this session** (both committed, both INPUT to downstream work):
+
+- `reports/gs-tile-pool-mapping-2026-05-28.md` — GS tile-pool empirical mapping (archive after runs manifest carries the content — TaskList #16)
+- `reports/h11-reorganisation-cost-estimate-2026-05-28.md` — the cost estimate driving the reorganisation decision
 
 ### Session 90 commit ledger (2026-05-26 to 2026-05-28, in order)
 
