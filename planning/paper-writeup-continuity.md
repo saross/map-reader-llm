@@ -37,7 +37,7 @@ project state.
 
 ### What's pending — priority order for Session 91+
 
-**Next concrete step (~1 h)**: Schema design session for the runs manifest. Decide:
+**Next concrete step (~1 h)**: Schema design session. **Read `planning/manifest-schema-design.md` first** — it is the self-contained brief (9 locked decisions, proposed field lists for all three manifests, 8 open decisions, data sources, read-first list). The brief is the single input; this session can start cold from it. Key open decisions to resolve:
 
 - JSON schema fields (~12 proposed; some need ID-convention rules — e.g., `run_id` for multi-level cases like `outputs/h11/pv-diag-384/...`)
 - Pass-level granularity: separate `passes-manifest.json` (recommended — normalised, symmetric with the other two) vs. embedded in post-run-report only vs. denormalised in runs manifest
