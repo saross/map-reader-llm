@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://faims.edu.au/vlm-burial-mound-detection/manifest-schemas/conditions-manifest.schema.json",
+  "title": "Conditions manifest",
+  "description": "One row per evaluable scored result — i.e. one leaderboard cell. A condition is the unit that OWNS the metrics. It is produced by aggregating + thresholding + (optionally) verifying the first N passes of a single proposer pool (cross-config fusion was never executed, so the reference is a simple prefix, not a many-to-many lineage table). Aggregation 'orphans' like greedy/wbf/consensus/verified ARE conditions.",
+  "type": "object",
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "generated_at": { "$ref": "common-defs.schema.json#/$defs/isoDateTime" },
+    "generator_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "conditions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/condition" }
+    }
+  },
+  "required": ["schema_version", "conditions"],
+  "additionalProperties": false,
+  "$defs": {
+    "condition": {
+      "type": "object",
+      "properties": {
+        "condition_id": {
+          "type": "string",
+          "description": "Primary key. Convention: {run_id}::{label}, e.g. pv-diag-384::flash-high-text-n5.",
+          "pattern": "^[a-z0-9-]+::[a-z0-9._-]+$"
+        },
+        "run_id": {
+          "type": "string",
+          "description": "Foreign key to the runs manifest.",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+        },
+        "label": {
+          "type": "string",
+          "description": "Human-readable condition label, e.g. flash-high-text-n5."
+        },
+        "architecture": {
+          "type": "string",
+          "enum": ["single-pass", "consensus", "proposer-verifier"],
+          "description": "The precise architecture of this evaluable result (the run carries only a coarse family)."
+        },
+        "aggregation": {
+          "type": "string",
+          "enum": ["none", "greedy", "wbf", "consensus", "verified"],
+          "description": "How the source passes were combined into one scored detection set. 'none' = a single-pass result."
+        },
+        "proposer_pool": {
+          "type": "string",
+          "description": "Identifier of the proposer config whose passes this condition draws from. The condition consumes the first n_passes of this pool. Every aggregation in the project is within ONE pool (verified: SPECIAL_CONFIGS in scripts/fuse_detections_wbf.py)."
+        },
+        "n_passes": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "How many passes of proposer_pool were consumed (the prefix length, e.g. consensus-n5 → 5)."
+        },
+        "source_pass_ids": {
+          "type": "array",
+          "description": "OPTIONAL explicit list of pass foreign keys. Only needed for the rare non-prefix selection; normally the (proposer_pool, n_passes) prefix is sufficient.",
+          "items": { "type": "string" }
+        },
+        "vote_threshold": {
+          "type": ["number", "null"],
+          "description": "Consensus vote threshold (votes a candidate needs to survive)."
+        },
+        "prob_threshold": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Probability threshold applied to candidates."
+        },
+        "verifier_config": {
+          "type": ["object", "null"],
+          "description": "Verifier variant, scale, calibration pool, instruction file — null where there is no verifier stage.",
+          "properties": {
+            "variant": { "type": "string" },
+            "scale": { "type": ["string", "number"] },
+            "calibration_pool": { "type": "string" },
+            "instruction_file": { "type": "string" }
+          },
+          "additionalProperties": true
+        },
+        "scope_override": {
+          "oneOf": [
+            { "$ref": "common-defs.schema.json#/$defs/scope" },
+            { "type": "null" }
+          ],
+          "description": "As-evaluated scope when it diverges from the run's nominal scope (rare, ~2%, e.g. a bounds-filtered companion). Null/absent means the run's scope applies."
+        },
+        "metrics": { "$ref": "#/$defs/metrics" },
+        "n_candidates": { "type": ["integer", "null"], "minimum": 0 },
+        "n_detections": { "type": ["integer", "null"], "minimum": 0 },
+        "n_reference_mounds": { "type": ["integer", "null"], "minimum": 0 },
+        "provenance": { "$ref": "common-defs.schema.json#/$defs/provenance" }
+      },
+      "required": [
+        "condition_id",
+        "run_id",
+        "label",
+        "architecture",
+        "aggregation",
+        "proposer_pool",
+        "n_passes",
+        "metrics",
+        "provenance"
+      ],
+      "additionalProperties": false
+    },
+    "metrics": {
+      "type": "object",
+      "description": "Two-part metrics: per-buffer DETECTION metrics, plus a single buffer-agnostic TILE-CLASSIFICATION block. MCC lives once at the tile level (per the project's MCC-always preference), NOT repeated per buffer.",
+      "properties": {
+        "per_buffer": {
+          "type": "object",
+          "description": "Detection metrics keyed by buffer radius in metres. Canonical set is 20/30/40/50 m; finer/larger/intermediate buffers may be added deliberately (recomputation is cheap and local).",
+          "propertyNames": { "pattern": "^[0-9]+$" },
+          "additionalProperties": { "$ref": "#/$defs/bufferMetrics" },
+          "minProperties": 1
+        },
+        "tile_classification": { "$ref": "#/$defs/tileClassification" }
+      },
+      "required": ["per_buffer", "tile_classification"],
+      "additionalProperties": false
+    },
+    "bufferMetrics": {
+      "type": "object",
+      "description": "Detection F1/precision/recall at one buffer radius, with a bootstrap CI and a coverage/reliability block for sparse cross-grids.",
+      "properties": {
+        "f1": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+        "precision": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+        "recall": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+        "ci": {
+          "oneOf": [
+            { "$ref": "common-defs.schema.json#/$defs/confidenceInterval" },
+            { "type": "null" }
+          ],
+          "description": "CI on F1 (the headline detection metric)."
+        },
+        "coverage": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Fraction of the scope actually evaluated (for sparse cross-grid cells)."
+        },
+        "ci_unreliable": {
+          "type": "boolean",
+          "default": false,
+          "description": "Flag set when sparse coverage makes the CI untrustworthy."
+        }
+      },
+      "required": ["f1", "precision", "recall"],
+      "additionalProperties": false
+    },
+    "tileClassification": {
+      "type": "object",
+      "description": "Buffer-agnostic tile-level classification. MCC ALWAYS present (per standing preference), even where cross-scope tile-matching gymnastics are required.",
+      "properties": {
+        "mcc": { "type": ["number", "null"], "minimum": -1, "maximum": 1 },
+        "sensitivity": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+        "specificity": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+        "tp": { "type": "integer", "minimum": 0 },
+        "tn": { "type": "integer", "minimum": 0 },
+        "fp": { "type": "integer", "minimum": 0 },
+        "fn": { "type": "integer", "minimum": 0 }
+      },
+      "required": ["mcc", "tp", "tn", "fp", "fn"],
+      "additionalProperties": false
+    }
+  }
+}

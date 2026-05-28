@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://faims.edu.au/vlm-burial-mound-detection/manifest-schemas/common-defs.schema.json",
+  "title": "Manifest common definitions",
+  "description": "Shared sub-schemas reused across the run / condition / pass / analysis manifests. Referenced via relative $ref (e.g. \"common-defs.schema.json#/$defs/provenance\"). Kept in one file so the provenance, scope, and confidence-interval shapes cannot drift between manifests.",
+  "type": "object",
+  "$comment": "This file defines no top-level instance; it is a $defs library only.",
+  "$defs": {
+    "isoDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 date-time in UTC, e.g. 2026-05-28T11:45:49Z."
+    },
+    "provenance": {
+      "type": "object",
+      "description": "Generator-written audit trail for every machine-extracted row. Per the project anti-confabulation rule, every extracted value must trace to a source file; missing values are null, never guessed.",
+      "properties": {
+        "source_files": {
+          "type": "array",
+          "description": "Repository-relative paths of every file the row's values were extracted from.",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "last_extracted_at": {
+          "$ref": "#/$defs/isoDateTime",
+          "description": "When the generator last (re-)extracted this row."
+        },
+        "extractor_version": {
+          "type": "string",
+          "description": "Semantic version of the generator script that wrote the row (tracks the script, NOT the manifest format — the manifest format is the top-level schema_version).",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        }
+      },
+      "required": ["source_files", "last_extracted_at", "extractor_version"],
+      "additionalProperties": false
+    },
+    "scope": {
+      "type": "object",
+      "description": "An evaluation tile pool. Vocabulary is the canonical tile-pool taxonomy in results/evaluation-scopes.md. On a run this is the nominal/design-intent scope; on a condition (scope_override) it is the as-evaluated truth when it diverges.",
+      "properties": {
+        "test_set_id": {
+          "type": "string",
+          "description": "Identifier of the test tile pool (e.g. era-2-487, era-3-327, 55-map-8541)."
+        },
+        "bounds_path": {
+          "type": ["string", "null"],
+          "description": "Repository-relative path of the .geojson defining the pool."
+        },
+        "n_test_tiles": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        },
+        "calibration_set_id": {
+          "type": ["string", "null"],
+          "description": "Identifier of the calibration tile pool, where one applies."
+        },
+        "n_calibration_tiles": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        }
+      },
+      "required": ["test_set_id"],
+      "additionalProperties": false
+    },
+    "confidenceInterval": {
+      "type": "object",
+      "description": "A bootstrap confidence interval. Project standard: BCa via scipy.stats.bootstrap, tile-level resampling, seed 42, 1000 or 10000 iterations.",
+      "properties": {
+        "low": { "type": "number" },
+        "high": { "type": "number" },
+        "method": { "type": "string", "enum": ["BCa", "percentile"], "default": "BCa" },
+        "n_iter": { "type": "integer", "enum": [1000, 10000] },
+        "seed": { "type": "integer", "default": 42 },
+        "resampling": { "type": "string", "enum": ["tile-level", "detection-level"], "default": "tile-level" }
+      },
+      "required": ["low", "high", "method"],
+      "additionalProperties": false
+    }
+  }
+}

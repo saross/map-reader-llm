@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://faims.edu.au/vlm-burial-mound-detection/manifest-schemas/passes-manifest.schema.json",
+  "title": "Passes manifest",
+  "description": "One row per raw proposer/verifier execution (run_N). Passes belong to the RUN, not the condition — N-sweeps share a pass pool (consensus-n5 and consensus-n10 are the same passes aggregated differently), so a pass cannot be owned by a single condition. The pass OWNS the generation config and the cost/token/timing facts.",
+  "type": "object",
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "generated_at": { "$ref": "common-defs.schema.json#/$defs/isoDateTime" },
+    "generator_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "passes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/pass" }
+    }
+  },
+  "required": ["schema_version", "passes"],
+  "additionalProperties": false,
+  "$defs": {
+    "pass": {
+      "type": "object",
+      "properties": {
+        "pass_id": {
+          "type": "string",
+          "description": "Primary key. Convention: {run_id}::{proposer_pool}::run{N}. The condition does NOT appear in the key (passes belong to the run).",
+          "pattern": "^[a-z0-9-]+::[a-z0-9._-]+::run[0-9]+$"
+        },
+        "run_id": {
+          "type": "string",
+          "description": "Foreign key to the runs manifest.",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+        },
+        "proposer_pool": {
+          "type": "string",
+          "description": "Which generation config produced this pass. Conditions consume the first N passes of a pool."
+        },
+        "pass_n": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "The Nth pass (run_N) within proposer_pool."
+        },
+        "model_used": {
+          "type": "string",
+          "description": "AUTHORITATIVE model identity, read from per_item_metadata.model_used. NEVER inferred from the directory/condition name — a 'pro-'named condition was verified to have run Flash (memory 2026-05-28-b6bc50ca773e). Empty string allowed only for failed/empty items.",
+          "examples": ["gemini-3-flash", "gemini-3-flash-preview", "gemini-3.1-pro-preview", "gemini-3-pro-preview"]
+        },
+        "model_requested": {
+          "type": ["string", "null"],
+          "description": "Model asked for, from per_item_metadata.model_requested (may differ from model_used)."
+        },
+        "model_version": {
+          "type": ["string", "null"],
+          "description": "API-reported version string, from per_item_metadata.model_version."
+        },
+        "modality": {
+          "type": "string",
+          "enum": ["image", "text"],
+          "description": "Proposer input modality."
+        },
+        "thinking_level": {
+          "type": ["string", "null"],
+          "enum": ["minimal", "low", "medium", "high", null]
+        },
+        "temperature": { "type": ["number", "null"], "minimum": 0 },
+        "instruction_hash": {
+          "type": ["string", "null"],
+          "description": "Hash of the system instruction — captures prompt version AND detects silent drift (better than a version string)."
+        },
+        "library_hash": {
+          "type": ["string", "null"],
+          "description": "Hash of the few-shot example library."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["ok", "partial", "failed"]
+        },
+        "n_tiles_processed": { "type": "integer", "minimum": 0 },
+        "tokens": {
+          "type": ["object", "null"],
+          "description": "Token accounting from the meta.json.",
+          "properties": {
+            "input_billed": { "type": "integer", "minimum": 0 },
+            "input_cached": { "type": "integer", "minimum": 0 },
+            "output": { "type": "integer", "minimum": 0 },
+            "thinking": { "type": "integer", "minimum": 0 },
+            "total": { "type": "integer", "minimum": 0 }
+          },
+          "additionalProperties": false
+        },
+        "cost_usd": { "type": ["number", "null"], "minimum": 0 },
+        "wall_clock_s": { "type": ["number", "null"], "minimum": 0 },
+        "timestamps": {
+          "type": ["object", "null"],
+          "description": "Pass start/end (UTC). These feed the run's derived (not stored) dates_run.",
+          "properties": {
+            "start": { "$ref": "common-defs.schema.json#/$defs/isoDateTime" },
+            "end": { "$ref": "common-defs.schema.json#/$defs/isoDateTime" }
+          },
+          "additionalProperties": false
+        },
+        "retries": { "type": "integer", "minimum": 0, "default": 0 },
+        "provenance": { "$ref": "common-defs.schema.json#/$defs/provenance" }
+      },
+      "required": [
+        "pass_id",
+        "run_id",
+        "proposer_pool",
+        "pass_n",
+        "model_used",
+        "modality",
+        "status",
+        "n_tiles_processed",
+        "provenance"
+      ],
+      "additionalProperties": false,
+      "$comment": "Lenient back-fill policy: identity (pass_id, run_id, proposer_pool, pass_n), the authoritative model_used, modality, status, n_tiles_processed, and provenance are required. Cost/token/timing fields are nullable so older runs without a cost_manifest.json still validate."
+    }
+  }
+}

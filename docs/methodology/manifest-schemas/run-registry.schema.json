@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://faims.edu.au/vlm-burial-mound-detection/manifest-schemas/run-registry.schema.json",
+  "title": "Run registry",
+  "description": "The enumeration mechanism and the generator's input. Its rows DEFINE what is a run (hand-verified — no path-depth rule can enumerate runs, since the same directory depth means 'condition' in one subtree and 'run' in another). It maps the stable run_id to the current directory_path; the path column is the single place a directory reorganisation edits. Non-runs (outputs/results/, figures/, qgis-*/, stub manifests) are simply omitted.",
+  "type": "object",
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "generated_at": { "$ref": "common-defs.schema.json#/$defs/isoDateTime" },
+    "registry": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entry" }
+    }
+  },
+  "required": ["schema_version", "registry"],
+  "additionalProperties": false,
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "description": "Stable flat slug (primary key); never changes once assigned.",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+        },
+        "directory_path": {
+          "type": "string",
+          "description": "Current location under outputs/. The one field a directory reorganisation edits."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "archived"],
+          "default": "active"
+        },
+        "notes": {
+          "type": ["string", "null"],
+          "description": "Free text, e.g. why a sibling directory is omitted, or a rename-history pointer."
+        }
+      },
+      "required": ["run_id", "directory_path"],
+      "additionalProperties": false
+    }
+  }
+}

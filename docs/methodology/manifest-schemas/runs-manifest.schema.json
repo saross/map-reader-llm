@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://faims.edu.au/vlm-burial-mound-detection/manifest-schemas/runs-manifest.schema.json",
+  "title": "Runs manifest",
+  "description": "One row per run. A run is one coherent execution unit (roughly one post_run_report.md's worth). It OWNS no metrics and no per-pass config: passes carry the generation config + cost, conditions carry the metrics. The run carries study grouping tags, corpus/GT/grid context, and a human-designated headline pointer. Generator-written (generator-as-only-writer); humans edit only the headline_condition_id and headline_rationale.",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "description": "Manifest FORMAT version (distinct from the generator's extractor_version in each row's provenance)."
+    },
+    "generated_at": { "$ref": "common-defs.schema.json#/$defs/isoDateTime" },
+    "generator_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "runs": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/run" }
+    }
+  },
+  "required": ["schema_version", "runs"],
+  "additionalProperties": false,
+  "$defs": {
+    "run": {
+      "type": "object",
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "description": "Stable flat slug (primary key). NO slashes — a slash would re-encode the directory path and re-introduce the fragility this design removes. Seeded from the leaf directory name; group-prefixed only where the bare leaf is not globally unique (e.g. retest-phase2a). Assigned once, NEVER changes.",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+        },
+        "directory_path": {
+          "type": "string",
+          "description": "MUTABLE. Current location under outputs/. The H11 reorganisation edits THIS field (one per moved run); run_id and every foreign key / lineage reference survive untouched. Authoritative location lives in the run registry."
+        },
+        "primary_hypothesis": {
+          "type": ["string", "null"],
+          "description": "The main study this run was executed for — the clean single-value grouping for the common query. Controlled vocabulary (H1..H15 plus documented named programmes). Null for genuinely non-hypothesis runs (see purpose)."
+        },
+        "also_informs": {
+          "type": "array",
+          "description": "Secondary studies/hypotheses this run also feeds (the many-to-many tail; e.g. pv-diag-384 feeds H11, PV-strategy, N-sweep, Flash-vs-Pro). The precise membership is carried by analyses selecting conditions; this is the coarse navigational tag.",
+          "items": { "type": "string" },
+          "default": []
+        },
+        "purpose": {
+          "type": ["string", "null"],
+          "description": "Free-text escape hatch for dev / debug / exploratory runs that do not map to a hypothesis."
+        },
+        "run_type": {
+          "type": ["string", "null"],
+          "enum": ["single-pass", "consensus", "proposer-verifier", "mixed", null],
+          "description": "Coarse architecture family. 'mixed' where the run's conditions span architectures (the precise architecture lives on each condition)."
+        },
+        "tile_size_px": {
+          "type": "integer",
+          "enum": [256, 384, 512],
+          "description": "The run's evaluation grid."
+        },
+        "corpus": {
+          "type": "string",
+          "description": "Which map sheets the run covers (e.g. 4-map-gs, 55-map, or a named subset). Constant across a run."
+        },
+        "gt_reference": {
+          "type": "string",
+          "enum": ["curator", "student", "combined"],
+          "description": "Which ground-truth reference the metrics are computed against. Constant across a run; matters for interpretation."
+        },
+        "scope": {
+          "$ref": "common-defs.schema.json#/$defs/scope",
+          "description": "Nominal/design-intent evaluation scope, shared by most conditions. A condition overrides via scope_override only when its as-evaluated tile set diverges (rare, ~2%)."
+        },
+        "headline_condition_id": {
+          "type": ["string", "null"],
+          "description": "HUMAN-designated foreign key to the condition that represents this run in the paper/leaderboard. NOT auto-computed — calling a condition 'best' over-claims when confidence intervals overlap. Usually the preregistered/canonical condition, or the simplest among a tied top set."
+        },
+        "headline_rationale": {
+          "type": ["string", "null"],
+          "description": "Why that condition was designated headline; notes any statistical tie (the tie itself is recorded as an analysis with a tie_set)."
+        },
+        "post_run_report_path": {
+          "type": ["string", "null"],
+          "description": "Repository-relative path of the run's post_run_report.md; null if not yet authored."
+        },
+        "working_notes_obs": {
+          "type": "array",
+          "description": "Working-notes observations about this run, as 'Obs N — title'. NO line numbers (they drift).",
+          "items": { "type": "string", "pattern": "^Obs [0-9]+ — .+" },
+          "default": []
+        },
+        "historical_aliases": {
+          "type": "array",
+          "description": "Prior names for cross-referencing existing prose, e.g. ['Era 2', 'the v2 GS run']. 'Era' is retired going forward but preserved here.",
+          "items": { "type": "string" },
+          "default": []
+        },
+        "provenance": { "$ref": "common-defs.schema.json#/$defs/provenance" }
+      },
+      "required": [
+        "run_id",
+        "directory_path",
+        "primary_hypothesis",
+        "tile_size_px",
+        "corpus",
+        "gt_reference",
+        "scope",
+        "provenance"
+      ],
+      "additionalProperties": false,
+      "$comment": "Lenient back-fill policy: identity (run_id, directory_path), grouping (primary_hypothesis — nullable), context (tile_size_px, corpus, gt_reference, scope), and provenance are required. Derived fields dates_run and total_cost_usd are intentionally ABSENT — they are computed on demand from passes (min/max timestamp; sum cost), not stored, to avoid a denormalisation the generator must keep in sync."
+    }
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://faims.edu.au/vlm-burial-mound-detection/manifest-schemas/analyses-manifest.schema.json",
+  "title": "Analyses manifest",
+  "description": "One row per analysis. An analysis is a comparison/finding OVER CONDITIONS (studies compare conditions, so the target is conditions_compared, not runs). This is where study findings live, and where preregistration linkage is recorded ('we did what we said, modulo errata'). Hybrid: the generator machine-fills analysis_id, output_path, working_notes_obs; humans author outcome, paper_section, and the prereg linkage. The generator never overwrites human-authored fields.",
+  "type": "object",
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "generated_at": { "$ref": "common-defs.schema.json#/$defs/isoDateTime" },
+    "generator_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "analyses": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/analysis" }
+    }
+  },
+  "required": ["schema_version", "analyses"],
+  "additionalProperties": false,
+  "$defs": {
+    "analysis": {
+      "type": "object",
+      "properties": {
+        "analysis_id": {
+          "type": "string",
+          "description": "Primary key. Convention: the results/ subdir name (lowercased, hyphenated). For a top-level .md analysis, the filename stem.",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["comparison", "leaderboard", "sweep", "diagnostic", "classification", "gt-audit"]
+        },
+        "conditions_compared": {
+          "type": "array",
+          "description": "Foreign keys to condition_id. CHANGED from the brief's runs_compared — studies compare conditions; the run/study are derivable from the conditions.",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+::[a-z0-9._-]+$"
+          },
+          "minItems": 1
+        },
+        "hypothesis_refs": {
+          "type": "array",
+          "description": "HUMAN-authored. Controlled vocabulary: H1..H15 plus documented named programmes.",
+          "items": { "type": "string" },
+          "default": []
+        },
+        "preregistered": {
+          "type": ["string", "null"],
+          "enum": ["preregistered", "exploratory", "preregistered-with-deviation", null],
+          "description": "HUMAN-authored preregistration status."
+        },
+        "deviations": {
+          "type": "array",
+          "description": "HUMAN-authored. D-/E-numbers from decisions-log.md / protocol-errata.md (the 'modulo errata and amendments' demonstration).",
+          "items": { "type": "string" },
+          "default": []
+        },
+        "predicted_outcome": {
+          "type": ["string", "null"],
+          "description": "HUMAN-authored. What the preregistration predicted, for the predicted-vs-actual comparison."
+        },
+        "tie_set": {
+          "type": "array",
+          "description": "HUMAN-authored. Conditions found statistically indistinguishable (from a permutation/CI-overlap test). This is where a statistical tie is recorded — NOT by hard-coding a 'best' condition on the run.",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+::[a-z0-9._-]+$"
+          },
+          "default": []
+        },
+        "outcome": {
+          "type": ["string", "null"],
+          "description": "HUMAN-authored one-sentence headline finding."
+        },
+        "paper_section": {
+          "type": ["string", "null"],
+          "enum": ["Methods", "Results", "Discussion", "Limitations", "Appendix", null],
+          "description": "HUMAN-authored target section."
+        },
+        "output_path": {
+          "type": "string",
+          "description": "results/<analysis_id>/ for a subdir analysis, or the path to a top-level .md file."
+        },
+        "working_notes_obs": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^Obs [0-9]+ — .+" },
+          "default": []
+        },
+        "manually_verified_at": {
+          "oneOf": [
+            { "$ref": "common-defs.schema.json#/$defs/isoDateTime" },
+            { "type": "null" }
+          ],
+          "description": "Set when a human authors/verifies the row. The generator treats a non-null value as a signal not to overwrite the human-authored fields."
+        },
+        "provenance": { "$ref": "common-defs.schema.json#/$defs/provenance" }
+      },
+      "required": [
+        "analysis_id",
+        "type",
+        "conditions_compared",
+        "output_path",
+        "provenance"
+      ],
+      "additionalProperties": false,
+      "$comment": "Lenient back-fill policy: the machine-fillable fields (analysis_id, type, conditions_compared, output_path, provenance) are required; all human-authored fields are nullable so a generator-created stub validates before a human authors it."
+    }
+  }
+}
