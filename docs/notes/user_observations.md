@@ -101,4 +101,19 @@ Still occassional confabulations.
   monotonicity held — my table was just wrong, not the underlying analysis.
 
   Observation 23:
-  Severe confabulation problem after 4.7 dropped. Repeated, serious misrepresentations. Diagnosed as context contamination, spurred a 'prune the context surface to mitigate confabulation' pass with CC in a fresh session. Testing now. 
+  Severe confabulation problem after 4.7 dropped. Repeated, serious misrepresentations. Diagnosed as context contamination, spurred a 'prune the context surface to mitigate confabulation' pass with CC in a fresh session. Testing now.
+
+Observation 24:
+After the post-4.7 confabulation problems (Obs 22, 23), this session (2026-05-26 to -28, documentation audit) showed the verify-before-asserting discipline actually working. CC re-read source files before committing each specific and caught four errors that would otherwise have propagated: the audit plan's own § 3.2 framing was wrong (claimed all four 55-map runs were dual-located; only two are); the experiment_intent.md count was off (~50 claimed vs 139 actual); my own "~60 tile" recollection conflated two separate transitions; and CC's first-pass e47/H11 classification was wrong. The thing that worked: every number and path got a pre-commit re-check, logged in the commit message.
+
+Observation 25:
+The H11 reorganisation was heading toward a cost-driven decision (Strategy A/B/C by hours). I redirected by asking "what IS H11, actually?" — and the principled answer (tile-size study + the 384px approach-characterisation that fed the leaderboard) dissolved the B-vs-C question and corrected CC's misclassification of e47. Lesson for me: when CC frames a choice as a cost trade-off, it's worth checking whether a principle makes the trade-off moot.
+
+Observation 26:
+The manifest idea (retire "eras", build runs/analyses/passes manifests) came from me mid-conversation, not the original audit plan. CC took it as a genuine improvement rather than defending the existing plan, and we re-sequenced around it — at the cost of partly superseding the README rewrite it had done an hour earlier. Worth it, but a reminder that I should surface structural ideas like this before CC invests in the thing they'll supersede.
+
+Observation 27:
+The propose/approve/commit/push-one-at-a-time cadence for the 8 Phase 0 spec edits worked well — each edit got a real review, anti-confabulation checks fired per-edit, and the commit history is legible. Slower than batching, but for spec changes that downstream agents depend on, the per-edit scrutiny was the right call.
+
+Observation 28:
+A generalisable pattern, seen a couple of times the week of 2026-05-26: we go down a rabbit hole, the solution gets complicated, and we start building baroque / epicyclic structures to save it — when the better move is to throw out the epicycles and find a clean, principled reframing. H11 was the clearest case (cost-strategy A/B/C comparison plus the SPECIAL_CONFIGS coupling analysis, all dissolved by "what IS H11?"). The complicated path is often a signal that the framing itself is wrong. (Overstated slightly for emphasis, but it's a real phenomenon.)
