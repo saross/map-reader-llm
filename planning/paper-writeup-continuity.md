@@ -1,14 +1,83 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-05-08 (Session 88 — doc audit plan drafted, sapphire reconciliation + comparative analysis (Obs 325), repo tidied; **backlog now firmly on user side** — see "What user owes" below)
+**Last updated**: 2026-05-28 (Session 90 — Phase 0 of doc audit complete; manifest approach adopted to replace "Era" terminology going forward; runs/analyses manifests in design; README revision deferred to post-manifest population)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
 
 ---
 
-## ⏳ Session 89 (next) — START HERE — USER BACKLOG ITEMISED, PAPER OUTLINE GATED ON STAGE GATE 1
+## ⏳ Session 91 (next) — START HERE — MANIFEST SCHEMA DESIGN NEXT; PHASE 0 OF AUDIT CLOSED
+
+**Posted**: 2026-05-28, mid-Session 90.
+
+### TL;DR
+
+**Phase 0 of the documentation audit is complete (8 spec edits committed and pushed 2026-05-26 + audit-plan Changelog correction 2026-05-28).** Stage Gate 1 was approved. Two manual memories captured (`## See also` canonical heading; post-run-report schema location).
+
+**Mid-Session 90, the user re-thought how we organise experimental documentation.** Replacing "Era 1/2/3" terminology going forward with two empirical manifests:
+
+1. **Runs manifest** (`results/runs-manifest.{json,md}`) — one row per run directory under `outputs/`. JSON-canonical with MD rendered from it. Fields: run_id, hypothesis_or_purpose, model_config, tile_size_px, calibration_set_id + n_calibration_tiles, test_set_id + n_test_tiles, dates_run, total_cost_usd, headline_f1 + CIs, outputs_path, post_run_report_path, working_notes_obs, historical_aliases (preserves "Era 2", "v2 GS", etc. for cross-referencing existing prose).
+2. **Analyses manifest** (`results/analyses-manifest.{json,md}`) — one row per results/ subdir analysis. Fields: analysis_id, type, runs_compared (foreign keys to manifest 1), outcome, paper_section, output_path, working_notes_obs.
+3. **Pass-level record**: required, linked. Design TBD — likely a third `passes-manifest.json` with `run_id` foreign key (normalised), OR embedded under post_run_report.md as a "Passes" section, OR both. **Schema design session resolves this.**
+
+**Sequencing decision (III — schema-first)**: design the manifest JSON schemas in one short session (~1 h), commit the schemas, then defer population until Phase 1 (generator script) writes both per-run post-run-reports and manifest rows from the same extraction pipeline.
+
+**README state**: `results/README.md` was rewritten 2026-05-26 (commit `2ef592c8`) as part of Phase 0. Current revision describes "Era" sub-phases for GS analyses. **Per user direction, this README is committed as a snapshot of current state; the next revision lands AFTER the runs manifest is populated and we know how to rewrite the prose around the manifest.** Do NOT touch the README before the manifest exists.
+
+**GS sub-phase mapping investigation**: dispatched mid-session 90 as a one-shot agent (`general-purpose`). Report at `reports/gs-tile-pool-mapping-2026-05-28.md`. Verified the canonical taxonomy at `results/evaluation-scopes.md`: Era 1 = 340 × 512 px tiles, Era 2 = 487 × 384 px tiles, Era 3 = 327 × 384 px tiles (Era 2 minus 160 pool_160). The user's "~60-tile" recollection is a pre-Era exploratory pool retired 2026-03-15 (archived). Per-subdir mapping for the 9 GS-related subdirs verified at high confidence. **This report is INPUT to the runs manifest, not a permanent artefact** — archive to `archive/investigations/` once the manifest carries the same content.
+
+### Read-first for the next session
+
+1. **This section** (you're reading it).
+2. **`reports/gs-tile-pool-mapping-2026-05-28.md`** — the empirical mapping, including reconciliation of the user's "~60 tile" recollection vs the project's Era 1/2/3 canonical taxonomy. Becomes input to the runs manifest.
+3. **`planning/documentation-audit-plan.md`** § Changelog (2026-05-28 entry) — full Phase 0 commit ledger + corrections to the original plan.
+4. **`docs/methodology/output-directory-standard.md`** § "Post-Run Report Schema", § "Cross-reference / Lineage Block", § "Documents in Revision Policy Scope" — the conventions we just codified.
+
+### What's pending — priority order for Session 91+
+
+**Next concrete step (~1 h)**: Schema design session for the runs manifest. Decide:
+
+- JSON schema fields (~12 proposed; some need ID-convention rules — e.g., `run_id` for multi-level cases like `outputs/h11/pv-diag-384/...`)
+- Pass-level granularity: separate `passes-manifest.json` (recommended — normalised, symmetric with the other two) vs. embedded in post-run-report only vs. denormalised in runs manifest
+- "Generator as only writer" rule (runs manifest auto-extracted; humans edit source-of-truth files like `*.meta.json` and configs, not the manifest)
+- Schema versioning (v1.0) + JSON Schema validation file at `docs/methodology/runs-manifest-schema.json`
+- Provenance fields (`source_file`, `last_extracted_at`, `extractor_version`)
+
+**After schema lock**: resume Phase 1 (generator script `scripts/generate_post_run_report.py`), now extended to also write to the manifest. ~4–6 h pair-programmed.
+
+**Then in order**: Phase 2 pilot (`phase3d-pilot` proposer-verifier dry-run) → Phase 3 fan-out → Phase 4 lineage back-fill (where `## See also` blocks gain manifest-ID references) → Phase 5 hand-author hard cases → Phase 6 conformance sweep.
+
+### Session 90 commit ledger (2026-05-26 to 2026-05-28, in order)
+
+| Hash | Description |
+|---|---|
+| `d4722105` | chore(archive): move completed investigations out of planning/ |
+| `c611c573` | docs(spec): codify post-run-report schema (Phase 0 Edit 1) |
+| `1aaece11` | docs(spec): codify dual-location post-run-report convention (Edit 2) |
+| `593d60f3` | docs(spec): codify Cross-reference / Lineage Block format (Edit 3) |
+| `d9cc2501` | docs(spec): refresh ## Status section (Edit 4) |
+| `c30ce58a` | docs(spec): codify Revision Policy scope as authoritative path list (Edit 5) |
+| `ee0d7aa1` | docs(spec): apply Revision Policy banner + Changelog to spec doc (Edit 6) |
+| `0e697c77` | docs(index): clarify Phase 2b split location and Phase 3b absorption (Edit 7) |
+| `2ef592c8` | docs(results): full rewrite of stale README (Edit 8 — frozen until manifests written) |
+| `b31d3e36` | docs(audit-plan): record Phase 0 corrections + commit ledger (audit-plan Changelog) |
+
+### Memories captured Session 90
+
+- `2026-05-28-56afd23f91c8` (methodology) — `## See also` canonical lineage heading + affirmative `None` + no line-number Obs anchors
+- `2026-05-28-ef713179f902` (methodology) — Post-run-report schema location + Exemplar A pointer
+
+### Sapphire status
+
+Unchanged since end of Session 88 (synced clean to `origin/main`). LUKS unlock required if rebooted between sessions.
+
+---
+
+## ⏳ Session 89 (start of period) — USER BACKLOG ITEMISED, PAPER OUTLINE GATED ON STAGE GATE 1
+
+> Superseded by Session 91 beacon above. Retained for historical context.
 
 **Posted**: 2026-05-08 evening, end of Session 88 (~before user steps away for ANU class prep).
 
