@@ -6148,3 +6148,48 @@ Eight spec edits, executed one-at-a-time (propose / approve / commit / push):
 - The manifest direction emerged *after* Edit 8 had landed; the partial supersession of the README is a known, accepted cost (Observation 26), not thrash.
 - pa-data (memories + inbox flags) intentionally left uncommitted: the store had accumulated cross-project writes from the user's other sessions this week, so manual commit would have swept up unrelated work — the daily-sync handles it.
 - The H11 reorganisation cost estimate assumes `e47-propose-brief/` stays (the principled outcome); the estimate's "Strategy C" (moving e47) is moot under the adopted principle.
+
+## Session 91 — 2026-05-28 to 2026-05-29 (map-reader-llm) — crash recovery + manifest schema completion
+
+The schema-design session (TaskList #15) was attempted in a prior Claude Code session that **crashed mid-conversation** on an unrecoverable API error and could not be resumed. This session recovered it from the transcript and completed the deliverable. One continuous session; $0 API spend (no model calls, no agents dispatched here).
+
+### Recovery
+
+- Read the crashed session transcript `8529ef59-9d20-4d03-a3a1-01193d026c4e.jsonl` (350 lines, 1.3 MB). Reconstructed the user/assistant narrative, the `tool_use` sequence, and — critically — the `tool_result` payloads for the final cluster of calls that ran after the last assistant text.
+- Crash cause: four identical `400 … thinking or redacted_thinking blocks in the latest assistant message cannot be modified`, fired after the previous instance dispatched a cross-config-fusion agent. The agent + four Bash verifications had completed; their outputs were recoverable.
+- Confirmed nothing was lost: all three of the user's final directives (model recovery, entity re-examination, the fusion question) had been answered pre-crash. The task list (7 tasks) and the two intentional provenance memories had persisted.
+
+### Resolved design (recovered, then re-confirmed with user)
+
+- **4-entity model** replacing the brief's 3 flat manifests: `study → run → condition → pass`, analyses over conditions. run/condition/pass/analysis are entities; **study** is a grouping tag on runs (`primary_hypothesis` + `also_informs[]`); a **run registry** (`run_id → directory_path`) is the enumeration mechanism.
+- Passes moved up to the run (own generation config + cost); **condition** = one evaluable scored result (a leaderboard cell), owns the metrics, references the first N passes of one proposer pool.
+- `run_id` = stable flat slug + mutable `directory_path` (H11 reorg edits one field per run). Headline metric = human-designated `headline_condition_id` + rationale (no auto-"best"); ties recorded as analyses. Analyses compare `conditions_compared` + carry prereg linkage.
+- **Load-bearing finding** (recovered): cross-config / cross-model fusion was never executed (every `SPECIAL_CONFIGS` entry in `scripts/fuse_detections_wbf.py` is single-config; H9 diversity was within-config) → condition→pass is a simple prefix reference, no M:N table, no 5th entity.
+
+### Deliverables + commits (5, all pushed; `origin/main` → `c730a8ea`)
+
+1. `3204993e` — six JSON Schema files (draft 2020-12) under `docs/methodology/manifest-schemas/` initially: runs, conditions, passes, analyses, run-registry, + shared `common-defs`.
+2. `6c747721` — `planning/manifest-schema-design.md` rewritten: § 1A rationale, § 2 resolved field lists, § 3 resolutions (mechanical sub-decisions flagged `(proposed)`), Changelog with before→after table.
+3. `4e00231d` — `planning/paper-writeup-continuity.md`: Session 91 closure + recovery beacon; prior "Session 91 (next)" demoted to superseded.
+4. `d6377e1e` — backfilled schema commit hash into the brief Changelog.
+5. `c730a8ea` — moved `docs/methodology/manifest-schemas/` → `docs/manifest-schemas/` per user preference; updated 7 path references.
+
+- Validation: all six schemas meta-validate against draft 2020-12; realistic example instances per manifest pass (cross-file `$ref`s resolve); negative control (`tile_size_px=999`) rejected. Both touched Markdown files lint clean.
+
+### Memory hygiene
+
+- `/forget` on `2026-05-28-183835fe9bfc` (auto-extractor's provenance near-duplicate): set `is_active=false` + `revisions[]` audit entry via flock-guarded atomic rewrite of `memories.jsonl`. The two intentional records (`d9601cd610c0`, `f57100dfb759`) left active and untouched.
+
+### Pending for next session (priority order)
+
+1. **Confirm the `(proposed)` mechanical sub-decisions** (brief § 3) — `pass_id`/`condition_id`/`analysis_id` conventions, lenient back-fill validation. User already confirmed 2–5 and chose `docs/manifest-schemas/` for the location.
+2. **H11 reorganisation** (TaskList #17) — now safe (stable-slug `run_id` → one-field edits). Stay/move classification in the Session 90 beacon.
+3. **Phase 1 generator** (`scripts/generate_post_run_report.py`) — extend to emit manifest rows from the same extraction pass. Do not start before the reorg.
+4. **(optional) normative `manifest-standard.md`** for future projects — rationale currently lives in brief § 1A + schema `$comment`s.
+
+### Contextual assumptions
+
+- Two distinct sessions are involved: the *crashed* schema-design session (separate UUID, never reflected — it crashed first) and *this* recovery session. The continuity beacon collapses both under "Session 91"; the reflection docs follow that numbering.
+- $0 API spend here; the cross-config-fusion agent and the model-metadata scans ran in the *crashed* session, not this one.
+- The `memories.jsonl` `/forget` edit was intentionally not committed by me — the personal-assistant store syncs (commit + push) on its daily tick, and manual commit would sweep up unrelated cross-project writes (same rationale as Session 90).
+- The schema commit `3204993e` records where the files were *added*; they were subsequently relocated in `c730a8ea`. The brief Changelog cites `3204993e` (the add), which remains correct as the deliverable-landed anchor.

@@ -4765,3 +4765,29 @@ The user's interventions in two of the three sequences (logs deletion → preced
 ### Meta-pattern — the epicycles tell
 
 Sequence 1 and the broader H11 decision share a shape Shawn named explicitly: a decision accreting **epicycles** (Strategy A/B/C by cost, SPECIAL_CONFIGS coupling analysis, e47-ambiguity flag, leaderboard-regen budget) is a *signal that the framing is wrong*, not a problem to be solved by perfecting the epicycles. The reframe ("what IS H11?") dissolved the apparatus — once e47 was correctly classified as staying, the inventory edit and leaderboard regen both evaporated from the cost. This is distinct from Session 88's "run one orthogonal check" lesson: there the inference was wrong and a cheap check caught it; here the *machinery of decision* was wrong and a cheaper *question* dissolved it. Shawn noted it had recurred "a couple of times this week" across projects — a cross-session AI failure mode (over-elaborating a baroque solution when a reframe was available), now captured as feedback memory `2026-05-28-6d0c01fd6dc7`. **Future-self rule**: when a decision is sprouting conditional branches and coupling caveats, suspect the framing of the underlying question before investing further in the branches.
+
+## Session 91 — 2026-05-28 to 2026-05-29 — recovering a crashed session
+
+**Conditions met**: belief revision (Sequence 1, first-person). Written by the instance that did the recovery (no compaction). Sequence 2 is **recovered second-hand** from the crashed transcript and is flagged as such — it is included because it is a clean sequence the crash would otherwise have lost from this corpus, not because I reasoned through it.
+
+### Sequence 1 (first-person) — "this is partial salvage of an interrupted session"
+
+**Surprising fact**: The session was asked to "recover what we can" from a crash, framing the prior session as broken mid-work. But the transcript's *assistant text* ended at "Dispatching a focused agent" on the final open question (does aggregation ever fuse across proposer configs?), while the `tool_use` list showed the dispatched agent **and four subsequent Bash calls** all executing after that last sentence. Prose said "unfinished"; the tool-call structure said "more happened".
+
+**Probe**: Pulled the `tool_result` payloads for that final cluster of calls (the agent's verdict + the four verifications), keyed by `tool_use_id`, rather than trusting the assistant's prose as the record of progress.
+
+**Belief revised**: From "the decision-walk was interrupted; salvage the partial state" to "the decision-walk was *complete* — every one of the user's three final directives had been answered, and the last question's verdict (no cross-config fusion → simple condition→pass reference) was fully computed; the crash merely prevented its narration." The task was transcription, not reconstruction.
+
+**Probe-type**: structural reading of the transcript against its prose. The lesson: in a crashed agentic session the assistant's text is the *least* complete layer (it stops one turn before synthesis); the `tool_result` layer holds the completed work. Read tool-results-first, prose-as-connective-tissue. (Now an llm-observation, Session 91.)
+
+### Sequence 2 (recovered second-hand — NOT my reasoning) — "Pro ran abundantly across thousands of items"
+
+> Reconstructed from the crashed instance's transcript for the research corpus. I did not live this sequence; I verified its *conclusion* against the saved memories, not its reasoning steps.
+
+**Surprising fact** (as the crashed instance recorded it): a draft memory asserted Gemini Pro "ran across many thousands of items", but a repo-wide grep returned **zero** `gemini-3-pro-preview` in `model_used` across `outputs/` — all recorded items were `gemini-3-flash-preview`.
+
+**Probe**: successive greps widening the search — first the exact string, then string *variants*, then an enumeration across all 2,413 `*.meta.json` in `outputs/` + `archive/`.
+
+**Belief revised, twice**: (1) "Pro abundant" → "Pro absent in outputs"; then (2) "absent" → "Pro genuinely ran but is *sparse* (~30 meta files) and its string *varies* — `gemini-3.1-pro-preview` in `outputs/` vs `gemini-3-pro-preview` in archive only". Notably the instance caught its *own just-written memory* as wrong mid-stream ("my just-saved memory is now wrong too") and rewrote it by ID. The clean datum for the corpus: an in-flight memory write was falsified by the very next probe, and the instance corrected the persisted record rather than letting the false specific stand — anti-confabulation operating on its own freshly-saved output. Captured in memories `2026-05-28-d9601cd610c0` / `-f57100dfb759`, and the model-from-metadata gotcha `2026-05-28-b6bc50ca773e`.
+
+**Probe-type**: grep-widening against a high-conviction quantitative claim. The lesson (second-hand but worth keeping): a memory is most dangerous in the seconds after it is written, before any probe has tested it; the write-then-immediately-grep discipline is what caught it.
