@@ -26,16 +26,16 @@ from scipy.stats import binomtest
 # Repository root assumed to be the script's grandparent (scripts/ -> repo).
 REPO = Path(__file__).resolve().parent.parent
 
-CONSENSUS_GEOJSON = REPO / "outputs/h11/gold-standard-v2/consensus/consensus-4of5.geojson"
+CONSENSUS_GEOJSON = REPO / "outputs/gs/gold-standard-v2/consensus/consensus-4of5.geojson"
 
 PROB_PATHS: dict[str, Path] = {
-    "0.0": REPO / "outputs/h11/gold-standard-v2/verified-v1/probabilities.json",
+    "0.0": REPO / "outputs/gs/gold-standard-v2/verified-v1/probabilities.json",
     "0.5": REPO / "outputs/verifier-t-pilot/T0.5/probabilities.json",
     "1.0": REPO / "outputs/verifier-t-pilot/T1.0/probabilities.json",
 }
 
 META_PATHS: dict[str, Path] = {
-    "0.0": REPO / "outputs/h11/gold-standard-v2/verified-v1/run.meta.json",
+    "0.0": REPO / "outputs/gs/gold-standard-v2/verified-v1/run.meta.json",
     "0.5": REPO / "outputs/verifier-t-pilot/T0.5/run.meta.json",
     "1.0": REPO / "outputs/verifier-t-pilot/T1.0/run.meta.json",
 }

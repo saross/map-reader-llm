@@ -277,7 +277,7 @@ CONDITION_REGISTRY: dict[str, dict[str, dict[str, Any]]] = {
     # ----- Gold-standard-v2 (K=5, 487 tiles, canonical 4-of-5) -----
     "gold_standard_v2": {
         "detect_brief-text": {
-            "run_dir": "outputs/h11/gold-standard-v2/proposer/detect_brief-text",
+            "run_dir": "outputs/gs/gold-standard-v2/proposer/detect_brief-text",
             "K": 5, "optimal_t": 4, "bounds": BOUNDS_487,
         },
     },

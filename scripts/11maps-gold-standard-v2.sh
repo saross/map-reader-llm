@@ -17,14 +17,14 @@
 #
 # Usage:
 #   nohup bash scripts/11maps-gold-standard-v2.sh \
-#     > outputs/h11/gold-standard-v2/pipeline.log 2>&1 &
+#     > outputs/gs/gold-standard-v2/pipeline.log 2>&1 &
 
 set -euo pipefail
 cd /home/shawn/Code/map-reader-llm
 source .venv/bin/activate
 export PYTHONUNBUFFERED=1
 
-OUTDIR="outputs/h11/gold-standard-v2"
+OUTDIR="outputs/gs/gold-standard-v2"
 TILES_DIR="inputs/tiles_384"
 MANIFEST="$TILES_DIR/full_evaluation_manifest.json"
 PROPOSER_CONFIG="prompts/configs/detect_brief-text.json"

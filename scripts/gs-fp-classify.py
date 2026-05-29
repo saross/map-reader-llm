@@ -6,7 +6,7 @@ Gold-standard FP-Class Classification Driver (Obs 302 follow-up, v2).
 Description
 -----------
 Classifies all 371 detections in the gold-standard (GS) verified-v1
-full-scope set (``outputs/h11/gold-standard-v2/verified-v1/``) by the
+full-scope set (``outputs/gs/gold-standard-v2/verified-v1/``) by the
 cartographic feature most likely responsible for the detection — the
 GS-side comparator that the original Obs 302 diagnostic flagged as
 missing. The 55-map sibling driver
@@ -182,7 +182,7 @@ import config  # noqa: E402  — must follow sys.path mutation
 # operating-point output described in
 # ``archive/planning-completed-session-81-82/gs-fp-classification-plan-2026-04-29.md`` §1.
 DETECTIONS_PATH: Path = REPO_ROOT / (
-    "outputs/h11/gold-standard-v2/verified-v1/"
+    "outputs/gs/gold-standard-v2/verified-v1/"
     "verified_detections_full-scope.geojson"
 )
 
@@ -1713,7 +1713,7 @@ def write_report_md(
         "GS-side measurement to make a clean cross-corpus claim. This run "
         "applies a Soviet-1980s closed-list classifier to all 371 "
         "detections in the GS verified-v1 full-scope set "
-        "(`outputs/h11/gold-standard-v2/verified-v1/"
+        "(`outputs/gs/gold-standard-v2/verified-v1/"
         "verified_detections_full-scope.geojson`), partitioning into "
         "TP-side (<= 50 m from a curator GT mound) and FP-side (> 50 m) "
         "post-classification. Plan reference: "

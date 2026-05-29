@@ -89,11 +89,11 @@ SPECIAL_CONFIGS = {
     # Priority 1 canonical WBF vs greedy comparison.
     "gold-standard-v2-detect": {
         "pass_files": [
-            "outputs/h11/gold-standard-v2/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-10.geojson",
-            "outputs/h11/gold-standard-v2/proposer/detect_brief-text/run_2/detections-detect_brief-text-3-flash-2026-04-10.geojson",
-            "outputs/h11/gold-standard-v2/proposer/detect_brief-text/run_3/detections-detect_brief-text-3-flash-2026-04-10.geojson",
-            "outputs/h11/gold-standard-v2/proposer/detect_brief-text/run_4/detections-detect_brief-text-3-flash-2026-04-10.geojson",
-            "outputs/h11/gold-standard-v2/proposer/detect_brief-text/run_5/detections-detect_brief-text-3-flash-2026-04-10.geojson",
+            "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-10.geojson",
+            "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_2/detections-detect_brief-text-3-flash-2026-04-10.geojson",
+            "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_3/detections-detect_brief-text-3-flash-2026-04-10.geojson",
+            "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_4/detections-detect_brief-text-3-flash-2026-04-10.geojson",
+            "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_5/detections-detect_brief-text-3-flash-2026-04-10.geojson",
         ],
         "default_output_dir": "outputs/wbf/gold-standard-v2-detect",
     },

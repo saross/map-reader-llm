@@ -4,7 +4,7 @@
 #
 # Recovers the 13 unrecovered proposer tile-pass failures from the
 # 2026-04-10 GS-v2 production run on the 4-GS-map corpus
-# (`outputs/h11/gold-standard-v2/`):
+# (`outputs/gs/gold-standard-v2/`):
 #
 #     run_1: 2 failures (JSON parse errors)
 #     run_2: 4 failures
@@ -40,7 +40,7 @@
 #
 # Usage:
 #   nohup bash scripts/gs-v2-t0.7-recovery.sh \
-#     > outputs/h11/gold-standard-v2/recovery.log 2>&1 &
+#     > outputs/gs/gold-standard-v2/recovery.log 2>&1 &
 
 set -euo pipefail
 cd /home/shawn/Code/map-reader-llm
@@ -51,7 +51,7 @@ source .env
 set +a
 export PYTHONUNBUFFERED=1
 
-OUTDIR="outputs/h11/gold-standard-v2"
+OUTDIR="outputs/gs/gold-standard-v2"
 TILES_DIR="inputs/tiles_384"
 MANIFEST="$TILES_DIR/full_evaluation_manifest.json"
 RASTERS_DIR="inputs/rasters"

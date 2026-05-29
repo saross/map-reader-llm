@@ -55,7 +55,7 @@ Usage
 
     python scripts/analyse_subtype_classification.py \\
         --gt-dir inputs/vectors/references/ \\
-        --detections outputs/h11/gold-standard-v2/consensus/consensus-4of5.geojson \\
+        --detections outputs/gs/gold-standard-v2/consensus/consensus-4of5.geojson \\
         --bounds inputs/vectors/bounds/384/full_evaluation_bounds.geojson \\
         --buffers 20 30 50 \\
         --output-dir results/gold-standard-subtype-classification/ \\
@@ -1403,7 +1403,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         "--detections",
         type=Path,
         default=Path(
-            "outputs/h11/gold-standard-v2/consensus/consensus-4of5.geojson",
+            "outputs/gs/gold-standard-v2/consensus/consensus-4of5.geojson",
         ),
         help=(
             "Consensus detections GeoJSON (default 4/5). The "

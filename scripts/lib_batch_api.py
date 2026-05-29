@@ -886,7 +886,7 @@ def parse_response_with_repair(response_text: str) -> dict | list:
     Parse a Gemini response with three tiers of malformed-JSON recovery.
 
     Audit of three production runs (``outputs/55maps-text-min-generalisation/``,
-    ``outputs/55maps-image-generalisation/``, ``outputs/h11/gold-standard-v2/``)
+    ``outputs/55maps-image-generalisation/``, ``outputs/gs/gold-standard-v2/``)
     showed 92 % of 163 lost tiles match patterns this pipeline handles:
 
     Tier 1 (regex):

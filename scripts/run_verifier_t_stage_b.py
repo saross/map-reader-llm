@@ -67,10 +67,10 @@ from scripts.materialise_pv_geojson import materialise  # noqa: E402
 
 # ── Canonical Stage B parameters ─────────────────────────────────────
 CONSENSUS_GEOJSON = REPO_ROOT / (
-    "outputs/h11/gold-standard-v2/consensus/consensus-4of5.geojson"
+    "outputs/gs/gold-standard-v2/consensus/consensus-4of5.geojson"
 )
 PROBS_BY_T: dict[str, Path] = {
-    "T0.0": REPO_ROOT / "outputs/h11/gold-standard-v2/verified-v1/probabilities.json",
+    "T0.0": REPO_ROOT / "outputs/gs/gold-standard-v2/verified-v1/probabilities.json",
     "T0.5": REPO_ROOT / "outputs/verifier-t-pilot/T0.5/probabilities.json",
     "T1.0": REPO_ROOT / "outputs/verifier-t-pilot/T1.0/probabilities.json",
 }
