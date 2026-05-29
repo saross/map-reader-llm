@@ -1,7 +1,7 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-05-28 (Session 91 — manifest schema design RESOLVED: 4-entity model + JSON Schema files authored; session crashed mid-conversation on a `thinking`-block API error and was recovered from transcript with no decision lost)
+**Last updated**: 2026-05-29 (Session 91 close — manifest schema design RESOLVED: 4-entity model + six JSON Schema files authored under docs/manifest-schemas/, sub-decisions confirmed, duplicate memory retired, reflection logged; the schema-design session had crashed mid-conversation on a `thinking`-block API error and was recovered from transcript with no decision lost)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
@@ -10,7 +10,7 @@ project state.
 
 ## ✅ Session 91 (this session) — START HERE — MANIFEST SCHEMA RESOLVED + RECOVERED FROM CRASH
 
-**Posted**: 2026-05-28, after recovering the crashed schema-design session.
+**Posted**: 2026-05-28, after recovering the crashed schema-design session. **Refreshed at session close 2026-05-29** to record the post-beacon work (directory move, sub-decision confirmations, memory `/forget`, reflection) — so this beacon reflects the true end-state, not its mid-session draft.
 
 ### TL;DR
 
@@ -25,7 +25,7 @@ project state.
 - Headline metric: **human-designated** `headline_condition_id` + rationale (no auto-"best"); statistical ties recorded as analyses.
 - Analyses compare **`conditions_compared`** (not `runs_compared`) and gain **preregistration linkage** (`hypothesis_refs`, `preregistered` status, `deviations`).
 
-Full worked rationale is in `planning/manifest-schema-design.md` § 1A; the resolved field lists are § 2; the eight original open decisions are resolved in § 3 (several mechanical sub-decisions are marked **(proposed)** — assistant defaults, flagged for veto: `pass_id`/`condition_id`/`analysis_id` conventions, schema-file location, required-vs-optional/lenient validation).
+Full worked rationale is in `planning/manifest-schema-design.md` § 1A; the resolved field lists are § 2; the eight original open decisions are resolved in § 3. The mechanical sub-decisions originally marked **(proposed)** — the `pass_id` / `condition_id` / `analysis_id` conventions and the lenient back-fill validation — were **confirmed by the user** at session close. The schema-file location was set to **`docs/manifest-schemas/`** (the user's choice, not the brief's original `docs/methodology/...`).
 
 ### The load-bearing finding that simplified the model
 
@@ -38,25 +38,34 @@ While verifying field placement, the model metadata was scanned authoritatively 
 - **The project runs Gemini 3 / 3.1, never 2.5.** Flash dominant (`gemini-3-flash`, `gemini-3-flash-preview`). The session-start memory citing "Gemini 2.5 quotas" is stale — do not carry forward.
 - **Pro genuinely ran but is sparse** (~30 meta files) and its string **varies**: `gemini-3.1-pro-preview` (in `outputs/`) vs `gemini-3-pro-preview` (archive only). Plus a flash-lite variant and 2 legacy `gemini-2.5-flash` stragglers in archive.
 - **⚠ Anomaly**: `pro-`named conditions in `outputs/h11/n1-outstanding-384/` (`pro-text-high-t0`, `pro-image-high-t0`) actually **ran Flash** — `per_item_metadata.model_used = gemini-3-flash-preview` for all 487 items. **Lesson baked into the schema**: read `model_used` from metadata, never infer from the directory name. Deeper recovery (which conditions truly used Pro, reconcile with billing) is **deferred**.
-- Captured in memories `2026-05-28-d9601cd610c0`, `2026-05-28-f57100dfb759` (provenance), `2026-05-28-b6bc50ca773e` (gotcha: model-from-metadata). A near-duplicate `2026-05-28-183835fe9bfc` (auto-extractor) can be pruned.
+- Captured in memories `2026-05-28-d9601cd610c0`, `2026-05-28-f57100dfb759` (provenance), `2026-05-28-b6bc50ca773e` (gotcha: model-from-metadata). The auto-extractor's near-duplicate `2026-05-28-183835fe9bfc` was `/forget`-retired this session (soft-deleted with an audit entry; the two intentional records remain active).
 
-### Deliverables this session
+### Deliverables this session — commit ledger (all pushed to `origin/main`)
 
-- `planning/manifest-schema-design.md` — rewritten to record the resolved decisions (§ 1A rationale, § 2 field lists, § 3 resolutions, Changelog with before→after).
-- `docs/manifest-schemas/` — five JSON Schema files (draft 2020-12): runs, conditions, passes, analyses, run-registry.
-- This beacon.
+| Commit | What |
+|---|---|
+| `3204993e` | six schema files (draft 2020-12) — runs, conditions, passes, analyses, run-registry + a shared `common-defs` library (the five manifest schemas plus the defs file) |
+| `6c747721` | `planning/manifest-schema-design.md` rewritten (§ 1A rationale, § 2 field lists, § 3 resolutions, Changelog with before→after) |
+| `4e00231d` | this beacon (initial draft) |
+| `d6377e1e` | brief Changelog hash backfill |
+| `c730a8ea` | moved schemas `docs/methodology/manifest-schemas/` → `docs/manifest-schemas/` (user preference); 7 path references updated |
+| `5e0204ca` | Session 91 reflection across four docs (session-reflection, llm-observations, abductive-reasoning, session-log) |
+
+Plus this closure-refresh commit. All six schemas meta-validate against draft 2020-12; example instances confirm the cross-file `$ref`s resolve. Non-git: `/forget` on memory `2026-05-28-183835fe9bfc` (syncs via the personal-assistant daily tick, not a repo commit).
 
 ### What's pending — priority order for Session 92+
 
-1. **Confirm the `(proposed)` mechanical sub-decisions** (brief § 3) — the user may want to veto any of the ID conventions / schema-file location / lenient-validation calls. Cheap to revise.
-2. **(optional) Normative `manifest-standard.md`** — promote the § 1A level-definitions + entity-vs-grouping rule to a standalone spec for *future projects*. Deferred; not part of the schema session's deliverable.
-3. **H11 reorganisation** (TaskList #17 — see the Session 90 beacon below for the stay/move classification). Now safe to do: the stable-slug `run_id` means the reorg edits only `directory_path`.
-4. **Phase 1 generator** (`scripts/generate_post_run_report.py`) — extend it to emit manifest rows from the same extraction pass that fills the post-run-report template. ~4–6 h pair-programmed.
-5. **Then in order**: Phase 2 pilot → Phase 3 fan-out → Phase 4 lineage back-fill → Phase 5 hand-author hard cases → Phase 6 conformance sweep.
+1. **H11 reorganisation** (TaskList #17 — see the Session 90 beacon below for the stay/move classification). Now safe to do: the stable-slug `run_id` means the reorg edits only `directory_path`. Run the project's dry-run gap simulation and confirm scope before moving tracked directories.
+2. **Phase 1 generator** (`scripts/generate_post_run_report.py`) — extend it to emit manifest rows from the same extraction pass that fills the post-run-report template. ~4–6 h pair-programmed. Do not start before the reorg.
+3. **Then in order**: Phase 2 pilot → Phase 3 fan-out → Phase 4 lineage back-fill → Phase 5 hand-author hard cases → Phase 6 conformance sweep.
+4. **(optional) Normative `manifest-standard.md`** — promote the § 1A level-definitions + entity-vs-grouping rule to a standalone spec for *future projects*. Deferred; not part of the schema session's deliverable.
+5. **(deferred) Model-provenance recovery** — which conditions *truly* ran Pro, reconciled against billing (see the model-provenance findings above). Flagged, not urgent.
+
+The schema session's mechanical sub-decisions are **resolved** (confirmed by the user) — no longer pending.
 
 ### Sapphire status
 
-No compute ran this session (pure design + recovery). Sapphire unchanged; LUKS unlock required if rebooted between sessions.
+No compute ran this session (pure recovery + design + documentation). All session commits are pushed to `origin/main`; sapphire, zbook, and amd-tower come into sync on their next `git pull`. LUKS unlock required if sapphire is rebooted between sessions.
 
 ---
 
