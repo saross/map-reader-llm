@@ -64,7 +64,7 @@ SPECIAL_CONFIGS = {
             "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_4/detections-propose_brief-text-3-flash-2026-04-09.geojson",
             "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_5/detections-propose_brief-text-3-flash-2026-04-09.geojson",
         ],
-        "default_output_dir": "outputs/h11/wbf/e47-propose-brief-n5",
+        "default_output_dir": "outputs/wbf/e47-propose-brief-n5",
     },
     # FH text N=5 (Flash HIGH, T=0.7): PV proposer consensus stage.
     # Leaderboard #2: FH text 4/5 + PV (min vf) = F1 0.864.
@@ -73,7 +73,7 @@ SPECIAL_CONFIGS = {
             f"outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_{i}/detections_text-t0.7_run{i:02d}.geojson"
             for i in range(1, 6)
         ],
-        "default_output_dir": "outputs/h11/wbf/fh-text-n5",
+        "default_output_dir": "outputs/wbf/fh-text-n5",
     },
     # FH text N=30 (Flash HIGH, T=0.7): PV proposer consensus stage.
     # Leaderboard #1: FH text 16/30 + PV (min vf) = F1 0.890.
@@ -82,7 +82,7 @@ SPECIAL_CONFIGS = {
             f"outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_{i}/detections_text-t0.7_run{i:02d}.geojson"
             for i in range(1, 31)
         ],
-        "default_output_dir": "outputs/h11/wbf/fh-text-n30",
+        "default_output_dir": "outputs/wbf/fh-text-n30",
     },
     # Canonical 4-map production pipeline (detect_brief-text, HIGH, T=0.7, K=5,
     # library 8580ecb2..., matches 55-map generalisation config). Obs 233 /
@@ -95,7 +95,7 @@ SPECIAL_CONFIGS = {
             "outputs/h11/gold-standard-v2/proposer/detect_brief-text/run_4/detections-detect_brief-text-3-flash-2026-04-10.geojson",
             "outputs/h11/gold-standard-v2/proposer/detect_brief-text/run_5/detections-detect_brief-text-3-flash-2026-04-10.geojson",
         ],
-        "default_output_dir": "outputs/h11/wbf/gold-standard-v2-detect",
+        "default_output_dir": "outputs/wbf/gold-standard-v2-detect",
     },
     # H8 v2 library-composition re-run (7 conditions, 384 px tiles, production
     # carry-forward: T=0.7, thinking=high, detect_brief-text-image.md, K=5).

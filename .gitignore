@@ -123,7 +123,7 @@ outputs/h11/v2-proposer-test-BAD-TILESIZE/
 
 # WBF output crop directories — large PNG sets (regenerable from raw proposer data)
 outputs/h10/wbf/*/crops/
-outputs/h11/wbf/*/crops/
+outputs/wbf/*/crops/
 
 # Verifier cleanup backup files (transient, regenerable)
 outputs/**/*.pre-cleanup-*.backup
@@ -140,7 +140,7 @@ outputs/**/*.pre-meta-cleanup-*.backup
 
 # Verifier HTTP request logs (noise, not useful for reproducibility)
 outputs/h10/wbf/**/*.log
-outputs/h11/wbf/**/*.log
+outputs/wbf/**/*.log
 
 # Integration-test working dirs (e.g., tests/test_run_phase2.py uses
 # outputs/test-phase2b/ as its output_dir). Test runs may leave residual
