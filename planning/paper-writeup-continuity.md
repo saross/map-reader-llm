@@ -1,14 +1,75 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-05-29 (Session 91 close — manifest schema design RESOLVED: 4-entity model + six JSON Schema files authored under docs/manifest-schemas/, sub-decisions confirmed, duplicate memory retired, reflection logged; the schema-design session had crashed mid-conversation on a `thinking`-block API error and was recovered from transcript with no decision lost)
+**Last updated**: 2026-05-29 (Session 92 — H11 reorganisation executed and pushed: 4 runs moved out of `outputs/h11/`, E44 archived, E43 kept in place with a neutral manifest identity deferred to the generator; Phase 1 generator is now the active milestone)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
 
 ---
 
-## ✅ Session 91 (this session) — START HERE — MANIFEST SCHEMA RESOLVED + RECOVERED FROM CRASH
+## ✅ Session 92 (this session) — START HERE — H11 REORGANISATION COMPLETE
+
+**Posted**: 2026-05-29, end of the H11 reorganisation session.
+
+### TL;DR
+
+**The H11 reorganisation (the Session 91 beacon's pending item 1 / "TaskList #17") is executed and pushed to `origin/main`.** Four misplaced runs moved out of `outputs/h11/`, one unused deviation run archived, and the live deviation run kept in place with a neutral manifest identity deferred to the Phase 1 generator. **The reorg gate is cleared; the Phase 1 generator (`scripts/generate_post_run_report.py`) is the active next milestone (started this session).**
+
+A dry-run gap simulation *before touching anything* caught that the two `*-UNINTENDED-T1.0/` runs — which the cost-estimate report had scoped **out** — carried 174 references and were a documented protocol-erratum (E43/E44). That reshaped the plan: archive the unused one, keep the live one, no cosmetic rename.
+
+### Stay / move / archive — final outcome
+
+- **STAY under `outputs/h11/`** (H11-proper): `consensus-384-UNINTENDED-T1.0` (E43, live data — kept in place), `e47-propose-brief`, `n1-outstanding-384`, `proposer-verifier-384`, `proposer-verifier-512`, `pv-diag-256`, `pv-diag-384`.
+- **MOVED OUT**: `gold-standard-v2` → `outputs/gs/gold-standard-v2/` (new `gs/` umbrella); `wbf` → `outputs/wbf/`; `v2-proposer-test` → `outputs/v2-proposer-test/`.
+- **ARCHIVED**: `propose-brief-v1-test` → `archive/superseded-tests/` (superseded precursor); `single-pass-384-UNINTENDED-T1.0` → `archive/h11-unintended-t1.0/` (E44, unused).
+
+### Key decisions this session
+
+1. **`gold-standard-v2` target**: the `outputs/gs/` umbrella (future-proofs further GS variants), not flat.
+2. **The two UNINTENDED-T1.0 runs are documented errata (E43/E44), not casual labels.** E43 (consensus) is live data feeding the T=0.7-vs-T=1.0 temperature analysis + paper-eval; E44 (single-pass) is *"not used in any published analysis"*. → archive E44, keep E43.
+3. **No cosmetic rename of E43.** The `UNINTENDED` filename conflated identity with status (a March stopgap before structured deviation records existed). Resolution: neutral identity via the manifest `run_id` (`consensus-384-t1.0`), physical dir unchanged, deviation status on the analysis. Recorded in `manifest-schema-design.md` § 1A ("Deviation runs keep a neutral identity"). The underlying principle is in the global scratchpad: *identity vs. status — a filename should say what a thing is, not annotate its provenance*.
+4. **Reference-update rule**: update code / active configs / `.gitignore` / live-tree self-pointers / living results docs (full Revision-Policy treatment); leave frozen `archive/**`, dated reports (incl. the cost-estimate report), reflection logs, the working-notes Obs log, and computed eval-JSON provenance. E44's doc/registry mentions back-fill on touch (canonical record = the updated errata E44).
+
+### Deliverables — commit ledger (all pushed to `origin/main`)
+
+| Commit | What |
+|---|---|
+| `43895be1` | chore(h11): move v2-proposer-test out of h11 tree |
+| `941b3b9a` | chore(h11): archive propose-brief-v1-test precursor |
+| `b9ec6b86` | chore(h11): archive unused E44 single-pass-384 T=1.0 run |
+| `118507e2` | refactor(h11): move wbf out to outputs/wbf/ |
+| `c5983adb` | refactor(h11): move gold-standard-v2 to outputs/gs/ umbrella |
+| `ab92d2cd` | fix(gs): repoint candidate_manifest self-reference after move |
+| `c8f92781` | docs(gs): repoint relocated gs-v2 paths in 9 docs (full Revision-Policy treatment) |
+| *this commit* | docs(planning): E43 deviation-run identity note (§ 1A) + this Session 92 beacon |
+
+### Verification
+
+`outputs/h11/` holds only the 7 H11-proper dirs; **zero active code/config references** to any moved path; fuse script imports cleanly (14 SPECIAL_CONFIGS); `ruff` / `py_compile` / `bash -n` / `markdownlint` all clean; tree clean and pushed (local == origin).
+
+### What's pending — priority order for Session 92+
+
+1. **Phase 1 generator** (`scripts/generate_post_run_report.py`) — extend it to emit manifest rows from the same extraction pass that fills the post-run-report template. **Active milestone (started this session).** Must honour the **E43 deviation-run identity convention** (`manifest-schema-design.md` § 1A): neutral `run_id` from `*.meta.json`, physical `directory_path` unchanged, old name in `historical_aliases`, deviation linkage on the analysis.
+2. **(carry-forward) Model-provenance recovery** — which conditions *truly* ran Pro, reconciled against billing (see the Session 91 beacon's model-provenance findings). Flagged, not urgent.
+3. **(optional) Normative `manifest-standard.md`** for future projects (deferred).
+4. **Then in order**: Phase 2 pilot → Phase 3 fan-out → Phase 4 lineage back-fill → Phase 5 hand-author hard cases → Phase 6 conformance sweep.
+
+### Deferred / back-fill-on-touch (recorded so it is not lost)
+
+- E44 (`single-pass`) has ~8 doc/registry mentions in `results/` + `planning/` left to back-fill when those docs are next edited; the canonical location record (errata E44 "Files" line) is already updated to the archive path.
+- The cost-estimate report (`reports/h11-reorganisation-cost-estimate-2026-05-28.md`) and the `gs-tile-pool-mapping` report are now historical (they reference old paths and the cost report's superseded "defer gold-standard-v2" recommendation) — left frozen as dated records.
+
+### Sapphire status
+
+No compute this session (pure filesystem reorg + doc edits). Sapphire unchanged; LUKS unlock required if rebooted between sessions.
+
+---
+
+## Session 91 — MANIFEST SCHEMA RESOLVED + RECOVERED FROM CRASH
+
+> Superseded by the Session 92 beacon above. Retained for the manifest schema
+> decisions and the model-provenance findings.
 
 **Posted**: 2026-05-28, after recovering the crashed schema-design session. **Refreshed at session close 2026-05-29** to record the post-beacon work (directory move, sub-decision confirmations, memory `/forget`, reflection) — so this beacon reflects the true end-state, not its mid-session draft.
 

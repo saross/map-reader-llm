@@ -1,9 +1,8 @@
 # Manifest Schema Design Brief
 
-> **Last revised**: 2026-05-28 (schema-design session: resolved the 4-entity
-> model — run / condition / pass / analysis, plus study-as-grouping and a run
-> registry — and the per-level field lists; JSON Schema files authored). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-05-29 (added the deviation-run identity convention —
+> E43 worked example, § 1A; the 4-entity model and field lists are unchanged).
+> See [§ Changelog](#changelog) for revision history.
 
 **Status**: Decisions **resolved**; JSON Schema files authored under
 `docs/manifest-schemas/`. This brief now records the resolved
@@ -173,9 +172,47 @@ belongs.
 path), seeded from the leaf directory name and group-prefixed only where the
 bare leaf is not globally unique (`retest-phase2a`). It is assigned once and
 never changes. `directory_path` is a **separate, mutable** field the generator
-refreshes. The H11 reorganisation (TaskList #17) edits `directory_path` in one
-row per moved run; every FK and lineage reference survives untouched. This is
-the mechanism that satisfies locked decision #8.
+refreshes. The H11 reorganisation (executed Session 92, 2026-05-29) edited
+`directory_path` for the moved runs; every FK and lineage reference survived
+untouched. This is the mechanism that satisfies locked decision #8.
+
+### Deviation runs keep a neutral identity (E43 worked example)
+
+The same identity-vs-location decoupling resolves a question the H11
+reorganisation surfaced (Session 92, 2026-05-29): how to identify a run whose
+*physical directory name* encodes a protocol deviation. The H11 consensus run
+executed at T=1.0 instead of the intended T=0.7 (erratum **E43**) and was
+renamed `consensus-384-UNINTENDED-T1.0` to flag this at the point of use — at a
+time when no structured deviation record existed. That "shout-in-the-filename"
+is brittle (it accreted ~150 references) and conflates **identity** with
+**status**.
+
+The schema's resolution: the **`run_id` is the neutral, parameter-descriptive
+identity**; the deviation is **status carried in metadata**, never welded into
+the identity string. For E43 the generator assigns:
+
+- `run_id`: `consensus-384-t1.0` — neutral slug (architecture + tile size +
+  *actual* temperature, read from `*.meta.json`), no pejorative.
+- `directory_path`: `outputs/h11/consensus-384-UNINTENDED-T1.0` — the physical
+  location is left **unchanged** (no mass rename of the ~150 references); it is
+  now an incidental breadcrumb, not the identity.
+- `historical_aliases`: `["consensus-384-UNINTENDED-T1.0"]` — preserves the old
+  shout-name so existing prose and result-file paths stay searchable (the field
+  was designed for exactly this; see locked decision #7).
+- The **deviation linkage lives on the analysis**, not the run: the
+  T=0.7-vs-T=1.0 temperature analysis that consumes this run's conditions
+  records `preregistered: preregistered-with-deviation` and
+  `deviations: ["E43"]` (§ 2.4) — where the deviation scientifically belongs.
+
+**Generator rule**: read the *actual* parameters from `*.meta.json` (here
+`temperature: 1.0`) to mint the neutral `run_id`; never propagate a
+status-bearing directory name into the identity. **Open schema consideration**
+(flag, do not assume): whether to add an optional run-level `deviations: []`
+field for at-a-glance visibility in the runs manifest, versus relying solely on
+the analysis-level linkage above. The unused counterpart run (erratum **E44**,
+`single-pass-384-UNINTENDED-T1.0`) was archived to
+`archive/h11-unintended-t1.0/` in the same reorganisation and is simply omitted
+from the run registry.
 
 ---
 
@@ -419,6 +456,25 @@ manifests, plus this brief updated with the resolved decisions. **Both done**
 ---
 
 ## Changelog
+
+### 2026-05-29 — Deviation-run identity convention (E43)
+
+**Refresh trigger**: the H11 reorganisation (Session 92) raised how to identify
+a run whose physical directory name encodes a protocol deviation. Resolved by
+applying the existing `run_id`/`directory_path` decoupling to the
+identity-vs-status question.
+
+**What changed**: added the § 1A subsection "Deviation runs keep a neutral
+identity (E43 worked example)" — the generator mints a neutral `run_id`
+(`consensus-384-t1.0`), leaves the physical `directory_path` unchanged, records
+the old name in `historical_aliases`, and carries the deviation linkage on the
+analysis (`preregistered-with-deviation`, `deviations: ["E43"]`). Flagged an
+open consideration: an optional run-level `deviations[]` field. Also refreshed
+the stale "TaskList #17" reference (the reorg is now executed).
+
+**What did NOT change**: the entity model, the per-level field lists, and the
+resolved sub-decisions (§§ 1–3) are unchanged; this adds a worked-example
+identity convention for the Phase 1 generator only.
 
 ### 2026-05-28 — Schema-design session: 4-entity model resolved
 
