@@ -12,7 +12,7 @@ where information lives and how sources relate.
 
 | Document | What it captures | Numbering | Current range |
 |:---------|:-----------------|:----------|:--------------|
-| [Working notes](../notes/reflections/working-notes.md) | Observations — findings, mechanisms, lessons | Obs N | 1–165 |
+| [Working notes](../notes/working-notes.md) | Observations — findings, mechanisms, lessons | Obs N | 1–165 |
 | [Decisions log](preregistration/decisions-log.md) | Methodology decisions with rationale | Decision N | 1–21 |
 | [Protocol errata](preregistration/protocol-errata.md) | Deviations, corrections, clarifications | EN | E1–E34 |
 | [Hypothesis tracking](preregistration/hypothesis-tracking.md) | Hypothesis status and condition mapping | H1–H15 | All updated |

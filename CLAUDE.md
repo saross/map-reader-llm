@@ -86,7 +86,7 @@ The instinct to "fix and move on" is an optimisation reflex. In a research conte
 
 ## Working Notes and Observations
 
-The file `docs/notes/reflections/working-notes.md` captures observations about research directions, methodological insights, and meta-level reflections on the human-AI collaboration process.
+The file `docs/notes/working-notes.md` captures observations about research directions, methodological insights, and meta-level reflections on the human-AI collaboration process.
 
 **Proactive observation sharing**: If you notice something interesting about how we work together, about the research process, or about findings that might inform future work, you should proactively raise it with the user. If they agree it's worth documenting, we'll add it to `working_notes.md`. This includes:
 
