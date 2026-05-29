@@ -1,5 +1,7 @@
 # Temperature, transient errors, and failure-recovery on the 55-map proposer cross-run — synthesis report
 
+> **Last revised**: 2026-05-29 (`gold-standard-v2` relocated to `outputs/gs/`). See [§ Changelog](#changelog) for revision history.
+
 **Date**: 2026-04-30 (initial); major refresh **2026-05-03** (Session 84 — 3 follow-up recoveries propagated)
 **Sessions**: 79–80 (working-notes Obs 281); **83** (T=0.7 recovery); **84** (image, text-MIN, GS-v2 follow-up recoveries)
 **Primary observation**: Obs 281 in `docs/notes/reflections/working-notes.md`
@@ -272,7 +274,7 @@ the parse robustness, or the safety of post-recovery analyses.
 `json.loads()` directly on the model response, treating any `JSONDecodeError` as an
 unrecoverable parse failure. Audit of three production runs
 (`outputs/55maps-text-min-generalisation/`, `outputs/55maps-image-generalisation/`,
-`outputs/h11/gold-standard-v2/`) showed **163 tiles lost to such failures**, of which ~92 % match
+`outputs/gs/gold-standard-v2/`) showed **163 tiles lost to such failures**, of which ~92 % match
 patterns a tiered repair pipeline can recover.
 
 **Fix**: ports and extends the canonical Tier 1 trailing-comma strip already present in
@@ -700,7 +702,7 @@ calculation — see § 2.3.
 
 7. **Three outstanding recoveries closed in Session 84.** The Session 83 closure flagged 163
    outstanding tiles across `outputs/55maps-text-min-generalisation/`,
-   `outputs/55maps-image-generalisation/`, and `outputs/h11/gold-standard-v2/`. **All three
+   `outputs/55maps-image-generalisation/`, and `outputs/gs/gold-standard-v2/`. **All three
    were closed in Session 84** (§ 7.3 / 7.4 / 7.5); the patched parser (commit `e3aef6fa`)
    recovered ~92 % of failures on the first attempt without retry storms.
 
@@ -991,3 +993,24 @@ synthesis. All compute artefacts referenced live in
 ---
 
 **End of report.**
+
+## Changelog
+
+### 2026-05-29 — gold-standard-v2 relocated to outputs/gs/
+
+**Refresh trigger**: H11 reorganisation — the `gold-standard-v2` run was moved
+out of `outputs/h11/` to the new `outputs/gs/` umbrella (relocation landed in
+commit `c5983adb`). Its `run_id` slug is unchanged (`gold-standard-v2`);
+only the directory path moved.
+
+**What changed**: every `outputs/h11/gold-standard-v2/…` path reference in this
+document was repointed to `outputs/gs/gold-standard-v2/…`.
+
+**What did NOT change**: no numerical results, tables, rankings, or findings —
+this is a pure path relocation.
+
+### 2026-05-02 — Original publication
+
+Document first authored on 2026-05-02; see git history for substantive content.
+This banner and changelog were added on 2026-05-29 (the first Revision-Policy
+stub for this document) as part of the H11 reorganisation.

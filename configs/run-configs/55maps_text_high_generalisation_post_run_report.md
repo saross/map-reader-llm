@@ -1,5 +1,7 @@
 # Post-Run Report — 55-Map Text HIGH Generalisation (Re-run)
 
+> **Last revised**: 2026-05-29 (`gold-standard-v2` relocated to `outputs/gs/`). See [§ Changelog](#changelog) for revision history.
+
 **Run name**: `55maps-text-high-generalisation`
 **Completed (original)**: 2026-04-18 17:48 UTC
 **Recovery completed**: 2026-05-03 (proposer recovery, verifier
@@ -599,10 +601,31 @@ queued under the same recovery pattern:
 
 1. `outputs/55maps-image-generalisation/` — image HIGH run
 2. `outputs/55maps-text-min-generalisation/` — text MIN run
-3. `outputs/h11/gold-standard-v2/` — GS-v2 run
+3. `outputs/gs/gold-standard-v2/` — GS-v2 run
 
 Per the parser-fix audit (commit message of `e3aef6fa`), these three
 runs collectively lost 163 tiles to JSON-parse failures that the
 3-tier repair would now recover. None has been actioned as of
 2026-05-03; they are tracked in `planning/paper-writeup-continuity.md`
 under "Pending before paper outline".
+
+## Changelog
+
+### 2026-05-29 — gold-standard-v2 relocated to outputs/gs/
+
+**Refresh trigger**: H11 reorganisation — the `gold-standard-v2` run was moved
+out of `outputs/h11/` to the new `outputs/gs/` umbrella (relocation landed in
+commit `c5983adb`). Its `run_id` slug is unchanged (`gold-standard-v2`);
+only the directory path moved.
+
+**What changed**: every `outputs/h11/gold-standard-v2/…` path reference in this
+document was repointed to `outputs/gs/gold-standard-v2/…`.
+
+**What did NOT change**: no numerical results, tables, rankings, or findings —
+this is a pure path relocation.
+
+### 2026-04-19 — Original publication
+
+Document first authored on 2026-04-19; see git history for substantive content.
+This banner and changelog were added on 2026-05-29 (the first Revision-Policy
+stub for this document) as part of the H11 reorganisation.

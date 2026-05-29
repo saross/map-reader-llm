@@ -1,5 +1,7 @@
 # Gold-Standard Spatial Tolerance Curve (4-map, Extended Buffers)
 
+> **Last revised**: 2026-05-29 (`gold-standard-v2` relocated to `outputs/gs/`). See [§ Changelog](#changelog) for revision history.
+
 **Generated**: 2026-04-18T23:37:10+00:00 (source run); consolidated 2026-04-20
 **Buffers**: 5, 10, 15, 25, 35, 45 m (extended-buffer sweep)
 **Bounds**: `inputs/vectors/bounds/384/h10_test_bounds.geojson` (327 tiles, 4 maps, 569 reference mounds)
@@ -26,7 +28,7 @@ the underlying ground-truth precision differs materially (see §"Interpretation"
 - **Verifier**: `verify_adversarial-text` (v1 prompt), Gemini 3 Flash, T = 0.0, thinking = MINIMAL.
 - **Consensus / decision**: vote_t = 4 (4-of-5 majority), prob_t = 0.15 on verifier `mound_probability`,
   Intersection-over-Union deduplication radius 20 m.
-- **Run**: `outputs/h11/gold-standard-v2/` (git commit `d59798ac`), verifier artefact
+- **Run**: `outputs/gs/gold-standard-v2/` (git commit `d59798ac`), verifier artefact
   `verified-v1/probabilities.json` (597 / 607 candidates parsed; 10 parse failures dropped per convention).
 
 ## F1 with 95 % CI by Buffer Distance
@@ -101,3 +103,24 @@ so that the ~25 m annotation-precision offset is visible to the reader.
 - The 20 / 30 / 40 / 50 m cells on this same run are reported in the cached leaderboard cell
   (`gold-standard-v2-greedy-v1-327tile.json`) and are not duplicated here to avoid source-of-truth
   drift. The extended buffers above (5 / 10 / 15 / 25 / 35 / 45 m) are the new information.
+
+## Changelog
+
+### 2026-05-29 — gold-standard-v2 relocated to outputs/gs/
+
+**Refresh trigger**: H11 reorganisation — the `gold-standard-v2` run was moved
+out of `outputs/h11/` to the new `outputs/gs/` umbrella (relocation landed in
+commit `c5983adb`). Its `run_id` slug is unchanged (`gold-standard-v2`);
+only the directory path moved.
+
+**What changed**: every `outputs/h11/gold-standard-v2/…` path reference in this
+document was repointed to `outputs/gs/gold-standard-v2/…`.
+
+**What did NOT change**: no numerical results, tables, rankings, or findings —
+this is a pure path relocation.
+
+### 2026-04-21 — Original publication
+
+Document first authored on 2026-04-21; see git history for substantive content.
+This banner and changelog were added on 2026-05-29 (the first Revision-Policy
+stub for this document) as part of the H11 reorganisation.

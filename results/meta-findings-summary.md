@@ -1,5 +1,7 @@
 # Meta-findings summary — synthesis of Observations 262–273
 
+> **Last revised**: 2026-05-29 (`gold-standard-v2` relocated to `outputs/gs/`). See [§ Changelog](#changelog) for revision history.
+
 **Created**: 2026-04-23
 **Purpose**: Paper-Discussion-shaped synthesis of the 2026-04-20/21
 human-review day's cross-cutting findings, framed for direct use during
@@ -79,7 +81,7 @@ drill-downs.
   reviewer-promoted true positives at 50 m + 274 additional reviewer
   promotions at R > 50 m (today's multi-buffer pass) give 746 total
   reviewer-promoted real mounds from this candidate set.
-- **4-map gold-standard set** (T4 only): `outputs/h11/gold-standard-v2/`
+- **4-map gold-standard set** (T4 only): `outputs/gs/gold-standard-v2/`
   proposer consensus against the 569 expert-digitised features in
   `inputs/vectors/references/reference_*.geojson` (burial 456 /
   benchmark 65 / triangulation 43 / settlement 5).
@@ -1017,7 +1019,7 @@ artefact under `results/` produced by a versioned script with an explicit
 seed. The provenance chain is:
 
 - **Raw detections and consensus** → `outputs/55maps-image-generalisation/verified/`
-  (55-map slice) and `outputs/h11/gold-standard-v2/consensus/` (4-map
+  (55-map slice) and `outputs/gs/gold-standard-v2/consensus/` (4-map
   slice).
 - **Matching and measured F1/P/R** → `outputs/55maps-image-generalisation/evaluation/evaluation.json`
   (Hungarian one-to-one at 20 / 30 / 40 / 50 m, 1 000 bootstrap
@@ -1201,7 +1203,7 @@ consolidated):
 
 - `/home/shawn/Code/map-reader-llm/outputs/55maps-image-generalisation/evaluation/evaluation.json`
 - `/home/shawn/Code/map-reader-llm/outputs/55maps-image-generalisation/verified/verified_detections.geojson`
-- `/home/shawn/Code/map-reader-llm/outputs/h11/gold-standard-v2/consensus/consensus-4of5.geojson`
+- `/home/shawn/Code/map-reader-llm/outputs/gs/gold-standard-v2/consensus/consensus-4of5.geojson`
 - `/home/shawn/Code/map-reader-llm/inputs/vectors/references/student-mounds-55maps-reviewed.geojson`
 - `/home/shawn/Code/map-reader-llm/inputs/vectors/references/reference_*.geojson` (four files, 4-map gold-standard)
 - `/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson`
@@ -1259,3 +1261,24 @@ consolidated):
 `planning/paper-writeup-continuity.md`) only after Step 4 gap-fills and
 Step 5 SUPERSEDED marking are complete, per the scorecard at
 `planning/interim-docs-review.md` §6 Step 4 sequencing.
+
+## Changelog
+
+### 2026-05-29 — gold-standard-v2 relocated to outputs/gs/
+
+**Refresh trigger**: H11 reorganisation — the `gold-standard-v2` run was moved
+out of `outputs/h11/` to the new `outputs/gs/` umbrella (relocation landed in
+commit `c5983adb`). Its `run_id` slug is unchanged (`gold-standard-v2`);
+only the directory path moved.
+
+**What changed**: every `outputs/h11/gold-standard-v2/…` path reference in this
+document was repointed to `outputs/gs/gold-standard-v2/…`.
+
+**What did NOT change**: no numerical results, tables, rankings, or findings —
+this is a pure path relocation.
+
+### 2026-04-23 — Original publication
+
+Document first authored on 2026-04-23; see git history for substantive content.
+This banner and changelog were added on 2026-05-29 (the first Revision-Policy
+stub for this document) as part of the H11 reorganisation.

@@ -1,5 +1,7 @@
 # Extended-Buffer F1 Curve on 4 Gold-Standard Maps (Text-HIGH pipeline)
 
+> **Last revised**: 2026-05-29 (`gold-standard-v2` relocated to `outputs/gs/`). See [§ Changelog](#changelog) for revision history.
+
 **Date of analysis**: 2026-04-18 (Sydney).
 **Level-up**: 2026-04-24 (Session 76).
 **T=0.7 post-recovery refresh**: 2026-05-03 — the 55-map text-HIGH
@@ -44,7 +46,7 @@ This report characterises the F1 curve behaviour at **tighter-than-primary** (5 
 
 ## 2. Canonical run selected
 
-- **Run path**: `outputs/h11/gold-standard-v2/`.
+- **Run path**: `outputs/gs/gold-standard-v2/`.
 - **Git commit** (proposer + verifier-v1): `d59798ac7f32c0f6a4a050eb40824fffea8ec029`.
 - **Proposer**: `detect_brief-text`, `gemini-3-flash`, T = 0.7, thinking = HIGH, K = 5, 17 text-only labelled examples (no example images).
 - **Verifier**: `verify_adversarial-text` (v1 prompt, `verify_adversarial.md`), `gemini-3-flash`, T = 0.0, thinking = MINIMAL.
@@ -177,8 +179,8 @@ The **extended-buffer curve shape is a free diagnostic** for GT-precision-noise 
 
 **Inputs**:
 
-- `outputs/h11/gold-standard-v2/crops/candidate_manifest.json` — candidate manifest post-dedup.
-- `outputs/h11/gold-standard-v2/verified-v1/probabilities.json` — verifier-v1 probabilities.
+- `outputs/gs/gold-standard-v2/crops/candidate_manifest.json` — candidate manifest post-dedup.
+- `outputs/gs/gold-standard-v2/verified-v1/probabilities.json` — verifier-v1 probabilities.
 - `inputs/vectors/bounds/384/h10_test_bounds.geojson` — 327-tile Era 3 bounds.
 - `inputs/vectors/references/mounds-reference.geojson` — 569-mound GT.
 
@@ -194,8 +196,8 @@ The **extended-buffer curve shape is a free diagnostic** for GT-precision-noise 
 
     ```bash
     python scripts/score_leaderboard_cells.py \
-        --manifest outputs/h11/gold-standard-v2/crops/candidate_manifest.json \
-        --probs outputs/h11/gold-standard-v2/verified-v1/probabilities.json \
+        --manifest outputs/gs/gold-standard-v2/crops/candidate_manifest.json \
+        --probs outputs/gs/gold-standard-v2/verified-v1/probabilities.json \
         --bounds inputs/vectors/bounds/384/h10_test_bounds.geojson \
         --gt inputs/vectors/references/mounds-reference.geojson \
         --label "gold-standard-v2-text-high-extended-buffer" \
@@ -220,3 +222,24 @@ The **extended-buffer curve shape is a free diagnostic** for GT-precision-noise 
 
 - **Git commit of original data run**: `8747d726` (`data(analysis): GT spacing + gold-standard F1 curve + docs audit + Obs 260`). Level-up commit: see this file's `git log` entry at 2026-04-24.
 - **Toolchain**: Python ≥ 3.11, GeoPandas ≥ 0.14, NumPy, pandas. Pinned versions in `requirements.txt`.
+
+## Changelog
+
+### 2026-05-29 — gold-standard-v2 relocated to outputs/gs/
+
+**Refresh trigger**: H11 reorganisation — the `gold-standard-v2` run was moved
+out of `outputs/h11/` to the new `outputs/gs/` umbrella (relocation landed in
+commit `c5983adb`). Its `run_id` slug is unchanged (`gold-standard-v2`);
+only the directory path moved.
+
+**What changed**: every `outputs/h11/gold-standard-v2/…` path reference in this
+document was repointed to `outputs/gs/gold-standard-v2/…`.
+
+**What did NOT change**: no numerical results, tables, rankings, or findings —
+this is a pure path relocation.
+
+### 2026-04-19 — Original publication
+
+Document first authored on 2026-04-19; see git history for substantive content.
+This banner and changelog were added on 2026-05-29 (the first Revision-Policy
+stub for this document) as part of the H11 reorganisation.

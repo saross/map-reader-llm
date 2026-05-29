@@ -1,5 +1,7 @@
 # Subtype-classification accuracy on the 4-map gold-standard — analysis report
 
+> **Last revised**: 2026-05-29 (`gold-standard-v2` relocated to `outputs/gs/`). See [§ Changelog](#changelog) for revision history.
+
 **Date**: 2026-04-21
 **Recovery 2026-05-03**: data files refreshed against the post-recovery
 GS-v2 consensus (commits `90890ae9..c6023034`). The 4-of-5 consensus
@@ -45,7 +47,7 @@ Bootstrap: 10 000 iterations, matched-pair-level resample, stratified by map, se
 ### 2.1 Ground truth and predictions
 
 - **Ground truth**: `inputs/vectors/references/reference_*.geojson` (four files, 569 features total — burial 456 / benchmark 65 / triangulation 43 / settlement 5).
-- **Predictions (headline)**: `outputs/h11/gold-standard-v2/consensus/consensus-4of5.geojson` (607 features).
+- **Predictions (headline)**: `outputs/gs/gold-standard-v2/consensus/consensus-4of5.geojson` (607 features).
 - **Predictions (sweep)**: `consensus-3of5.geojson` (865 features), `consensus-5of5.geojson` (405 features). Both generated via `scripts/merge_passes.py` at thresholds 3 and 5.
 - **Bounds**: `inputs/vectors/bounds/384/full_evaluation_bounds.geojson`.
 - **Vocabulary mapping** (logged in `run_manifest.json`): `Burial mound`/`Burial Mound` → `burial_mound`; `Bench mark on burial mound` → `benchmark_mound`; `Triangulation point on burial mound` → `triangulation_mound`; `Settlement mound` → `settlement_mound`.
@@ -279,7 +281,7 @@ The `confidence` field on each prediction is **vote-share across the 5 passes** 
   ```bash
   python scripts/analyse_subtype_classification.py \
       --gt-dir inputs/vectors/references/ \
-      --detections outputs/h11/gold-standard-v2/consensus/consensus-4of5.geojson \
+      --detections outputs/gs/gold-standard-v2/consensus/consensus-4of5.geojson \
       --bounds inputs/vectors/bounds/384/full_evaluation_bounds.geojson \
       --buffers 20 30 50 \
       --output-dir results/gold-standard-subtype-classification/ \
@@ -332,3 +334,24 @@ An `/audit` pass on the analysis script surfaced a bug in the `settlement_trace`
 ---
 
 **End of report.**
+
+## Changelog
+
+### 2026-05-29 — gold-standard-v2 relocated to outputs/gs/
+
+**Refresh trigger**: H11 reorganisation — the `gold-standard-v2` run was moved
+out of `outputs/h11/` to the new `outputs/gs/` umbrella (relocation landed in
+commit `c5983adb`). Its `run_id` slug is unchanged (`gold-standard-v2`);
+only the directory path moved.
+
+**What changed**: every `outputs/h11/gold-standard-v2/…` path reference in this
+document was repointed to `outputs/gs/gold-standard-v2/…`.
+
+**What did NOT change**: no numerical results, tables, rankings, or findings —
+this is a pure path relocation.
+
+### 2026-04-21 — Original publication
+
+Document first authored on 2026-04-21; see git history for substantive content.
+This banner and changelog were added on 2026-05-29 (the first Revision-Policy
+stub for this document) as part of the H11 reorganisation.

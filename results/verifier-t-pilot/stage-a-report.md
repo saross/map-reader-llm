@@ -1,5 +1,7 @@
 # Stage A Verifier-Temperature Failure-Rate Pilot — Report
 
+> **Last revised**: 2026-05-29 (`gold-standard-v2` relocated to `outputs/gs/`). See [§ Changelog](#changelog) for revision history.
+
 **Date:** 2026-04-27
 **Author:** Claude Code (Opus 4.7) acting under Shawn's brief
 **Compute:** sapphire (192.168.1.150)
@@ -18,7 +20,7 @@ Three conditions, all on the same 607 candidates from the canonical 4-of-5
 consensus set:
 
 - **T=0.0** — reused from the existing canonical run at
-  `outputs/h11/gold-standard-v2/verified-v1/` (commit `a01858e5`,
+  `outputs/gs/gold-standard-v2/verified-v1/` (commit `a01858e5`,
   `run.meta.json` records git commit `d59798ac`).
 - **T=0.5** — fresh run, single pass (k=1).
 - **T=1.0** — fresh run, single pass (k=1).
@@ -32,8 +34,8 @@ All three use the canonical verifier config (`verify_adversarial-text.json`):
 |---|---|
 | `prompts/configs/verify_adversarial-text.json` is canonical v1 | Confirmed: T=0.0, gemini-3-flash, thinking_level minimal, examples=[]. |
 | `scripts/run_pv.py verify` accepts `--temperature` override | Confirmed at `scripts/run_pv.py:1078-1081`. |
-| 4-of-5 consensus path exists with 607 candidates | Confirmed: `outputs/h11/gold-standard-v2/consensus/consensus-4of5.geojson`. |
-| `outputs/h11/gold-standard-v2/crops/` PNGs present | **Re-extracted on sapphire** — directory previously held only `candidate_manifest.json` (PNGs gitignored). 607/607 successful from rasters. |
+| 4-of-5 consensus path exists with 607 candidates | Confirmed: `outputs/gs/gold-standard-v2/consensus/consensus-4of5.geojson`. |
+| `outputs/gs/gold-standard-v2/crops/` PNGs present | **Re-extracted on sapphire** — directory previously held only `candidate_manifest.json` (PNGs gitignored). 607/607 successful from rasters. |
 
 ### Canonical config snapshot (verifier)
 
@@ -149,10 +151,31 @@ paths are uncommitted on amd-tower (and on sapphire for the run outputs):
 
 - `outputs/verifier-t-pilot/T0.5/{probabilities.json, run.meta.json, run.log}` — sapphire + amd-tower
 - `outputs/verifier-t-pilot/T1.0/{probabilities.json, run.meta.json, run.log}` — sapphire + amd-tower
-- `outputs/h11/gold-standard-v2/crops/candidate_*.png` — sapphire only (gitignored; can be re-extracted)
+- `outputs/gs/gold-standard-v2/crops/candidate_*.png` — sapphire only (gitignored; can be re-extracted)
 - `results/verifier-t-pilot/stage-a-report.md` — amd-tower (this file)
 - `results/verifier-t-pilot/per-t-stats.json` — amd-tower
 - `scripts/analyse_verifier_t_pilot.py` — amd-tower
 
-The T=0.0 baseline at `outputs/h11/gold-standard-v2/verified-v1/` was not
+The T=0.0 baseline at `outputs/gs/gold-standard-v2/verified-v1/` was not
 modified, moved, or overwritten.
+
+## Changelog
+
+### 2026-05-29 — gold-standard-v2 relocated to outputs/gs/
+
+**Refresh trigger**: H11 reorganisation — the `gold-standard-v2` run was moved
+out of `outputs/h11/` to the new `outputs/gs/` umbrella (relocation landed in
+commit `c5983adb`). Its `run_id` slug is unchanged (`gold-standard-v2`);
+only the directory path moved.
+
+**What changed**: every `outputs/h11/gold-standard-v2/…` path reference in this
+document was repointed to `outputs/gs/gold-standard-v2/…`.
+
+**What did NOT change**: no numerical results, tables, rankings, or findings —
+this is a pure path relocation.
+
+### 2026-04-27 — Original publication
+
+Document first authored on 2026-04-27; see git history for substantive content.
+This banner and changelog were added on 2026-05-29 (the first Revision-Policy
+stub for this document) as part of the H11 reorganisation.

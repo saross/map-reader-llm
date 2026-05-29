@@ -1,5 +1,7 @@
 # GS FP-class classification (Obs 302 follow-up, v2)
 
+> **Last revised**: 2026-05-29 (`gold-standard-v2` relocated to `outputs/gs/`). See [§ Changelog](#changelog) for revision history.
+
 _Generated 2026-04-29 12:52 UTC_
 
 **Date**: 2026-04-29
@@ -27,7 +29,7 @@ Headline findings:
 
 **Interpretation** (see "Paper implications" below for the full Discussion): the corpora produce statistically distinguishable FP-class distributions at conventional significance, with the divergence concentrated in burial-mound-adjacent categories on GS (Pearson residuals: `burial-mound` +5.29 / +4.26; `triangulation-point-on-burial-mound` +3.33 / +3.65 at the > 50 m / > 125 m strata) versus contour-ring on 55-map (residual −2.33 / −2.18). Per Obs 307, this refines but does NOT confirm Shawn's original Obs 296 manual-review hypothesis (that 55-map FPs would be numbers/benchmarks and GS would be water-features/spot-heights); the actual mechanism — burial-mound-adjacent symbols on GS, contour-rings on 55-map — is a different finding that the closed-list expansion (Obs 306) made tractable.
 
-Inputs: detections at `outputs/h11/gold-standard-v2/verified-v1/verified_detections_full-scope.geojson`. v2 expands the closed list to include four burial-mound categories (see the Methodology change section below); v1 outputs are archived at `archive/gs-fp-classification-v1-pre-burial-mound-list/`.
+Inputs: detections at `outputs/gs/gold-standard-v2/verified-v1/verified_detections_full-scope.geojson`. v2 expands the closed list to include four burial-mound categories (see the Methodology change section below); v1 outputs are archived at `archive/gs-fp-classification-v1-pre-burial-mound-list/`.
 
 ## Methodology change vs v1 (closed-list expansion)
 
@@ -325,7 +327,7 @@ What this analysis contributes to the Discussion section, and what it does **not
 
 - Driver script: `scripts/gs-fp-classify.py` (v2; commit `9fa6db4e`). Sibling driver: `scripts/55maps-fp-classify.py` (the two share helper signatures by copy, not by import; see plan §9).
 - Inputs (paths fixed in the driver, not parameterised):
-  - Detections: `outputs/h11/gold-standard-v2/verified-v1/verified_detections_full-scope.geojson` (371 features, EPSG:32635)
+  - Detections: `outputs/gs/gold-standard-v2/verified-v1/verified_detections_full-scope.geojson` (371 features, EPSG:32635)
   - Curator GT: `inputs/vectors/references/mounds-reference.geojson` (569 mounds, MultiPoint exploded to Point, EPSG:32635)
   - Source rasters: `inputs/rasters/{K-35-052-4, K-35-053-3, K-35-062-2, K-35-078-1}.tif`
   - Cross-corpus comparator: `results/55maps-fp-classification/category_distribution.json` (text-track aggregate; v1 fallback at `archive/55maps-fp-classification-v1-pre-burial-mound-list/category_distribution.json` if v2 absent)
@@ -349,3 +351,24 @@ What this analysis contributes to the Discussion section, and what it does **not
 ## Findable later
 
 Search terms: GS FP-class classification, Obs 302 follow-up, v2 closed list, burial-mound categories added, benchmark-on-burial-mound, triangulation-point-on-burial-mound, settlement-mound, cross-corpus comparator, distance-from-curator-GT primary 50 m, deepest stratum 125 m, sensitivity sweep 25 50 75 100 125 m, Soviet 1980s topographic categories closed list, Gemini 3 Flash 150 m crop classification, TP-side reliability check (v2 — burial-mound dominance expected), water-feature spot-height GS failure mode, sub-metre curator GT precision, v1 vs v2 TP-side comparison, Monte Carlo chi-square 0.0028 at greater than 125 m, Monte Carlo chi-square 0.0012 at greater than 50 m, Pearson residual burial-mound +5.29 +4.26, Pearson residual triangulation-point-on-burial-mound +3.33 +3.65, Pearson residual contour-ring −2.33 −2.18, failure-of-generalisation reinterpretation cross-reference Obs 296 Obs 302 Obs 304 Obs 306 Obs 307, calibration-vs-native cap difference paper Discussion framing, GS curator GT may have missed mounds 6-crop deferred inspection plan section 13.7, single-classifier no-consensus caveat, prompt vocabulary anchor Soviet 1980s deliberate departure, cross-corpus FP-distribution asymmetry paper-load-bearing recasting, burial-mound-adjacent on GS contour-ring on 55-map mechanism.
+
+## Changelog
+
+### 2026-05-29 — gold-standard-v2 relocated to outputs/gs/
+
+**Refresh trigger**: H11 reorganisation — the `gold-standard-v2` run was moved
+out of `outputs/h11/` to the new `outputs/gs/` umbrella (relocation landed in
+commit `c5983adb`). Its `run_id` slug is unchanged (`gold-standard-v2`);
+only the directory path moved.
+
+**What changed**: every `outputs/h11/gold-standard-v2/…` path reference in this
+document was repointed to `outputs/gs/gold-standard-v2/…`.
+
+**What did NOT change**: no numerical results, tables, rankings, or findings —
+this is a pure path relocation.
+
+### 2026-04-29 — Original publication
+
+Document first authored on 2026-04-29; see git history for substantive content.
+This banner and changelog were added on 2026-05-29 (the first Revision-Policy
+stub for this document) as part of the H11 reorganisation.

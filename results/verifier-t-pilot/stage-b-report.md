@@ -1,5 +1,7 @@
 # Stage B Verifier-Temperature Accuracy Pilot — Report
 
+> **Last revised**: 2026-05-29 (`gold-standard-v2` relocated to `outputs/gs/`). See [§ Changelog](#changelog) for revision history.
+
 **Date:** 2026-04-27
 **Author:** Claude Code (Opus 4.7) acting under Shawn's Stage B brief
 **Compute:** sapphire (192.168.1.150)
@@ -38,7 +40,7 @@ Mirror the per-architecture leaderboard methodology
 
 | Parameter | Value |
 |---|---|
-| Consensus input | `outputs/h11/gold-standard-v2/consensus/consensus-4of5.geojson` (607 features) |
+| Consensus input | `outputs/gs/gold-standard-v2/consensus/consensus-4of5.geojson` (607 features) |
 | Vote threshold | `vote_t = 4` (already enforced by 4-of-5 consensus; explicit for config) |
 | Probability sweep | `prob_t in {0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.40, 0.50}` |
 | Buffers | `[20, 30, 40, 50, 100]` m |
@@ -240,3 +242,24 @@ exactly, confirming pipeline byte-equivalence.
    small directional MCC delta is concentrated in a small number of
    high-uncertainty candidates (and could be addressed by a per-candidate
    ensemble across temperatures). Out of scope for Stage B.
+
+## Changelog
+
+### 2026-05-29 — gold-standard-v2 relocated to outputs/gs/
+
+**Refresh trigger**: H11 reorganisation — the `gold-standard-v2` run was moved
+out of `outputs/h11/` to the new `outputs/gs/` umbrella (relocation landed in
+commit `c5983adb`). Its `run_id` slug is unchanged (`gold-standard-v2`);
+only the directory path moved.
+
+**What changed**: every `outputs/h11/gold-standard-v2/…` path reference in this
+document was repointed to `outputs/gs/gold-standard-v2/…`.
+
+**What did NOT change**: no numerical results, tables, rankings, or findings —
+this is a pure path relocation.
+
+### 2026-04-27 — Original publication
+
+Document first authored on 2026-04-27; see git history for substantive content.
+This banner and changelog were added on 2026-05-29 (the first Revision-Policy
+stub for this document) as part of the H11 reorganisation.
