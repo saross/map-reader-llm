@@ -6,7 +6,7 @@
 > [§ Changelog](#changelog) for revision history.
 
 **Status**: Decisions **resolved**; JSON Schema files authored under
-`docs/methodology/manifest-schemas/`. This brief now records the resolved
+`docs/manifest-schemas/`. This brief now records the resolved
 schema decisions (it began life as the pre-session brief of proposals). The
 entity model and per-level field lists below are the current truth; the
 schema files are their machine-readable encoding. Population of the manifests
@@ -182,7 +182,7 @@ the mechanism that satisfies locked decision #8.
 ## 2. Field lists (resolved)
 
 These are the resolved per-level fields, encoded in the schema files under
-`docs/methodology/manifest-schemas/`. Types and required/optional status are
+`docs/manifest-schemas/`. Types and required/optional status are
 given here; the schema files are authoritative for validation.
 
 ### 2.1 Runs manifest — one row per run
@@ -324,7 +324,7 @@ revised, flagged here for veto.
    `run_id`.
 6. **Schema versioning + file location** — **(locked)** top-level
    `schema_version` (`"1.0"`) on each manifest. **(proposed)** the JSON Schema
-   validation files live in `docs/methodology/manifest-schemas/`
+   validation files live in `docs/manifest-schemas/`
    (`runs-manifest.schema.json`, etc.) — a dedicated subdir, since there are
    now five of them. `extractor_version` tracks the **generator script**
    version (semver); a separate `schema_version` tracks the format.
@@ -414,7 +414,7 @@ revised, flagged here for veto.
 
 The schema-design session's deliverable: committed JSON Schema files for the
 manifests, plus this brief updated with the resolved decisions. **Both done**
-(schemas under `docs/methodology/manifest-schemas/`; this brief).
+(schemas under `docs/manifest-schemas/`; this brief).
 
 ---
 
@@ -452,7 +452,7 @@ H9 diversity was within-config) → condition → pass is a simple
 prefix-reference, no M:N lineage table needed.
 
 **Deliverable landed**: JSON Schema (draft 2020-12) files under
-`docs/methodology/manifest-schemas/` (runs, conditions, passes, analyses,
+`docs/manifest-schemas/` (runs, conditions, passes, analyses,
 run-registry). Commit hash: `3204993e`.
 
 ### 2026-05-28 — Original publication

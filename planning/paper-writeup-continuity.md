@@ -43,7 +43,7 @@ While verifying field placement, the model metadata was scanned authoritatively 
 ### Deliverables this session
 
 - `planning/manifest-schema-design.md` — rewritten to record the resolved decisions (§ 1A rationale, § 2 field lists, § 3 resolutions, Changelog with before→after).
-- `docs/methodology/manifest-schemas/` — five JSON Schema files (draft 2020-12): runs, conditions, passes, analyses, run-registry.
+- `docs/manifest-schemas/` — five JSON Schema files (draft 2020-12): runs, conditions, passes, analyses, run-registry.
 - This beacon.
 
 ### What's pending — priority order for Session 92+
