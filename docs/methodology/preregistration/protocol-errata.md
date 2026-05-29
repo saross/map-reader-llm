@@ -1073,7 +1073,7 @@ to `consensus-384-UNINTENDED-T1.0` with explanatory README.
 |-------|-------|
 | Date | 2026-03-25 (discovered during configuration audit) |
 | Type | Deviation |
-| Files | `outputs/h11/single-pass-384-UNINTENDED-T1.0/` (renamed from `single-pass-384/`) |
+| Files | `archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/` (renamed from `single-pass-384/`; archived from `outputs/h11/` on 2026-05-29, H11 reorganisation) |
 | Impact | 10 runs × 240 tiles executed at wrong temperature; corrected rerun in progress |
 
 **Description**: The H11 single-pass-384 study was intended as a deterministic
@@ -1083,7 +1083,10 @@ propagation failure as E43: the YAML specified `fixed.temperature: 0.0` and
 `"temperature": 1.0` hardcoded and the CLI override was not applied.
 
 **Data disposition**: Directory renamed to `single-pass-384-UNINTENDED-T1.0`
-with explanatory README. Not used in any published analysis.
+with explanatory README. Not used in any published analysis. Archived to
+`archive/h11-unintended-t1.0/` on 2026-05-29 (H11 reorganisation; preserved,
+not deleted — it is unused deviation data, so it leaves the active output
+tree while the canonical deviation record stays here in this erratum).
 
 **Corrected rerun**: `outputs/retest/h11-single-pass-384-t0/` (10 runs,
 487 tiles — expanded to full evaluation area for consistency with consensus
