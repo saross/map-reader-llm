@@ -1708,4 +1708,35 @@ Several **post-hoc** analyses (not specified in the preregistration) use **10 00
 
 ---
 
+### E55: Verifier-t-pilot T0.5/T1.0 metadata under-recorded the swept temperature
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-05-30 |
+| Type | Metadata correction (non-destructive) |
+| Commit | TBD |
+| Impact | Low — exploratory pilot (H2); corrected at source and in the manifest |
+
+**Description**: The verifier-temperature pilot `outputs/verifier-t-pilot/` swept the verifier temperature via a CLI `--temperature` override. For the two new executions (`T0.5`, `T1.0`), the override was applied to the API call and logged in `run.log` (`Temperature override: 0.50` / `1.00`), but it was **not written back into the serialised `run.meta.json`**, whose `configuration.temperature` (and `configuration.full_config_snapshot.temperature`) retained the base-config default of `0.0`. Reading the temperature from the meta alone would therefore mis-record the very parameter the pilot varies.
+
+**Verification**: the override genuinely took effect — across the 607 shared candidates, 348 (57 %) of mound probabilities differ between `T0.5` and `T1.0` (`probabilities.json` → `results`). The `T0.0` arm has no `run.meta.json` (it reuses the existing T=0.0 baseline verifier).
+
+**Blast radius**: a scan of every `run.log` under `outputs/` for `Temperature override:` returns **only these two files**. No other run swept temperature by CLI override; all other runs set temperature in their config/study YAML, where the meta records it faithfully. The class of error is confined to this pilot.
+
+**Root cause**: the verifier runner applied the `--temperature` CLI override to the request but serialised the unmodified base-config object into `run.meta.json` (the override was not merged into the snapshot before writing).
+
+**Resolution (option R2, non-destructive)**:
+
+1. The original `configuration.temperature: 0.0` is **left untouched** (a faithful record of what the runner serialised).
+2. An additive `configuration.temperature_effective` (0.5 / 1.0) and a `configuration._correction` block (true value, `run.log` source, this erratum, date) were added to each meta, so a direct reader of the raw file sees the execution truth.
+3. The manifest generator records the true temperature for these verifier passes, with `provenance.source_files` listing both `run.meta.json` and `run.log`. The extractor gains a general rule: prefer a logged CLI override over the meta `configuration` field (GAP-10).
+
+**Reference artefacts**:
+
+- Affected metas: `outputs/verifier-t-pilot/{T0.5,T1.0}/run.meta.json` (`configuration.temperature_effective`, `configuration._correction`)
+- Ground truth: `outputs/verifier-t-pilot/{T0.5,T1.0}/run.log` (`Temperature override:`)
+- Manifest design / extractor rule: `planning/manifest-schema-design.md`; `planning/run-registry-draft-review.md` (GAP-10)
+
+---
+
 *End of errata. New entries should be appended above this line.*

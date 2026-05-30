@@ -162,7 +162,7 @@
       "run_id": "verifier-t-pilot",
       "directory_path": "outputs/verifier-t-pilot",
       "status": "active",
-      "notes": "FLAG-GRAIN: umbrella=one run (T0.0/T0.5/T1.0 are verifier-temperature conditions). Absent from inventory."
+      "notes": "Issue 5 RESOLVED: one run (verifier-temperature pilot, H2-exploratory; T0.0 baseline + T0.5/T1.0 = new verifier passes -> conditions). Owns new API work, unlike wbf. GAP-10/E55: true verifier temp is in run.log ('Temperature override:'), not configuration.temperature (which reads 0.0); metas corrected non-destructively (temperature_effective). Eval bounds=None -> scope from another source."
     }
   ]
 }

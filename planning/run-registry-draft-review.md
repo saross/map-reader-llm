@@ -92,8 +92,17 @@ candidate:
    composition. Conditions = composition × aggregation (greedy/wbf/consensus).
    Facts-phase carry-in: mixed eval scope (43 evals on 487, 7 on 327) → the
    verifier-stage conditions need `scope_override` to the 327 pool (beacon trap).
-3. **`verifier-t-pilot` (27).** `T0.0 / T0.5 / T1.0` — verifier-temperature
-   conditions over a shared pool. Clean "one run, three conditions".
+3. **`verifier-t-pilot` (27) — ✅ RESOLVED (Issue 5): one run.** Verifier-
+   temperature pilot (H2, exploratory) over a shared consensus-vote4 candidate
+   set; conditions = `{T0.0 baseline, T0.5, T1.0}`. It owns **new** verifier API
+   executions (T0.5/T1.0 have their own `run.meta.json`), the clean line that
+   separates it from `wbf` (pure post-hoc fusion → not a run). **Surfaced and
+   fixed a real data-integrity error (erratum E55, GAP-10)**: the swept verifier
+   temperature was logged in `run.log` but never written into the meta
+   (`configuration.temperature` reads 0.0 for both); the override genuinely took
+   effect (57 % of 607 candidate probabilities differ T0.5 vs T1.0); blast radius
+   = these two files only. Metas corrected non-destructively
+   (`temperature_effective` + `_correction`).
 4. **`h12-v2` (15).** `greedy / r1-hn-heavy / r3-hp-heavy / wbf` — aggregation
    variants. One run.
 5. **`h10` (7).** `evaluation-v2 / example-pools-v2 / hard-cases-v2` — these look
@@ -164,6 +173,7 @@ this draft; sub-steps 2–3 are recorded so nothing is lost.
 | GAP-7 | 3 | Verifier-pass extractor handles one `run.meta.json` per dir, but `pv-diag-384` has 88 (per-condition passes). Many-pass shape unhandled. |
 | GAP-8 | 3 | (carry-forward) Verifier `n_tiles_processed = request_count` is wrong semantics (per-candidate-crop, not tiles). Decide: keep + document, derive true tile count, or null. |
 | GAP-9 | 3 | Possible third `*.meta.json` shape in older Era-1 `retest/*` (batch-API meta without `per_item_metadata`). Verify when generalising the extractor. |
+| GAP-10 | 3 | **(found + source-corrected, Issue 5 / E55)** A CLI `--temperature` override may not be serialised into `configuration.temperature` — `verifier-t-pilot/{T0.5,T1.0}` logged the override in `run.log` but the meta kept the base default 0.0. Extractor rule: prefer a logged override (`run.log`) / `temperature_effective` over the meta config field; provenance lists both. Blast radius confirmed = these two files only. |
 
 ---
 
