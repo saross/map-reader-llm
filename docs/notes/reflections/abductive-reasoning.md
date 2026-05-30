@@ -4815,3 +4815,27 @@ Sequence 1 and the broader H11 decision share a shape Shawn named explicitly: a 
 **Probe-type**: unprimed-agent triangulation against a tentative scope assumption. The lesson: a "by analogy / common case" parameter choice is a hypothesis, not a default — and the cheapest way to test it without confirmation bias is an agent told the *question* but not my expected *answer*.
 
 **Probe-type**: grep-widening against a high-conviction quantitative claim. The lesson (second-hand but worth keeping): a memory is most dangerous in the seconds after it is written, before any probe has tested it; the write-then-immediately-grep discipline is what caught it.
+
+## Session 93 — 2026-05-30 — a scope disagreement reconciled, and a metadata field that lied about its own run
+
+**Conditions met**: two first-person belief revisions (the h8/h12 scope; the verifier-t-pilot temperature). Both investigated this session; I held the priors being revised and verified the revisions against source. No compaction.
+
+### Sequence 1 — "the canonical doc settles h8-v2/h12-v2's scope at Era 3"
+
+**Surprising fact**: I had assigned h8-v2/h12-v2 the 327-tile Era-3 scope on the authority of `evaluation-scopes.md` §6, treating the doc as dispositive. Shawn contradicted it from memory — 487 was the *principal* scope. Two trusted sources (a canonical doc; the project lead's recollection) disagreed on a published-results scope assignment.
+
+**Probe**: Dispatched an agent to gather the *published-cell* evidence — which scope the actual leaderboard / analysis cells use, and *why* — rather than weigh doc-against-memory. It found every library-study leaderboard cell is `*-327tile.json`, and the study YAMLs (`h8-v2-library.yaml`, `h12-v2-ratio.yaml`) source their hard-case few-shot crops from the pool_160 tiles; errata E51/E52 bind the 327 manifest for exactly that reason.
+
+**Belief revised**: From "the doc says 327, so 327" to "327 is correct, but by a *leakage necessity* that neither the doc citation nor the memory had surfaced — the few-shot examples were mined from pool_160, so 487 would test on the model's own prompt data; and Shawn's '487 principal' is simultaneously correct, for the production / PV matrix, a different scope class." Both surface answers were right-ish for the wrong reason; the leakage constraint was the actual ground.
+
+**Probe-type**: evidence-gathering against a doc-vs-memory disagreement. The lesson: when a trusted document and a trusted human disagree, the resolution is often not "who's right" but "what fact is each a lossy pointer to" — and recovering that fact (here: where the few-shot library came from) reconciles both. A disagreement between two authorities is a signal that *neither* is citing the load-bearing reason.
+
+### Sequence 2 — "verifier-t-pilot ran at the temperatures it claims"
+
+**Surprising fact**: verifier-t-pilot's directories are named T0.0/T0.5/T1.0, but both new runs' `run.meta.json` recorded `configuration.temperature: 0.0`. The metadata flatly contradicted the experiment's entire premise (a temperature sweep) — and contradicted the directory names.
+
+**Probe**: Three independent checks rather than trusting either the dir name or the meta. (1) `run.log` for each: "Temperature override: 0.50" / "1.00" — the CLI override, logged. (2) A probability diff: 348 of 607 candidate mound-probabilities differ between T0.5 and T1.0 — the override *materially changed outputs*, so it genuinely took effect. (3) A repo-wide scan of every `run.log` for a temperature override: exactly these two files.
+
+**Belief revised**: From "the meta's 0.0 must be authoritative (read parameters from metadata, not dir names — the E43 lesson)" to "the meta is faithful to the *base config object* but wrong about the *execution* — the runner never merged the CLI override back into the serialised snapshot." The E43 rule (trust meta over dir name) had a blind spot: a CLI override is in *neither* by default; the execution log is the only authoritative record.
+
+**Probe-type**: triangulation across log + effect-size + blast-radius, against two mutually-contradicting metadata sources. The lesson (now Obs 329, erratum E55): a serialised field can be a faithful copy of its source object and still be false about what ran. When the dir name and the meta disagree, don't pick one — go to the execution log, and confirm the effect is real before correcting.

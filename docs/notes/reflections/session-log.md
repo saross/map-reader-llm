@@ -6234,3 +6234,52 @@ Three phases in one continuous session. ~$0 API (scoring is local BCa bootstrap 
 - Scoring ran on sapphire while it carried a separate days-long job (load ~12); eval jobs are CPU-light and ran on spare cores. Outputs were committed *from* sapphire and pulled locally (multi-machine git: sapphire `git pull --ff-only` → run → add → commit → push; local pull).
 - The `_inbox.md` flag lives in `~/personal-assistant/notes/` (beyond a symlink in the PA repo); it syncs via the PA daily-sync, not a manual commit here — same rationale as the `/forget` memory edits in Sessions 90–91.
 - The manifests under `results/` hold gold-standard-v2 only — the vertical slice, not the full population; fan-out extends them in place.
+
+## Session 93 — 2026-05-30 (map-reader-llm) — manifest fan-out: registry, per-run facts, and the 3a B1 refactor
+
+One continuous session picking up Session 92's pending fan-out. ~$0 API (all extraction + read/grep; four investigation agents + one background agent, all read-only). `origin/main` → `a9f59a5b` at close; working tree clean.
+
+### Sub-step 1 — run-registry (27 runs, 7 issues)
+
+- Drafted `planning/run-registry-draft.json` from the live `outputs/` tree (`condition-inventory.json` was stale + wrong-grain — its entries are condition- or pass-level). 28 runs initially; resolved to 27 across seven issues worked one-at-a-time with the user, each its own commit:
+  - Issue 1 (`5dfdbbc9`): slug dot→hyphen (option A1); §1A's `consensus-384-t1.0` example was invalid against the no-dots `run_id` pattern — corrected.
+  - Issue 2 (`3fcf1389`): the registry is the generator's hand-authored INPUT (decision B1), not a synthesised output; + a drift-check guard.
+  - Issue 3 (`d0d6f1cb`): `wbf` is not a run — its 4 subdirs are `aggregation=wbf` conditions of source runs (gs-v2 / e47 / pv-diag-384), per `SPECIAL_CONFIGS`. 28→27; resolved carry-forward #11.
+  - Issues 4 / 6 / 7 (`c83a8e93` / `e7f54a0a` / `dd29436a`): h8-v2 / h12-v2 / h10 each one run.
+  - Issue 5 (`2aa89caf`): verifier-t-pilot one run + erratum E55 (below).
+- The run-vs-condition boundary settled on "a run owns ≥1 pass of new API execution; a post-hoc fusion is a condition". Review record: `planning/run-registry-draft-review.md` (7 issues + facts-phase carry-ins + the GAP-1…10 table).
+
+### Housekeeping
+
+- Archived the 3 QGIS QA checks → `archive/qa-visual-checks/` (`52a212b1`); archived superseded `v2-proposer-test` → `archive/superseded-tests/`, deleted stale `outputs/test-phase2b`, removed a dead `.gitignore` rule (`a7b71741`). The untracked/ignored sweep came back clean (everything ignored is ephemeral; the surprising `scripts/`+`tests/` ignored counts are all `__pycache__`).
+
+### Sub-step 2 — per-run facts (all 27, HIGH confidence)
+
+- `results/run-facts.json` (corpus, gt_reference, scope, study tags, aliases; headline deferred). gt_reference rule from `evaluation-scopes.md` §11: 4-map = curator, 55-map = student.
+- Three read-only agents resolved the hard cases: pv-diag-256 (bespoke 256px / 1032-tile scope; eval JSONs archived out of `results/`); verifier-t-pilot (reconstructed — verifies the 4-map GS 4-of-5 consensus, n=607, Era 2; T=0.5 adopted as the production verifier default); and the h8/h10/h12-v2 scope (Era 3 by leakage — pool_160-mined few-shot examples). Commits `392ae343`, `3519039d`.
+- A background agent then empirically confirmed the 8 canonical-assigned scopes (8/8, 0 corrected; proposer-verifier-512 the lone inference — no eval artefact).
+- Named-programme vocabulary documented (`manifest-schema-design.md` §2.6: pv-strategy, consensus-n-sweep, flash-vs-pro, diversity-dividend, library-design) and applied to `also_informs`.
+
+### Sub-step 3a — B1 generator refactor
+
+- Promoted registry + facts to `results/` as inputs (`85a22030`). Refactored `scripts/generate_post_run_report.py` to v0.2.0 (`b8b4e12c`): retired `extract_registry_entry` / `extract_run_row`; added `load_run_registry` / `load_run_facts` / `build_run_row` / `drift_check`; `--all` / `--run` CLI; never rewrites the registry JSON (renders its `.md` only). `results/runs-manifest.json` now carries all 27 runs (run-level facts; 26 `run_type=null` + gold-standard-v2 `mixed`). Conditions/passes stay gs-v2-only until 3b. 7 tier-1 tests pass; ruff + py_compile clean.
+
+### Erratum E55
+
+- verifier-t-pilot's swept verifier temperature (T0.5/T1.0) was logged in `run.log` but never written to `run.meta.json` (`configuration.temperature` read 0.0). Verified real (57% of 607 candidate probabilities differ T0.5-vs-T1.0); blast radius = those 2 files only; corrected non-destructively (additive `temperature_effective` + `_correction`). Extractor rule GAP-10: prefer a logged CLI override over the meta config field.
+
+### Handoff
+
+- Session 93 beacon (`a9f59a5b`); Obs 328–329 (`714fae80`); user-observations 32–33 (`eb70d00d`). 1 flag to `~/personal-assistant/notes/_inbox.md` (manifest/provenance methodology cluster) for `/weekly-review`.
+
+### Pending (next session, priority order)
+
+1. **Sub-step 3b** — conditions decomposition across the 26 non-gs runs + GAP-6 (cross-run conditions: wbf fusions, h12 `r2-balanced`), GAP-7 (pv-diag-384's 88 verifier passes), GAP-9 (Era-1 retest meta shape), GAP-10 (override-temp).
+2. **Sub-step 3c** — analyses manifest (hybrid human-authored).
+
+### Contextual assumptions
+
+- "Session 93" is the day's second session (2026-05-30), distinct from Session 92 (also 2026-05-30); both are single continuous conversations.
+- The planning drafts (`run-registry-draft.json`, `run-facts-draft.json`) are now superseded by the `results/` inputs but retained as the dated review record.
+- The `_inbox.md` flag lives in `~/personal-assistant/notes/` (which had another session's uncommitted reflection changes); left uncommitted there to avoid sweeping that work — it syncs via the PA daily-sync.
+- `results/runs-manifest.json` is run-level only for 26 of 27 runs; conditions/passes for the non-gs runs land in 3b.
