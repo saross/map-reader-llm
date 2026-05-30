@@ -103,8 +103,12 @@ candidate:
    effect (57 % of 607 candidate probabilities differ T0.5 vs T1.0); blast radius
    = these two files only. Metas corrected non-destructively
    (`temperature_effective` + `_correction`).
-4. **`h12-v2` (15).** `greedy / r1-hn-heavy / r3-hp-heavy / wbf` — aggregation
-   variants. One run.
+4. **`h12-v2` (15) — ✅ RESOLVED (Issue 6): one run.** The H12 HP:HN ratio
+   study; conditions = `{r1-hn-heavy, r2-balanced, r3-hp-heavy} × {greedy, wbf}`.
+   `r1-hn-heavy`/`r3-hp-heavy` own `run_1-5`; `greedy/` and `wbf/` are
+   aggregation-output collectors. `r2-balanced` is a **cross-run condition** —
+   it reuses `outputs/h10/evaluation-v2/pool_160_hp4hn4` (E52), the live GAP-6
+   case: `proposer_pool` belongs to h10, referenced by name, not duplicated.
 5. **`h10` (7).** `evaluation-v2 / example-pools-v2 / hard-cases-v2` — these look
    like sub-analyses/diagnostics rather than scored conditions; may not yield
    conditions at all. One run.
