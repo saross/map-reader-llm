@@ -117,3 +117,12 @@ The propose/approve/commit/push-one-at-a-time cadence for the 8 Phase 0 spec edi
 
 Observation 28:
 A generalisable pattern, seen a couple of times the week of 2026-05-26: we go down a rabbit hole, the solution gets complicated, and we start building baroque / epicyclic structures to save it — when the better move is to throw out the epicycles and find a clean, principled reframing. H11 was the clearest case (cost-strategy A/B/C comparison plus the SPECIAL_CONFIGS coupling analysis, all dissolved by "what IS H11?"). The complicated path is often a signal that the framing itself is wrong. (Overstated slightly for emphasis, but it's a real phenomenon.)
+
+Observation 29:
+Twice this session (2026-05-30) I bounced a question back to "clarify" rather than answer it — whether to rename the UNINTENDED runs, and how to model the consensus conditions. In both cases the right move wasn't a decision but more investigation (reading the E43/E44 errata; dispatching a scan agent), after which CC re-surfaced the fork properly with evidence and a recommendation. The forks that landed in one pass (the outputs/gs/ umbrella, score-all-11) were the ones where CC had already done the legwork. Lesson for CC: when a fork's answer depends on facts not yet gathered, gather first, then present the fork — don't ask cold.
+
+Observation 30:
+Before authorising the scoring back-fill, I asked CC to scan how common the unscored-output gap was rather than commit blind. It turned out to be ~11 (a handful, not dozens), which made "score all" an easy yes. Bounding the scope of a corrective action before authorising it is a cheap, high-value reflex — and CC defaulting to a read-only scan agent for the sizing was the right instinct.
+
+Observation 31:
+I told CC explicitly not to prime the preregistration-check agent with my expectation (that the comparison was exploratory). The unprimed agent confirmed exploratory AND surfaced a nuance I'd have missed — that the consensus sweep itself is preregistered (H3). The same unprimed-agent discipline caught a parameter-control trap on h8-v2 (it was evaluated on the 327-tile pool, not 487). Not seeding agents with the hoped-for answer is what made their findings trustworthy.
