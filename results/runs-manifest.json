@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-05-30T02:52:42Z",
+  "generator_version": "0.1.0",
+  "runs": [
+    {
+      "run_id": "gold-standard-v2",
+      "directory_path": "outputs/gs/gold-standard-v2",
+      "primary_hypothesis": null,
+      "also_informs": [],
+      "purpose": "Canonical 4-map gold-standard production pipeline (detect_brief-text, HIGH, T=0.7, K=5); the paper headline GS result.",
+      "run_type": "mixed",
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-2-487",
+        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "the v2 GS run"
+      ],
+      "provenance": {
+        "source_files": [
+          "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+          "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-10.meta.json"
+        ],
+        "last_extracted_at": "2026-05-30T02:52:42Z",
+        "extractor_version": "0.1.0"
+      }
+    }
+  ]
+}
