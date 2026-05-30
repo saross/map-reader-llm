@@ -71,10 +71,11 @@ were settled at draft; 5 carried a `FLAG-GRAIN` for your call.
 
 ---
 
-## The five FLAG-GRAIN groupings — your call
+## The five FLAG-GRAIN groupings — all RESOLVED (2026-05-30)
 
-Each is drafted as **one run** (your default). Listed strongest-to-weakest split
-candidate:
+Each was drafted as **one run**. Outcome: `wbf` omitted (→ conditions of source
+runs); the other four confirmed as one run each. Listed strongest-to-weakest
+original split candidate:
 
 1. **`wbf` (28) — ✅ RESOLVED (Issue 3): OMIT as a run.** The fusion script's
    `SPECIAL_CONFIGS` (`scripts/fuse_detections_wbf.py:58`) records that none of
@@ -109,9 +110,13 @@ candidate:
    aggregation-output collectors. `r2-balanced` is a **cross-run condition** —
    it reuses `outputs/h10/evaluation-v2/pool_160_hp4hn4` (E52), the live GAP-6
    case: `proposer_pool` belongs to h10, referenced by name, not duplicated.
-5. **`h10` (7).** `evaluation-v2 / example-pools-v2 / hard-cases-v2` — these look
-   like sub-analyses/diagnostics rather than scored conditions; may not yield
-   conditions at all. One run.
+5. **`h10` (7) — ✅ RESOLVED (Issue 7): one run.** The H10 library-pool-*size*
+   study. `evaluation-v2/` holds the 4 scored conditions (`pool_020/040/080/160
+   _hp4hn4`, each `run_1-5` + `consensus_t4`, scored by `results/h10/with-mcc/
+   pool_*`). `example-pools-v2/` (few-shot library example sets, incl. unscored
+   `hp8hn8`/`hp16hn16` composition variants) and `hard-cases-v2/` (per-pool
+   galleries) are diagnostics referenced by no eval — not conditions.
+   `pool_160_hp4hn4` is the pool h12-v2's `r2-balanced` reuses (Issue 6).
 
 ---
 
@@ -213,15 +218,35 @@ an existing run when its facts are authored (sub-step 2). Source pools per
   - (The `verifier-t-pilot/T0.0|T0.5|T1.0` dirs also carry dots but are
     *condition*-level, not runs.)
 
-## What I need from you to proceed
+## Review status — all 7 issues resolved (2026-05-30)
 
-1. **Verify the 28-run enumeration** — split/merge any of the five FLAG-GRAIN
-   umbrellas; confirm the omitted non-runs; correct any hypothesis tag.
-2. **Rule on contradiction A** (dot→hyphen vs relax the pattern).
-3. **Rule on contradiction B** (promote draft to `results/` + flip the generator
-   to read the registry).
+| Issue | Outcome |
+|---|---|
+| 1 — slug dots (contradiction A) | dot→hyphen (A1); §1A corrected |
+| 2 — registry input vs output (contradiction B) | B1 + drift-check; promote on facts-lock, generator reads it |
+| 3 — `wbf` grain | omitted as a run; 4 fusion outputs → conditions of source runs (resolves #11) |
+| 4 — `h8-v2` grain | one run (7 composition pools × aggregations) |
+| 5 — `verifier-t-pilot` grain | one run; **+ fixed E55 swept-temperature metadata error** |
+| 6 — `h12-v2` grain | one run (cross-run `r2-balanced` via h10 pool, E52) |
+| 7 — `h10` grain | one run (4 pool-size conditions; example/hard-cases = diagnostics) |
 
-On your verified edits I promote the registry to `results/run-registry.json`,
-then move to sub-step 2 (per-run facts), starting with the runs whose facts are
-most machine-supported (the `55maps-*` runs with `post_run_report.md`, and the
-already-extracted `gold-standard-v2`).
+**Registry now: 27 runs** (28 drafted − `wbf`).
+
+**Remaining before promotion**: a final confirm of the omitted non-runs (below).
+Then: promote the verified registry to `results/run-registry.json` **bundled with
+the B1 generator refactor** (sub-step 3 — promoting now would be overwritten by
+the generator's current synthesiser on the next `--write`). Sub-step 2 (per-run
+facts) can begin against the locked planning draft in parallel, starting with the
+most machine-supported runs (the `55maps-*` runs with `post_run_report.md`, and
+the already-extracted `gold-standard-v2`).
+
+### Omitted non-runs — final confirm
+
+These `outputs/` entries are **not** in the registry (the "omit non-runs"
+decision). Confirming none is secretly a run:
+
+- `outputs/figures/`, `outputs/results/` — output collectors, not runs.
+- `outputs/qgis-dedup-check/`, `outputs/qgis-sanity-check/`,
+  `outputs/qgis-wbf-check/` — QGIS spot-checks.
+- `outputs/test-phase2b/`, `outputs/v2-proposer-test/` — dev/test scaffolding
+  (v2-proposer-test was moved out of h11 in Session 92).
