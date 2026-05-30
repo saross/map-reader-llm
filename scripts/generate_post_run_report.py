@@ -264,16 +264,51 @@ def _timestamps(meta: dict) -> dict | None:
     return None
 
 
+def _pool_spec(value: Any) -> tuple[Any, str | None]:
+    """Normalise a ``proposer_pools`` / ``verifier_passes`` entry.
+
+    Two accepted forms:
+
+    * compact string — the value IS the modality; the directory path is left to the
+      caller's convention (``proposer/<label>`` for proposer pools, ``<label>`` for
+      verifier passes), which keeps the gold-standard-v2 slice unchanged.
+    * explicit dict — ``{"modality": ..., "path": "<rel-to-run-dir>"}`` for runs
+      whose pools are not under ``proposer/`` (most runs put pool dirs directly under
+      the run) or whose verifier metas are nested (e.g. pv-diag-384's deep
+      ``verified/<config>/`` tree). The explicit path means the extractor never
+      guesses a layout.
+
+    Returns ``(modality, explicit_path_or_None)``.
+    """
+    if isinstance(value, dict):
+        return value.get("modality"), value.get("path")
+    return value, None
+
+
+def _effective_temperature(cfg: dict) -> Any:
+    """Return the verifier/proposer temperature, preferring the E55-corrected value.
+
+    A CLI ``--temperature`` override was not always serialised into
+    ``configuration.temperature`` (erratum E55, GAP-10): the corrected metas carry
+    the real value in ``configuration.temperature_effective``. Prefer it; fall back
+    to the base field. (``run.log`` is the deeper source if neither is present — not
+    parsed here, since the affected metas were corrected non-destructively.)
+    """
+    return cfg.get("temperature_effective", cfg.get("temperature"))
+
+
 def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
     """Extract pass rows (proposer + verifier) for one run.
 
-    Proposer passes are read from ``<dir>/proposer/<pool>/run_N/*.meta.json`` —
-    the shape carrying ``per_item_metadata``, the AUTHORITATIVE source of
-    ``model_used`` (never inferred from a directory name). Verifier passes are
-    read from ``<dir>/<verified>/run.meta.json`` — the other shape, where the
-    model lives in ``configuration.model`` (no per-item record exists, so that
-    config field is the best available authoritative value, recorded in
-    provenance).
+    Proposer passes are read from each pool's ``run_N/*.meta.json``. Two meta shapes
+    are handled: the newer shape carries ``per_item_metadata`` (the AUTHORITATIVE
+    source of ``model_used``, never inferred from a directory name); the older Era-1
+    batch-API shape has no per-item record, so ``configuration.model`` is the best
+    available authoritative value and the tile count comes from
+    ``execution_stats.items_processed`` (GAP-9). The pool directory is resolved from
+    the spec's explicit ``path`` or, for the compact string form, the conventional
+    ``proposer/<label>``. Verifier passes are read from ``<path-or-label>/run.meta.json``
+    — the explicit path also covers deeply-nested verifier trees (GAP-7).
 
     Args:
         facts: an extraction context (see :func:`build_extraction_context`):
@@ -289,32 +324,53 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
     rows: list[dict] = []
 
     # --- proposer passes ---
-    for pool, modality in facts.get("proposer_pools", {}).items():
-        for run_n_dir in sorted((run_dir / "proposer" / pool).glob("run_*")):
+    for pool, spec in facts.get("proposer_pools", {}).items():
+        modality, path = _pool_spec(spec)
+        pool_dir = run_dir / (path or f"proposer/{pool}")
+        for run_n_dir in sorted(pool_dir.glob("run_*")):
+            suffix = run_n_dir.name.split("_", 1)[1] if "_" in run_n_dir.name else ""
+            if not suffix.isdigit():
+                print(f"WARNING: skipping non-numeric pass dir {_repo_rel(run_n_dir)}",
+                      file=sys.stderr)
+                continue
             meta_files = list(run_n_dir.glob("*.meta.json"))
             if not meta_files:
                 continue
-            pass_n = int(run_n_dir.name.split("_")[1])
+            pass_n = int(suffix)
             meta_path = meta_files[0]
             meta = _load_json(meta_path)
             pim = meta.get("per_item_metadata") or []
             cfg = meta.get("configuration", {})
             es = meta.get("execution_stats", {})
-            n_proc = len(pim)
+            if pim:
+                # Newer shape: authoritative per-item model identity + tile count.
+                n_proc = len(pim)
+                model_used = next((it.get("model_used") for it in pim if it.get("model_used")), "")
+                model_requested = next(
+                    (it.get("model_requested") for it in pim if it.get("model_requested")), None)
+                model_version = next(
+                    (it.get("model_version") for it in pim if it.get("model_version")), None)
+            else:
+                # Era-1 batch-API shape (GAP-9): no per-item record. configuration.model
+                # is the best available authoritative value (the verifier path uses the
+                # same fallback); the tile count is in execution_stats.
+                n_proc = es.get("items_processed", 0)
+                model_used = cfg.get("model", "")
+                model_requested = cfg.get("model")
+                model_version = None
             failed = es.get("items_failed", 0)
-            status = "ok" if failed == 0 else ("failed" if n_proc == 0 else "partial")
+            status = "failed" if n_proc == 0 else ("ok" if failed == 0 else "partial")
             rows.append({
                 "pass_id": f"{run_id}::{pool}::run{pass_n}",
                 "run_id": run_id,
                 "proposer_pool": pool,
                 "pass_n": pass_n,
-                # authoritative model identity from per_item_metadata
-                "model_used": next((it.get("model_used") for it in pim if it.get("model_used")), ""),
-                "model_requested": next((it.get("model_requested") for it in pim if it.get("model_requested")), None),
-                "model_version": next((it.get("model_version") for it in pim if it.get("model_version")), None),
+                "model_used": model_used,
+                "model_requested": model_requested,
+                "model_version": model_version,
                 "modality": modality,
                 "thinking_level": cfg.get("thinking_level"),
-                "temperature": cfg.get("temperature"),
+                "temperature": _effective_temperature(cfg),
                 "instruction_hash": cfg.get("instruction_hash") or cfg.get("system_instruction_hash"),
                 "library_hash": cfg.get("library_hash"),
                 "status": status,
@@ -328,13 +384,16 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             })
 
     # --- verifier passes ---
-    for vdir, modality in facts.get("verifier_passes", {}).items():
-        meta_path = run_dir / vdir / "run.meta.json"
+    for vdir, spec in facts.get("verifier_passes", {}).items():
+        modality, path = _pool_spec(spec)
+        meta_path = run_dir / (path or vdir) / "run.meta.json"
         if not meta_path.exists():
             continue
         meta = _load_json(meta_path)
         cfg = meta.get("configuration", {})
         usage = meta.get("usage_stats", {})
+        # GAP-8 carry-forward: request_count is per-candidate-crop, not tiles — kept
+        # and documented until the true tile count is derived or this field is nulled.
         req_count = (usage.get("by_provider", {}).get("google_gemini", {}) or {}).get("request_count", 0)
         rows.append({
             "pass_id": f"{run_id}::{vdir}::run1",
@@ -346,7 +405,7 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             "model_version": None,
             "modality": modality,
             "thinking_level": cfg.get("thinking_level"),
-            "temperature": cfg.get("temperature"),
+            "temperature": _effective_temperature(cfg),
             "instruction_hash": cfg.get("system_instruction_hash"),
             "library_hash": cfg.get("library_hash"),
             "status": "ok",

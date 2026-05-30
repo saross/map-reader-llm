@@ -74,6 +74,48 @@ def test_gs_v2_passes_valid(registry):
 
 
 @pytest.mark.tier1
+def test_era1_proposer_pass_model_fallback(registry):
+    # GAP-9: the Era-1 batch-API meta has no per_item_metadata, so model_used must
+    # fall back to configuration.model (gemini-3-flash) and the tile count to
+    # execution_stats.items_processed (340) — not "" / 0. Uses an explicit pool path
+    # because Era-1 runs put pool dirs directly under the run (no proposer/ subdir).
+    ctx = {
+        "run_id": "retest-phase2a",
+        "directory_path": "outputs/retest/phase2a",
+        "scope": {},
+        "proposer_pools": {"brief-text": {"modality": "text", "path": "brief-text"}},
+        "verifier_passes": {},
+        "conditions": [],
+    }
+    passes = extract_passes(ctx)
+    assert len(passes) == 3  # brief-text/run_1..run_3
+    for p in passes:
+        assert validate_row("passes", p, registry) == []
+        assert p["model_used"] == "gemini-3-flash"  # from configuration.model, not ""
+        assert p["n_tiles_processed"] == 340  # from execution_stats, not len(pim)=0
+        assert p["status"] == "ok"
+
+
+@pytest.mark.tier1
+def test_verifier_pass_effective_temperature(registry):
+    # GAP-10/E55: the swept verifier temperature lives in temperature_effective, not
+    # configuration.temperature (which reads 0.0). The label is slug-safe; the path
+    # points at the real dotted directory.
+    ctx = {
+        "run_id": "verifier-t-pilot",
+        "directory_path": "outputs/verifier-t-pilot",
+        "scope": {},
+        "proposer_pools": {},
+        "verifier_passes": {"t0-5": {"modality": "image", "path": "T0.5"}},
+        "conditions": [],
+    }
+    passes = extract_passes(ctx)
+    assert len(passes) == 1
+    assert validate_row("passes", passes[0], registry) == []
+    assert passes[0]["temperature"] == 0.5  # temperature_effective, not the 0.0 base field
+
+
+@pytest.mark.tier1
 def test_gs_v2_conditions_valid_with_metrics(registry):
     conditions = extract_conditions(extraction_context("gold-standard-v2"))
     assert {c["label"] for c in conditions} == {
