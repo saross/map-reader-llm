@@ -85,10 +85,13 @@ candidate:
    therefore `aggregation=wbf` *conditions* of their source runs, not a run.
    `outputs/wbf/` joins the omitted-non-runs list; the four outputs become
    facts-phase carry-ins (below). Resolves carry-forward #11.
-2. **`h8-v2` (16).** Subdirs `canonical / plus-hp / pure-positive-canon / greedy /
-   wbf / scale-{4,8,16,32}` — `scale-N` are verifier-scale variants over one
-   proposer pool, i.e. conditions. One run is defensible; the 327-vs-487 scope
-   trap (Session 92 beacon) means some conditions need `scope_override`.
+2. **`h8-v2` (16) — ✅ RESOLVED (Issue 4): one run.** Seven proposer pools
+   (`canonical / plus-hp / pure-positive-canon / scale-{4,8,16,32}`, each
+   `run_1-5` = library-composition variants, NOT verifier-scale); `greedy/` and
+   `wbf/` are aggregation-output collectors holding one scored output per
+   composition. Conditions = composition × aggregation (greedy/wbf/consensus).
+   Facts-phase carry-in: mixed eval scope (43 evals on 487, 7 on 327) → the
+   verifier-stage conditions need `scope_override` to the 327 pool (beacon trap).
 3. **`verifier-t-pilot` (27).** `T0.0 / T0.5 / T1.0` — verifier-temperature
    conditions over a shared pool. Clean "one run, three conditions".
 4. **`h12-v2` (15).** `greedy / r1-hn-heavy / r3-hp-heavy / wbf` — aggregation
