@@ -1,0 +1,191 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-05-30T02:38:43.337601+00:00",
+  "summary": {
+    "label": "55maps-gen-verified-paired",
+    "n_detections": 4068,
+    "buffers": [
+      {
+        "buffer_metres": 20,
+        "f1": 0.6254,
+        "f1_point": 0.6254,
+        "f1_ci_lower": 0.6113,
+        "f1_ci_upper": 0.6385,
+        "f1_ci_method": "BCa",
+        "precision": 0.6775,
+        "p_point": 0.6775,
+        "p_ci_lower": 0.6622,
+        "p_ci_upper": 0.6918,
+        "p_ci_method": "BCa",
+        "recall": 0.5807,
+        "r_point": 0.5807,
+        "r_ci_lower": 0.5651,
+        "r_ci_upper": 0.5953,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 8541,
+          "n_zero_count_tiles": 5631,
+          "zero_fraction": 0.6592904812082895,
+          "threshold": 0.5,
+          "coverage_status": "sparse_cross_grid"
+        },
+        "coverage_status": "sparse_cross_grid",
+        "ci_unreliable": true
+      },
+      {
+        "buffer_metres": 30,
+        "f1": 0.7574,
+        "f1_point": 0.7574,
+        "f1_ci_lower": 0.7457,
+        "f1_ci_upper": 0.7683,
+        "f1_ci_method": "BCa",
+        "precision": 0.8206,
+        "p_point": 0.8206,
+        "p_ci_lower": 0.8081,
+        "p_ci_upper": 0.8325,
+        "p_ci_method": "BCa",
+        "recall": 0.7033,
+        "r_point": 0.7033,
+        "r_ci_lower": 0.6885,
+        "r_ci_upper": 0.7174,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 8541,
+          "n_zero_count_tiles": 5679,
+          "zero_fraction": 0.6649104320337197,
+          "threshold": 0.5,
+          "coverage_status": "sparse_cross_grid"
+        },
+        "coverage_status": "sparse_cross_grid",
+        "ci_unreliable": true
+      },
+      {
+        "buffer_metres": 40,
+        "f1": 0.7856,
+        "f1_point": 0.7856,
+        "f1_ci_lower": 0.7747,
+        "f1_ci_upper": 0.7954,
+        "f1_ci_method": "BCa",
+        "precision": 0.851,
+        "p_point": 0.851,
+        "p_ci_lower": 0.8393,
+        "p_ci_upper": 0.8621,
+        "p_ci_method": "BCa",
+        "recall": 0.7295,
+        "r_point": 0.7295,
+        "r_ci_lower": 0.7149,
+        "r_ci_upper": 0.7431,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 8541,
+          "n_zero_count_tiles": 5689,
+          "zero_fraction": 0.6660812551223511,
+          "threshold": 0.5,
+          "coverage_status": "sparse_cross_grid"
+        },
+        "coverage_status": "sparse_cross_grid",
+        "ci_unreliable": true
+      },
+      {
+        "buffer_metres": 50,
+        "f1": 0.7921,
+        "f1_point": 0.7921,
+        "f1_ci_lower": 0.7815,
+        "f1_ci_upper": 0.8019,
+        "f1_ci_method": "BCa",
+        "precision": 0.8582,
+        "p_point": 0.8582,
+        "p_ci_lower": 0.8468,
+        "p_ci_upper": 0.8692,
+        "p_ci_method": "BCa",
+        "recall": 0.7356,
+        "r_point": 0.7356,
+        "r_ci_lower": 0.7214,
+        "r_ci_upper": 0.7493,
+        "r_ci_method": "BCa",
+        "coverage": {
+          "n_tiles": 8541,
+          "n_zero_count_tiles": 5692,
+          "zero_fraction": 0.6664325020489404,
+          "threshold": 0.5,
+          "coverage_status": "sparse_cross_grid"
+        },
+        "coverage_status": "sparse_cross_grid",
+        "ci_unreliable": true
+      }
+    ],
+    "ci_unreliable_any_buffer": true,
+    "coverage_status": "sparse_cross_grid",
+    "tile_classification": {
+      "confusion": {
+        "tp": 2155,
+        "tn": 4946,
+        "fp": 214,
+        "fn": 1226
+      },
+      "mcc": {
+        "point": 0.6509,
+        "mean": 0.6509,
+        "ci_lower": 0.637,
+        "ci_upper": 0.6652,
+        "method": "BCa"
+      },
+      "sensitivity": {
+        "point": 0.6374,
+        "mean": 0.6373,
+        "ci_lower": 0.6226,
+        "ci_upper": 0.6527,
+        "method": "BCa"
+      },
+      "specificity": {
+        "point": 0.9585,
+        "mean": 0.9586,
+        "ci_lower": 0.9533,
+        "ci_upper": 0.9632,
+        "method": "BCa"
+      }
+    }
+  },
+  "_metadata": {
+    "metadata_version": "1.1",
+    "script_path": "scripts/evaluate_detections.py",
+    "script_git_commit": "9e56a447b",
+    "script_git_status": "dirty",
+    "generated_at_utc": "2026-05-30T02:36:45.983310+00:00",
+    "cli_args": {
+      "detections": [
+        "outputs/55maps-generalisation/verified/verified_detections_paired.geojson"
+      ],
+      "detections_dir": null,
+      "batch": null,
+      "glob": "*/detections_*.geojson",
+      "buffers": [
+        20,
+        30,
+        40,
+        50
+      ],
+      "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "bootstrap": 10000,
+      "seed": 42,
+      "output_dir": "results/condition-scoring-backfill-2026-05-30/55maps-gen-verified-paired",
+      "label": "55maps-gen-verified-paired",
+      "mcc": true
+    },
+    "bootstrap": {
+      "n_iterations": 10000,
+      "seed": 42,
+      "resampling_unit": "tile_level",
+      "method": "BCa",
+      "library": "scipy.stats.bootstrap"
+    },
+    "input_files": {
+      "detections": [
+        "outputs/55maps-generalisation/verified/verified_detections_paired.geojson"
+      ],
+      "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+    }
+  }
+}
