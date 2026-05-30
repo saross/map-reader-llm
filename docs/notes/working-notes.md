@@ -16795,3 +16795,40 @@ Search terms: Obs 327, manifest schema completeness audit, required metrics bloc
 - **`scripts/generate_post_run_report.py`**: the manifest generator whose schema requirement triggered the gap discovery.
 - **`results/conditions-manifest.json`**: the manifest being built when the gaps were found.
 - **Artefacts**: `scripts/score-unscored-conditions-2026-05-30.sh`; `scripts/generate_post_run_report.py`; `results/conditions-manifest.json`; `results/condition-scoring-backfill-2026-05-30/` (all subdirectories); `docs/methodology/preregistration/protocol-errata.md` (E51).
+
+## Observation 328: Empirical eval-count can mislead on nominal scope — the leakage constraint decides (Session 93, 2026-05-30)
+
+### The finding
+
+**When assigning a run's nominal evaluation scope for the manifest, the majority of its committed evaluations is NOT authoritative — the study's data-leakage constraint is.** Building per-run facts, `h8-v2` and `h12-v2` showed their committed evals dominated by the 487-tile Era-2 pool (43-vs-11 and 18-vs-3 over the 327-tile Era-3 pool); dominant-by-count would have assigned them Era 2. But their nominal scope is **Era 3 (327)**: all three v2 library studies (`h8-v2`, `h10`, `h12-v2`) mined their hard-positive / hard-negative few-shot crops from the `pool_160` tiles (study YAMLs `h8-v2-library.yaml`, `h12-v2-ratio.yaml`; errata E51/E52), so scoring on the 487-tile pool — which contains those 160 tiles — would test the model on the data its own prompt examples were drawn from. The 327-tile pool exists precisely to exclude them. The 487-tile evals that exist are deliberately-kept cross-scope comparability siblings, recorded as condition-level `scope_override`s.
+
+### Why this matters
+
+1. **Derive nominal scope from the experimental design's data-hygiene requirement, not from where scoring happened to land.** The eval-count majority reflects how much exploratory scoring was done at each scope, not which scope is methodologically correct.
+2. **It reconciled a genuine human-vs-doc conflict.** The project lead recalled "487 principal"; the canonical scope doc said "Era 3". Both were right about different things — 487 IS principal for the production / H11 / PV matrix; 327 is nominal for the library studies — and the leakage argument is what distinguished them (user-observation 32).
+
+### See also
+
+- **Leakage rationale**: `results/evaluation-scopes.md` §5.3; errata E50/E51/E52.
+- **The reconciliation**: `planning/run-registry-draft-review.md`; `planning/paper-writeup-continuity.md` (Session 93 beacon).
+- **Obs 327** (schema-as-completeness-audit): the sibling manifest-build finding from the same fan-out programme.
+
+## Observation 329: A CLI override can be faithful-to-the-config yet wrong-about-the-execution — cross-check the run log (E55) (Session 93, 2026-05-30)
+
+### The finding
+
+**A serialised metadata field can be a faithful copy of the config object and still be wrong about what actually ran; provenance extraction must cross-check the execution log, not trust the meta block alone.** The `verifier-t-pilot` run swept verifier sampling temperature via a CLI `--temperature` override across T=0.0/0.5/1.0. For the two new executions (T0.5, T1.0), the override was genuinely applied — 348 of 607 candidate probabilities (57%) differ between T0.5 and T1.0 — and recorded in `run.log` as `Temperature override: 0.50` / `1.00`. But `run.meta.json:configuration.temperature` read **0.0** for both: the runner serialised the un-overridden base-config object and never merged the CLI override back in. A blast-radius scan of every `run.log` under `outputs/` returned exactly those two files — the class of error is confined to this one pilot (every other run set temperature in its config / study YAML, where the meta records it faithfully).
+
+Resolution (erratum **E55**): non-destructive — the original `temperature: 0.0` is left untouched (a faithful record of what was serialised); an additive `temperature_effective` (0.5/1.0) plus a `_correction` block (true value, `run.log` source, E55, date) was added; the manifest records the true temperature with provenance `[run.meta.json, run.log]`. Extractor rule **GAP-10**: prefer a logged CLI override over the meta config field.
+
+### Why this matters
+
+1. **"Faithful to the config object" is not "true about the execution."** This is the inverse of the E43 lesson (there the directory name was unreliable and the meta authoritative). Neither the dir name nor the meta config block is categorically trustworthy; the execution log is the tiebreaker for any parameter that can be CLI-overridden.
+2. **Blast-radius bounding turned a scare into a contained fix.** Scanning all run logs proved only 2 files were affected, which made a targeted non-destructive correction proportionate.
+3. **Non-destructive correction (R2) preserved provenance.** Editing API-output metadata is normally off-limits; adding a clearly-marked `temperature_effective` + `_correction` rather than overwriting keeps the original serialisation intact while making the execution truth locally visible.
+
+### See also
+
+- **Erratum E55**: `docs/methodology/preregistration/protocol-errata.md`.
+- **The pilot**: `outputs/verifier-t-pilot/{T0.5,T1.0}/run.meta.json` + `run.log`.
+- **E43** (the inverse case): `planning/manifest-schema-design.md` §1A — directory name unreliable, meta authoritative.
