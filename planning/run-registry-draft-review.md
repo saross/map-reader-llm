@@ -150,6 +150,25 @@ this draft; sub-steps 2–3 are recorded so nothing is lost.
 
 ---
 
+## Deferred follow-ups
+
+- **Contradiction A — RESOLVED (2026-05-30): dot→hyphen (option A1).** §1A's
+  worked example and its changelog were corrected (`consensus-384-t1.0` →
+  `consensus-384-t1-0`) and the no-dots constraint documented inline.
+- **Deferred (user request): rename dotted *directories* to match their slugs.**
+  Two cases, of unequal cost:
+  - `outputs/55maps-text-high-t0.3-generalisation` →
+    `outputs/55maps-text-high-t0-3-generalisation` — cheap and clean (few
+    references); safe to do in the rename follow-up.
+  - `outputs/h11/consensus-384-UNINTENDED-T1.0` (the `T1.0` carries a dot) —
+    **caveat**: §1A *explicitly decided not to rename this directory* (~150
+    references; identity already decoupled via the neutral `run_id`). A rename
+    here reopens that decision and is not "cheap". Recommend leaving the dir
+    as-is and relying on `directory_path` + `historical_aliases`; revisit only
+    if the dotted dir actually breaks tooling.
+  - (The `verifier-t-pilot/T0.0|T0.5|T1.0` dirs also carry dots but are
+    *condition*-level, not runs.)
+
 ## What I need from you to proceed
 
 1. **Verify the 28-run enumeration** — split/merge any of the five FLAG-GRAIN

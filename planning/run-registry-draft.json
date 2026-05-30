@@ -24,7 +24,7 @@
       "run_id": "55maps-text-high-t0-3-generalisation",
       "directory_path": "outputs/55maps-text-high-t0.3-generalisation",
       "status": "active",
-      "notes": "FLAG-SLUG: dir name has a dot (t0.3); slug uses dot->hyphen to satisfy the run_id pattern. Generalisation (text, HIGH, T=0.3)."
+      "notes": "Slug uses dot->hyphen (t0-3) per the no-dots run_id pattern (resolved 2026-05-30, option A1). Dir rename t0.3->t0-3 is a deferred follow-up. Generalisation (text, HIGH, T=0.3)."
     },
     {
       "run_id": "55maps-text-min-generalisation",
@@ -48,7 +48,7 @@
       "run_id": "consensus-384-t1-0",
       "directory_path": "outputs/h11/consensus-384-UNINTENDED-T1.0",
       "status": "active",
-      "notes": "E43 deviation run (ran T=1.0 vs intended 0.7). Neutral slug per design doc 1A; historical_alias=consensus-384-UNINTENDED-T1.0. FLAG-SLUG: 1A writes 'consensus-384-t1.0' but the slug pattern forbids the dot -> using t1-0; 1A example needs correcting."
+      "notes": "E43 deviation run (ran T=1.0 vs intended 0.7). Neutral slug per design doc 1A; historical_alias=consensus-384-UNINTENDED-T1.0. Slug uses dot->hyphen (t1-0) per the no-dots run_id pattern (resolved 2026-05-30, option A1; 1A corrected). Physical dir kept dotted per 1A's no-mass-rename decision."
     },
     {
       "run_id": "e47-propose-brief",

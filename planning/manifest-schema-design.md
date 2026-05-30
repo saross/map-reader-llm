@@ -1,8 +1,8 @@
 # Manifest Schema Design Brief
 
-> **Last revised**: 2026-05-29 (added the deviation-run identity convention —
-> E43 worked example, § 1A; the 4-entity model and field lists are unchanged).
-> See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-05-30 (slug correction — the E43 example
+> `consensus-384-t1.0` was invalid against the no-dots `run_id` pattern; now
+> `consensus-384-t1-0`). See [§ Changelog](#changelog) for revision history.
 
 **Status**: Decisions **resolved**; JSON Schema files authored under
 `docs/manifest-schemas/`. This brief now records the resolved
@@ -191,8 +191,12 @@ The schema's resolution: the **`run_id` is the neutral, parameter-descriptive
 identity**; the deviation is **status carried in metadata**, never welded into
 the identity string. For E43 the generator assigns:
 
-- `run_id`: `consensus-384-t1.0` — neutral slug (architecture + tile size +
-  *actual* temperature, read from `*.meta.json`), no pejorative.
+- `run_id`: `consensus-384-t1-0` — neutral slug (architecture + tile size +
+  *actual* temperature, read from `*.meta.json`), no pejorative. The temperature
+  is hyphen-encoded (`t1-0`, not `t1.0`): the `run_id` pattern
+  (`^[a-z0-9]+(-[a-z0-9]+)*$`) forbids dots, so a slug seeded from a dotted
+  parameter (or from a dotted directory such as
+  `55maps-text-high-t0.3-generalisation`) converts the dot to a hyphen.
 - `directory_path`: `outputs/h11/consensus-384-UNINTENDED-T1.0` — the physical
   location is left **unchanged** (no mass rename of the ~150 references); it is
   now an incidental breadcrumb, not the identity.
@@ -457,6 +461,31 @@ manifests, plus this brief updated with the resolved decisions. **Both done**
 
 ## Changelog
 
+### 2026-05-30 — Slug correction: the E43 example was dot-invalid
+
+**Refresh trigger**: fan-out sub-step 1 (drafting the run registry) validated the
+§ 1A E43 worked example against the actual `run_id` schema pattern and found it
+invalid — the pattern `^[a-z0-9]+(-[a-z0-9]+)*$` forbids dots, but the example
+read `consensus-384-t1.0`.
+
+**What changed**: corrected the worked example to `consensus-384-t1-0`
+(dot→hyphen) in § 1A and in the 2026-05-29 changelog entry below, and documented
+the no-dots constraint inline so it cannot recur. The same convention applies to
+the live dotted directory `outputs/55maps-text-high-t0.3-generalisation` → slug
+`55maps-text-high-t0-3-generalisation`.
+
+| Field | Before | After |
+|---|---|---|
+| E43 `run_id` example | `consensus-384-t1.0` | `consensus-384-t1-0` |
+
+**What did NOT change**: the identity-vs-status convention, the entity model, and
+the per-level field lists are untouched. Physical directory names with dots are
+left as-is for now (a separate rename follow-up, noted in
+`planning/run-registry-draft-review.md`).
+
+**Decision**: dot→hyphen in slugs (option A1), preferred over relaxing the schema
+pattern to admit dots into primary keys. Commit: *this commit*.
+
 ### 2026-05-29 — Deviation-run identity convention (E43)
 
 **Refresh trigger**: the H11 reorganisation (Session 92) raised how to identify
@@ -466,7 +495,7 @@ identity-vs-status question.
 
 **What changed**: added the § 1A subsection "Deviation runs keep a neutral
 identity (E43 worked example)" — the generator mints a neutral `run_id`
-(`consensus-384-t1.0`), leaves the physical `directory_path` unchanged, records
+(`consensus-384-t1-0`), leaves the physical `directory_path` unchanged, records
 the old name in `historical_aliases`, and carries the deviation linkage on the
 analysis (`preregistered-with-deviation`, `deviations: ["E43"]`). Flagged an
 open consideration: an optional run-level `deviations[]` field. Also refreshed
