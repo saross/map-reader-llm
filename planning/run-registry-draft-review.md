@@ -31,7 +31,8 @@ you verify, split, or merge; the verified result is promoted to
   `outputs/qgis-{dedup,sanity,wbf}-check`, `outputs/test-phase2b`,
   `outputs/v2-proposer-test`. None appear in the draft.
 
-**Result: 28 runs.** 23 are settled; 5 carry a `FLAG-GRAIN` for your call.
+**Result: 28 runs drafted; 27 after Issue 3** (resolutions tracked below). 23
+were settled at draft; 5 carried a `FLAG-GRAIN` for your call.
 
 ---
 
@@ -66,7 +67,7 @@ you verify, split, or merge; the verified result is promoted to
 | 25 | `retest-phase3c` | `outputs/retest/phase3c` | H9 | GAP-6 |
 | 26 | `retest-h11-single-pass-384-t0` | `outputs/retest/h11-single-pass-384-t0` | H11 | — |
 | 27 | `verifier-t-pilot` | `outputs/verifier-t-pilot` | — | **FLAG-GRAIN** |
-| 28 | `wbf` | `outputs/wbf` | — | **FLAG-GRAIN** |
+| 28 | ~~`wbf`~~ | `outputs/wbf` | — | → omitted (Issue 3) |
 
 ---
 
@@ -75,15 +76,15 @@ you verify, split, or merge; the verified result is promoted to
 Each is drafted as **one run** (your default). Listed strongest-to-weakest split
 candidate:
 
-1. **`wbf` (28) — strongest split candidate.** Its four subdirs
-   (`e47-propose-brief-n5`, `fh-text-n30`, `fh-text-n5`, `gold-standard-v2-detect`)
-   are WBF *fusion* outputs that consume *other runs'* proposer pools. They read
-   more like cross-run *conditions* than an internally-coherent run. Carry-forward
-   #11 (`gold-standard-v2-detect`) is one of them. Two coherent options: (a) keep
-   `wbf` as a thin umbrella run holding four fusion conditions; (b) attach each
-   fusion output as a condition of its *source* run (gs-v2, e47, fh-text). Option
-   (b) is cleaner conceptually but needs cross-run condition references the
-   extractor does not yet do (GAP-6).
+1. **`wbf` (28) — ✅ RESOLVED (Issue 3): OMIT as a run.** The fusion script's
+   `SPECIAL_CONFIGS` (`scripts/fuse_detections_wbf.py:58`) records that none of
+   the four subdirs owns its own proposer passes — each fuses an existing run's
+   pool: `gold-standard-v2-detect` ← gs-v2's `detect_brief-text/run_1-5`;
+   `e47-propose-brief-n5` ← e47's `flash-high-text-n5/run_1-5`; `fh-text-n5` and
+   `fh-text-n30` ← `pv-diag-384`'s `text-t0.7/run_1-5` and `run_1-30`. They are
+   therefore `aggregation=wbf` *conditions* of their source runs, not a run.
+   `outputs/wbf/` joins the omitted-non-runs list; the four outputs become
+   facts-phase carry-ins (below). Resolves carry-forward #11.
 2. **`h8-v2` (16).** Subdirs `canonical / plus-hp / pure-positive-canon / greedy /
    wbf / scale-{4,8,16,32}` — `scale-N` are verifier-scale variants over one
    proposer pool, i.e. conditions. One run is defensible; the 327-vs-487 scope
@@ -155,12 +156,26 @@ this draft; sub-steps 2–3 are recorded so nothing is lost.
 | GAP-3 | 1 | Non-runs identified and omitted. **Resolved.** |
 | GAP-4 | 2 | No per-run facts store exists; `gt_reference` is not uniformly `curator` (55maps runs use a cleaned/student GT — see `results/55maps-cleaned-gt-evaluation/`). Bulk human work; authored after registry lock. |
 | GAP-5 | 2 | Scope is per-run (327 vs 487) and sometimes per-condition (`scope_override`); canonical source `results/evaluation-scopes.md`. |
-| GAP-6 | 3 | `extract_passes()` assumes `proposer/<pool>/run_N/`; only 8 run roots have a `proposer/` dir. Fusion/aggregation-only runs (`wbf/*`, `h8-v2` scales) consume *other* runs' pools → needs cross-run pass references. |
+| GAP-6 | 3 | `extract_passes()` assumes `proposer/<pool>/run_N/`; only 8 run roots have a `proposer/` dir. Fusion/aggregation-only outputs (`wbf/*`) are now conditions referencing a source run's pool (Issue 3), so they need no own passes. The live cross-run case is `h12v2-r2-balanced`, whose pool is `outputs/h10/evaluation-v2/pool_160_hp4hn4` (errata E52) — a condition pointing at another run's passes. |
+| #11 | 2 | (carry-forward) `wbf/gold-standard-v2-detect` — **✅ RESOLVED (Issue 3)**: it is a `gold-standard-v2` condition; scope is gs-v2's era-2-487, no longer inferred. |
 | GAP-7 | 3 | Verifier-pass extractor handles one `run.meta.json` per dir, but `pv-diag-384` has 88 (per-condition passes). Many-pass shape unhandled. |
 | GAP-8 | 3 | (carry-forward) Verifier `n_tiles_processed = request_count` is wrong semantics (per-candidate-crop, not tiles). Decide: keep + document, derive true tile count, or null. |
 | GAP-9 | 3 | Possible third `*.meta.json` shape in older Era-1 `retest/*` (batch-API meta without `per_item_metadata`). Verify when generalising the extractor. |
 
 ---
+
+## Facts-phase carry-ins (conditions to author, from resolved FLAG-GRAIN issues)
+
+These are scored outputs that are **not** runs but must appear as conditions of
+an existing run when its facts are authored (sub-step 2). Source pools per
+`scripts/fuse_detections_wbf.py` `SPECIAL_CONFIGS`.
+
+| Output dir | → condition of run | `proposer_pool` | `n_passes` | `aggregation` | note |
+|---|---|---|---|---|---|
+| `outputs/wbf/gold-standard-v2-detect` | `gold-standard-v2` | `detect_brief-text` | 5 | `wbf` | carry-forward #11; add to `GS_V2_FACTS.conditions`; `vote2plus` geojson present |
+| `outputs/wbf/e47-propose-brief-n5` | `e47-propose-brief` | `flash-high-text-n5` | 5 | `wbf` | — |
+| `outputs/wbf/fh-text-n5` | `pv-diag-384` | `text-t0.7` | 5 | `wbf` | leaderboard #2 (F1≈0.864) |
+| `outputs/wbf/fh-text-n30` | `pv-diag-384` | `text-t0.7` | 30 | `wbf` | leaderboard #1 (F1≈0.890); needs pv-diag-384 passes extended to 30 |
 
 ## Deferred follow-ups
 
