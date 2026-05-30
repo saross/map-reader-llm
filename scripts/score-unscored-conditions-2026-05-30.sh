@@ -53,9 +53,16 @@ BUF_20="20"                             # verifier-stage operating point
 BUF_55="20 30 40 50"                    # 55-map canonical detection buffers
 
 echo "=== gold-standard-v2 consensus thresholds — Era-2 487 pool [HIGH] (completes H3) ==="
+# consensus-3of5 / -4of5 / -5of5 = the full H3 vote-threshold sweep on the GS
+# corpus. (consensus-4of5 was added after the initial run: the unscored-output
+# scan mis-classified it as "scored" because it is referenced elsewhere as a
+# verifier provenance source — it has no standalone F1 eval, so it belongs here.)
 $EVAL --detections outputs/gs/gold-standard-v2/consensus/consensus-3of5.geojson \
   --bounds "$B_487" --ground-truth "$GT_GS" --buffers $BUF_GS $COMMON \
   --output-dir "$OUT/gs-v2-consensus-3of5" --label gs-v2-consensus-3of5
+$EVAL --detections outputs/gs/gold-standard-v2/consensus/consensus-4of5.geojson \
+  --bounds "$B_487" --ground-truth "$GT_GS" --buffers $BUF_GS $COMMON \
+  --output-dir "$OUT/gs-v2-consensus-4of5" --label gs-v2-consensus-4of5
 $EVAL --detections outputs/gs/gold-standard-v2/consensus/consensus-5of5.geojson \
   --bounds "$B_487" --ground-truth "$GT_GS" --buffers $BUF_GS $COMMON \
   --output-dir "$OUT/gs-v2-consensus-5of5" --label gs-v2-consensus-5of5
