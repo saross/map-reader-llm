@@ -238,6 +238,7 @@ GS_V2_FACTS: dict[str, Any] = {
         "(detect_brief-text, HIGH, T=0.7, K=5); the paper headline GS result."
     ),
     "also_informs": [],
+    "tile_size_px": 384,
     "corpus": "4-map-gs",
     "gt_reference": "curator",  # mounds-reference.geojson
     "scope": {
@@ -254,6 +255,31 @@ GS_V2_FACTS: dict[str, Any] = {
     "proposer_pools": {"detect_brief-text": "text"},
     # Verifier passes (dir under the run root) → modality.
     "verifier_passes": {"verified-v1": "image"},
+    # Conditions = the evaluable scored results (user-verified decomposition).
+    # Each names the detection geojson it scored; the extractor maps that to the
+    # evaluation.json that scored it (via input_files.detections, normalised
+    # across the H11 reorganisation) and lifts the metrics. vote_threshold on the
+    # verified condition is the consensus threshold whose candidates it verified
+    # (consensus-4of5, per crops/candidate_manifest.json's consensus_source).
+    "conditions": [
+        {"label": "consensus-3of5", "architecture": "consensus", "aggregation": "consensus",
+         "proposer_pool": "detect_brief-text", "n_passes": 5, "vote_threshold": 3, "prob_threshold": None,
+         "verifier_config": None,
+         "detections": "outputs/gs/gold-standard-v2/consensus/consensus-3of5.geojson"},
+        {"label": "consensus-4of5", "architecture": "consensus", "aggregation": "consensus",
+         "proposer_pool": "detect_brief-text", "n_passes": 5, "vote_threshold": 4, "prob_threshold": None,
+         "verifier_config": None,
+         "detections": "outputs/gs/gold-standard-v2/consensus/consensus-4of5.geojson"},
+        {"label": "consensus-5of5", "architecture": "consensus", "aggregation": "consensus",
+         "proposer_pool": "detect_brief-text", "n_passes": 5, "vote_threshold": 5, "prob_threshold": None,
+         "verifier_config": None,
+         "detections": "outputs/gs/gold-standard-v2/consensus/consensus-5of5.geojson"},
+        {"label": "verified-v1", "architecture": "proposer-verifier", "aggregation": "verified",
+         "proposer_pool": "detect_brief-text", "n_passes": 5, "vote_threshold": 4, "prob_threshold": None,
+         "verifier_config": {"variant": "v1", "instruction_file": "verify_adversarial.md",
+                             "model": "gemini-3-flash-preview", "thinking_level": "minimal", "temperature": 0.0},
+         "detections": "outputs/gs/gold-standard-v2/verified-v1/verified_detections_full-scope.geojson"},
+    ],
 }
 
 
@@ -384,6 +410,329 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
     return rows
 
 
+def _normalise_detections_path(path: str) -> str:
+    """Bridge the H11 reorganisation so evals recorded under old paths match.
+
+    Evaluations written before the reorganisation cite the old ``outputs/h11/...``
+    locations of files now under ``outputs/gs/`` or ``outputs/wbf/``. Normalising
+    both sides to the current path lets the eval→condition mapping survive the
+    move (the stable-identity principle the manifest design rests on).
+    """
+    return (
+        path.replace("outputs/h11/gold-standard-v2", "outputs/gs/gold-standard-v2")
+        .replace("outputs/h11/wbf", "outputs/wbf")
+    )
+
+
+def _build_eval_index() -> dict[str, list[tuple[str, dict, str | None]]]:
+    """Index every ``results/**/evaluation.json`` by the detections it scored.
+
+    Returns a map ``normalised-detections-path → [(eval_path, summary, bounds), …]``.
+    The eval→condition link is read from ``_metadata.input_files.detections`` (and
+    its ``cli_args`` bounds), never inferred — anti-confabulation.
+    """
+    index: dict[str, list[tuple[str, dict, str | None]]] = {}
+    for eval_file in (REPO_ROOT / "results").rglob("evaluation.json"):
+        try:
+            doc = _load_json(eval_file)
+        except (json.JSONDecodeError, OSError):
+            continue
+        meta = doc.get("_metadata", {})
+        inf = meta.get("input_files", {}) or {}
+        dets = inf.get("detections") or []
+        if isinstance(dets, str):
+            dets = [dets]
+        bounds = inf.get("bounds") or (meta.get("cli_args") or {}).get("bounds")
+        for det in dets:
+            index.setdefault(_normalise_detections_path(det), []).append(
+                (_repo_rel(eval_file), doc.get("summary", {}), bounds)
+            )
+    return index
+
+
+def _point(value: Any) -> Any:
+    """Return the ``point`` estimate from a metric block, or the value itself."""
+    return value.get("point") if isinstance(value, dict) else value
+
+
+def _metrics_from_eval(summary: dict, n_iter: int = 10000, seed: int = 42) -> dict:
+    """Transform an ``evaluation.json`` summary into the schema's ``metrics`` shape.
+
+    Produces the two-part block: per-buffer detection metrics (keyed by buffer
+    radius in metres, each with an F1 bootstrap CI) plus the buffer-agnostic
+    tile-classification block (MCC + confusion counts). The eval stores its CI
+    bounds as ``f1_ci_lower``/``f1_ci_upper``; the bootstrap parameters
+    (n_iter/seed/resampling) are the project standard, recorded explicitly.
+    """
+    per_buffer: dict[str, dict] = {}
+    for b in summary.get("buffers", []):
+        ci = None
+        if b.get("f1_ci_lower") is not None and b.get("f1_ci_upper") is not None:
+            ci = {
+                "low": b["f1_ci_lower"],
+                "high": b["f1_ci_upper"],
+                "method": b.get("f1_ci_method", "BCa"),
+                "n_iter": n_iter,
+                "seed": seed,
+                "resampling": "tile-level",
+            }
+        per_buffer[str(b["buffer_metres"])] = {
+            "f1": b.get("f1"),
+            "precision": b.get("precision"),
+            "recall": b.get("recall"),
+            "ci": ci,
+            "coverage": None,  # eval records a coverage dict, not the scalar this field wants
+            "ci_unreliable": bool(b.get("ci_unreliable", False)),
+        }
+    tc = summary.get("tile_classification", {})
+    conf = tc.get("confusion", {})
+    tile = {
+        "mcc": _point(tc.get("mcc")),
+        "sensitivity": _point(tc.get("sensitivity")),
+        "specificity": _point(tc.get("specificity")),
+        "tp": conf.get("tp"),
+        "tn": conf.get("tn"),
+        "fp": conf.get("fp"),
+        "fn": conf.get("fn"),
+    }
+    return {"per_buffer": per_buffer, "tile_classification": tile}
+
+
+def extract_conditions(facts: dict, at: str | None = None) -> list[dict]:
+    """Extract condition rows (the evaluable scored results) for one run.
+
+    Each condition spec names the detection geojson it scored; this maps that to
+    the evaluation.json that scored it (preferring the eval whose bounds match the
+    run's nominal scope) and lifts the metrics. A condition with no matching eval
+    is skipped with a warning — the schema cannot represent a metric-less
+    condition, so an unscored aggregation output is not a condition.
+
+    Args:
+        facts: a run-facts dict with a ``conditions`` list and a ``scope``.
+        at: ISO timestamp stamped on every row's provenance.
+
+    Returns:
+        Condition rows conforming to the conditions-manifest item schema.
+    """
+    run_id = facts["run_id"]
+    scope_bounds = facts.get("scope", {}).get("bounds_path")
+    index = _build_eval_index()
+    rows: list[dict] = []
+
+    for spec in facts.get("conditions", []):
+        det_norm = _normalise_detections_path(spec["detections"])
+        candidates = index.get(det_norm, [])
+        # prefer evals on the run's nominal scope; among those, the most complete
+        scope_match = [c for c in candidates if c[2] == scope_bounds]
+        chosen = scope_match or candidates
+        if not chosen:
+            print(
+                f"WARNING: no evaluation found for condition {spec['label']} "
+                f"({spec['detections']}); skipping (cannot emit metric-less condition).",
+                file=sys.stderr,
+            )
+            continue
+        eval_path, summary, _bounds = max(chosen, key=lambda c: len(c[1].get("buffers", [])))
+        rows.append({
+            "condition_id": f"{run_id}::{spec['label']}",
+            "run_id": run_id,
+            "label": spec["label"],
+            "architecture": spec["architecture"],
+            "aggregation": spec["aggregation"],
+            "proposer_pool": spec["proposer_pool"],
+            "n_passes": spec["n_passes"],
+            "vote_threshold": spec.get("vote_threshold"),
+            "prob_threshold": spec.get("prob_threshold"),
+            "verifier_config": spec.get("verifier_config"),
+            "scope_override": None,  # all gs-v2 conditions sit on the run's nominal scope
+            "metrics": _metrics_from_eval(summary),
+            "n_detections": summary.get("n_detections"),
+            "n_candidates": None,
+            "n_reference_mounds": None,
+            "provenance": build_provenance([eval_path, spec["detections"]], at),
+        })
+    return rows
+
+
+def extract_run_row(facts: dict, conditions: list[dict], at: str | None = None) -> dict:
+    """Assemble the runs-manifest row for one run.
+
+    Mostly the hand-authored facts (corpus, GT, scope, study tags). ``run_type``
+    is DERIVED from the conditions' architectures (a single family, or ``mixed``
+    when they span families — gold-standard-v2 has both consensus and
+    proposer-verifier conditions). The headline pointer is left null for a human.
+    ``post_run_report_path`` is filled only if the file exists. Provenance anchors
+    on the scope bounds file plus a representative pass meta.
+    """
+    run_id = facts["run_id"]
+    run_dir = REPO_ROOT / facts["directory_path"]
+    archs = {c["architecture"] for c in conditions}
+    run_type = next(iter(archs)) if len(archs) == 1 else "mixed"
+
+    sources = [facts["scope"]["bounds_path"]]
+    metas = sorted((run_dir / "proposer").rglob("*.meta.json"))
+    if metas:
+        sources.append(_repo_rel(metas[0]))
+
+    prr = run_dir / "post_run_report.md"
+    return {
+        "run_id": run_id,
+        "directory_path": facts["directory_path"],
+        "primary_hypothesis": facts.get("primary_hypothesis"),
+        "also_informs": facts.get("also_informs", []),
+        "purpose": facts.get("purpose"),
+        "run_type": run_type,
+        "tile_size_px": facts["tile_size_px"],
+        "corpus": facts["corpus"],
+        "gt_reference": facts["gt_reference"],
+        "scope": facts["scope"],
+        "headline_condition_id": facts.get("headline_condition_id"),
+        "headline_rationale": facts.get("headline_rationale"),
+        "post_run_report_path": _repo_rel(prr) if prr.exists() else None,
+        "working_notes_obs": facts.get("working_notes_obs", []),
+        "historical_aliases": facts.get("historical_aliases", []),
+        "provenance": build_provenance(sources, at),
+    }
+
+
+def extract_registry_entry(facts: dict) -> dict:
+    """Build the run-registry entry — the stable run_id → current directory_path."""
+    return {
+        "run_id": facts["run_id"],
+        "directory_path": facts["directory_path"],
+        "status": "active",
+        "notes": facts.get("registry_notes"),
+    }
+
+
+# --------------------------------------------------------------------------- #
+# Manifest assembly, whole-manifest validation, and rendering
+# --------------------------------------------------------------------------- #
+
+#: Where each manifest's JSON source-of-truth is written (the .md sibling is
+#: rendered alongside). Per the schema-design brief, manifests live in results/.
+MANIFEST_FILES: dict[str, str] = {
+    "runs": "results/runs-manifest.json",
+    "conditions": "results/conditions-manifest.json",
+    "passes": "results/passes-manifest.json",
+    "run-registry": "results/run-registry.json",
+}
+
+
+def _array_key(manifest: str) -> str:
+    """Return a manifest schema's top-level array property name (runs/passes/…)."""
+    contents = json.loads((SCHEMA_DIR / MANIFEST_SCHEMAS[manifest]).read_text(encoding="utf-8"))
+    for name, prop in contents.get("properties", {}).items():
+        if isinstance(prop, dict) and prop.get("type") == "array":
+            return name
+    raise ValueError(f"no top-level array property in {manifest} schema")
+
+
+def validate_manifest(manifest: str, obj: dict, registry: Registry) -> list[str]:
+    """Validate a whole assembled manifest object against its top-level schema."""
+    validator = jsonschema.Draft202012Validator(
+        {"$ref": _schema_id(manifest)},
+        registry=registry,
+        format_checker=jsonschema.Draft202012Validator.FORMAT_CHECKER,
+    )
+    errors = sorted(validator.iter_errors(obj), key=lambda e: list(e.path))
+    return [f"{'/'.join(str(p) for p in e.path) or '<root>'}: {e.message}" for e in errors]
+
+
+def assemble_manifest(manifest: str, rows: list[dict], at: str) -> dict:
+    """Wrap extracted rows in the manifest envelope.
+
+    Only includes the top-level fields the schema actually declares — the
+    run-registry schema, unlike runs/conditions/passes, has no
+    ``generator_version`` and is ``additionalProperties: false``, so the envelope
+    is built from the schema's own properties rather than a fixed shape.
+    """
+    props = json.loads(
+        (SCHEMA_DIR / MANIFEST_SCHEMAS[manifest]).read_text(encoding="utf-8")
+    ).get("properties", {})
+    obj: dict[str, Any] = {"schema_version": SCHEMA_VERSION}
+    if "generated_at" in props:
+        obj["generated_at"] = at
+    if "generator_version" in props:
+        obj["generator_version"] = GENERATOR_VERSION
+    obj[_array_key(manifest)] = rows
+    return obj
+
+
+def _md_table(headers: list[str], rows: list[list]) -> str:
+    """Render a GitHub-flavoured Markdown table."""
+    lines = ["| " + " | ".join(headers) + " |",
+             "|" + "|".join("---" for _ in headers) + "|"]
+    for r in rows:
+        lines.append("| " + " | ".join("—" if c is None else str(c) for c in r) + " |")
+    return "\n".join(lines)
+
+
+def render_manifest(manifest: str, obj: dict, json_rel: str) -> str:
+    """Render a human-readable Markdown view of a manifest (do-not-edit)."""
+    rows = obj[_array_key(manifest)]
+    titles = {
+        "runs": "Runs manifest", "conditions": "Conditions manifest",
+        "passes": "Passes manifest", "run-registry": "Run registry",
+    }
+    head = (
+        f"<!-- GENERATED FILE — DO NOT EDIT. Rendered from {json_rel} by "
+        f"scripts/generate_post_run_report.py v{GENERATOR_VERSION}. Edit the "
+        f"source-of-truth files and regenerate. -->\n\n"
+        f"# {titles[manifest]}\n\n"
+        f"> Generated {obj['generated_at']} · {len(rows)} row(s) · schema "
+        f"v{obj['schema_version']}.\n>\n"
+        f"> **Coverage**: gold-standard-v2 vertical slice; fan-out across all runs "
+        f"extends this manifest in place.\n\n"
+    )
+    if manifest == "runs":
+        table = _md_table(
+            ["run_id", "type", "tile_px", "corpus", "gt", "scope", "headline"],
+            [[r["run_id"], r["run_type"], r["tile_size_px"], r["corpus"], r["gt_reference"],
+              r["scope"]["test_set_id"], r["headline_condition_id"]] for r in rows])
+    elif manifest == "conditions":
+        table = _md_table(
+            ["condition_id", "arch", "agg", "vote", "n", "F1@20m", "MCC", "n_det"],
+            [[r["condition_id"], r["architecture"], r["aggregation"], r["vote_threshold"],
+              r["n_passes"], r["metrics"]["per_buffer"].get("20", {}).get("f1"),
+              r["metrics"]["tile_classification"]["mcc"], r["n_detections"]] for r in rows])
+    elif manifest == "passes":
+        table = _md_table(
+            ["pass_id", "model", "modality", "think", "T", "status", "tiles", "cost_usd"],
+            [[r["pass_id"], r["model_used"], r["modality"], r["thinking_level"], r["temperature"],
+              r["status"], r["n_tiles_processed"], r["cost_usd"]] for r in rows])
+    else:  # run-registry
+        table = _md_table(
+            ["run_id", "directory_path", "status"],
+            [[r["run_id"], r["directory_path"], r["status"]] for r in rows])
+    return head + table + "\n"
+
+
+def write_manifests(bundles: dict[str, list[dict]], at: str, registry: Registry) -> dict[str, tuple]:
+    """Validate and write each manifest (JSON + rendered MD); never write an invalid one.
+
+    Args:
+        bundles: manifest name → its extracted rows.
+        at: shared generation timestamp.
+        registry: schema registry.
+
+    Returns:
+        manifest → (n_rows, errors, json_rel) — errors empty on success.
+    """
+    out: dict[str, tuple] = {}
+    for manifest, rows in bundles.items():
+        obj = assemble_manifest(manifest, rows, at)
+        errors = validate_manifest(manifest, obj, registry)
+        json_rel = MANIFEST_FILES[manifest]
+        if not errors:
+            json_path = REPO_ROOT / json_rel
+            json_path.write_text(json.dumps(obj, indent=2) + "\n", encoding="utf-8")
+            json_path.with_suffix(".md").write_text(
+                render_manifest(manifest, obj, json_rel), encoding="utf-8")
+        out[manifest] = (len(rows), errors, json_rel)
+    return out
+
+
 # --------------------------------------------------------------------------- #
 # Self-test (proves the harness round-trips before any extractor is wired in)
 # --------------------------------------------------------------------------- #
@@ -447,7 +796,13 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="(not yet implemented) Extract and validate but write nothing.",
+        help="Print the full extracted rows as JSON (extract + validate, write nothing).",
+    )
+    parser.add_argument(
+        "--write",
+        action="store_true",
+        help="Write the validated manifests (JSON + rendered MD) to results/. "
+             "Refuses to write if any row or manifest fails validation.",
     )
     return parser
 
@@ -470,26 +825,86 @@ def main(argv: list[str] | None = None) -> int:
         registry, _ = load_schema_registry()
         at = utc_now_iso()
         passes = extract_passes(GS_V2_FACTS, at)
-        print(f"Extracted {len(passes)} passes for {args.run}:\n")
+        conditions = extract_conditions(GS_V2_FACTS, at)
         all_valid = True
+
+        print(f"=== {args.run}: {len(passes)} passes ===")
         for p in passes:
             errors = validate_row("passes", p, registry)
-            if errors:
-                all_valid = False
-            flag = "ok " if not errors else "BAD"
+            all_valid = all_valid and not errors
             print(
-                f"  [{flag}] {p['pass_id']}\n"
-                f"         model={p['model_used']}  modality={p['modality']}  "
-                f"thinking={p['thinking_level']}  T={p['temperature']}  "
-                f"status={p['status']}  tiles={p['n_tiles_processed']}  cost=${p['cost_usd']}"
+                f"  [{'ok ' if not errors else 'BAD'}] {p['pass_id']}  "
+                f"model={p['model_used']} {p['modality']} thinking={p['thinking_level']} "
+                f"T={p['temperature']} status={p['status']} tiles={p['n_tiles_processed']} "
+                f"cost=${p['cost_usd']}"
             )
             for e in errors:
-                print(f"         - schema error: {e}")
-        print(f"\n{'all passes valid' if all_valid else 'VALIDATION FAILED'} "
-              f"against passes-manifest schema")
+                print(f"        - {e}")
+
+        print(f"\n=== {args.run}: {len(conditions)} conditions ===")
+        for c in conditions:
+            errors = validate_row("conditions", c, registry)
+            all_valid = all_valid and not errors
+            m20 = c["metrics"]["per_buffer"].get("20", {})
+            mcc = c["metrics"]["tile_classification"].get("mcc")
+            print(
+                f"  [{'ok ' if not errors else 'BAD'}] {c['condition_id']}  "
+                f"{c['architecture']}/{c['aggregation']} vote={c['vote_threshold']} "
+                f"n_passes={c['n_passes']} | 20m F1={m20.get('f1')} MCC={mcc} "
+                f"n_det={c['n_detections']}"
+            )
+            for e in errors:
+                print(f"        - {e}")
+
+        run_row = extract_run_row(GS_V2_FACTS, conditions, at)
+        registry_entry = extract_registry_entry(GS_V2_FACTS)
+        print(f"\n=== {args.run}: run row + registry entry ===")
+        run_errors = validate_row("runs", run_row, registry)
+        all_valid = all_valid and not run_errors
+        print(
+            f"  [{'ok ' if not run_errors else 'BAD'}] run: run_id={run_row['run_id']} "
+            f"type={run_row['run_type']} tile={run_row['tile_size_px']}px corpus={run_row['corpus']} "
+            f"gt={run_row['gt_reference']} scope={run_row['scope']['test_set_id']} "
+            f"headline={run_row['headline_condition_id']}"
+        )
+        for e in run_errors:
+            print(f"        - {e}")
+        reg_errors = validate_row("run-registry", registry_entry, registry)
+        all_valid = all_valid and not reg_errors
+        print(
+            f"  [{'ok ' if not reg_errors else 'BAD'}] registry: {registry_entry['run_id']} "
+            f"→ {registry_entry['directory_path']} ({registry_entry['status']})"
+        )
+        for e in reg_errors:
+            print(f"        - {e}")
+
+        print(
+            f"\n{'ALL VALID' if all_valid else 'VALIDATION FAILED'} "
+            f"({len(passes)} passes + {len(conditions)} conditions + 1 run + 1 registry row vs schemas)"
+        )
         if args.dry_run:
-            print("\n--- full pass rows (--dry-run) ---")
-            print(json.dumps(passes, indent=2))
+            for name, payload in [("passes", passes), ("conditions", conditions),
+                                  ("run", run_row), ("registry-entry", registry_entry)]:
+                print(f"\n--- {name} ---")
+                print(json.dumps(payload, indent=2))
+
+        if args.write:
+            if not all_valid:
+                print("\nRefusing to write: validation failed above.", file=sys.stderr)
+                return 1
+            bundles = {
+                "runs": [run_row],
+                "conditions": conditions,
+                "passes": passes,
+                "run-registry": [registry_entry],
+            }
+            written = write_manifests(bundles, at, registry)
+            print("\n=== wrote manifests ===")
+            for manifest, (n, errors, json_rel) in written.items():
+                status = f"{n} row(s) → {json_rel} (+ .md)" if not errors else f"NOT WRITTEN: {errors}"
+                print(f"  {manifest:13s} {status}")
+                all_valid = all_valid and not errors
+
         return 0 if all_valid else 1
 
     build_arg_parser().print_help()
