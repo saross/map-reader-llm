@@ -16664,3 +16664,134 @@ Search terms: Obs 325, T=0.0 reproducibility, near-deterministic Gemini Flash tw
 **Documentation-integrity finding worth recording**: the Phase 0 documentation audit (8 spec edits, commits `c611c573..2ef592c8`) surfaced that the audit's *own* planning artefacts contained verifiable errors — `documentation-audit-plan.md` § 3.2 wrongly asserted all four 55-map runs were dual-located (only two are), undercounted `experiment_intent.md` files (~50 claimed vs 139 on disk), and contradicted itself (§ 3.3 vs § 6.1) on which file an edit touches. All were caught by re-reading the source before committing. The reproducibility implication: planning and audit documents are not authorities; they require the same source-verification discipline as data. The manifests (generator-as-only-writer, every field source-anchored via a `provenance` block) are partly a structural fix for this — they remove the hand-maintained-claim drift that produced these errors.
 
 **Pending**: schema design (TaskList #15) → H11 reorganisation per the H11 scope principle (#17, memory `2026-05-28-3be9d3066363`) → generator population. The GS tile-pool mapping (`reports/gs-tile-pool-mapping-2026-05-28.md`) is input to the runs manifest.
+
+---
+
+## Observation 326: Verifier value-add on the 4-map gold-standard corpus, quantified — H3 consensus sweep + proposer-verifier comparison (Session 92, 2026-05-30)
+
+### The finding
+
+**The gold-standard-v2 consensus thresholds had never been scored standalone on the 4-map GS corpus until this session. Scoring them for the first time completes the preregistered H3 sweep on the GS corpus and — by comparison with the already-scored proposer-verifier output — quantifies the verifier's marginal value on the same corpus.**
+
+**H3 consensus vote-threshold sweep** (Era-2 487-tile pool, `inputs/vectors/bounds/384/full_evaluation_bounds.geojson`; ground truth `inputs/vectors/references/mounds-reference.geojson`; 20 m buffer; BCa bootstrap 10,000 iterations, seed 42; `--mcc`):
+
+| Threshold | F1 | Precision | Recall | MCC | n\_det |
+|:----------|---:|----------:|-------:|----:|-------:|
+| consensus 3-of-5 | 0.593 | 0.445 | 0.887 | 0.296 | 868 |
+| consensus 4-of-5 | 0.700 | 0.600 | 0.839 | 0.456 | 608 |
+| consensus 5-of-5 | 0.765 | 0.779 | 0.752 | 0.579 | 420 |
+
+Monotonic pattern: precision, F1, and MCC rise with vote threshold; recall falls. This is exactly what H3 predicts.
+
+**Proposer-verifier result** (verified-v1, which verified the consensus-4-of-5 candidate set; same evaluation parameters):
+
+| Condition | F1 | Precision | Recall | MCC | n\_det |
+|:----------|---:|----------:|-------:|----:|-------:|
+| verified-v1 (proposer-verifier) | 0.866 | — | — | 0.778 | 380 |
+
+The verifier gains **+0.101 F1** and **+0.199 MCC** over the best consensus threshold (5-of-5). This is the first time the verifier's marginal contribution on the GS corpus has been directly visible — previously only the post-verifier result had been scored there, so the consensus-threshold baseline was absent.
+
+**Registration status** (determined by an unprimed preregistration-check agent — not told the expected answer):
+
+- Consensus vote-threshold F1 / precision / recall sweep: **preregistered (H3)** — `osf/preregistration.md` §5 "H3", §3.8, §8.5.
+- Tile-level MCC per threshold: **preregistered-secondary** (§4.2) — registered secondary outcome, not bound to the H3 sweep specifically; do not label as H3-primary.
+- Consensus-vs-verifier value-add comparison: **exploratory** — the proposer-verifier pipeline is a post-hoc extension (erratum E37); nearest registered hook is H2.
+
+### The test
+
+Scored using `scripts/score-unscored-conditions-2026-05-30.sh` with strict parameter control: each output evaluated against its own run's protocol (bounds, ground truth, buffer copied from an exact-path sibling evaluation), only the input detections varying. The evaluation parameters above were verified against existing sibling `evaluation.json` files before running. The verified-v1 metrics are from `results/gold-standard-extended-buffer-sweep-era2/evaluation.json` (a pre-existing scored output, not newly run this session).
+
+### Why this matters
+
+1. **Closes a genuine gap in the H3 evidence chain.** H3 is a preregistered hypothesis; scoring it on the GS corpus was always required. The gap existed because the gold-standard-v2 consensus thresholds were never evaluated there — only the final verifier output was. This session closes the gap and provides the complete vote-threshold curve the paper's H3 section needs.
+
+2. **Quantifies verifier value-add directly.** The +0.101 F1 / +0.199 MCC gain from consensus-5-of-5 to verified-v1 is now an empirical statement on the same corpus, not an inference across different corpora. This is the cleanest possible comparison: same evaluation parameters, same tile pool, only the detection source varying.
+
+3. **Monotonicity confirms H3 direction.** The clean precision↑ / recall↓ / F1↑ / MCC↑ progression across 3-of-5 → 4-of-5 → 5-of-5 is exactly the pattern H3 predicts, with no reversals. The MCC curve is especially clean (0.296 → 0.456 → 0.579).
+
+4. **Contextualises the verifier as a fourth point on the curve.** Viewed through a precision/recall lens, verified-v1 (n\_det 380, precision implicitly high, recall maintained) sits beyond the consensus-5-of-5 point — the verifier is not merely a different mechanism but a further step along the same precision-recall trade-off, now visible as such.
+
+### Caveats / methodological notes
+
+**The full precision and recall for verified-v1** are not restated here from memory — consult `results/gold-standard-extended-buffer-sweep-era2/evaluation.json` directly. F1=0.866 and MCC=0.778 are sourced from that file; the F1 and MCC values for the consensus thresholds are from `results/condition-scoring-backfill-2026-05-30/gs-v2-consensus-{3,4,5}of5/evaluation.json`.
+
+**Exploratory tagging for the verifier comparison** is firm. The proposer-verifier pipeline was introduced via erratum E37 after registration closed; the consensus-vs-verifier delta is therefore exploratory regardless of how compelling the result is. The paper should flag this clearly to distinguish H3 (registered) from the verifier value-add (exploratory).
+
+**The MCC-per-threshold secondary registration** applies to the tile-level MCC values in the table above. These should be reported as preregistered-secondary metrics, not as primary H3 outcomes, in any paper table footnotes.
+
+### Findable later
+
+Search terms: Obs 326, H3 consensus sweep GS corpus, gold-standard-v2 consensus scoring, 4-map GS corpus consensus thresholds, proposer-verifier value-add quantified, +0.10 F1 verifier margin, consensus 3-of-5 4-of-5 5-of-5, F1 0.593 0.700 0.765, MCC 0.296 0.456 0.579, verified-v1 F1 0.866 MCC 0.778, n\_det 868 608 420 380, preregistered H3 vote-threshold sweep, preregistered-secondary MCC per threshold, exploratory verifier value-add H2 erratum E37, registration status unprimed agent check, score-unscored-conditions-2026-05-30, condition-scoring-backfill-2026-05-30, gold-standard-extended-buffer-sweep-era2, 487-tile Era-2 pool full\_evaluation\_bounds, 20 m buffer BCa bootstrap seed 42.
+
+### Related observations and artefacts
+
+- **Obs 327** (schema-as-completeness-audit — the gap discovery that made this scoring possible): the manifest-generator's required metrics block surfaced these outputs as unscored; directly enabled this Obs.
+- **Methodological note — 2026-05-28** (manifest schema design, Session 90): the design decision that produced the completeness-audit side-effect documented in Obs 327.
+- **Obs 281** (T=0.7 proposer failure-rate analysis): an example of a prior session quantifying a specific pipeline component; Obs 326 follows the same pattern for the verifier stage.
+- **Erratum E37** (`docs/methodology/preregistration/protocol-errata.md`): the erratum that introduced the proposer-verifier pipeline as a post-hoc extension — establishes the exploratory status of the verifier value-add comparison.
+- **Erratum E43** (`docs/methodology/preregistration/protocol-errata.md`): related errata context.
+- **Erratum E51** (`docs/methodology/preregistration/protocol-errata.md`): the erratum establishing the 327-tile h8-v2 evaluation pool — cited in Obs 327 for parameter-control context.
+- **`osf/preregistration.md` §5 "H3", §3.8, §4.2, §8.5**: the registration loci for the H3 sweep and the secondary MCC outcome.
+- **Artefacts**: `results/condition-scoring-backfill-2026-05-30/gs-v2-consensus-3of5/evaluation.json`; `results/condition-scoring-backfill-2026-05-30/gs-v2-consensus-4of5/evaluation.json`; `results/condition-scoring-backfill-2026-05-30/gs-v2-consensus-5of5/evaluation.json`; `results/gold-standard-extended-buffer-sweep-era2/evaluation.json` (verified-v1 metrics); `scripts/score-unscored-conditions-2026-05-30.sh`; `scripts/generate_post_run_report.py`; `results/conditions-manifest.json`.
+
+---
+
+## Observation 327: Building the conditions manifest surfaced ~12 never-scored detection outputs — a schema as completeness audit (Session 92, 2026-05-30)
+
+### The finding
+
+**Building the Phase 1 manifest generator (`scripts/generate_post_run_report.py`) revealed that approximately 12 materialised detection outputs across 6 runs had never been evaluated against ground truth. The mechanism: the manifest schema requires a metrics block for every condition, so an aggregation or verification output with no `evaluation.json` cannot be represented as a valid condition — validation failure is the signal.**
+
+The ~12 never-scored outputs, identified by a repo-wide scan, fell across 6 runs:
+
+| Run / output | Status at discovery |
+|:-------------|:-------------------|
+| gold-standard-v2 consensus 3-of-5 | materialised, unscored |
+| gold-standard-v2 consensus 4-of-5 | materialised, unscored |
+| gold-standard-v2 consensus 5-of-5 | materialised, unscored |
+| gold-standard-v2 WBF candidate set | materialised, unscored |
+| h8-v2 verifier-stage variant(s) | materialised, unscored |
+| h10 verifier-stage variant(s) | materialised, unscored |
+| 55-map consensus output | materialised, unscored |
+| 55-map verified-paired output | materialised, unscored |
+
+These were either intermediate candidate sets (which fed downstream verifiers and were never themselves evaluated) or alternative thresholds simply never scored. Per user direction, all were evaluated — with strict parameter control: each output scored on its own run's protocol (bounds, ground truth, buffer copied from an exact-path sibling evaluation), only the input detections varying.
+
+**Parameter-control catch by an unprimed scope-investigation agent**: h8-v2's verifier-stage outputs must be evaluated on the **327-tile h10-384 pool** (per erratum E51), not the 487-tile Era-2 pool. Had they been scored on 487 tiles, the resulting numbers would be inconsistent with the published h8-v2 headline band. The unprimed agent flagged this before execution.
+
+### The test
+
+The gap was identified during the Phase 1 manifest-generator development session (2026-05-30) when populating `results/conditions-manifest.json`. Each output directory was cross-checked for an `evaluation.json`; absent files triggered the manifest-validation failure that made the gap visible. The repo-wide unscored-output scan proceeded interactively during the session; the scoring script (`scripts/score-unscored-conditions-2026-05-30.sh`) was written to batch the evaluations with the correct per-run parameters.
+
+### Why this matters
+
+1. **A required schema field is a completeness audit.** This is the main methodological point worth keeping. Imposing a structured representation on existing data exposes records that silently lack required properties — and those validation failures should be read as data-coverage findings, not merely bugs. The manifest-design decision (to require a metrics block for every condition) was motivated by reproducibility, not gap-detection; the gap-detection was a side-effect.
+
+2. **The gap led directly to new scientific results.** The GS corpus consensus-threshold scoring (Obs 326) — the first complete H3 sweep on the 4-map corpus, plus the first direct quantification of the verifier's marginal value — only exists because the manifest required a metrics block. A schema design choice produced a paper-section's worth of results.
+
+3. **Unprimed agents are effective parameter-control guardians.** The h8-v2 pool-size catch demonstrates a pattern worth repeating: when scoping a batch evaluation, invoke a fresh agent with only the task description and the project's parameter-control conventions, not a summary of expected answers. The agent's finding that h8-v2 requires the 327-tile pool (not 487) was not prompted by the user; it was derived from reading erratum E51.
+
+4. **Intermediate candidate sets are an invisible gap class.** The unscored outputs here were not orphaned by error — they were intentionally produced as pipeline inputs (candidates for a downstream verifier) and never evaluated because the pipeline's primary output was the post-verifier result. Any project that uses a multi-stage pipeline (propose → verify → evaluate) should explicitly audit whether intermediate stages have been scored, not just the final stage.
+
+### Caveats / methodological notes
+
+**"~12" is the session-contemporaneous count.** The exact count of never-scored outputs depends on how "output" is counted (e.g., whether WBF and greedy consensus are counted separately for the same run). The user-spec says ~12; this is not verified to a precise figure from the scoring script. The scientific content (which runs were affected, what was done) is verified; the headline count is approximate.
+
+**The 55-map consensus and verified-paired outputs** are scored on a different tile pool (55-map generalisation corpus, not the 4-map GS corpus). Their metrics are not restated here; see `results/condition-scoring-backfill-2026-05-30/` subdirectories for those evaluation files.
+
+**The schema-as-audit pattern requires the schema to be enforced.** A schema with a required metrics block only catches gaps when the schema validator actually rejects invalid records. If the manifest generator were written to accept partial records with a null metrics field, the audit side-effect would not occur. The design choice to require the field (rather than making it optional) is what made the pattern work here.
+
+### Findable later
+
+Search terms: Obs 327, manifest schema completeness audit, required metrics block, never-scored detection outputs, ~12 unscored materialised outputs, gold-standard-v2 consensus unscored, h8-v2 verifier-stage unscored, h10 verifier-stage unscored, 55-map consensus unscored, intermediate candidate sets invisible gap class, schema-as-audit pattern, validation failure as data-coverage finding, unprimed scope-investigation agent parameter control, h8-v2 327-tile pool erratum E51, generate\_post\_run\_report.py manifest generator, score-unscored-conditions-2026-05-30.sh, conditions-manifest.json Phase 1, propose-verify-evaluate multi-stage pipeline audit, parameter-control strict sibling evaluation, repo-wide unscored-output scan Session 92.
+
+### Related observations and artefacts
+
+- **Obs 326** (verifier value-add quantified — the GS sweep result this gap-detection enabled): the direct scientific outcome. Obs 327 is the process; Obs 326 is the result.
+- **Methodological note — 2026-05-28** (manifest schema design, Session 90): the design decision that created the required metrics block and thereby created the completeness-audit side-effect.
+- **Obs 324** (Phase3a Tier-2/3 closure, audit infrastructure): an analogous example of audit infrastructure surfacing coverage gaps (`audit_verifier_completeness.py`'s 43 REVIEW class).
+- **Obs 321** (Session 84 closure — 28 silently-dropped verifier candidates): the earlier precedent for silent omissions in a multi-stage pipeline.
+- **Erratum E51** (`docs/methodology/preregistration/protocol-errata.md`): the erratum that establishes h8-v2's 327-tile evaluation pool — the basis for the unprimed agent's parameter-control catch.
+- **`scripts/generate_post_run_report.py`**: the manifest generator whose schema requirement triggered the gap discovery.
+- **`results/conditions-manifest.json`**: the manifest being built when the gaps were found.
+- **Artefacts**: `scripts/score-unscored-conditions-2026-05-30.sh`; `scripts/generate_post_run_report.py`; `results/conditions-manifest.json`; `results/condition-scoring-backfill-2026-05-30/` (all subdirectories); `docs/methodology/preregistration/protocol-errata.md` (E51).
