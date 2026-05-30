@@ -120,17 +120,25 @@ def test_run_conditions_sidecar_in_sync(registry):
     # the decomposition sidecar (3b, Q3) is the generator's third hand-authored
     # input; every decomposed run must resolve against the registry and the facts
     reg = load_run_registry()
+    facts = load_run_facts()
     decomposition = load_run_conditions()
     assert "gold-standard-v2" in decomposition  # the migrated vertical slice
     # no orphan decomposition: 3-input drift (registry <-> facts <-> conditions) is clean
-    assert drift_check(reg["registry"], load_run_facts(), decomposition) == []
+    assert drift_check(reg["registry"], facts, decomposition) == []
+    # negative path: a decomposed run absent from registry + facts MUST be flagged.
+    # Proves the 3rd-argument branch actually executes (not a tautology on live data,
+    # where the sole decomposed run happens to be present in both other inputs).
+    orphaned = {**decomposition, "zzz-orphan-run": {"conditions": []}}
+    warnings = drift_check(reg["registry"], facts, orphaned)
+    assert any("zzz-orphan-run" in w for w in warnings)
 
 
 @pytest.mark.tier1
 def test_manifest_envelopes_valid(registry):
     at = "2026-05-30T00:00:00Z"
     _reg, run_rows, conditions, passes, warnings = build_manifests(at)
-    assert len(run_rows) == 27 and warnings == []
+    assert len(run_rows) == 27
+    assert warnings == []
 
     runs_obj = assemble_manifest("runs", run_rows, at)
     assert validate_manifest("runs", runs_obj, registry) == []
@@ -139,3 +147,7 @@ def test_manifest_envelopes_valid(registry):
     cond_obj = assemble_manifest("conditions", conditions, at)
     assert validate_manifest("conditions", cond_obj, registry) == []
     assert len(conditions) == 4  # gold-standard-v2 vertical slice (Phase 3b extends this)
+
+    passes_obj = assemble_manifest("passes", passes, at)
+    assert validate_manifest("passes", passes_obj, registry) == []
+    assert len(passes) == 6  # gold-standard-v2 vertical slice (Phase 3b extends this)

@@ -738,9 +738,9 @@ def _md_table(headers: list[str], rows: list[list]) -> str:
 def _coverage_note(manifest: str, n_rows: int) -> str:
     """Human-readable coverage line for a manifest's rendered Markdown header."""
     return {
-        "runs": f"all {n_rows} runs (run-level facts; per-run conditions/passes land in Phase 3b)",
-        "conditions": "gold-standard-v2 only (Phase 3b extends to all runs)",
-        "passes": "gold-standard-v2 only (Phase 3b extends to all runs)",
+        "runs": f"all {n_rows} runs (run-level facts; conditions/passes added as 3b batches land)",
+        "conditions": f"{n_rows} condition(s) across the decomposed runs (sub-step 3b in progress)",
+        "passes": f"{n_rows} pass(es) across the decomposed runs (sub-step 3b in progress)",
         "run-registry": f"all {n_rows} runs (hand-verified input)",
     }.get(manifest, f"{n_rows} row(s)")
 
@@ -780,7 +780,8 @@ def render_manifest(manifest: str, obj: dict, json_rel: str) -> str:
     else:  # run-registry
         table = _md_table(
             ["run_id", "directory_path", "status"],
-            [[r["run_id"], r["directory_path"], r["status"]] for r in rows])
+            # status is schema-optional (default "active"); don't assume it's present
+            [[r["run_id"], r["directory_path"], r.get("status", "active")] for r in rows])
     return head + table + "\n"
 
 

@@ -77,6 +77,31 @@ on top of a bounded set of extractor-code fixes.
    condition/pass spec skeleton into the sidecar for human verification.
 9. **Tests** extended per batch (tier-1, deterministic, no API/bootstrap).
 
+### 4a. Audit carry-forwards (from the increment-1 `/audit`, 2026-05-30)
+
+Increment 1's audit surfaced extractor-robustness items in code paths no current
+input exercises but the batches will. Fold these into increment 2 (the GAP fixes
+touch the same extractors). The increment-1 *consequences* — a stale coverage
+note, the run-registry `status` crash-path, and two weak tests — were fixed in
+the increment-1 follow-up commit.
+
+- **Malformed-spec hardening** — `extract_conditions`/`extract_passes` read
+  `spec[...]` with bare subscripts; a hand-authored sidecar typo aborts the whole
+  `--all` with a bare `KeyError`. Give a descriptive per-spec error (or warn+skip),
+  consistent with the missing-eval warning path.
+- **Brittle `run_*` parse** — `int(run_n_dir.name.split("_")[1])` crashes on a
+  non-numeric `run_*` dir; guard before the Era-1 / many-pass batches.
+- **Empty-pass status** — `items_failed == 0 and n_proc == 0` is mislabelled `ok`;
+  fix when reworking status for GAP-9.
+- **Falsy `model_used`** — the `next(…, "")` fallback records `""` for a non-empty
+  pass whose per-item model is blank; tighten alongside the GAP-9 model fallback.
+- **Nullable tile-classification** — `_metrics_from_eval` emits `None` tp/tn/fp/fn
+  when an eval lacks a `confusion` block (→ validation failure, not a clean skip);
+  relevant to pv-diag-256 (no MCC) in batch E.
+- **Provenance path normalisation** — conditions record the raw `spec["detections"]`
+  while the eval match used the normalised path; align when batch E (wbf) uses
+  pre-reorg paths.
+
 ---
 
 ## 5. Archetype batches (26 runs; gs-v2 already done)
