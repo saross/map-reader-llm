@@ -6193,3 +6193,44 @@ The schema-design session (TaskList #15) was attempted in a prior Claude Code se
 - $0 API spend here; the cross-config-fusion agent and the model-metadata scans ran in the *crashed* session, not this one.
 - The `memories.jsonl` `/forget` edit was intentionally not committed by me — the personal-assistant store syncs (commit + push) on its daily tick, and manual commit would sweep up unrelated cross-project writes (same rationale as Session 90).
 - The schema commit `3204993e` records where the files were *added*; they were subsequently relocated in `c730a8ea`. The brief Changelog cites `3204993e` (the add), which remains correct as the deliverable-landed anchor.
+
+## Session 92 — 2026-05-29 to 2026-05-30 (map-reader-llm) — H11 reorganisation, scoring back-fill, and the Phase 1 generator's first slice
+
+Three phases in one continuous session. ~$0 API (scoring is local BCa bootstrap on sapphire; no model calls). `origin/main` → `a33d0220` at close; working tree clean.
+
+### Phase 1 — H11 reorganisation (TaskList #17)
+
+- A dry-run gap simulation before any `git mv` re-verified the cost-estimate report's reference counts and caught that the two `*-UNINTENDED-T1.0/` runs — scoped *out* of that report — carried 174 references and were documented errata (E43/E44). Reshaped the plan.
+- Outcome: moved `gold-standard-v2` → `outputs/gs/gold-standard-v2/`, `wbf` → `outputs/wbf/`, `v2-proposer-test` → `outputs/v2-proposer-test/`; archived `propose-brief-v1-test` → `archive/superseded-tests/` and the unused E44 `single-pass-384-UNINTENDED-T1.0` → `archive/h11-unintended-t1.0/`; kept E43 `consensus-384-UNINTENDED-T1.0` in place (live temperature-factor data), with neutral identity deferred to the manifest `run_id`. `e47-propose-brief` + `n1-outstanding-384` stay (H11-proper).
+- References propagated: code (`fuse_detections_wbf.py` + 9 gs scripts), `.gitignore`, live-tree self-pointers, 9 paper-cited docs (full Revision-Policy treatment), errata E44. Commits `43895be1`, `941b3b9a`, `b9ec6b86`, `118507e2`, `c5983adb`, `ab92d2cd`, `c8f92781`; planning note (E43 § 1A convention + Session 92 beacon) `53cb506e`.
+
+### Phase 2 — scoring back-fill (on sapphire)
+
+- Building the generator surfaced ~12 materialised aggregation/verification outputs across 6 runs with no `evaluation.json`. An agent scan sized the gap (a handful, not dozens); per user direction, scored all on sapphire, each on its own run's protocol (parameter control): BCa bootstrap 10000, seed 42, `--mcc`.
+- An unprimed scope agent established h8-v2's pool as 327-tile h10-384 (not 487) via E51 + `threshold_sweep.json` metadata — a parameter-control save.
+- `scripts/score-unscored-conditions-2026-05-30.sh` is the reproducible batch record. 11 outputs scored, then consensus-4of5 added (a scan mis-classification corrected). Commits `9e56a447`, `e3be49ff` (sapphire), `2141309b`, `6a2b78fc` (sapphire). Outputs under `results/condition-scoring-backfill-2026-05-30/`.
+- Headline results: H3 consensus sweep on the GS corpus (3/4/5-of-5 → F1 0.593 / 0.700 / 0.765 @20 m, monotonic); verifier value-add (verified-v1 F1 = 0.866, MCC 0.778 — +0.10 F1 / +0.20 MCC over best consensus).
+
+### Phase 3 — Phase 1 manifest generator, gold-standard-v2 vertical slice
+
+- `scripts/generate_post_run_report.py`: schema-validation harness (loads the 6 `docs/manifest-schemas/` files with cross-file `$ref` resolution) + extractors (passes / conditions / run / registry) + assemble / validate / render / write. `--run gold-standard-v2 --write` → 4 JSON + 4 rendered MD under `results/`, all schema-valid.
+- Extracted: 6 passes (5 proposer + 1 verifier), 4 conditions (two-part metrics), 1 run row (`run_type=mixed`, headline null for a human), 1 registry entry. Honours the E43 deviation-run convention (neutral `run_id`, physical `directory_path`, deviation on the analysis).
+- `tests/test_generate_post_run_report.py`: 6 tier-1 tests. Commits `e777bd0e` (scaffold), `bfa0bc6f` (passes), `dec10d71` (conditions/run/writer + tests), `df26d543` (manifests).
+- Caught + fixed: the run-registry envelope schema declares no `generator_version` and is closed — the envelope builder now includes only the fields each schema declares; regression-guarded in the tests.
+
+### Handoff
+
+- Commits `565e6290` (continuity Session 92 beacon refresh), `c3f5d77c` (Obs 326 + 327 via obs-writer), `52b0b206` (user-observations 29–31), `a33d0220` (trailing-whitespace fix-on-touch). 2 flags to `~/personal-assistant/notes/_inbox.md` for `/weekly-review` (identity-vs-status; structured-representation-surfaces-data-gaps).
+
+### Pending (next session, priority order)
+
+1. **Fan-out the generator across all runs**: hand-verified run-registry draft (I-draft-you-verify) → per-run facts → generalise the extractors for cross-run meta-shape / scope variations.
+2. Carry-forwards: verifier-pass `n_tiles_processed` semantics (currently request_count); the 2 MEDIUM-confidence scored conditions (#10 `55maps-gen/verified_paired`, #11 `wbf/gold-standard-v2-detect`).
+3. Analyses-manifest tagging when built: consensus sweep = preregistered (H3); MCC-per-threshold = secondary; consensus-vs-verifier value-add = exploratory (E37, H2 hook).
+
+### Contextual assumptions
+
+- The session spans a date boundary (reorg 2026-05-29; scoring + generator + handoff 2026-05-30); "Session 92" is one continuous conversation.
+- Scoring ran on sapphire while it carried a separate days-long job (load ~12); eval jobs are CPU-light and ran on spare cores. Outputs were committed *from* sapphire and pulled locally (multi-machine git: sapphire `git pull --ff-only` → run → add → commit → push; local pull).
+- The `_inbox.md` flag lives in `~/personal-assistant/notes/` (beyond a symlink in the PA repo); it syncs via the PA daily-sync, not a manual commit here — same rationale as the `/forget` memory edits in Sessions 90–91.
+- The manifests under `results/` hold gold-standard-v2 only — the vertical slice, not the full population; fan-out extends them in place.

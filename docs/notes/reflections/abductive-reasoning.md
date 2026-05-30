@@ -4790,4 +4790,28 @@ Sequence 1 and the broader H11 decision share a shape Shawn named explicitly: a 
 
 **Belief revised, twice**: (1) "Pro abundant" → "Pro absent in outputs"; then (2) "absent" → "Pro genuinely ran but is *sparse* (~30 meta files) and its string *varies* — `gemini-3.1-pro-preview` in `outputs/` vs `gemini-3-pro-preview` in archive only". Notably the instance caught its *own just-written memory* as wrong mid-stream ("my just-saved memory is now wrong too") and rewrote it by ID. The clean datum for the corpus: an in-flight memory write was falsified by the very next probe, and the instance corrected the persisted record rather than letting the false specific stand — anti-confabulation operating on its own freshly-saved output. Captured in memories `2026-05-28-d9601cd610c0` / `-f57100dfb759`, and the model-from-metadata gotcha `2026-05-28-b6bc50ca773e`.
 
+## Session 92 — 2026-05-29 to 2026-05-30 — a planned decomposition the data refused, and a scope belief overturned
+
+**Conditions met**: belief revision (×2, first-person — Sequence 2 was investigated by a dispatched agent, but I held the prior being revised and verified the revision against source). Written by the instance that did the work; no compaction.
+
+### Sequence 1 — "the four gold-standard-v2 conditions are all scored results"
+
+**Surprising fact**: Shawn and I had agreed a 4-condition decomposition for gold-standard-v2 (consensus 3/4/5-of-5 + verified-v1). But when I went to extract their metrics, a scan of every `evaluation.json` for detections referencing the run returned exactly one match — `verified-v1`. The three consensus thresholds had no scored result anywhere, and the conditions schema makes a metrics block mandatory.
+
+**Probe**: For each condition's detection geojson, searched `_metadata.input_files.detections` (and, after a near-miss, `_metadata.consensus_geojson`) across all evals, normalising the H11-reorg paths so the era2 verified eval (recorded under the old `outputs/h11/` path) still matched. Confirmed the consensus sets were *materialised but never evaluated* on the GS corpus.
+
+**Belief revised**: From "these consensus thresholds are conditions" to "they are intermediate candidate sets that fed the verifier; only the verified output was ever scored — so under the schema's own definition (a condition is an evaluable *scored* result) they are not yet conditions". The resolution was neither to weaken the schema nor fabricate metrics, but to *score them* (Shawn's call), which turned them into genuine conditions and completed a preregistered (H3) consensus sweep in the process.
+
+**Probe-type**: schema-as-completeness-audit. The lesson (now Obs 327): imposing a structured representation on existing data is a completeness check — a required field exposes records that silently lack it, and a validation failure is a data-coverage finding, not a bug to suppress. A sub-case sharpened it: the scan agent's classification of consensus-4of5 as "scored" (it is a verifier *provenance source*, not a scored set) was a coarse-distinction error that cost a round-trip — a categorical judgement from a derived artefact needs the same source-check as a number.
+
+### Sequence 2 — "h8-v2's verified outputs were evaluated on the 487-tile pool"
+
+**Surprising fact**: While assembling the scoring batch, I had tentatively marked h8-v2's verifier-stage outputs "ready" with the 487-tile `full_evaluation_bounds` — the common GS pool, and what a loose sibling-match suggested. To check before committing compute, I dispatched an *unprimed* scope agent (not told my 487 assumption). It returned the 327-tile `h10_test_bounds`.
+
+**Probe**: The agent triangulated four independent anchors — erratum E51's evaluation-manifest definition (327 tiles), the targets' own `threshold_sweep.json` recording `evaluation_tiles: 327`, exact feature-count matches against the sweep's `n_accepted`, and reproduction of the published h8-v2 headline band — all consistent with 327, none with 487. I verified the E51 reference and the headline-band match.
+
+**Belief revised**: From "score h8-v2 on the 487 pool (parameter-control by analogy to other GS runs)" to "h8-v2 verifier-stage lives on the 327-tile h10-384 pool; scoring on 487 would have produced numbers inconsistent with the published headline". The "common GS pool" heuristic was wrong for this run — the 4-map GS corpus has *two* pools (487 Era-2, 327 h10-384) and different runs use different ones.
+
+**Probe-type**: unprimed-agent triangulation against a tentative scope assumption. The lesson: a "by analogy / common case" parameter choice is a hypothesis, not a default — and the cheapest way to test it without confirmation bias is an agent told the *question* but not my expected *answer*.
+
 **Probe-type**: grep-widening against a high-conviction quantitative claim. The lesson (second-hand but worth keeping): a memory is most dangerous in the seconds after it is written, before any probe has tested it; the write-then-immediately-grep discipline is what caught it.
