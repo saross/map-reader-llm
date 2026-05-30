@@ -247,6 +247,8 @@ decision). Confirming none is secretly a run:
 
 - `outputs/figures/`, `outputs/results/` — output collectors, not runs.
 - `outputs/qgis-dedup-check/`, `outputs/qgis-sanity-check/`,
-  `outputs/qgis-wbf-check/` — QGIS spot-checks.
+  `outputs/qgis-wbf-check/` — QGIS spot-checks. **Archived 2026-05-30** to
+  `archive/qa-visual-checks/` (one-off QA; export scripts left in place).
 - `outputs/test-phase2b/`, `outputs/v2-proposer-test/` — dev/test scaffolding
-  (v2-proposer-test was moved out of h11 in Session 92).
+  (v2-proposer-test was moved out of h11 in Session 92). Under review for
+  archival/relocation (see working notes).
