@@ -1085,6 +1085,24 @@ def _infer_modality(rel_path: str) -> str | None:
     return None
 
 
+def _add_unique(target: dict[str, dict], label: str, value: dict, kind: str) -> None:
+    """Insert ``label → value``, warning (not silently dropping) on a slug collision.
+
+    Two distinct directory paths can slug to the same label; a plain dict assignment
+    would silently overwrite one, which is exactly the silent drop the drafter must
+    avoid. The first entry is kept and the clash is reported to stderr (the drafter's
+    JSON goes to stdout, so the warning does not corrupt it).
+    """
+    if label in target:
+        print(
+            f"WARNING: draft_run: {kind} label '{label}' collides with an existing "
+            f"entry (path {value['path']}); keeping the first — rename during verification.",
+            file=sys.stderr,
+        )
+        return
+    target[label] = value
+
+
 def draft_run(run_id: str) -> dict:
     """Propose a decomposition skeleton for one run (the I-draft half of 3b).
 
@@ -1129,11 +1147,13 @@ def draft_run(run_id: str) -> dict:
                 continue
             seen_pool_dirs.add(pool_dir)
             rel = pool_dir.relative_to(run_dir).as_posix()
-            proposer_pools[_slug(rel)] = {"modality": _infer_modality(rel), "path": rel}
+            _add_unique(proposer_pools, _slug(rel),
+                        {"modality": _infer_modality(rel), "path": rel}, "proposer pool")
         elif meta_path.name == "run.meta.json":
             # verifier pass: <vdir>/run.meta.json (vdir may be nested several levels)
             rel = parent.relative_to(run_dir).as_posix()
-            verifier_passes[_slug(rel)] = {"modality": _infer_modality(rel), "path": rel}
+            _add_unique(verifier_passes, _slug(rel),
+                        {"modality": _infer_modality(rel), "path": rel}, "verifier pass")
 
     # condition candidates: every indexed eval that scored a detection under this run
     dir_prefix = _normalise_detections_path(entry["directory_path"].rstrip("/") + "/")
@@ -1148,7 +1168,7 @@ def draft_run(run_id: str) -> dict:
                 "bounds": bounds,
                 "n_detections": summary.get("n_detections"),
                 "has_mcc": bool(summary.get("tile_classification")),
-                "buffers": [b.get("buffer_metres") for b in summary.get("buffers", [])],
+                "buffers": [b.get("buffer_metres") for b in (summary.get("buffers") or [])],
             })
 
     return {
