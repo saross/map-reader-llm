@@ -1,12 +1,168 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-05-30T02:52:42Z",
+  "generated_at": "2026-05-30T08:03:46Z",
   "registry": [
+    {
+      "run_id": "55maps-generalisation",
+      "directory_path": "outputs/55maps-generalisation",
+      "status": "active",
+      "notes": "Generalisation programme (text, paired verifier). Absent from condition-inventory; facts from configs/report. Carry-forward #10 (verified_detections_paired) lives here."
+    },
+    {
+      "run_id": "55maps-image-generalisation",
+      "directory_path": "outputs/55maps-image-generalisation",
+      "status": "active",
+      "notes": "Generalisation programme (image modality). Has post_run_report.md."
+    },
+    {
+      "run_id": "55maps-text-high-generalisation",
+      "directory_path": "outputs/55maps-text-high-generalisation",
+      "status": "active",
+      "notes": "Generalisation programme (text, HIGH thinking)."
+    },
+    {
+      "run_id": "55maps-text-high-t0-3-generalisation",
+      "directory_path": "outputs/55maps-text-high-t0.3-generalisation",
+      "status": "active",
+      "notes": "Slug uses dot->hyphen (t0-3) per the no-dots run_id pattern (resolved 2026-05-30, option A1). Dir rename t0.3->t0-3 is a deferred follow-up. Generalisation (text, HIGH, T=0.3)."
+    },
+    {
+      "run_id": "55maps-text-min-generalisation",
+      "directory_path": "outputs/55maps-text-min-generalisation",
+      "status": "active",
+      "notes": "Generalisation programme (text, minimal thinking). Has post_run_report.md."
+    },
     {
       "run_id": "gold-standard-v2",
       "directory_path": "outputs/gs/gold-standard-v2",
       "status": "active",
-      "notes": null
+      "notes": "Populated vertical slice (Session 92). Paper headline GS run."
+    },
+    {
+      "run_id": "h10",
+      "directory_path": "outputs/h10",
+      "status": "active",
+      "notes": "one run (H10 library-pool-size study). Conditions = 4 evaluation-v2 pools (pool_020/040/080/160_hp4hn4, each run_1-5, consensus_t4). example-pools-v2 (few-shot library sets, incl. unscored hp8hn8/hp16hn16) and hard-cases-v2 (galleries) are diagnostics, not conditions. pool_160_hp4hn4 shared with h12-v2 r2 (E52). Inventory: H10v2."
+    },
+    {
+      "run_id": "consensus-384-t1-0",
+      "directory_path": "outputs/h11/consensus-384-UNINTENDED-T1.0",
+      "status": "active",
+      "notes": "E43 deviation run (ran T=1.0 vs intended 0.7). Neutral slug per design doc 1A; historical_alias=consensus-384-UNINTENDED-T1.0. Slug uses dot->hyphen (t1-0) per the no-dots run_id pattern (resolved 2026-05-30, option A1; 1A corrected). Physical dir kept dotted per 1A's no-mass-rename decision."
+    },
+    {
+      "run_id": "e47-propose-brief",
+      "directory_path": "outputs/h11/e47-propose-brief",
+      "status": "active",
+      "notes": "H11 (propose-brief)."
+    },
+    {
+      "run_id": "n1-outstanding-384",
+      "directory_path": "outputs/h11/n1-outstanding-384",
+      "status": "active",
+      "notes": "H11 (n=1 outstanding, 384px)."
+    },
+    {
+      "run_id": "proposer-verifier-384",
+      "directory_path": "outputs/h11/proposer-verifier-384",
+      "status": "active",
+      "notes": "H11 (proposer-verifier, 384px)."
+    },
+    {
+      "run_id": "proposer-verifier-512",
+      "directory_path": "outputs/h11/proposer-verifier-512",
+      "status": "active",
+      "notes": "H11 (proposer-verifier, 512px). Absent from inventory."
+    },
+    {
+      "run_id": "pv-diag-256",
+      "directory_path": "outputs/h11/pv-diag-256",
+      "status": "active",
+      "notes": "H11 (pv-diag, 256px). Absent from inventory."
+    },
+    {
+      "run_id": "pv-diag-384",
+      "directory_path": "outputs/h11/pv-diag-384",
+      "status": "active",
+      "notes": "Feeds 4 studies: primary H11, also_informs H3/H8/PV-strategy. 88 verifier run.meta.json = per-condition passes (GAP-7, many-pass shape)."
+    },
+    {
+      "run_id": "h12-v2",
+      "directory_path": "outputs/h12-v2",
+      "status": "active",
+      "notes": "one run (H12 HP:HN ratio study). Conditions = {r1-hn-heavy, r2-balanced, r3-hp-heavy} x {greedy, wbf}; r1/r3 own run_1-5, greedy/ and wbf/ are aggregation collectors. r2-balanced is a CROSS-RUN condition reusing outputs/h10/evaluation-v2/pool_160_hp4hn4 (E52, GAP-6). Inventory: H12v2."
+    },
+    {
+      "run_id": "h8-v2",
+      "directory_path": "outputs/h8-v2",
+      "status": "active",
+      "notes": "one run. 7 proposer pools (canonical/plus-hp/pure-positive-canon/scale-4/8/16/32, each run_1-5 = library-composition variants); greedy/ and wbf/ are aggregation-output collectors -> conditions = composition x aggregation (greedy/wbf/consensus). Inventory: H8v2. Mixed eval scope: most on 487, verifier-stage on 327 -> per-condition scope_override in facts (beacon trap)."
+    },
+    {
+      "run_id": "retest-phase2a",
+      "directory_path": "outputs/retest/phase2a",
+      "status": "active",
+      "notes": "H1."
+    },
+    {
+      "run_id": "retest-phase2b",
+      "directory_path": "outputs/retest/phase2b",
+      "status": "active",
+      "notes": "H7."
+    },
+    {
+      "run_id": "retest-phase2c",
+      "directory_path": "outputs/retest/phase2c",
+      "status": "active",
+      "notes": "H8."
+    },
+    {
+      "run_id": "retest-phase2d",
+      "directory_path": "outputs/retest/phase2d",
+      "status": "active",
+      "notes": "H5."
+    },
+    {
+      "run_id": "retest-phase2e",
+      "directory_path": "outputs/retest/phase2e",
+      "status": "active",
+      "notes": "H4."
+    },
+    {
+      "run_id": "retest-phase3a",
+      "directory_path": "outputs/retest/phase3a",
+      "status": "active",
+      "notes": "H3."
+    },
+    {
+      "run_id": "retest-phase3a-high",
+      "directory_path": "outputs/retest/phase3a-high",
+      "status": "active",
+      "notes": "H3 (HIGH thinking)."
+    },
+    {
+      "run_id": "retest-phase3a-replication",
+      "directory_path": "outputs/retest/phase3a-replication",
+      "status": "active",
+      "notes": "H3 (replication)."
+    },
+    {
+      "run_id": "retest-phase3c",
+      "directory_path": "outputs/retest/phase3c",
+      "status": "active",
+      "notes": "H9 (45 inventory conditions). Deep nesting: track1-image/h9-A-p1..p4 are PASSES, not conditions (GAP-6)."
+    },
+    {
+      "run_id": "retest-h11-single-pass-384-t0",
+      "directory_path": "outputs/retest/h11-single-pass-384-t0",
+      "status": "active",
+      "notes": "H11 single-pass baseline."
+    },
+    {
+      "run_id": "verifier-t-pilot",
+      "directory_path": "outputs/verifier-t-pilot",
+      "status": "active",
+      "notes": "one run (verifier-temperature pilot, H2-exploratory; T0.0 baseline + T0.5/T1.0 = new verifier passes -> conditions). Owns new API work, unlike wbf. GAP-10/E55: true verifier temp is in run.log ('Temperature override:'), not configuration.temperature (which reads 0.0); metas corrected non-destructively (temperature_effective). Eval bounds=None -> scope from another source."
     }
   ]
 }
