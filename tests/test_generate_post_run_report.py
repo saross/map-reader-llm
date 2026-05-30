@@ -135,6 +135,53 @@ def test_gs_v2_conditions_valid_with_metrics(registry):
 
 
 @pytest.mark.tier1
+def test_condition_explicit_eval_path(registry):
+    # G-E: a condition names its scoring eval explicitly. For h8-v2 the complete
+    # with-MCC eval (327 scope, F1@20 + MCC) is the right one; the index auto-matcher
+    # would instead pick a buffer-rich F1-only sibling at the 487 comparability scope.
+    ctx = {
+        "run_id": "h8-v2",
+        "directory_path": "outputs/h8-v2",
+        "scope": {"bounds_path": "inputs/vectors/bounds/384/h10_test_bounds.geojson"},
+        "proposer_pools": {},
+        "verifier_passes": {},
+        "conditions": [{
+            "label": "canonical-greedy",
+            "architecture": "consensus",
+            "aggregation": "greedy",
+            "proposer_pool": "canonical",
+            "n_passes": 5,
+            "vote_threshold": 4,
+            "eval_path": "results/h8-v2/with-mcc/canonical/evaluation.json",
+        }],
+    }
+    conditions = extract_conditions(ctx)
+    assert len(conditions) == 1
+    c = conditions[0]
+    assert validate_row("conditions", c, registry) == []
+    assert c["condition_id"] == "h8-v2::canonical-greedy"
+    tile = c["metrics"]["tile_classification"]
+    assert tile["mcc"] == 0.6785  # lifted from the with-MCC eval, not auto-matched
+    assert (tile["tp"], tile["tn"], tile["fp"], tile["fn"]) == (118, 156, 16, 37)
+    assert c["metrics"]["per_buffer"]["20"]["f1"] == 0.7071
+
+
+@pytest.mark.tier1
+def test_condition_missing_key_raises():
+    # audit §4a: a hand-authored spec missing a required key fails with a descriptive
+    # ValueError naming the run + label, not an opaque KeyError mid-build.
+    ctx = {
+        "run_id": "x", "directory_path": "outputs/x", "scope": {},
+        "conditions": [{  # missing "architecture"
+            "label": "bad", "aggregation": "greedy", "proposer_pool": "p",
+            "n_passes": 5, "eval_path": "results/whatever.json",
+        }],
+    }
+    with pytest.raises(ValueError, match="architecture"):
+        extract_conditions(ctx)
+
+
+@pytest.mark.tier1
 def test_gs_v2_run_row_valid(registry):
     facts = load_run_facts()
     conditions = extract_conditions(extraction_context("gold-standard-v2"))

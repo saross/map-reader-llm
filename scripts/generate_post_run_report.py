@@ -509,17 +509,47 @@ def _metrics_from_eval(summary: dict, n_iter: int = 10000, seed: int = 42) -> di
     return {"per_buffer": per_buffer, "tile_classification": tile}
 
 
+#: Keys every condition spec must carry before the extractor reads them — a missing
+#: one in the hand-authored sidecar should fail with a clear message, not an opaque
+#: KeyError mid-build.
+_REQUIRED_CONDITION_KEYS: tuple[str, ...] = (
+    "label", "architecture", "aggregation", "proposer_pool", "n_passes",
+)
+
+
+def _require_condition_keys(spec: dict, run_id: str) -> None:
+    """Validate a hand-authored condition spec carries the keys the extractor reads.
+
+    Raises a descriptive ``ValueError`` (naming the run and the offending label) so a
+    sidecar typo is caught at the spec rather than as an opaque ``KeyError`` deep in
+    the row build. A condition must also carry an eval source — an explicit
+    ``eval_path`` or a ``detections`` path for the auto-matcher.
+    """
+    missing = [k for k in _REQUIRED_CONDITION_KEYS if k not in spec]
+    if "eval_path" not in spec and "detections" not in spec:
+        missing.append("eval_path-or-detections")
+    if missing:
+        raise ValueError(
+            f"condition spec in run '{run_id}' (label={spec.get('label', '?')}) "
+            f"is missing required key(s): {', '.join(missing)}"
+        )
+
+
 def extract_conditions(facts: dict, at: str | None = None) -> list[dict]:
     """Extract condition rows (the evaluable scored results) for one run.
 
-    Each condition spec names the detection geojson it scored; this maps that to
-    the evaluation.json that scored it (preferring the eval whose bounds match the
-    run's nominal scope) and lifts the metrics. A condition with no matching eval
-    is skipped with a warning — the schema cannot represent a metric-less
-    condition, so an unscored aggregation output is not a condition.
+    Each condition's metrics come from its scoring evaluation, resolved one of two
+    ways: an explicit ``eval_path`` in the spec (preferred — unambiguous, and the
+    only correct option when the auto-matcher would pick the wrong eval, e.g. a
+    buffer-rich F1-only sibling over the complete with-MCC eval at the nominal
+    scope); or, with no ``eval_path``, an auto-match from the detection geojson via
+    the results/ eval index, preferring the eval whose bounds match the run's nominal
+    scope (gold-standard-v2 uses this path). A condition with no resolvable eval is
+    skipped with a warning — the schema cannot represent a metric-less condition, so
+    an unscored aggregation output is not a condition.
 
     Args:
-        facts: a run-facts dict with a ``conditions`` list and a ``scope``.
+        facts: an extraction context with a ``conditions`` list and a ``scope``.
         at: ISO timestamp stamped on every row's provenance.
 
     Returns:
@@ -527,23 +557,34 @@ def extract_conditions(facts: dict, at: str | None = None) -> list[dict]:
     """
     run_id = facts["run_id"]
     scope_bounds = facts.get("scope", {}).get("bounds_path")
-    index = _build_eval_index()
+    index: dict | None = None  # built lazily, only if a spec needs the auto-matcher
     rows: list[dict] = []
 
     for spec in facts.get("conditions", []):
-        det_norm = _normalise_detections_path(spec["detections"])
-        candidates = index.get(det_norm, [])
-        # prefer evals on the run's nominal scope; among those, the most complete
-        scope_match = [c for c in candidates if c[2] == scope_bounds]
-        chosen = scope_match or candidates
-        if not chosen:
-            print(
-                f"WARNING: no evaluation found for condition {spec['label']} "
-                f"({spec['detections']}); skipping (cannot emit metric-less condition).",
-                file=sys.stderr,
-            )
-            continue
-        eval_path, summary, _bounds = max(chosen, key=lambda c: len(c[1].get("buffers", [])))
+        _require_condition_keys(spec, run_id)
+        if spec.get("eval_path"):
+            # explicit eval: the human/drafter names exactly which eval scores this
+            summary = _load_json(REPO_ROOT / spec["eval_path"]).get("summary", {})
+            eval_sources = [spec["eval_path"]]
+        else:
+            if index is None:
+                index = _build_eval_index()
+            det_norm = _normalise_detections_path(spec["detections"])
+            candidates = index.get(det_norm, [])
+            # prefer evals on the run's nominal scope; among those, the most complete
+            scope_match = [c for c in candidates if c[2] == scope_bounds]
+            chosen = scope_match or candidates
+            if not chosen:
+                print(
+                    f"WARNING: no evaluation found for condition {spec['label']} "
+                    f"({spec['detections']}); skipping (cannot emit metric-less condition).",
+                    file=sys.stderr,
+                )
+                continue
+            eval_path, summary, _bounds = max(chosen, key=lambda c: len(c[1].get("buffers", [])))
+            # provenance cites the normalised detections path (what the match used),
+            # not the raw spec path, so it always names a file that exists on disk
+            eval_sources = [eval_path, det_norm]
         rows.append({
             "condition_id": f"{run_id}::{spec['label']}",
             "run_id": run_id,
@@ -555,12 +596,12 @@ def extract_conditions(facts: dict, at: str | None = None) -> list[dict]:
             "vote_threshold": spec.get("vote_threshold"),
             "prob_threshold": spec.get("prob_threshold"),
             "verifier_config": spec.get("verifier_config"),
-            "scope_override": None,  # all gs-v2 conditions sit on the run's nominal scope
+            "scope_override": spec.get("scope_override"),
             "metrics": _metrics_from_eval(summary),
             "n_detections": summary.get("n_detections"),
-            "n_candidates": None,
-            "n_reference_mounds": None,
-            "provenance": build_provenance([eval_path, spec["detections"]], at),
+            "n_candidates": spec.get("n_candidates"),
+            "n_reference_mounds": spec.get("n_reference_mounds"),
+            "provenance": build_provenance(eval_sources, at),
         })
     return rows
 
