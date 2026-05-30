@@ -1,10 +1,10 @@
-<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/conditions-manifest.json by scripts/generate_post_run_report.py v0.1.0. Edit the source-of-truth files and regenerate. -->
+<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/conditions-manifest.json by scripts/generate_post_run_report.py v0.2.0. Edit the source-of-truth files and regenerate. -->
 
 # Conditions manifest
 
-> Generated 2026-05-30T02:52:42Z · 4 row(s) · schema v1.0.
+> Generated 2026-05-30T08:10:42Z · 4 row(s) · schema v1.0.
 >
-> **Coverage**: gold-standard-v2 vertical slice; fan-out across all runs extends this manifest in place.
+> **Coverage**: gold-standard-v2 only (Phase 3b extends to all runs).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|

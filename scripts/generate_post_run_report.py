@@ -63,7 +63,7 @@ SCHEMA_DIR: Path = REPO_ROOT / "docs" / "manifest-schemas"
 #: Semantic version of THIS generator script. Written into every row's
 #: ``provenance.extractor_version`` (tracks the script, distinct from the
 #: manifest *format* ``schema_version``). Bump on any extraction-logic change.
-GENERATOR_VERSION: str = "0.1.0"
+GENERATOR_VERSION: str = "0.2.0"
 
 #: Manifest format version embedded at the top of each emitted manifest. Must
 #: match the ``schema_version`` const in the schema files.
@@ -554,30 +554,37 @@ def extract_conditions(facts: dict, at: str | None = None) -> list[dict]:
     return rows
 
 
-def extract_run_row(facts: dict, conditions: list[dict], at: str | None = None) -> dict:
-    """Assemble the runs-manifest row for one run.
+def build_run_row(run_id: str, directory_path: str, facts: dict,
+                  conditions: list[dict], at: str | None = None) -> dict:
+    """Assemble a runs-manifest row from the registry entry + per-run facts.
 
-    Mostly the hand-authored facts (corpus, GT, scope, study tags). ``run_type``
-    is DERIVED from the conditions' architectures (a single family, or ``mixed``
-    when they span families — gold-standard-v2 has both consensus and
-    proposer-verifier conditions). The headline pointer is left null for a human.
-    ``post_run_report_path`` is filled only if the file exists. Provenance anchors
-    on the scope bounds file plus a representative pass meta.
+    The registry supplies ``run_id`` and the mutable ``directory_path``; ``facts``
+    (one entry of ``results/run-facts.json``) supplies the irreducibly-human fields
+    (corpus, GT, scope, study tags, aliases, headline pointer). ``run_type`` is
+    DERIVED from the conditions' architectures when conditions are available (a
+    single family, or ``mixed`` when they span families — gold-standard-v2 has both
+    consensus and proposer-verifier conditions); it is ``null`` for runs whose
+    per-run conditions have not yet been extracted (Phase 3b). Provenance anchors
+    on the facts file, the scope bounds, and a representative pass meta if present.
     """
-    run_id = facts["run_id"]
-    run_dir = REPO_ROOT / facts["directory_path"]
+    run_dir = REPO_ROOT / directory_path
     archs = {c["architecture"] for c in conditions}
-    run_type = next(iter(archs)) if len(archs) == 1 else "mixed"
+    run_type = (next(iter(archs)) if len(archs) == 1 else "mixed") if conditions else None
 
-    sources = [facts["scope"]["bounds_path"]]
-    metas = sorted((run_dir / "proposer").rglob("*.meta.json"))
-    if metas:
-        sources.append(_repo_rel(metas[0]))
+    sources = ["results/run-facts.json"]
+    bounds_path = (facts.get("scope") or {}).get("bounds_path")
+    if bounds_path:
+        sources.append(bounds_path)
+    proposer_dir = run_dir / "proposer"
+    if proposer_dir.exists():
+        metas = sorted(proposer_dir.rglob("*.meta.json"))
+        if metas:
+            sources.append(_repo_rel(metas[0]))
 
     prr = run_dir / "post_run_report.md"
     return {
         "run_id": run_id,
-        "directory_path": facts["directory_path"],
+        "directory_path": directory_path,
         "primary_hypothesis": facts.get("primary_hypothesis"),
         "also_informs": facts.get("also_informs", []),
         "purpose": facts.get("purpose"),
@@ -595,14 +602,40 @@ def extract_run_row(facts: dict, conditions: list[dict], at: str | None = None) 
     }
 
 
-def extract_registry_entry(facts: dict) -> dict:
-    """Build the run-registry entry — the stable run_id → current directory_path."""
-    return {
-        "run_id": facts["run_id"],
-        "directory_path": facts["directory_path"],
-        "status": "active",
-        "notes": facts.get("registry_notes"),
-    }
+def load_run_registry(path: Path | None = None) -> dict:
+    """Load the hand-authored run registry — the generator's INPUT (decision B1).
+
+    The registry is the source-of-truth enumeration of runs (``run_id`` →
+    ``directory_path``); the generator READS it and never synthesises it. Returns
+    the whole manifest object (envelope + ``registry`` list) so the caller can both
+    iterate the runs and re-render the Markdown view.
+    """
+    return _load_json(path or REPO_ROOT / "results" / "run-registry.json")
+
+
+def load_run_facts(path: Path | None = None) -> dict[str, dict]:
+    """Load the per-run human-authored facts — the generator's other INPUT.
+
+    Returns a ``{run_id: facts}`` mapping. Each entry carries the irreducibly-human
+    fields (corpus, gt_reference, scope, study tags, historical aliases, headline
+    pointer). Underscore-prefixed annotations (the human provenance for the scope
+    choice) are retained in the file but ignored by the extractor.
+    """
+    return _load_json(path or REPO_ROOT / "results" / "run-facts.json").get("facts", {})
+
+
+def drift_check(registry: list[dict], facts: dict[str, dict]) -> list[str]:
+    """Warn when the registry and the facts file disagree on the run set (B1 guard).
+
+    A registry run with no facts entry cannot produce a complete run row; a facts
+    entry with no registry row will never be emitted. An empty list means the two
+    inputs are in sync.
+    """
+    reg_ids = {e["run_id"] for e in registry}
+    fact_ids = set(facts)
+    warnings = [f"registry run '{rid}' has NO facts entry" for rid in sorted(reg_ids - fact_ids)]
+    warnings += [f"facts run '{rid}' is NOT in the registry" for rid in sorted(fact_ids - reg_ids)]
+    return warnings
 
 
 # --------------------------------------------------------------------------- #
@@ -668,6 +701,16 @@ def _md_table(headers: list[str], rows: list[list]) -> str:
     return "\n".join(lines)
 
 
+def _coverage_note(manifest: str, n_rows: int) -> str:
+    """Human-readable coverage line for a manifest's rendered Markdown header."""
+    return {
+        "runs": f"all {n_rows} runs (run-level facts; per-run conditions/passes land in Phase 3b)",
+        "conditions": "gold-standard-v2 only (Phase 3b extends to all runs)",
+        "passes": "gold-standard-v2 only (Phase 3b extends to all runs)",
+        "run-registry": f"all {n_rows} runs (hand-verified input)",
+    }.get(manifest, f"{n_rows} row(s)")
+
+
 def render_manifest(manifest: str, obj: dict, json_rel: str) -> str:
     """Render a human-readable Markdown view of a manifest (do-not-edit)."""
     rows = obj[_array_key(manifest)]
@@ -682,8 +725,7 @@ def render_manifest(manifest: str, obj: dict, json_rel: str) -> str:
         f"# {titles[manifest]}\n\n"
         f"> Generated {obj['generated_at']} · {len(rows)} row(s) · schema "
         f"v{obj['schema_version']}.\n>\n"
-        f"> **Coverage**: gold-standard-v2 vertical slice; fan-out across all runs "
-        f"extends this manifest in place.\n\n"
+        f"> **Coverage**: {_coverage_note(manifest, len(rows))}.\n\n"
     )
     if manifest == "runs":
         table = _md_table(
@@ -789,9 +831,15 @@ def build_arg_parser() -> argparse.ArgumentParser:
         help="Validate that all schemas load and the validation harness round-trips, then exit.",
     )
     parser.add_argument(
+        "--all",
+        action="store_true",
+        help="Build every run in results/run-registry.json: a run-level row for each, plus "
+             "conditions/passes for runs whose per-run extractor is wired up (gold-standard-v2).",
+    )
+    parser.add_argument(
         "--run",
         metavar="RUN_ID",
-        help="(not yet implemented) Extract + validate the manifests for one run.",
+        help="Build just the named run (filters --all to one run_id; for inspection).",
     )
     parser.add_argument(
         "--dry-run",
@@ -801,10 +849,52 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--write",
         action="store_true",
-        help="Write the validated manifests (JSON + rendered MD) to results/. "
-             "Refuses to write if any row or manifest fails validation.",
+        help="Write the validated manifests (JSON + rendered MD) to results/. Refuses to write "
+             "if any row or manifest fails validation. Never rewrites run-registry.json (the "
+             "hand-authored input) — only its rendered .md view.",
     )
     return parser
+
+
+def build_manifests(at: str, only: str | None = None) -> tuple:
+    """Build all manifest rows from the registry + facts INPUTS.
+
+    Iterates ``results/run-registry.json`` (the hand-authored run list); for each
+    run builds a runs-manifest row from its ``results/run-facts.json`` entry. Runs
+    whose per-run extractor is wired up (currently only gold-standard-v2) also
+    yield conditions + passes, which in turn fix that run's derived ``run_type``.
+
+    Args:
+        at: shared extraction timestamp stamped on every provenance block.
+        only: if set, restrict the build to this single ``run_id``.
+
+    Returns:
+        ``(registry_obj, run_rows, conditions, passes, drift_warnings)``.
+    """
+    registry_obj = load_run_registry()
+    facts = load_run_facts()
+    entries = registry_obj.get("registry", [])
+    warnings = drift_check(entries, facts)
+
+    run_rows: list[dict] = []
+    conditions_all: list[dict] = []
+    passes_all: list[dict] = []
+    for entry in entries:
+        run_id, directory_path = entry["run_id"], entry["directory_path"]
+        if only and run_id != only:
+            continue
+        run_facts = facts.get(run_id, {})
+        conditions: list[dict] = []
+        if run_id == "gold-standard-v2":
+            # The wired-up vertical slice: its extraction hints (proposer pools,
+            # verifier passes, condition decomposition) live in GS_V2_FACTS, while
+            # the run-level facts come from run-facts.json. Phase 3b generalises
+            # these extractors to the other runs.
+            passes_all.extend(extract_passes(GS_V2_FACTS, at))
+            conditions = extract_conditions(GS_V2_FACTS, at)
+            conditions_all.extend(conditions)
+        run_rows.append(build_run_row(run_id, directory_path, run_facts, conditions, at))
+    return registry_obj, run_rows, conditions_all, passes_all, warnings
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -814,77 +904,60 @@ def main(argv: list[str] | None = None) -> int:
     if args.self_test:
         return _self_test()
 
-    if args.run:
-        if args.run != "gold-standard-v2":
-            print(
-                f"Only the gold-standard-v2 vertical slice is wired up so far "
-                f"(got '{args.run}'). Conditions/runs extractors and fan-out land next.",
-                file=sys.stderr,
-            )
-            return 2
-        registry, _ = load_schema_registry()
+    if args.all or args.run:
+        schema_reg, _ = load_schema_registry()
         at = utc_now_iso()
-        passes = extract_passes(GS_V2_FACTS, at)
-        conditions = extract_conditions(GS_V2_FACTS, at)
+        registry_obj, run_rows, conditions, passes, warnings = build_manifests(at, only=args.run)
+
+        if args.run and not run_rows:
+            print(f"No run '{args.run}' in results/run-registry.json.", file=sys.stderr)
+            return 2
+
+        if warnings:
+            print("=== registry ↔ facts drift ===")
+            for w in warnings:
+                print(f"  WARN: {w}")
+            print()
+
         all_valid = True
 
-        print(f"=== {args.run}: {len(passes)} passes ===")
-        for p in passes:
-            errors = validate_row("passes", p, registry)
+        print(f"=== {len(run_rows)} run rows ===")
+        for r in run_rows:
+            errors = validate_row("runs", r, schema_reg)
             all_valid = all_valid and not errors
             print(
-                f"  [{'ok ' if not errors else 'BAD'}] {p['pass_id']}  "
-                f"model={p['model_used']} {p['modality']} thinking={p['thinking_level']} "
-                f"T={p['temperature']} status={p['status']} tiles={p['n_tiles_processed']} "
-                f"cost=${p['cost_usd']}"
+                f"  [{'ok ' if not errors else 'BAD'}] {r['run_id']:34s} "
+                f"type={str(r['run_type']):16s} {str(r['tile_size_px']):>3}px "
+                f"{r['corpus']:8s} {r['gt_reference']:7s} {r['scope']['test_set_id']}"
             )
             for e in errors:
                 print(f"        - {e}")
 
-        print(f"\n=== {args.run}: {len(conditions)} conditions ===")
-        for c in conditions:
-            errors = validate_row("conditions", c, registry)
-            all_valid = all_valid and not errors
-            m20 = c["metrics"]["per_buffer"].get("20", {})
-            mcc = c["metrics"]["tile_classification"].get("mcc")
-            print(
-                f"  [{'ok ' if not errors else 'BAD'}] {c['condition_id']}  "
-                f"{c['architecture']}/{c['aggregation']} vote={c['vote_threshold']} "
-                f"n_passes={c['n_passes']} | 20m F1={m20.get('f1')} MCC={mcc} "
-                f"n_det={c['n_detections']}"
-            )
-            for e in errors:
-                print(f"        - {e}")
+        if conditions:
+            bad = [c for c in conditions if validate_row("conditions", c, schema_reg)]
+            all_valid = all_valid and not bad
+            print(f"\n=== {len(conditions)} conditions (gold-standard-v2) — "
+                  f"{len(conditions) - len(bad)} valid ===")
+            for c in bad:
+                for e in validate_row("conditions", c, schema_reg):
+                    print(f"  [BAD] {c['condition_id']}: {e}")
 
-        run_row = extract_run_row(GS_V2_FACTS, conditions, at)
-        registry_entry = extract_registry_entry(GS_V2_FACTS)
-        print(f"\n=== {args.run}: run row + registry entry ===")
-        run_errors = validate_row("runs", run_row, registry)
-        all_valid = all_valid and not run_errors
-        print(
-            f"  [{'ok ' if not run_errors else 'BAD'}] run: run_id={run_row['run_id']} "
-            f"type={run_row['run_type']} tile={run_row['tile_size_px']}px corpus={run_row['corpus']} "
-            f"gt={run_row['gt_reference']} scope={run_row['scope']['test_set_id']} "
-            f"headline={run_row['headline_condition_id']}"
-        )
-        for e in run_errors:
-            print(f"        - {e}")
-        reg_errors = validate_row("run-registry", registry_entry, registry)
-        all_valid = all_valid and not reg_errors
-        print(
-            f"  [{'ok ' if not reg_errors else 'BAD'}] registry: {registry_entry['run_id']} "
-            f"→ {registry_entry['directory_path']} ({registry_entry['status']})"
-        )
-        for e in reg_errors:
-            print(f"        - {e}")
+        if passes:
+            bad = [p for p in passes if validate_row("passes", p, schema_reg)]
+            all_valid = all_valid and not bad
+            print(f"=== {len(passes)} passes (gold-standard-v2) — "
+                  f"{len(passes) - len(bad)} valid ===")
+            for p in bad:
+                for e in validate_row("passes", p, schema_reg):
+                    print(f"  [BAD] {p['pass_id']}: {e}")
 
         print(
             f"\n{'ALL VALID' if all_valid else 'VALIDATION FAILED'} "
-            f"({len(passes)} passes + {len(conditions)} conditions + 1 run + 1 registry row vs schemas)"
+            f"({len(run_rows)} runs + {len(conditions)} conditions + {len(passes)} passes vs schemas)"
         )
+
         if args.dry_run:
-            for name, payload in [("passes", passes), ("conditions", conditions),
-                                  ("run", run_row), ("registry-entry", registry_entry)]:
+            for name, payload in [("runs", run_rows), ("conditions", conditions), ("passes", passes)]:
                 print(f"\n--- {name} ---")
                 print(json.dumps(payload, indent=2))
 
@@ -892,18 +965,25 @@ def main(argv: list[str] | None = None) -> int:
             if not all_valid:
                 print("\nRefusing to write: validation failed above.", file=sys.stderr)
                 return 1
-            bundles = {
-                "runs": [run_row],
-                "conditions": conditions,
-                "passes": passes,
-                "run-registry": [registry_entry],
-            }
-            written = write_manifests(bundles, at, registry)
+            if args.run:
+                print("\nRefusing to write a single-run subset; use --all to write manifests.",
+                      file=sys.stderr)
+                return 1
+            bundles = {"runs": run_rows, "conditions": conditions, "passes": passes}
+            written = write_manifests(bundles, at, schema_reg)
+            # The registry JSON is the hand-authored INPUT — never rewritten; only
+            # its Markdown view is regenerated from it (read → render).
+            reg_path = REPO_ROOT / MANIFEST_FILES["run-registry"]
+            reg_path.with_suffix(".md").write_text(
+                render_manifest("run-registry", registry_obj, MANIFEST_FILES["run-registry"]),
+                encoding="utf-8")
             print("\n=== wrote manifests ===")
             for manifest, (n, errors, json_rel) in written.items():
                 status = f"{n} row(s) → {json_rel} (+ .md)" if not errors else f"NOT WRITTEN: {errors}"
                 print(f"  {manifest:13s} {status}")
                 all_valid = all_valid and not errors
+            print(f"  {'run-registry':13s} {len(registry_obj['registry'])} row(s) → "
+                  f"{MANIFEST_FILES['run-registry']} (.md only; JSON is the input)")
 
         return 0 if all_valid else 1
 

@@ -1,22 +1,22 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-05-30T02:52:42Z",
-  "generator_version": "0.1.0",
+  "generated_at": "2026-05-30T08:10:42Z",
+  "generator_version": "0.2.0",
   "runs": [
     {
-      "run_id": "gold-standard-v2",
-      "directory_path": "outputs/gs/gold-standard-v2",
+      "run_id": "55maps-generalisation",
+      "directory_path": "outputs/55maps-generalisation",
       "primary_hypothesis": null,
       "also_informs": [],
-      "purpose": "Canonical 4-map gold-standard production pipeline (detect_brief-text, HIGH, T=0.7, K=5); the paper headline GS result.",
-      "run_type": "mixed",
+      "purpose": "55-map generalisation: text, paired verifier",
+      "run_type": null,
       "tile_size_px": 384,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
+      "corpus": "55-map",
+      "gt_reference": "student",
       "scope": {
-        "test_set_id": "era-2-487",
-        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
-        "n_test_tiles": 487,
+        "test_set_id": "55maps-8541",
+        "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+        "n_test_tiles": 8541,
         "calibration_set_id": null,
         "n_calibration_tiles": null
       },
@@ -25,15 +25,898 @@
       "post_run_report_path": null,
       "working_notes_obs": [],
       "historical_aliases": [
+        "55-map generalisation"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+          "outputs/55maps-generalisation/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-09.meta.json"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "55maps-image-generalisation",
+      "directory_path": "outputs/55maps-image-generalisation",
+      "primary_hypothesis": null,
+      "also_informs": [],
+      "purpose": "55-map generalisation: image modality",
+      "run_type": null,
+      "tile_size_px": 384,
+      "corpus": "55-map",
+      "gt_reference": "student",
+      "scope": {
+        "test_set_id": "55maps-8541",
+        "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+        "n_test_tiles": 8541,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": "outputs/55maps-image-generalisation/post_run_report.md",
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "55-map generalisation"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+          "outputs/55maps-image-generalisation/proposer/library_plus-hp/run_1/detections-library_plus-hp-3-flash-2026-04-18.meta.json"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "55maps-text-high-generalisation",
+      "directory_path": "outputs/55maps-text-high-generalisation",
+      "primary_hypothesis": null,
+      "also_informs": [],
+      "purpose": "55-map generalisation: text HIGH",
+      "run_type": null,
+      "tile_size_px": 384,
+      "corpus": "55-map",
+      "gt_reference": "student",
+      "scope": {
+        "test_set_id": "55maps-8541",
+        "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+        "n_test_tiles": 8541,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "55-map generalisation"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+          "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-18.meta.json"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "55maps-text-high-t0-3-generalisation",
+      "directory_path": "outputs/55maps-text-high-t0.3-generalisation",
+      "primary_hypothesis": null,
+      "also_informs": [],
+      "purpose": "55-map generalisation: text HIGH, T=0.3",
+      "run_type": null,
+      "tile_size_px": 384,
+      "corpus": "55-map",
+      "gt_reference": "student",
+      "scope": {
+        "test_set_id": "55maps-8541",
+        "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+        "n_test_tiles": 8541,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "55-map generalisation"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+          "outputs/55maps-text-high-t0.3-generalisation/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-26.meta.json"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "55maps-text-min-generalisation",
+      "directory_path": "outputs/55maps-text-min-generalisation",
+      "primary_hypothesis": null,
+      "also_informs": [],
+      "purpose": "55-map generalisation: text minimal",
+      "run_type": null,
+      "tile_size_px": 384,
+      "corpus": "55-map",
+      "gt_reference": "student",
+      "scope": {
+        "test_set_id": "55maps-8541",
+        "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+        "n_test_tiles": 8541,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": "outputs/55maps-text-min-generalisation/post_run_report.md",
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "55-map generalisation"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+          "outputs/55maps-text-min-generalisation/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-18.meta.json"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "gold-standard-v2",
+      "directory_path": "outputs/gs/gold-standard-v2",
+      "primary_hypothesis": null,
+      "also_informs": [],
+      "purpose": "Canonical 4-map gold-standard pipeline (detect_brief-text, HIGH, T=0.7, K=5); paper headline GS result.",
+      "run_type": "mixed",
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-2-487",
+        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": "cal-20-384",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "Era 2",
         "the v2 GS run"
       ],
       "provenance": {
         "source_files": [
+          "results/run-facts.json",
           "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
           "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-10.meta.json"
         ],
-        "last_extracted_at": "2026-05-30T02:52:42Z",
-        "extractor_version": "0.1.0"
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "h10",
+      "directory_path": "outputs/h10",
+      "primary_hypothesis": "H10",
+      "also_informs": [
+        "library-design"
+      ],
+      "purpose": null,
+      "run_type": null,
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-3-327",
+        "bounds_path": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+        "n_test_tiles": 327,
+        "calibration_set_id": "pool_160",
+        "n_calibration_tiles": 160
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "Era 3"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/384/h10_test_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "consensus-384-t1-0",
+      "directory_path": "outputs/h11/consensus-384-UNINTENDED-T1.0",
+      "primary_hypothesis": "H11",
+      "also_informs": [
+        "H7"
+      ],
+      "purpose": null,
+      "run_type": null,
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-2-487",
+        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": "cal-20-384",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "Era 2",
+        "consensus-384-UNINTENDED-T1.0"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "e47-propose-brief",
+      "directory_path": "outputs/h11/e47-propose-brief",
+      "primary_hypothesis": "H11",
+      "also_informs": [],
+      "purpose": null,
+      "run_type": null,
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-2-487",
+        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": "cal-20-384",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "Era 2"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "n1-outstanding-384",
+      "directory_path": "outputs/h11/n1-outstanding-384",
+      "primary_hypothesis": "H11",
+      "also_informs": [],
+      "purpose": null,
+      "run_type": null,
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-2-487",
+        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": "cal-20-384",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "Era 2"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "proposer-verifier-384",
+      "directory_path": "outputs/h11/proposer-verifier-384",
+      "primary_hypothesis": "H11",
+      "also_informs": [
+        "pv-strategy"
+      ],
+      "purpose": null,
+      "run_type": null,
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-2-487",
+        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": "cal-20-384",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "Era 2"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+          "outputs/h11/proposer-verifier-384/proposer/detections-detect_brief-text-3-flash-2026-03-15.meta.json"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "proposer-verifier-512",
+      "directory_path": "outputs/h11/proposer-verifier-512",
+      "primary_hypothesis": "H11",
+      "also_informs": [
+        "pv-strategy"
+      ],
+      "purpose": null,
+      "run_type": null,
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-1-340",
+        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "n_test_tiles": 340,
+        "calibration_set_id": "cal-20-512",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "Era 1"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "pv-diag-256",
+      "directory_path": "outputs/h11/pv-diag-256",
+      "primary_hypothesis": "H11",
+      "also_informs": [],
+      "purpose": null,
+      "run_type": null,
+      "tile_size_px": 256,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "px256-1032",
+        "bounds_path": "inputs/vectors/bounds/256/full_evaluation_bounds.geojson",
+        "n_test_tiles": 1032,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/256/full_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "pv-diag-384",
+      "directory_path": "outputs/h11/pv-diag-384",
+      "primary_hypothesis": "H11",
+      "also_informs": [
+        "H3",
+        "H8",
+        "pv-strategy",
+        "consensus-n-sweep",
+        "flash-vs-pro"
+      ],
+      "purpose": null,
+      "run_type": null,
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-2-487",
+        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": "cal-20-384",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "Era 2"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "h12-v2",
+      "directory_path": "outputs/h12-v2",
+      "primary_hypothesis": "H12",
+      "also_informs": [
+        "library-design"
+      ],
+      "purpose": null,
+      "run_type": null,
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-3-327",
+        "bounds_path": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+        "n_test_tiles": 327,
+        "calibration_set_id": "pool_160",
+        "n_calibration_tiles": 160
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "Era 3"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/384/h10_test_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "h8-v2",
+      "directory_path": "outputs/h8-v2",
+      "primary_hypothesis": "H8",
+      "also_informs": [
+        "library-design"
+      ],
+      "purpose": null,
+      "run_type": null,
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-3-327",
+        "bounds_path": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+        "n_test_tiles": 327,
+        "calibration_set_id": "pool_160",
+        "n_calibration_tiles": 160
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "Era 3"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/384/h10_test_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "retest-phase2a",
+      "directory_path": "outputs/retest/phase2a",
+      "primary_hypothesis": "H1",
+      "also_informs": [],
+      "purpose": null,
+      "run_type": null,
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-1-340",
+        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "n_test_tiles": 340,
+        "calibration_set_id": "cal-20-512",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "Era 1"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "retest-phase2b",
+      "directory_path": "outputs/retest/phase2b",
+      "primary_hypothesis": "H7",
+      "also_informs": [],
+      "purpose": null,
+      "run_type": null,
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-1-340",
+        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "n_test_tiles": 340,
+        "calibration_set_id": "cal-20-512",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "Era 1"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "retest-phase2c",
+      "directory_path": "outputs/retest/phase2c",
+      "primary_hypothesis": "H8",
+      "also_informs": [],
+      "purpose": null,
+      "run_type": null,
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-1-340",
+        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "n_test_tiles": 340,
+        "calibration_set_id": "cal-20-512",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "Era 1"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "retest-phase2d",
+      "directory_path": "outputs/retest/phase2d",
+      "primary_hypothesis": "H5",
+      "also_informs": [],
+      "purpose": null,
+      "run_type": null,
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-1-340",
+        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "n_test_tiles": 340,
+        "calibration_set_id": "cal-20-512",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "Era 1"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "retest-phase2e",
+      "directory_path": "outputs/retest/phase2e",
+      "primary_hypothesis": "H4",
+      "also_informs": [],
+      "purpose": null,
+      "run_type": null,
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-1-340",
+        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "n_test_tiles": 340,
+        "calibration_set_id": "cal-20-512",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "Era 1"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "retest-phase3a",
+      "directory_path": "outputs/retest/phase3a",
+      "primary_hypothesis": "H3",
+      "also_informs": [],
+      "purpose": null,
+      "run_type": null,
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-1-340",
+        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "n_test_tiles": 340,
+        "calibration_set_id": "cal-20-512",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "Era 1"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "retest-phase3a-high",
+      "directory_path": "outputs/retest/phase3a-high",
+      "primary_hypothesis": "H3",
+      "also_informs": [],
+      "purpose": null,
+      "run_type": null,
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-1-340",
+        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "n_test_tiles": 340,
+        "calibration_set_id": "cal-20-512",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "Era 1"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "retest-phase3a-replication",
+      "directory_path": "outputs/retest/phase3a-replication",
+      "primary_hypothesis": "H3",
+      "also_informs": [],
+      "purpose": null,
+      "run_type": null,
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-1-340",
+        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "n_test_tiles": 340,
+        "calibration_set_id": "cal-20-512",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "Era 1"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "retest-phase3c",
+      "directory_path": "outputs/retest/phase3c",
+      "primary_hypothesis": "H9",
+      "also_informs": [],
+      "purpose": null,
+      "run_type": null,
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-1-340",
+        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "n_test_tiles": 340,
+        "calibration_set_id": "cal-20-512",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "Era 1"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "retest-h11-single-pass-384-t0",
+      "directory_path": "outputs/retest/h11-single-pass-384-t0",
+      "primary_hypothesis": "H11",
+      "also_informs": [],
+      "purpose": "H11 single-pass 384px baseline (T=0).",
+      "run_type": null,
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-2-487",
+        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": "cal-20-384",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "Era 2"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
+      }
+    },
+    {
+      "run_id": "verifier-t-pilot",
+      "directory_path": "outputs/verifier-t-pilot",
+      "primary_hypothesis": "H2",
+      "also_informs": [],
+      "purpose": "Verifier sampling-temperature pilot (T0.0/0.5/1.0); recommended T=0.5 as production verifier default.",
+      "run_type": null,
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-2-487",
+        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": "cal-20-384",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "Era 2"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-05-30T08:10:42Z",
+        "extractor_version": "0.2.0"
       }
     }
   ]

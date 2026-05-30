@@ -14,9 +14,9 @@ Asserts:
 - the consensus vote-threshold sweep is monotonic in F1 (the H3 signal);
 - every condition carries the schema-required tile-classification confusion
   counts as integers;
-- the run row is ``mixed`` with a null (human-designated) headline;
-- whole-manifest envelopes validate, including the run-registry's deliberate
-  omission of ``generator_version`` (regression guard for the envelope builder).
+- the gold-standard-v2 run row is ``mixed`` with a null (human-designated) headline;
+- the 27-run registry input validates and stays in sync with the facts (drift
+  guard), and the whole-manifest envelopes validate.
 """
 
 from __future__ import annotations
@@ -26,10 +26,13 @@ import pytest
 from scripts.generate_post_run_report import (
     GS_V2_FACTS,
     assemble_manifest,
+    build_manifests,
+    build_run_row,
+    drift_check,
     extract_conditions,
     extract_passes,
-    extract_registry_entry,
-    extract_run_row,
+    load_run_facts,
+    load_run_registry,
     load_schema_registry,
     validate_manifest,
     validate_row,
@@ -87,26 +90,38 @@ def test_gs_v2_conditions_valid_with_metrics(registry):
 
 
 @pytest.mark.tier1
-def test_gs_v2_run_and_registry_valid(registry):
+def test_gs_v2_run_row_valid(registry):
+    facts = load_run_facts()
     conditions = extract_conditions(GS_V2_FACTS)
-    run_row = extract_run_row(GS_V2_FACTS, conditions)
+    run_row = build_run_row(
+        "gold-standard-v2", "outputs/gs/gold-standard-v2", facts["gold-standard-v2"], conditions
+    )
     assert validate_row("runs", run_row, registry) == []
     assert run_row["run_type"] == "mixed"  # consensus + proposer-verifier conditions
     assert run_row["headline_condition_id"] is None  # human-designated; left null
-    assert validate_row("run-registry", extract_registry_entry(GS_V2_FACTS), registry) == []
+
+
+@pytest.mark.tier1
+def test_run_registry_input_valid_and_in_sync(registry):
+    # the registry is now a hand-authored INPUT the generator reads, not synthesises (B1)
+    reg = load_run_registry()
+    assert validate_manifest("run-registry", reg, registry) == []
+    assert len(reg["registry"]) == 27
+    assert "generator_version" not in reg  # run-registry schema is closed; no generator_version
+    # registry and facts must describe the same run set (the B1 drift guard)
+    assert drift_check(reg["registry"], load_run_facts()) == []
 
 
 @pytest.mark.tier1
 def test_manifest_envelopes_valid(registry):
     at = "2026-05-30T00:00:00Z"
-    conditions = extract_conditions(GS_V2_FACTS, at)
+    _reg, run_rows, conditions, passes, warnings = build_manifests(at)
+    assert len(run_rows) == 27 and warnings == []
 
-    runs_obj = assemble_manifest("runs", [extract_run_row(GS_V2_FACTS, conditions, at)], at)
+    runs_obj = assemble_manifest("runs", run_rows, at)
     assert validate_manifest("runs", runs_obj, registry) == []
     assert "generator_version" in runs_obj
 
-    # the run-registry schema declares no generator_version and is closed —
-    # the envelope builder must omit it (regression for the additionalProperties bug)
-    reg_obj = assemble_manifest("run-registry", [extract_registry_entry(GS_V2_FACTS)], at)
-    assert validate_manifest("run-registry", reg_obj, registry) == []
-    assert "generator_version" not in reg_obj
+    cond_obj = assemble_manifest("conditions", conditions, at)
+    assert validate_manifest("conditions", cond_obj, registry) == []
+    assert len(conditions) == 4  # gold-standard-v2 vertical slice (Phase 3b extends this)
