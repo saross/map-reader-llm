@@ -85,6 +85,16 @@ touch the same extractors). The increment-1 *consequences* — a stale coverage
 note, the run-registry `status` crash-path, and two weak tests — were fixed in
 the increment-1 follow-up commit.
 
+The increment-2 audit (after 2a/2b) fixed four real defects in the new code:
+two `.get(k, fallback)` null-handling bugs (`_effective_temperature`,
+Era-1 `items_processed`) that drop a valid value on an explicit JSON `null`; the
+two `cost_estimate` null-guards; and a descriptive `eval_path`-missing error
+(was a bare `FileNotFoundError` aborting `--all`). It also strengthened the
+`eval_path` test to truly isolate explicit selection from the auto-matcher.
+The remaining Low items (a pool spec with no `modality`, a slash in a verifier
+label, a bare-string `scope_override`) are left to schema validation, which
+catches them loudly at emit time — acceptable for a hand-authored input.
+
 - **Malformed-spec hardening** — `extract_conditions`/`extract_passes` read
   `spec[...]` with bare subscripts; a hand-authored sidecar typo aborts the whole
   `--all` with a bare `KeyError`. Give a descriptive per-spec error (or warn+skip),
@@ -95,9 +105,12 @@ the increment-1 follow-up commit.
   fix when reworking status for GAP-9.
 - **Falsy `model_used`** — the `next(…, "")` fallback records `""` for a non-empty
   pass whose per-item model is blank; tighten alongside the GAP-9 model fallback.
-- **Nullable tile-classification** — `_metrics_from_eval` emits `None` tp/tn/fp/fn
-  when an eval lacks a `confusion` block (→ validation failure, not a clean skip);
-  relevant to pv-diag-256 (no MCC) in batch E.
+- **No-MCC conditions (sharpened by the increment-2 audit)** — `_metrics_from_eval`
+  emits `None` tp/tn/fp/fn when an eval lacks a `confusion` block, but the conditions
+  schema REQUIRES tp/tn/fp/fn as non-null integers (and `mcc` present). So a
+  genuinely MCC-less result (pv-diag-256, batch E) CANNOT be emitted as a valid
+  condition as-is — batch E must compute its tile-classification, point at an
+  MCC-bearing eval, or the schema must be relaxed for that one diagnostic run.
 - **Provenance path normalisation** — conditions record the raw `spec["detections"]`
   while the eval match used the normalised path; align when batch E (wbf) uses
   pre-reorg paths.

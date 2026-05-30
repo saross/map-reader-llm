@@ -293,8 +293,12 @@ def _effective_temperature(cfg: dict) -> Any:
     the real value in ``configuration.temperature_effective``. Prefer it; fall back
     to the base field. (``run.log`` is the deeper source if neither is present — not
     parsed here, since the affected metas were corrected non-destructively.)
+
+    Uses an explicit ``is not None`` check, not ``.get(k, fallback)``: the latter
+    would NOT fall back when ``temperature_effective`` is present but JSON-``null``.
     """
-    return cfg.get("temperature_effective", cfg.get("temperature"))
+    effective = cfg.get("temperature_effective")
+    return effective if effective is not None else cfg.get("temperature")
 
 
 def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
@@ -353,8 +357,10 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             else:
                 # Era-1 batch-API shape (GAP-9): no per-item record. configuration.model
                 # is the best available authoritative value (the verifier path uses the
-                # same fallback); the tile count is in execution_stats.
-                n_proc = es.get("items_processed", 0)
+                # same fallback); the tile count is in execution_stats. `or 0` guards an
+                # explicit-null items_processed (which would break the n_proc==0 status
+                # test and the schema's integer requirement).
+                n_proc = es.get("items_processed") or 0
                 model_used = cfg.get("model", "")
                 model_requested = cfg.get("model")
                 model_version = None
@@ -376,7 +382,7 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                 "status": status,
                 "n_tiles_processed": n_proc,
                 "tokens": _tokens_from_usage(meta.get("usage_stats", {})),
-                "cost_usd": meta.get("cost_estimate", {}).get("total_cost_usd"),
+                "cost_usd": (meta.get("cost_estimate") or {}).get("total_cost_usd"),
                 "wall_clock_s": (meta.get("timestamp") or {}).get("duration_seconds"),
                 "timestamps": _timestamps(meta),
                 "retries": es.get("retries_total", 0),
@@ -411,7 +417,7 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             "status": "ok",
             "n_tiles_processed": req_count,
             "tokens": _tokens_from_usage(usage),
-            "cost_usd": meta.get("cost_estimate", {}).get("total_cost_usd"),
+            "cost_usd": (meta.get("cost_estimate") or {}).get("total_cost_usd"),
             "wall_clock_s": (meta.get("timestamp") or {}).get("duration_seconds"),
             "timestamps": _timestamps(meta),
             "retries": (meta.get("execution_stats", {}) or {}).get("retries_total", 0),
@@ -563,8 +569,16 @@ def extract_conditions(facts: dict, at: str | None = None) -> list[dict]:
     for spec in facts.get("conditions", []):
         _require_condition_keys(spec, run_id)
         if spec.get("eval_path"):
-            # explicit eval: the human/drafter names exactly which eval scores this
-            summary = _load_json(REPO_ROOT / spec["eval_path"]).get("summary", {})
+            # explicit eval: the human/drafter names exactly which eval scores this.
+            # A named-but-missing eval is an authoring error — fail loud with context
+            # (unlike the auto-match miss below, where no eval can be legitimate).
+            eval_file = REPO_ROOT / spec["eval_path"]
+            if not eval_file.exists():
+                raise FileNotFoundError(
+                    f"condition '{spec['label']}' in run '{run_id}': "
+                    f"eval_path {spec['eval_path']} does not exist"
+                )
+            summary = _load_json(eval_file).get("summary", {})
             eval_sources = [spec["eval_path"]]
         else:
             if index is None:

@@ -136,13 +136,17 @@ def test_gs_v2_conditions_valid_with_metrics(registry):
 
 @pytest.mark.tier1
 def test_condition_explicit_eval_path(registry):
-    # G-E: a condition names its scoring eval explicitly. For h8-v2 the complete
-    # with-MCC eval (327 scope, F1@20 + MCC) is the right one; the index auto-matcher
-    # would instead pick a buffer-rich F1-only sibling at the 487 comparability scope.
+    # G-E: a condition names its scoring eval explicitly, overriding the auto-matcher.
+    # consensus_t4.geojson is scored by TWO evals: greedy/canonical/t4 (487 scope,
+    # F1-only, no MCC) and with-mcc/canonical (327 scope, F1@20 + MCC). The context
+    # below is rigged so the auto-matcher WOULD mispick: detections is set and the
+    # scope is the 487 bounds, so a regression that ignored eval_path would select
+    # the MCC-less 487 sibling and the mcc==0.6785 assertion would fail. eval_path
+    # must force the complete with-MCC eval.
     ctx = {
         "run_id": "h8-v2",
         "directory_path": "outputs/h8-v2",
-        "scope": {"bounds_path": "inputs/vectors/bounds/384/h10_test_bounds.geojson"},
+        "scope": {"bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"},
         "proposer_pools": {},
         "verifier_passes": {},
         "conditions": [{
@@ -152,6 +156,7 @@ def test_condition_explicit_eval_path(registry):
             "proposer_pool": "canonical",
             "n_passes": 5,
             "vote_threshold": 4,
+            "detections": "outputs/h8-v2/greedy/canonical/consensus_t4.geojson",
             "eval_path": "results/h8-v2/with-mcc/canonical/evaluation.json",
         }],
     }
@@ -161,9 +166,11 @@ def test_condition_explicit_eval_path(registry):
     assert validate_row("conditions", c, registry) == []
     assert c["condition_id"] == "h8-v2::canonical-greedy"
     tile = c["metrics"]["tile_classification"]
-    assert tile["mcc"] == 0.6785  # lifted from the with-MCC eval, not auto-matched
+    assert tile["mcc"] == 0.6785  # from the named with-MCC eval, NOT the 487 auto-match
     assert (tile["tp"], tile["tn"], tile["fp"], tile["fn"]) == (118, 156, 16, 37)
     assert c["metrics"]["per_buffer"]["20"]["f1"] == 0.7071
+    # provenance cites the named eval, not the auto-match detections path
+    assert c["provenance"]["source_files"] == ["results/h8-v2/with-mcc/canonical/evaluation.json"]
 
 
 @pytest.mark.tier1
