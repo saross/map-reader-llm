@@ -1,5 +1,5 @@
 {
-  "_README": "DRAFT per-run facts (sub-step 2, I-draft-you-verify). Underscore fields (_scope_confidence/_scope_source/_flags) are draft annotations, stripped on promotion. gt_reference: 4-map=curator, 55-map=student (evaluation-scopes.md \u00a711). Scope vocab from evaluation-scopes.md.",
+  "_README": "DRAFT per-run facts (sub-step 2, I-draft-you-verify). Underscore fields are draft annotations, stripped on promotion. gt_reference: 4-map=curator, 55-map=student (evaluation-scopes.md \u00a711). Scope vocab from evaluation-scopes.md + the px256-1032 bespoke 256px diagnostic scope. Named programmes per manifest-schema-design.md \u00a72.6.",
   "facts": {
     "55maps-generalisation": {
       "primary_hypothesis": null,
@@ -142,7 +142,9 @@
     },
     "h10": {
       "primary_hypothesis": "H10",
-      "also_informs": [],
+      "also_informs": [
+        "library-design"
+      ],
       "purpose": null,
       "tile_size_px": 384,
       "corpus": "4-map-gs",
@@ -160,8 +162,10 @@
         "Era 3"
       ],
       "_scope_confidence": "HIGH",
-      "_scope_source": "empirical + canonical(\u00a76 Era 3)",
-      "_flags": []
+      "_scope_source": "canonical(\u00a76)+leakage: few-shot crops mined from pool_160 -> 327 excludes them",
+      "_flags": [
+        "487 evals = comparability siblings -> condition scope_override"
+      ]
     },
     "consensus-384-t1-0": {
       "primary_hypothesis": "H11",
@@ -186,9 +190,9 @@
         "consensus-384-UNINTENDED-T1.0"
       ],
       "_scope_confidence": "MEDIUM",
-      "_scope_source": "canonical(\u00a76: 384 H11 consensus = Era 2)",
+      "_scope_source": "canonical(\u00a76: 384 H11 consensus = Era 2); errata E43",
       "_flags": [
-        "E43 T=1.0 deviation; feeds T=0.7-vs-1.0 temperature analysis -> also_informs H7?"
+        "E43 T=1.0 deviation; feeds T=0.7-vs-1.0 temperature analysis (also_informs H7)"
       ]
     },
     "e47-propose-brief": {
@@ -240,7 +244,7 @@
     "proposer-verifier-384": {
       "primary_hypothesis": "H11",
       "also_informs": [
-        "PV-strategy"
+        "pv-strategy"
       ],
       "purpose": null,
       "tile_size_px": 384,
@@ -264,7 +268,9 @@
     },
     "proposer-verifier-512": {
       "primary_hypothesis": "H11",
-      "also_informs": [],
+      "also_informs": [
+        "pv-strategy"
+      ],
       "purpose": null,
       "tile_size_px": 512,
       "corpus": "4-map-gs",
@@ -282,9 +288,9 @@
         "Era 1"
       ],
       "_scope_confidence": "MEDIUM",
-      "_scope_source": "canonical(H11 512px tile-size arm = 340x512 footprint)",
+      "_scope_source": "canonical(H11 512px tile-size arm = 340x512 footprint; user-confirmed)",
       "_flags": [
-        "H11 512px arm; scope = Era 1 512px footprint \u2014 VERIFY"
+        "H11 512px arm"
       ]
     },
     "pv-diag-256": {
@@ -295,26 +301,29 @@
       "corpus": "4-map-gs",
       "gt_reference": "curator",
       "scope": {
-        "test_set_id": null,
-        "bounds_path": null,
-        "n_test_tiles": null,
+        "test_set_id": "px256-1032",
+        "bounds_path": "inputs/vectors/bounds/256/full_evaluation_bounds.geojson",
+        "n_test_tiles": 1032,
         "calibration_set_id": null,
         "n_calibration_tiles": null
       },
       "headline_condition_id": null,
       "headline_rationale": null,
       "historical_aliases": [],
-      "_scope_confidence": "LOW",
-      "_scope_source": "dir-name 256px; NOT in evaluation-scopes.md",
+      "_scope_confidence": "HIGH",
+      "_scope_source": "agent-investigated: 256px H11 diagnostic; bespoke 256 scope",
       "_flags": [
-        "256px diagnostic; scope (bounds + tile count) undocumented \u2014 NEEDS the 256 bounds/manifest"
+        "eval JSONs in archive/results-non-production-tile-sizes/h11-256-pv-diagnostic/ (commit 276e4ca8); 256px F1=0.844 vs 384px 0.883, non-sig p=0.816 (Obs 181); 431 ref mounds; no MCC; bespoke scope not in evaluation-scopes.md"
       ]
     },
     "pv-diag-384": {
       "primary_hypothesis": "H11",
       "also_informs": [
         "H3",
-        "H8"
+        "H8",
+        "pv-strategy",
+        "consensus-n-sweep",
+        "flash-vs-pro"
       ],
       "purpose": null,
       "tile_size_px": 384,
@@ -335,12 +344,14 @@
       "_scope_confidence": "HIGH",
       "_scope_source": "empirical",
       "_flags": [
-        "feeds 4 studies (H11/PV-strategy/consensus-N-sweep/Flash-vs-Pro); also_informs trimmed to H3,H8 \u2014 VERIFY"
+        "feeds 4 study threads (\u00a71A)"
       ]
     },
     "h12-v2": {
       "primary_hypothesis": "H12",
-      "also_informs": [],
+      "also_informs": [
+        "library-design"
+      ],
       "purpose": null,
       "tile_size_px": 384,
       "corpus": "4-map-gs",
@@ -357,15 +368,17 @@
       "historical_aliases": [
         "Era 3"
       ],
-      "_scope_confidence": "MEDIUM",
-      "_scope_source": "canonical(\u00a76 H12v2=Era 3)",
+      "_scope_confidence": "HIGH",
+      "_scope_source": "canonical(\u00a76)+leakage: hard cases mined from pool_160 (studies/h12-v2-ratio.yaml:104; E52)",
       "_flags": [
-        "SCOPE-FLAG: empirical evals dominated by 487 (18) vs 327 (3); canonical published scope is Era 3 327. r2-balanced reuses h10 pool (E52). 487 evals = cross-scope exploration -> condition scope_override"
+        "nominal 327 (leakage); 487 evals = comparability siblings -> condition scope_override; r2-balanced reuses h10 pool"
       ]
     },
     "h8-v2": {
       "primary_hypothesis": "H8",
-      "also_informs": [],
+      "also_informs": [
+        "library-design"
+      ],
       "purpose": null,
       "tile_size_px": 384,
       "corpus": "4-map-gs",
@@ -382,10 +395,10 @@
       "historical_aliases": [
         "Era 3"
       ],
-      "_scope_confidence": "MEDIUM",
-      "_scope_source": "canonical(\u00a76 H8v2=Era 3)",
+      "_scope_confidence": "HIGH",
+      "_scope_source": "canonical(\u00a76)+leakage: hard cases mined from pool_160 (studies/h8-v2-library.yaml:93; E51)",
       "_flags": [
-        "SCOPE-FLAG: empirical evals dominated by 487 (43) vs 327 (11); canonical published scope is Era 3 327 (beacon trap). 487 evals = cross-scope exploration -> condition scope_override"
+        "nominal 327 (leakage); 487 evals = comparability siblings -> condition scope_override"
       ]
     },
     "retest-phase2a": {
@@ -627,24 +640,26 @@
     "verifier-t-pilot": {
       "primary_hypothesis": "H2",
       "also_informs": [],
-      "purpose": "Verifier-temperature pilot (T0.0/0.5/1.0).",
-      "tile_size_px": null,
+      "purpose": "Verifier sampling-temperature pilot (T0.0/0.5/1.0); recommended T=0.5 as production verifier default.",
+      "tile_size_px": 384,
       "corpus": "4-map-gs",
       "gt_reference": "curator",
       "scope": {
-        "test_set_id": null,
-        "bounds_path": null,
-        "n_test_tiles": null,
-        "calibration_set_id": null,
-        "n_calibration_tiles": null
+        "test_set_id": "era-2-487",
+        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": "cal-20-384",
+        "n_calibration_tiles": 20
       },
       "headline_condition_id": null,
       "headline_rationale": null,
-      "historical_aliases": [],
-      "_scope_confidence": "LOW",
-      "_scope_source": "scope = vote4 candidate set; eval bounds=None",
+      "historical_aliases": [
+        "Era 2"
+      ],
+      "_scope_confidence": "HIGH",
+      "_scope_source": "agent-investigated: verifies 4-map GS 4-of-5 consensus (n=607); scope Era 2",
       "_flags": [
-        "SCOPE + tile_size unknown: verifier over a consensus-vote4 candidate set; eval bounds=None; source proposer corpus/scope/tile-size TBD; E55 temperatures"
+        "exploratory (revisits Phase 3d); Obs 286/287; GT partly built from T=0.0 verified output (self-eval-bias caveat); E55 swept-temp metadata; T0.0 baseline lives at outputs/gs/gold-standard-v2/verified-v1/"
       ]
     }
   }

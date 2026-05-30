@@ -1,8 +1,9 @@
 # Manifest Schema Design Brief
 
-> **Last revised**: 2026-05-30 (slug correction — the E43 example
-> `consensus-384-t1.0` was invalid against the no-dots `run_id` pattern; now
-> `consensus-384-t1-0`). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-05-30 (named-programme vocabulary added, § 2.6; plus
+> the earlier slug correction — the E43 example `consensus-384-t1.0` was invalid
+> against the no-dots `run_id` pattern, now `consensus-384-t1-0`). See
+> [§ Changelog](#changelog) for revision history.
 
 **Status**: Decisions **resolved**; JSON Schema files authored under
 `docs/manifest-schemas/`. This brief now records the resolved
@@ -339,6 +340,30 @@ subtree and "run" in another). Non-runs (`outputs/results/`, `figures/`,
 
 ---
 
+## 2.6 Controlled vocabularies — hypotheses and named programmes
+
+`primary_hypothesis`, `also_informs[]` (runs), and `hypothesis_refs[]` (analyses)
+draw from a controlled vocabulary: the preregistered hypotheses **H1 … H15**, plus
+the **named programmes** below — coherent cross-hypothesis study threads the
+project refers to by name in prose. Programme slugs are lowercase-hyphen (the
+`run_id` style). `purpose` is the free-text escape hatch for anything outside the
+vocabulary.
+
+| Programme slug | What it is |
+|---|---|
+| `pv-strategy` | Proposer–verifier strategy comparison (adversarial / brief / checklist × image / text) |
+| `consensus-n-sweep` | Consensus N-sweep (N = 5 / 10 / 30 proposer passes) |
+| `flash-vs-pro` | Flash-vs-Pro model comparison |
+| `diversity-dividend` | Within-config pass-diversity benefit (H9; Obs 140–148) |
+| `library-design` | Few-shot library-design axis (H8 v2 composition, H10 v2 pool size, H12 v2 HP:HN ratio) |
+
+The list is **extensible**: add a programme here (with a one-line definition)
+before using its slug in a manifest. H-numbers and programme slugs may be mixed
+in `also_informs` (e.g. `pv-diag-384`: `[H3, H8, pv-strategy, consensus-n-sweep,
+flash-vs-pro]`).
+
+---
+
 ## 3. Schema-session sub-decisions — resolutions
 
 The original §3 listed eight open decisions. Their resolutions follow. Items
@@ -460,6 +485,23 @@ manifests, plus this brief updated with the resolved decisions. **Both done**
 ---
 
 ## Changelog
+
+### 2026-05-30 — Named-programme vocabulary (§ 2.6)
+
+**Refresh trigger**: fan-out sub-step 2 (per-run facts) needed `also_informs`
+values for cross-hypothesis study threads (PV-strategy, consensus N-sweep,
+Flash-vs-Pro, library-design) that the schema's controlled vocabulary already
+admitted ("H1..H15 plus documented named programmes") but had never enumerated.
+
+**What changed**: added § 2.6 documenting the five named programmes
+(`pv-strategy`, `consensus-n-sweep`, `flash-vs-pro`, `diversity-dividend`,
+`library-design`) as the canonical extensible list for `primary_hypothesis` /
+`also_informs` / `hypothesis_refs`.
+
+**What did NOT change**: the entity model, field lists, and the JSON Schema files
+are untouched — the vocabulary documents allowed *string values*, not a schema
+enum (the schemas keep these fields as free strings so the list stays extensible
+without a schema bump).
 
 ### 2026-05-30 — Slug correction: the E43 example was dot-invalid
 
