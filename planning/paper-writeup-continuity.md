@@ -1,14 +1,76 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-05-30 (Session 92 — three milestones: H11 reorganisation executed; 12 previously-unscored conditions scored on sapphire; the Phase 1 manifest generator built and proven end-to-end on the gold-standard-v2 vertical slice. Fan-out across all runs is next.)
+**Last updated**: 2026-05-30 (Session 93 — manifest fan-out: run-registry verified (27 runs, 7 issues), per-run facts authored (all 27, HIGH confidence), and the sub-step 3a B1 refactor landed (generator reads registry+facts, emits the 27-run runs-manifest). Erratum E55 fixed mid-review. Sub-step 3b — conditions decomposition — is next.)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
 
 ---
 
-## ✅ Session 92 (this session) — START HERE — H11 REORG + SCORING BACKFILL + GENERATOR SLICE
+## ✅ Session 93 (this session) — START HERE — FAN-OUT: REGISTRY + FACTS + 3a
+
+**Posted**: 2026-05-30, end of a heavy fan-out session (registry review → housekeeping → per-run facts → 3a B1 refactor).
+
+### TL;DR
+
+**The manifest fan-out reached the end of sub-step 3a.** The hand-verified run registry (27 runs), per-run facts (all 27, HIGH confidence), and the B1 generator refactor are done and pushed. `results/runs-manifest.json` now carries all 27 runs (run-level facts; gold-standard-v2 fully extracted with conditions/passes, the other 26 with `run_type=null` pending sub-step 3b). The next milestone is **3b — the conditions decomposition + extractor gaps**. The durable review record is `planning/run-registry-draft-review.md` (the 7 issues, facts-phase carry-ins, and the GAP-1…10 table).
+
+### What got done (in order)
+
+1. **Run-registry (sub-step 1) — 27 runs, verified.** Drafted from the live `outputs/` tree (`condition-inventory.json` was stale + wrong-grain), then worked through 7 issues one-by-one with the user:
+   - **Issue 1 — slug dots**: dot→hyphen (option A1); §1A's own `consensus-384-t1.0` example was invalid against the no-dots `run_id` pattern — corrected.
+   - **Issue 2 — registry input vs output**: B1 — the registry is the generator's hand-authored INPUT (+ a drift-check), not a synthesised output.
+   - **Issue 3 — wbf is not a run**: its 4 subdirs are `aggregation=wbf` CONDITIONS of source runs (gs-v2 / e47 / pv-diag-384), per `SPECIAL_CONFIGS`. 28→27 runs; resolved carry-forward #11.
+   - **Issues 4 / 6 / 7 — h8-v2 / h12-v2 / h10**: each one run (umbrella = run; subdirs are conditions, aggregation collectors, or diagnostics).
+   - **Issue 5 — verifier-t-pilot**: one run + **fixed erratum E55** (below).
+   - The **"new-API-work" boundary** settled run-vs-condition: a run owns ≥1 pass of new API execution; a pure post-hoc fusion of existing passes is a condition.
+2. **Housekeeping**: archived the 3 QGIS QA checks → `archive/qa-visual-checks/`; archived superseded `v2-proposer-test` → `archive/superseded-tests/`; deleted stale `outputs/test-phase2b`; removed a dead `.gitignore` rule. The untracked/ignored sweep came back clean (everything ignored is genuinely ephemeral; the `.gitignore` is principled).
+3. **Per-run facts (sub-step 2) — all 27, HIGH confidence.** `results/run-facts.json` (corpus, gt_reference, scope, study tags, aliases; headline deferred). Three read-only agent investigations + a convention decision resolved the hard cases; a background agent then confirmed the 8 canonical-assigned scopes (8/8, 0 corrected). Named-programme vocabulary documented (`manifest-schema-design.md` §2.6).
+4. **Sub-step 3a — B1 refactor.** Generator v0.2.0 READS registry + facts, emits the 27-run runs-manifest, drift-checks, and never rewrites the registry JSON. 7 tier-1 tests pass; ruff + compile clean.
+
+### Key findings worth carrying
+
+- **E55 (data-integrity fix)**: `verifier-t-pilot`'s swept temperature (T0.5/T1.0) was logged in `run.log` but never written to `run.meta.json` (`configuration.temperature` read 0.0). Verified real (57% of 607 candidate probabilities differ T0.5-vs-T1.0); blast-radius = those 2 files only; corrected non-destructively (`temperature_effective` + `_correction`). Extractor rule **GAP-10**: prefer a logged CLI override over the meta config field.
+- **The leakage finding (scope)**: `h8-v2` / `h10` / `h12-v2` are nominal **Era 3 (327)**, not Era 2 (487) — all three mined their few-shot hard cases from `pool_160` (study YAMLs `h8-v2-library.yaml`, `h12-v2-ratio.yaml`; errata E51/E52), so scoring at 487 would leak. The user's "487 principal" memory is correct — for the production/H11/PV matrix, not these library studies. The 487 evals become condition-level `scope_override`s.
+- **pv-diag-256**: bespoke 256px scope (1032 tiles); its eval JSONs were archived out of `results/` (so the eval scan missed them). 256px F1 < 384px but non-significant (Obs 181).
+- **Naming trap**: the `results/phase3a-*-matrix/` dirs score `pv-diag-384` (Era 2), NOT the `retest/phase3a` runs.
+
+### Deliverables — commit ledger (all pushed to `origin/main`)
+
+| Commit | What |
+|---|---|
+| `8192787b` | draft run-registry (28 runs) |
+| `5dfdbbc9` | Issue 1: slug dot→hyphen (A1) + §1A fix |
+| `3fcf1389` | Issue 2: registry-as-input (B1) |
+| `d0d6f1cb` | Issue 3: wbf → conditions (28→27) |
+| `c83a8e93` | Issue 4: h8-v2 one run |
+| `2aa89caf` | Issue 5: verifier-t-pilot + E55 |
+| `e7f54a0a` | Issue 6: h12-v2 one run |
+| `dd29436a` | Issue 7: h10 one run; all FLAG-GRAIN resolved |
+| `52a212b1` | archive QGIS QA checks |
+| `a7b71741` | archive v2-proposer-test + prune cruft |
+| `392ae343` | sub-step 2: draft per-run facts (27) |
+| `3519039d` | sub-step 2: resolve facts via agents (leakage, E55 scope, §2.6 vocab) |
+| `85a22030` | 3a: promote registry + facts to `results/` (inputs) |
+| `b8b4e12c` | 3a: B1 generator refactor + 27-run runs-manifest |
+| *this commit* | Session 93 handoff (continuity + working-notes + user-obs) |
+
+### What's pending — priority order for Session 94+
+
+1. **Sub-step 3b — conditions decomposition + extractor gaps** (the big one): enumerate every scored detection → condition across the 26 non-gs runs; fill `run_type` / headline; handle **GAP-6** (cross-run conditions: the wbf fusions, h12 `r2-balanced`), **GAP-7** (pv-diag-384's 88 verifier passes), **GAP-9** (Era-1 retest meta shape), **GAP-10** (override-temp via `temperature_effective`). Carry-ins are in `planning/run-registry-draft-review.md` ("Facts-phase carry-ins" + the GAP table).
+2. **Sub-step 3c — analyses manifest** (hybrid human-authored).
+3. **(housekeeping)** the planning drafts (`run-registry-draft.json`, `run-facts-draft.json`) are now superseded by the `results/` inputs — keep as the dated review record or archive.
+
+### Sapphire status
+
+No sapphire compute this session (registry / facts / refactor are pure extraction + read/grep; the three investigation agents and one background agent ran read-only, locally). All commits pushed to `origin/main`.
+
+---
+
+## Session 92 — H11 REORG + SCORING BACKFILL + GENERATOR SLICE
+
+> Superseded by the Session 93 beacon above. Retained for the H11 reorg, the scoring back-fill, and the generator-slice detail.
 
 **Posted**: 2026-05-30, end of a heavy three-part session (reorg → scoring → generator slice).
 
