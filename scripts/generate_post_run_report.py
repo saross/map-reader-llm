@@ -991,6 +991,13 @@ def build_arg_parser() -> argparse.ArgumentParser:
         help="Build just the named run (filters --all to one run_id; for inspection).",
     )
     parser.add_argument(
+        "--draft-run",
+        metavar="RUN_ID",
+        help="Propose a decomposition skeleton for one run (proposer pools, verifier passes, "
+             "and scored-eval condition candidates) as JSON on stdout, for human verification "
+             "before pasting into results/run-conditions.json. Writes nothing.",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Print the full extracted rows as JSON (extract + validate, write nothing).",
@@ -1050,12 +1057,126 @@ def build_manifests(at: str, only: str | None = None) -> tuple:
     return registry_obj, run_rows, conditions_all, passes_all, warnings
 
 
+# --------------------------------------------------------------------------- #
+# Auto-drafter — the "I-draft" half of the I-draft-you-verify decomposition
+# --------------------------------------------------------------------------- #
+
+
+def _slug(name: str) -> str:
+    """Slug-safe label (keeps the pass_id / condition_id middle-segment alphabet).
+
+    Lowercases and replaces any character outside ``[a-z0-9._-]`` (notably the path
+    separator) with a hyphen, so a nested directory path becomes a unique label.
+    """
+    return "".join(ch if (ch.isalnum() or ch in "._-") else "-" for ch in name.lower())
+
+
+def _infer_modality(rel_path: str) -> str | None:
+    """Best-effort modality guess from a pool/verifier path (``image`` / ``text``).
+
+    A keyword scan only — the drafter's output is a PROPOSAL the human verifies, so
+    an unguessable case returns ``None`` for a human to fill rather than guessing.
+    """
+    low = rel_path.lower()
+    if "image" in low:
+        return "image"
+    if "text" in low:
+        return "text"
+    return None
+
+
+def draft_run(run_id: str) -> dict:
+    """Propose a decomposition skeleton for one run (the I-draft half of 3b).
+
+    Walks the run's directory to enumerate **proposer pools** (dirs whose ``run_N``
+    children hold ``*.meta.json``) and **verifier passes** (dirs holding a
+    ``run.meta.json``), and lists every evaluation that scored a detection file under
+    the run as a **condition candidate**. This is a PROPOSAL for human verification,
+    never written into the sidecar automatically: modality is keyword-guessed, the
+    pass/condition grain is the human's call (Q2: vote-threshold sweeps are
+    conditions, probability-threshold sweeps collapse to one operating point), and
+    cross-run conditions (GAP-6) are not detected here. Labels are derived from the
+    directory path and are expected to be renamed during verification.
+
+    Args:
+        run_id: a run in ``results/run-registry.json``.
+
+    Returns:
+        A dict with the proposed ``proposer_pools`` / ``verifier_passes`` and a
+        ``condition_candidates`` list (each: detections, eval_path, bounds,
+        n_detections, has_mcc, buffers).
+
+    Raises:
+        KeyError: if ``run_id`` is not in the registry.
+    """
+    registry_obj = load_run_registry()
+    entry = next(
+        (e for e in registry_obj.get("registry", []) if e["run_id"] == run_id), None)
+    if entry is None:
+        raise KeyError(f"run '{run_id}' is not in the run registry")
+    run_dir = REPO_ROOT / entry["directory_path"]
+
+    proposer_pools: dict[str, dict] = {}
+    verifier_passes: dict[str, dict] = {}
+    seen_pool_dirs: set = set()
+    for meta_path in sorted(run_dir.rglob("*.meta.json")):
+        parent = meta_path.parent
+        parts = parent.name.split("_", 1)
+        if parts[0] == "run" and len(parts) == 2 and parts[1].isdigit():
+            # proposer pass: <pool>/run_N/<*.meta.json> → the pool is run_N's parent
+            pool_dir = parent.parent
+            if pool_dir in seen_pool_dirs:
+                continue
+            seen_pool_dirs.add(pool_dir)
+            rel = pool_dir.relative_to(run_dir).as_posix()
+            proposer_pools[_slug(rel)] = {"modality": _infer_modality(rel), "path": rel}
+        elif meta_path.name == "run.meta.json":
+            # verifier pass: <vdir>/run.meta.json (vdir may be nested several levels)
+            rel = parent.relative_to(run_dir).as_posix()
+            verifier_passes[_slug(rel)] = {"modality": _infer_modality(rel), "path": rel}
+
+    # condition candidates: every indexed eval that scored a detection under this run
+    dir_prefix = _normalise_detections_path(entry["directory_path"].rstrip("/") + "/")
+    candidates: list[dict] = []
+    for det_path, evals in sorted(_build_eval_index().items()):
+        if not det_path.startswith(dir_prefix):
+            continue
+        for eval_rel, summary, bounds in evals:
+            candidates.append({
+                "detections": det_path,
+                "eval_path": eval_rel,
+                "bounds": bounds,
+                "n_detections": summary.get("n_detections"),
+                "has_mcc": bool(summary.get("tile_classification")),
+                "buffers": [b.get("buffer_metres") for b in summary.get("buffers", [])],
+            })
+
+    return {
+        "run_id": run_id,
+        "directory_path": entry["directory_path"],
+        "proposed_decomposition": {
+            "proposer_pools": proposer_pools,
+            "verifier_passes": verifier_passes,
+            "conditions": [],  # author from condition_candidates per the Q2 grain
+        },
+        "condition_candidates": candidates,
+    }
+
+
 def main(argv: list[str] | None = None) -> int:
     """Entry point. Returns a process exit code."""
     args = build_arg_parser().parse_args(argv)
 
     if args.self_test:
         return _self_test()
+
+    if args.draft_run:
+        try:
+            print(json.dumps(draft_run(args.draft_run), indent=2))
+        except KeyError as exc:
+            print(str(exc), file=sys.stderr)
+            return 2
+        return 0
 
     if args.all or args.run:
         schema_reg, _ = load_schema_registry()

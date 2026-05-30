@@ -29,6 +29,7 @@ from scripts.generate_post_run_report import (
     assemble_manifest,
     build_manifests,
     build_run_row,
+    draft_run,
     drift_check,
     extract_conditions,
     extract_passes,
@@ -171,6 +172,32 @@ def test_condition_explicit_eval_path(registry):
     assert c["metrics"]["per_buffer"]["20"]["f1"] == 0.7071
     # provenance cites the named eval, not the auto-match detections path
     assert c["provenance"]["source_files"] == ["results/h8-v2/with-mcc/canonical/evaluation.json"]
+
+
+@pytest.mark.tier1
+def test_draft_run_enumerates_pools_and_candidates():
+    # the I-draft half: walking h8-v2 finds its 7 composition pools (each by its
+    # run_N/*.meta.json children) and lists scored evals as condition candidates.
+    draft = draft_run("h8-v2")
+    pools = draft["proposed_decomposition"]["proposer_pools"]
+    assert {v["path"] for v in pools.values()} == {
+        "canonical", "plus-hp", "pure-positive-canon",
+        "scale-4", "scale-8", "scale-16", "scale-32",
+    }
+    assert all("modality" in v and "path" in v for v in pools.values())
+    cands = draft["condition_candidates"]
+    assert cands
+    assert all({"detections", "eval_path", "has_mcc", "n_detections"} <= set(c) for c in cands)
+    # modality keyword-inference: Era-1 pool names carry the modality
+    a2 = draft_run("retest-phase2a")["proposed_decomposition"]["proposer_pools"]
+    assert a2["brief-text"]["modality"] == "text"
+    assert a2["image-only"]["modality"] == "image"
+
+
+@pytest.mark.tier1
+def test_draft_run_unknown_raises():
+    with pytest.raises(KeyError, match="not in the run registry"):
+        draft_run("no-such-run")
 
 
 @pytest.mark.tier1
