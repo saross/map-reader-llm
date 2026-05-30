@@ -98,7 +98,7 @@ candidate:
 
 ---
 
-## Two design contradictions the fan-out surfaced (need a ruling)
+## Two design contradictions the fan-out surfaced (both RESOLVED 2026-05-30)
 
 ### A. Slug pattern forbids dots — but §1A and a live dir contain them
 
@@ -112,8 +112,11 @@ The `run_id` pattern in **both** the run-registry and runs schemas is
 
 **Options**: (a) **dot→hyphen** in slugs + a one-line correction to §1A's example
 (my default, applied in the draft); (b) relax the schema pattern to allow dots
-(uglier slugs, but §1A stays as written and slugs mirror dirs exactly). Pick one;
-I'll apply it consistently and fix §1A.
+(uglier slugs, but §1A stays as written and slugs mirror dirs exactly).
+
+> **✅ Resolved — option A1 (dot→hyphen).** §1A and its 2026-05-29 changelog
+> corrected; the no-dots constraint documented inline; draft notes updated. The
+> physical dir rename is a deferred follow-up (see below).
 
 ### B. The registry is *input* at fan-out, but the generator currently *writes* it
 
@@ -126,8 +129,17 @@ must be the **source-of-truth the generator reads** to know which runs exist.
 **Proposed resolution** (flagged, not yet applied): on approval, promote this
 draft to `results/run-registry.json`; retire `extract_registry_entry()` as a
 synthesiser and have the generator *read + validate + render* the registry
-instead, using it as the run list. No schema change needed. Confirm and I'll fold
-it into the extractor-generalisation sub-step.
+instead, using it as the run list. No schema change needed.
+
+> **✅ Resolved — B1 + drift-check.** The verified registry becomes the
+> hand-authored source-of-truth at `results/run-registry.json`. The generator
+> reads + validates it, uses `registry[]` as the authoritative run list, renders
+> `results/run-registry.md` from it, and retires `extract_registry_entry()` as a
+> synthesiser. Added guard: the generator WARNs if a run with facts has no
+> registry row, or a registry row has no facts (registry↔facts drift). §1 item 5's
+> "generator-as-only-writer" scopes to runs/conditions/passes, not the registry,
+> so this is consistent with the design. **Implementation lands in sub-step 3**
+> (extractor generalisation), after the registry and per-run facts are settled.
 
 ---
 
