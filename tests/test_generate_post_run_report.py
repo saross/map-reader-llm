@@ -16,7 +16,9 @@ Asserts:
   counts as integers;
 - the gold-standard-v2 run row is ``mixed`` with a null (human-designated) headline;
 - the 27-run registry input validates and stays in sync with the facts (drift
-  guard), and the whole-manifest envelopes validate.
+  guard), and the whole-manifest envelopes validate;
+- the run-conditions decomposition sidecar is free of orphan runs (every
+  decomposed run is in the registry and the facts — the 3-input drift guard).
 """
 
 from __future__ import annotations
@@ -24,13 +26,14 @@ from __future__ import annotations
 import pytest
 
 from scripts.generate_post_run_report import (
-    GS_V2_FACTS,
     assemble_manifest,
     build_manifests,
     build_run_row,
     drift_check,
     extract_conditions,
     extract_passes,
+    extraction_context,
+    load_run_conditions,
     load_run_facts,
     load_run_registry,
     load_schema_registry,
@@ -62,7 +65,7 @@ def test_validate_row_rejects_bad_slug(registry):
 
 @pytest.mark.tier1
 def test_gs_v2_passes_valid(registry):
-    passes = extract_passes(GS_V2_FACTS)
+    passes = extract_passes(extraction_context("gold-standard-v2"))
     assert len(passes) == 6  # 5 detect_brief-text proposer + 1 verified-v1 verifier
     for p in passes:
         assert validate_row("passes", p, registry) == []
@@ -72,7 +75,7 @@ def test_gs_v2_passes_valid(registry):
 
 @pytest.mark.tier1
 def test_gs_v2_conditions_valid_with_metrics(registry):
-    conditions = extract_conditions(GS_V2_FACTS)
+    conditions = extract_conditions(extraction_context("gold-standard-v2"))
     assert {c["label"] for c in conditions} == {
         "consensus-3of5", "consensus-4of5", "consensus-5of5", "verified-v1",
     }
@@ -92,7 +95,7 @@ def test_gs_v2_conditions_valid_with_metrics(registry):
 @pytest.mark.tier1
 def test_gs_v2_run_row_valid(registry):
     facts = load_run_facts()
-    conditions = extract_conditions(GS_V2_FACTS)
+    conditions = extract_conditions(extraction_context("gold-standard-v2"))
     run_row = build_run_row(
         "gold-standard-v2", "outputs/gs/gold-standard-v2", facts["gold-standard-v2"], conditions
     )
@@ -110,6 +113,17 @@ def test_run_registry_input_valid_and_in_sync(registry):
     assert "generator_version" not in reg  # run-registry schema is closed; no generator_version
     # registry and facts must describe the same run set (the B1 drift guard)
     assert drift_check(reg["registry"], load_run_facts()) == []
+
+
+@pytest.mark.tier1
+def test_run_conditions_sidecar_in_sync(registry):
+    # the decomposition sidecar (3b, Q3) is the generator's third hand-authored
+    # input; every decomposed run must resolve against the registry and the facts
+    reg = load_run_registry()
+    decomposition = load_run_conditions()
+    assert "gold-standard-v2" in decomposition  # the migrated vertical slice
+    # no orphan decomposition: 3-input drift (registry <-> facts <-> conditions) is clean
+    assert drift_check(reg["registry"], load_run_facts(), decomposition) == []
 
 
 @pytest.mark.tier1

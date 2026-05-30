@@ -219,68 +219,18 @@ def build_provenance(source_files: list[str], extracted_at: str | None = None) -
 
 
 # --------------------------------------------------------------------------- #
-# Run facts (the irreducibly-human inputs) — gold-standard-v2 vertical slice
+# Extraction inputs (the irreducibly-human decomposition)
 # --------------------------------------------------------------------------- #
-
-# Hand-authored facts for the gold-standard-v2 run: the values that CANNOT be
-# machine-extracted (corpus, ground-truth choice, study grouping, nominal scope,
-# prior names) plus the human-designated headline pointer (left null for a human
-# to fill). In the fan-out phase these come from the hand-verified run registry
-# plus a per-run facts file; for the vertical slice they are inline and clearly
-# marked. Everything else (passes, metrics, cost, model) is extracted from the
-# source files. gt_reference and the era-2-487 scope are user-confirmed.
-GS_V2_FACTS: dict[str, Any] = {
-    "run_id": "gold-standard-v2",
-    "directory_path": "outputs/gs/gold-standard-v2",
-    "primary_hypothesis": None,
-    "purpose": (
-        "Canonical 4-map gold-standard production pipeline "
-        "(detect_brief-text, HIGH, T=0.7, K=5); the paper headline GS result."
-    ),
-    "also_informs": [],
-    "tile_size_px": 384,
-    "corpus": "4-map-gs",
-    "gt_reference": "curator",  # mounds-reference.geojson
-    "scope": {
-        "test_set_id": "era-2-487",
-        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
-        "n_test_tiles": 487,
-        "calibration_set_id": None,
-        "n_calibration_tiles": None,
-    },
-    "historical_aliases": ["the v2 GS run"],
-    "headline_condition_id": None,   # human-designated; left for a human
-    "headline_rationale": None,
-    # Proposer pools (dir under proposer/) → input modality.
-    "proposer_pools": {"detect_brief-text": "text"},
-    # Verifier passes (dir under the run root) → modality.
-    "verifier_passes": {"verified-v1": "image"},
-    # Conditions = the evaluable scored results (user-verified decomposition).
-    # Each names the detection geojson it scored; the extractor maps that to the
-    # evaluation.json that scored it (via input_files.detections, normalised
-    # across the H11 reorganisation) and lifts the metrics. vote_threshold on the
-    # verified condition is the consensus threshold whose candidates it verified
-    # (consensus-4of5, per crops/candidate_manifest.json's consensus_source).
-    "conditions": [
-        {"label": "consensus-3of5", "architecture": "consensus", "aggregation": "consensus",
-         "proposer_pool": "detect_brief-text", "n_passes": 5, "vote_threshold": 3, "prob_threshold": None,
-         "verifier_config": None,
-         "detections": "outputs/gs/gold-standard-v2/consensus/consensus-3of5.geojson"},
-        {"label": "consensus-4of5", "architecture": "consensus", "aggregation": "consensus",
-         "proposer_pool": "detect_brief-text", "n_passes": 5, "vote_threshold": 4, "prob_threshold": None,
-         "verifier_config": None,
-         "detections": "outputs/gs/gold-standard-v2/consensus/consensus-4of5.geojson"},
-        {"label": "consensus-5of5", "architecture": "consensus", "aggregation": "consensus",
-         "proposer_pool": "detect_brief-text", "n_passes": 5, "vote_threshold": 5, "prob_threshold": None,
-         "verifier_config": None,
-         "detections": "outputs/gs/gold-standard-v2/consensus/consensus-5of5.geojson"},
-        {"label": "verified-v1", "architecture": "proposer-verifier", "aggregation": "verified",
-         "proposer_pool": "detect_brief-text", "n_passes": 5, "vote_threshold": 4, "prob_threshold": None,
-         "verifier_config": {"variant": "v1", "instruction_file": "verify_adversarial.md",
-                             "model": "gemini-3-flash-preview", "thinking_level": "minimal", "temperature": 0.0},
-         "detections": "outputs/gs/gold-standard-v2/verified-v1/verified_detections_full-scope.geojson"},
-    ],
-}
+#
+# The per-run DECOMPOSITION (which scored results are conditions, and how the
+# proposer/verifier passes enumerate) is hand-authored in the sidecar
+# ``results/run-conditions.json`` (sub-step 3b, decision Q3). It is loaded by
+# :func:`load_run_conditions` and merged with the registry entry + the per-run
+# facts into the single dict the extractors read (:func:`build_extraction_context`).
+# Run-level facts (corpus, scope, gt_reference, study tags) live in the sibling
+# ``results/run-facts.json`` and are never duplicated into the decomposition.
+# gold-standard-v2 was the inline vertical slice; its decomposition migrated
+# verbatim to the sidecar in the Session 94 refactor (behaviour-preserving).
 
 
 def _load_json(path: Path) -> dict:
@@ -326,7 +276,9 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
     provenance).
 
     Args:
-        facts: a run-facts dict (see :data:`GS_V2_FACTS`).
+        facts: an extraction context (see :func:`build_extraction_context`):
+            ``run_id``, ``directory_path``, and the ``proposer_pools`` /
+            ``verifier_passes`` decomposition hints.
         at: ISO timestamp stamped on every row's provenance (one per run).
 
     Returns:
@@ -624,17 +576,99 @@ def load_run_facts(path: Path | None = None) -> dict[str, dict]:
     return _load_json(path or REPO_ROOT / "results" / "run-facts.json").get("facts", {})
 
 
-def drift_check(registry: list[dict], facts: dict[str, dict]) -> list[str]:
-    """Warn when the registry and the facts file disagree on the run set (B1 guard).
+def load_run_conditions(path: Path | None = None) -> dict[str, dict]:
+    """Load the per-run decomposition sidecar — the generator's third INPUT (3b, Q3).
+
+    Returns a ``{run_id: decomposition}`` mapping, where each decomposition carries
+    ``proposer_pools`` (dir→modality), ``verifier_passes`` (dir→modality), and
+    ``conditions`` (the evaluable scored-result specs). Kept separate from
+    ``run-facts.json`` so the high-churn decomposition stays isolated from the locked
+    run-level facts (decision Q3). A run absent from the sidecar yields no
+    conditions/passes yet (its ``run_type`` stays ``null``).
+    """
+    return _load_json(
+        path or REPO_ROOT / "results" / "run-conditions.json"
+    ).get("decomposition", {})
+
+
+def build_extraction_context(entry: dict, run_facts: dict, decomposition: dict) -> dict:
+    """Merge a run's three input sources into the single dict the extractors read.
+
+    :func:`extract_passes` and :func:`extract_conditions` consume one dict carrying
+    identity (``run_id``, ``directory_path``), the nominal ``scope`` (for matching an
+    evaluation to the run's bounds), and the decomposition hints (``proposer_pools``,
+    ``verifier_passes``, ``conditions``). Those come from, respectively: the registry
+    entry (identity/location), the per-run facts (scope), and the run-conditions
+    sidecar (decomposition). Assembling them here means no field is duplicated across
+    the input files.
+    """
+    return {
+        "run_id": entry["run_id"],
+        "directory_path": entry["directory_path"],
+        "scope": run_facts.get("scope", {}),
+        "proposer_pools": decomposition.get("proposer_pools", {}),
+        "verifier_passes": decomposition.get("verifier_passes", {}),
+        "conditions": decomposition.get("conditions", []),
+    }
+
+
+def extraction_context(
+    run_id: str,
+    registry_obj: dict | None = None,
+    facts: dict[str, dict] | None = None,
+    decomposition: dict[str, dict] | None = None,
+) -> dict:
+    """Convenience: build one run's extraction context, loading inputs lazily.
+
+    A thin wrapper over :func:`build_extraction_context` that resolves the run's
+    registry entry by ``run_id`` and pulls its facts/decomposition. The three inputs
+    are loaded from disk when not supplied (so a caller — e.g. a test — can ask for a
+    single run's context with just its id). A run with no sidecar entry returns a
+    context with empty decomposition (zero passes/conditions extracted).
+
+    Raises:
+        KeyError: if ``run_id`` is not in the run registry.
+    """
+    registry_obj = registry_obj if registry_obj is not None else load_run_registry()
+    facts = facts if facts is not None else load_run_facts()
+    decomposition = decomposition if decomposition is not None else load_run_conditions()
+    entry = next(
+        (e for e in registry_obj.get("registry", []) if e["run_id"] == run_id), None
+    )
+    if entry is None:
+        raise KeyError(f"run '{run_id}' is not in the run registry")
+    return build_extraction_context(entry, facts.get(run_id, {}), decomposition.get(run_id, {}))
+
+
+def drift_check(
+    registry: list[dict],
+    facts: dict[str, dict],
+    conditions: dict[str, dict] | None = None,
+) -> list[str]:
+    """Warn when the input files disagree on the run set (the B1 guard, extended to 3b).
 
     A registry run with no facts entry cannot produce a complete run row; a facts
-    entry with no registry row will never be emitted. An empty list means the two
-    inputs are in sync.
+    entry with no registry row will never be emitted. When ``conditions`` (the
+    decomposition sidecar) is supplied, also flags any decomposed run that is missing
+    from the registry or the facts — an *orphan* decomposition that would never emit.
+    The reverse is intentionally NOT flagged: a registry run with no decomposition is
+    the expected mid-fan-out state (it simply has no conditions/passes yet). An empty
+    list means the inputs are in sync.
     """
     reg_ids = {e["run_id"] for e in registry}
     fact_ids = set(facts)
     warnings = [f"registry run '{rid}' has NO facts entry" for rid in sorted(reg_ids - fact_ids)]
     warnings += [f"facts run '{rid}' is NOT in the registry" for rid in sorted(fact_ids - reg_ids)]
+    if conditions is not None:
+        cond_ids = set(conditions)
+        warnings += [
+            f"run-conditions run '{rid}' is NOT in the registry"
+            for rid in sorted(cond_ids - reg_ids)
+        ]
+        warnings += [
+            f"run-conditions run '{rid}' has NO facts entry"
+            for rid in sorted(cond_ids - fact_ids)
+        ]
     return warnings
 
 
@@ -834,7 +868,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
         "--all",
         action="store_true",
         help="Build every run in results/run-registry.json: a run-level row for each, plus "
-             "conditions/passes for runs whose per-run extractor is wired up (gold-standard-v2).",
+             "conditions/passes for runs decomposed in results/run-conditions.json.",
     )
     parser.add_argument(
         "--run",
@@ -857,12 +891,14 @@ def build_arg_parser() -> argparse.ArgumentParser:
 
 
 def build_manifests(at: str, only: str | None = None) -> tuple:
-    """Build all manifest rows from the registry + facts INPUTS.
+    """Build all manifest rows from the registry + facts + decomposition INPUTS.
 
     Iterates ``results/run-registry.json`` (the hand-authored run list); for each
-    run builds a runs-manifest row from its ``results/run-facts.json`` entry. Runs
-    whose per-run extractor is wired up (currently only gold-standard-v2) also
-    yield conditions + passes, which in turn fix that run's derived ``run_type``.
+    run builds a runs-manifest row from its ``results/run-facts.json`` entry. A run
+    that has a decomposition entry in ``results/run-conditions.json`` also yields
+    conditions + passes (extracted from its source files), which in turn fix that
+    run's derived ``run_type``; a run not yet decomposed gets a run row only (its
+    ``run_type`` stays ``null``).
 
     Args:
         at: shared extraction timestamp stamped on every provenance block.
@@ -873,8 +909,9 @@ def build_manifests(at: str, only: str | None = None) -> tuple:
     """
     registry_obj = load_run_registry()
     facts = load_run_facts()
+    decomposition = load_run_conditions()
     entries = registry_obj.get("registry", [])
-    warnings = drift_check(entries, facts)
+    warnings = drift_check(entries, facts, decomposition)
 
     run_rows: list[dict] = []
     conditions_all: list[dict] = []
@@ -885,13 +922,14 @@ def build_manifests(at: str, only: str | None = None) -> tuple:
             continue
         run_facts = facts.get(run_id, {})
         conditions: list[dict] = []
-        if run_id == "gold-standard-v2":
-            # The wired-up vertical slice: its extraction hints (proposer pools,
-            # verifier passes, condition decomposition) live in GS_V2_FACTS, while
-            # the run-level facts come from run-facts.json. Phase 3b generalises
-            # these extractors to the other runs.
-            passes_all.extend(extract_passes(GS_V2_FACTS, at))
-            conditions = extract_conditions(GS_V2_FACTS, at)
+        if run_id in decomposition:
+            # Decomposed runs: the extractors read the run-conditions sidecar (which
+            # scored results are conditions, how passes enumerate) merged with the
+            # registry entry + facts. Runs absent from the sidecar are not yet
+            # decomposed and emit a run row only.
+            ctx = build_extraction_context(entry, run_facts, decomposition[run_id])
+            passes_all.extend(extract_passes(ctx, at))
+            conditions = extract_conditions(ctx, at)
             conditions_all.extend(conditions)
         run_rows.append(build_run_row(run_id, directory_path, run_facts, conditions, at))
     return registry_obj, run_rows, conditions_all, passes_all, warnings
@@ -936,7 +974,7 @@ def main(argv: list[str] | None = None) -> int:
         if conditions:
             bad = [c for c in conditions if validate_row("conditions", c, schema_reg)]
             all_valid = all_valid and not bad
-            print(f"\n=== {len(conditions)} conditions (gold-standard-v2) — "
+            print(f"\n=== {len(conditions)} conditions — "
                   f"{len(conditions) - len(bad)} valid ===")
             for c in bad:
                 for e in validate_row("conditions", c, schema_reg):
@@ -945,7 +983,7 @@ def main(argv: list[str] | None = None) -> int:
         if passes:
             bad = [p for p in passes if validate_row("passes", p, schema_reg)]
             all_valid = all_valid and not bad
-            print(f"=== {len(passes)} passes (gold-standard-v2) — "
+            print(f"=== {len(passes)} passes — "
                   f"{len(passes) - len(bad)} valid ===")
             for p in bad:
                 for e in validate_row("passes", p, schema_reg):

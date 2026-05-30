@@ -1,0 +1,66 @@
+{
+  "_README": "Per-run DECOMPOSITION specs (the generator's third INPUT, Q3 sub-step 3b). Keyed by run_id under 'decomposition'. Each entry carries proposer_pools (dir->modality), verifier_passes (dir->modality), and conditions (the evaluable scored-result specs the extractors lift metrics for). Run-level facts (corpus, scope, gt_reference, study tags) live in the sibling run-facts.json and are NOT duplicated here. Runs absent from this file have not yet been decomposed (run_type stays null). Authored in archetype batches (planning/manifest-3b-conditions-plan.md). gold-standard-v2 migrated verbatim from the inline GS_V2_FACTS constant (Session 94 sidecar refactor).",
+  "schema_version": "1.0",
+  "decomposition": {
+    "gold-standard-v2": {
+      "proposer_pools": {
+        "detect_brief-text": "text"
+      },
+      "verifier_passes": {
+        "verified-v1": "image"
+      },
+      "conditions": [
+        {
+          "label": "consensus-3of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "detections": "outputs/gs/gold-standard-v2/consensus/consensus-3of5.geojson"
+        },
+        {
+          "label": "consensus-4of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "detections": "outputs/gs/gold-standard-v2/consensus/consensus-4of5.geojson"
+        },
+        {
+          "label": "consensus-5of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 5,
+          "vote_threshold": 5,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "detections": "outputs/gs/gold-standard-v2/consensus/consensus-5of5.geojson"
+        },
+        {
+          "label": "verified-v1",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "detections": "outputs/gs/gold-standard-v2/verified-v1/verified_detections_full-scope.geojson"
+        }
+      ]
+    }
+  }
+}
