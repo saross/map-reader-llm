@@ -54,7 +54,7 @@ I felt a little uncomfortable about the division / organisation of hard negative
 Observation 17:
 Evan after externalising a lot of information, constant application of taste and judgement needed - e.g., the verbose and brief prompts were unaligned between text and image prompts, and prompting (from Gemini) was...distinctly suboptimal. Testing suite not kept up to date, needed to catch that and instruct to extend it.
 
-Observation 18: 
+Observation 18:
 Although CC did very well mining the session archives for 'eta' human-llm-interaction observations, for some reason performance on observations about the evolution of the map-reader pipeline were poor: lots of confabulations until corrected, and not as insightful even after they were fixed.
 
 Observation 19:
@@ -63,11 +63,11 @@ Throughout most of this project, CC has been extemely corrigible. Specifically, 
 Observation 20:
 Has been difficult to get my intent regarding API usage to stick: gate all useage with a review presented to me, only proceed with my approval after confirming configuration - when an outdated SDK on this machine cause 'flex' mode on the gemini API to fail, CC just ran it in 'normal' mode, costing some $30-35 extra for no benefit. Have now tried to ensure that the intent is in memory and scratchpad (with defaults how I want them in code).
 
-Observation 21: 
-Need to do better with recording past decisions and recording intent - it was a real struggle to get to the point where CC and I agreed on what tile sets were 'production' - I had one mistake in my mental model, and I really had to coax CC along to get us on the same page. 
+Observation 21:
+Need to do better with recording past decisions and recording intent - it was a real struggle to get to the point where CC and I agreed on what tile sets were 'production' - I had one mistake in my mental model, and I really had to coax CC along to get us on the same page.
 
 Observation 22:
-Still occassional confabulations. 
+Still occassional confabulations.
 
 ● You're right — that's impossible, and my previous table had an error. Here are the correct numbers from the sweep_2d files:
 
