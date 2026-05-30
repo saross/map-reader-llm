@@ -1,16 +1,16 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-05-29 (Session 92 — H11 reorganisation executed and pushed: 4 runs moved out of `outputs/h11/`, E44 archived, E43 kept in place with a neutral manifest identity deferred to the generator; Phase 1 generator is now the active milestone)
+**Last updated**: 2026-05-30 (Session 92 — three milestones: H11 reorganisation executed; 12 previously-unscored conditions scored on sapphire; the Phase 1 manifest generator built and proven end-to-end on the gold-standard-v2 vertical slice. Fan-out across all runs is next.)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
 
 ---
 
-## ✅ Session 92 (this session) — START HERE — H11 REORGANISATION COMPLETE
+## ✅ Session 92 (this session) — START HERE — H11 REORG + SCORING BACKFILL + GENERATOR SLICE
 
-**Posted**: 2026-05-29, end of the H11 reorganisation session.
+**Posted**: 2026-05-30, end of a heavy three-part session (reorg → scoring → generator slice).
 
 ### TL;DR
 
@@ -31,6 +31,16 @@ A dry-run gap simulation *before touching anything* caught that the two `*-UNINT
 3. **No cosmetic rename of E43.** The `UNINTENDED` filename conflated identity with status (a March stopgap before structured deviation records existed). Resolution: neutral identity via the manifest `run_id` (`consensus-384-t1.0`), physical dir unchanged, deviation status on the analysis. Recorded in `manifest-schema-design.md` § 1A ("Deviation runs keep a neutral identity"). The underlying principle is in the global scratchpad: *identity vs. status — a filename should say what a thing is, not annotate its provenance*.
 4. **Reference-update rule**: update code / active configs / `.gitignore` / live-tree self-pointers / living results docs (full Revision-Policy treatment); leave frozen `archive/**`, dated reports (incl. the cost-estimate report), reflection logs, the working-notes Obs log, and computed eval-JSON provenance. E44's doc/registry mentions back-fill on touch (canonical record = the updated errata E44).
 
+### Two further milestones — scoring back-fill + the Phase 1 generator slice
+
+**1. Scored 12 previously-unscored conditions (on sapphire).** Building the generator surfaced that ~12 materialised aggregation/verification outputs across 6 runs had no `evaluation.json` — and the conditions schema *requires* a metrics block, so an unscored output cannot be a condition. A repo-wide scan sized the gap (a handful, not dozens); per user direction we scored all for consistency. `scripts/score-unscored-conditions-2026-05-30.sh` ran on sapphire, each output on **its own run's protocol** (parameter control). Outcomes:
+
+- **H3 consensus vote-threshold sweep completed on the GS corpus** (first scored there): 3/4/5-of-5 → F1 **0.593 / 0.700 / 0.765** @20 m, monotonic — as preregistered. An unprimed prereg agent confirmed: the consensus sweep is **preregistered (H3)**; tile-MCC-per-threshold is secondary; the consensus-vs-verifier value-add comparison is **exploratory** (H2 hook + E37 disclosure) — pins the eventual analyses-manifest tagging.
+- **Verifier value-add quantified**: verified-v1 F1=**0.866** / MCC=0.778, **+0.10 F1 / +0.20 MCC** over best consensus.
+- An unprimed h8-v2 scope agent caught a parameter-control trap: h8-v2 verifier-stage was evaluated on the **327-tile h10-384 pool**, not the 487-tile pool — scoring on 487 would have produced numbers inconsistent with the published headline.
+
+**2. Built the Phase 1 manifest generator + proved it on the gold-standard-v2 vertical slice.** `scripts/generate_post_run_report.py` now runs the full pipeline: **extract** (6 passes / 4 conditions / 1 run / 1 registry entry) → **validate** every row *and* whole-manifest envelope against the draft-2020-12 schemas → **write** 4 JSON source-of-truth files (`results/{runs,conditions,passes}-manifest.json` + `results/run-registry.json`) → **render** 4 MD (do-not-edit banner + coverage note) → **6 tier-1 tests** (`tests/test_generate_post_run_report.py`). The manifests currently hold gold-standard-v2 only. The generator honours the E43 deviation-run convention. **Fan-out carry-forwards**: verifier-pass `n_tiles_processed` uses request_count (a semantics question); the 2 MEDIUM-confidence scored conditions (#10 `55maps-gen/verified_paired`, #11 `wbf/gold-standard-v2-detect`) had scope inferred from the closest run.
+
 ### Deliverables — commit ledger (all pushed to `origin/main`)
 
 | Commit | What |
@@ -42,7 +52,16 @@ A dry-run gap simulation *before touching anything* caught that the two `*-UNINT
 | `c5983adb` | refactor(h11): move gold-standard-v2 to outputs/gs/ umbrella |
 | `ab92d2cd` | fix(gs): repoint candidate_manifest self-reference after move |
 | `c8f92781` | docs(gs): repoint relocated gs-v2 paths in 9 docs (full Revision-Policy treatment) |
-| *this commit* | docs(planning): E43 deviation-run identity note (§ 1A) + this Session 92 beacon |
+| `53cb506e` | docs(planning): E43 deviation-run identity note (§ 1A) + Session 92 beacon |
+| `e777bd0e` | feat(generator): scaffold + schema-validation harness |
+| `9e56a447` | chore(eval): batch-score 11 unscored conditions (the batch script) |
+| `e3be49ff` | data(eval): back-fill 11 unscored-condition evaluations (sapphire) |
+| `bfa0bc6f` | feat(generator): passes extractor for gold-standard-v2 slice |
+| `2141309b` | chore(eval): add consensus-4of5 to the GS scoring batch |
+| `6a2b78fc` | data(eval): back-fill gold-standard-v2 consensus-4of5 (sapphire) |
+| `dec10d71` | feat(generator): conditions/run/registry extractors + manifest writer |
+| `df26d543` | data(manifests): gold-standard-v2 vertical-slice manifests |
+| *this commit* | docs(handoff): refresh Session 92 beacon (full session) + working-notes |
 
 ### Verification
 
@@ -50,7 +69,7 @@ A dry-run gap simulation *before touching anything* caught that the two `*-UNINT
 
 ### What's pending — priority order for Session 92+
 
-1. **Phase 1 generator** (`scripts/generate_post_run_report.py`) — extend it to emit manifest rows from the same extraction pass that fills the post-run-report template. **Active milestone (started this session).** Must honour the **E43 deviation-run identity convention** (`manifest-schema-design.md` § 1A): neutral `run_id` from `*.meta.json`, physical `directory_path` unchanged, old name in `historical_aliases`, deviation linkage on the analysis.
+1. **Fan-out the manifest generator across all runs** (Phase 3). The generator + the gold-standard-v2 slice are **done this session**; the manifests under `results/` currently hold gs-v2 only. Fan-out needs: (a) the hand-verified **run-registry** (the "I-draft-you-verify" enumeration — no path-depth rule reliably enumerates runs); (b) per-run **facts** (corpus, gt_reference, scope, study tags, headline pointer) for each run; (c) **generalising the extractors** for the meta-shape / scope variations across runs (gs-v2 was a single run; others differ — e.g. the 327-vs-487 pool split, image vs text). Carry-forwards: verifier-pass `n_tiles_processed` semantics (request_count); the 2 MEDIUM-confidence scored conditions (#10/#11) whose scope was inferred. The generator already honours the **E43 deviation-run convention** (`manifest-schema-design.md` § 1A).
 2. **(carry-forward) Model-provenance recovery** — which conditions *truly* ran Pro, reconciled against billing (see the Session 91 beacon's model-provenance findings). Flagged, not urgent.
 3. **(optional) Normative `manifest-standard.md`** for future projects (deferred).
 4. **Then in order**: Phase 2 pilot → Phase 3 fan-out → Phase 4 lineage back-fill → Phase 5 hand-author hard cases → Phase 6 conformance sweep.
@@ -62,7 +81,7 @@ A dry-run gap simulation *before touching anything* caught that the two `*-UNINT
 
 ### Sapphire status
 
-No compute this session (pure filesystem reorg + doc edits). Sapphire unchanged; LUKS unlock required if rebooted between sessions.
+Compute **did** run: the 12-condition scoring batch (`scripts/score-unscored-conditions-2026-05-30.sh`, BCa bootstrap 10000, seed 42, `--mcc`) ran on sapphire; outputs were committed from sapphire and pulled locally. Sapphire was at load ~12 (a separate days-long job) but had spare cores. Synced clean to `origin/main`. LUKS unlock required if rebooted between sessions.
 
 ---
 
