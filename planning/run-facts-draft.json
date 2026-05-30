@@ -1,0 +1,651 @@
+{
+  "_README": "DRAFT per-run facts (sub-step 2, I-draft-you-verify). Underscore fields (_scope_confidence/_scope_source/_flags) are draft annotations, stripped on promotion. gt_reference: 4-map=curator, 55-map=student (evaluation-scopes.md \u00a711). Scope vocab from evaluation-scopes.md.",
+  "facts": {
+    "55maps-generalisation": {
+      "primary_hypothesis": null,
+      "also_informs": [],
+      "purpose": "55-map generalisation: text, paired verifier",
+      "tile_size_px": 384,
+      "corpus": "55-map",
+      "gt_reference": "student",
+      "scope": {
+        "test_set_id": "55maps-8541",
+        "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+        "n_test_tiles": 8541,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "55-map generalisation"
+      ],
+      "_scope_confidence": "HIGH",
+      "_scope_source": "empirical(own evals)",
+      "_flags": []
+    },
+    "55maps-image-generalisation": {
+      "primary_hypothesis": null,
+      "also_informs": [],
+      "purpose": "55-map generalisation: image modality",
+      "tile_size_px": 384,
+      "corpus": "55-map",
+      "gt_reference": "student",
+      "scope": {
+        "test_set_id": "55maps-8541",
+        "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+        "n_test_tiles": 8541,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "55-map generalisation"
+      ],
+      "_scope_confidence": "HIGH",
+      "_scope_source": "empirical",
+      "_flags": []
+    },
+    "55maps-text-high-generalisation": {
+      "primary_hypothesis": null,
+      "also_informs": [],
+      "purpose": "55-map generalisation: text HIGH",
+      "tile_size_px": 384,
+      "corpus": "55-map",
+      "gt_reference": "student",
+      "scope": {
+        "test_set_id": "55maps-8541",
+        "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+        "n_test_tiles": 8541,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "55-map generalisation"
+      ],
+      "_scope_confidence": "HIGH",
+      "_scope_source": "empirical",
+      "_flags": []
+    },
+    "55maps-text-high-t0-3-generalisation": {
+      "primary_hypothesis": null,
+      "also_informs": [],
+      "purpose": "55-map generalisation: text HIGH, T=0.3",
+      "tile_size_px": 384,
+      "corpus": "55-map",
+      "gt_reference": "student",
+      "scope": {
+        "test_set_id": "55maps-8541",
+        "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+        "n_test_tiles": 8541,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "55-map generalisation"
+      ],
+      "_scope_confidence": "HIGH",
+      "_scope_source": "empirical",
+      "_flags": []
+    },
+    "55maps-text-min-generalisation": {
+      "primary_hypothesis": null,
+      "also_informs": [],
+      "purpose": "55-map generalisation: text minimal",
+      "tile_size_px": 384,
+      "corpus": "55-map",
+      "gt_reference": "student",
+      "scope": {
+        "test_set_id": "55maps-8541",
+        "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+        "n_test_tiles": 8541,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "55-map generalisation"
+      ],
+      "_scope_confidence": "HIGH",
+      "_scope_source": "empirical",
+      "_flags": []
+    },
+    "gold-standard-v2": {
+      "primary_hypothesis": null,
+      "also_informs": [],
+      "purpose": "Canonical 4-map gold-standard pipeline (detect_brief-text, HIGH, T=0.7, K=5); paper headline GS result.",
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-2-487",
+        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": "cal-20-384",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "Era 2",
+        "the v2 GS run"
+      ],
+      "_scope_confidence": "HIGH",
+      "_scope_source": "empirical (user-confirmed)",
+      "_flags": []
+    },
+    "h10": {
+      "primary_hypothesis": "H10",
+      "also_informs": [],
+      "purpose": null,
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-3-327",
+        "bounds_path": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+        "n_test_tiles": 327,
+        "calibration_set_id": "pool_160",
+        "n_calibration_tiles": 160
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "Era 3"
+      ],
+      "_scope_confidence": "HIGH",
+      "_scope_source": "empirical + canonical(\u00a76 Era 3)",
+      "_flags": []
+    },
+    "consensus-384-t1-0": {
+      "primary_hypothesis": "H11",
+      "also_informs": [
+        "H7"
+      ],
+      "purpose": null,
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-2-487",
+        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": "cal-20-384",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "Era 2",
+        "consensus-384-UNINTENDED-T1.0"
+      ],
+      "_scope_confidence": "MEDIUM",
+      "_scope_source": "canonical(\u00a76: 384 H11 consensus = Era 2)",
+      "_flags": [
+        "E43 T=1.0 deviation; feeds T=0.7-vs-1.0 temperature analysis -> also_informs H7?"
+      ]
+    },
+    "e47-propose-brief": {
+      "primary_hypothesis": "H11",
+      "also_informs": [],
+      "purpose": null,
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-2-487",
+        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": "cal-20-384",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "Era 2"
+      ],
+      "_scope_confidence": "MEDIUM",
+      "_scope_source": "canonical(\u00a76 H11=Era 2)",
+      "_flags": []
+    },
+    "n1-outstanding-384": {
+      "primary_hypothesis": "H11",
+      "also_informs": [],
+      "purpose": null,
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-2-487",
+        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": "cal-20-384",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "Era 2"
+      ],
+      "_scope_confidence": "HIGH",
+      "_scope_source": "empirical",
+      "_flags": []
+    },
+    "proposer-verifier-384": {
+      "primary_hypothesis": "H11",
+      "also_informs": [
+        "PV-strategy"
+      ],
+      "purpose": null,
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-2-487",
+        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": "cal-20-384",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "Era 2"
+      ],
+      "_scope_confidence": "MEDIUM",
+      "_scope_source": "canonical(\u00a76 H11=Era 2)",
+      "_flags": []
+    },
+    "proposer-verifier-512": {
+      "primary_hypothesis": "H11",
+      "also_informs": [],
+      "purpose": null,
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-1-340",
+        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "n_test_tiles": 340,
+        "calibration_set_id": "cal-20-512",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "Era 1"
+      ],
+      "_scope_confidence": "MEDIUM",
+      "_scope_source": "canonical(H11 512px tile-size arm = 340x512 footprint)",
+      "_flags": [
+        "H11 512px arm; scope = Era 1 512px footprint \u2014 VERIFY"
+      ]
+    },
+    "pv-diag-256": {
+      "primary_hypothesis": "H11",
+      "also_informs": [],
+      "purpose": null,
+      "tile_size_px": 256,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": null,
+        "bounds_path": null,
+        "n_test_tiles": null,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [],
+      "_scope_confidence": "LOW",
+      "_scope_source": "dir-name 256px; NOT in evaluation-scopes.md",
+      "_flags": [
+        "256px diagnostic; scope (bounds + tile count) undocumented \u2014 NEEDS the 256 bounds/manifest"
+      ]
+    },
+    "pv-diag-384": {
+      "primary_hypothesis": "H11",
+      "also_informs": [
+        "H3",
+        "H8"
+      ],
+      "purpose": null,
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-2-487",
+        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": "cal-20-384",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "Era 2"
+      ],
+      "_scope_confidence": "HIGH",
+      "_scope_source": "empirical",
+      "_flags": [
+        "feeds 4 studies (H11/PV-strategy/consensus-N-sweep/Flash-vs-Pro); also_informs trimmed to H3,H8 \u2014 VERIFY"
+      ]
+    },
+    "h12-v2": {
+      "primary_hypothesis": "H12",
+      "also_informs": [],
+      "purpose": null,
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-3-327",
+        "bounds_path": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+        "n_test_tiles": 327,
+        "calibration_set_id": "pool_160",
+        "n_calibration_tiles": 160
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "Era 3"
+      ],
+      "_scope_confidence": "MEDIUM",
+      "_scope_source": "canonical(\u00a76 H12v2=Era 3)",
+      "_flags": [
+        "SCOPE-FLAG: empirical evals dominated by 487 (18) vs 327 (3); canonical published scope is Era 3 327. r2-balanced reuses h10 pool (E52). 487 evals = cross-scope exploration -> condition scope_override"
+      ]
+    },
+    "h8-v2": {
+      "primary_hypothesis": "H8",
+      "also_informs": [],
+      "purpose": null,
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-3-327",
+        "bounds_path": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+        "n_test_tiles": 327,
+        "calibration_set_id": "pool_160",
+        "n_calibration_tiles": 160
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "Era 3"
+      ],
+      "_scope_confidence": "MEDIUM",
+      "_scope_source": "canonical(\u00a76 H8v2=Era 3)",
+      "_flags": [
+        "SCOPE-FLAG: empirical evals dominated by 487 (43) vs 327 (11); canonical published scope is Era 3 327 (beacon trap). 487 evals = cross-scope exploration -> condition scope_override"
+      ]
+    },
+    "retest-phase2a": {
+      "primary_hypothesis": "H1",
+      "also_informs": [],
+      "purpose": null,
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-1-340",
+        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "n_test_tiles": 340,
+        "calibration_set_id": "cal-20-512",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "Era 1"
+      ],
+      "_scope_confidence": "HIGH",
+      "_scope_source": "empirical",
+      "_flags": []
+    },
+    "retest-phase2b": {
+      "primary_hypothesis": "H7",
+      "also_informs": [],
+      "purpose": null,
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-1-340",
+        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "n_test_tiles": 340,
+        "calibration_set_id": "cal-20-512",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "Era 1"
+      ],
+      "_scope_confidence": "HIGH",
+      "_scope_source": "empirical (\u00a78.1: H7 retest K=3 x 340)",
+      "_flags": [
+        "5 cross-scope evals on 487 -> condition scope_override"
+      ]
+    },
+    "retest-phase2c": {
+      "primary_hypothesis": "H8",
+      "also_informs": [],
+      "purpose": null,
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-1-340",
+        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "n_test_tiles": 340,
+        "calibration_set_id": "cal-20-512",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "Era 1"
+      ],
+      "_scope_confidence": "HIGH",
+      "_scope_source": "empirical",
+      "_flags": []
+    },
+    "retest-phase2d": {
+      "primary_hypothesis": "H5",
+      "also_informs": [],
+      "purpose": null,
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-1-340",
+        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "n_test_tiles": 340,
+        "calibration_set_id": "cal-20-512",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "Era 1"
+      ],
+      "_scope_confidence": "HIGH",
+      "_scope_source": "empirical",
+      "_flags": []
+    },
+    "retest-phase2e": {
+      "primary_hypothesis": "H4",
+      "also_informs": [],
+      "purpose": null,
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-1-340",
+        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "n_test_tiles": 340,
+        "calibration_set_id": "cal-20-512",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "Era 1"
+      ],
+      "_scope_confidence": "HIGH",
+      "_scope_source": "empirical",
+      "_flags": []
+    },
+    "retest-phase3a": {
+      "primary_hypothesis": "H3",
+      "also_informs": [],
+      "purpose": null,
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-1-340",
+        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "n_test_tiles": 340,
+        "calibration_set_id": "cal-20-512",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "Era 1"
+      ],
+      "_scope_confidence": "MEDIUM",
+      "_scope_source": "canonical(\u00a76 H3=Era 1)",
+      "_flags": []
+    },
+    "retest-phase3a-high": {
+      "primary_hypothesis": "H3",
+      "also_informs": [],
+      "purpose": null,
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-1-340",
+        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "n_test_tiles": 340,
+        "calibration_set_id": "cal-20-512",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "Era 1"
+      ],
+      "_scope_confidence": "MEDIUM",
+      "_scope_source": "canonical(\u00a76 H3=Era 1)",
+      "_flags": [
+        "HIGH thinking variant"
+      ]
+    },
+    "retest-phase3a-replication": {
+      "primary_hypothesis": "H3",
+      "also_informs": [],
+      "purpose": null,
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-1-340",
+        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "n_test_tiles": 340,
+        "calibration_set_id": "cal-20-512",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "Era 1"
+      ],
+      "_scope_confidence": "MEDIUM",
+      "_scope_source": "canonical(\u00a76 H3=Era 1)",
+      "_flags": [
+        "replication variant"
+      ]
+    },
+    "retest-phase3c": {
+      "primary_hypothesis": "H9",
+      "also_informs": [],
+      "purpose": null,
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-1-340",
+        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "n_test_tiles": 340,
+        "calibration_set_id": "cal-20-512",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "Era 1"
+      ],
+      "_scope_confidence": "MEDIUM",
+      "_scope_source": "canonical(\u00a76 H9=Era 1)",
+      "_flags": []
+    },
+    "retest-h11-single-pass-384-t0": {
+      "primary_hypothesis": "H11",
+      "also_informs": [],
+      "purpose": "H11 single-pass 384px baseline (T=0).",
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-2-487",
+        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": "cal-20-384",
+        "n_calibration_tiles": 20
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [
+        "Era 2"
+      ],
+      "_scope_confidence": "HIGH",
+      "_scope_source": "empirical",
+      "_flags": []
+    },
+    "verifier-t-pilot": {
+      "primary_hypothesis": "H2",
+      "also_informs": [],
+      "purpose": "Verifier-temperature pilot (T0.0/0.5/1.0).",
+      "tile_size_px": null,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": null,
+        "bounds_path": null,
+        "n_test_tiles": null,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "historical_aliases": [],
+      "_scope_confidence": "LOW",
+      "_scope_source": "scope = vote4 candidate set; eval bounds=None",
+      "_flags": [
+        "SCOPE + tile_size unknown: verifier over a consensus-vote4 candidate set; eval bounds=None; source proposer corpus/scope/tile-size TBD; E55 temperatures"
+      ]
+    }
+  }
+}
