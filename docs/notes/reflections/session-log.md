@@ -6283,3 +6283,19 @@ One continuous session picking up Session 92's pending fan-out. ~$0 API (all ext
 - The planning drafts (`run-registry-draft.json`, `run-facts-draft.json`) are now superseded by the `results/` inputs but retained as the dated review record.
 - The `_inbox.md` flag lives in `~/personal-assistant/notes/` (which had another session's uncommitted reflection changes); left uncommitted there to avoid sweeping that work — it syncs via the PA daily-sync.
 - `results/runs-manifest.json` is run-level only for 26 of 27 runs; conditions/passes for the non-gs runs land in 3b.
+
+## Session 94 — 2026-05-31
+
+**Work**: Pivoted 3b to standardise-then-decompose (the manifest build as methodology audit). Built `scripts/verify_run_conditions.py` (Tier-1 deterministic verifier, recalibrated to WARN-as-audit-instrument; `--classify` worklist) and `scripts/rescore_conditions.py` (re-scoring harness, 14 uniform buffers 5–150 m + MCC, thread-pinned, RAM-aware). Standardised Batch A (6 h11 runs, 53 outputs) on zbook. Found + fixed a UTM-no-crs CRS bug (F1=0 / NaN crash) across the h11 runs; made CRS explicit (eval `spatial` metadata v1.2; `crs-missing-utm`/`f1-all-zero` verifier flags; `docs/methodology/spatial-reference.md`). Cleaned 286 MB off zbook (stale crops; archived the mislabelled BAD-TILESIZE run's 6 API files into git).
+
+**Decided**: (1) prefer re-scoring to standardise over adapters; verifier = audit instrument. (2) 14 uniform buffers everywhere. (3) verified-set convention — materialise the actual set; flags are provenance (Decision 1A). (4) repeated-single-pass standard — K-pass runs yield single-pass + consensus conditions; deltas are analyses. (5) performance-shape 2×2 framework; map availability per run (no run is complete).
+
+**Produced**: ~20 commits → `bf4f9cd0`. Planning: `manifest-3b-conditions-plan.md`, `rescore-worklist-2026-05-31.md`, `performance-shape-availability-map-2026-05-31.md`. Obs 330–332; user-obs 34–37; memories `…e45dad98a906`, `…9e0040de4433`. Six agents (read-only/careful). Verifier + generator tier-1 tests pass.
+
+### Pending (next session, priority order)
+
+Review the 2×2 availability map; materialise the pv-384/512 verified subsets (Decision 1A) + re-score; score every K-pass run's individual passes (single-run conditions); author `run-conditions.json` for the standardised consensus conditions (e47, n1, single-pass, consensus-384-t1-0); archive n1's superseded legacy evals (scoped).
+
+### Contextual assumptions
+
+Re-scoring is evaluation-only (no detection API) → cheap, ran on zbook. Sapphire was off-limits (multi-day Bayesian run). zbook had ~90 GB free CPU RAM (no Ollama model loaded), so 55-map concurrency wasn't a constraint. `GENERATOR_VERSION` held at 0.2.0 (bump when the first batch emits new manifest rows). Almost no `run-conditions.json` authoring happened — the session was machinery + standardisation; authoring is next.

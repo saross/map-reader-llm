@@ -4839,3 +4839,21 @@ Sequence 1 and the broader H11 decision share a shape Shawn named explicitly: a 
 **Belief revised**: From "the meta's 0.0 must be authoritative (read parameters from metadata, not dir names — the E43 lesson)" to "the meta is faithful to the *base config object* but wrong about the *execution* — the runner never merged the CLI override back into the serialised snapshot." The E43 rule (trust meta over dir name) had a blind spot: a CLI override is in *neither* by default; the execution log is the only authoritative record.
 
 **Probe-type**: triangulation across log + effect-size + blast-radius, against two mutually-contradicting metadata sources. The lesson (now Obs 329, erratum E55): a serialised field can be a faithful copy of its source object and still be false about what ran. When the dir name and the meta disagree, don't pick one — go to the execution log, and confirm the effect is real before correcting.
+
+## Session 94 — 2026-05-31 — a silent F1=0 traced to a missing CRS member, and a verifier that wasn't verifying
+
+### Sequence 1 — "the proposer-verifier runs genuinely score F1=0"
+
+**Surprising fact**: re-scoring Batch A, the proposer-verifier-384/512 conditions came back F1=0 at *every* buffer (5–150 m) — implausible for a 572-detection set against ~400 mounds — with a small non-zero tile-MCC, and all 8 configs scoring *identically* (0.4032). A related run (consensus-384-t1-0) didn't score 0, it *crashed* on a NaN `source_tile`.
+
+**Probe**: the buffer curve (F1=0 even at 150 m) ruled out a simple offset; the geojson coordinates were UTM-35N metres (e.g. 416963, 4687963) with no `crs` member, where the working runs store WGS84 degrees. An agent traced the mechanism: GeoPandas/the scorer default a missing `crs` to WGS84, so the metres are read as degrees and reprojected far off the tile grid → no detection matches any mound at any radius (and where points fall outside all tiles, the per-map scoping join yields NaN → the crash).
+
+**Belief revision**: "F1=0 / the crash is a model or data-content failure" → "it is a *coordinate-frame metadata* failure — the geometry is fine, the label is missing." Generalised: a missing `crs` member is *correct* for WGS84 files (RFC 7946 default), so it cannot be rejected outright; the distinguishing signal is coordinate magnitude (|x|>180 ≠ longitude). Fixed by reprojection + making CRS explicit (eval metadata, a verifier flag, a canonical doc). Defect contained to the h11 runs.
+
+### Sequence 2 — "the 'verified' conditions measure the verifier"
+
+**Surprising fact**: even after the CRS fix, the 8 proposer-verifier-384 configs (different verifier strategies, 215–336 accepted candidates each) all scored *identically* (F1 0.4032).
+
+**Probe**: the geojson held 572 features with a per-feature `verified` boolean (269 True / 303 False) + verifier provenance, and the scorer scores *every* geometry regardless of the flag. gs-v2's verified file, by contrast, is pre-filtered (380 verified features, no flag).
+
+**Belief revision**: "scoring a verified-X.geojson measures the verifier" → "it measures the *unfiltered proposer baseline*, because the file is the full candidate set + a flag the scorer ignores." Forced a convention (the scoreable set is always the *materialised actual set*; verdicts/flags are separate provenance) and revealed that the verifier value-add (the +0.10 F1 gs-v2 showed) had been silently un-measured for these runs.
