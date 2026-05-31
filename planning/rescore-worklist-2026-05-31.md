@@ -54,6 +54,21 @@
 
 (`matlsd` = materialised detection geojsons under the run — aggregation/verified outputs, excluding raw proposer passes and crops.)
 
+## Buffer standard + re-scoring cost (decided 2026-05-31)
+
+**14 uniform buffers for ALL runs**: `5 10 15 20 25 30 35 40 45 50 75 100 125 150` m (a fine 5–50 m core at 5 m steps + an extended 75–150 m tail). Rationale: uniformity across corpora (one `per_buffer` key set; cross-run comparable), and the scorer's **one-to-one Hungarian matching** (`scipy.optimize.linear_sum_assignment`, `scripts/lib_advanced_metrics.py:533`) makes the extended buffers *safe* — they relax tolerance and F1 *saturates*, with no cross-matching inflation. Baked into `scripts/rescore_conditions.py` (`BUFFERS_STANDARD`).
+
+**Cost is linear in buffer count** (the BCa bootstrap runs inside the per-buffer loop in `evaluate_detections.py`), measured 2026-05-31 (amd-tower):
+
+| Regime | tiles | 1 buffer | per-buffer | 14 buffers | RAM |
+|---|---:|---:|---:|---:|---:|
+| 4-map (327/487) | ~487 | 5.7 s | ~1.55 s | **~26 s** | ~0.3 GB |
+| 55-map | 8541 | 60.7 s | ~27 s | **~7 min** | ~2.1 GB |
+
+The **55-map conditions dominate** (few in count, but ~7 min and ~2 GB each — RAM caps their concurrency). `scripts/rescore_conditions.py` (dry-run by default) reports the wall-clock estimate for a given worklist + worker count.
+
+**The re-scoring target is the CONDITIONS, not every materialised geojson.** There are **1044** `consensus*/verified*/wbf*/greedy*` geojsons under `outputs/` (excl. raw passes/crops), but most are sweep/pass *intermediates* (pv-diag-384 289, phase3c 225, phase3a 180, …). The actual conditions are the decomposed set (~150–250). So **re-scoring is coupled to the decomposition** (we re-score each run's conditions, not a blind sweep) — it interleaves per run, it is not a single "score everything first" pass.
+
 ## Next steps
 
 1. **Adjudicate** the corpus-dependent flags (especially `55maps-*` buffers) and the `no_standard_scoring` runs (which need full re-scoring vs which are passes-only).
@@ -61,6 +76,10 @@
 3. **Re-run `--classify`** to confirm the worklist drains, then resume the 3b decomposition authoring against the standardised record.
 
 ## Changelog
+
+### 2026-05-31 — Buffer decision + cost + the harness
+
+Added the "Buffer standard + re-scoring cost" section: 14 uniform buffers everywhere (one-to-one Hungarian matching makes the extended tail safe), the measured linear cost model (4-map ~26 s; 55-map ~7 min / ~2 GB), and the finding that re-scoring targets the ~150–250 conditions (not the 1044 materialised geojsons, mostly intermediates) so it is coupled to the decomposition. Harness: `scripts/rescore_conditions.py` (buffers baked in, parallel, dry-run by default). No re-scoring executed — paused for zbook.
 
 ### 2026-05-31 — Original publication
 
