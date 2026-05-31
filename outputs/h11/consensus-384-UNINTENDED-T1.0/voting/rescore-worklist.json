@@ -1,0 +1,40 @@
+{
+  "_comment": "Worklist for re-scoring the 5 consensus-threshold conditions of the E43 deviation run (consensus-384-UNINTENDED-T1.0) after the missing-CRS data repair (2026-05-31). The voting/consensus_t*.geojson were written in UTM 35N (EPSG:32635) metres with no crs member, so the scorer read them as EPSG:4326 and mis-reprojected them off the tile grid (source_tile -> NaN -> ValueError in calculate_f1_internal). The repair reprojected the coordinates 32635 -> 4326 to match every working sibling consensus run's on-disk WGS84 convention; coordinates are otherwise unchanged. Same 487-tile Era 2 bounds + curator GT as e47/gs-v2. Scope: bounds full_evaluation_bounds.geojson, ground_truth mounds-reference.geojson.",
+  "entries": [
+    {
+      "label": "consensus-384-UNINTENDED-T1.0-t1",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t1"
+    },
+    {
+      "label": "consensus-384-UNINTENDED-T1.0-t2",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t2"
+    },
+    {
+      "label": "consensus-384-UNINTENDED-T1.0-t3",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t3"
+    },
+    {
+      "label": "consensus-384-UNINTENDED-T1.0-t4",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t4"
+    },
+    {
+      "label": "consensus-384-UNINTENDED-T1.0-t5",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t5"
+    }
+  ]
+}
