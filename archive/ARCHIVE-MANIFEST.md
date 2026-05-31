@@ -189,3 +189,22 @@ of the HP:HN variants is at `results/h8-v2/analysis_summary.md` (Scale-8
 / 16 / 32) and `results/h12-v2/analysis_summary.md` (R1 / R2 / R3).
 
 **Full retraction context**: `archive/h10-h12-v1-retracted-probe/README.md`.
+
+## 2026-05-31 addition: `superseded-evals/n1-outstanding-384/`
+
+- `results/paper-eval/n1/384px-outstanding/` → `archive/superseded-evals/n1-outstanding-384/paper-eval-384px-outstanding/` (24 tracked files: `batch_summary.{csv,json,md}` + 7 model dirs)
+
+**Reason**: superseded by the Session 94/95 3b standardisation re-score. Every
+`n1-outstanding-384` condition was re-scored through the current standard scorer
+(14 uniform buffers + MCC, BCa bootstrap seed 42) to
+`results/rescore-2026-05-31/n1-outstanding-384/` (commit `02f1493b`). The legacy
+paper-pipeline eval tree is therefore redundant. All seven archived model dirs map
+1:1 to the re-scored pools (full vs short naming); see the archive README for the
+mapping table and the one `brief-text` ↔ `flash-text-minimal` naming caveat.
+
+**Scope guard**: ONLY `384px-outstanding/` was archived. Held in place for joint
+review: `results/paper-eval/n1/{384px, 384px-all-buffers}/` (ambiguous run
+correspondence) and `{512px, 512px-all-buffers}/` (NOT n1 — they are the
+`retest-phase2*` runs, `P2a/P2b/P2c/P2d`).
+
+**Full context**: `archive/superseded-evals/n1-outstanding-384/README.md`.
