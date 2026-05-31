@@ -53,11 +53,42 @@ def test_verify_detects_wrong_eval():
         }
     }
     rep = verify_run("gold-standard-v2", registry_obj, facts, bad_decomp, index)
-    assert rep["verdict"] == "FAIL"
+    assert rep["verdict"] == "FAIL"  # the two ERRORs (wrong file + scope) fail it
     codes = {d["code"] for d in rep["discrepancies"]}
-    assert "eval-detections-mismatch" in codes
-    assert "scope-mismatch" in codes
-    assert "feature-count-mismatch" in codes
+    assert "eval-detections-mismatch" in codes  # ERROR: scored a different file
+    assert "scope-mismatch" in codes  # ERROR: real scope leak, both bounds known
+    assert "feature-count-drift" in codes  # WARN: count divergence (now a signal, not a fail)
+
+
+@pytest.mark.tier1
+def test_verify_feature_count_drift_warns_not_fails():
+    # The recalibration (verifier as audit instrument): a STALE eval — correct file,
+    # correct scope, but n_detections != current geojson feature count — must WARN
+    # for adjudication, NOT hard-fail. Real case: the 55maps text-min cleaned-GT eval
+    # records 3861 detections; its geojson was refreshed to 3865 after the eval ran.
+    registry_obj = load_run_registry()
+    facts = load_run_facts()
+    index = _g._build_eval_index()
+    decomp = {
+        "55maps-text-min-generalisation": {
+            "proposer_pools": {},
+            "verifier_passes": {},
+            "conditions": [{
+                "label": "verified",
+                "architecture": "proposer-verifier",
+                "aggregation": "verified",
+                "n_passes": 5,
+                "detections": "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson",
+                "eval_path": "results/55maps-cleaned-gt-evaluation/text-min/evaluation.json",
+            }],
+        }
+    }
+    rep = verify_run("55maps-text-min-generalisation", registry_obj, facts, decomp, index)
+    codes = {d["code"] for d in rep["discrepancies"]}
+    severities = {d["severity"] for d in rep["discrepancies"]}
+    assert "feature-count-drift" in codes
+    assert "ERROR" not in severities  # a stale eval is a WARN signal, not a failure
+    assert rep["verdict"] == "PARTIAL"
 
 
 @pytest.mark.tier1

@@ -22,6 +22,15 @@ This is Tier 1 of the Batch verification loop (the deterministic backbone). A
 fresh-context LLM adversarial pass (Tier 2) handles the judgment calls. The
 verifier writes nothing — it re-computes from source and emits a verdict per run.
 
+**The verifier is the methodology-audit instrument**, not just a gate on authoring:
+the manifest build doubles as a methodology audit, so most checks **WARN** — they
+surface a result for human adjudication (re-score to standardise, or accept) —
+rather than hard-failing. **ERROR** is reserved for the unambiguous wrong-source
+cases (a named eval that scored a *different* file; a real scope leak where both
+bounds are known). A feature-count divergence, a bounds-less eval, or an
+unclaimed eval are WARNs: each is a signal that a result may be stale,
+non-standard, or missing — the re-scoring worklist, not a failure.
+
 Usage:
     python scripts/verify_run_conditions.py            # all decomposed runs
     python scripts/verify_run_conditions.py --run h8-v2
@@ -121,22 +130,44 @@ def verify_condition(spec: dict, scope_bounds: str | None,
                            f"{label}: eval_path given without detections — cannot cross-check "
                            f"eval↔detections or feature count"))
 
+    # scope_override may be mis-authored as a bare string instead of a scope dict;
+    # resolve it defensively so a typo surfaces as a discrepancy, not a crash.
+    so = spec.get("scope_override")
+    if so is not None and not isinstance(so, dict):
+        discs.append(_disc(WARN, "scope-override-malformed",
+                           f"{label}: scope_override is not a scope object ({so!r})"))
+    override_bounds = so.get("bounds_path") if isinstance(so, dict) else None
+    effective_scope = override_bounds or scope_bounds
+
     # eval ↔ detections, scope, and feature-count checks (need both the eval and the geojson)
     if eval_doc is not None and detections:
         eval_dets, eval_bounds = _eval_inputs(eval_doc)
         det_norm = g._normalise_detections_path(detections)
         if det_norm not in eval_dets:
+            # the eval scored a different named file — unambiguous wrong-source
             discs.append(_disc(ERROR, "eval-detections-mismatch",
                                f"{label}: eval scored {eval_dets}, not {det_norm}"))
-        effective_scope = (spec.get("scope_override") or {}).get("bounds_path") or scope_bounds
         if eval_bounds and effective_scope and eval_bounds != effective_scope:
+            # a real scope leak, both bounds known — hard error
             discs.append(_disc(ERROR, "scope-mismatch",
                                f"{label}: eval bounds {eval_bounds} != scope {effective_scope}"))
+        elif effective_scope and not eval_bounds:
+            # cannot confirm scope (bounds-less eval) — surface, don't skip silently
+            discs.append(_disc(WARN, "scope-uncheckable",
+                               f"{label}: eval records no bounds; scope unconfirmed "
+                               f"({effective_scope})"))
         n_det = (eval_doc.get("summary") or {}).get("n_detections")
         fc = _geojson_feature_count(detections)
-        if n_det is not None and fc is not None and n_det != fc:
-            discs.append(_disc(ERROR, "feature-count-mismatch",
-                               f"{label}: geojson has {fc} features but eval n_detections={n_det}"))
+        if fc is None:
+            discs.append(_disc(WARN, "geojson-missing",
+                               f"{label}: detections missing/unreadable — feature check skipped "
+                               f"({detections})"))
+        elif n_det is not None and n_det != fc:
+            # divergence is a SIGNAL for adjudication (stale eval vs benign drift),
+            # NOT a hard error — the verifier surfaces; the human decides re-run vs accept
+            discs.append(_disc(WARN, "feature-count-drift",
+                               f"{label}: geojson has {fc} features but eval n_detections={n_det} "
+                               f"(possible stale eval — re-score or accept)"))
 
     # pool resolves + n_passes sane
     pool = spec.get("proposer_pool")
@@ -147,18 +178,32 @@ def verify_condition(spec: dict, scope_bounds: str | None,
     elif pool in proposer_pools:
         spec_pool = proposer_pools[pool]
         path = spec_pool.get("path") if isinstance(spec_pool, dict) else None
-        pool_dir = g.REPO_ROOT / run_dir_rel / (path or f"proposer/{pool}")
-        n_on_disk = len(list(pool_dir.glob("run_*")))
-        n_passes = spec.get("n_passes")
-        if isinstance(n_passes, int) and n_on_disk and n_passes > n_on_disk:
-            discs.append(_disc(WARN, "n-passes-over",
-                               f"{label}: n_passes={n_passes} exceeds {n_on_disk} run_* dirs"))
+        rel = path or f"proposer/{pool}"
+        pool_dir = g.REPO_ROOT / run_dir_rel / rel
+        if not pool_dir.is_dir():
+            # a string-form pool with no explicit path can resolve to a non-existent
+            # proposer/<pool> dir — surface it rather than silently skipping n_passes
+            discs.append(_disc(WARN, "pool-dir-not-found",
+                               f"{label}: pool path '{rel}' not found under {run_dir_rel} "
+                               f"— n_passes uncheckable"))
+        else:
+            n_on_disk = len(list(pool_dir.glob("run_*")))
+            n_passes = spec.get("n_passes")
+            if isinstance(n_passes, int) and n_passes > n_on_disk:
+                discs.append(_disc(WARN, "n-passes-over",
+                                   f"{label}: n_passes={n_passes} exceeds {n_on_disk} run_* dirs"))
     return discs
 
 
 def verify_completeness(directory_path: str, conditions: list[dict],
                         ignored_evals: set[str], index: dict) -> list[dict]:
-    """Flag scored evals under the run that no condition claims and that aren't waived."""
+    """Flag scored evals under the run that no condition claims and that aren't waived.
+
+    Limitation: only evals whose detections live under the run's own directory are
+    considered, so a CROSS-RUN condition (whose eval/detections sit under another
+    run, e.g. h12-v2's r2-balanced reusing an h10 pool) is not completeness-checked
+    here — it must be accounted for under the run that physically owns its eval.
+    """
     dir_prefix = g._normalise_detections_path(directory_path.rstrip("/") + "/")
     claimed = {s["eval_path"] for s in conditions if s.get("eval_path")}
     auto_dets = {g._normalise_detections_path(s["detections"])
