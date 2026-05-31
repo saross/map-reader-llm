@@ -95,8 +95,14 @@ happened yet** — that is the next concrete step, now unblocked.
 
 1. **Read the two new maps** (both agent-produced, committed): the re-scoring worklist
    (`planning/rescore-worklist-2026-05-31.md`) and the performance-shape 2×2
-   availability map (`planning/performance-shape-availability-map-2026-05-31.md` —
-   landing from a background agent at session end; verify it committed).
+   availability map (`planning/performance-shape-availability-map-2026-05-31.md`,
+   commit `cac2818b`). **Map headline**: NO non-gs run has a complete 4-quadrant 2×2
+   — the verifier fills one PV diagonal, not both. The candidate-set switch is visible:
+   generalisation / h10 / h8-v2 / verifier-t-pilot verified *k-of-n consensus*
+   (→ consensus-PV); proposer-verifier-384/512 verified a *single pass* (→ single-run-PV).
+   11 runs reachable with ZERO API (pv-diag-384 is closest to a full 2×2 — its
+   per-candidate probabilities sweep both families); 15 have no verifier output and
+   would need a little API to round out single-run-PV / consensus-PV.
 2. **Materialise the verified subsets** (Decision 1A) for pv-384/512 (filter
    `verified:true`) and re-score them; then they measure the verifier.
 3. **Round out the performance-shape grid**: score every K-pass run's individual
@@ -128,8 +134,8 @@ happened yet** — that is the next concrete step, now unblocked.
 
 All work pushed to `origin/main` (local = zbook = origin). Re-scoring ran on **zbook**
 (`ssh zbook`; 32 cores / ~90 GB free; venv at `.venv`); **sapphire untouched**
-(multi-day Bayesian run — do not disrupt). The performance-shape map agent was still
-running at session close — confirm its commit landed.
+(multi-day Bayesian run — do not disrupt). The performance-shape map agent committed
+`planning/performance-shape-availability-map-2026-05-31.md` (`cac2818b`).
 
 ---
 
