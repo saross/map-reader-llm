@@ -129,11 +129,13 @@ def test_classify_gs_v2_standard_current():
 
 @pytest.mark.tier1
 def test_classify_flags_no_standard_scoring():
-    # e47-propose-brief has materialised detection geojsons but ZERO standard evals
-    # (its results were scored by the leaderboard pipeline) -> flagged for re-scoring.
+    # A run with materialised detection geojsons but ZERO standard evals is flagged
+    # for re-scoring. retest-phase3c (H9 diversity, scored by a non-standard pipeline)
+    # is the example — it sits deep in the backlog and is not yet standardised.
+    # (Data-coupled: once retest-phase3c is re-scored, repoint to another backlog run.)
     registry_obj = load_run_registry()
     index = _g._build_eval_index()
-    c = classify_run("e47-propose-brief", registry_obj, index)
+    c = classify_run("retest-phase3c", registry_obj, index)
     assert c["n_evals"] == 0
     assert c["n_materialised_geojson"] > 0
     assert c["no_standard_scoring"]
