@@ -1,0 +1,20 @@
+{
+  "description": "\u00a72 #3 pv-diag-384 PV quadrants (D-materialise). flash-high-text pool: single-run-PV (1of5 union verified) + consensus-PV (4of5 verified), both materialised from consensus/flash-high-text-1of5.geojson at prob_t=0.20 (documented operating point matching gs-v2/verifier-t-pilot; FLAG for review). bounds=487-tile full_evaluation_bounds, gt=mounds-reference. 14 buffers + MCC, eval-only.",
+  "generated": "2026-05-31",
+  "entries": [
+    {
+      "label": "pv-diag-384::flash-high-text-single-run-PV-1of5-vt1-pt0.20",
+      "detections": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5/materialised_vt1_pt0.20.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/pv-diag-384/flash-high-text-1of5-verified-vt1-pt0.20"
+    },
+    {
+      "label": "pv-diag-384::flash-high-text-consensus-PV-4of5-vt4-pt0.20",
+      "detections": "outputs/h11/pv-diag-384/verified/flash-high-text-4of5/materialised_vt4_pt0.20.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/pv-diag-384/flash-high-text-4of5-verified-vt4-pt0.20"
+    }
+  ]
+}
