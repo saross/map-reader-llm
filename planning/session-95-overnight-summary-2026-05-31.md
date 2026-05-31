@@ -130,7 +130,7 @@ was needed (Q2 dissolved). The beacon was stale.
 
 ## Commits (this overnight run, newest first)
 
-```
+```text
 169d6602 feat(manifest): author 4 runs into run-conditions.json (#3)
 d18b963d archive(evals): n1-outstanding-384 superseded paper-eval (#4)
 7861b6d0 eval(rescore): pv-diag-384 PV quadrants (§2 #3)
@@ -139,6 +139,7 @@ d18b963d archive(evals): n1-outstanding-384 superseded paper-eval (#4)
 0e980055 chore(rescore): consensus-PV worklist (§2 #4)
 44c0fa91 docs(reflection): Obs 333 — consensus dividend tracks proposer σ
 ```
+
 (plus the earlier #1/#2 commits: `4d51c07d`, `dcd849df`, `78571094`, `02f1493b`.)
 
 ## Suggested next steps
