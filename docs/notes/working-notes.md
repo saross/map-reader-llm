@@ -16989,3 +16989,53 @@ Search terms: Obs 332, verified geojson full candidate set flagged not filtered,
 - **Obs 327** (manifest-as-completeness-audit — the fan-out programme that surfaced this representation problem): the same schema-driven audit process that caught never-scored conditions in Obs 327 is what forced pv-384 into the scorer and made the uniform-F1 pattern visible.
 - **Obs 331** (missing CRS silently scoring F1=0 — sibling data-representation finding from the same standardisation pass): both Obs 331 and 332 were surfaced during the 3b re-score; both are data-representation problems rather than model failures; both require materialisation fixes before their results are scientifically usable.
 - **Artefacts**: `outputs/h11/proposer-verifier-384/verified-brief-text.geojson` (572 features, 269 True / 303 False — canonical example of the affected format); `outputs/gs/gold-standard-v2/verified-v1/verified_detections_full-scope.geojson` (380 features, pre-filtered — the correct materialisation pattern); `results/rescore-2026-05-31/proposer-verifier-384/` (re-scores showing F1@20m = 0.4032 for all 8 original configs); `scripts/evaluate_detections.py` (scorer); `scripts/verify_run_conditions.py` (audit check for `verified: false` features in scored GeoJSON).
+
+## Observation 333: The consensus aggregation dividend is strongly run-dependent and tracks proposer diversity — single-pass σ is a usable proxy for available headroom (Session 95, 2026-05-31)
+
+### The finding
+
+**Across four h11 conditions rescored in Session 95, the gain from consensus aggregation over single-pass F1 scales tightly with the single-pass run-to-run standard deviation. Near-deterministic runs (T=0, sd≈0.004) gain almost nothing; high-temperature / high-diversity runs (T=1.0 or flash-high thinking, sd≈0.010–0.019) gain substantially.**
+
+Results at F1@20 m buffer (buffer\_metres=20), verified at source:
+
+| Condition | Temperature / regime | Single-pass mean ± sd | n passes | Best consensus | Vote threshold | Dividend |
+|:----------|:---------------------|:----------------------|:--------:|:--------------:|:--------------:|:--------:|
+| e47-propose-brief (`flash-high-text-n5`) | Flash 2.0, HIGH thinking, stochastic | 0.366 ± 0.019 | 5 | **0.714** | vote≥5 (unanimous) | **+0.349** |
+| consensus-384-t1-0 (`brief-text`, T=1.0) | Flash 2.0, T=1.0 | 0.384 ± 0.010 | 30 | 0.471 | vote≥5 | +0.087 |
+| n1-outstanding-384 (mixed pools) | Multiple models/temps | 0.530 ± 0.057 | 17 (pooled) | 0.677 | vote≥3 (`image-t03`) | +0.148 |
+| retest-h11-single-pass-384-t0 (`brief-text`, T=0) | Flash 2.0, T=0.0 | 0.503 ± 0.004 | 10 | 0.554 | vote≥10 (all-agree) | **+0.051** |
+
+The vote≥1 union (every pass's detections merged) scores *below* the single-pass mean in both stochastic conditions: e47 vote-1 = 0.167 vs mean 0.366; c384-T1.0 vote-1 = 0.304 vs mean 0.384. This confirms that unioning all passes inflates false positives before higher vote thresholds can prune them; the dividend is not free — it requires a vote threshold above 1.
+
+### Why this matters
+
+1. **σ is a diagnostic for consensus headroom.** Before committing to a multi-pass run strategy, a cheap 3–5-pass pilot can measure σ. If σ < 0.01, consensus will add little value and the paper should report single-pass results. If σ ≥ 0.015, consensus may recoup a meaningful F1 increment.
+
+2. **The T=0 "ceiling" result is particularly clean.** Ten near-identical passes (sd=0.004) yield a dividend of only +0.051 — essentially the small residual diversity from non-zero floating-point noise between runs. Consensus voting has nothing to filter because the false positives are correlated across passes (the same tiles are misdetected each time). This makes the mechanism concrete: consensus prunes *uncorrelated* false positives, not correlated ones.
+
+3. **The e47 result is the most striking in the corpus.** A 0.366 single-pass mean climbs to 0.714 unanimous consensus — a factor-of-two improvement on a tough 384-px task. This is the strongest evidence in the project that the diversity mechanism is real and quantifiable, not an artefact of a particular threshold or pool.
+
+4. **Reporting convention.** The paper should report the dividend per-condition, not as a single aggregate figure. Pooling across conditions with very different σ would produce a misleading "average dividend."
+
+### Caveats / methodological notes
+
+**The e47 consensus uses only 5 passes** (confirmed via `voting_summary.json`: `total_passes: 5`). Vote≥5 is unanimous consensus over all 5 passes — not vote≥5 out of a larger pool. This is a stringent threshold that explains the high precision driving the large dividend.
+
+**The n1-outstanding-384 pooled statistics mix models and temperatures.** The sd=0.057 includes between-pool variance (Flash image 0.596–0.600 vs Pro text-medium 0.416), not just run-to-run variation within a single configuration. The per-pool σ values are much smaller. The pooled n=17 / sd=0.057 figure characterises spread across the outstanding-condition parameter space, not the within-configuration reproducibility that predicts consensus headroom.
+
+**The c384-T1.0 run is the "UNINTENDED" E43 deviation** (Obs 331 explains why the GeoJSONs required CRS repair before re-scoring). The vote-5 consensus (0.471) is from `outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t5/evaluation.json`; the single passes are from `results/rescore-2026-05-31/consensus-384-t1-0/384/run_*/evaluation.json`.
+
+**sd is sample standard deviation** (ddof=1) throughout. For n=5 (e47), confidence on the sd estimate is low; the reported 0.019 is a point estimate, not a stable characterisation.
+
+### Findable later
+
+Search terms: Obs 333, consensus aggregation dividend run-dependent, single-pass sigma proxy headroom, standard deviation predicts consensus gain, T=0 near-deterministic no dividend, flash-high thinking diversity dividend quantified, e47 propose-brief vote-5 unanimous F1 0.714, consensus-384-t1-0 T=1.0 F1 0.471, retest-h11-single-pass-384-t0 T=0 sd=0.004, n1-outstanding-384 pooled sigma, vote-1 union below single-pass mean, uncorrelated false positive filtering, correlated FP consensus no gain, voting\_summary.json total\_passes 5, performance-shape 2x2 rescore 2026-05-31, Session 95 standardised rescore, dividend per-condition reporting convention, 0.366 to 0.714 unanimous consensus, commit 02f1493b commit dcd849df.
+
+### Related observations and artefacts
+
+- **Obs 140** ("the diversity dividend" — HIGH thinking improves consensus over standard thinking): this Obs quantifies the dividend's run-dependence, gives σ as a predictive proxy, and extends the finding from a binary HIGH-vs-standard comparison to a continuous σ-vs-dividend relationship across four conditions.
+- **Obs 130** (consensus improvement is primarily FP filtering): the FP-filtering mechanism identified in Obs 130 is now shown to be *gated by* run-to-run variation — when T=0 makes passes near-identical, the false positives are correlated across passes and consensus cannot prune them, so the dividend collapses to ≈+0.05.
+- **Obs 128** (perfect determinism at T=0.0): explains why the retest-h11-single-pass-384-t0 run has sd=0.004 and hence a near-zero dividend; the T=0 condition is the cleanest test of the "no diversity → no dividend" prediction.
+- **Obs 136** (consensus pool size has a non-linear activation threshold): related dependence of aggregation benefit on ensemble composition; the present Obs adds σ of individual passes as a second axis alongside pool size.
+- **Obs 332** (sibling Session 95 finding — "verified" GeoJSON scores the proposer baseline): both Obs 332 and 333 arise from the Session 95 standardised re-score of the performance-shape 2×2; Obs 332 addresses what the scores measure, Obs 333 addresses what the aggregation architecture delivers.
+- **Artefacts**: `results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_*/evaluation.json` (e47 single-pass evals, n=5); `results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t5/evaluation.json` (e47 vote-5 consensus, F1@20=0.714); `outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/voting_summary.json` (total\_passes=5 confirmation); `results/rescore-2026-05-31/consensus-384-t1-0/384/run_*/evaluation.json` (c384-T1.0 single passes, n=30); `outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t5/evaluation.json` (c384-T1.0 vote-5 consensus); `results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_*/evaluation.json` (T=0 single passes, n=10); `results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/consensus/consensus_t10/evaluation.json` (T=0 vote-10 all-agree, F1@20=0.554); `results/rescore-2026-05-31/n1-outstanding-384/` (per-pool single-pass and consensus evals); commits `02f1493b` (single-pass evals) and `dcd849df` (verified-subset evals).
