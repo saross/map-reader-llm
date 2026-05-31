@@ -1,14 +1,139 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-05-30 (Session 93 — manifest fan-out: run-registry verified (27 runs, 7 issues), per-run facts authored (all 27, HIGH confidence), and the sub-step 3a B1 refactor landed (generator reads registry+facts, emits the 27-run runs-manifest). Erratum E55 fixed mid-review. Sub-step 3b — conditions decomposition — is next.)
+**Last updated**: 2026-05-31 (Session 94 — the BIG pivot: 3b reframed as a documentation-uplift + methodology audit; built the deterministic verifier (audit instrument) + the re-scoring harness; standardised Batch A (6 h11 runs) at 14 uniform buffers + MCC; fixed a CRS-misread data bug (UTM-no-crs F1=0) across the h11 runs + made CRS explicit; locked the verified-set convention, the repeated-single-pass standard, and the performance-shape 2×2 framework. Condition authoring is next, against the standardised record.)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
 
 ---
 
-## ✅ Session 93 (this session) — START HERE — FAN-OUT: REGISTRY + FACTS + 3a
+## ✅ Session 94 (this session) — START HERE — STANDARDISE-THEN-DECOMPOSE + CRS FIX + PERFORMANCE-SHAPE
+
+**Posted**: 2026-05-31, end of a very long session. The 3b conditions work changed
+shape fundamentally — read this before resuming.
+
+### TL;DR
+
+3b stopped being "decompose the 26 runs" and became **"standardise the eval record,
+THEN decompose against it."** Building the conditions manifest doubles as a
+**methodology audit** (Shawn's own framing — documentation finalisation always
+surfaces methodology gaps; we now plan it in). The session built the audit
+machinery, standardised the first batch, fixed a real spatial-data bug, and locked
+several analysis-design decisions. **Almost no `run-conditions.json` authoring
+happened yet** — that is the next concrete step, now unblocked.
+
+### Locked decisions (the load-bearing ones)
+
+1. **Prefer re-scoring to standardise over building extractor adapters** for legacy
+   eval shapes. Re-score each condition's detection geojson through the current
+   standard scorer (`scripts/evaluate_detections.py`), evaluation-only, NO detection
+   API. (memory `2026-05-31-e45dad98a906`; Obs 330.)
+2. **The verifier is the AUDIT INSTRUMENT** (`scripts/verify_run_conditions.py`). It
+   WARNs to surface for human adjudication (stale / non-standard / missing / CRS /
+   F1=0) and reserves ERROR for unambiguous wrong-source. `--classify` produces the
+   re-scoring worklist (`planning/rescore-worklist-2026-05-31.md`).
+3. **14 uniform buffers everywhere**: `5 10 15 20 25 30 35 40 45 50 75 100 125 150` m
+   (fine 5–50 core + extended tail; one-to-one Hungarian matching makes the tail
+   safe). Cost is linear in buffers: 4-map ~26 s / 0.3 GB; 55-map ~7 min / 2 GB per
+   condition. Harness: `scripts/rescore_conditions.py` (dry-run default; `--execute`
+   on zbook; thread-pinned; `--ram-gb` caps 55-map concurrency).
+4. **Verified-set convention (Decision 1A)**: the scoreable detection set is always
+   the MATERIALISED actual set; verifier verdicts/flags are separate provenance. gs-v2
+   pre-filters (380 verified feats, no flag); pv-384/512 store the full candidate set
+   + a `verified` boolean (e.g. 269 True / 303 False) — so their verified subset is
+   *derivable* (filter `verified:true`) and must be materialised + re-scored before it
+   measures the verifier (currently those conditions score the unfiltered proposer
+   baseline → all identical F1≈0.40). Add an audit check: a proposer-verifier
+   condition whose geojson still contains `verified:false` features → WARN.
+5. **Repeated-single-pass standard (Decision 2)**: a K-pass run yields BOTH
+   single-pass conditions (score each pass, n=1) AND consensus conditions
+   (`consensus_tN`) — non-duplicative. Per-pass scores are granular data (K
+   single-pass conditions); the single-pass mean ± σ and the deltas are ANALYSES.
+   Mark intent via `purpose` + `headline` + an `also_informs` programme tag (not a
+   schema change). **Do this for EVERY K-pass run.**
+6. **Performance-shape 2×2** (Shawn's framework): every run characterised on
+   {single-run, consensus} × {no-verify, verify} → the deltas single→consensus
+   (aggregation benefit) and no-verify→verify (verifier benefit). The single↔consensus
+   half is uniformly free (score the passes). The PV column is run-specific: a
+   background agent is building `planning/performance-shape-availability-map-2026-05-31.md`
+   (per-run M/D/A map). **Verifier history**: at some point the project switched from
+   verifying a particular x-of-n to verifying all n=1 (every 1-of-n point) — so which
+   PV quadrant a verified output fills depends on its candidate set; MAP don't assume.
+   Shawn is willing to spend a little API to round out PV gaps.
+
+### What got done (in order)
+
+1. **Verifier + classifier built** (`scripts/verify_run_conditions.py`, tier-1 tests):
+   Tier-1 deterministic checks (eval↔detections, scope, feature-count-drift,
+   pool/n_passes, completeness) + recalibrated to WARN-not-FAIL (audit instrument) +
+   `--classify` worklist. **Worklist headline: only 2/27 runs were standard-current**;
+   10 had no standard scoring; the rest need MCC / full buffers / current re-score.
+2. **Re-scoring harness** (`scripts/rescore_conditions.py`) with the 14 buffers baked
+   in, thread-pinned, RAM-aware; cost model measured empirically.
+3. **Batch A standardised on zbook** (6 h11 runs, 53 scoreable outputs): e47, n1,
+   proposer-verifier-384/512, retest-h11-single-pass-384-t0, consensus-384-t1-0. Ran
+   in ~95 s (16 workers). Evals under `results/rescore-2026-05-31/`.
+4. **CRS bug found + fixed** (erratum-class). Several h11 geojsons were UTM-35N metres
+   written with NO `crs` member → silently read as WGS84 → mis-reprojected → F1=0 at
+   all buffers (consensus-384-t1-0 *crashed* on NaN `source_tile`). Two agents
+   reprojected 32635→4326 (matching the WGS84 storage convention), archived originals
+   to `archive/data-repairs/*-missing-crs/`, re-scored. 16/17 now F1>0 (one genuine
+   F1=0: a 2-detection verifier output). Corpus scan: defect contained to these h11
+   runs. **CRS made explicit**: eval `_metadata` gained a `spatial` block
+   (`metadata_version` 1.2), the verifier got `crs-missing-utm` + `f1-all-zero` flags,
+   and `docs/methodology/spatial-reference.md` is the canonical record (verified
+   per-artefact CRS: rasters/tiles/bounds/GT = EPSG:32635 UTM 35N; detection geojsons
+   = EPSG:4326).
+5. **zbook hygiene**: deleted 258 MB of stale pre-reorg crops (gold-standard-v2 + wbf;
+   crops verified to exist on sapphire / local canonical); archived the 6 unique API
+   files of `v2-proposer-test-BAD-TILESIZE` into git (commit `12a9a32b`; the
+   "-BAD-TILESIZE" label is misleading — it's a stochastic T=1.0 replicate, not a
+   tile-size error; agent-verified) + deleted its 721 crops.
+
+### Open threads — priority order for Session 95+
+
+1. **Read the two new maps** (both agent-produced, committed): the re-scoring worklist
+   (`planning/rescore-worklist-2026-05-31.md`) and the performance-shape 2×2
+   availability map (`planning/performance-shape-availability-map-2026-05-31.md` —
+   landing from a background agent at session end; verify it committed).
+2. **Materialise the verified subsets** (Decision 1A) for pv-384/512 (filter
+   `verified:true`) and re-score them; then they measure the verifier.
+3. **Round out the performance-shape grid**: score every K-pass run's individual
+   passes (single-run conditions); re-score the derivable PV quadrants; decide (with
+   Shawn) which absent PV quadrants are worth a little API to fill.
+4. **Author `run-conditions.json`** against the standardised record. READY NOW (grain
+   confirmed — every vote threshold is a condition): the consensus conditions for
+   e47 (×5 + a single-pass baseline), n1 (×15), single-pass (×10), consensus-384-t1-0
+   (×5). Their metrics are sensible/monotonic (e.g. e47 vote1→5 F1 0.167→0.714). Use
+   the sidecar format + the generator extractors (`build_extraction_context`,
+   `extract_conditions` with explicit `eval_path`).
+5. **Bookkeeping**: archive n1's superseded legacy evals — `results/paper-eval/n1/*`
+   + `results/mcc/384px/*` SCOPED TO THE n1-outstanding-384 model dirs only (an agent
+   confirmed "outstanding" is a run-naming label, not a distinct subset; those trees
+   also hold other runs — do not sweep them wholesale).
+6. **Then**: the rest of the 26 runs (the worklist), the analyses manifest (3c), the
+   GENERATOR_VERSION bump (held at 0.2.0; bump when the first batch emits new rows).
+
+### Reusable plan/spec docs (read these, don't re-derive)
+
+- `planning/manifest-3b-conditions-plan.md` — the 3b plan, extractor work items, the
+  5 archetype batches, the §4a audit carry-forwards.
+- `planning/rescore-worklist-2026-05-31.md` — the standardisation worklist + the
+  buffer/cost decision + the "re-scoring is coupled to decomposition" finding.
+- `planning/run-registry-draft-review.md` — the 27-run registry, GAP-1…10, carry-ins.
+- `docs/methodology/spatial-reference.md` — CRS canonical record.
+
+### Sync / compute status
+
+All work pushed to `origin/main` (local = zbook = origin). Re-scoring ran on **zbook**
+(`ssh zbook`; 32 cores / ~90 GB free; venv at `.venv`); **sapphire untouched**
+(multi-day Bayesian run — do not disrupt). The performance-shape map agent was still
+running at session close — confirm its commit landed.
+
+---
+
+## ✅ Session 93 — FAN-OUT: REGISTRY + FACTS + 3a
 
 **Posted**: 2026-05-30, end of a heavy fan-out session (registry review → housekeeping → per-run facts → 3a B1 refactor).
 
