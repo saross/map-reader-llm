@@ -132,3 +132,15 @@ On the h8-v2/h12-v2 evaluation scope, I pushed back on CC's reading of the canon
 
 Observation 33:
 For the runs that were months old and that I genuinely couldn't remember (pv-diag-256, verifier-t-pilot), I named my low confidence openly ("I'm a little fuzzy… I support taking time to explore") and asked CC to dispatch agents rather than accept its own MEDIUM-confidence guesses. The agents turned plausible-but-unsourced facts into principled, cited ones — and one reconstructed a run I'd entirely forgotten. Naming low confidence and choosing investigation over a fast answer was the right call for facts headed into a paper's supplementary material.
+
+Observation 34:
+Mid-session (2026-05-31) I reframed the conditions-manifest build as both a documentation uplift AND a methodology audit — naming that this is how my manual practice always worked: methodology omissions always surfaced during documentation finalisation, and I'd subconsciously carried the pattern over. CC had been treating it more narrowly as "decompose the 26 runs." Making the dual purpose explicit reshaped the whole approach — standardise-then-decompose, the verifier as an audit instrument — and turned a bookkeeping task into a methodology pass that caught real problems (a CRS bug, a mis-scored verifier). Lesson: surfacing the real *purpose* of a piece of work, not just its mechanics, can change the whole approach.
+
+Observation 35:
+Several times this session I steered explicitly toward the principled long-term solution over the expedient patch — "prefer principled over expedient" on the sidecar design, and "I'd like to make the best principles / long-term solution here, not an ad hoc pass… can you walk me through this decision" on the proposer-verifier scoring. Asking to be walked through the decision rather than handed a fix is what produced a durable, documented convention (materialise the actual set; verdicts are separate provenance) instead of a one-off filter that would have hidden the same trap elsewhere.
+
+Observation 36:
+When CC proposed scoring single passes alongside the consensus sweep to get the single→consensus delta, I pushed it further — to a full performance-shape 2×2 (single-run → consensus → single-run-PV → consensus-PV) — seeing nearly-free extra information CC hadn't surfaced, and the symmetric "do the reverse for the consensus runs too." The analytical frame often has more in it than the first proposal captures; pushing on "what else does this give us for free?" paid off (and the availability map then kept us honest about how much of it we actually have).
+
+Observation 37:
+I insisted on empirically MAPPING the 2×2 availability per run rather than assuming the picture was complete — and the map confirmed no run actually has a full 2×2, vindicating the caution. I also flagged the context budget (80%, a genuinely long session) at the right moment, which let us protect continuity — offload the map to an agent, document, hand off — instead of running dry mid-task. Both are the same instinct: don't let optimism, about completeness or about remaining runway, outrun the evidence.
