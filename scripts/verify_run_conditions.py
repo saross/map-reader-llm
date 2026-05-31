@@ -256,6 +256,87 @@ def verify_all(only: str | None = None) -> list[dict]:
     return [verify_run(r, registry_obj, facts, decomposition, index) for r in sorted(run_ids)]
 
 
+def _eval_completeness(summary: dict) -> tuple[bool, bool]:
+    """``(has_full_buffers, has_mcc)`` for an evaluation.json ``summary``.
+
+    Full buffers = the canonical 20/30/40/50 m set is present; MCC = a
+    ``tile_classification`` block exists.
+    """
+    buffers = {b.get("buffer_metres") for b in (summary.get("buffers") or [])}
+    return {20, 30, 40, 50} <= buffers, bool(summary.get("tile_classification"))
+
+
+def classify_run(run_id: str, registry_obj: dict, index: dict) -> dict:
+    """Classify a run's scored evals for the re-scoring worklist (the audit pass).
+
+    For each ``evaluation.json`` that scored a detection under the run, decides
+    ``standard-current`` (full buffers + MCC + n_detections present and matching the
+    geojson) vs ``needs-rescore`` (with reasons: partial-buffers / no-mcc / stale /
+    no-n_detections). A run with materialised detection outputs but ZERO standard
+    evals is flagged ``no_standard_scoring`` — its results were scored by a
+    non-standard pipeline (leaderboard / sweep) or not at all, so they need
+    re-scoring to standardise. The worklist's purpose: prefer re-scoring to
+    standardise over building adapters for legacy eval shapes.
+    """
+    entry = next((e for e in registry_obj.get("registry", []) if e["run_id"] == run_id), None)
+    if entry is None:
+        return {"run_id": run_id, "error": "not in registry"}
+    dpath = entry["directory_path"]
+    dir_prefix = g._normalise_detections_path(dpath.rstrip("/") + "/")
+
+    evals: list[dict] = []
+    for det_path, evs in sorted(index.items()):
+        if not det_path.startswith(dir_prefix):
+            continue
+        fc = _geojson_feature_count(det_path)
+        for eval_rel, summary, _bounds in evs:
+            has_full, has_mcc = _eval_completeness(summary)
+            n_det = summary.get("n_detections")
+            reasons: list[str] = []
+            if not has_full:
+                reasons.append("partial-buffers")
+            if not has_mcc:
+                reasons.append("no-mcc")
+            if n_det is None:
+                reasons.append("no-n_detections")
+            elif fc is not None and n_det != fc:
+                reasons.append(f"stale:{fc}vs{n_det}")
+            evals.append({"eval": eval_rel,
+                          "status": "standard-current" if not reasons else "needs-rescore",
+                          "reasons": reasons})
+
+    run_dir = g.REPO_ROOT / dpath
+    materialised = 0
+    if run_dir.is_dir():
+        for p in run_dir.rglob("*.geojson"):
+            parts = p.relative_to(run_dir).parts
+            # count aggregation/verified outputs, not raw proposer passes or crops
+            if any(part == "crops" or (part.startswith("run_") and part[4:].isdigit())
+                   for part in parts):
+                continue
+            materialised += 1
+
+    n_std = sum(1 for e in evals if e["status"] == "standard-current")
+    return {
+        "run_id": run_id,
+        "directory_path": dpath,
+        "n_evals": len(evals),
+        "n_standard_current": n_std,
+        "n_needs_rescore": len(evals) - n_std,
+        "n_materialised_geojson": materialised,
+        "no_standard_scoring": len(evals) == 0 and materialised > 0,
+        "evals": evals,
+    }
+
+
+def classify_all() -> list[dict]:
+    """Classify every registered run for the re-scoring worklist."""
+    registry_obj = g.load_run_registry()
+    index = g._build_eval_index()
+    return [classify_run(e["run_id"], registry_obj, index)
+            for e in registry_obj.get("registry", [])]
+
+
 def _print_report(reports: list[dict]) -> None:
     """Human-readable verdict + discrepancy listing."""
     icon = {"PASS": "✓", "PARTIAL": "~", "FAIL": "✗"}
@@ -274,7 +355,14 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Tier 1 run-conditions verifier.")
     parser.add_argument("--run", metavar="RUN_ID", help="Verify only this run.")
     parser.add_argument("--json", action="store_true", help="Emit the report as JSON.")
+    parser.add_argument("--classify", action="store_true",
+                        help="Audit pass: classify every run's evals (standard-current vs "
+                             "needs-rescore) for the re-scoring worklist; emits JSON.")
     args = parser.parse_args(argv)
+
+    if args.classify:
+        print(json.dumps(classify_all(), indent=2))
+        return 0
 
     reports = verify_all(only=args.run)
     if not reports:

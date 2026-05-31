@@ -15,7 +15,7 @@ from scripts.generate_post_run_report import (
     load_run_facts,
     load_run_registry,
 )
-from scripts.verify_run_conditions import verify_all, verify_run
+from scripts.verify_run_conditions import classify_run, verify_all, verify_run
 
 # the eval index is private to the generator; import via the module to reuse it
 from scripts import generate_post_run_report as _g
@@ -113,3 +113,27 @@ def test_verify_flags_unresolved_pool():
     }
     rep = verify_run("gold-standard-v2", registry_obj, facts, decomp, index)
     assert any(d["code"] == "pool-unresolved" for d in rep["discrepancies"])
+
+
+@pytest.mark.tier1
+def test_classify_gs_v2_standard_current():
+    # the audit pass: gold-standard-v2's evals are standard-current (full buffers +
+    # MCC + matching geojson), so it has no re-scoring work and is not flagged.
+    registry_obj = load_run_registry()
+    index = _g._build_eval_index()
+    c = classify_run("gold-standard-v2", registry_obj, index)
+    assert c["n_standard_current"] >= 4
+    assert c["n_needs_rescore"] == 0
+    assert not c["no_standard_scoring"]
+
+
+@pytest.mark.tier1
+def test_classify_flags_no_standard_scoring():
+    # e47-propose-brief has materialised detection geojsons but ZERO standard evals
+    # (its results were scored by the leaderboard pipeline) -> flagged for re-scoring.
+    registry_obj = load_run_registry()
+    index = _g._build_eval_index()
+    c = classify_run("e47-propose-brief", registry_obj, index)
+    assert c["n_evals"] == 0
+    assert c["n_materialised_geojson"] > 0
+    assert c["no_standard_scoring"]
