@@ -1,0 +1,447 @@
+{
+  "description": "#2 single-run (individual-pass) re-scores for the four Batch-A authoring runs (e47, retest-h11-single-pass, n1, consensus-384-t1-0). n=1 each. Where a run dir holds >1 detection geojson (e47 run_5: a real-duration dated pass + a zero-duration reorg copy) BOTH are scored, disambiguated by stem, pending decomposition. 14 buffers + MCC, eval-only.",
+  "generated": "2026-05-31",
+  "entries": [
+    {
+      "label": "e47-propose-brief::single-flash-high-text-n5-propose_brief-text-run_1",
+      "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_1/detections_propose_brief-text_run01.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_1"
+    },
+    {
+      "label": "e47-propose-brief::single-flash-high-text-n5-propose_brief-text-run_2",
+      "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_2/detections_propose_brief-text_run02.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_2"
+    },
+    {
+      "label": "e47-propose-brief::single-flash-high-text-n5-propose_brief-text-run_3",
+      "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_3/detections_propose_brief-text_run03.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_3"
+    },
+    {
+      "label": "e47-propose-brief::single-flash-high-text-n5-propose_brief-text-run_4",
+      "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_4/detections-propose_brief-text-3-flash-2026-04-09.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_4"
+    },
+    {
+      "label": "e47-propose-brief::single-flash-high-text-n5-propose_brief-text-run_5-detections-propose_brief-text-3-flash-2026-04-09",
+      "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_5/detections-propose_brief-text-3-flash-2026-04-09.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_5/detections-propose_brief-text-3-flash-2026-04-09"
+    },
+    {
+      "label": "e47-propose-brief::single-flash-high-text-n5-propose_brief-text-run_5-detections_propose_brief-text_run05",
+      "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_5/detections_propose_brief-text_run05.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_5/detections_propose_brief-text_run05"
+    },
+    {
+      "label": "retest-h11-single-pass-384-t0::single-brief-text-t0-run_1",
+      "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_1/detections_brief-text-t0_run01.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_1"
+    },
+    {
+      "label": "retest-h11-single-pass-384-t0::single-brief-text-t0-run_10",
+      "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_10/detections_brief-text-t0_run10.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_10"
+    },
+    {
+      "label": "retest-h11-single-pass-384-t0::single-brief-text-t0-run_2",
+      "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_2/detections_brief-text-t0_run02.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_2"
+    },
+    {
+      "label": "retest-h11-single-pass-384-t0::single-brief-text-t0-run_3",
+      "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_3/detections_brief-text-t0_run03.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_3"
+    },
+    {
+      "label": "retest-h11-single-pass-384-t0::single-brief-text-t0-run_4",
+      "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_4/detections_brief-text-t0_run04.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_4"
+    },
+    {
+      "label": "retest-h11-single-pass-384-t0::single-brief-text-t0-run_5",
+      "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_5/detections_brief-text-t0_run05.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_5"
+    },
+    {
+      "label": "retest-h11-single-pass-384-t0::single-brief-text-t0-run_6",
+      "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_6/detections_brief-text-t0_run06.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_6"
+    },
+    {
+      "label": "retest-h11-single-pass-384-t0::single-brief-text-t0-run_7",
+      "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_7/detections_brief-text-t0_run07.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_7"
+    },
+    {
+      "label": "retest-h11-single-pass-384-t0::single-brief-text-t0-run_8",
+      "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_8/detections_brief-text-t0_run08.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_8"
+    },
+    {
+      "label": "retest-h11-single-pass-384-t0::single-brief-text-t0-run_9",
+      "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_9/detections_brief-text-t0_run09.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_9"
+    },
+    {
+      "label": "n1-outstanding-384::single-brief-text-t03-run_1",
+      "detections": "outputs/h11/n1-outstanding-384/brief-text-t03/run_1/detections_brief-text-t03_run01.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/n1-outstanding-384/brief-text-t03/run_1"
+    },
+    {
+      "label": "n1-outstanding-384::single-brief-text-t03-run_2",
+      "detections": "outputs/h11/n1-outstanding-384/brief-text-t03/run_2/detections_brief-text-t03_run02.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/n1-outstanding-384/brief-text-t03/run_2"
+    },
+    {
+      "label": "n1-outstanding-384::single-brief-text-t03-run_3",
+      "detections": "outputs/h11/n1-outstanding-384/brief-text-t03/run_3/detections_brief-text-t03_run03.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/n1-outstanding-384/brief-text-t03/run_3"
+    },
+    {
+      "label": "n1-outstanding-384::single-image-t0-run_1",
+      "detections": "outputs/h11/n1-outstanding-384/image-t0/run_1/detections_image-t0_run01.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/n1-outstanding-384/image-t0/run_1"
+    },
+    {
+      "label": "n1-outstanding-384::single-image-t0-run_2",
+      "detections": "outputs/h11/n1-outstanding-384/image-t0/run_2/detections_image-t0_run02.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/n1-outstanding-384/image-t0/run_2"
+    },
+    {
+      "label": "n1-outstanding-384::single-image-t0-run_3",
+      "detections": "outputs/h11/n1-outstanding-384/image-t0/run_3/detections_image-t0_run03.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/n1-outstanding-384/image-t0/run_3"
+    },
+    {
+      "label": "n1-outstanding-384::single-image-t03-run_1",
+      "detections": "outputs/h11/n1-outstanding-384/image-t03/run_1/detections_image-t03_run01.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/n1-outstanding-384/image-t03/run_1"
+    },
+    {
+      "label": "n1-outstanding-384::single-image-t03-run_2",
+      "detections": "outputs/h11/n1-outstanding-384/image-t03/run_2/detections_image-t03_run02.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/n1-outstanding-384/image-t03/run_2"
+    },
+    {
+      "label": "n1-outstanding-384::single-image-t03-run_3",
+      "detections": "outputs/h11/n1-outstanding-384/image-t03/run_3/detections_image-t03_run03.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/n1-outstanding-384/image-t03/run_3"
+    },
+    {
+      "label": "n1-outstanding-384::single-pro-image-high-t0-run_1",
+      "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_1/detections_pro-image-high-t0_run01.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_1"
+    },
+    {
+      "label": "n1-outstanding-384::single-pro-image-high-t0-run_2",
+      "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_2/detections_pro-image-high-t0_run02.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_2"
+    },
+    {
+      "label": "n1-outstanding-384::single-pro-image-high-t0-run_3",
+      "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_3/detections_pro-image-high-t0_run03.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_3"
+    },
+    {
+      "label": "n1-outstanding-384::single-pro-image-medium-t07-run_1",
+      "detections": "outputs/h11/n1-outstanding-384/pro-image-medium-t07/run_1/detections_pro-image-medium-t07_run01.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-medium-t07/run_1"
+    },
+    {
+      "label": "n1-outstanding-384::single-pro-text-high-t0-run_1",
+      "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_1/detections_pro-text-high-t0_run01.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_1"
+    },
+    {
+      "label": "n1-outstanding-384::single-pro-text-high-t0-run_2",
+      "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_2/detections_pro-text-high-t0_run02.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_2"
+    },
+    {
+      "label": "n1-outstanding-384::single-pro-text-high-t0-run_3",
+      "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_3/detections_pro-text-high-t0_run03.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_3"
+    },
+    {
+      "label": "n1-outstanding-384::single-pro-text-medium-t07-run_1",
+      "detections": "outputs/h11/n1-outstanding-384/pro-text-medium-t07/run_1/detections_pro-text-medium-t07_run01.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-medium-t07/run_1"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_1",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_1"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_10",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_10/detections_384_run10.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_10"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_11",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_11/detections_384_run11.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_11"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_12",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_12/detections_384_run12.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_12"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_13",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_13/detections_384_run13.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_13"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_14",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_14/detections_384_run14.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_14"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_15",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_15/detections_384_run15.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_15"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_16",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_16/detections_384_run16.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_16"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_17",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_17/detections_384_run17.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_17"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_18",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_18/detections_384_run18.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_18"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_19",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_19/detections_384_run19.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_19"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_2",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_2/detections_384_run02.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_2"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_20",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_20/detections_384_run20.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_20"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_21",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_21/detections_384_run21.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_21"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_22",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_22/detections_384_run22.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_22"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_23",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_23/detections_384_run23.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_23"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_24",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_24/detections_384_run24.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_24"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_25",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_25/detections_384_run25.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_25"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_26",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_26/detections_384_run26.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_26"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_27",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_27/detections_384_run27.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_27"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_28",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_28/detections_384_run28.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_28"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_29",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_29/detections_384_run29.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_29"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_3",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_3/detections_384_run03.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_3"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_30",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_30/detections_384_run30.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_30"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_4",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_4/detections_384_run04.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_4"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_5",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_5/detections_384_run05.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_5"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_6",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_6/detections_384_run06.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_6"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_7",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_7/detections_384_run07.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_7"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_8",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_8/detections_384_run08.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_8"
+    },
+    {
+      "label": "consensus-384-t1-0::single-384-run_9",
+      "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_9/detections_384_run09.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_9"
+    }
+  ]
+}
