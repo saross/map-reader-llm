@@ -1,0 +1,90 @@
+{
+  "description": "\u00a72 #4 consensus-PV re-scores (14 buffers + MCC, eval-only). Each set re-scored with its OWN existing bounds+GT (provenance-preserving standardisation). 4-map: h10 pool_160, h8-v2 greedy+wbf scale-4/8, verifier-t-pilot T0/0.5/1.0 @ vote4_prob0.20 (operating point per Q2). 55-map: 5 generalisation verified sets. NOTE: t0.3 uses non-reviewed GT (its original) \u2014 flagged for harmonisation review.",
+  "generated": "2026-05-31",
+  "entries": [
+    {
+      "label": "h10::pool_160-vt4-pt0.05",
+      "detections": "outputs/h10/evaluation-v2/pool_160_hp4hn4/verified/detections_vt4_pt0.05.geojson",
+      "bounds": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/h10/pool_160_hp4hn4-verified-vt4-pt0.05"
+    },
+    {
+      "label": "h8-v2::greedy-scale-4-vt4-pt0.10",
+      "detections": "outputs/h8-v2/scale-4/verified/detections_vt4_pt0.10.geojson",
+      "bounds": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/h8-v2/scale-4-verified-vt4-pt0.10"
+    },
+    {
+      "label": "h8-v2::wbf-scale-4-vt4-pt0.10",
+      "detections": "outputs/h8-v2/wbf/scale-4/verified/detections_vt4_pt0.10.geojson",
+      "bounds": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/h8-v2/wbf-scale-4-verified-vt4-pt0.10"
+    },
+    {
+      "label": "h8-v2::wbf-scale-8-vt4-pt0.15",
+      "detections": "outputs/h8-v2/wbf/scale-8/verified/detections_vt4_pt0.15.geojson",
+      "bounds": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/h8-v2/wbf-scale-8-verified-vt4-pt0.15"
+    },
+    {
+      "label": "verifier-t-pilot::T0.0-vote4-prob0.20",
+      "detections": "outputs/verifier-t-pilot/T0.0/materialised/vote4_prob0.20.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/verifier-t-pilot/T0.0-vote4-prob0.20"
+    },
+    {
+      "label": "verifier-t-pilot::T0.5-vote4-prob0.20",
+      "detections": "outputs/verifier-t-pilot/T0.5/materialised/vote4_prob0.20.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/verifier-t-pilot/T0.5-vote4-prob0.20"
+    },
+    {
+      "label": "verifier-t-pilot::T1.0-vote4-prob0.20",
+      "detections": "outputs/verifier-t-pilot/T1.0/materialised/vote4_prob0.20.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/verifier-t-pilot/T1.0-vote4-prob0.20"
+    },
+    {
+      "label": "55maps-generalisation::verified-paired",
+      "detections": "outputs/55maps-generalisation/verified/verified_detections_paired.geojson",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+      "output_dir": "results/rescore-2026-05-31/55maps-generalisation/verified-paired"
+    },
+    {
+      "label": "55maps-image-generalisation::verified",
+      "detections": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+      "output_dir": "results/rescore-2026-05-31/55maps-image-generalisation/verified"
+    },
+    {
+      "label": "55maps-text-high-generalisation::verified",
+      "detections": "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+      "output_dir": "results/rescore-2026-05-31/55maps-text-high-generalisation/verified"
+    },
+    {
+      "label": "55maps-text-min-generalisation::verified",
+      "detections": "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+      "output_dir": "results/rescore-2026-05-31/55maps-text-min-generalisation/verified"
+    },
+    {
+      "label": "55maps-text-high-t0.3-generalisation::verified",
+      "detections": "outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/student-mounds-55maps.geojson",
+      "output_dir": "results/rescore-2026-05-31/55maps-text-high-t0.3-generalisation/verified"
+    }
+  ]
+}
