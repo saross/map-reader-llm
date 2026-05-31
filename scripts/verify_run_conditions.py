@@ -85,6 +85,34 @@ def _geojson_feature_count(rel_path: str) -> int | None:
     return len(feats) if isinstance(feats, list) else None
 
 
+def _geojson_coord_frame(rel_path: str) -> str | None:
+    """Classify a geojson's coordinate frame for the CRS sanity check.
+
+    Returns ``"utm-no-crs"`` — projected metres (first |x| > 180°) with NO declared
+    ``crs`` member, the silent-misread hazard behind the 2026-05-31 F1=0 bug: the
+    scorer trusts a missing ``crs`` as WGS84 and mis-reprojects the points off the
+    tile grid. Returns ``"ok"`` for WGS84 degrees, or projected coords that DO carry
+    an explicit ``crs`` (the scorer reprojects those correctly). ``None`` if
+    unreadable.
+    """
+    path = g.REPO_ROOT / rel_path
+    if not path.exists():
+        return None
+    try:
+        doc = g._load_json(path)
+    except (json.JSONDecodeError, OSError):
+        return None
+    feats = doc.get("features")
+    if not isinstance(feats, list) or not feats:
+        return None
+    coord = feats[0].get("geometry", {}).get("coordinates")
+    while isinstance(coord, list) and coord and isinstance(coord[0], list):
+        coord = coord[0]
+    if not (isinstance(coord, list) and coord and isinstance(coord[0], (int, float))):
+        return None
+    return "utm-no-crs" if abs(coord[0]) > 180 and "crs" not in doc else "ok"
+
+
 def _auto_match_eval(detections: str, scope_bounds: str | None,
                      index: dict) -> str | None:
     """Resolve the eval for a no-``eval_path`` condition, mirroring the extractor.
@@ -130,6 +158,13 @@ def verify_condition(spec: dict, scope_bounds: str | None,
                            f"{label}: eval_path given without detections — cannot cross-check "
                            f"eval↔detections or feature count"))
 
+    # CRS sanity: projected metres with no declared crs are silently misread as WGS84
+    # by the scorer and mis-reprojected off the tile grid (the 2026-05-31 F1=0 bug).
+    if detections and _geojson_coord_frame(detections) == "utm-no-crs":
+        discs.append(_disc(WARN, "crs-missing-utm",
+                           f"{label}: detections look like projected metres (|x|>180) with no "
+                           f"crs member — silent-misread hazard; declare the CRS or reproject"))
+
     # scope_override may be mis-authored as a bare string instead of a scope dict;
     # resolve it defensively so a typo surfaces as a discrepancy, not a crash.
     so = spec.get("scope_override")
@@ -168,6 +203,13 @@ def verify_condition(spec: dict, scope_bounds: str | None,
             discs.append(_disc(WARN, "feature-count-drift",
                                f"{label}: geojson has {fc} features but eval n_detections={n_det} "
                                f"(possible stale eval — re-score or accept)"))
+        # all-zero F1 across every buffer is a scoring red flag (a CRS misread can make
+        # detections match nothing at any radius while tile-MCC still shows faint signal)
+        f1s = [b.get("f1") for b in ((eval_doc.get("summary") or {}).get("buffers") or [])]
+        if f1s and all(v in (0, 0.0, None) for v in f1s):
+            discs.append(_disc(WARN, "f1-all-zero",
+                               f"{label}: F1 is 0 at every buffer — a scoring red flag "
+                               f"(e.g. a CRS misread), likely not a real result"))
 
     # pool resolves + n_passes sane
     pool = spec.get("proposer_pool")

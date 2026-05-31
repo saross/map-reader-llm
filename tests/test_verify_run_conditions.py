@@ -15,7 +15,13 @@ from scripts.generate_post_run_report import (
     load_run_facts,
     load_run_registry,
 )
-from scripts.verify_run_conditions import classify_run, verify_all, verify_run
+from scripts.verify_run_conditions import (
+    _geojson_coord_frame,
+    classify_run,
+    verify_all,
+    verify_condition,
+    verify_run,
+)
 
 # the eval index is private to the generator; import via the module to reuse it
 from scripts import generate_post_run_report as _g
@@ -125,6 +131,47 @@ def test_classify_gs_v2_standard_current():
     assert c["n_standard_current"] >= 4
     assert c["n_needs_rescore"] == 0
     assert not c["no_standard_scoring"]
+
+
+@pytest.mark.tier1
+def test_coord_frame_distinguishes_utm_no_crs_from_declared():
+    # the silent-misread hazard: projected metres with NO crs member is flagged;
+    # WGS84, and projected-WITH-explicit-crs, are both "ok".
+    archived_utm = ("archive/data-repairs/consensus-384-UNINTENDED-T1.0-missing-crs/"
+                    "voting/consensus_t1.geojson")
+    assert _geojson_coord_frame(archived_utm) == "utm-no-crs"
+    assert _geojson_coord_frame(
+        "outputs/h11/proposer-verifier-384/verified-brief-text.geojson") == "ok"  # repaired -> WGS84
+    # UTM coords but a declared EPSG::32635 crs member -> the scorer reprojects it; not a hazard
+    assert _geojson_coord_frame(
+        "outputs/h11/e47-propose-brief/text-baseline/"
+        "detections-propose_brief-text-3-flash-2026-04-08.geojson") == "ok"
+
+
+@pytest.mark.tier1
+def test_verify_flags_crs_missing_utm():
+    # a condition pointing at a UTM-no-crs geojson is flagged (the user-requested flag)
+    discs = verify_condition(
+        {"label": "utm-test",
+         "detections": ("archive/data-repairs/consensus-384-UNINTENDED-T1.0-missing-crs/"
+                        "voting/consensus_t1.geojson")},
+        None, {}, "outputs/h11/consensus-384-UNINTENDED-T1.0", _g._build_eval_index())
+    assert "crs-missing-utm" in {d["code"] for d in discs}
+
+
+@pytest.mark.tier1
+def test_verify_flags_f1_all_zero():
+    # an eval that is F1=0 at every buffer is flagged as a scoring red flag. The
+    # verified-checklist-image-v2 condition is a real all-zero (only 2 detections,
+    # both >1 km from any mound) — correctly surfaced for human review.
+    discs = verify_condition(
+        {"label": "zero-test",
+         "eval_path": ("results/rescore-2026-05-31/proposer-verifier-384/"
+                       "verified-checklist-image-v2/evaluation.json"),
+         "detections": "outputs/h11/proposer-verifier-384/verified-checklist-image-v2.geojson"},
+        "inputs/vectors/bounds/384/full_evaluation_bounds.geojson", {},
+        "outputs/h11/proposer-verifier-384", _g._build_eval_index())
+    assert "f1-all-zero" in {d["code"] for d in discs}
 
 
 @pytest.mark.tier1

@@ -223,12 +223,11 @@ def _build_metadata(args: argparse.Namespace) -> dict[str, Any]:
     bounds = getattr(args, "bounds", None)
 
     metadata: dict[str, Any] = {
-        # ``metadata_version`` bumped to 1.1 on 2026-04-29 with the
-        # introduction of the BCa bootstrap method and Mitigation 3
-        # sparse-coverage flag (commit feat(bootstrap): replace percentile
-        # method with BCa). Downstream consumers should treat 1.0 outputs
-        # as percentile-method and 1.1+ as BCa.
-        "metadata_version": "1.1",
+        # ``metadata_version``: 1.1 (2026-04-29) added BCa + the Mitigation 3
+        # sparse-coverage flag; 1.2 (2026-05-31) added the ``spatial`` block recording
+        # the evaluation CRS explicitly (after the missing-crs F1=0 bug). Downstream
+        # consumers should treat 1.0 outputs as percentile-method and 1.1+ as BCa.
+        "metadata_version": "1.2",
         "script_path": _SCRIPT_RELATIVE_PATH,
         "script_git_commit": _git_short_hash(PROJECT_ROOT),
         "script_git_status": _git_status(PROJECT_ROOT),
@@ -248,6 +247,18 @@ def _build_metadata(args: argparse.Namespace) -> dict[str, Any]:
             "detections": detections_value,
             "ground_truth": str(ground_truth) if ground_truth else None,
             "bounds": str(bounds) if bounds else None,
+        },
+        "spatial": {
+            # All geometries are reprojected to this CRS for matching/scoring; recorded
+            # explicitly so the spatial provenance lives in the eval, not just the code.
+            # See docs/methodology/spatial-reference.md.
+            "evaluation_crs": DEFAULT_CRS,
+            "evaluation_crs_name": "UTM Zone 35N (Bulgaria)",
+            "geojson_storage_crs": "EPSG:4326",
+            "geojson_storage_note": (
+                "GeoJSON is WGS84 (RFC 7946) unless a file declares its own crs member; "
+                "the scorer reprojects to evaluation_crs before matching."
+            ),
         },
     }
     return metadata
