@@ -16887,3 +16887,105 @@ Search terms: Obs 330, manifest build methodology audit, documentation uplift au
 - **Obs 326** (verifier value-add on the 4-map GS corpus — H3 consensus sweep): the scientific payoff that the completeness-audit pattern from Obs 327 produced; evidence that the audit-during-documentation pattern yields real results.
 - **Obs 328** (empirical eval-count can mislead on nominal scope): a sibling eval-interpretation finding from the same manifest fan-out programme.
 - **Artefacts**: `scripts/verify_run_conditions.py` (the audit instrument / Tier-1 verifier); `planning/manifest-3b-conditions-plan.md` (the 3b plan this Obs reframes); `results/55maps-cleaned-gt-evaluation/text-min/evaluation.json` (stale eval, n\_detections = 3861); `outputs/55maps-text-min-generalisation/verified/verified_detections.geojson` (current detections, 3865 features); `.pre-gtupdate-20260503` backups under `outputs/55maps-text-min-generalisation/` subdirectories (GT-refresh event corroboration).
+
+## Observation 331: A missing GeoJSON `crs` member silently scores F1=0 — a coordinate-frame misread, not a model failure (Session 94, 2026-05-31)
+
+### The finding
+
+**Several h11 detection GeoJSONs were stored in UTM Zone 35N metres (EPSG:32635) with NO `crs` member. The GeoJSON specification defaults a missing `crs` to WGS84 (EPSG:4326), so GeoPandas read unlabelled metre coordinates as degrees and the scorer's `load_geojson` in `scripts/evaluate_detections.py` (via `scripts/lib_advanced_metrics.py`, `DEFAULT_CRS = "EPSG:32635"`) then mis-reprojected them far off the tile grid. The detections matched no ground-truth mound at any buffer — producing F1=0 at every buffer (with a faint, non-zero tile-MCC surviving because tile-level co-occurrence is less sensitive to exact coordinate positions).**
+
+Affected outputs:
+
+| Run | Detection file(s) | Effect |
+|:----|:------------------|:-------|
+| `outputs/h11/proposer-verifier-384/` | `verified-*.geojson` (15 files) | F1=0 at every buffer |
+| `outputs/h11/proposer-verifier-512/` | `verified-adversarial-text.geojson`, `verified-adversarial-text-v2.geojson` (2 files) | F1=0 at every buffer |
+| `outputs/h11/e47-propose-brief/consensus/` | `flash-high-text-1of5.geojson` | F1=0 at every buffer |
+| `outputs/h11/consensus-384-UNINTENDED-T1.0/voting/` | `consensus_t*.geojson` (5 files) | **Crash**: `source_tile` spatial join produced NaN → `calculate_f1_internal` raised `"Cannot mask with non-boolean array containing NA / NaN values"` |
+
+The distinguishing diagnostic: a first coordinate with |x| > 180 cannot be a longitude in degrees. For the E43 deviation run (`consensus-384-UNINTENDED-T1.0`) the effect was a hard crash rather than a silent zero, because the per-map scoping mask (`source_tile` join) hit NaN before F1 could be computed.
+
+A corpus scan of all detection GeoJSONs under `outputs/` confirmed the defect was **contained to these h11 runs** — every working sibling run stores WGS84 degrees (coordinates like [25.76, 42.44]) with no `crs` member, which reads as EPSG:4326 and reprojects correctly to EPSG:32635 for scoring.
+
+**Fix (two commits):** reproject coordinates 32635 → 4326 to match the working-sibling WGS84 storage convention; originals archived to `archive/data-repairs/<run>-missing-crs/`. Post-repair re-scores produced non-zero results consistent with sibling conditions. Three downstream hardening measures were then added:
+
+1. **Verifier flags** (`scripts/verify_run_conditions.py`): `crs-missing-utm` (WARN — detections are projected metres with |x| > 180 and no `crs` member) and `f1-all-zero` (WARN — eval is F1=0 at every buffer, the silent-misread signature).
+2. **Eval metadata** (`scripts/evaluate_detections.py`): a `spatial` block recording `evaluation_crs` (EPSG:32635 / UTM Zone 35N) and `geojson_storage_crs` (EPSG:4326) in every `evaluation.json`; `metadata_version` bumped 1.1 → 1.2. Purely additive — no scoring change.
+3. **Canonical documentation**: `docs/methodology/spatial-reference.md` — verified per-artefact CRS (rasters/tiles/bounds/GT = EPSG:32635; detection GeoJSONs = EPSG:4326; evaluation reprojects to EPSG:32635), the gotcha, the guards, and how to check a file.
+
+**Erratum class:** flag in methodology / limitations as a data-integrity issue caught and corrected before analysis.
+
+### Why this matters
+
+1. **A silent F1=0 is the most dangerous failure mode: no crash, no warning, a plausible-looking number.** The bug would not have been caught by any threshold-based alert or sanity check unless someone had prior expectations about the result. The manifest-build audit surfaced it precisely because the standardisation re-score (3b) forced every condition through the scorer and the uniform-zero pattern was conspicuous across multiple conditions simultaneously.
+
+2. **The distinguishing signal is geometric, not statistical.** A coordinate with |x| > 180 cannot be a longitude in degrees — no statistical test is required to identify the class of defect. The `crs-missing-utm` WARN in `verify_run_conditions.py` encodes this rule so it fires automatically on any future condition in this state.
+
+3. **The crash on `consensus-384-UNINTENDED-T1.0` was informative.** Silent zeros were the majority failure mode; the hard crash on the E43 deviation run provided an error message (`"Cannot mask with non-boolean array containing NA / NaN values"` in `calculate_f1_internal`) that confirmed the exact mechanism and enabled the corpus scan to verify no other run shared it.
+
+4. **Non-destructive repair + archive is the right response to API-output data.** Reprojecting coordinates in-place and archiving originals preserves the detection geometry byte-faithfully (round-trip drift ~1×10⁻⁹ m); all per-feature properties including `source_tile` are unchanged. This follows the same R2 (additive correction) principle as E55 (Obs 329).
+
+### Caveats / methodological notes
+
+**The `f1-all-zero` WARN is a heuristic, not a proof.** A legitimate condition could produce F1=0 if the model found zero detections or if ground truth and detections are in genuinely disjoint areas. The WARN is a flag for human adjudication, not an automatic verdict. The accompanying `crs-missing-utm` flag narrows the diagnosis to the coordinate-frame cause.
+
+**Only the h11 runs were affected.** The corpus scan used a coordinate-frame heuristic (|x| > 180 with no `crs` member) across every GeoJSON under `outputs/`. Working sibling runs store WGS84 degrees — coordinates like [25.76, 42.44] — and read as EPSG:4326 correctly. The `e47-propose-brief/text-baseline/` GeoJSON carries an explicit `EPSG::32635` `crs` member (double-colon is the legacy PROJ format) and was correctly skipped by the repair.
+
+**The `spatial` block in `evaluation.json` records the CRS used by the scorer at run time.** It does not retroactively validate the input GeoJSON's coordinate frame; that is the verifier's job. Evals produced before `metadata_version` 1.2 lack the block but are otherwise unaffected — the scoring arithmetic was not changed.
+
+### Findable later
+
+Search terms: Obs 331, missing CRS GeoJSON F1=0, crs member absent UTM Zone 35N, EPSG:32635 metres read as EPSG:4326 degrees, mis-reprojected detections tile grid, F1=0 every buffer silent failure, coordinate frame misread not model failure, proposer-verifier-384 verified geojson CRS repair, proposer-verifier-512 CRS repair, e47 flash-high-text-1of5 CRS, consensus-384-UNINTENDED-T1.0 crash NaN source\_tile, calculate\_f1\_internal NA NaN mask, crs-missing-utm WARN flag, f1-all-zero WARN flag, verify\_run\_conditions.py new flags, evaluate\_detections.py spatial block, metadata\_version 1.2, docs/methodology/spatial-reference.md, |x|>180 longitude diagnostic, 32635 4326 reproject repair archive data-repairs, commit 6427e410 commit fbef3def, Session 94 standardisation re-score 3b.
+
+### Related observations and artefacts
+
+- **Obs 330** (the manifest build is a methodology audit — the 3b re-score that surfaced the defect): the standardisation re-score was the mechanism by which uniform-zero F1s became conspicuous; without it, affected conditions would have remained unscored or scored with stale/incorrect values.
+- **Obs 329** (CLI override faithful-to-config yet wrong-about-execution, E55): the same "additive non-destructive correction preserving original serialisation" repair principle, applied here to coordinate data rather than metadata.
+- **Obs 326** (verifier value-add on the 4-map GS corpus — gs-v2 verified-v1 F1=0.866): the pv-384 conditions, once repaired, are the h11 counterpart to gs-v2; their pre-repair F1=0 values were measuring nothing — the repair restores their scientific content.
+- **Artefacts**: `scripts/evaluate_detections.py` (scorer; `DEFAULT_CRS` in `scripts/lib_advanced_metrics.py` line 41); `scripts/verify_run_conditions.py` (verifier; `crs-missing-utm` line 164, `f1-all-zero` line 210); `docs/methodology/spatial-reference.md` (canonical CRS record); `archive/data-repairs/proposer-verifier-384-missing-crs/`; `archive/data-repairs/proposer-verifier-512-missing-crs/`; `archive/data-repairs/e47-propose-brief-missing-crs/`; `archive/data-repairs/consensus-384-UNINTENDED-T1.0-missing-crs/`; commits `6427e410` (consensus-384-UNINTENDED-T1.0 repair) and `fbef3def` (17 Batch A repairs); commit `5987a23e` (verifier flags + eval metadata + spatial-reference.md).
+
+## Observation 332: A "verified" GeoJSON holding the full candidate set plus a flag scores the proposer baseline, not the verifier — the scorer scores files as-is (Session 94, 2026-05-31)
+
+### The finding
+
+**The `proposer-verifier-384` run's `verified-*.geojson` files (e.g. `outputs/h11/proposer-verifier-384/verified-brief-text.geojson`) contain the FULL proposer candidate set (572 features) with a per-feature `verified` boolean (269 True / 303 False for `verified-brief-text`) plus verifier provenance metadata. The scorer (`scripts/evaluate_detections.py`) scores every geometry in a file and has no concept of the flag — so all 8 original verifier-prompt configs that store 572 features score identically: F1@20m ≈ 0.4032. They all measure the unfiltered proposer baseline; the verifier's discriminative effect is invisible in the scores.**
+
+By contrast, `outputs/gs/gold-standard-v2/verified-v1/verified_detections_full-scope.geojson` is **pre-filtered** — 380 features, no per-feature `verified` flag, explicit `crs` member (`EPSG:32635`) — so scoring it correctly measures the verified subset and produces the F1=0.866 / MCC=0.778 result reported in Obs 326.
+
+| File type | Feature count | `verified` flag present | What the scorer measures |
+|:----------|:-------------|:----------------------|:------------------------|
+| `pv-384` `verified-*.geojson` (8 original configs) | 572 each | Yes (True/False per feature) | Unfiltered proposer baseline (F1@20m = 0.4032 for all 8) |
+| `gs-v2` `verified_detections_full-scope.geojson` | 380 | No (pre-filtered) | Verified subset (F1@20m ≈ 0.866) |
+
+This motivated a locked convention (**Decision 1A, Session 94**): the scoreable detection set is ALWAYS the materialised actual set — the features physically present in the file. Verifier verdicts and per-feature flags are separate provenance records; a file intended to represent the verified output must contain only the verified:true geometries. An audit check (`verify_run_conditions.py`) now flags any proposer-verifier condition whose scored GeoJSON still contains `verified: false` features.
+
+The cascade variants (`verified-cascade-adversarial-checklist.geojson`, `verified-cascade-checklist-adversarial.geojson`) and several v2 variants have fewer than 572 features and different F1 values, indicating they were materialised correctly or partially filtered. The 8 original configs (non-cascade, non-v2) are the affected set.
+
+### Why this matters
+
+1. **The eight pv-384 verifier-prompt comparisons are scientifically void as stored.** The scores express nothing about which verifier prompt is better — every one of them measured the same 572-feature proposer set. Any analysis that cited verifier-prompt F1 differences for pv-384 would be comparing noise. The fix is to materialise the `verified: true` subset before scoring.
+
+2. **The gs-v2 verified-v1 result (+0.101 F1 over consensus-5-of-5, Obs 326) depended on correct materialisation.** That result is valid precisely because `verified_detections_full-scope.geojson` is pre-filtered. The contrast between the two files makes the materialisation convention load-bearing for any cross-condition comparison.
+
+3. **"Materialised actual set" is the canonical definition of what a condition's scored GeoJSON represents.** Consensus (tN thresholds), greedy, and WBF outputs are all materialised actual sets — the pv-384 flagged-superset was the lone exception. Generalising the convention retrospectively names what had always been implicitly true, and makes the exception an audit failure rather than a silent ambiguity.
+
+4. **The scorer is deliberately agnostic to feature flags.** This is correct design — the scorer should not need to understand pipeline-internal provenance metadata. The responsibility for materialising the correct set belongs to the pipeline stage that writes the GeoJSON, not to the scorer. The audit check in `verify_run_conditions.py` enforces the contract at the boundary.
+
+### Caveats / methodological notes
+
+**The v2 and cascade pv-384 variants are not uniformly affected.** `verified-checklist-image-v2.geojson` has 2 features (both `verified: false`), producing F1=0 — a different failure mode, likely a pipeline error. `verified-checklist-text-v2.geojson` has 462 features (311 True, 151 False), producing F1@20m = 0.4526 — partially filtered but still measuring a mixed set. The cascade variants appear closer to materialised sets (271 and 326 features respectively with very few `verified: false`). Each v2 and cascade condition requires individual review before its score can be interpreted.
+
+**The 572-feature count is the proposer output size for this run, not a fixed constant.** A different proposer configuration or tile pool would produce a different count. The diagnostic signal is not the number itself but the uniformity of feature counts across all verifier-prompt variants — if every verifier config produces the same count, the verifier has not filtered.
+
+**Decision 1A is a prospective convention, not a retroactive mandate.** Existing scored pv-384 conditions need to be re-materialised and re-scored before their results are cited. Historical leaderboard entries built from these scores should be treated as proposer-baseline numbers, not verifier numbers, until corrected.
+
+### Findable later
+
+Search terms: Obs 332, verified geojson full candidate set flagged not filtered, verified boolean per-feature flag scorer agnostic, proposer-verifier-384 F1 identical all configs, F1@20m 0.4032 uniform all 8 verifier prompts, 572 features proposer baseline not verifier, verified-brief-text 269 True 303 False, gs-v2 verified-v1 pre-filtered 380 features, materialised actual set convention, Decision 1A Session 94, scorer scores as-is no flag concept, evaluate\_detections.py feature flag agnostic, verify\_run\_conditions.py verified-false audit check, verifier-prompt comparison void unfiltered, pv-384 rescore materialise verified-true subset, proposer-verifier correct materialisation, F1 0.4032 proposer not verifier, cascade variants partially filtered, v2 variants individual review required, Session 94 standardisation 3b representation problem.
+
+### Related observations and artefacts
+
+- **Obs 326** (verifier value-add on the 4-map GS corpus, gs-v2 verified-v1 F1=0.866 / MCC=0.778): the quantity that the pv-384 conditions fail to measure as stored — the gs-v2 result is valid precisely because `verified_detections_full-scope.geojson` is pre-filtered to 380 features.
+- **Obs 327** (manifest-as-completeness-audit — the fan-out programme that surfaced this representation problem): the same schema-driven audit process that caught never-scored conditions in Obs 327 is what forced pv-384 into the scorer and made the uniform-F1 pattern visible.
+- **Obs 331** (missing CRS silently scoring F1=0 — sibling data-representation finding from the same standardisation pass): both Obs 331 and 332 were surfaced during the 3b re-score; both are data-representation problems rather than model failures; both require materialisation fixes before their results are scientifically usable.
+- **Artefacts**: `outputs/h11/proposer-verifier-384/verified-brief-text.geojson` (572 features, 269 True / 303 False — canonical example of the affected format); `outputs/gs/gold-standard-v2/verified-v1/verified_detections_full-scope.geojson` (380 features, pre-filtered — the correct materialisation pattern); `results/rescore-2026-05-31/proposer-verifier-384/` (re-scores showing F1@20m = 0.4032 for all 8 original configs); `scripts/evaluate_detections.py` (scorer); `scripts/verify_run_conditions.py` (audit check for `verified: false` features in scored GeoJSON).
