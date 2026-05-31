@@ -1,6 +1,6 @@
 # Evaluation: verified-checklist-image-v2
 
-**Generated**: 2026-05-31T01:42:07.763870+00:00  
+**Generated**: 2026-05-31T02:10:31.035383+00:00  
 **Detections**: 2  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI | MCC | MCC CI | Sens | Spec |
