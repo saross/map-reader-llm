@@ -61,6 +61,476 @@
           "detections": "outputs/gs/gold-standard-v2/verified-v1/verified_detections_full-scope.geojson"
         }
       ]
+    },
+    "e47-propose-brief": {
+      "proposer_pools": {
+        "propose_brief-text": "text"
+      },
+      "verifier_passes": {},
+      "conditions": [
+        {
+          "label": "consensus-1of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "propose_brief-text",
+          "n_passes": 5,
+          "vote_threshold": 1,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t1/evaluation.json",
+          "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t1.geojson"
+        },
+        {
+          "label": "consensus-2of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "propose_brief-text",
+          "n_passes": 5,
+          "vote_threshold": 2,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t2/evaluation.json",
+          "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t2.geojson"
+        },
+        {
+          "label": "consensus-3of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "propose_brief-text",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t3/evaluation.json",
+          "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t3.geojson"
+        },
+        {
+          "label": "consensus-4of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "propose_brief-text",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t4/evaluation.json",
+          "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t4.geojson"
+        },
+        {
+          "label": "consensus-5of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "propose_brief-text",
+          "n_passes": 5,
+          "vote_threshold": 5,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t5/evaluation.json",
+          "detections": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t5.geojson"
+        },
+        {
+          "label": "baseline-single-pass",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "propose_brief-text",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/e47-propose-brief/text-baseline/detections-propose_brief-text-3-flash-2026-04-08/evaluation.json",
+          "detections": "outputs/h11/e47-propose-brief/text-baseline/detections-propose_brief-text-3-flash-2026-04-08.geojson"
+        }
+      ]
+    },
+    "n1-outstanding-384": {
+      "proposer_pools": {
+        "brief-text-t03": "text",
+        "image-t0": "image",
+        "image-t03": "image",
+        "pro-image-high-t0": "image",
+        "pro-text-high-t0": "text",
+        "pro-image-medium-t07": "image",
+        "pro-text-medium-t07": "text"
+      },
+      "verifier_passes": {},
+      "conditions": [
+        {
+          "label": "brief-text-t03-consensus-1of3",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "brief-text-t03",
+          "n_passes": 3,
+          "vote_threshold": 1,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/brief-text-t03/consensus/consensus_t1/evaluation.json",
+          "detections": "outputs/h11/n1-outstanding-384/brief-text-t03/consensus/consensus_t1.geojson"
+        },
+        {
+          "label": "brief-text-t03-consensus-2of3",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "brief-text-t03",
+          "n_passes": 3,
+          "vote_threshold": 2,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/brief-text-t03/consensus/consensus_t2/evaluation.json",
+          "detections": "outputs/h11/n1-outstanding-384/brief-text-t03/consensus/consensus_t2.geojson"
+        },
+        {
+          "label": "brief-text-t03-consensus-3of3",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "brief-text-t03",
+          "n_passes": 3,
+          "vote_threshold": 3,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/brief-text-t03/consensus/consensus_t3/evaluation.json",
+          "detections": "outputs/h11/n1-outstanding-384/brief-text-t03/consensus/consensus_t3.geojson"
+        },
+        {
+          "label": "image-t0-consensus-1of3",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "image-t0",
+          "n_passes": 3,
+          "vote_threshold": 1,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/image-t0/consensus/consensus_t1/evaluation.json",
+          "detections": "outputs/h11/n1-outstanding-384/image-t0/consensus/consensus_t1.geojson"
+        },
+        {
+          "label": "image-t0-consensus-2of3",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "image-t0",
+          "n_passes": 3,
+          "vote_threshold": 2,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/image-t0/consensus/consensus_t2/evaluation.json",
+          "detections": "outputs/h11/n1-outstanding-384/image-t0/consensus/consensus_t2.geojson"
+        },
+        {
+          "label": "image-t0-consensus-3of3",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "image-t0",
+          "n_passes": 3,
+          "vote_threshold": 3,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/image-t0/consensus/consensus_t3/evaluation.json",
+          "detections": "outputs/h11/n1-outstanding-384/image-t0/consensus/consensus_t3.geojson"
+        },
+        {
+          "label": "image-t03-consensus-1of3",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "image-t03",
+          "n_passes": 3,
+          "vote_threshold": 1,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/image-t03/consensus/consensus_t1/evaluation.json",
+          "detections": "outputs/h11/n1-outstanding-384/image-t03/consensus/consensus_t1.geojson"
+        },
+        {
+          "label": "image-t03-consensus-2of3",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "image-t03",
+          "n_passes": 3,
+          "vote_threshold": 2,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/image-t03/consensus/consensus_t2/evaluation.json",
+          "detections": "outputs/h11/n1-outstanding-384/image-t03/consensus/consensus_t2.geojson"
+        },
+        {
+          "label": "image-t03-consensus-3of3",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "image-t03",
+          "n_passes": 3,
+          "vote_threshold": 3,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/image-t03/consensus/consensus_t3/evaluation.json",
+          "detections": "outputs/h11/n1-outstanding-384/image-t03/consensus/consensus_t3.geojson"
+        },
+        {
+          "label": "pro-image-high-t0-consensus-1of3",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "pro-image-high-t0",
+          "n_passes": 3,
+          "vote_threshold": 1,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t1/evaluation.json",
+          "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t1.geojson"
+        },
+        {
+          "label": "pro-image-high-t0-consensus-2of3",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "pro-image-high-t0",
+          "n_passes": 3,
+          "vote_threshold": 2,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t2/evaluation.json",
+          "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t2.geojson"
+        },
+        {
+          "label": "pro-image-high-t0-consensus-3of3",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "pro-image-high-t0",
+          "n_passes": 3,
+          "vote_threshold": 3,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t3/evaluation.json",
+          "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t3.geojson"
+        },
+        {
+          "label": "pro-text-high-t0-consensus-1of3",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "pro-text-high-t0",
+          "n_passes": 3,
+          "vote_threshold": 1,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t1/evaluation.json",
+          "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t1.geojson"
+        },
+        {
+          "label": "pro-text-high-t0-consensus-2of3",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "pro-text-high-t0",
+          "n_passes": 3,
+          "vote_threshold": 2,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t2/evaluation.json",
+          "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t2.geojson"
+        },
+        {
+          "label": "pro-text-high-t0-consensus-3of3",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "pro-text-high-t0",
+          "n_passes": 3,
+          "vote_threshold": 3,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t3/evaluation.json",
+          "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t3.geojson"
+        }
+      ]
+    },
+    "retest-h11-single-pass-384-t0": {
+      "proposer_pools": {
+        "brief-text-t0": "text"
+      },
+      "verifier_passes": {},
+      "conditions": [
+        {
+          "label": "single-pass-run_1",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "brief-text-t0",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_1/evaluation.json",
+          "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_1/detections_brief-text-t0_run01.geojson"
+        },
+        {
+          "label": "single-pass-run_2",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "brief-text-t0",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_2/evaluation.json",
+          "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_2/detections_brief-text-t0_run02.geojson"
+        },
+        {
+          "label": "single-pass-run_3",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "brief-text-t0",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_3/evaluation.json",
+          "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_3/detections_brief-text-t0_run03.geojson"
+        },
+        {
+          "label": "single-pass-run_4",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "brief-text-t0",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_4/evaluation.json",
+          "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_4/detections_brief-text-t0_run04.geojson"
+        },
+        {
+          "label": "single-pass-run_5",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "brief-text-t0",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_5/evaluation.json",
+          "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_5/detections_brief-text-t0_run05.geojson"
+        },
+        {
+          "label": "single-pass-run_6",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "brief-text-t0",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_6/evaluation.json",
+          "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_6/detections_brief-text-t0_run06.geojson"
+        },
+        {
+          "label": "single-pass-run_7",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "brief-text-t0",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_7/evaluation.json",
+          "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_7/detections_brief-text-t0_run07.geojson"
+        },
+        {
+          "label": "single-pass-run_8",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "brief-text-t0",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_8/evaluation.json",
+          "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_8/detections_brief-text-t0_run08.geojson"
+        },
+        {
+          "label": "single-pass-run_9",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "brief-text-t0",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_9/evaluation.json",
+          "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_9/detections_brief-text-t0_run09.geojson"
+        },
+        {
+          "label": "single-pass-run_10",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "brief-text-t0",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_10/evaluation.json",
+          "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_10/detections_brief-text-t0_run10.geojson"
+        }
+      ]
+    },
+    "consensus-384-t1-0": {
+      "proposer_pools": {
+        "384": "text"
+      },
+      "verifier_passes": {},
+      "conditions": [
+        {
+          "label": "consensus-1of30",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "384",
+          "n_passes": 30,
+          "vote_threshold": 1,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t1/evaluation.json",
+          "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t1.geojson"
+        },
+        {
+          "label": "consensus-2of30",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "384",
+          "n_passes": 30,
+          "vote_threshold": 2,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t2/evaluation.json",
+          "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t2.geojson"
+        },
+        {
+          "label": "consensus-3of30",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "384",
+          "n_passes": 30,
+          "vote_threshold": 3,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t3/evaluation.json",
+          "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t3.geojson"
+        },
+        {
+          "label": "consensus-4of30",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "384",
+          "n_passes": 30,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t4/evaluation.json",
+          "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t4.geojson"
+        },
+        {
+          "label": "consensus-5of30",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "384",
+          "n_passes": 30,
+          "vote_threshold": 5,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t5/evaluation.json",
+          "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/voting/consensus_t5.geojson"
+        }
+      ]
     }
   }
 }
