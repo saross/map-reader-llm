@@ -16832,3 +16832,58 @@ Resolution (erratum **E55**): non-destructive — the original `temperature: 0.0
 - **Erratum E55**: `docs/methodology/preregistration/protocol-errata.md`.
 - **The pilot**: `outputs/verifier-t-pilot/{T0.5,T1.0}/run.meta.json` + `run.log`.
 - **E43** (the inverse case): `planning/manifest-schema-design.md` §1A — directory name unreliable, meta authoritative.
+
+## Observation 330: The manifest build is a methodology audit, not just documentation — and we have now made that purpose explicit and planned it in (Session 94, 2026-05-31)
+
+### The finding
+
+**Building the run-conditions decomposition manifest (sub-step 3b of the manifest fan-out) is functioning as both a documentation uplift AND a methodology audit. Accounting for every scored result forces stale, non-standard, incomplete, and missing evaluations into view.** The project lead observed that this mirrors his prior fully-manual practice — methodology omissions were always uncovered during documentation finalisation — and that he had subconsciously carried that pattern over into the agent-assisted workflow. We are now naming it explicitly and planning it in rather than catching it as a side-effect.
+
+Two consequences were decided and are now standing policy:
+
+1. **Always prefer re-scoring to standardise, over building extractor adapters for legacy or non-standard eval shapes.** Re-score each condition's detection GeoJSON through the current standard scorer (full buffers + MCC, each on its own scope). This is evaluation-only — no detection API calls — so it simultaneously fixes stale evals, standardises shape, fills MCC everywhere, and keeps the extractor simple.
+
+2. **The decomposition verifier (`scripts/verify_run_conditions.py`) becomes the audit instrument.** It classifies each condition's evaluation as standard-current / stale / non-standard / missing, and that classification IS the re-scoring worklist. The verifier should WARN (surface for human adjudication: re-run vs accept) and reserve ERROR for unambiguous wrong-source. The verifier's severity model is being recalibrated this session to match this: feature-count divergence is downgraded from ERROR to WARN.
+
+### The evidence — a stale eval caught by the verifier
+
+The feature-count cross-check (re-verified against source files for this Obs) found a stale eval at `results/55maps-cleaned-gt-evaluation/text-min/evaluation.json`:
+
+| Artefact | Value |
+|:---------|:------|
+| `evaluation.json` → `summary.n_detections` | 3861 |
+| `outputs/55maps-text-min-generalisation/verified/verified_detections.geojson` → feature count | 3865 |
+| `evaluation.json` mtime | 2026-04-30 |
+| `verified_detections.geojson` mtime | 2026-05-03 |
+
+The eval was computed before the GT/detections refresh; `.pre-gtupdate-20260503` backup files in sibling subdirectories of `outputs/55maps-text-min-generalisation/` corroborate the 2026-05-03 refresh event. The 4-feature discrepancy is mtime-dated staleness, not a wrong-source error — hence WARN, not ERROR. This is the motivating case for the severity recalibration.
+
+### Why this matters
+
+1. **Naming the pattern makes it reproducible.** "The manifest build IS the audit" is a design principle now, not an accidental side-effect. Future manifest fan-out sub-steps should be scoped and scheduled with the expectation that they will surface an audit worklist, not merely populate a JSON schema.
+
+2. **It generalises Obs 327's completeness check into a broader evaluation-integrity audit.** Obs 327 identified never-scored outputs (a gap class). This Obs adds stale evals, non-standard eval shapes, and MCC-missing evals to the audit taxonomy. The verifier is the instrument that classifies all four classes.
+
+3. **Re-score over adapter is a methodological preference, not just an engineering shortcut.** Adapting extractors to legacy eval shapes would preserve the stale/non-standard numbers as canonical. Re-scoring through the current standard scorer ensures every condition in the manifest is evaluated under the same protocol — which is the precondition for valid cross-condition comparisons in the paper.
+
+4. **The severity recalibration (WARN vs ERROR for feature-count divergence) is load-bearing.** If the verifier treats staleness as ERROR, it will block manifest builds whenever a stale eval exists — the opposite of surfacing it for adjudication. WARN + worklist is the correct instrument for an audit; ERROR should be reserved for provably wrong inputs.
+
+### Caveats / methodological notes
+
+**Mtime dates are corroborating evidence, not hard provenance.** File modification times can be perturbed by copy operations, git checkouts, or file-system events unrelated to the original computation. They are consistent with the staleness hypothesis here and are cited as corroboration; the definitive provenance is the feature-count discrepancy itself (3861 vs 3865).
+
+**"Standard-current" requires a definition.** The verifier's classification of an eval as standard-current depends on an agreed specification of what the current standard scorer produces (buffer radii, MCC presence, tile-pool). That spec must be kept current as the pipeline evolves; if it drifts, the verifier's WARN/pass boundary drifts with it.
+
+**The re-score policy applies to the manifest programme.** It does not retroactively mandate re-scoring all historical evals in the repo; it governs what the manifest fan-out sub-step 3b will do when it encounters a non-standard or stale condition.
+
+### Findable later
+
+Search terms: Obs 330, manifest build methodology audit, documentation uplift audit, manifest fan-out 3b, decomposition verifier audit instrument, verify\_run\_conditions.py, re-score over adapter policy, stale eval, feature-count divergence WARN not ERROR, severity recalibration verifier, 55maps-cleaned-gt-evaluation text-min stale, evaluation.json n\_detections 3861, verified\_detections.geojson 3865 features, pre-gtupdate-20260503 backup, documentation-finalisation audit pattern, always prefer re-scoring standardise, MCC missing eval worklist, Session 94 manifest audit reframing.
+
+### Related observations and artefacts
+
+- **Obs 327** (building the conditions manifest surfaced ~12 never-scored outputs — schema as completeness audit): this Obs GENERALISES Obs 327 from a completeness check (never-scored) to a broader audit taxonomy (also stale / non-standard / missing), and makes the audit purpose explicit policy.
+- **Obs 329** (CLI override faithful-to-config yet wrong-about-execution, E55): same theme — the manifest build surfacing a real data-integrity problem that would be invisible without the cross-check.
+- **Obs 326** (verifier value-add on the 4-map GS corpus — H3 consensus sweep): the scientific payoff that the completeness-audit pattern from Obs 327 produced; evidence that the audit-during-documentation pattern yields real results.
+- **Obs 328** (empirical eval-count can mislead on nominal scope): a sibling eval-interpretation finding from the same manifest fan-out programme.
+- **Artefacts**: `scripts/verify_run_conditions.py` (the audit instrument / Tier-1 verifier); `planning/manifest-3b-conditions-plan.md` (the 3b plan this Obs reframes); `results/55maps-cleaned-gt-evaluation/text-min/evaluation.json` (stale eval, n\_detections = 3861); `outputs/55maps-text-min-generalisation/verified/verified_detections.geojson` (current detections, 3865 features); `.pre-gtupdate-20260503` backups under `outputs/55maps-text-min-generalisation/` subdirectories (GT-refresh event corroboration).
