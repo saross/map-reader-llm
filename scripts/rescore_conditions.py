@@ -30,12 +30,25 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+
+#: Pin every worker to ONE thread. Each evaluate_detections.py is CPU-bound (scipy
+#: BCa bootstrap); without this, 16 concurrent processes each spawn BLAS threads and
+#: oversubscribe the cores, inflating per-condition time. One thread per process →
+#: clean N-way scaling across the 16 cores.
+THREAD_ENV = {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+}
 
 #: The 14 uniform buffers (metres), standard for ALL runs as of 2026-05-31:
 #: a fine 5-50 m core (5 m steps) plus an extended 75-150 m tail (saturation /
@@ -112,8 +125,10 @@ def estimate(entries: list[dict], workers: int, ram_gb: float = 16.0) -> dict:
 
 
 def run_entry(entry: dict) -> tuple[str, int]:
-    """Execute one re-score; return ``(label, returncode)``."""
-    proc = subprocess.run(_eval_command(entry), cwd=REPO_ROOT, capture_output=True, text=True)
+    """Execute one re-score (single-threaded); return ``(label, returncode)``."""
+    env = {**os.environ, **THREAD_ENV}
+    proc = subprocess.run(_eval_command(entry), cwd=REPO_ROOT,
+                          capture_output=True, text=True, env=env)
     return entry.get("label", entry["detections"]), proc.returncode
 
 
