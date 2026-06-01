@@ -1,0 +1,125 @@
+{
+  "description": "FLAG 1+2 follow-up. (a) pv-diag-384 verifier-threshold SWEEP \u2014 both PV quadrants x prob_t in {0.05..0.50} to find the F1-optimal operating point (CAVEAT: selecting threshold on the eval set is optimistic; use a held-out split for a headline claim). (b) 55maps-text-high-t0.3 re-scored against the REVIEWED GT (4746) to harmonise with the other 4 generalisation runs (overwrites the non-reviewed eval). 14 buffers + MCC, eval-only, no API.",
+  "generated": "2026-06-01",
+  "entries": [
+    {
+      "label": "pv-diag-384::single-run-PV-1of5-pt0.05",
+      "detections": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5/materialised_vt1_pt0.05.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/pv-diag-384/sweep/single-run-PV-1of5-pt0.05"
+    },
+    {
+      "label": "pv-diag-384::consensus-PV-4of5-pt0.05",
+      "detections": "outputs/h11/pv-diag-384/verified/flash-high-text-4of5/materialised_vt4_pt0.05.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/pv-diag-384/sweep/consensus-PV-4of5-pt0.05"
+    },
+    {
+      "label": "pv-diag-384::single-run-PV-1of5-pt0.10",
+      "detections": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5/materialised_vt1_pt0.10.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/pv-diag-384/sweep/single-run-PV-1of5-pt0.10"
+    },
+    {
+      "label": "pv-diag-384::consensus-PV-4of5-pt0.10",
+      "detections": "outputs/h11/pv-diag-384/verified/flash-high-text-4of5/materialised_vt4_pt0.10.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/pv-diag-384/sweep/consensus-PV-4of5-pt0.10"
+    },
+    {
+      "label": "pv-diag-384::single-run-PV-1of5-pt0.15",
+      "detections": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5/materialised_vt1_pt0.15.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/pv-diag-384/sweep/single-run-PV-1of5-pt0.15"
+    },
+    {
+      "label": "pv-diag-384::consensus-PV-4of5-pt0.15",
+      "detections": "outputs/h11/pv-diag-384/verified/flash-high-text-4of5/materialised_vt4_pt0.15.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/pv-diag-384/sweep/consensus-PV-4of5-pt0.15"
+    },
+    {
+      "label": "pv-diag-384::single-run-PV-1of5-pt0.20",
+      "detections": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5/materialised_vt1_pt0.20.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/pv-diag-384/sweep/single-run-PV-1of5-pt0.20"
+    },
+    {
+      "label": "pv-diag-384::consensus-PV-4of5-pt0.20",
+      "detections": "outputs/h11/pv-diag-384/verified/flash-high-text-4of5/materialised_vt4_pt0.20.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/pv-diag-384/sweep/consensus-PV-4of5-pt0.20"
+    },
+    {
+      "label": "pv-diag-384::single-run-PV-1of5-pt0.25",
+      "detections": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5/materialised_vt1_pt0.25.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/pv-diag-384/sweep/single-run-PV-1of5-pt0.25"
+    },
+    {
+      "label": "pv-diag-384::consensus-PV-4of5-pt0.25",
+      "detections": "outputs/h11/pv-diag-384/verified/flash-high-text-4of5/materialised_vt4_pt0.25.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/pv-diag-384/sweep/consensus-PV-4of5-pt0.25"
+    },
+    {
+      "label": "pv-diag-384::single-run-PV-1of5-pt0.30",
+      "detections": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5/materialised_vt1_pt0.30.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/pv-diag-384/sweep/single-run-PV-1of5-pt0.30"
+    },
+    {
+      "label": "pv-diag-384::consensus-PV-4of5-pt0.30",
+      "detections": "outputs/h11/pv-diag-384/verified/flash-high-text-4of5/materialised_vt4_pt0.30.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/pv-diag-384/sweep/consensus-PV-4of5-pt0.30"
+    },
+    {
+      "label": "pv-diag-384::single-run-PV-1of5-pt0.40",
+      "detections": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5/materialised_vt1_pt0.40.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/pv-diag-384/sweep/single-run-PV-1of5-pt0.40"
+    },
+    {
+      "label": "pv-diag-384::consensus-PV-4of5-pt0.40",
+      "detections": "outputs/h11/pv-diag-384/verified/flash-high-text-4of5/materialised_vt4_pt0.40.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/pv-diag-384/sweep/consensus-PV-4of5-pt0.40"
+    },
+    {
+      "label": "pv-diag-384::single-run-PV-1of5-pt0.50",
+      "detections": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5/materialised_vt1_pt0.50.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/pv-diag-384/sweep/single-run-PV-1of5-pt0.50"
+    },
+    {
+      "label": "pv-diag-384::consensus-PV-4of5-pt0.50",
+      "detections": "outputs/h11/pv-diag-384/verified/flash-high-text-4of5/materialised_vt4_pt0.50.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-05-31/pv-diag-384/sweep/consensus-PV-4of5-pt0.50"
+    },
+    {
+      "label": "55maps-text-high-t0.3-generalisation::verified-reviewed-gt",
+      "detections": "outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+      "output_dir": "results/rescore-2026-05-31/55maps-text-high-t0.3-generalisation/verified"
+    }
+  ]
+}
