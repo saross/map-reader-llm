@@ -4879,3 +4879,25 @@ Sequence 1 and the broader H11 decision share a shape Shawn named explicitly: a 
 **Belief revision**: "a manual review is outstanding" → "no review is outstanding: the base run is the *superseded original* of text-high (its assessment is carried by the successor), and the genuinely-missing pieces were two *crosstab computations*, not reviews." Generalised: a half-remembered to-do can be a misremembered version of work already done in a different form — when memory is imprecise, enumerate the artefacts and let their state, not the memory, decide what is actually missing.
 
 **Probe-type**: exhaustive state-mapping across a run family + provenance-read of the one anomaly, against an imprecise human prior. The prior's *shape* ("complete a 2×2") guided the search correctly even though it misnamed the target.
+
+## Session 96 — 2026-06-02 — a common-cause bug collapsed a provenance hierarchy; a challenged assertion held
+
+### Sequence 1 — "the Pro pools have per-item metadata, so their model is recorded correctly"
+
+**Surprising fact**: my prior (encoded as a comment in `extract_passes`) ranks `per_item_metadata.model_used` AUTHORITATIVE and `config.model` an unreliable Era-1 fallback. The n1 Pro pools have per-item metadata — so I expected their model to be correct and no override needed. Reading an actual meta.json, `per_item_metadata.model_used` reads `gemini-3-flash-preview` — *identical* to the supposedly-unreliable `config.model`, and wrong (these are Pro pools).
+
+**Probe**: traced to the study definitions (E57's named authority). All four Pro pools declare `model: gemini-3.1-pro` in `studies/h11-384-{n1-outstanding,pro-medium-t07}.yaml`. E57's root cause: the proposer runner serialised the *base-config* model without merging the per-study Pro override — so the flash default landed in **both** serialised fields, not just one.
+
+**Belief revision**: "per_item_metadata is authoritative → trust it" → "a single upstream serialisation bug contaminated both provenance fields identically, so the authoritative-vs-fallback ranking is moot here; the study YAML is the only surviving model-of-record." Generalised: a provenance hierarchy assumes the two sources' failure modes are *independent*. A common-cause upstream bug (one runner, one missing merge) hits both and collapses the ranking — trust-by-rank silently fails when the error is shared. Detect it with a cross-source *agreement* check: two sources agreeing is reassuring only if they can fail independently; agreeing-and-both-wrong is the trap.
+
+**Probe-type**: cross-source agreement check (do the ranked sources disagree, or agree-and-both-wrong?) + provenance-trace to the upstream definition, run against a *self-authored* prior about source authority. The most dangerous prior was one I'd written into the code as a comment.
+
+### Sequence 2 — "MCC differs by buffer for a marginally-placed detection" (a confirmation, not a revision)
+
+**Surprising fact**: having asserted to the human that MCC is buffer-agnostic, he pushed back with an edge case — "one real mound in a tile detected only at ≥35 m: isn't the MCC outcome different below vs above 35 m?" Plausible enough to threaten my just-made claim.
+
+**Probe**: re-read the source rather than defend the claim. `calculate_tile_classification` (`lib_advanced_metrics.py:1655`) classifies tiles by *membership* — a GT mound intersects the tile, and a detection's `source_tile` equals the tile — with no distance test and no buffer argument, called once outside the per-buffer loop. The second path (`compute_per_tile_classification`, used for permutation tests) carries the identical definition.
+
+**Belief revision**: none — the prior held. But the epistemic status changed: *assertion → source-verified fact*. The human's edge case conflates detection-matching (buffer-dependent → F1) with tile-membership (buffer-free → MCC); a detection in the right tile but far from the mound credits MCC regardless of buffer. The lesson is about the *probe*, not the conclusion: a challenge to a confident assertion of mine is a cue to re-verify at source even when I expect to be right — a confirming read costs one file and converts a confabulation-shaped assertion into a fact.
+
+**Probe-type**: source re-read triggered by a human challenge to the LLM's own claim. The valuable behaviour was treating my own confident assertion as provisional under challenge, not the (correct) prior itself.

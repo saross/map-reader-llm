@@ -8124,3 +8124,72 @@ Anti-confabulation held its longest load yet: I declined to confirm "image is th
 we need" on availability rather than verification, flagged that bumping GENERATOR_VERSION
 for new data would mislabel provenance, and reverted my own hand-edits to generated
 leaderboard files on hitting the anti-pattern — each a self-catch he didn't have to make.
+
+## Session 96 — 2026-06-02 — the N=1 baseline matrix, with the human slowing me down to learn
+
+### Prompt: What was different about this session compared to recent ones?
+
+The inverse of Session 95. That one was solo delegation — "do it all overnight." This
+one was the human deliberately *slowing the cadence to understand*, not to approve. When
+I posed three forks (MCC source, analyses scope, n_passes), he answered the easy one and
+on the other two wrote "could we discuss this? I want to make a careful, principled
+decision but I don't quite understand how buffers and MCC interact." So a chunk of the
+session was teaching — what a buffer is, why MCC is buffer-agnostic, why the eval was
+split — and the teaching paid off twice: he caught that the matrix was below the
+14-buffer standard (a real gap I'd have merged two stale files to paper over), and his
+"MCC at 20m and 50m?" edge-case forced me to re-read the scorer and confirm the metric
+is buffer-free rather than assert it. The other novelty: a background agent (the
+parallelisation) ran in its own worktree while I worked the analyses/pass-publishing on
+main — genuinely parallel, non-overlapping, and it came back with a clean PR.
+
+### Prompt: What surprised you about this session?
+
+That `per_item_metadata.model_used` was *also* wrong. The extractor carries a comment I
+wrote treating `per_item_metadata` as the AUTHORITATIVE model source and `config.model`
+as the unreliable Era-1 fallback — so my prior was "the n1 Pro pools have per-item
+metadata, therefore their model is correct, therefore no override is needed." Checking
+at the source (the discipline paying off again) showed the flash template-default had
+leaked into *both* `config.model` AND `per_item_metadata.model_used`. The "authoritative"
+source was no more trustworthy than the fallback for these pools. The override wasn't a
+fallback-patch; it was a both-sources-are-wrong correction, and the study YAML was the
+only truth left. A smaller surprise with the same shape: the audit verifier I think of
+as a *legacy*-scanner caught a regression *I* had just introduced — absolute
+`/home/shawn/...` paths in the evals I generated that morning. The tool built to police
+old data policed me.
+
+### Prompt: What decision made today will look arbitrary without this session's context?
+
+Recording `model_used = gemini-3.1-pro` on n1's four Pro-pool passes when the recorded
+meta plainly says `gemini-3-flash-preview`. With no context that reads as a bug — the
+manifest contradicting its own source artefact. The context: errata E57 (the runner
+didn't serialise the per-study Pro override), Shawn's explicit decision to follow E57
+and record the study-design model, and — the part most likely to be forgotten — that
+billing reconciliation is *still open*, so `gemini-3.1-pro` reflects the study **design**,
+not an independently-verified dispatch. I deliberately did not silently encode this: the
+model-version rule in his CLAUDE.md is marked CRITICAL, so I surfaced the exact string
+(3.1, not 3.0), the meta disagreement, and the unverified status, and let him choose. If
+billing later shows flash actually ran, the override is where to look, and the provenance
+(`run-conditions.json` cited on those passes) is the thread to pull.
+
+**Session**: 2026-06-02, map-reader-llm, Session 96 (a collaborative day, distinct from
+the Session-95 multi-day arc). ~10 commits on `main`, all pushed
+(`32097c54`…`b57f69ce`) plus the squash-merge of PR #9 (`f67b2479`). **$0 API** — the
+re-score was evaluation-only on zbook (~50 min, single-core; parallelisation now fixes
+that). Deliverables: the **N=1 baseline matrix** re-scored at 14 buffers + MCC and
+authored as 18 single-pass conditions (92→110); a repo-relative eval-provenance fix
+(caught by the audit verifier); the **analyses manifest** bootstrapped (5th entity) with
+the `n1-baseline-matrix-384` leaderboard **stub**; **batch-pass publishing** for all 4
+decomposed runs (6→68 passes) including the E57 model-of-record override; PR #9
+(parallel batch eval) merged. Final manifest: 27 runs + 110 conditions + 68 passes + 1
+analysis, ALL VALID; tier-1 1058 passed. `docs/methodology/n1-baseline-matrix.md`
+created. One background agent (parallelisation, worktree-isolated, returned a clean PR).
+
+**Relational texture**: *Principles-over-patches* again, but the texture was pedagogical
+— he spent his own effort understanding the metric before deciding, and twice that
+understanding improved the output (the 14-buffer standard; the buffer-free-MCC
+confirmation). He set a durable boundary for the repo (commit direct to main, no PRs —
+captured to memory) and a clean delegation split: "I trust your judgement on
+architectural decisions like spawn vs fork" paired with "model versions are CRITICAL,
+confirm those." That division — trust the engineering, ratify the science — is exactly
+the right one for a non-programmer domain expert, and it let the session move fast where
+it was safe and slow where it mattered.

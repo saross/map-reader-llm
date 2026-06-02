@@ -6359,3 +6359,66 @@ Five agents (obs-writer ×2, two background investigators, the overnight obs-wri
 - The 17 "phantom-modified" crop strays the overnight run saw were **Syncthing churn** —
   content byte-identical to git; the un-track + gitignore cleared 16 of 17.
 - The 4 batch runs publish **conditions but not passes** (pass-walk gap, item 2 above).
+
+## Session 96 — 2026-06-02 (N=1 baseline matrix + analyses scaffold + batch passes)
+
+**Work**: (1) **N=1 baseline matrix** — re-scored the 18 single-pass baseline pools at
+the 14-buffer standard (5–150 m) + MCC on zbook (`configs/n1-eval-384px-14buf-mcc.yaml`,
+~50 min, single-core, **zero-API**) → `results/paper-eval/n1/384px-14buf-mcc/`,
+superseding the 4-buffer/no-MCC `384px-all-buffers` (marked superseded in place via
+`SUPERSEDED.md`, *not* moved — E57 cites its path). Authored 18 single-pass conditions
+(`baseline-<slug>`, `n_passes=1`) on the 3 real source runs (pv-diag-384 ×10 as a new
+conditions-only entry, n1 ×7, retest ×1): **92 → 110 conditions**. Documented in
+`docs/methodology/n1-baseline-matrix.md`. (2) Fixed a portability regression the audit
+verifier caught — `evaluate_detections.py` recorded *absolute* eval paths in batch mode;
+added `_repo_relative` (+ regression test, fixed a stale `metadata_version` 1.1→1.2
+assertion) and normalised the 18 committed evals. (3) **Analyses manifest bootstrapped**
+(the 5th entity) in `generate_post_run_report.py` (`load_run_analyses` / `build_analyses`,
+the build/validate/write/render path, and an FK guard); authored the `n1-baseline-matrix-384`
+leaderboard **stub** (`run-analyses.json`; human fields deferred). (4) **Batch-pass
+publishing** — explicit pool paths for all 4 decomposed runs (**6 → 68 passes**) + a
+per-pool `model_of_record` override (E57): n1's 4 Pro pools record `gemini-3.1-pro`. (5)
+Merged **PR #9** (parallel batch eval: `--workers`, `spawn` pool, byte-identical, default
+serial).
+
+**Decided**: (1) Baseline cells = single-pass conditions, `n_passes=1`; the
+mean-over-replicates is the headline metric, coexisting with the per-pass conditions
+(distinct eval protocols). (2) MCC is buffer-agnostic (verified at source) — one value
+per cell; F1 headline stays the preregistered 20 m; no cross-buffer averaging anywhere.
+(3) n1 Pro model-of-record = `gemini-3.1-pro` per E57 (study design — meta says flash in
+*both* `config.model` and `per_item_metadata`; billing reconciliation still open, so NOT
+a verified dispatch). (4) **Commit direct to `main`, no PRs** for this single-author repo
+(captured to memory; overrides the global voluntary-PR rule). (5) `GENERATOR_VERSION`
+0.3.0 → **0.4.0** (extraction-logic change: analyses emission + the model_of_record
+override). (6) Analyses row deferred earlier per user ("conditions now, analyses row
+next") → scaffolded as a stub this session.
+
+**Produced**: ~10 commits `32097c54`…`b57f69ce` (all pushed) + PR #9 squash-merge
+(`f67b2479`), **$0 API**. New: `n1-eval-384px-14buf-mcc.yaml`, `384px-14buf-mcc/` (18
+evals), `n1-baseline-matrix.md`, `run-analyses.json`, `analyses-manifest.{json,md}`,
+`SUPERSEDED.md`. Generator at 0.4.0. Final manifest: **27 runs + 110 conditions + 68
+passes + 1 analysis, ALL VALID**; tier-1 **1058 passed**. One background agent
+(parallelisation, worktree-isolated → PR #9). Memory: no-PR repo preference.
+
+### Pending (next session, priority order)
+
+1. **Leaderboard finding + tie-set** — populate `n1-baseline-matrix-384` from stub to
+   finding: a pairwise permutation / CI-overlap pass (zbook) for the `tie_set`, then
+   the human-authored `outcome` / `hypothesis_refs` / `preregistered`.
+2. **Billing reconciliation** of the n1 Pro model identity (open E57 carry-forward) —
+   confirm/correct `gemini-3.1-pro` vs the meta's flash.
+3. **Manifest batches C/D + pv-diag-384 full decomposition** (Batch E / GAP-7) — its
+   consensus / verified / per-pass passes (only its 10 baseline conditions exist).
+4. **Carried from S95**: sapphire crop copy (`sync-crops.sh sapphire`) + Syncthing folder
+   removal (user); git history purge (post-submission); R2 durable sync.
+
+### Contextual assumptions
+
+- Session 96 is a distinct **collaborative** day, same calendar date (2026-06-02) as the
+  Session-95 follow-up but a separate session. Texture was pedagogical — the human slowed
+  the cadence to understand the metric (buffers/MCC) before deciding.
+- Everything **zero-API** (evaluation-only re-score + authoring); compute on **zbook**.
+- The re-score ran single-core (~50 min); PR #9's parallelisation is now available but was
+  merged *after* the run, so this run did not use it.
+- n1's Pro model-of-record (`gemini-3.1-pro`) reflects the **study design**, not a
+  billing-verified dispatch — the recorded meta says flash in both provenance fields (E57).
