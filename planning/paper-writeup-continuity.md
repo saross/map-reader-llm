@@ -43,8 +43,20 @@ in `planning/session-95-overnight-summary-2026-05-31.md`. **Explicitly deferred:
    headline = binary verdict (`prob_t=null`); diagnostics = sensitivity curve, not
    an argmax. **Documented in `protocol-errata.md` E56** (threshold provenance:
    when/how each threshold was set). [#1]
-5. **Manifest regen + `GENERATOR_VERSION` bump** (0.2.0 → 0.3.0) — publish the
-   authored conditions into `runs-manifest.json` when the batch is ready. [#5]
+5. **Manifest regen + `GENERATOR_VERSION` bump** — **DONE 2026-06-02**: regenerated
+   all 4 manifests (`--all --write`); 92 conditions across 5 decomposed runs
+   (gs-v2 + the 4 batch runs), `generator_version` 0.3.0 (a batch-emission
+   milestone, not a logic change — comment updated). One brittle test (`==4`
+   condition count) relaxed to a stable-slice + non-shrinking assertion. *Residual:
+   the 4 batch runs publish CONDITIONS but not PASSES yet (extract_passes still emits
+   only gs-v2's 6 — the pass-walk needs generalising for these run shapes; GAP-7/9).*
+   E56 tier back-fill: caveat added to the `build_cross_architecture_tables.py`
+   header **only** — it surfaces in the era-2 tier MDs on the next leaderboard regen
+   (the generated MDs were NOT hand-edited; that would be clobbered + diverge). The
+   caveat is live NOW at `protocol-errata.md` E56 + the verifier-calibration-matrix
+   README (the source of the `*-opt-20m` cells). **Residual**:
+   `regenerate_per_arch_md_from_json.py` (the cheap re-render path) has its own
+   renderer — fold the note in there too at the next leaderboard regen. [#5]
 6. **55-map generalisation runs** — now documented in
    `docs/methodology/55maps-generalisation-runs.md` (identities, the
    superseded-original relationship, assessment-coverage matrix). **No manual review

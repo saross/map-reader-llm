@@ -1,10 +1,10 @@
-<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/conditions-manifest.json by scripts/generate_post_run_report.py v0.2.0. Edit the source-of-truth files and regenerate. -->
+<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/conditions-manifest.json by scripts/generate_post_run_report.py v0.3.0. Edit the source-of-truth files and regenerate. -->
 
 # Conditions manifest
 
-> Generated 2026-05-30T08:10:42Z · 4 row(s) · schema v1.0.
+> Generated 2026-06-02T03:14:11Z · 92 row(s) · schema v1.0.
 >
-> **Coverage**: gold-standard-v2 only (Phase 3b extends to all runs).
+> **Coverage**: 92 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -12,3 +12,91 @@
 | gold-standard-v2::consensus-4of5 | consensus | consensus | 4 | 5 | 0.6999 | 0.4557 | 608 |
 | gold-standard-v2::consensus-5of5 | consensus | consensus | 5 | 5 | 0.7649 | 0.5791 | 420 |
 | gold-standard-v2::verified-v1 | proposer-verifier | verified | 4 | 5 | 0.8663 | 0.7778 | 380 |
+| consensus-384-t1-0::consensus-1of30 | consensus | consensus | 1 | 30 | 0.3038 | 0.0608 | 974 |
+| consensus-384-t1-0::consensus-2of30 | consensus | consensus | 2 | 30 | 0.3977 | 0.0951 | 616 |
+| consensus-384-t1-0::consensus-3of30 | consensus | consensus | 3 | 30 | 0.4331 | 0.1164 | 484 |
+| consensus-384-t1-0::consensus-4of30 | consensus | consensus | 4 | 30 | 0.4554 | 0.1458 | 395 |
+| consensus-384-t1-0::consensus-5of30 | consensus | consensus | 5 | 30 | 0.4712 | 0.2565 | 295 |
+| consensus-384-t1-0::single-pass-run_1 | single-pass | none | — | 1 | 0.39 | 0.0341 | 570 |
+| consensus-384-t1-0::single-pass-run_2 | single-pass | none | — | 1 | 0.3891 | 0.0298 | 593 |
+| consensus-384-t1-0::single-pass-run_3 | single-pass | none | — | 1 | 0.3767 | 0.0341 | 579 |
+| consensus-384-t1-0::single-pass-run_4 | single-pass | none | — | 1 | 0.3792 | 0.0341 | 604 |
+| consensus-384-t1-0::single-pass-run_5 | single-pass | none | — | 1 | 0.387 | 0.0336 | 583 |
+| consensus-384-t1-0::single-pass-run_6 | single-pass | none | — | 1 | 0.3812 | 0.0341 | 588 |
+| consensus-384-t1-0::single-pass-run_7 | single-pass | none | — | 1 | 0.3874 | 0.0341 | 582 |
+| consensus-384-t1-0::single-pass-run_8 | single-pass | none | — | 1 | 0.3812 | 0.0341 | 609 |
+| consensus-384-t1-0::single-pass-run_9 | single-pass | none | — | 1 | 0.3686 | 0.0298 | 585 |
+| consensus-384-t1-0::single-pass-run_10 | single-pass | none | — | 1 | 0.373 | 0.0298 | 589 |
+| consensus-384-t1-0::single-pass-run_11 | single-pass | none | — | 1 | 0.3831 | 0.0298 | 583 |
+| consensus-384-t1-0::single-pass-run_12 | single-pass | none | — | 1 | 0.4032 | 0.038 | 577 |
+| consensus-384-t1-0::single-pass-run_13 | single-pass | none | — | 1 | 0.3915 | 0.0341 | 597 |
+| consensus-384-t1-0::single-pass-run_14 | single-pass | none | — | 1 | 0.3743 | 0.0254 | 623 |
+| consensus-384-t1-0::single-pass-run_15 | single-pass | none | — | 1 | 0.3858 | 0.0341 | 607 |
+| consensus-384-t1-0::single-pass-run_16 | single-pass | none | — | 1 | 0.379 | 0.0341 | 631 |
+| consensus-384-t1-0::single-pass-run_17 | single-pass | none | — | 1 | 0.3811 | 0.0341 | 583 |
+| consensus-384-t1-0::single-pass-run_18 | single-pass | none | — | 1 | 0.3569 | 0.038 | 624 |
+| consensus-384-t1-0::single-pass-run_19 | single-pass | none | — | 1 | 0.3842 | 0.0341 | 580 |
+| consensus-384-t1-0::single-pass-run_20 | single-pass | none | — | 1 | 0.3963 | 0.0341 | 544 |
+| consensus-384-t1-0::single-pass-run_21 | single-pass | none | — | 1 | 0.3904 | 0.0341 | 605 |
+| consensus-384-t1-0::single-pass-run_22 | single-pass | none | — | 1 | 0.3851 | 0.0341 | 609 |
+| consensus-384-t1-0::single-pass-run_23 | single-pass | none | — | 1 | 0.393 | 0.0341 | 593 |
+| consensus-384-t1-0::single-pass-run_24 | single-pass | none | — | 1 | 0.3778 | 0.0298 | 608 |
+| consensus-384-t1-0::single-pass-run_25 | single-pass | none | — | 1 | 0.3683 | 0.0298 | 575 |
+| consensus-384-t1-0::single-pass-run_26 | single-pass | none | — | 1 | 0.375 | 0.0298 | 605 |
+| consensus-384-t1-0::single-pass-run_27 | single-pass | none | — | 1 | 0.3853 | 0.0341 | 598 |
+| consensus-384-t1-0::single-pass-run_28 | single-pass | none | — | 1 | 0.3957 | 0.0298 | 586 |
+| consensus-384-t1-0::single-pass-run_29 | single-pass | none | — | 1 | 0.3901 | 0.0298 | 580 |
+| consensus-384-t1-0::single-pass-run_30 | single-pass | none | — | 1 | 0.4044 | 0.0341 | 564 |
+| e47-propose-brief::consensus-1of5 | consensus | consensus | 1 | 5 | 0.1669 | 0.0882 | 4491 |
+| e47-propose-brief::consensus-2of5 | consensus | consensus | 2 | 5 | 0.3868 | 0.1728 | 1659 |
+| e47-propose-brief::consensus-3of5 | consensus | consensus | 3 | 5 | 0.5188 | 0.3081 | 1080 |
+| e47-propose-brief::consensus-4of5 | consensus | consensus | 4 | 5 | 0.6394 | 0.3879 | 738 |
+| e47-propose-brief::consensus-5of5 | consensus | consensus | 5 | 5 | 0.7143 | 0.5028 | 461 |
+| e47-propose-brief::baseline-single-pass | single-pass | none | — | 1 | 0.4706 | 0.0101 | 1180 |
+| e47-propose-brief::single-pass-run_1 | single-pass | none | — | 1 | 0.3709 | 0.294 | 1614 |
+| e47-propose-brief::single-pass-run_2 | single-pass | none | — | 1 | 0.3416 | 0.2347 | 1755 |
+| e47-propose-brief::single-pass-run_3 | single-pass | none | — | 1 | 0.3683 | 0.2864 | 1645 |
+| e47-propose-brief::single-pass-run_4 | single-pass | none | — | 1 | 0.3544 | 0.2287 | 1619 |
+| e47-propose-brief::single-pass-run_5 | single-pass | none | — | 1 | 0.3579 | 0.2977 | 1694 |
+| n1-outstanding-384::brief-text-t03-consensus-1of3 | consensus | consensus | 1 | 3 | 0.4663 | 0.0651 | 1229 |
+| n1-outstanding-384::brief-text-t03-consensus-2of3 | consensus | consensus | 2 | 3 | 0.5537 | 0.0938 | 952 |
+| n1-outstanding-384::brief-text-t03-consensus-3of3 | consensus | consensus | 3 | 3 | 0.5907 | 0.1711 | 794 |
+| n1-outstanding-384::image-t0-consensus-1of3 | consensus | consensus | 1 | 3 | 0.624 | 0.2157 | 690 |
+| n1-outstanding-384::image-t0-consensus-2of3 | consensus | consensus | 2 | 3 | 0.629 | 0.2157 | 681 |
+| n1-outstanding-384::image-t0-consensus-3of3 | consensus | consensus | 3 | 3 | 0.6288 | 0.2197 | 675 |
+| n1-outstanding-384::image-t03-consensus-1of3 | consensus | consensus | 1 | 3 | 0.5822 | 0.1689 | 812 |
+| n1-outstanding-384::image-t03-consensus-2of3 | consensus | consensus | 2 | 3 | 0.6424 | 0.2216 | 664 |
+| n1-outstanding-384::image-t03-consensus-3of3 | consensus | consensus | 3 | 3 | 0.6766 | 0.3489 | 567 |
+| n1-outstanding-384::pro-image-high-t0-consensus-1of3 | consensus | consensus | 1 | 3 | 0.5509 | 0.5446 | 665 |
+| n1-outstanding-384::pro-image-high-t0-consensus-2of3 | consensus | consensus | 2 | 3 | 0.5499 | 0.5537 | 627 |
+| n1-outstanding-384::pro-image-high-t0-consensus-3of3 | consensus | consensus | 3 | 3 | 0.5525 | 0.5664 | 604 |
+| n1-outstanding-384::pro-text-high-t0-consensus-1of3 | consensus | consensus | 1 | 3 | 0.4726 | 0.2706 | 1118 |
+| n1-outstanding-384::pro-text-high-t0-consensus-2of3 | consensus | consensus | 2 | 3 | 0.5199 | 0.348 | 946 |
+| n1-outstanding-384::pro-text-high-t0-consensus-3of3 | consensus | consensus | 3 | 3 | 0.5665 | 0.3941 | 783 |
+| n1-outstanding-384::brief-text-t03-single-pass-run_1 | single-pass | none | — | 1 | 0.501 | 0.0427 | 1078 |
+| n1-outstanding-384::brief-text-t03-single-pass-run_2 | single-pass | none | — | 1 | 0.499 | 0.0143 | 1052 |
+| n1-outstanding-384::brief-text-t03-single-pass-run_3 | single-pass | none | — | 1 | 0.4977 | 0.0605 | 1096 |
+| n1-outstanding-384::image-t0-single-pass-run_1 | single-pass | none | — | 1 | 0.6 | 0.3124 | 745 |
+| n1-outstanding-384::image-t0-single-pass-run_2 | single-pass | none | — | 1 | 0.5956 | 0.316 | 747 |
+| n1-outstanding-384::image-t0-single-pass-run_3 | single-pass | none | — | 1 | 0.5995 | 0.3124 | 746 |
+| n1-outstanding-384::image-t03-single-pass-run_1 | single-pass | none | — | 1 | 0.5943 | 0.3065 | 753 |
+| n1-outstanding-384::image-t03-single-pass-run_2 | single-pass | none | — | 1 | 0.5944 | 0.2934 | 746 |
+| n1-outstanding-384::image-t03-single-pass-run_3 | single-pass | none | — | 1 | 0.5905 | 0.316 | 747 |
+| n1-outstanding-384::pro-image-high-t0-single-pass-run_1 | single-pass | none | — | 1 | 0.5288 | 0.6093 | 692 |
+| n1-outstanding-384::pro-image-high-t0-single-pass-run_2 | single-pass | none | — | 1 | 0.5305 | 0.6073 | 681 |
+| n1-outstanding-384::pro-image-high-t0-single-pass-run_3 | single-pass | none | — | 1 | 0.5234 | 0.6021 | 677 |
+| n1-outstanding-384::pro-text-high-t0-single-pass-run_1 | single-pass | none | — | 1 | 0.501 | 0.3916 | 1026 |
+| n1-outstanding-384::pro-text-high-t0-single-pass-run_2 | single-pass | none | — | 1 | 0.4867 | 0.3704 | 1028 |
+| n1-outstanding-384::pro-text-high-t0-single-pass-run_3 | single-pass | none | — | 1 | 0.4948 | 0.3805 | 1004 |
+| n1-outstanding-384::pro-image-medium-t07-single-pass-run_1 | single-pass | none | — | 1 | 0.452 | 0.5984 | 941 |
+| n1-outstanding-384::pro-text-medium-t07-single-pass-run_1 | single-pass | none | — | 1 | 0.416 | 0.3105 | 1445 |
+| retest-h11-single-pass-384-t0::single-pass-run_1 | single-pass | none | — | 1 | 0.5065 | 0.0427 | 1093 |
+| retest-h11-single-pass-384-t0::single-pass-run_2 | single-pass | none | — | 1 | 0.4994 | 0.0427 | 1107 |
+| retest-h11-single-pass-384-t0::single-pass-run_3 | single-pass | none | — | 1 | 0.4961 | 0.0427 | 1113 |
+| retest-h11-single-pass-384-t0::single-pass-run_4 | single-pass | none | — | 1 | 0.5075 | 0.0427 | 1090 |
+| retest-h11-single-pass-384-t0::single-pass-run_5 | single-pass | none | — | 1 | 0.5052 | 0.0427 | 1093 |
+| retest-h11-single-pass-384-t0::single-pass-run_6 | single-pass | none | — | 1 | 0.5003 | 0.0427 | 1104 |
+| retest-h11-single-pass-384-t0::single-pass-run_7 | single-pass | none | — | 1 | 0.5036 | 0.0427 | 1098 |
+| retest-h11-single-pass-384-t0::single-pass-run_8 | single-pass | none | — | 1 | 0.5085 | 0.0427 | 1087 |
+| retest-h11-single-pass-384-t0::single-pass-run_9 | single-pass | none | — | 1 | 0.5039 | 0.0742 | 1089 |
+| retest-h11-single-pass-384-t0::single-pass-run_10 | single-pass | none | — | 1 | 0.4997 | 0.0427 | 1090 |

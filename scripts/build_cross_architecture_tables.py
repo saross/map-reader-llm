@@ -447,6 +447,12 @@ def build_paired_table(era: int, metric: str, output_dir: Path) -> Path:
         "the verifier (or moving from single-pass to consensus, etc.) "
         "produces a statistically significant change after BH-FDR.",
         "",
+        "> **Operating-point note (E56)**: verifier-stage (`*-opt-20m`) cells, where "
+        "present, use a `(vote_t, prob_t)` operating point selected **in-sample on the "
+        "test set** (no calibration-tile verifier data exists). The headline "
+        "proposer-verifier result uses the binary verdict (`prob_t = null`). See "
+        "`docs/methodology/preregistration/protocol-errata.md` E56.",
+        "",
         f"Conditions tested: {len(rows)}",
         "",
         f"| Pair (arch_a -> arch_b) | A | {score_label}(A) | B | "

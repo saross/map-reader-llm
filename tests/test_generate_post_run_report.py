@@ -269,8 +269,14 @@ def test_manifest_envelopes_valid(registry):
 
     cond_obj = assemble_manifest("conditions", conditions, at)
     assert validate_manifest("conditions", cond_obj, registry) == []
-    assert len(conditions) == 4  # gold-standard-v2 vertical slice (Phase 3b extends this)
+    # The gold-standard-v2 vertical slice (4 conditions) is stable; Phase 3b adds
+    # more runs, so assert the slice + a non-shrinking total rather than a brittle ==.
+    gs_conditions = [c for c in conditions if c["run_id"] == "gold-standard-v2"]
+    assert len(gs_conditions) == 4
+    assert len(conditions) >= 4
 
     passes_obj = assemble_manifest("passes", passes, at)
     assert validate_manifest("passes", passes_obj, registry) == []
-    assert len(passes) == 6  # gold-standard-v2 vertical slice (Phase 3b extends this)
+    gs_passes = [p for p in passes if p["run_id"] == "gold-standard-v2"]
+    assert len(gs_passes) == 6
+    assert len(passes) >= 6

@@ -1,10 +1,10 @@
-<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/passes-manifest.json by scripts/generate_post_run_report.py v0.2.0. Edit the source-of-truth files and regenerate. -->
+<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/passes-manifest.json by scripts/generate_post_run_report.py v0.3.0. Edit the source-of-truth files and regenerate. -->
 
 # Passes manifest
 
-> Generated 2026-05-30T08:10:42Z · 6 row(s) · schema v1.0.
+> Generated 2026-06-02T03:14:11Z · 6 row(s) · schema v1.0.
 >
-> **Coverage**: gold-standard-v2 only (Phase 3b extends to all runs).
+> **Coverage**: 6 pass(es) across the decomposed runs (sub-step 3b in progress).
 
 | pass_id | model | modality | think | T | status | tiles | cost_usd |
 |---|---|---|---|---|---|---|---|

@@ -62,8 +62,13 @@ SCHEMA_DIR: Path = REPO_ROOT / "docs" / "manifest-schemas"
 
 #: Semantic version of THIS generator script. Written into every row's
 #: ``provenance.extractor_version`` (tracks the script, distinct from the
-#: manifest *format* ``schema_version``). Bump on any extraction-logic change.
-GENERATOR_VERSION: str = "0.2.0"
+#: manifest *format* ``schema_version``). Bump on an extraction-logic change OR a
+#: batch-emission milestone. The 0.3.0 bump (Session 95, 2026-06-02) is the latter:
+#: no extractor-logic change, but it marks the first decomposition batch landing —
+#: the 4 non-gs runs (e47-propose-brief, n1-outstanding-384,
+#: retest-h11-single-pass-384-t0, consensus-384-t1-0; 88 conditions) published into
+#: the manifest from the hand-authored ``run-conditions.json`` sidecar.
+GENERATOR_VERSION: str = "0.3.0"
 
 #: Manifest format version embedded at the top of each emitted manifest. Must
 #: match the ``schema_version`` const in the schema files.
