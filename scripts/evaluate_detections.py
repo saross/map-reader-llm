@@ -42,9 +42,12 @@ import argparse
 import csv
 import json
 import logging
+import multiprocessing
+import os
 import re
 import subprocess
 import sys
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -1249,6 +1252,23 @@ def main() -> int:
             "empty and reports MCC, sensitivity, and specificity."
         ),
     )
+    parser.add_argument(
+        "--workers", type=int, default=1,
+        help=(
+            "Number of parallel worker processes for batch mode "
+            "(default: 1). With the default of 1, conditions run "
+            "strictly sequentially in the parent process — the exact "
+            "legacy code path, preserved for reproducibility. Values "
+            "greater than 1 evaluate independent conditions concurrently "
+            "in a process pool (the bootstrap is CPU-bound, so processes "
+            "side-step the GIL). A value of 0 means 'auto', resolving to "
+            "os.cpu_count(). The pool is always capped at the number of "
+            "conditions. Results are reordered back to YAML condition "
+            "order before the batch summary is written, so the summary "
+            "is byte-for-identical regardless of worker count. Ignored "
+            "outside batch mode."
+        ),
+    )
 
     args = parser.parse_args()
 
@@ -1396,43 +1416,97 @@ def _run_single_mode(args: argparse.Namespace) -> int:
     return 0
 
 
-def _run_batch_mode(args: argparse.Namespace) -> int:
-    """Run batch evaluation mode from a YAML spec.
+def _evaluate_condition_worker(task: dict[str, Any]) -> tuple[int, dict]:
+    """Evaluate one batch condition in a worker process.
 
-    Evaluates multiple conditions, writes per-condition outputs, and
-    produces a consolidated batch summary.
+    This is the picklable unit of parallel work. It receives only file
+    paths and scalar parameters (never a GeoDataFrame), so nothing large
+    or unpicklable crosses the process boundary. Each invocation loads
+    its own ground-truth and bounds GeoDataFrames via
+    :func:`load_geojson`, then delegates to :func:`_evaluate_condition`,
+    which performs the identical metric and bootstrap logic used by the
+    serial path. Because every condition carries a fixed per-condition
+    ``seed``, results are deterministic and independent of which worker
+    runs them or in what order they complete.
+
+    The ``index`` is echoed back unchanged so the caller can reorder
+    out-of-order futures into the original YAML condition order before
+    writing the batch summary.
 
     Args:
-        args: Parsed CLI arguments.
+        task: A task specification produced by
+            :func:`_build_condition_tasks`. Required keys:
+
+            - ``index`` (int): zero-based position in the YAML condition
+              list, used to restore deterministic ordering.
+            - ``det_files`` (list[Path]): detection GeoJSON paths.
+            - ``ground_truth`` (Path): ground-truth reference GeoJSON.
+            - ``bounds`` (Path): tile-boundaries GeoJSON.
+            - ``buffers`` (list[int]): buffer distances in metres.
+            - ``n_bootstrap`` (int): bootstrap iterations.
+            - ``seed`` (int): per-condition random seed.
+            - ``label`` (str): human-readable condition label.
+            - ``output_dir`` (Path): per-condition output directory.
+            - ``compute_mcc`` (bool): whether to compute tile-level MCC.
+            - ``metadata`` (dict): provenance metadata block.
 
     Returns:
-        Exit code (0 for success, 1 for error).
+        A ``(index, summary)`` tuple, where ``summary`` is the per-condition
+        metrics dict returned by :func:`_evaluate_condition`.
     """
-    if not args.output_dir:
-        logger.error("--output-dir is required in batch mode.")
-        return 1
+    gdf_ref = load_geojson(task["ground_truth"])
+    gdf_bounds = load_geojson(task["bounds"])
+    summary = _evaluate_condition(
+        task["det_files"],
+        gdf_ref,
+        gdf_bounds,
+        buffers=task["buffers"],
+        n_bootstrap=task["n_bootstrap"],
+        seed=task["seed"],
+        label=task["label"],
+        output_dir=task["output_dir"],
+        compute_mcc=task["compute_mcc"],
+        metadata=task["metadata"],
+    )
+    return task["index"], summary
 
-    defaults, conditions = load_batch_yaml(args.batch)
-    metadata = defaults.get("_metadata")
 
-    # Capture run provenance once for the entire batch. Each condition
-    # inherits the same block, then overlays its own bootstrap/seed
-    # values from the YAML below.
-    run_metadata = _build_metadata(args)
+def _build_condition_tasks(
+    conditions: list[dict],
+    args: argparse.Namespace,
+    run_metadata: dict[str, Any],
+    gt_path: Path,
+) -> list[dict[str, Any]]:
+    """Resolve each YAML condition into a self-contained task specification.
 
-    # Load ground truth once (shared across conditions)
-    gt_path = Path(defaults.get(
-        "ground_truth",
-        str(DEFAULT_GROUND_TRUTH),
-    ))
-    logger.info("Loading ground truth: %s", gt_path)
-    gdf_ref = load_geojson(gt_path)
+    Walks the conditions in YAML order and, for each, resolves every
+    parameter the evaluator needs (label, detection files, buffers,
+    bootstrap iterations, seed, bounds path, per-condition metadata, and
+    output directory) into a single picklable dict. Detection-file
+    discovery (:func:`find_detection_files`) happens here, in the parent
+    process, so empty conditions are skipped exactly as the serial loop
+    skips them and the warning ordering is preserved.
 
-    # Track bounds to avoid reloading when unchanged
-    current_bounds_path: str | None = None
-    gdf_bounds: gpd.GeoDataFrame | None = None
+    Crucially, only file paths and scalars are stored — no GeoDataFrames —
+    so each task can be dispatched to a worker process without pickling
+    large geometry objects. The serial and parallel code paths both consume
+    these task specs, guaranteeing identical inputs to
+    :func:`_evaluate_condition` regardless of worker count.
 
-    all_summaries = []
+    Args:
+        conditions: Resolved condition dicts from :func:`load_batch_yaml`.
+        args: Parsed CLI arguments (supplies ``output_dir`` and ``mcc``).
+        run_metadata: Shared run-provenance block from
+            :func:`_build_metadata`.
+        gt_path: Ground-truth GeoJSON path shared across all conditions.
+
+    Returns:
+        A list of task-specification dicts in YAML condition order, one
+        per condition that has at least one detection file. Each dict's
+        ``index`` field records its position in this returned list, used
+        to reorder out-of-order parallel results.
+    """
+    tasks: list[dict[str, Any]] = []
     total = len(conditions)
 
     for i, cond in enumerate(conditions, 1):
@@ -1448,14 +1522,7 @@ def _run_batch_mode(args: argparse.Namespace) -> int:
             "[%d/%d] %s (dir=%s)", i, total, label, det_dir,
         )
 
-        # Reload bounds if changed
-        if bounds_path != current_bounds_path:
-            logger.info("Loading bounds: %s", bounds_path)
-            gdf_bounds = load_geojson(Path(bounds_path))
-            current_bounds_path = bounds_path
-            logger.info("Bounds: %d tiles", len(gdf_bounds))
-
-        # Find detection files
+        # Find detection files (parent process, preserving skip/warn order).
         det_files = find_detection_files(det_dir, glob_pat)
         if not det_files:
             logger.warning("No files found for %s — skipping", label)
@@ -1482,25 +1549,154 @@ def _run_batch_mode(args: argparse.Namespace) -> int:
             },
         }
 
-        # Evaluate
-        cond_output_dir = args.output_dir / slugify(label)
-        summary = _evaluate_condition(
-            det_files, gdf_ref, gdf_bounds,
-            buffers=buffers,
-            n_bootstrap=n_bootstrap,
-            seed=seed,
-            label=label,
-            output_dir=cond_output_dir,
-            compute_mcc=args.mcc,
-            metadata=cond_metadata,
-        )
-        all_summaries.append(summary)
+        tasks.append({
+            # ``index`` is the position within ``tasks`` (skipped conditions
+            # excluded), used to restore deterministic order after parallel
+            # completion.
+            "index": len(tasks),
+            "det_files": det_files,
+            "ground_truth": gt_path,
+            "bounds": Path(bounds_path),
+            "buffers": buffers,
+            "n_bootstrap": n_bootstrap,
+            "seed": seed,
+            "label": label,
+            "output_dir": args.output_dir / slugify(label),
+            "compute_mcc": args.mcc,
+            "metadata": cond_metadata,
+        })
 
-    if not all_summaries:
+    return tasks
+
+
+def _run_batch_mode(args: argparse.Namespace) -> int:
+    """Run batch evaluation mode from a YAML spec.
+
+    Evaluates multiple conditions, writes per-condition outputs, and
+    produces a consolidated batch summary.
+
+    Conditions are independent and deterministic (each uses a fixed
+    per-condition seed), so they parallelise cleanly. With ``--workers 1``
+    (the default) the conditions run strictly sequentially in the parent
+    process — the exact legacy code path, preserved for reproducibility.
+    With ``--workers`` greater than 1 (or 0 for ``os.cpu_count()``) the
+    independent conditions are evaluated concurrently in a
+    :class:`~concurrent.futures.ProcessPoolExecutor`. The CPU-bound
+    bootstrap dominates wall-clock time, so processes (not threads)
+    are used to side-step the Global Interpreter Lock (GIL). Whatever the
+    worker count, results are reordered back to YAML condition order
+    before the summary is written, so ``batch_summary.{json,csv,md}`` is
+    byte-for-identical across worker counts.
+
+    Args:
+        args: Parsed CLI arguments.
+
+    Returns:
+        Exit code (0 for success, 1 for error).
+    """
+    if not args.output_dir:
+        logger.error("--output-dir is required in batch mode.")
+        return 1
+
+    defaults, conditions = load_batch_yaml(args.batch)
+    metadata = defaults.get("_metadata")
+
+    # Capture run provenance once for the entire batch. Each condition
+    # inherits the same block, then overlays its own bootstrap/seed
+    # values from the YAML below.
+    run_metadata = _build_metadata(args)
+
+    # Ground-truth path shared across conditions (each worker loads its
+    # own copy in parallel mode; the serial path loads it once below).
+    gt_path = Path(defaults.get(
+        "ground_truth",
+        str(DEFAULT_GROUND_TRUTH),
+    ))
+
+    # Resolve every condition into a self-contained, picklable task spec.
+    # Detection-file discovery and per-condition skip/warn ordering happen
+    # here so the serial and parallel paths share identical inputs.
+    tasks = _build_condition_tasks(conditions, args, run_metadata, gt_path)
+
+    if not tasks:
         logger.error("No conditions produced results.")
         return 1
 
-    # Write batch summary
+    # Resolve worker count: 0 means auto (os.cpu_count()), and the pool is
+    # always capped at the number of conditions — no point spawning idle
+    # workers, and a cap of 1 collapses to the serial path.
+    if args.workers == 0:
+        requested_workers = os.cpu_count() or 1
+    else:
+        requested_workers = max(1, args.workers)
+    n_workers = min(requested_workers, len(tasks))
+
+    # ``results`` is index-aligned to ``tasks`` (YAML condition order) so
+    # the batch summary is deterministic regardless of completion order.
+    results: list[dict | None] = [None] * len(tasks)
+
+    if n_workers == 1:
+        # ── Serial path (exact legacy behaviour) ──────────────────
+        # Load ground truth once (shared across conditions) and reload
+        # bounds only when the path changes, mirroring the original loop.
+        logger.info("Loading ground truth: %s", gt_path)
+        gdf_ref = load_geojson(gt_path)
+
+        current_bounds_path: str | None = None
+        gdf_bounds: gpd.GeoDataFrame | None = None
+
+        for task in tasks:
+            bounds_path = str(task["bounds"])
+            if bounds_path != current_bounds_path:
+                logger.info("Loading bounds: %s", bounds_path)
+                gdf_bounds = load_geojson(task["bounds"])
+                current_bounds_path = bounds_path
+                logger.info("Bounds: %d tiles", len(gdf_bounds))
+
+            summary = _evaluate_condition(
+                task["det_files"], gdf_ref, gdf_bounds,
+                buffers=task["buffers"],
+                n_bootstrap=task["n_bootstrap"],
+                seed=task["seed"],
+                label=task["label"],
+                output_dir=task["output_dir"],
+                compute_mcc=task["compute_mcc"],
+                metadata=task["metadata"],
+            )
+            results[task["index"]] = summary
+    else:
+        # ── Parallel path (process pool) ──────────────────────────
+        # Each worker loads its own ground-truth and bounds; only paths and
+        # scalars cross the process boundary. Futures complete out of order,
+        # so each result is slotted back into its YAML position via ``index``.
+        logger.info(
+            "Evaluating %d conditions across %d worker processes",
+            len(tasks), n_workers,
+        )
+        # Use the 'spawn' start method rather than the Linux default 'fork':
+        # the parent may already be multi-threaded (geopandas/pyogrio,
+        # NumPy/BLAS pools), and forking a multi-threaded process risks
+        # deadlocks. 'spawn' starts each worker from a clean interpreter,
+        # which also makes behaviour consistent across platforms. The slightly
+        # higher per-worker start-up cost is negligible against the
+        # bootstrap-dominated, minutes-long workload.
+        mp_context = multiprocessing.get_context("spawn")
+        with ProcessPoolExecutor(
+            max_workers=n_workers, mp_context=mp_context,
+        ) as executor:
+            futures = {
+                executor.submit(_evaluate_condition_worker, task): task["index"]
+                for task in tasks
+            }
+            for future in as_completed(futures):
+                index, summary = future.result()
+                results[index] = summary
+
+    # By construction every task produced a summary, so ``results`` has no
+    # gaps; the cast to a plain list documents that intent for type checkers.
+    all_summaries: list[dict] = [s for s in results if s is not None]
+
+    # Write batch summary (deterministic order: YAML condition order).
     write_batch_summary(all_summaries, args.output_dir, metadata=metadata)
 
     logger.info(
