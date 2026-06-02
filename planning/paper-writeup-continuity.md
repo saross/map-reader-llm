@@ -20,12 +20,14 @@ in `planning/session-95-overnight-summary-2026-05-31.md`. **Explicitly deferred:
    submitted (rewrites every hash — disruptive across amd-tower / zbook / sapphire). [#6]
 2. **Out-of-band crop/tile sync** — Syncthing is the wrong fit and was double-syncing
    git-tracked files. `scripts/sync-crops.sh <host>` rsyncs the un-tracked crop PNGs
-   from amd-tower (the canonical copy) to a clone. **Done: zbook (2026-06-02, 2.65 GB).
-   Pending: sapphire** (`scripts/sync-crops.sh sapphire`), and **removing this repo's
-   folders from Syncthing** (user, via the GUI). Evaluate **Cloudflare R2** (now
-   configured for another project) as the durable approach. NB: pulling `21b5cc7e`
-   deletes the now-untracked crops from a clone's working tree (regenerable; rsync
-   from amd-tower). [#6]
+   from amd-tower (the canonical copy) to a clone. **Done: zbook (2026-06-02, 2.65 GB).**
+   **TO DO — sapphire crop copy**: `scripts/sync-crops.sh sapphire`, run **later, once
+   sapphire's multi-day Bayesian job is free** (rsync is light, but defer to be safe).
+   **TO DO — remove this repo's folders from Syncthing**: **user, next session** (via
+   the Syncthing GUI) — stops the git⊕Syncthing double-sync churn. Evaluate
+   **Cloudflare R2** (now configured for another project) as the durable approach.
+   NB: pulling `21b5cc7e` deletes the now-untracked crops from a clone's working tree
+   (regenerable; rsync from amd-tower). [#6]
 3. **N=1 baseline-matrix manifest authoring** — model the 18 single-pass baseline
    pools as `single-pass` conditions on their 3 real source runs (`pv-diag-384` ×10,
    `n1-outstanding-384` ×7, `retest-h11-single-pass-384-t0` ×1) **+ one `analyses`
