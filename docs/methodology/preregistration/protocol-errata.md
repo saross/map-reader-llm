@@ -1740,3 +1740,61 @@ Several **post-hoc** analyses (not specified in the preregistration) use **10 00
 ---
 
 *End of errata. New entries should be appended above this line.*
+
+---
+
+### E56: Verifier probability-threshold operating points are in-sample (test-set-selected), not calibrated
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-06-02 |
+| Type | Methodological clarification (threshold provenance) |
+| Commit | TBD |
+| Impact | Medium — governs how diagnostic operating points are reported; the headline pipeline is unaffected (binary verdict) |
+
+**Description**: The headline proposer-verifier pipeline (gold-standard-v2) applies the verifier as a **binary accept/reject verdict** — its `verified` condition records `prob_threshold = null`, so no probability cutoff is tuned. The preregistered calibrate-then-test split governs the **consensus vote threshold** (Phase 1 baseline calibration on the 20 held-out calibration tiles, ≥3/5).
+
+The verifier's continuous `mound_probability` is explored only in the **diagnostic** runs (pv-diag-384 / the Session 78 verifier-calibration matrix). There the per-cell operating point `(vote_t, prob_t)` is selected by sweeping the grid and taking the F1-optimum at the 20 m buffer — and that selection is performed **on the 487-tile evaluation scope, which is the test set** (`scripts/score_leaderboard_cells.py`; `results/verifier-calibration-matrix/README.md` Phase B). There is **no calibration-tile verifier data** to select on: the verifier never ran on the 20 calibration tiles (excluded from the 487-tile scope; pv-diag ∩ calibration = 0). So any single `prob_t`-thresholded F1 quoted for these diagnostics is an **in-sample, test-set-optimised** number, not a calibrated one.
+
+**Verification**: gs-v2 `verified-v1` carries `prob_threshold: null` (`results/run-conditions.json`); the 487-tile `full_evaluation_bounds` has zero overlap with the 20-tile `inputs/tiles/calibration_manifest.json`; the pv-diag text pool (471 covered tiles) contains none of the 20. The 2026-06-02 sweep (`results/rescore-2026-05-31/pv-diag-384/sweep/`) shows the F1@20 curve is **flat in the operating range** — single-run-PV ≈0.74 across prob_t 0.25–0.40, consensus-PV ≈0.86 across 0.15–0.20 — so a fixed reference threshold (0.20: 0.718 / 0.861) and the in-sample optimum (0.25: 0.740 / 0.15: 0.864) differ by ≤0.022 F1.
+
+**Blast radius**: every `prob_t`-thresholded operating point in the verifier-probability diagnostics — the 14 `*-opt-20m.geojson` Session 78 cells, the h10 / h8-v2 / verifier-t-pilot `detections_vt*_pt*` materialisations, and the pv-diag-384 PV quadrants. The **headline** proposer-verifier results (binary verdict) and **all consensus-vote-threshold** results (preregistered, calibration-selected) are NOT affected.
+
+**Reporting rule (resolution)**:
+
+1. Report the headline proposer-verifier result at the **binary verdict** (`prob_t = null`), per gs-v2 and the preregistered design.
+2. Present the verifier-probability diagnostics as **threshold-sensitivity curves**, not single F1 maxima. Where one operating point is quoted, state explicitly that it is the **20 m test-set F1-optimum (in-sample)** and give the fixed-reference value beside it; the curve's flatness (≤0.022 F1 across the plateau) makes the two interchangeable for the well-calibrated text track.
+3. State plainly, in the paper and all supporting materials, **when and how each threshold was set**: vote threshold → preregistered, calibrated on the 20 held-out tiles; verifier binary verdict → no tuning; verifier `prob_t` operating points → in-sample on the 487-tile test set (diagnostic only).
+4. The text-track verifier is well-calibrated (AUC 0.956, ECE 0.071); the image track is not (AUC 0.86, ECE 0.18; Obs 269, 277) — so a fixed threshold transfers on text but not image. Cite this for any image-track operating point.
+
+**Reference artefacts**: `results/verifier-calibration-matrix/README.md` (Phase B); `results/run-conditions.json` (gs-v2 `prob_threshold: null`); `inputs/tiles/calibration_manifest.json`; `results/rescore-2026-05-31/pv-diag-384/sweep/`; working-notes Obs 269 + 277; `planning/session-78-matrix-calibration-summary.md`.
+
+---
+
+### E57: H11 384px Pro/baseline detection metadata — model template default and output_dir overrides
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-06-02 |
+| Type | Metadata correction (non-destructive) |
+| Commit | TBD |
+| Impact | Low — provenance legibility only; run/model identity recoverable from eval input_files + study manifests |
+
+**Description**: Two metadata artefacts in the H11 384px single-pass baseline pools (the N=1 baseline matrix, `results/paper-eval/n1/384px-all-buffers/`, sourced from pv-diag-384 ×10, n1-outstanding-384 ×7, retest-h11-single-pass-384-t0 ×1):
+
+1. **`config.model` template default** — the per-detection `.meta.json` `configuration.model` reads `gemini-3-flash` / `gemini-3-flash-preview` even for the four **Pro** pools (e.g. `pro-text-medium-t-0-0`, `pro-image-medium-t-0-0`), whose `study_manifest.json` describes a Gemini 3 Pro single-pass proposer. The field is an unreliable template default that does not reflect the model actually dispatched.
+2. **Study `output_dir` overridden at runtime** — e.g. `studies/h11-384-pro-medium-text-baseline.yaml` declares `output_dir: outputs/h11/pv-diag-384/pro-pilot-text`, but the actual (eval-referenced) directory is `outputs/h11/pv-diag-384/pro-medium-text-baseline`; the declared `pro-pilot-*` dirs do not exist on disk.
+
+**Verification**: traced by a background investigation (2026-06-02) over all 18 pool dirs via each eval's `_metadata.input_files.detections` + `configs/n1-eval-384px-all-buffers.yaml` + the per-study `studies/h11-384-*.yaml`. The eval `input_files` paths are internally consistent and are the ground truth for run identity.
+
+**Blast radius**: the four Pro pools (model field) and the two `pro-*-baseline` study YAMLs (output_dir). Detection geometries and scores are unaffected — only the model-of-record and the declared output path are mis-stated in the raw artefacts.
+
+**Root cause**: the proposer runner serialised the base-config `model` without merging the per-study Pro override; and the study `output_dir` was overridden by a runtime flag not written back into the YAML.
+
+**Resolution (non-destructive)**:
+
+1. Leave the raw `.meta.json` and study YAMLs untouched (faithful records of what was written).
+2. Treat the eval `_metadata.input_files.detections` path + the `study_manifest.json` description as ground truth for run/model identity — NOT `config.model` or the YAML `output_dir`.
+3. When the N=1 baseline pools are authored into the manifest (continuity Session 95 to-do #3), record the **model-of-record** as a derived field from the study manifest, with provenance noting the `config.model` template-default caveat.
+
+**Reference artefacts**: `configs/n1-eval-384px-all-buffers.yaml`; `studies/h11-384-pro-medium-text-baseline.yaml`; `results/paper-eval/n1/384px-all-buffers/*/evaluation.json` (`_metadata.input_files`); run-registry entries for pv-diag-384 / n1-outstanding-384 / retest-h11-single-pass-384-t0.

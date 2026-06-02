@@ -29,13 +29,16 @@ in `planning/session-95-overnight-summary-2026-05-31.md`. **Explicitly deferred:
    `n1-outstanding-384` ×7, `retest-h11-single-pass-384-t0` ×1) **+ one `analyses`
    row** (type comparison/leaderboard), NOT a pseudo-run — consistent with the
    leaderboard + wbf/GAP-6 precedent. Use the `384px-all-buffers` evals (full buffer
-   set); the 30 m-only `384px` was archived 2026-06-02. [#4]
-4. **pv-diag verifier operating point** — after the sweep
-   (`planning/rescore-worklists/pv-diag-sweep-and-t03-gt-2026-06-01.json`) runs,
-   pick the reported threshold: do NOT report the in-sample F1-max on the 487 test
-   set; use a fixed/transferred operating point or report the sweep curve as a
-   sensitivity band (the text-track verifier is well-calibrated — Session 78
-   AUC 0.956, ECE 0.071 — so a fixed calibrated threshold is defensible). [#1]
+   set); the 30 m-only `384px` was archived 2026-06-02. **Record model-of-record
+   from the study manifest, not `config.model` — see `protocol-errata.md` E57**
+   (the four Pro pools' meta read "flash"; study `output_dir`s were overridden). [#4]
+4. **pv-diag verifier operating point** — sweep RUN 2026-06-02
+   (`results/rescore-2026-05-31/pv-diag-384/sweep/`); the F1@20 curve is FLAT in
+   the operating range (single-run-PV ≈0.74 @ prob_t 0.25–0.40; consensus-PV ≈0.86
+   @ 0.15–0.20), so fixed-vs-in-sample-optimum differs ≤0.022 F1. Reporting rule:
+   headline = binary verdict (`prob_t=null`); diagnostics = sensitivity curve, not
+   an argmax. **Documented in `protocol-errata.md` E56** (threshold provenance:
+   when/how each threshold was set). [#1]
 5. **Manifest regen + `GENERATOR_VERSION` bump** (0.2.0 → 0.3.0) — publish the
    authored conditions into `runs-manifest.json` when the batch is ready. [#5]
 

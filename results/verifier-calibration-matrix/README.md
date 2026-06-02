@@ -84,6 +84,14 @@ max |ΔF1| 0.035 in `text-brief-text`).
 `prob_t` ∈ 0.0/0.05/.../0.6) grid at buffers 20/30/40/50 m for each cell
 and selects the per-cell optimum at the 20 m buffer.
 
+> **Threshold provenance (E56, 2026-06-02)**: this per-cell optimum is selected
+> on the **487-tile test set** — there is no calibration-tile verifier data to
+> select on (the verifier never ran on the 20 held-out calibration tiles). So a
+> single `prob_t`-thresholded F1 from this matrix is an **in-sample** quantity.
+> Report these as **threshold-sensitivity curves**, not calibrated operating
+> points; the headline proposer-verifier result uses the binary verdict
+> (`prob_t = null`). See `docs/methodology/preregistration/protocol-errata.md` E56.
+
 ### Phase C — Materialisation and deep evaluation (canonical)
 
 Per-cell post-verifier detection sets are materialised at each cell's
