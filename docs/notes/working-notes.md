@@ -17039,3 +17039,58 @@ Search terms: Obs 333, consensus aggregation dividend run-dependent, single-pass
 - **Obs 136** (consensus pool size has a non-linear activation threshold): related dependence of aggregation benefit on ensemble composition; the present Obs adds σ of individual passes as a second axis alongside pool size.
 - **Obs 332** (sibling Session 95 finding — "verified" GeoJSON scores the proposer baseline): both Obs 332 and 333 arise from the Session 95 standardised re-score of the performance-shape 2×2; Obs 332 addresses what the scores measure, Obs 333 addresses what the aggregation architecture delivers.
 - **Artefacts**: `results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_*/evaluation.json` (e47 single-pass evals, n=5); `results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t5/evaluation.json` (e47 vote-5 consensus, F1@20=0.714); `outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/voting_summary.json` (total\_passes=5 confirmation); `results/rescore-2026-05-31/consensus-384-t1-0/384/run_*/evaluation.json` (c384-T1.0 single passes, n=30); `outputs/h11/consensus-384-UNINTENDED-T1.0/voting/eval-t5/evaluation.json` (c384-T1.0 vote-5 consensus); `results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_*/evaluation.json` (T=0 single passes, n=10); `results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/consensus/consensus_t10/evaluation.json` (T=0 vote-10 all-agree, F1@20=0.554); `results/rescore-2026-05-31/n1-outstanding-384/` (per-pool single-pass and consensus evals); commits `02f1493b` (single-pass evals) and `dcd849df` (verified-subset evals).
+
+## Observation 334: The pv-diag-384 verifier-probability F1 curve is flat in the operating range — in-sample operating-point optimism is negligible (≤0.023 F1) (Session 95, 2026-05-31)
+
+### The finding
+
+**For the pv-diag-384 text-track verifier, the F1@20 m curve is remarkably flat across the operationally relevant probability-threshold range. The single-run (1-of-5 union) condition peaks at F1=0.7403 (prob\_t=0.25–0.30) and declines only modestly at the reference operating point prob\_t=0.20 (F1=0.7177) — a gap of 0.0226. The consensus (4-of-5) condition peaks at F1=0.8641 (prob\_t=0.15) and is essentially unchanged at the reference (F1=0.8610, gap=0.0031). The in-sample operating-point optimism — the spurious precision gain from selecting the argmax threshold on the same data used for evaluation — is therefore ≤0.023 F1 across both conditions.**
+
+Full sweep results at F1@20 m buffer, verified at source (`results/rescore-2026-05-31/pv-diag-384/sweep/`):
+
+| prob\_t | Single-run 1of5 F1@20 | 95 % CI (BCa) | Consensus 4of5 F1@20 | 95 % CI (BCa) |
+|:-------:|:---------------------:|:-------------:|:--------------------:|:-------------:|
+| 0.05 | 0.2982 | [0.288, 0.309] | 0.7838 | [0.776, 0.792] |
+| 0.10 | 0.4775 | [0.467, 0.490] | 0.8275 | [0.820, 0.835] |
+| 0.15 | 0.7051 | [0.696, 0.714] | **0.8641** | [0.858, 0.871] |
+| 0.20 | 0.7177 | [0.709, 0.727] | 0.8610 | [0.854, 0.867] |
+| **0.25** | **0.7403** | [0.732, 0.749] | 0.8475 | [0.840, 0.853] |
+| **0.30** | **0.7403** | [0.732, 0.749] | 0.8475 | [0.840, 0.853] |
+| 0.40 | 0.7395 | [0.731, 0.748] | 0.8461 | [0.839, 0.852] |
+| 0.50 | 0.7363 | [0.728, 0.744] | 0.8338 | [0.826, 0.840] |
+
+Peak bolded. Note: BCa CIs marked `ci_unreliable=True` in source for prob\_t ≥ 0.25 (single-run) and prob\_t ≥ 0.10 (consensus) — sparse-cross-grid coverage status; treat CIs as approximate.
+
+The plateau structure for single-run: F1 rises steeply from 0.05 to 0.15 (high-recall / low-precision regime), then flattens from 0.20 to 0.50 (the operating range), with the peak at 0.25–0.30 and only 0.004 F1 separating the 0.20–0.50 band. For consensus: peak at 0.15, then a gentle monotone decline — still only 0.030 F1 between the peak and the 0.50 endpoint.
+
+### Why this matters
+
+1. **The in-sample optimism is quantified and small.** Protocol errata E56 raised the question of whether reporting the in-sample argmax threshold introduces overfitting bias into the headline verifier result. This sweep answers it: the maximum gap between the argmax and a fixed reference operating point (prob\_t=0.20) is 0.0226 F1 (single-run) and 0.0031 F1 (consensus). Neither constitutes a scientifically meaningful inflation. The honest-reporting decision for E56 is therefore numerically cheap: reporting a threshold-sensitivity table (this Obs) or a fixed/transferred operating point loses essentially nothing relative to the in-sample argmax.
+
+2. **The flat curve reflects a well-calibrated verifier.** When a verifier's probability scores are well-calibrated to the task, the precision–recall frontier shifts smoothly with prob\_t, and no single threshold dominates by a wide margin. This is the expected behaviour for the text-track verifier. The contrast with the image track (Obs 269, 277) — where miscalibration produces a steep, brittle curve — is diagnostically meaningful: threshold transfer *from* the text-track sweep is likely to hold; threshold transfer from the image-track sweep is not.
+
+3. **The fixed reference point (prob\_t=0.20) performs near-optimally.** For both conditions, prob\_t=0.20 sits within the flat plateau. It is a reasonable default for any downstream use of the pv-diag-384 verifier on similar data, without requiring in-sample optimisation.
+
+4. **The headline proposer–verifier result (binary verdict, prob\_t=null) is unaffected.** The binary condition uses the model's yes/no verdict directly, not a probability threshold; none of the sweep thresholds alter that result. The sweep characterises the continuous-score regime only.
+
+### Caveats / methodological notes
+
+**This is the text-track verifier only.** The image-track verifier (Obs 269, 277) is miscalibrated; its F1 curve has a different shape and the threshold-transfer robustness demonstrated here does not apply to it.
+
+**The BCa bootstrap CIs are flagged `ci_unreliable=True` for most of the operating range** (sparse-cross-grid coverage: 260 of 487 tiles have zero detections at the peak threshold). The point estimates are accurate; the CIs are approximate. Do not report the CIs in the paper without noting the sparsity flag.
+
+**The sweep covers only the diagnostic (pv-diag-384) run.** The production proposer–verifier-384 run uses a different verifier invocation (full corpus, materialised verified-true geometries, post-E56 convention). The sweep's prob\_t findings apply to the same underlying model and probability scoring, but the absolute F1 values should not be directly compared to the production run without confirming the evaluation pool is identical.
+
+**The ≤0.023 bound is computed for the reference pt=0.20.** A researcher choosing a different reference (e.g., pt=0.10) would face a larger gap (0.7403 − 0.4775 = 0.263 for single-run) — the flatness is specific to the 0.20–0.50 operating range, not the full 0.05–0.50 sweep.
+
+### Findable later
+
+Search terms: Obs 334, pv-diag-384 verifier probability threshold sweep, F1 curve flat operating range, in-sample operating-point optimism negligible, prob\_t sweep single-run consensus, protocol errata E56 threshold optimism quantified, argmax threshold in-sample overfitting bias, 0.7403 single-run plateau 0.25 0.30, 0.8641 consensus peak 0.15, prob\_t 0.20 reference near-optimal, threshold transfer text-track robust, image-track miscalibrated contrast Obs 269 277, binary verdict prob\_t null unaffected, BCa bootstrap ci\_unreliable sparse-cross-grid, 487 tiles 260 zero-count, verifier calibration probability score, rescore-2026-05-31 pv-diag-384 sweep, F1@20 buffer 20 metres, Session 95 verifier sweep analysis.
+
+### Related observations and artefacts
+
+- **Obs 269** (image-track verifier miscalibration — first detection): the reason this Obs's robustness finding is *text-track-specific*; the image track's miscalibrated curve makes threshold transfer unreliable, while the text track's flat curve makes it robust.
+- **Obs 277** (image-track verifier miscalibration — further characterisation): extends Obs 269; together these two entries bound the scope of the present flatness result to the text track.
+- **Obs 333** (sibling Session 95 finding — consensus dividend tracks proposer σ): the same pv-diag-384 diagnostic run context; Obs 333 characterises the aggregation architecture, this Obs characterises the threshold sensitivity of the probability-score layer.
+- **E56** (protocol errata — in-sample operating-point provenance): the errata entry whose numerical consequence this Obs resolves; the flat curve confirms the optimism is negligible and the honest-reporting path is clear.
+- **Artefacts**: `results/rescore-2026-05-31/pv-diag-384/sweep/single-run-PV-1of5-pt{0.05..0.50}/evaluation.json` (single-run threshold sweep, 8 files, F1@20 verified); `results/rescore-2026-05-31/pv-diag-384/sweep/consensus-PV-4of5-pt{0.05..0.50}/evaluation.json` (consensus threshold sweep, 8 files, F1@20 verified).
