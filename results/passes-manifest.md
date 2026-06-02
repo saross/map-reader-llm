@@ -2,7 +2,7 @@
 
 # Passes manifest
 
-> Generated 2026-06-02T03:14:11Z · 6 row(s) · schema v1.0.
+> Generated 2026-06-02T08:02:59Z · 6 row(s) · schema v1.0.
 >
 > **Coverage**: 6 pass(es) across the decomposed runs (sub-step 3b in progress).
 

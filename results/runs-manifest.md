@@ -2,7 +2,7 @@
 
 # Runs manifest
 
-> Generated 2026-06-02T03:14:11Z · 27 row(s) · schema v1.0.
+> Generated 2026-06-02T08:02:59Z · 27 row(s) · schema v1.0.
 >
 > **Coverage**: all 27 runs (run-level facts; conditions/passes added as 3b batches land).
 
@@ -21,7 +21,7 @@
 | proposer-verifier-384 | — | 384 | 4-map-gs | curator | era-2-487 | — |
 | proposer-verifier-512 | — | 512 | 4-map-gs | curator | era-1-340 | — |
 | pv-diag-256 | — | 256 | 4-map-gs | curator | px256-1032 | — |
-| pv-diag-384 | — | 384 | 4-map-gs | curator | era-2-487 | — |
+| pv-diag-384 | single-pass | 384 | 4-map-gs | curator | era-2-487 | — |
 | h12-v2 | — | 384 | 4-map-gs | curator | era-3-327 | — |
 | h8-v2 | — | 384 | 4-map-gs | curator | era-3-327 | — |
 | retest-phase2a | — | 512 | 4-map-gs | curator | era-1-340 | — |

@@ -597,6 +597,90 @@
           "verifier_config": null,
           "eval_path": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-medium-t07/run_1/evaluation.json",
           "detections": "outputs/h11/n1-outstanding-384/pro-text-medium-t07/run_1/detections_pro-text-medium-t07_run01.geojson"
+        },
+        {
+          "label": "baseline-flash-image-minimal-t-0-0-487-tiles",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "image-t0",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/n1/384px-14buf-mcc/flash-image-minimal-t-0-0-487-tiles/evaluation.json",
+          "detections": "outputs/h11/n1-outstanding-384/image-t0"
+        },
+        {
+          "label": "baseline-flash-image-minimal-t-0-3",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "image-t03",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/n1/384px-14buf-mcc/flash-image-minimal-t-0-3/evaluation.json",
+          "detections": "outputs/h11/n1-outstanding-384/image-t03"
+        },
+        {
+          "label": "baseline-flash-text-minimal-t-0-3",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "brief-text-t03",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/n1/384px-14buf-mcc/flash-text-minimal-t-0-3/evaluation.json",
+          "detections": "outputs/h11/n1-outstanding-384/brief-text-t03"
+        },
+        {
+          "label": "baseline-pro-image-high-t-0-0",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "pro-image-high-t0",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/n1/384px-14buf-mcc/pro-image-high-t-0-0/evaluation.json",
+          "detections": "outputs/h11/n1-outstanding-384/pro-image-high-t0"
+        },
+        {
+          "label": "baseline-pro-image-medium-t-0-7",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "pro-image-medium-t07",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/n1/384px-14buf-mcc/pro-image-medium-t-0-7/evaluation.json",
+          "detections": "outputs/h11/n1-outstanding-384/pro-image-medium-t07"
+        },
+        {
+          "label": "baseline-pro-text-high-t-0-0",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "pro-text-high-t0",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/n1/384px-14buf-mcc/pro-text-high-t-0-0/evaluation.json",
+          "detections": "outputs/h11/n1-outstanding-384/pro-text-high-t0"
+        },
+        {
+          "label": "baseline-pro-text-medium-t-0-7",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "pro-text-medium-t07",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-7/evaluation.json",
+          "detections": "outputs/h11/n1-outstanding-384/pro-text-medium-t07"
         }
       ]
     },
@@ -725,6 +809,18 @@
           "verifier_config": null,
           "eval_path": "results/rescore-2026-05-31/retest-h11-single-pass-384-t0/brief-text-t0/run_10/evaluation.json",
           "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_10/detections_brief-text-t0_run10.geojson"
+        },
+        {
+          "label": "baseline-flash-text-minimal-t-0-0",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "brief-text-t0",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/n1/384px-14buf-mcc/flash-text-minimal-t-0-0/evaluation.json",
+          "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0"
         }
       ]
     },
@@ -1153,6 +1249,133 @@
           "verifier_config": null,
           "eval_path": "results/rescore-2026-05-31/consensus-384-t1-0/384/run_30/evaluation.json",
           "detections": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_30/detections_384_run30.geojson"
+        }
+      ]
+    },
+    "pv-diag-384": {
+      "_note": "N=1 baseline-matrix cells only (Session 96). proposer_pools/verifier_passes intentionally EMPTY: pv-diag-384's full pass+consensus+verified decomposition is Batch E (GAP-7). These 10 single-pass conditions reference their pools by relative pool-dir path; Batch E will declare them. See docs/methodology/n1-baseline-matrix.md.",
+      "proposer_pools": {},
+      "verifier_passes": {},
+      "conditions": [
+        {
+          "label": "baseline-flash-image-high-t-0-7",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "flash-high-image-n5/image-t0.7",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/n1/384px-14buf-mcc/flash-image-high-t-0-7/evaluation.json",
+          "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7"
+        },
+        {
+          "label": "baseline-flash-image-minimal-t-0-0",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "image-baseline/image-t0.0",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/n1/384px-14buf-mcc/flash-image-minimal-t-0-0/evaluation.json",
+          "detections": "outputs/h11/pv-diag-384/image-baseline/image-t0.0"
+        },
+        {
+          "label": "baseline-flash-image-minimal-t-0-7",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "image-n5/image-t0.7",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/n1/384px-14buf-mcc/flash-image-minimal-t-0-7/evaluation.json",
+          "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7"
+        },
+        {
+          "label": "baseline-flash-text-high-t-0-7",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "flash-high-text-n5/text-t0.7",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/n1/384px-14buf-mcc/flash-text-high-t-0-7/evaluation.json",
+          "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7"
+        },
+        {
+          "label": "baseline-flash-text-minimal-t-0-0-pv-baseline",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "text-baseline/text-t0.0",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/n1/384px-14buf-mcc/flash-text-minimal-t-0-0-pv-baseline/evaluation.json",
+          "detections": "outputs/h11/pv-diag-384/text-baseline/text-t0.0"
+        },
+        {
+          "label": "baseline-flash-text-minimal-t-0-7",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "flash-minimal-text-n30-t07/text-t0.7",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/n1/384px-14buf-mcc/flash-text-minimal-t-0-7/evaluation.json",
+          "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7"
+        },
+        {
+          "label": "baseline-pro-image-high-t-0-7",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "pro-high-image-n5/image-t0.7",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/n1/384px-14buf-mcc/pro-image-high-t-0-7/evaluation.json",
+          "detections": "outputs/h11/pv-diag-384/pro-high-image-n5/image-t0.7"
+        },
+        {
+          "label": "baseline-pro-image-medium-t-0-0",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "pro-medium-image-baseline/image-t0.0",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/n1/384px-14buf-mcc/pro-image-medium-t-0-0/evaluation.json",
+          "detections": "outputs/h11/pv-diag-384/pro-medium-image-baseline/image-t0.0"
+        },
+        {
+          "label": "baseline-pro-text-high-t-0-7",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "pro-high-text-n5/text-t0.7",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/n1/384px-14buf-mcc/pro-text-high-t-0-7/evaluation.json",
+          "detections": "outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7"
+        },
+        {
+          "label": "baseline-pro-text-medium-t-0-0",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "pro-medium-text-baseline/text-t0.0",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+          "detections": "outputs/h11/pv-diag-384/pro-medium-text-baseline/text-t0.0"
         }
       ]
     }

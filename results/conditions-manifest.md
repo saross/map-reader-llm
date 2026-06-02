@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-06-02T03:14:11Z · 92 row(s) · schema v1.0.
+> Generated 2026-06-02T08:02:59Z · 110 row(s) · schema v1.0.
 >
-> **Coverage**: 92 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 110 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -90,6 +90,23 @@
 | n1-outstanding-384::pro-text-high-t0-single-pass-run_3 | single-pass | none | — | 1 | 0.4948 | 0.3805 | 1004 |
 | n1-outstanding-384::pro-image-medium-t07-single-pass-run_1 | single-pass | none | — | 1 | 0.452 | 0.5984 | 941 |
 | n1-outstanding-384::pro-text-medium-t07-single-pass-run_1 | single-pass | none | — | 1 | 0.416 | 0.3105 | 1445 |
+| n1-outstanding-384::baseline-flash-image-minimal-t-0-0-487-tiles | single-pass | none | — | 1 | 0.5984 | 0.3136 | — |
+| n1-outstanding-384::baseline-flash-image-minimal-t-0-3 | single-pass | none | — | 1 | 0.5931 | 0.3053 | — |
+| n1-outstanding-384::baseline-flash-text-minimal-t-0-3 | single-pass | none | — | 1 | 0.4992 | 0.0392 | — |
+| n1-outstanding-384::baseline-pro-image-high-t-0-0 | single-pass | none | — | 1 | 0.5276 | 0.6062 | — |
+| n1-outstanding-384::baseline-pro-image-medium-t-0-7 | single-pass | none | — | 1 | 0.452 | 0.5984 | 941 |
+| n1-outstanding-384::baseline-pro-text-high-t-0-0 | single-pass | none | — | 1 | 0.4942 | 0.3808 | — |
+| n1-outstanding-384::baseline-pro-text-medium-t-0-7 | single-pass | none | — | 1 | 0.416 | 0.3105 | 1445 |
+| pv-diag-384::baseline-flash-image-high-t-0-7 | single-pass | none | — | 1 | 0.4986 | 0.6019 | — |
+| pv-diag-384::baseline-flash-image-minimal-t-0-0 | single-pass | none | — | 1 | 0.5995 | 0.3124 | 746 |
+| pv-diag-384::baseline-flash-image-minimal-t-0-7 | single-pass | none | — | 1 | 0.5534 | 0.3295 | — |
+| pv-diag-384::baseline-flash-text-high-t-0-7 | single-pass | none | — | 1 | 0.3871 | 0.3314 | — |
+| pv-diag-384::baseline-flash-text-minimal-t-0-0-pv-baseline | single-pass | none | — | 1 | 0.5196 | -0.0038 | 1047 |
+| pv-diag-384::baseline-flash-text-minimal-t-0-7 | single-pass | none | — | 1 | 0.4883 | 0.0784 | — |
+| pv-diag-384::baseline-pro-image-high-t-0-7 | single-pass | none | — | 1 | 0.5908 | 0.8524 | — |
+| pv-diag-384::baseline-pro-image-medium-t-0-0 | single-pass | none | — | 1 | 0.6059 | 0.7336 | 519 |
+| pv-diag-384::baseline-pro-text-high-t-0-7 | single-pass | none | — | 1 | 0.745 | 0.7465 | — |
+| pv-diag-384::baseline-pro-text-medium-t-0-0 | single-pass | none | — | 1 | 0.763 | 0.7515 | 430 |
 | retest-h11-single-pass-384-t0::single-pass-run_1 | single-pass | none | — | 1 | 0.5065 | 0.0427 | 1093 |
 | retest-h11-single-pass-384-t0::single-pass-run_2 | single-pass | none | — | 1 | 0.4994 | 0.0427 | 1107 |
 | retest-h11-single-pass-384-t0::single-pass-run_3 | single-pass | none | — | 1 | 0.4961 | 0.0427 | 1113 |
@@ -100,3 +117,4 @@
 | retest-h11-single-pass-384-t0::single-pass-run_8 | single-pass | none | — | 1 | 0.5085 | 0.0427 | 1087 |
 | retest-h11-single-pass-384-t0::single-pass-run_9 | single-pass | none | — | 1 | 0.5039 | 0.0742 | 1089 |
 | retest-h11-single-pass-384-t0::single-pass-run_10 | single-pass | none | — | 1 | 0.4997 | 0.0427 | 1090 |
+| retest-h11-single-pass-384-t0::baseline-flash-text-minimal-t-0-0 | single-pass | none | — | 1 | 0.5031 | 0.0459 | — |
