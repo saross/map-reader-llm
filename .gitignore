@@ -59,8 +59,14 @@ outputs/.active_files.*
 # ─────────────────────────────────────────────────
 # Batch API JSONL payloads (base64 images, rebuilt from tiles)
 outputs/**/batch_working/
-# Verifier crop PNGs (extracted from rasters by extract_candidates.py)
-# Match both nested structures: crops/crops/ and crops/*/crops/
+# Verifier/proposer crop PNGs are large reproducible binaries (extracted from
+# rasters by extract_candidates.py). NEVER git-track them — synced out-of-band
+# (rsync / object storage), per the Session 95 (2026-06-02) git-vs-sync split.
+# This global rule supersedes the narrower per-path rules below; the
+# candidate_manifest.json siblings are small metadata and remain tracked (.png only).
+**/crops/*.png
+**/crops/**/*.png
+# (legacy narrower rules, retained for clarity)
 outputs/**/crops/crops/
 outputs/**/crops/*/crops/
 # Session 78 verifier-calibration matrix shared-crops PNGs (regenerable
