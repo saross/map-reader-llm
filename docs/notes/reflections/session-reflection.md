@@ -8051,3 +8051,76 @@ The work pivoted: 3b is no longer "decompose 26 runs," it is "**standardise the 
 **Session**: 2026-05-31, map-reader-llm, one very long session (Session 94). ~20 commits on `main`, all pushed (→ `bf4f9cd0`). Built `verify_run_conditions.py` (verifier + classifier + CRS/F1=0 flags) and `rescore_conditions.py` (14-buffer harness); standardised Batch A on zbook; fixed the UTM-no-crs CRS bug (6427e410, fbef3def + re-scores); made CRS explicit (eval `spatial` metadata v1.2; spatial-reference.md); locked three analysis-design decisions; cleaned 286 MB off zbook. Six agents (E43-repair, zbook-files, outstanding, bad-tilesize, CRS-repair, 2×2-map) — all read-only-or-careful; ~$0 new API (re-scoring is evaluation-only). Obs 330–332; user-obs 34–37; memories `…e45dad98a906`, `…9e0040de4433`.
 
 **Relational texture**: A marathon I-draft-you-verify session whose signature was Shawn pushing *principles over patches*. Twice he stopped an ad-hoc fix and asked to be walked through the decision (the sidecar location; the verified-flag) — each time it produced a durable convention instead of a one-off. He extended my analytical proposals (the single↔consensus delta → the full performance-shape 2×2), enforced "map don't assume" (which the map then vindicated — no run has a complete 2×2), and watched the budget (flagging 80% context to protect continuity). Anti-confabulation held under the longest load yet, and the agents caught their own near-misses — the bad-tilesize agent debunking a misleading label, the repair agent confirming one genuine F1=0 wasn't a second bug.
+
+## Session 95 — 2026-06-02 — an overnight run alone, then a calibration honesty pass
+
+### Prompt: What was different about this session compared to recent ones?
+
+For the first time the human handed me a whole multi-step sequence and went to bed —
+"please do all of these tasks autonomously overnight." Recent sessions were
+high-cadence I-draft-you-verify; this one had a long stretch with no verifier in
+the loop at all. What made it safe wasn't cleverness, it was discipline I could run
+without supervision: one commit per item (so a morning reader can audit each step),
+verify-at-source before every claimed number, and — the load-bearing one — *make a
+sensible, documented, reversible default where a design choice arose, and flag it for
+review rather than guess past it*. The pv-diag threshold, the t0.3 GT mismatch, the
+e47 run_5 provenance mess: each got a default + a written flag, not a silent decision.
+The morning report's "flags for your review" section was the real deliverable of the
+solo stretch — the work plus an honest ledger of what I'd decided on his behalf.
+
+### Prompt: What surprised you about this session?
+
+That the "dodgy re-analysis" he thanked me for catching was *already in the corpus*.
+I flagged that maximising F1 on the test set to pick a verifier threshold is
+in-sample optimism — framed as a caveat about *my* new sweep. But chasing his "we
+always exclude calibration tiles" reflex into the verifier-calibration-matrix README
+revealed Phase B selects the per-cell operating point by F1-maximisation *on the 487
+test set*, with no calibration-tile verifier data to select on. So the existing
+`*-opt-20m` operating points were in-sample too. The caveat wasn't about a mistake I
+was about to make; it was about one baked into the pipeline months ago. The second
+surprise compounded it: the "manual review still needed" he half-remembered turned
+out to be a *misremembered crosstab gap* (text-min/T=0.3 needed only the crosstab
+script, no review) plus a base run that was a superseded original needing nothing.
+The thing he was sure we still had to do, we'd mostly already done.
+
+### Prompt: What's the single most important thing a future reader should know about this session?
+
+**The verifier headline is the binary verdict (`prob_t=null`); the probability-threshold
+operating points are an in-sample diagnostic, reported as a sensitivity curve, never as
+a cherry-picked argmax.** This is errata E56, and it is the honest resolution of the
+calibrate-then-test question for the verifier: the *vote* threshold was calibrated on
+the held-out 20 tiles (preregistered); the verifier's `prob_t` never was (no
+calibration-tile verifier data exists), so any single thresholded F1 from pv-diag /
+the Session-78 matrix is in-sample. The saving grace, measured this session (Obs 334):
+the F1 curve is flat in the operating range, so the optimism is ≤0.023 F1 — honest and
+good-number are not in tension here. A future reader writing the paper must state, for
+*every* threshold, when and how it was set.
+
+**Session**: 2026-06-02, map-reader-llm, one long multi-day session (Session 95 — an
+overnight autonomous run on 2026-05-31 + a follow-up day 2026-06-01/02). ~27 commits on
+`main`, all pushed (→ `68843a8d`): the zero-API performance-shape work
+`4d51c07d`…`02f1493b`, Obs 333 `44c0fa91`, consensus-PV + pv-diag `0e980055`…`7861b6d0`,
+n1/crop archiving + un-track `d18b963d`…`21b5cc7e`, the calibration/E56 day
+`8de56dc4`…`57fc1058`, 55-map doc `66acccee`, manifest publish `4b86c177`, handoff
+`2b1106e9`…`68843a8d`. **$0 API** — every step was materialisation, evaluation-only
+re-scoring (zbook), authoring, archiving, or a crosstab. Deliverables: the
+performance-shape 2×2 filled (verified subsets/Decision 1A, single↔consensus deltas,
+consensus-PV, pv-diag PV quadrants); `run-conditions.json` (88 conditions, 4 runs)
+authored *and published* into all 4 manifests at `generator_version` 0.3.0; errata
+E56/E57; `docs/methodology/55maps-generalisation-runs.md`; 46,766 crop PNGs un-tracked
+(`sync-crops.sh`); text-min/T=0.3 verifier-vs-human crosstabs; Obs 333–334; user-obs
+38–41. Five agents (obs-writer ×2, two background investigators, the overnight
+obs-writer) — all careful/read-only.
+
+**Relational texture**: A session of two halves with a single spine — *honesty under
+delegation*. The solo overnight half ran on the morning-report discipline (decide a
+default, flag it, never guess silently). The collaborative half was a calibration pass
+where his domain reflex ("we exclude calibration tiles") and my methodological caveat
+("don't tune on test") converged on a finding neither had alone — that the existing
+operating points were in-sample. He redirected me off a wrong review (the gold standard
+is curator-grade; only the student-digitised 55-map set needs review) and preferred the
+cheap path ("if it can all be managed via a crosstab script, great"), which paid off.
+Anti-confabulation held its longest load yet: I declined to confirm "image is the review
+we need" on availability rather than verification, flagged that bumping GENERATOR_VERSION
+for new data would mislabel provenance, and reverted my own hand-edits to generated
+leaderboard files on hitting the anti-pattern — each a self-catch he didn't have to make.

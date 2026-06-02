@@ -4857,3 +4857,25 @@ Sequence 1 and the broader H11 decision share a shape Shawn named explicitly: a 
 **Probe**: the geojson held 572 features with a per-feature `verified` boolean (269 True / 303 False) + verifier provenance, and the scorer scores *every* geometry regardless of the flag. gs-v2's verified file, by contrast, is pre-filtered (380 verified features, no flag).
 
 **Belief revision**: "scoring a verified-X.geojson measures the verifier" → "it measures the *unfiltered proposer baseline*, because the file is the full candidate set + a flag the scorer ignores." Forced a convention (the scoreable set is always the *materialised actual set*; verdicts/flags are separate provenance) and revealed that the verifier value-add (the +0.10 F1 gs-v2 showed) had been silently un-measured for these runs.
+
+## Session 95 — 2026-06-02 — the in-sample operating point was already in the corpus; a review that wasn't
+
+### Sequence 1 — "my threshold sweep introduced a dodgy re-analysis"
+
+**Surprising fact**: I flagged that picking a verifier `prob_t` by maximising F1 on the test set is in-sample optimism — framed as a caveat about the *new* sweep I'd just set up. The user's reply implied the problem was already handled: "I thought we always excluded calibration tiles from test sets."
+
+**Probe**: rather than accept either framing, I traced how the *existing* operating points were chosen. The `results/verifier-calibration-matrix/README.md` Phase B states it selects the per-cell `(vote_t, prob_t)` optimum by F1 at 20 m *on the 487-tile scope* — the test set. I then checked coverage: `pv-diag ∩ calibration_manifest = 0` (the verifier never ran on the 20 held-out tiles), and `gs-v2`'s headline `verified` condition carries `prob_threshold: null` — a binary verdict, no tuned cutoff.
+
+**Belief revision**: "my sweep introduced an in-sample analysis" → "the in-sample selection was already baked into the corpus (the `*-opt-20m` cells); the verifier `prob_t` was *never* a calibrated quantity — the preregistered calibrate-then-test governs the *vote* threshold, while the headline sidesteps `prob_t` entirely via the binary verdict." Generalised: excluding calibration tiles from the test set closes the *library/example-leakage* door but not the *tune-the-operating-point-on-test* door — they are different leakage paths, and the second is invisible if you only check the first. Logged as errata E56; the curve's flatness (≤0.023 F1, Obs 334) makes the honest reporting numerically free.
+
+**Probe-type**: provenance-trace of an existing artefact's *method* (how were its operating points chosen?) + data-coverage check, run against a domain reflex that had (reasonably) assumed the problem was already solved. The reflex was right about its door and wrong about which door was open.
+
+### Sequence 2 — "a 55-map manual review is still outstanding"
+
+**Surprising fact**: the user was confident a manual review remained — "to complete a 2×2 matrix or bring analyses into alignment" — but couldn't name it, and I could not find it scoped anywhere in this or the previous session's transcript.
+
+**Probe**: mapped all five `55maps-*-generalisation` runs' review + crosstab state. Four (image, text-high, text-min, T=0.3) had complete human-review CSVs; text-min and T=0.3 merely *lacked the verifier-vs-human crosstab*, which the parameterised script builds from the existing CSV — no review. The fifth, the base `55maps-generalisation`, had *no* review at all; I read its `post_run_report_retrospective.md` and compared tiles/config to `55maps-text-high-generalisation` (same reconstruction config, 79% tile overlap, near-identical headline F1).
+
+**Belief revision**: "a manual review is outstanding" → "no review is outstanding: the base run is the *superseded original* of text-high (its assessment is carried by the successor), and the genuinely-missing pieces were two *crosstab computations*, not reviews." Generalised: a half-remembered to-do can be a misremembered version of work already done in a different form — when memory is imprecise, enumerate the artefacts and let their state, not the memory, decide what is actually missing.
+
+**Probe-type**: exhaustive state-mapping across a run family + provenance-read of the one anomaly, against an imprecise human prior. The prior's *shape* ("complete a 2×2") guided the search correctly even though it misnamed the target.

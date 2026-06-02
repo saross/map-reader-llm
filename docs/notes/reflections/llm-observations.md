@@ -5969,3 +5969,17 @@ I built a deterministic verifier to validate my condition decomposition — and 
 ### "It validates" is not "it's right" — plausibility is a separate check from completeness
 
 I reported "5/6 runs standardised" because the classifier confirmed the evals existed and passed schema validation. Two were scoring F1=0 — a CRS bug the classifier could not see (it checks completeness, not plausibility). The metrics were the real verdict. The gap became a verifier flag (`f1-all-zero`), but the lesson is older than this project: a structurally-valid artefact can be semantically wrong, and the human reads the *numbers* while the machine reads the *schema*. Shawn's GIS-rigour instinct (CRS must be explicit in metadata) was the same reflex from the data side.
+
+## Session 95 — 2026-06-02 (an overnight autonomous run + a calibration honesty pass)
+
+### A note that must persist in a generated artefact belongs in the generator, not the output
+
+Asked to "back-fill E56" into two leaderboard tier MDs, I started editing the MDs directly — then hit the friction: each has a sibling `.json` and a git history of "regenerate tier tree" commits, i.e. they are *generated*. A manual edit would be clobbered on the next regen, would diverge from the second (cheap) render path, and — when markdownlint flagged a pre-existing double-blank the generator itself emits — was about to pull me into hand-fixing generated output. I reverted to a one-line change in the generator's header template instead.
+
+**The rule**: the moment you notice a Markdown file has a sibling `.json` or a "regenerate"-style commit history, treat it as build output — a durable note goes in the *generator's template*, never the rendered file. Hand-editing generated artefacts is a category error that looks like a quick win and silently creates divergence + clobber debt. Accept the cost (the note appears on next regen, not instantly) rather than pay the larger one. The caveat was already live at the canonical source (the errata + the matrix README), so immediate visibility in the generated copy was never worth the anti-pattern.
+
+### The contract that makes an unsupervised overnight run safe is the flag ledger, not autonomy
+
+Handed a whole multi-step sequence to run while the human slept, what kept it trustworthy was not doing the steps well — it was the *handling of forks*. Wherever a step needed a decision the human would want to own (the pv-diag operating-point threshold, the T=0.3 ground-truth mismatch, the e47 run_5 provenance ambiguity), the move was: choose a sensible, **reversible** default; **document** it at the point of change; and **surface it in a "flags for your review" ledger** in the morning report — never decide silently, never block waiting. Each flag became where the next morning's conversation actually opened.
+
+**The rule**: the deliverable of an unsupervised stretch is the work *plus an honest ledger of what you decided on the human's behalf and why*. A silent default is a landmine; a blocked task wastes the delegation; a flagged-and-defaulted task is both progress and an audit trail. Bias every autonomous design choice toward reversibility, and spend words on the flag, not the decision — the human reads the ledger to reconstruct your judgement without having to predict it in advance.

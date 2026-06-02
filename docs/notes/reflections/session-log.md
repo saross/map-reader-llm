@@ -6299,3 +6299,63 @@ Review the 2×2 availability map; materialise the pv-384/512 verified subsets (D
 ### Contextual assumptions
 
 Re-scoring is evaluation-only (no detection API) → cheap, ran on zbook. Sapphire was off-limits (multi-day Bayesian run). zbook had ~90 GB free CPU RAM (no Ollama model loaded), so 55-map concurrency wasn't a constraint. `GENERATOR_VERSION` held at 0.2.0 (bump when the first batch emits new manifest rows). Almost no `run-conditions.json` authoring happened — the session was machinery + standardisation; authoring is next.
+
+## Session 95 — 2026-06-02 (overnight autonomous run + follow-up day)
+
+**Work (overnight, autonomous)**: Filled the performance-shape 2×2 (all zero-API, on
+zbook). Materialised + re-scored the pv-384/512 `verified:true` subsets (Decision 1A,
+16 sets — verifier benefit now measurable: F1 0.40→~0.50, MCC 0.03→~0.40). Scored each
+K-pass run's individual passes for the single↔consensus delta (4 runs, 63 evals).
+Scored the already-materialised consensus-PV (12 conditions: h10 pool_160, h8-v2
+scale-4 + wbf, verifier-t-pilot ×3, the 5 generalisation runs). Materialised + scored
+pv-diag-384's two PV quadrants (consensus-PV 0.861, single-run-PV 0.718). Authored
+`run-conditions.json` for e47 / n1 / retest-h11-single-pass / c384. Archived n1's
+superseded `384px-outstanding` evals. Logged Obs 333.
+
+**Work (follow-up day)**: Calibration-honesty pass — established the verifier `prob_t`
+operating points are selected in-sample on the test set (errata **E56**); ran the
+pv-diag threshold sweep (flat curve → Obs 334). **E57** (Pro-pool `config.model`
+template default + study `output_dir` overrides). Harmonised the T=0.3 generalisation
+GT to the reviewed GT. Built the text-min/T=0.3 verifier-vs-human crosstabs from the
+existing reviews (no new manual review). Documented the five 55-map runs
+(`docs/methodology/55maps-generalisation-runs.md`). Un-tracked 46,766 crop PNGs +
+gitignored (`scripts/sync-crops.sh`; zbook copy synced). Published the manifest batch
+(`--all --write`): 92 conditions across 5 decomposed runs, `generator_version` 0.3.0,
+one brittle `==4` test relaxed (14/14 pass).
+
+**Decided**: (1) Verifier headline = the binary verdict (`prob_t=null`); `prob_t`
+operating points are an in-sample *diagnostic*, reported as a sensitivity curve, never
+an argmax (E56). The preregistered calibrate-then-test governs the *vote* threshold.
+(2) The base `55maps-generalisation` is the superseded original of
+`55maps-text-high-generalisation` — **no manual review outstanding** for the
+generalisation 2×2 set. (3) git ⊕ Syncthing: git-tracked → push/pull only; large crops
+un-tracked + synced out-of-band. (4) `GENERATOR_VERSION` 0.3.0 = a batch-emission
+milestone (not a logic change; comment made honest).
+
+**Produced**: ~27 commits → `68843a8d`, all pushed, $0 API. New scripts:
+`materialise_verified_subset.py` (+14 tier-1 tests), `sync-crops.sh`. New doc:
+`55maps-generalisation-runs.md`. Errata E56/E57. Obs 333–334; user-obs 38–41. Manifests
+republished at 0.3.0 (92 conditions / 5 runs). `session-95-overnight-summary-2026-05-31.md`.
+Five agents (obs-writer ×2, two background investigators, the overnight obs-writer).
+
+### Pending (next session, priority order)
+
+1. **N=1 baseline-matrix authoring** — single-pass conditions on the 3 real source runs
+   (`pv-diag-384` ×10, `n1-outstanding-384` ×7, `retest-h11-single-pass-384-t0` ×1) **+
+   one `analyses` row** (not a pseudo-run); record model-of-record per E57.
+2. **Passes for the 4 batch runs** — published conditions but not passes; the pass-walk
+   needs generalising (GAP-7/9).
+3. **Sapphire crop copy** (`sync-crops.sh sapphire`) + **Syncthing folder removal** (user).
+4. **Deferred**: git history purge (post-submission); R2 durable sync; the "report both"
+   55-map generalisation analysis (transferred vs re-derived operating point); the E56
+   note in the cheap MD re-render path.
+
+### Contextual assumptions
+
+- Session 95 spans an overnight autonomous run (2026-05-31 — the user delegated the full
+  zero-API sequence and went to bed) + a collaborative follow-up day (2026-06-01/02).
+- Everything was **zero-API** (materialisation, evaluation-only re-scoring, authoring,
+  archiving, crosstab); compute on **zbook** (sapphire busy with a multi-day Bayesian run).
+- The 17 "phantom-modified" crop strays the overnight run saw were **Syncthing churn** —
+  content byte-identical to git; the un-track + gitignore cleared 16 of 17.
+- The 4 batch runs publish **conditions but not passes** (pass-walk gap, item 2 above).
