@@ -1,0 +1,122 @@
+# N=1 Single-Pass Evaluation — 384px, 14-buffer standard + MCC
+# =============================================================
+# Batch spec for evaluate_detections.py --batch --mcc.
+#
+# Re-scores ALL 18 N=1 384px single-pass baseline pools (the "N=1
+# baseline matrix") at the Session-94 14-buffer standard PLUS tile-level
+# MCC, SUPERSEDING the 4-buffer (20/30/40/50m, no-MCC) evaluation in
+# configs/n1-eval-384px-all-buffers.yaml.
+#
+# WHY THIS RE-SCORE EXISTS
+# ------------------------
+# The original baseline matrix predates two project standards:
+#   1. The 14 uniform buffers (5 10 15 20 25 30 35 40 45 50 75 100 125
+#      150 m) adopted 2026-05-31 for ALL runs (scripts/rescore_conditions.py
+#      BUFFERS_STANDARD). The original carried only 20/30/40/50 m.
+#   2. The MCC-always preference (report tile-level MCC alongside F1
+#      wherever the inputs support it). The original was run --mcc false.
+# Re-scoring brings the 18 headline baseline cells onto the same eval
+# footing as every other condition in the conditions manifest, and lets
+# them be authored as VALID condition rows (the conditions schema requires
+# non-null tp/tn/fp/fn, which only the MCC pass supplies).
+#
+# SEMANTICS (so a reader is not misled)
+# -------------------------------------
+# * Each pool's detections_dir globs its replicate single passes; the
+#   scorer averages the per-pass scores. So a cell's F1 (per buffer) and
+#   MCC are the MEAN single-pass values across replicates — the expected
+#   performance of ONE pass — not a union/consensus over passes.
+# * MCC is BUFFER-AGNOSTIC: it classifies tiles by presence/absence
+#   (tile contains a GT mound? tile contains any detection?) with NO
+#   distance test, so there is exactly one MCC per cell regardless of
+#   buffer (preregistration §4.2; scripts/lib_advanced_metrics.py
+#   calculate_tile_classification). The 14 buffers vary only F1/P/R.
+# * Headline detection buffer is the preregistered 20 m; 50 m is the
+#   lenient comparison; 75-150 m are the saturation tail. Nothing
+#   downstream averages ACROSS buffers — each buffer is reported in its
+#   own per_buffer slot; the only averaging is across replicate passes
+#   within a buffer.
+#
+# Run->pool provenance for all 18 cells (verified from each eval's
+# _metadata.input_files.detections; see docs/methodology/n1-baseline-matrix.md):
+#   pv-diag-384 x10, n1-outstanding-384 x7, retest-h11-single-pass-384-t0 x1.
+#
+# 487 tiles: 229 populated (47%), 258 empty (53%).
+#
+# Created: 2026-06-02 (Session 96). Supersedes n1-eval-384px-all-buffers.yaml.
+
+metadata:
+  description: "N=1 single-pass evaluation at 384px, 14-buffer standard (5-150m) + MCC, 487 tiles"
+  tile_size: 384
+  purpose: >
+    Standard-compliant re-score of all 18 single-pass N=1 baselines at the
+    14 uniform buffers plus tile-level MCC. Supersedes the 4-buffer
+    (20/30/40/50m, no-MCC) sweep in n1-eval-384px-all-buffers.yaml so the
+    baseline matrix can be authored as valid condition rows.
+
+defaults:
+  bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+  buffers: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100, 125, 150]
+  bootstrap: 10000
+  seed: 42
+  glob: "*/detections_*.geojson"
+
+conditions:
+  # ── Flash Text ──────────────────────────────────────────────
+  - label: "Flash Text MINIMAL T=0.0"
+    detections_dir: outputs/retest/h11-single-pass-384-t0/brief-text-t0
+
+  - label: "Flash Text MINIMAL T=0.3"
+    detections_dir: outputs/h11/n1-outstanding-384/brief-text-t03
+
+  - label: "Flash Text MINIMAL T=0.7"
+    detections_dir: outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7
+
+  - label: "Flash Text HIGH T=0.7"
+    detections_dir: outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7
+
+  - label: "Flash Text MINIMAL T=0.0 (PV baseline)"
+    detections_dir: outputs/h11/pv-diag-384/text-baseline/text-t0.0
+
+  # ── Flash Image ─────────────────────────────────────────────
+  - label: "Flash Image MINIMAL T=0.0"
+    detections_dir: outputs/h11/pv-diag-384/image-baseline/image-t0.0
+
+  - label: "Flash Image MINIMAL T=0.0 (487 tiles)"
+    detections_dir: outputs/h11/n1-outstanding-384/image-t0
+
+  - label: "Flash Image MINIMAL T=0.3"
+    detections_dir: outputs/h11/n1-outstanding-384/image-t03
+
+  - label: "Flash Image MINIMAL T=0.7"
+    detections_dir: outputs/h11/pv-diag-384/image-n5/image-t0.7
+
+  - label: "Flash Image HIGH T=0.7"
+    detections_dir: outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7
+
+  # ── Pro Text ────────────────────────────────────────────────
+  - label: "Pro Text MEDIUM T=0.0"
+    detections_dir: outputs/h11/pv-diag-384/pro-medium-text-baseline/text-t0.0
+
+  - label: "Pro Text MEDIUM T=0.7"
+    detections_dir: outputs/h11/n1-outstanding-384/pro-text-medium-t07
+
+  - label: "Pro Text HIGH T=0.0"
+    detections_dir: outputs/h11/n1-outstanding-384/pro-text-high-t0
+
+  - label: "Pro Text HIGH T=0.7"
+    detections_dir: outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7
+
+  # ── Pro Image ───────────────────────────────────────────────
+  - label: "Pro Image MEDIUM T=0.0"
+    detections_dir: outputs/h11/pv-diag-384/pro-medium-image-baseline/image-t0.0
+
+  - label: "Pro Image MEDIUM T=0.7"
+    detections_dir: outputs/h11/n1-outstanding-384/pro-image-medium-t07
+
+  - label: "Pro Image HIGH T=0.0"
+    detections_dir: outputs/h11/n1-outstanding-384/pro-image-high-t0
+
+  - label: "Pro Image HIGH T=0.7"
+    detections_dir: outputs/h11/pv-diag-384/pro-high-image-n5/image-t0.7
