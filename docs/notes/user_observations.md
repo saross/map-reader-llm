@@ -1,3 +1,5 @@
+# User observations — collaboration meta-log
+
 Observation 1: Gemini is not as tractable / corrigible as Claude, It's smart, but esp. in Antigravity it's like 'what the hell did you just do and why did you do that?' in a way that Claude isn't. Just ran an overnight historical map extraction and it decided to switch from using 3 Flash (which I'm using for testing and development) to 3 Pro, which...only cost me about $2.50 but burned my day's quota. If you forget something (specifying a model, specifying a prompt or script to use/run, specifying a target / count / etc.), you just never know what you're going to get, whereas Claude usually does the right thing.
 
 Observation 2:
@@ -144,3 +146,15 @@ When CC proposed scoring single passes alongside the consensus sweep to get the 
 
 Observation 37:
 I insisted on empirically MAPPING the 2×2 availability per run rather than assuming the picture was complete — and the map confirmed no run actually has a full 2×2, vindicating the caution. I also flagged the context budget (80%, a genuinely long session) at the right moment, which let us protect continuity — offload the map to an agent, document, hand off — instead of running dry mid-task. Both are the same instinct: don't let optimism, about completeness or about remaining runway, outrun the evidence.
+
+Observation 38:
+CC flagged that picking a verifier threshold by maximising F1 on the test set is in-sample optimism — and my reflex was "but we always exclude calibration tiles from test sets." Chasing that conflict showed both were true about different doors: calibration-exclusion stops library/example leakage, but it doesn't stop tuning-on-test. And it surfaced that the EXISTING pipeline's verifier operating points (pv-diag / Session-78 matrix) were selected in-sample too — a real finding (errata E56), not just my new sweep. The honest framing we landed on (headline = the binary verdict, prob_t operating points are an in-sample diagnostic reported as a sensitivity curve) came out of taking the conflict seriously rather than either of us being simply right.
+
+Observation 39:
+When CC framed the remaining 55-map 2×2 work as possibly needing a manual review, I steered toward "if it can all be managed via a crosstab script, great" — preferring the cheaper path explicitly — and it turned out the human-review CSVs already existed, so the crosstab script closed the gap (text-min + T=0.3) with no new 20-minute review. Naming the low-cost preference up front shaped the investigation toward checking what was already on disk before reaching for fresh effort.
+
+Observation 40:
+I asked CC to find which review we actually needed by reading back through the transcripts; it couldn't find it explicitly scoped, said so plainly instead of guessing, and we reasoned it out from the artifacts instead — the base 55maps-generalisation turned out to be the superseded original of text-high, so no review was needed. My imprecise memory ("complete a 2×2 / bring analyses into alignment") was enough to steer the search even though it didn't name the thing, and CC declining to confabulate a confident "yes, it's the one I queued" is what kept us off the wrong candidate set.
+
+Observation 41:
+Twice this session CC stopped itself from the convenient-but-wrong move without my prompting: it flagged that bumping GENERATOR_VERSION for new input data (not a logic change) would mislabel the provenance, and fixed the code comment to be honest about the bump being a batch milestone; and it reverted its own hand-edits to generated leaderboard files once it hit the anti-pattern (clobbered on regen, diverges from the cheap-render path), choosing the generator-only fix. Self-catching these rather than me having to flag them is exactly the discipline I want.
