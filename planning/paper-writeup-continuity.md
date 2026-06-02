@@ -1,14 +1,73 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-05-31 (Session 94 — the BIG pivot: 3b reframed as a documentation-uplift + methodology audit; built the deterministic verifier (audit instrument) + the re-scoring harness; standardised Batch A (6 h11 runs) at 14 uniform buffers + MCC; fixed a CRS-misread data bug (UTM-no-crs F1=0) across the h11 runs + made CRS explicit; locked the verified-set convention, the repeated-single-pass standard, and the performance-shape 2×2 framework. Condition authoring is next, against the standardised record.)
+**Last updated**: 2026-06-02 (Session 96 — N=1 baseline matrix authored: re-scored 18 pools at 14 buffers + MCC → 18 single-pass conditions (92→110); analyses manifest bootstrapped (3c) + the `n1-baseline-matrix-384` leaderboard stub; batch passes published (6→68) incl. the E57 `model_of_record` override (n1 Pro = `gemini-3.1-pro`, study-design not billing-verified); parallelisation merged (PR #9); `GENERATOR_VERSION`→0.4.0. See the Session 96 START-HERE.)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
 
 ---
 
-## ✅ Session 95 — START HERE — 2×2 FILLED + CALIBRATION HONESTY + MANIFEST PUBLISHED
+## ✅ Session 96 — START HERE — N=1 BASELINE MATRIX + ANALYSES SCAFFOLD + BATCH PASSES
+
+**Posted**: 2026-06-02, end of a collaborative day (distinct from the Session-95 arc).
+~10 commits `32097c54`→`b57f69ce`, all pushed, + PR #9 squash-merged (`f67b2479`). **$0 API.**
+
+### TL;DR
+
+Authored the **N=1 baseline matrix** (carry-forward #3 → DONE), bootstrapped the
+**analyses manifest** (sub-step 3c) with a leaderboard stub, **published passes** for all
+4 decomposed batch runs (#5 residual → DONE), and merged the batch-eval
+**parallelisation**. Manifest now: **27 runs + 110 conditions + 68 passes + 1 analysis,
+ALL VALID**; tier-1 1058 passed.
+
+### What got done
+
+- **N=1 baseline matrix**: re-scored the 18 pools at the 14-buffer standard + MCC (zbook,
+  $0 API) → `results/paper-eval/n1/384px-14buf-mcc/` — supersedes the 4-buffer
+  `384px-all-buffers` (marked `SUPERSEDED.md` **in place**, not moved, because E57 cites
+  its path). Authored 18 `baseline-<slug>` single-pass conditions (`n_passes=1`) on
+  pv-diag-384 ×10 (new conditions-only entry) / n1 ×7 / retest ×1 (92→110). Full doc:
+  `docs/methodology/n1-baseline-matrix.md`.
+- **Analyses manifest (3c)**: the generator now emits a 5th entity (`load_run_analyses` /
+  `build_analyses` + write/render + FK guard); `results/run-analyses.json` sidecar →
+  `analyses-manifest.{json,md}`; leaderboard **stub** `n1-baseline-matrix-384` (18 cells;
+  finding / prereg / `tie_set` **deferred**). `GENERATOR_VERSION` 0.3.0→**0.4.0**.
+- **Batch passes (6→68)**: explicit pool paths for the 4 runs + a per-pool
+  `model_of_record` override (E57). e47 +5, retest +10, consensus-384 +30, n1 +17.
+- **Parallelisation**: PR #9 merged (`--workers`, `spawn` pool, byte-identical, default 1).
+- **Eval-provenance fix**: `evaluate_detections.py` records repo-relative paths now (the
+  audit verifier caught absolute `/home/...` paths in the evals I'd just generated).
+
+### Key locked decisions / findings
+
+1. **n1 Pro model-of-record = `gemini-3.1-pro`** (verbatim from the study YAMLs), per E57 —
+   but this is the **study DESIGN, not a billing-verified dispatch**: the recorded meta
+   says flash in *both* `config.model` AND `per_item_metadata.model_used`. Billing
+   reconciliation is still open (carry-forward #7 below). The override cites
+   `run-conditions.json` in the affected passes' provenance.
+2. **MCC is buffer-agnostic** (verified at source: `lib_advanced_metrics.py`
+   `calculate_tile_classification` — tile presence/absence, no distance) — one value per
+   condition; F1 headline = preregistered **20 m**; nothing averages across buffers.
+3. **Baseline cells = single-pass conditions (`n_passes=1`)**; the metric is the
+   mean-over-replicates (headline n=1 expectation), coexisting with the per-pass
+   conditions on n1/retest (distinct eval protocols — paper-eval vs rescore-2026-05-31).
+4. **Commit direct to `main`, no PRs** for this single-author repo (captured to memory;
+   overrides the global voluntary-PR rule).
+
+### Top of ready work (next session)
+
+1. **Leaderboard finding + tie-set** — lift `n1-baseline-matrix-384` from stub to finding:
+   a pairwise permutation / CI-overlap pass (zbook) to populate `tie_set`, then author the
+   human fields (`outcome`, `hypothesis_refs`, `preregistered`) in `run-analyses.json`.
+2. **Billing reconciliation** of the n1 Pro model identity (E57) — confirm/correct
+   `gemini-3.1-pro` vs the meta's flash (carry-forward #7).
+3. **Manifest batches C/D + pv-diag-384 full decomposition** (Batch E / GAP-7) — only its
+   10 baseline conditions exist; consensus / verified / per-pass passes pending.
+
+---
+
+## ✅ Session 95 — 2×2 FILLED + CALIBRATION HONESTY + MANIFEST PUBLISHED
 
 **Posted**: 2026-06-02, end of a long multi-day session (an overnight autonomous run
 plus a full follow-up day). 24 commits, `4d51c07d`→`4b86c177`, all pushed.
@@ -74,7 +133,10 @@ split); and **published the first manifest batch** (92 conditions / 5 runs,
    **Cloudflare R2** (now configured for another project) as the durable approach.
    NB: pulling `21b5cc7e` deletes the now-untracked crops from a clone's working tree
    (regenerable; rsync from amd-tower). [#6]
-3. **N=1 baseline-matrix manifest authoring** — model the 18 single-pass baseline
+3. **N=1 baseline-matrix manifest authoring** — **DONE 2026-06-02 (Session 96; see the
+   Session 96 START-HERE)**. NB the eval source changed: re-scored to the 14-buffer +
+   MCC standard (`384px-14buf-mcc`), not the 4-buffer `384px-all-buffers`. Original brief:
+   model the 18 single-pass baseline
    pools as `single-pass` conditions on their 3 real source runs (`pv-diag-384` ×10,
    `n1-outstanding-384` ×7, `retest-h11-single-pass-384-t0` ×1) **+ one `analyses`
    row** (type comparison/leaderboard), NOT a pseudo-run — consistent with the
@@ -96,6 +158,9 @@ split); and **published the first manifest batch** (92 conditions / 5 runs,
    condition count) relaxed to a stable-slice + non-shrinking assertion. *Residual:
    the 4 batch runs publish CONDITIONS but not PASSES yet (extract_passes still emits
    only gs-v2's 6 — the pass-walk needs generalising for these run shapes; GAP-7/9).*
+   **Passes DONE 2026-06-02 (Session 96)**: 6→68 — explicit pool paths for the 4 runs
+   + a per-pool `model_of_record` override (E57, GAP-7/9 resolved for these). Generator
+   bumped 0.3.0→0.4.0 (analyses emission + the override).
    E56 tier back-fill: caveat added to the `build_cross_architecture_tables.py`
    header **only** — it surfaces in the era-2 tier MDs on the next leaderboard regen
    (the generated MDs were NOT hand-edited; that would be clobbered + diverge). The
