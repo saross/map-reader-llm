@@ -19,8 +19,10 @@ in `planning/session-95-overnight-summary-2026-05-31.md`. **Explicitly deferred:
    the blobs*. Run `git filter-repo` to reclaim the space ONLY after the paper is
    submitted (rewrites every hash — disruptive across amd-tower / zbook / sapphire). [#6]
 2. **Out-of-band crop/tile sync** — Syncthing is the wrong fit and was double-syncing
-   git-tracked files. Remove this repo's folders from Syncthing; manually rsync
-   tiles/crops to zbook + amd-tower in the interim; evaluate **Cloudflare R2** (now
+   git-tracked files. `scripts/sync-crops.sh <host>` rsyncs the un-tracked crop PNGs
+   from amd-tower (the canonical copy) to a clone. **Done: zbook (2026-06-02, 2.65 GB).
+   Pending: sapphire** (`scripts/sync-crops.sh sapphire`), and **removing this repo's
+   folders from Syncthing** (user, via the GUI). Evaluate **Cloudflare R2** (now
    configured for another project) as the durable approach. NB: pulling `21b5cc7e`
    deletes the now-untracked crops from a clone's working tree (regenerable; rsync
    from amd-tower). [#6]
@@ -41,6 +43,15 @@ in `planning/session-95-overnight-summary-2026-05-31.md`. **Explicitly deferred:
    when/how each threshold was set). [#1]
 5. **Manifest regen + `GENERATOR_VERSION` bump** (0.2.0 → 0.3.0) — publish the
    authored conditions into `runs-manifest.json` when the batch is ready. [#5]
+6. **55-map generalisation runs** — now documented in
+   `docs/methodology/55maps-generalisation-runs.md` (identities, the
+   superseded-original relationship, assessment-coverage matrix). **No manual review
+   outstanding**: the four distinct experiments (image, text-high/T=0.7, text-min,
+   T=0.3) all have full coverage; text-min + T=0.3 verifier-vs-human 2×2s were built
+   2026-06-02 from existing reviews (commit `57fc1058`, no new review). Open item:
+   confirm the base `55maps-generalisation` manifest scope (carry-forward #10) and
+   decide **fold-into-text-high (`historical_alias`) vs keep-as-cited-original** when
+   authoring Batch B. [55-map]
 
 ---
 

@@ -144,6 +144,12 @@ Run tally: A 6 + B 5 + C 3 + D 9 + E 3 = 26. ✓
 - **pv-diag-256 archived eval**: `archive/results-non-production-tile-sizes/h11-256-pv-diagnostic/`
   (`threshold_sweep.json`/`summary.json` shapes; commit 276e4ca8). No MCC; 431 ref
   mounds; bespoke 256 scope.
+- **55-map base run = superseded original** (carry-forward #10): `55maps-generalisation`
+  (`verified_paired`) is the pre-recovery original of `55maps-text-high-generalisation`
+  (same T=0.7 text experiment, same reconstruction config). When authoring Batch B,
+  confirm the inferred scope and decide **fold the base into text-high as a
+  `historical_alias` vs keep it as a cited original**. Full identity/coverage map:
+  `docs/methodology/55maps-generalisation-runs.md`.
 
 ---
 
