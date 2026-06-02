@@ -8,11 +8,57 @@ project state.
 
 ---
 
-## 🔖 Session 95 carry-forward to-dos (2026-06-02)
+## ✅ Session 95 — START HERE — 2×2 FILLED + CALIBRATION HONESTY + MANIFEST PUBLISHED
 
-Session 95 (verified subsets, single↔consensus deltas, consensus-PV, pv-diag PV
-quadrants, `run-conditions.json` authoring for 4 runs, n1 archiving) is summarised
-in `planning/session-95-overnight-summary-2026-05-31.md`. **Explicitly deferred:**
+**Posted**: 2026-06-02, end of a long multi-day session (an overnight autonomous run
+plus a full follow-up day). 24 commits, `4d51c07d`→`4b86c177`, all pushed.
+
+### TL;DR
+
+Two arcs. **(1) Overnight** — executed the zero-API performance-shape work:
+materialised + scored the verified subsets (Decision 1A), the single↔consensus
+deltas, the consensus-PV diagonal, and pv-diag-384's PV quadrants; authored
+`run-conditions.json` for the first 4 non-gs runs; archived n1's superseded evals;
+logged Obs 333. Full record: `planning/session-95-overnight-summary-2026-05-31.md`.
+**(2) Follow-up day** — a calibration-honesty deep-dive that caught the verifier
+`prob_t` operating points (pv-diag / Session-78 matrix) being selected **in-sample
+on the test set** → **errata E56** (headline uses the binary verdict `prob_t=null`;
+diagnostics report the sensitivity curve, which is flat — fixed-vs-optimum ≤0.022
+F1). Plus: completed the text-min/T=0.3 verifier-vs-human 2×2s (crosstab script, no
+new review); documented the 55-map runs; un-tracked 46,766 crop PNGs (git⊕sync
+split); and **published the first manifest batch** (92 conditions / 5 runs,
+`generator_version` 0.3.0).
+
+### What got done
+
+- **Performance-shape 2×2** (zero-API, on zbook): verified subsets (Decision 1A —
+  verifier benefit now measurable: F1 0.40→~0.50, MCC 0.03→~0.40); single↔consensus
+  deltas for 4 runs; consensus-PV (12 conditions, verifier-t-pilot F1 0.856);
+  pv-diag-384 both PV quadrants (consensus-PV 0.861, single-run-PV 0.718).
+- **`run-conditions.json`** authored for e47 / n1 / retest-h11-single-pass / c384
+  (88 conditions incl. single-pass), then **published** into all 4 manifests
+  (`--all --write`, ALL VALID, `generator_version` 0.3.0).
+- **E56** (threshold provenance / in-sample operating points) + the pv-diag sweep;
+  **E57** (Pro-pool `config.model` template-default + `output_dir` overrides).
+- **55-map**: t0.3 GT harmonised to the reviewed GT; text-min/T=0.3 verifier-vs-human
+  crosstabs; `docs/methodology/55maps-generalisation-runs.md` (the base
+  `55maps-generalisation` is the superseded original of `text-high`).
+- **Repo hygiene**: 46,766 crop PNGs un-tracked + gitignored; `scripts/sync-crops.sh`
+  (zbook copy done); n1 + 30 m-baseline evals archived.
+- **Obs 333** (consensus dividend tracks proposer σ). New scripts:
+  `materialise_verified_subset.py`, `sync-crops.sh`.
+
+### Key locked decisions / findings
+
+1. **Verifier headline = binary verdict** (`prob_t=null`, per gs-v2). The prob_t
+   operating points are an **in-sample diagnostic** (E56); the *vote* threshold is the
+   preregistered, calibration-tile-selected one. State this in the paper (E56).
+2. **55-map base run** is the superseded original of `text-high`; **no manual review
+   outstanding** for the generalisation 2×2 set.
+3. **git ⊕ Syncthing**: git-tracked → syncs via push/pull, never Syncthing; large
+   crops un-tracked, synced out-of-band.
+
+### Open threads — carry-forward to-dos
 
 1. **git history purge of crop blobs** — 46,766 crop PNGs (2.3 GB) were un-tracked
    from the index (commit `21b5cc7e`) + globally gitignored; *history still carries
@@ -69,7 +115,7 @@ in `planning/session-95-overnight-summary-2026-05-31.md`. **Explicitly deferred:
 
 ---
 
-## ✅ Session 94 — START HERE — STANDARDISE-THEN-DECOMPOSE + CRS FIX + PERFORMANCE-SHAPE
+## ✅ Session 94 — STANDARDISE-THEN-DECOMPOSE + CRS FIX + PERFORMANCE-SHAPE
 
 **Posted**: 2026-05-31, end of a very long session. The 3b conditions work changed
 shape fundamentally — read this before resuming.
