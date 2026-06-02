@@ -315,8 +315,8 @@
       "buffers": [
         20
       ],
-      "ground_truth": "/home/shawn/Code/map-reader-llm/inputs/vectors/references/mounds-reference.geojson",
-      "bounds": "/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
       "bootstrap": 1000,
       "seed": 42,
       "output_dir": "results/paper-eval/n1/384px-14buf-mcc",
@@ -329,9 +329,9 @@
       "resampling_unit": "tile_level"
     },
     "input_files": {
-      "detections": "/home/shawn/Code/map-reader-llm/outputs/retest/h11-single-pass-384-t0/brief-text-t0",
-      "ground_truth": "/home/shawn/Code/map-reader-llm/inputs/vectors/references/mounds-reference.geojson",
-      "bounds": "/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+      "detections": "outputs/retest/h11-single-pass-384-t0/brief-text-t0",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
     },
     "spatial": {
       "evaluation_crs": "EPSG:32635",

@@ -97,7 +97,8 @@ class TestBuildMetadataSchema:
         and 1.1+ as BCa.
         """
         meta = _build_metadata(_make_args())
-        assert meta["metadata_version"] == "1.1"
+        # 1.2 (2026-05-31) added the ``spatial`` block recording the evaluation CRS.
+        assert meta["metadata_version"] == "1.2"
 
     def test_script_path_is_relative(self) -> None:
         """Script path is the stable repo-relative location."""
@@ -133,6 +134,30 @@ class TestBuildMetadataSchema:
         assert meta["input_files"]["bounds"].endswith(
             "full_evaluation_bounds.geojson",
         )
+
+    def test_input_files_paths_recorded_repo_relative(self) -> None:
+        """Absolute paths under the repo are recorded repo-relative (portability).
+
+        An absolute ``/home/<user>/.../map-reader-llm/...`` path embedded in an eval is
+        non-portable across clones and trips the run-conditions audit verifier; the
+        ``input_files``/``cli_args`` provenance must therefore be repo-relative. This
+        guards the regression where batch mode (load_batch_yaml resolves to absolute)
+        leaked absolute paths into the metadata.
+        """
+        from scripts.evaluate_detections import PROJECT_ROOT
+
+        abs_det = PROJECT_ROOT / "outputs/run_1/detections.geojson"
+        abs_bounds = PROJECT_ROOT / "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+        meta = _build_metadata(_make_args(detections=[abs_det], bounds=abs_bounds))
+        assert meta["input_files"]["detections"] == ["outputs/run_1/detections.geojson"]
+        assert meta["input_files"]["bounds"] == (
+            "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+        )
+        # cli_args path keys are normalised too; non-path args pass through.
+        assert meta["cli_args"]["bounds"] == (
+            "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+        )
+        assert meta["cli_args"]["glob"] == "*/detections_*.geojson"
 
     def test_input_files_dir_mode(self) -> None:
         """``--detections-dir`` mode records the directory as a string."""

@@ -155,6 +155,35 @@ def _git_status(repo_root: Path) -> str:
     return "clean" if proc.stdout.strip() == "" else "dirty"
 
 
+#: CLI argument keys that hold filesystem paths, normalised to repo-relative in the
+#: serialised ``cli_args`` block (the other keys — bootstrap, seed, label, mcc — are
+#: passed through verbatim).
+_PATH_ARG_KEYS: frozenset[str] = frozenset(
+    {"detections", "detections_dir", "batch", "bounds", "ground_truth", "output_dir"}
+)
+
+
+def _repo_relative(value: Any) -> Any:
+    """Normalise a path (str/Path), list of paths, or ``None`` to repo-relative POSIX.
+
+    Provenance paths recorded in ``_metadata`` must be portable across machines: an
+    absolute ``/home/<user>/...`` path embedded in an eval breaks on every other clone
+    (and trips the run-conditions audit verifier's scope/eval-detections checks, which
+    compare against repo-relative inputs). Any path resolving under ``PROJECT_ROOT`` is
+    rewritten relative to it; already-relative paths are preserved; paths outside the
+    repo (e.g. ``/tmp``) and ``None`` are returned unchanged. The check is independent
+    of the current working directory for absolute inputs.
+    """
+    if value is None:
+        return None
+    if isinstance(value, list):
+        return [_repo_relative(v) for v in value]
+    try:
+        return Path(str(value)).resolve().relative_to(PROJECT_ROOT.resolve()).as_posix()
+    except (ValueError, OSError):
+        return str(value)
+
+
 def _serialise_cli_args(args: argparse.Namespace) -> dict[str, Any]:
     """Convert a parsed argparse Namespace into a JSON-safe dict.
 
@@ -172,7 +201,12 @@ def _serialise_cli_args(args: argparse.Namespace) -> dict[str, Any]:
     """
     serialised: dict[str, Any] = {}
     for key, value in vars(args).items():
-        if isinstance(value, Path):
+        if key in _PATH_ARG_KEYS:
+            # Path-valued args are recorded repo-relative for portability.
+            serialised[key] = _repo_relative(
+                [str(item) for item in value] if isinstance(value, list) else value
+            )
+        elif isinstance(value, Path):
             serialised[key] = str(value)
         elif isinstance(value, list):
             serialised[key] = [
@@ -244,9 +278,11 @@ def _build_metadata(args: argparse.Namespace) -> dict[str, Any]:
             "library": "scipy.stats.bootstrap",
         },
         "input_files": {
-            "detections": detections_value,
-            "ground_truth": str(ground_truth) if ground_truth else None,
-            "bounds": str(bounds) if bounds else None,
+            # Recorded repo-relative for portability (see _repo_relative): an absolute
+            # path here is non-portable and trips the run-conditions audit verifier.
+            "detections": _repo_relative(detections_value),
+            "ground_truth": _repo_relative(str(ground_truth)) if ground_truth else None,
+            "bounds": _repo_relative(str(bounds)) if bounds else None,
         },
         "spatial": {
             # All geometries are reprojected to this CRS for matching/scoring; recorded
@@ -1439,8 +1475,10 @@ def _run_batch_mode(args: argparse.Namespace) -> int:
             },
             "input_files": {
                 **run_metadata["input_files"],
-                "detections": str(det_dir),
-                "bounds": str(bounds_path),
+                # Repo-relative for portability (det_dir/bounds_path are resolved to
+                # absolute by load_batch_yaml for loading; see _repo_relative).
+                "detections": _repo_relative(str(det_dir)),
+                "bounds": _repo_relative(str(bounds_path)),
             },
         }
 
