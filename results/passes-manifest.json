@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-06-02T11:44:44Z",
+  "generated_at": "2026-06-02T11:59:28Z",
   "generator_version": "0.4.0",
   "passes": [
     {
@@ -36,7 +36,7 @@
         "source_files": [
           "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-10.meta.json"
         ],
-        "last_extracted_at": "2026-06-02T11:44:44Z",
+        "last_extracted_at": "2026-06-02T11:59:28Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -73,7 +73,7 @@
         "source_files": [
           "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_2/detections-detect_brief-text-3-flash-2026-04-10.meta.json"
         ],
-        "last_extracted_at": "2026-06-02T11:44:44Z",
+        "last_extracted_at": "2026-06-02T11:59:28Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -110,7 +110,7 @@
         "source_files": [
           "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_3/detections-detect_brief-text-3-flash-2026-04-10.meta.json"
         ],
-        "last_extracted_at": "2026-06-02T11:44:44Z",
+        "last_extracted_at": "2026-06-02T11:59:28Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -147,7 +147,7 @@
         "source_files": [
           "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_4/detections-detect_brief-text-3-flash-2026-04-10.meta.json"
         ],
-        "last_extracted_at": "2026-06-02T11:44:44Z",
+        "last_extracted_at": "2026-06-02T11:59:28Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -184,7 +184,7 @@
         "source_files": [
           "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_5/detections-detect_brief-text-3-flash-2026-04-10.meta.json"
         ],
-        "last_extracted_at": "2026-06-02T11:44:44Z",
+        "last_extracted_at": "2026-06-02T11:59:28Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -221,7 +221,1672 @@
         "source_files": [
           "outputs/gs/gold-standard-v2/verified-v1/run.meta.json"
         ],
-        "last_extracted_at": "2026-06-02T11:44:44Z",
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run1",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000104,
+      "timestamps": {
+        "start": "2026-03-14T11:10:49.516488+00:00",
+        "end": "2026-03-14T11:10:49.516592+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run10",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 10,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000107,
+      "timestamps": {
+        "start": "2026-03-14T11:48:49.940293+00:00",
+        "end": "2026-03-14T11:48:49.940400+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_10/detections_384_run10.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run11",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 11,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000104,
+      "timestamps": {
+        "start": "2026-03-14T11:50:08.076367+00:00",
+        "end": "2026-03-14T11:50:08.076471+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_11/detections_384_run11.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run12",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 12,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000102,
+      "timestamps": {
+        "start": "2026-03-14T11:50:15.084879+00:00",
+        "end": "2026-03-14T11:50:15.084981+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_12/detections_384_run12.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run13",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 13,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000103,
+      "timestamps": {
+        "start": "2026-03-14T11:51:22.759648+00:00",
+        "end": "2026-03-14T11:51:22.759751+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_13/detections_384_run13.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run14",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 14,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000106,
+      "timestamps": {
+        "start": "2026-03-14T11:49:45.611675+00:00",
+        "end": "2026-03-14T11:49:45.611781+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_14/detections_384_run14.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run15",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 15,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000103,
+      "timestamps": {
+        "start": "2026-03-14T11:49:55.086036+00:00",
+        "end": "2026-03-14T11:49:55.086139+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_15/detections_384_run15.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run16",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 16,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000119,
+      "timestamps": {
+        "start": "2026-03-14T11:51:11.229156+00:00",
+        "end": "2026-03-14T11:51:11.229275+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_16/detections_384_run16.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run17",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 17,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000112,
+      "timestamps": {
+        "start": "2026-03-14T11:49:05.946665+00:00",
+        "end": "2026-03-14T11:49:05.946777+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_17/detections_384_run17.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run18",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 18,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000112,
+      "timestamps": {
+        "start": "2026-03-14T11:49:50.369521+00:00",
+        "end": "2026-03-14T11:49:50.369633+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_18/detections_384_run18.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run19",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 19,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000116,
+      "timestamps": {
+        "start": "2026-03-14T11:49:59.750211+00:00",
+        "end": "2026-03-14T11:49:59.750327+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_19/detections_384_run19.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run2",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 2,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000112,
+      "timestamps": {
+        "start": "2026-03-14T11:10:40.743866+00:00",
+        "end": "2026-03-14T11:10:40.743978+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_2/detections_384_run02.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run20",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 20,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000108,
+      "timestamps": {
+        "start": "2026-03-14T11:51:02.447230+00:00",
+        "end": "2026-03-14T11:51:02.447338+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_20/detections_384_run20.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run21",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 21,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000108,
+      "timestamps": {
+        "start": "2026-03-14T11:51:14.671036+00:00",
+        "end": "2026-03-14T11:51:14.671144+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_21/detections_384_run21.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run22",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 22,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000108,
+      "timestamps": {
+        "start": "2026-03-14T11:50:49.860504+00:00",
+        "end": "2026-03-14T11:50:49.860612+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_22/detections_384_run22.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run23",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 23,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000126,
+      "timestamps": {
+        "start": "2026-03-14T11:51:18.555815+00:00",
+        "end": "2026-03-14T11:51:18.555941+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_23/detections_384_run23.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run24",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 24,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000111,
+      "timestamps": {
+        "start": "2026-03-14T11:51:06.482563+00:00",
+        "end": "2026-03-14T11:51:06.482674+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_24/detections_384_run24.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run25",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 25,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000109,
+      "timestamps": {
+        "start": "2026-03-14T11:51:26.861861+00:00",
+        "end": "2026-03-14T11:51:26.861970+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_25/detections_384_run25.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run26",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 26,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000116,
+      "timestamps": {
+        "start": "2026-03-14T11:49:41.180804+00:00",
+        "end": "2026-03-14T11:49:41.180920+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_26/detections_384_run26.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run27",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 27,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000106,
+      "timestamps": {
+        "start": "2026-03-14T11:48:56.262137+00:00",
+        "end": "2026-03-14T11:48:56.262243+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_27/detections_384_run27.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run28",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 28,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000111,
+      "timestamps": {
+        "start": "2026-03-14T11:49:00.717788+00:00",
+        "end": "2026-03-14T11:49:00.717899+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_28/detections_384_run28.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run29",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 29,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000113,
+      "timestamps": {
+        "start": "2026-03-14T11:50:03.502750+00:00",
+        "end": "2026-03-14T11:50:03.502863+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_29/detections_384_run29.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run3",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 3,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000138,
+      "timestamps": {
+        "start": "2026-03-14T11:09:35.294991+00:00",
+        "end": "2026-03-14T11:09:35.295129+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_3/detections_384_run03.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run30",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 30,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000124,
+      "timestamps": {
+        "start": "2026-03-14T11:47:29.036965+00:00",
+        "end": "2026-03-14T11:47:29.037089+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_30/detections_384_run30.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run4",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 4,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000114,
+      "timestamps": {
+        "start": "2026-03-14T11:13:25.958399+00:00",
+        "end": "2026-03-14T11:13:25.958513+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_4/detections_384_run04.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run5",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 5,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000111,
+      "timestamps": {
+        "start": "2026-03-14T11:10:45.014044+00:00",
+        "end": "2026-03-14T11:10:45.014155+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_5/detections_384_run05.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run6",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 6,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000105,
+      "timestamps": {
+        "start": "2026-03-14T11:53:32.317412+00:00",
+        "end": "2026-03-14T11:53:32.317517+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_6/detections_384_run06.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run7",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 7,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.00011,
+      "timestamps": {
+        "start": "2026-03-14T11:48:09.001320+00:00",
+        "end": "2026-03-14T11:48:09.001430+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_7/detections_384_run07.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run8",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 8,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000109,
+      "timestamps": {
+        "start": "2026-03-14T11:50:58.316598+00:00",
+        "end": "2026-03-14T11:50:58.316707+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_8/detections_384_run08.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "consensus-384-t1-0::384::run9",
+      "run_id": "consensus-384-t1-0",
+      "proposer_pool": "384",
+      "pass_n": 9,
+      "model_used": "gemini-3-flash",
+      "model_requested": "gemini-3-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 1.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 240,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000117,
+      "timestamps": {
+        "start": "2026-03-14T11:50:54.131982+00:00",
+        "end": "2026-03-14T11:50:54.132099+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_9/detections_384_run09.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "e47-propose-brief::propose_brief-text::run1",
+      "run_id": "e47-propose-brief",
+      "proposer_pool": "propose_brief-text",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "high",
+      "temperature": 0.7,
+      "instruction_hash": "d26e44308c4a7329922dfd9498b30849f7b5e4122ba8772182def6090fdaf521",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000185,
+      "timestamps": {
+        "start": "2026-04-08T09:14:41.653904+00:00",
+        "end": "2026-04-08T09:14:41.654089+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_1/detections_propose_brief-text_run01.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "e47-propose-brief::propose_brief-text::run2",
+      "run_id": "e47-propose-brief",
+      "proposer_pool": "propose_brief-text",
+      "pass_n": 2,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "high",
+      "temperature": 0.7,
+      "instruction_hash": "d26e44308c4a7329922dfd9498b30849f7b5e4122ba8772182def6090fdaf521",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000163,
+      "timestamps": {
+        "start": "2026-04-08T19:51:07.410151+00:00",
+        "end": "2026-04-08T19:51:07.410314+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_2/detections_propose_brief-text_run02.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "e47-propose-brief::propose_brief-text::run3",
+      "run_id": "e47-propose-brief",
+      "proposer_pool": "propose_brief-text",
+      "pass_n": 3,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "high",
+      "temperature": 0.7,
+      "instruction_hash": "d26e44308c4a7329922dfd9498b30849f7b5e4122ba8772182def6090fdaf521",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000194,
+      "timestamps": {
+        "start": "2026-04-08T21:17:31.401864+00:00",
+        "end": "2026-04-08T21:17:31.402058+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_3/detections_propose_brief-text_run03.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "e47-propose-brief::propose_brief-text::run4",
+      "run_id": "e47-propose-brief",
+      "proposer_pool": "propose_brief-text",
+      "pass_n": 4,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "high",
+      "temperature": 0.7,
+      "instruction_hash": "d26e44308c4a7329922dfd9498b30849f7b5e4122ba8772182def6090fdaf521",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "partial",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 742608,
+        "input_cached": 0,
+        "output": 106159,
+        "thinking": 1408697,
+        "total": 2257464
+      },
+      "cost_usd": 0.689781,
+      "wall_clock_s": 1052.019718,
+      "timestamps": {
+        "start": "2026-04-08T23:51:15.207679+00:00",
+        "end": "2026-04-09T00:08:47.227397+00:00"
+      },
+      "retries": 388,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_4/detections-propose_brief-text-3-flash-2026-04-09.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "e47-propose-brief::propose_brief-text::run5",
+      "run_id": "e47-propose-brief",
+      "proposer_pool": "propose_brief-text",
+      "pass_n": 5,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "high",
+      "temperature": 0.7,
+      "instruction_hash": "d26e44308c4a7329922dfd9498b30849f7b5e4122ba8772182def6090fdaf521",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "partial",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 744136,
+        "input_cached": 0,
+        "output": 110389,
+        "thinking": 1444336,
+        "total": 2298861
+      },
+      "cost_usd": 0.703235,
+      "wall_clock_s": 1060.965072,
+      "timestamps": {
+        "start": "2026-04-09T00:08:48.433603+00:00",
+        "end": "2026-04-09T00:26:29.398675+00:00"
+      },
+      "retries": 473,
+      "provenance": {
+        "source_files": [
+          "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_5/detections-propose_brief-text-3-flash-2026-04-09.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "retest-h11-single-pass-384-t0::brief-text-t0::run1",
+      "run_id": "retest-h11-single-pass-384-t0",
+      "proposer_pool": "brief-text-t0",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000178,
+      "timestamps": {
+        "start": "2026-03-25T07:14:44.747932+00:00",
+        "end": "2026-03-25T07:14:44.748110+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_1/detections_brief-text-t0_run01.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "retest-h11-single-pass-384-t0::brief-text-t0::run10",
+      "run_id": "retest-h11-single-pass-384-t0",
+      "proposer_pool": "brief-text-t0",
+      "pass_n": 10,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000169,
+      "timestamps": {
+        "start": "2026-03-25T07:07:16.197125+00:00",
+        "end": "2026-03-25T07:07:16.197294+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_10/detections_brief-text-t0_run10.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "retest-h11-single-pass-384-t0::brief-text-t0::run2",
+      "run_id": "retest-h11-single-pass-384-t0",
+      "proposer_pool": "brief-text-t0",
+      "pass_n": 2,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000176,
+      "timestamps": {
+        "start": "2026-03-25T07:04:34.510044+00:00",
+        "end": "2026-03-25T07:04:34.510220+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_2/detections_brief-text-t0_run02.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "retest-h11-single-pass-384-t0::brief-text-t0::run3",
+      "run_id": "retest-h11-single-pass-384-t0",
+      "proposer_pool": "brief-text-t0",
+      "pass_n": 3,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000195,
+      "timestamps": {
+        "start": "2026-03-25T07:03:46.415201+00:00",
+        "end": "2026-03-25T07:03:46.415396+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_3/detections_brief-text-t0_run03.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "retest-h11-single-pass-384-t0::brief-text-t0::run4",
+      "run_id": "retest-h11-single-pass-384-t0",
+      "proposer_pool": "brief-text-t0",
+      "pass_n": 4,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.00017,
+      "timestamps": {
+        "start": "2026-03-25T07:10:17.413637+00:00",
+        "end": "2026-03-25T07:10:17.413807+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_4/detections_brief-text-t0_run04.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "retest-h11-single-pass-384-t0::brief-text-t0::run5",
+      "run_id": "retest-h11-single-pass-384-t0",
+      "proposer_pool": "brief-text-t0",
+      "pass_n": 5,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000178,
+      "timestamps": {
+        "start": "2026-03-25T07:09:19.083364+00:00",
+        "end": "2026-03-25T07:09:19.083542+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_5/detections_brief-text-t0_run05.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "retest-h11-single-pass-384-t0::brief-text-t0::run6",
+      "run_id": "retest-h11-single-pass-384-t0",
+      "proposer_pool": "brief-text-t0",
+      "pass_n": 6,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000174,
+      "timestamps": {
+        "start": "2026-03-25T09:00:00.726871+00:00",
+        "end": "2026-03-25T09:00:00.727045+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_6/detections_brief-text-t0_run06.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "retest-h11-single-pass-384-t0::brief-text-t0::run7",
+      "run_id": "retest-h11-single-pass-384-t0",
+      "proposer_pool": "brief-text-t0",
+      "pass_n": 7,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000174,
+      "timestamps": {
+        "start": "2026-03-25T07:08:20.836911+00:00",
+        "end": "2026-03-25T07:08:20.837085+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_7/detections_brief-text-t0_run07.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "retest-h11-single-pass-384-t0::brief-text-t0::run8",
+      "run_id": "retest-h11-single-pass-384-t0",
+      "proposer_pool": "brief-text-t0",
+      "pass_n": 8,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000175,
+      "timestamps": {
+        "start": "2026-03-25T07:11:10.292104+00:00",
+        "end": "2026-03-25T07:11:10.292279+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_8/detections_brief-text-t0_run08.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "retest-h11-single-pass-384-t0::brief-text-t0::run9",
+      "run_id": "retest-h11-single-pass-384-t0",
+      "proposer_pool": "brief-text-t0",
+      "pass_n": 9,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 0.000177,
+      "timestamps": {
+        "start": "2026-03-25T07:16:26.882742+00:00",
+        "end": "2026-03-25T07:16:26.882919+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_9/detections_brief-text-t0_run09.meta.json"
+        ],
+        "last_extracted_at": "2026-06-02T11:59:28Z",
         "extractor_version": "0.4.0"
       }
     }

@@ -64,7 +64,10 @@
     },
     "e47-propose-brief": {
       "proposer_pools": {
-        "propose_brief-text": "text"
+        "propose_brief-text": {
+          "modality": "text",
+          "path": "flash-high-text-n5/propose_brief-text"
+        }
       },
       "verifier_passes": {},
       "conditions": [
@@ -686,7 +689,10 @@
     },
     "retest-h11-single-pass-384-t0": {
       "proposer_pools": {
-        "brief-text-t0": "text"
+        "brief-text-t0": {
+          "modality": "text",
+          "path": "brief-text-t0"
+        }
       },
       "verifier_passes": {},
       "conditions": [
@@ -826,7 +832,10 @@
     },
     "consensus-384-t1-0": {
       "proposer_pools": {
-        "384": "text"
+        "384": {
+          "modality": "text",
+          "path": "384"
+        }
       },
       "verifier_passes": {},
       "conditions": [
