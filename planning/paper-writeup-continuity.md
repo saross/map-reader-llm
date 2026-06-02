@@ -8,7 +8,40 @@ project state.
 
 ---
 
-## ✅ Session 94 (this session) — START HERE — STANDARDISE-THEN-DECOMPOSE + CRS FIX + PERFORMANCE-SHAPE
+## 🔖 Session 95 carry-forward to-dos (2026-06-02)
+
+Session 95 (verified subsets, single↔consensus deltas, consensus-PV, pv-diag PV
+quadrants, `run-conditions.json` authoring for 4 runs, n1 archiving) is summarised
+in `planning/session-95-overnight-summary-2026-05-31.md`. **Explicitly deferred:**
+
+1. **git history purge of crop blobs** — 46,766 crop PNGs (2.3 GB) were un-tracked
+   from the index (commit `21b5cc7e`) + globally gitignored; *history still carries
+   the blobs*. Run `git filter-repo` to reclaim the space ONLY after the paper is
+   submitted (rewrites every hash — disruptive across amd-tower / zbook / sapphire). [#6]
+2. **Out-of-band crop/tile sync** — Syncthing is the wrong fit and was double-syncing
+   git-tracked files. Remove this repo's folders from Syncthing; manually rsync
+   tiles/crops to zbook + amd-tower in the interim; evaluate **Cloudflare R2** (now
+   configured for another project) as the durable approach. NB: pulling `21b5cc7e`
+   deletes the now-untracked crops from a clone's working tree (regenerable; rsync
+   from amd-tower). [#6]
+3. **N=1 baseline-matrix manifest authoring** — model the 18 single-pass baseline
+   pools as `single-pass` conditions on their 3 real source runs (`pv-diag-384` ×10,
+   `n1-outstanding-384` ×7, `retest-h11-single-pass-384-t0` ×1) **+ one `analyses`
+   row** (type comparison/leaderboard), NOT a pseudo-run — consistent with the
+   leaderboard + wbf/GAP-6 precedent. Use the `384px-all-buffers` evals (full buffer
+   set); the 30 m-only `384px` was archived 2026-06-02. [#4]
+4. **pv-diag verifier operating point** — after the sweep
+   (`planning/rescore-worklists/pv-diag-sweep-and-t03-gt-2026-06-01.json`) runs,
+   pick the reported threshold: do NOT report the in-sample F1-max on the 487 test
+   set; use a fixed/transferred operating point or report the sweep curve as a
+   sensitivity band (the text-track verifier is well-calibrated — Session 78
+   AUC 0.956, ECE 0.071 — so a fixed calibrated threshold is defensible). [#1]
+5. **Manifest regen + `GENERATOR_VERSION` bump** (0.2.0 → 0.3.0) — publish the
+   authored conditions into `runs-manifest.json` when the batch is ready. [#5]
+
+---
+
+## ✅ Session 94 — START HERE — STANDARDISE-THEN-DECOMPOSE + CRS FIX + PERFORMANCE-SHAPE
 
 **Posted**: 2026-05-31, end of a very long session. The 3b conditions work changed
 shape fundamentally — read this before resuming.

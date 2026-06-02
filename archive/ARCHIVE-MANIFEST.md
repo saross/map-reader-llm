@@ -208,3 +208,20 @@ correspondence) and `{512px, 512px-all-buffers}/` (NOT n1 — they are the
 `retest-phase2*` runs, `P2a/P2b/P2c/P2d`).
 
 **Full context**: `archive/superseded-evals/n1-outstanding-384/README.md`.
+
+## 2026-06-02 addition: `superseded-evals/n1-baseline-384px-30m-only/`
+
+- `results/paper-eval/n1/384px/` → `archive/superseded-evals/n1-baseline-384px-30m-only/` (36 tracked files: `batch_summary.{csv,json,md}` + 11 pool dirs)
+
+**Reason**: the 30 m-only cut of the N=1 single-pass baseline matrix, superseded by
+`results/paper-eval/n1/384px-all-buffers/` (18 pools, all 20/30/40/50 m buffers) per
+that tree's own metadata. The pool set here is a strict subset of the all-buffers
+version (verified redundant 2026-06-02). The baseline pools trace to 3 real source
+runs (`pv-diag-384` ×10, `n1-outstanding-384` ×7, `retest-h11-single-pass-384-t0` ×1);
+they will be authored into the manifest as single-pass conditions + one analyses row,
+pointing at the all-buffers evals. See the archive README + continuity Session 95
+carry-forward #3.
+
+**Scope guard**: still held for review under `results/paper-eval/n1/`:
+`384px-all-buffers/` (the keeper), `512px/` + `512px-all-buffers/` (the
+`retest-phase2*` runs, NOT n1).
