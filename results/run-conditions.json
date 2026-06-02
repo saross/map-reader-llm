@@ -207,13 +207,38 @@
     },
     "n1-outstanding-384": {
       "proposer_pools": {
-        "brief-text-t03": "text",
-        "image-t0": "image",
-        "image-t03": "image",
-        "pro-image-high-t0": "image",
-        "pro-text-high-t0": "text",
-        "pro-image-medium-t07": "image",
-        "pro-text-medium-t07": "text"
+        "brief-text-t03": {
+          "modality": "text",
+          "path": "brief-text-t03"
+        },
+        "image-t0": {
+          "modality": "image",
+          "path": "image-t0"
+        },
+        "image-t03": {
+          "modality": "image",
+          "path": "image-t03"
+        },
+        "pro-image-high-t0": {
+          "modality": "image",
+          "path": "pro-image-high-t0",
+          "model_of_record": "gemini-3.1-pro"
+        },
+        "pro-text-high-t0": {
+          "modality": "text",
+          "path": "pro-text-high-t0",
+          "model_of_record": "gemini-3.1-pro"
+        },
+        "pro-image-medium-t07": {
+          "modality": "image",
+          "path": "pro-image-medium-t07",
+          "model_of_record": "gemini-3.1-pro"
+        },
+        "pro-text-medium-t07": {
+          "modality": "text",
+          "path": "pro-text-medium-t07",
+          "model_of_record": "gemini-3.1-pro"
+        }
       },
       "verifier_passes": {},
       "conditions": [

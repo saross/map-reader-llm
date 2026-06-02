@@ -68,9 +68,12 @@ SCHEMA_DIR: Path = REPO_ROOT / "docs" / "manifest-schemas"
 #: the 4 non-gs runs (e47-propose-brief, n1-outstanding-384,
 #: retest-h11-single-pass-384-t0, consensus-384-t1-0; 88 conditions) published into
 #: the manifest from the hand-authored ``run-conditions.json`` sidecar. 0.4.0
-#: (Session 96, 2026-06-02) is an extraction-logic change: the generator now emits a
-#: fifth manifest, ``analyses`` (sub-step 3c), from the hand-authored
-#: ``run-analyses.json`` sidecar, alongside the N=1 baseline-matrix landing.
+#: (Session 96, 2026-06-02) is an extraction-logic change bundling two additions: the
+#: generator now emits a fifth manifest, ``analyses`` (sub-step 3c), from the
+#: hand-authored ``run-analyses.json`` sidecar; and ``extract_passes`` honours a
+#: per-pool ``model_of_record`` override (E57) for pools whose recorded meta carries a
+#: model template-default. Landed alongside the N=1 baseline-matrix + batch-pass
+#: publishing.
 GENERATOR_VERSION: str = "0.4.0"
 
 #: Manifest format version embedded at the top of each emitted manifest. Must
@@ -338,6 +341,10 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
     # --- proposer passes ---
     for pool, spec in facts.get("proposer_pools", {}).items():
         modality, path = _pool_spec(spec)
+        # Model-of-record override (E57): the authoritative model when the recorded
+        # meta is an unreliable template default (see below). Authored in the sidecar
+        # from the study YAML; None for the normal case (trust the meta).
+        model_of_record = spec.get("model_of_record") if isinstance(spec, dict) else None
         pool_dir = run_dir / (path or f"proposer/{pool}")
         for run_n_dir in sorted(pool_dir.glob("run_*")):
             suffix = run_n_dir.name.split("_", 1)[1] if "_" in run_n_dir.name else ""
@@ -372,6 +379,17 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                 model_used = cfg.get("model", "")
                 model_requested = cfg.get("model")
                 model_version = None
+            # E57: a few pools carry a flash template-default in BOTH config.model AND
+            # per_item_metadata.model_used even though the study YAML dispatched a
+            # different model. When the sidecar declares model_of_record, it is the
+            # authoritative identity and overrides the (unreliable) meta value; the
+            # study-YAML source is cited via the sidecar in provenance.
+            if model_of_record:
+                model_used = model_of_record
+                model_requested = model_of_record
+            prov_sources = [_repo_rel(meta_path)]
+            if model_of_record:
+                prov_sources.append("results/run-conditions.json")
             failed = es.get("items_failed", 0)
             status = "failed" if n_proc == 0 else ("ok" if failed == 0 else "partial")
             rows.append({
@@ -394,7 +412,7 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                 "wall_clock_s": (meta.get("timestamp") or {}).get("duration_seconds"),
                 "timestamps": _timestamps(meta),
                 "retries": es.get("retries_total", 0),
-                "provenance": build_provenance([_repo_rel(meta_path)], at),
+                "provenance": build_provenance(prov_sources, at),
             })
 
     # --- verifier passes ---

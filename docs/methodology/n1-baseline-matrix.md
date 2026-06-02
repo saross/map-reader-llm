@@ -187,9 +187,15 @@ reads `gemini-3-flash` — an unreliable template default that does **not** refl
 the Gemini 3 Pro model actually dispatched (errata E57). The model-of-record is
 the per-study `study_manifest.json` / `studies/h11-384-*.yaml`, not
 `config.model`. This affects **passes**, not conditions (a condition carries no
-model field). It becomes live when `n1-outstanding-384`'s Pro-pool passes are
-published (the deliverable-B pass-publishing step), where a model-of-record
-override records the correct model with a provenance note.
+model field), and is now **applied**: `n1-outstanding-384`'s four Pro-pool passes
+record `model_used = gemini-3.1-pro` (read verbatim from the study YAMLs
+`studies/h11-384-{n1-outstanding,pro-medium-t07}.yaml`) via a per-pool
+`model_of_record` override in `run-conditions.json`, with `run-conditions.json` cited
+in the pass provenance alongside the meta. The recorded meta's flash value
+(`gemini-3-flash-preview`) is the template default — present in **both** `config.model`
+and `per_item_metadata.model_used`. Billing reconciliation (whether Pro vs Flash
+actually ran) remains an open E57 carry-forward, so the model-of-record reflects the
+**study design**, not an independently-verified dispatch.
 
 ---
 

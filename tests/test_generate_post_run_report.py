@@ -294,6 +294,30 @@ def test_manifest_envelopes_valid(registry):
 
 
 @pytest.mark.tier1
+def test_model_of_record_override(registry):
+    """A pool's ``model_of_record`` overrides the (template-default) meta model (E57).
+
+    n1-outstanding-384's four Pro pools record a flash template-default in BOTH
+    config.model AND per_item_metadata.model_used; the sidecar declares
+    model_of_record=gemini-3.1-pro (from the study YAML). Passes from those pools must
+    report the override as model_used/model_requested and cite the sidecar in
+    provenance; the run's flash pools must be untouched (meta value, meta-only source).
+    """
+    passes = extract_passes(extraction_context("n1-outstanding-384"))
+    pro = [p for p in passes if p["proposer_pool"].startswith("pro-")]
+    flash = [p for p in passes if not p["proposer_pool"].startswith("pro-")]
+    assert pro and flash
+    for p in pro:
+        assert validate_row("passes", p, registry) == []
+        assert p["model_used"] == "gemini-3.1-pro"
+        assert p["model_requested"] == "gemini-3.1-pro"
+        assert "results/run-conditions.json" in p["provenance"]["source_files"]
+    for p in flash:
+        assert p["model_used"] == "gemini-3-flash-preview"
+        assert "results/run-conditions.json" not in p["provenance"]["source_files"]
+
+
+@pytest.mark.tier1
 def test_analyses_leaderboard_stub(registry):
     """The hand-authored N=1 baseline-matrix leaderboard stub builds and validates.
 

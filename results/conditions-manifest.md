@@ -2,7 +2,7 @@
 
 # Conditions manifest
 
-> Generated 2026-06-02T11:59:28Z · 110 row(s) · schema v1.0.
+> Generated 2026-06-02T12:03:17Z · 110 row(s) · schema v1.0.
 >
 > **Coverage**: 110 condition(s) across the decomposed runs (sub-step 3b in progress).
 
