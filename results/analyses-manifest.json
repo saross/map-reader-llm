@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-06-02T11:44:44Z",
+  "generator_version": "0.4.0",
+  "analyses": [
+    {
+      "analysis_id": "n1-baseline-matrix-384",
+      "type": "leaderboard",
+      "conditions_compared": [
+        "pv-diag-384::baseline-flash-image-high-t-0-7",
+        "pv-diag-384::baseline-flash-image-minimal-t-0-0",
+        "pv-diag-384::baseline-flash-image-minimal-t-0-7",
+        "pv-diag-384::baseline-flash-text-high-t-0-7",
+        "pv-diag-384::baseline-flash-text-minimal-t-0-0-pv-baseline",
+        "pv-diag-384::baseline-flash-text-minimal-t-0-7",
+        "pv-diag-384::baseline-pro-image-high-t-0-7",
+        "pv-diag-384::baseline-pro-image-medium-t-0-0",
+        "pv-diag-384::baseline-pro-text-high-t-0-7",
+        "pv-diag-384::baseline-pro-text-medium-t-0-0",
+        "n1-outstanding-384::baseline-flash-image-minimal-t-0-0-487-tiles",
+        "n1-outstanding-384::baseline-flash-image-minimal-t-0-3",
+        "n1-outstanding-384::baseline-flash-text-minimal-t-0-3",
+        "n1-outstanding-384::baseline-pro-image-high-t-0-0",
+        "n1-outstanding-384::baseline-pro-image-medium-t-0-7",
+        "n1-outstanding-384::baseline-pro-text-high-t-0-0",
+        "n1-outstanding-384::baseline-pro-text-medium-t-0-7",
+        "retest-h11-single-pass-384-t0::baseline-flash-text-minimal-t-0-0"
+      ],
+      "hypothesis_refs": [],
+      "preregistered": null,
+      "deviations": [],
+      "predicted_outcome": null,
+      "tie_set": [],
+      "outcome": null,
+      "paper_section": null,
+      "output_path": "results/paper-eval/n1/384px-14buf-mcc",
+      "working_notes_obs": [],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/paper-eval/n1/384px-14buf-mcc"
+        ],
+        "last_extracted_at": "2026-06-02T11:44:44Z",
+        "extractor_version": "0.4.0"
+      }
+    }
+  ]
+}

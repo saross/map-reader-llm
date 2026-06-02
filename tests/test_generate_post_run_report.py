@@ -27,6 +27,7 @@ import pytest
 
 from scripts.generate_post_run_report import (
     assemble_manifest,
+    build_analyses,
     build_manifests,
     build_run_row,
     draft_run,
@@ -34,6 +35,7 @@ from scripts.generate_post_run_report import (
     extract_conditions,
     extract_passes,
     extraction_context,
+    load_run_analyses,
     load_run_conditions,
     load_run_facts,
     load_run_registry,
@@ -259,7 +261,7 @@ def test_run_conditions_sidecar_in_sync(registry):
 @pytest.mark.tier1
 def test_manifest_envelopes_valid(registry):
     at = "2026-05-30T00:00:00Z"
-    _reg, run_rows, conditions, passes, warnings = build_manifests(at)
+    _reg, run_rows, conditions, passes, analyses, warnings = build_manifests(at)
     assert len(run_rows) == 27
     assert warnings == []
 
@@ -280,3 +282,31 @@ def test_manifest_envelopes_valid(registry):
     gs_passes = [p for p in passes if p["run_id"] == "gold-standard-v2"]
     assert len(gs_passes) == 6
     assert len(passes) >= 6
+
+    # Analyses (sub-step 3c): the assembled envelope validates, and every
+    # conditions_compared id resolves to a built condition (the build_manifests FK
+    # guard would have populated `warnings` otherwise — already asserted empty above).
+    analyses_obj = assemble_manifest("analyses", analyses, at)
+    assert validate_manifest("analyses", analyses_obj, registry) == []
+    known_ids = {c["condition_id"] for c in conditions}
+    for a in analyses:
+        assert set(a["conditions_compared"]) <= known_ids
+
+
+@pytest.mark.tier1
+def test_analyses_leaderboard_stub(registry):
+    """The hand-authored N=1 baseline-matrix leaderboard stub builds and validates.
+
+    Machine fields are populated (18 baseline condition_ids, type=leaderboard); the
+    human-authored finding / prereg linkage / tie_set are deferred (null/empty) per the
+    schema's lenient back-fill, so the stub must still validate.
+    """
+    analyses = build_analyses(load_run_analyses(), "2026-05-30T00:00:00Z")
+    lb = next(a for a in analyses if a["analysis_id"] == "n1-baseline-matrix-384")
+    assert validate_row("analyses", lb, registry) == []
+    assert lb["type"] == "leaderboard"
+    assert len(lb["conditions_compared"]) == 18
+    assert all(cid.split("::")[1].startswith("baseline-") for cid in lb["conditions_compared"])
+    # deferred content: stub leaves the interpretive fields unauthored
+    assert lb["outcome"] is None and lb["tie_set"] == [] and lb["preregistered"] is None
+    assert "_note" not in lb  # additionalProperties:false — sidecar note not emitted

@@ -67,8 +67,11 @@ SCHEMA_DIR: Path = REPO_ROOT / "docs" / "manifest-schemas"
 #: no extractor-logic change, but it marks the first decomposition batch landing —
 #: the 4 non-gs runs (e47-propose-brief, n1-outstanding-384,
 #: retest-h11-single-pass-384-t0, consensus-384-t1-0; 88 conditions) published into
-#: the manifest from the hand-authored ``run-conditions.json`` sidecar.
-GENERATOR_VERSION: str = "0.3.0"
+#: the manifest from the hand-authored ``run-conditions.json`` sidecar. 0.4.0
+#: (Session 96, 2026-06-02) is an extraction-logic change: the generator now emits a
+#: fifth manifest, ``analyses`` (sub-step 3c), from the hand-authored
+#: ``run-analyses.json`` sidecar, alongside the N=1 baseline-matrix landing.
+GENERATOR_VERSION: str = "0.4.0"
 
 #: Manifest format version embedded at the top of each emitted manifest. Must
 #: match the ``schema_version`` const in the schema files.
@@ -710,6 +713,90 @@ def load_run_conditions(path: Path | None = None) -> dict[str, dict]:
     ).get("decomposition", {})
 
 
+def load_run_analyses(path: Path | None = None) -> list[dict]:
+    """Load the hand-authored ANALYSIS specs — the generator's 3c INPUT (sub-step 3c).
+
+    An analysis is a comparison/finding OVER conditions (a leaderboard, a hypothesis
+    test, a sweep). The sidecar ``results/run-analyses.json`` holds one spec per
+    analysis; the generator validates them, attaches provenance, and emits
+    ``results/analyses-manifest.json``. The manifest is **hybrid**: the spec carries
+    the machine-fillable keys (``analysis_id``, ``type``, ``conditions_compared``,
+    ``output_path``) and any human-authored fields (``outcome``, ``hypothesis_refs``,
+    ``preregistered`` linkage, ``tie_set``, …), which may be null until authored per
+    the schema's lenient back-fill. Returns ``[]`` when the sidecar is absent (the
+    expected state before 3c authoring begins).
+    """
+    p = path or REPO_ROOT / "results" / "run-analyses.json"
+    if not p.exists():
+        return []
+    return _load_json(p).get("analyses", [])
+
+
+#: Machine-fillable keys an analysis spec must carry; the human-authored fields are
+#: all nullable (schema lenient back-fill), so a stub validates before a human writes
+#: the finding / prereg linkage.
+_REQUIRED_ANALYSIS_KEYS: tuple[str, ...] = (
+    "analysis_id", "type", "conditions_compared", "output_path",
+)
+
+
+def _require_analysis_keys(spec: dict) -> None:
+    """Validate an analysis spec carries the required machine-fillable keys.
+
+    Raises a descriptive ``ValueError`` naming the offending analysis so a sidecar
+    typo fails clearly rather than as an opaque ``KeyError`` mid-build.
+    """
+    missing = [k for k in _REQUIRED_ANALYSIS_KEYS if k not in spec]
+    if missing:
+        raise ValueError(
+            f"analysis spec (analysis_id={spec.get('analysis_id', '?')}) "
+            f"is missing required key(s): {', '.join(missing)}"
+        )
+
+
+def build_analyses(specs: list[dict], at: str | None = None) -> list[dict]:
+    """Build analyses-manifest rows from the hand-authored specs.
+
+    Each spec's schema-allowed fields are copied through (human-authored fields kept
+    verbatim — the generator never invents a finding); array fields default to ``[]``
+    and the optional human fields to ``null``. Provenance anchors on the sidecar and,
+    when it exists on disk, the analysis ``output_path`` artefact. ``additionalProperties``
+    is ``false`` on the emitted row, so only the known keys are copied (a sidecar
+    ``_note`` is ignored).
+
+    Args:
+        specs: the ``analyses`` list from :func:`load_run_analyses`.
+        at: ISO timestamp stamped on every row's provenance.
+
+    Returns:
+        Analysis rows conforming to the analyses-manifest item schema.
+    """
+    rows: list[dict] = []
+    for spec in specs:
+        _require_analysis_keys(spec)
+        out_path = spec["output_path"]
+        sources = ["results/run-analyses.json"]
+        if out_path and (REPO_ROOT / out_path).exists():
+            sources.append(out_path)
+        rows.append({
+            "analysis_id": spec["analysis_id"],
+            "type": spec["type"],
+            "conditions_compared": spec["conditions_compared"],
+            "hypothesis_refs": spec.get("hypothesis_refs", []),
+            "preregistered": spec.get("preregistered"),
+            "deviations": spec.get("deviations", []),
+            "predicted_outcome": spec.get("predicted_outcome"),
+            "tie_set": spec.get("tie_set", []),
+            "outcome": spec.get("outcome"),
+            "paper_section": spec.get("paper_section"),
+            "output_path": out_path,
+            "working_notes_obs": spec.get("working_notes_obs", []),
+            "manually_verified_at": spec.get("manually_verified_at"),
+            "provenance": build_provenance(sources, at),
+        })
+    return rows
+
+
 def build_extraction_context(entry: dict, run_facts: dict, decomposition: dict) -> dict:
     """Merge a run's three input sources into the single dict the extractors read.
 
@@ -801,6 +888,7 @@ MANIFEST_FILES: dict[str, str] = {
     "runs": "results/runs-manifest.json",
     "conditions": "results/conditions-manifest.json",
     "passes": "results/passes-manifest.json",
+    "analyses": "results/analyses-manifest.json",
     "run-registry": "results/run-registry.json",
 }
 
@@ -860,6 +948,7 @@ def _coverage_note(manifest: str, n_rows: int) -> str:
         "runs": f"all {n_rows} runs (run-level facts; conditions/passes added as 3b batches land)",
         "conditions": f"{n_rows} condition(s) across the decomposed runs (sub-step 3b in progress)",
         "passes": f"{n_rows} pass(es) across the decomposed runs (sub-step 3b in progress)",
+        "analyses": f"{n_rows} analysis(es) over conditions (sub-step 3c; hybrid human-authored)",
         "run-registry": f"all {n_rows} runs (hand-verified input)",
     }.get(manifest, f"{n_rows} row(s)")
 
@@ -869,7 +958,8 @@ def render_manifest(manifest: str, obj: dict, json_rel: str) -> str:
     rows = obj[_array_key(manifest)]
     titles = {
         "runs": "Runs manifest", "conditions": "Conditions manifest",
-        "passes": "Passes manifest", "run-registry": "Run registry",
+        "passes": "Passes manifest", "analyses": "Analyses manifest",
+        "run-registry": "Run registry",
     }
     head = (
         f"<!-- GENERATED FILE — DO NOT EDIT. Rendered from {json_rel} by "
@@ -896,6 +986,11 @@ def render_manifest(manifest: str, obj: dict, json_rel: str) -> str:
             ["pass_id", "model", "modality", "think", "T", "status", "tiles", "cost_usd"],
             [[r["pass_id"], r["model_used"], r["modality"], r["thinking_level"], r["temperature"],
               r["status"], r["n_tiles_processed"], r["cost_usd"]] for r in rows])
+    elif manifest == "analyses":
+        table = _md_table(
+            ["analysis_id", "type", "#conditions", "preregistered", "paper_section", "outcome"],
+            [[r["analysis_id"], r["type"], len(r["conditions_compared"]),
+              r["preregistered"], r["paper_section"], r["outcome"]] for r in rows])
     else:  # run-registry
         table = _md_table(
             ["run_id", "directory_path", "status"],
@@ -1032,7 +1127,7 @@ def build_manifests(at: str, only: str | None = None) -> tuple:
         only: if set, restrict the build to this single ``run_id``.
 
     Returns:
-        ``(registry_obj, run_rows, conditions, passes, drift_warnings)``.
+        ``(registry_obj, run_rows, conditions, passes, analyses, drift_warnings)``.
     """
     registry_obj = load_run_registry()
     facts = load_run_facts()
@@ -1059,7 +1154,22 @@ def build_manifests(at: str, only: str | None = None) -> tuple:
             conditions = extract_conditions(ctx, at)
             conditions_all.extend(conditions)
         run_rows.append(build_run_row(run_id, directory_path, run_facts, conditions, at))
-    return registry_obj, run_rows, conditions_all, passes_all, warnings
+
+    # Analyses (sub-step 3c) are global — comparisons OVER conditions, not run-scoped.
+    analyses_all = build_analyses(load_run_analyses(), at)
+    # FK guard: warn on any conditions_compared id absent from the built conditions.
+    # Only meaningful on a full build (a --run filter yields a partial condition set,
+    # which would mis-flag cross-run analyses), so skip the check when filtering.
+    if only is None:
+        known = {c["condition_id"] for c in conditions_all}
+        for a in analyses_all:
+            for cid in a["conditions_compared"]:
+                if cid not in known:
+                    warnings.append(
+                        f"analysis '{a['analysis_id']}' references unknown "
+                        f"condition_id '{cid}'"
+                    )
+    return registry_obj, run_rows, conditions_all, passes_all, analyses_all, warnings
 
 
 # --------------------------------------------------------------------------- #
@@ -1206,7 +1316,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.all or args.run:
         schema_reg, _ = load_schema_registry()
         at = utc_now_iso()
-        registry_obj, run_rows, conditions, passes, warnings = build_manifests(at, only=args.run)
+        registry_obj, run_rows, conditions, passes, analyses, warnings = build_manifests(
+            at, only=args.run)
 
         if args.run and not run_rows:
             print(f"No run '{args.run}' in results/run-registry.json.", file=sys.stderr)
@@ -1250,13 +1361,24 @@ def main(argv: list[str] | None = None) -> int:
                 for e in validate_row("passes", p, schema_reg):
                     print(f"  [BAD] {p['pass_id']}: {e}")
 
+        if analyses:
+            bad = [a for a in analyses if validate_row("analyses", a, schema_reg)]
+            all_valid = all_valid and not bad
+            print(f"=== {len(analyses)} analyses — "
+                  f"{len(analyses) - len(bad)} valid ===")
+            for a in bad:
+                for e in validate_row("analyses", a, schema_reg):
+                    print(f"  [BAD] {a['analysis_id']}: {e}")
+
         print(
             f"\n{'ALL VALID' if all_valid else 'VALIDATION FAILED'} "
-            f"({len(run_rows)} runs + {len(conditions)} conditions + {len(passes)} passes vs schemas)"
+            f"({len(run_rows)} runs + {len(conditions)} conditions + {len(passes)} passes "
+            f"+ {len(analyses)} analyses vs schemas)"
         )
 
         if args.dry_run:
-            for name, payload in [("runs", run_rows), ("conditions", conditions), ("passes", passes)]:
+            for name, payload in [("runs", run_rows), ("conditions", conditions),
+                                  ("passes", passes), ("analyses", analyses)]:
                 print(f"\n--- {name} ---")
                 print(json.dumps(payload, indent=2))
 
@@ -1268,7 +1390,8 @@ def main(argv: list[str] | None = None) -> int:
                 print("\nRefusing to write a single-run subset; use --all to write manifests.",
                       file=sys.stderr)
                 return 1
-            bundles = {"runs": run_rows, "conditions": conditions, "passes": passes}
+            bundles = {"runs": run_rows, "conditions": conditions, "passes": passes,
+                       "analyses": analyses}
             written = write_manifests(bundles, at, schema_reg)
             # The registry JSON is the hand-authored INPUT — never rewritten; only
             # its Markdown view is regenerated from it (read → render).

@@ -1,0 +1,41 @@
+{
+  "_README": "Hand-authored ANALYSIS specs (sub-step 3c). Each entry is one analysis \u2014 a comparison/finding OVER conditions (leaderboard, hypothesis test, sweep, ...). The generator (scripts/generate_post_run_report.py) validates these, attaches provenance, and emits results/analyses-manifest.json (+ .md). HYBRID authoring: the machine-fillable keys (analysis_id, type, conditions_compared, output_path) are authored here; the human-authored fields (outcome, hypothesis_refs, preregistered, deviations, predicted_outcome, tie_set, paper_section, working_notes_obs) may stay null until a human writes the finding + preregistration linkage, per the schema's lenient back-fill. Set manually_verified_at when a human has authored/verified a row. Schema: docs/manifest-schemas/analyses-manifest.schema.json.",
+  "schema_version": "1.0",
+  "analyses": [
+    {
+      "analysis_id": "n1-baseline-matrix-384",
+      "type": "leaderboard",
+      "_note": "The N=1 single-pass baseline leaderboard at 384px (the cross-architecture model x modality x thinking x temperature matrix). STUB: machine fields filled; the finding, preregistration linkage, and the statistical tie_set (pending a pairwise permutation / CI-overlap pass) are DEFERRED. See docs/methodology/n1-baseline-matrix.md.",
+      "conditions_compared": [
+        "pv-diag-384::baseline-flash-image-high-t-0-7",
+        "pv-diag-384::baseline-flash-image-minimal-t-0-0",
+        "pv-diag-384::baseline-flash-image-minimal-t-0-7",
+        "pv-diag-384::baseline-flash-text-high-t-0-7",
+        "pv-diag-384::baseline-flash-text-minimal-t-0-0-pv-baseline",
+        "pv-diag-384::baseline-flash-text-minimal-t-0-7",
+        "pv-diag-384::baseline-pro-image-high-t-0-7",
+        "pv-diag-384::baseline-pro-image-medium-t-0-0",
+        "pv-diag-384::baseline-pro-text-high-t-0-7",
+        "pv-diag-384::baseline-pro-text-medium-t-0-0",
+        "n1-outstanding-384::baseline-flash-image-minimal-t-0-0-487-tiles",
+        "n1-outstanding-384::baseline-flash-image-minimal-t-0-3",
+        "n1-outstanding-384::baseline-flash-text-minimal-t-0-3",
+        "n1-outstanding-384::baseline-pro-image-high-t-0-0",
+        "n1-outstanding-384::baseline-pro-image-medium-t-0-7",
+        "n1-outstanding-384::baseline-pro-text-high-t-0-0",
+        "n1-outstanding-384::baseline-pro-text-medium-t-0-7",
+        "retest-h11-single-pass-384-t0::baseline-flash-text-minimal-t-0-0"
+      ],
+      "hypothesis_refs": [],
+      "preregistered": null,
+      "deviations": [],
+      "predicted_outcome": null,
+      "tie_set": [],
+      "outcome": null,
+      "paper_section": null,
+      "output_path": "results/paper-eval/n1/384px-14buf-mcc",
+      "working_notes_obs": [],
+      "manually_verified_at": null
+    }
+  ]
+}
