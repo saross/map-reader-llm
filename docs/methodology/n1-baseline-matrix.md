@@ -274,7 +274,8 @@ Reading the matrix (single-pass, no aggregation, no verifier):
   runs.
 - These are **single-pass** numbers; the consensus (vote-threshold) and
   proposer-verifier architectures are scored separately and compared against this
-  baseline in the (forthcoming) leaderboard analysis.
+  baseline in the leaderboard analysis (`n1-baseline-matrix-384`, currently a stub —
+  the ranking/tie-set and finding are deferred; see § 6).
 
 ---
 
@@ -290,6 +291,11 @@ Reading the matrix (single-pass, no aggregation, no verifier):
 - `results/run-conditions.json` — the 18 baseline conditions (the
   `baseline-<slug>` entries on pv-diag-384 / n1-outstanding-384 /
   retest-h11-single-pass-384-t0).
+- `results/run-analyses.json` → `results/analyses-manifest.json` — the leaderboard
+  analysis **stub** (`analysis_id n1-baseline-matrix-384`, `type=leaderboard`) over
+  the 18 cells. Machine fields filled; the finding (`outcome`), preregistration
+  linkage, and the statistical `tie_set` (pending a pairwise permutation / CI-overlap
+  pass) are **deferred for human authoring** (sub-step 3c).
 - `docs/methodology/preregistration/protocol-errata.md` — E57 (Pro-pool
   model-of-record / `output_dir`), E56 (verifier threshold provenance — not
   applicable to these no-verifier baselines).
