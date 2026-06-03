@@ -1,14 +1,85 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-06-02 (Session 96 — N=1 baseline matrix authored: re-scored 18 pools at 14 buffers + MCC → 18 single-pass conditions (92→110); analyses manifest bootstrapped (3c) + the `n1-baseline-matrix-384` leaderboard stub; batch passes published (6→68) incl. the E57 `model_of_record` override (n1 Pro = `gemini-3.1-pro`, study-design not billing-verified); parallelisation merged (PR #9); `GENERATOR_VERSION`→0.4.0. See the Session 96 START-HERE.)
+**Last updated**: 2026-06-03 (Session 97 — N=1 leaderboard lifted stub→finding (permutation+FDR → 6 tiers, tie_set = the two Pro-text-low-temp leaders; Obs 336); E57 **billing reconciliation**: the four n1-outstanding "Pro" cells were dispatched as **Flash** (API `model_version` confirmed), pv-diag Pro genuine; **genuine-Pro re-run launched** (realtime+flex, ~$20–30, still running detached at close). See the Session 97 START-HERE.)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
 
 ---
 
-## ✅ Session 96 — START HERE — N=1 BASELINE MATRIX + ANALYSES SCAFFOLD + BATCH PASSES
+## ✅ Session 97 — START HERE — LEADERBOARD FINDING + E57 BILLING RECONCILIATION + GENUINE-PRO RE-RUN (IN FLIGHT)
+
+**Posted**: 2026-06-03, end of a long collaborative day. Commits `c6aef99a`→`05838064`,
+all pushed. **One API run launched (~$20–30, real-time+flex) — STILL RUNNING DETACHED AT CLOSE.**
+
+### ⚠️ FIRST THING NEXT SESSION — check the in-flight re-run
+
+A genuine-Pro re-run is running in the background (nohup, **not** harness-tracked):
+`outputs/h11/n1-pro-rerun-384/`. **Check `_run_log.txt` for "ALL 8 PASSES COMPLETE"** before
+anything else. If complete → tasks below (re-score → integrate → reconcile). If failed mid-way
+→ the log shows which pass; re-run just that pass via `scripts/run_n1_pro_rerun.sh` (idempotent
+per pool/run dir). The run command + full rationale are in that script's header.
+
+### TL;DR
+
+Two arcs. **(1) Leaderboard finding** — lifted `n1-baseline-matrix-384` from stub to finding:
+round-robin tile-swap permutation (replicate-mean per-tile) + BH-FDR + greedy-clique tiering →
+**6 tiers; tie_set (Tier 1) = `pro-text-medium-t-0-0` (0.763) + `pro-text-high-t-0-7` (0.745)**,
+BH-adj p=0.50 between them. Authored the manifest finding + a prereg-framing template + 16
+tier-1 tests + Obs 336. **(2) E57 billing reconciliation** — triple-checked: the four
+**n1-outstanding** "Pro" cells were **dispatched as Flash** (the API's own `model_version =
+gemini-3-flash-preview` on all ~3,896 responses); the four **pv-diag** Pro cells are genuinely
+Pro. Decided to **re-run** the four as genuine Pro to complete the Pro 2×2 — audited configs
+byte-identical, validated dispatch via one-tile tests, launched.
+
+### Key locked findings / decisions
+
+1. **tie_set = the two Pro-text-low-temp leaders** (pv-diag, genuinely Pro — UNAFFECTED by the
+   billing finding). The permutation was chosen over CI-overlap *because* those two are the only
+   `ci_unreliable`/`sparse_cross_grid` cells — the tile-swap test is robust to empty tiles where
+   the bootstrap CI is not.
+2. **F1 leader ≠ MCC leader** — Pro-text wins localisation (F1@20m); `pro-image-high-t-0-7` wins
+   tile-discrimination (MCC +0.852, only 7th on F1). Metric-dependent winner; in `outcome`.
+3. **BILLING VERDICT (airtight)**: n1-outstanding "pro-*" = **Flash** (confirmed by
+   `per_item_metadata.model_version`, sourced from `response.model_version` at
+   `lib_llm_metadata.py:635`; corroborated by Flash pricing rates + Flash-range performance).
+   pv-diag "pro-*" = **Pro** (`pricing_used.model=gemini-3.1-pro-preview` at $2/$12 rates; the
+   `--model` override took there). The study YAMLs *intended* Pro but the runner never threaded
+   it. **The authoritative field for *what ran* is `model_version` / `pricing_used.model` —
+   NEVER `config.model` (E57 template-default flash on BOTH groups) and NEVER the slug/YAML.**
+4. **Leaderboard prereg framing = `exploratory`** (H1/H6/H7 refs) — a *template* for the
+   architecture-baseline family (see `leaderboard-construction-plan.md` Update 2026-06-03).
+5. **Re-run = realtime+flex** (=batch cost), configs **only-model-changed** (hash-audited vs
+   originals AND pv-diag partners; batch↔realtime payload verified byte-equivalent). Resolves
+   `gemini-3.1-pro`→`gemini-3.1-pro-preview` (matches pv-diag).
+
+### Top of ready work (next session) — tasks #10–#12
+
+1. **Verify re-run** (the ⚠️ above) → confirm per-pass `model_version=gemini-3.1-pro-preview`,
+   ~487 tiles, low failures; measure actual cost.
+2. **Re-score** the 4 genuine-Pro pools at 14-buffer+MCC; add as conditions on a new run
+   `n1-pro-rerun-384` in `run-conditions.json`; regenerate manifests; **commit the API outputs**
+   (geojsons/metas/evals). **Re-run the leaderboard tiering** — Pro HIGH/T=0.0 (untested as Pro,
+   potential ceiling-lift) may change the tie_set.
+3. **Reconcile E57 + fix the finding**: record the billing verdict in `protocol-errata.md` E57;
+   correct model-of-record on the 4 n1-outstanding passes (`gemini-3.1-pro` →
+   `gemini-3-flash-preview`, **document-don't-rename** per the E57 precedent); fix the
+   `n1-baseline-matrix-384` `predicted_outcome` H6 narrative (the "weak Pro configs" were Flash);
+   corrective Obs.
+
+### Artefacts (this session)
+
+- Commits: `d6daec4e` (tiering script+results), `9cbb6480` (manifest finding), `3483d875`
+  (docs+template), `0eddf031` (tests), `89edf956` (Obs 336), `5a1c3f90` (outcome+model-era fix),
+  `05838064` (re-run orchestration).
+- New: `scripts/n1_baseline_leaderboard_tiering.py`, `scripts/run_n1_pro_rerun.sh`,
+  `tests/test_n1_baseline_leaderboard_tiering.py`,
+  `results/paper-eval/n1/384px-14buf-mcc/tiering/`. Memory: observations-as-we-go cadence.
+
+---
+
+## ✅ Session 96 — N=1 BASELINE MATRIX + ANALYSES SCAFFOLD + BATCH PASSES
 
 **Posted**: 2026-06-02, end of a collaborative day (distinct from the Session-95 arc).
 ~10 commits `32097c54`→`b57f69ce`, all pushed, + PR #9 squash-merged (`f67b2479`). **$0 API.**
