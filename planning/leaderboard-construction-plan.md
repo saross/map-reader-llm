@@ -489,3 +489,58 @@ testing. Stage 3, 4, 5 scripts:
 | `scripts/build_tier_stability.py` | Spearman rho across buffers |
 | `scripts/build_cross_architecture_tables.py` | Stage 4a + 4b + 4c |
 | `scripts/build_per_arch_documentation.py` | Stage 5 READMEs + headlines |
+
+## Update 2026-06-03 — Preregistration-framing template for architecture-baseline leaderboards (Session 97)
+
+**Status**: a reusable convention for how the `preregistered` and
+`hypothesis_refs` fields of an **analyses-manifest leaderboard row** are set
+when the leaderboard characterises a single **architecture** (single-pass,
+consensus, or proposer-verifier) on its own terms. First applied to
+`n1-baseline-matrix-384` (the N=1 single-pass board; see
+`docs/methodology/n1-baseline-matrix.md` § 6). It is a **template** because a
+family of these boards follows — a consensus leaderboard, a proposer-verifier
+leaderboard, and a single-vs-consensus-vs-PV cross-architecture comparison —
+and they should be framed consistently.
+
+### The principle: justified ≠ confirmatory
+
+Treating each run-architecture as a focused object of study was **not
+anticipated** in the preregistration, but architecture proved a dominant
+performance lever, so the deeper dive is **justified**. Justification (was it
+worth doing?) and preregistration status (was *this analysis* in the planned
+analysis set?) are **orthogonal**. An exploratory analysis can be rigorous,
+important, and headline-worthy; labelling it `exploratory` records provenance,
+not quality. Do not let "the dive is justified" drift into claiming
+confirmatory status.
+
+### Three claims bundled in one architecture-baseline board
+
+1. **Within-board contrasts** (e.g. Pro vs Flash → H6, text vs image → H1,
+   temperature → H7) recapitulate **preregistered directions** as a
+   *convergent* line of evidence. They are **not** the confirmatory test —
+   those live in their own controlled single-lever phases.
+2. **The ranking / `tie_set`** ("which configuration wins") was **not** in the
+   preregistered analysis plan → exploratory.
+3. **The architecture axis** is the baseline arm the preregistered
+   *architecture* hypotheses are implicitly defined **against** (consensus = H3,
+   two-stage / proposer-verifier = H2). Characterising it operationalises a
+   comparator the preregistration presupposed.
+
+### The template
+
+| field | value for a single-architecture baseline board | rationale |
+|---|---|---|
+| `preregistered` | **`exploratory`** | The ranked board was not in the planned analysis set. NOT `preregistered-with-deviation` — that overstates (we did not preregister *this* analysis). |
+| `hypothesis_refs` | the hypotheses whose contrasts the board **examines** (e.g. `H1`, `H6`, `H7`) | Keep refs = "what this board tests". |
+| `outcome` / `_note` | name the architecture-baseline comparator role in prose (H2 / H3 are downstream **consumers**, named here, not in `hypothesis_refs`) | preserves the linkage without over-claiming |
+| `predicted_outcome` | the directional priors from the referenced hypotheses, with a predicted-vs-actual read | lets an exploratory board show a predicted-vs-actual check |
+| `deviations` | only genuinely applicable D-/E-numbers (e.g. `E57` for the Pro model-of-record caveat) | not the place for "the framing was post-hoc" — that goes in prose |
+
+### The asymmetry to preserve
+
+The **cross-architecture** head-to-head board (single vs consensus vs PV) is a
+different case: comparing the architectures *is* the actual question of H2 / H3,
+so it may legitimately earn **`preregistered-with-deviation`** (documenting the
+post-hoc cell assembly and any rescore-standard departures) where each
+single-architecture board earns **`exploratory`**. Do not flatten the whole
+family to one label.

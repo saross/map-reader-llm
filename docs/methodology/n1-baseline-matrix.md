@@ -1,8 +1,9 @@
 # The N=1 baseline matrix — what it is, how it is scored, and how it enters the manifest
 
-> **Last revised**: 2026-06-02 (Session 96 — created: re-scored the 18 baseline
-> pools to the 14-buffer + MCC standard and authored them as single-pass
-> conditions). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-06-03 (Session 97 — leaderboard lifted from stub to
+> finding: round-robin permutation + BH-FDR tiering → 6 tiers, `tie_set` = the
+> two Pro-text-low-temp leaders; see new § 6). See [§ Changelog](#changelog) for
+> revision history.
 
 **Purpose**: a single legible map of the **N=1 baseline matrix** — the
 cross-architecture single-pass leaderboard at 384 px on the 4-map gold-standard
@@ -280,12 +281,85 @@ Reading the matrix (single-pass, no aggregation, no verifier):
   runs.
 - These are **single-pass** numbers; the consensus (vote-threshold) and
   proposer-verifier architectures are scored separately and compared against this
-  baseline in the leaderboard analysis (`n1-baseline-matrix-384`, currently a stub —
-  the ranking/tie-set and finding are deferred; see § 6).
+  baseline. The statistical ranking and tiering of these 18 cells — and the
+  `tie_set` — are the leaderboard **finding** in § 6 (analysis
+  `n1-baseline-matrix-384`).
 
 ---
 
-## 6. Cross-references
+## 6. The leaderboard finding — statistical tiering
+
+The 18 cells are ranked by the headline **F1@20 m** and grouped into
+statistically distinguishable **tiers** by the project's canonical leaderboard
+method, run here as `scripts/n1_baseline_leaderboard_tiering.py` (results:
+`results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.{json,md}`; computed
+on zbook, $0 API):
+
+- **Round-robin paired permutation** — all C(18, 2) = 153 pairs, a tile-swap
+  permutation on the **pass-averaged per-tile** TP/FP/FN (the expected
+  single-pass micro-F1 — the same statistic the bootstrap CIs use), 10 000
+  permutations, seed 42, two-sided. This is the canonical
+  `pairwise_permutation_test.run_permutation_test` algorithm (micro-average F1,
+  erratum E45), extended from integer single-pass counts to **float replicate
+  means** (see the script header). Cross-check: the permutation's observed
+  micro-F1-of-the-mean matches each cell's mean-of-per-pass board F1 (§ 5) to
+  within **≤0.0003** at every replicate count (1–30 passes), so the test ranks
+  exactly what the leaderboard reports.
+- **Benjamini–Hochberg FDR** at q = 0.05 over the 153 raw p-values, then
+  **greedy clique tiering** (identical to
+  `build_tiered_leaderboard.apply_fdr_and_tier`): cells are processed in
+  F1-descending order, each joining the current tier iff indistinguishable from
+  **all** current members. 112/153 pairs significant → **6 tiers**.
+
+**Why a permutation and not CI-overlap.** The two F1 leaders are the *only* two
+cells flagged `ci_unreliable` (`sparse_cross_grid`, § 2.2): being the most
+precise detectors they leave >50 % of tiles empty, so their bootstrap F1 CIs are
+unreliable — exactly at the decisive top comparison. The tile-swap permutation
+sidesteps this: empty tiles are inert under label-swapping, so the test does not
+depend on the flagged CIs. It confirms the cheap CI-overlap read (top two tied,
+far above the rest) on firmer ground.
+
+### The tiers (F1@20 m)
+
+| tier | members (F1@20 m) |
+|---:|---|
+| **1 — `tie_set`** | `pro-text-medium-t-0-0` (0.763), `pro-text-high-t-0-7` (0.745) |
+| 2 | `pro-image-medium-t-0-0` (0.606), `flash-image-minimal-t-0-0` (0.600), `flash-image-minimal-t-0-0-487-tiles` (0.598), `flash-image-minimal-t-0-3` (0.593), `pro-image-high-t-0-7` (0.591) |
+| 3 | `flash-image-minimal-t-0-7` (0.553), `pro-image-high-t-0-0` (0.528), `flash-text-minimal-t-0-0-pv-baseline` (0.520) |
+| 4 | `flash-text-minimal-t-0-0` (0.503), `flash-text-minimal-t-0-3` (0.499), `flash-image-high-t-0-7` (0.499), `pro-text-high-t-0-0` (0.494), `flash-text-minimal-t-0-7` (0.488) |
+| 5 | `pro-image-medium-t-0-7` (0.452), `pro-text-medium-t-0-7` (0.416) |
+| 6 | `flash-text-high-t-0-7` (0.387) |
+
+**The finding.** **Tier 1 — the `tie_set` — is the two Gemini 3 Pro text
+low-temperature cells**, statistically indistinguishable from each other
+(BH-adjusted p = 0.50) and both significantly clear of rank 3 (BH-adjusted
+p = 0.0000). Two cross-cutting reads:
+
+- **F1 leader ≠ MCC leader (the winner is metric-dependent).** The Tier-1 cells
+  lead *localisation* (F1@20 m) but are not the *tile-discrimination* leader:
+  that is `pro-image-high-t-0-7` (MCC +0.852), which sits in **Tier 2** on F1
+  (0.591, rank 7). Text wins precise localisation; image wins flagging the right
+  tiles — the MCC-alongside-F1 split (§ 2.2) made concrete.
+- **H6 (Pro vs Flash) holds at the top but not uniformly.** Pro text leads, yet
+  Flash image-MINIMAL (0.59–0.60, Tier 2) beats several weak Pro configs (Pro
+  text high T=0.0 0.494; Pro image medium T=0.7 0.452; Pro text medium T=0.7
+  0.416). And **H7's preregistered T=0.0 optimum does not reappear at the top** —
+  the two tied leaders are T=0.0 and T=0.7.
+
+**Manifest linkage and preregistration.** The finding is recorded in the
+analyses manifest row `n1-baseline-matrix-384` (`tie_set`, `outcome`,
+`predicted_outcome`). It is framed **`exploratory`** (`hypothesis_refs`
+H1 / H6 / H7): the within-board contrasts recapitulate preregistered directions
+as convergent evidence, but the 18-cell ranked board was not itself in the
+preregistered analysis plan — it operationalises the **single-pass baseline
+arm** that the consensus (H3) and proposer-verifier (H2) architectures are
+measured against. See `planning/leaderboard-construction-plan.md` (Update
+2026-06-03) for the architecture-baseline prereg-framing template this analysis
+sets.
+
+---
+
+## 7. Cross-references
 
 - `configs/n1-eval-384px-14buf-mcc.yaml` — the re-score recipe (supersedes
   `configs/n1-eval-384px-all-buffers.yaml`).
@@ -298,10 +372,16 @@ Reading the matrix (single-pass, no aggregation, no verifier):
   `baseline-<slug>` entries on pv-diag-384 / n1-outstanding-384 /
   retest-h11-single-pass-384-t0).
 - `results/run-analyses.json` → `results/analyses-manifest.json` — the leaderboard
-  analysis **stub** (`analysis_id n1-baseline-matrix-384`, `type=leaderboard`) over
-  the 18 cells. Machine fields filled; the finding (`outcome`), preregistration
-  linkage, and the statistical `tie_set` (pending a pairwise permutation / CI-overlap
-  pass) are **deferred for human authoring** (sub-step 3c).
+  analysis (`analysis_id n1-baseline-matrix-384`, `type=leaderboard`) over the 18
+  cells. **Finding authored 2026-06-03** (`tie_set` = the Tier-1 Pro-text leaders,
+  `outcome`, `predicted_outcome`, `preregistered=exploratory`, `hypothesis_refs`
+  H1/H6/H7, `deviations` E57, `manually_verified_at` set); see § 6.
+- `scripts/n1_baseline_leaderboard_tiering.py` — the round-robin permutation +
+  BH-FDR + greedy-clique tiering script that produced the § 6 finding (replicate-mean
+  per-tile; reuses `compute_per_tile_tp_fp_fn`, `apply_bh_correction`).
+- `results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.{json,md}` — the
+  tiering result: per-pair p-values (raw + BH-adjusted), the 6-tier structure, the
+  per-cell board-F1-vs-observed cross-check, and the `tie_set`.
 - `docs/methodology/preregistration/protocol-errata.md` — E57 (Pro-pool
   model-of-record / `output_dir`), E56 (verifier threshold provenance — not
   applicable to these no-verifier baselines).
@@ -313,6 +393,28 @@ Reading the matrix (single-pass, no aggregation, no verifier):
 ---
 
 ## Changelog
+
+### 2026-06-03 — Leaderboard finding (Session 97)
+
+Lifted the `n1-baseline-matrix-384` analysis from stub to **finding**.
+
+- **Method**: round-robin paired tile-swap permutation (replicate-mean
+  per-tile, 10 000 perms, seed 42, two-sided) + Benjamini–Hochberg FDR
+  (q = 0.05) + greedy-clique tiering at 20 m, on zbook ($0 API). New script:
+  `scripts/n1_baseline_leaderboard_tiering.py`; artefacts under
+  `results/paper-eval/n1/384px-14buf-mcc/tiering/`.
+- **Result**: 112/153 pairs significant → **6 tiers**; **`tie_set` (Tier 1) =
+  `pro-text-medium-t-0-0` + `pro-text-high-t-0-7`** (BH-adjusted p = 0.50
+  between them; both adj-p = 0.0000 vs rank 3). New § 6 "The leaderboard
+  finding"; Cross-references renumbered § 6 → § 7.
+- **Manifest**: `run-analyses.json` human fields authored (`tie_set`,
+  `outcome`, `predicted_outcome`, `preregistered=exploratory`, `hypothesis_refs`
+  H1/H6/H7, `deviations` E57, `manually_verified_at`); `analyses-manifest.{json,md}`
+  regenerated (ALL VALID: 27 runs + 110 conditions + 68 passes + 1 analysis).
+- **What did NOT change**: the 18 cells' F1/MCC values (§ 5) or the detection
+  geometries — the tiering formalises the § 5 ordering. The permutation (robust
+  to the `sparse_cross_grid` flag) confirms the CI-overlap read.
+- Commit: landed this session (see `git log` for `results/run-analyses.json`).
 
 ### 2026-06-02 — Original publication (Session 96)
 
