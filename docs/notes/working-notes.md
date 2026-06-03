@@ -17214,3 +17214,63 @@ Search terms: Obs 336, N=1 baseline leaderboard tiering, 6 statistical tiers, 15
 - **Obs 334** (pv-diag-384 verifier threshold flat in operating range, Session 95): the Tier-1 cells are Pro-text proposers in the pv-diag-384 run; Obs 334 characterises the verifier built on top of them.
 - **Obs 130** (consensus improves F1 primarily by FP filtering): the Tier 4–6 Flash text MINIMAL cells with fp ≈ 257 are exactly the regime where Obs 130's FP-filtering mechanism cannot help (correlated FPs across passes).
 - **Artefacts**: `results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json` — per-pair p-values (raw + BH-adjusted), 6-tier structure, tie-set; `results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.md` — human-readable ranked table; `scripts/n1_baseline_leaderboard_tiering.py` — the round-robin permutation + BH-FDR + greedy-clique script; `docs/methodology/n1-baseline-matrix.md` § 6 — prose finding, methodology rationale, and cross-references; `results/run-analyses.json` → `results/analyses-manifest.json` row `n1-baseline-matrix-384`; commit `0eddf031` (tier1 tests, landing commit).
+
+## Observation 337: The four n1-outstanding-384 "Pro" cells were dispatched as Flash — confirmed by the API's own model_version — exposing a three-layer provenance hierarchy: intent ≠ request ≠ service (E57 billing reconciliation, Session 97, 2026-06-03)
+
+### The finding
+
+**The four n1-outstanding-384 conditions slugged `pro-*` (pro-text-high-t0, pro-text-medium-t07, pro-image-high-t0, pro-image-medium-t07) were dispatched as Gemini 3 Flash, not Gemini 3.1 Pro. This is confirmed by three independent signals from the execution artefacts, all pointing to the same conclusion.**
+
+| evidence layer | n1-outstanding-384 `pro-*` | pv-diag-384 `pro-*` |
+|---|---|---|
+| `per_item_metadata.model_version` (API's own report, `lib_llm_metadata.py:635`) | `gemini-3-flash-preview` × 3,895 tile responses | N/A (`lib_batch_api.py` does not populate `per_item_metadata`) |
+| `per_item_metadata.model_requested` | `gemini-3-flash-preview` | N/A |
+| `cost_estimate.pricing_used.model` | `gemini-3-flash-preview` ($0.5/$3.0 per 1 M tokens) | `gemini-3.1-pro-preview` ($2.0/$12.0 per 1 M tokens) |
+| runner script | `4_detect_mounds_batch.py` | `lib_batch_api.py` |
+| `configuration.model` in `.meta.json` | `gemini-3-flash-preview` | `gemini-3-flash` (same template default — unreliable in both) |
+| study YAML `model:` | `gemini-3.1-pro` (intent) | `gemini-3.1-pro` (intent) |
+| F1@20 m observed | 0.416–0.528 (Flash-range) | 0.591–0.763 (genuine Pro-range) |
+
+The pv-diag-384 `pro-*` cells ARE genuinely Pro: their `pricing_used.model = gemini-3.1-pro-preview` and Pro-rate billing confirm it, and their F1@20 m (0.591–0.763) is characteristic of the Pro model. Both groups share `config.model = gemini-3-flash` (a template default that never correctly reflected the intended model in either run), which is why E57 as originally framed (Session 96, 2026-06-02) treated the issue as metadata-only. The billing reconciliation in Session 97 revealed the material distinction: the `--model` CLI override propagated correctly through `lib_batch_api.py` (pv-diag) but was never threaded into the actual request inside `4_detect_mounds_batch.py` (n1-outstanding).
+
+### The provenance lesson
+
+**Intent ≠ request ≠ service.** Three distinct artefacts record three distinct things:
+
+- **Intent** — study YAML `model:` field (`gemini-3.1-pro`), condition slug (`pro-*`). These record what was planned; they are authored on our side of the API boundary.
+- **Request** — `per_item_metadata.model_requested` (populated from the `model_name` argument to the library at `lib_llm_metadata.py:1074`). This records what was sent; it still lies if the library's internal routing silently substituted a different model.
+- **Service** — `per_item_metadata.model_version` (populated directly from `response.model_version` at `lib_llm_metadata.py:635`). This records what actually ran; it is the only field authored on the provider's side of the boundary.
+
+For n1-outstanding-384, all three layers happened to be wrong-and-consistent: intent said Pro, request said Flash, service confirmed Flash. For pv-diag-384, intent said Pro and service confirmed Pro (billing verified); `config.model` template noise was irrelevant.
+
+**The practical rule:** when auditing "what model actually ran?", distrust every artefact authored on our side of the API boundary (slug, YAML, `config.model`, `model_requested`) and find the one field the provider populated (`model_version`). Where `model_version` is unavailable (batch API runs via `lib_batch_api.py`), billing rates are the next-best authority — Pro vs Flash pricing is unambiguous at $2/$12 vs $0.5/$3.0 per 1 M tokens. This corrects the Session 96 belief recorded in E57's original framing that "the study YAML is the only surviving truth" for model identity: the YAML recorded intent that was never executed for the n1-outstanding-384 cells.
+
+### Why this matters
+
+1. **The Obs 336 tie_set is unaffected.** Both Tier-1 cells (`pro-text-medium-t-0-0` and `pro-text-high-t-0-7`) source from pv-diag-384 — genuinely Pro, billing-confirmed. The single-pass F1 ceiling (0.745–0.763) stands.
+
+2. **The H6 reading in the `analyses-manifest.json` predicted_outcome is now wrong.** The entry cites "weak Pro configs (Pro text high T=0.0 0.494; Pro image medium T=0.7 0.452; Pro text medium T=0.7 0.416)" as evidence that H6 does not hold uniformly. Those three cells are n1-outstanding-384 Flash cells. The genuine Pro vs Flash comparison cannot be drawn from the current n1-outstanding-384 data; it requires the re-run (see below). Flagged for correction after re-run completion.
+
+3. **The Pro thinking × temperature 2×2 is incomplete.** The four n1-outstanding-384 cells were intended to extend the Pro grid to higher-thinking variants and a T=0.0 anchor not present in pv-diag-384. As Flash, they do not fill that role. The re-run (`scripts/run_n1_pro_rerun.sh`, commit `05838064`) dispatches genuine Gemini 3.1 Pro (real-time + flex service tier; 8 passes × 487 tiles = 3,896 calls) to complete the 2×2 and enable the correct H6 analysis.
+
+4. **The flash originals are preserved and relabelled, not deleted.** The four cells remain in `outputs/h11/n1-outstanding-384/pro-*/` as correctly-labelled Flash data. The model-of-record in the manifest will be corrected to `gemini-3-flash-preview` for these cells; they remain valid Flash-high-thinking data points.
+
+### Caveats / methodological notes
+
+**E57's original scope (Session 96) was too narrow.** The errata entry described the `config.model` template default as affecting both pv-diag-384 and n1-outstanding-384 equally, classifying it as "non-destructive / provenance legibility only." Billing reconciliation showed the two groups are not symmetric: for pv-diag-384 the model-of-record is recoverable from billing and `model_version` fields; for n1-outstanding-384, those same fields reveal a genuine dispatch error. E57 needs a supplementary entry (or a new errata, if the decision is to close E57 as written and open E58) after the re-run completes.
+
+**`per_item_metadata.pricing_used` is None for n1-outstanding-384 cells.** Pricing is recorded only at the run level (`cost_estimate.pricing_used`), not per-item. The run-level value is unambiguous ($0.5/$3.0), but per-item billing breakdowns are not available for this runner.
+
+**The re-run output directory will be a new directory** (`outputs/h11/n1-pro-rerun-384/` or similar per `run_n1_pro_rerun.sh`). The original n1-outstanding-384 `pro-*` dirs are untouched. The re-run uses the same configs (byte-identical library_hash and system_instruction_hash, Session 97 audit) — only the model changes.
+
+### Findable later
+
+Search terms: Obs 337, E57 billing reconciliation, n1-outstanding-384 pro-* dispatched as Flash, model_version gemini-3-flash-preview, model_requested Flash pricing 0.5 3.0, pv-diag-384 pro-* genuine Pro pricing 2.0 12.0, intent request service provenance hierarchy, lib_llm_metadata response.model_version line 635, lib_batch_api vs 4_detect_mounds_batch --model override, config.model template default unreliable, study YAML model-of-record not ground truth, billing rate audit model identity, three-layer provenance, analyses-manifest predicted_outcome H6 weak Pro correction, Obs 336 tie_set unaffected pv-diag, Flash-range F1 0.416-0.528 n1-outstanding, Pro-range F1 0.745-0.763 pv-diag, run_n1_pro_rerun.sh genuine Pro re-run, 3895 tile responses Flash confirmed, Session 97 2026-06-03.
+
+### Related observations and artefacts
+
+- **Obs 335** (N=1 baseline matrix 14 buffers + MCC, Session 96): the matrix that contains the four mislabelled Flash cells. Obs 335's Caveat section noted "errata E57" as affecting pass provenance; this Obs resolves what E57 actually means — dispatch error, not metadata noise.
+- **Obs 336** (leaderboard tiering, Session 97): the tiering analysis built on the Obs 335 matrix. The Tier-1 tie_set is unaffected (both pv-diag cells, billing-confirmed Pro); the H6 commentary in the `analyses-manifest.json` `predicted_outcome` cites cells that were actually Flash — flagged for post-re-run correction.
+- **Obs 329** (CLI override faithful-to-config yet wrong-about-execution, E55, Session 93): the nearest structural precedent — a different mechanism (config propagation vs CLI flag threading) but the same pattern: what the operator intended and what the API received were not the same, and only a post-hoc artefact audit revealed the gap.
+- **E57** (protocol-errata.md:1774): the errata entry for this incident. As of 2026-06-03 the entry's "non-destructive" framing is superseded for the n1-outstanding-384 group; a supplementary entry is pending re-run completion.
+- **Artefacts**: `outputs/h11/n1-outstanding-384/pro-{text,image}-{high-t0,medium-t07}/run_*/detections_*.meta.json` — per-item `model_version = gemini-3-flash-preview` and `model_requested = gemini-3-flash-preview` (3,895 tile responses); `outputs/h11/pv-diag-384/pro-*/*/run_*/detections_*.meta.json` — `cost_estimate.pricing_used.model = gemini-3.1-pro-preview` at Pro rates; `studies/h11-384-n1-outstanding.yaml` and `studies/h11-384-pro-medium-t07.yaml` — `model: gemini-3.1-pro` (intent); `scripts/run_n1_pro_rerun.sh` — genuine-Pro re-run orchestration; `results/analyses-manifest.json` → `n1-baseline-matrix-384.predicted_outcome` (H6 commentary flagged for correction); commit `05838064` (re-run script, Session 97 landing commit).
