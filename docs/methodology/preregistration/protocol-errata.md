@@ -1775,10 +1775,10 @@ The verifier's continuous `mound_probability` is explored only in the **diagnost
 
 | Field | Value |
 |-------|-------|
-| Date | 2026-06-02 |
-| Type | Metadata correction (non-destructive) |
-| Commit | TBD |
-| Impact | Low — provenance legibility only; run/model identity recoverable from eval input_files + study manifests |
+| Date | 2026-06-02 (original); **revised 2026-06-03** — see Update below |
+| Type | Metadata correction (non-destructive) + **billing reconciliation (finding-affecting)** |
+| Commit | `e1f20da4` (model-of-record + re-run), `59727c8a` (re-tier), `c06aceee` (finding rewrite) |
+| Impact | **Revised to Medium–High.** The original assessment ("Low — provenance only") was wrong: the 2026-06-03 billing reconciliation found four of the "Pro" pools were dispatched as **Flash**, which CHANGED the N=1 leaderboard finding (tie_set and the H6 narrative). See the Update. |
 
 **Description**: Two metadata artefacts in the H11 384px single-pass baseline pools (the N=1 baseline matrix, `results/paper-eval/n1/384px-all-buffers/`, sourced from pv-diag-384 ×10, n1-outstanding-384 ×7, retest-h11-single-pass-384-t0 ×1):
 
@@ -1798,3 +1798,41 @@ The verifier's continuous `mound_probability` is explored only in the **diagnost
 3. When the N=1 baseline pools are authored into the manifest (continuity Session 95 to-do #3), record the **model-of-record** as a derived field from the study manifest, with provenance noting the `config.model` template-default caveat.
 
 **Reference artefacts**: `configs/n1-eval-384px-all-buffers.yaml`; `studies/h11-384-pro-medium-text-baseline.yaml`; `results/paper-eval/n1/384px-all-buffers/*/evaluation.json` (`_metadata.input_files`); run-registry entries for pv-diag-384 / n1-outstanding-384 / retest-h11-single-pass-384-t0.
+
+---
+
+#### Update (2026-06-03): billing reconciliation — four "Pro" cells were Flash; genuine-Pro re-run; finding changed
+
+The original entry (above) assumed `config.model = flash` was an unreliable *template default* on **all** the "Pro" pools and that those pools were genuinely Gemini 3 Pro. A triple-checked billing reconciliation on 2026-06-03 found this is only half right, and the half it got wrong is finding-affecting.
+
+**The split (airtight):**
+
+- The four **`n1-outstanding-384`** anti-diagonal "Pro" cells — `pro-text-high-t0`, `pro-image-high-t0`, `pro-text-medium-t07`, `pro-image-medium-t07` — were **dispatched and billed as `gemini-3-flash-preview`**, NOT Pro. Confirmed by `per_item_metadata.model_version = gemini-3-flash-preview` on every one of their ~3,896 responses (sourced from `response.model_version` at `scripts/lib_llm_metadata.py:635`), and corroborated by Flash pricing rates and Flash-range performance. The runner never threaded the per-study `--model` Pro override, so the base-config Flash ran. For these four, `config.model = flash` was therefore *correct*, not a misleading template default.
+- The four **`pv-diag-384`** "Pro" cells (`pro-medium-text-baseline`, `pro-medium-image-baseline`, `pro-high-text-n5`, `pro-high-image-n5`) ARE genuinely Pro: `pricing_used.model = gemini-3.1-pro-preview` at $2/$12 rates — the `--model` override took there.
+
+**The authoritative field for *what ran* is `per_item_metadata.model_version` / `pricing_used.model` — NEVER `config.model`** (a Flash template-default on BOTH groups) **and never the directory slug or the study YAML** (which record *intent*, not dispatch).
+
+**Genuine-Pro re-run.** To complete the genuine Pro 2×2 × modality, the four mis-dispatched corners were re-dispatched as genuine Pro (run `n1-pro-rerun-384`, realtime+flex, byte-audited configs; `outputs/h11/n1-pro-rerun-384/`, committed `1cdf9438`). All 8 passes verify `model_version = gemini-3.1-pro-preview`. Scored at the 14-buffer + MCC standard (`results/paper-eval/n1/384px-14buf-mcc/pro-rerun/`).
+
+**Model-of-record corrections** (`results/run-conditions.json`, non-destructive — directories and slugs unchanged):
+
+| Pool (corner) | Was (study intent) | Now (model-of-record) |
+|---|---|---|
+| `n1-outstanding-384` pro-{text,image}-{high-t0, medium-t07} ×4 | `gemini-3.1-pro` | **`gemini-3-flash-preview`** |
+| `n1-pro-rerun-384` pro-{text,image}-{high-t0, medium-t07} ×4 | — (new run) | **`gemini-3.1-pro-preview`** |
+
+**Finding change (the reason this is no longer "Low impact").** The pre-E57 N=1 leaderboard ranked the four mis-dispatched Flash cells as "weak Pro" (F1 0.42–0.53) and reported a two-member Tier-1 tie (`pro-text-medium-t-0-0` 0.763 + `pro-text-high-t-0-7` 0.745). Replacing them with the genuine-Pro re-run cells (which score 0.59–0.80 at the same corners):
+
+| Corner | Flash (mis-dispatch) F1@20 m | Genuine Pro F1@20 m |
+|---|---:|---:|
+| Pro text HIGH T=0.0 | 0.494 | **0.804** |
+| Pro text MEDIUM T=0.7 | 0.416 | 0.764 |
+| Pro image HIGH T=0.0 | 0.528 | 0.666 |
+| Pro image MEDIUM T=0.7 | 0.452 | 0.593 |
+
+- The Tier-1 **tie collapses to a single leader**: genuine `pro-text-high-t-0-0` (F1 0.804) is now significantly clear of the field (120/153 pairs significant → 7 tiers).
+- The earlier "Flash image-MINIMAL beats weak Pro" reading was an **artefact of the mis-dispatch**: genuine Pro beats the best Flash cell (0.600) at every text corner and dominates MCC at every image corner. H6 (Pro ≥ Flash) now holds uniformly at the top.
+
+The leaderboard's `n1-baseline-matrix-384` board membership (`results/run-analyses.json` `conditions_compared`) was updated to name the genuine-Pro re-run cells, **replacing** the Flash cells; `tie_set`, `outcome`, and `predicted_outcome` were rewritten (commit `c06aceee`). The four Flash cells are preserved (documented, not deleted) under `n1-outstanding-384` with the corrected model-of-record; they remain available as genuine Flash data at otherwise-untested thinking/temperature corners.
+
+**Verification**: `per_item_metadata.model_version` re-read at source across all affected pools; `results/passes-manifest.json` now shows the 8 `n1-outstanding-384` pro-* passes as `gemini-3-flash-preview` and the 8 `n1-pro-rerun-384` passes as `gemini-3.1-pro-preview`. Cross-references: Obs 336 (leaderboard finding), Obs 337 (billing reconciliation), `docs/methodology/n1-baseline-matrix.md`.
