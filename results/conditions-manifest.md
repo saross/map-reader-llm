@@ -2,7 +2,7 @@
 
 # Conditions manifest
 
-> Generated 2026-06-03T08:27:45Z · 114 row(s) · schema v1.0.
+> Generated 2026-06-03T12:45:50Z · 114 row(s) · schema v1.0.
 >
 > **Coverage**: 114 condition(s) across the decomposed runs (sub-step 3b in progress).
 
@@ -98,9 +98,9 @@
 | n1-outstanding-384::baseline-pro-text-high-t-0-0 | single-pass | none | — | 1 | 0.4942 | 0.3808 | — |
 | n1-outstanding-384::baseline-pro-text-medium-t-0-7 | single-pass | none | — | 1 | 0.416 | 0.3105 | 1445 |
 | n1-pro-rerun-384::baseline-pro-text-high-t-0-0 | single-pass | none | — | 1 | 0.8045 | 0.79 | — |
-| n1-pro-rerun-384::baseline-pro-text-medium-t-0-7 | single-pass | none | — | 1 | 0.7638 | 0.7873 | 471 |
+| n1-pro-rerun-384::baseline-pro-text-medium-t-0-7 | single-pass | none | — | 1 | 0.7555 | 0.768 | — |
 | n1-pro-rerun-384::baseline-pro-image-high-t-0-0 | single-pass | none | — | 1 | 0.6658 | 0.8679 | — |
-| n1-pro-rerun-384::baseline-pro-image-medium-t-0-7 | single-pass | none | — | 1 | 0.593 | 0.9135 | 543 |
+| n1-pro-rerun-384::baseline-pro-image-medium-t-0-7 | single-pass | none | — | 1 | 0.595 | 0.9108 | — |
 | pv-diag-384::baseline-flash-image-high-t-0-7 | single-pass | none | — | 1 | 0.4986 | 0.6019 | — |
 | pv-diag-384::baseline-flash-image-minimal-t-0-0 | single-pass | none | — | 1 | 0.5995 | 0.3124 | 746 |
 | pv-diag-384::baseline-flash-image-minimal-t-0-7 | single-pass | none | — | 1 | 0.5534 | 0.3295 | — |
@@ -108,9 +108,9 @@
 | pv-diag-384::baseline-flash-text-minimal-t-0-0-pv-baseline | single-pass | none | — | 1 | 0.5196 | -0.0038 | 1047 |
 | pv-diag-384::baseline-flash-text-minimal-t-0-7 | single-pass | none | — | 1 | 0.4883 | 0.0784 | — |
 | pv-diag-384::baseline-pro-image-high-t-0-7 | single-pass | none | — | 1 | 0.5908 | 0.8524 | — |
-| pv-diag-384::baseline-pro-image-medium-t-0-0 | single-pass | none | — | 1 | 0.6059 | 0.7336 | 519 |
+| pv-diag-384::baseline-pro-image-medium-t-0-0 | single-pass | none | — | 1 | 0.6555 | 0.8677 | — |
 | pv-diag-384::baseline-pro-text-high-t-0-7 | single-pass | none | — | 1 | 0.745 | 0.7465 | — |
-| pv-diag-384::baseline-pro-text-medium-t-0-0 | single-pass | none | — | 1 | 0.763 | 0.7515 | 430 |
+| pv-diag-384::baseline-pro-text-medium-t-0-0 | single-pass | none | — | 1 | 0.7921 | 0.7903 | — |
 | retest-h11-single-pass-384-t0::single-pass-run_1 | single-pass | none | — | 1 | 0.5065 | 0.0427 | 1093 |
 | retest-h11-single-pass-384-t0::single-pass-run_2 | single-pass | none | — | 1 | 0.4994 | 0.0427 | 1107 |
 | retest-h11-single-pass-384-t0::single-pass-run_3 | single-pass | none | — | 1 | 0.4961 | 0.0427 | 1113 |

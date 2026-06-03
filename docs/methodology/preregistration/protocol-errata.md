@@ -1826,13 +1826,18 @@ The original entry (above) assumed `config.model = flash` was an unreliable *tem
 | Corner | Flash (mis-dispatch) F1@20 m | Genuine Pro F1@20 m |
 |---|---:|---:|
 | Pro text HIGH T=0.0 | 0.494 | **0.804** |
-| Pro text MEDIUM T=0.7 | 0.416 | 0.764 |
+| Pro text MEDIUM T=0.7 | 0.416 | 0.755 |
 | Pro image HIGH T=0.0 | 0.528 | 0.666 |
-| Pro image MEDIUM T=0.7 | 0.452 | 0.593 |
+| Pro image MEDIUM T=0.7 | 0.452 | 0.595 |
 
-- The Tier-1 **tie collapses to a single leader**: genuine `pro-text-high-t-0-0` (F1 0.804) is now significantly clear of the field (120/153 pairs significant → 7 tiers).
-- The earlier "Flash image-MINIMAL beats weak Pro" reading was an **artefact of the mis-dispatch**: genuine Pro beats the best Flash cell (0.600) at every text corner and dominates MCC at every image corner. H6 (Pro ≥ Flash) now holds uniformly at the top.
+(genuine-Pro column shown at the final n=3; the medium-thinking corners moved
+0.764→0.755 / 0.593→0.595 between the n=1 re-run and the n=3 top-up.)
 
-The leaderboard's `n1-baseline-matrix-384` board membership (`results/run-analyses.json` `conditions_compared`) was updated to name the genuine-Pro re-run cells, **replacing** the Flash cells; `tie_set`, `outcome`, and `predicted_outcome` were rewritten (commit `c06aceee`). The four Flash cells are preserved (documented, not deleted) under `n1-outstanding-384` with the corrected model-of-record; they remain available as genuine Flash data at otherwise-untested thinking/temperature corners.
+- The earlier "Flash image-MINIMAL beats weak Pro" reading was an **artefact of the mis-dispatch**: genuine Pro beats the best Flash cell (0.600) at every text corner and dominates MCC at every image corner. H6 (Pro ≥ Flash) now holds uniformly at the top (top six cells all genuine Pro).
+- The Tier-1 `tie_set` is **two genuine-Pro text cells at T=0.0** — `pro-text-high-t-0-0` (0.804) + `pro-text-medium-t-0-0` (0.792) — clear of the two Pro-text T=0.7 cells (Tier 2), a clean T=0.0 > T=0.7 ordering (H7). 129/153 pairs significant → 7 tiers.
 
-**Verification**: `per_item_metadata.model_version` re-read at source across all affected pools; `results/passes-manifest.json` now shows the 8 `n1-outstanding-384` pro-* passes as `gemini-3-flash-preview` and the 8 `n1-pro-rerun-384` passes as `gemini-3.1-pro-preview`. Cross-references: Obs 336 (leaderboard finding), Obs 337 (billing reconciliation), `docs/methodology/n1-baseline-matrix.md`.
+The leaderboard's `n1-baseline-matrix-384` board membership (`results/run-analyses.json` `conditions_compared`) was updated to name the genuine-Pro re-run cells, **replacing** the Flash cells; `tie_set`, `outcome`, and `predicted_outcome` were rewritten. The four Flash cells are preserved (documented, not deleted) under `n1-outstanding-384` with the corrected model-of-record; they remain available as genuine Flash data at otherwise-untested thinking/temperature corners.
+
+**Completeness addendum (n=3 top-up).** Finalising the board, all four medium-thinking Pro cells were brought to n=3. This surfaced a *separate* data-quality issue isolated to the two **pv-diag medium-t-0-0** cells: their `run_1` batch passes had ~5 % unretried tile failures (25/23 of 487), which had depressed their scores (`pro-text-medium-t-0-0` 0.763, `pro-image-medium-t-0-0` 0.606). Recovered to 487/487 via the standard resume-merge path (genuine Pro, single round each), they score 0.792 / 0.655. The intermediate "sole leader" reading recorded above the addendum line was an artefact of the incomplete `run_1`; with coverage fixed, `pro-text-medium-t-0-0` ties the leader. Commits: `c06aceee` (initial E57 rewrite), `309e08de`/`c07c5776`/`28c8438a`/`0f32ec00`/`e857c7b5` (top-up, recovery, union glob, re-score, re-tier).
+
+**Verification**: `per_item_metadata.model_version` re-read at source across all affected pools; `results/passes-manifest.json` shows the 8 `n1-outstanding-384` pro-* passes as `gemini-3-flash-preview` and the `n1-pro-rerun-384` passes as `gemini-3.1-pro-preview`. Cross-references: Obs 336 (leaderboard finding), Obs 337 (billing reconciliation), Obs 338 (genuine-Pro re-run), Obs 339 (n=3 top-up + recovery), `docs/methodology/n1-baseline-matrix.md`.

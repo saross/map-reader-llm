@@ -1,10 +1,12 @@
 # The N=1 baseline matrix — what it is, how it is scored, and how it enters the manifest
 
-> **Last revised**: 2026-06-03 (Session 98 — **E57 genuine-Pro replace**: the four
-> anti-diagonal "Pro" cells were found to have been dispatched as **Flash** and were
-> replaced by a genuine-Pro re-run (`n1-pro-rerun-384`). Re-tiered → **7 tiers**,
-> `tie_set` collapses to a **single leader** `pro-text-high-t-0-0` (genuine Pro,
-> F1 0.804). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-06-03 (Session 98 — **E57 genuine-Pro replace** + **n=3
+> completeness top-up**: the four anti-diagonal "Pro" cells were Flash, replaced by a
+> genuine-Pro re-run; all four medium-thinking Pro cells brought to n=3 after
+> recovering ~5% unretried tile failures in the pv-diag medium-t-0-0 run_1.
+> **7 tiers**; `tie_set` (Tier 1) = **two genuine-Pro text cells at T=0.0** —
+> `pro-text-high-t-0-0` (0.804) + `pro-text-medium-t-0-0` (0.792). See
+> [§ Changelog](#changelog) for revision history.
 
 **Purpose**: a single legible map of the **N=1 baseline matrix** — the
 cross-architecture single-pass leaderboard at 384 px on the 4-map gold-standard
@@ -276,31 +278,35 @@ tile-classification value; the confusion block is one tile-set's worth (sums to 
 | pv-diag-384 | flash-text-minimal-t-0-0-pv-baseline | 0.520 | 0.536 | -0.003 | 228/1/257/1 |
 | pv-diag-384 | flash-text-minimal-t-0-7 | 0.488 | 0.513 | +0.078 | 229/3/255/0 |
 | pv-diag-384 | pro-image-high-t-0-7 | 0.591 | 0.809 | +0.852 | 221/228/30/8 |
-| pv-diag-384 | pro-image-medium-t-0-0 | 0.606 | 0.778 | +0.734 | 202/220/38/27 |
+| pv-diag-384 | pro-image-medium-t-0-0 | 0.655 | 0.827 | +0.868 | 220/220/38/9 |
 | pv-diag-384 | pro-text-high-t-0-7 | 0.745 | 0.799 | +0.747 | 175/247/11/54 |
-| pv-diag-384 | pro-text-medium-t-0-0 | 0.763 | 0.802 | +0.751 | 179/246/12/50 |
+| pv-diag-384 | pro-text-medium-t-0-0 | 0.792 | 0.825 | +0.790 | 186/246/12/43 |
 | n1-outstanding-384 | flash-image-minimal-t-0-0-487-tiles | 0.598 | 0.680 | +0.314 | 228/51/207/1 |
 | n1-outstanding-384 | flash-image-minimal-t-0-3 | 0.593 | 0.677 | +0.305 | 227/52/206/2 |
 | n1-outstanding-384 | flash-text-minimal-t-0-3 | 0.499 | 0.523 | +0.039 | 229/1/257/0 |
 | n1-pro-rerun-384 | pro-image-high-t-0-0 | 0.666 | 0.834 | +0.868 | 218/237/21/11 |
-| n1-pro-rerun-384 | pro-image-medium-t-0-7 | 0.593 | 0.836 | +0.913 | 216/250/8/13 |
+| n1-pro-rerun-384 | pro-image-medium-t-0-7 | 0.595 | 0.843 | +0.911 | 216/250/8/13 |
 | n1-pro-rerun-384 | pro-text-high-t-0-0 | 0.804 | 0.828 | +0.790 | 188/247/11/41 |
-| n1-pro-rerun-384 | pro-text-medium-t-0-7 | 0.764 | 0.826 | +0.787 | 181/252/6/48 |
+| n1-pro-rerun-384 | pro-text-medium-t-0-7 | 0.755 | 0.823 | +0.768 | 181/252/6/48 |
 | retest-h11-single-pass-384-t0 | flash-text-minimal-t-0-0 | 0.503 | 0.520 | +0.046 | 229/1/257/0 |
 
 The four `n1-pro-rerun-384` rows are the **genuine-Pro** anti-diagonal (evals under
 `384px-14buf-mcc/pro-rerun/`). The off-board **Flash** dispatches of the same configs
 (E57) scored far lower — F1@20 m 0.528 / 0.452 / 0.494 / 0.416 — so genuine Pro adds
-**+0.14 to +0.35 F1** at these corners (full before→after table in errata E57).
+**+0.14 to +0.35 F1** at these corners (full before→after table in errata E57). All
+four medium-thinking Pro cells are **n=3** (the four HIGH-thinking cells already were);
+the two pv-diag medium-t-0-0 cells were topped up after recovering ~5% unretried tile
+failures in their `run_1` that had depressed them (`pro-text-medium-t-0-0` 0.763→0.792,
+`pro-image-medium-t-0-0` 0.606→0.655; Obs 338/339).
 
 Reading the matrix (single-pass, no aggregation, no verifier):
 
-- **F1@20 m leader** is genuine Pro text with HIGH thinking at T=0.0:
-  `pro-text-high-t-0-0` (0.804), ahead of a cluster of other Pro-text passes
-  (`pro-text-medium-t-0-7` 0.764, `pro-text-medium-t-0-0` 0.763, `pro-text-high-t-0-7`
-  0.745). **MCC leader** is now genuine Pro **image**: `pro-image-medium-t-0-7`
-  (+0.913, confusion 216/250/8/13), with `pro-image-high-t-0-0` (+0.868) second —
-  both above the former MCC leader `pro-image-high-t-0-7` (+0.852).
+- **F1@20 m leaders** are genuine Pro text at T=0.0: `pro-text-high-t-0-0` (0.804) and
+  `pro-text-medium-t-0-0` (0.792) — a two-member Tier-1 tie (§ 6) — ahead of the two
+  Pro-text T=0.7 cells (`pro-text-medium-t-0-7` 0.755, `pro-text-high-t-0-7` 0.745).
+  **MCC leader** is genuine Pro **image**: `pro-image-medium-t-0-7` (+0.911, confusion
+  216/250/8/13), with `pro-image-high-t-0-0` (+0.868) second — both above the former
+  MCC leader `pro-image-high-t-0-7` (+0.852).
 - **Flash text MINIMAL massively over-detects**: it flags almost every tile
   (`fp`≈257, `tn`≈1), so its MCC collapses to ≈0 (even slightly negative for the
   T=0.0 PV baseline). F1 stays moderate (~0.50) because recall is near-total, but the
@@ -340,7 +346,7 @@ on sapphire, $0 API):
   **greedy clique tiering** (identical to
   `build_tiered_leaderboard.apply_fdr_and_tier`): cells are processed in
   F1-descending order, each joining the current tier iff indistinguishable from
-  **all** current members. 120/153 pairs significant → **7 tiers**.
+  **all** current members. 129/153 pairs significant → **7 tiers**.
 
 **Why a permutation and not CI-overlap.** The most precise detectors at the top of
 the board (the genuine Pro-text leaders) are flagged `ci_unreliable`
@@ -354,42 +360,47 @@ on firmer ground than CI-overlap would.
 
 | tier | members (F1@20 m) |
 |---:|---|
-| **1 — `tie_set`** | `pro-text-high-t-0-0` (0.804) — genuine Pro, **sole leader** |
-| 2 | `pro-text-medium-t-0-7` (0.764), `pro-text-medium-t-0-0` (0.763), `pro-text-high-t-0-7` (0.745) |
-| 3 | `pro-image-high-t-0-0` (0.666) |
-| 4 | `pro-image-medium-t-0-0` (0.606), `flash-image-minimal-t-0-0` (0.600), `flash-image-minimal-t-0-0-487-tiles` (0.598), `flash-image-minimal-t-0-3` (0.593), `pro-image-medium-t-0-7` (0.593), `pro-image-high-t-0-7` (0.591) |
+| **1 — `tie_set`** | `pro-text-high-t-0-0` (0.804), `pro-text-medium-t-0-0` (0.792) — genuine Pro text, **both T=0.0** |
+| 2 | `pro-text-medium-t-0-7` (0.755), `pro-text-high-t-0-7` (0.745) — both T=0.7 |
+| 3 | `pro-image-high-t-0-0` (0.666), `pro-image-medium-t-0-0` (0.655) |
+| 4 | `flash-image-minimal-t-0-0` (0.600), `flash-image-minimal-t-0-0-487-tiles` (0.598), `pro-image-medium-t-0-7` (0.595), `flash-image-minimal-t-0-3` (0.593), `pro-image-high-t-0-7` (0.591) |
 | 5 | `flash-image-minimal-t-0-7` (0.553), `flash-text-minimal-t-0-0-pv-baseline` (0.520) |
 | 6 | `flash-text-minimal-t-0-0` (0.503), `flash-text-minimal-t-0-3` (0.499), `flash-image-high-t-0-7` (0.499), `flash-text-minimal-t-0-7` (0.488) |
 | 7 | `flash-text-high-t-0-7` (0.387) |
 
-(`pro-text-high-t-0-0`, `pro-text-medium-t-0-7`, `pro-image-high-t-0-0`,
-`pro-image-medium-t-0-7` are the genuine-Pro re-run cells; see § 3.4 / E57.)
+(The eight genuine-Pro cells are the four `n1-pro-rerun-384` anti-diagonal cells plus
+the four `pv-diag-384` diagonal cells; the four medium-thinking cells are n=3, the four
+high-thinking already were. See § 3.4 / E57 and § 5.)
 
-**The finding.** **Tier 1 — the `tie_set` — is the single cell
-`pro-text-high-t-0-0`** (genuine Gemini 3 Pro text, HIGH thinking, T=0.0; F1 0.804),
-statistically clear of every other configuration. It is significantly separated from
-the Tier-2 trio of other Pro-text passes (`pro-text-medium-t-0-7` 0.764,
-`pro-text-medium-t-0-0` 0.763, `pro-text-high-t-0-7` 0.745), which are mutually
-indistinguishable. The top four cells are all Pro text and the top five all genuine
-Pro. (This supersedes the pre-E57 board, whose Tier 1 was a two-member tie at
-0.763/0.745 — computed before the four anti-diagonal cells were found to be Flash and
-replaced by the genuine-Pro re-run.) Two cross-cutting reads:
+**The finding.** **Tier 1 — the `tie_set` — is a two-member tie between
+`pro-text-high-t-0-0` (F1 0.804) and `pro-text-medium-t-0-0` (0.792)**, both genuine
+Gemini 3 Pro text at **T=0.0**: the permutation cannot separate them, and both are
+significantly clear of the Tier-2 pair (the two Pro-text **T=0.7** cells,
+`pro-text-medium-t-0-7` 0.755 and `pro-text-high-t-0-7` 0.745). So at T=0.0 the
+thinking level (HIGH vs MEDIUM) does not significantly matter, and T=0.0 beats T=0.7
+at matched model and modality. The top four cells are all Pro text and the top six all
+genuine Pro. (This is the n=3, complete-coverage result. The brief intermediate "sole
+leader" reading — `pro-text-high-t-0-0` alone — was an artefact of the incomplete
+pv-diag medium-t-0-0 `run_1`, whose ~5 % unretried tile failures depressed it to 0.763;
+recovered to 487/487 it scores 0.792 and ties. The pre-E57 board's tie was a different,
+lower pair, 0.763/0.745, with Flash-misdispatched cells in the mix — see § Changelog.)
+Two cross-cutting reads:
 
-- **F1 leader ≠ MCC leader (the winner is metric-dependent).** The Tier-1 cell
-  leads *localisation* (F1@20 m) but is not the *tile-discrimination* leader: that
-  is genuine Pro **image** — `pro-image-medium-t-0-7` (MCC +0.913, but only 10th on
-  F1 at 0.593) and `pro-image-high-t-0-0` (MCC +0.868) — which sit in Tiers 4 / 3 on
-  F1. Text wins precise localisation; image wins flagging the right tiles — the
-  MCC-alongside-F1 split (§ 2.2) made concrete, and *sharper* than the pre-E57 board
-  (the genuine Pro-image cells reach MCC +0.91, above the former leader's +0.852).
-- **H6 (Pro vs Flash) holds at the top and uniformly.** The top five cells are all
+- **F1 leaders ≠ MCC leader (the winner is metric-dependent).** The Tier-1 cells
+  lead *localisation* (F1@20 m) but are not the *tile-discrimination* leader: that is
+  genuine Pro **image** — `pro-image-medium-t-0-7` (MCC +0.911, but 9th on F1 at 0.595)
+  and `pro-image-high-t-0-0` (MCC +0.868) — which sit in Tiers 4 / 3 on F1. Text wins
+  precise localisation; image wins flagging the right tiles — the MCC-alongside-F1
+  split (§ 2.2) made concrete, and *sharper* than the pre-E57 board (the genuine
+  Pro-image cells reach MCC +0.91, above the former leader's +0.852).
+- **H6 (Pro vs Flash) holds at the top and uniformly.** The top six cells are all
   genuine Pro; every Pro-text cell beats the best Flash cell (`flash-image-minimal-t-0-0`,
   F1 0.600), and the genuine Pro-image cells match Flash on F1 while dominating MCC.
   The pre-E57 board's apparent "Flash image-MINIMAL beats weak Pro" was an **artefact
   of the Flash-misdispatched anti-diagonal** (E57): those four cells were Flash, not
   Pro, and genuine Pro at the same corners scores 0.59–0.80. **H7's preregistered
-  T=0.0 optimum now appears at the apex** — the sole Tier-1 leader is T=0.0 — though
-  Tier 2 mixes T=0.0 and T=0.7 indistinguishably.
+  T=0.0 optimum is cleanly supported within Pro text**: the two Tier-1 cells are both
+  T=0.0 and the two Tier-2 cells are both T=0.7 — a clear T=0.0 > T=0.7 ordering.
 
 **Manifest linkage and preregistration.** The finding is recorded in the
 analyses manifest row `n1-baseline-matrix-384` (`tie_set`, `outcome`,
@@ -419,10 +430,10 @@ sets.
 - `results/run-analyses.json` → `results/analyses-manifest.json` — the leaderboard
   analysis (`analysis_id n1-baseline-matrix-384`, `type=leaderboard`) over the 18
   cells. **Finding authored 2026-06-03, revised same day for the E57 genuine-Pro
-  replace** (`tie_set` = the sole Tier-1 leader `pro-text-high-t-0-0`, `outcome`,
-  `predicted_outcome`, `preregistered=exploratory`, `hypothesis_refs` H1/H6/H7,
-  `deviations` E57; `manually_verified_at` null pending sign-off on the revised text);
-  see § 6.
+  replace and the n=3 completeness top-up** (`tie_set` = the two Tier-1 Pro-text-T=0.0
+  cells `pro-text-high-t-0-0` + `pro-text-medium-t-0-0`, `outcome`, `predicted_outcome`,
+  `preregistered=exploratory`, `hypothesis_refs` H1/H6/H7, `deviations` E57;
+  `manually_verified_at` null pending sign-off on the revised text); see § 6.
 - `scripts/n1_baseline_leaderboard_tiering.py` — the round-robin permutation +
   BH-FDR + greedy-clique tiering script that produced the § 6 finding (replicate-mean
   per-tile; reuses `compute_per_tile_tp_fp_fn`, `apply_bh_correction`).
@@ -445,11 +456,40 @@ sets.
 
 ## Changelog
 
+### 2026-06-03 — n=3 completeness top-up + recovery → tie reopens (Session 98)
+
+Follow-on to the same-day E57 replace (entry below). The four medium-thinking Pro
+cells were brought to **n=3** (anti-noise; the four high-thinking cells already were).
+The completeness audit then found the two **pv-diag medium-t-0-0** `run_1` batch passes
+had ~5 % **unretried tile failures** (25/23 of 487) — isolated to those two cells
+(every other board pass ≤1 failure) — which had depressed their scores. Recovered via
+the standard resume-merge path to 487/487 (single round each).
+
+- **Top-up**: +2 genuine-Pro realtime+flex+cache passes per medium cell (8 passes; all
+  `gemini-3.1-pro-preview`, 487/0). The two pv-diag pools are now MIXED batch+realtime
+  → eval/tiering use a union glob (`*/detections*.geojson`). Manifests: 76→80 passes.
+- **Recovery**: `pro-text-medium-t-0-0` 0.763→**0.792**, `pro-image-medium-t-0-0`
+  0.606→**0.655** (coverage artefact removed). Cost ≈ $0.96.
+
+  | claim | sole-leader (post-E57, pre-top-up) | n=3 complete (final) |
+  |---|---|---|
+  | `tie_set` | single: `pro-text-high-t-0-0` (0.804) | **2-member tie**: `pro-text-high-t-0-0` (0.804) + `pro-text-medium-t-0-0` (0.792), **both T=0.0** |
+  | tiers | 7 (120/153 sig) | 7 (129/153 sig) |
+  | H7 (T=0.0 optimum) | "at the apex (sole leader is T=0.0)" | **clean**: Tier 1 both T=0.0, Tier 2 both T=0.7 |
+
+- **Why the change**: the sole-leader result was an artefact of the incomplete `run_1`;
+  with coverage fixed, `pro-text-medium-t-0-0` rises to 0.792 and ties the leader. Note
+  the final tie is a *different, higher* pair than the pre-E57 tie (0.763/0.745).
+- Commits: `309e08de` (top-up passes), `c07c5776` (run_1 recovery), `28c8438a` (union
+  glob), `0f32ec00` (re-score n=3), `e857c7b5` (re-tier). Cross-ref Obs 338, 339.
+
 ### 2026-06-03 — E57 genuine-Pro replace + re-tier (Session 98)
 
 The E57 billing reconciliation found the four anti-diagonal "Pro" cells from
 `n1-outstanding-384` were dispatched as **Flash**; they were re-run as genuine Pro
 (`n1-pro-rerun-384`) and **replace** the Flash cells on the board (user decision).
+*(Superseded same day by the n=3 top-up entry above — the sole-leader result here was
+an intermediate state.)*
 
 - **Trigger**: `per_item_metadata.model_version = gemini-3-flash-preview` on the four
   `n1-outstanding-384` "Pro" cells (the `--model` override never threaded); genuine-Pro

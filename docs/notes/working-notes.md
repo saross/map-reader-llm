@@ -17321,3 +17321,44 @@ Search terms: Obs 338, genuine-Pro re-run n1-pro-rerun-384, E57 resolved, tie_se
 - **Obs 336** (leaderboard tiering, Session 97): the tiering this Obs supersedes. The pre-E57 6-tier / two-member-tie result is now 7-tier / single-leader; the permutation-over-CI-overlap method is unchanged.
 - **Obs 335** (N=1 matrix 14 buffers + MCC, Session 96): the matrix into which the 4 genuine-Pro cells are now substituted.
 - **Artefacts**: `outputs/h11/n1-pro-rerun-384/` (8 genuine-Pro passes, committed `1cdf9438`); `results/paper-eval/n1/384px-14buf-mcc/pro-rerun/` (the 4 evals); `results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.{json,md}` (re-tiered); `configs/n1-pro-rerun-eval-384px-14buf-mcc.yaml`; `docs/methodology/preregistration/protocol-errata.md` E57 § Update (2026-06-03); `docs/methodology/n1-baseline-matrix.md` (revised §§1/3.4/4/5/6/7 + Session-98 changelog). Commits `e1f20da4` (structural + model-of-record), `59727c8a` (re-tier), `c06aceee` (finding rewrite), `dcf3364a` (docs).
+
+## Observation 339: The "sole leader" was an artefact — bringing the medium Pro cells to n=3 (and recovering a 5% coverage hole in pv-diag medium-t-0-0) REOPENS the tie to two genuine-Pro-text-T=0.0 cells (Session 98, 2026-06-03)
+
+### The finding
+
+**Obs 338's "sole leader" result was itself an artefact of incomplete data, and the anti-noise n=3 top-up that was meant to firm up Tier 2 instead reopened Tier 1.** Two things happened when the four medium-thinking Pro cells were brought from n=1 to n=3:
+
+1. **A coverage hole surfaced.** A completeness audit of all 18 board cells found that the two **pv-diag medium-t-0-0** `run_1` batch passes had ~5% unretried tile failures (text 462/487, 25 failed; image 464/487, 23 failed) — *isolated* to those two cells (every other board pass had ≤1 failure). Those incomplete `run_1` values WERE the board's scores (0.763 text / 0.606 image): the ~25 missing tiles had been scored as artificial false-negatives. The failures were transient (no retries recorded originally); a single resume-merge round each cleared them to 487/487 (genuine Pro, verified).
+
+2. **The tie reopened.** With coverage fixed and n=3, `pro-text-medium-t-0-0` rises 0.763 → **0.792** and ties the leader `pro-text-high-t-0-0` (0.804). Re-tiering: 129/153 pairs significant → 7 tiers; **Tier 1 (tie_set) = two genuine-Pro text cells at T=0.0** (high + medium thinking), Tier 2 = the two Pro-text T=0.7 cells (0.755/0.745).
+
+| board state (all 2026-06-03) | tie_set | basis |
+|---|---|---|
+| pre-E57 (Obs 336) | `pro-text-medium-t-0-0` 0.763 + `pro-text-high-t-0-7` 0.745 | incomplete run_1 + Flash-mislabelled cells |
+| post-E57 sole leader (Obs 338) | `pro-text-high-t-0-0` 0.804 (alone) | genuine Pro, but pv-diag medium-t-0-0 still incomplete (0.763) |
+| **n=3 complete (this Obs)** | `pro-text-high-t-0-0` 0.804 + `pro-text-medium-t-0-0` 0.792 | genuine Pro, all medium cells n=3, coverage fixed |
+
+### Why this matters
+
+1. **The headline is now both cleaner and better-supported.** A two-member T=0.0 tie (thinking-level-agnostic) over a clean T=0.0 > T=0.7 separation is a stronger, simpler claim than a knife-edge sole leader — and it directly supports H7 (T=0.0 optimum) at matched model/modality, which neither prior board version showed cleanly.
+
+2. **"Clear all failures" was the right instinct, and it changed the result.** The user's standing recovery practice (resume-merge until clean), applied here, did more than reduce noise: it removed a coverage *bias* that had been silently separating the leader. The lesson: a single-pass cell's "score" can be depressed by an unaudited completeness hole; auditing pass coverage (not just config identity) belongs in the pre-finalisation checklist.
+
+3. **Two artefact layers, both now removed.** Obs 337 removed the model-identity artefact (Flash mislabelled as Pro); this Obs removes the coverage artefact (incomplete run_1). The board is now genuine-model AND complete-coverage at n≥3 for every Pro cell.
+
+### Caveats / methodological notes
+
+- **n=3 was reached two ways.** The two rerun medium cells (`*-medium-t07`) got run_2/run_3 added (all realtime). The two pv-diag medium cells (`*-medium-t-0-0`) had run_1 *completed in place* (batch+realtime merged) plus the fresh run_2/run_3 — so those pools are MIXED batch+realtime; the eval and tiering use a union glob (`*/detections*.geojson`). Dispatch mode does not change the experimental condition (same model/config/temp; prompt-assembly byte-equivalence established at the re-run).
+- **The recovered run_1 is slightly below run_2/3** (text run_1 0.776 vs run_2/3 0.80/0.80; image 0.624 vs 0.666/0.676) — ordinary run-to-run variance plus the batch-origin majority of run_1's tiles; the n=3 mean (0.792 / 0.655) is the reported value.
+- **Did NOT sweep the minor flash-cell failures** (≤5 tiles each, ≤1%, in old non-Pro non-finalised cells; some are parse-failures `resume` cannot retry). Flagged for a separate decision; immaterial to any finding.
+
+### Findable later
+
+Search terms: Obs 339, sole leader artefact, n=3 top-up reopens tie, pv-diag medium-t-0-0 run_1 25 failures coverage hole, resume-merge recovery 487 complete, pro-text-medium-t-0-0 0.763 to 0.792, tie_set two T=0.0 cells, pro-text-high-t-0-0 pro-text-medium-t-0-0, 129/153 significant 7 tiers, H7 T=0.0 optimum clean, thinking-level-agnostic at T=0.0, union glob mixed batch realtime, completeness audit board passes, clear all failures recovery practice, Obs 338 superseded sole leader, Obs 337 model artefact, two artefact layers, Session 98 2026-06-03.
+
+### Related observations and artefacts
+
+- **Obs 338** (genuine-Pro re-run → sole leader, Session 98): the immediate predecessor. This Obs corrects it — the sole-leader result was an artefact of the incomplete pv-diag run_1, not a real outright lead. (Per the never-edit-an-Obs convention, the correction lands here, cross-referencing 338.)
+- **Obs 337** (E57 billing reconciliation): removed the model-identity artefact; this Obs removes the coverage artefact — the two layers that had distorted the board.
+- **Obs 336 / 335**: the original tiering and matrix.
+- **Artefacts**: recovered `outputs/h11/pv-diag-384/pro-medium-{text,image}-baseline/*/run_1/` (487/0); `outputs/h11/{pv-diag-384,n1-pro-rerun-384}/.../{run_2,run_3}/` (top-up); `results/paper-eval/n1/384px-14buf-mcc/{pro-text-medium-t-0-0,pro-image-medium-t-0-0,pro-rerun/}/evaluation.json` (n=3); `tiering/tiering_20m.{json,md}` (2-member tie); `scripts/run_n1_pro_topup.sh`; `docs/methodology/preregistration/protocol-errata.md` E57 § completeness addendum; `docs/methodology/n1-baseline-matrix.md` (n=3 changelog entry). Commits `309e08de` `c07c5776` `28c8438a` `0f32ec00` `e857c7b5`.

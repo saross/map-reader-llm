@@ -2,9 +2,9 @@
 
 # Passes manifest
 
-> Generated 2026-06-03T08:27:45Z · 76 row(s) · schema v1.0.
+> Generated 2026-06-03T12:45:50Z · 80 row(s) · schema v1.0.
 >
-> **Coverage**: 76 pass(es) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 80 pass(es) across the decomposed runs (sub-step 3b in progress).
 
 | pass_id | model | modality | think | T | status | tiles | cost_usd |
 |---|---|---|---|---|---|---|---|
@@ -70,10 +70,14 @@
 | n1-pro-rerun-384::pro-text-high-t0::run2 | gemini-3.1-pro-preview | text | high | 0.0 | ok | 487 | 1.849756 |
 | n1-pro-rerun-384::pro-text-high-t0::run3 | gemini-3.1-pro-preview | text | high | 0.0 | ok | 487 | 1.8592 |
 | n1-pro-rerun-384::pro-text-medium-t07::run1 | gemini-3.1-pro-preview | text | medium | 0.7 | ok | 487 | 1.862104 |
+| n1-pro-rerun-384::pro-text-medium-t07::run2 | gemini-3.1-pro-preview | text | medium | 0.7 | ok | 487 | 1.854328 |
+| n1-pro-rerun-384::pro-text-medium-t07::run3 | gemini-3.1-pro-preview | text | medium | 0.7 | ok | 487 | 1.853536 |
 | n1-pro-rerun-384::pro-image-high-t0::run1 | gemini-3.1-pro-preview | image | high | 0.0 | ok | 487 | 15.733846 |
 | n1-pro-rerun-384::pro-image-high-t0::run2 | gemini-3.1-pro-preview | image | high | 0.0 | ok | 487 | 15.738586 |
 | n1-pro-rerun-384::pro-image-high-t0::run3 | gemini-3.1-pro-preview | image | high | 0.0 | ok | 487 | 15.737074 |
 | n1-pro-rerun-384::pro-image-medium-t07::run1 | gemini-3.1-pro-preview | image | medium | 0.7 | ok | 487 | 15.71665 |
+| n1-pro-rerun-384::pro-image-medium-t07::run2 | gemini-3.1-pro-preview | image | medium | 0.7 | ok | 487 | 15.716326 |
+| n1-pro-rerun-384::pro-image-medium-t07::run3 | gemini-3.1-pro-preview | image | medium | 0.7 | ok | 487 | 15.715846 |
 | retest-h11-single-pass-384-t0::brief-text-t0::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | 0.0 |
 | retest-h11-single-pass-384-t0::brief-text-t0::run10 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | 0.0 |
 | retest-h11-single-pass-384-t0::brief-text-t0::run2 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | 0.0 |
