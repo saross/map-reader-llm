@@ -17165,3 +17165,52 @@ Search terms: Obs 335, N=1 single-pass baseline matrix, 18-cell cross-architectu
 - **Obs 130** (consensus aggregation improves F1 primarily by FP filtering): the Flash text MINIMAL cells with fp ≈ 257 are the canonical case for which the FP-filtering mechanism has no traction — the FPs are correlated across passes (all passes flag the same tiles) so consensus cannot prune them. Obs 130's mechanism and Obs 333's dividend both predict negligible consensus gain for these cells.
 - **Obs 269, Obs 277** (image-track verifier miscalibration): the image-track Pro cells here — particularly `pro-image-high-t-0-7` with its MCC/F1 dissociation — are the proposer pools used in the image-track proposer-verifier experiments those Obs entries assess.
 - **Artefacts**: `results/paper-eval/n1/384px-14buf-mcc/<slug>/evaluation.json` — 18 per-cell evaluation files, each verified at source; `docs/methodology/n1-baseline-matrix.md` — full provenance map, scoring protocol, and results table; `results/conditions-manifest.json` — the 18 `baseline-*` condition entries (pv-diag-384 ×10, n1-outstanding-384 ×7, retest-h11-single-pass-384-t0 ×1); `configs/n1-eval-384px-14buf-mcc.yaml` — the re-score recipe; `results/paper-eval/n1/384px-all-buffers/` — the superseded 4-buffer no-MCC evals (archived in place).
+
+## Observation 336: The N=1 single-pass baseline leaderboard settles into 6 statistical tiers — Pro text (T=0.0 and T=0.7) share Tier 1, and the permutation test beats CI-overlap exactly where CI flags are raised (Session 97, 2026-06-03)
+
+### The finding
+
+**Round-robin paired tile-swap permutation (replicate-mean per-tile micro-F1, 10 000 permutations, seed 42, two-sided) + Benjamini–Hochberg FDR (q = 0.05) + greedy-clique tiering over the 18 single-pass baseline cells at the 20 m headline buffer resolves to 6 tiers (112/153 pairs significant).**
+
+| tier | members (F1@20 m) | notes |
+|---:|---|---|
+| **1 — `tie_set`** | `pro-text-medium-t-0-0` (0.763), `pro-text-high-t-0-7` (0.745) | BH-adjusted p = 0.50 within tier; both p = 0.0000 vs rank 3 |
+| 2 | `pro-image-medium-t-0-0` (0.606), `flash-image-minimal-t-0-0` (0.600), `flash-image-minimal-t-0-0-487-tiles` (0.598), `flash-image-minimal-t-0-3` (0.593), `pro-image-high-t-0-7` (0.591) | MCC champion is here (rank 7) |
+| 3 | `flash-image-minimal-t-0-7` (0.553), `pro-image-high-t-0-0` (0.528), `flash-text-minimal-t-0-0-pv-baseline` (0.520) | |
+| 4 | `flash-text-minimal-t-0-0` (0.503), `flash-text-minimal-t-0-3` (0.499), `flash-image-high-t-0-7` (0.499), `pro-text-high-t-0-0` (0.494), `flash-text-minimal-t-0-7` (0.488) | |
+| 5 | `pro-image-medium-t-0-7` (0.452), `pro-text-medium-t-0-7` (0.416) | |
+| 6 | `flash-text-high-t-0-7` (0.387) | |
+
+**The winner is metric-dependent.** The MCC champion `pro-image-high-t-0-7` (MCC +0.852) sits in **Tier 2** on F1 (0.591, rank 7). Text wins precise localisation (F1@20 m); image wins tile-level discrimination (MCC). This is the complementarity from Obs 335 made structurally explicit: the two metrics assign different leaders, and both leaders are legitimate depending on the paper's research question.
+
+**H6 and H7 partial confirmation.** H6 (Pro beats Flash) holds at the top: the Tier-1 cells are both Pro text. It does not hold uniformly — Flash image-MINIMAL (0.59–0.60, Tier 2) outranks several Pro configs. H7's preregistered T=0.0 optimum does not reappear cleanly at the top: the two tied leaders are T=0.0 (`pro-text-medium`) and T=0.7 (`pro-text-high`). Analysis is framed **exploratory** (`hypothesis_refs` H1/H6/H7).
+
+**Replicate-mean fidelity.** The permutation's observed micro-F1-of-the-mean matches each cell's mean-of-per-pass board F1 to within ≤0.0003 across the full 1–30 replicate-pass range, confirming the statistic the test operates on is the same quantity the leaderboard reports.
+
+### The methodological point
+
+**The two Tier-1 cells are the only two of 18 flagged `ci_unreliable` (`sparse_cross_grid`).** As the most precise detectors they leave >50 % of tiles empty, making their bootstrap F1 confidence intervals unreliable — and this flag fell exactly at the decisive top comparison. A CI-overlap tie-set would have rested on those flagged CIs.
+
+The tile-swap permutation sidesteps this: empty tiles are inert under label-swapping, so the test does not depend on the flagged CIs. The result is also more comfortable than CI-overlap suggested: the within-tier non-rejection yields BH-adjusted p = 0.50 (not a knife-edge), while both leaders are significantly clear of rank 3 at BH-adjusted p = 0.0000.
+
+**Lesson:** for sparse cross-grid detectors, prefer a permutation test over CI-overlap for tie determination. CI flags at the decisive comparison are a signal to switch methods, not to ignore the concern.
+
+### Why this matters
+
+1. **This leaderboard is the single-pass baseline arm** that consensus (H3) and proposer-verifier (H2) architectures are measured against. It operationalises H1/H2/H3 testing by establishing the N=1 reference point with statistical confidence.
+
+2. **The tied Tier-1 set is paper-citable.** `pro-text-medium-t-0-0` and `pro-text-high-t-0-7` are statistically indistinguishable (BH p = 0.50) and constitute the project's single-pass F1 ceiling at 384 px. Any architecture that does not significantly beat both Tier-1 members in a paired test has not beaten the single-pass baseline.
+
+3. **The permutation-over-CI-overlap decision is a standing methodological precedent** for any future leaderboard cell comparison where `ci_unreliable` is raised. The pattern (detect flag → switch to permutation) should be applied consistently across all tiering analyses.
+
+### Findable later
+
+Search terms: Obs 336, N=1 baseline leaderboard tiering, 6 statistical tiers, 153 pairs 112 significant, greedy-clique tiering, Benjamini–Hochberg FDR q=0.05, tile-swap permutation replicate-mean per-tile, pro-text-medium-t-0-0 F1 0.763 Tier 1, pro-text-high-t-0-7 F1 0.745 Tier 1, tie_set BH-adjusted p 0.50, rank 3 BH-adjusted p 0.0000, pro-image-high-t-0-7 MCC 0.852 Tier 2 rank 7, metric-dependent winner F1 MCC, ci_unreliable sparse_cross_grid top comparison, permutation beats CI-overlap flagged CIs, exploratory H1 H6 H7, H7 T=0.0 optimum not confirmed, replicate-mean fidelity 0.0003, n1_baseline_leaderboard_tiering.py, tiering_20m.json tiering_20m.md, results/paper-eval/n1/384px-14buf-mcc/tiering, n1-baseline-matrix-384 analysis_id, single-pass baseline arm consensus proposer-verifier, Session 97 2026-06-03.
+
+### Related observations and artefacts
+
+- **Obs 335** (N=1 matrix re-scored at 14 buffers + MCC, Session 96, 2026-06-02): the cell-level metrics (F1 and MCC per cell) that this Obs tiers statistically. Obs 336 is the direct statistical sequel — it lifts the point-estimate leaderboard of Obs 335 into a significance-tested tier structure.
+- **Obs 333** (consensus aggregation dividend tracks proposer σ, Session 95): the σ values for the Tier-1 cells in particular are the single-pass variance anchors for that analysis. Very-low σ at the top of the board limits the available consensus headroom.
+- **Obs 334** (pv-diag-384 verifier threshold flat in operating range, Session 95): the Tier-1 cells are Pro-text proposers in the pv-diag-384 run; Obs 334 characterises the verifier built on top of them.
+- **Obs 130** (consensus improves F1 primarily by FP filtering): the Tier 4–6 Flash text MINIMAL cells with fp ≈ 257 are exactly the regime where Obs 130's FP-filtering mechanism cannot help (correlated FPs across passes).
+- **Artefacts**: `results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json` — per-pair p-values (raw + BH-adjusted), 6-tier structure, tie-set; `results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.md` — human-readable ranked table; `scripts/n1_baseline_leaderboard_tiering.py` — the round-robin permutation + BH-FDR + greedy-clique script; `docs/methodology/n1-baseline-matrix.md` § 6 — prose finding, methodology rationale, and cross-references; `results/run-analyses.json` → `results/analyses-manifest.json` row `n1-baseline-matrix-384`; commit `0eddf031` (tier1 tests, landing commit).
