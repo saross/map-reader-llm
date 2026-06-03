@@ -1,14 +1,33 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-06-03 (Session 97 — N=1 leaderboard lifted stub→finding (permutation+FDR → 6 tiers, tie_set = the two Pro-text-low-temp leaders; Obs 336); E57 **billing reconciliation**: the four n1-outstanding "Pro" cells were dispatched as **Flash** (API `model_version` confirmed; Obs 337), pv-diag Pro genuine; **genuine-Pro re-run COMPLETED CLEANLY** (8/8 passes, all 3,896 tiles `gemini-3.1-pro-preview`, 0 failures, committed `1cdf9438`) — ready to re-score. See the Session 97 START-HERE.)
+**Last updated**: 2026-06-03 (Session 98 — re-scored the genuine-Pro re-run, **replaced** the four Flash-misdispatched anti-diagonal cells on the N=1 board, brought all four medium-thinking Pro cells to **n=3** (recovering a ~5% coverage hole in the pv-diag medium-t-0-0 run_1), and re-tiered. **FINAL finding: Tier-1 tie_set = two genuine-Pro text cells at T=0.0 — `pro-text-high-t-0-0` (0.804) + `pro-text-medium-t-0-0` (0.792)** — over a clean T=0.0 > T=0.7 separation (H7). Obs 338/339; errata E57 updated. See the Session 98 START-HERE.)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
 
 ---
 
-## ✅ Session 97 — START HERE — LEADERBOARD FINDING + E57 BILLING RECONCILIATION + GENUINE-PRO RE-RUN (IN FLIGHT)
+## ✅ Session 98 — START HERE — E57 GENUINE-PRO BOARD FINALISED AT n=3 (tie reopened)
+
+**Posted**: 2026-06-03, end of a very long collaborative day. Commits `d973a53d`→`3b5dc1eb`, all pushed. **Two API runs (genuine Pro, realtime+flex+cache): the n=3 top-up (8 passes) + the pv-diag run_1 recovery — ~$71 total estimated (image passes dominate at ~$15.7 each); $0.96 of that was the recovery.**
+
+### What Session 98 did (all committed + pushed)
+
+1. **Scored the genuine-Pro re-run** (Session 97's `n1-pro-rerun-384`) at 14buf+MCC and **replaced** the four Flash-misdispatched `n1-outstanding-384` anti-diagonal cells on the board (`conditions_compared`; user decision = replace). Corrected those 4 cells' `model_of_record` → `gemini-3-flash-preview` (document-don't-rename).
+2. **Brought all four medium-thinking Pro cells to n=3** (anti-noise top-up). This surfaced a **coverage hole** isolated to the two pv-diag medium-t-0-0 `run_1` batch passes (~5% unretried failures), which had depressed them; **recovered to 487/0** via the standard resume-merge path. Mixed batch+realtime pools → eval/tiering use a union glob.
+3. **Re-tiered (final)**: 129/153 significant → 7 tiers; **Tier-1 tie_set = `pro-text-high-t-0-0` (0.804) + `pro-text-medium-t-0-0` (0.792), both genuine Pro text T=0.0**. Tier 2 = the two Pro-text T=0.7 cells → clean T=0.0 > T=0.7 (H7). MCC leader = `pro-image-medium-t-0-7` (+0.911, genuine Pro image; 9th on F1 — metric-dependent winner).
+4. Rewrote the finding (`run-analyses.json`), regenerated manifests (28 runs / 114 conditions / 80 passes / 1 analysis), revised `docs/methodology/n1-baseline-matrix.md` + errata E57, logged **Obs 338** (genuine-Pro re-run) and **Obs 339** (the sole-leader was an artefact; n=3 + recovery reopened the tie).
+
+### Open / next session
+
+- **Sign-off pending**: `n1-baseline-matrix-384.manually_verified_at` is **null** — Shawn to confirm the revised finding text, then set it.
+- **Minor flash-cell failures NOT swept**: ≤5 tiles each (≤1%) in old non-Pro non-finalised cells (some are parse-failures `resume` can't retry). Flagged in Obs 339; immaterial to any finding. Decide whether to clear.
+- The Session 97 START-HERE below is now historical (its "first action: re-score" is done).
+
+---
+
+## Session 97 — LEADERBOARD FINDING + E57 BILLING RECONCILIATION + GENUINE-PRO RE-RUN (historical)
 
 **Posted**: 2026-06-03, end of a long collaborative day. Commits `c6aef99a`→`1cdf9438`,
 all pushed. **One API run completed (~$20–30, real-time+flex) — finished in ~10 min during
