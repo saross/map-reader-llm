@@ -17094,3 +17094,74 @@ Search terms: Obs 334, pv-diag-384 verifier probability threshold sweep, F1 curv
 - **Obs 333** (sibling Session 95 finding — consensus dividend tracks proposer σ): the same pv-diag-384 diagnostic run context; Obs 333 characterises the aggregation architecture, this Obs characterises the threshold sensitivity of the probability-score layer.
 - **E56** (protocol errata — in-sample operating-point provenance): the errata entry whose numerical consequence this Obs resolves; the flat curve confirms the optimism is negligible and the honest-reporting path is clear.
 - **Artefacts**: `results/rescore-2026-05-31/pv-diag-384/sweep/single-run-PV-1of5-pt{0.05..0.50}/evaluation.json` (single-run threshold sweep, 8 files, F1@20 verified); `results/rescore-2026-05-31/pv-diag-384/sweep/consensus-PV-4of5-pt{0.05..0.50}/evaluation.json` (consensus threshold sweep, 8 files, F1@20 verified).
+
+## Observation 335: The N=1 single-pass baseline matrix re-scored at 14 buffers + MCC reveals Pro text as the F1 leader and Pro image as the tile-discrimination leader — and Flash text MINIMAL as the MCC failure mode (Session 96, 2026-06-02)
+
+### The finding
+
+**The 18-cell cross-architecture single-pass baseline matrix (384 px, 4-map gold-standard corpus, 487 tiles) was re-scored to the project's current 14-buffer + tile-level MCC standard. Each cell's metric is the mean single-pass value across that pool's replicate passes — the expected performance of one pass, not a consensus or union. Three findings stand out.**
+
+Full results (F1 is the per-pass mean at the headline 20 m buffer; MCC is buffer-agnostic; confusion block is one tile-set's worth, summing to 487), verified at source from `results/paper-eval/n1/384px-14buf-mcc/<slug>/evaluation.json`:
+
+| source run | cell (slug) | F1@20 m | F1@50 m | MCC | confusion (tp/tn/fp/fn) |
+|---|---|:---:|:---:|:---:|:---:|
+| pv-diag-384 | flash-image-high-t-0-7 | 0.499 | 0.622 | +0.602 | 225/153/105/4 |
+| pv-diag-384 | flash-image-minimal-t-0-0 | 0.600 | 0.681 | +0.312 | 228/51/207/1 |
+| pv-diag-384 | flash-image-minimal-t-0-7 | 0.553 | 0.666 | +0.330 | 228/54/204/1 |
+| pv-diag-384 | flash-text-high-t-0-7 | 0.387 | 0.416 | +0.331 | 227/62/196/2 |
+| pv-diag-384 | flash-text-minimal-t-0-0-pv-baseline | 0.520 | 0.536 | −0.003 | 228/1/257/1 |
+| pv-diag-384 | flash-text-minimal-t-0-7 | 0.488 | 0.513 | +0.078 | 229/3/255/0 |
+| **pv-diag-384** | **pro-image-high-t-0-7** | 0.591 | 0.809 | **+0.852** | 221/228/30/8 |
+| pv-diag-384 | pro-image-medium-t-0-0 | 0.606 | 0.778 | +0.734 | 202/220/38/27 |
+| pv-diag-384 | pro-text-high-t-0-7 | 0.745 | 0.799 | +0.747 | 175/247/11/54 |
+| **pv-diag-384** | **pro-text-medium-t-0-0** | **0.763** | 0.802 | +0.751 | 179/246/12/50 |
+| n1-outstanding-384 | flash-image-minimal-t-0-0-487-tiles | 0.598 | 0.680 | +0.314 | 228/51/207/1 |
+| n1-outstanding-384 | flash-image-minimal-t-0-3 | 0.593 | 0.677 | +0.305 | 227/52/206/2 |
+| n1-outstanding-384 | flash-text-minimal-t-0-3 | 0.499 | 0.523 | +0.039 | 229/1/257/0 |
+| n1-outstanding-384 | pro-image-high-t-0-0 | 0.528 | 0.634 | +0.606 | 217/165/93/12 |
+| n1-outstanding-384 | pro-image-medium-t-0-7 | 0.452 | 0.586 | +0.598 | 228/142/116/1 |
+| n1-outstanding-384 | pro-text-high-t-0-0 | 0.494 | 0.525 | +0.381 | 223/86/172/6 |
+| n1-outstanding-384 | pro-text-medium-t-0-7 | 0.416 | 0.430 | +0.310 | 225/58/200/4 |
+| retest-h11-single-pass-384-t0 | flash-text-minimal-t-0-0 | 0.503 | 0.520 | +0.046 | 229/1/257/0 |
+
+**Finding 1 — F1 leaders are Pro text at low temperature.** `pro-text-medium-t-0-0` (F1@20 = 0.763, MCC +0.751) and `pro-text-high-t-0-7` (F1@20 = 0.745, MCC +0.747) are clear leaders. Both have tightly balanced confusion (fp 11–12 vs fn 50–54) — high precision, moderate recall; the localisation is accurate when the model fires.
+
+**Finding 2 — The MCC leader is `pro-image-high-t-0-7` (+0.852, confusion 221/228/30/8).** This cell achieves the best tile-level discrimination in the matrix despite a substantially lower F1@20 (0.591) than the text leaders. The contrast reveals that the image-track Pro cell has near-perfect recall (229 of 229 positive tiles = 221+8) and excellent specificity (228 of 258 negative tiles correct), but its localisation at 20 m is imprecise — detections land in the right tile but not necessarily within 20 m of the mound centroid. F1@50 m (0.809) confirms this: much of the F1 deficit at 20 m is recovered at 50 m.
+
+**Finding 3 — Flash text MINIMAL over-detects to the point of MCC collapse.** All Flash text MINIMAL conditions flag almost every tile (fp ≈ 257, tn ≈ 0–3 of 487), which drives MCC toward zero or below. The starkest case is `flash-text-minimal-t-0-0-pv-baseline` (MCC −0.003, confusion 228/1/257/1) and `retest-h11-single-pass-384-t0::flash-text-minimal-t-0-0` (MCC +0.046, confusion 229/1/257/0). F1@20 m for these cells stays ~0.50 because recall is near-total — the model finds every mound — but tile-level discrimination is essentially nil. This is exactly the failure mode MCC is designed to expose and F1 alone hides.
+
+**Finding 4 — Cross-run consistency check.** Flash Image MINIMAL T=0.0 appears in two independent source runs: `pv-diag-384` (1 pass, MCC +0.312, confusion 228/51/207/1) and `n1-outstanding-384` (3 passes, MCC +0.314, confusion 228/51/207/1). The agreement is near-exact, confirming the cell is reproducible across source runs and that the pooling and re-score pipeline are consistent.
+
+### Why this matters
+
+1. **This is the single-pass baseline against which all architectures are compared.** The consensus (vote-threshold) and proposer-verifier architectures are evaluated relative to these 18 cells. Obs 333 showed that consensus headroom tracks proposer σ; the σ values in the present matrix are the σ-anchor for that analysis. Obs 334 showed that the pv-diag-384 verifier threshold is flat around the operating point; the single-pass proposer F1 cells here are the baseline those verifier improvements are compared against.
+
+2. **The F1/MCC dissociation for `pro-image-high-t-0-7` is paper-citable.** A Pro image cell can be the best tile-level discriminator in the matrix (+0.852 MCC) while not being the F1@20 leader — because F1 penalises centroid offset whereas MCC does not. This is a concrete demonstration of the complementarity of the two metrics.
+
+3. **The re-score brings the matrix onto the same evaluation footing as every other condition.** The original 4-buffer no-MCC evals (`results/paper-eval/n1/384px-all-buffers/`, archived) predate the 14-buffer standard and the MCC-always preference. These 18 cells now have non-null `tp/tn/fp/fn` blocks, enabling valid condition rows in the manifest.
+
+4. **The standing MCC-alongside-F1 reporting preference is justified in-corpus.** The Flash text MINIMAL MCC collapse would be invisible from F1 alone. This makes the case, with live project data, for the reporting standard.
+
+### Caveats / methodological notes
+
+**MCC is buffer-agnostic.** Tile presence/absence is determined by whether the model emitted any detection in that tile (by `source_tile`, no distance test). There is therefore exactly one MCC per cell, identical at every buffer. The 14 F1 values per cell vary with buffer; the MCC does not. Do not confuse the two when citing.
+
+**The confusion block is from the first replicate pass** for multi-pass cells (a known scorer behaviour documented in `docs/methodology/n1-baseline-matrix.md` §2). It sums to 487 tiles. The MCC is the replicate mean, so MCC and the confusion block are not exactly inter-derivable for multi-pass cells; the confusion block is indicative, not numerically linked to the reported MCC.
+
+**`pro-image-high-t-0-7` F1 vs MCC dissociation is specific to the 20 m buffer.** At 50 m the same cell scores F1 0.809, narrowing the gap with the text leaders considerably. The dissociation is a function of the strict preregistered buffer, not an intrinsic model-modality property.
+
+**The four Pro cells on `n1-outstanding-384` carry errata E57** (meta `config.model` reads `gemini-3-flash` — an unreliable template default; model-of-record is the study YAML, which specifies Gemini 3.1 Pro). This affects pass provenance, not cell metrics; the metrics are scored from detection geometry, which is unambiguous.
+
+**The matrix covers 18 of 27 possible grid points** (3 temperatures × 3 thinking levels × 2 modalities × 2 models). Several grid points were never run.
+
+### Findable later
+
+Search terms: Obs 335, N=1 single-pass baseline matrix, 18-cell cross-architecture, 384 px 4-map gold standard corpus, 487 tiles 14 buffers MCC re-score, pro-text-medium-t-0-0 F1 0.763, pro-text-high-t-0-7 F1 0.745, pro-image-high-t-0-7 MCC 0.852, tile-level discrimination leader, Flash text MINIMAL over-detects MCC collapse, confusion 228/1/257/1, near-total recall MCC zero, MCC alongside F1 justified in-corpus, F1 MCC dissociation image modality, cross-run consistency flash-image-minimal, pv-diag-384 n1-outstanding-384 retest-h11, results/paper-eval/n1/384px-14buf-mcc, 14-buffer MCC standard, n1-baseline-matrix.md Session 96 2026-06-02, conditions-manifest baseline conditions, buffer-agnostic tile presence absence, confusion block first replicate pass, errata E57 Pro cells, proposer localisation accuracy 20 m centroid.
+
+### Related observations and artefacts
+
+- **Obs 333** (consensus aggregation dividend tracks proposer σ, Session 95): the per-pass σ values for the single-pass cells in this matrix are the σ values that predict consensus headroom in Obs 333. The present Obs provides the per-cell expected single-pass performance that is the input to the σ-vs-dividend analysis.
+- **Obs 334** (pv-diag-384 verifier probability threshold sweep is flat, Session 95): the 10 pv-diag-384 baseline cells documented here are the single-pass proposer baselines from that same run. Obs 334 characterises the verifier probability threshold on top of these proposers; this Obs documents what the proposers deliver without a verifier.
+- **Obs 130** (consensus aggregation improves F1 primarily by FP filtering): the Flash text MINIMAL cells with fp ≈ 257 are the canonical case for which the FP-filtering mechanism has no traction — the FPs are correlated across passes (all passes flag the same tiles) so consensus cannot prune them. Obs 130's mechanism and Obs 333's dividend both predict negligible consensus gain for these cells.
+- **Obs 269, Obs 277** (image-track verifier miscalibration): the image-track Pro cells here — particularly `pro-image-high-t-0-7` with its MCC/F1 dissociation — are the proposer pools used in the image-track proposer-verifier experiments those Obs entries assess.
+- **Artefacts**: `results/paper-eval/n1/384px-14buf-mcc/<slug>/evaluation.json` — 18 per-cell evaluation files, each verified at source; `docs/methodology/n1-baseline-matrix.md` — full provenance map, scoring protocol, and results table; `results/conditions-manifest.json` — the 18 `baseline-*` condition entries (pv-diag-384 ×10, n1-outstanding-384 ×7, retest-h11-single-pass-384-t0 ×1); `configs/n1-eval-384px-14buf-mcc.yaml` — the re-score recipe; `results/paper-eval/n1/384px-all-buffers/` — the superseded 4-buffer no-MCC evals (archived in place).
