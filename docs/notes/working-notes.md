@@ -17274,3 +17274,50 @@ Search terms: Obs 337, E57 billing reconciliation, n1-outstanding-384 pro-* disp
 - **Obs 329** (CLI override faithful-to-config yet wrong-about-execution, E55, Session 93): the nearest structural precedent — a different mechanism (config propagation vs CLI flag threading) but the same pattern: what the operator intended and what the API received were not the same, and only a post-hoc artefact audit revealed the gap.
 - **E57** (protocol-errata.md:1774): the errata entry for this incident. As of 2026-06-03 the entry's "non-destructive" framing is superseded for the n1-outstanding-384 group; a supplementary entry is pending re-run completion.
 - **Artefacts**: `outputs/h11/n1-outstanding-384/pro-{text,image}-{high-t0,medium-t07}/run_*/detections_*.meta.json` — per-item `model_version = gemini-3-flash-preview` and `model_requested = gemini-3-flash-preview` (3,895 tile responses); `outputs/h11/pv-diag-384/pro-*/*/run_*/detections_*.meta.json` — `cost_estimate.pricing_used.model = gemini-3.1-pro-preview` at Pro rates; `studies/h11-384-n1-outstanding.yaml` and `studies/h11-384-pro-medium-t07.yaml` — `model: gemini-3.1-pro` (intent); `scripts/run_n1_pro_rerun.sh` — genuine-Pro re-run orchestration; `results/analyses-manifest.json` → `n1-baseline-matrix-384.predicted_outcome` (H6 commentary flagged for correction); commit `05838064` (re-run script, Session 97 landing commit).
+
+## Observation 338: Genuine-Pro re-run resolves E57 — the board re-tiers, the two-member tie collapses to a sole leader (pro-text-high-t-0-0, F1 0.804), and H6 flips from "not uniform" to uniform (Session 98, 2026-06-03)
+
+### The finding
+
+**The genuine-Pro re-run (`n1-pro-rerun-384`) completed cleanly and was scored, the four Flash cells were replaced on the leaderboard, and the board was re-tiered. Every thread Obs 337 left open is now closed — and the headline result changed.** At the four anti-diagonal corners, genuine Gemini 3.1 Pro scores far above the Flash misdispatch (the "weak Pro" cells of the pre-E57 board):
+
+| corner (pool) | Flash misdispatch F1@20 m | genuine Pro F1@20 m | Δ | genuine Pro MCC |
+|---|---:|---:|---:|---:|
+| pro-text-high-t-0-0 | 0.494 | **0.804** | +0.310 | +0.790 |
+| pro-text-medium-t-0-7 | 0.416 | 0.764 | +0.348 | +0.787 |
+| pro-image-high-t-0-0 | 0.528 | 0.666 | +0.138 | +0.868 |
+| pro-image-medium-t-0-7 | 0.452 | 0.593 | +0.141 | +0.913 |
+
+All 8 re-run passes verify `model_version = gemini-3.1-pro-preview` (status ok, 487 tiles each). The re-run reproduced the originals' (3/1/3/1) replicate allocation.
+
+### What the re-tiering changed
+
+Re-running `scripts/n1_baseline_leaderboard_tiering.py` over the 18-cell board (the 4 genuine-Pro cells **replacing** the 4 Flash cells — user decision, "definitely replace"):
+
+- **The two-member tie_set collapses to a single leader.** Pre-E57 Tier 1 was `pro-text-medium-t-0-0` (0.763) + `pro-text-high-t-0-7` (0.745). Now Tier 1 is the lone `pro-text-high-t-0-0` (0.804), significantly clear of the field; the two former co-leaders drop to Tier 2 alongside the genuine `pro-text-medium-t-0-7` (0.764). 120/153 pairs significant → **7 tiers** (was 112/153 → 6).
+- **H6 (Pro ≥ Flash) flips from "holds but not uniform" to uniform.** The pre-E57 "Flash image-MINIMAL beats weak Pro" reading was an artefact of the misdispatch; the top five cells are now all genuine Pro, and every Pro-text cell beats the best Flash cell (`flash-image-minimal-t-0-0`, 0.600).
+- **The MCC leader moves and the F1≠MCC split sharpens.** Genuine Pro image now leads MCC: `pro-image-medium-t-0-7` (+0.913, 10th on F1) and `pro-image-high-t-0-0` (+0.868), both above the former MCC leader `pro-image-high-t-0-7` (+0.852). The F1 leader (text) and MCC leader (image) are different cells — the metric-dependent winner, now starker.
+- **H7's T=0.0 optimum appears at the apex** (the sole leader is T=0.0), where the pre-E57 tie mixed T=0.0 and T=0.7.
+
+### Determinism note (T=0.0 is NOT deterministic for Gemini 3.1 Pro)
+
+The three T=0.0 replicates were checked and are **not identical**: pro-text-high-t-0-0 feature counts 443/437/450 (per-run F1 0.811/0.798/0.805) and pro-image-high-t-0-0 550/549/546 — distinct geometries and F1 spread ≈0.013–0.016. So temperature 0 has real run-to-run variance here (MoE routing / non-deterministic kernels); n>1 at T=0.0 is **not** wasted budget. (This refutes an intuitively-reasonable "T=0 is deterministic, so don't replicate it" heuristic — checked empirically before acting on it.)
+
+### Why this matters
+
+1. **The leaderboard finding is now genuine-model-clean and stronger.** A single, statistically-clear Pro-text leader is a cleaner headline than a two-way tie, and the uniform H6 result is a cleaner cross-architecture story. The single-pass F1 ceiling rises from 0.763 to 0.804.
+
+2. **The "preserve and compare" policy paid off.** The Flash misdispatch was not discarded: it is kept on `n1-outstanding-384` (model-of-record corrected to Flash) as genuine Flash data at otherwise-untested HIGH-thinking-T=0.0 and MEDIUM-thinking-T=0.7 corners, and the Flash-vs-Pro contrast at matched configs (+0.14 to +0.35 F1) is itself a finding (errata E57 § Update).
+
+3. **Board membership is now single-sourced.** The tiering script reads `conditions_compared` from `run-analyses.json` rather than a hardcoded run list, so the replace took effect with no membership logic in the script; it also tries both pass-file globs (the realtime re-run files are `detections-*.geojson`, hyphen).
+
+### Findable later
+
+Search terms: Obs 338, genuine-Pro re-run n1-pro-rerun-384, E57 resolved, tie_set collapse single leader, pro-text-high-t-0-0 F1 0.804 sole Tier 1, 7 tiers 120/153 significant, H6 uniform Pro beats Flash, MCC leader pro-image-medium-t-0-7 0.913, F1 MCC metric-dependent winner, replace Flash cells leaderboard, conditions_compared single source of truth, hyphen glob detections-*.geojson, T=0.0 not deterministic Gemini 3.1 Pro replicate variance, n1-pro-rerun-384 model_version gemini-3.1-pro-preview verified, model-of-record corrected gemini-3-flash-preview, 14-buffer MCC pro-rerun eval, before after F1 0.494 0.804, Session 98 2026-06-03.
+
+### Related observations and artefacts
+
+- **Obs 337** (E57 billing reconciliation, Session 97): the direct predecessor — it established the four cells were Flash and flagged the H6 correction + re-run as pending. This Obs closes every thread Obs 337 forward-referenced.
+- **Obs 336** (leaderboard tiering, Session 97): the tiering this Obs supersedes. The pre-E57 6-tier / two-member-tie result is now 7-tier / single-leader; the permutation-over-CI-overlap method is unchanged.
+- **Obs 335** (N=1 matrix 14 buffers + MCC, Session 96): the matrix into which the 4 genuine-Pro cells are now substituted.
+- **Artefacts**: `outputs/h11/n1-pro-rerun-384/` (8 genuine-Pro passes, committed `1cdf9438`); `results/paper-eval/n1/384px-14buf-mcc/pro-rerun/` (the 4 evals); `results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.{json,md}` (re-tiered); `configs/n1-pro-rerun-eval-384px-14buf-mcc.yaml`; `docs/methodology/preregistration/protocol-errata.md` E57 § Update (2026-06-03); `docs/methodology/n1-baseline-matrix.md` (revised §§1/3.4/4/5/6/7 + Session-98 changelog). Commits `e1f20da4` (structural + model-of-record), `59727c8a` (re-tier), `c06aceee` (finding rewrite), `dcf3364a` (docs).
