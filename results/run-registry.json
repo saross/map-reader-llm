@@ -60,7 +60,13 @@
       "run_id": "n1-outstanding-384",
       "directory_path": "outputs/h11/n1-outstanding-384",
       "status": "active",
-      "notes": "H11 (n=1 outstanding, 384px)."
+      "notes": "H11 (n=1 outstanding, 384px). NB the four pro-* anti-diagonal pools dispatched as Flash, not Pro (E57 billing verdict); genuine-Pro re-dispatch is run n1-pro-rerun-384."
+    },
+    {
+      "run_id": "n1-pro-rerun-384",
+      "directory_path": "outputs/h11/n1-pro-rerun-384",
+      "status": "active",
+      "notes": "H11 genuine-Pro re-run (E57). The four anti-diagonal Pro corners (text/image x {HIGH-T=0.0, MEDIUM-T=0.7}) re-dispatched as genuine gemini-3.1-pro-preview (model_version verified on all 8 passes) after the n1-outstanding originals were found to have billed as Flash. Completes the genuine Pro 2x2 x modality; supplies the four Pro anti-diagonal cells of the n1-baseline-matrix-384 leaderboard."
     },
     {
       "run_id": "proposer-verifier-384",

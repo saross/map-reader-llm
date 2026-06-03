@@ -5,7 +5,7 @@
     {
       "analysis_id": "n1-baseline-matrix-384",
       "type": "leaderboard",
-      "_note": "The N=1 single-pass baseline leaderboard at 384px (the cross-architecture model x modality x thinking x temperature matrix). FINDING (authored 2026-06-03): tie_set + outcome from a round-robin tile-swap permutation (replicate-mean per-tile, 10k perms, seed 42, two-sided) + Benjamini-Hochberg FDR (q=0.05) + greedy-clique tiering at the 20 m headline buffer -> 6 tiers; Tier 1 (tie_set) = the two Pro-text-low-temp leaders, BH-adjusted p=0.50 between them, both significantly clear of rank 3 (adj-p=0.0000). Result artefacts: results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.{json,md}; script: scripts/n1_baseline_leaderboard_tiering.py. This single-pass board is the baseline comparator the consensus (H3) and proposer-verifier (H2) architectures are measured against. See docs/methodology/n1-baseline-matrix.md and planning/leaderboard-construction-plan.md.",
+      "_note": "The N=1 single-pass baseline leaderboard at 384px (the cross-architecture model x modality x thinking x temperature matrix). *** FINDING UNDER REVISION (2026-06-03, E57 genuine-Pro replace): the four anti-diagonal Pro corners were re-dispatched as genuine gemini-3.1-pro-preview (run n1-pro-rerun-384) after the n1-outstanding originals were found to have billed as Flash; conditions_compared now points at the genuine-Pro cells, REPLACING the Flash ones. tie_set / outcome / predicted_outcome are PENDING the tiering re-run (scripts/n1_baseline_leaderboard_tiering.py reads conditions_compared) and will be rewritten from results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.{json,md}. *** This single-pass board is the baseline comparator the consensus (H3) and proposer-verifier (H2) architectures are measured against. See docs/methodology/n1-baseline-matrix.md and planning/leaderboard-construction-plan.md.",
       "conditions_compared": [
         "pv-diag-384::baseline-flash-image-high-t-0-7",
         "pv-diag-384::baseline-flash-image-minimal-t-0-0",
@@ -20,25 +20,22 @@
         "n1-outstanding-384::baseline-flash-image-minimal-t-0-0-487-tiles",
         "n1-outstanding-384::baseline-flash-image-minimal-t-0-3",
         "n1-outstanding-384::baseline-flash-text-minimal-t-0-3",
-        "n1-outstanding-384::baseline-pro-image-high-t-0-0",
-        "n1-outstanding-384::baseline-pro-image-medium-t-0-7",
-        "n1-outstanding-384::baseline-pro-text-high-t-0-0",
-        "n1-outstanding-384::baseline-pro-text-medium-t-0-7",
+        "n1-pro-rerun-384::baseline-pro-image-high-t-0-0",
+        "n1-pro-rerun-384::baseline-pro-image-medium-t-0-7",
+        "n1-pro-rerun-384::baseline-pro-text-high-t-0-0",
+        "n1-pro-rerun-384::baseline-pro-text-medium-t-0-7",
         "retest-h11-single-pass-384-t0::baseline-flash-text-minimal-t-0-0"
       ],
       "hypothesis_refs": ["H1", "H6", "H7"],
       "preregistered": "exploratory",
       "deviations": ["E57"],
-      "predicted_outcome": "Preregistered directions come from earlier Gemini-3-Flash / 512 px phases (this board is Gemini 3 at 384 px): H6 (Phase 4, the only untested confirmatory hypothesis) expected the stronger Pro model to transfer/match-or-exceed Flash; H7 (Phase 2b) found T=0.0 optimal for both tracks; H1 (Phase 2a) planned a text-only vs image-using contrast without a committed directional winner. Board result: H6 holds at the top (Pro text leads) but NOT uniformly -- Flash image-MINIMAL (F1 0.59-0.60) beats several weak Pro configs (Pro text high T=0.0 0.494; Pro image medium T=0.7 0.452; Pro text medium T=0.7 0.416); H7's T=0.0 advantage does not reappear at the top (the two tied leaders are T=0.0 and T=0.7); H1 resolves metric-dependently -- text wins F1@20 m localisation (Tier 1 is all text) while image wins MCC tile-discrimination (pro-image-high-t-0-7, MCC +0.852).",
-      "tie_set": [
-        "pv-diag-384::baseline-pro-text-medium-t-0-0",
-        "pv-diag-384::baseline-pro-text-high-t-0-7"
-      ],
-      "outcome": "At the preregistered 20 m buffer the best single pass for mound localisation is Gemini 3 Pro text at low temperature: baseline-pro-text-medium-t-0-0 (F1 0.763) and baseline-pro-text-high-t-0-7 (F1 0.745) form a two-member statistical tie (round-robin tile-swap permutation, BH-FDR q=0.05; pair BH-adjusted p=0.50) significantly clear of all 16 other single-pass configurations. The text-over-image advantage that recurs throughout the paper holds here at matched settings: the best text pass beats the best image pass (pro-image-medium-t-0-0, F1 0.606) by 0.157 F1 with model, thinking and temperature held constant (both Pro, MEDIUM thinking, T=0.0 -- modality is the only difference), a significant gap (BH-adjusted p=0.0000). The F1 leaders are not the tile-level discrimination (MCC) leader, however (pro-image-high-t-0-7, MCC +0.852, 7th on F1), so the best single-pass configuration is metric-dependent.",
+      "predicted_outcome": "PENDING RE-TIERING (E57 genuine-Pro replace, 2026-06-03). The prior text described the Flash-misdispatched cells as 'weak Pro configs' (Pro text high T=0.0 0.494; Pro image medium T=0.7 0.452; Pro text medium T=0.7 0.416) -- those were Flash, not Pro (E57). With the genuine-Pro re-run the same corners score far higher (text high T=0.0 0.804; text medium T=0.7 0.764; image high T=0.0 0.666; image medium T=0.7 0.593), so the H6 narrative will be rewritten after the tiering re-run.",
+      "tie_set": [],
+      "outcome": "PENDING RE-TIERING (E57 genuine-Pro replace, 2026-06-03). conditions_compared now names the genuine-Pro re-run cells; tie_set/outcome are recomputed by scripts/n1_baseline_leaderboard_tiering.py and rewritten from results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.{json,md}. NOTE the genuine Pro text high T=0.0 (F1 0.804) exceeds the prior board leader (0.763) -- a likely tie_set change.",
       "paper_section": "Results",
       "output_path": "results/paper-eval/n1/384px-14buf-mcc",
       "working_notes_obs": [],
-      "manually_verified_at": "2026-06-03T02:25:32Z"
+      "manually_verified_at": null
     }
   ]
 }

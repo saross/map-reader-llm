@@ -222,22 +222,26 @@
         "pro-image-high-t0": {
           "modality": "image",
           "path": "pro-image-high-t0",
-          "model_of_record": "gemini-3.1-pro"
+          "model_of_record": "gemini-3-flash-preview",
+          "model_of_record_note": "E57 billing verdict (corrected 2026-06-03): dispatched as Flash (per_item_metadata.model_version=gemini-3-flash-preview), NOT the gemini-3.1-pro the study YAML intended; the runner never threaded --model. The genuine-Pro re-dispatch of this corner is n1-pro-rerun-384::baseline-pro-image-high-t-0-0."
         },
         "pro-text-high-t0": {
           "modality": "text",
           "path": "pro-text-high-t0",
-          "model_of_record": "gemini-3.1-pro"
+          "model_of_record": "gemini-3-flash-preview",
+          "model_of_record_note": "E57 billing verdict (corrected 2026-06-03): dispatched as Flash (per_item_metadata.model_version=gemini-3-flash-preview), NOT the gemini-3.1-pro the study YAML intended; the runner never threaded --model. The genuine-Pro re-dispatch of this corner is n1-pro-rerun-384::baseline-pro-text-high-t-0-0."
         },
         "pro-image-medium-t07": {
           "modality": "image",
           "path": "pro-image-medium-t07",
-          "model_of_record": "gemini-3.1-pro"
+          "model_of_record": "gemini-3-flash-preview",
+          "model_of_record_note": "E57 billing verdict (corrected 2026-06-03): dispatched as Flash (per_item_metadata.model_version=gemini-3-flash-preview), NOT the gemini-3.1-pro the study YAML intended; the runner never threaded --model. The genuine-Pro re-dispatch of this corner is n1-pro-rerun-384::baseline-pro-image-medium-t-0-7."
         },
         "pro-text-medium-t07": {
           "modality": "text",
           "path": "pro-text-medium-t07",
-          "model_of_record": "gemini-3.1-pro"
+          "model_of_record": "gemini-3-flash-preview",
+          "model_of_record_note": "E57 billing verdict (corrected 2026-06-03): dispatched as Flash (per_item_metadata.model_version=gemini-3-flash-preview), NOT the gemini-3.1-pro the study YAML intended; the runner never threaded --model. The genuine-Pro re-dispatch of this corner is n1-pro-rerun-384::baseline-pro-text-medium-t-0-7."
         }
       },
       "verifier_passes": {},
@@ -709,6 +713,86 @@
           "verifier_config": null,
           "eval_path": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-7/evaluation.json",
           "detections": "outputs/h11/n1-outstanding-384/pro-text-medium-t07"
+        }
+      ]
+    },
+    "n1-pro-rerun-384": {
+      "_note": "Genuine-Pro re-run of the four anti-diagonal Pro corners (E57). Re-dispatched as genuine gemini-3.1-pro-preview (per_item_metadata.model_version verified on all 8 passes; committed 1cdf9438) after the n1-outstanding originals were found to have billed as Flash. Supplies the four Pro anti-diagonal cells of the n1-baseline-matrix-384 leaderboard, REPLACING the n1-outstanding (Flash) cells of the same corners. Realtime(+flex) dispatch -> per-pass files are detections-<prompt>-3.1-pro-<date>.geojson (hyphen).",
+      "proposer_pools": {
+        "pro-text-high-t0": {
+          "modality": "text",
+          "path": "pro-text-high-t0",
+          "model_of_record": "gemini-3.1-pro-preview",
+          "model_of_record_note": "Genuine Pro, verified at source (model_used=model_requested=model_version=gemini-3.1-pro-preview on all passes). Asserted explicitly because this run exists to settle the E57 model-identity question."
+        },
+        "pro-text-medium-t07": {
+          "modality": "text",
+          "path": "pro-text-medium-t07",
+          "model_of_record": "gemini-3.1-pro-preview",
+          "model_of_record_note": "Genuine Pro, verified at source (model_used=model_requested=model_version=gemini-3.1-pro-preview on all passes). Asserted explicitly because this run exists to settle the E57 model-identity question."
+        },
+        "pro-image-high-t0": {
+          "modality": "image",
+          "path": "pro-image-high-t0",
+          "model_of_record": "gemini-3.1-pro-preview",
+          "model_of_record_note": "Genuine Pro, verified at source (model_used=model_requested=model_version=gemini-3.1-pro-preview on all passes). Asserted explicitly because this run exists to settle the E57 model-identity question."
+        },
+        "pro-image-medium-t07": {
+          "modality": "image",
+          "path": "pro-image-medium-t07",
+          "model_of_record": "gemini-3.1-pro-preview",
+          "model_of_record_note": "Genuine Pro, verified at source (model_used=model_requested=model_version=gemini-3.1-pro-preview on all passes). Asserted explicitly because this run exists to settle the E57 model-identity question."
+        }
+      },
+      "verifier_passes": {},
+      "conditions": [
+        {
+          "label": "baseline-pro-text-high-t-0-0",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "pro-text-high-t0",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-high-t-0-0/evaluation.json",
+          "detections": "outputs/h11/n1-pro-rerun-384/pro-text-high-t0"
+        },
+        {
+          "label": "baseline-pro-text-medium-t-0-7",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "pro-text-medium-t07",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-medium-t-0-7/evaluation.json",
+          "detections": "outputs/h11/n1-pro-rerun-384/pro-text-medium-t07"
+        },
+        {
+          "label": "baseline-pro-image-high-t-0-0",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "pro-image-high-t0",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-high-t-0-0/evaluation.json",
+          "detections": "outputs/h11/n1-pro-rerun-384/pro-image-high-t0"
+        },
+        {
+          "label": "baseline-pro-image-medium-t-0-7",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "pro-image-medium-t07",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-medium-t-0-7/evaluation.json",
+          "detections": "outputs/h11/n1-pro-rerun-384/pro-image-medium-t07"
         }
       ]
     },

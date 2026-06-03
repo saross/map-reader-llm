@@ -101,20 +101,29 @@ SEED = 42  # project-standard reproducibility seed
 FDR_Q = 0.05  # build_tiered_leaderboard DEFAULT_FDR_Q
 
 DEFAULT_CONDITIONS = BASE_DIR / "results" / "run-conditions.json"
+DEFAULT_ANALYSES = BASE_DIR / "results" / "run-analyses.json"
 DEFAULT_GT = BASE_DIR / "inputs" / "vectors" / "references" / "mounds-reference.geojson"
 DEFAULT_BOUNDS = (
     BASE_DIR / "inputs" / "vectors" / "bounds" / "384" / "full_evaluation_bounds.geojson"
 )
 DEFAULT_OUTPUT = BASE_DIR / "results" / "paper-eval" / "n1" / "384px-14buf-mcc" / "tiering"
 
-# The three source runs that carry the 18 N=1 baseline cells. Their baseline
-# conditions are the ``baseline-*`` labels in run-conditions.json.
-BASELINE_RUNS = (
-    "pv-diag-384",
-    "n1-outstanding-384",
-    "retest-h11-single-pass-384-t0",
-)
-PASS_GLOB = "*/detections_*.geojson"  # same glob the 14buf-mcc eval config uses
+# Board membership is the SINGLE SOURCE OF TRUTH in run-analyses.json: the
+# ``conditions_compared`` list of this analysis. Reading it here (rather than
+# re-deriving "all baseline-* cells in runs X/Y/Z") means edits to the board
+# — e.g. the E57 replace of the four Flash-misdispatched n1-outstanding "Pro"
+# cells with the genuine-Pro re-run (n1-pro-rerun-384) — take effect with no
+# change to this script. Each ref ``<run>::<label>`` is resolved against
+# run-conditions.json for its detections dir and evaluation.json.
+ANALYSIS_ID = "n1-baseline-matrix-384"
+
+# Candidate replicate-pass globs, tried in order. The original baseline pools
+# carry batch-style ``detections_<pool>_runNN.geojson`` (underscore); the
+# genuine-Pro re-run (n1-pro-rerun-384) was dispatched realtime(+flex) and
+# carries ``detections-<prompt>-3.1-pro-<date>.geojson`` (hyphen). Each pool dir
+# matches exactly ONE style (verified: no pool matches both), so first-non-empty
+# is unambiguous.
+PASS_GLOBS = ("*/detections_*.geojson", "*/detections-*.geojson")
 
 
 def git_commit() -> str:
@@ -155,8 +164,12 @@ def micro_f1(tp: float, fp: float, fn: float) -> float:
     return 2 * precision * recall / (precision + recall)
 
 
-def load_baseline_cells(conditions_path: Path) -> list[dict]:
-    """Load the 18 N=1 baseline cells from run-conditions.json.
+def load_baseline_cells(conditions_path: Path, analyses_path: Path) -> list[dict]:
+    """Load the N=1 baseline cells named by the analysis's ``conditions_compared``.
+
+    Board membership is read from run-analyses.json (the single source of truth);
+    each ``<run>::<label>`` ref is then resolved against run-conditions.json for
+    its detection pass directory and evaluation.json.
 
     Each returned dict has: ``ref`` (``<run>::<label>``), ``run``, ``label``,
     ``detections`` (the pass directory the cell aggregates), and ``eval_path``
@@ -164,27 +177,36 @@ def load_baseline_cells(conditions_path: Path) -> list[dict]:
 
     Args:
         conditions_path: Path to results/run-conditions.json.
+        analyses_path: Path to results/run-analyses.json.
 
     Returns:
-        List of cell dicts, in file order across the three baseline runs.
+        List of cell dicts, in ``conditions_compared`` order.
+
+    Raises:
+        KeyError / StopIteration: if the analysis is absent, or a ref does not
+            resolve to a condition in run-conditions.json (a board/sidecar
+            inconsistency that should fail loudly rather than silently drop a cell).
     """
-    data = json.loads(conditions_path.read_text())
-    decomposition = data["decomposition"]
+    analyses = json.loads(analyses_path.read_text())["analyses"]
+    board = next(a for a in analyses if a["analysis_id"] == ANALYSIS_ID)
+    refs: list[str] = board["conditions_compared"]
+
+    decomposition = json.loads(conditions_path.read_text())["decomposition"]
     cells: list[dict] = []
-    for run in BASELINE_RUNS:
-        for cond in decomposition[run]["conditions"]:
-            label = cond["label"]
-            if not label.startswith("baseline-"):
-                continue
-            cells.append(
-                {
-                    "ref": f"{run}::{label}",
-                    "run": run,
-                    "label": label,
-                    "detections": cond["detections"],
-                    "eval_path": cond["eval_path"],
-                }
-            )
+    for ref in refs:
+        run, label = ref.split("::", 1)
+        cond = next(
+            c for c in decomposition[run]["conditions"] if c["label"] == label
+        )
+        cells.append(
+            {
+                "ref": ref,
+                "run": run,
+                "label": label,
+                "detections": cond["detections"],
+                "eval_path": cond["eval_path"],
+            }
+        )
     return cells
 
 
@@ -232,10 +254,15 @@ def pass_averaged_per_tile(
     Raises:
         FileNotFoundError: If no replicate passes match the glob.
     """
-    pass_files = sorted((BASE_DIR / detections_dir).glob(PASS_GLOB))
+    pool_dir = BASE_DIR / detections_dir
+    pass_files: list[Path] = []
+    for glob_pat in PASS_GLOBS:
+        pass_files = sorted(pool_dir.glob(glob_pat))
+        if pass_files:
+            break
     if not pass_files:
         raise FileNotFoundError(
-            f"No replicate passes under {detections_dir} matching {PASS_GLOB}"
+            f"No replicate passes under {detections_dir} matching any of {PASS_GLOBS}"
         )
 
     tile_index = {name: i for i, name in enumerate(tile_order)}
@@ -386,6 +413,7 @@ def main() -> int:
     """CLI entry point: run the round-robin, tier, and write results."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--conditions", type=Path, default=DEFAULT_CONDITIONS)
+    parser.add_argument("--analyses", type=Path, default=DEFAULT_ANALYSES)
     parser.add_argument("--ground-truth", type=Path, default=DEFAULT_GT)
     parser.add_argument("--bounds", type=Path, default=DEFAULT_BOUNDS)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
@@ -405,7 +433,7 @@ def main() -> int:
     tile_order = list(gdf_bounds["tile_name"].unique())
     print(f"  {len(tile_order)} evaluation tiles", flush=True)
 
-    cells = load_baseline_cells(args.conditions)
+    cells = load_baseline_cells(args.conditions, args.analyses)
     if args.limit_cells is not None:
         cells = cells[: args.limit_cells]
     print(f"Loaded {len(cells)} baseline cells", flush=True)

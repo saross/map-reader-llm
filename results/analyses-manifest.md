@@ -2,10 +2,10 @@
 
 # Analyses manifest
 
-> Generated 2026-06-03T02:25:49Z · 1 row(s) · schema v1.0.
+> Generated 2026-06-03T08:19:32Z · 1 row(s) · schema v1.0.
 >
 > **Coverage**: 1 analysis(es) over conditions (sub-step 3c; hybrid human-authored).
 
 | analysis_id | type | #conditions | preregistered | paper_section | outcome |
 |---|---|---|---|---|---|
-| n1-baseline-matrix-384 | leaderboard | 18 | exploratory | Results | At the preregistered 20 m buffer the best single pass for mound localisation is Gemini 3 Pro text at low temperature: baseline-pro-text-medium-t-0-0 (F1 0.763) and baseline-pro-text-high-t-0-7 (F1 0.745) form a two-member statistical tie (round-robin tile-swap permutation, BH-FDR q=0.05; pair BH-adjusted p=0.50) significantly clear of all 16 other single-pass configurations. The text-over-image advantage that recurs throughout the paper holds here at matched settings: the best text pass beats the best image pass (pro-image-medium-t-0-0, F1 0.606) by 0.157 F1 with model, thinking and temperature held constant (both Pro, MEDIUM thinking, T=0.0 -- modality is the only difference), a significant gap (BH-adjusted p=0.0000). The F1 leaders are not the tile-level discrimination (MCC) leader, however (pro-image-high-t-0-7, MCC +0.852, 7th on F1), so the best single-pass configuration is metric-dependent. |
+| n1-baseline-matrix-384 | leaderboard | 18 | exploratory | Results | PENDING RE-TIERING (E57 genuine-Pro replace, 2026-06-03). conditions_compared now names the genuine-Pro re-run cells; tie_set/outcome are recomputed by scripts/n1_baseline_leaderboard_tiering.py and rewritten from results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.{json,md}. NOTE the genuine Pro text high T=0.0 (F1 0.804) exceeds the prior board leader (0.763) -- a likely tie_set change. |

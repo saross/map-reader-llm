@@ -2,9 +2,9 @@
 
 # Run registry
 
-> Generated 2026-05-30T08:03:46Z · 27 row(s) · schema v1.0.
+> Generated 2026-05-30T08:03:46Z · 28 row(s) · schema v1.0.
 >
-> **Coverage**: all 27 runs (hand-verified input).
+> **Coverage**: all 28 runs (hand-verified input).
 
 | run_id | directory_path | status |
 |---|---|---|
@@ -18,6 +18,7 @@
 | consensus-384-t1-0 | outputs/h11/consensus-384-UNINTENDED-T1.0 | active |
 | e47-propose-brief | outputs/h11/e47-propose-brief | active |
 | n1-outstanding-384 | outputs/h11/n1-outstanding-384 | active |
+| n1-pro-rerun-384 | outputs/h11/n1-pro-rerun-384 | active |
 | proposer-verifier-384 | outputs/h11/proposer-verifier-384 | active |
 | proposer-verifier-512 | outputs/h11/proposer-verifier-512 | active |
 | pv-diag-256 | outputs/h11/pv-diag-256 | active |

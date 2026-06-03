@@ -234,7 +234,7 @@ def test_run_registry_input_valid_and_in_sync(registry):
     # the registry is now a hand-authored INPUT the generator reads, not synthesises (B1)
     reg = load_run_registry()
     assert validate_manifest("run-registry", reg, registry) == []
-    assert len(reg["registry"]) == 27
+    assert len(reg["registry"]) == 28  # +1: n1-pro-rerun-384 (E57 genuine-Pro re-run)
     assert "generator_version" not in reg  # run-registry schema is closed; no generator_version
     # registry and facts must describe the same run set (the B1 drift guard)
     assert drift_check(reg["registry"], load_run_facts()) == []
@@ -262,7 +262,7 @@ def test_run_conditions_sidecar_in_sync(registry):
 def test_manifest_envelopes_valid(registry):
     at = "2026-05-30T00:00:00Z"
     _reg, run_rows, conditions, passes, analyses, warnings = build_manifests(at)
-    assert len(run_rows) == 27
+    assert len(run_rows) == 28  # +1: n1-pro-rerun-384 (E57 genuine-Pro re-run)
     assert warnings == []
 
     runs_obj = assemble_manifest("runs", run_rows, at)
@@ -295,35 +295,57 @@ def test_manifest_envelopes_valid(registry):
 
 @pytest.mark.tier1
 def test_model_of_record_override(registry):
-    """A pool's ``model_of_record`` overrides the (template-default) meta model (E57).
+    """``model_of_record`` declares the authoritative dispatched model (E57).
 
-    n1-outstanding-384's four Pro pools record a flash template-default in BOTH
-    config.model AND per_item_metadata.model_used; the sidecar declares
-    model_of_record=gemini-3.1-pro (from the study YAML). Passes from those pools must
-    report the override as model_used/model_requested and cite the sidecar in
-    provenance; the run's flash pools must be untouched (meta value, meta-only source).
+    Two cases, both exercised here:
+
+    * **n1-outstanding-384** — its four Pro-slug pools were DISPATCHED AS FLASH (the
+      runner never threaded --model; per_item_metadata.model_version is
+      gemini-3-flash-preview). The sidecar's model_of_record was CORRECTED from the
+      mistaken gemini-3.1-pro to gemini-3-flash-preview (the Session-97 billing
+      verdict). Passes from those pools report flash as model_used/model_requested and
+      cite the sidecar in provenance (the override path still executes, even though the
+      value now agrees with the meta); the run's other, genuinely-flash pools report
+      flash from the meta with NO sidecar citation.
+    * **n1-pro-rerun-384** — the genuine-Pro re-dispatch. Every pool declares
+      model_of_record=gemini-3.1-pro-preview, matching the reliable meta
+      (model_version), and cites the sidecar in provenance.
     """
+    # n1-outstanding-384: the four Pro-slug pools billed as Flash (E57 corrected).
     passes = extract_passes(extraction_context("n1-outstanding-384"))
     pro = [p for p in passes if p["proposer_pool"].startswith("pro-")]
     flash = [p for p in passes if not p["proposer_pool"].startswith("pro-")]
     assert pro and flash
     for p in pro:
         assert validate_row("passes", p, registry) == []
-        assert p["model_used"] == "gemini-3.1-pro"
-        assert p["model_requested"] == "gemini-3.1-pro"
+        assert p["model_used"] == "gemini-3-flash-preview"
+        assert p["model_requested"] == "gemini-3-flash-preview"
         assert "results/run-conditions.json" in p["provenance"]["source_files"]
     for p in flash:
         assert p["model_used"] == "gemini-3-flash-preview"
         assert "results/run-conditions.json" not in p["provenance"]["source_files"]
 
+    # n1-pro-rerun-384: the genuine-Pro re-dispatch asserts gemini-3.1-pro-preview.
+    rerun = extract_passes(extraction_context("n1-pro-rerun-384"))
+    assert rerun
+    for p in rerun:
+        assert validate_row("passes", p, registry) == []
+        assert p["model_used"] == "gemini-3.1-pro-preview"
+        assert p["model_requested"] == "gemini-3.1-pro-preview"
+        assert p["model_version"] == "gemini-3.1-pro-preview"
+        assert "results/run-conditions.json" in p["provenance"]["source_files"]
+
 
 @pytest.mark.tier1
-def test_analyses_leaderboard_stub(registry):
-    """The hand-authored N=1 baseline-matrix leaderboard stub builds and validates.
+def test_analyses_leaderboard_finding(registry):
+    """The N=1 baseline-matrix leaderboard builds, validates, and reflects the E57 replace.
 
-    Machine fields are populated (18 baseline condition_ids, type=leaderboard); the
-    human-authored finding / prereg linkage / tie_set are deferred (null/empty) per the
-    schema's lenient back-fill, so the stub must still validate.
+    Machine fields are populated (18 baseline condition_ids, type=leaderboard,
+    preregistered=exploratory). The four anti-diagonal Pro cells are sourced from the
+    genuine-Pro re-run (n1-pro-rerun-384), REPLACING the Flash-misdispatched
+    n1-outstanding cells of the same corners (E57). The interpretive finding
+    (outcome / tie_set) is authored/revised separately and is not pinned here, so this
+    test is stable across the PENDING-re-tiering window.
     """
     analyses = build_analyses(load_run_analyses(), "2026-05-30T00:00:00Z")
     lb = next(a for a in analyses if a["analysis_id"] == "n1-baseline-matrix-384")
@@ -331,6 +353,16 @@ def test_analyses_leaderboard_stub(registry):
     assert lb["type"] == "leaderboard"
     assert len(lb["conditions_compared"]) == 18
     assert all(cid.split("::")[1].startswith("baseline-") for cid in lb["conditions_compared"])
-    # deferred content: stub leaves the interpretive fields unauthored
-    assert lb["outcome"] is None and lb["tie_set"] == [] and lb["preregistered"] is None
+    assert lb["preregistered"] == "exploratory"
+    # E57 replace: the genuine-Pro re-run cells are IN; the Flash-misdispatched
+    # n1-outstanding "pro" cells of the same four corners are OUT.
+    corners = (
+        "baseline-pro-text-high-t-0-0",
+        "baseline-pro-text-medium-t-0-7",
+        "baseline-pro-image-high-t-0-0",
+        "baseline-pro-image-medium-t-0-7",
+    )
+    for corner in corners:
+        assert f"n1-pro-rerun-384::{corner}" in lb["conditions_compared"]
+        assert f"n1-outstanding-384::{corner}" not in lb["conditions_compared"]
     assert "_note" not in lb  # additionalProperties:false — sidecar note not emitted

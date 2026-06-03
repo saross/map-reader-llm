@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-06-02T12:03:17Z · 110 row(s) · schema v1.0.
+> Generated 2026-06-03T08:19:32Z · 114 row(s) · schema v1.0.
 >
-> **Coverage**: 110 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 114 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -97,6 +97,10 @@
 | n1-outstanding-384::baseline-pro-image-medium-t-0-7 | single-pass | none | — | 1 | 0.452 | 0.5984 | 941 |
 | n1-outstanding-384::baseline-pro-text-high-t-0-0 | single-pass | none | — | 1 | 0.4942 | 0.3808 | — |
 | n1-outstanding-384::baseline-pro-text-medium-t-0-7 | single-pass | none | — | 1 | 0.416 | 0.3105 | 1445 |
+| n1-pro-rerun-384::baseline-pro-text-high-t-0-0 | single-pass | none | — | 1 | 0.8045 | 0.79 | — |
+| n1-pro-rerun-384::baseline-pro-text-medium-t-0-7 | single-pass | none | — | 1 | 0.7638 | 0.7873 | 471 |
+| n1-pro-rerun-384::baseline-pro-image-high-t-0-0 | single-pass | none | — | 1 | 0.6658 | 0.8679 | — |
+| n1-pro-rerun-384::baseline-pro-image-medium-t-0-7 | single-pass | none | — | 1 | 0.593 | 0.9135 | 543 |
 | pv-diag-384::baseline-flash-image-high-t-0-7 | single-pass | none | — | 1 | 0.4986 | 0.6019 | — |
 | pv-diag-384::baseline-flash-image-minimal-t-0-0 | single-pass | none | — | 1 | 0.5995 | 0.3124 | 746 |
 | pv-diag-384::baseline-flash-image-minimal-t-0-7 | single-pass | none | — | 1 | 0.5534 | 0.3295 | — |
