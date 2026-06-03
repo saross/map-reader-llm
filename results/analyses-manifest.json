@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-06-02T12:03:17Z",
+  "generated_at": "2026-06-03T01:32:17Z",
   "generator_version": "0.4.0",
   "analyses": [
     {
@@ -26,22 +26,31 @@
         "n1-outstanding-384::baseline-pro-text-medium-t-0-7",
         "retest-h11-single-pass-384-t0::baseline-flash-text-minimal-t-0-0"
       ],
-      "hypothesis_refs": [],
-      "preregistered": null,
-      "deviations": [],
-      "predicted_outcome": null,
-      "tie_set": [],
-      "outcome": null,
-      "paper_section": null,
+      "hypothesis_refs": [
+        "H1",
+        "H6",
+        "H7"
+      ],
+      "preregistered": "exploratory",
+      "deviations": [
+        "E57"
+      ],
+      "predicted_outcome": "Preregistered directions come from Gemini-2.x-Flash / 512 px phases (this board is Gemini 3 at 384 px): H6 (Phase 4, the only untested confirmatory hypothesis) expected the stronger Pro model to transfer/match-or-exceed Flash; H7 (Phase 2b) found T=0.0 optimal for both tracks; H1 (Phase 2a) planned a text-only vs image-using contrast without a committed directional winner. Board result: H6 holds at the top (Pro text leads) but NOT uniformly -- Flash image-MINIMAL (F1 0.59-0.60) beats several weak Pro configs (Pro text high T=0.0 0.494; Pro image medium T=0.7 0.452; Pro text medium T=0.7 0.416); H7's T=0.0 advantage does not reappear at the top (the two tied leaders are T=0.0 and T=0.7); H1 resolves metric-dependently -- text wins F1@20 m localisation (Tier 1 is all text) while image wins MCC tile-discrimination (pro-image-high-t-0-7, MCC +0.852).",
+      "tie_set": [
+        "pv-diag-384::baseline-pro-text-medium-t-0-0",
+        "pv-diag-384::baseline-pro-text-high-t-0-7"
+      ],
+      "outcome": "At the preregistered 20 m buffer the best single pass for mound localisation is Gemini 3 Pro text at low temperature: baseline-pro-text-medium-t-0-0 (F1 0.763) and baseline-pro-text-high-t-0-7 (F1 0.745) form a two-member statistical tie (round-robin tile-swap permutation, BH-FDR q=0.05; pair BH-adjusted p=0.50) significantly clear of all 16 other single-pass configurations, but the F1 leaders are not the tile-level discrimination (MCC) leader (pro-image-high-t-0-7, MCC +0.852, 7th on F1), so the best single-pass configuration is metric-dependent.",
+      "paper_section": "Results",
       "output_path": "results/paper-eval/n1/384px-14buf-mcc",
       "working_notes_obs": [],
-      "manually_verified_at": null,
+      "manually_verified_at": "2026-06-03T01:30:52Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/paper-eval/n1/384px-14buf-mcc"
         ],
-        "last_extracted_at": "2026-06-02T12:03:17Z",
+        "last_extracted_at": "2026-06-03T01:32:17Z",
         "extractor_version": "0.4.0"
       }
     }
