@@ -4901,3 +4901,69 @@ Sequence 1 and the broader H11 decision share a shape Shawn named explicitly: a 
 **Belief revision**: none — the prior held. But the epistemic status changed: *assertion → source-verified fact*. The human's edge case conflates detection-matching (buffer-dependent → F1) with tile-membership (buffer-free → MCC); a detection in the right tile but far from the mound credits MCC regardless of buffer. The lesson is about the *probe*, not the conclusion: a challenge to a confident assertion of mine is a cue to re-verify at source even when I expect to be right — a confirming read costs one file and converts a confabulation-shaped assertion into a fact.
 
 **Probe-type**: source re-read triggered by a human challenge to the LLM's own claim. The valuable behaviour was treating my own confident assertion as provisional under challenge, not the (correct) prior itself.
+
+## Session 97 — 2026-06-03 — the billing reconciliation: intent is not dispatch, and a cross-session double revision
+
+### Sequence 1 — "the n1 Pro pools are Pro by study design (S96's conclusion); reconciliation will confirm it"
+
+**Surprising fact**: Session 96 closed by recording `model_of_record = gemini-3.1-pro` on the
+four n1-outstanding Pro pools, on the authority of the study YAML (its belief revision: "the
+study YAML is the only surviving truth"), and flagged billing reconciliation as still open. I
+opened S97's reconciliation expecting to *confirm* it. Scanning `pricing_used.model` across
+all eight nominally-Pro pools, they **split**: the four pv-diag pools read
+`gemini-3.1-pro-preview` (Pro rates \$2/\$12), but the four n1-outstanding pools read
+`gemini-3-flash-preview` (Flash rates) — and every n1-outstanding pool, "Pro" and Flash
+alike, recorded flash in *both* `config.model` and `pricing_used.model`.
+
+**Probe**: a chain, each link more authoritative than the last. (a) `pricing_used.model` is
+recorded verbatim from `model_name` (`lib_llm_metadata.py:1074`), and `model_name` is exactly
+what `submit_batch_job` sends Google — so pricing=flash ⟹ flash *dispatched*, independent of
+the E57 `config.model` bug. (b) `4_detect_mounds_batch.py` overwrites `config["model"]` with
+`--model` *before* both dispatch and meta, so flash-in-meta means the override was never
+applied. (c) The decisive one: `per_item_metadata.model_version` is read straight off
+`response.model_version` (`lib_llm_metadata.py:635`) — the **API's own report of what served
+the request** — and it is `gemini-3-flash-preview` for all ~3,896 successful tile responses,
+with `model_requested`=flash too (the requests themselves went out as flash). Pricing *rates*
+corroborate ($2/$12 for the genuine pv-diag Pro vs $0.5/$3.0 here), and so does performance
+(these cells score in the Flash range, 0.42–0.53; genuine pv-diag Pro-text scores 0.74–0.76).
+
+**Belief revision**: S96 said "the recorded metadata is contaminated by a common-cause bug →
+trust the study YAML." S97: the study YAML records what the run *intended*, and **intent was
+never executed** for n1-outstanding — the runner dropped the per-condition `model:
+gemini-3.1-pro` on the floor. The corrected hierarchy: a study YAML / config / slug records
+**intent**; `model_requested` records the **request**; `model_version` (and the bill)
+records the **service** — what actually ran. Only the last is authoritative for a dispatch
+claim, and it is the one field sourced from the provider's response rather than from our own
+config. Two sessions, two trusted provenance layers (`per_item_metadata.model_used` in S96,
+the study YAML in S96→S97), both recording something *other* than service.
+
+**Probe-type**: provenance-trace to the provider's own response field, run against a
+*prior-session's* belief revision (not just a prior). The generalised detector: when a claim
+is "what model/version/config actually *ran*," distrust every artefact authored on *our* side
+of the API boundary (slug, config, study design, even recorded request) and find the one
+field the *provider* populated. Intent, request, and service are three different facts that a
+naming convention silently conflates — and "we encoded it into the filename" is how the
+conflation hides for two sessions.
+
+### Sequence 2 — "realtime and batch send different prompts, so the re-run isn't parameter-controlled" (a confirmation, pre-empting a real risk)
+
+**Surprising fact** (anticipated, not observed): the flash originals ran in **batch** mode
+(`build_jsonl_file`); the human wants the re-run in **realtime** + flex (`detect_mounds_
+versioned`). Two different code paths assemble the prompt — a plausible uncontrolled variable
+that would invalidate the comparison, and exactly the kind of thing a successful-looking run
+would not surface.
+
+**Probe**: read both assemblers rather than assume equivalence. Batch's `_build_reference_
+parts` opens `if not include_images: return []`; realtime's per-tile loop is guarded by the
+same `if include_images:`. So for a text config (`include_example_images=False`) *both* send
+preamble + transition + tile with zero examples; for image both send the 13 example images.
+Each function's docstring states it mirrors the other. The "Examples loaded: 0" the smoke
+test printed for text — which first read as a regression — is the *correct, matching*
+behaviour (it counts images, of which text sends none).
+
+**Belief revision**: none — the paths are byte-equivalent in payload. But the epistemic move
+matters: a mode difference is a *candidate* confound, not a confound; the way to discharge it
+is to read the two builders to the leaf, not to reason from "different code path → different
+result." The smoke test's surprising line ("Examples loaded: 0") was the cue to trace, and
+tracing converted an anxiety into a verified equivalence — the same source-read discipline as
+S96's MCC confirmation, applied pre-emptively before spend rather than under challenge.

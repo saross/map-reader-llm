@@ -6422,3 +6422,84 @@ passes + 1 analysis, ALL VALID**; tier-1 **1058 passed**. One background agent
   merged *after* the run, so this run did not use it.
 - n1's Pro model-of-record (`gemini-3.1-pro`) reflects the **study design**, not a
   billing-verified dispatch — the recorded meta says flash in both provenance fields (E57).
+
+## Session 97 — 2026-06-03 (N=1 leaderboard finding + E57 billing reconciliation + genuine-Pro re-run)
+
+**Work**: (1) **Lifted the N=1 baseline leaderboard** stub → finding. New
+`scripts/n1_baseline_leaderboard_tiering.py`: round-robin paired tile-swap permutation on
+**pass-averaged per-tile** counts (the replicate-mean statistic the bootstrap CIs use, so it
+ranks what the board ranks; cross-check ≤0.0003 F1 across 1–30 replicates), 10k perms seed 42,
++ Benjamini-Hochberg FDR (q=0.05) + greedy-clique tiering at 20 m, on **zbook** (\$0 API;
+sapphire saturated). Result: 112/153 pairs significant → **6 tiers**; **tie_set (Tier 1) =
+`pro-text-medium-t-0-0` (0.763) + `pro-text-high-t-0-7` (0.745)**, BH-adj p=0.50 between them,
+both significantly clear of rank 3. Authored the `run-analyses.json` human fields (tie_set,
+outcome, predicted_outcome, `preregistered=exploratory`, `hypothesis_refs` H1/H6/H7,
+`deviations` E57); regenerated `analyses-manifest.{json,md}` (ALL VALID). Documented the
+finding in `n1-baseline-matrix.md` §6 + a prereg-framing **template** for the
+architecture-baseline leaderboard family in `leaderboard-construction-plan.md`. 16 tier-1
+tests (`test_n1_baseline_leaderboard_tiering.py`, all pass). Obs 336. (2) **E57 billing
+reconciliation** — triple-checked the n1 Pro model identity. Verdict: the four **pv-diag**
+Pro cells are **genuinely Pro** (`pricing_used.model=gemini-3.1-pro-preview` at Pro rates;
+`--model` override in the study YAML took effect); the four **n1-outstanding** "Pro" cells
+were **dispatched as Flash** — confirmed by the API's own `per_item_metadata.model_version =
+gemini-3-flash-preview` across all ~3,896 tile responses (sourced from `response.model_version`,
+`lib_llm_metadata.py:635`), `model_requested`=flash, Flash pricing rates, and Flash-range
+performance. The study YAMLs intended `model: gemini-3.1-pro` but the runner never threaded it
+into `--model`. (3) **Genuine-Pro re-run launched** — after weighing the value (completes the
+Pro thinking×temperature 2×2, deconfounds thinking from temperature, probes the untested Pro
+HIGH/T=0.0 corner that could lift the ceiling), audited configs **byte-identical** (recomputed
+`library_hash`/`system_instruction_hash`) to both the flash originals and the pv-diag Pro
+partners — only the model changes; verified batch↔realtime prompt assembly is byte-equivalent;
+smoke test + two one-tile tests (empty + 10-mound) confirmed `gemini-3.1-pro-preview` dispatch;
+launched 8 passes (3/3/1/1) via `scripts/run_n1_pro_rerun.sh` in **real-time + flex** (=batch
+cost) with context caching, `outputs/h11/n1-pro-rerun-384/`, ~3,896 calls, ~\$20–30.
+
+**Decided**: (1) Tie-set via the canonical round-robin permutation+FDR (chosen over CI-overlap
+*because* the two leaders are the only `ci_unreliable`/`sparse_cross_grid` cells — the
+permutation is robust to empty tiles where the bootstrap CI is not). (2) Leaderboard framing =
+**exploratory** with H1/H6/H7 refs (the within-board contrasts recapitulate preregistered
+directions as convergent evidence; the ranked board itself was not in the analysis plan) — set
+as a *template*: single-architecture baseline boards = exploratory; the cross-architecture
+head-to-head may earn preregistered-with-deviation. (3) On the Flash-not-Pro cells: re-run as
+genuine Pro (user's call after cost discussion), **document-don't-rename** per the E57
+precedent for the residual handling. (4) Re-run uses realtime+flex (not batch) for the flex
+discount, justified by the verified payload equivalence. (5) Model string `gemini-3.1-pro`
+(resolves to `-preview`, matching pv-diag) — corrected my own earlier confabulation that the
+preregistration phases used Gemini 2.x (zero `gemini-2.x` strings exist in configs/prereg/
+registry; all Gemini 3).
+
+**Produced**: commits `c6aef99a`…`05838064` (all pushed): `d6daec4e` (tiering script+results),
+`9cbb6480` (manifest finding), `3483d875` (docs+template), `0eddf031` (tests), `89edf956`
+(Obs 336), `5a1c3f90` (outcome refinement + model-era fix), `05838064` (re-run orchestration).
+Memory: observations-as-we-go cadence (feedback). The re-run was **still running detached** at
+session close (nohup; not harness-tracked — poll `_run_log.txt`).
+
+**Pending (next session, priority order)**:
+
+1. **Verify the re-run completed** — `outputs/h11/n1-pro-rerun-384/_run_log.txt` → "ALL 8
+   PASSES COMPLETE"; confirm per-pass `model_version=gemini-3.1-pro-preview`, ~487 tiles each,
+   low failures; measure actual cost.
+2. **Re-score the 4 genuine-Pro cells** at 14-buffer+MCC; add as conditions on a new run
+   (`n1-pro-rerun-384`) in `run-conditions.json`; regenerate manifests; commit the API outputs
+   (geojsons, metas, evals). **Re-run the leaderboard tiering** — Pro HIGH/T=0.0 may change the
+   ceiling/tie_set.
+3. **Reconcile E57 + relabel** — record the billing verdict in `protocol-errata.md` E57;
+   correct model-of-record on the 4 n1-outstanding passes (`gemini-3.1-pro` →
+   `gemini-3-flash-preview`, document-don't-rename); fix the `n1-baseline-matrix-384`
+   `predicted_outcome` H6 narrative (the "weak Pro configs" were Flash); corrective Obs.
+4. **Carried**: manifest batches C/D + pv-diag-384 full decomposition (Batch E); sapphire crop
+   copy + Syncthing removal; git history purge (post-submission).
+
+### Contextual assumptions
+
+- This is **Session 97**, 2026-06-03 — the next session after the two 2026-06-02 sessions
+  (95 overnight+follow-up, 96 collaborative). A long, closely-collaborative day.
+- The leaderboard tiering was **\$0 API** (permutation on existing evals, zbook). The re-run is
+  the session's only API spend (~\$20–30, real-time+flex, *not yet reconciled against actual
+  billing*).
+- The re-run launched at ~05:39 UTC and runs ~2–3 h detached; **it had not completed when the
+  session closed**, so its results are not yet in any manifest/doc — tasks #10–#12 are the
+  post-run integration.
+- Re-run parameter-control rests on the audited hash-equality of configs and the verified
+  batch↔realtime payload equivalence; the *only* intended difference from the flash originals
+  is the model (and the output-neutral mode/caching).

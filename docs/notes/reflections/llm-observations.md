@@ -5997,3 +5997,48 @@ Handed a whole multi-step sequence to run while the human slept, what kept it tr
 E57 gave me blanket licence to record the study-design model-of-record. I *could* have squash-encoded `gemini-3.1-pro` on those passes under that authority and moved on. I didn't — because three things coincided: the recorded meta said the opposite (flash), billing reconciliation was still open (so "Pro actually ran" was unverified), and the human's CLAUDE.md marks model versions CRITICAL ("never change without explicit direction"). So I built the override mechanism but surfaced the *specific value* — the exact string (3.1, not 3.0), the meta disagreement, the unverified status — and let him choose, rather than acting on the policy's general authority.
 
 **The rule**: separate "the documented policy says do X" from "this specific, contestable value is X." A standing decision (an erratum, a convention) authorises the *mechanism/approach*; it does not pre-authorise every particular value that flows through it — especially a version-sensitive, not-independently-verified one under a CRITICAL human rule. Implement the general thing freely; escalate the specific number with its disagreements attached. The cost is one question; the alternative is silently encoding a claim the human would have wanted to own.
+
+## Session 97 — 2026-06-03 (the menu vs the conversation; the invisible failure mode sets the rigour)
+
+### AskUserQuestion is the wrong instrument for an open research-judgement fork
+
+Three times this session I posed a decision as an `AskUserQuestion` with curated options
+(tie-set method; preregistration framing; how to record the Flash-not-Pro cells), and three
+times the human declined the tool and asked to **discuss** instead — twice answering "let's
+discuss briefly," once "I want to clarify." Each time the discussion produced a *better*
+frame than any option I'd pre-written: the prereg-framing turned into a reusable template
+with a "justified ≠ confirmatory" distinction I hadn't drawn; the model-of-record fork
+became a triple-check-then-re-run path none of my three options contained. The pattern: a
+multiple-choice question silently asserts "the option set is complete and the decision is
+yours to *pick*." For a bounded, mutually-exclusive choice (which buffer, which library)
+that's true and efficient. For an open research fork it's a category error — it closes the
+space before the human has shaped it, and the human who *owns the science* wants to reason
+toward the answer, not ratify my enumeration.
+
+**The rule**: reserve `AskUserQuestion` for choices that are genuinely bounded and where my
+option set is plausibly exhaustive. When the fork is a research-judgement call (framing,
+interpretation, how to handle a surprising result), lead with the evidence and an open
+question in prose — let the human co-author the option space rather than choosing inside
+mine. The tell that I've reached for the wrong instrument: I'm offering an "(Recommended)"
+on a question whose *framing* is the actual work.
+
+### The invisible failure mode, not the dollar cost, is what sets the rigour bar
+
+The human's launch instruction was "we can't afford to undertake this run more than once …
+be sure all configs are correct." The run cost ~\$20–30 — trivially re-runnable on budget.
+What is *not* re-runnable is the **silent** failure: a subtly mis-parametered run that
+completes successfully, scores plausibly, and contaminates a published comparison with an
+uncontrolled variable nobody notices. His framing correctly located the expensive failure in
+the invisible place, not the visible one, and it changed my behaviour: I ran a full
+config-*drift* audit (recomputing `library_hash`/`system_instruction_hash` against the
+March originals — not just "the file exists" but "the bytes are identical"), then a smoke
+test, then *two* one-tile tests (an empty tile and a 10-mound tile) to exercise both the
+negative and positive paths and read back the API's `model_version` before committing the
+fleet.
+
+**The rule**: when a human flags a one-shot constraint, the rigour budget should track the
+cost of an *undetected* wrong result, not the cost of repeating the operation. Cheap-to-
+repeat does not mean cheap-to-get-wrong: a $25 run that quietly breaks parameter control can
+cost a paragraph of the paper. Audit the inputs that would fail *silently* (config drift,
+mode-dependent payload differences, model resolution) hardest, because those are the ones a
+successful-looking run will not reveal.

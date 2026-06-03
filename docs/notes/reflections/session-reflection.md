@@ -8193,3 +8193,67 @@ architectural decisions like spawn vs fork" paired with "model versions are CRIT
 confirm those." That division — trust the engineering, ratify the science — is exactly
 the right one for a non-programmer domain expert, and it let the session move fast where
 it was safe and slow where it mattered.
+
+## Session 97 — 2026-06-03 — the foreshadowing came due: a study's intent was never executed
+
+### Prompt: What surprised you about this session?
+
+The hedge Session 96 wrote down came true almost verbatim. S96's reflection: "if billing
+later shows flash actually ran, the override is where to look." I opened the billing
+reconciliation expecting to *confirm* `gemini-3.1-pro` and close a loose end. Instead the
+four n1-outstanding "Pro" pools were dispatched as **Flash** — confirmed not by inference
+but by the Gemini API's own `model_version` (read straight off `response.model_version`,
+`lib_llm_metadata.py:635`) on all ~3,896 tile responses. The deeper surprise was that it
+*split*: the four **pv-diag** "Pro" pools really are Pro (billed at Pro's \$2/\$12 rates),
+the four **n1-outstanding** ones are Flash — same nominal model, opposite reality, because
+two different drivers (`lib_batch_api.py` vs `4_detect_mounds_batch.py`) threaded the
+`--model` override in one and dropped it in the other. So S96's belief revision ("the study
+YAML is the only surviving truth") was itself only half-right: the YAML records what the run
+*intended*, and intent was never executed for n1-outstanding. Two sessions running, two
+provenance layers trusted, two wrong.
+
+### Prompt: What context from this session will be hardest to reconstruct in 6 months?
+
+Why pv-diag is genuinely Pro *despite its `config.model` also reading `gemini-3-flash`*.
+Both groups carry the E57 template-default flash in `config.model`; the discriminator is
+`pricing_used.model`, which `estimate_cost` records verbatim from `model_name` — the
+variable `submit_batch_job` actually sends to Google. pv-diag's resolved to
+`gemini-3.1-pro-preview` (the override took), n1-outstanding's stayed
+`gemini-3-flash-preview` (it didn't). Six months on, someone seeing `config.model=flash` on
+the pv-diag *leaders* could "helpfully correct" them to Flash and detonate the tie_set. The
+note to leave loud: the authoritative field for *what ran* is `per_item_metadata.model_version`
+(the API's response) where it exists, else `pricing_used.model` (= dispatched `model_name`)
+— **never** `config.model`, **never** the study YAML. The slug, the config, and the design
+doc all record intent; only the response and the bill record service.
+
+### Prompt: What decision made today will look arbitrary without this session's context?
+
+Running the re-run in **real-time + flex** when every comparison cell (the flash originals,
+the pv-diag Pro grid partners) was **batch**. On its face that's an uncontrolled second
+variable — different execution path, different code. The context that makes it sound: I read
+both prompt-builders and *proved* the payload is byte-equivalent — `_build_reference_parts`
+returns `[]` for a text config in both modes, the image example-loop is `include_images`-
+guarded identically, and each docstring states it mirrors the other. Mode changes the
+transport and the price (flex = batch's 50%), not the bytes the model sees. Without that
+verification on record, the realtime choice reads as a shortcut rather than an audited
+equivalence — and the whole point of the run is that it *must* be parameter-controlled.
+
+**Session**: 2026-06-03, map-reader-llm, Session 97. Two arcs. (1) **Lifted the N=1
+leaderboard** stub → finding: round-robin tile-swap permutation + BH-FDR → 6 tiers, tie_set
+= the two Pro-text-low-temp leaders (the permutation chosen *because* it is robust to the
+`sparse_cross_grid` flag that made exactly those two cells' bootstrap CIs unreliable — the
+right test for the data, not the default one). Authored the manifest finding, the
+prereg-framing template, 16 tier-1 tests, Obs 336. (2) **Billing reconciliation** of E57 →
+the n1-outstanding "Pro" cells are Flash; weighed the value of re-running (completes the
+genuine-Pro thinking×temperature 2×2, probes the untested Pro HIGH/T=0.0 ceiling); audited
+configs byte-identical (library + instruction hashes) to both the originals and the pv-diag
+partners; smoke + two one-tile tests (empty + 10-mound) confirmed `gemini-3.1-pro-preview`
+dispatch; launched the 8-pass realtime+flex run (~\$20–30, still running detached at
+session close). Commits `c6aef99a`…`05838064`, all pushed.
+
+**Relational texture**: the human set the bar with "we can't afford to undertake this run
+more than once" — and *three times* chose to **discuss** a fork (tie-set method, prereg
+framing, model identity) rather than pick from the options I offered via AskUserQuestion. The
+pattern is not indecision; it is that he wants to reason *toward* the decision with me, not
+ratify a menu I've pre-closed. The options were good but premature: on genuinely open
+research-judgement forks, the discussion *is* the work, and the multiple-choice skips it.
