@@ -1,0 +1,81 @@
+# N=1 GENUINE-Pro re-run — 384px, 14-buffer standard + MCC
+# =========================================================
+# Batch spec for evaluate_detections.py --batch --mcc.
+#
+# Scores the FOUR genuine-Pro re-run pools (outputs/h11/n1-pro-rerun-384/)
+# at the identical Session-94 14-buffer standard + tile-level MCC used by
+# the 18-cell N=1 baseline matrix (configs/n1-eval-384px-14buf-mcc.yaml).
+# Same buffers, bootstrap, seed, ground truth, and bounds — only the
+# detection pools and the glob differ.
+#
+# WHY THIS RE-RUN EXISTS (the E57 billing finding)
+# ------------------------------------------------
+# The four anti-diagonal Pro corners (text/image x {HIGH-T=0.0, MEDIUM-T=0.7})
+# were originally dispatched under run `n1-outstanding-384` with study YAMLs
+# that INTENDED gemini-3.1-pro, but the runner never threaded the --model
+# override, so the API actually billed and ran them as gemini-3-flash-preview
+# (confirmed by per_item_metadata.model_version on every response; protocol
+# erratum E57). Those four cells are therefore Flash, not Pro. This re-run
+# re-dispatched the identical four configs as GENUINE Pro
+# (model_version = gemini-3.1-pro-preview verified on all 8 passes,
+# committed 1cdf9438) to complete the genuine Pro 2x2 x modality.
+#
+# THE OTHER FOUR Pro corners (text/image x {MEDIUM-T=0.0, HIGH-T=0.7}) come
+# from run `pv-diag-384` and ARE genuinely Pro (the --model override took
+# there) — they are already in the 18-cell matrix and are NOT re-run here.
+#
+# SEMANTICS (identical to the 18-cell matrix re-score)
+# ----------------------------------------------------
+# * Each pool's detections_dir globs its replicate single passes
+#   (run_N/detections-*.geojson); the scorer averages the per-pass scores.
+#   A cell's F1 (per buffer) and MCC are the MEAN single-pass values across
+#   replicates — the expected performance of ONE pass — not a union/consensus.
+# * MCC is BUFFER-AGNOSTIC (tile presence/absence, no distance test): one
+#   value per cell regardless of buffer.
+# * Headline detection buffer is the preregistered 20 m.
+#
+# GLOB NOTE (the one difference from the 18-cell config)
+# ------------------------------------------------------
+# The re-run was executed in REALTIME (+flex) mode, so its per-pass files are
+# named realtime-style `detections-<prompt>-3.1-pro-<date>.geojson` (HYPHEN)
+# under run_N/, not the batch-style `detections_<pool>_runNN.geojson`
+# (UNDERSCORE) the default glob expects. Hence glob: "*/detections-*.geojson".
+#
+# Replicate counts (3/1/3/1) mirror the originals: HIGH-T=0.0 x3, MEDIUM-T=0.7 x1.
+#
+# 487 tiles: 229 populated (47%), 258 empty (53%).
+#
+# Created: 2026-06-03 (Session 98). Companion to n1-eval-384px-14buf-mcc.yaml.
+
+metadata:
+  description: "Genuine-Pro re-run (4 cells) at 384px, 14-buffer standard (5-150m) + MCC, 487 tiles"
+  tile_size: 384
+  purpose: >
+    Standard-compliant score of the four GENUINE-Pro re-run pools at the
+    14 uniform buffers plus tile-level MCC, on the same eval footing as the
+    18-cell N=1 baseline matrix. Completes the genuine Pro 2x2 x modality
+    after the E57 billing finding (the original n1-outstanding "Pro" cells
+    were dispatched as Flash).
+
+defaults:
+  bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
+  ground_truth: inputs/vectors/references/mounds-reference.geojson
+  buffers: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100, 125, 150]
+  bootstrap: 10000
+  seed: 42
+  glob: "*/detections-*.geojson"
+
+conditions:
+  # ── Pro Text (genuine re-run) ───────────────────────────────
+  - label: "Pro Text HIGH T=0.0"
+    detections_dir: outputs/h11/n1-pro-rerun-384/pro-text-high-t0
+
+  - label: "Pro Text MEDIUM T=0.7"
+    detections_dir: outputs/h11/n1-pro-rerun-384/pro-text-medium-t07
+
+  # ── Pro Image (genuine re-run) ──────────────────────────────
+  - label: "Pro Image HIGH T=0.0"
+    detections_dir: outputs/h11/n1-pro-rerun-384/pro-image-high-t0
+
+  - label: "Pro Image MEDIUM T=0.7"
+    detections_dir: outputs/h11/n1-pro-rerun-384/pro-image-medium-t07
