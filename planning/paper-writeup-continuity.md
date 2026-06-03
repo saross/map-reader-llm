@@ -1,7 +1,7 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-06-03 (Session 97 — N=1 leaderboard lifted stub→finding (permutation+FDR → 6 tiers, tie_set = the two Pro-text-low-temp leaders; Obs 336); E57 **billing reconciliation**: the four n1-outstanding "Pro" cells were dispatched as **Flash** (API `model_version` confirmed), pv-diag Pro genuine; **genuine-Pro re-run launched** (realtime+flex, ~$20–30, still running detached at close). See the Session 97 START-HERE.)
+**Last updated**: 2026-06-03 (Session 97 — N=1 leaderboard lifted stub→finding (permutation+FDR → 6 tiers, tie_set = the two Pro-text-low-temp leaders; Obs 336); E57 **billing reconciliation**: the four n1-outstanding "Pro" cells were dispatched as **Flash** (API `model_version` confirmed; Obs 337), pv-diag Pro genuine; **genuine-Pro re-run COMPLETED CLEANLY** (8/8 passes, all 3,896 tiles `gemini-3.1-pro-preview`, 0 failures, committed `1cdf9438`) — ready to re-score. See the Session 97 START-HERE.)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
@@ -10,16 +10,18 @@ project state.
 
 ## ✅ Session 97 — START HERE — LEADERBOARD FINDING + E57 BILLING RECONCILIATION + GENUINE-PRO RE-RUN (IN FLIGHT)
 
-**Posted**: 2026-06-03, end of a long collaborative day. Commits `c6aef99a`→`05838064`,
-all pushed. **One API run launched (~$20–30, real-time+flex) — STILL RUNNING DETACHED AT CLOSE.**
+**Posted**: 2026-06-03, end of a long collaborative day. Commits `c6aef99a`→`1cdf9438`,
+all pushed. **One API run completed (~$20–30, real-time+flex) — finished in ~10 min during
+the handoff.**
 
-### ⚠️ FIRST THING NEXT SESSION — check the in-flight re-run
+### ✅ FIRST THING NEXT SESSION — re-score the completed Pro re-run
 
-A genuine-Pro re-run is running in the background (nohup, **not** harness-tracked):
-`outputs/h11/n1-pro-rerun-384/`. **Check `_run_log.txt` for "ALL 8 PASSES COMPLETE"** before
-anything else. If complete → tasks below (re-score → integrate → reconcile). If failed mid-way
-→ the log shows which pass; re-run just that pass via `scripts/run_n1_pro_rerun.sh` (idempotent
-per pool/run dir). The run command + full rationale are in that script's header.
+The genuine-Pro re-run is **DONE and committed** (`1cdf9438`): `outputs/h11/n1-pro-rerun-384/`,
+8 passes (3/3/1/1) × 487 tiles, **all `gemini-3.1-pro-preview` verified, 0 failures**,
+detections 437–550/pass. Raw geojsons/metas committed; **evals NOT yet run**. Start at
+**task 1 below (re-score)**. (Per-pass output naming is realtime-style
+`detections-<version>-3.1-pro-<date>.geojson` under `<pool>/run_N/` — adjust the eval glob
+from the batch-style `detections_*` if needed.)
 
 ### TL;DR
 
@@ -56,12 +58,13 @@ byte-identical, validated dispatch via one-tile tests, launched.
 
 ### Top of ready work (next session) — tasks #10–#12
 
-1. **Verify re-run** (the ⚠️ above) → confirm per-pass `model_version=gemini-3.1-pro-preview`,
-   ~487 tiles, low failures; measure actual cost.
-2. **Re-score** the 4 genuine-Pro pools at 14-buffer+MCC; add as conditions on a new run
-   `n1-pro-rerun-384` in `run-conditions.json`; regenerate manifests; **commit the API outputs**
-   (geojsons/metas/evals). **Re-run the leaderboard tiering** — Pro HIGH/T=0.0 (untested as Pro,
-   potential ceiling-lift) may change the tie_set.
+1. ~~**Verify re-run**~~ **[x] DONE this session** — 8/8 passes, all 3,896 tiles
+   `gemini-3.1-pro-preview`, 0 failures, committed `1cdf9438`.
+2. **Re-score** the 4 genuine-Pro pools at 14-buffer+MCC (raw geojsons/metas already committed;
+   evals pending); add as conditions on a new run `n1-pro-rerun-384` in `run-conditions.json`;
+   regenerate manifests; **commit the evals**. **Re-run the leaderboard tiering** — Pro
+   HIGH/T=0.0 (now genuine Pro, previously untested — potential ceiling-lift) may change the
+   tie_set.
 3. **Reconcile E57 + fix the finding**: record the billing verdict in `protocol-errata.md` E57;
    correct model-of-record on the 4 n1-outstanding passes (`gemini-3.1-pro` →
    `gemini-3-flash-preview`, **document-don't-rename** per the E57 precedent); fix the
