@@ -117,12 +117,14 @@ DEFAULT_OUTPUT = BASE_DIR / "results" / "paper-eval" / "n1" / "384px-14buf-mcc" 
 # run-conditions.json for its detections dir and evaluation.json.
 ANALYSIS_ID = "n1-baseline-matrix-384"
 
-# Candidate replicate-pass globs, tried in order. The original baseline pools
-# carry batch-style ``detections_<pool>_runNN.geojson`` (underscore); the
-# genuine-Pro re-run (n1-pro-rerun-384) was dispatched realtime(+flex) and
-# carries ``detections-<prompt>-3.1-pro-<date>.geojson`` (hyphen). Each pool dir
-# matches exactly ONE style (verified: no pool matches both), so first-non-empty
-# is unambiguous.
+# Candidate replicate-pass globs, UNION-ed (not first-non-empty). The original
+# baseline pools carry batch-style ``detections_<pool>_runNN.geojson``
+# (underscore); the genuine-Pro realtime(+flex) passes carry
+# ``detections-<prompt>-3.1-pro-<date>.geojson`` (hyphen). Most pools are one
+# style, but the two pv-diag MEDIUM-T=0.0 cells are MIXED after the n=3 top-up
+# (Session 98): batch run_1 + realtime run_2/run_3. A filename is either
+# ``detections_…`` or ``detections-…`` (never both), so unioning the two
+# patterns and de-duplicating collects every replicate without double-counting.
 PASS_GLOBS = ("*/detections_*.geojson", "*/detections-*.geojson")
 
 
@@ -255,11 +257,7 @@ def pass_averaged_per_tile(
         FileNotFoundError: If no replicate passes match the glob.
     """
     pool_dir = BASE_DIR / detections_dir
-    pass_files: list[Path] = []
-    for glob_pat in PASS_GLOBS:
-        pass_files = sorted(pool_dir.glob(glob_pat))
-        if pass_files:
-            break
+    pass_files = sorted({f for g in PASS_GLOBS for f in pool_dir.glob(g)})
     if not pass_files:
         raise FileNotFoundError(
             f"No replicate passes under {detections_dir} matching any of {PASS_GLOBS}"

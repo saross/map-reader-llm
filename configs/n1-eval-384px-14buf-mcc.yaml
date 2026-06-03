@@ -98,6 +98,9 @@ conditions:
   # ── Pro Text ────────────────────────────────────────────────
   - label: "Pro Text MEDIUM T=0.0"
     detections_dir: outputs/h11/pv-diag-384/pro-medium-text-baseline/text-t0.0
+    # MIXED pool after the n=3 top-up (Session 98): batch run_1 (detections_*) +
+    # realtime run_2/run_3 (detections-*). Union glob collects all three.
+    glob: "*/detections*.geojson"
 
   - label: "Pro Text MEDIUM T=0.7"
     detections_dir: outputs/h11/n1-outstanding-384/pro-text-medium-t07
@@ -111,6 +114,9 @@ conditions:
   # ── Pro Image ───────────────────────────────────────────────
   - label: "Pro Image MEDIUM T=0.0"
     detections_dir: outputs/h11/pv-diag-384/pro-medium-image-baseline/image-t0.0
+    # MIXED pool after the n=3 top-up (Session 98): batch run_1 (detections_*) +
+    # realtime run_2/run_3 (detections-*). Union glob collects all three.
+    glob: "*/detections*.geojson"
 
   - label: "Pro Image MEDIUM T=0.7"
     detections_dir: outputs/h11/n1-outstanding-384/pro-image-medium-t07
