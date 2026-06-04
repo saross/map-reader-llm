@@ -4967,3 +4967,59 @@ is to read the two builders to the leaf, not to reason from "different code path
 result." The smoke test's surprising line ("Examples loaded: 0") was the cue to trace, and
 tracing converted an anxiety into a verified equivalence — the same source-read discipline as
 S96's MCC confirmation, applied pre-emptively before spend rather than under challenge.
+
+## Session 98 — 2026-06-03/04 — a human's premise refuted by a 30-second check, and the second artefact layer (a self-revision of a same-session finding)
+
+### Sequence 1 — "T=0.0 is deterministic, so the n=3 replicates there were wasted" (the human's premise, refuted)
+
+**Surprising fact** (proposed, not yet observed): the human, approving the n=3 top-up, noted
+that we'd run T=0.0 at n=3 (deterministic → replicates add nothing) but T=0.7 at n=1
+(stochastic → where replicates are needed), called the allocation inverted, and asked me to
+`/remember` "don't run n>1 on T=0.0." The premise — temperature 0 ⟹ deterministic output — is
+textbook-reasonable and I was inclined to ratify it.
+
+**Probe**: rather than record the memory, I compared the three T=0.0 replicates directly —
+feature counts and order-independent geometry hashes per pass, then per-run F1@20 m. They are
+**not** identical: `pro-text-high-t-0-0` ran 443/437/450 detections (distinct hashes), per-run
+F1 0.811/0.798/0.805; `pro-image-high-t-0-0` 550/549/546. A spread of ~0.013–0.016 F1 across
+"deterministic" passes.
+
+**Belief revision**: the premise is **false for this model**. Gemini 3.1 Pro at T=0.0 is
+*near*-deterministic but carries real run-to-run variance (MoE routing, non-deterministic
+kernels, server-side batching) comparable to ordinary between-run noise — so n>1 at T=0.0 is
+*not* wasted; it captures genuine variance. I did not bake the memory; I reported the spread,
+and the human agreed ("ok, not a waste of time then"). The notable move: the premise originated
+with the *human*, and the right response was to empirically check it before acting, not to
+defer to it — the same source-of-truth discipline as the config sequences, turned on an
+assumption rather than an artefact. "Temperature 0 means deterministic" is a confident default
+that an LLM (and a human) will assert without measuring; one cheap measurement refutes it.
+
+### Sequence 2 — "the genuine-Pro board has a sole Tier-1 leader (0.804)" (a revision of my OWN finding, committed hours earlier)
+
+**Surprising fact**: after bringing the two pv-diag medium-t-0-0 cells to n=3, their scores
+rose *more than replication noise should allow* — `pro-text-medium-t-0-0` 0.763 → 0.792,
+`pro-image-medium-t-0-0` 0.606 → 0.655. Adding two passes to a stable point should not move the
+mean by 0.04–0.06.
+
+**Probe**: a completeness audit of every pass feeding the 18 board cells. It isolated the cause
+to two passes only: the pv-diag medium-t-0-0 `run_1` *batch* passes had processed 462/464 of
+487 tiles (25/23 silent failures, `retries_total: 0`) — every other board pass was ≤1 failure.
+Per-pass micro-F1 confirmed the mechanism: the incomplete `run_1` scored 0.763 (text) / 0.606
+(image) — *exactly the board values* — because the ~25 unprocessed tiles were scored as
+false-negatives; the two complete fresh passes scored ~0.80 / ~0.67. The "improvement" was the
+removal of a coverage bias, not added samples.
+
+**Belief revision**: the **sole-leader finding I had committed and documented earlier this
+same session** (`pro-text-high-t-0-0` alone at 0.804) was an artefact of that incomplete
+`run_1`. With coverage repaired, `pro-text-medium-t-0-0` rises to 0.792 and re-enters a
+two-member Tier-1 tie. Combined with S97's model-identity revision, the board carried **two
+independent artefact layers** — Flash-mislabelled-as-Pro (peeled S97) and a silent coverage
+hole (peeled S98) — each of which independently produced a plausible, internally-consistent,
+*wrong* finding. The finding was only stable once both were removed.
+
+**Probe-type**: a magnitude-triggered completeness audit. The generalised detector: when adding
+data *improves* a metric by **more than sampling noise**, the prior question is "did the new
+data fix a bias in the old data?" — not "great, more is better." A rise that large from n=1→n=3
+is a smell, not a win. And the meta-detector across S97–S98: a committed, documented,
+confidently-worded finding is not evidence the underlying data has stopped moving; layered
+artefacts each look exactly like a result until the next layer is peeled.

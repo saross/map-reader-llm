@@ -6503,3 +6503,74 @@ session close (nohup; not harness-tracked — poll `_run_log.txt`).
 - Re-run parameter-control rests on the audited hash-equality of configs and the verified
   batch↔realtime payload equivalence; the *only* intended difference from the flash originals
   is the model (and the output-neutral mode/caching).
+
+## Session 98 — 2026-06-03/04 (genuine-Pro board finalised at n=3; finding moved sole-leader → 2-member tie)
+
+**Work**: Drove the N=1 board from Session 97's completed re-run to a final, verified state, in
+two waves. **Wave 1 (E57 replace).** Scored the 4 genuine-Pro re-run pools at 14-buffer+MCC
+(new `configs/n1-pro-rerun-eval-384px-14buf-mcc.yaml`, hyphen glob; on sapphire, $0 API);
+added run `n1-pro-rerun-384` to `run-registry.json`/`run-facts.json`/`run-conditions.json` (4
+proposer pools + 4 baseline conditions); **replaced** the 4 Flash-misdispatched
+`n1-outstanding` anti-diagonal cells on the board (`run-analyses.json` `conditions_compared`);
+corrected those 4 cells' `model_of_record` → `gemini-3-flash-preview` (document-don't-rename);
+refactored `n1_baseline_leaderboard_tiering.py` to read board membership from
+`conditions_compared` (single source of truth) + dual glob. Re-tiered: 120/153 → 7 tiers, **sole
+leader** `pro-text-high-t-0-0` (0.804). Rewrote the finding, updated errata E57 (billing
+reconciliation, impact Low→Med-High) + `n1-baseline-matrix.md` throughout; logged **Obs 338**.
+**Wave 2 (n=3 top-up, user-directed).** Brought all four medium-thinking Pro cells to n=3 (+8
+genuine-Pro realtime+flex+cache passes; dry-run smoke + 4 one-tile end-to-end tests passed
+first). A completeness audit then found the two **pv-diag medium-t-0-0** `run_1` batch passes
+were ~5 % incomplete (25/23 silent failures) — isolated to those two cells — and **recovered**
+them to 487/0 via the standard resume-merge path (single round each). Re-scored (n=3) and
+re-tiered: 129/153 → 7 tiers, **tie reopened to 2**: `pro-text-high-t-0-0` (0.804) +
+`pro-text-medium-t-0-0` (0.792), both genuine Pro text **T=0.0**. Rewrote the finding again,
+updated errata + doc (new changelog entry) + **Obs 339** (corrective, cross-refs 338); trimmed
+`outcome`/`predicted_outcome` to finding-first per the human's edit; **set
+`manually_verified_at` 2026-06-04** on the human's sign-off.
+
+**Results (final, verified)**: Tier 1 (tie_set) = `pro-text-high-t-0-0` (0.804) +
+`pro-text-medium-t-0-0` (0.792), statistically indistinguishable, both genuine Pro text T=0.0.
+Tier 2 = the two Pro-text T=0.7 cells (0.755/0.745) → clean **T=0.0 > T=0.7** within Pro text
+(H7); top four all Pro text, top six all genuine Pro (H6 uniform); MCC leader = genuine Pro
+image `pro-image-medium-t-0-7` (+0.911, 9th on F1 — metric-dependent winner). Recovery lifts:
+`pro-text-medium-t-0-0` 0.763→0.792, `pro-image-medium-t-0-0` 0.606→0.655.
+
+**Decided**: (1) **Replace** (not add-alongside) the Flash cells on the board — 18-cell
+genuine-model board; FDR over C(18,2) preserved (user's call). (2) **Recover** the incomplete
+`run_1` in place (vs drop to n=2 or pay for a run_4) — the user's "clear all failures" practice;
+makes n=3 all-complete with the pv-diag lineage preserved. (3) Mixed batch+realtime pools →
+**union glob** (`*/detections*.geojson`) in eval + tiering. (4) Minor flash-cell failures (≤5
+each, ≤1 %, non-Pro non-finalised cells; some unrecoverable parse-failures) **not swept** —
+immaterial. (5) `outcome` reports finding-first; recovery/artefact provenance compressed to a
+pointer (audit trail in deviations E57 / errata / Obs 338-339 / doc changelog).
+
+**Produced**: commits `d973a53d`…`54944e43` (all pushed). Key: `d973a53d` (eval config),
+`78d6dd75` (re-run evals), `e1f20da4` (structural + model-of-record), `59727c8a` (Wave-1
+re-tier), `c06aceee` (Wave-1 finding), `5c3480fd` (`run_n1_pro_topup.sh`), `309e08de` (top-up
+passes), `c07c5776` (run_1 recovery), `28c8438a` (union glob), `0f32ec00` (n=3 re-score),
+`e857c7b5` (final re-tier), `3b5dc1eb` (finalise finding), `54944e43` (sign-off). New scripts:
+`run_n1_pro_topup.sh`. Tests updated (counts, model-of-record both cases, renamed
+leaderboard-stub→finding test pinning the E57 replace invariant; 41 tier-1 pass).
+
+**Pending (next session)**:
+
+1. **Manual handoff** — the user is amending the `/handoff` command and will initiate it
+   himself; this session paused before it.
+2. **Carried** (unchanged): manifest batches C/D + pv-diag-384 full decomposition (Batch E);
+   sapphire crop copy + Syncthing removal; git history purge (post-submission).
+
+### Contextual assumptions
+
+- This is **Session 98**, spanning 2026-06-03 (start) into 2026-06-04 (sign-off after midnight
+  Sydney). A continuation of the closely-collaborative Session-97 arc — same N=1 board, same day.
+- API spend was **~$71** standard-rate estimate (the 8-pass top-up ≈ $70 + ~$0.96 recovery +
+  ~$0.07 one-tile tests), realtime+flex+cache. Image passes dominate (~$15.7 each). The
+  Session-97 re-run's "~$20–30" vs its ~$70 recorded `cost_estimate` is still unreconciled
+  against the actual Google billing console (dashboard had not updated; the user accepted the
+  estimate-based go).
+- The finding's stability is the key context: it passed through **three states in ~a day**
+  (pre-E57 tie → sole leader → final 2-member tie). The intermediate sole-leader commits/docs
+  (`c06aceee`, Obs 338) are superseded by the final ones; the audit trail is intentional, not a
+  mistake — each state was correct given the data known at that moment.
+- All heavy compute (evals, tiering, recovery dispatch) ran on **sapphire**, which was
+  concurrently running the user's Inscriptions JAMT MCMC job (undisturbed; ~20 of 24 cores free).

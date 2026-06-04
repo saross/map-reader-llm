@@ -8257,3 +8257,72 @@ framing, model identity) rather than pick from the options I offered via AskUser
 pattern is not indecision; it is that he wants to reason *toward* the decision with me, not
 ratify a menu I've pre-closed. The options were good but premature: on genuinely open
 research-judgement forks, the discussion *is* the work, and the multiple-choice skips it.
+
+---
+
+## Session 98 — 2026-06-03/04 — the finding moved three times in a day, and each move was a layer of artefact peeling off
+
+### Prompt: What surprised you about this session?
+
+That an **anti-noise** step turned out to be a **de-biasing** step, and reopened a finding I
+had already committed and documented hours earlier *in the same session*. The plan was modest:
+bring the four medium-thinking Pro cells from n=1 to n=3 so their estimates were less noisy.
+But the completeness check I ran almost incidentally during post-run verification found that
+two of those cells' original `run_1` batch passes were ~5 % incomplete (25/23 of 487 tiles
+silently failed, never retried) — and those incomplete values *were* the board scores. The
+top-up didn't reduce variance around a stable point; it removed a systematic downward bias.
+`pro-text-medium-t-0-0` rose 0.763 → 0.792 and **re-tied the leader**, dissolving the "sole
+leader" finding I'd confidently written into `run-analyses.json`, the errata, the methodology
+doc, and Obs 338 only a few hours before. The board passed through three states in roughly a
+day — pre-E57 tie (wrong pair, contaminated by Flash) → sole leader (genuine Pro, but one cell
+still coverage-degraded) → final two-member T=0.0 tie — and *each* transition was the same
+move: remove a data-quality artefact and let the real numbers show. I did not expect the
+artefacts to come in layers.
+
+### Prompt: What would you do differently if you replayed this session?
+
+Two things. First, I'd fold **pass-completeness** into the pre-flight, not discover it
+post-hoc. I audited *config identity* meticulously before spending (hashes, one-tile dispatch
+tests) — the E57 lesson, well learned — but "is each existing pass actually complete?" is a
+*different* axis I only checked because I happened to print per-pass tile counts during
+verification. Config-controlled and complete are orthogonal; the checklist had only the first.
+Second, and sharper: when I found the incomplete `run_1`, I built an `AskUserQuestion` offering
+A/B/C ways to *compose the n=3 around the degraded pass* (drop it / pay for a replacement /
+keep it with a caveat). The human rejected the menu and said, in effect, "just clear the
+failures" — invoking a standing recovery practice that *fixes* the hole rather than living with
+it. His option dominated all three of mine and I hadn't even framed it. I had anchored on
+"how do we cope with bad data" when the prior question was "can the data simply be repaired?"
+That is the second session running where my multiple-choice pre-closed a fork the human wanted
+open — and this time the option I omitted was the correct one.
+
+### Prompt: What is the single most important thing a future reader should know about this session?
+
+**The intermediate commits lie, and the final one is right.** Anyone scanning `git log` will
+see `c06aceee "rewrite n1 leaderboard finding"` describing a *sole leader* `pro-text-high-t-0-0`,
+with matching errata and Obs 338 — all internally consistent, all confidently worded, all
+**superseded within the same session** by `54944e43`. The verified, signed-off finding is a
+**two-member tie at T=0.0** (`pro-text-high-t-0-0` 0.804 + `pro-text-medium-t-0-0` 0.792). The
+audit trail is deliberate (Obs 339 cross-references and corrects Obs 338; the doc changelog
+carries a three-state table; nothing was rewritten in place) — but the lesson generalises: in a
+session that peels artefacts in layers, confidence at step *k* is not evidence the finding is
+stable, and a committed-and-documented result is not a finished one until the data underneath
+it has stopped moving.
+
+**Session**: 2026-06-03 into 2026-06-04, map-reader-llm, Session 98. Picked up Session 97's
+completed genuine-Pro re-run and drove the N=1 board to a final, verified state: scored the
+re-run, **replaced** the four Flash-misdispatched anti-diagonal cells on the board (user
+decision), brought all four medium Pro cells to **n=3**, discovered + **recovered** a ~5 %
+coverage hole in the two pv-diag medium-t-0-0 `run_1` passes (single resume-merge round each,
+genuine Pro verified), re-tiered (129/153 → 7 tiers; Tier-1 tie reopened to two T=0.0 cells),
+and rewrote/verified the finding (`manually_verified_at` set 2026-06-04). ~$71 API
+(top-up + recovery, realtime+flex+cache). Obs 338/339; errata E57 completeness addendum.
+Commits `d973a53d`…`54944e43`, all pushed.
+
+**Relational texture**: the human's standing practices are load-bearing infrastructure I should
+reach for *before* improvising. "Clear all failures via recovery" and "compute on sapphire" are
+not preferences to be re-derived each time — they are the right defaults, and twice this session
+the cleaner path was simply *his existing practice* applied without my re-litigating it. He also
+read the trimmed finding and asked the exactly-right editorial question ("less of how the
+sausage is made, unless it's material?") — pushing the cited `outcome` toward finding-first while
+trusting me to keep the audit trail somewhere. Calibration of what belongs in the headline vs the
+provenance is his instinct to set; mine to implement.

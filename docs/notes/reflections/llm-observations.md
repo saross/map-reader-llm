@@ -6042,3 +6042,56 @@ repeat does not mean cheap-to-get-wrong: a $25 run that quietly breaks parameter
 cost a paragraph of the paper. Audit the inputs that would fail *silently* (config drift,
 mode-dependent payload differences, model resolution) hardest, because those are the ones a
 successful-looking run will not reveal.
+
+## Session 98 — 2026-06-03/04 (the menu's missing option was the right one; config-controlled ≠ complete; operator hygiene on remote jobs)
+
+### When I framed a decision as "how to cope with bad data," the human's standing practice was to fix it — and I hadn't offered that option
+
+This is the Session-97 menu-vs-conversation observation with a sharper edge. Finding two
+incomplete passes, I posed an `AskUserQuestion`: A) drop the degraded pass (n=2), B) pay to
+replace it (n=3), C) keep it with a caveat. All three presupposed the bad pass was a
+*constraint to live with*. The human declined and said, in effect, "clear all failures via
+recovery" — invoking a standing practice that **repairs** the hole (resume-merge the missing
+tiles) and makes n=3 clean at near-zero cost. His path dominated all three of mine, and I had
+not framed it. The failure wasn't the menu format this time; it was that I anchored on
+*coping* before asking the prior question, **"can this simply be repaired?"** — and I skipped
+the human's own documented recovery practice as a first-class option.
+
+**The rule**: before enumerating ways to work *around* degraded data, spend one beat on
+whether the degradation is *fixable* — and check the human's standing practices (recovery,
+re-run, resume) as candidate options, not afterthoughts. A standing practice the human has
+used before is a stronger default than any menu I invent on the spot. The tell: my options all
+share a hidden premise ("the data stays bad"); if so, I haven't questioned the premise.
+
+### Config-controlled and complete are orthogonal pre-flight axes
+
+I audited *config identity* before spending — hashes against the originals, one-tile dispatch
+tests reading back `model_version` (the E57 lesson, well applied). But the two pv-diag cells
+that turned out to be 5 % incomplete were perfectly config-identical; their `run_1` had simply
+not finished (25/23 tiles failed silently, no retry). "Is this the right experiment?" and "did
+the experiment finish?" are different questions, and my pre-flight checklist only carried the
+first. I caught the incompleteness post-hoc, by chance, because I printed per-pass tile counts
+during verification — not because completeness was on the checklist.
+
+**The rule**: pre-flight (and re-score) verification needs a *coverage* check independent of
+the config check — for every pass feeding a scored cell, assert `items_processed == expected`
+and `items_failed == 0`, not just that the config hashes match. A pass can be byte-correct and
+still be missing data; the eval will silently score the gaps as false-negatives.
+
+### Operator hygiene: long remote jobs and the two ways I nearly corrupted a result
+
+Three operator mistakes on the sapphire compute jobs, all recoverable but instructive. (1) I
+ran an eval under `timeout 300 ssh sapphire '…'`; the eval exceeded 300 s, the timeout killed
+the *ssh*, but the remote Python kept running orphaned — and I then launched a *second* eval
+into the same output directory, briefly racing two writers. (2) Cleaning up, I ran
+`pkill -f "evaluate_detections.py …"` whose pattern matched the **pkill command's own
+argv**, so it killed the ssh session running it (exit 255). (3) Recovering from that, a naive
+`pgrep` count of "2" looked like a duplicate but was just parent + a spawned worker.
+
+**The rules**: for any remote job that may outlive the ssh timeout, **nohup + disown it and
+poll a log file** — never let an ssh-client timeout decide a compute job's fate. Never `pkill`
+on a pattern that also matches the controlling command (anchor it, exclude self with `[e]`-
+style globs, or kill by PID). And distinguish a process-pool's spawned workers from genuine
+duplicates by checking `ppid`/argv before acting. Two concurrent writers to one results
+directory is a silent-corruption risk exactly of the kind the rigour bar above is meant to
+prevent — the operator layer needs the same care as the experiment layer.
