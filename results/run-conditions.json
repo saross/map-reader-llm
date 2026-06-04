@@ -1496,6 +1496,276 @@
           "detections": "outputs/h11/pv-diag-384/pro-medium-text-baseline/text-t0.0"
         }
       ]
+    },
+    "h8-v2": {
+      "proposer_pools": {
+        "pure-positive-canon": {
+          "modality": "image",
+          "path": "pure-positive-canon"
+        },
+        "canonical": {
+          "modality": "image",
+          "path": "canonical"
+        },
+        "plus-hp": {
+          "modality": "image",
+          "path": "plus-hp"
+        },
+        "scale-4": {
+          "modality": "image",
+          "path": "scale-4"
+        },
+        "scale-8": {
+          "modality": "image",
+          "path": "scale-8"
+        },
+        "scale-16": {
+          "modality": "image",
+          "path": "scale-16"
+        },
+        "scale-32": {
+          "modality": "image",
+          "path": "scale-32"
+        }
+      },
+      "verifier_passes": {
+        "scale-4-verified": {
+          "modality": "image",
+          "path": "scale-4/verified"
+        },
+        "wbf-scale-4-verified": {
+          "modality": "image",
+          "path": "wbf/scale-4/verified"
+        },
+        "wbf-scale-8-verified": {
+          "modality": "image",
+          "path": "wbf/scale-8/verified"
+        }
+      },
+      "conditions": [
+        {
+          "label": "greedy-pure-positive-canon",
+          "architecture": "consensus",
+          "aggregation": "greedy",
+          "proposer_pool": "pure-positive-canon",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h8-v2/with-mcc/pure-positive-canon/evaluation.json",
+          "detections": "outputs/h8-v2/greedy/pure-positive-canon/consensus_t4.geojson"
+        },
+        {
+          "label": "greedy-canonical",
+          "architecture": "consensus",
+          "aggregation": "greedy",
+          "proposer_pool": "canonical",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h8-v2/with-mcc/canonical/evaluation.json",
+          "detections": "outputs/h8-v2/greedy/canonical/consensus_t4.geojson"
+        },
+        {
+          "label": "greedy-plus-hp",
+          "architecture": "consensus",
+          "aggregation": "greedy",
+          "proposer_pool": "plus-hp",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h8-v2/with-mcc/plus-hp/evaluation.json",
+          "detections": "outputs/h8-v2/greedy/plus-hp/consensus_t4.geojson"
+        },
+        {
+          "label": "greedy-scale-4",
+          "architecture": "consensus",
+          "aggregation": "greedy",
+          "proposer_pool": "scale-4",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h8-v2/with-mcc/scale-4/evaluation.json",
+          "detections": "outputs/h8-v2/greedy/scale-4/consensus_t4.geojson"
+        },
+        {
+          "label": "greedy-scale-8",
+          "architecture": "consensus",
+          "aggregation": "greedy",
+          "proposer_pool": "scale-8",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h8-v2/with-mcc/scale-8/evaluation.json",
+          "detections": "outputs/h8-v2/greedy/scale-8/consensus_t4.geojson"
+        },
+        {
+          "label": "greedy-scale-16",
+          "architecture": "consensus",
+          "aggregation": "greedy",
+          "proposer_pool": "scale-16",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h8-v2/with-mcc/scale-16/evaluation.json",
+          "detections": "outputs/h8-v2/greedy/scale-16/consensus_t4.geojson"
+        },
+        {
+          "label": "greedy-scale-32",
+          "architecture": "consensus",
+          "aggregation": "greedy",
+          "proposer_pool": "scale-32",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h8-v2/with-mcc/scale-32/evaluation.json",
+          "detections": "outputs/h8-v2/greedy/scale-32/consensus_t4.geojson"
+        },
+        {
+          "label": "wbf-pure-positive-canon",
+          "architecture": "consensus",
+          "aggregation": "wbf",
+          "proposer_pool": "pure-positive-canon",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h8-v2/wbf-mcc/pure-positive-canon/evaluation.json",
+          "detections": "outputs/h8-v2/wbf/pure-positive-canon/wbf_vote4.geojson"
+        },
+        {
+          "label": "wbf-canonical",
+          "architecture": "consensus",
+          "aggregation": "wbf",
+          "proposer_pool": "canonical",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h8-v2/wbf-mcc/canonical/evaluation.json",
+          "detections": "outputs/h8-v2/wbf/canonical/wbf_vote4.geojson"
+        },
+        {
+          "label": "wbf-plus-hp",
+          "architecture": "consensus",
+          "aggregation": "wbf",
+          "proposer_pool": "plus-hp",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h8-v2/wbf-mcc/plus-hp/evaluation.json",
+          "detections": "outputs/h8-v2/wbf/plus-hp/wbf_vote4.geojson"
+        },
+        {
+          "label": "wbf-scale-4",
+          "architecture": "consensus",
+          "aggregation": "wbf",
+          "proposer_pool": "scale-4",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h8-v2/wbf-mcc/scale-4/evaluation.json",
+          "detections": "outputs/h8-v2/wbf/scale-4/wbf_vote4.geojson"
+        },
+        {
+          "label": "wbf-scale-8",
+          "architecture": "consensus",
+          "aggregation": "wbf",
+          "proposer_pool": "scale-8",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h8-v2/wbf-mcc/scale-8/evaluation.json",
+          "detections": "outputs/h8-v2/wbf/scale-8/wbf_vote4.geojson"
+        },
+        {
+          "label": "wbf-scale-16",
+          "architecture": "consensus",
+          "aggregation": "wbf",
+          "proposer_pool": "scale-16",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h8-v2/wbf-mcc/scale-16/evaluation.json",
+          "detections": "outputs/h8-v2/wbf/scale-16/wbf_vote4.geojson"
+        },
+        {
+          "label": "wbf-scale-32",
+          "architecture": "consensus",
+          "aggregation": "wbf",
+          "proposer_pool": "scale-32",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h8-v2/wbf-mcc/scale-32/evaluation.json",
+          "detections": "outputs/h8-v2/wbf/scale-32/wbf_vote4.geojson"
+        },
+        {
+          "label": "verified-scale-4",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "scale-4",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": 0.1,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/rescore-2026-05-31/h8-v2/scale-4-verified-vt4-pt0.10/evaluation.json",
+          "detections": "outputs/h8-v2/scale-4/verified/detections_vt4_pt0.10.geojson"
+        },
+        {
+          "label": "verified-wbf-scale-4",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "scale-4",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": 0.1,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/rescore-2026-05-31/h8-v2/wbf-scale-4-verified-vt4-pt0.10/evaluation.json",
+          "detections": "outputs/h8-v2/wbf/scale-4/verified/detections_vt4_pt0.10.geojson"
+        },
+        {
+          "label": "verified-wbf-scale-8",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "scale-8",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/rescore-2026-05-31/h8-v2/wbf-scale-8-verified-vt4-pt0.15/evaluation.json",
+          "detections": "outputs/h8-v2/wbf/scale-8/verified/detections_vt4_pt0.15.geojson"
+        }
+      ]
     }
   }
 }

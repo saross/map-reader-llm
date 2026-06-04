@@ -2,9 +2,9 @@
 
 # Passes manifest
 
-> Generated 2026-06-04T02:05:53Z · 80 row(s) · schema v1.0.
+> Generated 2026-06-04T04:28:27Z · 118 row(s) · schema v1.0.
 >
-> **Coverage**: 80 pass(es) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 118 pass(es) across the decomposed runs (sub-step 3b in progress).
 
 | pass_id | model | modality | think | T | status | tiles | cost_usd |
 |---|---|---|---|---|---|---|---|
@@ -78,6 +78,44 @@
 | n1-pro-rerun-384::pro-image-medium-t07::run1 | gemini-3.1-pro-preview | image | medium | 0.7 | ok | 487 | 15.71665 |
 | n1-pro-rerun-384::pro-image-medium-t07::run2 | gemini-3.1-pro-preview | image | medium | 0.7 | ok | 487 | 15.716326 |
 | n1-pro-rerun-384::pro-image-medium-t07::run3 | gemini-3.1-pro-preview | image | medium | 0.7 | ok | 487 | 15.715846 |
+| h8-v2::pure-positive-canon::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 1.629811 |
+| h8-v2::pure-positive-canon::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 1.624442 |
+| h8-v2::pure-positive-canon::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 1.634089 |
+| h8-v2::pure-positive-canon::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 1.634119 |
+| h8-v2::pure-positive-canon::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 1.628599 |
+| h8-v2::canonical::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 1.972151 |
+| h8-v2::canonical::run2 | gemini-3-flash-preview | image | high | 0.7 | partial | 327 | 1.982267 |
+| h8-v2::canonical::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 1.968017 |
+| h8-v2::canonical::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 1.963796 |
+| h8-v2::canonical::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 1.971391 |
+| h8-v2::plus-hp::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 2.680339 |
+| h8-v2::plus-hp::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 2.679094 |
+| h8-v2::plus-hp::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 2.669935 |
+| h8-v2::plus-hp::run4 | gemini-3-flash-preview | image | high | 0.7 | partial | 327 | 2.685677 |
+| h8-v2::plus-hp::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 2.683111 |
+| h8-v2::scale-4::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 2.681356 |
+| h8-v2::scale-4::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 2.686957 |
+| h8-v2::scale-4::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 2.68441 |
+| h8-v2::scale-4::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 2.671474 |
+| h8-v2::scale-4::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 2.67331 |
+| h8-v2::scale-8::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.383344 |
+| h8-v2::scale-8::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.385927 |
+| h8-v2::scale-8::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.390254 |
+| h8-v2::scale-8::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.389447 |
+| h8-v2::scale-8::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.381889 |
+| h8-v2::scale-16::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 4.824209 |
+| h8-v2::scale-16::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 4.822573 |
+| h8-v2::scale-16::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 4.821226 |
+| h8-v2::scale-16::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 4.817957 |
+| h8-v2::scale-16::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 4.817674 |
+| h8-v2::scale-32::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 7.67222 |
+| h8-v2::scale-32::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 7.671206 |
+| h8-v2::scale-32::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 7.678555 |
+| h8-v2::scale-32::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 7.680248 |
+| h8-v2::scale-32::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 7.673872 |
+| h8-v2::scale-4-verified::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 1551 | 2.160168 |
+| h8-v2::wbf-scale-4-verified::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 15 | 0.021753 |
+| h8-v2::wbf-scale-8-verified::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 1053 | 1.3917 |
 | retest-h11-single-pass-384-t0::brief-text-t0::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | 0.0 |
 | retest-h11-single-pass-384-t0::brief-text-t0::run10 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | 0.0 |
 | retest-h11-single-pass-384-t0::brief-text-t0::run2 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | 0.0 |

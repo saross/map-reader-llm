@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-06-04T02:05:53Z · 114 row(s) · schema v1.0.
+> Generated 2026-06-04T04:28:27Z · 131 row(s) · schema v1.0.
 >
-> **Coverage**: 114 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 131 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -111,6 +111,23 @@
 | pv-diag-384::baseline-pro-image-medium-t-0-0 | single-pass | none | — | 1 | 0.6555 | 0.8677 | — |
 | pv-diag-384::baseline-pro-text-high-t-0-7 | single-pass | none | — | 1 | 0.745 | 0.7465 | — |
 | pv-diag-384::baseline-pro-text-medium-t-0-0 | single-pass | none | — | 1 | 0.7921 | 0.7903 | — |
+| h8-v2::greedy-pure-positive-canon | consensus | greedy | 4 | 5 | 0.697 | 0.6502 | 275 |
+| h8-v2::greedy-canonical | consensus | greedy | 4 | 5 | 0.7071 | 0.6785 | 258 |
+| h8-v2::greedy-plus-hp | consensus | greedy | 4 | 5 | 0.7051 | 0.7306 | 254 |
+| h8-v2::greedy-scale-4 | consensus | greedy | 4 | 5 | 0.7326 | 0.7714 | 257 |
+| h8-v2::greedy-scale-8 | consensus | greedy | 4 | 5 | 0.71 | 0.75 | 250 |
+| h8-v2::greedy-scale-16 | consensus | greedy | 4 | 5 | 0.693 | 0.7194 | 238 |
+| h8-v2::greedy-scale-32 | consensus | greedy | 4 | 5 | 0.713 | 0.7168 | 242 |
+| h8-v2::wbf-pure-positive-canon | consensus | wbf | 4 | 5 | 0.659 | 0.62 | 373 |
+| h8-v2::wbf-canonical | consensus | wbf | 4 | 5 | 0.6796 | 0.638 | 349 |
+| h8-v2::wbf-plus-hp | consensus | wbf | 4 | 5 | 0.6727 | 0.6654 | 344 |
+| h8-v2::wbf-scale-4 | consensus | wbf | 4 | 5 | 0.7373 | 0.7062 | 332 |
+| h8-v2::wbf-scale-8 | consensus | wbf | 4 | 5 | 0.6998 | 0.7302 | 324 |
+| h8-v2::wbf-scale-16 | consensus | wbf | 4 | 5 | 0.6894 | 0.7059 | 325 |
+| h8-v2::wbf-scale-32 | consensus | wbf | 4 | 5 | 0.6657 | 0.695 | 345 |
+| h8-v2::verified-scale-4 | proposer-verifier | verified | 4 | 5 | 0.7368 | 0.803 | 251 |
+| h8-v2::verified-wbf-scale-4 | proposer-verifier | verified | 4 | 5 | 0.737 | 0.8052 | 297 |
+| h8-v2::verified-wbf-scale-8 | proposer-verifier | verified | 4 | 5 | 0.7219 | 0.8133 | 285 |
 | retest-h11-single-pass-384-t0::single-pass-run_1 | single-pass | none | — | 1 | 0.5065 | 0.0427 | 1093 |
 | retest-h11-single-pass-384-t0::single-pass-run_2 | single-pass | none | — | 1 | 0.4994 | 0.0427 | 1107 |
 | retest-h11-single-pass-384-t0::single-pass-run_3 | single-pass | none | — | 1 | 0.4961 | 0.0427 | 1113 |
