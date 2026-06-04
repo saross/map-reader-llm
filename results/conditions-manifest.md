@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-06-04T04:37:44Z · 136 row(s) · schema v1.0.
+> Generated 2026-06-04T04:41:31Z · 142 row(s) · schema v1.0.
 >
-> **Coverage**: 136 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 142 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -116,6 +116,12 @@
 | pv-diag-384::baseline-pro-image-medium-t-0-0 | single-pass | none | — | 1 | 0.6555 | 0.8677 | — |
 | pv-diag-384::baseline-pro-text-high-t-0-7 | single-pass | none | — | 1 | 0.745 | 0.7465 | — |
 | pv-diag-384::baseline-pro-text-medium-t-0-0 | single-pass | none | — | 1 | 0.7921 | 0.7903 | — |
+| h12-v2::greedy-r1-hn-heavy | consensus | greedy | 4 | 5 | 0.7084 | 0.6956 | 240 |
+| h12-v2::greedy-r2-balanced | consensus | greedy | 4 | 5 | 0.7171 | 0.7168 | 236 |
+| h12-v2::greedy-r3-hp-heavy | consensus | greedy | 4 | 5 | 0.6876 | 0.7169 | 254 |
+| h12-v2::wbf-r1-hn-heavy | consensus | wbf | 4 | 5 | 0.6934 | 0.7185 | 330 |
+| h12-v2::wbf-r2-balanced | consensus | wbf | 4 | 5 | 0.6854 | 0.7181 | 323 |
+| h12-v2::wbf-r3-hp-heavy | consensus | wbf | 4 | 5 | 0.6832 | 0.7122 | 328 |
 | h8-v2::greedy-pure-positive-canon | consensus | greedy | 4 | 5 | 0.697 | 0.6502 | 275 |
 | h8-v2::greedy-canonical | consensus | greedy | 4 | 5 | 0.7071 | 0.6785 | 258 |
 | h8-v2::greedy-plus-hp | consensus | greedy | 4 | 5 | 0.7051 | 0.7306 | 254 |

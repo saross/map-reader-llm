@@ -1864,6 +1864,95 @@
           "detections": "outputs/h10/evaluation-v2/pool_160_hp4hn4/verified/detections_vt4_pt0.05.geojson"
         }
       ]
+    },
+    "h12-v2": {
+      "proposer_pools": {
+        "r1-hn-heavy": {
+          "modality": "image",
+          "path": "r1-hn-heavy"
+        },
+        "r3-hp-heavy": {
+          "modality": "image",
+          "path": "r3-hp-heavy"
+        }
+      },
+      "verifier_passes": {},
+      "conditions": [
+        {
+          "label": "greedy-r1-hn-heavy",
+          "architecture": "consensus",
+          "aggregation": "greedy",
+          "proposer_pool": "r1-hn-heavy",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h12-v2/with-mcc/r1-hn-heavy/evaluation.json",
+          "detections": "outputs/h12-v2/greedy/r1-hn-heavy/consensus_t4.geojson"
+        },
+        {
+          "label": "greedy-r2-balanced",
+          "architecture": "consensus",
+          "aggregation": "greedy",
+          "proposer_pool": "pool_160_hp4hn4",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h12-v2/with-mcc/r2-balanced/evaluation.json",
+          "detections": "outputs/h12-v2/greedy/r2-balanced/consensus_t4.geojson",
+          "source_run": "h10"
+        },
+        {
+          "label": "greedy-r3-hp-heavy",
+          "architecture": "consensus",
+          "aggregation": "greedy",
+          "proposer_pool": "r3-hp-heavy",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h12-v2/with-mcc/r3-hp-heavy/evaluation.json",
+          "detections": "outputs/h12-v2/greedy/r3-hp-heavy/consensus_t4.geojson"
+        },
+        {
+          "label": "wbf-r1-hn-heavy",
+          "architecture": "consensus",
+          "aggregation": "wbf",
+          "proposer_pool": "r1-hn-heavy",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h12-v2/wbf-mcc/r1-hn-heavy/evaluation.json",
+          "detections": "outputs/h12-v2/wbf/r1-hn-heavy/wbf_vote4.geojson"
+        },
+        {
+          "label": "wbf-r2-balanced",
+          "architecture": "consensus",
+          "aggregation": "wbf",
+          "proposer_pool": "pool_160_hp4hn4",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h12-v2/wbf-mcc/r2-balanced/evaluation.json",
+          "detections": "outputs/h12-v2/wbf/r2-balanced/wbf_vote4.geojson",
+          "source_run": "h10"
+        },
+        {
+          "label": "wbf-r3-hp-heavy",
+          "architecture": "consensus",
+          "aggregation": "wbf",
+          "proposer_pool": "r3-hp-heavy",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h12-v2/wbf-mcc/r3-hp-heavy/evaluation.json",
+          "detections": "outputs/h12-v2/wbf/r3-hp-heavy/wbf_vote4.geojson"
+        }
+      ]
     }
   }
 }

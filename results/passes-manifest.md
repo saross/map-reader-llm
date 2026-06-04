@@ -2,9 +2,9 @@
 
 # Passes manifest
 
-> Generated 2026-06-04T04:37:44Z · 140 row(s) · schema v1.0.
+> Generated 2026-06-04T04:41:31Z · 150 row(s) · schema v1.0.
 >
-> **Coverage**: 140 pass(es) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 150 pass(es) across the decomposed runs (sub-step 3b in progress).
 
 | pass_id | model | modality | think | T | status | tiles | cost_usd |
 |---|---|---|---|---|---|---|---|
@@ -100,6 +100,16 @@
 | n1-pro-rerun-384::pro-image-medium-t07::run1 | gemini-3.1-pro-preview | image | medium | 0.7 | ok | 487 | 15.71665 |
 | n1-pro-rerun-384::pro-image-medium-t07::run2 | gemini-3.1-pro-preview | image | medium | 0.7 | ok | 487 | 15.716326 |
 | n1-pro-rerun-384::pro-image-medium-t07::run3 | gemini-3.1-pro-preview | image | medium | 0.7 | ok | 487 | 15.715846 |
+| h12-v2::r1-hn-heavy::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.395056 |
+| h12-v2::r1-hn-heavy::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.400733 |
+| h12-v2::r1-hn-heavy::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.392723 |
+| h12-v2::r1-hn-heavy::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.394303 |
+| h12-v2::r1-hn-heavy::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.398324 |
+| h12-v2::r3-hp-heavy::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.397736 |
+| h12-v2::r3-hp-heavy::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.382915 |
+| h12-v2::r3-hp-heavy::run3 | gemini-3-flash-preview | image | high | 0.7 | partial | 327 | 3.397642 |
+| h12-v2::r3-hp-heavy::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.382294 |
+| h12-v2::r3-hp-heavy::run5 | gemini-3-flash-preview | image | high | 0.7 | partial | 327 | 3.391195 |
 | h8-v2::pure-positive-canon::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 1.629811 |
 | h8-v2::pure-positive-canon::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 1.624442 |
 | h8-v2::pure-positive-canon::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 1.634089 |
