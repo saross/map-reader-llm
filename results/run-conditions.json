@@ -2301,6 +2301,76 @@
           "detections": "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson"
         }
       ]
+    },
+    "verifier-t-pilot": {
+      "_note": "Batch E (tractable part). H2 verifier-TEMPERATURE pilot at era-2-487 (exploratory, revisits Phase 3d; Obs 286/287). 3 verified conditions = verifier T=0.0 / 0.5 / 1.0 at the chosen vote4 / prob0.20 operating point, scored 14-buffer+MCC. E55/GAP-10: the swept temperature lives in configuration.temperature_effective (cfg.temperature reads 0.0); the verifier_config.temperature here is the EFFECTIVE value. Condition labels are slug-safe (verified-t0-0 etc.); the real cell dirs are T0.0/T0.5/T1.0. T0.5/T1.0 are local dir-form verifier passes (slug keys t0-5/t1-0 -> real paths T0.5/T1.0); the T0.0 verifier baseline has NO local meta and reuses gold-standard-v2's verified-v1. proposer_pools EMPTY: the proposer is cross-run from gs-v2 (detect_brief-text, 5-pass consensus 4of5); conditions reference it by string -> benign pool-unresolved WARN. CAVEATS (run-facts flag): self-eval-bias (GT partly built from T=0.0 verified output); the T0.0 baseline is gs-v2's IMAGE verifier whereas T0.5/T1.0 use the text verifier (verify_adversarial-text) -> temperature/modality partly confounded; interpret per Obs 286/287. The verifier prob sweep (prob0.05..0.50) + other vote points collapse to vote4/prob0.20 per Q2 -> deferred _ignored_evals close-out sweep.",
+      "proposer_pools": {},
+      "verifier_passes": {
+        "t0-5": {
+          "modality": "text",
+          "path": "T0.5"
+        },
+        "t1-0": {
+          "modality": "text",
+          "path": "T1.0"
+        }
+      },
+      "conditions": [
+        {
+          "label": "verified-t0-0",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": 0.2,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/rescore-2026-05-31/verifier-t-pilot/T0.0-vote4-prob0.20/evaluation.json",
+          "detections": "outputs/verifier-t-pilot/T0.0/materialised/vote4_prob0.20.geojson"
+        },
+        {
+          "label": "verified-t0-5",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": 0.2,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.5
+          },
+          "eval_path": "results/rescore-2026-05-31/verifier-t-pilot/T0.5-vote4-prob0.20/evaluation.json",
+          "detections": "outputs/verifier-t-pilot/T0.5/materialised/vote4_prob0.20.geojson"
+        },
+        {
+          "label": "verified-t1-0",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": 0.2,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 1.0
+          },
+          "eval_path": "results/rescore-2026-05-31/verifier-t-pilot/T1.0-vote4-prob0.20/evaluation.json",
+          "detections": "outputs/verifier-t-pilot/T1.0/materialised/vote4_prob0.20.geojson"
+        }
+      ]
     }
   }
 }

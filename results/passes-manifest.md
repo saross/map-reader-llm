@@ -2,9 +2,9 @@
 
 # Passes manifest
 
-> Generated 2026-06-04T08:15:41Z · 190 row(s) · schema v1.0.
+> Generated 2026-06-04T08:32:21Z · 192 row(s) · schema v1.0.
 >
-> **Coverage**: 190 pass(es) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 192 pass(es) across the decomposed runs (sub-step 3b in progress).
 
 | pass_id | model | modality | think | T | status | tiles | cost_usd |
 |---|---|---|---|---|---|---|---|
@@ -198,3 +198,5 @@
 | retest-h11-single-pass-384-t0::brief-text-t0::run7 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | 0.0 |
 | retest-h11-single-pass-384-t0::brief-text-t0::run8 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | 0.0 |
 | retest-h11-single-pass-384-t0::brief-text-t0::run9 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | 0.0 |
+| verifier-t-pilot::t0-5::run1 | gemini-3-flash-preview | text | minimal | 0.5 | ok | 627 | 0.851831 |
+| verifier-t-pilot::t1-0::run1 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 614 | 0.854939 |

@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-06-04T08:15:41Z · 156 row(s) · schema v1.0.
+> Generated 2026-06-04T08:32:21Z · 159 row(s) · schema v1.0.
 >
-> **Coverage**: 156 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 159 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -164,3 +164,6 @@
 | retest-h11-single-pass-384-t0::single-pass-run_9 | single-pass | none | — | 1 | 0.5039 | 0.0742 | 1089 |
 | retest-h11-single-pass-384-t0::single-pass-run_10 | single-pass | none | — | 1 | 0.4997 | 0.0427 | 1090 |
 | retest-h11-single-pass-384-t0::baseline-flash-text-minimal-t-0-0 | single-pass | none | — | 1 | 0.5031 | 0.0459 | — |
+| verifier-t-pilot::verified-t0-0 | proposer-verifier | verified | 4 | 5 | 0.8507 | 0.7778 | 369 |
+| verifier-t-pilot::verified-t0-5 | proposer-verifier | verified | 4 | 5 | 0.8561 | 0.7714 | 371 |
+| verifier-t-pilot::verified-t1-0 | proposer-verifier | verified | 4 | 5 | 0.8422 | 0.7562 | 370 |
