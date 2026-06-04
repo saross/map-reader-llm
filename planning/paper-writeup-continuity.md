@@ -10,7 +10,7 @@ project state.
 
 ## ✅ Session 98 — START HERE — E57 GENUINE-PRO BOARD FINALISED AT n=3 (tie reopened)
 
-**Posted**: 2026-06-03, end of a very long collaborative day. Commits `d973a53d`→`3b5dc1eb`, all pushed. **Two API runs (genuine Pro, realtime+flex+cache): the n=3 top-up (8 passes) + the pv-diag run_1 recovery — ~$71 total estimated (image passes dominate at ~$15.7 each); $0.96 of that was the recovery.**
+**Posted**: 2026-06-03 into 2026-06-04 (signed off + reflected after midnight Sydney), end of a very long collaborative day. Commits `d973a53d`→`1d0254e8`, all pushed. **Two API runs (genuine Pro, realtime+flex+cache): the n=3 top-up (8 passes) + the pv-diag run_1 recovery — ~$71 total estimated (image passes dominate at ~$15.7 each); $0.96 of that was the recovery.** The finding is **signed off** (`manually_verified_at = 2026-06-04T02:05:31Z`, commit `54944e43`) and the session is **reflected** (commit `1d0254e8`).
 
 ### What Session 98 did (all committed + pushed)
 
@@ -21,8 +21,9 @@ project state.
 
 ### Open / next session
 
-- **Sign-off pending**: `n1-baseline-matrix-384.manually_verified_at` is **null** — Shawn to confirm the revised finding text, then set it.
-- **Minor flash-cell failures NOT swept**: ≤5 tiles each (≤1%) in old non-Pro non-finalised cells (some are parse-failures `resume` can't retry). Flagged in Obs 339; immaterial to any finding. Decide whether to clear.
+- **N=1 board is DONE** — genuine-model, complete-coverage, n≥3 for every Pro cell, finding signed off. Nothing outstanding on it. The `outcome` reports finding-first (recovery/artefact provenance compressed to a pointer; full trail in deviations E57 / errata E57 / Obs 338-339 / `n1-baseline-matrix.md` changelog).
+- **Minor flash-cell failures: WON'T-FIX** (Shawn's call) — ≤5 tiles each (≤1%) in old non-Pro non-finalised cells, some unrecoverable parse-failures; immaterial to any finding. "Results quality is very high overall." Not chasing.
+- **Carried (unchanged from S97)**: manifest batches C/D + pv-diag-384 full decomposition (Batch E / GAP-7); sapphire crop copy + Syncthing removal; git history purge of crop blobs (post-submission).
 - The Session 97 START-HERE below is now historical (its "first action: re-score" is done).
 
 ---
