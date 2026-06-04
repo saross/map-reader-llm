@@ -418,12 +418,41 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
     # --- verifier passes ---
     for vdir, spec in facts.get("verifier_passes", {}).items():
         modality, path = _pool_spec(spec)
-        meta_path = run_dir / (path or vdir) / "run.meta.json"
-        if not meta_path.exists():
+        # Two on-disk shapes for a verifier pass's run metadata:
+        #   * dir form    — ``<base>/run.meta.json`` (gold-standard-v2, verifier-t-pilot);
+        #   * sidecar form — ``<base>.meta.json`` next to the verified geojson
+        #     (the proposer-verifier strategy runs pv-384 / pv-512, which write one
+        #     ``verified-<strategy>.meta.json`` per strategy rather than a per-pass dir).
+        # Prefer the dir form so the gold-standard-v2 extraction stays byte-identical,
+        # then fall back to the sidecar.
+        base = path or vdir
+        dir_meta = run_dir / base / "run.meta.json"
+        sidecar_meta = run_dir / f"{base}.meta.json"
+        if dir_meta.exists():
+            meta_path = dir_meta
+        elif sidecar_meta.exists():
+            meta_path = sidecar_meta
+        else:
             continue
         meta = _load_json(meta_path)
         cfg = meta.get("configuration", {})
         usage = meta.get("usage_stats", {})
+        # Model-of-record (E57 / feedback_model_version_consistency): when the meta
+        # carries per-item identity, it is authoritative over configuration.model
+        # (which is a template default on some runs — gemini-3-flash where the API
+        # actually dispatched gemini-3-flash-preview). gold-standard-v2's verifier meta
+        # has no per_item_metadata, so it falls straight back to cfg.model (unchanged).
+        pim = meta.get("per_item_metadata") or []
+        model_used = (
+            next((it.get("model_used") for it in pim if it.get("model_used")), None)
+            or next((it.get("model_version") for it in pim if it.get("model_version")), None)
+            or cfg.get("model", "")
+        )
+        model_requested = (
+            next((it.get("model_requested") for it in pim if it.get("model_requested")), None)
+            or cfg.get("model")
+        )
+        model_version = next((it.get("model_version") for it in pim if it.get("model_version")), None)
         # GAP-8 carry-forward: request_count is per-candidate-crop, not tiles — kept
         # and documented until the true tile count is derived or this field is nulled.
         req_count = (usage.get("by_provider", {}).get("google_gemini", {}) or {}).get("request_count", 0)
@@ -432,9 +461,9 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             "run_id": run_id,
             "proposer_pool": vdir,
             "pass_n": 1,
-            "model_used": cfg.get("model", ""),
-            "model_requested": cfg.get("model"),
-            "model_version": None,
+            "model_used": model_used,
+            "model_requested": model_requested,
+            "model_version": model_version,
             "modality": modality,
             "thinking_level": cfg.get("thinking_level"),
             "temperature": _effective_temperature(cfg),

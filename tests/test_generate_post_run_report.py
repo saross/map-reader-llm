@@ -119,6 +119,29 @@ def test_verifier_pass_effective_temperature(registry):
 
 
 @pytest.mark.tier1
+def test_verifier_pass_sidecar_meta(registry):
+    # proposer-verifier strategy runs (pv-384/pv-512) store the verifier run metadata
+    # as a sibling sidecar `verified-<strategy>.meta.json`, not the gold-standard-v2
+    # per-pass `<dir>/run.meta.json`. The extractor must fall back to the sidecar, and
+    # the model-of-record must come from per_item_metadata (gemini-3-flash-preview),
+    # NOT configuration.model (the unreliable gemini-3-flash template default — E57).
+    ctx = {
+        "run_id": "proposer-verifier-512",
+        "directory_path": "outputs/h11/proposer-verifier-512",
+        "scope": {},
+        "proposer_pools": {},
+        "verifier_passes": {"verified-adversarial-text": {"modality": "text"}},
+        "conditions": [],
+    }
+    passes = extract_passes(ctx)
+    assert len(passes) == 1  # the sidecar meta is found despite no run_N dir
+    assert validate_row("passes", passes[0], registry) == []
+    assert passes[0]["model_used"] == "gemini-3-flash-preview"  # per-item, not cfg.model
+    assert passes[0]["model_version"] == "gemini-3-flash-preview"
+    assert passes[0]["status"] == "ok"
+
+
+@pytest.mark.tier1
 def test_gs_v2_conditions_valid_with_metrics(registry):
     conditions = extract_conditions(extraction_context("gold-standard-v2"))
     assert {c["label"] for c in conditions} == {
