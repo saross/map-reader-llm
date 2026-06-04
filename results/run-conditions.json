@@ -2140,6 +2140,167 @@
           "detections": "outputs/h11/proposer-verifier-512/verified-adversarial-text-accepted.geojson"
         }
       ]
+    },
+    "55maps-generalisation": {
+      "_note": "Batch B. SUPERSEDED ORIGINAL of 55maps-text-high-generalisation (same experiment: text, HIGH thinking, T=0.7; pre-recovery, executed 2026-04-10 via bash scripts before run_generalisation.py). Kept as a CITED ORIGINAL (not folded as a historical_alias, Session 100 decision) because its verified set (verified_detections_paired) is referenced by the paired-permutation analyses; archive-don't-delete. 1 verified condition at the standardised 14-buffer+MCC re-score vs the reviewed student GT (student-mounds-55maps-reviewed.geojson), era 55maps-8541. Two verifier_passes: 'verified' (the paired output) and 'verified-v2' (a verify_adversarial_v2.md prompt re-run that produced no scored geojson here). Consensus-4of5 + non-canonical sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md.",
+      "proposer_pools": {
+        "detect_brief-text": {
+          "modality": "text",
+          "path": "proposer/detect_brief-text"
+        }
+      },
+      "verifier_passes": {
+        "verified": "text",
+        "verified-v2": "text"
+      },
+      "conditions": [
+        {
+          "label": "verified-paired",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/rescore-2026-05-31/55maps-generalisation/verified-paired/evaluation.json",
+          "detections": "outputs/55maps-generalisation/verified/verified_detections_paired.geojson"
+        }
+      ]
+    },
+    "55maps-image-generalisation": {
+      "_note": "Batch B. Image-track out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). Image proposer (library_plus-hp, detect_brief-text-image.md) x text adversarial verifier (cross-modal). 1 verified condition at the 14-buffer+MCC re-score (consensus operating point 3of5). Consensus-3of5 + non-canonical mcc/backfill/cleaned-gt sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md.",
+      "proposer_pools": {
+        "library_plus-hp": {
+          "modality": "image",
+          "path": "proposer/library_plus-hp"
+        }
+      },
+      "verifier_passes": {
+        "verified": "text"
+      },
+      "conditions": [
+        {
+          "label": "verified",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "library_plus-hp",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": null,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/rescore-2026-05-31/55maps-image-generalisation/verified/evaluation.json",
+          "detections": "outputs/55maps-image-generalisation/verified/verified_detections.geojson"
+        }
+      ]
+    },
+    "55maps-text-high-generalisation": {
+      "_note": "Batch B. text HIGH thinking, T=0.7 (the publishable recovered successor of 55maps-generalisation). Out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). detect_brief-text proposer x text adversarial verifier. 1 verified condition at the standardised 14-buffer+MCC re-score (consensus operating point 4of5). Consensus-4of5 + non-canonical sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md.",
+      "proposer_pools": {
+        "detect_brief-text": {
+          "modality": "text",
+          "path": "proposer/detect_brief-text"
+        }
+      },
+      "verifier_passes": {
+        "verified": "text"
+      },
+      "conditions": [
+        {
+          "label": "verified",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/rescore-2026-05-31/55maps-text-high-generalisation/verified/evaluation.json",
+          "detections": "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson"
+        }
+      ]
+    },
+    "55maps-text-high-t0-3-generalisation": {
+      "_note": "Batch B. text HIGH thinking, T=0.3 (re-scored vs the reviewed student GT 2026-06-01 to match the other four runs, per protocol-errata E56). Out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). detect_brief-text proposer x text adversarial verifier. 1 verified condition at the standardised 14-buffer+MCC re-score (consensus operating point 4of5). Consensus-4of5 + non-canonical sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md.",
+      "proposer_pools": {
+        "detect_brief-text": {
+          "modality": "text",
+          "path": "proposer/detect_brief-text"
+        }
+      },
+      "verifier_passes": {
+        "verified": "text"
+      },
+      "conditions": [
+        {
+          "label": "verified",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/rescore-2026-05-31/55maps-text-high-t0.3-generalisation/verified/evaluation.json",
+          "detections": "outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson"
+        }
+      ]
+    },
+    "55maps-text-min-generalisation": {
+      "_note": "Batch B. text MINIMAL thinking. Out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). detect_brief-text proposer x text adversarial verifier. 1 verified condition at the standardised 14-buffer+MCC re-score (consensus operating point 4of5). Consensus-4of5 + non-canonical sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md.",
+      "proposer_pools": {
+        "detect_brief-text": {
+          "modality": "text",
+          "path": "proposer/detect_brief-text"
+        }
+      },
+      "verifier_passes": {
+        "verified": "text"
+      },
+      "conditions": [
+        {
+          "label": "verified",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/rescore-2026-05-31/55maps-text-min-generalisation/verified/evaluation.json",
+          "detections": "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson"
+        }
+      ]
     }
   }
 }

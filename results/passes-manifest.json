@@ -1,8 +1,1155 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-06-04T07:45:19Z",
+  "generated_at": "2026-06-04T08:15:41Z",
   "generator_version": "0.4.0",
   "passes": [
+    {
+      "pass_id": "55maps-generalisation::detect_brief-text::run1",
+      "run_id": "55maps-generalisation",
+      "proposer_pool": "detect_brief-text",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "high",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 1,
+      "tokens": {
+        "input_billed": 1502,
+        "input_cached": 0,
+        "output": 748,
+        "thinking": 2277,
+        "total": 4527
+      },
+      "cost_usd": 0.002995,
+      "wall_clock_s": 101.281424,
+      "timestamps": {
+        "start": "2026-04-10T00:48:54.638395+00:00",
+        "end": "2026-04-10T00:50:35.919819+00:00"
+      },
+      "retries": 1,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-generalisation/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-09.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-generalisation::detect_brief-text::run2",
+      "run_id": "55maps-generalisation",
+      "proposer_pool": "detect_brief-text",
+      "pass_n": 2,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "high",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 7,
+      "tokens": {
+        "input_billed": 10514,
+        "input_cached": 0,
+        "output": 3161,
+        "thinking": 30612,
+        "total": 44287
+      },
+      "cost_usd": 0.01474,
+      "wall_clock_s": 122.924879,
+      "timestamps": {
+        "start": "2026-04-10T01:00:55.498563+00:00",
+        "end": "2026-04-10T01:02:58.423442+00:00"
+      },
+      "retries": 5,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-generalisation/proposer/detect_brief-text/run_2/detections-detect_brief-text-3-flash-2026-04-09.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-generalisation::detect_brief-text::run3",
+      "run_id": "55maps-generalisation",
+      "proposer_pool": "detect_brief-text",
+      "pass_n": 3,
+      "model_used": "",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "high",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "partial",
+      "n_tiles_processed": 1,
+      "tokens": {
+        "input_billed": 0,
+        "input_cached": 0,
+        "output": 0,
+        "thinking": 0,
+        "total": 0
+      },
+      "cost_usd": 0.0,
+      "wall_clock_s": 197.647444,
+      "timestamps": {
+        "start": "2026-04-10T01:15:12.995297+00:00",
+        "end": "2026-04-10T01:18:30.642741+00:00"
+      },
+      "retries": 5,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-generalisation/proposer/detect_brief-text/run_3/detections-detect_brief-text-3-flash-2026-04-10.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-generalisation::detect_brief-text::run4",
+      "run_id": "55maps-generalisation",
+      "proposer_pool": "detect_brief-text",
+      "pass_n": 4,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "high",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 3,
+      "tokens": {
+        "input_billed": 4506,
+        "input_cached": 0,
+        "output": 2068,
+        "thinking": 10272,
+        "total": 16846
+      },
+      "cost_usd": 0.008457,
+      "wall_clock_s": 154.921947,
+      "timestamps": {
+        "start": "2026-04-10T01:24:34.278368+00:00",
+        "end": "2026-04-10T01:27:09.200315+00:00"
+      },
+      "retries": 2,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-generalisation/proposer/detect_brief-text/run_4/detections-detect_brief-text-3-flash-2026-04-10.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-generalisation::detect_brief-text::run5",
+      "run_id": "55maps-generalisation",
+      "proposer_pool": "detect_brief-text",
+      "pass_n": 5,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "high",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 4,
+      "tokens": {
+        "input_billed": 6008,
+        "input_cached": 0,
+        "output": 1577,
+        "thinking": 15563,
+        "total": 23148
+      },
+      "cost_usd": 0.007735,
+      "wall_clock_s": 154.176137,
+      "timestamps": {
+        "start": "2026-04-10T01:32:57.263635+00:00",
+        "end": "2026-04-10T01:35:31.439772+00:00"
+      },
+      "retries": 3,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-generalisation/proposer/detect_brief-text/run_5/detections-detect_brief-text-3-flash-2026-04-10.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-generalisation::verified::run1",
+      "run_id": "55maps-generalisation",
+      "proposer_pool": "verified",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+      "library_hash": "no_examples",
+      "status": "ok",
+      "n_tiles_processed": 10154,
+      "tokens": {
+        "input_billed": 15977472,
+        "input_cached": 0,
+        "output": 1479940,
+        "thinking": 0,
+        "total": 17457412
+      },
+      "cost_usd": 12.428556,
+      "wall_clock_s": 3939.320867,
+      "timestamps": {
+        "start": "2026-04-10T02:25:41.723999+00:00",
+        "end": "2026-04-10T03:31:21.044866+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-generalisation/verified/run.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-generalisation::verified-v2::run1",
+      "run_id": "55maps-generalisation",
+      "proposer_pool": "verified-v2",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "c4c9184199a2b37387135c744a0907b9589ef769acf8f91a277649dae4204643",
+      "library_hash": "no_examples",
+      "status": "ok",
+      "n_tiles_processed": 3,
+      "tokens": {
+        "input_billed": 5667,
+        "input_cached": 0,
+        "output": 496,
+        "thinking": 0,
+        "total": 6163
+      },
+      "cost_usd": 0.004322,
+      "wall_clock_s": 4.479926,
+      "timestamps": {
+        "start": "2026-05-06T08:35:38.043901+00:00",
+        "end": "2026-05-06T08:35:42.523827+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-generalisation/verified-v2/run.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-image-generalisation::library_plus-hp::run1",
+      "run_id": "55maps-image-generalisation",
+      "proposer_pool": "library_plus-hp",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "image",
+      "thinking_level": "high",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "3f7f028c2eb90b2dfe4ff06b2bbfef75a35d93c22a16e756dd63da37c97ea3cb",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 267612302,
+        "input_cached": 248534147,
+        "output": 2598667,
+        "thinking": 38038851,
+        "total": 308249820
+      },
+      "cost_usd": 141.602153,
+      "wall_clock_s": 6651.552549,
+      "timestamps": {
+        "start": "2026-04-18T00:15:52.716709+00:00",
+        "end": "2026-05-03T01:50:36.822927+00:00"
+      },
+      "retries": 868,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-image-generalisation/proposer/library_plus-hp/run_1/detections-library_plus-hp-3-flash-2026-04-18.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-image-generalisation::library_plus-hp::run2",
+      "run_id": "55maps-image-generalisation",
+      "proposer_pool": "library_plus-hp",
+      "pass_n": 2,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "image",
+      "thinking_level": "high",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "3f7f028c2eb90b2dfe4ff06b2bbfef75a35d93c22a16e756dd63da37c97ea3cb",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 267534012,
+        "input_cached": 248534147,
+        "output": 2580631,
+        "thinking": 38334485,
+        "total": 308449128
+      },
+      "cost_usd": 141.50889999999998,
+      "wall_clock_s": 6558.378283,
+      "timestamps": {
+        "start": "2026-04-18T01:11:01.635403+00:00",
+        "end": "2026-05-03T01:51:15.934096+00:00"
+      },
+      "retries": 898,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-image-generalisation/proposer/library_plus-hp/run_2/detections-library_plus-hp-3-flash-2026-04-18.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-image-generalisation::library_plus-hp::run3",
+      "run_id": "55maps-image-generalisation",
+      "proposer_pool": "library_plus-hp",
+      "pass_n": 3,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "image",
+      "thinking_level": "high",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "3f7f028c2eb90b2dfe4ff06b2bbfef75a35d93c22a16e756dd63da37c97ea3cb",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 267612302,
+        "input_cached": 248574792,
+        "output": 2560387,
+        "thinking": 37982416,
+        "total": 308155105
+      },
+      "cost_usd": 141.48731099999998,
+      "wall_clock_s": 4025.2770100000002,
+      "timestamps": {
+        "start": "2026-04-18T02:09:08.137347+00:00",
+        "end": "2026-05-03T01:52:55.910689+00:00"
+      },
+      "retries": 863,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-image-generalisation/proposer/library_plus-hp/run_3/detections-library_plus-hp-3-flash-2026-04-18.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-image-generalisation::library_plus-hp::run4",
+      "run_id": "55maps-image-generalisation",
+      "proposer_pool": "library_plus-hp",
+      "pass_n": 4,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "image",
+      "thinking_level": "high",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "3f7f028c2eb90b2dfe4ff06b2bbfef75a35d93c22a16e756dd63da37c97ea3cb",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 267518354,
+        "input_cached": 248542276,
+        "output": 2533840,
+        "thinking": 37737641,
+        "total": 307789835
+      },
+      "cost_usd": 141.360696,
+      "wall_clock_s": 3903.113091,
+      "timestamps": {
+        "start": "2026-04-18T02:41:56.530586+00:00",
+        "end": "2026-05-03T01:53:26.363159+00:00"
+      },
+      "retries": 888,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-image-generalisation/proposer/library_plus-hp/run_4/detections-library_plus-hp-3-flash-2026-04-18.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-image-generalisation::library_plus-hp::run5",
+      "run_id": "55maps-image-generalisation",
+      "proposer_pool": "library_plus-hp",
+      "pass_n": 5,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "image",
+      "thinking_level": "high",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "3f7f028c2eb90b2dfe4ff06b2bbfef75a35d93c22a16e756dd63da37c97ea3cb",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 267565328,
+        "input_cached": 248566663,
+        "output": 2571619,
+        "thinking": 38318890,
+        "total": 308455837
+      },
+      "cost_usd": 141.49752,
+      "wall_clock_s": 4103.804147,
+      "timestamps": {
+        "start": "2026-04-18T03:14:19.089186+00:00",
+        "end": "2026-05-03T01:54:02.671199+00:00"
+      },
+      "retries": 864,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-image-generalisation/proposer/library_plus-hp/run_5/detections-library_plus-hp-3-flash-2026-04-18.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-image-generalisation::verified::run1",
+      "run_id": "55maps-image-generalisation",
+      "proposer_pool": "verified",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+      "library_hash": "no_examples",
+      "status": "ok",
+      "n_tiles_processed": 1,
+      "tokens": {
+        "input_billed": 1792,
+        "input_cached": 0,
+        "output": 186,
+        "thinking": 0,
+        "total": 1978
+      },
+      "cost_usd": 0.001454,
+      "wall_clock_s": 6.251105,
+      "timestamps": {
+        "start": "2026-05-03T02:42:31.913712+00:00",
+        "end": "2026-05-03T02:42:38.164817+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-image-generalisation/verified/run.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-high-generalisation::detect_brief-text::run1",
+      "run_id": "55maps-text-high-generalisation",
+      "proposer_pool": "detect_brief-text",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "high",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 25694714,
+        "input_cached": 0,
+        "output": 3345558,
+        "thinking": 45708799,
+        "total": 74749071
+      },
+      "cost_usd": 22.884031,
+      "wall_clock_s": 3968.761264,
+      "timestamps": {
+        "start": "2026-04-18T14:27:04.476301+00:00",
+        "end": "2026-05-02T15:46:35.545139+00:00"
+      },
+      "retries": 1266,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-18.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-high-generalisation::detect_brief-text::run2",
+      "run_id": "55maps-text-high-generalisation",
+      "proposer_pool": "detect_brief-text",
+      "pass_n": 2,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "high",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 25720248,
+        "input_cached": 0,
+        "output": 3308271,
+        "thinking": 46002708,
+        "total": 75031227
+      },
+      "cost_usd": 22.784937,
+      "wall_clock_s": 3825.614841,
+      "timestamps": {
+        "start": "2026-04-18T14:58:56.908819+00:00",
+        "end": "2026-05-02T15:48:52.162722+00:00"
+      },
+      "retries": 1196,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_2/detections-detect_brief-text-3-flash-2026-04-18.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-high-generalisation::detect_brief-text::run3",
+      "run_id": "55maps-text-high-generalisation",
+      "proposer_pool": "detect_brief-text",
+      "pass_n": 3,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "high",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 25714240,
+        "input_cached": 0,
+        "output": 3274720,
+        "thinking": 46260946,
+        "total": 75249906
+      },
+      "cost_usd": 22.68128,
+      "wall_clock_s": 3991.491637,
+      "timestamps": {
+        "start": "2026-04-18T15:29:43.937118+00:00",
+        "end": "2026-05-02T15:50:42.409019+00:00"
+      },
+      "retries": 1238,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_3/detections-detect_brief-text-3-flash-2026-04-18.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-high-generalisation::detect_brief-text::run4",
+      "run_id": "55maps-text-high-generalisation",
+      "proposer_pool": "detect_brief-text",
+      "pass_n": 4,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "high",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 25699220,
+        "input_cached": 0,
+        "output": 3284285,
+        "thinking": 46441456,
+        "total": 75424961
+      },
+      "cost_usd": 22.702465,
+      "wall_clock_s": 3758.940909,
+      "timestamps": {
+        "start": "2026-04-18T16:02:07.109479+00:00",
+        "end": "2026-05-02T15:52:12.076527+00:00"
+      },
+      "retries": 1322,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_4/detections-detect_brief-text-3-flash-2026-04-18.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-high-generalisation::detect_brief-text::run5",
+      "run_id": "55maps-text-high-generalisation",
+      "proposer_pool": "detect_brief-text",
+      "pass_n": 5,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "high",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 25697718,
+        "input_cached": 0,
+        "output": 3354402,
+        "thinking": 46083484,
+        "total": 75135604
+      },
+      "cost_usd": 22.912065,
+      "wall_clock_s": 3750.750353,
+      "timestamps": {
+        "start": "2026-04-18T16:32:44.298650+00:00",
+        "end": "2026-05-02T15:53:28.070461+00:00"
+      },
+      "retries": 1241,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_5/detections-detect_brief-text-3-flash-2026-04-18.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-high-generalisation::verified::run1",
+      "run_id": "55maps-text-high-generalisation",
+      "proposer_pool": "verified",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+      "library_hash": "no_examples",
+      "status": "ok",
+      "n_tiles_processed": 74,
+      "tokens": {
+        "input_billed": 132608,
+        "input_cached": 0,
+        "output": 11792,
+        "thinking": 0,
+        "total": 144400
+      },
+      "cost_usd": 0.10168,
+      "wall_clock_s": 14.640159,
+      "timestamps": {
+        "start": "2026-05-02T23:46:11.794955+00:00",
+        "end": "2026-05-02T23:46:26.435114+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-high-generalisation/verified/run.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-high-t0-3-generalisation::detect_brief-text::run1",
+      "run_id": "55maps-text-high-t0-3-generalisation",
+      "proposer_pool": "detect_brief-text",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "high",
+      "temperature": 0.3,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 12834590,
+        "input_cached": 0,
+        "output": 1454547,
+        "thinking": 29724969,
+        "total": 44014106
+      },
+      "cost_usd": 10.780936,
+      "wall_clock_s": 3773.5505820000003,
+      "timestamps": {
+        "start": "2026-04-26T08:18:18.950602+00:00",
+        "end": "2026-04-27T00:39:14.556680+00:00"
+      },
+      "retries": 2194,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-high-t0.3-generalisation/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-26.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-high-t0-3-generalisation::detect_brief-text::run2",
+      "run_id": "55maps-text-high-t0-3-generalisation",
+      "proposer_pool": "detect_brief-text",
+      "pass_n": 2,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "high",
+      "temperature": 0.3,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 12831586,
+        "input_cached": 0,
+        "output": 1458548,
+        "thinking": 30586741,
+        "total": 44876875
+      },
+      "cost_usd": 10.791437,
+      "wall_clock_s": 3491.120182,
+      "timestamps": {
+        "start": "2026-04-26T09:20:16.327477+00:00",
+        "end": "2026-04-27T00:40:06.490804+00:00"
+      },
+      "retries": 2125,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-high-t0.3-generalisation/proposer/detect_brief-text/run_2/detections-detect_brief-text-3-flash-2026-04-26.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-high-t0-3-generalisation::detect_brief-text::run3",
+      "run_id": "55maps-text-high-t0-3-generalisation",
+      "proposer_pool": "detect_brief-text",
+      "pass_n": 3,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "high",
+      "temperature": 0.3,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 12833088,
+        "input_cached": 0,
+        "output": 1466298,
+        "thinking": 30215874,
+        "total": 44515260
+      },
+      "cost_usd": 10.815438,
+      "wall_clock_s": 4111.751503,
+      "timestamps": {
+        "start": "2026-04-26T10:17:58.837833+00:00",
+        "end": "2026-04-27T00:43:37.325085+00:00"
+      },
+      "retries": 2339,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-high-t0.3-generalisation/proposer/detect_brief-text/run_3/detections-detect_brief-text-3-flash-2026-04-26.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-high-t0-3-generalisation::detect_brief-text::run4",
+      "run_id": "55maps-text-high-t0-3-generalisation",
+      "proposer_pool": "detect_brief-text",
+      "pass_n": 4,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "high",
+      "temperature": 0.3,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 12836092,
+        "input_cached": 0,
+        "output": 1463113,
+        "thinking": 30848784,
+        "total": 45147989
+      },
+      "cost_usd": 10.807385,
+      "wall_clock_s": 4218.948368,
+      "timestamps": {
+        "start": "2026-04-26T11:23:09.627744+00:00",
+        "end": "2026-04-27T00:44:47.470015+00:00"
+      },
+      "retries": 2499,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-high-t0.3-generalisation/proposer/detect_brief-text/run_4/detections-detect_brief-text-3-flash-2026-04-26.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-high-t0-3-generalisation::detect_brief-text::run5",
+      "run_id": "55maps-text-high-t0-3-generalisation",
+      "proposer_pool": "detect_brief-text",
+      "pass_n": 5,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "high",
+      "temperature": 0.3,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 12830084,
+        "input_cached": 0,
+        "output": 1469848,
+        "thinking": 30116146,
+        "total": 44416078
+      },
+      "cost_usd": 10.824586,
+      "wall_clock_s": 4815.735172000001,
+      "timestamps": {
+        "start": "2026-04-26T12:31:34.462321+00:00",
+        "end": "2026-04-27T00:51:21.693946+00:00"
+      },
+      "retries": 3165,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-high-t0.3-generalisation/proposer/detect_brief-text/run_5/detections-detect_brief-text-3-flash-2026-04-26.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-high-t0-3-generalisation::verified::run1",
+      "run_id": "55maps-text-high-t0-3-generalisation",
+      "proposer_pool": "verified",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+      "library_hash": "no_examples",
+      "status": "ok",
+      "n_tiles_processed": 10539,
+      "tokens": {
+        "input_billed": 17758720,
+        "input_cached": 0,
+        "output": 1640461,
+        "thinking": 0,
+        "total": 19399181
+      },
+      "cost_usd": 13.800743,
+      "wall_clock_s": 8598.818748,
+      "timestamps": {
+        "start": "2026-04-26T13:56:06.921427+00:00",
+        "end": "2026-04-27T01:05:41.623088+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-high-t0.3-generalisation/verified/run.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-min-generalisation::detect_brief-text::run1",
+      "run_id": "55maps-text-min-generalisation",
+      "proposer_pool": "detect_brief-text",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 12828582,
+        "input_cached": 0,
+        "output": 973718,
+        "thinking": 0,
+        "total": 13802300
+      },
+      "cost_usd": 9.335445,
+      "wall_clock_s": 951.633119,
+      "timestamps": {
+        "start": "2026-04-18T10:15:20.791542+00:00",
+        "end": "2026-04-18T10:31:12.424661+00:00"
+      },
+      "retries": 11,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-min-generalisation/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-18.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-min-generalisation::detect_brief-text::run2",
+      "run_id": "55maps-text-min-generalisation",
+      "proposer_pool": "detect_brief-text",
+      "pass_n": 2,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 12828582,
+        "input_cached": 0,
+        "output": 977773,
+        "thinking": 0,
+        "total": 13806355
+      },
+      "cost_usd": 9.34761,
+      "wall_clock_s": 1496.675695,
+      "timestamps": {
+        "start": "2026-04-18T10:31:14.049618+00:00",
+        "end": "2026-04-18T10:56:10.725313+00:00"
+      },
+      "retries": 6,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-min-generalisation/proposer/detect_brief-text/run_2/detections-detect_brief-text-3-flash-2026-04-18.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-min-generalisation::detect_brief-text::run3",
+      "run_id": "55maps-text-min-generalisation",
+      "proposer_pool": "detect_brief-text",
+      "pass_n": 3,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 12828582,
+        "input_cached": 0,
+        "output": 980412,
+        "thinking": 0,
+        "total": 13808994
+      },
+      "cost_usd": 9.355527,
+      "wall_clock_s": 965.698588,
+      "timestamps": {
+        "start": "2026-04-18T10:56:12.388586+00:00",
+        "end": "2026-04-18T11:12:18.087174+00:00"
+      },
+      "retries": 18,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-min-generalisation/proposer/detect_brief-text/run_3/detections-detect_brief-text-3-flash-2026-04-18.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-min-generalisation::detect_brief-text::run4",
+      "run_id": "55maps-text-min-generalisation",
+      "proposer_pool": "detect_brief-text",
+      "pass_n": 4,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 12828582,
+        "input_cached": 0,
+        "output": 972669,
+        "thinking": 0,
+        "total": 13801251
+      },
+      "cost_usd": 9.332298,
+      "wall_clock_s": 947.189301,
+      "timestamps": {
+        "start": "2026-04-18T11:12:19.716957+00:00",
+        "end": "2026-04-18T11:28:06.906258+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-min-generalisation/proposer/detect_brief-text/run_4/detections-detect_brief-text-3-flash-2026-04-18.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-min-generalisation::detect_brief-text::run5",
+      "run_id": "55maps-text-min-generalisation",
+      "proposer_pool": "detect_brief-text",
+      "pass_n": 5,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 12828582,
+        "input_cached": 0,
+        "output": 979382,
+        "thinking": 0,
+        "total": 13807964
+      },
+      "cost_usd": 9.352437,
+      "wall_clock_s": 949.958837,
+      "timestamps": {
+        "start": "2026-04-18T11:28:08.502363+00:00",
+        "end": "2026-04-18T11:43:58.461200+00:00"
+      },
+      "retries": 26,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-min-generalisation/proposer/detect_brief-text/run_5/detections-detect_brief-text-3-flash-2026-04-18.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-min-generalisation::verified::run1",
+      "run_id": "55maps-text-min-generalisation",
+      "proposer_pool": "verified",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+      "library_hash": "no_examples",
+      "status": "ok",
+      "n_tiles_processed": 39,
+      "tokens": {
+        "input_billed": 69888,
+        "input_cached": 0,
+        "output": 5967,
+        "thinking": 0,
+        "total": 75855
+      },
+      "cost_usd": 0.052845,
+      "wall_clock_s": 7.14809,
+      "timestamps": {
+        "start": "2026-05-03T01:55:53.225867+00:00",
+        "end": "2026-05-03T01:56:00.373957+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-min-generalisation/verified/run.meta.json"
+        ],
+        "last_extracted_at": "2026-06-04T08:15:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
     {
       "pass_id": "gold-standard-v2::detect_brief-text::run1",
       "run_id": "gold-standard-v2",
@@ -36,7 +1183,7 @@
         "source_files": [
           "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-10.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -73,7 +1220,7 @@
         "source_files": [
           "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_2/detections-detect_brief-text-3-flash-2026-04-10.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -110,7 +1257,7 @@
         "source_files": [
           "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_3/detections-detect_brief-text-3-flash-2026-04-10.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -147,7 +1294,7 @@
         "source_files": [
           "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_4/detections-detect_brief-text-3-flash-2026-04-10.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -184,7 +1331,7 @@
         "source_files": [
           "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_5/detections-detect_brief-text-3-flash-2026-04-10.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -221,7 +1368,7 @@
         "source_files": [
           "outputs/gs/gold-standard-v2/verified-v1/run.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -258,7 +1405,7 @@
         "source_files": [
           "outputs/h10/evaluation-v2/pool_020_hp4hn4/run_1/detections-detect_pool_020_hp4hn4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -295,7 +1442,7 @@
         "source_files": [
           "outputs/h10/evaluation-v2/pool_020_hp4hn4/run_2/detections-detect_pool_020_hp4hn4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -332,7 +1479,7 @@
         "source_files": [
           "outputs/h10/evaluation-v2/pool_020_hp4hn4/run_3/detections-detect_pool_020_hp4hn4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -369,7 +1516,7 @@
         "source_files": [
           "outputs/h10/evaluation-v2/pool_020_hp4hn4/run_4/detections-detect_pool_020_hp4hn4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -406,7 +1553,7 @@
         "source_files": [
           "outputs/h10/evaluation-v2/pool_020_hp4hn4/run_5/detections-detect_pool_020_hp4hn4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -443,7 +1590,7 @@
         "source_files": [
           "outputs/h10/evaluation-v2/pool_040_hp4hn4/run_1/detections-detect_pool_040_hp4hn4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -480,7 +1627,7 @@
         "source_files": [
           "outputs/h10/evaluation-v2/pool_040_hp4hn4/run_2/detections-detect_pool_040_hp4hn4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -517,7 +1664,7 @@
         "source_files": [
           "outputs/h10/evaluation-v2/pool_040_hp4hn4/run_3/detections-detect_pool_040_hp4hn4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -554,7 +1701,7 @@
         "source_files": [
           "outputs/h10/evaluation-v2/pool_040_hp4hn4/run_4/detections-detect_pool_040_hp4hn4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -591,7 +1738,7 @@
         "source_files": [
           "outputs/h10/evaluation-v2/pool_040_hp4hn4/run_5/detections-detect_pool_040_hp4hn4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -628,7 +1775,7 @@
         "source_files": [
           "outputs/h10/evaluation-v2/pool_080_hp4hn4/run_1/detections-detect_pool_080_hp4hn4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -665,7 +1812,7 @@
         "source_files": [
           "outputs/h10/evaluation-v2/pool_080_hp4hn4/run_2/detections-detect_pool_080_hp4hn4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -702,7 +1849,7 @@
         "source_files": [
           "outputs/h10/evaluation-v2/pool_080_hp4hn4/run_3/detections-detect_pool_080_hp4hn4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -739,7 +1886,7 @@
         "source_files": [
           "outputs/h10/evaluation-v2/pool_080_hp4hn4/run_4/detections-detect_pool_080_hp4hn4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -776,7 +1923,7 @@
         "source_files": [
           "outputs/h10/evaluation-v2/pool_080_hp4hn4/run_5/detections-detect_pool_080_hp4hn4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -813,7 +1960,7 @@
         "source_files": [
           "outputs/h10/evaluation-v2/pool_160_hp4hn4/run_1/detections-detect_pool_160_hp4hn4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -850,7 +1997,7 @@
         "source_files": [
           "outputs/h10/evaluation-v2/pool_160_hp4hn4/run_2/detections-detect_pool_160_hp4hn4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -887,7 +2034,7 @@
         "source_files": [
           "outputs/h10/evaluation-v2/pool_160_hp4hn4/run_3/detections-detect_pool_160_hp4hn4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -924,7 +2071,7 @@
         "source_files": [
           "outputs/h10/evaluation-v2/pool_160_hp4hn4/run_4/detections-detect_pool_160_hp4hn4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -961,7 +2108,7 @@
         "source_files": [
           "outputs/h10/evaluation-v2/pool_160_hp4hn4/run_5/detections-detect_pool_160_hp4hn4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -998,7 +2145,7 @@
         "source_files": [
           "outputs/h10/evaluation-v2/pool_020_hp4hn4/verified/run.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1035,7 +2182,7 @@
         "source_files": [
           "outputs/h10/evaluation-v2/pool_160_hp4hn4/verified/run.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1072,7 +2219,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1109,7 +2256,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_10/detections_384_run10.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1146,7 +2293,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_11/detections_384_run11.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1183,7 +2330,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_12/detections_384_run12.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1220,7 +2367,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_13/detections_384_run13.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1257,7 +2404,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_14/detections_384_run14.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1294,7 +2441,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_15/detections_384_run15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1331,7 +2478,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_16/detections_384_run16.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1368,7 +2515,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_17/detections_384_run17.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1405,7 +2552,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_18/detections_384_run18.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1442,7 +2589,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_19/detections_384_run19.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1479,7 +2626,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_2/detections_384_run02.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1516,7 +2663,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_20/detections_384_run20.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1553,7 +2700,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_21/detections_384_run21.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1590,7 +2737,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_22/detections_384_run22.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1627,7 +2774,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_23/detections_384_run23.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1664,7 +2811,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_24/detections_384_run24.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1701,7 +2848,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_25/detections_384_run25.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1738,7 +2885,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_26/detections_384_run26.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1775,7 +2922,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_27/detections_384_run27.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1812,7 +2959,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_28/detections_384_run28.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1849,7 +2996,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_29/detections_384_run29.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1886,7 +3033,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_3/detections_384_run03.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1923,7 +3070,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_30/detections_384_run30.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1960,7 +3107,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_4/detections_384_run04.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -1997,7 +3144,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_5/detections_384_run05.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2034,7 +3181,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_6/detections_384_run06.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2071,7 +3218,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_7/detections_384_run07.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2108,7 +3255,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_8/detections_384_run08.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2145,7 +3292,7 @@
         "source_files": [
           "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_9/detections_384_run09.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2182,7 +3329,7 @@
         "source_files": [
           "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_1/detections_propose_brief-text_run01.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2219,7 +3366,7 @@
         "source_files": [
           "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_2/detections_propose_brief-text_run02.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2256,7 +3403,7 @@
         "source_files": [
           "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_3/detections_propose_brief-text_run03.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2293,7 +3440,7 @@
         "source_files": [
           "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_4/detections-propose_brief-text-3-flash-2026-04-09.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2330,7 +3477,7 @@
         "source_files": [
           "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_5/detections-propose_brief-text-3-flash-2026-04-09.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2367,7 +3514,7 @@
         "source_files": [
           "outputs/h11/n1-outstanding-384/brief-text-t03/run_1/detections_brief-text-t03_run01.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2404,7 +3551,7 @@
         "source_files": [
           "outputs/h11/n1-outstanding-384/brief-text-t03/run_2/detections_brief-text-t03_run02.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2441,7 +3588,7 @@
         "source_files": [
           "outputs/h11/n1-outstanding-384/brief-text-t03/run_3/detections_brief-text-t03_run03.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2478,7 +3625,7 @@
         "source_files": [
           "outputs/h11/n1-outstanding-384/image-t0/run_1/detections_image-t0_run01.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2515,7 +3662,7 @@
         "source_files": [
           "outputs/h11/n1-outstanding-384/image-t0/run_2/detections_image-t0_run02.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2552,7 +3699,7 @@
         "source_files": [
           "outputs/h11/n1-outstanding-384/image-t0/run_3/detections_image-t0_run03.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2589,7 +3736,7 @@
         "source_files": [
           "outputs/h11/n1-outstanding-384/image-t03/run_1/detections_image-t03_run01.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2626,7 +3773,7 @@
         "source_files": [
           "outputs/h11/n1-outstanding-384/image-t03/run_2/detections_image-t03_run02.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2663,7 +3810,7 @@
         "source_files": [
           "outputs/h11/n1-outstanding-384/image-t03/run_3/detections_image-t03_run03.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2701,7 +3848,7 @@
           "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_1/detections_pro-image-high-t0_run01.meta.json",
           "results/run-conditions.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2739,7 +3886,7 @@
           "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_2/detections_pro-image-high-t0_run02.meta.json",
           "results/run-conditions.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2777,7 +3924,7 @@
           "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_3/detections_pro-image-high-t0_run03.meta.json",
           "results/run-conditions.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2815,7 +3962,7 @@
           "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_1/detections_pro-text-high-t0_run01.meta.json",
           "results/run-conditions.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2853,7 +4000,7 @@
           "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_2/detections_pro-text-high-t0_run02.meta.json",
           "results/run-conditions.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2891,7 +4038,7 @@
           "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_3/detections_pro-text-high-t0_run03.meta.json",
           "results/run-conditions.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2929,7 +4076,7 @@
           "outputs/h11/n1-outstanding-384/pro-image-medium-t07/run_1/detections_pro-image-medium-t07_run01.meta.json",
           "results/run-conditions.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -2967,7 +4114,7 @@
           "outputs/h11/n1-outstanding-384/pro-text-medium-t07/run_1/detections_pro-text-medium-t07_run01.meta.json",
           "results/run-conditions.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3005,7 +4152,7 @@
           "outputs/h11/n1-pro-rerun-384/pro-text-high-t0/run_1/detections-detect_brief-text-3.1-pro-2026-06-03.meta.json",
           "results/run-conditions.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3043,7 +4190,7 @@
           "outputs/h11/n1-pro-rerun-384/pro-text-high-t0/run_2/detections-detect_brief-text-3.1-pro-2026-06-03.meta.json",
           "results/run-conditions.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3081,7 +4228,7 @@
           "outputs/h11/n1-pro-rerun-384/pro-text-high-t0/run_3/detections-detect_brief-text-3.1-pro-2026-06-03.meta.json",
           "results/run-conditions.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3119,7 +4266,7 @@
           "outputs/h11/n1-pro-rerun-384/pro-text-medium-t07/run_1/detections-detect_brief-text-3.1-pro-2026-06-03.meta.json",
           "results/run-conditions.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3157,7 +4304,7 @@
           "outputs/h11/n1-pro-rerun-384/pro-text-medium-t07/run_2/detections-detect_brief-text-3.1-pro-2026-06-03.meta.json",
           "results/run-conditions.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3195,7 +4342,7 @@
           "outputs/h11/n1-pro-rerun-384/pro-text-medium-t07/run_3/detections-detect_brief-text-3.1-pro-2026-06-03.meta.json",
           "results/run-conditions.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3233,7 +4380,7 @@
           "outputs/h11/n1-pro-rerun-384/pro-image-high-t0/run_1/detections-library_plus-hp-3.1-pro-2026-06-03.meta.json",
           "results/run-conditions.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3271,7 +4418,7 @@
           "outputs/h11/n1-pro-rerun-384/pro-image-high-t0/run_2/detections-library_plus-hp-3.1-pro-2026-06-03.meta.json",
           "results/run-conditions.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3309,7 +4456,7 @@
           "outputs/h11/n1-pro-rerun-384/pro-image-high-t0/run_3/detections-library_plus-hp-3.1-pro-2026-06-03.meta.json",
           "results/run-conditions.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3347,7 +4494,7 @@
           "outputs/h11/n1-pro-rerun-384/pro-image-medium-t07/run_1/detections-library_plus-hp-3.1-pro-2026-06-03.meta.json",
           "results/run-conditions.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3385,7 +4532,7 @@
           "outputs/h11/n1-pro-rerun-384/pro-image-medium-t07/run_2/detections-library_plus-hp-3.1-pro-2026-06-03.meta.json",
           "results/run-conditions.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3423,7 +4570,7 @@
           "outputs/h11/n1-pro-rerun-384/pro-image-medium-t07/run_3/detections-library_plus-hp-3.1-pro-2026-06-03.meta.json",
           "results/run-conditions.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3460,7 +4607,7 @@
         "source_files": [
           "outputs/h11/proposer-verifier-384/verified-adversarial-text.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3497,7 +4644,7 @@
         "source_files": [
           "outputs/h11/proposer-verifier-384/verified-adversarial-image.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3534,7 +4681,7 @@
         "source_files": [
           "outputs/h11/proposer-verifier-384/verified-brief-text.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3571,7 +4718,7 @@
         "source_files": [
           "outputs/h11/proposer-verifier-384/verified-brief-image.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3608,7 +4755,7 @@
         "source_files": [
           "outputs/h11/proposer-verifier-384/verified-checklist-text.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3645,7 +4792,7 @@
         "source_files": [
           "outputs/h11/proposer-verifier-384/verified-checklist-image.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3682,7 +4829,7 @@
         "source_files": [
           "outputs/h11/proposer-verifier-384/verified-cascade-adversarial-checklist.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3719,7 +4866,7 @@
         "source_files": [
           "outputs/h11/proposer-verifier-384/verified-cascade-checklist-adversarial.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3756,7 +4903,7 @@
         "source_files": [
           "outputs/h11/proposer-verifier-512/verified-adversarial-text.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3793,7 +4940,7 @@
         "source_files": [
           "outputs/h12-v2/r1-hn-heavy/run_1/detections-detect_h12_r1-hn-heavy_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3830,7 +4977,7 @@
         "source_files": [
           "outputs/h12-v2/r1-hn-heavy/run_2/detections-detect_h12_r1-hn-heavy_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3867,7 +5014,7 @@
         "source_files": [
           "outputs/h12-v2/r1-hn-heavy/run_3/detections-detect_h12_r1-hn-heavy_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3904,7 +5051,7 @@
         "source_files": [
           "outputs/h12-v2/r1-hn-heavy/run_4/detections-detect_h12_r1-hn-heavy_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3941,7 +5088,7 @@
         "source_files": [
           "outputs/h12-v2/r1-hn-heavy/run_5/detections-detect_h12_r1-hn-heavy_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -3978,7 +5125,7 @@
         "source_files": [
           "outputs/h12-v2/r3-hp-heavy/run_1/detections-detect_h12_r3-hp-heavy_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4015,7 +5162,7 @@
         "source_files": [
           "outputs/h12-v2/r3-hp-heavy/run_2/detections-detect_h12_r3-hp-heavy_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4052,7 +5199,7 @@
         "source_files": [
           "outputs/h12-v2/r3-hp-heavy/run_3/detections-detect_h12_r3-hp-heavy_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4089,7 +5236,7 @@
         "source_files": [
           "outputs/h12-v2/r3-hp-heavy/run_4/detections-detect_h12_r3-hp-heavy_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4126,7 +5273,7 @@
         "source_files": [
           "outputs/h12-v2/r3-hp-heavy/run_5/detections-detect_h12_r3-hp-heavy_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4163,7 +5310,7 @@
         "source_files": [
           "outputs/h8-v2/pure-positive-canon/run_1/detections-detect_h8_pure-positive-canon_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4200,7 +5347,7 @@
         "source_files": [
           "outputs/h8-v2/pure-positive-canon/run_2/detections-detect_h8_pure-positive-canon_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4237,7 +5384,7 @@
         "source_files": [
           "outputs/h8-v2/pure-positive-canon/run_3/detections-detect_h8_pure-positive-canon_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4274,7 +5421,7 @@
         "source_files": [
           "outputs/h8-v2/pure-positive-canon/run_4/detections-detect_h8_pure-positive-canon_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4311,7 +5458,7 @@
         "source_files": [
           "outputs/h8-v2/pure-positive-canon/run_5/detections-detect_h8_pure-positive-canon_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4348,7 +5495,7 @@
         "source_files": [
           "outputs/h8-v2/canonical/run_1/detections-detect_h8_canonical_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4385,7 +5532,7 @@
         "source_files": [
           "outputs/h8-v2/canonical/run_2/detections-detect_h8_canonical_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4422,7 +5569,7 @@
         "source_files": [
           "outputs/h8-v2/canonical/run_3/detections-detect_h8_canonical_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4459,7 +5606,7 @@
         "source_files": [
           "outputs/h8-v2/canonical/run_4/detections-detect_h8_canonical_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4496,7 +5643,7 @@
         "source_files": [
           "outputs/h8-v2/canonical/run_5/detections-detect_h8_canonical_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4533,7 +5680,7 @@
         "source_files": [
           "outputs/h8-v2/plus-hp/run_1/detections-detect_h8_plus-hp_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4570,7 +5717,7 @@
         "source_files": [
           "outputs/h8-v2/plus-hp/run_2/detections-detect_h8_plus-hp_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4607,7 +5754,7 @@
         "source_files": [
           "outputs/h8-v2/plus-hp/run_3/detections-detect_h8_plus-hp_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4644,7 +5791,7 @@
         "source_files": [
           "outputs/h8-v2/plus-hp/run_4/detections-detect_h8_plus-hp_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4681,7 +5828,7 @@
         "source_files": [
           "outputs/h8-v2/plus-hp/run_5/detections-detect_h8_plus-hp_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4718,7 +5865,7 @@
         "source_files": [
           "outputs/h8-v2/scale-4/run_1/detections-detect_h8_scale-4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4755,7 +5902,7 @@
         "source_files": [
           "outputs/h8-v2/scale-4/run_2/detections-detect_h8_scale-4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4792,7 +5939,7 @@
         "source_files": [
           "outputs/h8-v2/scale-4/run_3/detections-detect_h8_scale-4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4829,7 +5976,7 @@
         "source_files": [
           "outputs/h8-v2/scale-4/run_4/detections-detect_h8_scale-4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4866,7 +6013,7 @@
         "source_files": [
           "outputs/h8-v2/scale-4/run_5/detections-detect_h8_scale-4_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4903,7 +6050,7 @@
         "source_files": [
           "outputs/h8-v2/scale-8/run_1/detections-detect_h8_scale-8_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4940,7 +6087,7 @@
         "source_files": [
           "outputs/h8-v2/scale-8/run_2/detections-detect_h8_scale-8_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -4977,7 +6124,7 @@
         "source_files": [
           "outputs/h8-v2/scale-8/run_3/detections-detect_h8_scale-8_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5014,7 +6161,7 @@
         "source_files": [
           "outputs/h8-v2/scale-8/run_4/detections-detect_h8_scale-8_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5051,7 +6198,7 @@
         "source_files": [
           "outputs/h8-v2/scale-8/run_5/detections-detect_h8_scale-8_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5088,7 +6235,7 @@
         "source_files": [
           "outputs/h8-v2/scale-16/run_1/detections-detect_h8_scale-16_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5125,7 +6272,7 @@
         "source_files": [
           "outputs/h8-v2/scale-16/run_2/detections-detect_h8_scale-16_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5162,7 +6309,7 @@
         "source_files": [
           "outputs/h8-v2/scale-16/run_3/detections-detect_h8_scale-16_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5199,7 +6346,7 @@
         "source_files": [
           "outputs/h8-v2/scale-16/run_4/detections-detect_h8_scale-16_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5236,7 +6383,7 @@
         "source_files": [
           "outputs/h8-v2/scale-16/run_5/detections-detect_h8_scale-16_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5273,7 +6420,7 @@
         "source_files": [
           "outputs/h8-v2/scale-32/run_1/detections-detect_h8_scale-32_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5310,7 +6457,7 @@
         "source_files": [
           "outputs/h8-v2/scale-32/run_2/detections-detect_h8_scale-32_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5347,7 +6494,7 @@
         "source_files": [
           "outputs/h8-v2/scale-32/run_3/detections-detect_h8_scale-32_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5384,7 +6531,7 @@
         "source_files": [
           "outputs/h8-v2/scale-32/run_4/detections-detect_h8_scale-32_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5421,7 +6568,7 @@
         "source_files": [
           "outputs/h8-v2/scale-32/run_5/detections-detect_h8_scale-32_v2-3-flash-2026-04-15.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5458,7 +6605,7 @@
         "source_files": [
           "outputs/h8-v2/scale-4/verified/run.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5495,7 +6642,7 @@
         "source_files": [
           "outputs/h8-v2/wbf/scale-4/verified/run.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5532,7 +6679,7 @@
         "source_files": [
           "outputs/h8-v2/wbf/scale-8/verified/run.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5569,7 +6716,7 @@
         "source_files": [
           "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_1/detections_brief-text-t0_run01.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5606,7 +6753,7 @@
         "source_files": [
           "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_10/detections_brief-text-t0_run10.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5643,7 +6790,7 @@
         "source_files": [
           "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_2/detections_brief-text-t0_run02.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5680,7 +6827,7 @@
         "source_files": [
           "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_3/detections_brief-text-t0_run03.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5717,7 +6864,7 @@
         "source_files": [
           "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_4/detections_brief-text-t0_run04.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5754,7 +6901,7 @@
         "source_files": [
           "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_5/detections_brief-text-t0_run05.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5791,7 +6938,7 @@
         "source_files": [
           "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_6/detections_brief-text-t0_run06.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5828,7 +6975,7 @@
         "source_files": [
           "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_7/detections_brief-text-t0_run07.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5865,7 +7012,7 @@
         "source_files": [
           "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_8/detections_brief-text-t0_run08.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -5902,7 +7049,7 @@
         "source_files": [
           "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_9/detections_brief-text-t0_run09.meta.json"
         ],
-        "last_extracted_at": "2026-06-04T07:45:19Z",
+        "last_extracted_at": "2026-06-04T08:15:41Z",
         "extractor_version": "0.4.0"
       }
     }

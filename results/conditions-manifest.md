@@ -2,12 +2,17 @@
 
 # Conditions manifest
 
-> Generated 2026-06-04T07:45:19Z · 151 row(s) · schema v1.0.
+> Generated 2026-06-04T08:15:41Z · 156 row(s) · schema v1.0.
 >
-> **Coverage**: 151 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 156 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
+| 55maps-generalisation::verified-paired | proposer-verifier | verified | 4 | 5 | 0.6254 | 0.6509 | 4068 |
+| 55maps-image-generalisation::verified | proposer-verifier | verified | 3 | 5 | 0.5082 | 0.6927 | 4680 |
+| 55maps-text-high-generalisation::verified | proposer-verifier | verified | 4 | 5 | 0.626 | 0.648 | 4164 |
+| 55maps-text-high-t0-3-generalisation::verified | proposer-verifier | verified | 4 | 5 | 0.6308 | 0.6541 | 4350 |
+| 55maps-text-min-generalisation::verified | proposer-verifier | verified | 4 | 5 | 0.6201 | 0.6264 | 3865 |
 | gold-standard-v2::consensus-3of5 | consensus | consensus | 3 | 5 | 0.5925 | 0.2964 | 868 |
 | gold-standard-v2::consensus-4of5 | consensus | consensus | 4 | 5 | 0.6999 | 0.4557 | 608 |
 | gold-standard-v2::consensus-5of5 | consensus | consensus | 5 | 5 | 0.7649 | 0.5791 | 420 |

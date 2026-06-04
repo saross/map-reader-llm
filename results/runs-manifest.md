@@ -2,17 +2,17 @@
 
 # Runs manifest
 
-> Generated 2026-06-04T07:45:19Z · 28 row(s) · schema v1.0.
+> Generated 2026-06-04T08:15:41Z · 28 row(s) · schema v1.0.
 >
 > **Coverage**: all 28 runs (run-level facts; conditions/passes added as 3b batches land).
 
 | run_id | type | tile_px | corpus | gt | scope | headline |
 |---|---|---|---|---|---|---|
-| 55maps-generalisation | — | 384 | 55-map | student | 55maps-8541 | — |
-| 55maps-image-generalisation | — | 384 | 55-map | student | 55maps-8541 | — |
-| 55maps-text-high-generalisation | — | 384 | 55-map | student | 55maps-8541 | — |
-| 55maps-text-high-t0-3-generalisation | — | 384 | 55-map | student | 55maps-8541 | — |
-| 55maps-text-min-generalisation | — | 384 | 55-map | student | 55maps-8541 | — |
+| 55maps-generalisation | proposer-verifier | 384 | 55-map | student | 55maps-8541 | — |
+| 55maps-image-generalisation | proposer-verifier | 384 | 55-map | student | 55maps-8541 | — |
+| 55maps-text-high-generalisation | proposer-verifier | 384 | 55-map | student | 55maps-8541 | — |
+| 55maps-text-high-t0-3-generalisation | proposer-verifier | 384 | 55-map | student | 55maps-8541 | — |
+| 55maps-text-min-generalisation | proposer-verifier | 384 | 55-map | student | 55maps-8541 | — |
 | gold-standard-v2 | mixed | 384 | 4-map-gs | curator | era-2-487 | — |
 | h10 | mixed | 384 | 4-map-gs | curator | era-3-327 | — |
 | consensus-384-t1-0 | mixed | 384 | 4-map-gs | curator | era-2-487 | — |
