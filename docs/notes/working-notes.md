@@ -17362,3 +17362,66 @@ Search terms: Obs 339, sole leader artefact, n=3 top-up reopens tie, pv-diag med
 - **Obs 337** (E57 billing reconciliation): removed the model-identity artefact; this Obs removes the coverage artefact — the two layers that had distorted the board.
 - **Obs 336 / 335**: the original tiering and matrix.
 - **Artefacts**: recovered `outputs/h11/pv-diag-384/pro-medium-{text,image}-baseline/*/run_1/` (487/0); `outputs/h11/{pv-diag-384,n1-pro-rerun-384}/.../{run_2,run_3}/` (top-up); `results/paper-eval/n1/384px-14buf-mcc/{pro-text-medium-t-0-0,pro-image-medium-t-0-0,pro-rerun/}/evaluation.json` (n=3); `tiering/tiering_20m.{json,md}` (2-member tie); `scripts/run_n1_pro_topup.sh`; `docs/methodology/preregistration/protocol-errata.md` E57 § completeness addendum; `docs/methodology/n1-baseline-matrix.md` (n=3 changelog entry). Commits `309e08de` `c07c5776` `28c8438a` `0f32ec00` `e857c7b5`.
+
+## Observation 340: On-disk WBF evaluations scored raw, unthresholded fused candidates — a pipeline error that produces spurious F1 ≈ 0.29–0.32 and would falsely contradict greedy≈WBF equivalence; fix is vote≥4 filtering at the 327-tile nominal scope with MCC (Session 99, 2026-06-04)
+
+### The finding
+
+**While decomposing Batch C (the library-design study) into the analysis manifest, the existing on-disk WBF evaluations were found to be methodologically misconfigured in two compounding ways: they scored the raw, unthresholded fused candidate set (all vote levels, 1–5) rather than the vote-matched subset (vote≥4), and they used the 487-tile full-evaluation scope rather than the 327-tile nominal test scope used by every other preregistered result, and without the `--mcc` flag.** The combination produces an artefactual F1@20 m of 0.29–0.32 — far below the project's established headline range — that would falsely contradict the greedy≈WBF equivalence established in the preregistered robustness check.
+
+**The two misconfigured on-disk evaluations:**
+
+| file | n\_detections | F1@20 m | n\_tiles | MCC | bounds |
+|---|---:|---:|---:|---|---|
+| `results/h8-v2/wbf/canonical/evaluation.json` | 1,167 | 0.2946 | 487 | absent | `full_evaluation_bounds.geojson` |
+| `results/h12-v2/wbf/r2-balanced/evaluation.json` | 1,041 | 0.3198 | 487 | absent | `full_evaluation_bounds.geojson` |
+
+**Root cause — vote mismatch:** The raw WBF candidate files carry a per-feature `vote_count` spanning 1–5. For example, `outputs/h8-v2/wbf/canonical/wbf_candidates.geojson` contains 1,167 features with the distribution {1: 658, 2: 108, 3: 52, 4: 59, 5: 290}. The greedy PRIMARY, by contrast, applies a vote threshold of ≥4: `outputs/h8-v2/greedy/canonical/consensus_t4.geojson` contains 258 features with `vote_count` ∈ {4, 5} only. Scoring the raw WBF set (all 1,167 candidates) against a vote-thresholded greedy comparator is an apples-to-oranges comparison; the inflated recall from the 909 low-confidence vote-1/2/3 detections drives precision down and distorts F1.
+
+**The authoritative matched-threshold comparison** in `results/wbf-greedy-comparison/wbf_vs_greedy_pv_n5_permutation.json` correctly applied `vote_t=4` to both methods:
+
+| method | F1@20 m | precision | recall | n\_detections |
+|---|---:|---:|---:|---:|
+| greedy (vote≥4, pv-filtered) | 0.864078 | 0.915167 | 0.818391 | 389 |
+| WBF (vote≥4, pv-filtered) | 0.855792 | 0.880779 | 0.832184 | 411 |
+
+Permutation test (n=10,000 tile-level permutations): observed ΔF1=0.008286, p=0.3919 — not significant. Greedy and WBF are statistically equivalent when compared at matched thresholds.
+
+**The fix — `scripts/filter_detections_by_vote.py`:** A new reusable tool filters any candidate GeoJSON to `vote_count ≥ N`, preserving all properties and refusing to silently pass through features with a missing `vote_count` field. Each WBF cell was filtered to vote≥4 (producing `wbf_vote4.geojson`) and re-scored at the 327-tile nominal scope (`inputs/vectors/bounds/384/h10_test_bounds.geojson`) with `--mcc`, mirroring the greedy with-mcc evaluations. Results land under `results/h8-v2/wbf-mcc/<composition>/` and `results/h12-v2/wbf-mcc/<ratio>/`.
+
+**After the fix, WBF lands alongside greedy at the corrected scope:**
+
+| batch | compositions / ratios | WBF F1@20 m range (vote≥4, 327 tiles, MCC) | greedy F1@20 m range (with-mcc, 327 tiles) |
+|---|---:|---|---|
+| h8-v2 (library design) | 7 | 0.659–0.737 | 0.693–0.733 |
+| h12-v2 (library ratio) | 3 | 0.683–0.693 | (see h12-v2 with-mcc evals) |
+
+Per-cell ΔF1 is typically ≤~0.04. Greedy≈WBF equivalence is restored at the corrected scope and threshold. The raw 487-scope WBF evaluations are a diagnostic artefact, not the headline comparator, and are superseded by the `wbf-mcc/` evaluations.
+
+### Why this matters
+
+1. **Data-pipeline correctness, paper-load-bearing.** A manifest "WBF condition" reported alongside greedy in the paper must be vote-matched and scored at the nominal scope with MCC. The raw fused candidates would have placed a ~0.38-F1-wide gap next to the greedy headline — an artefact, not a scientific result — and would have appeared to contradict the preregistered greedy≈WBF robustness claim recorded in `docs/methodology/preregistration/decisions-log.md`.
+
+2. **The "flag surprising results" rule did its job.** The spectacularly low raw F1 was the trigger: greedy canonical at the same scope scores 0.59–0.61 at 487 tiles (t3/t4); a WBF result of 0.29 at the same scope was immediately implausible. The pipeline investigation surfaced the vote-threshold omission.
+
+3. **Applies to every remaining WBF cell — Batches D and E.** Any future batch that uses WBF must filter to vote≥4 before evaluation. The `filter_detections_by_vote.py` tool is now available for this purpose, with 8 tier-1 pytest tests covering the core contract.
+
+4. **Retroactive scope correction.** The 487-tile scope was also wrong: the library-design study uses the 327-tile nominal test scope (`h10_test_bounds.geojson`), not the full 487-tile evaluation scope. The old evals conflated the two.
+
+### Caveats / methodological notes
+
+- The raw on-disk WBF evaluations (`results/h8-v2/wbf/canonical/evaluation.json`, `results/h12-v2/wbf/r2-balanced/evaluation.json`) are retained in place as a record of what the scorer produced from the unfiltered candidates. They are not deleted; the `wbf-mcc/` results supersede them as the headline comparator.
+- The vote-threshold applied (≥4 of 5 passes) matches the greedy primary threshold (`consensus_t4`). This is the preregistered vote threshold; no new calibration was introduced.
+- The `filter_detections_by_vote.py` tool was built defensively: it raises an error rather than silently defaulting when `vote_count` is absent, preventing a recurrence of the raw-candidate scoring mistake.
+- The corrected evaluations use the 327-tile `h10_test_bounds.geojson` scope, consistent with every other preregistered result for h8-v2 and h12-v2. The 487-tile scope in the old evals was not a deliberate choice — it was the default bounds file used by the evaluate script when no h10-specific bounds were specified.
+
+### Findable later
+
+Search terms: Obs 340, raw WBF candidates unthresholded, vote-count mismatch, wbf_candidates.geojson 1167 features, vote_count distribution 1 658 2 108 3 52 4 59 5 290, spurious F1 0.2946 0.3198, filter_detections_by_vote, wbf-mcc corrected scope, 327 tiles h10_test_bounds, vote-matched threshold vote_t=4, greedy≈WBF equivalence, full_evaluation_bounds 487 tiles wrong scope, apples-to-oranges comparison, pipeline correctness WBF scoring, flag surprising results rule, Batch C decomposition manifest, h8-v2 wbf-mcc 0.659–0.737, h12-v2 wbf-mcc 0.683–0.693, greedy with-mcc 0.693–0.733, ΔF1 per-cell ≤0.04, permutation test p=0.3919 vote_t=4 matched, Batch D Batch E WBF filter, ace55874 dd2ebe9f cee75dcb, Session 99 2026-06-04.
+
+### Related observations and artefacts
+
+- **Obs 241** (Scale-4 vs Scale-8 parsimony stable across greedy and WBF pipelines, 2026-04-16): that comparison used matched thresholds and the nominal scope — exactly what this Obs shows the raw on-disk evals lacked. The parsimony finding was correctly produced; this Obs documents why the raw `wbf/` evals should not be used in place of the `wbf-mcc/` evals.
+- **Obs 237** (tile-level correction reveals significant WBF result, 2026-04-15): the WBF methodology lineage and the discovery that scoring unit matters. This Obs is a second instance of the same class of pipeline correctness error — scope and filter settings, not permutation unit, but the same "wrong configuration silently produces a misleading number" pattern.
+- **Batch C decomposition Obs logged the same session** (sibling, Session 99): that Obs reports the library-design null result these corrected WBF conditions feed into. The wbf-mcc/ evaluations produced here are the WBF comparator values used in the Batch C analysis.
+- **Artefacts**: `scripts/filter_detections_by_vote.py` (vote-threshold filter tool); `tests/test_filter_detections_by_vote.py` (8 tier-1 tests); `results/h8-v2/wbf-mcc/` (7 corrected WBF evaluations at 327 tiles with MCC); `results/h12-v2/wbf-mcc/` (3 corrected WBF evaluations); `results/wbf-greedy-comparison/wbf_vs_greedy_pv_n5_permutation.json` (authoritative matched-threshold comparison, p=0.3919). Commits `ace55874` (filter tool + tests), `dd2ebe9f` (h8-v2 decomposition + wbf-mcc evals), `cee75dcb` (h12-v2 decomposition + wbf-mcc evals).
