@@ -1,14 +1,40 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-06-05 (Session 100 — decomposed **Batch A residual** + **Batch B** (5× 55maps) + **verifier-t-pilot** → **18 of 28 runs**, manifest **28 runs / 159 conditions / 192 passes**; enhanced the verifier-pass extractor (sidecar metas + per-item model). **Batch D recon'd with decisions**: phase2a-e DEFERRED (needs a bespoke 14-buf+MCC re-score — the metric is a replicate-mean via `analyse_phase2_results.py`, no MCC); phase3a/3c DEFERRED to sub-step 3c. **Batch E**: verifier-t-pilot done; pv-diag-256 + pv-diag-384 completion deferred. $0 API. Finding from S98 unchanged. See the Session 100 START-HERE.)
+**Last updated**: 2026-06-05 (Session 100 — decomposed **Batch A residual** + **Batch B** (5× 55maps) + **verifier-t-pilot** → **18 of 28 runs**, manifest **28 runs / 159 conditions / 192 passes**; enhanced the verifier-pass extractor (sidecar metas + per-item model). Ran two read-only explorations that **resolved the phase3a↔pv-diag-384 puzzle (name collision)** and confirmed **phase3a/3a-high/3a-replication/3c → sub-step 3c analyses** (no MCC conditions exist); see `reports/phase3-decomposition-investigation-2026-06-05.md`. **Session 101 plan baked in at the top** (re-score phase2a-e + complete pv-diag-384 GAP-7 are the remaining substantive tasks; two model/thinking anomalies to resolve). $0 API. Finding from S98 unchanged.)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
 
 ---
 
-## ✅ Session 100 — START HERE — BATCH A RESIDUAL + BATCH B + verifier-t-pilot DECOMPOSED (18/28); BATCH D/E RECON + DEFERRALS
+## 🎯 NEXT SESSION (101) — PLANNED WORK [set up 2026-06-05 end of Session 100]
+
+Four tasks were queued. **Two read-only explorations are already DONE** (run at the close of Session 100; full findings in `reports/phase3-decomposition-investigation-2026-06-05.md` — agent-produced, file-path-anchored, verify at source). **Two substantive tasks remain** for a live, supervised session.
+
+### ✅ DONE (Session 100 close) — explorations resolved
+
+1. **phase3a ↔ pv-diag-384 — RESOLVED: it's a NAME COLLISION, not entanglement.** `retest-phase3a` is a distinct Era-1 run (340 tiles, 512px, H3) with its own 180 proposer passes under `outputs/retest/phase3a/`; its analysis is the F1-only consensus sweep in `results/retest/phase3a-consensus/`. The `results/phase3a-text-matrix/` + `results/phase3a-image-matrix/` evals (which DO have MCC) score **pv-diag-384's** Era-2/487/384px detections — they belong to **pv-diag-384 (Batch E)**, not retest-phase3a. The Session-100 "cross-run sourcing" alarm was the bare label "phase3a" colliding across two unrelated families. No further investigation needed.
+2. **phase3a / phase3a-high / phase3a-replication / phase3c — RESOLVED: all → sub-step 3c ANALYSES.** All four are undecomposed Era-1 runs and share one decisive property: **ZERO per-condition `evaluation.json` with MCC exists** — every evaluable artefact is an F1-only consensus/diversity SWEEP analysis. So they cannot be 3b conditions (schema needs non-null MCC). Recommendation: record their proposer pools as **passes** (180 / text-only / 60 / 45 respectively) and represent the sweeps as **3c analyses**. `retest-phase3a-high`'s `track1-image` track **never ran** (only a `study_manifest.json`) → record as planned-but-unexecuted. phase3c (H9 diversity) was **REJECTED** (no diversity mechanism gives a significant gain); its `h9-{A..E}-{p,v,img,t}N` dirs are PASS variants (GAP-6: passes not conditions). Don't mint 3b conditions from these pools.
+
+### ⏳ TODO (next live session) — substantive work (tasks 3 & 4 of the four)
+
+1. **(Task 3) Re-score phase2a-e at 14-buffer + MCC, then author the 5 runs.** This is a **bespoke compute task** (run on sapphire), NOT a Batch-C single-output rescore: the canonical phase2 metric is a replicate-mean over K passes computed by `scripts/analyse_phase2_results.py`, which is **hard-coded to a single 20 m buffer and computes NO MCC**. Options: (a) extend/rework that script to emit standard 14-buf+MCC per-condition evals, or (b) build a per-pass-score-and-average pipeline using `scripts/evaluate_detections.py` × K passes. Then author 1 condition per pool (Era-1 GAP-9 passes; phase2b needs `scope_override` for its 5 cross-scope 487 evals). **GET API/COMPUTE APPROVAL per the project gate before any heavy run** (it's CPU/$0 but still compute → sapphire). **Resolve the model anomaly first** (see below) — it affects what model these Era-1 runs record.
+2. **(Task 4) Complete pv-diag-384's GAP-7 decomposition.** It currently has 10 single-pass N1-baseline conditions with empty pools; completing it means adding consensus + verified conditions and the ~88 verifier metas across ~15 pools + `verified/`. **The `results/phase3a-text-matrix/` + `phase3a-image-matrix/` evals (Era-2/487, WITH MCC) are pv-diag-384's consensus-sweep material** — wire them in here (as a 3c analysis and/or operating-point conditions), now that we know they belong to pv-diag-384, not retest-phase3a.
+
+### ⚠ Anomalies to resolve before recording model-of-record (from the explorations)
+
+- **Era-1 model contradiction**: `outputs/retest/phase3a*/**/*.meta.json` say `config.model = gemini-3-flash`, but `results/retest/retest-production-summary.md` says the Era-1 retest used **`gemini-2.0-flash`**. Cannot both be true; resolve before the manifest records a model for the phase2/phase3 Era-1 retests. (Echoes E57: trust meta over prose — but Era-1 metas are GAP-9 with no per-item, so `config.model` is the only signal, and it still conflicts with the prose.)
+- **phase3c thinking-level doc conflict**: `cross-track-comparison.md` says "MINIMAL"; the comprehensive report + per-run metas say `high`. The cross-track doc is likely stale — correct it, don't trust its parameter prose.
+
+### Also pending (carried)
+
+- **`_ignored_evals` close-out sweep** (deferred since Session 99) — register all deliberately-excluded scored evals in one pass once 3b authoring is complete; turns the drift-check into a sharp completeness guard. 16/18 decomposed runs sit at benign "partial" until then.
+- **Cross-run proposer provenance** (pv-384/512 + verifier-t-pilot reference `detect_brief-text` by string) — add a GAP-6 `source_run` (likely gs-v2) or accept the `pool-unresolved` WARN.
+
+---
+
+## ✅ Session 100 — BATCH A RESIDUAL + BATCH B + verifier-t-pilot DECOMPOSED (18/28); BATCH D/E RECON + DEFERRALS
 
 **Posted**: 2026-06-05. Commits `b97a8c59`→`4a338f9c` (extractor + Batch A residual + Batch B + verifier-t-pilot + continuity), all pushed. **$0 API** (local JSON authoring + deterministic extraction). The Session-98 N=1 board/finding is **unchanged and still signed off**. Manifest now **28 runs / 159 conditions / 192 passes / 1 analysis, ALL VALID**; drift-check **18 runs, 2 pass, 16 partial, 0 fail**. Decomposition progress: **18 of 28 runs**.
 
