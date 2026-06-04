@@ -17425,3 +17425,84 @@ Search terms: Obs 340, raw WBF candidates unthresholded, vote-count mismatch, wb
 - **Obs 237** (tile-level correction reveals significant WBF result, 2026-04-15): the WBF methodology lineage and the discovery that scoring unit matters. This Obs is a second instance of the same class of pipeline correctness error — scope and filter settings, not permutation unit, but the same "wrong configuration silently produces a misleading number" pattern.
 - **Batch C decomposition Obs logged the same session** (sibling, Session 99): that Obs reports the library-design null result these corrected WBF conditions feed into. The wbf-mcc/ evaluations produced here are the WBF comparator values used in the Batch C analysis.
 - **Artefacts**: `scripts/filter_detections_by_vote.py` (vote-threshold filter tool); `tests/test_filter_detections_by_vote.py` (8 tier-1 tests); `results/h8-v2/wbf-mcc/` (7 corrected WBF evaluations at 327 tiles with MCC); `results/h12-v2/wbf-mcc/` (3 corrected WBF evaluations); `results/wbf-greedy-comparison/wbf_vs_greedy_pv_n5_permutation.json` (authoritative matched-threshold comparison, p=0.3919). Commits `ace55874` (filter tool + tests), `dd2ebe9f` (h8-v2 decomposition + wbf-mcc evals), `cee75dcb` (h12-v2 decomposition + wbf-mcc evals).
+
+## Observation 341: Batch C decomposition into the analysis manifest corroborates the library-design NULL at the production 327/t4/14-buffer+MCC standard — greedy≈WBF per cell (post Obs 340 fix), verifier lifts tile-MCC to ~0.80 (Session 99, 2026-06-04)
+
+### The finding
+
+**Decomposing Batch C — the library-design study runs h8-v2, h10, and h12-v2 — into the structured analysis manifest reproduces the already-established library-design NULL at the current production evaluation standard (327-tile nominal scope, greedy operating point t4, 14-buffer+MCC). This is a corroboration of prior nulls (Obs 236/238/239/240), not a new discovery; it is reported here because the corroboration is now auditable inside the manifest, and because the Obs 340 WBF fix was required before the greedy≈WBF equivalence could be read correctly from these cells.**
+
+**Manifest milestone — Batch C decomposition complete.** The three runs add 28 conditions to the manifest:
+
+| run | greedy conditions | WBF conditions | verified conditions | total |
+|---|---:|---:|---:|---:|
+| h8-v2 (composition) | 7 | 7 | 3 | 17 |
+| h10 (calibration pool size) | 4 | 0 | 1 | 5 |
+| h12-v2 (HP:HN ratio) | 3 | 3 | 0 | 6 |
+| **Batch C total** | **14** | **10** | **4** | **28** |
+
+The manifest now stands at **28 runs / 142 conditions / 150 passes / 1 analysis**, with **10 of 28 runs decomposed** (source: `results/run-conditions.json`, `results/conditions-manifest.json`, `results/passes-manifest.json`; 28-run total from `results/run-registry.md`).
+
+**Scope and operating point.** All greedy conditions are scored at the **327-tile nominal test scope** (era-3-327; `inputs/vectors/bounds/384/h10_test_bounds.geojson`) with vote threshold ≥4 of 5 passes (`consensus_t4`) and the `--mcc` flag, matching every other preregistered result. The 487-tile full-evaluation scope is deliberately excluded for these runs: the library hard-cases are mined from pool_160, so the 487-tile evaluations are leakage-contaminated comparability siblings, not the primary test scope.
+
+**Library-design NULL reproduced.** Greedy F1@20m at the 327-tile nominal scope:
+
+| hypothesis | variable | conditions | F1@20m range | MCC range | interpretation |
+|---|---|---:|---|---|---|
+| H8 (composition) | proposer-pool composition | 7 | 0.693–0.733 | 0.650–0.771 | null / modest spread; scale-4 best (0.7326), scale-16 lowest (0.693), canonical 0.7071 |
+| H10 (pool size) | calibration-pool size | 4 | 0.662–0.717 | 0.692–0.717 | null; no monotonic pool-size effect; pool_020 0.6934, pool_040 0.6809, pool_080 0.6618, pool_160 0.7171 |
+| H12 v2 (ratio) | HP:HN ratio | 3 | 0.688–0.717 | 0.696–0.717 | null; r1-hn-heavy 0.7084, r2-balanced 0.7171, r3-hp-heavy 0.6876 |
+
+No condition produces a decisive winner within any hypothesis axis. The spread across all 14 greedy conditions is ≈0.07 F1 — small relative to the inter-hypothesis spread established in the full matrix (Obs 240).
+
+**Verifier MCC lift quantified.** The proposer-verifier stage (h8-v2 scale-4 verified, wbf-scale-4 verified, wbf-scale-8 verified; h10 pool_160 verified) lifts tile-MCC substantially at modest F1 cost at 20m:
+
+| condition | greedy MCC | verified MCC | verified F1@20m |
+|---|---:|---:|---:|
+| h8-v2 scale-4 verified | 0.771 | 0.803 | 0.737 |
+| h8-v2 wbf-scale-4 verified | — | 0.805 | 0.737 |
+| h8-v2 wbf-scale-8 verified | — | 0.813 | 0.722 |
+| h10 pool_160 verified | 0.717 | 0.760 | 0.722 |
+
+(Source: `results/rescore-2026-05-31/h8-v2/*/evaluation.json` and `results/rescore-2026-05-31/h10/pool_160_hp4hn4-verified-vt4-pt0.05/evaluation.json`.)
+
+**greedy≈WBF per cell — confirmed after Obs 340 fix.** With WBF evaluations now vote-matched (vote≥4) and at the 327-tile nominal scope with MCC (the Obs 340 fix), WBF F1@20m tracks greedy within ≈0.04 per cell:
+
+| batch | WBF F1@20m range (vote≥4, 327 tiles, MCC) | greedy F1@20m range |
+|---|---|---|
+| h8-v2 | 0.659–0.737 | 0.693–0.733 |
+| h12-v2 | 0.683–0.693 | 0.688–0.717 |
+
+**GAP-6 cross-run handled cleanly.** H12-v2's r2-balanced condition has no local proposer pool — it reuses h10's `pool_160_hp4hn4` passes. Its conditions carry `proposer_pool="pool_160_hp4hn4"` and `source_run="h10"`. The `source_run` field suppresses the foreign-pool drift warning at `scripts/verify_run_conditions.py:216`; those passes are counted once, in h10. H12-v2's r2-balanced contributes 0 own passes; the 10 h12-v2 passes are r1-hn-heavy (5) + r3-hp-heavy (5).
+
+### Why this matters
+
+1. **The library-design NULL is now auditable inside the structured manifest at the production evaluation standard.** The original April analyses (Obs 236/238/239/240) used earlier evaluation configurations. The NULL now survives re-expression at the 327/t4/14-buffer+MCC standard used for all paper-citable results — so the negative result is robust to the eval-standard change since April.
+
+2. **10 of 28 runs are now decomposed.** The manifest is the authoritative, machine-readable register of conditions, passes, and artefact paths. Each decomposed run becomes a fixed, auditable entry; future changes (e.g. a reanalysis) must either update the manifest or create a new condition entry. The milestone marks Batch C as complete — Batch A residual, B, D, and E remain.
+
+3. **greedy≈WBF is now readable cleanly for Batch C.** The Obs 340 WBF fix was a prerequisite; without it, the WBF column would have shown artefactual F1 ~0.30 and appeared to contradict the preregistered equivalence claim. Post-fix, per-cell ΔF1 is ≤0.04 across all Batch C cells, consistent with the matched-threshold permutation test (p=0.3919, Obs 340).
+
+4. **Verifier MCC lift is quantified and manifest-tracked.** The ~0.80 tile-MCC from verified conditions (vs ~0.70–0.77 from greedy) is the primary justification for including PV conditions in the paper. These values are now inside the manifest as auditable entries, not only in standalone report files.
+
+### Caveats / methodological notes
+
+- **This is corroboration, not a new discovery.** The library-design NULL was originally established by Obs 236/238/239/240 in April. The present Obs records that the NULL reproduces at a new eval standard and is now captured in the manifest — both are useful paper-supporting facts, but neither changes the scientific conclusion.
+- **Nominal 327-tile scope only.** The 487-tile comparability siblings for h8-v2 and h12-v2 exist on disk but are deliberately excluded here (leakage). If a reviewer requests 487-tile figures, they must be presented with a leakage disclosure note.
+- **18 of 28 runs remain to decompose.** Batch A residual (gold-standard-v2 predecessor runs, e47 predecessor runs), Batch B, D, and E are not yet in the manifest. The 142 conditions and 150 passes figures are therefore partial.
+- **r2-balanced detections are h10 pool_160 detections.** The F1 and MCC for h12-v2 r2-balanced (0.7171 / 0.717) are identical to h10 pool_160 because they are the same underlying detections, evaluated under the same scope. This is expected and correct — r2-balanced is a design alias, not an independent run.
+- **H8-v2 verified prob_threshold is 0.10**, not 0.05 (h10's threshold). The two hypotheses use different verifier operating points, calibrated independently; the MCC figures are not directly comparable across hypotheses.
+
+### Findable later
+
+Search terms: Obs 341, Batch C decomposition manifest, library-design NULL corroboration, 327-tile nominal scope era-3-327, greedy t4 vote-threshold, h8-v2 composition null 0.693–0.733, h10 pool-size null 0.662–0.717, h12-v2 HP:HN ratio null 0.688–0.717, verifier MCC lift 0.80, h8-v2 verified MCC 0.803 0.805 0.813, h10 pool_160 verified MCC 0.760, wbf vote≥4 327 tiles, greedy WBF equivalence per-cell ΔF1 0.04, GAP-6 cross-run r2-balanced source_run h10, pool_160_hp4hn4 foreign pool, verify_run_conditions.py line 216, 10 of 28 runs decomposed, 142 conditions 150 passes 1 analysis, run-conditions.json conditions-manifest.json passes-manifest.json, dd2ebe9f h8-v2 decomposition, 327c19cb h10 decomposition, cee75dcb h12-v2 decomposition, Obs 340 WBF fix prerequisite, Obs 236 238 239 240 library null original, Session 99 2026-06-04.
+
+### Related observations and artefacts
+
+- **Obs 340** (WBF raw-candidate scoring fix, Session 99 — same session, sibling): the prerequisite fix that had to precede this Obs. The `wbf-mcc/` evaluations produced by Obs 340 are the WBF comparator values used in the Batch C analysis here. Without the fix, the WBF column would show artefactual F1 ~0.30, falsely contradicting greedy≈WBF.
+- **Obs 238** (H8 v2 library composition null — original, 2026-04-15): all seven preregistered composition contrasts fail after BH-FDR. This Obs corroborates at the new eval standard.
+- **Obs 239** (H12 v2 HP:HN ratio null — original, 2026-04-16): all three pairwise ratio contrasts fail. Corroborated here.
+- **Obs 240** (library-design axis definitively null, 45-pair cross-hypothesis matrix, 2026-04-16): the definitive statement of the negative result across H8 v2 + H12 v2. This Obs feeds into the same conclusion at the production manifest standard.
+- **Obs 236** (H10 pool size is a null — original, 2026-04-15): 20-tile calibration matches 160-tile under PV. Corroborated here with the pool-size F1 range flat at 0.662–0.717.
+- **Obs 241** (scale-4 vs scale-8 parsimony stable across greedy and WBF, 2026-04-16): the parsimony choice that holds even after the Obs 340 WBF correction.
+- **Artefacts**: `results/run-conditions.json` (Batch C condition specifications); `results/conditions-manifest.json` / `results/conditions-manifest.md` (142 conditions, 10 runs); `results/passes-manifest.json` / `results/passes-manifest.md` (150 passes); `results/h8-v2/with-mcc/` (7 greedy evaluations); `results/h10/with-mcc/` (4 greedy evaluations); `results/h12-v2/with-mcc/` (3 greedy evaluations); `results/h8-v2/wbf-mcc/` and `results/h12-v2/wbf-mcc/` (corrected WBF evaluations); `results/rescore-2026-05-31/h8-v2/` and `results/rescore-2026-05-31/h10/pool_160_hp4hn4-verified-vt4-pt0.05/` (verified evaluations). Commits `dd2ebe9f` (h8-v2 decomposition), `327c19cb` (h10 decomposition), `cee75dcb` (h12-v2 decomposition).
