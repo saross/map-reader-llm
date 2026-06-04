@@ -6095,3 +6095,54 @@ style globs, or kill by PID). And distinguish a process-pool's spawned workers f
 duplicates by checking `ppid`/argv before acting. Two concurrent writers to one results
 directory is a silent-corruption risk exactly of the kind the rigour bar above is meant to
 prevent — the operator layer needs the same care as the experiment layer.
+
+## Session 99 — 2026-06-04 ("identical" is layer-scoped; the implausible number as a transcription tripwire; the menu thread resolved)
+
+### "Identical" is a claim about a layer, not a file — and an aggregate can lag its inputs
+
+Reconciling the sapphire dirty files, I diffed the 22 standalone n1 evals, found them
+byte-identical, and was one sentence from "metadata churn — discard." The substantive defect was
+one layer up: the consolidated `batch_summary` still carried n=1 values for two cells that were
+n=3 everywhere else (it had never been regenerated after a top-up). My "identical" was true of
+the per-condition evals and *false* of the aggregate that derives from them — and I had silently
+scoped the conclusion to the layer I checked first. This is the Session-98 "config-controlled ≠
+complete" axis again, in the artefact dimension: a derived aggregate is a *separate* correctness
+surface from its inputs, and "the inputs match" does not certify it.
+
+**The rule**: before acting on "X is identical/unchanged," name *which representation* that holds
+for — raw inputs, per-unit derived, consolidated aggregate — and check the aggregate explicitly,
+because it can lag its inputs without any of them changing. "Verify before discarding" only works
+if the verification covers the layer the value actually lives in.
+
+### A number that contradicts an established finding is a pipeline-defect signal, not data
+
+Decomposition is nominally a transcription task — lift what the eval says into the manifest. But
+"what the eval says" can be wrong: the on-disk WBF eval reported F1 0.32, and a faithful
+transcription would have shipped it next to greedy's 0.71, making the preregistered greedy≈WBF
+equivalence look broken. The only thing standing between that and the manifest was the
+domain-plausibility tripwire — 0.32 is *implausible given the design*, so it was a defect to
+trace, not a value to record. The lesson for mechanical-seeming work: the more rote the task
+feels, the more a result that contradicts a known finding deserves a hard stop, because rote mode
+is exactly when transcription errors get waved through.
+
+**The rule**: when a transcription/extraction step yields a number that contradicts an
+established result (here, a preregistered equivalence), treat it as evidence the *pipeline* is
+wrong before treating it as evidence the *finding* is wrong — and never commit it without tracing
+the contradiction to root cause.
+
+### The menu thread, one session on: forks carry a recommendation, and I say when I'm unsure
+
+Sessions 97–98 logged a recurring failure: my `AskUserQuestion` menus pre-closed the option the
+human actually wanted. This session leaned heavily on the same tool (~six forks: WBF handling,
+nominal scope, the batch_summary fix) and it went well — not because I stopped using menus, but
+because each fork carried (a) a *recommended* option with its reasoning as the first choice, (b)
+the genuine trade-offs of the alternatives, and (c) an honest "this one I'm unsure about" where
+that was true. The human converged on the recommendation every time, which only means the
+recommendations were calibrated *this* time — but the structural fix for the menu failure is now
+legible: a menu is safe when it surfaces a fork I *could* default, states which way I'd go and
+why, and reserves the human's attention for setting policy rather than rubber-stamping mechanics.
+
+**The rule**: an `AskUserQuestion` is well-formed when it would still be useful if the human only
+read the first option — i.e. it leads with a reasoned recommendation, not a neutral list — and
+when it honestly flags the forks where I have no recommendation. Deferral without a recommendation
+is the smell; a recommended default with visible trade-offs is the shape.

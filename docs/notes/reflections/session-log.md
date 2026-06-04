@@ -6574,3 +6574,65 @@ leaderboard-stub→finding test pinning the E57 replace invariant; 41 tier-1 pas
   mistake — each state was correct given the data known at that moment.
 - All heavy compute (evals, tiering, recovery dispatch) ran on **sapphire**, which was
   concurrently running the user's Inscriptions JAMT MCMC job (undisturbed; ~20 of 24 cores free).
+
+## Session 99 — 2026-06-04 (Batch C library studies decomposed; WBF raw-candidate scoring fix; n1 batch_summary refresh)
+
+**Work**: Carry-forward decomposition. Decomposed **Batch C** (the three library studies) into
+`results/run-conditions.json`: **`h8-v2`** (H8 composition — 7 image-track proposer pools K=5 + 3
+verifier passes → 17 conditions = 7 greedy + 7 WBF + 3 verified); **`h10`** (H10 calibration-pool
+size — 4 pools + 2 verifier passes → 5 = 4 greedy + 1 verified); **`h12-v2`** (H12 HP:HN ratio — 2
+local pools, no verifier passes → 6 = 3 greedy + 3 WBF). Manifest now **28 runs / 142 conditions /
+150 passes / 1 analysis, ALL VALID**; 10 of 28 runs decomposed. Conditions scored at the 327
+nominal scope (era-3-327, leakage-clean — `pool_160` hard-cases excluded), greedy operating point
+**t4 (vote≥4 of 5)**; greedy eval source = `with-mcc/<cell>` (327, F1@20m + MCC), verified =
+`rescore-2026-05-31` 14-buffer evals. **WBF fix**: the on-disk `results/<run>/wbf/<cell>/` evals
+scored *raw, unthresholded* candidates at the 487 scope with no MCC (spurious F1 ≈ 0.29–0.32);
+wrote new `scripts/filter_detections_by_vote.py` (+ 8 tier-1 tests), filtered each WBF cell to
+vote≥4, re-scored the **10 WBF cells** (7 h8-v2 + 3 h12-v2) at 327 + MCC on sapphire →
+`results/h{8,12}-v2/wbf-mcc/`. **GAP-6**: `h12-v2 r2-balanced` reuses `h10`'s `pool_160_hp4hn4`
+passes — conditions carry `source_run="h10"` (drift warning suppressed; passes counted once in
+h10). **n1 batch_summary**: found the committed `batch_summary.{json,md,csv}` carried stale n=1
+values for the two medium-T=0.0 Pro cells (never regenerated after S98's n=3 top-up); regenerated
+from the 18 n=3 standalone evals (zero recompute) → only those 2 rows changed; verified
+row-identical to an uncommitted parallel re-run found on sapphire, which was then restored +
+fast-forwarded to origin.
+
+**Results (decomposition)**: at the 327/t4/14-buf-MCC standard the conditions reproduce the
+established library-design **null** — H8 composition greedy F1@20m ≈ 0.69–0.73 (scale-4 best), H10
+pool-size flat 0.66–0.72 (null), H12 ratio clustered 0.69–0.72; verified lifts tile-MCC to ~0.80;
+greedy≈WBF per cell (ΔF1 ≤ ~0.04, post-fix). The signed-off n1 finding is unchanged.
+
+**Decided** (all user forks via AskUserQuestion): (1) WBF conditions = vote≥4-filtered, scored at
+327 + MCC, included alongside greedy. (2) Nominal **327 only**; the 487 comparability siblings
+excluded (leakage). (3) Aggregation labels `greedy`/`wbf` (per the 3b plan), kept over gs-v2's
+legacy `consensus` — user-confirmed better. (4) n1 batch_summary regenerated locally + sapphire
+dirty files discarded (their only value, the corrected aggregate, reproduced cleanly). (5)
+`_ignored_evals` completeness-guard sweep **deferred** to a single 3b close-out pass.
+
+**Produced**: commits `ace55874` (filter tool + tests), `dd2ebe9f` (h8-v2), `327c19cb` (h10),
+`cee75dcb` (h12-v2), `79a68032` (n1 batch_summary fix), `4ad7d155` (continuity Session-99
+START-HERE), `4c333929` (Obs 340), `0c7cdab1` (Obs 341) — all pushed. New: `filter_detections_by_vote.py`
+(+ `tests/test_filter_detections_by_vote.py`). **Obs 340** (WBF raw-candidate scoring artefact +
+fix), **Obs 341** (Batch C reproduces the library-design null). One `methodology` memory captured
+(the WBF vote-matching gotcha, id `2026-06-04-697d5f708515`).
+
+**Pending (next session)**:
+
+1. **Decompose the remaining 18 runs**: Batch A residual (`proposer-verifier-384/512`), Batch B
+   (5× `55maps-*`), Batch D (9× `retest-phase*`, GAP-9), Batch E (`pv-diag-256` + `verifier-t-pilot`
+   + `pv-diag-384` consensus/verified completion, GAP-7). WBF cells in any of these need the same
+   vote≥4 + 327-MCC treatment (Obs 340 / the memory).
+2. **`_ignored_evals` sweep** at 3b completion (deferred this session).
+3. **Carried (unchanged)**: sapphire crop copy + Syncthing removal; git history purge
+   (post-submission); the S97 ~$70-vs-~$20–30 billing reconciliation against the Google console.
+
+### Contextual assumptions
+
+- This is **Session 99**, 2026-06-04, resuming directly from the Session-98 handoff. **$0 API** —
+  all work was local JSON authoring + CPU scoring (the WBF re-scores) on **sapphire**, which was
+  still running the user's Inscriptions JAMT MCMC job (undisturbed).
+- The decomposition results corroborate, rather than newly establish, the library-design null
+  (originals: Obs 236/238/239/240); the new angle is reproduction at the production
+  327/t4/14-buffer+MCC manifest standard plus the WBF scoring correction.
+- `outputs/h11/wbf/` on sapphire (old 2026-04-15 `fh-text` WBF crops, untracked, not in origin)
+  was left untouched during the sapphire cleanup — it is pre-existing, not this session's.

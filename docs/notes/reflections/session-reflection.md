@@ -8326,3 +8326,57 @@ read the trimmed finding and asked the exactly-right editorial question ("less o
 sausage is made, unless it's material?") — pushing the cited `outcome` toward finding-first while
 trusting me to keep the audit trail somewhere. Calibration of what belongs in the headline vs the
 provenance is his instinct to set; mine to implement.
+
+---
+
+## Session 99 — 2026-06-04 — the routine decomposition where "routine" hid two real defects
+
+The brief was carry-forward work: decompose Batch C (the library studies h8-v2 / h10 / h12-v2)
+into the analysis manifest. Mostly that is what it was — authoring conditions, running the
+generator, committing. But the two moments worth reflecting on are the two near-misses where
+"routine" was a thin skin over a genuine defect, and both turned on the same discipline: not
+trusting the first answer that looked clean.
+
+### Prompt: What surprised you about this session?
+
+**WBF F1 ≈ 0.32.** Scoring the first h8-v2 WBF cell returned F1 0.319 against greedy's 0.707 — a
+0.39 gap that flatly contradicts the project's *own* preregistered greedy≈WBF equivalence. The
+surprise was not that I'd erred mid-scoring; it was that the committed on-disk WBF evals carried
+the same error (raw, unthresholded candidates at the 487 comparability scope, no MCC), had sat
+there since April, and the identical pattern was in h12-v2. The "flag surprising results" reflex
+fired exactly as the project CLAUDE.md intends: 0.32 read as *implausible given the design*, so I
+stopped and traced it to a vote-threshold mismatch (raw WBF spans votes 1–5; the greedy primary
+keeps only ≥4) rather than authoring it into the manifest. Had I trusted the on-disk eval, the
+headline robustness comparator would have shipped looking broken.
+
+### Prompt: What almost went wrong — what would you replay differently?
+
+**I was a sentence away from discarding the more-correct file.** The sapphire reconciliation: I
+diffed the 22 standalone n1 evals, found them byte-identical (seeded bootstrap is
+worker-invariant), and had all but written "metadata churn — discard." The batch_summary check
+was nearly an afterthought; it showed two rows still at n=1 where everything else was n=3. The
+"dirty" files I was about to throw away held a *more correct* `batch_summary` than the committed
+repo, which had never been regenerated after Session 98's n=3 top-up. The uncomfortable part:
+"identical" was true of the layer I checked first (the per-condition evals) and false of the
+aggregate, and I had quietly scoped my conclusion to the easy layer. I only caught it because I
+checked one more file — which is precisely the project's "verify before discarding" data-policy,
+and the same instinct the human modelled last session. The replay lesson: when about to call
+something "identical," name *which* layer that's true of before acting on it.
+
+### Prompt: the single most important thing a future reader should know
+
+**The on-disk `wbf/<cell>/` evals are a trap for the rest of the decomposition.** Whoever
+decomposes the remaining WBF-bearing runs (Batch D/E — `pv-diag-384`, `verifier-t-pilot`) and
+points a condition's `eval_path` at the raw `results/<run>/wbf/<cell>/evaluation.json` will
+silently import a spurious ~0.3 F1. The condition must filter to the greedy-matched vote
+threshold (`scripts/filter_detections_by_vote.py`) and re-score at nominal scope with MCC.
+Recorded in Obs 340 and a `methodology` memory so it survives past this context window.
+
+**Relational texture**: the session ran on a chain of AskUserQuestion forks — WBF handling,
+nominal scope, the batch_summary fix — and the human's answers consistently landed on the option
+I'd marked "recommended," which I read as convergence rather than rubber-stamping (the forks where
+I was genuinely unsure, I said so, and those are the ones worth his time). One small ratification
+worth keeping: when I flagged that I'd labelled greedy-ball `aggregation="greedy"`/`"wbf"` against
+gold-standard-v2's legacy `"consensus"`, he replied "we should have named greedy/wbf from the
+start, what you've done is better, leave it" — a judgement call affirmed rather than corrected,
+the inverse of last session's omitted-option pattern.

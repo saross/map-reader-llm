@@ -5023,3 +5023,58 @@ data fix a bias in the old data?" — not "great, more is better." A rise that l
 is a smell, not a win. And the meta-detector across S97–S98: a committed, documented,
 confidently-worded finding is not evidence the underlying data has stopped moving; layered
 artefacts each look exactly like a result until the next layer is peeled.
+
+## Session 99 — 2026-06-04 — a contradiction that pointed at the comparison, not the data; and my own "identical" refuted by one more diff
+
+### Sequence 1 — "WBF is ~0.37 F1 worse than greedy" (the on-disk eval's implicit claim, refuted)
+
+**Surprising fact**: scoring the first h8-v2 WBF cell returned F1 0.32 against greedy's 0.71, and
+the committed on-disk WBF evals (both h8-v2 and h12-v2) reported the same ~0.3 — directly
+contradicting the project's *preregistered* greedy≈WBF equivalence (ΔF1 0.008, p 0.39). A result
+that contradicts a registered equivalence is either a real reversal or a broken comparison.
+
+**Probe**: rather than treat 0.32 as the WBF score, I asked what differed between the two sides
+*other than the aggregation algorithm under test*. Inspecting the candidate files: the WBF
+`wbf_candidates.geojson` carries `vote_count` 1–5 and the on-disk eval scored *all* of them at
+the 487 comparability scope with no MCC; the greedy primary (`consensus_t4`) keeps only
+`vote_count ≥ 4`. So the comparison was raw-WBF (all votes, wrong scope) vs vote-thresholded
+greedy. I filtered WBF to vote≥4 and re-scored at the 327 nominal scope with MCC → F1 ~0.68.
+
+**Belief revision**: WBF is *not* ~0.37 worse; the on-disk WBF evals are simply not a valid
+greedy comparator (raw candidate set, comparability scope, no MCC). At matched vote≥4 + nominal
+scope, greedy≈WBF holds across every Batch C cell (within ~0.04 F1), corroborating the
+preregistered equivalence. The "WBF fails" reading was an artefact of an apples-to-oranges
+threshold-and-scope mismatch, not a property of WBF.
+
+**Probe-type**: *equivalence-contradiction → find the off-axis difference.* When a measurement
+contradicts an established equivalence, the generalised move is to enumerate every dimension on
+which the two sides differ and locate the one that is **not** the dimension under test (here:
+vote threshold and eval scope, not the fusion algorithm). The contradiction is evidence about the
+*comparison's* validity before it is evidence about the *claim*.
+
+### Sequence 2 — "the sapphire dirty files are identical metadata churn, discard them" (my own conclusion, refuted by one more diff)
+
+**Surprising fact**: having diffed the 22 standalone n1 evals and found them byte-identical to the
+committed versions, I had concluded "worker-count-only metadata churn — safe to discard." Then the
+`batch_summary` diff showed two rows differing in *value* (F1 0.763→0.792, 0.606→0.656), not in
+metadata.
+
+**Probe**: traced the two rows (Pro Text/Image MEDIUM T=0.0) — `n_runs` 1→3. Cross-checked the
+standalone evals for those cells (n=3, correct, matching the signed-off finding's 0.792) against
+the committed `batch_summary` (n=1, stale). The committed aggregate had never been regenerated
+after Session 98's n=3 top-up; the finding was safe because it sources the standalone evals, not
+the aggregate.
+
+**Belief revision**: the "dirty" files I was about to discard contained a *more correct*
+`batch_summary` than the committed repo. My "identical" had been scoped to the layer I checked
+first (per-condition evals) and was false at the derived-aggregate layer. The right action
+flipped from "discard the dirty files" to "fix the committed artefact" (regenerate the aggregate
+from the n=3 inputs).
+
+**Probe-type**: *layer-completeness — "identical at layer L" ⇏ "identical at layer L+1."* A
+derived aggregate is a separate correctness surface from its inputs and can lag them with none of
+them changing; diff the aggregate independently rather than inferring it from input equality. This
+is the artefact-dimension twin of S98's "config-controlled ≠ complete" — and the cross-session
+meta-detector now reads: *a clean-looking surface (a confident committed finding in S98, a
+byte-identical input diff in S99) is not evidence the layer that matters is clean; name the layer
+your "fine" applies to before acting on it.*
