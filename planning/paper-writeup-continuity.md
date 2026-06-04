@@ -1,14 +1,35 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-06-03 (Session 98 — re-scored the genuine-Pro re-run, **replaced** the four Flash-misdispatched anti-diagonal cells on the N=1 board, brought all four medium-thinking Pro cells to **n=3** (recovering a ~5% coverage hole in the pv-diag medium-t-0-0 run_1), and re-tiered. **FINAL finding: Tier-1 tie_set = two genuine-Pro text cells at T=0.0 — `pro-text-high-t-0-0` (0.804) + `pro-text-medium-t-0-0` (0.792)** — over a clean T=0.0 > T=0.7 separation (H7). Obs 338/339; errata E57 updated. See the Session 98 START-HERE.)
+**Last updated**: 2026-06-04 (Session 99 — decomposed **Batch C** (library studies `h8-v2`/`h10`/`h12-v2`) into the manifest → **28 runs / 142 conditions / 150 passes**; caught + fixed a **WBF raw-candidate scoring artefact** (vote≥4 filter, new `filter_detections_by_vote.py`, Obs 340); **refreshed the stale n1 `batch_summary`** to n=3 and cleaned/fast-forwarded sapphire. Finding from S98 unchanged. See the Session 99 START-HERE.)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
 
 ---
 
-## ✅ Session 98 — START HERE — E57 GENUINE-PRO BOARD FINALISED AT n=3 (tie reopened)
+## ✅ Session 99 — START HERE — BATCH C DECOMPOSED + WBF SCORING FIX + n1 batch_summary REFRESHED
+
+**Posted**: 2026-06-04. Commits `ace55874`→`79a68032`, all pushed. **$0 API** (local JSON authoring + CPU scoring on sapphire). The Session-98 N=1 board/finding is **unchanged and still signed off**.
+
+### What Session 99 did (all committed + pushed)
+
+1. **Decomposed Batch C** (library studies) into `results/run-conditions.json`: `h8-v2` (17 conditions = 7 greedy + 7 WBF + 3 verified), `h10` (5 = 4 greedy + 1 verified), `h12-v2` (6 = 3 greedy + 3 WBF). Manifest now **28 runs / 142 conditions / 150 passes / 1 analysis, ALL VALID**. Decomposition progress: **10 of 28 runs**. Conditions are at the **327 nominal** scope (era-3-327, leakage-clean — `pool_160` hard-cases excluded; the 487 evals are contaminated comparability siblings, omitted), greedy operating point **t4 (vote≥4 of 5)**, eval source = the `with-mcc/<cell>` 327 evals (greedy) / `rescore-2026-05-31` 14-buffer evals (verified). Library result reproduced (Obs 341): H8 composition modest, H10 pool-size null, H12 ratio clustered; verified lifts MCC ~0.80; greedy≈WBF.
+2. **WBF scoring fix** (Obs 340): the on-disk library WBF evals scored **raw unthresholded** candidates at 487/no-MCC → spurious F1≈0.32 (would falsely contradict the preregistered greedy≈WBF equivalence). New `scripts/filter_detections_by_vote.py` (+ 8 tier-1 tests) filters to vote≥4 (greedy-matched); re-scored at 327+MCC on sapphire → `results/h{8,12}-v2/wbf-mcc/`. greedy≈WBF restored (WBF 0.66–0.74 vs greedy 0.69–0.73 per cell).
+3. **GAP-6 handled**: `h12-v2 r2-balanced` has no local proposer pool — it reuses `h10`'s `pool_160_hp4hn4` passes. Its conditions carry `proposer_pool="pool_160_hp4hn4"` + `source_run="h10"` (suppresses the foreign-pool drift warning at `verify_run_conditions.py:216`); passes counted once, in h10 (r2 adds 0 own passes). `source_run` stays in the sidecar input, not emitted to the manifest.
+4. **n1 `batch_summary` refreshed** (`79a68032`): the committed `batch_summary.{json,md,csv}` still carried Session-97 **n=1** values for the two medium-T=0.0 Pro cells (F1 0.763/0.606) — never regenerated after the S98 n=3 top-up (0.792/0.656). Re-aggregated from the 18 n=3 standalone evals (zero re-compute); only those 2 rows changed; **finding unaffected** (it sources the standalone evals). Confirmed byte-identical to an uncommitted parallel re-run found on sapphire (seeded bootstrap is worker-count-invariant) → **sapphire working tree restored + fast-forwarded to origin**; its `outputs/h11/wbf/` (old 2026-04-15 `fh-text` crops, untracked, not in origin) left untouched.
+
+### Open / next session — decomposition to-do (sub-step 3b)
+
+- **Remaining runs to decompose (18 of 28)**: Batch A residual (`proposer-verifier-384/512`), Batch B (5× `55maps-*`), **Batch D** (9× `retest-phase*` — GAP-9 Era-1 meta shape at scale, deep phase3c nesting), **Batch E** (`pv-diag-256` archived-eval shape + `verifier-t-pilot` + `pv-diag-384` consensus/verified completion — GAP-7). WBF cells in any of these need the same vote≥4 + 327-MCC scoring (Obs 340).
+- **3b close-out task — `_ignored_evals` sweep [DEFERRED, agreed Session 99]**: populate `_ignored_evals` per run in `run-conditions.json` to register deliberately-excluded scored evals (collapsed greedy `t1/t2/t3/t5` sweep points, superseded raw-487 WBF evals, off-operating-point verifier prob sweeps, non-nominal-scope siblings). No run uses it today → 8/10 decomposed runs sit at drift-check **"partial"** (benign `unclaimed-eval` WARNs, 0 fail). **Value**: converts `verify_run_conditions.py` from a noisy advisory into a sharp **completeness guard** — once deliberate exclusions are registered, any NEW unclaimed eval = a genuine omission. **Do as ONE sweep at 3b completion** (not piecemeal); semi-automatable (the `--draft-run` drafter lists all candidate evals; the un-authored set IS the `_ignored_evals`).
+- **Aggregation labels**: Batch C uses `aggregation="greedy"` (greedy-ball) / `"wbf"` (WBF) per the 3b plan's terminology — **user-confirmed better** than gs-v2's legacy `"consensus"` for greedy-ball; harmonise gs-v2 later if a single convention is wanted.
+- **Pre-existing carry-forwards (unchanged)**: sapphire crop copy + Syncthing removal; git history purge of crop blobs (post-submission).
+- **Minor flash-cell failures: WON'T-FIX** (S98 decision; immaterial to any finding).
+
+---
+
+## ✅ Session 98 — E57 GENUINE-PRO BOARD FINALISED AT n=3 (tie reopened) (historical — board unchanged, carried to-dos superseded by Session 99)
 
 **Posted**: 2026-06-03 into 2026-06-04 (signed off + reflected after midnight Sydney), end of a very long collaborative day. Commits `d973a53d`→`1d0254e8`, all pushed. **Two API runs (genuine Pro, realtime+flex+cache): the n=3 top-up (8 passes) + the pv-diag run_1 recovery — ~$71 total estimated (image passes dominate at ~$15.7 each); $0.96 of that was the recovery.** The finding is **signed off** (`manually_verified_at = 2026-06-04T02:05:31Z`, commit `54944e43`) and the session is **reflected** (commit `1d0254e8`).
 
