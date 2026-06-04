@@ -1953,6 +1953,193 @@
           "detections": "outputs/h12-v2/wbf/r3-hp-heavy/wbf_vote4.geojson"
         }
       ]
+    },
+    "proposer-verifier-384": {
+      "_note": "Batch A residual (H11 + pv-strategy). Verifier-strategy matrix over ONE shared proposer pool (detect_brief-text, flash, single pass, 572 candidates at era-2-487). 8 canonical verified conditions = adversarial/brief/checklist x text/image (6) + 2 cascade orderings, each scored at its verifier-accepted operating point (Session 100, user-confirmed grain). proposer_pools intentionally EMPTY: the on-disk proposer meta (proposer/detections-detect_brief-text-3-flash-2026-03-15.meta.json) is a degenerate stub (items_processed=1, items_failed=1, 1 tile) although the geojson holds 572 features, so no faithful proposer PASS can be extracted; conditions reference the pool by string -> benign pool-unresolved WARN (pv-diag-384 precedent). The 8 verifier_passes are real sidecar metas (verified-<strategy>.meta.json, 572 items, 0 failures). The v2 / v1-prompt replicates (identical T=0.0 config re-runs, ~10h apart) and the n=572 pre-verifier 'full' scorings are deliberately excluded; they register in _ignored_evals at the deferred 3b close-out sweep. Cascade instruction_file = the final stage the single sidecar meta records (stage 1 not separately captured).",
+      "proposer_pools": {},
+      "verifier_passes": {
+        "verified-adversarial-text": "text",
+        "verified-adversarial-image": "image",
+        "verified-brief-text": "text",
+        "verified-brief-image": "image",
+        "verified-checklist-text": "text",
+        "verified-checklist-image": "image",
+        "verified-cascade-adversarial-checklist": "text",
+        "verified-cascade-checklist-adversarial": "image"
+      },
+      "conditions": [
+        {
+          "label": "verified-adversarial-text",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/rescore-2026-05-31/proposer-verifier-384/verified-adversarial-text-accepted/evaluation.json",
+          "detections": "outputs/h11/proposer-verifier-384/verified-adversarial-text-accepted.geojson"
+        },
+        {
+          "label": "verified-adversarial-image",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/rescore-2026-05-31/proposer-verifier-384/verified-adversarial-image-accepted/evaluation.json",
+          "detections": "outputs/h11/proposer-verifier-384/verified-adversarial-image-accepted.geojson"
+        },
+        {
+          "label": "verified-brief-text",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_brief.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/rescore-2026-05-31/proposer-verifier-384/verified-brief-text-accepted/evaluation.json",
+          "detections": "outputs/h11/proposer-verifier-384/verified-brief-text-accepted.geojson"
+        },
+        {
+          "label": "verified-brief-image",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_brief.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/rescore-2026-05-31/proposer-verifier-384/verified-brief-image-accepted/evaluation.json",
+          "detections": "outputs/h11/proposer-verifier-384/verified-brief-image-accepted.geojson"
+        },
+        {
+          "label": "verified-checklist-text",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_checklist.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/rescore-2026-05-31/proposer-verifier-384/verified-checklist-text-accepted/evaluation.json",
+          "detections": "outputs/h11/proposer-verifier-384/verified-checklist-text-accepted.geojson"
+        },
+        {
+          "label": "verified-checklist-image",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_checklist.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/rescore-2026-05-31/proposer-verifier-384/verified-checklist-image-accepted/evaluation.json",
+          "detections": "outputs/h11/proposer-verifier-384/verified-checklist-image-accepted.geojson"
+        },
+        {
+          "label": "verified-cascade-adversarial-checklist",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_checklist.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/rescore-2026-05-31/proposer-verifier-384/verified-cascade-adversarial-checklist-accepted/evaluation.json",
+          "detections": "outputs/h11/proposer-verifier-384/verified-cascade-adversarial-checklist-accepted.geojson"
+        },
+        {
+          "label": "verified-cascade-checklist-adversarial",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/rescore-2026-05-31/proposer-verifier-384/verified-cascade-checklist-adversarial-accepted/evaluation.json",
+          "detections": "outputs/h11/proposer-verifier-384/verified-cascade-checklist-adversarial-accepted.geojson"
+        }
+      ]
+    },
+    "proposer-verifier-512": {
+      "_note": "Batch A residual (H11), thin Era-1 sibling of pv-384 at 512px / era-1-340. Only the adversarial-text verifier strategy was run here; 1 verified condition at its verifier-accepted operating point (Session 100, user-confirmed). proposer_pools EMPTY: the proposer dir holds only detections.geojson with NO meta (GAP-9 Era-1 weak provenance), so no proposer pass is extractable; condition references the pool by string -> benign pool-unresolved WARN. The 1 verifier_pass is a real sidecar meta (verified-adversarial-text.meta.json, 140 items, 0 failures). The v2 replicate re-run is excluded -> _ignored_evals at the deferred 3b close-out sweep.",
+      "proposer_pools": {},
+      "verifier_passes": {
+        "verified-adversarial-text": "text"
+      },
+      "conditions": [
+        {
+          "label": "verified-adversarial-text",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/rescore-2026-05-31/proposer-verifier-512/verified-adversarial-text-accepted/evaluation.json",
+          "detections": "outputs/h11/proposer-verifier-512/verified-adversarial-text-accepted.geojson"
+        }
+      ]
     }
   }
 }

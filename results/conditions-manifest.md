@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-06-04T04:41:31Z · 142 row(s) · schema v1.0.
+> Generated 2026-06-04T07:45:19Z · 151 row(s) · schema v1.0.
 >
-> **Coverage**: 142 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 151 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -106,6 +106,15 @@
 | n1-pro-rerun-384::baseline-pro-text-medium-t-0-7 | single-pass | none | — | 1 | 0.7555 | 0.768 | — |
 | n1-pro-rerun-384::baseline-pro-image-high-t-0-0 | single-pass | none | — | 1 | 0.6658 | 0.8679 | — |
 | n1-pro-rerun-384::baseline-pro-image-medium-t-0-7 | single-pass | none | — | 1 | 0.595 | 0.9108 | — |
+| proposer-verifier-384::verified-adversarial-text | proposer-verifier | verified | — | 1 | 0.4708 | 0.4313 | 215 |
+| proposer-verifier-384::verified-adversarial-image | proposer-verifier | verified | — | 1 | 0.4943 | 0.416 | 261 |
+| proposer-verifier-384::verified-brief-text | proposer-verifier | verified | — | 1 | 0.5142 | 0.3953 | 269 |
+| proposer-verifier-384::verified-brief-image | proposer-verifier | verified | — | 1 | 0.5204 | 0.3402 | 326 |
+| proposer-verifier-384::verified-checklist-text | proposer-verifier | verified | — | 1 | 0.5214 | 0.3154 | 336 |
+| proposer-verifier-384::verified-checklist-image | proposer-verifier | verified | — | 1 | 0.5309 | 0.3873 | 326 |
+| proposer-verifier-384::verified-cascade-adversarial-checklist | proposer-verifier | verified | — | 1 | 0.5036 | 0.4313 | 264 |
+| proposer-verifier-384::verified-cascade-checklist-adversarial | proposer-verifier | verified | — | 1 | 0.495 | 0.4121 | 260 |
+| proposer-verifier-512::verified-adversarial-text | proposer-verifier | verified | — | 1 | 0.1931 | 0.235 | 72 |
 | pv-diag-384::baseline-flash-image-high-t-0-7 | single-pass | none | — | 1 | 0.4986 | 0.6019 | — |
 | pv-diag-384::baseline-flash-image-minimal-t-0-0 | single-pass | none | — | 1 | 0.5995 | 0.3124 | 746 |
 | pv-diag-384::baseline-flash-image-minimal-t-0-7 | single-pass | none | — | 1 | 0.5534 | 0.3295 | — |

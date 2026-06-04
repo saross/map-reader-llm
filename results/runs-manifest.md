@@ -2,7 +2,7 @@
 
 # Runs manifest
 
-> Generated 2026-06-04T04:41:31Z · 28 row(s) · schema v1.0.
+> Generated 2026-06-04T07:45:19Z · 28 row(s) · schema v1.0.
 >
 > **Coverage**: all 28 runs (run-level facts; conditions/passes added as 3b batches land).
 
@@ -19,8 +19,8 @@
 | e47-propose-brief | mixed | 384 | 4-map-gs | curator | era-2-487 | — |
 | n1-outstanding-384 | mixed | 384 | 4-map-gs | curator | era-2-487 | — |
 | n1-pro-rerun-384 | single-pass | 384 | 4-map-gs | curator | era-2-487 | — |
-| proposer-verifier-384 | — | 384 | 4-map-gs | curator | era-2-487 | — |
-| proposer-verifier-512 | — | 512 | 4-map-gs | curator | era-1-340 | — |
+| proposer-verifier-384 | proposer-verifier | 384 | 4-map-gs | curator | era-2-487 | — |
+| proposer-verifier-512 | proposer-verifier | 512 | 4-map-gs | curator | era-1-340 | — |
 | pv-diag-256 | — | 256 | 4-map-gs | curator | px256-1032 | — |
 | pv-diag-384 | single-pass | 384 | 4-map-gs | curator | era-2-487 | — |
 | h12-v2 | consensus | 384 | 4-map-gs | curator | era-3-327 | — |
