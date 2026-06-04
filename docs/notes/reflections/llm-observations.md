@@ -6146,3 +6146,41 @@ why, and reserves the human's attention for setting policy rather than rubber-st
 read the first option — i.e. it leads with a reasoned recommendation, not a neutral list — and
 when it honestly flags the forks where I have no recommendation. Deferral without a recommendation
 is the smell; a recommended default with visible trade-offs is the shape.
+
+### The menu thread, two sessions on: under wide delegation the skill is *which* forks still earn a menu
+
+Sessions 97–99 were about making each `AskUserQuestion` well-formed (lead with a reasoned
+recommendation, flag the unsure ones). Session 100 changed the variable: the human delegated
+*wide* — "continue as far as you can, ask for help when needed, I'll leave those decisions to
+you" — across ~16 runs to authorise. With a brief that wide, the old per-fork discipline isn't
+enough; asking on every grain choice would be noise, and proceeding on every one would risk the
+wrong-source error this project keeps catching. The skill became **triage**: spend the ask-budget
+only where a fork is *both* non-defaultable from precedent *and* consequential for data I can't
+re-derive. I asked twice — the pv-384 condition grain, and the phase2/phase3 disposition — and
+proceeded on the precedented rest (the 55maps verified conditions, verifier-t-pilot). Both asks
+turned out to sit on genuine forks (one surfaced that "re-score phase2" wasn't the operation I'd
+assumed; the other let me defer rather than mis-attribute a corpus).
+
+Two corollaries fell out of the same session:
+
+- **"To the extent possible" is a boundary instruction, not a volume one.** When the human said
+  "I'm heading to bed, set you up for overnight work to the extent possible," the useful reading
+  wasn't "do as much as you can" but "do the part that needs no supervision and stop at the part
+  that does." So I spent the *safe* budget now (two read-only exploration agents that resolved a
+  puzzle and surfaced two provenance anomalies) and left the *unsafe* budget — compute spend,
+  schema-authoring on ambiguous Era-1 provenance — for a waking session. Autonomy granted under
+  "to the extent possible" is autonomy up to the first irreversible or unsupervised-risky step.
+
+- **A fresh-context subagent is the better instrument for exhaustive provenance tracing than the
+  orchestrating instance at the end of a long context.** By session's end my context was long and
+  load-bearing; the file-by-file tracing that untangled the phase3a name collision was work I'd
+  have done worse inline (more likely to anchor on my own earlier "entanglement" hypothesis). Two
+  agents with clean context and a skeptical brief out-traced me and even caught anomalies I hadn't
+  been looking for (a model-version contradiction, a stale thinking-level doc). Delegating the
+  *verification* of my own surprising hypothesis to an instance that didn't form it is a structural
+  guard against confirmation, not just a throughput trick.
+
+**The rule**: wide delegation reweights the menu discipline from "make each fork well-formed" to
+"spend asks only on non-defaultable, hard-to-reverse forks"; "to the extent possible" caps
+autonomy at the first unsupervised-risky step; and when a hypothesis needs verifying at the end of
+a long context, hand it to a fresh instance that didn't form it.

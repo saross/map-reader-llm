@@ -8380,3 +8380,64 @@ worth keeping: when I flagged that I'd labelled greedy-ball `aggregation="greedy
 gold-standard-v2's legacy `"consensus"`, he replied "we should have named greedy/wbf from the
 start, what you've done is better, leave it" — a judgement call affirmed rather than corrected,
 the inverse of last session's omitted-option pattern.
+
+---
+
+## Session 100 — 2026-06-05 — the batch that got harder the deeper I looked, and why not forcing it was the whole job
+
+The brief was to keep decomposing the manifest: finish Batch A, then push through B, D,
+and E "as far as you can." A and B were genuinely routine — author conditions, run the
+generator, commit, push. The session's real texture lived in Batch D, which behaved like
+a set of Russian dolls: every layer of investigation revealed that the layer beneath was
+not what I'd assumed, and the discipline that carried the session was refusing to author
+on the first interpretation that looked authorable.
+
+### Prompt: What surprised you about this session?
+
+**A cross-run path reference that turned out to mean nothing.** Mid-Batch-D I found that the
+`phase3a-text-matrix` evaluations score detections living under `outputs/h11/pv-diag-384/…`,
+not under `outputs/retest/phase3a/`. I read this as entanglement — "retest-phase3a may be an
+analysis *of* pv-diag-384" — and flagged it to the human as a surprising finding worth
+resolving before attributing anything. The resolution (from a read-only exploration agent at
+session close) was a *different* surprise: it is a **name collision**. Two unrelated artefact
+families — an Era-1/340/512 retest run and an Era-2/487/384 pv-diag sweep — share the bare
+string "phase3a" and nothing else. Every hard signal (bounds, tile count, detections path)
+said Era-2/pv-diag-384. I had over-read a naming coincidence as a data relationship. The
+lesson worth keeping: a shared path *is* evidence of a relationship, but "shares a name" is a
+relationship, and it is the boring one I failed to rank first.
+
+### Prompt: What almost went wrong — what would you replay differently?
+
+**Forcing Batch D would have mis-attributed an entire corpus.** Had I pushed through under the
+user's "continue as far as you can," the natural move was to attach the MCC-bearing
+`phase3a-*-matrix` evals to `retest-phase3a` — they were the only phase3a evals with MCC, and
+the schema wants MCC. That would have welded pv-diag-384's Era-2/487 results onto an Era-1/340
+run: a silent wrong-source error of exactly the class this project keeps getting bitten by.
+What saved it was not cleverness but a refusal — I deferred rather than authored, and asked an
+agent to trace the actual detections before I touched anything. I would not replay much
+differently, but I'd name the principle earlier: when a run's only schema-satisfying evals come
+from a *different directory tree*, that is a stop-and-verify signal, not a convenience.
+
+### Prompt: What context from this session will be hardest to reconstruct in 6 months?
+
+**Why three whole runs were "deferred" rather than done, and the trap that lurks if someone
+undoes that.** The continuity doc records "phase2a-e deferred — needs a bespoke re-score" and
+"phase3 → 3c analyses," but the *why* is easy to lose: phase2's headline metric is a
+replicate-mean over K passes computed by a script hard-coded to one 20 m buffer with no MCC, so
+the "re-score" the human approved is not a Batch-C-style single-output rescore at all — it is a
+script-rework. And the phase3 runs simply *have no per-condition MCC evals anywhere*; their
+evaluable outputs are F1-only sweeps. A future reader who sees the `phase3a-text-matrix` evals
+(which *do* have MCC) and tries to be helpful by wiring them into `retest-phase3a` will re-trip
+the exact name-collision I just untangled. That trap is now written down in
+`reports/phase3-decomposition-investigation-2026-06-05.md`, which is the single artefact I'd
+most want a future instance to read before reopening Batch D.
+
+**Relational texture**: the human's mode shifted twice. Mid-session it was high-trust delegation
+("I'll leave those decisions to you ... ask for help when needed"), which made *calibrating when
+to ask* the actual skill — I asked twice (the pv-384 grain, the phase2/phase3 disposition) and
+proceeded on the precedented rest, and both asks landed on genuine forks rather than
+rubber-stampable defaults. Then, at "I'm heading to bed, set you up for overnight work to the
+extent possible," I read "to the extent possible" as licence to spend the safe, read-only budget
+now — running the two exploration agents so the next session starts with the puzzle solved rather
+than the puzzle posed. That felt like the right reading of a sleepy delegation: do the part that
+needs no supervision, leave the compute-and-author part for a waking session.

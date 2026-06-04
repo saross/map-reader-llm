@@ -6636,3 +6636,76 @@ fix), **Obs 341** (Batch C reproduces the library-design null). One `methodology
   327/t4/14-buffer+MCC manifest standard plus the WBF scoring correction.
 - `outputs/h11/wbf/` on sapphire (old 2026-04-15 `fh-text` WBF crops, untracked, not in origin)
   was left untouched during the sapphire cleanup — it is pre-existing, not this session's.
+
+---
+
+## Session 100 — 2026-06-05 (Batch A residual + Batch B + verifier-t-pilot decomposed; Batch D/E recon + deferrals; phase3 explorations)
+
+**Work**: Manifest decomposition (sub-step 3b), continuing from the Session-99 handoff. Decomposed
+**8 more runs → 18 of 28**. (1) **Batch A residual** — `proposer-verifier-384` (the H11
+verifier-strategy matrix: 8 verified conditions = adversarial/brief/checklist × text/image + 2
+cascade orderings, each at its verifier-accepted operating point, era-2-487, MCC) and
+`proposer-verifier-512` (1 verified `adversarial-text`, era-1-340) → **Batch A complete**. (2)
+**Batch B** — the 5× `55maps-*` generalisation runs (each proposer-5pass→consensus→text-adversarial
+-verifier; 1 verified condition each at the 14-buf+MCC re-score vs the reviewed student GT;
+`55maps-generalisation` kept as a *cited original* of text-high, not a historical_alias). (3)
+**verifier-t-pilot** (Batch E tractable part) — H2 verifier-temperature pilot, era-2-487, 3 verified
+conditions (T=0.0/0.5/1.0 at vote4/prob0.20), GAP-10 `temperature_effective` handled. **Extractor
+enhancement**: the verifier-pass extractor now reads both the dir-form `<base>/run.meta.json`
+(gs-v2, byte-identical preserved) and the sidecar `<base>.meta.json` (PV strategy runs), and prefers
+per-item `model_version` over `config.model` (E57); +1 tier-1 test (26 green).
+
+**Batch D recon — both parts DEFERRED (no runs authored)**: (a) **phase2a-e** — the canonical metric
+is a replicate-mean over K passes via `analyse_phase2_results.py` (hard-coded 20 m, no MCC), so a
+faithful 14-buf+MCC re-score is a *bespoke compute task*, deferred (user chose "re-score first").
+(b) **phase3a / phase3a-high / phase3a-replication / phase3c** — deferred to sub-step 3c.
+
+**Batch E**: verifier-t-pilot done; **pv-diag-256** deferred (archived threshold_sweep/summary eval
+shape, no MCC → schema can't emit valid conditions); **pv-diag-384 GAP-7 completion** deferred
+(~88 verifier metas across ~15 pools — substantial).
+
+**Session-close explorations (two read-only agents)** — set up for the next session:
+
+1. **phase3a ↔ pv-diag-384 is a NAME COLLISION, not entanglement.** `retest-phase3a` is a distinct
+   Era-1/340/512 run with its own 180 proposer passes; the `phase3a-{text,image}-matrix` evals
+   (which have MCC) score pv-diag-384's Era-2/487/384 detections and belong to **pv-diag-384**.
+2. **phase3a / phase3a-high / phase3a-replication / phase3c all → 3c analyses.** ZERO per-condition
+   MCC evals exist for any of them (F1-only consensus/diversity sweeps); their pools are passes
+   (GAP-6). phase3a-high's image track never ran; phase3c (H9 diversity) was rejected.
+   Findings preserved in `reports/phase3-decomposition-investigation-2026-06-05.md`.
+
+**Results (manifest)**: **28 runs / 159 conditions / 192 passes / 1 analysis, ALL VALID**;
+drift-check **18 runs, 2 pass, 16 partial, 0 fail** (partials are benign deferred `unclaimed-eval`
+and cross-run `pool-unresolved` WARNs). New condition metrics are sensible (55maps base ≈ text-high,
+confirming same experiment; image best-MCC/lower-F1@20 as expected). The signed-off n1 finding is
+unchanged.
+
+**Decided** (user forks via AskUserQuestion): (1) pv-384 grain = 8 distinct verified conditions;
+`-v2`/`-v1-prompt` are T=0 replicate re-runs (excluded → deferred `_ignored_evals`). (2) pv-512
+decomposed now (thin Era-1). (3) Carry-forward #10: `55maps-generalisation` kept as a cited
+original. (4) phase2a-e: re-score first at 14-buf+MCC (then author). (5) phase3a/3c: defer to 3c.
+
+**Produced**: commits `b97a8c59` (extractor + test), `8d5d78e3` (Batch A residual), `b26751cb`
+(continuity), `537faf2f` (Batch B), `4a338f9c` (verifier-t-pilot), `34871467` (continuity full),
+`ef1a6d58` (Session-101 plan + phase3 investigation report) — all pushed. New:
+`reports/phase3-decomposition-investigation-2026-06-05.md`; `test_verifier_pass_sidecar_meta`.
+
+**Pending (next session — baked into continuity Session 101 plan)**:
+
+1. **Re-score phase2a-e at 14-buf+MCC** (bespoke — rework `analyse_phase2_results.py` or build a
+   per-pass-score-and-average pipeline on sapphire; get compute approval), then author the 5 runs
+   (phase2b needs `scope_override`). **Resolve the model anomaly first.**
+2. **Complete pv-diag-384's GAP-7 decomposition** — the `phase3a-*-matrix` evals are its
+   consensus-sweep material.
+3. **phase3a/3a-high/3a-replication/3c → 3c analyses** (record pools as passes; no 3b conditions).
+4. **`_ignored_evals` close-out sweep** (deferred since S99). **pv-diag-256** (no-MCC) disposition.
+
+### Contextual assumptions
+
+- This is **Session 100**, 2026-06-05, resuming from the Session-99 handoff. **$0 API** — all work
+  was local JSON authoring + deterministic extraction; the two exploration agents are read-only.
+- Two provenance anomalies surfaced (to resolve before recording model-of-record for the Era-1
+  retests): Era-1 metas say `gemini-3-flash` but `retest-production-summary.md` says
+  `gemini-2.0-flash`; and a phase3c thinking-level doc conflict (`cross-track-comparison.md` stale).
+- The session ran long and split into a clean half (A/B/verifier-t-pilot authored) and a recon half
+  (Batch D/E mapped, hard parts deferred); the deferrals are deliberate scope calls, not blockers.

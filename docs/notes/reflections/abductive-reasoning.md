@@ -5078,3 +5078,67 @@ is the artefact-dimension twin of S98's "config-controlled ≠ complete" — and
 meta-detector now reads: *a clean-looking surface (a confident committed finding in S98, a
 byte-identical input diff in S99) is not evidence the layer that matters is clean; name the layer
 your "fine" applies to before acting on it.*
+
+---
+
+## Session 100 — 2026-06-05 — a shared name mistaken for shared data; and a "re-score" that wasn't the operation I assumed
+
+### Sequence 1 — "retest-phase3a is entangled with pv-diag-384" (my own hypothesis, refuted)
+
+**Surprising fact**: decomposing Batch D, the drafter found *zero* eval candidates for
+`retest-phase3a` — yet 156 `evaluation.json` files exist under `results/phase3a-text-matrix/`,
+and their `_metadata.cli_args.detections` point to `outputs/h11/pv-diag-384/…/consensus-n10/`,
+i.e. a *different run's* tree. An eval that scores another run's detections is a strong cross-run
+signal.
+
+**Probe**: I first read this as entanglement — "retest-phase3a may be an analysis of pv-diag-384"
+— and, rather than author on it, deferred and commissioned a read-only agent to trace the actual
+referents: what scope/bounds/tile-count do the matrix evals use, and what does
+`outputs/retest/phase3a/` itself contain? The agent found the matrix evals run at
+`bounds/384/full_evaluation_bounds.geojson`, `n_tiles 487` (Era-2/384px), while
+`outputs/retest/phase3a/` holds its *own* 180 Era-1/340/512 proposer passes, and
+`results/retest/retest-production-summary.md` explicitly labels the matrices "the Era 2 consensus
+sweeps."
+
+**Belief revision**: there is **no data relationship** — it is a **name collision**. Two unrelated
+artefact families (an Era-1 retest run and an Era-2 pv-diag sweep) share only the bare string
+"phase3a." The matrices belong to pv-diag-384; `retest-phase3a` is a distinct run whose own evals
+are F1-only consensus sweeps elsewhere. The "entanglement" was a coincidence of naming I had
+promoted to a claim about lineage.
+
+**Probe-type**: *shared identifier ⇏ shared substance — rank the boring relationship first.* A
+string match (a path, a label) is evidence of a relationship at the **naming** layer; it does not
+license a claim at the **data** layer until the actual referents are traced. This is the inverse
+of S99 Seq 1: there a *contradiction* correctly pointed me at the comparison's validity; here a
+*coincidence* falsely pointed me at data lineage. The cross-session meta-detector sharpens to:
+before acting on any same-layer signal — a clean diff (S99), a string match (S100) — name which
+layer it actually licenses a conclusion about, because the layer that matters is usually one step
+removed from the one the signal lives on.
+
+### Sequence 2 — "re-score phase2 the way we re-scored Batch C" (the plan's framing, revised)
+
+**Surprising fact**: the only MCC-bearing phase2 eval (`paper-eval/mcc/512px/p2a-brief-text`) had
+a degenerate confusion matrix (`tn: 1` of 340 tiles), recorded `detections: None`, and carried a
+*single* 30 m buffer — none of which fits the 14-buffer + MCC + named-detection shape that "score
+a detection geojson" produces. I had pitched the fix to the human as a Batch-C-style re-score, and
+they approved "re-score first" on that framing.
+
+**Probe**: before designing the re-score I read `scripts/analyse_phase2_results.py` (the script
+that produced the phase2 numbers) and its sidecar metadata, asking what the phase2 *metric*
+actually is. The metadata names the resampling unit as "tile-level, multi-run averaged over K
+detection passes"; the script is hard-coded to one 20 m buffer and computes **no MCC** at all.
+
+**Belief revision**: "re-score phase2" is not the operation I'd assumed. The canonical phase2
+result is a **replicate-mean over K passes**, not a single scored geojson, and no tool in the repo
+emits it at 14 buffers with MCC. So the approved "re-score" is a *bespoke compute task* — either
+extend that analysis script or build a per-pass-score-and-average pipeline — not a `--glob` away.
+The revision was about the **task**, not the data: I had imported Batch C's procedure-shape onto a
+run whose metric has a different shape.
+
+**Probe-type**: *verify the operation's output shape before re-running a named procedure.* "Re-score"
+is a verb that hides an assumed object (a single detection set → one evaluation.json). When the
+target's existing artefacts don't match that shape (degenerate confusion, `detections:None`,
+one buffer), that mismatch is the signal that the named procedure doesn't apply — surface it to
+the human *before* they approve the verb, because the approval was given to the assumed shape, not
+the real one. (Here I surfaced it the turn after approval, which was soon enough to avoid wasted
+compute, but the cleaner move is to check the metric's provenance before proposing the verb.)
