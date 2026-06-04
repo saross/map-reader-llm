@@ -1,14 +1,36 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-06-04 (Session 99 — decomposed **Batch C** (library studies `h8-v2`/`h10`/`h12-v2`) into the manifest → **28 runs / 142 conditions / 150 passes**; caught + fixed a **WBF raw-candidate scoring artefact** (vote≥4 filter, new `filter_detections_by_vote.py`, Obs 340); **refreshed the stale n1 `batch_summary`** to n=3 and cleaned/fast-forwarded sapphire. Finding from S98 unchanged. See the Session 99 START-HERE.)
+**Last updated**: 2026-06-05 (Session 100 — decomposed **Batch A residual** (`proposer-verifier-384` + `proposer-verifier-512`) → **Batch A now COMPLETE**; manifest **28 runs / 151 conditions / 159 passes**, **12 of 28 runs** decomposed; enhanced the verifier-pass extractor to read **sidecar `verified-<strategy>.meta.json`** metas + per-item model-of-record (gs-v2 byte-identical, +1 tier-1 test). $0 API. Finding from S98 unchanged. See the Session 100 START-HERE.)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
 
 ---
 
-## ✅ Session 99 — START HERE — BATCH C DECOMPOSED + WBF SCORING FIX + n1 batch_summary REFRESHED
+## ✅ Session 100 — START HERE — BATCH A RESIDUAL DECOMPOSED (Batch A complete) + SIDECAR VERIFIER-META EXTRACTOR
+
+**Posted**: 2026-06-05. Commits `b97a8c59` (extractor) → `8d5d78e3` (decomposition data) + this continuity update, all pushed. **$0 API** (local JSON authoring + deterministic extraction; no compute). The Session-98 N=1 board/finding is **unchanged and still signed off**.
+
+### What Session 100 did (all committed + pushed)
+
+1. **Decomposed Batch A residual** into `results/run-conditions.json` — **Batch A is now COMPLETE** (all 6 runs): `proposer-verifier-384` (8 verified conditions = the verifier-strategy matrix: adversarial/brief/checklist × text/image + 2 cascade orderings, each at its **verifier-accepted operating point**, era-2-487 nominal scope, all MCC-bearing) and `proposer-verifier-512` (1 verified `adversarial-text` condition, era-1-340, the thin 512px Era-1 sibling). Manifest now **28 runs / 151 conditions / 159 passes / 1 analysis, ALL VALID**. Decomposition progress: **12 of 28 runs**.
+2. **Extractor enhancement** (`feat(manifest)`): the verifier-pass extractor now resolves verifier run metadata in **two on-disk shapes** — the dir form `<base>/run.meta.json` (gold-standard-v2; preferred, so gs-v2 stays byte-identical) **and** the sidecar form `<base>.meta.json` (the PV strategy runs write one `verified-<strategy>.meta.json` per strategy, not a per-pass dir). It also now prefers **per-item `model_version`** over `configuration.model` for the verifier's model-of-record (E57 / `feedback_model_version_consistency`) — pv-384/512 metas carry the unreliable `gemini-3-flash` in `config.model` but the authoritative `gemini-3-flash-preview` per-item. +1 tier-1 test (`test_verifier_pass_sidecar_meta`); all 26 generator+verifier tier-1 tests green; gs-v2 6-pass reproduction unchanged.
+3. **Grain decisions (user-confirmed, Session 100)**: pv-384 = **8 distinct verified conditions** (one per config at its `-accepted` operating point); the **`-v2` / `-v1-prompt` suffixes are replicate re-runs** (identical T=0.0/minimal/flash config, ~10 h apart — the small accepted-count drift is T=0 nondeterminism, NOT a different prompt), and the n=572 **pre-verifier "full" scorings** are deliberately excluded. Both replicate + full evals are left to the deferred `_ignored_evals` close-out sweep (→ benign `unclaimed-eval` WARNs now).
+4. **Proposer provenance flagged, not faked**: pv-384's on-disk proposer meta is a **degenerate stub** (`items_processed=1, items_failed=1`, one tile, yet the geojson holds 572 features); pv-512 has **no proposer meta at all** (GAP-9 Era-1). So `proposer_pools` is **EMPTY** for both — no faithful proposer PASS exists to extract — and the conditions reference the pool by string (`detect_brief-text`) → benign `pool-unresolved` WARN (pv-diag-384 precedent), documented in each entry's `_note`. The 8 (pv-384) + 1 (pv-512) **verifier passes are real** sidecar metas (572 / 140 items, 0 failures). Both runs sit at drift-check **PARTIAL, 0 fail**.
+
+### Open / next session — decomposition to-do (sub-step 3b)
+
+- **Remaining runs to decompose (16 of 28)**: Batch B (5× `55maps-*` — G-E inline evals, student GT, carry-forward #10 `verified_paired`), **Batch D** (9× `retest-phase*` — GAP-9 Era-1 meta shape at scale, deep phase3c nesting), **Batch E** (`pv-diag-256` archived-eval shape + `verifier-t-pilot` + `pv-diag-384` consensus/verified completion — GAP-7). WBF cells in any of these need the vote≥4 + 327-MCC scoring (Obs 340). The new **sidecar verifier-meta** support may help any run storing verifier output as `<strategy>.meta.json` files.
+- **3b close-out task — `_ignored_evals` sweep [DEFERRED, agreed Session 99]**: populate `_ignored_evals` per run in `run-conditions.json` to register deliberately-excluded scored evals (collapsed greedy `t1/t2/t3/t5` sweep points, superseded raw-487 WBF evals, off-operating-point verifier prob sweeps, the PV replicate `-v2`/`-v1-prompt` + pre-verifier `full` scorings, non-nominal-scope siblings). No run uses it today → 10/12 decomposed runs sit at drift-check **"partial"** (benign `unclaimed-eval` WARNs, 0 fail). **Value**: converts `verify_run_conditions.py` from a noisy advisory into a sharp **completeness guard** — once deliberate exclusions are registered, any NEW unclaimed eval = a genuine omission. **Do as ONE sweep at 3b completion** (not piecemeal); semi-automatable (the `--draft-run` drafter lists all candidate evals; the un-authored set IS the `_ignored_evals`).
+- **PV proposer provenance** (carry-forward from this session): the pv-384/512 proposer pass is not faithfully on disk (stub / absent meta). If the passes manifest should record the proposer compute, the 572 candidates likely originate from a canonical `detect_brief-text` run — confirm and add a GAP-6 `source_run`, or accept the `pool-unresolved` WARN as the honest signal.
+- **Aggregation labels**: Batch C uses `aggregation="greedy"` (greedy-ball) / `"wbf"` (WBF); Batch A verified conditions use `aggregation="verified"`. Harmonise gs-v2's legacy `"consensus"` later if a single convention is wanted.
+- **Pre-existing carry-forwards (unchanged)**: sapphire crop copy + Syncthing removal; git history purge of crop blobs (post-submission).
+- **Minor flash-cell failures: WON'T-FIX** (S98 decision; immaterial to any finding).
+
+---
+
+## ✅ Session 99 — BATCH C DECOMPOSED + WBF SCORING FIX + n1 batch_summary REFRESHED (historical)
 
 **Posted**: 2026-06-04. Commits `ace55874`→`79a68032`, all pushed. **$0 API** (local JSON authoring + CPU scoring on sapphire). The Session-98 N=1 board/finding is **unchanged and still signed off**.
 
