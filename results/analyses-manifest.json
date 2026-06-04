@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-06-03T12:45:50Z",
+  "generated_at": "2026-06-04T02:05:53Z",
   "generator_version": "0.4.0",
   "analyses": [
     {
@@ -35,22 +35,22 @@
       "deviations": [
         "E57"
       ],
-      "predicted_outcome": "Preregistered directions come from earlier Gemini-3-Flash / 512 px phases (this board is Gemini 3 at 384 px): H6 (Phase 4, the only untested confirmatory hypothesis) expected the stronger Pro model to transfer/match-or-exceed Flash; H7 (Phase 2b) found T=0.0 optimal for both tracks; H1 (Phase 2a) planned a text-only vs image-using contrast without a committed directional winner. Board result (post-E57, genuine Pro, all medium cells at n=3): H6 holds strongly and uniformly -- the top six cells are all genuine Pro, every Pro-text cell beats the best Flash cell (flash-image-minimal-t-0-0, F1 0.600), and the genuine Pro-image cells match Flash on F1 while dominating MCC; the earlier apparent 'Flash beats weak Pro' (the pre-E57 board had Flash image-MINIMAL 0.59-0.60 above 'Pro' configs at 0.42-0.53) was an ARTEFACT of the Flash-misdispatched anti-diagonal -- those four cells were Flash, not Pro (E57), and genuine Pro at the same corners scores 0.59-0.80. H7's T=0.0 optimum is now CLEANLY supported within Pro text: the two Tier-1 cells are both T=0.0 (HIGH and MEDIUM thinking, tied) and the two Tier-2 cells are both T=0.7 -- a clear T=0.0 > T=0.7 ordering at matched model/modality. H1 resolves metric-dependently -- text wins F1@20 m localisation (the top four cells are all text) while image wins MCC tile-discrimination (pro-image-medium-t-0-7, MCC +0.911).",
+      "predicted_outcome": "Preregistered directions come from earlier Gemini-3-Flash / 512 px phases (this board is Gemini 3 at 384 px): H6 (Phase 4, the only untested confirmatory hypothesis) expected the stronger Pro model to transfer/match-or-exceed Flash; H7 (Phase 2b) found T=0.0 optimal for both tracks; H1 (Phase 2a) planned a text-only vs image-using contrast without a committed directional winner. Board result (genuine Pro, all Pro cells n>=3): H6 holds strongly and uniformly -- the top six cells are all genuine Pro, every Pro-text cell beats the best Flash cell (flash-image-minimal-t-0-0, F1 0.600), and the genuine Pro-image cells match Flash on F1 while dominating MCC (any apparent Flash-over-Pro in the raw board traces to the E57 Flash-misdispatched cells, now replaced). H7's T=0.0 optimum is cleanly supported within Pro text: the two Tier-1 cells are both T=0.0 (HIGH and MEDIUM thinking, tied) and the two Tier-2 cells are both T=0.7 -- a clear T=0.0 > T=0.7 ordering at matched model/modality. H1 resolves metric-dependently -- text wins F1@20 m localisation (the top four cells are all text) while image wins MCC tile-discrimination (pro-image-medium-t-0-7, MCC +0.911).",
       "tie_set": [
         "n1-pro-rerun-384::baseline-pro-text-high-t-0-0",
         "pv-diag-384::baseline-pro-text-medium-t-0-0"
       ],
-      "outcome": "At the preregistered 20 m buffer the best single pass for mound localisation is genuine Gemini 3 Pro text at T=0.0. Tier 1 -- the tie_set -- is a two-member statistical tie between pro-text-high-t-0-0 (n1-pro-rerun-384; F1 0.804) and pro-text-medium-t-0-0 (pv-diag-384; F1 0.792): a round-robin tile-swap permutation (BH-FDR q=0.05; 129/153 pairs significant -> 7 tiers) cannot separate them, and both are significantly clear of the Tier-2 pair -- the two Pro-text T=0.7 cells, pro-text-medium-t-0-7 (0.755) and pro-text-high-t-0-7 (0.745). So at T=0.0 the thinking level (HIGH vs MEDIUM) does not significantly matter, and T=0.0 beats T=0.7 (Tier 1 vs Tier 2) at matched model and modality (H7). The top four cells are all Pro text and the top six all genuine Pro; the text-over-image advantage holds at matched settings (best Pro text 0.804 vs best Pro image 0.666). The F1 leaders are NOT the tile-level discrimination (MCC) leader: genuine Pro IMAGE wins MCC -- pro-image-medium-t-0-7 (MCC +0.911, but 9th on F1) and pro-image-high-t-0-0 (+0.868) -- while Pro text leads F1, so the best single-pass configuration is metric-dependent. Provenance: all four anti-diagonal Pro cells are the genuine-Pro re-run (the n1-outstanding originals were Flash, E57); all four medium-thinking cells are n=3, after recovering ~5% unretried tile failures in the pv-diag medium-t-0-0 run_1 that had depressed it to 0.763 (Obs 338/339). The brief intermediate 'sole leader' result was an artefact of that incomplete pass.",
+      "outcome": "At the preregistered 20 m buffer the best single pass for mound localisation is genuine Gemini 3 Pro text at T=0.0. Tier 1 -- the tie_set -- is a two-member statistical tie between pro-text-high-t-0-0 (F1 0.804) and pro-text-medium-t-0-0 (F1 0.792): a round-robin tile-swap permutation (BH-FDR q=0.05; 129/153 pairs significant -> 7 tiers) cannot separate them, and both are significantly clear of the Tier-2 pair -- the two Pro-text T=0.7 cells, pro-text-medium-t-0-7 (0.755) and pro-text-high-t-0-7 (0.745). So at T=0.0 the thinking level (HIGH vs MEDIUM) does not significantly matter, and T=0.0 beats T=0.7 (Tier 1 vs Tier 2) at matched model and modality (H7). The top four cells are all Pro text and the top six all genuine Pro; the text-over-image advantage holds at matched settings (best Pro text 0.804 vs best Pro image 0.666). The F1 leaders are NOT the tile-level discrimination (MCC) leader: genuine Pro IMAGE wins MCC -- pro-image-medium-t-0-7 (MCC +0.911, but 9th on F1) and pro-image-high-t-0-0 (+0.868) -- while Pro text leads F1, so the best single-pass configuration is metric-dependent. (All eight Pro cells are genuine Gemini 3 Pro at n>=3; see deviations E57 and docs/methodology/n1-baseline-matrix.md for board provenance.)",
       "paper_section": "Results",
       "output_path": "results/paper-eval/n1/384px-14buf-mcc",
       "working_notes_obs": [],
-      "manually_verified_at": null,
+      "manually_verified_at": "2026-06-04T02:05:31Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/paper-eval/n1/384px-14buf-mcc"
         ],
-        "last_extracted_at": "2026-06-03T12:45:50Z",
+        "last_extracted_at": "2026-06-04T02:05:53Z",
         "extractor_version": "0.4.0"
       }
     }
