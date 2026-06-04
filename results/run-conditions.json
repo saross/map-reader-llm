@@ -1766,6 +1766,104 @@
           "detections": "outputs/h8-v2/wbf/scale-8/verified/detections_vt4_pt0.15.geojson"
         }
       ]
+    },
+    "h10": {
+      "proposer_pools": {
+        "pool_020_hp4hn4": {
+          "modality": "image",
+          "path": "evaluation-v2/pool_020_hp4hn4"
+        },
+        "pool_040_hp4hn4": {
+          "modality": "image",
+          "path": "evaluation-v2/pool_040_hp4hn4"
+        },
+        "pool_080_hp4hn4": {
+          "modality": "image",
+          "path": "evaluation-v2/pool_080_hp4hn4"
+        },
+        "pool_160_hp4hn4": {
+          "modality": "image",
+          "path": "evaluation-v2/pool_160_hp4hn4"
+        }
+      },
+      "verifier_passes": {
+        "pool_020-verified": {
+          "modality": "image",
+          "path": "evaluation-v2/pool_020_hp4hn4/verified"
+        },
+        "pool_160-verified": {
+          "modality": "image",
+          "path": "evaluation-v2/pool_160_hp4hn4/verified"
+        }
+      },
+      "conditions": [
+        {
+          "label": "greedy-pool-020",
+          "architecture": "consensus",
+          "aggregation": "greedy",
+          "proposer_pool": "pool_020_hp4hn4",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h10/with-mcc/pool_020/evaluation.json",
+          "detections": "outputs/h10/evaluation-v2/pool_020_hp4hn4/consensus/consensus_t4.geojson"
+        },
+        {
+          "label": "greedy-pool-040",
+          "architecture": "consensus",
+          "aggregation": "greedy",
+          "proposer_pool": "pool_040_hp4hn4",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h10/with-mcc/pool_040/evaluation.json",
+          "detections": "outputs/h10/evaluation-v2/pool_040_hp4hn4/consensus/consensus_t4.geojson"
+        },
+        {
+          "label": "greedy-pool-080",
+          "architecture": "consensus",
+          "aggregation": "greedy",
+          "proposer_pool": "pool_080_hp4hn4",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h10/with-mcc/pool_080/evaluation.json",
+          "detections": "outputs/h10/evaluation-v2/pool_080_hp4hn4/consensus/consensus_t4.geojson"
+        },
+        {
+          "label": "greedy-pool-160",
+          "architecture": "consensus",
+          "aggregation": "greedy",
+          "proposer_pool": "pool_160_hp4hn4",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/h10/with-mcc/pool_160/evaluation.json",
+          "detections": "outputs/h10/evaluation-v2/pool_160_hp4hn4/consensus/consensus_t4.geojson"
+        },
+        {
+          "label": "verified-pool-160",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "pool_160_hp4hn4",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": 0.05,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/rescore-2026-05-31/h10/pool_160_hp4hn4-verified-vt4-pt0.05/evaluation.json",
+          "detections": "outputs/h10/evaluation-v2/pool_160_hp4hn4/verified/detections_vt4_pt0.05.geojson"
+        }
+      ]
     }
   }
 }

@@ -2,9 +2,9 @@
 
 # Passes manifest
 
-> Generated 2026-06-04T04:28:27Z · 118 row(s) · schema v1.0.
+> Generated 2026-06-04T04:37:44Z · 140 row(s) · schema v1.0.
 >
-> **Coverage**: 118 pass(es) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 140 pass(es) across the decomposed runs (sub-step 3b in progress).
 
 | pass_id | model | modality | think | T | status | tiles | cost_usd |
 |---|---|---|---|---|---|---|---|
@@ -14,6 +14,28 @@
 | gold-standard-v2::detect_brief-text::run4 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | 0.66163 |
 | gold-standard-v2::detect_brief-text::run5 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | 1.348076 |
 | gold-standard-v2::verified-v1::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 11 | 0.015619 |
+| h10::pool_020_hp4hn4::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.39313 |
+| h10::pool_020_hp4hn4::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.406915 |
+| h10::pool_020_hp4hn4::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.409139 |
+| h10::pool_020_hp4hn4::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.393349 |
+| h10::pool_020_hp4hn4::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.394448 |
+| h10::pool_040_hp4hn4::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.401262 |
+| h10::pool_040_hp4hn4::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.403023 |
+| h10::pool_040_hp4hn4::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.408915 |
+| h10::pool_040_hp4hn4::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.399924 |
+| h10::pool_040_hp4hn4::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.395175 |
+| h10::pool_080_hp4hn4::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.410264 |
+| h10::pool_080_hp4hn4::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.413941 |
+| h10::pool_080_hp4hn4::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.416138 |
+| h10::pool_080_hp4hn4::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.414706 |
+| h10::pool_080_hp4hn4::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.411148 |
+| h10::pool_160_hp4hn4::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.394297 |
+| h10::pool_160_hp4hn4::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.379528 |
+| h10::pool_160_hp4hn4::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.384721 |
+| h10::pool_160_hp4hn4::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.394945 |
+| h10::pool_160_hp4hn4::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 3.38413 |
+| h10::pool_020-verified::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 1763 | 2.445043 |
+| h10::pool_160-verified::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 1454 | 2.029003 |
 | consensus-384-t1-0::384::run1 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | 0.0 |
 | consensus-384-t1-0::384::run10 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | 0.0 |
 | consensus-384-t1-0::384::run11 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | 0.0 |

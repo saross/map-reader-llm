@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-06-04T04:28:27Z · 131 row(s) · schema v1.0.
+> Generated 2026-06-04T04:37:44Z · 136 row(s) · schema v1.0.
 >
-> **Coverage**: 131 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 136 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -12,6 +12,11 @@
 | gold-standard-v2::consensus-4of5 | consensus | consensus | 4 | 5 | 0.6999 | 0.4557 | 608 |
 | gold-standard-v2::consensus-5of5 | consensus | consensus | 5 | 5 | 0.7649 | 0.5791 | 420 |
 | gold-standard-v2::verified-v1 | proposer-verifier | verified | 4 | 5 | 0.8663 | 0.7778 | 380 |
+| h10::greedy-pool-020 | consensus | greedy | 4 | 5 | 0.6934 | 0.7092 | 255 |
+| h10::greedy-pool-040 | consensus | greedy | 4 | 5 | 0.6809 | 0.6999 | 242 |
+| h10::greedy-pool-080 | consensus | greedy | 4 | 5 | 0.6618 | 0.6919 | 234 |
+| h10::greedy-pool-160 | consensus | greedy | 4 | 5 | 0.7171 | 0.7168 | 236 |
+| h10::verified-pool-160 | proposer-verifier | verified | 4 | 5 | 0.7223 | 0.7602 | 232 |
 | consensus-384-t1-0::consensus-1of30 | consensus | consensus | 1 | 30 | 0.3038 | 0.0608 | 974 |
 | consensus-384-t1-0::consensus-2of30 | consensus | consensus | 2 | 30 | 0.3977 | 0.0951 | 616 |
 | consensus-384-t1-0::consensus-3of30 | consensus | consensus | 3 | 30 | 0.4331 | 0.1164 | 484 |
