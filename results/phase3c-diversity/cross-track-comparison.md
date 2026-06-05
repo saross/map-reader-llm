@@ -1,5 +1,7 @@
 # Phase 3c H9 Diversity: Cross-Track Comparison
 
+> **Last revised**: 2026-06-05 (thinking-level provenance corrected: MINIMAL → HIGH; all 450 per-pass metas record `thinking_level: high`). See [§ Changelog](#changelog) for revision history.
+
 ## Context
 
 Hypothesis H9 predicted that at least one diversity mechanism (text
@@ -11,7 +13,10 @@ passes. Phase 3c tested this across two tracks:
 - **Track 2 (Text-Only)**: 4 conditions × 5 sub-conditions × 5 runs = 100 units
   (Condition C excluded — image diversity is inapplicable to text-only)
 
-Both tracks used MINIMAL thinking, T=0.7, N=5 pool size, and 20m spatial
+Both tracks used **HIGH** thinking (corrected 2026-06-05 from a stale
+"MINIMAL" claim — all 450 per-pass metas record `thinking_level: high`,
+agreeing with `phase3c-comprehensive-results-report.md`; see
+[§ Changelog](#changelog)), T=0.7, N=5 pool size, and 20m spatial
 tolerance. Analysis via paired permutation test (10,000 iterations,
 two-sided, α=0.05).
 
@@ -67,7 +72,7 @@ Track 2 text-only (F1=0.716) outperforms Track 1 image-using (F1=0.664)
 at baseline, consistent with the modality findings from the main
 consensus analysis (Group 2 pairwise tests). This gap persists across
 all diversity conditions, confirming that the text-only pipeline is
-inherently more accurate at MINIMAL thinking.
+inherently more accurate at HIGH thinking.
 
 ### 4. Variance stabilisation did not replicate at scale
 
@@ -130,3 +135,38 @@ pipeline's error structure is task-determined, not prompt-determined,
 and that meaningful improvement requires structural changes to the
 pipeline architecture (H2) rather than parametric perturbation of
 inputs (H9).
+
+## Changelog
+
+### 2026-06-05 — Thinking-level provenance corrected: MINIMAL → HIGH
+
+**Refresh trigger**: Session 101 anomaly close-out (flagged as Anomaly 2 in
+`reports/phase3-decomposition-investigation-2026-06-05.md`). This doc's prose
+stated "Both tracks used MINIMAL thinking", contradicting
+`phase3c-comprehensive-results-report.md` ("All conditions use HIGH thinking")
+and the per-pass metas.
+
+**Evidence (re-read at source)**: all **450** `outputs/retest/phase3c/**/*.meta.json`
+record `thinking_level: high`; **zero** record `minimal`. The "MINIMAL" prose
+was stale/wrong — the same machine-artefact-over-prose pattern as the
+model-of-record correction (commit `f9e53e0a`, Obs 342).
+
+| Claim | Before | After |
+|---|---|---|
+| §Context provenance line | "Both tracks used **MINIMAL** thinking" | "Both tracks used **HIGH** thinking" |
+| §Cross-Track Finding 3 | "more accurate at **MINIMAL** thinking" | "more accurate at **HIGH** thinking" |
+
+**What did NOT change**: every F1, ±SD, ΔF1, and p-value in both result tables,
+the H9-rejected null result, the parametric-vs-structural-diversity
+interpretation, and the variance-stabilisation finding. These were computed on
+the actual HIGH-thinking runs regardless of the doc's stale label — the
+correction is a provenance label only. The fix also resolves a latent internal
+tension: §"Connection to the diversity dividend (Obs 141)" already discussed
+HIGH thinking, which is now consistent with the study's stated thinking level.
+
+### Original publication
+
+Document first authored as the Phase 3c H9 cross-track synthesis (see git
+history for substantive content). This banner and changelog were added
+2026-06-05 (first Revision-Policy stub) as part of the thinking-level
+correction above.
