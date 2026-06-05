@@ -17713,3 +17713,278 @@ obs342 caveat sharpened superseded.
   commit `10c2fdd356` environment field); `archive/preliminary-work/antigravity_logs/artifacts/7f9838be-f730-4489-bbb3-d7be6b259603/task.md`
   line 5 (`gemini-2.0-flash-exp` first wrong label); Obs 342 Table 1 (`gemini-2.0-flash`
   second wrong label, three result-doc families).
+
+## Observation 344: Phase2a–e standardised to the 14-buffer + MCC manifest standard — and the replicate-mean path was NOT bespoke (Session 102, 2026-06-05)
+
+*Corrects the S100/S101 framing that characterised this re-score as a "bespoke compute
+task". Source anchor: `planning/paper-writeup-continuity.md` line 40 (Session-102 harness
+note); commit `f6e757a7` (dir-mode branch added to `scripts/rescore_conditions.py`).*
+
+### The finding
+
+The five Era-1 hypothesis retests (retest-phase2a through retest-phase2e; H1/H7/H8/H5/H4;
+512 px, Era-1 340-tile, curator ground truth) now have replicate-mean evaluation at the
+project-standard 14 uniform buffers (`BUFFERS_STANDARD` =
+[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100, 125, 150] m) plus tile-level MCC, under
+`results/paper-eval/phase2/512px-14buf-mcc/` (36 condition directories, each containing
+`evaluation.json`, `evaluation.csv`, and `evaluation.md`).
+
+**Calibration check — F1@20 m reproduces the production-summary headlines almost exactly:**
+
+| condition | new eval (replicate-mean, 14-buf+MCC) | production-summary headline (verified at source) |
+|---|---|---|
+| canonical-last (p2e) | F1 = 0.6314 | F1 = 0.6314 [0.587, 0.672] |
+| text-T=0.0 (p2b) | F1 = 0.6055 | F1 = 0.6048 [0.547, 0.655] |
+| image-T=0.0 (p2b) | F1 = 0.5862 | F1 = 0.5869 [0.541, 0.633] |
+
+(Production-summary values verified at `results/retest/retest-production-summary.md`
+lines 25, 60, 73, and 140.)
+
+The session authored 36 single-pass replicate conditions + 66 passes into
+`results/run-conditions.json` (commit `73a66091`). Post-commit manifest:
+**28 runs / 224 conditions / 559 passes, ALL VALID**
+(verified from `results/runs-manifest.json`, `results/conditions-manifest.json`, and
+`results/passes-manifest.json`).
+
+### The methodological correction
+
+Prior planning documents (including the Session-100 / Session-101 beacon, and
+`planning/paper-writeup-continuity.md` through line 101) characterised the 14-buffer + MCC
+re-score as a "bespoke compute task" requiring extension or replacement of
+`scripts/analyse_phase2_results.py` (the old script, hard-coded to 20 m, no MCC). This
+framing was **wrong**.
+
+The correct path: **`scripts/evaluate_detections.py --detections-dir`** already emits the
+replicate-mean summary + MCC at any set of buffers. No scope_override was needed — the
+fresh evaluations are all at nominal Era-1 340 tiles. The only bespoke work was adding a
+dir-mode/replicate input-grain branch to the re-scoring harness
+(`scripts/rescore_conditions.py`, commit `f6e757a7`), which is a thin orchestration layer,
+not a new analysis pipeline. The re-score ran on zbook (12 workers, evaluation-only, $0 API
+spend).
+
+### Why this matters
+
+1. **The phase2a–e re-score slot (Tasks 3 in the continuity beacon) is COMPLETE.** The
+   14-buffer + MCC evals are in the manifest, calibrated against production headlines, and
+   committed. No further compute task is required for phase2 decomposition.
+
+2. **The "bespoke" framing was an overestimate of complexity** that appeared in at least
+   three places in the planning documents (continuity lines 40, 63, 91). Future planning
+   for similar re-scores should default to `evaluate_detections.py --detections-dir` first
+   before scoping new pipelines.
+
+3. **The calibration result confirms pipeline integrity.** Δ < 0.001 between the new
+   replicate-mean eval and the production-summary headlines (which were produced by the
+   old single-buffer script from the same detections) is strong evidence that both
+   pipelines agree on the underlying detection quality, and that the 14-buffer standard
+   does not alter any F1@20 m headline.
+
+### Caveats / methodological notes
+
+- **No scope_override needed for phase2b's 5 cross-scope 487 evals.** Prior planning
+  flagged this as a complication; in practice the fresh evals are all at the nominal Era-1
+  340-tile pool. This should be confirmed before citing if phase2b cross-scope behaviour
+  becomes relevant to a paper claim.
+- **Evaluation-only on zbook, not sapphire.** The project CLAUDE.md specifies sapphire for
+  compute-intensive tasks; rescoring at 14 buffers with no bootstrap inference was judged
+  sufficiently light for zbook (12 workers, 0 failures). This is a documented deviation
+  from the default. If bootstrap CIs are added to the phase2 evals in future, those
+  iterations should move to sapphire.
+- **The old `analyse_phase2_results.py` single-buffer (20 m) output is superseded for
+  manifest purposes** but remains in the repo for reproducibility traceability. The new
+  14-buffer + MCC evals under `results/paper-eval/phase2/512px-14buf-mcc/` are the
+  canonical source for all paper-facing phase2 metrics.
+
+### Findable later
+
+Search terms: Obs 344, phase2a-e re-score 14-buffer MCC, BUFFERS_STANDARD 14 uniform,
+results/paper-eval/phase2/512px-14buf-mcc, replicate-mean evaluation.json,
+rescore_conditions.py dir-mode branch, evaluate_detections.py detections-dir,
+bespoke framing corrected, S100 S101 planning error, f6e757a7 dir-mode harness,
+73a66091 phase2a-e authoring commit, 28 runs 224 conditions 559 passes,
+canonical-last 0.6314 calibration, text-t0.0 0.6055 vs 0.6048, image-t0.0 0.5862 vs 0.5869,
+era-1 340-tile 512px curator GT, Session 102 Task 3, analyse_phase2_results.py superseded,
+scope_override not needed phase2b, 14-buffer standard manifest, zbook 12 workers 0 API.
+
+### Related observations and artefacts
+
+- **Obs 52** (dry-run simulation for gap analysis, 2026-01-20, line 1207): the planning
+  methodology that the bespoke-framing error exemplifies. Dry-run simulation should surface
+  existing scripts before scoping new ones.
+- **Obs 335** (N=1 single-pass baseline matrix re-scored at 14 buffers + MCC, Session 96,
+  line 17101): the earlier application of the 14-buffer + MCC standard to the 384px
+  conditions; the present Obs applies the same standard to the 512px phase2 conditions.
+- **Obs 341** (Batch C decomposition, Session 99, line 17432): the Batch C pipeline that
+  the phase2 re-score now aligns with; shared `BUFFERS_STANDARD`, shared manifest schema.
+- **Obs 342** (gemini-2.0-flash confabulation, Session 101, line 17513): model-of-record
+  resolved to `gemini-3-flash` for all Era-1 runs, including these phase2a–e conditions.
+- **Artefacts**: `results/paper-eval/phase2/512px-14buf-mcc/` (36 condition directories;
+  source verified 2026-06-05 — 36 subdirectories confirmed); `results/run-conditions.json`
+  (36 phase2 conditions + 66 passes, verified 2026-06-05 from the JSON directly);
+  `results/runs-manifest.json` / `results/conditions-manifest.json` /
+  `results/passes-manifest.json` (28 / 224 / 559, ALL VALID, verified 2026-06-05);
+  commit `73a66091` (5 Era-1 retest runs authored; manifests updated);
+  commit `f6e757a7` (dir-mode harness, `scripts/rescore_conditions.py`);
+  `planning/paper-writeup-continuity.md` line 40 (S100/S101 framing correction note);
+  `results/retest/retest-production-summary.md` lines 25, 60, 73, 140 (production
+  headlines verified against).
+
+## Observation 345: pv-diag-384 consensus sweep buffer-harmonised and 29 headline operating points registered — but the diversity-dividend statistical test is NOT yet run (Session 102, 2026-06-05)
+
+*Source anchors: `results/run-analyses.json` (pv-diag-384-consensus-calibration entry,
+verified 2026-06-05); `results/rescore-2026-06-05/pv-diag-384/consensus-sweep/` (249 evals,
+verified 2026-06-05); commit `9d1ec057` (GAP-7 inventory); commit `5b2130be` (29 consensus
+conditions + 3c sweep analysis).*
+
+### The finding
+
+The pv-diag-384 consensus vote-threshold × N-aggregation sweep (the phase3a-{text,image}-matrix
+material; Era-2 487-tile, 384 px, `gemini-3-flash`) was re-scored from the matrix
+evaluations' original [20, 30, 40, 50] m buffers to the 14-buffer + MCC standard, producing
+249 consensus GeoJSONs evaluated under `results/rescore-2026-06-05/pv-diag-384/consensus-sweep/`.
+
+**GAP-7 inventory** (commit `9d1ec057`): 24 proposer pools (pool × temperature) and 88
+verifier passes (across `verified-v1-nN` / session-78-matrix subdirectories) populated in
+the manifest. Manifest post-`9d1ec057`:
+28 runs / 195 conditions / 559 passes (+301 pv-diag passes), ALL VALID.
+
+**29 consensus conditions** authored (commit `5b2130be`), one per (pool × temperature ×
+N-aggregation) configuration at its best-F1@20 m vote threshold. Post-commit manifest:
+**28 runs / 224 conditions / 559 passes, ALL VALID.**
+
+The **`pv-diag-384-consensus-calibration`** analysis registered in `results/run-analyses.json`
+(commit `5b2130be`; type = `sweep`; hypothesis refs: [H3]; `preregistered`: exploratory).
+Key fields verified at source:
+
+| field | value |
+|---|---|
+| `analysis_id` | `pv-diag-384-consensus-calibration` |
+| `type` | `sweep` |
+| `hypothesis_refs` | `["H3"]` |
+| `manually_verified_at` | **null** |
+| `output_path` | `results/rescore-2026-06-05/pv-diag-384/consensus-sweep` |
+
+Best-F1@20 m across the 29 headline conditions: **0.488–0.814** (from `outcome` field,
+`run-analyses.json`, verified 2026-06-05). Top three operating points from that field:
+`flash-high-text-n5-text-t0.7-consensus-26of30` (F1 = 0.814),
+`flash-high-text-n5-text-t0.7-consensus-n10-9of10` (F1 = 0.797),
+`flash-high-text-n5-text-t0.3-consensus-10of10` (F1 = 0.789).
+
+### IMPORTANT FLAG — the diversity-dividend test is NOT yet run
+
+**`manually_verified_at` is null.** The `pv-diag-384-consensus-calibration` analysis is a
+**REGISTERED CALIBRATION, not a verified finding.** What has been done:
+
+- Buffer-harmonised the 249-point consensus sweep to the 14-buffer + MCC standard ✓
+- Registered one citable condition per (pool × temperature × N-aggregation) config at
+  best-F1@20 m ✓
+- Authored the 3c sweep analysis entry in `results/run-analyses.json` ✓
+
+What has NOT been done:
+
+- The **diversity-dividend statistical test proper** — HIGH-thinking consensus
+  recovering/exceeding minimal-thinking performance AND beating the single-pass baseline
+  (`n1-baseline-matrix-384`) with permutation + Benjamini–Hochberg false-discovery-rate
+  correction — is still to be run and signed off.
+
+This is **Session-103 TODO #1** in `planning/paper-writeup-continuity.md` line 17.
+Compute on sapphire or zbook; $0 API spend.
+
+### The decomposition pattern used (user-confirmed)
+
+One citable condition per (pool × temperature × N-aggregation) config at its best-F1@20 m
+vote threshold; non-headline thresholds deferred to the `_ignored_evals` close-out,
+consistent with Batch C. This pattern was explicitly confirmed by the user during Session 102
+and /remember'd. The 249-eval sweep geojsons remain available under
+`results/rescore-2026-06-05/pv-diag-384/consensus-sweep/` for any threshold-sensitivity
+analysis.
+
+### Why this matters
+
+1. **The consensus calibration material is now in the manifest and ready for the
+   diversity-dividend test.** The 29 headline operating points cover the full
+   (pool × temperature × N-aggregation) space; the single-pass baseline
+   (`n1-baseline-matrix-384`) is already in the manifest from Session 96–98. The test
+   requires only a statistical comparison script run on existing manifested data.
+
+2. **The phase3a ↔ pv-diag-384 naming relationship.** The pv-diag-384 material IS the
+   phase3a-{text,image}-matrix material — the run directory is
+   `outputs/h11/pv-diag-384/` and the phase3a retest batch outputs are at
+   `outputs/retest/phase3a/`; these are distinct but complementary (the matrix evaluations
+   in `outputs/h11/pv-diag-384/` are the canonical truth source for tile-level MCC; see
+   Obs 288, line 14084). The consensus conditions authored here draw exclusively from the
+   `outputs/h11/pv-diag-384/` tree.
+
+3. **H3 test status is precisely defined.** The `preregistered: exploratory` designation
+   in `run-analyses.json` reflects that the vote-threshold × N sweep is exploratory
+   calibration; the confirmatory diversity-dividend test against the single-pass baseline
+   with formal significance testing is the unfinished work. Until `manually_verified_at`
+   is populated, no paper-citable diversity-dividend claim should cite this analysis.
+
+### Caveats / methodological notes
+
+- **Best-F1@20 m range discrepancy.** The user spec and `planning/paper-writeup-continuity.md`
+  line 48 both state "0.49–0.75"; the `run-analyses.json` `outcome` field (source)
+  states "0.488–0.814". This Obs follows the source file. The discrepancy likely reflects
+  rounding (0.488 → 0.49) and the continuity-file range being written before the full
+  sweep result was available (0.814 top end not yet computed when line 48 was drafted).
+  Downstream citations should use the source value (0.488–0.814).
+- **249 evals, not 29.** The 249 geojsons in the consensus-sweep directory cover the full
+  t1..N threshold range for each config; only the 29 best-F1@20 m operating points are
+  cited as headline conditions. The full sweep is preserved for threshold-sensitivity
+  analysis.
+- **No scope_override for pv-diag-384 conditions.** All 29 consensus conditions are at
+  Era-2 487-tile nominal scope.
+- **Re-score ran on zbook.** As with Obs 344, the buffer-harmonisation was evaluated on
+  zbook (12 workers, $0 API) rather than sapphire. The diversity-dividend permutation test
+  (when run) should go to sapphire.
+
+### Findable later
+
+Search terms: Obs 345, pv-diag-384 consensus sweep buffer-harmonised, 14-buffer MCC
+consensus, 249 consensus evals rescore-2026-06-05, 29 headline operating points
+best-F1@20m, pv-diag-384-consensus-calibration manually_verified_at null, registered
+calibration not verified finding, diversity-dividend test NOT yet run, H3 exploratory
+calibration sweep, Session-103 TODO #1, GAP-7 24 proposer pools 88 verifier passes,
+9d1ec057 GAP-7 inventory, 5b2130be consensus conditions 3c analysis, run-analyses.json
+analysis_id pv-diag-384-consensus-calibration, flash-high-text-n5-text-t0.7-consensus-26of30
+F1 0.814, best-F1 range 0.488 0.814, permutation BH-FDR diversity dividend future work,
+n1-baseline-matrix-384 single-pass baseline comparison, phase3a pv-diag-384 naming
+relationship h11 outputs, Session 102 Task 4.
+
+### Related observations and artefacts
+
+- **Obs 140** (HIGH thinking improves consensus despite hurting single-pass — the diversity
+  dividend, 2026-02-16, line 2239): the original diversity-dividend finding that the
+  unrun statistical test should confirm or refute at the formal manifested standard.
+- **Obs 141** (serendipitous error as abductive catalyst — the thinking-level mistake,
+  2026-02-16, line 2281): the accidental HIGH-thinking runs that revealed the diversity
+  dividend; the pv-diag-384 consensus sweep is the formal follow-up.
+- **Obs 288** (pre-existing `with-mcc/` reference cells are off-matrix one-offs; Wave 2
+  sweep cross-check; matrix-canonical outputs/h11/pv-diag-384 as truth source,
+  2026-04-27, line 14084): confirms that the pv-diag-384 consensus conditions must draw
+  from `outputs/h11/pv-diag-384/`, not the retest batch outputs — directly applicable here.
+- **Obs 333** (consensus aggregation dividend is run-dependent and tracks proposer
+  diversity, Session 95, line 16996): the proposer-diversity insight that motivates the
+  HIGH-thinking versus minimal-thinking comparison in the unrun test.
+- **Obs 334** (pv-diag-384 verifier-probability F1 curve is flat in the operating range,
+  Session 95, line 17046): the in-sample optimism caveat for operating-point selection;
+  relevant to interpreting the best-F1@20 m headline values per config.
+- **Obs 335** (N=1 single-pass baseline matrix re-scored at 14 buffers + MCC, Session 96,
+  line 17101): the single-pass baseline (`n1-baseline-matrix-384`) that the diversity-dividend
+  test will compare against. Shared buffer standard and Era-2 scope.
+- **Obs 344** (phase2a–e standardised to 14-buffer + MCC, Session 102, this file, above):
+  companion Obs from the same session; same buffer harmonisation methodology applied to
+  512 px / Era-1 conditions.
+- **Artefacts**: `results/rescore-2026-06-05/pv-diag-384/consensus-sweep/` (249 geojsons,
+  verified 2026-06-05 — directory exists, 249 files confirmed);
+  `results/run-analyses.json` (`pv-diag-384-consensus-calibration` entry verified
+  2026-06-05 — `manually_verified_at: null`, `type: sweep`, `hypothesis_refs: ["H3"]`,
+  `output_path` confirmed, 29 entries in `conditions_compared` confirmed);
+  commit `9d1ec057` (GAP-7 pools + 88 verifier passes; manifest 28 runs / 195 conditions /
+  559 passes);
+  commit `5b2130be` (29 consensus conditions + 3c sweep analysis; manifest 28 runs /
+  224 conditions / 559 passes);
+  `planning/paper-writeup-continuity.md` line 17 (Session-103 TODO #1 diversity-dividend
+  test); line 48 (decomposition-pattern note; best-F1 range listed as 0.49–0.75 — source
+  file gives 0.488–0.814, see Caveats).
