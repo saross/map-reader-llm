@@ -1,0 +1,118 @@
+{
+  "_comment": "Consensus cells for the diversity-dividend tiering (Session 103, 2026-06-06). CHAMPIONS = best-F1@20m operating point per proposer pool at T=0.7 (the production carry-forward temperature, E49/E51). Three of four pools have their GLOBAL best-F1 at T=0.7; flash-minimal-text-n30's global best is T=1.0 9of10 (0.6667), 0.0055 above its T=0.7 best (0.6611) -- anchoring all four at T=0.7 keeps the matched single-pass baselines on the n1 board available and holds temperature constant for the HIGH-vs-minimal contrast. DEPLOYABLE = the same pool/temperature at N=5 with the 55maps-matched vote threshold (text 4-of-5, image 3-of-5; configs/run-configs/55maps_*_generalisation.yaml). All cells reference pv-diag-384 (Era-2 487-tile, 384px); evals re-scored at the 14-buffer+MCC standard (worklist planning/rescore-worklists/pv-diag-384-consensus-14buf-mcc-2026-06-05.json). best-F1@20m is the IN-SAMPLE (487-tile test-set) optimum per E56; the deployable N=5 points are the honest a-priori operating points.",
+  "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+  "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+  "rescore_root": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep",
+  "champions": [
+    {
+      "label": "consensus-flash-high-text-26of30",
+      "kind": "champion",
+      "thinking": "high",
+      "modality": "text",
+      "temperature": 0.7,
+      "pool": "flash-high-text-n5",
+      "pool_N": 30,
+      "vote": 26,
+      "condition_ref": "pv-diag-384::flash-high-text-n5-text-t0.7-consensus-26of30",
+      "matched_single_pass_ref": "pv-diag-384::baseline-flash-text-high-t-0-7",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t26.geojson",
+      "eval_path": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t26/evaluation.json"
+    },
+    {
+      "label": "consensus-flash-high-image-7of10",
+      "kind": "champion",
+      "thinking": "high",
+      "modality": "image",
+      "temperature": 0.7,
+      "pool": "flash-high-image-n5",
+      "pool_N": 10,
+      "vote": 7,
+      "condition_ref": "pv-diag-384::flash-high-image-n5-image-t0.7-consensus-7of10",
+      "matched_single_pass_ref": "pv-diag-384::baseline-flash-image-high-t-0-7",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus/consensus_t7.geojson",
+      "eval_path": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.7__consensus__t7/evaluation.json"
+    },
+    {
+      "label": "consensus-flash-minimal-text-29of30",
+      "kind": "champion",
+      "thinking": "minimal",
+      "modality": "text",
+      "temperature": 0.7,
+      "pool": "flash-minimal-text-n30-t07",
+      "pool_N": 30,
+      "vote": 29,
+      "condition_ref": "pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-consensus-29of30",
+      "matched_single_pass_ref": "pv-diag-384::baseline-flash-text-minimal-t-0-7",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t29.geojson",
+      "eval_path": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t29/evaluation.json"
+    },
+    {
+      "label": "consensus-flash-minimal-image-8of10",
+      "kind": "champion",
+      "thinking": "minimal",
+      "modality": "image",
+      "temperature": 0.7,
+      "pool": "image-n5",
+      "pool_N": 10,
+      "vote": 8,
+      "condition_ref": "pv-diag-384::image-n5-image-t0.7-consensus-8of10",
+      "matched_single_pass_ref": "pv-diag-384::baseline-flash-image-minimal-t-0-7",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus/consensus_t8.geojson",
+      "eval_path": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.7__consensus__t8/evaluation.json"
+    }
+  ],
+  "deployable": [
+    {
+      "label": "deploy-flash-high-text-n5-4of5",
+      "kind": "deployable",
+      "thinking": "high",
+      "modality": "text",
+      "temperature": 0.7,
+      "pool": "flash-high-text-n5",
+      "pool_N": 5,
+      "vote": 4,
+      "matched_single_pass_ref": "pv-diag-384::baseline-flash-text-high-t-0-7",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n5/consensus_t4.geojson",
+      "eval_path": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus-n5__t4/evaluation.json"
+    },
+    {
+      "label": "deploy-flash-high-image-n5-3of5",
+      "kind": "deployable",
+      "thinking": "high",
+      "modality": "image",
+      "temperature": 0.7,
+      "pool": "flash-high-image-n5",
+      "pool_N": 5,
+      "vote": 3,
+      "matched_single_pass_ref": "pv-diag-384::baseline-flash-image-high-t-0-7",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n5/consensus_t3.geojson",
+      "eval_path": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.7__consensus-n5__t3/evaluation.json"
+    },
+    {
+      "label": "deploy-flash-minimal-text-n5-4of5",
+      "kind": "deployable",
+      "thinking": "minimal",
+      "modality": "text",
+      "temperature": 0.7,
+      "pool": "flash-minimal-text-n30-t07",
+      "pool_N": 5,
+      "vote": 4,
+      "matched_single_pass_ref": "pv-diag-384::baseline-flash-text-minimal-t-0-7",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n5/consensus_t4.geojson",
+      "eval_path": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus-n5__t4/evaluation.json"
+    },
+    {
+      "label": "deploy-flash-minimal-image-n5-3of5",
+      "kind": "deployable",
+      "thinking": "minimal",
+      "modality": "image",
+      "temperature": 0.7,
+      "pool": "image-n5",
+      "pool_N": 5,
+      "vote": 3,
+      "matched_single_pass_ref": "pv-diag-384::baseline-flash-image-minimal-t-0-7",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n5/consensus_t3.geojson",
+      "eval_path": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.7__consensus-n5__t3/evaluation.json"
+    }
+  ]
+}
