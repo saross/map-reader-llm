@@ -45,7 +45,7 @@ project state.
 
 - **Consensus re-score** (`4b34ed87`): 249 consensus_tK geojsons buffer-harmonised from the matrix evals' `[20,30,40,50]` to the 14-buffer standard (worklist `pv-diag-384-consensus-14buf-mcc-2026-06-05.json` → `results/rescore-2026-06-05/pv-diag-384/consensus-sweep/`). Era-2 487, 384px; 3 n1-outstanding strays excluded.
 - **GAP-7 inventory** (`9d1ec057`): populated the **24 proposer pools + 88 verifier passes** (the "88 metas across ~15 pools"); kept the 10 signed-off N1 baseline conditions verbatim.
-- **Conditions + analysis** (`5b2130be`): **29 consensus conditions** (one per `pool×temp×N` config at best-F1@20m, range 0.49–0.75) + the consensus 3c analysis **`pv-diag-384-consensus-calibration`** (type=`sweep`, H3). **Registered calibration, NOT a verified finding** → the diversity-dividend test is Session-103 scheduled work (TODO #1 above). drift-check 0 ERROR.
+- **Conditions + analysis** (`5b2130be`): **29 consensus conditions** (one per `pool×temp×N` config at best-F1@20m, range **0.488–0.814** — top = `flash-high-text-n5-text-t0.7-consensus-26of30`, which ≈ the Pro-text single-pass leader 0.804, an unverified diversity-dividend hint) + the consensus 3c analysis **`pv-diag-384-consensus-calibration`** (type=`sweep`, H3). **Registered calibration, NOT a verified finding** → the diversity-dividend test is Session-103 scheduled work (TODO #1 above). drift-check 0 ERROR.
 
 ---
 
