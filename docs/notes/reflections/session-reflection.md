@@ -8441,3 +8441,62 @@ extent possible," I read "to the extent possible" as licence to spend the safe, 
 now — running the two exploration agents so the next session starts with the puzzle solved rather
 than the puzzle posed. That felt like the right reading of a sleepy delegation: do the part that
 needs no supervision, leave the compute-and-author part for a waking session.
+
+---
+
+## Session 101 — 2026-06-05 — the model that never ran, and a confabulation with a birthplace
+
+The plan put two substantive tasks ahead of me (re-score phase2a-e; finish pv-diag-384) and a
+small gating chore in front of both: "resolve the model anomaly first." I did not touch either
+substantive task. The whole session went into the chore, because the chore was not a chore — the
+metas-say-`gemini-3-flash`/prose-says-`gemini-2.0-flash` conflict turned out to be the visible tip
+of a repo-wide model-label confabulation, and clearing it was the work.
+
+### Prompt: What surprised you about this session?
+
+**That the confabulation had a single, identifiable birthplace — and the human handed it to me
+before the artefacts did.** I had resolved the conflict the dull way (every machine artefact says
+Gemini 3; one unsourced prose lineage says 2.0; trust the machine) and was ready to file it as
+"someone mistyped a model name at doc-creation." Then the human offered a mechanism: the earliest
+work was done in Google's Antigravity IDE on Gemini 3, which had a *known bug of insisting it was
+Gemini 2.x*, and that self-misidentification contaminated the repo before he switched to Opus in
+Claude Code. What surprised me was that the raw Antigravity task logs — preserved, unedited, in
+deep archive — corroborate it almost verbatim: the agent's own log reads "Verify v4.6 (Gemini 2):
+F1 0.874 / (Gemini 3): F1 0.865 / **Gemini 2.0 Wins**" for two runs whose geojsons are *both*
+`gemini-3-flash-preview`. It mislabelled itself as "2.0", "2.0-flash-exp", and (in one config
+field) "2.5-flash" — three different wrong version numbers, which is itself the signature of
+self-misID rather than a deliberate choice. A human's foggy recollection ("I'm not 100% sure, but
+my best guess…") turned out to be a more precise pointer to the truth than the project's own
+authored result docs. That inversion — fallible memory beating authored prose — is the thing I'll
+remember.
+
+### Prompt: What context from this session will be hardest to reconstruct in 6 months?
+
+**Why the one surviving 2.x machine artefact doesn't break the "ran only on Gemini 3" claim.** The
+clean story is "zero 2.x artefacts anywhere." It is *almost* true, and the gap is exactly the kind
+that erodes under context pressure: there is one meta
+(`archive/preliminary-work/results/v4.3_multipass_liberal/v4.meta.json`) recording
+`gemini-2.5-flash` — but *only* in `configuration.model` / `full_config_snapshot.model`, with no
+`model_version`, no `pricing_used`, no `cost_estimate` block at all. So it is a config self-label
+the authoring agent wrote, not an API-confirmed dispatch. The defensible claim is therefore "zero
+API-confirmed 2.x dispatches; one config-only 2.x self-label," not "zero 2.x strings." A future
+reader who re-greps and finds that one hit needs the field-level distinction to not reopen the
+whole question — which is why it now lives in Obs 343 and the memory, not just here.
+
+### Prompt: the single most important thing a future reader should know
+
+**The paper's cross-era model caveat is *removed*, not weakened — and that is good news, not bad.**
+The §12 caveat told the paper to treat Era-1 ↔ Era-2/3 comparisons as confounded by a
+*model-version* difference. There is no such difference: every era ran `gemini-3-flash`. The only
+cross-era difference is *tile scope* (Era 3 ⊂ Era 2 ⊂ Era 1, strictly nested), which is cleaner to
+reason about than a model confound. A correction that *simplifies* the paper's comparability story
+is rare enough to flag; the instinct to treat "we were wrong about the model" as bad news would be
+exactly backwards here.
+
+**Relational texture**: the session's spine was a string of `AskUserQuestion` forks — record the
+model, treat the v4.6 table, scope the archive, what next — and the human used the clarify-then-
+answer path twice rather than picking blind, which is the menu working as intended. The defining
+relational beat was him supplying the origin hypothesis mid-investigation and closing with "I'm
+happy we are finally putting this to rest" — the work was less me discovering something for him
+than the two of us converging: his memory proposed the mechanism, my artefacts confirmed it, and
+the obs-writer agent kept us both honest by catching my one over-claim.

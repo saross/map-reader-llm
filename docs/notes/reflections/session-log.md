@@ -6709,3 +6709,70 @@ original. (4) phase2a-e: re-score first at 14-buf+MCC (then author). (5) phase3a
   `gemini-2.0-flash`; and a phase3c thinking-level doc conflict (`cross-track-comparison.md` stale).
 - The session ran long and split into a clean half (A/B/verifier-t-pilot authored) and a recon half
   (Batch D/E mapped, hard parts deferred); the deferrals are deliberate scope calls, not blockers.
+
+## Session 101 — 2026-06-05 (model-of-record anomaly resolved → gemini-3-flash; repo-wide confabulation corrected; phase3c thinking-level fixed)
+
+**Work**: Resolved the two provenance anomalies the Session-100 plan gated the substantive work
+behind. The two substantive tasks (Task 3 re-score phase2a-e; Task 4 pv-diag-384 GAP-7) were **not**
+started — deferred to subsequent sessions, by the user's call.
+
+**Anomaly 1 — Era-1 model-of-record (RESOLVED → `gemini-3-flash`)**: investigated the
+metas-say-`gemini-3-flash` vs prose-says-`gemini-2.0-flash` conflict. Every machine artefact
+(all retest/validation metas `configuration.model` + `cost_estimate.pricing_used.model`; source
+config `detect_brief-text.json` = gemini-3-flash since 2026-01-09 by git blame; output-file tags
+`-3-flash-`; `config.py` default gemini-3-pro-preview) records Gemini 3; **zero** metas anywhere
+record `gemini-2.0-flash`; the project post-dates Gemini 3's 2025-11-18 release. The `2.0` claim was
+an unsourced prose lineage. User adjudicated "trust the artefacts." **Model-of-record for all Era-1
+retests = `gemini-3-flash`; the paper's cross-era model-comparability caveat is REMOVED** (cross-era
+difference is tile-scope only, strictly nested).
+
+**Origin (user hypothesis, confirmed by artefacts)**: early map-reader work ran in Google's
+Antigravity IDE on Gemini 3, which self-identified as "Gemini 2.x" (known bug); contaminated the
+repo, propagated when the user switched to Opus-in-CC. Corroborated by the raw Antigravity task logs
+(`archive/preliminary-work/antigravity_logs/…`): the agent's own log records "Verify v4.6 (Gemini 2):
+F1 0.874 / (Gemini 3): F1 0.865 / Gemini 2.0 Wins" for two runs whose geojsons are both
+`gemini-3-flash-preview`; it self-labelled as 2.0, `gemini-2.0-flash-exp`, and `gemini-2.5-flash`.
+
+**Corrections made**:
+
+- **Active docs** (commit `f9e53e0a`): `retest-production-summary.md` (header + §12 Caveat 3/4,
+  banner + Changelog), `pv-phase2-analysis.md` (cost-basis model + banner + Changelog),
+  `documentation-audit-plan.md` (caveat description), `working-notes.md` Obs-45 (erratum banner +
+  strikethrough — the v4.6 "2.0-beats-3" table is two gemini-3 runs; "2.0 is SOTA" void),
+  `phase3-decomposition-investigation-2026-06-05.md` + `paper-writeup-continuity.md` (marked
+  resolved). Lint-clean.
+- **Archived material** (commit `a6c9a986`): erratum banners on the 3 archived 60-tile validation
+  reports (which assert "Gemini 2.0 Flash (`gemini-2.0-flash-001`)") + a pointer in the pre-toolkit
+  working_notes snapshot; raw Antigravity logs left untouched (origin evidence). User chose
+  "banner the 4, leave the logs."
+
+**Anomaly 2 — phase3c thinking-level (RESOLVED → HIGH; commit `d4930b0f`)**: `cross-track-comparison.md`
+said "Both tracks used MINIMAL thinking"; **all 450** `outputs/retest/phase3c/**/*.meta.json` record
+`thinking_level: high` (agreeing with the comprehensive report). Corrected the two body provenance
+claims (§Context + §Cross-Track Finding 3) MINIMAL → HIGH; added banner + Changelog. Label-only — no
+F1/±SD/ΔF1/p-value or finding changed; also resolves the doc's latent tension with its own Obs-141
+diversity-dividend section.
+
+**Logged**: working-notes **Obs 342** (commit `945732e9`, the systematic confabulation) + **Obs 343**
+(commit `b10b8f13`, the `gemini-2.5-flash` config-only caveat + three-wrong-version-numbers
+corroboration; the obs-writer caught the orchestrator's over-broad "zero 2.x artefacts" spec claim);
+provenance **memory** captured to `memories.jsonl` (`2026-06-05-32c29f23659b`, category provenance).
+
+**Deferred**: `_ignored_evals` close-out sweep (gated on 3b decomposition completion — 10 runs +
+pv-diag-384 GAP-7 still open). pv-diag-256 (no-MCC) disposition. Tasks 3 & 4 to subsequent sessions.
+
+**Produced**: commits `f9e53e0a`, `a6c9a986`, `945732e9`, `b10b8f13`, `d4930b0f` — all pushed. No new
+scripts; no data regenerated.
+
+### Contextual assumptions
+
+- This is **Session 101**, 2026-06-05, resuming from the Session-100 handoff. **$0 API**, **$0
+  compute** — entirely doc corrections + at-source re-verification (grep/git-blame/python field
+  reads) + two obs-writer dispatches.
+- The whole session was the "resolve the model anomaly first" gate from the Session-101 plan; it
+  expanded from a one-line chore into a repo-wide confabulation cleanup because the same mislabel
+  recurred across three independent doc families.
+- Era-1 batch metas are GAP-9 (no per-item `model_version`), so the model-of-record rests on
+  unanimous *config/pricing/output-tag* artefacts vs a single unsourced prose lineage, not on an
+  API-returned model field. The precise model claim is "zero API-confirmed 2.x dispatches; one
+  config-only `gemini-2.5-flash` self-label" (see Obs 343).

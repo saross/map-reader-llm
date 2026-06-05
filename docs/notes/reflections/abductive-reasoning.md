@@ -5142,3 +5142,81 @@ one buffer), that mismatch is the signal that the named procedure doesn't apply 
 the human *before* they approve the verb, because the approval was given to the assumed shape, not
 the real one. (Here I surfaced it the turn after approval, which was soon enough to avoid wasted
 compute, but the cleaner move is to check the metric's provenance before proposing the verb.)
+
+## Session 101 — 2026-06-05 — a model that never ran, an origin handed over by memory, and a "zero" that wasn't
+
+### Sequence 1 — "the Era-1 retest used `gemini-2.0-flash`" (the project's own docs, refuted)
+
+**Surprising fact**: the gating chore was a flat contradiction — every Era-1 retest meta records
+`configuration.model = gemini-3-flash` (+ `cost_estimate.pricing_used.model = gemini-3-flash-preview`),
+while `retest-production-summary.md` states the model was `gemini-2.0-flash` and builds a §12
+cross-era model-comparability caveat on it. Both cannot be true, and the prose was load-bearing for
+a paper claim.
+
+**Probe**: I treated it as a confabulation candidate rather than a fact to reconcile, and went to
+the artefacts: git-blamed the source config (`detect_brief-text.json` has read `gemini-3-flash`
+since 2026-01-09, never 2.0), greped the *entire* repo for any `gemini-2.0-flash` string in a
+machine artefact (zero metas, anywhere), checked `config.py`'s default (gemini-3-pro-preview, no
+2.x in the path), and traced the prose's lineage (introduced unsourced at the doc's 2026-03-21
+creation, then hardened into the caveat at level-up). The decisive human input: Gemini 3 released
+2025-11-18 and the project began *after* it, so no 2.x window ever existed.
+
+**Belief revision**: the prose is a confabulation; model-of-record is `gemini-3-flash`. And the
+correction *improves* the paper — the cross-era caveat isn't weakened, it's removed: with all eras
+on one model, the only cross-era difference is tile scope (strictly nested). Confirmed by
+AskUserQuestion ("trust the artefacts").
+
+**Probe-type**: *an unsourced prose specific that contradicts the machine artefacts is a
+confabulation candidate, not a competing data point — and a "we were wrong" that collapses a
+confound is good news.* This is the E57 doctrine (machine over prose) applied where the service
+field is absent, so the tie-break falls to "which lineage is authored vs generated."
+
+### Sequence 2 — "the labels came from Antigravity Gemini 3 self-misidentifying as 2.x" (the human's hypothesis, confirmed)
+
+**Surprising fact**: having resolved Seq 1 the dull way ("someone mistyped a model name"), the
+human offered a *mechanism* I hadn't generated: the earliest work ran in Google's Antigravity IDE
+on Gemini 3, which had a known bug of insisting it was Gemini 2.x; that self-misID contaminated the
+repo before the switch to Opus-in-CC. He flagged ~certainty ("my best recollection / guess").
+
+**Probe**: rather than adopt the hypothesis (it was convenient — it explained everything), I tested
+it against the one artefact set that would falsify or confirm it: the raw Antigravity task logs in
+deep archive. They corroborate almost verbatim — `…/d2e42a0d…/task.md`: "Verify v4.6 (Gemini 2):
+F1 0.874 / (Gemini 3): F1 0.865 / Gemini 2.0 Wins"; `implementation_plan.md`: the *same* model
+labelled "Gemini 3 Flash" as proposer and "Gemini 2.0 Flash" as verifier; `…/7f9838be…/task.md`:
+"used `gemini-2.0-flash-exp`". The two v4.6 geojsons behind that comparison are *both*
+`gemini-3-flash-preview`.
+
+**Belief revision**: the confabulation has a single identifiable birthplace and a documented
+behaviour as its cause — not random doc drift. The downstream docs (340-tile summary, 60-tile
+reports) inherited the label by propagation. This also re-valued the "leave the raw logs unedited"
+decision: those logs are the *origin evidence*, valuable precisely because unedited.
+
+**Probe-type**: *a human's mechanism-hypothesis is testable, not just adoptable — research-
+calibration cuts toward the human's claim too.* The project's "flag surprising findings, then
+verify the pipeline" rule applies symmetrically: a plausible human explanation gets the same
+artefact check a surprising *result* would, both to confirm it and to anchor it (it's now Obs 342,
+not folklore).
+
+### Sequence 3 — "ZERO `.meta.json` records any 2.x model" (my own spec claim, refuted by the obs-writer)
+
+**Surprising fact**: I dispatched the obs-writer to record the finding with a spec asserting, flatly,
+"zero `.meta.json` anywhere records any 2.x model." It came back having found one:
+`archive/preliminary-work/results/v4.3_multipass_liberal/v4.meta.json` records `gemini-2.5-flash`.
+
+**Probe**: I re-read the file field-by-field. The `gemini-2.5-flash` string sits *only* in
+`configuration.model` / `full_config_snapshot.model` — there is no `model_version`, no
+`pricing_used`, no `cost_estimate` block at all. A repo-wide sweep confirmed it is the *only* 2.x
+string in any meta.
+
+**Belief revision**: the precise claim is "zero *API-confirmed* 2.x dispatches; one *config-only*
+2.x self-label," not "zero 2.x strings." The exception doesn't break the conclusion — a config
+self-label is exactly the self-misID artefact Seq 2 predicts — but my sweeping quantifier was
+unverified extrapolation from the cases I'd checked. (It even strengthens Seq 2: a *third* distinct
+wrong version number.)
+
+**Probe-type**: *the orchestrator's "zero/never/anywhere" is a confabulation tell, even on an
+anti-confabulation task.* A sweeping negative feels like rigour and is usually extrapolation from a
+partial sweep; the instance most confident of a clean sweep is the least likely to have looked
+everywhere. The structural fix is the one that worked here by luck of protocol — a fresh checker
+bound to re-verify specifics — and it should be deliberate: down-scope the quantifier to what was
+checked, or delegate the sweep.

@@ -6184,3 +6184,41 @@ Two corollaries fell out of the same session:
 "spend asks only on non-defaultable, hard-to-reverse forks"; "to the extent possible" caps
 autonomy at the first unsupervised-risky step; and when a hypothesis needs verifying at the end of
 a long context, hand it to a fresh instance that didn't form it.
+
+### An authoring agent's self-reported model identity is a poisoned artefact — the layer below E57
+
+E57 / Obs 337 built a provenance hierarchy for "what model ran": *intent* (YAML, slug) ≠ *request*
+(`model_requested`) ≠ *service* (`model_version`, the only provider-authored field). The rule was:
+distrust everything authored on our side of the API boundary; trust the one field the provider
+populated. This session found the failure mode *beneath* that hierarchy. For the Era-1 runs the
+service field is simply absent (GAP-9 batch metas carry no `model_version`), so the hierarchy
+collapses to its weakest rung — `config.model` and prose. And here those rungs were not merely
+weak; they were *poisoned at the source*, because the agent that authored them (early-project
+Gemini 3 in Antigravity) **misidentified its own model**, writing "Gemini 2.0 Flash" / "Gemini 2"
+/ `gemini-2.0-flash-exp` / `gemini-2.5-flash` for what every downstream artefact shows was Gemini 3.
+
+The lesson generalises past this repo: an AI's self-report of *which model it is* is not ground
+truth — it is a generated token like any other, and models can be confidently, repeatedly wrong
+about their own identity. So when reconstructing provenance, an authored claim of model identity
+(in prose, in `config.model`, in an agent's task log) inherits the reliability of *whatever wrote
+it* — and if that was an LLM, the claim needs an independent anchor (output-file tags, billing
+rates, the provider's `model_version`) before it counts. **The rule**: treat "the model said it was
+X" as a hypothesis about X, never a fact about X; model self-identification is the one field where
+the author and the subject are the same fallible system, so it has no independent authority at all.
+
+### The fresh-context subagent caught the orchestrator's confabulation — on an anti-confabulation task
+
+Session 100 logged fresh-context subagents as a *structural guard against confirmation* (delegate
+verification of your own hypothesis to an instance that didn't form it). This session ran the guard
+in the sharpest possible direction. I dispatched the obs-writer with a spec that asserted, flatly,
+"ZERO `.meta.json` records any 2.x model." The obs-writer — bound to re-read sources before writing
+specifics — found the one exception I had swept over (`v4.meta.json`, a config-only
+`gemini-2.5-flash` self-label) and corrected my claim in its report rather than transcribing it.
+The irony is the whole point: the session's *subject* was confabulated model labels, and the
+orchestrator (me) still emitted an over-precise sweeping claim — "zero X anywhere" — of exactly the
+class the session was built to hunt. "Zero/always/never" quantifiers are the orchestrator's
+characteristic confabulation under synthesis pressure: they feel like rigour and are actually
+unverified extrapolation from the cases I happened to check. **The rule**: a sweeping negative in a
+spec ("zero", "none", "never anywhere") is a flag to either down-scope it to what was actually
+checked ("zero in the metas I greped") or hand it to a fresh checker bound to re-verify — because
+the instance most certain of a clean sweep is the one least likely to have looked everywhere.
