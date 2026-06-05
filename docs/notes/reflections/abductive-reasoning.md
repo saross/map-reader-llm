@@ -5220,3 +5220,56 @@ partial sweep; the instance most confident of a clean sweep is the least likely 
 everywhere. The structural fix is the one that worked here by luck of protocol — a fresh checker
 bound to re-verify specifics — and it should be deliberate: down-scope the quantifier to what was
 checked, or delegate the sweep.
+
+## Session 102 — 2026-06-05 — two of the beacon's load-bearing claims, read at the source and revised
+
+### Sequence 1 — "'14-buf' means a 14-metre matching buffer" (my own reading of the task name, refuted)
+
+**Surprising fact**: the task said "re-score at 14-buffer + MCC," and I half-read "14-buffer" as a
+14 m matching tolerance — until I went to confirm the buffer before locking it and found the
+reference eval dir `results/paper-eval/n1/384px-14buf-mcc/` had `cli_args.buffers=[20]` sitting next
+to a `summary.buffers` list with **fourteen** entries `[5,10,15,20,…,150]`. A name with "14" in it,
+a `[20]` in the CLI, and a 14-long summary do not reconcile under "14 = the buffer radius."
+
+**Probe**: grepped the docs and `rescore_conditions.py`. `BUFFERS_STANDARD` is the 14-distance sweep;
+`n1-baseline-matrix.md` calls it "the 14 uniform buffers"; the headline metric is reported at the
+20 m *operating point within* that sweep. "14-buf" = **14 buffer distances**, not 14 metres.
+
+**Belief revision**: the re-score must sweep all 14 distances with `--mcc` and report at 20 m — not
+score once at 14 m (which would have produced silently non-comparable numbers that still *looked*
+like valid F1s, the worst kind of wrong). The trigger was purely the anti-confabulation reflex
+("re-verify a specific before locking it"); nothing in the task flagged the ambiguity.
+
+**Probe-type**: *a compressed identifier ("14-buf", "t4", "n5") is a lossy pointer to a convention,
+not the convention.* When the short form could plausibly name two different quantities (14 metres
+vs 14 distances), the cost of resolving it at the source is one grep; the cost of guessing is
+non-comparable results that pass every downstream validity check.
+
+### Sequence 2 — "the phase2 re-score is a bespoke compute task" (the beacon's framing, S100→S102, refuted)
+
+**Surprising fact**: the continuity beacon (written S100, restated S101) framed the phase2 re-score
+as *bespoke* — the canonical metric is a replicate-mean over K passes computed by
+`analyse_phase2_results.py`, which is hard-coded to 20 m and computes no MCC, so "a faithful
+14-buf+MCC re-score needs a from-scratch per-pass-and-average pipeline." Plausible, and I nearly
+designed the compute-gate question around it. But the *existing* 30 m thin phase2 evals already had
+per-run **and** replicate-mean summaries with MCC — produced by *something*, and not that script.
+
+**Probe**: read `evaluate_detections.py`'s argparse. It has a `--detections-dir` + `--glob` mode that
+globs the K run geojsons, scores each, and emits exactly the replicate-mean `summary` (+ `--mcc`,
++ any `--buffers`). The 30 m thin evals were made this way. So the "bespoke pipeline" already
+existed as a standard flag; only the *canonical harness* (`rescore_conditions.py`) lacked a way to
+pass it a directory.
+
+**Belief revision**: the task was not bespoke. It reduced to a ~50-line dir-mode branch on the
+harness (audited, tested) + a standard worklist. The beacon's *facts* were all correct
+(`analyse_phase2_results.py` really is 20 m/no-MCC); its *inference* ("therefore from-scratch") was
+the stale part, and it had ridden three handoffs unchecked because each transcribed the prior's
+compression rather than re-deriving it.
+
+**Probe-type**: *an inherited difficulty estimate is an un-anchored inference, not a fact — re-derive
+it before designing around it.* The same propagation mechanism that carried a confabulated model
+label across doc families in Session 101 carries a "this is hard" framing across handoffs; the tell
+is identical (high confidence in something you personally never checked), and the fix is the same
+two-minute source read. The give-away I should have heeded sooner: the framing asserted a *gap* (no
+standard path) while the filesystem held an *artefact* (30 m MCC evals) that could only exist if the
+path did.

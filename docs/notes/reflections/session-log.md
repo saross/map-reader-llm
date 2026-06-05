@@ -6776,3 +6776,73 @@ scripts; no data regenerated.
   unanimous *config/pricing/output-tag* artefacts vs a single unsourced prose lineage, not on an
   API-returned model field. The precise model claim is "zero API-confirmed 2.x dispatches; one
   config-only `gemini-2.5-flash` self-label" (see Obs 343).
+
+## Session 102 — 2026-06-05 — Tasks 3 & 4 complete (phase2a-e re-score + author; pv-diag-384 GAP-7)
+
+**Overview**: Executed the two substantive tasks deferred since the decomposition began. Re-scored
+phase2a-e and pv-diag-384's consensus sweep at the 14-buffer+MCC standard on **zbook** (12 workers,
+0 failures), then authored the manifest entries. Manifest went **159→224 conditions / 192→559
+passes / 1→2 analyses, ALL VALID** at every step; decomposition **18→23 of 28 runs**. **$0 API**
+(evaluation-only). Commits `f6e757a7`→`20038b7e` (11), all pushed.
+
+**Task 3 — phase2a-e (DONE)**:
+
+- **Harness** (`f6e757a7`): dir-mode/replicate branch on `scripts/rescore_conditions.py` — worklist
+  entries may now use `detections_dir`+`glob` (replicate-mean) or a file-list, alongside the legacy
+  single-file `detections`. Replicate-aware cost estimate; backward-compatible. +10 tier-1 tests,
+  ruff clean, `/audit`ed (verdict clean: two Low malformed-input notes, not fixed). **Framing
+  correction**: the re-score was NOT bespoke (the S100/S101 beacon's premise) — `evaluate_detections.py
+  --detections-dir` already emits the replicate-mean summary + MCC at any buffer; only the harness
+  needed the branch.
+- **Re-score** (`4b34ed87`): 36 phase2a-e leaf conditions, worklist
+  `planning/rescore-worklists/phase2-14buf-mcc-2026-06-05.json` →
+  `results/paper-eval/phase2/512px-14buf-mcc/`. Era-1 340, curator GT, 512px; K=3 (phase2a/b), K=1
+  (c/d/e).
+- **Authored** (`73a66091`): 5 runs `retest-phase2{a..e}` = 36 single-pass replicate conditions +
+  66 passes, `gemini-3-flash`. **Calibration verified** against the production summary: F1@20m
+  canonical-last 0.6314 (vs 0.631), text-t0.0 0.6055 (vs 0.6048), image-t0.0 0.5862 (vs 0.5869).
+  phase2b `scope_override` NOT needed (fresh evals all at nominal 340). phase2e + scale-4-optimal-487
+  modality set to `image` (`detect_brief-text-image.md`; the `--draft-run` left it null).
+
+**Task 4 — pv-diag-384 GAP-7 (DONE, Option B = buffer-consistent)**:
+
+- **Consensus re-score** (`4b34ed87`): 249 `consensus_tK` geojsons buffer-harmonised from the
+  `phase3a-{text,image}-matrix` evals' `[20,30,40,50]` to the 14-buffer standard, worklist
+  `pv-diag-384-consensus-14buf-mcc-2026-06-05.json` →
+  `results/rescore-2026-06-05/pv-diag-384/consensus-sweep/`. Era-2 487, 384px; 3 n1-outstanding
+  strays excluded; slug `pool__temp__consensus-dir__tK` (consensus-dir = the N-aggregation
+  disambiguator).
+- **GAP-7 inventory** (`9d1ec057`): populated the previously-empty 24 proposer pools + 88 verifier
+  passes; 10 signed-off N1 baselines kept verbatim.
+- **Conditions + analysis** (`5b2130be`): 29 consensus conditions (one per `pool×temp×N` config at
+  best-F1@20m, range 0.49–0.75) + the 3c analysis `pv-diag-384-consensus-calibration` (type=`sweep`,
+  H3, `manually_verified_at=null`). drift-check 0 ERROR.
+
+**Decision (user-confirmed, `/remember`ed `2026-06-05-9a5c62444a73`)**: consensus/aggregation
+vote-threshold sweeps decompose as **one citable condition per config at best-F1@20m + a 3c `sweep`
+analysis**; non-headline thresholds deferred to `_ignored_evals` (consistent with Batch C's fixed
+vote≥4). The model for the future phase3a/3c decomposition.
+
+**Produced**: harness branch + `tests/test_rescore_conditions.py`; 2 worklists; 285 evals
+(36 phase2 + 249 consensus); 41 manifest conditions + 367 passes + 1 analysis; continuity beacon →
+Session 103 (`20038b7e`). No detection API calls; no models run.
+
+**Deferred (to Session 103, in the beacon)**: ⏰ the **diversity-dividend statistical test** vs the
+single-pass baseline (the consensus analysis is a registered calibration, not a verified finding);
+phase3a/3a-high/3a-replication/3c → 3c analyses (template now exists); `_ignored_evals` close-out
+sweep; pv-diag-256 (no-MCC); cross-run proposer provenance.
+
+### Contextual assumptions
+
+- **Session 102**, 2026-06-05, resuming from the Session-101 handoff. Compute ran on **zbook**
+  (32 cores, 12 workers) because **sapphire was reserved for an inscriptions run** and the standing
+  rule + `rescore_conditions.py` docstring both forbid amd-tower (fan noise). zbook was offline at
+  first (needed a restart by the user mid-session); everything was staged + committed while blocked,
+  then run once it returned — no fallback to amd-tower was taken or offered.
+- The phase2 replicate-mean condition points `detections` at the condition *directory* (the
+  replicate-mean eval has no single geojson, and records `n_detections=null`), which yields a benign
+  `geojson-missing` WARN by design — not a defect.
+- All 5 phase2 runs + pv-diag-384 sit at drift-check "partial" (0 ERROR) — the old 30 m/all-buffer
+  phase2 siblings and pv-diag's non-headline thresholds are unclaimed, awaiting the deferred
+  `_ignored_evals` sweep (consistent with how Batch C runs sit; `_ignored_evals` is intentionally
+  empty until 3b completion).

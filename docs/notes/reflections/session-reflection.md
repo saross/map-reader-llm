@@ -8500,3 +8500,55 @@ relational beat was him supplying the origin hypothesis mid-investigation and cl
 happy we are finally putting this to rest" — the work was less me discovering something for him
 than the two of us converging: his memory proposed the mechanism, my artefacts confirmed it, and
 the obs-writer agent kept us both honest by catching my one over-claim.
+
+## Session 102 — 2026-06-05 — two of the beacon's load-bearing claims dissolved at the source, and the work got *easier*
+
+### Prompt: What surprised you about this session?
+
+**Two claims the handoff had carried for three sessions evaporated the moment I read the source
+file.** The beacon said "re-score phase2a-e at 14-buffer + MCC" and called it a *bespoke compute
+task* — `analyse_phase2_results.py` is hard-coded to 20 m and computes no MCC, so a faithful
+re-score "needs a from-scratch per-pass-and-average pipeline." That framing rode Session 100's
+recon into 101's plan into this session's opening prompt. It was wrong: `evaluate_detections.py
+--detections-dir` *already* emits the replicate-mean summary with MCC at any buffer set — it's
+literally how the 30 m thin phase2 evals were made. The whole "bespoke" task collapsed to a
+~50-line dir-mode branch on the existing harness. The second surprise was smaller but sharper:
+"14-buf" is not a 14-*metre* buffer (which is what I half-assumed from the name and nearly scored
+at) — it's **14 buffer *distances*** `[5,10,…,150]`, reported at the 20 m operating point. I caught
+it only because the anti-confabulation reflex made me re-verify the buffer before locking it, and
+the N1 eval dir literally named `384px-14buf-mcc` had `cli_args.buffers=[20]` next to a 14-entry
+summary — a contradiction that forced the question. Both surprises point the same way: the beacon's
+*framing* was stale in a way its *facts* were not, and reading one file at the source beat three
+sessions of inherited compression.
+
+### Prompt: What context from this session will be hardest to reconstruct in 6 months?
+
+**The consensus 3c analysis is a *registered calibration*, not a verified finding — and the 29 vs
+249 condition count encodes a deliberate pattern, not a shortcut.** `pv-diag-384-consensus-calibration`
+sits in `run-analyses.json` with `manually_verified_at=null` on purpose: it wires in the
+249-point consensus sweep and the 29 headline operating-point conditions, but the *diversity-dividend
+statistical test* — HIGH-thinking consensus actually beating the single-pass baseline, with
+permutation + BH-FDR significance — has **not been run**. A future reader who sees an authored
+`outcome` string could easily mistake the registration for the finding; the `null` verified-at and
+the explicit "registers the calibration material, not a finding" note are the guardrail. The other
+fragile bit: pv-diag has **29** consensus conditions, not 249, because we minted *one citable
+condition per (pool×temp×N) config at its best-F1@20 m threshold* and left the rest of each vote
+sweep to the deferred `_ignored_evals` — exactly mirroring how Batch C kept only its vote≥4 point.
+That count looks arbitrary without knowing it's the Batch-C-consistent pattern the human asked me
+to `/remember` and reuse for phase3a/3c.
+
+### Prompt: What would you replay differently?
+
+**I'd have probed the "bespoke" claim before designing around it — not after.** I did the right
+thing eventually (read `evaluate_detections.py`, found the dir-mode path, flagged the correction),
+but only after I'd already started framing the compute-gate question around the beacon's premise.
+The cheaper move was to spend two minutes verifying *whether* the task was bespoke before spending
+any on *how* to do the bespoke thing. The session's best decisions were the small re-verifications
+— the buffer, the model field in the meta, the eval's `input_files.detections` — and its one mild
+inefficiency was taking the handoff's difficulty estimate at face value for longer than I should
+have. The texture overall was the inverse of Session 101: that was an investigation that *expanded*
+(one chore became a repo-wide cleanup); this was an execution session that *contracted* (a
+multi-session "bespoke" overhang became a thin harness branch), and the human's instinct to stage
+everything-then-block-on-zbook rather than fall back to amd-tower kept the contraction honest —
+the constraint (sapphire reserved for an inscriptions run, zbook offline then restarted) shaped the
+sequencing without ever compromising the compute-location rule.

@@ -6222,3 +6222,28 @@ unverified extrapolation from the cases I happened to check. **The rule**: a swe
 spec ("zero", "none", "never anywhere") is a flag to either down-scope it to what was actually
 checked ("zero in the metas I greped") or hand it to a fresh checker bound to re-verify — because
 the instance most certain of a clean sweep is the one least likely to have looked everywhere.
+
+### A handoff beacon's *framing* is a pointer, not a finding — "bespoke" rode three sessions unchecked (Session 102)
+
+The "zero/never" observation above is about a *negative* quantifier confabulated under synthesis
+pressure. This session is its mirror: a *positive difficulty framing* that propagated across three
+handoffs without anyone re-deriving it. The continuity beacon described the phase2 re-score as a
+"bespoke compute task" — needing a from-scratch per-pass-and-average pipeline — because Session 100's
+recon looked at `analyse_phase2_results.py` (hard-coded 20 m, no MCC) and concluded the canonical
+metric had no standard path. That conclusion was *reasonable when written* and *wrong by the time it
+mattered*: a different existing script (`evaluate_detections.py --detections-dir`) already produced
+the replicate-mean-with-MCC at any buffer. The framing survived S100→S101→S102 not because anyone
+re-checked it but because each handoff faithfully transcribed the prior's compressed claim — the same
+mechanism that let a confabulated model label survive across doc families in Session 101, applied to a
+*methodological difficulty estimate* instead of a *fact*.
+
+The distinction worth keeping: a beacon's **facts** (paths, counts, commit hashes) are anchored and
+re-verifiable; its **framing** (this is hard / bespoke / needs X) is an *un-anchored inference* that
+reads as settled once it's been restated twice. The anti-confabulation discipline already says
+"re-read the source before citing a specific." The extension this session earns: **re-derive a
+load-bearing difficulty/approach claim before designing around it**, especially one you inherited
+rather than formed. The tell is the same as the "zero/never" tell — high confidence in something you
+personally never checked. Cost of the check here was one file read (~2 min); cost of believing the
+framing was a compute-gate question scoped around a from-scratch pipeline that didn't need to exist.
+Reading `evaluate_detections.py`'s argparse before accepting "bespoke" would have reframed the whole
+task at the top instead of mid-session.
