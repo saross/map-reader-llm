@@ -17509,3 +17509,85 @@ Search terms: Obs 341, Batch C decomposition manifest, library-design NULL corro
 - **Obs 236** (H10 pool size is a null — original, 2026-04-15): 20-tile calibration matches 160-tile under PV. Corroborated here with the pool-size F1 range flat at 0.662–0.717.
 - **Obs 241** (scale-4 vs scale-8 parsimony stable across greedy and WBF, 2026-04-16): the parsimony choice that holds even after the Obs 340 WBF correction.
 - **Artefacts**: `results/run-conditions.json` (Batch C condition specifications); `results/conditions-manifest.json` / `results/conditions-manifest.md` (142 conditions, 10 runs); `results/passes-manifest.json` / `results/passes-manifest.md` (150 passes); `results/h8-v2/with-mcc/` (7 greedy evaluations); `results/h10/with-mcc/` (4 greedy evaluations); `results/h12-v2/with-mcc/` (3 greedy evaluations); `results/h8-v2/wbf-mcc/` and `results/h12-v2/wbf-mcc/` (corrected WBF evaluations); `results/rescore-2026-05-31/h8-v2/` and `results/rescore-2026-05-31/h10/pool_160_hp4hn4-verified-vt4-pt0.05/` (verified evaluations). Commits `dd2ebe9f` (h8-v2 decomposition), `327c19cb` (h10 decomposition), `cee75dcb` (h12-v2 decomposition).
+
+## Observation 342: "Gemini 2.0 Flash" is a systematic confabulation across three result-doc families — every project run used Gemini 3; the v4.6 "2.0-beats-3" result is void, and the paper's cross-era model-comparability caveat is removed (Session 101, 2026-06-05)
+
+### The finding
+
+**Every reference to "Gemini 2.0 Flash" in the project's result documents is a confabulation. All production runs — including the Era-1 retests, the 60-tile validation, and the preliminary v4.6 optimisation — used `gemini-3-flash` (resolving to `gemini-3-flash-preview`). Zero committed output artefacts record any `gemini-2.0-flash` model string.**
+
+The confabulation affected three independent result-doc families, all corrected on 2026-06-05:
+
+| result-doc family | mislabel used | actual model (from artefacts) |
+|---|---|---|
+| `results/retest/retest-production-summary.md` (340-tile production retest, header + §12 caveat) | `gemini-2.0-flash` | `gemini-3-flash` → `gemini-3-flash-preview` |
+| `archive/results-60-tile-validation/phase3a-consensus/*.md` (3 archived 60-tile validation reports) | `Gemini 2.0 Flash (gemini-2.0-flash-001)` — incl. description of its "thinking mode" | `gemini-3-flash` → `gemini-3-flash-preview` |
+| `docs/notes/working-notes.md` Obs 45 (v4.6 preliminary comparison) | "Gemini 2.0 Flash vs Gemini 3 Flash" comparison table; "2.0 Flash (v4.6) is SOTA, F1 0.874" | both rows are `gemini-3-flash-preview` (run-to-run variance, ΔF1 ≈ 0.008) |
+
+Evidence confirming the true model, verified at source:
+
+| evidence layer | value | source |
+|---|---|---|
+| `configuration.model` in all retest `.meta.json` | `gemini-3-flash-preview` (Phase 2 + Phase 3) | e.g. `outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_1/detections_brief-text-t0_run01.meta.json` |
+| `cost_estimate.pricing_used.model` in all retest `.meta.json` | `gemini-3-flash-preview` | same files |
+| `configuration.model` in 60-tile archive `.meta.json` | `gemini-3-flash` (→ `gemini-3-flash-preview`) | e.g. `archive/outputs-pre-retest-60-tile/preliminary-results/detect_brief-text_high-recall/detections-detect_brief-text_high-recall-3-flash-2026-03-10.meta.json` |
+| 60-tile output filenames | tagged `-3-flash-` throughout | `archive/outputs-pre-retest-60-tile/preliminary-results/` |
+| `prompts/configs/detect_brief-text.json` `model` field | `gemini-3-flash` since 2026-01-09 (file creation, commit `cfc10c13`) — never `2.0` | `git log -- prompts/configs/detect_brief-text.json` |
+| v4.6 "Gemini 2.0" geojson internal model strings | `gemini-3-flash-preview` × 70 features | `archive/preliminary-work/results/v4.6_opt/verified_run_01_v4_6.geojson` |
+| v4.6 "Gemini 3" sibling geojson internal model strings | `gemini-3-flash-preview` × 70 features | `archive/preliminary-work/results/v4.6_opt/verified_run_01_v4_6_gemini3.geojson` |
+| project start date | December 2025, AFTER Gemini 3's release on 2025-11-18 | user-confirmed; no 2.x window ever existed |
+| `gemini-2.0-flash` artefacts in repo | ZERO | `find . -name "*.meta.json"` piped to `grep -l "gemini-2.0"` returns nothing |
+
+**Consequence — Obs 45 v4.6 comparison is void.** The "Gemini 2.0 Flash vs Gemini 3 Flash" table (Obs 45) compares two `gemini-3-flash-preview` runs. The F1 values (0.874 vs 0.865) are genuine — they are real Gemini 3 results. The run-to-run gap (ΔF1 ≈ 0.008) is within normal variance; neither is "SOTA for a generation". The conclusion that "2.0 Flash outperforms Gemini 3" does not hold; Obs 45's cross-generation framing is struck through in the working notes (erratum added in-line, commit `f9e53e0a`).
+
+**Consequence — paper caveat removed.** The paper previously carried a cross-era model-comparability caveat (Era 1 = Gemini 2.0 Flash; Era 2/3 = Gemini 3 Flash). That caveat is now removed: the only cross-era difference is tile scope (Era 1 = 340 × 512 px; Era 2 = 487 × 384 px; Era 3 = 327 × 384 px — strictly nested subsets per `results/evaluation-scopes.md`). This is a cleaner framing than the prior one.
+
+### The probable origin (user's best-recollection hypothesis — corroborated, not proven)
+
+The user's recollection is that the earliest map-reader work was done in Google's **Antigravity** IDE using **Gemini 3**, and that Antigravity's agent had a known behaviour where it **refused to believe it was Gemini 3 and self-identified as "Gemini 2.x"**. When the project moved to Claude Code (~1–2 weeks later), the mislabels were already baked into the prose and propagated downstream into summary documents. The user noted he is **not 100% sure** of this explanation.
+
+This hypothesis is strongly corroborated — though not proven — by the preserved Antigravity logs:
+
+| log artefact | relevant text | interpretation |
+|---|---|---|
+| `archive/preliminary-work/antigravity_logs/artifacts/d2e42a0d-361f-4bae-8375-90d9545457e8/task.md` lines 22–27 | "F1 0.87 achieved with Gemini 2", "Verify v4.6 (Gemini 2): F1 0.874", "Verify v4.6 (Gemini 3): F1 0.865. (Underperformed slightly)", "Analyze & Compare: Gemini 2.0 Wins." | The Antigravity agent labelled one of its `gemini-3-flash-preview` runs as "Gemini 2" and treated it as a cross-generation comparison. Both geojsons on disk confirm `gemini-3-flash-preview`. |
+| `archive/preliminary-work/antigravity_logs/artifacts/d2e42a0d-361f-4bae-8375-90d9545457e8/implementation_plan.md` lines 7–8 | Proposer: "Gemini 3 Flash"; Verifier: "Gemini 2.0 Flash" | Self-inconsistent within a single document: the same pipeline is labelled both models simultaneously. |
+| `archive/preliminary-work/antigravity_logs/artifacts/7f9838be-f730-4489-bbb3-d7be6b259603/task.md` line 5 | "Run extraction on selected tiles (used `gemini-2.0-flash-exp`)" then line 7: "Revert to `gemini-3-pro-preview`" | A `gemini-2.0-flash-exp` request was *configured* transiently — confirmed by commit `b7920dda` (2025-12-10, `MODEL_NAME = "gemini-2.0-flash-exp"`) reverted by the next commit `34d6d39e` ("Switch to Gemini 3 Pro model"). However, no committed output `.meta.json` records a 2.x model response — a `gemini-2.0-flash-exp` API call post-2025-11-18 would have been served Gemini 3 anyway. |
+
+The self-identification bug in the Antigravity-era agent (labelling a Gemini 3 run as "Gemini 2") is the most plausible single origin of the contamination that then propagated into Claude Code sessions via the same repo's prose documents. The hypothesis remains unproven because no direct log of Antigravity asserting "I am Gemini 2" survives — only its actions (labelling two identical-model runs as different generations) are visible.
+
+### The provenance lesson (extends Obs 337)
+
+**Even `config.model` and `pricing_used.model` can be overridden by upstream agent self-misidentification propagated through hand-authored prose.** In the E57 case (Obs 337), the Flash-vs-Pro dispatch error was detectable because `model_version` (provider-authored) disagreed with the YAML intent. In this case, *every machine artefact agreed on the truth* — only hand-authored summary docs dissented, and the prose's origin was an upstream agent's self-reported model identity. This is a more dangerous failure mode: it cannot be caught by internal consistency checks on any single run.
+
+**Extended practical rule:** model-of-record must trace to a machine artefact (`meta.json` `configuration.model` / `cost_estimate.pricing_used.model`, output-file tag, source config), never to a hand-authored summary document — and be aware that an authoring agent's self-reported model identity is itself an unreliable signal. When prose and machine artefacts disagree, the machine artefacts win (the E57 doctrine; see `protocol-errata.md` E57 at line 1774).
+
+### Why this matters
+
+1. **Model-of-record for all Era-1 retests (phase2a–e, phase3a, phase3a-high, phase3a-replication, phase3c) = `gemini-3-flash` (→ `gemini-3-flash-preview`).** This is the value to record when those runs are decomposed into the manifest.
+
+2. **The paper's cross-era model-comparability caveat is removed, not weakened.** Cross-era differences are tile scope only (nested subsets). This is strictly cleaner for the paper than the prior "different model" framing.
+
+3. **The v4.6 "2.0 Flash is SOTA" preliminary conclusion is void.** Both runs in the comparison are `gemini-3-flash-preview`. The F1 values are genuine; the interpretation is not. Superseded by the formal study regardless.
+
+4. **The confabulation propagated through a whole documentation lineage before being caught.** The audit that caught it was the Session 101 phase3 decomposition investigation, which cross-checked `config.model` in the run metas against the prose in `retest-production-summary.md`. The catch required reading machine artefacts, not just reviewing documents — a strong argument for systematic meta-audit at decomposition time.
+
+### Caveats / methodological notes
+
+- **Origin is a hypothesis, not a proven fact.** The Antigravity logs are corroborating evidence but do not contain a direct self-identification of "I am Gemini 2"; only actions (cross-generation mislabelling) are visible. The user was explicit that he is not 100% sure.
+- **GAP-9 applies to Era-1 batch metas:** no per-item `model_version` field survived for the retest runs (the batch API runner does not populate it). The model-of-record case rests on `configuration.model` + `pricing_used.model` in every meta, consistent source configs, and the project-timeline argument — not on API-returned `model_version` per item. This is weaker than the E57 evidence chain but the convergence across all independent signals is decisive.
+- **One preliminary-work `.meta.json` records `gemini-2.5-flash`**, not `gemini-2.0-flash` — `archive/preliminary-work/results/v4.3_multipass_liberal/v4.meta.json`, timestamped 2025-12-22. This is a different model designator (the `2.5` series), from the early Antigravity-era experimental phase before the structured config system, and is unrelated to the confabulation. The "zero `gemini-2.0-flash` artefacts" claim holds; the "zero 2.x artefacts" claim is technically imprecise.
+- **The `gemini-2.0-flash-exp` transient config** (commit `b7920dda`, 2025-12-10, reverted same day by `34d6d39e`) is the one point where a 2.x model was genuinely *configured*. The Antigravity task log records "used `gemini-2.0-flash-exp`" for that run. Post-2025-11-18, such a request would have been served Gemini 3 at the API level; and no committed output `.meta.json` records a 2.x model response. Even this does not establish that a 2.x model produced any committed result.
+
+### Findable later
+
+Search terms: Obs 342, gemini-2.0-flash confabulation, model-of-record gemini-3-flash, Antigravity Gemini 3 self-misidentification, Gemini 3 calls itself Gemini 2, gemini-2.0-flash-001 invented model id, v4.6 two gemini-3 runs mislabelled, 2.0 Flash SOTA void, 60-tile validation model mislabel, cross-era model caveat removed tile-scope only, Gemini 3 release 2025-11-18, prose vs machine artefact provenance, upstream agent self-report unreliable, repo contamination Antigravity to Claude Code, f9e53e0a a6c9a986 correction commits, b7920dda 34d6d39e gemini-2.0-flash-exp transient config, cfc10c13 detect_brief-text.json creation 2026-01-09, verified_run_01_v4_6 gemini-3-flash-preview 70 features, implementation_plan.md self-inconsistent proposer verifier labels, Session 101 2026-06-05, d2e42a0d Antigravity artifact, 7f9838be Antigravity artifact.
+
+### Related observations and artefacts
+
+- **Obs 337** (E57 billing reconciliation; intent ≠ request ≠ service; `model_version` is the only provider-authored field, line 17221): this Obs extends Obs 337 to the prose-vs-machine layer and to authoring-agent self-misidentification. Obs 337's lesson is that machine artefacts beat human intent docs; this Obs adds that upstream agent prose is also unreliable.
+- **Obs 329** (E55: CLI override faithful-to-config yet wrong-about-execution, Session 93, line 16819): the nearest structural precedent for "what was recorded ≠ what ran". Different mechanism (config propagation vs agent self-reporting) but same pattern: a systematic gap between documentation and execution that only artefact audit reveals.
+- **Obs 338** (genuine-Pro re-run resolves E57, Session 98, line 17281): same Session-97/98 provenance arc; shares the "trust billing and `model_version` over prose" lesson.
+- **Obs 339** (sole-leader was an artefact, Session 98, line 17328): companion to Obs 338; same provenance investigation produced the E57 resolution that this Obs extends.
+- **E57** (`docs/methodology/preregistration/protocol-errata.md` line 1774): the provenance-hierarchy errata entry. The E57 doctrine ("trust machine config/meta over prose") is the direct antecedent of the rule extended here to cover upstream-agent self-identification.
+- **Artefacts**: correction commits `f9e53e0a` (6 active docs: banners + changelogs + Obs-45 erratum/strikethrough) and `a6c9a986` (3 archived 60-tile validation erratum banners); `results/retest/retest-production-summary.md` § Changelog (2026-06-05 entry — full evidence trail); `reports/phase3-decomposition-investigation-2026-06-05.md` Anomaly 1 → RESOLVED note; `planning/paper-writeup-continuity.md` anomaly marked resolved (line 27); Antigravity origin logs: `archive/preliminary-work/antigravity_logs/artifacts/d2e42a0d-361f-4bae-8375-90d9545457e8/task.md` (lines 22–27, Gemini 2 vs 3 mislabel), `archive/preliminary-work/antigravity_logs/artifacts/d2e42a0d-361f-4bae-8375-90d9545457e8/implementation_plan.md` (lines 7–8, self-inconsistent model labels), `archive/preliminary-work/antigravity_logs/artifacts/7f9838be-f730-4489-bbb3-d7be6b259603/task.md` (line 5, `gemini-2.0-flash-exp` transient config); `prompts/configs/detect_brief-text.json` (gemini-3-flash since 2026-01-09, commit `cfc10c13`); `archive/preliminary-work/results/v4.6_opt/verified_run_01_v4_6.geojson` and `verified_run_01_v4_6_gemini3.geojson` (both 70 features, both `gemini-3-flash-preview`); `config.py` commits `b7920dda` (gemini-2.0-flash-exp, 2025-12-10) / `34d6d39e` (reverted same day).
