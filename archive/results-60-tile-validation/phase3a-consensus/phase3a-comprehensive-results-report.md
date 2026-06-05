@@ -1,5 +1,7 @@
 # Phase 3a Comprehensive Results Report: Consensus Voting Across Temperature, Thinking Level, and Spatial Precision
 
+> **⚠ ERRATUM (2026-06-05) — model mislabel.** This archived 60-tile validation report states the model was "Gemini 2.0 Flash (`gemini-2.0-flash-001`)". That is a **confabulation**: the actual detection outputs (`archive/outputs-pre-retest-60-tile/`) are tagged `-3-flash-` and record `gemini-3-flash-preview` internally; **zero** project artefacts record any 2.x model, and the project post-dates Gemini 3's 2025-11-18 release. **Every model reference here should read `gemini-3-flash`.** Superseded by the 340-tile production retest; preserved per archive-never-delete. Evidence: `results/retest/retest-production-summary.md` § Changelog.
+
 **Author**: Shawn Ross
 **Date**: 2026-02-16
 **Status**: Reference report for paper drafting

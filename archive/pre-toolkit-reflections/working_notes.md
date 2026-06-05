@@ -1,5 +1,7 @@
 # Research Notes: LLM-based Map Extraction
 
+> **⚠ ERRATUM (2026-06-05).** This is a pre-toolkit snapshot of the working notes. Its v4.6 "Gemini 2.0 Flash vs Gemini 3 Flash" comparison (Observation 45) is a **model mislabel** — both source runs are `gemini-3-flash-preview`; the project never ran any 2.x model (it post-dates Gemini 3's 2025-11-18 release). The "2.0 Flash is SOTA" conclusion is void. See the corrected, active copy at `docs/notes/working-notes.md` (Obs 45 erratum) and `results/retest/retest-production-summary.md` § Changelog.
+
 ---
 
 ## Part 1: Map Reading and Symbol Extraction Observations
