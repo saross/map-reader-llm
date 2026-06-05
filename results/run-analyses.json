@@ -49,7 +49,7 @@
     {
       "analysis_id": "pv-diag-384-consensus-calibration",
       "type": "sweep",
-      "_note": "Consensus vote-threshold x N calibration sweep for pv-diag-384 (GAP-7, Session 102). One citable condition per config at best-F1@20m (29 conditions); the full t1..N sweep (249 evals) is this analysis. Non-headline thresholds remain unclaimed (deferred to the _ignored_evals close-out, consistent with Batch C). Buffer-harmonised from the phase3a-{text,image}-matrix [20,30,40,50] to the 14-buffer standard. NOT yet human-verified as a finding (manually_verified_at=null) \u2014 registers the calibration material; the diversity-dividend statistical test vs single-pass is future work.",
+      "_note": "Consensus vote-threshold x N calibration sweep for pv-diag-384 (GAP-7, Session 102). One citable condition per config at best-F1@20m (29 conditions); the full t1..N sweep (249 evals) is this analysis. Non-headline thresholds remain unclaimed (deferred to the _ignored_evals close-out, consistent with Batch C). Buffer-harmonised from the phase3a-{text,image}-matrix [20,30,40,50] to the 14-buffer standard. NOT yet human-verified as a finding (manually_verified_at=null) \u2014 registers the calibration material; the diversity-dividend statistical test vs single-pass is future work. [Session 103, 2026-06-06: the diversity-dividend statistical test is now authored as the sibling FINDING analysis diversity-dividend-384 -- the round-robin tile-swap permutation + BH-FDR + tiering against the single-pass baseline. This calibration sweep remains the registered underlying material.]",
       "conditions_compared": [
         "pv-diag-384::flash-high-image-n5-image-t0.0-consensus-1of3",
         "pv-diag-384::flash-high-image-n5-image-t0.3-consensus-9of10",
@@ -91,6 +91,55 @@
       "outcome": "Consensus vote-threshold x N-aggregation calibration over 29 configs (4 proposer pools x temperature x consensus/consensus-n5/consensus-n10), re-scored at the 14-buffer+MCC standard (Era-2 487-tile, 384px). Each config's headline operating point is its best-F1@20m vote threshold; best-F1@20m ranges 0.488-0.814. Top operating points: flash-high-text-n5-text-t0.7-consensus-26of30 (F1=0.814); flash-high-text-n5-text-t0.7-consensus-n10-9of10 (F1=0.797); flash-high-text-n5-text-t0.3-consensus-10of10 (F1=0.789). This registers the consensus calibration material (the diversity-dividend curve); the full statistical comparison against the single-pass baseline (n1-baseline-matrix-384) is cross-referenced, not asserted here.",
       "paper_section": "Results",
       "output_path": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep",
+      "working_notes_obs": [],
+      "manually_verified_at": null
+    },
+    {
+      "analysis_id": "diversity-dividend-384",
+      "type": "leaderboard",
+      "_note": "Diversity-dividend test (H3): a combined, statistically tiered leaderboard placing 4 consensus pool-champions (best-F1@20m per proposer pool at T=0.7, the production carry-forward temperature) against the 18 single-pass cells of n1-baseline-matrix-384. Run with the project-canonical n1 method (scripts/consensus_vs_baseline_tiering.py reuses n1_baseline_leaderboard_tiering verbatim): round-robin tile-swap micro-F1 permutation (10k, seed 42, two-sided) + BH-FDR q=0.05 + greedy-clique tiering at the 20m headline buffer. Consensus cells contribute integer per-tile TP/FP/FN from their single aggregated set; single-pass cells keep the pass-averaged per-tile counts. The companion tiering-with-deployable run adds the honest a-priori N=5 operating points (text 4-of-5, image 3-of-5; the 55maps deployment thresholds). Era-2 487-tile, 384px, gemini-3-flash proposer. This is the FINDING that promotes the registered pv-diag-384-consensus-calibration sweep; the best-F1@20m champion operating point is in-sample (test-set-selected) per E56 and the deployable column is reported beside it.",
+      "conditions_compared": [
+        "pv-diag-384::flash-high-text-n5-text-t0.7-consensus-26of30",
+        "pv-diag-384::flash-high-image-n5-image-t0.7-consensus-7of10",
+        "pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-consensus-29of30",
+        "pv-diag-384::image-n5-image-t0.7-consensus-8of10",
+        "pv-diag-384::baseline-flash-image-high-t-0-7",
+        "pv-diag-384::baseline-flash-image-minimal-t-0-0",
+        "pv-diag-384::baseline-flash-image-minimal-t-0-7",
+        "pv-diag-384::baseline-flash-text-high-t-0-7",
+        "pv-diag-384::baseline-flash-text-minimal-t-0-0-pv-baseline",
+        "pv-diag-384::baseline-flash-text-minimal-t-0-7",
+        "pv-diag-384::baseline-pro-image-high-t-0-7",
+        "pv-diag-384::baseline-pro-image-medium-t-0-0",
+        "pv-diag-384::baseline-pro-text-high-t-0-7",
+        "pv-diag-384::baseline-pro-text-medium-t-0-0",
+        "n1-outstanding-384::baseline-flash-image-minimal-t-0-0-487-tiles",
+        "n1-outstanding-384::baseline-flash-image-minimal-t-0-3",
+        "n1-outstanding-384::baseline-flash-text-minimal-t-0-3",
+        "n1-pro-rerun-384::baseline-pro-image-high-t-0-0",
+        "n1-pro-rerun-384::baseline-pro-image-medium-t-0-7",
+        "n1-pro-rerun-384::baseline-pro-text-high-t-0-0",
+        "n1-pro-rerun-384::baseline-pro-text-medium-t-0-7",
+        "retest-h11-single-pass-384-t0::baseline-flash-text-minimal-t-0-0"
+      ],
+      "hypothesis_refs": [
+        "H3"
+      ],
+      "preregistered": "exploratory",
+      "deviations": [
+        "E56 (consensus best-F1@20m operating point is in-sample/test-set-selected; the deployable N=5 column is the a-priori operating point)",
+        "E49/E51 (T=0.7 production carry-forward temperature; HIGH thinking)",
+        "E15 (preregistered Phase-1 baseline consensus is K=5, >=3/5; the 55maps deployment thresholds text 4-of-5 / image 3-of-5 are the a-priori N=5 points)"
+      ],
+      "predicted_outcome": "H3: consensus voting over K proposer passes improves localisation F1 over single-pass; the diversity dividend predicts HIGH-thinking (more diverse) pools recover or exceed minimal-thinking under consensus, and that cheap Flash consensus can approach expensive single-pass Pro.",
+      "tie_set": [
+        "pv-diag-384::flash-high-text-n5-text-t0.7-consensus-26of30",
+        "n1-pro-rerun-384::baseline-pro-text-high-t-0-0",
+        "pv-diag-384::baseline-pro-text-medium-t-0-0"
+      ],
+      "outcome": "Both named claims of the diversity-dividend test are confirmed at the preregistered 20m buffer (round-robin tile-swap permutation, 10k perms, seed 42, two-sided; BH-FDR q=0.05; greedy-clique tiering over a 22-cell board = 4 consensus champions + 18 single-pass cells; 197/231 pairs significant -> 7 tiers). (1) DIVERSITY DIVIDEND -- HIGH-thinking consensus significantly exceeds minimal-thinking consensus at matched modality: text +0.153 F1 (BH-p<0.001; MCC +0.239) and image +0.070 F1 (BH-p<0.001; MCC +0.272). The HIGH-thinking pools take the larger consensus gain -- more varied proposals let a high vote threshold prune their false positives. (2) CONSENSUS vs SINGLE-PASS -- every consensus champion significantly beats its matched within-pool single-pass baseline (+0.13 to +0.43 F1, all BH-p<0.001), and this holds at the honest a-priori N=5 deployable operating point too (+0.09 to +0.33 F1; text 4-of-5, image 3-of-5). (3) CROSS-ARCHITECTURE HEADLINE -- Tier 1 (the tie_set) is a THREE-member statistical tie: the Flash HIGH-text consensus champion (F1 0.814) and the two genuine-Gemini-3-Pro single-pass text leaders (pro-text-high-t-0-0 0.804, pro-text-medium-t-0-0 0.792); the permutation cannot separate Flash-consensus from the Pro leader (p=0.616, BH-p=0.66). Cheap Flash consensus reaches the expensive Pro single-pass tier on localisation F1. CAVEATS (honest reporting): (a) the Tier-1 parity uses the IN-SAMPLE best-F1@20m vote threshold (26-of-30), selected on the 487-tile test set (E56); at the honest a-priori N=5 deployable point HIGH-thinking Flash consensus reaches TIER 2 (text 4-of-5 0.720, image 3-of-5 0.727), tying genuine Pro text at T=0.7 rather than the absolute Pro leader. (b) F1-parity is NOT MCC-parity: the Pro text leaders have higher tile-level discrimination (MCC 0.790, 11 tile FPs) than the Flash consensus champion (MCC 0.620, 41 tile FPs) -- the metric-dependent-winner pattern of the n1 board persists. Artefacts: results/diversity-dividend-384/{tiering-champions,tiering-with-deployable}/tiering_20m.{json,md}; script scripts/consensus_vs_baseline_tiering.py; cell spec planning/diversity-dividend-cells-2026-06-06.json.",
+      "paper_section": "Results",
+      "output_path": "results/diversity-dividend-384",
       "working_notes_obs": [],
       "manually_verified_at": null
     }
