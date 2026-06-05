@@ -1,16 +1,16 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-06-05 (Session 100 — decomposed **Batch A residual** + **Batch B** (5× 55maps) + **verifier-t-pilot** → **18 of 28 runs**, manifest **28 runs / 159 conditions / 192 passes**; enhanced the verifier-pass extractor (sidecar metas + per-item model). Ran two read-only explorations that **resolved the phase3a↔pv-diag-384 puzzle (name collision)** and confirmed **phase3a/3a-high/3a-replication/3c → sub-step 3c analyses** (no MCC conditions exist); see `reports/phase3-decomposition-investigation-2026-06-05.md`. **Session 101 plan baked in at the top** (re-score phase2a-e + complete pv-diag-384 GAP-7 are the remaining substantive tasks; two model/thinking anomalies to resolve). $0 API. Finding from S98 unchanged.)
+**Last updated**: 2026-06-05 (Session 101 — **resolved both Session-101-plan anomalies**. Era-1 model-of-record = **`gemini-3-flash`** (the `gemini-2.0-flash` prose was a repo-wide confabulation originating in early Antigravity Gemini-3 self-misidentification — corrected across active + archived docs; commits `f9e53e0a` / `a6c9a986`; Obs 342/343; provenance memory). phase3c thinking-level = **HIGH** (commit `d4930b0f`). **Paper consequence: the cross-era *model* caveat is REMOVED — cross-era differences are tile-scope only (strictly nested).** **Tasks 3 & 4 (re-score phase2a-e; pv-diag-384 GAP-7) NOT started — deferred to Session 102**, now unblocked. $0 API / $0 compute. S98 finding unchanged. Prior (Session 100): decomposed Batch A residual + B + verifier-t-pilot → 18 of 28 runs; manifest 28 runs / 159 conditions / 192 passes.)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
 
 ---
 
-## 🎯 NEXT SESSION (101) — PLANNED WORK [set up 2026-06-05 end of Session 100]
+## 🎯 NEXT SESSION (102) — PLANNED WORK [Session 101 resolved both anomalies 2026-06-05]
 
-Four tasks were queued. **Two read-only explorations are already DONE** (run at the close of Session 100; full findings in `reports/phase3-decomposition-investigation-2026-06-05.md` — agent-produced, file-path-anchored, verify at source). **Two substantive tasks remain** for a live, supervised session.
+**Session 101 (2026-06-05) cleared the two blocking anomalies** — model-of-record → **`gemini-3-flash`**; phase3c thinking-level → **HIGH** (both ✅ RESOLVED, see § Anomalies below; full session record in `docs/notes/reflections/session-log.md` Session 101). **The two substantive tasks (3 & 4) remain and are now UNBLOCKED** — record `gemini-3-flash` as model-of-record when authoring the Era-1 runs. The Session-100-close read-only explorations are also done (name-collision + 3c-analyses findings in `reports/phase3-decomposition-investigation-2026-06-05.md` — file-path-anchored, verify at source).
 
 ### ✅ DONE (Session 100 close) — explorations resolved
 
@@ -19,7 +19,7 @@ Four tasks were queued. **Two read-only explorations are already DONE** (run at 
 
 ### ⏳ TODO (next live session) — substantive work (tasks 3 & 4 of the four)
 
-1. **(Task 3) Re-score phase2a-e at 14-buffer + MCC, then author the 5 runs.** This is a **bespoke compute task** (run on sapphire), NOT a Batch-C single-output rescore: the canonical phase2 metric is a replicate-mean over K passes computed by `scripts/analyse_phase2_results.py`, which is **hard-coded to a single 20 m buffer and computes NO MCC**. Options: (a) extend/rework that script to emit standard 14-buf+MCC per-condition evals, or (b) build a per-pass-score-and-average pipeline using `scripts/evaluate_detections.py` × K passes. Then author 1 condition per pool (Era-1 GAP-9 passes; phase2b needs `scope_override` for its 5 cross-scope 487 evals). **GET API/COMPUTE APPROVAL per the project gate before any heavy run** (it's CPU/$0 but still compute → sapphire). **Resolve the model anomaly first** (see below) — it affects what model these Era-1 runs record.
+1. **(Task 3) Re-score phase2a-e at 14-buffer + MCC, then author the 5 runs.** This is a **bespoke compute task** (run on sapphire), NOT a Batch-C single-output rescore: the canonical phase2 metric is a replicate-mean over K passes computed by `scripts/analyse_phase2_results.py`, which is **hard-coded to a single 20 m buffer and computes NO MCC**. Options: (a) extend/rework that script to emit standard 14-buf+MCC per-condition evals, or (b) build a per-pass-score-and-average pipeline using `scripts/evaluate_detections.py` × K passes. Then author 1 condition per pool (Era-1 GAP-9 passes; phase2b needs `scope_override` for its 5 cross-scope 487 evals). **GET API/COMPUTE APPROVAL per the project gate before any heavy run** (it's CPU/$0 but still compute → sapphire). **Model anomaly RESOLVED (Session 101) → record `gemini-3-flash`** for these Era-1 runs (see § Anomalies below; the "what model" question is settled).
 2. **(Task 4) Complete pv-diag-384's GAP-7 decomposition.** It currently has 10 single-pass N1-baseline conditions with empty pools; completing it means adding consensus + verified conditions and the ~88 verifier metas across ~15 pools + `verified/`. **The `results/phase3a-text-matrix/` + `phase3a-image-matrix/` evals (Era-2/487, WITH MCC) are pv-diag-384's consensus-sweep material** — wire them in here (as a 3c analysis and/or operating-point conditions), now that we know they belong to pv-diag-384, not retest-phase3a.
 
 ### ⚠ Anomalies to resolve before recording model-of-record (from the explorations)
