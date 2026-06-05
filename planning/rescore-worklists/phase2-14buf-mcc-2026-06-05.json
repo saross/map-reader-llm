@@ -1,0 +1,329 @@
+{
+  "_comment": "Phase 2a-e Era-1 retest re-score at the 14 uniform buffers + MCC (BUFFERS_STANDARD, BCa 10k/seed 42). Generated 2026-06-05 (Session 102) by walking outputs/retest/phase2{a..e}/ leaf conditions (dirs with run_*). dir-mode replicate-mean over K runs (phase2a/b K=3, phase2c/d/e K=1). Scope: Era-1 340 tiles (full_evaluation_bounds), curator GT, 512px. Model of record: gemini-3-flash. Run via scripts/rescore_conditions.py --execute on zbook. Headline operating point: 20 m within the sweep.",
+  "entries": [
+    {
+      "label": "p2a-brief-text",
+      "detections_dir": "outputs/retest/phase2a/brief-text",
+      "glob": "*/detections_*.geojson",
+      "replicates": 3,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2a-brief-text"
+    },
+    {
+      "label": "p2a-brief-text-image",
+      "detections_dir": "outputs/retest/phase2a/brief-text-image",
+      "glob": "*/detections_*.geojson",
+      "replicates": 3,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2a-brief-text-image"
+    },
+    {
+      "label": "p2a-image-only",
+      "detections_dir": "outputs/retest/phase2a/image-only",
+      "glob": "*/detections_*.geojson",
+      "replicates": 3,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2a-image-only"
+    },
+    {
+      "label": "p2a-verbose-text",
+      "detections_dir": "outputs/retest/phase2a/verbose-text",
+      "glob": "*/detections_*.geojson",
+      "replicates": 3,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2a-verbose-text"
+    },
+    {
+      "label": "p2a-verbose-text-image",
+      "detections_dir": "outputs/retest/phase2a/verbose-text-image",
+      "glob": "*/detections_*.geojson",
+      "replicates": 3,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2a-verbose-text-image"
+    },
+    {
+      "label": "p2b-image-t-0-0",
+      "detections_dir": "outputs/retest/phase2b/track1-image/T0.0",
+      "glob": "*/detections_*.geojson",
+      "replicates": 3,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2b-image-t-0-0"
+    },
+    {
+      "label": "p2b-image-t-0-3",
+      "detections_dir": "outputs/retest/phase2b/track1-image/T0.3",
+      "glob": "*/detections_*.geojson",
+      "replicates": 3,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2b-image-t-0-3"
+    },
+    {
+      "label": "p2b-image-t-0-7",
+      "detections_dir": "outputs/retest/phase2b/track1-image/T0.7",
+      "glob": "*/detections_*.geojson",
+      "replicates": 3,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2b-image-t-0-7"
+    },
+    {
+      "label": "p2b-image-t-1-0",
+      "detections_dir": "outputs/retest/phase2b/track1-image/T1.0",
+      "glob": "*/detections_*.geojson",
+      "replicates": 3,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2b-image-t-1-0"
+    },
+    {
+      "label": "p2b-image-t-1-3",
+      "detections_dir": "outputs/retest/phase2b/track1-image/T1.3",
+      "glob": "*/detections_*.geojson",
+      "replicates": 3,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2b-image-t-1-3"
+    },
+    {
+      "label": "p2b-text-t-0-0",
+      "detections_dir": "outputs/retest/phase2b/track2-text/T0.0",
+      "glob": "*/detections_*.geojson",
+      "replicates": 3,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2b-text-t-0-0"
+    },
+    {
+      "label": "p2b-text-t-0-3",
+      "detections_dir": "outputs/retest/phase2b/track2-text/T0.3",
+      "glob": "*/detections_*.geojson",
+      "replicates": 3,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2b-text-t-0-3"
+    },
+    {
+      "label": "p2b-text-t-0-7",
+      "detections_dir": "outputs/retest/phase2b/track2-text/T0.7",
+      "glob": "*/detections_*.geojson",
+      "replicates": 3,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2b-text-t-0-7"
+    },
+    {
+      "label": "p2b-text-t-1-0",
+      "detections_dir": "outputs/retest/phase2b/track2-text/T1.0",
+      "glob": "*/detections_*.geojson",
+      "replicates": 3,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2b-text-t-1-0"
+    },
+    {
+      "label": "p2b-text-t-1-3",
+      "detections_dir": "outputs/retest/phase2b/track2-text/T1.3",
+      "glob": "*/detections_*.geojson",
+      "replicates": 3,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2b-text-t-1-3"
+    },
+    {
+      "label": "p2c-image-canonical",
+      "detections_dir": "outputs/retest/phase2c/track1-image/canonical",
+      "glob": "*/detections_*.geojson",
+      "replicates": 1,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2c-image-canonical"
+    },
+    {
+      "label": "p2c-image-plus-hp",
+      "detections_dir": "outputs/retest/phase2c/track1-image/plus-hp",
+      "glob": "*/detections_*.geojson",
+      "replicates": 1,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2c-image-plus-hp"
+    },
+    {
+      "label": "p2c-image-pure-positive-canon",
+      "detections_dir": "outputs/retest/phase2c/track1-image/pure-positive-canon",
+      "glob": "*/detections_*.geojson",
+      "replicates": 1,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2c-image-pure-positive-canon"
+    },
+    {
+      "label": "p2c-image-scale-4",
+      "detections_dir": "outputs/retest/phase2c/track1-image/scale-4",
+      "glob": "*/detections_*.geojson",
+      "replicates": 1,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2c-image-scale-4"
+    },
+    {
+      "label": "p2c-image-scale-8",
+      "detections_dir": "outputs/retest/phase2c/track1-image/scale-8",
+      "glob": "*/detections_*.geojson",
+      "replicates": 1,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2c-image-scale-8"
+    },
+    {
+      "label": "p2c-image-exploratory-pure-positive-2hp",
+      "detections_dir": "outputs/retest/phase2c/track1-image-exploratory/pure-positive-2hp",
+      "glob": "*/detections_*.geojson",
+      "replicates": 1,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2c-image-exploratory-pure-positive-2hp"
+    },
+    {
+      "label": "p2c-image-exploratory-pure-positive-4hp",
+      "detections_dir": "outputs/retest/phase2c/track1-image-exploratory/pure-positive-4hp",
+      "glob": "*/detections_*.geojson",
+      "replicates": 1,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2c-image-exploratory-pure-positive-4hp"
+    },
+    {
+      "label": "p2c-image-exploratory-pure-positive-canon",
+      "detections_dir": "outputs/retest/phase2c/track1-image-exploratory/pure-positive-canon",
+      "glob": "*/detections_*.geojson",
+      "replicates": 1,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2c-image-exploratory-pure-positive-canon"
+    },
+    {
+      "label": "p2c-text-canonical",
+      "detections_dir": "outputs/retest/phase2c/track2-text/canonical",
+      "glob": "*/detections_*.geojson",
+      "replicates": 1,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2c-text-canonical"
+    },
+    {
+      "label": "p2c-text-plus-hp",
+      "detections_dir": "outputs/retest/phase2c/track2-text/plus-hp",
+      "glob": "*/detections_*.geojson",
+      "replicates": 1,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2c-text-plus-hp"
+    },
+    {
+      "label": "p2c-text-pure-positive-canon",
+      "detections_dir": "outputs/retest/phase2c/track2-text/pure-positive-canon",
+      "glob": "*/detections_*.geojson",
+      "replicates": 1,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2c-text-pure-positive-canon"
+    },
+    {
+      "label": "p2c-text-scale-4",
+      "detections_dir": "outputs/retest/phase2c/track2-text/scale-4",
+      "glob": "*/detections_*.geojson",
+      "replicates": 1,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2c-text-scale-4"
+    },
+    {
+      "label": "p2c-text-scale-8",
+      "detections_dir": "outputs/retest/phase2c/track2-text/scale-8",
+      "glob": "*/detections_*.geojson",
+      "replicates": 1,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2c-text-scale-8"
+    },
+    {
+      "label": "p2d-image-terse",
+      "detections_dir": "outputs/retest/phase2d/track1-image/terse",
+      "glob": "*/detections_*.geojson",
+      "replicates": 1,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2d-image-terse"
+    },
+    {
+      "label": "p2d-image-verbose",
+      "detections_dir": "outputs/retest/phase2d/track1-image/verbose",
+      "glob": "*/detections_*.geojson",
+      "replicates": 1,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2d-image-verbose"
+    },
+    {
+      "label": "p2d-text-terse",
+      "detections_dir": "outputs/retest/phase2d/track2-text/terse",
+      "glob": "*/detections_*.geojson",
+      "replicates": 1,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2d-text-terse"
+    },
+    {
+      "label": "p2d-text-verbose",
+      "detections_dir": "outputs/retest/phase2d/track2-text/verbose",
+      "glob": "*/detections_*.geojson",
+      "replicates": 1,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2d-text-verbose"
+    },
+    {
+      "label": "p2e-canonical-first",
+      "detections_dir": "outputs/retest/phase2e/canonical-first",
+      "glob": "*/detections_*.geojson",
+      "replicates": 1,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2e-canonical-first"
+    },
+    {
+      "label": "p2e-canonical-last",
+      "detections_dir": "outputs/retest/phase2e/canonical-last",
+      "glob": "*/detections_*.geojson",
+      "replicates": 1,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2e-canonical-last"
+    },
+    {
+      "label": "p2e-config-default",
+      "detections_dir": "outputs/retest/phase2e/config-default",
+      "glob": "*/detections_*.geojson",
+      "replicates": 1,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2e-config-default"
+    },
+    {
+      "label": "p2e-random",
+      "detections_dir": "outputs/retest/phase2e/random",
+      "glob": "*/detections_*.geojson",
+      "replicates": 1,
+      "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/paper-eval/phase2/512px-14buf-mcc/p2e-random"
+    }
+  ]
+}
