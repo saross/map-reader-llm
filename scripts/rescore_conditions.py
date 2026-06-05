@@ -9,10 +9,22 @@ the "prefer re-scoring to standardise" half of the methodology audit (memory
 ``2026-05-31-e45dad98a906``, Obs 330). It is **evaluation-only — NO detection API
 calls**.
 
-The worklist is a JSON file ``{"entries": [{label, detections, bounds,
+The worklist is a JSON file ``{"entries": [{label, <input>, bounds,
 ground_truth, output_dir}, ...]}`` — populated from the per-run decomposition
 (the conditions), NOT from every materialised geojson (most of which are sweep /
 pass intermediates, not conditions).
+
+Each entry selects its detections with **exactly one** of two input grains,
+mirroring ``evaluate_detections.py``'s own mutually-exclusive input group:
+
+* ``detections`` — a single geojson path, *or a list of paths* forwarded to
+  ``--detections`` (multiple files are treated as independent replicate runs of
+  one condition, producing a replicate-mean summary).
+* ``detections_dir`` (+ optional ``glob``, default ``*/detections_*.geojson``)
+  — a condition directory whose ``run_*`` subdirs are each a replicate. This is
+  the grain the Era-1 phase2 retests need (one condition = K passes under
+  ``<condition>/run_K/``); an optional ``replicates`` hint (default 1) keeps the
+  dry-run cost estimate honest without a filesystem walk.
 
 Compute note (heavy-compute policy): run on sapphire/zbook, never amd-tower. The
 55-map conditions (8 541 tiles) cost ~7 min and ~2 GB RAM EACH — RAM caps their
@@ -78,23 +90,81 @@ def _regime(bounds: str) -> str:
 
 
 def _entry_cost_s(bounds: str, n_buffers: int) -> float:
-    """Estimated wall-clock seconds for one condition at ``n_buffers``."""
+    """Estimated wall-clock seconds for one *single-replicate* condition."""
     c = COST[_regime(bounds)]
     return c["fixed_s"] + c["per_buffer_s"] * n_buffers
+
+
+def _replicate_count(entry: dict) -> int:
+    """Replicate (run) count for cost estimation.
+
+    ``evaluate_detections.py`` scores each replicate before averaging, so a
+    K-replicate condition costs ~K× a single file. The true count for a
+    ``detections_dir`` entry needs a directory walk; the optional ``replicates``
+    hint (default 1) keeps the dry-run estimate honest without filesystem I/O.
+
+    Args:
+        entry: A worklist entry dict.
+
+    Returns:
+        The replicate count: the explicit list length for a multi-file
+        ``detections`` entry, the ``replicates`` hint for a ``detections_dir``
+        entry, else 1.
+    """
+    if "detections_dir" in entry:
+        return max(1, int(entry.get("replicates", 1)))
+    det = entry.get("detections")
+    return len(det) if isinstance(det, list) else 1
+
+
+def _input_args(entry: dict) -> list[str]:
+    """Resolve the mutually-exclusive input selector for one worklist entry.
+
+    Returns the ``--detections`` / ``--detections-dir`` (+ ``--glob``) argv
+    fragment for ``evaluate_detections.py``. Exactly one of ``detections`` /
+    ``detections_dir`` must be present; raising here (rather than letting the
+    subprocess fail) gives a worklist-level error naming the offending entry.
+
+    Args:
+        entry: A worklist entry dict.
+
+    Returns:
+        The input-selector portion of the evaluate_detections.py command.
+
+    Raises:
+        ValueError: If neither or both input keys are present.
+    """
+    has_files = "detections" in entry
+    has_dir = "detections_dir" in entry
+    if has_files == has_dir:
+        which = "both" if has_files else "neither"
+        raise ValueError(
+            f"worklist entry {entry.get('label', '?')!r} must set exactly one of "
+            f"'detections' or 'detections_dir' (got {which})"
+        )
+    if has_dir:
+        selector = ["--detections-dir", str(entry["detections_dir"])]
+        glob = entry.get("glob")
+        if glob:
+            selector += ["--glob", str(glob)]
+        return selector
+    det = entry["detections"]
+    paths = det if isinstance(det, list) else [det]
+    return ["--detections", *(str(p) for p in paths)]
 
 
 def _eval_command(entry: dict) -> list[str]:
     """Build the evaluate_detections.py command for one worklist entry."""
     return [
         sys.executable, str(REPO_ROOT / "scripts" / "evaluate_detections.py"),
-        "--detections", entry["detections"],
-        "--bounds", entry["bounds"],
-        "--ground-truth", entry["ground_truth"],
+        *_input_args(entry),
+        "--bounds", str(entry["bounds"]),
+        "--ground-truth", str(entry["ground_truth"]),
         "--buffers", *[str(b) for b in BUFFERS_STANDARD],
         "--bootstrap", str(BOOTSTRAP_ITERS),
         "--seed", str(BOOTSTRAP_SEED),
         "--mcc",
-        "--output-dir", entry["output_dir"],
+        "--output-dir", str(entry["output_dir"]),
     ]
 
 
@@ -108,7 +178,8 @@ def estimate(entries: list[dict], workers: int, ram_gb: float = 16.0) -> dict:
     n_buf = len(BUFFERS_STANDARD)
     by_regime: dict[str, list[float]] = {"4map": [], "55map": []}
     for e in entries:
-        by_regime[_regime(e["bounds"])].append(_entry_cost_s(e["bounds"], n_buf))
+        cost = _entry_cost_s(e["bounds"], n_buf) * _replicate_count(e)
+        by_regime[_regime(e["bounds"])].append(cost)
     serial_s = sum(sum(v) for v in by_regime.values())
     workers_55 = min(workers, max(1, int(ram_gb // COST["55map"]["ram_gb"])))
     par_4 = sum(by_regime["4map"]) / max(1, workers)
@@ -129,14 +200,19 @@ def run_entry(entry: dict) -> tuple[str, int]:
     env = {**os.environ, **THREAD_ENV}
     proc = subprocess.run(_eval_command(entry), cwd=REPO_ROOT,
                           capture_output=True, text=True, env=env)
-    return entry.get("label", entry["detections"]), proc.returncode
+    fallback = entry.get("detections") or entry.get("detections_dir") or "?"
+    label = entry.get("label") or (
+        str(fallback[0]) if isinstance(fallback, list) else str(fallback)
+    )
+    return label, proc.returncode
 
 
 def main(argv: list[str] | None = None) -> int:
     """Entry point. Dry-run by default (prints the plan + estimate); --execute to run."""
     parser = argparse.ArgumentParser(description="Re-score conditions at 14 uniform buffers (3b).")
     parser.add_argument("--worklist", type=Path, required=True,
-                        help="JSON: {entries:[{label,detections,bounds,ground_truth,output_dir}]}")
+                        help="JSON: {entries:[{label, detections|detections_dir, "
+                             "bounds, ground_truth, output_dir}]} (see module docstring)")
     parser.add_argument("--workers", type=int, default=8, help="Concurrent conditions (default 8).")
     parser.add_argument("--ram-gb", type=float, default=16.0,
                         help="Available RAM (GB) — caps 55-map concurrency (~2 GB each).")
