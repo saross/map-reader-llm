@@ -120,7 +120,10 @@ DEFAULT_OUTPUT = BASE_DIR / "results" / "diversity-dividend-384" / "tiering"
 
 # The genuine-Pro single-pass leader (Tier 1 of the n1 board) -- the
 # cross-architecture comparator for the headline "Flash consensus vs Pro
-# single-pass" contrast.
+# single-pass" contrast. NB this ref is hard-coded: an E-series board edit that
+# REPLACED the Pro leader would leave this contrast unresolved -- ``contrast()``
+# returns None and the row is filtered out (no crash), so re-point it here if
+# the n1 board's Tier-1 leader ever changes.
 PRO_LEADER_REF = "n1-pro-rerun-384::baseline-pro-text-high-t-0-0"
 
 
@@ -174,6 +177,12 @@ def consensus_per_tile(
         raise FileNotFoundError(f"Consensus geojson not found: {geojson_path}")
 
     gdf_det = gpd.read_file(full_path)
+    if len(gdf_det) == 0:
+        # A vote threshold higher than any tile's agreement empties the pool.
+        # The cell is not dropped (it is a legitimate F1=0 operating point), but
+        # the operator must be told rather than left to infer it from a 0.0 row.
+        print(f"  WARNING: consensus set {geojson_path} has zero detections "
+              f"-> enters the board as an F1=0 cell", flush=True)
     if gdf_det.crs is None:
         gdf_det = gdf_det.set_crs("EPSG:4326")
     gdf_det = gdf_det.to_crs(TARGET_CRS)
@@ -429,8 +438,10 @@ def main() -> int:
     """CLI entry point: load cells, round-robin, tier, write results."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--cells", type=Path, default=DEFAULT_CELLS)
-    parser.add_argument("--ground-truth", type=Path, default=DEFAULT_GT)
-    parser.add_argument("--bounds", type=Path, default=DEFAULT_BOUNDS)
+    # Default None so the cell spec stays authoritative for bounds + ground
+    # truth (an explicit CLI value overrides it); see resolution below.
+    parser.add_argument("--ground-truth", type=Path, default=None)
+    parser.add_argument("--bounds", type=Path, default=None)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument(
         "--kinds", type=str, default="champion",
@@ -443,9 +454,18 @@ def main() -> int:
     kinds = {k.strip() for k in args.kinds.split(",") if k.strip()}
     spec = json.loads(args.cells.read_text())
 
-    print("Loading references and bounds ...", flush=True)
-    gdf_ref = gpd.read_file(args.ground_truth).to_crs(TARGET_CRS)
-    gdf_bounds = gpd.read_file(args.bounds).to_crs(TARGET_CRS)
+    # Resolve bounds + ground truth: explicit CLI arg wins; else the spec's own
+    # declaration (so the analysis carries its evaluation scope with it); else
+    # the module defaults. Guards the audit's "spec bounds silently ignored" gap.
+    ground_truth = args.ground_truth or (
+        BASE_DIR / spec["ground_truth"] if "ground_truth" in spec else DEFAULT_GT)
+    bounds = args.bounds or (
+        BASE_DIR / spec["bounds"] if "bounds" in spec else DEFAULT_BOUNDS)
+
+    print(f"Loading references {ground_truth.name} and bounds {bounds.name} ...",
+          flush=True)
+    gdf_ref = gpd.read_file(ground_truth).to_crs(TARGET_CRS)
+    gdf_bounds = gpd.read_file(bounds).to_crs(TARGET_CRS)
     tile_order = list(gdf_bounds["tile_name"].unique())
     print(f"  {len(tile_order)} evaluation tiles", flush=True)
 
@@ -478,6 +498,13 @@ def main() -> int:
         significant[key] = r["significant"]
         pair_lookup[key] = r
 
+    # Rank by the cell's eval-reported F1@20m (the headline the leaderboard
+    # presents), while the permutation/tiering operate on observed_micro_f1 (the
+    # F1-of-the-per-tile-arrays). For consensus cells the two are identical; for
+    # single-pass cells they can differ slightly (micro-F1-of-the-pass-mean vs
+    # the eval's mean F1 -- the printed `gap` above). This is the same split the
+    # n1 board uses (it sorts by board_f1); the gaps here are <=0.0005, so the
+    # ranking and the tier-merge decisions agree.
     ordered = sorted(cells, key=lambda c: c["eval_f1"], reverse=True)
     ordered_refs = [c["ref"] for c in ordered]
     tiers = greedy_clique_tiers(ordered_refs, significant)
