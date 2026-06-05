@@ -1,9 +1,11 @@
 # Production Retest Summary (340-Tile Corpus)
 
+> **Last revised**: 2026-06-05 (model-of-record corrected `gemini-2.0-flash` → `gemini-3-flash`; the cross-era difference is tile scope, not model version). See [§ Changelog](#changelog) for revision history.
+
 **Generated**: 2026-03-21. **Level-up**: 2026-04-24 (Session 76).
 **Corpus**: 340 tiles (569 ground truth mounds, 4 map sheets; Era 1 scope — see `results/evaluation-scopes.md`).
 **Baseline**: Phase 3 holdout set (60 tiles) — see `results/phase3d-pilot-results.md`.
-**Model**: Gemini 2.0 Flash (`gemini-2.0-flash`). This pre-dates the Era 2 / 3 `gemini-3-flash` runs cited elsewhere in the paper; see §12 Caveats on cross-era model comparability.
+**Model**: Gemini 3 Flash (`gemini-3-flash`, resolved to `gemini-3-flash-preview`). **Same model family as the Era 2 / 3 runs** — the cross-era difference is **tile scope, not model version** (see §12 Caveat 3 and `results/evaluation-scopes.md`).
 **Bootstrap**: 1,000 iterations, tile-level resampling, seed 42.
 **Spatial matching**: 20 m tolerance (Hungarian one-to-one).
 
@@ -274,8 +276,8 @@ Partial results from the 60 bootstrapped text-track runs across 20 diversity pro
 
 1. **T = 0.0 (image) vs T = 0.3 (text) crossover**: the tracks have different optimal temperatures (working-notes §"Five design decisions that cross over", line 6095+). This is one of the paper's practitioner-relevant findings — temperature should not be set by a global rule; track-specific optima matter.
 2. **FDR correction deferred**: §11 reports 24 / 70 raw p < 0.05 comparisons. FDR-corrected contrasts are **not yet in this doc**; they appear in per-phase permutation analyses (e.g., `results/cross-hypothesis-library/permutation-t4/fdr_summary.json` for the Phase 2c library-composition axis). Paper text should cite FDR-corrected results from those artefacts rather than the raw p-values here.
-3. **Model version**: this retest used `gemini-2.0-flash`. The later paper-headline runs (Era 2 / Era 3) use `gemini-3-flash`. Cross-era F1 comparisons should acknowledge the model-version difference; within-era (this doc) comparisons are safe.
-4. **Pending sections** (§13): Phase 3a-HIGH image-track consensus, Phase 3c image-track diversity, Phase 3c consensus sweep over diversity pools. Not blocking for paper if the paper's Phase 3a discussion rests on the Era 2 `gemini-3-flash` consensus sweeps (`results/phase3a-image-matrix/consensus-analysis-summary.md`, `results/phase3a-text-matrix/secondary_effects.md`) rather than this Era 1 `gemini-2.0-flash` retest.
+3. **Model version (corrected 2026-06-05)**: this retest used **`gemini-3-flash`** (resolved to `gemini-3-flash-preview`), the **same model family** as the Era 2 / Era 3 runs — confirmed by every run meta (`configuration.model` + `cost_estimate.pricing_used.model`) and the source config `prompts/configs/detect_brief-text.json` (`gemini-3-flash` since 2026-01-09); **zero** retest artefacts record any 2.x model, and the project post-dates Gemini 3's 2025-11-18 release. The earlier claim that this retest used `gemini-2.0-flash` was an unsourced prose error (see [§ Changelog](#changelog)). **Consequence**: cross-era comparisons are **not** confounded by model version — the only cross-era difference is **tile scope** (Era 1 = 340 × 512 px; Era 2 / 3 are smaller, strictly nested subsets). See `results/evaluation-scopes.md`.
+4. **Pending sections** (§13): Phase 3a-HIGH image-track consensus, Phase 3c image-track diversity, Phase 3c consensus sweep over diversity pools. Not blocking for paper if the paper's Phase 3a discussion rests on the Era 2 consensus sweeps (`results/phase3a-image-matrix/consensus-analysis-summary.md`, `results/phase3a-text-matrix/secondary_effects.md`) rather than this Era 1 retest — a choice about **tile scope and recency**, not model (both eras are `gemini-3-flash`).
 5. **K = 1 single-pass rows**: Phase 2c / 2d / 2e use K = 1 (single replicate) per condition; the per-condition CIs are tile-level only, not replicate-level. Phase 2a / 2b use K = 3.
 6. **[PENDING] sections in §13** are genuine open items, not level-up gaps. They do not block paper finalisation because the Era 2 / Era 3 analyses on `gemini-3-flash` are the paper's citation target.
 7. **Dedicated Phase 2b artefact supersedes narrative §4**: `results/retest/phase2b/analysis_summary.md` is the paper-citation source for Phase 2b claims; §4 here is retained for continuity with the rest of the retest narrative but is not paper-primary.
@@ -371,3 +373,55 @@ These are open items but **not blocking for paper finalisation** because the pap
 - **Re-run**: this summary is assembled from the per-phase evaluation JSONs listed in §17. The summary itself is hand-authored; there is no single "regenerate" script. To refresh a specific phase's tables, re-run the phase's evaluation pipeline (standard `10_evaluate_detections_bootstrap.py` invocation on the phase's detection outputs) and lift the resulting F1 / P / R / CI values into the relevant §3–§10 table.
 - **Toolchain**: Python ≥ 3.11, NumPy, pandas, GeoPandas ≥ 0.14, scikit-learn (MCC helper, bootstrap CI); pinned versions in `requirements.txt`.
 - **Git commit of this level-up**: see this file's `git log` entry at 2026-04-24.
+
+## Changelog
+
+### 2026-06-05 — Model-of-record corrected: `gemini-2.0-flash` → `gemini-3-flash`
+
+**Refresh trigger**: Session 101 model-anomaly resolution. The Era-1 retest's
+model-of-record was investigated because the run metas (`gemini-3-flash`)
+contradicted this document's prose (`gemini-2.0-flash`). Decisive evidence,
+all re-read at source:
+
+- **All** retest metas (phase2 *and* phase3) record `configuration.model =
+  gemini-3-flash` and `cost_estimate.pricing_used.model =
+  gemini-3-flash-preview` (runtime snapshots frozen 2026-03-15, not editable
+  retroactively).
+- The source config `prompts/configs/detect_brief-text.json` has specified
+  `gemini-3-flash` since 2026-01-09 (git blame); it was **never**
+  `gemini-2.0-flash`.
+- **Zero** retest artefacts (configs, metas, geojsons) record any 2.x model;
+  `config.py`'s default is `gemini-3-pro-preview`, and there is no
+  `gemini-2.0-flash` anywhere in the code path.
+- The project began (December 2025) **after** Gemini 3's 2025-11-18 release, so
+  there was never a window in which a 2.x model ran (user-confirmed: no 2.x
+  model was ever run after that date).
+
+The `gemini-2.0-flash` claim was hand-authored at this doc's creation
+(2026-03-21, commit `245b9468`) with **no cited source** and was hardened into
+the §12 cross-era caveat at the 2026-04-24 level-up. These Era-1 batch metas are
+GAP-9 (no per-item `model_version` survived), so the API-returned model cannot be
+re-confirmed directly — but every machine-generated artefact agrees on
+`gemini-3-flash`, against a single unsourced prose line (E57 doctrine: trust
+machine config/meta over prose).
+
+| Claim | Before | After |
+|---|---|---|
+| Header **Model** | `gemini-2.0-flash` | `gemini-3-flash` (→ `gemini-3-flash-preview`) |
+| §12 Caveat 3 | "cross-era F1 comparisons should acknowledge the **model-version** difference" | "cross-era difference is **tile scope only**; no model-version confound" |
+
+**What did NOT change**: all F1 / precision / recall / CI tables, rankings, and
+findings (§§3–11, 14) — the correction is a model *label*, not a result. The
+within-era comparisons were already model-homogeneous and remain so.
+
+**Consequence for the paper**: the cross-era model-comparability caveat is
+*removed*, not weakened — Era 1 ↔ Era 2/3 comparisons are confounded only by
+tile scope (strictly nested; see `results/evaluation-scopes.md`), which is
+cleaner than the prior framing implied.
+
+### 2026-03-21 — Original publication
+
+Document first authored 2026-03-21 (commit `245b9468`); levelled up 2026-04-24
+(Session 76, §§1, 2, 12, 14–17 added). This banner and changelog were added
+2026-06-05 (the first Revision-Policy stub for this document) as part of the
+model-of-record correction above.

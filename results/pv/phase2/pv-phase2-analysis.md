@@ -1,6 +1,9 @@
 # PV Phase 2: Production Verifier Results (340-Tile Corpus)
 
+> **Last revised**: 2026-06-05 (cost-basis model corrected `gemini-2.0-flash` → `gemini-3-flash`; relative comparison and headline unaffected). See [§ Changelog](#changelog) for revision history.
+
 **Generated**: 2026-03-21
+**Model**: Gemini 3 Flash (`gemini-3-flash` → `gemini-3-flash-preview`) — see § Changelog.
 **Verifier**: Adversarial-text, 150 px crops, N=1, T=0.0
 **Experiments**: 25 proposer configurations (N=1 single runs + consensus unions)
 **Bootstrap**: 1,000 iterations, seed=42
@@ -104,7 +107,7 @@ Text proposers consistently outperform image proposers by +0.12 to +0.19 F1 at e
 
 ## Cost-Efficiency Analysis (Obs 174)
 
-All costs assume Gemini 2.0 Flash real-time API pricing.
+All costs assume Gemini 3 Flash (`gemini-3-flash`) real-time API pricing. *(Corrected 2026-06-05: this line previously read "Gemini 2.0 Flash" — a model the project never ran; see [§ Changelog](#changelog). The absolute per-tile dollar figures below were computed on the old 2.0-flash rate basis ($0.15 / $0.60 per 1M in/out) and are therefore mild over-estimates — gemini-3-flash is cheaper ($0.10 / $0.40 per 1M) — but every row shares the model, so the **relative** cost comparison and the headline are unaffected.)*
 
 | Configuration | Total Passes | Est. Cost/Tile | PV F1 |
 |:--------------|------------:|:--------------:|------:|
@@ -134,3 +137,34 @@ All costs assume Gemini 2.0 Flash real-time API pricing.
 5. Probability threshold swept 0.0--1.0 in 0.05 steps; optimal selected by maximum F1
 6. F1/P/R computed via Hungarian matching at 20 m spatial tolerance
 7. Bootstrap CIs via tile-level resampling (K=1,000, seed=42)
+
+## Changelog
+
+### 2026-06-05 — Cost-basis model corrected: `gemini-2.0-flash` → `gemini-3-flash`
+
+**Refresh trigger**: Session 101 model-anomaly resolution (see
+`results/retest/retest-production-summary.md` § Changelog for the full evidence
+trail). This Era-1 / 340-tile PV diagnostic ran on `gemini-3-flash`
+(→ `gemini-3-flash-preview`), like all other retest-family runs; the project
+never ran any 2.x model (it post-dates Gemini 3's 2025-11-18 release).
+
+**What changed**: the "Cost-Efficiency Analysis" note that read "All costs assume
+Gemini 2.0 Flash real-time API pricing" now reads `gemini-3-flash`, with a note
+that the absolute per-tile figures were computed on the (incorrect) 2.0-flash
+rate basis.
+
+| | Before | After |
+|---|---|---|
+| Cost-basis model | `gemini-2.0-flash` ($0.15 / $0.60 per 1M) | `gemini-3-flash` ($0.10 / $0.40 per 1M) |
+
+**What did NOT change**: all F1 / P / R values, the leaderboard, the consensus
+findings, and the headline ("1/6 the cost"). The headline is a *ratio* between
+two configurations that share the model, so it is invariant to the rate
+correction. Only the absolute per-tile dollar figures are mild over-estimates
+(≈ 1/3 high) pending a recompute on the correct rates.
+
+### 2026-03-21 — Original publication
+
+Document first authored 2026-03-21. This banner and changelog were added
+2026-06-05 (first Revision-Policy stub) as part of the model-of-record
+correction.

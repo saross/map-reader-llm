@@ -177,8 +177,10 @@ What makes it strong (newcomer-orientation):
 - Each phase section pairs a per-condition table with a "Key finding"
   paragraph that states which contrasts are FDR-significant, with
   exact p-values inline.
-- Includes the cross-era model-comparability caveat (Gemini 2.0 Flash
-  vs Gemini 3 Flash) explicitly in the front-matter.
+- Includes the cross-era comparability caveat explicitly in the
+  front-matter (tile scope only — Era 1 340 × 512 px vs Era 2/3 smaller
+  nested scopes; all eras use `gemini-3-flash`, so there is no
+  model-version confound — corrected 2026-06-05).
 - Has a paper-facing headline claim sentence at the end of § 1.
 
 #### Exemplar C — Era 2 phase-specific level-up

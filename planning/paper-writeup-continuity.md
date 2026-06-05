@@ -24,8 +24,8 @@ Four tasks were queued. **Two read-only explorations are already DONE** (run at 
 
 ### ⚠ Anomalies to resolve before recording model-of-record (from the explorations)
 
-- **Era-1 model contradiction**: `outputs/retest/phase3a*/**/*.meta.json` say `config.model = gemini-3-flash`, but `results/retest/retest-production-summary.md` says the Era-1 retest used **`gemini-2.0-flash`**. Cannot both be true; resolve before the manifest records a model for the phase2/phase3 Era-1 retests. (Echoes E57: trust meta over prose — but Era-1 metas are GAP-9 with no per-item, so `config.model` is the only signal, and it still conflicts with the prose.)
-- **phase3c thinking-level doc conflict**: `cross-track-comparison.md` says "MINIMAL"; the comprehensive report + per-run metas say `high`. The cross-track doc is likely stale — correct it, don't trust its parameter prose.
+- **Era-1 model contradiction — ✅ RESOLVED 2026-06-05 (Session 101) → `gemini-3-flash`.** Model-of-record for ALL Era-1 retests (phase2a–e + phase3a/3a-high/3a-replication/3c) is **`gemini-3-flash`** (→ `gemini-3-flash-preview`). The `gemini-2.0-flash` prose was an unsourced confabulation (the project post-dates Gemini 3's 2025-11-18 release; zero 2.x artefacts exist; user-confirmed no 2.x model ever ran). Corrected across `retest-production-summary.md` (§ Changelog — full evidence trail), `pv-phase2-analysis.md`, `documentation-audit-plan.md`, `working-notes.md` (Obs-45 erratum + strikethrough), and the investigation report. **Paper consequence**: cross-era model-comparability caveat *removed* — cross-era differences are tile-scope only (strictly nested). **When authoring the 5 phase2 + 4 phase3 runs, record `gemini-3-flash`.**
+- **phase3c thinking-level doc conflict**: `cross-track-comparison.md` says "MINIMAL"; the comprehensive report + per-run metas say `high`. The cross-track doc is likely stale — correct it, don't trust its parameter prose. *(Still pending — separate from the model fix.)*
 
 ### Also pending (carried)
 

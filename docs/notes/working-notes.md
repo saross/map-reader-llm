@@ -216,8 +216,11 @@ The definitive speed and Recall of Flash make it the only viable engine for deve
 - **Workflow:** We will optimize Precision on Flash (currently 0.69) until it hits >0.85. This optimized prompt should then be transferable to Pro for final verification if needed, potentially unlocking even higher accuracy without the development iteration cost.
 
 ## Observation 45: Two-Stage Redemption (v4.6)
+
+> **⚠ ERRATUM (2026-06-05) — scope: Observation 45 through the v4.9 "Final Decision" below.** Every "Gemini 2.0 Flash" reference in this section is a **mislabel**. The run this section rests on (`verified_run_01_v4_6`) is archived at `archive/preliminary-work/results/v4.6_opt/`, and **both** `verified_run_01_v4_6.geojson` and its `_gemini3` sibling record `gemini-3-flash-preview` internally (70× each) — there is **no `gemini-2.0-flash` artefact anywhere in the project**. The project began after Gemini 3's 2025-11-18 release, so a `gemini-2.0-flash` request would have been served Gemini 3. **Consequence**: the "Gemini 2.0 Flash vs Gemini 3 Flash" comparison below is in fact **two Gemini 3 Flash runs** (run-to-run variance, ΔF1 ≈ 0.008), *not* a cross-generation comparison — so the conclusions "2.0 outperforms 3", "2.0 Flash (v4.6) is SOTA", and "Gemini 3 is a regression" **do not hold** and are struck through. The F1/P/R numbers themselves are genuine (real Gemini 3 runs); only the model labels and the cross-generation framing are wrong. See `results/retest/retest-production-summary.md` § Changelog for the full evidence trail.
+
 I successfully optimized the Stage 2 Verifier using the "Research-Driven" approach (Text-Free, Many-Shot, Federated Library).
-Run `verified_run_01_v4_6` (Gemini 2.0 Flash, 48 examples, 1-pass) yielded:
+Run `verified_run_01_v4_6` (~~Gemini 2.0 Flash~~ **Gemini 3 Flash** — see erratum, 48 examples, 1-pass) yielded:
 *   **Precision**: 0.8654 (vs 0.77 Baseline)
 *   **Recall**: 0.8824 (vs 0.92 Baseline)
 *   **F1 Score**: **0.8738**
@@ -226,13 +229,13 @@ This **beats** the previous best Single-Stage Consensus (Flash 2/5, F1 0.86).
 The "Modality Interference" hypothesis was correct: removing text instructions and relying on a rich visual library (including 21 mined hard cases) drastically improved discrimination power. The Two-Stage pipeline is now the SOTA candidate.
 
 
-### Feature Comparison: Gemini 2.0 Flash vs Gemini 3 Flash (v4.6 Prompt)
+### Feature Comparison: ~~Gemini 2.0 Flash vs Gemini 3 Flash~~ (v4.6 Prompt) — *see erratum: both rows are Gemini 3 Flash*
 I conducted a head-to-head comparison of the `v4.6` pipeline (Text-Free, Many-Shot) using both models on the `run_01` candidate set (70 items).
 
 | Model | Precision | Recall | F1 Score | Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| **Gemini 2.0 Flash** | **0.8654** | **0.8824** | **0.8738** | Superior precision. Efficient rejection of false positives. |
-| **Gemini 3 Flash** | 0.8491 | **0.8824** | 0.8654 | Identical recall, but slightly more "trigger happy" (more False Positives). |
+| ~~**Gemini 2.0 Flash**~~ **Gemini 3 Flash (run A)** | **0.8654** | **0.8824** | **0.8738** | *Mislabelled "2.0" — actually gemini-3-flash-preview (see erratum).* |
+| **Gemini 3 Flash (run B)** | 0.8491 | **0.8824** | 0.8654 | *A second gemini-3-flash-preview run; the "2.0 vs 3" gap is run-to-run variance.* |
 | *Baseline (Consensus)* | *0.85* | *0.86* | *0.86* | Single-Stage approach. |
 
 **Observation**: Contrary to expectations, the newer **Gemini 3 Flash** slightly underperformed Gemini 2.0 Flash in this specific visual discrimination task (lower Precision). This might be due to:
@@ -292,9 +295,9 @@ I re-ran the "Outer Loop" experiment with **Temperature 0.2** to test if lower t
     *   3+ Votes: 0 candidates
 *   **Analysis**: Temperature had **zero effect** on the total recall pool. The model is consistently blind to the standard mound features in this setup.
 
-**Conclusion**: The "Frontier" model (Gemini 3 Flash) in its current preview state is regression on this specific noisy-raster task compared to Gemini 2.0 Flash.
+~~**Conclusion**: The "Frontier" model (Gemini 3 Flash) in its current preview state is regression on this specific noisy-raster task compared to Gemini 2.0 Flash.~~ *(Struck — see erratum: there was no Gemini 2.0 run; the comparison is two Gemini 3 runs. The v4.9 "Outer Loop" recall collapse at T=0.7/0.2 is a real Gemini 3 Flash result, but the cross-generation conclusion is void.)*
 
-**Final Decision**: **Gemini 2.0 Flash (v4.6)** single-pass is the SOTA (F1 0.874).
+~~**Final Decision**: **Gemini 2.0 Flash (v4.6)** single-pass is the SOTA (F1 0.874).~~ *(Struck — see erratum. The F1 = 0.874 single-pass result is genuine, but on **Gemini 3 Flash**, not 2.0; superseded by the formal study regardless.)*
 
 ## Planned Overnight Experiments (Dec 20)
 To exhaustively verify model capabilities, we are queuing:
