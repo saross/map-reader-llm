@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-06-04T08:32:21Z",
+  "generated_at": "2026-06-05T07:31:40Z",
   "generator_version": "0.4.0",
   "analyses": [
     {
@@ -50,7 +50,62 @@
           "results/run-analyses.json",
           "results/paper-eval/n1/384px-14buf-mcc"
         ],
-        "last_extracted_at": "2026-06-04T08:32:21Z",
+        "last_extracted_at": "2026-06-05T07:31:40Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "analysis_id": "pv-diag-384-consensus-calibration",
+      "type": "sweep",
+      "conditions_compared": [
+        "pv-diag-384::flash-high-image-n5-image-t0.0-consensus-1of3",
+        "pv-diag-384::flash-high-image-n5-image-t0.3-consensus-9of10",
+        "pv-diag-384::flash-high-image-n5-image-t0.3-consensus-n5-5of5",
+        "pv-diag-384::flash-high-image-n5-image-t0.7-consensus-7of10",
+        "pv-diag-384::flash-high-image-n5-image-t0.7-consensus-n5-3of5",
+        "pv-diag-384::flash-high-image-n5-image-t1.0-consensus-6of10",
+        "pv-diag-384::flash-high-image-n5-image-t1.0-consensus-n5-4of5",
+        "pv-diag-384::flash-high-text-n5-text-t0.0-consensus-3of3",
+        "pv-diag-384::flash-high-text-n5-text-t0.3-consensus-10of10",
+        "pv-diag-384::flash-high-text-n5-text-t0.3-consensus-n5-5of5",
+        "pv-diag-384::flash-high-text-n5-text-t0.7-consensus-26of30",
+        "pv-diag-384::flash-high-text-n5-text-t0.7-consensus-n10-9of10",
+        "pv-diag-384::flash-high-text-n5-text-t0.7-consensus-n5-5of5",
+        "pv-diag-384::flash-high-text-n5-text-t1.0-consensus-9of10",
+        "pv-diag-384::flash-high-text-n5-text-t1.0-consensus-n5-5of5",
+        "pv-diag-384::flash-minimal-text-n30-t07-text-t0.0-consensus-3of3",
+        "pv-diag-384::flash-minimal-text-n30-t07-text-t0.3-consensus-10of10",
+        "pv-diag-384::flash-minimal-text-n30-t07-text-t0.3-consensus-n5-5of5",
+        "pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-consensus-29of30",
+        "pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-consensus-n10-10of10",
+        "pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-consensus-n5-5of5",
+        "pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-consensus-9of10",
+        "pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-consensus-n5-5of5",
+        "pv-diag-384::image-n5-image-t0.3-consensus-10of10",
+        "pv-diag-384::image-n5-image-t0.3-consensus-n5-5of5",
+        "pv-diag-384::image-n5-image-t0.7-consensus-8of10",
+        "pv-diag-384::image-n5-image-t0.7-consensus-n5-4of5",
+        "pv-diag-384::image-n5-image-t1.0-consensus-8of10",
+        "pv-diag-384::image-n5-image-t1.0-consensus-n5-4of5"
+      ],
+      "hypothesis_refs": [
+        "H3"
+      ],
+      "preregistered": "exploratory",
+      "deviations": [],
+      "predicted_outcome": "H3: consensus voting over K proposer passes improves localisation F1 over single-pass; the diversity dividend predicts HIGH-thinking (more diverse) pools recover or exceed minimal-thinking under consensus. Vote threshold trades precision (high k) for recall (low k); the best-F1 threshold is config-dependent.",
+      "tie_set": [],
+      "outcome": "Consensus vote-threshold x N-aggregation calibration over 29 configs (4 proposer pools x temperature x consensus/consensus-n5/consensus-n10), re-scored at the 14-buffer+MCC standard (Era-2 487-tile, 384px). Each config's headline operating point is its best-F1@20m vote threshold; best-F1@20m ranges 0.488-0.814. Top operating points: flash-high-text-n5-text-t0.7-consensus-26of30 (F1=0.814); flash-high-text-n5-text-t0.7-consensus-n10-9of10 (F1=0.797); flash-high-text-n5-text-t0.3-consensus-10of10 (F1=0.789). This registers the consensus calibration material (the diversity-dividend curve); the full statistical comparison against the single-pass baseline (n1-baseline-matrix-384) is cross-referenced, not asserted here.",
+      "paper_section": "Results",
+      "output_path": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep",
+      "working_notes_obs": [],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/rescore-2026-06-05/pv-diag-384/consensus-sweep"
+        ],
+        "last_extracted_at": "2026-06-05T07:31:40Z",
         "extractor_version": "0.4.0"
       }
     }

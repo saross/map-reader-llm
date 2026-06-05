@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-06-05T07:15:47Z · 195 row(s) · schema v1.0.
+> Generated 2026-06-05T07:31:40Z · 224 row(s) · schema v1.0.
 >
-> **Coverage**: 195 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 224 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -130,6 +130,35 @@
 | pv-diag-384::baseline-pro-image-medium-t-0-0 | single-pass | none | — | 1 | 0.6555 | 0.8677 | — |
 | pv-diag-384::baseline-pro-text-high-t-0-7 | single-pass | none | — | 1 | 0.745 | 0.7465 | — |
 | pv-diag-384::baseline-pro-text-medium-t-0-0 | single-pass | none | — | 1 | 0.7921 | 0.7903 | — |
+| pv-diag-384::flash-high-image-n5-image-t0.0-consensus-1of3 | consensus | consensus | 1 | 3 | 0.4883 | 0.4848 | 802 |
+| pv-diag-384::flash-high-image-n5-image-t0.3-consensus-9of10 | consensus | consensus | 9 | 10 | 0.7312 | 0.6834 | 361 |
+| pv-diag-384::flash-high-image-n5-image-t0.3-consensus-n5-5of5 | consensus | consensus | 5 | 5 | 0.7119 | 0.6803 | 346 |
+| pv-diag-384::flash-high-image-n5-image-t0.7-consensus-7of10 | consensus | consensus | 7 | 10 | 0.75 | 0.6784 | 405 |
+| pv-diag-384::flash-high-image-n5-image-t0.7-consensus-n5-3of5 | consensus | consensus | 3 | 5 | 0.7269 | 0.6648 | 506 |
+| pv-diag-384::flash-high-image-n5-image-t1.0-consensus-6of10 | consensus | consensus | 6 | 10 | 0.735 | 0.6456 | 433 |
+| pv-diag-384::flash-high-image-n5-image-t1.0-consensus-n5-4of5 | consensus | consensus | 4 | 5 | 0.697 | 0.6559 | 357 |
+| pv-diag-384::flash-high-text-n5-text-t0.0-consensus-3of3 | consensus | consensus | 3 | 3 | 0.6051 | 0.45 | 745 |
+| pv-diag-384::flash-high-text-n5-text-t0.3-consensus-10of10 | consensus | consensus | 10 | 10 | 0.7891 | 0.5874 | 409 |
+| pv-diag-384::flash-high-text-n5-text-t0.3-consensus-n5-5of5 | consensus | consensus | 5 | 5 | 0.7696 | 0.5571 | 498 |
+| pv-diag-384::flash-high-text-n5-text-t0.7-consensus-26of30 | consensus | consensus | 26 | 30 | 0.8141 | 0.6204 | 415 |
+| pv-diag-384::flash-high-text-n5-text-t0.7-consensus-n10-9of10 | consensus | consensus | 9 | 10 | 0.7968 | 0.6207 | 431 |
+| pv-diag-384::flash-high-text-n5-text-t0.7-consensus-n5-5of5 | consensus | consensus | 5 | 5 | 0.7788 | 0.5998 | 415 |
+| pv-diag-384::flash-high-text-n5-text-t1.0-consensus-9of10 | consensus | consensus | 9 | 10 | 0.7727 | 0.5749 | 414 |
+| pv-diag-384::flash-high-text-n5-text-t1.0-consensus-n5-5of5 | consensus | consensus | 5 | 5 | 0.7279 | 0.5461 | 403 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.0-consensus-3of3 | consensus | consensus | 3 | 3 | 0.5932 | 0.2235 | 799 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3-consensus-10of10 | consensus | consensus | 10 | 10 | 0.6424 | 0.3129 | 608 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3-consensus-n5-5of5 | consensus | consensus | 5 | 5 | 0.6307 | 0.2746 | 659 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-consensus-29of30 | consensus | consensus | 29 | 30 | 0.6611 | 0.3814 | 530 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-consensus-n10-10of10 | consensus | consensus | 10 | 10 | 0.6332 | 0.3655 | 560 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-consensus-n5-5of5 | consensus | consensus | 5 | 5 | 0.6397 | 0.3148 | 653 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-consensus-9of10 | consensus | consensus | 9 | 10 | 0.6667 | 0.4153 | 549 |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-consensus-n5-5of5 | consensus | consensus | 5 | 5 | 0.661 | 0.4065 | 509 |
+| pv-diag-384::image-n5-image-t0.3-consensus-10of10 | consensus | consensus | 10 | 10 | 0.6597 | 0.3397 | 517 |
+| pv-diag-384::image-n5-image-t0.3-consensus-n5-5of5 | consensus | consensus | 5 | 5 | 0.6539 | 0.3222 | 559 |
+| pv-diag-384::image-n5-image-t0.7-consensus-8of10 | consensus | consensus | 8 | 10 | 0.6803 | 0.4055 | 494 |
+| pv-diag-384::image-n5-image-t0.7-consensus-n5-4of5 | consensus | consensus | 4 | 5 | 0.6639 | 0.3898 | 523 |
+| pv-diag-384::image-n5-image-t1.0-consensus-8of10 | consensus | consensus | 8 | 10 | 0.6459 | 0.4424 | 466 |
+| pv-diag-384::image-n5-image-t1.0-consensus-n5-4of5 | consensus | consensus | 4 | 5 | 0.6461 | 0.4188 | 506 |
 | h12-v2::greedy-r1-hn-heavy | consensus | greedy | 4 | 5 | 0.7084 | 0.6956 | 240 |
 | h12-v2::greedy-r2-balanced | consensus | greedy | 4 | 5 | 0.7171 | 0.7168 | 236 |
 | h12-v2::greedy-r3-hp-heavy | consensus | greedy | 4 | 5 | 0.6876 | 0.7169 | 254 |

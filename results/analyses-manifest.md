@@ -2,10 +2,11 @@
 
 # Analyses manifest
 
-> Generated 2026-06-04T08:32:21Z · 1 row(s) · schema v1.0.
+> Generated 2026-06-05T07:31:40Z · 2 row(s) · schema v1.0.
 >
-> **Coverage**: 1 analysis(es) over conditions (sub-step 3c; hybrid human-authored).
+> **Coverage**: 2 analysis(es) over conditions (sub-step 3c; hybrid human-authored).
 
 | analysis_id | type | #conditions | preregistered | paper_section | outcome |
 |---|---|---|---|---|---|
 | n1-baseline-matrix-384 | leaderboard | 18 | exploratory | Results | At the preregistered 20 m buffer the best single pass for mound localisation is genuine Gemini 3 Pro text at T=0.0. Tier 1 -- the tie_set -- is a two-member statistical tie between pro-text-high-t-0-0 (F1 0.804) and pro-text-medium-t-0-0 (F1 0.792): a round-robin tile-swap permutation (BH-FDR q=0.05; 129/153 pairs significant -> 7 tiers) cannot separate them, and both are significantly clear of the Tier-2 pair -- the two Pro-text T=0.7 cells, pro-text-medium-t-0-7 (0.755) and pro-text-high-t-0-7 (0.745). So at T=0.0 the thinking level (HIGH vs MEDIUM) does not significantly matter, and T=0.0 beats T=0.7 (Tier 1 vs Tier 2) at matched model and modality (H7). The top four cells are all Pro text and the top six all genuine Pro; the text-over-image advantage holds at matched settings (best Pro text 0.804 vs best Pro image 0.666). The F1 leaders are NOT the tile-level discrimination (MCC) leader: genuine Pro IMAGE wins MCC -- pro-image-medium-t-0-7 (MCC +0.911, but 9th on F1) and pro-image-high-t-0-0 (+0.868) -- while Pro text leads F1, so the best single-pass configuration is metric-dependent. (All eight Pro cells are genuine Gemini 3 Pro at n>=3; see deviations E57 and docs/methodology/n1-baseline-matrix.md for board provenance.) |
+| pv-diag-384-consensus-calibration | sweep | 29 | exploratory | Results | Consensus vote-threshold x N-aggregation calibration over 29 configs (4 proposer pools x temperature x consensus/consensus-n5/consensus-n10), re-scored at the 14-buffer+MCC standard (Era-2 487-tile, 384px). Each config's headline operating point is its best-F1@20m vote threshold; best-F1@20m ranges 0.488-0.814. Top operating points: flash-high-text-n5-text-t0.7-consensus-26of30 (F1=0.814); flash-high-text-n5-text-t0.7-consensus-n10-9of10 (F1=0.797); flash-high-text-n5-text-t0.3-consensus-10of10 (F1=0.789). This registers the consensus calibration material (the diversity-dividend curve); the full statistical comparison against the single-pass baseline (n1-baseline-matrix-384) is cross-referenced, not asserted here. |
