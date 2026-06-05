@@ -17591,3 +17591,125 @@ Search terms: Obs 342, gemini-2.0-flash confabulation, model-of-record gemini-3-
 - **Obs 339** (sole-leader was an artefact, Session 98, line 17328): companion to Obs 338; same provenance investigation produced the E57 resolution that this Obs extends.
 - **E57** (`docs/methodology/preregistration/protocol-errata.md` line 1774): the provenance-hierarchy errata entry. The E57 doctrine ("trust machine config/meta over prose") is the direct antecedent of the rule extended here to cover upstream-agent self-identification.
 - **Artefacts**: correction commits `f9e53e0a` (6 active docs: banners + changelogs + Obs-45 erratum/strikethrough) and `a6c9a986` (3 archived 60-tile validation erratum banners); `results/retest/retest-production-summary.md` § Changelog (2026-06-05 entry — full evidence trail); `reports/phase3-decomposition-investigation-2026-06-05.md` Anomaly 1 → RESOLVED note; `planning/paper-writeup-continuity.md` anomaly marked resolved (line 27); Antigravity origin logs: `archive/preliminary-work/antigravity_logs/artifacts/d2e42a0d-361f-4bae-8375-90d9545457e8/task.md` (lines 22–27, Gemini 2 vs 3 mislabel), `archive/preliminary-work/antigravity_logs/artifacts/d2e42a0d-361f-4bae-8375-90d9545457e8/implementation_plan.md` (lines 7–8, self-inconsistent model labels), `archive/preliminary-work/antigravity_logs/artifacts/7f9838be-f730-4489-bbb3-d7be6b259603/task.md` (line 5, `gemini-2.0-flash-exp` transient config); `prompts/configs/detect_brief-text.json` (gemini-3-flash since 2026-01-09, commit `cfc10c13`); `archive/preliminary-work/results/v4.6_opt/verified_run_01_v4_6.geojson` and `verified_run_01_v4_6_gemini3.geojson` (both 70 features, both `gemini-3-flash-preview`); `config.py` commits `b7920dda` (gemini-2.0-flash-exp, 2025-12-10) / `34d6d39e` (reverted same day).
+
+## Observation 343: The `gemini-2.5-flash` self-label in `v4.meta.json` is config-only and non-API-confirmed — and is a third distinct wrong version number, sharpening the Obs 342 self-misidentification hypothesis (2026-06-05)
+
+*Supersedes the `gemini-2.5-flash` caveat in Obs 342 `### Caveats / methodological notes`
+(line 17579 of this file at time of writing). The original caveat was accurate but imprecise
+on the structural distinction between API-returned and config-authored fields, and did not
+connect this third self-label to the self-misidentification pattern.*
+
+### The finding
+
+**Verified at source (`archive/preliminary-work/results/v4.3_multipass_liberal/v4.meta.json`,
+2025-12-22), the `gemini-2.5-flash` string appears exactly twice — in
+`configuration.model` and `configuration.full_config_snapshot.model` — both config fields
+written by the authoring agent. The meta has no `model_version`, no `model_requested`, and
+no `pricing_used`/`cost_estimate` block at all.**
+
+Top-level keys of this meta, confirmed by direct inspection:
+
+```
+run_id | timestamp | environment | configuration | execution_stats | usage_stats | results_summary
+```
+
+There is no API-returned field recording `gemini-2.5-flash` as the dispatched or billed model.
+
+The precise general claim that replaces the Obs 342 caveat is:
+
+| claim | status |
+|---|---|
+| Zero metas record any 2.x model in an API-returned or billed field (`model_version` / `pricing_used.model`) | **Exact — confirmed by full repo sweep** |
+| Zero `gemini-2.0-flash` artefacts anywhere in the repo | **Exact** |
+| Zero 2.x artefacts of any kind | **Imprecise** — one meta exists with a 2.x config-only self-label |
+| One meta (`v4.meta.json`, 2025-12-22) records `gemini-2.5-flash` in `config.model` / `full_config_snapshot.model` only | **Exact — config-authored, not API-confirmed** |
+
+A full repo-wide sweep of all `*.meta.json` (archive and outputs) finds this is the sole 2.x
+model string outside of `gemini-2.0-flash-exp` (which appears in source-code commits, not
+metas). The `gemini-2.5-flash` occurrences are in deep-archive preliminary throwaway work,
+pre-dating the structured config system, with no bearing on any production result.
+
+### The self-misidentification connection
+
+The `gemini-2.5-flash` self-label is a **third distinct wrong version number** that the
+early Antigravity-era agent applied to itself — alongside the two already recorded in Obs
+342's origin table:
+
+| wrong version string | where it appears | mechanism |
+|---|---|---|
+| `gemini-2.0-flash-exp` | `archive/preliminary-work/antigravity_logs/artifacts/7f9838be-.../task.md` line 5: "used `gemini-2.0-flash-exp`" | transient config, reverted same session; no committed output meta records it |
+| `gemini-2.0-flash` / `Gemini 2.0 Flash` / `gemini-2.0-flash-001` | three result-doc families corrected 2026-06-05 (Obs 342 Table 1) | prose propagation from Antigravity-era mislabelling into Claude Code sessions |
+| `gemini-2.5-flash` | `archive/preliminary-work/results/v4.3_multipass_liberal/v4.meta.json`, `configuration.model` + `configuration.full_config_snapshot.model` | config-only self-label; no API-returned field; 2025-12-22 |
+
+An agent that was actually choosing models deliberately would apply one wrong version number
+consistently. An agent that was confabulating its own identity would apply whichever
+plausible-sounding 2.x designation occurred to it in the moment — generating a set of
+mutually inconsistent self-labels across different artefacts. The three labels are mutually
+inconsistent (`2.0-flash-exp`, `2.0-flash`, `2.5-flash`), and all are wrong (the ground
+truth is `gemini-3-flash-preview` throughout). This inconsistency is itself corroboration
+of the self-misidentification hypothesis: three confident self-labels, three different
+wrong answers, no pattern matching a deliberate model choice.
+
+The hypothesis framing from Obs 342 is unchanged: the user is ~certain of the
+self-misidentification explanation, but it remains unproven because no direct log of
+Antigravity asserting "I am Gemini 2.x" survives — only actions (inconsistent mislabelling)
+are visible. This Obs adds a third data point to those actions.
+
+### Why this matters
+
+1. **The precise paper-citable claim is now established.** The correct formulation is:
+   "zero API-confirmed 2.x dispatches; one config-only 2.x self-label." The shorthand "zero
+   2.x artefacts" should not be used — it overstates. The shorthand "zero `gemini-2.0-flash`
+   artefacts" remains exact.
+
+2. **The self-misidentification evidence is stronger than Obs 342 recorded.** Three distinct
+   wrong version numbers across three different artefact types (task log, result-doc prose,
+   meta config field) strengthen the case that this was systematic confabulation, not a
+   one-off mislabel.
+
+3. **The `v4.meta.json` self-label does not affect any production result.** It is in
+   deep-archive preliminary work, pre-structured-config-system, and has no path to the formal
+   study's evidence chain. Its only relevance is as a third data point in the
+   self-misidentification pattern.
+
+### Caveats / methodological notes
+
+- **Origin is still a hypothesis.** All three wrong labels are consistent with
+  self-misidentification, but none constitutes direct evidence of Antigravity asserting
+  an identity. The actions (inconsistent mislabelling) are visible; the mechanism is inferred.
+- **`gemini-2.5-flash` does not appear in any Antigravity log file** — it appears only in
+  the `v4.meta.json` config, not in `task.md` or `implementation_plan.md` from either
+  Antigravity artifact directory. So the `gemini-2.5-flash` self-label was written by
+  the pipeline itself (the config system recorded what the agent told it), not narrated in
+  a task log.
+- **The `v4.meta.json` meta structure pre-dates the structured config system** — the absence
+  of `pricing_used` / `cost_estimate` / `model_version` fields reflects an older script
+  version (4.1.0, commit `10c2fdd3`), not a failure to record them. This is consistent with
+  deep-archive throwaway-phase work.
+
+### Findable later
+
+Search terms: Obs 343, gemini-2.5-flash config-only, v4.meta.json third wrong version,
+self-misidentification three labels, API-confirmed dispatch zero 2.x, config-authored self-label
+v4.3 multipass liberal, Antigravity agent wrong version number, gemini-2.0-flash-exp
+gemini-2.0-flash gemini-2.5-flash inconsistent, zero API-returned 2.x, precise claim
+zero api-confirmed dispatch, 2025-12-22 preliminary archive meta, script version 4.1.0
+10c2fdd3, configuration.model full_config_snapshot.model, no model_version no pricing_used,
+three distinct wrong answers confabulation, self-inconsistent version labels,
+obs342 caveat sharpened superseded.
+
+### Related observations and artefacts
+
+- **Obs 342** (gemini-2.0-flash systematic confabulation, 2026-06-05, line 17513): this Obs
+  supersedes the `gemini-2.5-flash` caveat in Obs 342's `### Caveats / methodological notes`
+  (the bullet beginning "One preliminary-work `.meta.json` records `gemini-2.5-flash`"). The
+  rest of Obs 342 stands unchanged.
+- **Obs 337** (E57 billing reconciliation, line 17221): the `model_version` doctrine; relevant
+  here because `v4.meta.json` has no `model_version` field at all, making it structurally
+  distinct from E57-era metas.
+- **Artefacts**: `archive/preliminary-work/results/v4.3_multipass_liberal/v4.meta.json`
+  (source verified 2026-06-05 — top-level keys confirmed, `gemini-2.5-flash` in
+  `configuration.model` line 15 and `configuration.full_config_snapshot.model` line 22 only;
+  commit `10c2fdd356` environment field); `archive/preliminary-work/antigravity_logs/artifacts/7f9838be-f730-4489-bbb3-d7be6b259603/task.md`
+  line 5 (`gemini-2.0-flash-exp` first wrong label); Obs 342 Table 1 (`gemini-2.0-flash`
+  second wrong label, three result-doc families).
