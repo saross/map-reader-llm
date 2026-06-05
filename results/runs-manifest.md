@@ -2,7 +2,7 @@
 
 # Runs manifest
 
-> Generated 2026-06-04T08:32:21Z · 28 row(s) · schema v1.0.
+> Generated 2026-06-05T07:10:51Z · 28 row(s) · schema v1.0.
 >
 > **Coverage**: all 28 runs (run-level facts; conditions/passes added as 3b batches land).
 
@@ -25,11 +25,11 @@
 | pv-diag-384 | single-pass | 384 | 4-map-gs | curator | era-2-487 | — |
 | h12-v2 | consensus | 384 | 4-map-gs | curator | era-3-327 | — |
 | h8-v2 | mixed | 384 | 4-map-gs | curator | era-3-327 | — |
-| retest-phase2a | — | 512 | 4-map-gs | curator | era-1-340 | — |
-| retest-phase2b | — | 512 | 4-map-gs | curator | era-1-340 | — |
-| retest-phase2c | — | 512 | 4-map-gs | curator | era-1-340 | — |
-| retest-phase2d | — | 512 | 4-map-gs | curator | era-1-340 | — |
-| retest-phase2e | — | 512 | 4-map-gs | curator | era-1-340 | — |
+| retest-phase2a | single-pass | 512 | 4-map-gs | curator | era-1-340 | — |
+| retest-phase2b | single-pass | 512 | 4-map-gs | curator | era-1-340 | — |
+| retest-phase2c | single-pass | 512 | 4-map-gs | curator | era-1-340 | — |
+| retest-phase2d | single-pass | 512 | 4-map-gs | curator | era-1-340 | — |
+| retest-phase2e | single-pass | 512 | 4-map-gs | curator | era-1-340 | — |
 | retest-phase3a | — | 512 | 4-map-gs | curator | era-1-340 | — |
 | retest-phase3a-high | — | 512 | 4-map-gs | curator | era-1-340 | — |
 | retest-phase3a-replication | — | 512 | 4-map-gs | curator | era-1-340 | — |

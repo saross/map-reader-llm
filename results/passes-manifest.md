@@ -2,9 +2,9 @@
 
 # Passes manifest
 
-> Generated 2026-06-04T08:32:21Z · 192 row(s) · schema v1.0.
+> Generated 2026-06-05T07:10:51Z · 258 row(s) · schema v1.0.
 >
-> **Coverage**: 192 pass(es) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 258 pass(es) across the decomposed runs (sub-step 3b in progress).
 
 | pass_id | model | modality | think | T | status | tiles | cost_usd |
 |---|---|---|---|---|---|---|---|
@@ -188,6 +188,72 @@
 | h8-v2::scale-4-verified::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 1551 | 2.160168 |
 | h8-v2::wbf-scale-4-verified::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 15 | 0.021753 |
 | h8-v2::wbf-scale-8-verified::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 1053 | 1.3917 |
+| retest-phase2a::brief-text::run1 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | 0.0 |
+| retest-phase2a::brief-text::run2 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | 0.0 |
+| retest-phase2a::brief-text::run3 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | 0.0 |
+| retest-phase2a::brief-text-image::run1 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | 0.0 |
+| retest-phase2a::brief-text-image::run2 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | 0.0 |
+| retest-phase2a::brief-text-image::run3 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | 0.0 |
+| retest-phase2a::image-only::run1 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | 0.0 |
+| retest-phase2a::image-only::run2 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | 0.0 |
+| retest-phase2a::image-only::run3 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | 0.0 |
+| retest-phase2a::verbose-text::run1 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | 0.0 |
+| retest-phase2a::verbose-text::run2 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | 0.0 |
+| retest-phase2a::verbose-text::run3 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | 0.0 |
+| retest-phase2a::verbose-text-image::run1 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | 0.0 |
+| retest-phase2a::verbose-text-image::run2 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | 0.0 |
+| retest-phase2a::verbose-text-image::run3 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | 0.0 |
+| retest-phase2b::track1-image-t0.0::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2b::track1-image-t0.0::run2 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2b::track1-image-t0.0::run3 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2b::track1-image-t0.3::run1 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | 0.0 |
+| retest-phase2b::track1-image-t0.3::run2 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | 0.0 |
+| retest-phase2b::track1-image-t0.3::run3 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | 0.0 |
+| retest-phase2b::track1-image-t0.7::run1 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | 0.0 |
+| retest-phase2b::track1-image-t0.7::run2 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | 0.0 |
+| retest-phase2b::track1-image-t0.7::run3 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | 0.0 |
+| retest-phase2b::track1-image-t1.0::run1 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | 0.0 |
+| retest-phase2b::track1-image-t1.0::run2 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | 0.0 |
+| retest-phase2b::track1-image-t1.0::run3 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | 0.0 |
+| retest-phase2b::track1-image-t1.3::run1 | gemini-3-flash | image | minimal | 1.3 | ok | 340 | 0.0 |
+| retest-phase2b::track1-image-t1.3::run2 | gemini-3-flash | image | minimal | 1.3 | ok | 340 | 0.0 |
+| retest-phase2b::track1-image-t1.3::run3 | gemini-3-flash | image | minimal | 1.3 | ok | 340 | 0.0 |
+| retest-phase2b::track2-text-t0.0::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2b::track2-text-t0.0::run2 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2b::track2-text-t0.0::run3 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2b::track2-text-t0.3::run1 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | 0.0 |
+| retest-phase2b::track2-text-t0.3::run2 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | 0.0 |
+| retest-phase2b::track2-text-t0.3::run3 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | 0.0 |
+| retest-phase2b::track2-text-t0.7::run1 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | 0.0 |
+| retest-phase2b::track2-text-t0.7::run2 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | 0.0 |
+| retest-phase2b::track2-text-t0.7::run3 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | 0.0 |
+| retest-phase2b::track2-text-t1.0::run1 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | 0.0 |
+| retest-phase2b::track2-text-t1.0::run2 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | 0.0 |
+| retest-phase2b::track2-text-t1.0::run3 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | 0.0 |
+| retest-phase2b::track2-text-t1.3::run1 | gemini-3-flash | text | minimal | 1.3 | ok | 340 | 0.0 |
+| retest-phase2b::track2-text-t1.3::run2 | gemini-3-flash | text | minimal | 1.3 | ok | 340 | 0.0 |
+| retest-phase2b::track2-text-t1.3::run3 | gemini-3-flash | text | minimal | 1.3 | ok | 340 | 0.0 |
+| retest-phase2c::track1-image-canonical::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2c::track1-image-plus-hp::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2c::track1-image-pure-positive-canon::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2c::track1-image-scale-4::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2c::track1-image-scale-8::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2c::track1-image-exploratory-pure-positive-2hp::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2c::track1-image-exploratory-pure-positive-4hp::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2c::track1-image-exploratory-pure-positive-canon::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2c::track2-text-canonical::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2c::track2-text-plus-hp::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2c::track2-text-pure-positive-canon::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2c::track2-text-scale-4::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2c::track2-text-scale-8::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2d::track1-image-terse::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2d::track1-image-verbose::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2d::track2-text-terse::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2d::track2-text-verbose::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2e::canonical-first::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2e::canonical-last::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2e::config-default::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | 0.0 |
+| retest-phase2e::random::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | 0.0 |
 | retest-h11-single-pass-384-t0::brief-text-t0::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | 0.0 |
 | retest-h11-single-pass-384-t0::brief-text-t0::run10 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | 0.0 |
 | retest-h11-single-pass-384-t0::brief-text-t0::run2 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | 0.0 |

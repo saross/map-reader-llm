@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-06-04T08:32:21Z · 159 row(s) · schema v1.0.
+> Generated 2026-06-05T07:10:51Z · 195 row(s) · schema v1.0.
 >
-> **Coverage**: 159 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 195 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -153,6 +153,42 @@
 | h8-v2::verified-scale-4 | proposer-verifier | verified | 4 | 5 | 0.7368 | 0.803 | 251 |
 | h8-v2::verified-wbf-scale-4 | proposer-verifier | verified | 4 | 5 | 0.737 | 0.8052 | 297 |
 | h8-v2::verified-wbf-scale-8 | proposer-verifier | verified | 4 | 5 | 0.7219 | 0.8133 | 285 |
+| retest-phase2a::brief-text | single-pass | none | — | 3 | 0.5518 | 0.0443 | — |
+| retest-phase2a::brief-text-image | single-pass | none | — | 3 | 0.522 | 0.1773 | — |
+| retest-phase2a::image-only | single-pass | none | — | 3 | 0.4697 | 0.1091 | — |
+| retest-phase2a::verbose-text | single-pass | none | — | 3 | 0.5016 | 0.0443 | — |
+| retest-phase2a::verbose-text-image | single-pass | none | — | 3 | 0.517 | 0.2907 | — |
+| retest-phase2b::image-t0.0 | single-pass | none | — | 3 | 0.5862 | 0.1496 | — |
+| retest-phase2b::image-t0.3 | single-pass | none | — | 3 | 0.575 | 0.1226 | — |
+| retest-phase2b::image-t0.7 | single-pass | none | — | 3 | 0.5366 | 0.1731 | — |
+| retest-phase2b::image-t1.0 | single-pass | none | — | 3 | 0.5269 | 0.1815 | — |
+| retest-phase2b::image-t1.3 | single-pass | none | — | 3 | 0.4921 | 0.2104 | — |
+| retest-phase2b::text-t0.0 | single-pass | none | — | 3 | 0.6055 | 0.0 | — |
+| retest-phase2b::text-t0.3 | single-pass | none | — | 3 | 0.6065 | 0.0443 | — |
+| retest-phase2b::text-t0.7 | single-pass | none | — | 3 | 0.5842 | 0.0 | — |
+| retest-phase2b::text-t1.0 | single-pass | none | — | 3 | 0.5335 | 0.0222 | — |
+| retest-phase2b::text-t1.3 | single-pass | none | — | 3 | 0.5442 | 0.0665 | — |
+| retest-phase2c::image-canonical | single-pass | none | — | 1 | 0.5814 | 0.0942 | 720 |
+| retest-phase2c::image-plus-hp | single-pass | none | — | 1 | 0.5985 | 0.0942 | 771 |
+| retest-phase2c::image-pure-positive-canon | single-pass | none | — | 1 | 0.5678 | 0.0942 | 736 |
+| retest-phase2c::image-scale-4 | single-pass | none | — | 1 | 0.5837 | 0.1336 | 811 |
+| retest-phase2c::image-scale-8 | single-pass | none | — | 1 | 0.5867 | 0.1496 | 770 |
+| retest-phase2c::image-exploratory-pure-positive-2hp | single-pass | none | — | 1 | 0.5712 | 0.0 | 823 |
+| retest-phase2c::image-exploratory-pure-positive-4hp | single-pass | none | — | 1 | 0.5985 | 0.1642 | 771 |
+| retest-phase2c::image-exploratory-pure-positive-canon | single-pass | none | — | 1 | 0.5699 | 0.0942 | 728 |
+| retest-phase2c::text-canonical | single-pass | none | — | 1 | 0.6045 | 0.0 | 897 |
+| retest-phase2c::text-plus-hp | single-pass | none | — | 1 | 0.5969 | 0.0 | 885 |
+| retest-phase2c::text-pure-positive-canon | single-pass | none | — | 1 | 0.6045 | 0.0 | 887 |
+| retest-phase2c::text-scale-4 | single-pass | none | — | 1 | 0.6094 | 0.0 | 882 |
+| retest-phase2c::text-scale-8 | single-pass | none | — | 1 | 0.607 | 0.0 | 881 |
+| retest-phase2d::image-terse | single-pass | none | — | 1 | 0.6052 | 0.2239 | 773 |
+| retest-phase2d::image-verbose | single-pass | none | — | 1 | 0.6027 | 0.281 | 742 |
+| retest-phase2d::text-terse | single-pass | none | — | 1 | 0.5984 | 0.0 | 868 |
+| retest-phase2d::text-verbose | single-pass | none | — | 1 | 0.5834 | 0.0665 | 798 |
+| retest-phase2e::canonical-first | single-pass | none | — | 1 | 0.5985 | 0.0942 | 771 |
+| retest-phase2e::canonical-last | single-pass | none | — | 1 | 0.6314 | 0.2132 | 785 |
+| retest-phase2e::config-default | single-pass | none | — | 1 | 0.6057 | 0.2132 | 752 |
+| retest-phase2e::random | single-pass | none | — | 1 | 0.5706 | 0.0665 | 821 |
 | retest-h11-single-pass-384-t0::single-pass-run_1 | single-pass | none | — | 1 | 0.5065 | 0.0427 | 1093 |
 | retest-h11-single-pass-384-t0::single-pass-run_2 | single-pass | none | — | 1 | 0.4994 | 0.0427 | 1107 |
 | retest-h11-single-pass-384-t0::single-pass-run_3 | single-pass | none | — | 1 | 0.4961 | 0.0427 | 1113 |

@@ -2371,6 +2371,622 @@
           "detections": "outputs/verifier-t-pilot/T1.0/materialised/vote4_prob0.20.geojson"
         }
       ]
+    },
+    "retest-phase2a": {
+      "_note": "Era-1 retest, H1 (phase2a). Single-pass replicate conditions (K passes per condition, metric = replicate-mean over runs), scored at the 14-buffer+MCC standard (Session 102 re-score, results/paper-eval/phase2/512px-14buf-mcc/). Era-1 340-tile, curator GT, 512px. Model of record: gemini-3-flash. detections points at the condition dir (the replicate-mean eval has no single geojson); n_detections=None is expected. proposer_pools = the leaf condition dirs (run_* = replicates).",
+      "proposer_pools": {
+        "brief-text": {
+          "modality": "text",
+          "path": "brief-text"
+        },
+        "brief-text-image": {
+          "modality": "image",
+          "path": "brief-text-image"
+        },
+        "image-only": {
+          "modality": "image",
+          "path": "image-only"
+        },
+        "verbose-text": {
+          "modality": "text",
+          "path": "verbose-text"
+        },
+        "verbose-text-image": {
+          "modality": "image",
+          "path": "verbose-text-image"
+        }
+      },
+      "verifier_passes": {},
+      "conditions": [
+        {
+          "label": "brief-text",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "brief-text",
+          "n_passes": 3,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2a-brief-text/evaluation.json",
+          "detections": "outputs/retest/phase2a/brief-text"
+        },
+        {
+          "label": "brief-text-image",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "brief-text-image",
+          "n_passes": 3,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2a-brief-text-image/evaluation.json",
+          "detections": "outputs/retest/phase2a/brief-text-image"
+        },
+        {
+          "label": "image-only",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "image-only",
+          "n_passes": 3,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2a-image-only/evaluation.json",
+          "detections": "outputs/retest/phase2a/image-only"
+        },
+        {
+          "label": "verbose-text",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "verbose-text",
+          "n_passes": 3,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2a-verbose-text/evaluation.json",
+          "detections": "outputs/retest/phase2a/verbose-text"
+        },
+        {
+          "label": "verbose-text-image",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "verbose-text-image",
+          "n_passes": 3,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2a-verbose-text-image/evaluation.json",
+          "detections": "outputs/retest/phase2a/verbose-text-image"
+        }
+      ]
+    },
+    "retest-phase2b": {
+      "_note": "Era-1 retest, H7 (phase2b). Single-pass replicate conditions (K passes per condition, metric = replicate-mean over runs), scored at the 14-buffer+MCC standard (Session 102 re-score, results/paper-eval/phase2/512px-14buf-mcc/). Era-1 340-tile, curator GT, 512px. Model of record: gemini-3-flash. detections points at the condition dir (the replicate-mean eval has no single geojson); n_detections=None is expected. proposer_pools = the leaf condition dirs (run_* = replicates).",
+      "proposer_pools": {
+        "track1-image-t0.0": {
+          "modality": "image",
+          "path": "track1-image/T0.0"
+        },
+        "track1-image-t0.3": {
+          "modality": "image",
+          "path": "track1-image/T0.3"
+        },
+        "track1-image-t0.7": {
+          "modality": "image",
+          "path": "track1-image/T0.7"
+        },
+        "track1-image-t1.0": {
+          "modality": "image",
+          "path": "track1-image/T1.0"
+        },
+        "track1-image-t1.3": {
+          "modality": "image",
+          "path": "track1-image/T1.3"
+        },
+        "track2-text-t0.0": {
+          "modality": "text",
+          "path": "track2-text/T0.0"
+        },
+        "track2-text-t0.3": {
+          "modality": "text",
+          "path": "track2-text/T0.3"
+        },
+        "track2-text-t0.7": {
+          "modality": "text",
+          "path": "track2-text/T0.7"
+        },
+        "track2-text-t1.0": {
+          "modality": "text",
+          "path": "track2-text/T1.0"
+        },
+        "track2-text-t1.3": {
+          "modality": "text",
+          "path": "track2-text/T1.3"
+        }
+      },
+      "verifier_passes": {},
+      "conditions": [
+        {
+          "label": "image-t0.0",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track1-image-t0.0",
+          "n_passes": 3,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2b-image-t-0-0/evaluation.json",
+          "detections": "outputs/retest/phase2b/track1-image/T0.0"
+        },
+        {
+          "label": "image-t0.3",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track1-image-t0.3",
+          "n_passes": 3,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2b-image-t-0-3/evaluation.json",
+          "detections": "outputs/retest/phase2b/track1-image/T0.3"
+        },
+        {
+          "label": "image-t0.7",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track1-image-t0.7",
+          "n_passes": 3,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2b-image-t-0-7/evaluation.json",
+          "detections": "outputs/retest/phase2b/track1-image/T0.7"
+        },
+        {
+          "label": "image-t1.0",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track1-image-t1.0",
+          "n_passes": 3,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2b-image-t-1-0/evaluation.json",
+          "detections": "outputs/retest/phase2b/track1-image/T1.0"
+        },
+        {
+          "label": "image-t1.3",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track1-image-t1.3",
+          "n_passes": 3,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2b-image-t-1-3/evaluation.json",
+          "detections": "outputs/retest/phase2b/track1-image/T1.3"
+        },
+        {
+          "label": "text-t0.0",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track2-text-t0.0",
+          "n_passes": 3,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2b-text-t-0-0/evaluation.json",
+          "detections": "outputs/retest/phase2b/track2-text/T0.0"
+        },
+        {
+          "label": "text-t0.3",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track2-text-t0.3",
+          "n_passes": 3,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2b-text-t-0-3/evaluation.json",
+          "detections": "outputs/retest/phase2b/track2-text/T0.3"
+        },
+        {
+          "label": "text-t0.7",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track2-text-t0.7",
+          "n_passes": 3,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2b-text-t-0-7/evaluation.json",
+          "detections": "outputs/retest/phase2b/track2-text/T0.7"
+        },
+        {
+          "label": "text-t1.0",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track2-text-t1.0",
+          "n_passes": 3,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2b-text-t-1-0/evaluation.json",
+          "detections": "outputs/retest/phase2b/track2-text/T1.0"
+        },
+        {
+          "label": "text-t1.3",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track2-text-t1.3",
+          "n_passes": 3,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2b-text-t-1-3/evaluation.json",
+          "detections": "outputs/retest/phase2b/track2-text/T1.3"
+        }
+      ]
+    },
+    "retest-phase2c": {
+      "_note": "Era-1 retest, H8 (phase2c). Single-pass replicate conditions (K passes per condition, metric = replicate-mean over runs), scored at the 14-buffer+MCC standard (Session 102 re-score, results/paper-eval/phase2/512px-14buf-mcc/). Era-1 340-tile, curator GT, 512px. Model of record: gemini-3-flash. detections points at the condition dir (the replicate-mean eval has no single geojson); n_detections=None is expected. proposer_pools = the leaf condition dirs (run_* = replicates).",
+      "proposer_pools": {
+        "track1-image-canonical": {
+          "modality": "image",
+          "path": "track1-image/canonical"
+        },
+        "track1-image-plus-hp": {
+          "modality": "image",
+          "path": "track1-image/plus-hp"
+        },
+        "track1-image-pure-positive-canon": {
+          "modality": "image",
+          "path": "track1-image/pure-positive-canon"
+        },
+        "track1-image-scale-4": {
+          "modality": "image",
+          "path": "track1-image/scale-4"
+        },
+        "track1-image-scale-8": {
+          "modality": "image",
+          "path": "track1-image/scale-8"
+        },
+        "track1-image-exploratory-pure-positive-2hp": {
+          "modality": "image",
+          "path": "track1-image-exploratory/pure-positive-2hp"
+        },
+        "track1-image-exploratory-pure-positive-4hp": {
+          "modality": "image",
+          "path": "track1-image-exploratory/pure-positive-4hp"
+        },
+        "track1-image-exploratory-pure-positive-canon": {
+          "modality": "image",
+          "path": "track1-image-exploratory/pure-positive-canon"
+        },
+        "track2-text-canonical": {
+          "modality": "text",
+          "path": "track2-text/canonical"
+        },
+        "track2-text-plus-hp": {
+          "modality": "text",
+          "path": "track2-text/plus-hp"
+        },
+        "track2-text-pure-positive-canon": {
+          "modality": "text",
+          "path": "track2-text/pure-positive-canon"
+        },
+        "track2-text-scale-4": {
+          "modality": "text",
+          "path": "track2-text/scale-4"
+        },
+        "track2-text-scale-8": {
+          "modality": "text",
+          "path": "track2-text/scale-8"
+        }
+      },
+      "verifier_passes": {},
+      "conditions": [
+        {
+          "label": "image-canonical",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track1-image-canonical",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2c-image-canonical/evaluation.json",
+          "detections": "outputs/retest/phase2c/track1-image/canonical"
+        },
+        {
+          "label": "image-plus-hp",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track1-image-plus-hp",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2c-image-plus-hp/evaluation.json",
+          "detections": "outputs/retest/phase2c/track1-image/plus-hp"
+        },
+        {
+          "label": "image-pure-positive-canon",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track1-image-pure-positive-canon",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2c-image-pure-positive-canon/evaluation.json",
+          "detections": "outputs/retest/phase2c/track1-image/pure-positive-canon"
+        },
+        {
+          "label": "image-scale-4",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track1-image-scale-4",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2c-image-scale-4/evaluation.json",
+          "detections": "outputs/retest/phase2c/track1-image/scale-4"
+        },
+        {
+          "label": "image-scale-8",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track1-image-scale-8",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2c-image-scale-8/evaluation.json",
+          "detections": "outputs/retest/phase2c/track1-image/scale-8"
+        },
+        {
+          "label": "image-exploratory-pure-positive-2hp",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track1-image-exploratory-pure-positive-2hp",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2c-image-exploratory-pure-positive-2hp/evaluation.json",
+          "detections": "outputs/retest/phase2c/track1-image-exploratory/pure-positive-2hp"
+        },
+        {
+          "label": "image-exploratory-pure-positive-4hp",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track1-image-exploratory-pure-positive-4hp",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2c-image-exploratory-pure-positive-4hp/evaluation.json",
+          "detections": "outputs/retest/phase2c/track1-image-exploratory/pure-positive-4hp"
+        },
+        {
+          "label": "image-exploratory-pure-positive-canon",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track1-image-exploratory-pure-positive-canon",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2c-image-exploratory-pure-positive-canon/evaluation.json",
+          "detections": "outputs/retest/phase2c/track1-image-exploratory/pure-positive-canon"
+        },
+        {
+          "label": "text-canonical",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track2-text-canonical",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2c-text-canonical/evaluation.json",
+          "detections": "outputs/retest/phase2c/track2-text/canonical"
+        },
+        {
+          "label": "text-plus-hp",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track2-text-plus-hp",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2c-text-plus-hp/evaluation.json",
+          "detections": "outputs/retest/phase2c/track2-text/plus-hp"
+        },
+        {
+          "label": "text-pure-positive-canon",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track2-text-pure-positive-canon",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2c-text-pure-positive-canon/evaluation.json",
+          "detections": "outputs/retest/phase2c/track2-text/pure-positive-canon"
+        },
+        {
+          "label": "text-scale-4",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track2-text-scale-4",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2c-text-scale-4/evaluation.json",
+          "detections": "outputs/retest/phase2c/track2-text/scale-4"
+        },
+        {
+          "label": "text-scale-8",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track2-text-scale-8",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2c-text-scale-8/evaluation.json",
+          "detections": "outputs/retest/phase2c/track2-text/scale-8"
+        }
+      ]
+    },
+    "retest-phase2d": {
+      "_note": "Era-1 retest, H5 (phase2d). Single-pass replicate conditions (K passes per condition, metric = replicate-mean over runs), scored at the 14-buffer+MCC standard (Session 102 re-score, results/paper-eval/phase2/512px-14buf-mcc/). Era-1 340-tile, curator GT, 512px. Model of record: gemini-3-flash. detections points at the condition dir (the replicate-mean eval has no single geojson); n_detections=None is expected. proposer_pools = the leaf condition dirs (run_* = replicates).",
+      "proposer_pools": {
+        "track1-image-terse": {
+          "modality": "image",
+          "path": "track1-image/terse"
+        },
+        "track1-image-verbose": {
+          "modality": "image",
+          "path": "track1-image/verbose"
+        },
+        "track2-text-terse": {
+          "modality": "text",
+          "path": "track2-text/terse"
+        },
+        "track2-text-verbose": {
+          "modality": "text",
+          "path": "track2-text/verbose"
+        }
+      },
+      "verifier_passes": {},
+      "conditions": [
+        {
+          "label": "image-terse",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track1-image-terse",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2d-image-terse/evaluation.json",
+          "detections": "outputs/retest/phase2d/track1-image/terse"
+        },
+        {
+          "label": "image-verbose",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track1-image-verbose",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2d-image-verbose/evaluation.json",
+          "detections": "outputs/retest/phase2d/track1-image/verbose"
+        },
+        {
+          "label": "text-terse",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track2-text-terse",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2d-text-terse/evaluation.json",
+          "detections": "outputs/retest/phase2d/track2-text/terse"
+        },
+        {
+          "label": "text-verbose",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "track2-text-verbose",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2d-text-verbose/evaluation.json",
+          "detections": "outputs/retest/phase2d/track2-text/verbose"
+        }
+      ]
+    },
+    "retest-phase2e": {
+      "_note": "Era-1 retest, H4 (phase2e). Single-pass replicate conditions (K passes per condition, metric = replicate-mean over runs), scored at the 14-buffer+MCC standard (Session 102 re-score, results/paper-eval/phase2/512px-14buf-mcc/). Era-1 340-tile, curator GT, 512px. Model of record: gemini-3-flash. detections points at the condition dir (the replicate-mean eval has no single geojson); n_detections=None is expected. proposer_pools = the leaf condition dirs (run_* = replicates).",
+      "proposer_pools": {
+        "canonical-first": {
+          "modality": "image",
+          "path": "canonical-first"
+        },
+        "canonical-last": {
+          "modality": "image",
+          "path": "canonical-last"
+        },
+        "config-default": {
+          "modality": "image",
+          "path": "config-default"
+        },
+        "random": {
+          "modality": "image",
+          "path": "random"
+        }
+      },
+      "verifier_passes": {},
+      "conditions": [
+        {
+          "label": "canonical-first",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "canonical-first",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2e-canonical-first/evaluation.json",
+          "detections": "outputs/retest/phase2e/canonical-first"
+        },
+        {
+          "label": "canonical-last",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "canonical-last",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2e-canonical-last/evaluation.json",
+          "detections": "outputs/retest/phase2e/canonical-last"
+        },
+        {
+          "label": "config-default",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "config-default",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2e-config-default/evaluation.json",
+          "detections": "outputs/retest/phase2e/config-default"
+        },
+        {
+          "label": "random",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "random",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2e-random/evaluation.json",
+          "detections": "outputs/retest/phase2e/random"
+        }
+      ]
     }
   }
 }
