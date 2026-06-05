@@ -1,0 +1,1748 @@
+{
+  "_comment": "pv-diag-384 consensus vote-threshold x N-aggregation sweep re-scored at the 14 uniform buffers + MCC (BUFFERS_STANDARD, BCa 10k/seed 42). Buffer-harmonises the phase3a-{text,image}-matrix consensus sweep (originally [20,30,40,50]) to the 3b manifest standard, for Task 4 (GAP-7). Generated 2026-06-05 (Session 102) from the matrix evals' detection refs, restricted to pv-diag-384 (3 n1-outstanding-384 strays excluded). Slug = pool__temp__consensus-dir__tK (consensus-dir disambiguates the N-aggregation: consensus / consensus-n5 / consensus-n10). Scope: Era-2 487 tiles, curator GT, 384px. Single-file mode. Model of record: gemini-3-flash. Run on zbook via rescore_conditions.py --execute. Operating point: 20 m within the sweep.",
+  "entries": [
+    {
+      "label": "flash-high-image-n5__image-t0.0__consensus__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.0__consensus__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t2"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.0__consensus__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t3"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.3__consensus-n5__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n5/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.3__consensus-n5__t1"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.3__consensus-n5__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n5/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.3__consensus-n5__t2"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.3__consensus-n5__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n5/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.3__consensus-n5__t3"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.3__consensus-n5__t4",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n5/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.3__consensus-n5__t4"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.3__consensus-n5__t5",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n5/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.3__consensus-n5__t5"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.3__consensus__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.3__consensus__t1"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.3__consensus__t10",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus/consensus_t10.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.3__consensus__t10"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.3__consensus__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.3__consensus__t2"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.3__consensus__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.3__consensus__t3"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.3__consensus__t4",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.3__consensus__t4"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.3__consensus__t5",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.3__consensus__t5"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.3__consensus__t6",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus/consensus_t6.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.3__consensus__t6"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.3__consensus__t7",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus/consensus_t7.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.3__consensus__t7"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.3__consensus__t8",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus/consensus_t8.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.3__consensus__t8"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.3__consensus__t9",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus/consensus_t9.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.3__consensus__t9"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.7__consensus-n5__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n5/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.7__consensus-n5__t1"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.7__consensus-n5__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n5/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.7__consensus-n5__t2"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.7__consensus-n5__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n5/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.7__consensus-n5__t3"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.7__consensus-n5__t4",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n5/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.7__consensus-n5__t4"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.7__consensus-n5__t5",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n5/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.7__consensus-n5__t5"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.7__consensus__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.7__consensus__t1"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.7__consensus__t10",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus/consensus_t10.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.7__consensus__t10"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.7__consensus__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.7__consensus__t2"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.7__consensus__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.7__consensus__t3"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.7__consensus__t4",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.7__consensus__t4"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.7__consensus__t5",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.7__consensus__t5"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.7__consensus__t6",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus/consensus_t6.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.7__consensus__t6"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.7__consensus__t7",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus/consensus_t7.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.7__consensus__t7"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.7__consensus__t8",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus/consensus_t8.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.7__consensus__t8"
+    },
+    {
+      "label": "flash-high-image-n5__image-t0.7__consensus__t9",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus/consensus_t9.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.7__consensus__t9"
+    },
+    {
+      "label": "flash-high-image-n5__image-t1.0__consensus-n5__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n5/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t1.0__consensus-n5__t1"
+    },
+    {
+      "label": "flash-high-image-n5__image-t1.0__consensus-n5__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n5/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t1.0__consensus-n5__t2"
+    },
+    {
+      "label": "flash-high-image-n5__image-t1.0__consensus-n5__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n5/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t1.0__consensus-n5__t3"
+    },
+    {
+      "label": "flash-high-image-n5__image-t1.0__consensus-n5__t4",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n5/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t1.0__consensus-n5__t4"
+    },
+    {
+      "label": "flash-high-image-n5__image-t1.0__consensus-n5__t5",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n5/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t1.0__consensus-n5__t5"
+    },
+    {
+      "label": "flash-high-image-n5__image-t1.0__consensus__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t1.0__consensus__t1"
+    },
+    {
+      "label": "flash-high-image-n5__image-t1.0__consensus__t10",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus/consensus_t10.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t1.0__consensus__t10"
+    },
+    {
+      "label": "flash-high-image-n5__image-t1.0__consensus__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t1.0__consensus__t2"
+    },
+    {
+      "label": "flash-high-image-n5__image-t1.0__consensus__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t1.0__consensus__t3"
+    },
+    {
+      "label": "flash-high-image-n5__image-t1.0__consensus__t4",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t1.0__consensus__t4"
+    },
+    {
+      "label": "flash-high-image-n5__image-t1.0__consensus__t5",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t1.0__consensus__t5"
+    },
+    {
+      "label": "flash-high-image-n5__image-t1.0__consensus__t6",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus/consensus_t6.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t1.0__consensus__t6"
+    },
+    {
+      "label": "flash-high-image-n5__image-t1.0__consensus__t7",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus/consensus_t7.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t1.0__consensus__t7"
+    },
+    {
+      "label": "flash-high-image-n5__image-t1.0__consensus__t8",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus/consensus_t8.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t1.0__consensus__t8"
+    },
+    {
+      "label": "flash-high-image-n5__image-t1.0__consensus__t9",
+      "detections": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus/consensus_t9.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t1.0__consensus__t9"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.0__consensus__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t1"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.0__consensus__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t2"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.0__consensus__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.3__consensus-n5__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n5/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.3__consensus-n5__t1"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.3__consensus-n5__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n5/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.3__consensus-n5__t2"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.3__consensus-n5__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n5/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.3__consensus-n5__t3"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.3__consensus-n5__t4",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n5/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.3__consensus-n5__t4"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.3__consensus-n5__t5",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n5/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.3__consensus-n5__t5"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.3__consensus__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.3__consensus__t1"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.3__consensus__t10",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus/consensus_t10.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.3__consensus__t10"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.3__consensus__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.3__consensus__t2"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.3__consensus__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.3__consensus__t3"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.3__consensus__t4",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.3__consensus__t4"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.3__consensus__t5",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.3__consensus__t5"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.3__consensus__t6",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus/consensus_t6.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.3__consensus__t6"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.3__consensus__t7",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus/consensus_t7.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.3__consensus__t7"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.3__consensus__t8",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus/consensus_t8.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.3__consensus__t8"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.3__consensus__t9",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus/consensus_t9.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.3__consensus__t9"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus-n10__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n10/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus-n10__t1"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus-n10__t10",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n10/consensus_t10.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus-n10__t10"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus-n10__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n10/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus-n10__t2"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus-n10__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n10/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus-n10__t3"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus-n10__t4",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n10/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus-n10__t4"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus-n10__t5",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n10/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus-n10__t5"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus-n10__t6",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n10/consensus_t6.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus-n10__t6"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus-n10__t7",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n10/consensus_t7.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus-n10__t7"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus-n10__t8",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n10/consensus_t8.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus-n10__t8"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus-n10__t9",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n10/consensus_t9.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus-n10__t9"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus-n5__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n5/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus-n5__t1"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus-n5__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n5/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus-n5__t2"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus-n5__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n5/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus-n5__t3"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus-n5__t4",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n5/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus-n5__t4"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus-n5__t5",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n5/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus-n5__t5"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t1"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t10",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t10.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t10"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t11",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t11.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t11"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t12",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t12.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t12"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t13",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t13.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t13"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t14",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t14.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t14"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t15",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t15.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t15"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t16",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t16.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t16"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t17",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t17.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t17"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t18",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t18.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t18"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t19",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t19.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t19"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t2"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t20",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t20.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t20"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t21",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t21.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t21"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t22",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t22.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t22"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t23",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t23.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t23"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t24",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t24.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t24"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t25",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t25.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t25"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t26",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t26.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t26"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t27",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t27.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t27"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t28",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t28.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t28"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t29",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t29.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t29"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t3"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t30",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t30.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t30"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t4",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t4"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t5",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t5"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t6",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t6.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t6"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t7",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t7.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t7"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t8",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t8.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t8"
+    },
+    {
+      "label": "flash-high-text-n5__text-t0.7__consensus__t9",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/consensus_t9.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t9"
+    },
+    {
+      "label": "flash-high-text-n5__text-t1.0__consensus-n5__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n5/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t1.0__consensus-n5__t1"
+    },
+    {
+      "label": "flash-high-text-n5__text-t1.0__consensus-n5__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n5/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t1.0__consensus-n5__t2"
+    },
+    {
+      "label": "flash-high-text-n5__text-t1.0__consensus-n5__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n5/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t1.0__consensus-n5__t3"
+    },
+    {
+      "label": "flash-high-text-n5__text-t1.0__consensus-n5__t4",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n5/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t1.0__consensus-n5__t4"
+    },
+    {
+      "label": "flash-high-text-n5__text-t1.0__consensus-n5__t5",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n5/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t1.0__consensus-n5__t5"
+    },
+    {
+      "label": "flash-high-text-n5__text-t1.0__consensus__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t1.0__consensus__t1"
+    },
+    {
+      "label": "flash-high-text-n5__text-t1.0__consensus__t10",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus/consensus_t10.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t1.0__consensus__t10"
+    },
+    {
+      "label": "flash-high-text-n5__text-t1.0__consensus__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t1.0__consensus__t2"
+    },
+    {
+      "label": "flash-high-text-n5__text-t1.0__consensus__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t1.0__consensus__t3"
+    },
+    {
+      "label": "flash-high-text-n5__text-t1.0__consensus__t4",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t1.0__consensus__t4"
+    },
+    {
+      "label": "flash-high-text-n5__text-t1.0__consensus__t5",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t1.0__consensus__t5"
+    },
+    {
+      "label": "flash-high-text-n5__text-t1.0__consensus__t6",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus/consensus_t6.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t1.0__consensus__t6"
+    },
+    {
+      "label": "flash-high-text-n5__text-t1.0__consensus__t7",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus/consensus_t7.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t1.0__consensus__t7"
+    },
+    {
+      "label": "flash-high-text-n5__text-t1.0__consensus__t8",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus/consensus_t8.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t1.0__consensus__t8"
+    },
+    {
+      "label": "flash-high-text-n5__text-t1.0__consensus__t9",
+      "detections": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus/consensus_t9.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t1.0__consensus__t9"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.0__consensus__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.0/consensus/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.0__consensus__t1"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.0__consensus__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.0/consensus/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.0__consensus__t2"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.0__consensus__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.0/consensus/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.0__consensus__t3"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.3__consensus-n5__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n5/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.3__consensus-n5__t1"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.3__consensus-n5__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n5/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.3__consensus-n5__t2"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.3__consensus-n5__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n5/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.3__consensus-n5__t3"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.3__consensus-n5__t4",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n5/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.3__consensus-n5__t4"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.3__consensus-n5__t5",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n5/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.3__consensus-n5__t5"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.3__consensus__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.3__consensus__t1"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.3__consensus__t10",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus/consensus_t10.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.3__consensus__t10"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.3__consensus__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.3__consensus__t2"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.3__consensus__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.3__consensus__t3"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.3__consensus__t4",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.3__consensus__t4"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.3__consensus__t5",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.3__consensus__t5"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.3__consensus__t6",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus/consensus_t6.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.3__consensus__t6"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.3__consensus__t7",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus/consensus_t7.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.3__consensus__t7"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.3__consensus__t8",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus/consensus_t8.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.3__consensus__t8"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.3__consensus__t9",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus/consensus_t9.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.3__consensus__t9"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus-n10__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n10/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus-n10__t1"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus-n10__t10",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n10/consensus_t10.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus-n10__t10"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus-n10__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n10/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus-n10__t2"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus-n10__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n10/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus-n10__t3"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus-n10__t4",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n10/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus-n10__t4"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus-n10__t5",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n10/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus-n10__t5"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus-n10__t6",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n10/consensus_t6.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus-n10__t6"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus-n10__t7",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n10/consensus_t7.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus-n10__t7"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus-n10__t8",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n10/consensus_t8.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus-n10__t8"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus-n10__t9",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n10/consensus_t9.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus-n10__t9"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus-n5__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n5/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus-n5__t1"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus-n5__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n5/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus-n5__t2"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus-n5__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n5/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus-n5__t3"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus-n5__t4",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n5/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus-n5__t4"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus-n5__t5",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n5/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus-n5__t5"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t1"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t10",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t10.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t10"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t11",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t11.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t11"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t12",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t12.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t12"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t13",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t13.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t13"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t14",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t14.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t14"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t15",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t15.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t15"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t16",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t16.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t16"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t17",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t17.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t17"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t18",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t18.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t18"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t19",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t19.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t19"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t2"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t20",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t20.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t20"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t21",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t21.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t21"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t22",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t22.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t22"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t23",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t23.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t23"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t24",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t24.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t24"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t25",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t25.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t25"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t26",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t26.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t26"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t27",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t27.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t27"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t28",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t28.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t28"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t29",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t29.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t29"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t3"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t30",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t30.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t30"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t4",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t4"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t5",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t5"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t6",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t6.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t6"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t7",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t7.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t7"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t8",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t8.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t8"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t0.7__consensus__t9",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t9.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t0.7__consensus__t9"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t1.0__consensus-n5__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n5/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t1.0__consensus-n5__t1"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t1.0__consensus-n5__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n5/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t1.0__consensus-n5__t2"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t1.0__consensus-n5__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n5/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t1.0__consensus-n5__t3"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t1.0__consensus-n5__t4",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n5/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t1.0__consensus-n5__t4"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t1.0__consensus-n5__t5",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n5/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t1.0__consensus-n5__t5"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t1.0__consensus__t1",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t1.0__consensus__t1"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t1.0__consensus__t10",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus/consensus_t10.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t1.0__consensus__t10"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t1.0__consensus__t2",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t1.0__consensus__t2"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t1.0__consensus__t3",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t1.0__consensus__t3"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t1.0__consensus__t4",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t1.0__consensus__t4"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t1.0__consensus__t5",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t1.0__consensus__t5"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t1.0__consensus__t6",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus/consensus_t6.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t1.0__consensus__t6"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t1.0__consensus__t7",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus/consensus_t7.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t1.0__consensus__t7"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t1.0__consensus__t8",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus/consensus_t8.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t1.0__consensus__t8"
+    },
+    {
+      "label": "flash-minimal-text-n30-t07__text-t1.0__consensus__t9",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus/consensus_t9.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-minimal-text-n30-t07__text-t1.0__consensus__t9"
+    },
+    {
+      "label": "image-n5__image-t0.3__consensus-n5__t1",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n5/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.3__consensus-n5__t1"
+    },
+    {
+      "label": "image-n5__image-t0.3__consensus-n5__t2",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n5/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.3__consensus-n5__t2"
+    },
+    {
+      "label": "image-n5__image-t0.3__consensus-n5__t3",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n5/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.3__consensus-n5__t3"
+    },
+    {
+      "label": "image-n5__image-t0.3__consensus-n5__t4",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n5/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.3__consensus-n5__t4"
+    },
+    {
+      "label": "image-n5__image-t0.3__consensus-n5__t5",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n5/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.3__consensus-n5__t5"
+    },
+    {
+      "label": "image-n5__image-t0.3__consensus__t1",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.3__consensus__t1"
+    },
+    {
+      "label": "image-n5__image-t0.3__consensus__t10",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus/consensus_t10.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.3__consensus__t10"
+    },
+    {
+      "label": "image-n5__image-t0.3__consensus__t2",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.3__consensus__t2"
+    },
+    {
+      "label": "image-n5__image-t0.3__consensus__t3",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.3__consensus__t3"
+    },
+    {
+      "label": "image-n5__image-t0.3__consensus__t4",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.3__consensus__t4"
+    },
+    {
+      "label": "image-n5__image-t0.3__consensus__t5",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.3__consensus__t5"
+    },
+    {
+      "label": "image-n5__image-t0.3__consensus__t6",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus/consensus_t6.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.3__consensus__t6"
+    },
+    {
+      "label": "image-n5__image-t0.3__consensus__t7",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus/consensus_t7.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.3__consensus__t7"
+    },
+    {
+      "label": "image-n5__image-t0.3__consensus__t8",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus/consensus_t8.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.3__consensus__t8"
+    },
+    {
+      "label": "image-n5__image-t0.3__consensus__t9",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus/consensus_t9.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.3__consensus__t9"
+    },
+    {
+      "label": "image-n5__image-t0.7__consensus-n5__t1",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n5/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.7__consensus-n5__t1"
+    },
+    {
+      "label": "image-n5__image-t0.7__consensus-n5__t2",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n5/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.7__consensus-n5__t2"
+    },
+    {
+      "label": "image-n5__image-t0.7__consensus-n5__t3",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n5/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.7__consensus-n5__t3"
+    },
+    {
+      "label": "image-n5__image-t0.7__consensus-n5__t4",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n5/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.7__consensus-n5__t4"
+    },
+    {
+      "label": "image-n5__image-t0.7__consensus-n5__t5",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n5/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.7__consensus-n5__t5"
+    },
+    {
+      "label": "image-n5__image-t0.7__consensus__t1",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.7__consensus__t1"
+    },
+    {
+      "label": "image-n5__image-t0.7__consensus__t10",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus/consensus_t10.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.7__consensus__t10"
+    },
+    {
+      "label": "image-n5__image-t0.7__consensus__t2",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.7__consensus__t2"
+    },
+    {
+      "label": "image-n5__image-t0.7__consensus__t3",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.7__consensus__t3"
+    },
+    {
+      "label": "image-n5__image-t0.7__consensus__t4",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.7__consensus__t4"
+    },
+    {
+      "label": "image-n5__image-t0.7__consensus__t5",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.7__consensus__t5"
+    },
+    {
+      "label": "image-n5__image-t0.7__consensus__t6",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus/consensus_t6.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.7__consensus__t6"
+    },
+    {
+      "label": "image-n5__image-t0.7__consensus__t7",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus/consensus_t7.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.7__consensus__t7"
+    },
+    {
+      "label": "image-n5__image-t0.7__consensus__t8",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus/consensus_t8.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.7__consensus__t8"
+    },
+    {
+      "label": "image-n5__image-t0.7__consensus__t9",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus/consensus_t9.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t0.7__consensus__t9"
+    },
+    {
+      "label": "image-n5__image-t1.0__consensus-n5__t1",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n5/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t1.0__consensus-n5__t1"
+    },
+    {
+      "label": "image-n5__image-t1.0__consensus-n5__t2",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n5/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t1.0__consensus-n5__t2"
+    },
+    {
+      "label": "image-n5__image-t1.0__consensus-n5__t3",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n5/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t1.0__consensus-n5__t3"
+    },
+    {
+      "label": "image-n5__image-t1.0__consensus-n5__t4",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n5/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t1.0__consensus-n5__t4"
+    },
+    {
+      "label": "image-n5__image-t1.0__consensus-n5__t5",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n5/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t1.0__consensus-n5__t5"
+    },
+    {
+      "label": "image-n5__image-t1.0__consensus__t1",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus/consensus_t1.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t1.0__consensus__t1"
+    },
+    {
+      "label": "image-n5__image-t1.0__consensus__t10",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus/consensus_t10.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t1.0__consensus__t10"
+    },
+    {
+      "label": "image-n5__image-t1.0__consensus__t2",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus/consensus_t2.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t1.0__consensus__t2"
+    },
+    {
+      "label": "image-n5__image-t1.0__consensus__t3",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus/consensus_t3.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t1.0__consensus__t3"
+    },
+    {
+      "label": "image-n5__image-t1.0__consensus__t4",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus/consensus_t4.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t1.0__consensus__t4"
+    },
+    {
+      "label": "image-n5__image-t1.0__consensus__t5",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t1.0__consensus__t5"
+    },
+    {
+      "label": "image-n5__image-t1.0__consensus__t6",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus/consensus_t6.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t1.0__consensus__t6"
+    },
+    {
+      "label": "image-n5__image-t1.0__consensus__t7",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus/consensus_t7.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t1.0__consensus__t7"
+    },
+    {
+      "label": "image-n5__image-t1.0__consensus__t8",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus/consensus_t8.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t1.0__consensus__t8"
+    },
+    {
+      "label": "image-n5__image-t1.0__consensus__t9",
+      "detections": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus/consensus_t9.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t1.0__consensus__t9"
+    }
+  ]
+}
