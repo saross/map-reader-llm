@@ -1371,9 +1371,459 @@
       ]
     },
     "pv-diag-384": {
-      "_note": "N=1 baseline-matrix cells only (Session 96). proposer_pools/verifier_passes intentionally EMPTY: pv-diag-384's full pass+consensus+verified decomposition is Batch E (GAP-7). These 10 single-pass conditions reference their pools by relative pool-dir path; Batch E will declare them. See docs/methodology/n1-baseline-matrix.md.",
-      "proposer_pools": {},
-      "verifier_passes": {},
+      "_note": "GAP-7 (Session 102): proposer_pools (24 = pool x temp) + verifier_passes (88 metas across the pools' verified-v1-nN / session-78-matrix subdirs) now populated. The 10 N1 single-pass baseline conditions (Session 96) are kept verbatim; they reference their pool by relative path-string (benign pool-unresolved). Era-2 487-tile, 384px. Consensus operating-point conditions + the consensus 3c analysis (the buffer-harmonised sweep at results/rescore-2026-06-05/pv-diag-384/consensus-sweep/) are the next authoring step. Model of record: gemini-3-flash (flash pools) / gemini-3.1-pro (pro pools).",
+      "proposer_pools": {
+        "flash-high-image-n5-image-t0.0": {
+          "modality": "image",
+          "path": "flash-high-image-n5/image-t0.0"
+        },
+        "flash-high-image-n5-image-t0.3": {
+          "modality": "image",
+          "path": "flash-high-image-n5/image-t0.3"
+        },
+        "flash-high-image-n5-image-t0.7": {
+          "modality": "image",
+          "path": "flash-high-image-n5/image-t0.7"
+        },
+        "flash-high-image-n5-image-t1.0": {
+          "modality": "image",
+          "path": "flash-high-image-n5/image-t1.0"
+        },
+        "flash-high-text-n5-text-t0.0": {
+          "modality": "text",
+          "path": "flash-high-text-n5/text-t0.0"
+        },
+        "flash-high-text-n5-text-t0.3": {
+          "modality": "text",
+          "path": "flash-high-text-n5/text-t0.3"
+        },
+        "flash-high-text-n5-text-t0.7": {
+          "modality": "text",
+          "path": "flash-high-text-n5/text-t0.7"
+        },
+        "flash-high-text-n5-text-t1.0": {
+          "modality": "text",
+          "path": "flash-high-text-n5/text-t1.0"
+        },
+        "flash-minimal-text-n30-t07-text-t0.0": {
+          "modality": "text",
+          "path": "flash-minimal-text-n30-t07/text-t0.0"
+        },
+        "flash-minimal-text-n30-t07-text-t0.3": {
+          "modality": "text",
+          "path": "flash-minimal-text-n30-t07/text-t0.3"
+        },
+        "flash-minimal-text-n30-t07-text-t0.7": {
+          "modality": "text",
+          "path": "flash-minimal-text-n30-t07/text-t0.7"
+        },
+        "flash-minimal-text-n30-t07-text-t1.0": {
+          "modality": "text",
+          "path": "flash-minimal-text-n30-t07/text-t1.0"
+        },
+        "image-baseline-image-t0.0": {
+          "modality": "image",
+          "path": "image-baseline/image-t0.0"
+        },
+        "image-n5-image-t0.3": {
+          "modality": "image",
+          "path": "image-n5/image-t0.3"
+        },
+        "image-n5-image-t0.7": {
+          "modality": "image",
+          "path": "image-n5/image-t0.7"
+        },
+        "image-n5-image-t1.0": {
+          "modality": "image",
+          "path": "image-n5/image-t1.0"
+        },
+        "pro-high-image-n5-image-t0.7": {
+          "modality": "image",
+          "path": "pro-high-image-n5/image-t0.7"
+        },
+        "pro-high-text-n5-text-t0.7": {
+          "modality": "text",
+          "path": "pro-high-text-n5/text-t0.7"
+        },
+        "pro-medium-image-baseline-image-t0.0": {
+          "modality": "image",
+          "path": "pro-medium-image-baseline/image-t0.0"
+        },
+        "pro-medium-text-baseline-text-t0.0": {
+          "modality": "text",
+          "path": "pro-medium-text-baseline/text-t0.0"
+        },
+        "scale-4-optimal-487": {
+          "modality": "image",
+          "path": "scale-4-optimal-487"
+        },
+        "text-baseline-text-t0.0": {
+          "modality": "text",
+          "path": "text-baseline/text-t0.0"
+        },
+        "text-baseline-611tiles-text-t0.0": {
+          "modality": "text",
+          "path": "text-baseline-611tiles/text-t0.0"
+        },
+        "text-n10-text-t0.7": {
+          "modality": "text",
+          "path": "text-n10/text-t0.7"
+        }
+      },
+      "verifier_passes": {
+        "flash-high-image-n5-image-t0.0-verified-v1-n10": {
+          "modality": "image",
+          "path": "flash-high-image-n5/image-t0.0/verified-v1-n10"
+        },
+        "flash-high-image-n5-image-t0.3-verified-v1-n10": {
+          "modality": "image",
+          "path": "flash-high-image-n5/image-t0.3/verified-v1-n10"
+        },
+        "flash-high-image-n5-image-t0.3-verified-v1-n5": {
+          "modality": "image",
+          "path": "flash-high-image-n5/image-t0.3/verified-v1-n5"
+        },
+        "flash-high-image-n5-image-t0.7-session-78-matrix-verified-adversarial": {
+          "modality": "image",
+          "path": "flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial"
+        },
+        "flash-high-image-n5-image-t0.7-session-78-matrix-verified-adversarial-text": {
+          "modality": "image",
+          "path": "flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text"
+        },
+        "flash-high-image-n5-image-t0.7-session-78-matrix-verified-brief": {
+          "modality": "image",
+          "path": "flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief"
+        },
+        "flash-high-image-n5-image-t0.7-session-78-matrix-verified-brief-text": {
+          "modality": "image",
+          "path": "flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text"
+        },
+        "flash-high-image-n5-image-t0.7-session-78-matrix-verified-checklist": {
+          "modality": "image",
+          "path": "flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist"
+        },
+        "flash-high-image-n5-image-t0.7-session-78-matrix-verified-checklist-text": {
+          "modality": "image",
+          "path": "flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text"
+        },
+        "flash-high-image-n5-image-t0.7-session-78-matrix-verified-comparative": {
+          "modality": "image",
+          "path": "flash-high-image-n5/image-t0.7/session-78-matrix/verified-comparative"
+        },
+        "flash-high-image-n5-image-t0.7-verified-v1-n10": {
+          "modality": "image",
+          "path": "flash-high-image-n5/image-t0.7/verified-v1-n10"
+        },
+        "flash-high-image-n5-image-t0.7-verified-v1-n5": {
+          "modality": "image",
+          "path": "flash-high-image-n5/image-t0.7/verified-v1-n5"
+        },
+        "flash-high-image-n5-image-t1.0-verified-v1-n10": {
+          "modality": "image",
+          "path": "flash-high-image-n5/image-t1.0/verified-v1-n10"
+        },
+        "flash-high-image-n5-image-t1.0-verified-v1-n5": {
+          "modality": "image",
+          "path": "flash-high-image-n5/image-t1.0/verified-v1-n5"
+        },
+        "flash-high-text-n5-text-t0.0-verified-v1-n3": {
+          "modality": "text",
+          "path": "flash-high-text-n5/text-t0.0/verified-v1-n3"
+        },
+        "flash-high-text-n5-text-t0.3-verified-v1-n10": {
+          "modality": "text",
+          "path": "flash-high-text-n5/text-t0.3/verified-v1-n10"
+        },
+        "flash-high-text-n5-text-t0.3-verified-v1-n5": {
+          "modality": "text",
+          "path": "flash-high-text-n5/text-t0.3/verified-v1-n5"
+        },
+        "flash-high-text-n5-text-t0.7-session-78-matrix-verified-adversarial": {
+          "modality": "text",
+          "path": "flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial"
+        },
+        "flash-high-text-n5-text-t0.7-session-78-matrix-verified-adversarial-text": {
+          "modality": "text",
+          "path": "flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text"
+        },
+        "flash-high-text-n5-text-t0.7-session-78-matrix-verified-brief": {
+          "modality": "text",
+          "path": "flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief"
+        },
+        "flash-high-text-n5-text-t0.7-session-78-matrix-verified-brief-text": {
+          "modality": "text",
+          "path": "flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text"
+        },
+        "flash-high-text-n5-text-t0.7-session-78-matrix-verified-checklist": {
+          "modality": "text",
+          "path": "flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist"
+        },
+        "flash-high-text-n5-text-t0.7-session-78-matrix-verified-checklist-text": {
+          "modality": "text",
+          "path": "flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text"
+        },
+        "flash-high-text-n5-text-t0.7-session-78-matrix-verified-comparative": {
+          "modality": "text",
+          "path": "flash-high-text-n5/text-t0.7/session-78-matrix/verified-comparative"
+        },
+        "flash-high-text-n5-text-t0.7-verified-v1-n10": {
+          "modality": "text",
+          "path": "flash-high-text-n5/text-t0.7/verified-v1-n10"
+        },
+        "flash-high-text-n5-text-t0.7-verified-v1-n5": {
+          "modality": "text",
+          "path": "flash-high-text-n5/text-t0.7/verified-v1-n5"
+        },
+        "flash-high-text-n5-text-t1.0-verified-v1-n10": {
+          "modality": "text",
+          "path": "flash-high-text-n5/text-t1.0/verified-v1-n10"
+        },
+        "flash-high-text-n5-text-t1.0-verified-v1-n5": {
+          "modality": "text",
+          "path": "flash-high-text-n5/text-t1.0/verified-v1-n5"
+        },
+        "flash-minimal-text-n30-t07-text-t0.0-verified-v1-n3": {
+          "modality": "text",
+          "path": "flash-minimal-text-n30-t07/text-t0.0/verified-v1-n3"
+        },
+        "flash-minimal-text-n30-t07-text-t0.3-verified-v1-n10": {
+          "modality": "text",
+          "path": "flash-minimal-text-n30-t07/text-t0.3/verified-v1-n10"
+        },
+        "flash-minimal-text-n30-t07-text-t0.3-verified-v1-n5": {
+          "modality": "text",
+          "path": "flash-minimal-text-n30-t07/text-t0.3/verified-v1-n5"
+        },
+        "flash-minimal-text-n30-t07-text-t0.7-verified-v1-n10": {
+          "modality": "text",
+          "path": "flash-minimal-text-n30-t07/text-t0.7/verified-v1-n10"
+        },
+        "flash-minimal-text-n30-t07-text-t0.7-verified-v1-n5": {
+          "modality": "text",
+          "path": "flash-minimal-text-n30-t07/text-t0.7/verified-v1-n5"
+        },
+        "flash-minimal-text-n30-t07-text-t1.0-verified-v1-n10": {
+          "modality": "text",
+          "path": "flash-minimal-text-n30-t07/text-t1.0/verified-v1-n10"
+        },
+        "flash-minimal-text-n30-t07-text-t1.0-verified-v1-n5": {
+          "modality": "text",
+          "path": "flash-minimal-text-n30-t07/text-t1.0/verified-v1-n5"
+        },
+        "image-n5-image-t0.3-verified-v1-n10": {
+          "modality": "image",
+          "path": "image-n5/image-t0.3/verified-v1-n10"
+        },
+        "image-n5-image-t0.3-verified-v1-n5": {
+          "modality": "image",
+          "path": "image-n5/image-t0.3/verified-v1-n5"
+        },
+        "image-n5-image-t0.7-verified-v1-n10": {
+          "modality": "image",
+          "path": "image-n5/image-t0.7/verified-v1-n10"
+        },
+        "image-n5-image-t0.7-verified-v1-n5": {
+          "modality": "image",
+          "path": "image-n5/image-t0.7/verified-v1-n5"
+        },
+        "image-n5-image-t1.0-verified-v1-n10": {
+          "modality": "image",
+          "path": "image-n5/image-t1.0/verified-v1-n10"
+        },
+        "image-n5-image-t1.0-verified-v1-n5": {
+          "modality": "image",
+          "path": "image-n5/image-t1.0/verified-v1-n5"
+        },
+        "scale-4-optimal-487-verified-v1-n10": {
+          "modality": "image",
+          "path": "scale-4-optimal-487/verified-v1-n10"
+        },
+        "scale-4-optimal-487-verified-v1-n5": {
+          "modality": "image",
+          "path": "scale-4-optimal-487/verified-v1-n5"
+        },
+        "verified-flash-high-image-1of5": {
+          "modality": "image",
+          "path": "verified/flash-high-image-1of5"
+        },
+        "verified-flash-high-text-1of10": {
+          "modality": "text",
+          "path": "verified/flash-high-text-1of10"
+        },
+        "verified-flash-high-text-1of30": {
+          "modality": "text",
+          "path": "verified/flash-high-text-1of30"
+        },
+        "verified-flash-high-text-1of5": {
+          "modality": "text",
+          "path": "verified/flash-high-text-1of5"
+        },
+        "verified-flash-high-text-1of5-flash-high-verifier": {
+          "modality": "text",
+          "path": "verified/flash-high-text-1of5-flash-high-verifier"
+        },
+        "verified-flash-high-text-1of5-flash-medium-verifier": {
+          "modality": "text",
+          "path": "verified/flash-high-text-1of5-flash-medium-verifier"
+        },
+        "verified-flash-high-text-1of5-pro-verifier": {
+          "modality": "text",
+          "path": "verified/flash-high-text-1of5-pro-verifier"
+        },
+        "verified-flash-minimal-image-medium-verifier": {
+          "modality": "image",
+          "path": "verified/flash-minimal-image-medium-verifier"
+        },
+        "verified-flash-minimal-text-medium-verifier": {
+          "modality": "text",
+          "path": "verified/flash-minimal-text-medium-verifier"
+        },
+        "verified-flash-minimal-text-t07-1of5": {
+          "modality": "text",
+          "path": "verified/flash-minimal-text-t07-1of5"
+        },
+        "verified-image-1of10": {
+          "modality": "image",
+          "path": "verified/image-1of10"
+        },
+        "verified-image-1of5": {
+          "modality": "image",
+          "path": "verified/image-1of5"
+        },
+        "verified-image-2of5": {
+          "modality": "image",
+          "path": "verified/image-2of5"
+        },
+        "verified-image-3of5": {
+          "modality": "image",
+          "path": "verified/image-3of5"
+        },
+        "verified-image-4of5": {
+          "modality": "image",
+          "path": "verified/image-4of5"
+        },
+        "verified-image-5of5": {
+          "modality": "image",
+          "path": "verified/image-5of5"
+        },
+        "verified-image-baseline": {
+          "modality": "image",
+          "path": "verified/image-baseline"
+        },
+        "verified-image-baseline-pro-verifier": {
+          "modality": "image",
+          "path": "verified/image-baseline-pro-verifier"
+        },
+        "verified-pro-high-image-1of5-pro-verifier": {
+          "modality": "image",
+          "path": "verified/pro-high-image-1of5-pro-verifier"
+        },
+        "verified-pro-high-text-1of5": {
+          "modality": "text",
+          "path": "verified/pro-high-text-1of5"
+        },
+        "verified-pro-high-text-1of5-flash-minimal-verifier": {
+          "modality": "text",
+          "path": "verified/pro-high-text-1of5-flash-minimal-verifier"
+        },
+        "verified-pro-high-text-1of5-pro-verifier": {
+          "modality": "text",
+          "path": "verified/pro-high-text-1of5-pro-verifier"
+        },
+        "verified-pro-image-medium-verifier": {
+          "modality": "image",
+          "path": "verified/pro-image-medium-verifier"
+        },
+        "verified-pro-image-minimal-verifier": {
+          "modality": "image",
+          "path": "verified/pro-image-minimal-verifier"
+        },
+        "verified-pro-medium-image-baseline-pro-verifier": {
+          "modality": "image",
+          "path": "verified/pro-medium-image-baseline-pro-verifier"
+        },
+        "verified-pro-medium-text-baseline-pro-verifier": {
+          "modality": "text",
+          "path": "verified/pro-medium-text-baseline-pro-verifier"
+        },
+        "verified-pro-text-medium-verifier": {
+          "modality": "text",
+          "path": "verified/pro-text-medium-verifier"
+        },
+        "verified-pro-text-minimal-verifier": {
+          "modality": "text",
+          "path": "verified/pro-text-minimal-verifier"
+        },
+        "verified-text-10of10": {
+          "modality": "text",
+          "path": "verified/text-10of10"
+        },
+        "verified-text-1of10": {
+          "modality": "text",
+          "path": "verified/text-1of10"
+        },
+        "verified-text-1of5": {
+          "modality": "text",
+          "path": "verified/text-1of5"
+        },
+        "verified-text-2of10": {
+          "modality": "text",
+          "path": "verified/text-2of10"
+        },
+        "verified-text-2of5": {
+          "modality": "text",
+          "path": "verified/text-2of5"
+        },
+        "verified-text-3of10": {
+          "modality": "text",
+          "path": "verified/text-3of10"
+        },
+        "verified-text-3of5": {
+          "modality": "text",
+          "path": "verified/text-3of5"
+        },
+        "verified-text-4of10": {
+          "modality": "text",
+          "path": "verified/text-4of10"
+        },
+        "verified-text-4of5": {
+          "modality": "text",
+          "path": "verified/text-4of5"
+        },
+        "verified-text-5of10": {
+          "modality": "text",
+          "path": "verified/text-5of10"
+        },
+        "verified-text-5of5": {
+          "modality": "text",
+          "path": "verified/text-5of5"
+        },
+        "verified-text-6of10": {
+          "modality": "text",
+          "path": "verified/text-6of10"
+        },
+        "verified-text-7of10": {
+          "modality": "text",
+          "path": "verified/text-7of10"
+        },
+        "verified-text-8of10": {
+          "modality": "text",
+          "path": "verified/text-8of10"
+        },
+        "verified-text-9of10": {
+          "modality": "text",
+          "path": "verified/text-9of10"
+        },
+        "verified-text-baseline": {
+          "modality": "text",
+          "path": "verified/text-baseline"
+        },
+        "verified-text-baseline-pro-verifier": {
+          "modality": "text",
+          "path": "verified/text-baseline-pro-verifier"
+        }
+      },
       "conditions": [
         {
           "label": "baseline-flash-image-high-t-0-7",

@@ -2,7 +2,7 @@
 
 # Runs manifest
 
-> Generated 2026-06-05T07:10:51Z · 28 row(s) · schema v1.0.
+> Generated 2026-06-05T07:15:47Z · 28 row(s) · schema v1.0.
 >
 > **Coverage**: all 28 runs (run-level facts; conditions/passes added as 3b batches land).
 
