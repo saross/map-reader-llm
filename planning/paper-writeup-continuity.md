@@ -1,14 +1,55 @@
 # Paper write-up continuity — handoff for a fresh session
 
 **Created**: 2026-04-21 (late, end of Session 73 equivalent)
-**Last updated**: 2026-06-05 (Session 101 — **resolved both Session-101-plan anomalies**. Era-1 model-of-record = **`gemini-3-flash`** (the `gemini-2.0-flash` prose was a repo-wide confabulation originating in early Antigravity Gemini-3 self-misidentification — corrected across active + archived docs; commits `f9e53e0a` / `a6c9a986`; Obs 342/343; provenance memory). phase3c thinking-level = **HIGH** (commit `d4930b0f`). **Paper consequence: the cross-era *model* caveat is REMOVED — cross-era differences are tile-scope only (strictly nested).** **Tasks 3 & 4 (re-score phase2a-e; pv-diag-384 GAP-7) NOT started — deferred to Session 102**, now unblocked. $0 API / $0 compute. S98 finding unchanged. Prior (Session 100): decomposed Batch A residual + B + verifier-t-pilot → 18 of 28 runs; manifest 28 runs / 159 conditions / 192 passes.)
+**Last updated**: 2026-06-05 (Session 102 — **Tasks 3 & 4 COMPLETE**. Re-scored phase2a-e (36 conditions) + pv-diag-384's consensus sweep (249 evals) at the 14-buffer+MCC standard on **zbook** (12 workers, 0 failures; sapphire reserved for an inscriptions run); authored 5 phase2 runs + pv-diag-384's GAP-7 decomposition (24 pools + 88 verifier passes + 29 consensus conditions + the consensus 3c `sweep` analysis). Manifest **28 runs / 224 conditions / 559 passes / 2 analyses, ALL VALID**; decomposition **23 of 28 runs**. Model-of-record `gemini-3-flash` recorded. Commits `f6e757a7`→`5b2130be` (10), all pushed, $0 API. **Scheduled future work: the diversity-dividend statistical test** — the consensus analysis is a *registered calibration*, not a verified finding (see NEXT SESSION TODO #1). Prior (Session 101): resolved the model-of-record + phase3c-thinking anomalies.)
 **Purpose**: Continuity message for a fresh Claude Code session to
 pick up the paper write-up phase without re-reading the entire
 project state.
 
 ---
 
-## 🎯 NEXT SESSION (102) — PLANNED WORK [Session 101 resolved both anomalies 2026-06-05]
+## 🎯 NEXT SESSION (103) — PLANNED WORK [Session 102 completed Tasks 3 & 4, 2026-06-05]
+
+**Session 102 (2026-06-05) COMPLETED both substantive tasks (3 & 4)** — see § Session 102 record below. Manifest now **28 runs / 224 conditions / 559 passes / 2 analyses, ALL VALID**. Decomposition progress **23 of 28 runs** (remaining: phase3a / phase3a-high / phase3a-replication / phase3c + pv-diag-256). Both Era-1/Era-2 runs recorded `gemini-3-flash`.
+
+### ⏳ TODO (next live session)
+
+1. **⏰ SCHEDULE — Diversity-dividend statistical test vs the single-pass baseline (future work).** The Session-102 consensus 3c analysis **`pv-diag-384-consensus-calibration`** (`results/run-analyses.json`, type=`sweep`, H3) is a **REGISTERED CALIBRATION, NOT a verified finding** (`manually_verified_at=null`). It wires in the 249-point consensus sweep + the 29 headline operating-point conditions, but the **diversity-dividend test proper — HIGH-thinking consensus recovering/exceeding minimal-thinking and beating the single-pass baseline (`n1-baseline-matrix-384`), with significance (round-robin tile-swap permutation + BH-FDR, à la the n1 leaderboard)** — is **still to be run and signed off. THIS NEEDS SCHEDULING.** Compute on sapphire/zbook ($0 API).
+2. **phase3a / phase3a-high / phase3a-replication / phase3c → 3c analyses** (the 4 remaining Era-1 consensus sweeps). Now UNBLOCKED with a **template**: follow the Session-102 `pv-diag-384-consensus-calibration` pattern + the `/remember`ed rule (one citable condition per config at best-F1@20m + a 3c `sweep` analysis; non-headline thresholds → deferred `_ignored_evals`). NB their evals are F1-only (no MCC) → may need an MCC re-score or a no-MCC accommodation (cf. pv-diag-256).
+3. **`_ignored_evals` close-out sweep** — more runs now sit at benign "partial" (phase2a-e + pv-diag-384's unclaimed non-headline thresholds + the old 30 m/all-buffer phase2 siblings). Do as ONE sweep once the remaining 5 runs are decomposed; the `--draft-run` drafter lists candidate evals, the un-authored set IS the `_ignored_evals`. Turns the drift-check into a sharp completeness guard.
+4. **pv-diag-256 (no-MCC) disposition** — archived `threshold_sweep.json`/`summary.json` shape, 256 scope, no MCC → needs an MCC computation or a one-off schema relaxation for that diagnostic run.
+5. **Cross-run proposer provenance** (carry-forward): pv-384/512 + verifier-t-pilot reference `detect_brief-text` by string — add a GAP-6 `source_run` (likely gs-v2) or accept the `pool-unresolved` WARN.
+
+### Settled carry-forward (do NOT re-investigate)
+
+- **Model-of-record for ALL Era-1 retests = `gemini-3-flash`** (Obs 342/343; Session 101). Recorded for the 5 phase2 runs. Cross-era *model* caveat REMOVED — cross-era differences are tile-scope only (strictly nested).
+- **"14-buf" = 14 buffer DISTANCES** (`[5,10,15,20,25,30,35,40,45,50,75,100,125,150]`, headline reported at 20 m), NOT a 14 m buffer — confirmed Session 102 (`scripts/rescore_conditions.py` `BUFFERS_STANDARD`).
+- **phase2b `scope_override` NOT needed** — the fresh 14-buf+MCC evals are all at nominal Era-1 340 (Session 102). The old 487 siblings are deferred `_ignored_evals`.
+- **Decomposition pattern for consensus/aggregation sweeps** (`/remember`ed `2026-06-05-9a5c62444a73`, user-confirmed model going forward): **one citable condition per (pool × temp × N) config at best-F1@20m + a 3c `sweep` analysis** carrying the full vote-threshold sweep; non-headline thresholds → deferred `_ignored_evals` (consistent with Batch C, which left t1/t2/t3/t5 unclaimed at fixed vote≥4).
+- **phase3c thinking-level = HIGH** (Session 101, commit `d4930b0f`).
+- **phase3a ↔ pv-diag-384 name collision** (Session 100): the `phase3a-{text,image}-matrix` evals belong to **pv-diag-384**, not retest-phase3a — Session 102 wired them into pv-diag-384's consensus analysis (buffer-harmonised to 14-buf).
+
+---
+
+## ✅ Session 102 — TASKS 3 & 4 COMPLETE (phase2a-e re-score + author; pv-diag-384 GAP-7)
+
+**Posted**: 2026-06-05. Commits `f6e757a7`→`5b2130be` (10), all pushed. **$0 API** (evaluation-only re-score + local JSON authoring). zbook compute (12 workers, 0 failures; sapphire reserved for an inscriptions run). Manifest **28 runs / 224 conditions / 559 passes / 2 analyses, ALL VALID**. Decomposition progress **23 of 28 runs**.
+
+### Task 3 — phase2a-e re-scored + authored (DONE)
+
+- **Harness** (`f6e757a7`): added a dir-mode/replicate branch to `scripts/rescore_conditions.py` (worklist entries may now use `detections_dir`+`glob` for replicate-mean scoring, or a file-list); +10 tier-1 tests, ruff clean, `/audit`ed (verdict: clean). **Correction to the S100/S101 framing**: the re-score was NOT bespoke — `evaluate_detections.py --detections-dir` already emits the replicate-mean summary + MCC at any buffer; only the harness needed the dir-mode branch.
+- **Re-score** (`4b34ed87`): 36 phase2a-e leaf conditions at 14-buf+MCC on zbook (worklist `planning/rescore-worklists/phase2-14buf-mcc-2026-06-05.json` → `results/paper-eval/phase2/512px-14buf-mcc/`). Era-1 340, curator GT, 512px; K=3 for phase2a/b, K=1 for c/d/e.
+- **Authored** (`73a66091`): 5 runs `retest-phase2{a..e}` = 36 single-pass replicate conditions + 66 passes; `gemini-3-flash`. **Calibration verified**: F1@20m reproduces the production headlines (canonical-last 0.6314 vs 0.631; text-t0.0 0.6055; image-t0.0 0.5862). detections point at the condition dir (replicate-mean eval has no single geojson → benign `geojson-missing` WARN, by design).
+
+### Task 4 — pv-diag-384 GAP-7 (DONE, Option B = buffer-consistent)
+
+- **Consensus re-score** (`4b34ed87`): 249 consensus_tK geojsons buffer-harmonised from the matrix evals' `[20,30,40,50]` to the 14-buffer standard (worklist `pv-diag-384-consensus-14buf-mcc-2026-06-05.json` → `results/rescore-2026-06-05/pv-diag-384/consensus-sweep/`). Era-2 487, 384px; 3 n1-outstanding strays excluded.
+- **GAP-7 inventory** (`9d1ec057`): populated the **24 proposer pools + 88 verifier passes** (the "88 metas across ~15 pools"); kept the 10 signed-off N1 baseline conditions verbatim.
+- **Conditions + analysis** (`5b2130be`): **29 consensus conditions** (one per `pool×temp×N` config at best-F1@20m, range 0.49–0.75) + the consensus 3c analysis **`pv-diag-384-consensus-calibration`** (type=`sweep`, H3). **Registered calibration, NOT a verified finding** → the diversity-dividend test is Session-103 scheduled work (TODO #1 above). drift-check 0 ERROR.
+
+---
+
+## 🗄 Session 101 plan (HISTORICAL — Tasks 3 & 4 COMPLETED Session 102; see § Session 102 above)
 
 **Session 101 (2026-06-05) cleared the two blocking anomalies** — model-of-record → **`gemini-3-flash`**; phase3c thinking-level → **HIGH** (both ✅ RESOLVED, see § Anomalies below; full session record in `docs/notes/reflections/session-log.md` Session 101). **The two substantive tasks (3 & 4) remain and are now UNBLOCKED** — record `gemini-3-flash` as model-of-record when authoring the Era-1 runs. The Session-100-close read-only explorations are also done (name-collision + 3c-analyses findings in `reports/phase3-decomposition-investigation-2026-06-05.md` — file-path-anchored, verify at source).
 
