@@ -6247,3 +6247,38 @@ personally never checked. Cost of the check here was one file read (~2 min); cos
 framing was a compute-gate question scoped around a from-scratch pipeline that didn't need to exist.
 Reading `evaluate_detections.py`'s argparse before accepting "bespoke" would have reframed the whole
 task at the top instead of mid-session.
+
+### A statistical caution applied out of scope can invert a finding's meaning — the "in-sample" hedge that wasn't (Session 103)
+
+Session 102's lesson was: re-derive an inherited *difficulty* claim before designing around it. This
+session's is its methodological cousin: **re-check whether a statistical caution is in scope before
+attaching it — an out-of-scope caution doesn't merely add noise, it can invert what the result
+means.** I produced a finding where cheap Flash consensus ties expensive Pro single-pass on
+localisation F1, and reflexively appended an "in-sample / E56" caveat: the operating point was
+selected on the 487-tile evaluation set, so treat the parity as a test-set optimum, not a deployable
+number. Every clause of that caveat is *true*. It was also exactly wrong, because the GS test tiles
+are not a proxy for unseen data — they are the measurement instrument, and the preregistered H3
+analysis plan explicitly asks for "optimal (N, threshold) combinations" against them. The caution I
+imported (selecting an operating point on the eval set is optimistic) is real and load-bearing for
+*prediction* tasks; on a *characterisation* task it converts the finding's central virtue — we
+measured the best achievable performance against ground truth — into an apology.
+
+The mechanism is subtler than confabulation, which is why it's worth naming. I didn't invent a fact;
+I correctly recalled a genuine principle (E56, written for the verifier's probability threshold,
+which has no held-out calibration data) and *mis-scoped* it. The tell wasn't "high confidence in
+something I never checked" (the S102 tell) — it was **reaching for a domain default without checking
+whether the domain's precondition held**. Winner's-curse anxiety presupposes you care about
+generalisation *from* the selected point; if the selected point *is* the deliverable, the anxiety is
+a category error. The cheap guard, in hindsight: before attaching any "this is in-sample / this is
+optimistic / this may not generalise" caveat, ask what the data set is *for* — instrument or proxy.
+One read of `analysis-summary.md` §H3 answered it.
+
+A corroborating anti-confabulation instance rode alongside: I narrated the Pro leader's MCC as 0.381
+from a *guessed* eval path, and the tiering — which read the authoritative board `eval_path` —
+reported 0.790. The guessed file was a superseded Flash-misdispatched cell (E57, 172 tile-level FPs);
+the genuine Pro is the `pro-rerun` cell with eleven. What's instructive is *what caught it*: not a
+reviewer, but the **pipeline disagreeing with my prose**, because the code was wired to the
+authoritative source while my narration reached for a plausible-looking path. The architectural
+lesson compounds the methodological one — keep the artefact's specifics flowing from re-verifiable
+anchors (the condition's recorded `eval_path`), and your guessed numbers can corrupt your sentences
+but not your findings.

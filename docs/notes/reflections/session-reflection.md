@@ -8552,3 +8552,60 @@ multi-session "bespoke" overhang became a thin harness branch), and the human's 
 everything-then-block-on-zbook rather than fall back to amd-tower kept the contraction honest —
 the constraint (sapphire reserved for an inscriptions run, zbook offline then restarted) shaped the
 sequencing without ever compromising the compute-location rule.
+
+## Session 103 — 2026-06-06 — the finding was right; the framing apologised for it
+
+### Prompt: What surprised you about this session?
+
+**I built a clean, signed-off finding and then watched its *framing* get demolished — not its
+numbers.** The diversity-dividend test came out beautifully: a three-member Tier-1 tie putting cheap
+Flash HIGH-text consensus (0.814) level with the genuine-Pro single-pass text leaders (0.804/0.792),
+the dividend significant in both modalities, consensus beating matched single-pass everywhere. I
+wrapped it in what I took to be scrupulous honesty — an "in-sample / E56" caveat warning that the
+best-F1@20 m operating point was *test-set-selected* and therefore not deployable. The human read it
+and said, in effect: you're apologising for doing the experiment. The GS test tiles **are** the
+measurement instrument; the point of the study is to characterise how well the method *can* localise
+mounds against known ground truth. I checked `analysis-summary.md` §H3 and it said so outright — the
+preregistered H3 output is "threshold sweep curves showing **optimal (N, threshold) combinations**".
+I had imported a caution written for a genuinely different case (E56, the verifier probability
+threshold, which has no held-out calibration data) onto a case where it not only didn't apply but
+inverted the finding's meaning. The surprise wasn't a bug; it was that I'd reflexively hedged a
+result for committing the cardinal sin of measuring what it was preregistered to measure.
+
+### Prompt: What would you replay differently?
+
+**Two re-verifications I should have front-loaded, and one I'm glad I ran.** First: before writing a
+single "in-sample caveat," I should have asked whether the study's *design* made the winner's-curse
+anxiety apply at all — a thirty-second read of the H3 analysis plan would have pre-empted the whole
+reframe. I reached for the statistician's default (selecting an operating point on the evaluation set
+is optimistic) without checking that the evaluation set *was* the deliverable, not a proxy for unseen
+data. Second, the one I'm glad I ran: mid-session I told the human the Pro leader's MCC was 0.381 — a
+number I pulled from a path I *guessed* (`paper-eval/n1/384px-14buf-mcc/pro-text-high-t-0-0/`). The
+tiering, which read the authoritative board `eval_path`, reported 0.790, and the contradiction forced
+the reconciliation: the 0.381 file was the *superseded Flash-misdispatched cell* (E57); the genuine
+Pro is at `…/pro-rerun/pro-text-high-t-0-0/` with eleven tile-level false positives, not 172. The
+finding was never wrong — the pipeline used the right path — but my narration carried an invented
+specific with full confidence for two messages. Exactly the failure mode the global anti-confabulation
+rule names: a guessed path is a pointer, not an authority, and I treated it as authority until the
+pipeline disagreed with me. (It also salvaged a *better* finding: F1-parity is not MCC-parity — Pro
+is more tile-precise — which is more interesting than the false "consensus beats Pro on MCC" the
+wrong number had implied.)
+
+### Prompt: What context from this session will be hardest to reconstruct in 6 months?
+
+**Why E56 does not touch H3 — the boundary between test-tile *characterisation* and deployment
+*generalisation*.** The reframe produced a two-tier doctrine, now in memory, the beacon, and an E56
+Update: for the H-series on the GS 4-map *test* tiles, reporting each configuration's best
+(N, threshold) against known ground truth IS the preregistered method, full stop — no in-sample
+hedge. The calibrate→test→produce logic, and any "in-sample vs deployable" language, belongs ONLY to
+the 55-map generalisation, where the carried-forward configuration is reported against corrected
+student ground truth alongside the curtain-pulled oracle-best and the carry-forward−best delta. In
+six months the *numbers* will be legible from the manifest; what will be invisible is *why* an
+identical-looking operating-point selection is virtuous on the GS tiles and would be a confound on
+the 55-map set — the difference is whether the tiles are the instrument or a stand-in for the unseen.
+The E56 Update's three-way split (Phase-1 baseline ≥3/5 calibrated; H3 swept-optimal preregistered;
+verifier prob_t in-sample) is the durable artefact; the reasoning behind it is the fragile part.
+
+*Relational note: the session's pivot was the human declining to sign off and opening "let's briefly
+discuss how we frame things" instead — a reframe invited, not imposed. The numbers were done an hour
+before the framing was right.*

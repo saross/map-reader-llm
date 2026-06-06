@@ -5273,3 +5273,66 @@ is identical (high confidence in something you personally never checked), and th
 two-minute source read. The give-away I should have heeded sooner: the framing asserted a *gap* (no
 standard path) while the filesystem held an *artefact* (30 m MCC evals) that could only exist if the
 path did.
+
+## Session 103 — 2026-06-06 — a finding's framing revised: characterisation is not prediction
+
+### Sequence 1 — "selecting the best operating point on the test tiles is an in-sample limitation to hedge" (my own framing, refuted)
+
+**Surprising fact**: I authored the diversity-dividend finding with an explicit "in-sample / E56"
+caveat — the best-F1@20 m operating point was selected on the 487-tile evaluation set, so the
+Flash-consensus-ties-Pro parity is a test-set optimum, "not deployable." The human declined to sign
+off and opened a framing discussion instead: the GS test tiles are the *measurement instrument*;
+characterising best-achievable performance against them is the *purpose*, not a confound. That a
+finding I'd built to be scrupulously honest was, in the human's reading, *apologising for doing the
+experiment* was the surprise.
+
+**Probe**: read the preregistered H3 analysis plan (`analysis-summary.md` §H3). It says, verbatim,
+the H3 output is "threshold sweep curves showing **optimal (N, threshold) combinations**" and the
+analysis is "voted F1 vs single-pass mean F1." So reporting each configuration's best operating
+point against the test tiles is not a deviation needing an amendment — it *is* the preregistered
+method. Then traced where the "in-sample" caution actually came from: E56, written for the *verifier
+probability threshold*, which is selected on the test set *with no held-out calibration data* — a
+genuinely in-sample case. I had imported a scoped caution onto a case outside its scope.
+
+**Belief revision**: the best-(N, threshold) characterisation is the deliverable, reported without
+hedge. The "in-sample vs deployable" framing belongs only to the 55-map generalisation (where the
+carried-forward config is tested against corrected student GT and the carry-forward−best delta is
+the cost of committing). E56 was given a dated scope-clarification Update splitting three
+operating-point provenances (Phase-1 baseline ≥3/5 calibrated; H3 swept-optimal preregistered;
+verifier prob_t in-sample). No preregistration amendment needed. The finding's caveats section was
+rewritten from "honest limitations" to "operating-point sensitivity" — the same numbers, the
+opposite valence.
+
+**Probe-type**: *a statistical caution is scoped to a precondition; applying it where the
+precondition fails doesn't just mislead, it inverts the result's meaning.* Winner's-curse /
+in-sample anxiety presupposes the selected point must generalise to unseen data. When the evaluation
+set *is* the instrument (characterisation, not prediction), the anxiety is a category error. The
+cheap guard: before attaching any "in-sample / optimistic / may-not-generalise" caveat, ask what the
+data is *for* — instrument or proxy. The tell here was distinct from the S101/S102 confabulation
+tells: not high confidence in an unchecked *fact*, but a domain default reached for without checking
+the domain's precondition.
+
+### Sequence 2 — "the Pro single-pass leader's MCC is 0.381" (my guessed-path reading, refuted by the pipeline)
+
+**Surprising fact**: mid-session I told the human the genuine-Pro text leader had MCC 0.381
+(FP-heavy), making the consensus champion *beat* Pro on tile-level discrimination — a striking
+secondary finding. Then the tiering harness, run on zbook, printed MCC 0.790 for the same board
+cell. My prose and the pipeline disagreed by ~0.4 on a load-bearing number.
+
+**Probe**: read the board condition's *recorded* `eval_path` in `run-conditions.json`. It resolves
+to `…/pro-rerun/pro-text-high-t-0-0/evaluation.json` — MCC 0.790, eleven tile FPs. The 0.381 I'd
+quoted came from a path I *guessed* (`…/384px-14buf-mcc/pro-text-high-t-0-0/`, without the
+`pro-rerun/` segment), which is the *superseded Flash-misdispatched cell* (E57, 172 tile FPs) that
+the genuine-Pro re-run replaced.
+
+**Belief revision**: the authoritative Pro MCC is 0.790; the consensus champion (0.620) does *not*
+beat it — F1-parity is not MCC-parity, Pro is more tile-precise. The finding itself was never
+affected, because the harness read the authoritative `eval_path`; only my narration carried the
+wrong number, for two messages.
+
+**Probe-type**: *a guessed path is a pointer, not an authority* — the global anti-confabulation rule,
+biting on a directory name. What's notable is the catcher: not a human, not a subagent, but the
+*pipeline disagreeing with my prose*, because the code was anchored to the condition's recorded
+`eval_path` while I reached for a plausible sibling. Architecturally, keeping every artefact specific
+flowing from a re-verifiable anchor means a confabulated narration can corrupt sentences but not
+findings.

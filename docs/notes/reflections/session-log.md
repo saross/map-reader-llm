@@ -6846,3 +6846,65 @@ sweep; pv-diag-256 (no-MCC); cross-run proposer provenance.
   phase2 siblings and pv-diag's non-headline thresholds are unclaimed, awaiting the deferred
   `_ignored_evals` sweep (consistent with how Batch C runs sit; `_ignored_evals` is intentionally
   empty until 3b completion).
+
+## Session 103 — 2026-06-06 — diversity-dividend test run + signed off; test-tile framing reframe
+
+**Overview**: Ran the diversity-dividend statistical test (H3) deferred from Session 102, authored
+and signed off the finding, then reframed it (and E56) on the human's steer. Manifest **2→3
+analyses, ALL VALID** (added `diversity-dividend-384`, leaderboard, H3). **$0 API** (zbook
+permutation sweep). Commits `db582f1d`→`7f391252` (8) + the obs commit `95b0607c`, all pushed.
+
+**The test (DONE + SIGNED OFF)**:
+
+- **Harness** (`db582f1d`): `scripts/consensus_vs_baseline_tiering.py` reuses
+  `n1_baseline_leaderboard_tiering` verbatim (round-robin tile-swap micro-F1 permutation,
+  10k/seed42/two-sided + BH-FDR q=0.05 + greedy-clique tiering). Consensus cells = integer per-tile
+  from one aggregated set (`consensus_per_tile`); single-pass = pass-averaged. MCC read from
+  `summary.tile_classification.mcc.point`. Cell spec `planning/diversity-dividend-cells-2026-06-06.json`
+  (4 champions at best-(N,threshold) T=0.7 + 4 production N=5 points). +6 tier-1 tests. **No MCC
+  re-score needed** — the pv-diag-384 consensus sweep already carried MCC (the beacon's "F1-only"
+  worry was reading the per-buffer `mcc` field, always null, not `tile_classification.mcc`).
+- **Run** (`fd52bb82`, zbook): 22-cell board (4 champions + 18 single-pass), 197/231 sig → 7 tiers.
+  **Both claims confirmed**: (1) diversity dividend HIGH>minimal — text +0.153 / image +0.070 F1
+  (both BH-p<0.001), +0.239/+0.272 MCC; (2) consensus ≫ matched single-pass everywhere (+0.13..+0.43
+  best; +0.09..+0.33 at production N=5); (3) Tier-1 three-way tie — best Flash HIGH-text consensus
+  (0.814) ≈ genuine-Pro single-pass text leaders (0.804/0.792, p=0.62). Caveat: F1-parity ≠
+  MCC-parity (Pro text leader MCC 0.790, 11 tile FPs, vs consensus 0.620, 41).
+- **/audit ×2** (`811bc9b5`, `7f391252`): round 1 — zero-detection warning, spec-authoritative
+  bounds/gt; round 2 — fail-loud champs-collision guard, realistic test cells + full contrast
+  contract pinned + `read_tile_mcc` intermediate case (7 tier-1). Both rounds inputs-preserving;
+  reproducibility re-verified byte-identical on zbook after each.
+- **Authored + signed off** (`fd52bb82`): `diversity-dividend-384` (leaderboard, H3);
+  `manually_verified_at=2026-06-06T00:07:40Z`.
+
+**Framing reframe (`0c1318e4`)**: best (N, threshold) vs GS test-tile GT IS the preregistered H3
+method (`analysis-summary.md` §H3 "optimal (N, threshold) combinations"), NOT an in-sample
+limitation. Dropped the E56-style apology from the finding (caveats → "operating-point reading"); E56
+given a dated scope-clarification Update separating Phase-1 baseline (≥3/5 calibrated) / H3
+swept-optimal (preregistered) / verifier prob_t (in-sample); `n1-baseline-matrix.md` forward-ref to
+the realised consensus arm; calibration `_note` de-hedged. **No preregistration amendment needed**.
+The calibrate→test→produce / "in-sample vs deployable" framing belongs to the 55-map generalisation
+only.
+
+**Produced**: 1 script + cell spec + `tests/test_consensus_vs_baseline_tiering.py` (7 tier-1); 4
+tiering artefacts (`results/diversity-dividend-384/`); the finding doc
+`diversity-dividend-analysis.md` (revision-policy banner + changelog); 1 signed-off analysis; E56
+Update + 2 doc edits; Obs 346 (`95b0607c`); memory `2026-06-06-9665f4d010bf` (methodology);
+continuity beacon → Session 104. No detection API calls; no models run.
+
+**Deferred (to Session 104, in the beacon)**: NEW — the **55-map deployment analysis** (carry-forward
+params from GS → production vs corrected student GT; curtain-pulled oracle-best; carry-forward−best
+delta), the home of the calibrate-then-test framing; phase3a/3a-high/3a-replication/3c → 3c analyses
+(now reframed as best-(N,threshold) characterisations); `_ignored_evals` close-out; pv-diag-256
+(no-MCC); cross-run provenance.
+
+### Contextual assumptions
+
+- **Session 103**, 2026-06-06, resuming from the Session-102 handoff. Compute on **zbook** (32
+  cores) — sapphire was available but zbook was used for the permutation sweep; amd-tower forbidden
+  (fan noise). The diversity-dividend test was framed in the beacon as "⏰ SCHEDULE / future work,"
+  but the resume prompt listed it as task 1 to do now; treated as the session's primary task.
+- The framing reframe was **human-initiated mid-session** (the human declined the first sign-off and
+  opened "let's briefly discuss how we frame things"), not in the original plan — it expanded the
+  session from "run a test" to "run a test + correct a methodological framing across the finding,
+  E56, and the docs." The numbers were unchanged by the reframe; only the framing moved.
