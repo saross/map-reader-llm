@@ -411,8 +411,21 @@ def extract_named_contrasts(
         }
 
     contrasts = []
-    champs = {(c["modality"], c["thinking"]): c["ref"]
-              for c in cells if c["kind"] == "champion"}
+    # One champion per (modality, thinking) is assumed by the diversity-dividend
+    # contrast. Fail loud rather than silently overwrite if a spec ever supplies
+    # two champions for the same combination.
+    champs: dict[tuple[str, str], str] = {}
+    for c in cells:
+        if c["kind"] != "champion":
+            continue
+        key = (c["modality"], c["thinking"])
+        if key in champs:
+            raise ValueError(
+                f"Two champion cells share (modality, thinking)={key} "
+                f"({champs[key]} and {c['ref']}); the diversity-dividend contrast "
+                f"expects exactly one champion per modality x thinking — fix the cell spec."
+            )
+        champs[key] = c["ref"]
     # 1. Diversity dividend (HIGH vs minimal) at matched modality.
     for modality in ("text", "image"):
         hi, lo = champs.get((modality, "high")), champs.get((modality, "minimal"))

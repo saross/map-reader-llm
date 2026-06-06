@@ -18,7 +18,10 @@ is new here, and pinned below, is:
    pair's p-value and BH-significance.
 
 All tests use synthetic in-memory data — no network, and only a tmp_path
-JSON for the MCC reader.
+JSON for the MCC reader. The geopandas-I/O paths (``consensus_per_tile``, the
+board/consensus cell loaders, ``run_round_robin``, and ``main()``'s bounds /
+ground-truth resolution) need real GeoJSON fixtures and are deferred to a
+tier-2 suite.
 """
 
 from __future__ import annotations
@@ -68,6 +71,14 @@ def test_read_tile_mcc_absent_returns_none(tmp_path: Path) -> None:
     assert read_tile_mcc(p) is None
 
 
+@pytest.mark.tier1
+def test_read_tile_mcc_intermediate_missing_returns_none(tmp_path: Path) -> None:
+    """tile_classification present but without an mcc.point still yields None."""
+    p = tmp_path / "evaluation.json"
+    p.write_text(json.dumps({"summary": {"tile_classification": {"confusion": {}}}}))
+    assert read_tile_mcc(p) is None
+
+
 # --------------------------------------------------------------------------- #
 # 2. _uniform_cell — observed micro-F1 from arrays + MCC carried
 # --------------------------------------------------------------------------- #
@@ -110,12 +121,24 @@ def test_uniform_cell_handles_none_mcc() -> None:
 def _cell(ref: str, kind: str, f1: float, mcc: float, *,
           modality: str | None = None, thinking: str | None = None,
           matched: str | None = None) -> dict:
-    """Build a minimal tiered-cell dict for contrast extraction."""
-    return {
-        "ref": ref, "label": ref, "kind": kind, "eval_f1": f1, "mcc": mcc,
-        "modality": modality, "thinking": thinking,
-        "matched_single_pass_ref": matched,
-    }
+    """Build a tiered-cell dict mirroring _uniform_cell's real key set.
+
+    Champion cells carry modality/thinking/matched_single_pass_ref in their
+    meta; single-pass (board) cells do NOT (their meta is n_passes +
+    operating_point_provenance only). Only attach the champion-only keys when
+    provided, so a test single-pass cell realistically lacks them — that way
+    the kind-guarded access in extract_named_contrasts is genuinely exercised
+    (a regression that dropped the ``kind == "champion"`` guard would then
+    KeyError here instead of passing silently).
+    """
+    cell = {"ref": ref, "label": ref, "kind": kind, "eval_f1": f1, "mcc": mcc}
+    if modality is not None:
+        cell["modality"] = modality
+    if thinking is not None:
+        cell["thinking"] = thinking
+    if matched is not None:
+        cell["matched_single_pass_ref"] = matched
+    return cell
 
 
 def _pair(ref_a: str, ref_b: str, p: float, bh: float, sig: bool) -> dict:
@@ -153,11 +176,16 @@ def test_extract_contrasts_pulls_diversity_dividend_and_matched() -> None:
     assert dd["f1_a"] == 0.814 and dd["f1_b"] == 0.661
     assert dd["f1_diff"] == pytest.approx(0.153)
     assert dd["significant"] is True
+    # Full contrast contract: the pair's p/BH-p and both cells' MCC are wired in.
+    assert dd["p_value"] == 0.0001
+    assert dd["bh_adjusted_p"] == 0.0004
+    assert dd["mcc_a"] == 0.620 and dd["mcc_b"] == 0.381
 
     # Pro-leader contrast: the 0.814 vs 0.804 tie is carried as non-significant.
     pro = next(c for k, c in claims.items() if "Pro single-pass leader" in k)
     assert pro["significant"] is False
     assert pro["f1_a"] == 0.814 and pro["f1_b"] == 0.804
+    assert pro["p_value"] == 0.61 and pro["bh_adjusted_p"] == 0.61
 
     # Each champion's matched single-pass contrast is present.
     matched = [c for k, c in claims.items() if k.startswith("consensus vs matched")]
