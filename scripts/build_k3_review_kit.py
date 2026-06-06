@@ -166,7 +166,7 @@ def main() -> int:
     new_probs["total_results"] = len(new_results)
     json.dump(new_probs, open(out / "pass1-new" / "probabilities.json", "w"))
 
-    # --- pass 2: AUTO-FILL inherited labels ---
+    # --- pass 2: AUTO-FILL inherited labels (flat CSV record) ---
     by_id = {int(c["candidate_id"]): c for c in passed}
     with open(out / "pass2-autofill.csv", "w", newline="") as f:
         w = csv.writer(f)
@@ -180,6 +180,29 @@ def main() -> int:
             w.writerow([cid, r["human_label"], r["symbol_type"],
                         round(float(r["dist_m"]), 2), round(prob_of(cid), 4),
                         st, c["centroid_x"], c["centroid_y"]])
+
+    # --- pass 2 review kit: filtered manifest + probabilities + synthetic
+    #     prev-review so review_candidates.py pre-populates inherited mound
+    #     labels for one-keystroke confirm (not_mound inheritances and any
+    #     overrides flow through the normal FP queue). ---
+    (out / "pass2-review" / "crops").mkdir(parents=True, exist_ok=True)
+    af_cands = [c for c in passed if int(c["candidate_id"]) in autofill_ids]
+    af_manifest = dict(manifest)
+    af_manifest["candidates"] = af_cands
+    json.dump(af_manifest,
+              open(out / "pass2-review" / "crops" / "candidate_manifest.json", "w"))
+    af_results = {f"candidate_{int(c['candidate_id']):05d}":
+                  results[f"candidate_{int(c['candidate_id']):05d}"]
+                  for c in af_cands}
+    af_probs = dict(probs)
+    af_probs["results"] = af_results
+    af_probs["total_results"] = len(af_results)
+    json.dump(af_probs, open(out / "pass2-review" / "probabilities.json", "w"))
+    with open(out / "pass2-review" / "prevreview-mounds.csv", "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["candidate_id", "symbol_type", "human_label", "buffer_metres"])
+        for _, r in autofill[autofill["human_label"] == "mound"].iterrows():
+            w.writerow([int(r["candidate_id"]), r["symbol_type"], "mound", 50])
 
     summary = {
         "run": args.run,
