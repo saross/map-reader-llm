@@ -1769,6 +1769,14 @@ The verifier's continuous `mound_probability` is explored only in the **diagnost
 
 **Reference artefacts**: `results/verifier-calibration-matrix/README.md` (Phase B); `results/run-conditions.json` (gs-v2 `prob_threshold: null`); `inputs/tiles/calibration_manifest.json`; `results/rescore-2026-05-31/pv-diag-384/sweep/`; working-notes Obs 269 + 277; `planning/session-78-matrix-calibration-summary.md`.
 
+**Update (2026-06-06 — scope clarification, H3 consensus characterisation).** This erratum governs the **verifier probability-threshold** diagnostics only. It does **not** make the **H3 consensus-voting characterisation** (the Phase 3a / pv-diag-384 vote-threshold sweep, realised as the `diversity-dividend-384` finding) an "in-sample" limitation. The preregistered H3 analysis plan (`analysis-summary.md` §H3) is *"compare voted F1 vs single-pass mean F1"* with output *"threshold sweep curves showing **optimal (N, threshold) combinations**"* — so reporting each configuration's best (N, threshold) operating point against the test-tile ground truth is the **preregistered method**, and the deliverable of a study whose stated purpose is to characterise how well VLM symbol extraction localises mounds against known ground truth. Three operating-point provenances must be kept distinct and **not** conflated under one "in-sample" label:
+
+1. **Phase-1 baseline consensus** — vote threshold ≥3/5, calibration-selected on the 20 held-out calibration tiles, used to build the hard-case example library. Calibrated.
+2. **H3 consensus characterisation** (Phase 3a / pv-diag-384; `diversity-dividend-384`) — best (N, threshold) swept against the test tiles. **Preregistered method, not a hedge** — the test tiles are the measurement instrument, and best-achievable performance is the result.
+3. **Verifier `prob_t` diagnostics** (this erratum) — selected on the 487-tile test set with no held-out verifier data. In-sample; report as sensitivity curves.
+
+The calibrate → test → produce logic (and any "in-sample vs deployable" framing) belongs to the **55-map generalisation** deployment, where the carried-forward configuration is reported against corrected student ground truth alongside the oracle-best on the 55-map set (the carry-forward − best delta). It does not apply to the GS test-tile characterisation, which is the whole point of the test tiles. No preregistration amendment is required: H3's swept-optimal reporting was preregistered (`analysis-summary.md` §H3).
+
 ---
 
 ### E57: H11 384px Pro/baseline detection metadata — model template default and output_dir overrides

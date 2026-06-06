@@ -409,9 +409,12 @@ H1 / H6 / H7): the within-board contrasts recapitulate preregistered directions
 as convergent evidence, but the 18-cell ranked board was not itself in the
 preregistered analysis plan — it operationalises the **single-pass baseline
 arm** that the consensus (H3) and proposer-verifier (H2) architectures are
-measured against. See `planning/leaderboard-construction-plan.md` (Update
-2026-06-03) for the architecture-baseline prereg-framing template this analysis
-sets.
+measured against. The consensus (H3) arm is realised in `diversity-dividend-384`
+(Session 103): the best Flash HIGH-text consensus joins **Tier 1** with the two
+genuine-Pro single-pass text leaders of this board — cheap Flash consensus
+reaching the Pro single-pass tier on localisation F1 (though not on MCC). See
+`planning/leaderboard-construction-plan.md` (Update 2026-06-03) for the
+architecture-baseline prereg-framing template this analysis sets.
 
 ---
 
