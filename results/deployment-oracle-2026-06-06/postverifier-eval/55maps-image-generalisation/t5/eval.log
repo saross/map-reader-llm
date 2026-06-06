@@ -1,0 +1,23 @@
+INFO: Detection files: 1
+INFO: Loading ground truth: inputs/vectors/references/student-mounds-55maps-reviewed.geojson
+INFO: Loading bounds: inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson
+INFO: Reference: 4746 mounds, 8541 evaluation tiles
+INFO: Evaluating: filtered.geojson
+INFO:   5m: F1=0.044 [0.038, 0.051], P=0.068 [0.059, 0.078], R=0.033 [0.028, 0.038] [sparse coverage: 66.2% zero-tiles]
+INFO:   10m: F1=0.162 [0.150, 0.173], P=0.249 [0.232, 0.266], R=0.120 [0.110, 0.129] [sparse coverage: 66.6% zero-tiles]
+INFO:   15m: F1=0.291 [0.276, 0.305], P=0.447 [0.427, 0.467], R=0.215 [0.203, 0.227] [sparse coverage: 67.0% zero-tiles]
+INFO:   20m: F1=0.407 [0.391, 0.422], P=0.626 [0.606, 0.645], R=0.301 [0.288, 0.315] [sparse coverage: 67.3% zero-tiles]
+INFO:   25m: F1=0.485 [0.470, 0.501], P=0.747 [0.728, 0.764], R=0.359 [0.345, 0.374] [sparse coverage: 67.5% zero-tiles]
+INFO:   30m: F1=0.531 [0.516, 0.546], P=0.817 [0.801, 0.833], R=0.393 [0.379, 0.408] [sparse coverage: 67.7% zero-tiles]
+INFO:   35m: F1=0.551 [0.537, 0.566], P=0.849 [0.834, 0.863], R=0.408 [0.394, 0.423] [sparse coverage: 67.8% zero-tiles]
+INFO:   40m: F1=0.561 [0.546, 0.576], P=0.864 [0.850, 0.877], R=0.416 [0.401, 0.431] [sparse coverage: 67.8% zero-tiles]
+INFO:   45m: F1=0.568 [0.554, 0.583], P=0.875 [0.861, 0.888], R=0.421 [0.406, 0.436] [sparse coverage: 67.9% zero-tiles]
+INFO:   50m: F1=0.572 [0.557, 0.587], P=0.881 [0.867, 0.894], R=0.424 [0.409, 0.439] [sparse coverage: 67.9% zero-tiles]
+INFO:   75m: F1=0.577 [0.562, 0.592], P=0.888 [0.875, 0.901], R=0.427 [0.412, 0.443] [sparse coverage: 67.9% zero-tiles]
+INFO:   100m: F1=0.578 [0.563, 0.593], P=0.890 [0.877, 0.902], R=0.428 [0.413, 0.443] [sparse coverage: 67.9% zero-tiles]
+INFO:   125m: F1=0.578 [0.564, 0.593], P=0.890 [0.877, 0.903], R=0.428 [0.413, 0.443] [sparse coverage: 67.9% zero-tiles]
+INFO:   150m: F1=0.579 [0.564, 0.594], P=0.891 [0.878, 0.904], R=0.429 [0.414, 0.444] [sparse coverage: 67.9% zero-tiles]
+INFO:   MCC=0.530 [0.515, 0.544], Sens=0.442, Spec=0.980
+INFO: JSON written: results/deployment-oracle-2026-06-06/postverifier-eval/55maps-image-generalisation/t5/evaluation.json
+INFO: CSV written: results/deployment-oracle-2026-06-06/postverifier-eval/55maps-image-generalisation/t5/evaluation.csv
+INFO: Markdown written: results/deployment-oracle-2026-06-06/postverifier-eval/55maps-image-generalisation/t5/evaluation.md

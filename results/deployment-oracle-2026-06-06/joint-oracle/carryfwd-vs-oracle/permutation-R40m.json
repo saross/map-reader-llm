@@ -1,0 +1,68 @@
+{
+  "metadata": {
+    "timestamp": "2026-06-06T14:19:52.694854+00:00",
+    "script": "paired_permutation_corrected_55maps.py",
+    "version": "1.0.0",
+    "git_commit": "891a1c7c58ce9f302f443f069e4590a5cb713ef2",
+    "buffer_metres": 40,
+    "n_permutations": 10000,
+    "n_bootstrap": 10000,
+    "seed": 42,
+    "methodology": "Approach B \u2014 extended-GT-at-R Hungarian matching, tile-swap paired permutation test on micro-average F1"
+  },
+  "condition_a": {
+    "label": "carryfwd_T0.7_k4",
+    "detections": "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
+    "review_yesterday": "results/deployment-oracle-2026-06-06/joint-oracle/empty.csv",
+    "review_today": "results/deployment-oracle-2026-06-06/joint-oracle/union-review.csv",
+    "n_detections": 4164
+  },
+  "condition_b": {
+    "label": "oracle_T0.3_k3",
+    "detections": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-t0.3-generalisation/k3_verified.geojson",
+    "review_yesterday": "results/deployment-oracle-2026-06-06/joint-oracle/empty.csv",
+    "review_today": "results/deployment-oracle-2026-06-06/joint-oracle/union-review.csv",
+    "n_detections": 4905
+  },
+  "buffer_metres": 40,
+  "n_phantoms_a": 0,
+  "n_phantoms_b": 0,
+  "n_ref_extended_a": 4746,
+  "n_ref_extended_b": 4746,
+  "delta_f1_ci": {
+    "lower": -0.02204,
+    "upper": -0.005485,
+    "n_bootstrap": 10000
+  },
+  "global_a": {
+    "f1": 0.786756,
+    "precision": 0.841739,
+    "recall": 0.738517,
+    "tp": 3505,
+    "fp": 659,
+    "fn": 1241
+  },
+  "global_b": {
+    "f1": 0.800332,
+    "precision": 0.78736,
+    "recall": 0.813738,
+    "tp": 3862,
+    "fp": 1043,
+    "fn": 884
+  },
+  "permutation_test": {
+    "observed_f1_diff": -0.013575,
+    "p_value": 0.001,
+    "n_permutations": 10000,
+    "n_tiles": 8541,
+    "wins_a": 272,
+    "losses_a": 440,
+    "ties": 7829,
+    "null_distribution": {
+      "mean": -7.7e-05,
+      "std": 0.004161,
+      "percentile_2.5": -0.008135,
+      "percentile_97.5": 0.008184
+    }
+  }
+}

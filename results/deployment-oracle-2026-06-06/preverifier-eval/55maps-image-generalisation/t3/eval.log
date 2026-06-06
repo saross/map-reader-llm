@@ -1,0 +1,23 @@
+INFO: Detection files: 1
+INFO: Loading ground truth: inputs/vectors/references/student-mounds-55maps-reviewed.geojson
+INFO: Loading bounds: inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson
+INFO: Reference: 4746 mounds, 8541 evaluation tiles
+INFO: Evaluating: consensus_t3.geojson
+INFO:   5m: F1=0.041 [0.027, 0.057], P=0.033 [0.022, 0.046], R=0.055 [0.036, 0.075]
+INFO:   10m: F1=0.146 [0.119, 0.173], P=0.117 [0.095, 0.140], R=0.195 [0.159, 0.230]
+INFO:   15m: F1=0.269 [0.234, 0.303], P=0.215 [0.185, 0.246], R=0.357 [0.312, 0.400]
+INFO:   20m: F1=0.382 [0.344, 0.420], P=0.306 [0.270, 0.342], R=0.508 [0.460, 0.555]
+INFO:   25m: F1=0.463 [0.424, 0.501], P=0.371 [0.333, 0.409], R=0.616 [0.569, 0.662]
+INFO:   30m: F1=0.513 [0.474, 0.549], P=0.411 [0.371, 0.449], R=0.683 [0.637, 0.725]
+INFO:   35m: F1=0.544 [0.503, 0.580], P=0.436 [0.395, 0.474], R=0.723 [0.678, 0.764]
+INFO:   40m: F1=0.561 [0.520, 0.597], P=0.449 [0.407, 0.489], R=0.746 [0.701, 0.785]
+INFO:   45m: F1=0.571 [0.531, 0.606], P=0.457 [0.415, 0.497], R=0.759 [0.715, 0.798]
+INFO:   50m: F1=0.577 [0.537, 0.613], P=0.462 [0.420, 0.503], R=0.767 [0.724, 0.806]
+INFO:   75m: F1=0.591 [0.551, 0.627], P=0.473 [0.430, 0.514], R=0.786 [0.742, 0.823]
+INFO:   100m: F1=0.595 [0.556, 0.632], P=0.477 [0.434, 0.518], R=0.791 [0.749, 0.829]
+INFO:   125m: F1=0.597 [0.558, 0.634], P=0.479 [0.435, 0.520], R=0.794 [0.753, 0.832]
+INFO:   150m: F1=0.599 [0.559, 0.636], P=0.480 [0.437, 0.521], R=0.797 [0.756, 0.835]
+INFO:   MCC=0.410 [0.353, 0.463], Sens=0.770, Spec=0.648
+INFO: JSON written: results/deployment-oracle-2026-06-06/preverifier-eval/55maps-image-generalisation/t3/evaluation.json
+INFO: CSV written: results/deployment-oracle-2026-06-06/preverifier-eval/55maps-image-generalisation/t3/evaluation.csv
+INFO: Markdown written: results/deployment-oracle-2026-06-06/preverifier-eval/55maps-image-generalisation/t3/evaluation.md

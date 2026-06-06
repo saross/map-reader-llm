@@ -1,0 +1,36 @@
+Loading inputs...
+  detections: 3,865
+  student GT: 4,746
+  bounds tiles: 8,541
+  review (yesterday): 585
+  review (today):     116
+  excluded sentinels (>150 m shell, buffer_metres=200): 13
+
+--- Buffer R = 50 m ---
+R=50m  TP=3603  FP=262  FN=1491  n_ref_student=4746  n_reviewer_promoted=348  n_ref_ext_scoped=5094
+  P=0.9322  R=0.7073  F1=0.8043
+  95% CIs — P=[0.9233, 0.9407] R=[0.6925, 0.7219] F1=[0.7934, 0.8147]
+
+--- Buffer R = 75 m ---
+R=75m  TP=3603  FP=262  FN=1500  n_ref_student=4746  n_reviewer_promoted=357  n_ref_ext_scoped=5103
+  P=0.9322  R=0.7061  F1=0.8035
+  95% CIs — P=[0.9233, 0.9407] R=[0.6912, 0.7205] F1=[0.7926, 0.8140]
+
+--- Buffer R = 100 m ---
+R=100m  TP=3603  FP=262  FN=1506  n_ref_student=4746  n_reviewer_promoted=363  n_ref_ext_scoped=5109
+  P=0.9322  R=0.7052  F1=0.8030
+  95% CIs — P=[0.9233, 0.9407] R=[0.6905, 0.7196] F1=[0.7920, 0.8135]
+
+--- Buffer R = 125 m ---
+R=125m  TP=3603  FP=262  FN=1509  n_ref_student=4746  n_reviewer_promoted=366  n_ref_ext_scoped=5112
+  P=0.9322  R=0.7048  F1=0.8027
+  95% CIs — P=[0.9233, 0.9407] R=[0.6900, 0.7193] F1=[0.7917, 0.8133]
+
+--- Buffer R = 150 m ---
+R=150m  TP=3604  FP=261  FN=1514  n_ref_student=4746  n_reviewer_promoted=372  n_ref_ext_scoped=5118
+  P=0.9325  R=0.7042  F1=0.8024
+  95% CIs — P=[0.9235, 0.9409] R=[0.6894, 0.7186] F1=[0.7914, 0.8130]
+
+Wrote results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-min-generalisation/k4-corrected/corrected-f1.csv
+Wrote results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-min-generalisation/k4-corrected/summary.json
+Wrote results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-min-generalisation/k4-corrected/report_autogen.md

@@ -1,0 +1,27 @@
+{
+  "version": "1.0",
+  "mode": "realtime",
+  "verifier_config": "verify_adversarial-text",
+  "iterations": 1,
+  "total_results": 3,
+  "results": {
+    "candidate_00000": {
+      "mound_probability": 0.0,
+      "reasoning": "The symbol lacks the characteristic orange-brown sunburst pattern or outward-radiating rays of a burial mound. Instead, it is a standard Soviet map representation for a specific tree species (oak) within a forested area, confirmed by the explicit text label and forest characteristic fraction.",
+      "best_alternative": "Vegetation symbol and associated text label.",
+      "alternative_evidence": "The central symbol is a black, irregular tree-like icon (likely representing deciduous forest) accompanied by the Cyrillic text '\u0434\u0443\u0431' (oak) and a fraction indicating forest density/height (11/0.24)."
+    },
+    "candidate_00002": {
+      "mound_probability": 0.2,
+      "reasoning": "The symbol lacks the diagnostic radiating rays required for a burial mound. The presence of the word '\u041c\u043e\u0433\u0438\u043b\u0430' (Mogila) in the toponym above is a strong linguistic indicator of a mound, but the cartographic symbol itself is a standard spot height on a natural elevation. In Soviet mapping, 'Mogila' often persists in place names even if the physical mound is not specifically symbolized as an artificial feature.",
+      "best_alternative": "Spot height marker or natural hilltop summit.",
+      "alternative_evidence": "The central feature is a solid black dot (spot height) associated with the elevation number '473,0'. While it is located at the peak of a hill defined by orange-brown contour lines, there are no distinct, short radiating 'sunburst' rays surrounding the dot."
+    },
+    "candidate_00001": {
+      "mound_probability": 1.0,
+      "reasoning": "The symbol exhibits a classic 'sunburst' pattern with a central orange-brown circle and clearly defined short lines radiating outward. This is the standard cartographic representation for a burial mound (kurgan) on Soviet-style topographic maps. The presence of a small number '1' next to it likely indicates the height of the mound in meters, further confirming its identity.",
+      "best_alternative": "None plausible",
+      "alternative_evidence": "The symbol is rendered in the distinct orange-brown ink used for relief features, ruling out black-ink survey markers (triangulation points or benchmarks). It is not part of a continuous contour line or a vegetation boundary."
+    }
+  }
+}

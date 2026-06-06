@@ -1,0 +1,23 @@
+INFO: Detection files: 1
+INFO: Loading ground truth: inputs/vectors/references/student-mounds-55maps-reviewed.geojson
+INFO: Loading bounds: inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson
+INFO: Reference: 4746 mounds, 8541 evaluation tiles
+INFO: Evaluating: consensus_t5.geojson
+INFO:   5m: F1=0.060 [0.040, 0.080], P=0.054 [0.037, 0.074], R=0.066 [0.045, 0.089]
+INFO:   10m: F1=0.199 [0.164, 0.234], P=0.182 [0.149, 0.216], R=0.220 [0.181, 0.258]
+INFO:   15m: F1=0.344 [0.303, 0.386], P=0.315 [0.273, 0.358], R=0.380 [0.333, 0.427]
+INFO:   20m: F1=0.447 [0.403, 0.491], P=0.408 [0.361, 0.456], R=0.493 [0.444, 0.542]
+INFO:   25m: F1=0.502 [0.459, 0.546], P=0.459 [0.411, 0.509], R=0.554 [0.504, 0.604]
+INFO:   30m: F1=0.530 [0.486, 0.572], P=0.485 [0.435, 0.534], R=0.585 [0.536, 0.635] [sparse coverage: 50.0% zero-tiles]
+INFO:   35m: F1=0.543 [0.500, 0.585], P=0.496 [0.446, 0.546], R=0.599 [0.550, 0.648] [sparse coverage: 50.1% zero-tiles]
+INFO:   40m: F1=0.549 [0.506, 0.591], P=0.502 [0.451, 0.552], R=0.606 [0.557, 0.655] [sparse coverage: 50.1% zero-tiles]
+INFO:   45m: F1=0.552 [0.508, 0.594], P=0.504 [0.454, 0.554], R=0.609 [0.560, 0.659] [sparse coverage: 50.1% zero-tiles]
+INFO:   50m: F1=0.552 [0.509, 0.595], P=0.505 [0.455, 0.555], R=0.609 [0.561, 0.659] [sparse coverage: 50.1% zero-tiles]
+INFO:   75m: F1=0.554 [0.510, 0.596], P=0.506 [0.456, 0.556], R=0.611 [0.562, 0.660] [sparse coverage: 50.1% zero-tiles]
+INFO:   100m: F1=0.555 [0.511, 0.597], P=0.507 [0.457, 0.558], R=0.612 [0.563, 0.661] [sparse coverage: 50.1% zero-tiles]
+INFO:   125m: F1=0.556 [0.512, 0.598], P=0.508 [0.458, 0.558], R=0.613 [0.564, 0.662] [sparse coverage: 50.1% zero-tiles]
+INFO:   150m: F1=0.556 [0.512, 0.598], P=0.508 [0.458, 0.558], R=0.614 [0.564, 0.662] [sparse coverage: 50.1% zero-tiles]
+INFO:   MCC=0.356 [0.297, 0.414], Sens=0.642, Spec=0.718
+INFO: JSON written: results/deployment-oracle-2026-06-06/preverifier-eval/55maps-text-high-generalisation/t5/evaluation.json
+INFO: CSV written: results/deployment-oracle-2026-06-06/preverifier-eval/55maps-text-high-generalisation/t5/evaluation.csv
+INFO: Markdown written: results/deployment-oracle-2026-06-06/preverifier-eval/55maps-text-high-generalisation/t5/evaluation.md

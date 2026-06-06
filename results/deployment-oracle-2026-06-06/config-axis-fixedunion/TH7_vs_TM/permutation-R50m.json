@@ -1,0 +1,68 @@
+{
+  "metadata": {
+    "timestamp": "2026-06-06T14:07:01.808045+00:00",
+    "script": "paired_permutation_corrected_55maps.py",
+    "version": "1.0.0",
+    "git_commit": "891a1c7c58ce9f302f443f069e4590a5cb713ef2",
+    "buffer_metres": 50,
+    "n_permutations": 10000,
+    "n_bootstrap": 10000,
+    "seed": 42,
+    "methodology": "Approach B \u2014 extended-GT-at-R Hungarian matching, tile-swap paired permutation test on micro-average F1"
+  },
+  "condition_a": {
+    "label": "TH7",
+    "detections": "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
+    "review_yesterday": "results/deployment-oracle-2026-06-06/config-axis-fixedunion/empty-review.csv",
+    "review_today": "results/deployment-oracle-2026-06-06/config-axis-fixedunion/union-carried-review.csv",
+    "n_detections": 4164
+  },
+  "condition_b": {
+    "label": "TM",
+    "detections": "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson",
+    "review_yesterday": "results/deployment-oracle-2026-06-06/config-axis-fixedunion/empty-review.csv",
+    "review_today": "results/deployment-oracle-2026-06-06/config-axis-fixedunion/union-carried-review.csv",
+    "n_detections": 3865
+  },
+  "buffer_metres": 50,
+  "n_phantoms_a": 831,
+  "n_phantoms_b": 831,
+  "n_ref_extended_a": 5577,
+  "n_ref_extended_b": 5577,
+  "delta_f1_ci": {
+    "lower": 0.022518,
+    "upper": 0.041602,
+    "n_bootstrap": 10000
+  },
+  "global_a": {
+    "f1": 0.780413,
+    "precision": 0.912824,
+    "recall": 0.681549,
+    "tp": 3801,
+    "fp": 363,
+    "fn": 1776
+  },
+  "global_b": {
+    "f1": 0.748358,
+    "precision": 0.914101,
+    "recall": 0.633495,
+    "tp": 3533,
+    "fp": 332,
+    "fn": 2044
+  },
+  "permutation_test": {
+    "observed_f1_diff": 0.032054,
+    "p_value": 0.0,
+    "n_permutations": 10000,
+    "n_tiles": 8541,
+    "wins_a": 567,
+    "losses_a": 368,
+    "ties": 7606,
+    "null_distribution": {
+      "mean": -2.8e-05,
+      "std": 0.004816,
+      "percentile_2.5": -0.009586,
+      "percentile_97.5": 0.009281
+    }
+  }
+}

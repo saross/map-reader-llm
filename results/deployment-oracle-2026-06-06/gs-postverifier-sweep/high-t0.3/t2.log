@@ -1,0 +1,10 @@
+INFO: Detection files: 1
+INFO: Loading ground truth: inputs/vectors/references/mounds-reference.geojson
+INFO: Loading bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
+INFO: Reference: 569 mounds, 487 evaluation tiles
+INFO: Evaluating: postverif_t2.geojson
+INFO:   20m: F1=0.853 [0.832, 0.873], P=0.817 [0.789, 0.846], R=0.892 [0.869, 0.914] [sparse coverage: 54.8% zero-tiles]
+INFO:   MCC=0.762 [0.725, 0.804], Sens=0.838, Spec=0.919
+INFO: JSON written: results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.3/t2/evaluation.json
+INFO: CSV written: results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.3/t2/evaluation.csv
+INFO: Markdown written: results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.3/t2/evaluation.md
