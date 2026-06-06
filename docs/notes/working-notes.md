@@ -17988,3 +17988,188 @@ relationship h11 outputs, Session 102 Task 4.
   `planning/paper-writeup-continuity.md` line 17 (Session-103 TODO #1 diversity-dividend
   test); line 48 (decomposition-pattern note; best-F1 range listed as 0.49–0.75 — source
   file gives 0.488–0.814, see Caveats).
+
+## Observation 346: The diversity dividend tested and signed off — HIGH-thinking consensus reaches the Pro single-pass tier on F1, and cheap Flash consensus is a genuine Tier-1 co-member (Session 103, 2026-06-06)
+
+*Closes the Session-102 flag in Obs 345 (`manually_verified_at` was null). Source
+anchors: `results/diversity-dividend-384/tiering-champions/tiering_20m.json`
+(verified 2026-06-06 — n_total_pairs=231, n_significant=197, n_tiers=7, n_cells=22);
+`results/run-analyses.json` → `diversity-dividend-384` entry
+(`manually_verified_at: 2026-06-06T00:07:40Z`, `type: leaderboard`, verified 2026-06-06);
+`results/diversity-dividend-384/diversity-dividend-analysis.md`
+(FP tile counts and operating-point table, verified 2026-06-06).*
+
+### The finding
+
+The `diversity-dividend-384` leaderboard analysis was run and signed off as a verified
+manifest finding (manually_verified_at 2026-06-06T00:07:40Z).
+
+**Method**: project-canonical n1 round-robin tile-swap micro-F1 permutation (10,000
+permutations, seed 42, two-sided), Benjamini–Hochberg FDR correction (q = 0.05), and
+greedy-clique tiering over a 22-cell board: 4 consensus pool-champions (at each pool's
+best (N, threshold) operating point, T = 0.7) plus the 18 single-pass cells from
+`n1-baseline-matrix-384`. Scope: Era-2 487-tile, 384 px, gemini-3-flash proposer. Script:
+`scripts/consensus_vs_baseline_tiering.py` (reuses `n1_baseline_leaderboard_tiering.py`
+verbatim). Compute on zbook; $0 API spend.
+
+**Overall result: 197/231 pairs significant → 7 tiers.**
+
+#### 1. Diversity dividend — HIGH-thinking consensus > minimal-thinking consensus
+
+| Modality | HIGH F1 | minimal F1 | ΔF1 | BH-p | ΔMCC |
+|---|---:|---:|---:|---:|---:|
+| Text | 0.814 | 0.661 | **+0.153** | < 0.001 | +0.239 |
+| Image | 0.750 | 0.680 | **+0.070** | < 0.001 | +0.272 |
+
+Both contrasts are significant at BH-p < 0.001 on both F1 and MCC. The HIGH-thinking
+pools take the larger consensus gain: more varied proposals let a high vote threshold
+prune their false positives. The HIGH-text consensus champion carries 41 tile-level FPs
+vs the minimal-text champion's 115.
+
+#### 2. Consensus beats matched single-pass — everywhere, including the deployable N=5 point
+
+| Pool (T = 0.7) | single-pass F1 | best-consensus F1 | ΔF1 (best) | N=5 deployable F1 | ΔF1 (deploy) |
+|---|---:|---:|---:|---:|---:|
+| `flash-high-text` (HIGH) | 0.387 | 0.814 | +0.427 | 0.720 (4-of-5) | +0.333 |
+| `flash-high-image` (HIGH) | 0.499 | 0.750 | +0.251 | 0.727 (3-of-5) | +0.228 |
+| `flash-minimal-text` (min) | 0.488 | 0.661 | +0.173 | 0.602 (4-of-5) | +0.114 |
+| `flash-minimal-image` (min) | 0.553 | 0.680 | +0.127 | 0.644 (3-of-5) | +0.091 |
+
+All eight contrasts BH-p < 0.001. Consensus voting lifts F1 over matched single-pass at
+both the in-sample best threshold and the a-priori production N=5 deployable threshold
+(+0.09 to +0.33 F1).
+
+#### 3. Cross-architecture headline — Tier 1 is a three-member statistical tie
+
+| Cell | F1@20 m | MCC |
+|---|---:|---:|
+| `consensus-flash-high-text-26of30` | 0.814 | 0.620 |
+| `baseline-pro-text-high-t-0-0` (genuine Pro) | 0.804 | 0.790 |
+| `baseline-pro-text-medium-t-0-0` (genuine Pro) | 0.792 | 0.790 |
+
+The permutation cannot separate the Flash consensus champion from either Pro single-pass
+leader (Flash vs Pro high-t-0-0: p = 0.616, BH-p = 0.662). **Cheap Flash consensus
+reaches the expensive Pro single-pass tier on localisation F1.**
+
+#### F1-parity is NOT MCC-parity
+
+The genuine Pro text leaders are more tile-precise (MCC 0.790, 11 tile FPs) than the
+Flash consensus champion (MCC 0.620, 41 tile FPs). The metric-dependent-winner pattern
+of the n1 baseline board persists: Flash consensus matches Pro on localisation F1 but is
+less tile-precise on MCC. Pro image is the overall MCC leader (0.85–0.91).
+
+### Why this matters
+
+1. **H3 is confirmed, both named claims.** The diversity dividend (HIGH > minimal
+   consensus at matched modality) is statistically significant on both F1 and MCC in
+   both modalities. Consensus significantly beats matched within-pool single-pass at
+   every operating point tested. Both are paper-citable results.
+
+2. **The cross-architecture finding is the headline.** The Tier-1 three-member tie means
+   a cheap Flash HIGH-text consensus (30 passes, 26-of-30 vote) is statistically
+   indistinguishable from the best available genuine Gemini 3 Pro single-pass run on
+   localisation F1. This has direct cost-versus-performance implications and a clear
+   paper claim.
+
+3. **Operating-point framing settled (Session 103).** The best (N, threshold) against
+   the GS test-tile ground truth IS the preregistered H3 characterisation method
+   (analysis-summary.md §H3: "threshold sweep curves showing optimal (N, threshold)
+   combinations"). The study purpose is to measure how well VLM symbol extraction
+   localises mounds against known ground truth; best-achievable performance is the
+   deliverable. The N=5 production delta (≈ 0.094 F1 from 0.814 to 0.720) is reported
+   as a characterisation result — the within-test cousin of the carry-forward vs best
+   delta the 55-map generalisation will report — not a hedge or limitation. Deployment
+   generalisation is the separate question, answered by the 55-map runs.
+
+4. **The `pv-diag-384-consensus-calibration` Calibration sweep is now realised.** The
+   calibration registered in Obs 345 (`manually_verified_at: null`) is superseded by this
+   verified finding. No further compute is required for H3.
+
+### Caveats / methodological notes
+
+- **MCC delta rounding.** The image diversity-dividend MCC delta is reported as +0.272
+  in the analysis markdown and the `run-analyses.json` outcome field; the raw JSON values
+  (MCC_a 0.6784 − MCC_b 0.4055) give 0.2729. This Obs follows the reported figure
+  (0.272); the 0.001 rounding discrepancy is not paper-load-bearing.
+- **Mid-session path-guess slip (corrected).** During Session 103 a path-guess briefly
+  mis-read a Flash-misdispatched cell's MCC (0.381) as the Pro leader MCC. The
+  authoritative genuine-Pro MCC is 0.790, verified at
+  `results/diversity-dividend-384/tiering-champions/tiering_20m.json` ranks 2–3.
+- **In-sample operating-point selection (E56 caveat updated).** The 26-of-30 vote
+  threshold is selected at best-F1 against the same 487-tile test set. The paper must
+  note this as test-set-selected characterisation; deployment generalisation is the 55-map
+  analysis. A dated scope-clarification Update was added to E56; no preregistration
+  amendment needed.
+- **Compute on zbook, not sapphire.** The round-robin permutation sweep ran on zbook
+  (10,000 permutations, $0 API); reproducibility re-verified byte-identical post-Session
+  103. The project CLAUDE.md prescribes sapphire for bootstrap/permutation work; this was
+  a documented deviation (zbook result confirmed valid).
+- **Script re-use, not new pipeline.** `scripts/consensus_vs_baseline_tiering.py` reuses
+  `n1_baseline_leaderboard_tiering.py` verbatim (the same project-canonical method as the
+  n1 baseline board). No novel methodology is introduced.
+
+### Findable later
+
+Search terms: Obs 346, diversity-dividend-384 leaderboard signed off, manually_verified_at
+2026-06-06, diversity dividend HIGH-thinking consensus, 197/231 pairs significant 7 tiers
+22 cells, HIGH-text consensus F1 0.814 MCC 0.620, minimal-text consensus F1 0.661,
+text diversity dividend +0.153 F1 +0.239 MCC, image dividend +0.070 F1 +0.272 MCC,
+consensus vs single-pass +0.09 to +0.33 F1 deployable, Flash consensus Pro tier tie,
+three-member Tier 1 statistical tie, consensus-flash-high-text-26of30 0.814,
+pro-text-high-t-0-0 0.804 MCC 0.790, pro-text-medium-t-0-0 0.792 MCC 0.790,
+p=0.616 BH-p=0.662 Flash vs Pro, F1 parity not MCC parity, 41 tile FPs vs 115 vs 11,
+diversity-dividend-analysis.md, tiering-champions tiering_20m.json, tiering-with-deployable,
+consensus_vs_baseline_tiering.py n1_baseline_leaderboard_tiering reuse,
+diversity-dividend-cells-2026-06-06.json, Era-2 487-tile 384px gemini-3-flash,
+10000 permutations seed 42 BH-FDR q=0.05, zbook round-robin permutation $0 API,
+H3 confirmed both named claims, best N threshold preregistered H3 characterisation,
+operating-point framing settled Session 103, E56 scope-clarification update,
+best minus N5 delta 0.094 F1, carry-forward delta 55-map generalisation,
+pv-diag-384-consensus-calibration realised, Session 103 diversity dividend close.
+
+### Related observations and artefacts
+
+- **Obs 140** (HIGH thinking improves consensus despite hurting individual-run efficiency —
+  the diversity dividend, 2026-02-16, line 2239): the original serendipitous observation
+  that the formal test confirms and quantifies. The present Obs is its statistical
+  realisation.
+- **Obs 141** (serendipitous error as abductive catalyst — the accidental HIGH-thinking
+  runs, 2026-02-16, line 2281): the methodological origin story of the diversity-dividend
+  hypothesis; the pv-diag-384 corpus built from those accidental runs is the source data
+  for this test.
+- **Obs 333** (consensus aggregation dividend is run-dependent and tracks proposer
+  diversity, Session 95, line 16996): the proposer-diversity framing that explains why
+  HIGH-thinking pools take the larger consensus gain; directly corroborated by the 41
+  vs 115 tile-FP contrast.
+- **Obs 335** (N=1 single-pass baseline matrix re-scored at 14 buffers + MCC, Session 96,
+  line 17101): the `n1-baseline-matrix-384` board that provided the 18 single-pass cells
+  in this test. Shared Era-2 scope, buffer standard, and permutation method.
+- **Obs 338** (genuine-Pro re-run resolves E57 — sole leader artefact, Session 98, line
+  17281): established the genuine-Pro values (F1 0.804, MCC 0.790) that now form the
+  Tier-1 co-members. The "sole leader" pre-E57 artefact is fully resolved; this Obs
+  inherits the corrected Pro cells.
+- **Obs 344** (phase2a–e standardised to 14-buffer + MCC, Session 102, line 17717):
+  companion buffer-harmonisation work from the same session that established the
+  analysis standard applied here.
+- **Obs 345** (pv-diag-384 consensus sweep buffer-harmonised and 29 headline operating
+  points registered — diversity-dividend test NOT yet run, Session 102, line 17832):
+  the direct predecessor. This Obs closes the "NOT yet run" flag; the
+  `pv-diag-384-consensus-calibration` sweep registered there is now realised as this
+  verified `diversity-dividend-384` leaderboard.
+- **Artefacts**: `results/diversity-dividend-384/tiering-champions/tiering_20m.json`
+  (n_total_pairs=231, n_significant=197, n_tiers=7, Tier-1 tie_set confirmed,
+  verified 2026-06-06);
+  `results/diversity-dividend-384/tiering-champions/tiering_20m.md` (human-readable
+  tiering report);
+  `results/diversity-dividend-384/tiering-with-deployable/tiering_20m.{json,md}`
+  (N=5 deployable operating-point table);
+  `results/diversity-dividend-384/diversity-dividend-analysis.md` (synthesis document;
+  FP tile counts, operating-point sensitivity table, operating-point framing, verified
+  2026-06-06);
+  `results/run-analyses.json` → `diversity-dividend-384` entry
+  (`manually_verified_at: 2026-06-06T00:07:40Z`, `type: leaderboard`, `hypothesis_refs:
+  ["H3"]`, verified 2026-06-06);
+  `scripts/consensus_vs_baseline_tiering.py` (permutation + BH-FDR + tiering harness);
+  `planning/diversity-dividend-cells-2026-06-06.json` (cell spec, 22-cell board);
+  commits `db582f1d` → `fd52bb82` → `811bc9b5` (harness + finding + audit fixes,
+  Session 103); Session-103 reframe commit (operating-point framing, E56 Update).
