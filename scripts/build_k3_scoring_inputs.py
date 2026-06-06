@@ -59,8 +59,13 @@ def main() -> int:
     out.mkdir(parents=True, exist_ok=True)
 
     # 1) k3 detection union = k4 verified ∪ vote=3 verified, keep source_tile.
+    #    The two sets may differ in CRS (k4 verified is UTM 35N; the
+    #    build_post_verifier_geojson output is WGS84 / RFC 7946) — harmonise
+    #    the vote=3 set onto k4's CRS before concatenating.
     k4 = gpd.read_file(args.k4_verified)[["source_tile", "geometry"]].copy()
     v3 = gpd.read_file(args.vote3_verified)[["source_tile", "geometry"]].copy()
+    if v3.crs != k4.crs:
+        v3 = v3.to_crs(k4.crs)
     k3 = pd.concat([k4, v3], ignore_index=True)
     k3 = gpd.GeoDataFrame(k3, geometry="geometry", crs=k4.crs)
     k3.insert(0, "candidate_id", range(len(k3)))
