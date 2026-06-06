@@ -1,0 +1,23 @@
+{
+  "run": "55maps-text-high-generalisation",
+  "prob_threshold": 0.15,
+  "match_m": 50.0,
+  "coincide_m": 50.0,
+  "n_vote3_candidates": 4367,
+  "n_verifier_passed": 622,
+  "n_vlm_only": 239,
+  "n_pass1_new": 134,
+  "n_pass2_autofill": 105,
+  "autofill_label_breakdown": {
+    "not_mound": 59,
+    "mound": 46
+  },
+  "prior_review_files": [
+    "results/55maps-image-generalisation/human-review-multi-buffer.csv",
+    "results/55maps-image-generalisation/human-review.csv",
+    "results/55maps-text-high-generalisation/human-review-multi-buffer.csv",
+    "results/55maps-text-high-t0.3-generalisation/human-review-multi-buffer.csv",
+    "results/55maps-text-min-generalisation/human-review-multi-buffer.csv"
+  ],
+  "ground_truth": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson"
+}
