@@ -135,9 +135,11 @@ Provenance: `results/55maps-extended-gt-2026-06-07/` (`TRACK2-SUMMARY.md`,
 
 See `results/deployment-oracle-2026-06-06/deployment-oracle-findings.md` for the
 deployment-oracle write-up and `planning/55maps-gt-consolidation-spec-2026-06-07.md`
-for the consolidation spec. Formal manifest registration of the seven
-`@canonical-gt` conditions is pending (a bookkeeping step; the analysis is
-complete and committed).
+for the consolidation spec. The seven cells are **registered in the conditions
+manifest** as `<run>::verified-{k4,k3}-canonical-gt` (e.g. the oracle
+`55maps-text-high-t0-3-generalisation::verified-k3-canonical-gt`); the historical
+`verified` conditions (Track 1) carry a cross-reference to them in
+`run-conditions.json`.
 
 ## Bookkeeping notes / open items
 

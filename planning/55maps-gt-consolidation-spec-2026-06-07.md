@@ -1,8 +1,8 @@
 # 55-map ground-truth consolidation + canonical-GT re-score — spec
 
 **Created**: 2026-06-07 (Session 105)
-**Status**: LOCKED 2026-06-07 (O1/O2/O3 signed off). **Analysis + docs DONE; manifest
-registration PENDING** — see § Progress.
+**Status**: COMPLETE 2026-06-07 (O1/O2/O3 signed off; analysis, docs, AND manifest
+registration all done) — see § Progress.
 
 ## Progress (2026-06-07, Session 105)
 
@@ -23,18 +23,19 @@ registration PENDING** — see § Progress.
 - **Docs (D1/D2).** Two-reference section in `55maps-generalisation-runs.md`;
   changelog entry in the deployment-oracle findings doc.
 
-**PENDING (next session — bookkeeping, analysis already complete + committed):**
+**DONE (committed `9b96a99f`→`da2cf355`):**
 
-- **T2e — manifest minting.** Author the 7 `…@canonical-gt` conditions into
-  `conditions-manifest.json` (O1: suffix + oracle row). Route via the generated-
-  manifest flow (decomposition source `results/run-conditions.json` → extractor →
-  drift-check) — map it carefully; do **not** hand-edit the generated manifest.
-  Provenance per cell → `results/55maps-extended-gt-2026-06-07/<cell>/summary.json`.
-- **T1b — archive** the superseded historical GT-eval variants
-  (`55maps-cleaned-gt-evaluation/`, `55maps-*/human-reviewed-corrected/`,
-  `55maps-*/mcc/`, `condition-scoring-backfill-2026-05-30/55maps-*`) →
-  `archive/55maps-superseded-gt-evals/`.
-- **T1c — `_note`** on the 5 historical conditions pointing to the canonical track.
+- **T2e — manifest minting.** 7 `…-canonical-gt` conditions registered (224→231,
+  ALL VALID, 0 existing changed) via the generated-manifest flow (no hand-edit):
+  `adapt_track2_evals_for_manifest.py` (Track-2 `summary.json` → generator-
+  compatible `evaluation.json`) + `add_canonical_gt_conditions.py` (specs into
+  `run-conditions.json`) + `generate_post_run_report.py --all --write`. Drift-check
+  **0 fail**; the 5 55maps runs PASS. (O1's `@` suffix → `-canonical-gt`; the
+  schema's `condition_id` pattern forbids `@`.)
+- **T1b — archived** the superseded historical GT-eval variants →
+  `archive/55maps-superseded-gt-evals/` (none referenced pre-move; `git mv`).
+- **T1c — `_note`** canonical-track cross-reference added to each of the 4 run
+  decomposition entries in `run-conditions.json`.
 **Purpose**: Lock the design for two side-by-side evaluation references for the
 five 55-map generalisation runs — a **historical (as-measured)** track and a
 **canonical extended-GT (gold-standard-substitute)** track — so the paper can
