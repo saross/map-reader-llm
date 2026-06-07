@@ -1,6 +1,6 @@
 # 55-map deployment oracle — carry-forward vs oracle-best (Session 104)
 
-> **Last revised**: 2026-06-07 (phantom-gate fix landed; standalone corrected-F1 now matches the permutation exactly). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-06-07 (canonical adjudicated-GT re-score added — §4b; deltas hold, absolutes rise as duplicate phantoms clear). See [§ Changelog](#changelog) for revision history.
 
 **Question.** The 4 GS (gold-standard) maps are the calibration+test instrument; the
 55-map student corpus is the out-of-sample deployment. We carried forward a PV
@@ -100,6 +100,29 @@ Combining the axes, the joint oracle is **T0.3 × 3-of-5** and the carry-forward
 The carry-forward left **+0.032 corrected-F1** on the table, decomposing roughly into a
 config component (T0.7→T0.3, ~+0.020) and a threshold component (4-of-5→3-of-5, ~+0.010–0.028).
 
+## 4b. Canonical adjudicated-GT re-score (the rigorous reference)
+
+The cross-run comparisons in §§3–4 first used a *naive* union of every run's
+review (which double-counts a mound several runs found, and lets a `mound` label
+override a `not_mound`). We rebuilt a **canonical adjudicated GT** — one point per
+real feature: 740 auto-resolved clusters (agreed + min-ring-collapsed), 23 of 24
+human-adjudicated conflicts, and 10 of 213 cross-config-corroborated **vote=2**
+candidates that survived review (a GT-completeness pass toward GS quality; the low
+4.7 % yield confirms the vote≥3 floor was already near-saturated). **773 canonical
+mounds.** Re-scoring §§3–4 against it:
+
+| | config: T0.3 | T0.7 | image | text-min | T0.3−T0.7 | joint oracle Δ |
+|---|---|---|---|---|---|---|
+| naive union | 0.800 | 0.780 | 0.767 | 0.748 | +0.020 (p<0.001) | +0.032 (p<0.001) |
+| **canonical GT** | **0.836** | **0.815** | **0.799** | **0.783** | **+0.021 (p<0.001)** | **+0.032 (p<0.001)** |
+
+**Deltas hold; absolutes rise** ~0.02–0.04 as the ~600 duplicate phantoms clear.
+Canonical joint oracle: carry-forward (T0.7×4-of-5) = **0.815** vs oracle
+(T0.3×3-of-5) = **0.848**, the carry-forward leaving **+0.032 corrected-F1** on the
+table (p<0.001). The threshold-axis (§1) is unchanged — it never used cross-run
+unions. Provenance: `scripts/build_canonical_gt.py`, `build_vote2_enrichment_kit.py`,
+`results/.../canonical-gt/canonical-review.csv`, `results/.../canonical-rescore/`.
+
 ## 5. Two-script reconciliation (single-sourced numbers)
 
 `compute_corrected_f1_multi_buffer.py` and `paired_permutation_corrected_55maps.py`
@@ -165,6 +188,16 @@ operator; requires the API gate and a further (delta-from-3-of-5) manual review.
 ---
 
 ## Changelog
+
+### 2026-06-07 — Canonical adjudicated-GT re-score (§4b)
+
+Rebuilt the cross-run reference as a canonical, deduplicated, adjudicated GT (773
+mounds: 740 auto + 23 of 24 conflict adjudications + 10 of 213 vote=2 enrichment),
+replacing the naive review-union for the config-axis and joint-oracle. Config and
+joint **deltas held** (T0.3−T0.7 +0.020→+0.021; joint +0.032 unchanged) while
+**absolutes rose** (T0.3 0.800→0.836; joint oracle 0.830→0.848) as ~600 duplicate
+phantoms cleared. Threshold-axis (§1) untouched. Run on zbook (sapphire engaged by
+another session).
 
 ### 2026-06-07 — Phantom-gate fix
 
