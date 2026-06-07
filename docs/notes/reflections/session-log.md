@@ -6951,3 +6951,57 @@ GS plateau, p<0.001. Full write-up: `results/deployment-oracle-2026-06-06/deploy
   files — benign, cleared on re-stat.
 - Only API spend: the single vote=3 flex verifier run (~$7.4). Everything else $0 (re-scoring,
   permutation, free GS-sweep derivation from the existing union verifier run).
+
+## Session 105 — 2026-06-07 — 55-map Track-2 canonical extended-GT analysis: built, validated, documented, registered
+
+Resumed from the Session-104 beacon. Shawn's gut-check ("are we finished with last session's
+work?") opened into a two-reference consolidation: confirm the historical (Track-1, reviewed
+student GT) record is spec-complete, then run the same analyses against the **canonical
+extended GT** (Track-2) as the paper reference. Locked a spec, built and validated the
+analysis, then — at Shawn's call ("we have context, finish it") — completed the manifest
+registration in the same session.
+
+**What was done** (all $0 API; compute on zbook, sapphire contended)
+
+- **Engine**: additive `--compute-mcc` on `compute_corrected_f1_multi_buffer.py` (tile-MCC via
+  the shared `calculate_tile_classification`, same per-buffer gated extended GT; F1 path
+  byte-identical when off). 6 tier-1 tests; no regressions (37 tests green).
+- **Driver** `score_55maps_extended_gt_canonical.py`: 7 cells (4 carried configs + oracle +
+  2 threshold-completion k3s), full 14-buffer corrected-F1 + tile-MCC, one engine, only the GT
+  differs from Track 1.
+- **Validation gate**: 5 §4b-anchored cells reproduce corrected-F1 @ 50 m to ~7 d.p.
+  (carry-forward 0.815228, oracle 0.847606); below-50 m equals the Track-1 manifest exactly
+  (TH7-k4 F1@20m 0.6260, MCC 0.6480 — no phantoms gate in below 50 m).
+- **Threshold permutations** vs canonical GT (`launch_threshold_permutations_canonical.sh`):
+  k3 > carried k4 for all three text configs, p<0.001 @ 50 m (TH7 +0.0272, T03 +0.0117,
+  TM +0.0296) — moves §1's claim off the per-run GTs.
+- **Manifest registration**: adapter (`adapt_track2_evals_for_manifest.py`, Track-2
+  summary.json → generator-compatible evaluation.json) + spec-adder
+  (`add_canonical_gt_conditions.py`) + `generate_post_run_report.py --all --write`.
+  **224→231 conditions, ALL VALID, +7/0-changed (ts-normalised), drift-check 0 fail**, 5
+  55maps runs PASS. Labels `-canonical-gt` (schema forbids `@`). MCC pinned to the 50 m
+  headline (manifest slot is buffer-agnostic; full per-buffer MCC in consolidated-track2.csv).
+- **Archive (T1b)**: superseded GT-eval variants (cleaned-gt, per-run mcc/, image
+  human-reviewed-corrected, two 55maps condition-scoring-backfill dirs) → `git mv` to
+  `archive/55maps-superseded-gt-evals/` (none referenced pre-move; gs-v2 backfill left live).
+- **Docs**: two-reference section in `55maps-generalisation-runs.md`; findings-doc changelog
+  entry; spec § Progress (status COMPLETE); beacon updated (S106 → Era-1 3c analyses).
+
+**Headline**: oracle `55maps-text-high-t0-3-generalisation::verified-k3-canonical-gt` =
+**F1@50 0.848 / MCC 0.690** against the canonical GT; carry-forward left +0.032 F1 (decomp:
+threshold +0.027, temperature +0.021, sub-additive). Image tops MCC (0.710) at mid-pack F1
+(F1-vs-MCC divergence). 9 commits `bb7d5279`→`e327d8e9`, all pushed.
+
+**Deferred (S106)**: the original TODO #3 — Era-1 3c analyses (phase3a / phase3a-high /
+phase3a-replication / phase3c; manifest 23/28 runs decomposed). Then TODO #4–6.
+
+### Contextual assumptions
+
+- **Session 105**, 2026-06-07. Compute on **zbook** (sapphire BUSY, load 12 — confirmed via
+  `check-compute-hosts.sh`); amd-tower is the local workstation (compute-forbidden). $0 API.
+- A workflow snag worth remembering: results written on zbook then committed from local create
+  an **untracked-blocks-`git pull`** collision on zbook's next pull — resolved by a scoped
+  `git clean` of the just-committed (byte-identical) dir, leaving an unrelated session's
+  untracked dir untouched. Cleaner pattern: commit+push from the producing machine.
+- The eCryptfs stat-dirty "modified files" artefact recurred at session start (≈19 files,
+  identical content hashes) — benign, the same eCryptfs transient as Session 104.

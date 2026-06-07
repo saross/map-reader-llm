@@ -6282,3 +6282,33 @@ authoritative source while my narration reached for a plausible-looking path. Th
 lesson compounds the methodological one — keep the artefact's specifics flowing from re-verifiable
 anchors (the condition's recorded `eval_path`), and your guessed numbers can corrupt your sentences
 but not your findings.
+
+## Session 105 — 2026-06-07 (verification gates as the substrate for trustworthy autonomy; "intricate" is a gate-requirement, not a defer-signal)
+
+A long, mostly-autonomous build (an engine extension, a driver, a remote sweep, permutations,
+docs, and a generated-manifest registration) ran end-to-end with the human intervening only
+twice, both times at the level of *framing the deliverable* — the two-reference Track-1/Track-2
+decomposition, and "the argument needs both vote thresholds, so score 7 cells not 5." Every
+*mechanical* error was caught and fixed without him auditing: an eCryptfs stat-dirty file set
+that looked like uncommitted edits but had identical content hashes; a remote `git pull` that
+aborted on untracked result files; a schema rejecting `@` in a `condition_id`; a drift-check
+failing four runs because an adapted eval omitted the `input_files` block it cross-checks.
+
+The transferable observation is *why* that division of labour held. It was not trust — it was
+that each step had a **cheap, objective gate** that disagreed with me when I was wrong: the
+canonical re-score had to reproduce the prior finding's F1 to 7 decimal places before any new
+number was believed; the manifest regeneration was diffed against the committed version with
+timestamps normalised, so "added 7 / changed 0" was *verified*, not asserted; the drift-check
+returned a hard fail count. Autonomy is only as trustworthy as the gates that can falsify the
+agent's own output, and the agent's job is to *build the gate before doing the work* — a control
+baseline (regenerate the unmodified source, confirm it still validates) before the mutation,
+so the post-mutation diff means something.
+
+The corollary corrected a reflex of mine. Earlier in the session I argued to **defer** the
+manifest registration because it was "intricate — better mapped carefully than rushed." The
+human overrode it ("we have context, finish it"), and finishing surfaced two genuine breakages
+— which felt, briefly, like vindication of the caution. It wasn't. "Intricate" is a reason to
+*install gates and proceed*, not to defer; the breakages were caught precisely because the
+gates were there. Deferral dressed up as prudence is just postponed risk. The honest move when
+something is delicate is to make its failure modes *cheap to detect now*, not to push the
+delicacy into a future session that will face the same gates with less context.

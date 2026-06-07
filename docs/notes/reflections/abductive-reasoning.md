@@ -5373,3 +5373,34 @@ several phantom points (≈600 duplicates → spurious FNs), and `mound` silentl
 (one point per feature, min-ring, 24 human-adjudicated conflicts). Re-scored: deltas held,
 absolutes rose ~0.02–0.04 as the duplicates cleared — confirming the bias was real but
 common-mode. The deltas were robust; the absolutes were not.
+
+## Session 105 — 2026-06-07 — schema-valid but drift-failing: orthogonal validators
+
+### Sequence 1 — "the manifest validated ALL VALID, so the 7 conditions are correctly registered" (refuted by the drift-check)
+
+**Surprising fact:** `generate_post_run_report.py --all` returned **ALL VALID** (231 conditions
+against the draft-2020-12 schemas), so I treated registration as clean — and then
+`verify_run_conditions.py` immediately **failed four 55maps runs** with
+`eval-detections-mismatch [ERROR]: eval scored [], not <detections>`. Two validators run
+minutes apart on the same artefacts; one passed, one failed hard.
+
+**Probe:** read `verify_run_conditions._eval_inputs` — it reads
+`_metadata.input_files.{detections, bounds}` from each eval. My adapter had written the
+detections path to `_metadata.detections` (a *different* key) and no bounds at all, so the
+drift-check read an empty detections list ("scored []") and could not confirm the eval scored
+this condition's geojson or sat on the right scope.
+
+**Revision:** schema validation and the drift-check are **orthogonal layers**. The schema checks
+the *manifest row's* structural well-formedness; the drift-check checks *cross-source
+consistency* between the upstream eval file and the condition spec (and a feature-count tripwire
+that has caught wrong-source errors before). Passing one says nothing about the other. The fix
+was to emit `input_files` from the adapter; drift-check went 4-fail → 0-fail and the five 55maps
+runs flipped to PASS. The generalisable lesson: when you **synthesise an artefact to satisfy a
+consumer**, enumerate *every* consumer that reads it — here the schema validator AND the
+cross-source auditor both read my adapted eval — not just the one whose failure is loudest or
+checked first. "ALL VALID" was true and irrelevant to the question the next tool asked.
+
+**Footnote (a non-sequence):** O1's agreed `@canonical-gt` label suffix was rejected by the
+`condition_id` pattern `^[a-z0-9-]+::[a-z0-9._-]+$` on the first validation — a default-following
+correction with no abductive content (the validator simply said no), resolved to `-canonical-gt`.
+Recorded only because the deviation from a human-agreed name will otherwise read as arbitrary.

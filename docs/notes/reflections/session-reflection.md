@@ -8658,3 +8658,56 @@ recall floor was near-saturated. And the two-script reconciliation: that `build_
 silently over-promotes wider-ring "yesterday" mounds unless yesterday is single-buffer-50 m,
 which is invisible until you pass it a multi-buffer review. Both are documented in
 `deployment-oracle-findings.md`, but the *why each mattered* lives only here.
+
+## Session 105 — 2026-06-07 — the deferral I argued for, and the gates that made finishing safe
+
+### Prompt: Where did you and the human disagree, and who was right?
+
+Once, and it was the hinge of the session. With the Track-2 analysis built, validated, and
+documented, I proposed **deferring** the manifest registration to S106 — "it routes through a
+generated-manifest flow I'd rather map carefully than rush at the tail of a long session."
+Shawn: "we still have plenty of context, let's complete it." He was right that it was doable.
+But my caution wasn't empty: minting the seven conditions surfaced **two real breakages** —
+the schema's `condition_id` pattern rejected the `@` in O1's `@canonical-gt` suffix, and the
+drift-check failed four runs because my adapted `evaluation.json` omitted the
+`_metadata.input_files` block it reads to confirm eval↔detections. Neither was visible until
+the generator and the drift-check ran.
+
+So who was right is "both, and the synthesis matters": *intricate* was a reason to proceed
+**with verification gates**, not to defer. What made finishing safe wasn't courage, it was the
+control-baseline discipline — regenerate the **unmodified** source first (confirm 224
+conditions, ALL VALID), *then* add my work and diff with timestamps normalised (confirm
++7 / 0-changed). The deferral would have been the lazy reading of "this is delicate."
+
+### Prompt: What was different about this session compared to recent ones?
+
+Session 104 was disagreement-dense — Shawn catching my plausible defaults turn after turn.
+105 was the inverse: a long, mostly-autonomous build (engine → driver → gate → sweep →
+permutations → docs → manifest), and his two interventions were **structural framing**, not
+error-correction. First, the two-reference (historical Track 1 / canonical Track 2)
+decomposition — that organised the entire session and turned a vague "are we finished?" into a
+clean side-by-side deliverable. Second, "the argument is 4-of-5 vs 3-of-5, so we need *both*
+thresholds" — which expanded my tidy 5-cell plan to the 7 cells that actually carry the
+paper's central claim against the canonical GT. The mechanical errors this session I caught
+myself: the eCryptfs stat-dirty "modified files" that weren't, the zbook untracked-pull
+collision, the schema `@`, the drift-check `input_files`. That is a healthier division of
+labour — he works at the level of *what the paper needs*, I work at the level of *making the
+pipeline correct* — and it only holds because the verification gates (the §4b reproduction to
+7 d.p., the +7/0-changed diff, the drift-check 0-fail) let me self-correct without his having
+to audit each step.
+
+### Prompt: What context will be hardest to reconstruct in 6 months?
+
+The manifest-registration plumbing, because none of it is legible from the committed artefacts.
+The conditions manifest is **generated** (`generate_post_run_report.py --all`), not hand-edited,
+from `run-conditions.json`; so registering Track 2 meant (a) an **adapter** translating my
+corrected-F1 `summary.json` schema (`results[]`/`R_m`/`F1`) into the generator's expected
+`evaluation.json` schema (`summary.buffers[]` + `tile_classification.confusion`), and (b) a
+spec-adder writing the seven specs into the decomposition source. The single non-obvious
+modelling choice: the manifest's `tile_classification` slot is **buffer-agnostic** (one MCC per
+condition), but Track-2 MCC **varies with R** because the gated extended GT gains phantoms at
+≥50 m — so the registered MCC is pinned to the **50 m deployment headline**, and the full
+per-buffer MCC lives only in `consolidated-track2.csv`. A future reader seeing "MCC 0.690" in
+the manifest will not know it is the 50 m value of a curve unless this is written down. Also
+worth keeping: the label is `-canonical-gt`, not O1's `@canonical-gt`, purely because the
+schema forbids `@` — an arbitrary-looking deviation with a one-line reason.
