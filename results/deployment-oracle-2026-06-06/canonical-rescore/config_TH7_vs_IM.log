@@ -1,0 +1,51 @@
+2026-06-07 14:09:46,712 - INFO - Loading detections, student GT, bounds...
+2026-06-07 14:09:46,928 - INFO -   detections: A=4164 B=4680  student GT=4746  tiles=8541
+2026-06-07 14:09:46,931 - INFO -   review A: yesterday=0 today=773 sentinels=10
+2026-06-07 14:09:46,931 - INFO -   review B: yesterday=0 today=773 sentinels=10
+2026-06-07 14:09:46,931 - INFO - --- R = 20 m ---
+2026-06-07 14:09:46,936 - INFO -   phantoms: A=0 B=0  ext_GT: A=4746 B=4746
+2026-06-07 14:09:54,039 - INFO -   F1: TH7=0.6260 vs IM=0.5082  ΔF1=+0.1179 [+0.1039, +0.1316]  p=0.0000 ***  W/L/T=791/414/7336
+2026-06-07 14:09:54,041 - INFO - --- R = 25 m ---
+2026-06-07 14:09:54,046 - INFO -   phantoms: A=0 B=0  ext_GT: A=4746 B=4746
+2026-06-07 14:10:01,242 - INFO -   F1: TH7=0.7102 vs IM=0.6210  ΔF1=+0.0892 [+0.0763, +0.1023]  p=0.0000 ***  W/L/T=736/454/7351
+2026-06-07 14:10:01,245 - INFO - --- R = 30 m ---
+2026-06-07 14:10:01,251 - INFO -   phantoms: A=0 B=0  ext_GT: A=4746 B=4746
+2026-06-07 14:10:08,666 - INFO -   F1: TH7=0.7569 vs IM=0.6887  ΔF1=+0.0682 [+0.0560, +0.0805]  p=0.0000 ***  W/L/T=661/463/7417
+2026-06-07 14:10:08,669 - INFO - --- R = 35 m ---
+2026-06-07 14:10:08,674 - INFO -   phantoms: A=0 B=0  ext_GT: A=4746 B=4746
+2026-06-07 14:10:16,229 - INFO -   F1: TH7=0.7778 vs IM=0.7278  ΔF1=+0.0500 [+0.0387, +0.0615]  p=0.0000 ***  W/L/T=614/489/7438
+2026-06-07 14:10:16,232 - INFO - --- R = 40 m ---
+2026-06-07 14:10:16,238 - INFO -   phantoms: A=0 B=0  ext_GT: A=4746 B=4746
+2026-06-07 14:10:23,782 - INFO -   F1: TH7=0.7868 vs IM=0.7520  ΔF1=+0.0348 [+0.0240, +0.0461]  p=0.0000 ***  W/L/T=568/511/7462
+2026-06-07 14:10:23,784 - INFO - --- R = 45 m ---
+2026-06-07 14:10:23,790 - INFO -   phantoms: A=0 B=0  ext_GT: A=4746 B=4746
+2026-06-07 14:10:31,421 - INFO -   F1: TH7=0.7903 vs IM=0.7662  ΔF1=+0.0242 [+0.0137, +0.0348]  p=0.0000 ***  W/L/T=532/521/7488
+2026-06-07 14:10:31,424 - INFO - --- R = 50 m ---
+/home/shawn/Code/map-reader-llm/scripts/compute_corrected_f1_multi_buffer.py:169: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  phantoms = pd.concat([y_mounds, t_mounds], ignore_index=True)
+/home/shawn/Code/map-reader-llm/scripts/compute_corrected_f1_multi_buffer.py:169: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  phantoms = pd.concat([y_mounds, t_mounds], ignore_index=True)
+2026-06-07 14:10:31,441 - INFO -   phantoms: A=415 B=415  ext_GT: A=5161 B=5161
+2026-06-07 14:10:39,554 - INFO -   F1: TH7=0.8152 vs IM=0.7987  ΔF1=+0.0165 [+0.0065, +0.0267]  p=0.0017 **  W/L/T=543/557/7441
+2026-06-07 14:10:39,557 - INFO - --- R = 75 m ---
+/home/shawn/Code/map-reader-llm/scripts/compute_corrected_f1_multi_buffer.py:169: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  phantoms = pd.concat([y_mounds, t_mounds], ignore_index=True)
+/home/shawn/Code/map-reader-llm/scripts/compute_corrected_f1_multi_buffer.py:169: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  phantoms = pd.concat([y_mounds, t_mounds], ignore_index=True)
+2026-06-07 14:10:39,577 - INFO -   phantoms: A=594 B=594  ext_GT: A=5340 B=5340
+2026-06-07 14:10:47,802 - INFO -   F1: TH7=0.8045 vs IM=0.8158  ΔF1=-0.0113 [-0.0209, -0.0015]  p=0.0190 *  W/L/T=476/643/7422
+2026-06-07 14:10:47,807 - INFO - --- R = 100 m ---
+/home/shawn/Code/map-reader-llm/scripts/compute_corrected_f1_multi_buffer.py:169: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  phantoms = pd.concat([y_mounds, t_mounds], ignore_index=True)
+/home/shawn/Code/map-reader-llm/scripts/compute_corrected_f1_multi_buffer.py:169: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  phantoms = pd.concat([y_mounds, t_mounds], ignore_index=True)
+2026-06-07 14:10:47,832 - INFO -   phantoms: A=685 B=685  ext_GT: A=5431 B=5431
+2026-06-07 14:10:56,209 - INFO -   F1: TH7=0.8006 vs IM=0.8179  ΔF1=-0.0173 [-0.0270, -0.0076]  p=0.0002 ***  W/L/T=466/671/7404
+2026-06-07 14:10:56,212 - INFO - --- R = 125 m ---
+/home/shawn/Code/map-reader-llm/scripts/compute_corrected_f1_multi_buffer.py:169: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  phantoms = pd.concat([y_mounds, t_mounds], ignore_index=True)
+/home/shawn/Code/map-reader-llm/scripts/compute_corrected_f1_multi_buffer.py:169: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  phantoms = pd.concat([y_mounds, t_mounds], ignore_index=True)
+2026-06-07 14:10:56,237 - INFO -   phantoms: A=729 B=729  ext_GT: A=5475 B=5475
+2026-06-07 14:11:04,571 - INFO -   F1: TH7=0.7990 vs IM=0.8183  ΔF1=-0.0193 [-0.0290, -0.0094]  p=0.0000 ***  W/L/T=466/679/7396
+2026-06-07 14:11:04,576 - INFO - Wrote results/deployment-oracle-2026-06-06/canonical-rescore/config_TH7_vs_IM/summary.json

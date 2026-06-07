@@ -1,0 +1,68 @@
+{
+  "metadata": {
+    "timestamp": "2026-06-07T04:10:46.827294+00:00",
+    "script": "paired_permutation_corrected_55maps.py",
+    "version": "1.0.0",
+    "git_commit": "0d3693546a74aff603b4a67aaf69b5cff03e280e",
+    "buffer_metres": 75,
+    "n_permutations": 10000,
+    "n_bootstrap": 10000,
+    "seed": 42,
+    "methodology": "Approach B \u2014 extended-GT-at-R Hungarian matching, tile-swap paired permutation test on micro-average F1"
+  },
+  "condition_a": {
+    "label": "IM",
+    "detections": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+    "review_yesterday": "results/deployment-oracle-2026-06-06/canonical-gt/empty-review.csv",
+    "review_today": "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+    "n_detections": 4680
+  },
+  "condition_b": {
+    "label": "TM",
+    "detections": "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson",
+    "review_yesterday": "results/deployment-oracle-2026-06-06/canonical-gt/empty-review.csv",
+    "review_today": "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+    "n_detections": 3865
+  },
+  "buffer_metres": 75,
+  "n_phantoms_a": 594,
+  "n_phantoms_b": 594,
+  "n_ref_extended_a": 5340,
+  "n_ref_extended_b": 5340,
+  "delta_f1_ci": {
+    "lower": 0.032978,
+    "upper": 0.055274,
+    "n_bootstrap": 10000
+  },
+  "global_a": {
+    "f1": 0.815768,
+    "precision": 0.873291,
+    "recall": 0.765356,
+    "tp": 4087,
+    "fp": 593,
+    "fn": 1253
+  },
+  "global_b": {
+    "f1": 0.771754,
+    "precision": 0.919017,
+    "recall": 0.665169,
+    "tp": 3552,
+    "fp": 313,
+    "fn": 1788
+  },
+  "permutation_test": {
+    "observed_f1_diff": 0.044014,
+    "p_value": 0.0,
+    "n_permutations": 10000,
+    "n_tiles": 8541,
+    "wins_a": 806,
+    "losses_a": 473,
+    "ties": 7262,
+    "null_distribution": {
+      "mean": -7.7e-05,
+      "std": 0.005528,
+      "percentile_2.5": -0.010818,
+      "percentile_97.5": 0.010634
+    }
+  }
+}
