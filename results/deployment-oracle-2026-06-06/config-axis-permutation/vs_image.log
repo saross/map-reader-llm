@@ -1,0 +1,14 @@
+2026-06-06 12:53:35,469 - INFO - Loading ground truth: inputs/vectors/references/student-mounds-55maps-reviewed.geojson
+2026-06-06 12:53:35,523 - INFO - Loading bounds: inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson
+2026-06-06 12:53:35,628 - INFO - Reference: 4746 mounds, 8541 tiles
+2026-06-06 12:53:35,654 - INFO - GeoJSON: 4164 detections from verified_detections.geojson
+2026-06-06 12:53:35,680 - INFO - GeoJSON: 4680 detections from verified_detections.geojson
+2026-06-06 12:53:35,681 - INFO - Running permutation test: carryfwd_text-high-T0.7_k4 vs image_k3 (10000 permutations)
+2026-06-06 12:53:42,274 - INFO - Results written: results/deployment-oracle-2026-06-06/config-axis-permutation/vs_image/pairwise_permutation_result.json
+
+carryfwd_text-high-T0.7_k4 vs image_k3
+  A: F1=0.6260 (P=0.670, R=0.588, n=4164)
+  B: F1=0.5082 (P=0.512, R=0.505, n=4680)
+  ΔF1=+0.1179, p=0.0000 ***
+  Wins/Losses/Ties: 791/414/7336
+  95% null CI: [-0.0156, 0.0155]
