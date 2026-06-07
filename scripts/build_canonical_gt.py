@@ -199,6 +199,9 @@ def main() -> int:
     manifest = {"candidates": [
         {"candidate_id": d["cluster_id"], "centroid_x": d["x"], "centroid_y": d["y"],
          "source_tile": d["source_tile"], "cropped_from": "raster",
+         # crop_file is required by review_candidates.py's manifest schema; the
+         # PNG need not exist (the app re-crops live from --rasters-dir).
+         "crop_file": f"crops/candidate_{d['cluster_id']:05d}.png",
          "properties": {"kind": d["kind"]}}
         for d in re_review
     ]}
