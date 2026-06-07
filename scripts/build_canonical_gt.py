@@ -134,7 +134,11 @@ def main() -> int:
     n_auto_notmound = 0
 
     for items in clusters.values():
-        mound_rows = [d for d in items if d["label"] == "mound"]
+        # Creditable mound rows = label 'mound' AND within the 5 tolerance rings.
+        # The 200 m "visible-but-out-of-range" sentinel is excluded — exactly as
+        # build_phantom_gdf drops it — so sentinel-only clusters are not phantoms.
+        mound_rows = [d for d in items
+                      if d["label"] == "mound" and d["buf"] != SENTINEL_BUFFER]
         has_notmound = any(d["label"] == "not_mound" for d in items)
         cx = float(np.mean([d["x"] for d in items]))
         cy = float(np.mean([d["y"] for d in items]))
@@ -142,17 +146,14 @@ def main() -> int:
         mapn = next((d["map_name"] for d in items if d["map_name"]), "")
 
         if not mound_rows:
+            # no creditable mound here (all not_mound and/or all sentinel)
             n_auto_notmound += 1
             continue
 
-        # real-ring mounds only (drop the 200 m out-of-range sentinel for spread)
-        real_bufs = [d["buf"] for d in mound_rows if d["buf"] != SENTINEL_BUFFER]
-        if mound_rows and has_notmound:
+        bufs = [d["buf"] for d in mound_rows]
+        if has_notmound:
             kind = "label_conflict"
-        elif real_bufs and (max(real_bufs) - min(real_bufs)) > args.auto_collapse_m:
-            kind = "ring_conflict"
-        elif not real_bufs:
-            # every mound row is the sentinel — a genuine "out of range" call
+        elif (max(bufs) - min(bufs)) > args.auto_collapse_m:
             kind = "ring_conflict"
         else:
             kind = "auto"
@@ -161,7 +162,7 @@ def main() -> int:
             auto_mounds.append({
                 "candidate_id": len(auto_mounds),
                 "human_label": "mound",
-                "buffer_metres": int(min(real_bufs)),
+                "buffer_metres": int(min(bufs)),
                 "x": cx, "y": cy, "map_name": mapn,
             })
         else:
@@ -169,7 +170,7 @@ def main() -> int:
                 "cluster_id": len(re_review),
                 "kind": kind,
                 "x": cx, "y": cy, "source_tile": tile, "map_name": mapn,
-                "ring_spread": (max(real_bufs) - min(real_bufs)) if real_bufs else None,
+                "ring_spread": (max(bufs) - min(bufs)),
                 "calls": "; ".join(f"{d['src']}={d['label']}@{int(d['buf'])}"
                                    for d in items),
             })
