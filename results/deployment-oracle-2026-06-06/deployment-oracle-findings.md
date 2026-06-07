@@ -1,6 +1,6 @@
 # 55-map deployment oracle — carry-forward vs oracle-best (Session 104)
 
-> **Last revised**: 2026-06-07 (original publication; overnight analysis batch). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-06-07 (phantom-gate fix landed; standalone corrected-F1 now matches the permutation exactly). See [§ Changelog](#changelog) for revision history.
 
 **Question.** The 4 GS (gold-standard) maps are the calibration+test instrument; the
 55-map student corpus is the out-of-sample deployment. We carried forward a PV
@@ -113,6 +113,14 @@ corrected-F1 script over-promotes 86 wider-ring (75–150 m) phantoms at R=50, i
 from the permutation script.** The ΔF1s are unaffected (the bias is common to both cells);
 only the absolute F1 shifts ~0.01.
 
+**Resolved (2026-06-07).** `build_phantom_gdf` was given the symmetric yesterday-gate
+(`buffer_metres ≤ R`); the standalone corrected-F1 now matches the permutation **exactly**
+(k4 T0.7 = 0.8222, k3 = 0.8501, etc. — all six cells agree to 4 d.p.). The gate is a no-op
+for the empty/single-buffer-50 m "yesterday" the **published** corrected-F1 runs used
+(text-high empty, image single-buffer — verified from their `summary.json` provenance), so
+**published numbers are unchanged**. Fix + 3 tier-1 tests committed; standalone outputs
+refreshed.
+
 ## 6. Recommendation on 2-of-5 (open)
 
 Whether to extend the curve to **2-of-5** (to confirm 3-of-5 is the deployment peak, not
@@ -157,6 +165,16 @@ operator; requires the API gate and a further (delta-from-3-of-5) manual review.
 ---
 
 ## Changelog
+
+### 2026-06-07 — Phantom-gate fix
+
+Applied the symmetric yesterday-gate to `build_phantom_gdf` (`buffer_metres ≤ R`); the
+standalone `compute_corrected_f1_multi_buffer` now matches
+`paired_permutation_corrected_55maps` to 4 d.p. across all six k4/k3 cells. No headline
+number moved (the doc was already single-sourced from the permutation); §5 updated to
+record the resolution. Published per-run corrected-F1 numbers verified unchanged (their
+"yesterday" was empty or single-buffer-50 m). Fix + 3 tier-1 tests + refreshed standalone
+outputs committed.
 
 ### 2026-06-07 — Original publication
 
