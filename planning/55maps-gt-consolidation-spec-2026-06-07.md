@@ -1,7 +1,40 @@
 # 55-map ground-truth consolidation + canonical-GT re-score — spec
 
 **Created**: 2026-06-07 (Session 105)
-**Status**: LOCKED 2026-06-07 (O1/O2/O3 signed off) — proceeding to build
+**Status**: LOCKED 2026-06-07 (O1/O2/O3 signed off). **Analysis + docs DONE; manifest
+registration PENDING** — see § Progress.
+
+## Progress (2026-06-07, Session 105)
+
+**DONE (committed `bb7d5279`→`228e8675`):**
+
+- **T2a/b/c — engine + driver + sweep.** `compute_corrected_f1_multi_buffer.py`
+  gained an additive `--compute-mcc`; new driver
+  `scripts/score_55maps_extended_gt_canonical.py` scored the 7 cells (14-buffer
+  corrected-F1 + tile-MCC) vs the canonical extended GT on zbook.
+  **Validation gate PASSED**: 5 §4b-anchored cells reproduce corrected-F1 @ 50 m
+  to ~7 d.p.; below-50 m equals the Track-1 manifest exactly. Outputs
+  `results/55maps-extended-gt-2026-06-07/`.
+- **T2d — canonical-GT threshold permutations.** k3 > carried k4 for all three
+  text configs, p<0.001 @ 50 m (TH7 +0.027, T03 +0.012, TM +0.030).
+  `threshold-permutations/`.
+- **Tests.** 6 tier-1 tests (`tests/test_corrected_f1_mcc_extension.py`); no
+  regressions.
+- **Docs (D1/D2).** Two-reference section in `55maps-generalisation-runs.md`;
+  changelog entry in the deployment-oracle findings doc.
+
+**PENDING (next session — bookkeeping, analysis already complete + committed):**
+
+- **T2e — manifest minting.** Author the 7 `…@canonical-gt` conditions into
+  `conditions-manifest.json` (O1: suffix + oracle row). Route via the generated-
+  manifest flow (decomposition source `results/run-conditions.json` → extractor →
+  drift-check) — map it carefully; do **not** hand-edit the generated manifest.
+  Provenance per cell → `results/55maps-extended-gt-2026-06-07/<cell>/summary.json`.
+- **T1b — archive** the superseded historical GT-eval variants
+  (`55maps-cleaned-gt-evaluation/`, `55maps-*/human-reviewed-corrected/`,
+  `55maps-*/mcc/`, `condition-scoring-backfill-2026-05-30/55maps-*`) →
+  `archive/55maps-superseded-gt-evals/`.
+- **T1c — `_note`** on the 5 historical conditions pointing to the canonical track.
 **Purpose**: Lock the design for two side-by-side evaluation references for the
 five 55-map generalisation runs — a **historical (as-measured)** track and a
 **canonical extended-GT (gold-standard-substitute)** track — so the paper can
