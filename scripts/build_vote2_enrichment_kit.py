@@ -56,6 +56,19 @@ K3_RUNS = ["55maps-text-high-generalisation",
 K3_SUBS = ["pass1-new", "pass2-review", "pass2-mounds-confirm"]
 
 
+def _first_tile(st: object) -> str:
+    """Coerce a consensus feature's ``source_tiles`` (str / list / ndarray /
+    None) to a single tile-name string; '' on anything unparseable."""
+    if st is None:
+        return ""
+    if isinstance(st, str):
+        return st.strip("[]'\" ").split(",")[0].strip("'\" ")
+    try:
+        return str(st[0]) if len(st) else ""
+    except (TypeError, IndexError, KeyError):
+        return ""
+
+
 def reviewed_points(kit_root: Path) -> np.ndarray:
     """Every already-reviewed detection (x, y) in UTM 35N."""
     pts: list[tuple[float, float]] = []
@@ -97,14 +110,9 @@ def main() -> int:
             if (f.get("vote_count") or 0) != 2:
                 continue
             c = f.geometry.centroid
-            st = f.get("source_tiles")
-            if isinstance(st, str):
-                st = st.strip("[]'\" ").split(",")[0].strip("'\" ")
-            elif isinstance(st, list):
-                st = st[0] if st else ""
             cfgs.append(name)
             coords.append((c.x, c.y))
-            tiles.append(st or "")
+            tiles.append(_first_tile(f.get("source_tiles")))
     coords_a = np.array(coords)
 
     # genuinely-new filter: not near a reviewed detection, not near student GT
