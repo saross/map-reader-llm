@@ -143,8 +143,22 @@ def build_phantom_gdf(
         GeoDataFrame with columns ``candidate_id``, ``source_map``,
         ``human_label``, ``buffer_metres``, ``geometry``.
     """
-    y_mounds = review_yesterday[review_yesterday["human_label"] == "mound"].copy()
-    # Yesterday's mounds all have buffer_metres=50; include for every R >= 50
+    # Yesterday's mounds: gate by buffer_metres <= R when the column is
+    # present (multi-buffer reviews). Single-buffer reviews (all 50 m) and
+    # empty reviews are unaffected at R >= 50, so the published corrected-F1
+    # numbers (which used an empty or single-buffer-50 m "yesterday") are
+    # unchanged. Without this gate, passing a *multi-buffer* review as
+    # "yesterday" over-promotes wider-ring (>R) mounds at R = 50 — the latent
+    # bug worked around in paired_permutation_corrected_55maps (which pre-gates
+    # yesterday before calling this helper).
+    y_all = review_yesterday[review_yesterday["human_label"] == "mound"]
+    if "buffer_metres" in y_all.columns:
+        y_mounds = y_all[
+            (y_all["buffer_metres"] <= buffer_r)
+            & (y_all["buffer_metres"] != SENTINEL_BUFFER_EXCLUDED)
+        ].copy()
+    else:
+        y_mounds = y_all.copy()
     t_mounds = review_today[
         (review_today["human_label"] == "mound")
         & (review_today["buffer_metres"] <= buffer_r)
