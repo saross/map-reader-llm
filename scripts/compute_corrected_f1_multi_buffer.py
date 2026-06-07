@@ -72,6 +72,8 @@ if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
 from lib_advanced_metrics import (  # noqa: E402  (import after sys.path tweak)
+    bootstrap_tile_classification_ci,
+    calculate_tile_classification,
     compute_per_tile_tp_fp_fn,
     get_map_name,
     match_detections_to_references,
@@ -101,6 +103,22 @@ class BufferResult:
     recall_ci: tuple[float, float]
     f1: float
     f1_ci: tuple[float, float]
+    # --- Optional tile-level MCC block (populated only when --compute-mcc) ---
+    # Tile-classification MCC against the SAME per-buffer-gated extended GT used
+    # for the corrected F1 above. MCC is buffer-independent within the matching
+    # step (tiles are classified by mound/detection presence), so it varies with
+    # R only through the gated GT: below 50 m the extended GT == student GT, so
+    # MCC equals the historical (Track-1) student-GT MCC; phantoms gate in at
+    # R >= 50 m, flipping FP tiles to TP where the model found a student-missed
+    # mound. All None when MCC was not requested.
+    mcc: float | None = None
+    mcc_ci: tuple[float, float] | None = None
+    tile_tp: int | None = None
+    tile_tn: int | None = None
+    tile_fp: int | None = None
+    tile_fn: int | None = None
+    sensitivity: float | None = None
+    specificity: float | None = None
 
 
 def compute_point_estimate(tp: int, fp: int, fn: int) -> tuple[float, float, float]:
@@ -352,6 +370,7 @@ def compute_at_buffer(
     buffer_r: int,
     n_bootstrap: int,
     seed: int,
+    compute_mcc: bool = False,
 ) -> BufferResult:
     """Compute corrected-F1 point estimate and CIs at a single buffer R.
 
@@ -364,6 +383,10 @@ def compute_at_buffer(
         buffer_r: Buffer radius in metres.
         n_bootstrap: Number of bootstrap iterations for CIs.
         seed: Random seed for bootstrap reproducibility.
+        compute_mcc: If True, also compute tile-level MCC, sensitivity and
+            specificity (with BCa bootstrap CIs) against the same per-buffer
+            gated extended GT, via the shared ``calculate_tile_classification``
+            engine that Track 1 uses — so only the GT differs between tracks.
 
     Returns:
         :class:`BufferResult` with point estimates, counts, and 95 % CIs.
@@ -409,6 +432,39 @@ def compute_at_buffer(
         f"F1=[{cis['f1'][0]:.4f}, {cis['f1'][1]:.4f}]"
     )
 
+    # 6. Optional tile-level MCC against the SAME gated extended GT.
+    mcc_kwargs: dict = {}
+    if compute_mcc:
+        tile_class = calculate_tile_classification(gdf_det, gdf_ext_gt, gdf_bounds)
+        tile_ci = bootstrap_tile_classification_ci(
+            gdf_det, gdf_ext_gt, gdf_bounds,
+            n_iterations=n_bootstrap, random_seed=seed,
+        )
+        mcc_block = tile_ci.get("mcc", {}) if isinstance(tile_ci, dict) else {}
+        mcc_ci = (
+            (mcc_block.get("ci_lower"), mcc_block.get("ci_upper"))
+            if mcc_block.get("ci_lower") is not None
+            else None
+        )
+        mcc_kwargs = {
+            "mcc": tile_class.get("mcc"),
+            "mcc_ci": mcc_ci,
+            "tile_tp": tile_class.get("tp"),
+            "tile_tn": tile_class.get("tn"),
+            "tile_fp": tile_class.get("fp"),
+            "tile_fn": tile_class.get("fn"),
+            "sensitivity": tile_class.get("sensitivity"),
+            "specificity": tile_class.get("specificity"),
+        }
+        mcc_disp = tile_class.get("mcc")
+        mcc_str = f"{mcc_disp:.4f}" if mcc_disp is not None else "n/a"
+        print(
+            f"  MCC={mcc_str}  "
+            f"tiles TP/TN/FP/FN="
+            f"{tile_class.get('tp')}/{tile_class.get('tn')}/"
+            f"{tile_class.get('fp')}/{tile_class.get('fn')}"
+        )
+
     return BufferResult(
         buffer_metres=buffer_r,
         tp=int(tp),
@@ -423,6 +479,7 @@ def compute_at_buffer(
         recall_ci=cis["recall"],
         f1=f1,
         f1_ci=cis["f1"],
+        **mcc_kwargs,
     )
 
 
@@ -437,9 +494,16 @@ def git_commit_hash() -> str:
 
 
 def write_csv(results: list[BufferResult], out_path: Path) -> None:
-    """Write the multi-buffer results table to CSV."""
-    rows = [
-        {
+    """Write the multi-buffer results table to CSV.
+
+    MCC columns are appended only when the run was invoked with
+    ``--compute-mcc`` (i.e. at least one row carries an MCC), so legacy
+    F1-only output stays byte-identical.
+    """
+    has_mcc = any(r.mcc is not None for r in results)
+    rows = []
+    for r in results:
+        row = {
             "R_m": r.buffer_metres,
             "TP": r.tp,
             "FP": r.fp,
@@ -457,8 +521,19 @@ def write_csv(results: list[BufferResult], out_path: Path) -> None:
             "F1_CI_lo": r.f1_ci[0],
             "F1_CI_hi": r.f1_ci[1],
         }
-        for r in results
-    ]
+        if has_mcc:
+            row.update({
+                "MCC": r.mcc,
+                "MCC_CI_lo": r.mcc_ci[0] if r.mcc_ci else None,
+                "MCC_CI_hi": r.mcc_ci[1] if r.mcc_ci else None,
+                "tile_TP": r.tile_tp,
+                "tile_TN": r.tile_tn,
+                "tile_FP": r.tile_fp,
+                "tile_FN": r.tile_fn,
+                "sensitivity": r.sensitivity,
+                "specificity": r.specificity,
+            })
+        rows.append(row)
     pd.DataFrame(rows).to_csv(out_path, index=False)
 
 
@@ -504,25 +579,42 @@ def write_summary_json(
             "recall claim."
         ),
         "results": [
-            {
-                "R_m": r.buffer_metres,
-                "TP": r.tp,
-                "FP": r.fp,
-                "FN": r.fn,
-                "n_ref_student_only": r.n_ref_student_only,
-                "n_reviewer_promoted_at_R": r.n_reviewer_promoted,
-                "n_ref_extended": r.n_ref_extended,
-                "precision": r.precision,
-                "precision_CI": list(r.precision_ci),
-                "recall": r.recall,
-                "recall_CI": list(r.recall_ci),
-                "F1": r.f1,
-                "F1_CI": list(r.f1_ci),
-            }
+            _result_to_dict(r)
             for r in results
         ],
     }
     out_path.write_text(json.dumps(payload, indent=2))
+
+
+def _result_to_dict(r: BufferResult) -> dict:
+    """Serialise one BufferResult; append the MCC block only when present."""
+    d = {
+        "R_m": r.buffer_metres,
+        "TP": r.tp,
+        "FP": r.fp,
+        "FN": r.fn,
+        "n_ref_student_only": r.n_ref_student_only,
+        "n_reviewer_promoted_at_R": r.n_reviewer_promoted,
+        "n_ref_extended": r.n_ref_extended,
+        "precision": r.precision,
+        "precision_CI": list(r.precision_ci),
+        "recall": r.recall,
+        "recall_CI": list(r.recall_ci),
+        "F1": r.f1,
+        "F1_CI": list(r.f1_ci),
+    }
+    if r.mcc is not None or r.tile_tp is not None:
+        d["tile_classification"] = {
+            "mcc": r.mcc,
+            "mcc_CI": list(r.mcc_ci) if r.mcc_ci else None,
+            "tp": r.tile_tp,
+            "tn": r.tile_tn,
+            "fp": r.tile_fp,
+            "fn": r.tile_fn,
+            "sensitivity": r.sensitivity,
+            "specificity": r.specificity,
+        }
+    return d
 
 
 def write_markdown_report(
@@ -677,6 +769,7 @@ def run(
     buffers: Iterable[int],
     n_bootstrap: int,
     seed: int,
+    compute_mcc: bool = False,
 ) -> None:
     """End-to-end driver: load data, compute per-R, write outputs."""
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -730,6 +823,7 @@ def run(
                 buffer_r=r,
                 n_bootstrap=n_bootstrap,
                 seed=seed,
+                compute_mcc=compute_mcc,
             )
         )
 
@@ -787,6 +881,15 @@ def parse_args() -> argparse.Namespace:
         "--seed", type=int, default=42,
         help="Random seed for bootstrap reproducibility (default: 42).",
     )
+    p.add_argument(
+        "--compute-mcc", action="store_true",
+        help=(
+            "Also compute tile-level MCC, sensitivity and specificity (with "
+            "BCa bootstrap CIs) against the same per-buffer gated extended GT, "
+            "using the shared calculate_tile_classification engine. Off by "
+            "default so legacy F1-only output is byte-identical."
+        ),
+    )
     return p.parse_args()
 
 
@@ -803,6 +906,7 @@ def main() -> None:
         buffers=tuple(args.buffers),
         n_bootstrap=args.n_bootstrap,
         seed=args.seed,
+        compute_mcc=args.compute_mcc,
     )
 
 
