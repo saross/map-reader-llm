@@ -18587,3 +18587,40 @@ multi-stage review pipeline reusable naming convention, Session 104 canonical GT
   (T0.3 − T0.7 = +0.021, p < 0.001, verified 2026-06-07);
   `scripts/build_canonical_gt.py`, `scripts/build_vote2_enrichment_kit.py`,
   `scripts/build_k3_review_kit.py` (pipeline scripts).
+
+## Observation 349: Canonical-GT re-score confirms the deployment threshold finding under a full-buffer + MCC frame, and MCC moves with F1 (Session 105, 2026-06-07)
+
+*Source anchors: `results/55maps-extended-gt-2026-06-07/TRACK2-SUMMARY.md`
+(headline @50m table + validation gate, verified 2026-06-07);
+`results/55maps-extended-gt-2026-06-07/consolidated-track2.csv`
+(per-cell 14-buffer F1 + tile-MCC: MCC@50m TH7-k4 0.6666 / TH7-k3 0.6796 /
+T03-k4 0.6711 / T03-k3 0.6903 / TM-k4 0.6411 / TM-k3 0.6580 / IM-k3 0.7104,
+verified 2026-06-07);
+`results/55maps-extended-gt-2026-06-07/threshold-permutations/{TH7,T03,TM}_k4_vs_k3/summary.json`
+(k3−k4 ΔF1 @50m +0.0272 / +0.0117 / +0.0296, all p_bh<0.001, verified 2026-06-07);
+`results/55maps-extended-gt-2026-06-07/TH7-k4/summary.json` (F1@20m 0.6260,
+MCC@20m 0.6480, n_promoted@20m 0 — equals the Track-1 manifest, verified 2026-06-07);
+manifest condition `55maps-text-high-t0-3-generalisation::verified-k3-canonical-gt`
+in `results/conditions-manifest.json` (oracle F1@50 0.8476 / MCC 0.6903, verified
+2026-06-07). Method + spec: `planning/55maps-gt-consolidation-spec-2026-06-07.md`.*
+
+The 55-map deployment is now reported against two side-by-side references — Track 1
+(reviewed student GT, historical/as-measured) and **Track 2 (canonical adjudicated
+extended GT, the paper reference)**. Re-scoring the seven deployment cells against
+the canonical GT at the full 14-buffer corrected-F1 **plus tile-MCC** does three
+things. (1) **Reproduces** findings §4b corrected-F1 @ 50 m to ~7 d.p. (the
+validation gate), so the extension is trustworthy. (2) **Confirms the threshold
+axis** on the canonical reference, not just the per-run GTs of §1: 3-of-5 > carried
+4-of-5 for all three text configs, p<0.001 @ 50 m. (3) **Shows MCC agrees with F1**
+on that axis — k3 MCC > k4 MCC by +0.013 / +0.019 / +0.017 — so the 3-of-5 advantage
+is a genuine discrimination gain, *not* an F1-recall artefact a balanced metric would
+contradict.
+
+Two things worth carrying into the paper. First, **image tops MCC (0.710) at mid-pack
+F1 (0.799)** — the F1-vs-MCC divergence recurs: image trades detection-matching recall
+for the strongest tile-level specificity, so the metric you headline changes the
+winner (oracle T03-k3 by F1; image by MCC). Second, a clean control property:
+**below 50 m the Track-2 sweep equals the Track-1 student-GT numbers exactly** (no
+canonical phantom has a ring < 50 m, so the extended GT *is* the student GT there) —
+confirming the only thing that differs between the two tracks is the ground truth,
+which is the experimental-control story the two-reference design buys.
