@@ -1,6 +1,6 @@
 # 55-map deployment oracle — carry-forward vs oracle-best (Session 104)
 
-> **Last revised**: 2026-06-07 (canonical adjudicated-GT re-score added — §4b; deltas hold, absolutes rise as duplicate phantoms clear). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-06-07 (Session 105: Track-2 full-buffer + tile-MCC re-score and canonical-GT threshold permutations added — extends §4b, no §4b number changed). Prior same-day: canonical adjudicated-GT re-score (§4b). See [§ Changelog](#changelog) for revision history.
 
 **Question.** The 4 GS (gold-standard) maps are the calibration+test instrument; the
 55-map student corpus is the out-of-sample deployment. We carried forward a PV
@@ -188,6 +188,38 @@ operator; requires the API gate and a further (delta-from-3-of-5) manual review.
 ---
 
 ## Changelog
+
+### 2026-06-07 — Track-2 full-buffer + tile-MCC re-score and canonical-GT threshold permutations (Session 105)
+
+**Trigger**: complete the two-reference (Track 1 historical / Track 2 canonical)
+deliverable — extend the canonical-GT re-score from the §4b operating-point
+corrected-F1 @ 50 m to the **full 14-buffer sweep + tile-level MCC** for all
+seven cells, and move the threshold-axis significance (§1) off the per-run GTs
+onto the canonical GT.
+
+**What was added** (no §4b number changed — this extends, it does not revise):
+
+- Seven-cell canonical-GT sweep (`results/55maps-extended-gt-2026-06-07/`):
+  corrected-F1 + tile-MCC at 14 buffers. **Validation gate**: the five
+  §4b-anchored cells reproduce corrected-F1 @ 50 m to ~7 d.p. (e.g. carry-forward
+  0.815228, oracle 0.847606); below 50 m the sweep equals the Track-1 student-GT
+  manifest exactly. Engine: additive `--compute-mcc` on
+  `compute_corrected_f1_multi_buffer.py`; driver
+  `scripts/score_55maps_extended_gt_canonical.py`.
+- Headline MCC @ 50 m: TH7-k4 0.667, TH7-k3 0.680, T03-k4 0.671, **oracle T03-k3
+  0.690**, TM-k4 0.641, TM-k3 0.658, **image-k3 0.710** (image tops MCC despite
+  mid-pack F1 — the F1-vs-MCC divergence, cf. Session 103).
+- Canonical-GT threshold permutations (`threshold-permutations/`,
+  `launch_threshold_permutations_canonical.sh`): k3 > carried k4 for all three
+  text configs, **all p<0.001 @ 50 m** — TH7 ΔF1 +0.027, T03 +0.012, TM +0.030.
+  Tracks §1's per-run deltas (+0.028/+0.010/+0.027); the threshold claim now rests
+  on the same canonical GT as the config and joint axes.
+
+**Did NOT change**: every §1–§5 number; the joint-oracle gap (+0.032, p<0.001);
+the config and threshold rankings. Tier-1 tests added for the MCC extension.
+Commits `bb7d5279`→`b0f0e199`. Spec:
+`planning/55maps-gt-consolidation-spec-2026-06-07.md`. Manifest registration of
+the seven `@canonical-gt` conditions pending (bookkeeping).
 
 ### 2026-06-07 — Canonical adjudicated-GT re-score (§4b)
 

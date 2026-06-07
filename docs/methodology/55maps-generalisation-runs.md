@@ -1,6 +1,8 @@
 # The 55-map generalisation runs — identities, relationships, and assessment coverage
 
-**Last updated**: 2026-06-02 (Session 95 follow-up).
+**Last updated**: 2026-06-07 (Session 105 — added the **two-reference (Track 1 /
+Track 2) framing** and the **canonical extended-GT re-score**; see
+§ "Two evaluation references"). Prior: 2026-06-02 (Session 95 follow-up).
 **Purpose**: a single legible map of the five `55maps-*-generalisation` run
 directories — what each one is, how they relate (one is a superseded original of
 another), and which performance assessments each carries — so a reader (or
@@ -66,6 +68,76 @@ cf. the image track at 0.18–0.27 — see Obs 269/277 and `protocol-errata.md` 
 3. **Dawid-Skene** 2-annotator model (student + VLM) as a model-based corrected F1.
 4. **Verifier-vs-human 2×2 crosstab** (`crosstab_verifier_vs_human.py`):
    verifier probability vs the human label — the calibration check.
+
+## Two evaluation references — Track 1 (historical) and Track 2 (canonical)
+
+Added Session 105 (2026-06-07). The 55-map deployment is reported against **two
+ground-truth references, side by side**:
+
+- **Track 1 — historical / as-measured.** The bare **reviewed student GT**
+  (`student-mounds-55maps-reviewed.geojson`, 4,746 features). The honest "what a
+  deployer measuring against the student digitisation alone would have seen."
+  Already spec-complete: each carried condition at the full 14-buffer sweep +
+  tile-MCC (`results/rescore-2026-05-31/<run>/verified*/evaluation.json`).
+- **Track 2 — canonical / gold-standard-substitute (the paper reference).** The
+  **canonical adjudicated extended GT** = reviewed student GT **+** the 773-mound
+  deduplicated, adjudicated phantom set (`build_canonical_gt.py`,
+  `results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv`). The
+  phantom set **unions the earlier per-run manual corrections and the Session-104
+  k3-shell corrections** into one point-per-feature reference, **per-buffer gated**
+  (a phantom enters the GT at radius R only if its min-ring `buffer_metres ≤ R`;
+  the 200 m ">150 m" sentinel shell is excluded everywhere). The earlier ad-hoc
+  per-run corrections (`human-reviewed-corrected/`, `cleaned-gt-evaluation/`) are
+  **folded into the canonical and superseded** — not reported as a third column.
+
+Both tracks use **one trusted engine** (`evaluate_detections` /
+`compute_corrected_f1_multi_buffer` — shared `calculate_f1_internal` and
+`calculate_tile_classification`); **only the GT differs**, which is the clean
+experimental control. Below 50 m the two tracks coincide exactly (no phantom has
+a ring < 50 m, so the extended GT equals the student GT — verified: TH7-k4
+F1@20m = 0.6260 and MCC@20m = 0.6480 reproduce the Track-1 manifest to 4 d.p.).
+The Track-2 sweep reproduces findings §4b corrected-F1 @ 50 m to ~7 d.p. (the
+validation gate, all 5 anchored cells).
+
+### Track-2 results (canonical extended GT, corrected-F1 @ 50 m + tile-MCC)
+
+Provenance: `results/55maps-extended-gt-2026-06-07/` (`TRACK2-SUMMARY.md`,
+`consolidated-track2.csv`, per-cell `summary.json`); driver
+`scripts/score_55maps_extended_gt_canonical.py`.
+
+| cell | config | k | role | F1@50m | MCC@50m |
+|---|---|---:|---|---:|---:|
+| TH7-k4 | text-high T0.7 | 4 | carry-forward | 0.8152 | 0.6666 |
+| TH7-k3 | text-high T0.7 | 3 | threshold | 0.8425 | 0.6796 |
+| T03-k4 | text-high T0.3 | 4 | config | 0.8359 | 0.6711 |
+| **T03-k3** | text-high T0.3 | 3 | **oracle** | **0.8476** | **0.6903** |
+| TM-k4 | text-min | 4 | config | 0.7831 | 0.6411 |
+| TM-k3 | text-min | 3 | threshold | 0.8127 | 0.6580 |
+| IM-k3 | image | 3 | config | 0.7987 | **0.7104** |
+
+**Three findings against the canonical GT:**
+
+1. **Threshold axis (3-of-5 > carried 4-of-5)** holds for all three text configs
+   — paired tile-swap permutation (`launch_threshold_permutations_canonical.sh`
+   → `threshold-permutations/`), corrected-F1 @ 50 m, **all p<0.001**:
+   TH7 ΔF1 +0.027 [+0.022, +0.033]; T03 +0.012 [+0.007, +0.017]; TM +0.030
+   [+0.025, +0.035]. **MCC agrees** (k3 > k4 for all three), so the gain is not
+   an F1/recall artefact.
+2. **Carry-forward → oracle decomposition** (@ 50 m, from TH7-k4 = 0.8152):
+   threshold alone (→ TH7-k3) **+0.027**; temperature alone (→ T03-k4) **+0.021**;
+   both (→ oracle T03-k3) **+0.032** — sub-additive (the axes overlap), threshold
+   slightly the larger lever. The carry-forward left **+0.032 corrected-F1** on the
+   table (findings §4b, p<0.001).
+3. **F1-vs-MCC divergence**: **image tops MCC (0.710)** despite mid-pack F1 — its
+   tile-level discrimination (specificity) is strongest, echoing the Session-103
+   F1-parity ≠ MCC-parity caveat. By F1 the oracle (T03-k3) leads; by MCC image
+   does, with the oracle second.
+
+See `results/deployment-oracle-2026-06-06/deployment-oracle-findings.md` for the
+deployment-oracle write-up and `planning/55maps-gt-consolidation-spec-2026-06-07.md`
+for the consolidation spec. Formal manifest registration of the seven
+`@canonical-gt` conditions is pending (a bookkeeping step; the analysis is
+complete and committed).
 
 ## Bookkeeping notes / open items
 
