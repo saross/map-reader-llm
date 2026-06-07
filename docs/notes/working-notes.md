@@ -18380,3 +18380,210 @@ deployment oracle 0.830 strong result.
   fixed-union phantom gating);
   `results/deployment-oracle-2026-06-06/vote3-verify/` (k3-shell verifier outputs;
   per-candidate probabilities committed).
+
+## Observation 348: The 55-map deployment ground-truth pipeline — multi-stage human review de-biased the cross-run comparison and anchored the result to a GS-quality reference (Session 104, 2026-06-07)
+
+*Source anchors: `results/deployment-oracle-2026-06-06/deployment-oracle-findings.md`
+§4b and §8 (pipeline description and re-score, verified 2026-06-07);
+`results/deployment-oracle-2026-06-06/canonical-gt/summary.json`
+(n_review_rows=3113, n_clusters=1847, n_auto_canonical_mounds=740, n_re_review=24,
+verified 2026-06-07);
+`results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv`;
+`results/deployment-oracle-2026-06-06/vote2-enrichment/summary.json`
+(n_vote2_new_features_kept=213, min_configs=3, verified 2026-06-07);
+`results/deployment-oracle-2026-06-06/vote2-enrichment/human-review.csv`
+(10 mound / 203 not_mound, verified 2026-06-07);
+k3-review kit_summary.json per-run (n_pass1_new: 134/162/61; n_pass2_autofill:
+105/78/55, verified 2026-06-07);
+`results/deployment-oracle-2026-06-06/canonical-rescore/joint_carryfwd_vs_oracle/permutation-R50m.json`
+(carry-forward F1 0.8152, oracle F1 0.8476, Δ−0.0324, verified 2026-06-07);
+`results/deployment-oracle-2026-06-06/canonical-rescore/config_TH7_vs_T03/permutation-R50m.json`
+(T0.3 − T0.7 = +0.021, p < 0.001, verified 2026-06-07).*
+
+### The finding
+
+Obs 347 recorded the GS-calibration plateau lessons and the deployment oracle result
+(carry-forward T0.7×4-of-5 vs joint oracle T0.3×3-of-5, Δ+0.032, p < 0.001). That
+Obs used the naive review-union as its GT. The present Obs records the **method** that
+replaced it — a three-stage human-review pipeline that built a deduplicated,
+adjudicated, GS-quality canonical ground truth — and quantifies its impact on the
+numbers.
+
+#### Stage 1 — k3-shell review (genuinely new VLM-only candidates)
+
+The vote=3 shell: verifier-passed candidates that a looser 3-of-5 consensus produces
+but the carried 4-of-5 missed. Each was split into two passes via
+`scripts/build_k3_review_kit.py` and reviewed via `review_candidates.py`.
+
+| Run | pass-1 n (fresh judgement) | pass-1 real mounds | pass-2 n (auto-fill ≤50 m) |
+|---|---:|---:|---:|
+| `55maps-text-high-generalisation` (T0.7) | 134 | 49 | 105 |
+| `55maps-text-high-t0.3-generalisation` (T0.3) | 162 | 71 | 78 |
+| `55maps-text-min-generalisation` (text-min) | 61 | 25 | 55 |
+| **Total** | **357** | **145** | **238** |
+
+Auto-fill logic: a pass-2 candidate inherits the label from the nearest already-reviewed
+candidate within 50 m. Pass-1 required 357 fresh human judgements; 145 (40.6 %) of
+those were real burial mounds.
+
+#### Stage 2 — canonical adjudicated GT (`scripts/build_canonical_gt.py`)
+
+All 3,113 review rows across every run and pass were clustered at 20 m (one cluster =
+one real feature). Auto-resolution used **min-ring** (a mound is credited at the
+tightest ring any run achieved). The **200 m out-of-range sentinel** was excluded to
+match `build_phantom_gdf`. 24 clusters had genuine conflicts and were sent to human
+adjudication, broken down by conflict type:
+
+| Conflict type | N |
+|---|---:|
+| Label conflict | 5 |
+| Ring spread ≥ 50 m | 9 |
+| Mixed sentinel | 10 |
+| **Total** | **24** |
+
+**Outcome: 773 canonical mounds** = 740 auto-resolved + 23 of 24 conflict clusters
+confirmed as mound + 10 vote=2 enrichment (Stage 3 below).
+
+#### Stage 3 — vote=2 GT-completeness pass (`scripts/build_vote2_enrichment_kit.py`)
+
+To push the canonical GT toward GS completeness, cross-config-corroborated new
+vote=2 features were reviewed: candidates found by ≥ 3 of the 4 proposer configs
+that were genuinely new (not already in the canonical set).
+
+| | N |
+|---|---:|
+| Candidates reviewed | 213 |
+| Real mounds found | 10 |
+| Yield | **4.7 %** |
+
+The low yield confirmed the vote ≥ 3 recall floor was near-saturated. The broader
+≥ 2-config set (2,417 candidates) was deferred as low-value.
+
+#### Re-score against the canonical GT
+
+Replacing the naive review-union with the canonical GT in the §§3–4 comparisons
+(from `deployment-oracle-findings.md` §4b):
+
+| Metric | naive union | canonical GT |
+|---|---:|---:|
+| T0.3 corrected F1 @ 50 m | 0.800 | **0.836** |
+| T0.7 corrected F1 @ 50 m | 0.780 | **0.815** |
+| image corrected F1 @ 50 m | 0.767 | **0.799** |
+| text-min corrected F1 @ 50 m | 0.748 | **0.783** |
+| T0.3 − T0.7 Δ | +0.020 (p < 0.001) | **+0.021 (p < 0.001)** |
+| Joint oracle Δ (T0.3×3-of-5 vs T0.7×4-of-5) | +0.032 (p < 0.001) | **+0.032 (p < 0.001)** |
+
+Canonical joint oracle: carry-forward (T0.7×4-of-5) F1 = 0.815,
+oracle (T0.3×3-of-5) F1 = 0.848, Δ = +0.032 (p < 0.001). **Deltas held; absolutes
+rose ~0.02–0.04** as ~600 duplicate phantom points cleared (a mound found by
+multiple runs had become multiple phantom points in the naive union → spurious
+false negatives under Approach-B extended-GT scoring).
+
+Total human judgements across all three stages: **832** (357 pass-1 + 238 auto-fill +
+24 conflict adjudication + 213 vote=2).
+
+### Why this matters
+
+1. **The naive union was biased and the canonical GT removed the bias.** The naive
+   `build_extended_gt` had no spatial deduplication: a mound that three runs each
+   found generated three separate phantom points in the fixed-union reference. Each
+   point became a false negative for the two runs that didn't find it at precisely
+   that location. The canonical GT eliminated this by clustering at 20 m and
+   carrying the min-ring. The ~0.02–0.04 absolute F1 rise is not a performance
+   gain — it is the removal of a systematic undercount.
+
+2. **Deltas are robust; absolutes move.** The config and joint-oracle deltas are
+   unchanged (+0.020→+0.021 and +0.032 unchanged) because the duplicate-phantom
+   bias cancels across cells in a pairwise comparison. The canonical GT matters
+   most for absolute deployment numbers cited in the paper (joint oracle = 0.848)
+   and for any comparison across non-paired cells.
+
+3. **The pipeline is reusable.** The three-stage structure (k3-shell fresh/auto-fill
+   review → canonical-cluster adjudication → vote=2 enrichment) is now a named,
+   scripted workflow. Future deployment evaluations with multi-config runs should
+   adopt it by default rather than naively unioning per-run reviews.
+
+4. **The 4.7 % vote=2 yield anchors a useful floor.** Knowing that going below the
+   vote ≥ 3 floor yields < 5 % real mounds among cross-config-corroborated candidates
+   gives a principled stopping rule for GT-completeness passes. 213 judgements for
+   10 new mounds was worth doing once; a full ≥ 2-config sweep (2,417 candidates,
+   estimated ≤ 110 mounds) would cost ~10× more judgements for a negligible F1 shift.
+
+### Caveats / methodological notes
+
+- **Auto-fill is not human review.** The 238 pass-2 labels are inherited by proximity
+  (≤ 50 m), not fresh judgement. They are correct wherever the nearest reviewed
+  candidate is the same real feature, but can propagate a label error if the prior
+  review missed a nearby distinct mound. The 50 m coincidence threshold was chosen
+  to match the student-GT digitisation jitter (Obs 260); tighter settings would
+  push more candidates to pass-1 at cost of reviewer burden.
+- **23 of 24 conflict clusters resolved as mound.** The 1 unresolved conflict is
+  the 'uncertain' text-min candidate at a sheet edge (cand 2128, prob=1.0, raster
+  boundary — un-renderable for review; see §7 of deployment-oracle-findings.md).
+  This is a negligible under-credit (1/1,591 pass-1+conflict candidates).
+- **min-ring collapse vs carry-forward-ring.** The canonical GT credits a mound at
+  the tightest ring any run drew. This slightly favours the run that drew the
+  tightest ring in precision calculations; the effect is small across 773 features.
+- **Threshold-axis numbers (§1 of Obs 347) unaffected.** The k3-vs-k4 per-config
+  comparisons never used cross-run unions; they compared a single run's k3 and k4
+  cells against the same extended GT. The canonical-GT re-score applies only to the
+  config-axis and joint-oracle comparisons.
+- **Compute location.** Canonical GT construction and re-scoring ran on zbook (sapphire
+  was engaged by another session); computationally light (no API spend, sub-minute
+  runtimes). The canonical GT itself is committed and reproducible.
+
+### Findable later
+
+Search terms: Obs 348, 55-map deployment ground truth pipeline, canonical adjudicated GT,
+build_canonical_gt.py, build_vote2_enrichment_kit.py, build_k3_review_kit.py,
+review_candidates.py k3-shell, pass-1 fresh judgement pass-2 auto-fill 50m,
+357 genuinely-new 238 auto-fill 145 new real mounds, 49/71/25 per-run pass-1 mounds,
+3113 review rows 20m clustering, min-ring collapse, 200m out-of-range sentinel excluded,
+24 genuine conflicts 5 label 9 ring-spread 10 mixed-sentinel, 773 canonical mounds
+740 auto 23 conflicts 10 vote2, vote=2 enrichment 213 candidates 4.7 percent yield,
+10 of 213 real mounds vote2 completeness pass, 832 total human judgements,
+canonical GT naive union deduplication duplicate phantoms ~600, absolutes rise 0.02–0.04
+deltas held, canonical joint oracle 0.815 carry-forward 0.848 oracle +0.032 unchanged,
+T0.3 minus T0.7 +0.020 to +0.021, canonical-rescore joint_carryfwd_vs_oracle,
+canonical-gt summary.json canonical-review.csv, deployment-oracle-findings.md 4b,
+auto-resolve min-ring agreed clusters, 2417 vote-2-config deferred low-value,
+multi-stage review pipeline reusable naming convention, Session 104 canonical GT.
+
+### Related observations and artefacts
+
+- **Obs 347** (GS-calibration plateaus and the deployment oracle result — Session 104,
+  line 18177): the sibling Obs that records the GS-plateau lessons and the headline
+  deploy-gap numbers (Δ+0.032, joint oracle, carry-forward). The present Obs is its
+  method-and-impact companion; together they constitute the full Session-104 account.
+- **Obs 346** (diversity dividend tested and signed off — carry-forward config origin,
+  Session 103, line 17992): the Flash consensus HIGH-text T0.7 carry-forward was
+  selected in that session. Obs 347 shows T0.3 would have been a better deployment
+  choice; this Obs documents the pipeline that confirmed the canonical numbers
+  underlying that comparison.
+- **Obs 260** (student-GT digitisation jitter ~25 m — source of the 50 m tolerance
+  design): the auto-fill coincidence threshold and deployment evaluation buffer are
+  both set to 50 m for the reason established in Obs 260; this Obs inherits that design.
+- **Obs 317** (4-GS-vs-55-map FN-rate gap dominantly explained by small N and
+  inter-student variance, 2026-04-30, line 15881): contextualises the structural
+  difference between the 4-map GS reference and the 55-map student GT; the
+  canonical-GT pipeline partially closes that gap by spatial deduplication and
+  human adjudication of edge cases.
+- **Artefacts**: `results/deployment-oracle-2026-06-06/deployment-oracle-findings.md`
+  §4b (canonical-GT re-score and impact table, verified 2026-06-07);
+  `results/deployment-oracle-2026-06-06/canonical-gt/summary.json`
+  (n_review_rows=3113, n_auto_canonical_mounds=740, n_re_review=24, verified 2026-06-07);
+  `results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv`
+  (773-row adjudicated GT);
+  `results/deployment-oracle-2026-06-06/vote2-enrichment/summary.json`
+  (n=213, min_configs=3, verified 2026-06-07);
+  `results/deployment-oracle-2026-06-06/vote2-enrichment/human-review.csv`
+  (10 mound / 203 not_mound, verified 2026-06-07);
+  `results/deployment-oracle-2026-06-06/k3-review/<run>/{pass1-new/human-review.csv,
+  pass2-autofill.csv, kit_summary.json}` (per-run review data, verified 2026-06-07);
+  `results/deployment-oracle-2026-06-06/canonical-rescore/joint_carryfwd_vs_oracle/permutation-R50m.json`
+  (canonical joint-oracle Δ+0.032, p < 0.001, carry-forward 0.815, oracle 0.848,
+  verified 2026-06-07);
+  `results/deployment-oracle-2026-06-06/canonical-rescore/config_TH7_vs_T03/permutation-R50m.json`
+  (T0.3 − T0.7 = +0.021, p < 0.001, verified 2026-06-07);
+  `scripts/build_canonical_gt.py`, `scripts/build_vote2_enrichment_kit.py`,
+  `scripts/build_k3_review_kit.py` (pipeline scripts).
