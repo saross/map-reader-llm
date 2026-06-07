@@ -5336,3 +5336,40 @@ biting on a directory name. What's notable is the catcher: not a human, not a su
 `eval_path` while I reached for a plausible sibling. Architecturally, keeping every artefact specific
 flowing from a re-verifiable anchor means a confabulated narration can corrupt sentences but not
 findings.
+
+
+## Session 104 — 2026-06-06/07 — three convenient beliefs, three probes, three revisions
+
+### Sequence 1 — "4-of-5 was the GS optimum, correctly carried forward" (my framing, refuted into nuance)
+
+**Surprising fact prompting the probe:** Shawn asked whether 4-of-5 was *really* best on the
+GS maps in the same PV pipeline. I'd been treating the carry-forward as the GS optimum.
+**Probe:** derived the GS post-verifier F1@20m at every vote threshold (free — the GS verifier
+had run on the 1-of-N union) and permutation-tested 4-vs-3 and 4-vs-5. **Result:** 4-of-5 is
+the point-estimate peak but **not significantly above 3-of-5** (p = 0.12 / 0.11 / 0.43), while
+significantly above 5-of-5. **Revision:** "4-of-5 was the GS optimum" → "4-of-5 sat on a
+3-of-5≈4-of-5 GS plateau the small set couldn't resolve; deployment broke the tie toward
+3-of-5." Not an error — an under-powered calibration.
+
+### Sequence 2 — "the looser threshold wins on deployment because the metric is more forgiving" (my mechanism, refuted)
+
+**Surprising fact:** I'd explained the 3-of-5 deployment win via (a) the 50 m tolerance being
+more lenient than GS's 20 m and (b) the corrected GT crediting the extra mounds. Shawn pushed
+back. **Probe (his domain knowledge, not a computation):** the 50 m buffer is matched to the
+~25 m student jitter — it's the *correct* tolerance for that GT's precision, not extra
+generosity; and (b) is circular (the metric "rewarding found mounds" is recall by another
+name). **Revision:** dropped the mechanistic story entirely. The defensible claim is only that
+the 4-map set lacks resolving power and the 55-map set has it — no validated causal mechanism.
+A reminder that a plausible mechanism is not evidence.
+
+### Sequence 3 — "the naive cross-run review union is a sound fixed-union GT" (my construction, refuted)
+
+**Surprising fact:** Shawn asked how the union handled tiles he'd labelled differently across
+runs. **Probe:** read `build_extended_gt` — it concatenates phantoms with **no spatial
+dedup** — and clustered all 3,113 review rows. **Result:** a mound several runs found becomes
+several phantom points (≈600 duplicates → spurious FNs), and `mound` silently overrides
+`not_mound` (15 label conflicts) plus 49 ring-spread disagreements my label-only check missed.
+**Revision:** the naive union is *not* a clean fixed-union; built a canonical adjudicated GT
+(one point per feature, min-ring, 24 human-adjudicated conflicts). Re-scored: deltas held,
+absolutes rose ~0.02–0.04 as the duplicates cleared — confirming the bias was real but
+common-mode. The deltas were robust; the absolutes were not.

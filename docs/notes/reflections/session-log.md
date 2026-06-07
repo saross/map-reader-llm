@@ -6908,3 +6908,46 @@ delta), the home of the calibrate-then-test framing; phase3a/3a-high/3a-replicat
   opened "let's briefly discuss how we frame things"), not in the original plan — it expanded the
   session from "run a test" to "run a test + correct a methodological framing across the finding,
   E56, and the docs." The numbers were unchanged by the reframe; only the framing moved.
+
+
+## Session 104 — 2026-06-06/07 — the 55-map deployment-oracle analysis (carry-forward vs oracle)
+
+Executed the deferred TODO #2: the 55-map deployment-generalisation analysis, then followed
+Shawn's methodological steers through three successive GT refinements.
+
+**What was done**
+- **vote=3 shell verifier run** (the only API spend): 10,622 candidates, `gemini-3-flash`
+  text-adversarial, real-time **flex**, prob_t=0.15, **0 failures**, ≈ $7.4 billed (manifest
+  records ~$15 standard; flex halves at billing). Smoke + one-tile tests first, per Shawn.
+- **Threshold axis** (corrected-F1 @ 50 m, fixed-union, paired permutation): **k3 (3-of-5) >
+  carried k4 (4-of-5)** for all three text configs — +0.028 / +0.010 / +0.027, all p<0.001.
+- **GS calibration check** (free-derived): post-verifier 4-of-5 is the GS peak but on a
+  3-of-5≈4-of-5 plateau (4-vs-3 ns; 4-vs-5 sig). Carry-forward defensible, not transferable.
+- **Config axis** (fixed-union): T0.3 > T0.7 > image > text-min, all six pairs significant;
+  T0.3−T0.7 = +0.020 → +0.021 under fixed-union (vs +0.016 per-side v2 grid).
+- **Joint oracle**: carry-forward (T0.7×4-of-5) vs oracle (T0.3×3-of-5).
+- **Two-script reconciliation**: fixed `build_phantom_gdf` (gate yesterday by buffer≤R) +
+  3 tier-1 tests; standalone corrected-F1 now matches the permutation to 4 d.p. Published
+  per-run numbers verified unchanged (empty/single-buffer yesterday).
+- **Canonical adjudicated GT** (Shawn's design): 773 mounds (740 auto + 23 of 24 conflicts +
+  10 of 213 cross-config vote=2 enrichment). Re-scored config + joint: **carry-forward 0.815
+  vs oracle 0.848, Δ +0.032, p<0.001**; deltas held, absolutes rose.
+- **Ops**: `scripts/check-compute-hosts.sh` load-check backstop; Obs 347 (GS-plateau
+  heuristics); three memories (host-check, core-reservation, load-check).
+
+**Headline**: carry-forward left **+0.032 corrected-F1 @ 50 m** on the table vs the joint
+oracle (0.848 on a large, diverse, unseen 55-map set) — a genuine calibrate→deploy gap on a
+GS plateau, p<0.001. Full write-up: `results/deployment-oracle-2026-06-06/deployment-oracle-findings.md`.
+
+**Deferred**: 2-of-5 operating point (GS turns over; recall floor saturated — not worth it);
+≥2-config vote=2 set (2,417, 10× budget); the paper write-up itself.
+
+### Contextual assumptions
+- **Session 104**, 2026-06-06 into 2026-06-07, resuming from the Session-103 beacon. Compute
+  split across **zbook** and **sapphire** — sapphire became contended mid-session by another
+  session (load 13), which drove the load-check backstop and a kill-and-move-to-zbook.
+- Compute machine started as **amd-tower** by mistake (caught immediately); host-verification
+  lesson recorded. A transient **eCryptfs** stat artefact briefly showed 12 phantom-modified
+  files — benign, cleared on re-stat.
+- Only API spend: the single vote=3 flex verifier run (~$7.4). Everything else $0 (re-scoring,
+  permutation, free GS-sweep derivation from the existing union verifier run).

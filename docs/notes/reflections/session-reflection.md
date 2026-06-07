@@ -8609,3 +8609,52 @@ verifier prob_t in-sample) is the durable artefact; the reasoning behind it is t
 *Relational note: the session's pivot was the human declining to sign off and opening "let's briefly
 discuss how we frame things" instead — a reframe invited, not imposed. The numbers were done an hour
 before the framing was right.*
+
+
+## Session 104 — 2026-06-06/07 — the domain expert's instincts beat my defaults, repeatedly
+
+### Prompt: Where did you and the human disagree, and who was right?
+
+This session was a long sequence of me reaching for a plausible default and Shawn — who
+owns the data and will defend the paper — catching the subtlety I'd skipped. He was right
+every time, and the disagreements were the most productive part of the work.
+
+- I launched a consensus sweep on **amd-tower** (forbidden for compute). He caught it
+  within a turn. The real lesson wasn't "use sapphire" (I knew that) — it was that I'd
+  trusted the beacon's stale "current machine" note instead of running `hostname`.
+- When I explained *why* the looser 3-of-5 wins on deployment, I offered two mechanisms
+  (the 50 m metric is "more forgiving"; the corrected GT "credits the extra mounds"). He
+  dismantled both: the 50 m buffer is **calibrated to the ~25 m student-digitisation
+  jitter**, not leniency; and "the metric rewards finding real mounds" is just recall
+  restated. The honest account is the one I'd been avoiding — *the 4-map test set lacks the
+  resolving power to separate neighbouring configs*. I was narrating a mechanism where the
+  data only supports "we can't tell on GS, we can on the 55-map set."
+- When I built the cross-run "fixed-union" GT by concatenating every review, he asked the
+  exact right question — "what did you do where I labelled a tile differently across runs?"
+  — which exposed that I'd silently let `mound` override `not_mound` **and** that
+  `build_extended_gt` never deduplicates, so a mound several runs found became several
+  phantom points and spurious false negatives. His proposed adjudicated-canonical GT fixed
+  both. He then caught a *second* gap (ring-spread disagreements, not just label) that my
+  clustering ignored.
+
+The meta-pattern worth keeping: my failure mode is **confident sufficiency** — a mechanism
+that sounds right, a GT that's "good enough." His is **suspicion of his own conveniences**.
+On a paper that has to survive review, his disposition is the correct one, and I should
+treat my first plausible explanation as a hypothesis to attack, not a conclusion to defend.
+
+### Prompt: What surprised you about this session?
+
+That the carry-forward (vote 4-of-5) turned out to be a *defensible* choice, not an error —
+but only because GS couldn't distinguish it from 3-of-5 (a statistical plateau, p≈0.12), and
+deployment broke the tie. I came in expecting either "4-of-5 was right" or "4-of-5 was a
+mistake"; the truth was "GS lacked the power to choose, and the choice didn't transfer." The
+finding got *more* interesting as it got less clean.
+
+### Prompt: What context will be hardest to reconstruct in 6 months?
+
+The canonical-GT adjudication chain — why 773 mounds (740 auto + 23 of 24 conflicts + 10 of
+213 vote=2), why the 200 m sentinel is dropped, why the vote=2 yield (4.7 %) tells us the
+recall floor was near-saturated. And the two-script reconciliation: that `build_phantom_gdf`
+silently over-promotes wider-ring "yesterday" mounds unless yesterday is single-buffer-50 m,
+which is invisible until you pass it a multi-buffer review. Both are documented in
+`deployment-oracle-findings.md`, but the *why each mattered* lives only here.
