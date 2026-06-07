@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-06-07T07:54:49Z · 231 row(s) · schema v1.0.
+> Generated 2026-06-07T14:18:46Z · 273 row(s) · schema v1.0.
 >
-> **Coverage**: 231 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 273 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -225,6 +225,48 @@
 | retest-phase2e::canonical-last | single-pass | none | — | 1 | 0.6314 | 0.2132 | 785 |
 | retest-phase2e::config-default | single-pass | none | — | 1 | 0.6057 | 0.2132 | 752 |
 | retest-phase2e::random | single-pass | none | — | 1 | 0.5706 | 0.0665 | 821 |
+| retest-phase3a::image-t0.3-n5-4of5 | consensus | consensus | 4 | 5 | 0.6625 | 0.2979 | 572 |
+| retest-phase3a::image-t0.3-n10-8of10 | consensus | consensus | 8 | 10 | 0.6618 | 0.284 | 561 |
+| retest-phase3a::image-t0.3-n30-22of30 | consensus | consensus | 22 | 30 | 0.6661 | 0.2707 | 563 |
+| retest-phase3a::image-t0.7-n5-4of5 | consensus | consensus | 4 | 5 | 0.6577 | 0.4416 | 501 |
+| retest-phase3a::image-t0.7-n10-7of10 | consensus | consensus | 7 | 10 | 0.6692 | 0.4614 | 510 |
+| retest-phase3a::image-t0.7-n30-18of30 | consensus | consensus | 18 | 30 | 0.6909 | 0.4416 | 535 |
+| retest-phase3a::image-t1.0-n5-4of5 | consensus | consensus | 4 | 5 | 0.6389 | 0.4598 | 447 |
+| retest-phase3a::image-t1.0-n10-7of10 | consensus | consensus | 7 | 10 | 0.6554 | 0.4589 | 471 |
+| retest-phase3a::image-t1.0-n30-19of30 | consensus | consensus | 19 | 30 | 0.6792 | 0.4723 | 471 |
+| retest-phase3a::text-t0.3-n5-5of5 | consensus | consensus | 5 | 5 | 0.6843 | 0.194 | 598 |
+| retest-phase3a::text-t0.3-n10-8of10 | consensus | consensus | 8 | 10 | 0.6871 | 0.1544 | 669 |
+| retest-phase3a::text-t0.3-n30-23of30 | consensus | consensus | 23 | 30 | 0.6921 | 0.1807 | 666 |
+| retest-phase3a::text-t0.7-n5-4of5 | consensus | consensus | 4 | 5 | 0.6628 | 0.2294 | 677 |
+| retest-phase3a::text-t0.7-n10-8of10 | consensus | consensus | 8 | 10 | 0.6752 | 0.231 | 637 |
+| retest-phase3a::text-t0.7-n30-24of30 | consensus | consensus | 24 | 30 | 0.6915 | 0.2689 | 615 |
+| retest-phase3a::text-t1.0-n5-4of5 | consensus | consensus | 4 | 5 | 0.6684 | 0.2821 | 643 |
+| retest-phase3a::text-t1.0-n10-7of10 | consensus | consensus | 7 | 10 | 0.6834 | 0.3184 | 658 |
+| retest-phase3a::text-t1.0-n30-22of30 | consensus | consensus | 22 | 30 | 0.686 | 0.3332 | 601 |
+| retest-phase3a-high::text-high-t0.3-n5-4of5 | consensus | consensus | 4 | 5 | 0.7321 | 0.5207 | 562 |
+| retest-phase3a-high::text-high-t0.3-n10-8of10 | consensus | consensus | 8 | 10 | 0.7595 | 0.5833 | 517 |
+| retest-phase3a-high::text-high-t0.3-n30-23of30 | consensus | consensus | 23 | 30 | 0.7744 | 0.5759 | 494 |
+| retest-phase3a-high::text-high-t0.7-n5-4of5 | consensus | consensus | 4 | 5 | 0.73 | 0.4752 | 535 |
+| retest-phase3a-high::text-high-t0.7-n10-7of10 | consensus | consensus | 7 | 10 | 0.7402 | 0.4563 | 558 |
+| retest-phase3a-high::text-high-t0.7-n30-22of30 | consensus | consensus | 22 | 30 | 0.7729 | 0.5722 | 478 |
+| retest-phase3a-high::text-high-t1.0-n5-4of5 | consensus | consensus | 4 | 5 | 0.7261 | 0.4397 | 527 |
+| retest-phase3a-high::text-high-t1.0-n10-8of10 | consensus | consensus | 8 | 10 | 0.7722 | 0.5476 | 453 |
+| retest-phase3a-high::text-high-t1.0-n30-23of30 | consensus | consensus | 23 | 30 | 0.7747 | 0.6425 | 442 |
+| retest-phase3a-replication::text-high-t0.7-n5-4of5 | consensus | consensus | 4 | 5 | 0.7129 | 0.4558 | 558 |
+| retest-phase3a-replication::text-high-t0.7-n10-8of10 | consensus | consensus | 8 | 10 | 0.7466 | 0.5588 | 495 |
+| retest-phase3a-replication::text-high-t0.7-n30-21of30 | consensus | consensus | 21 | 30 | 0.7705 | 0.5466 | 520 |
+| retest-phase3a-replication::text-minimal-t0.7-n5-4of5 | consensus | consensus | 4 | 5 | 0.6905 | 0.2227 | 663 |
+| retest-phase3a-replication::text-minimal-t0.7-n10-8of10 | consensus | consensus | 8 | 10 | 0.7009 | 0.2903 | 628 |
+| retest-phase3a-replication::text-minimal-t0.7-n30-25of30 | consensus | consensus | 25 | 30 | 0.7033 | 0.313 | 590 |
+| retest-phase3c::image-h9-a-diversity-3of5 | consensus | consensus | 3 | 5 | 0.664 | 0.6603 | — |
+| retest-phase3c::image-h9-b-diversity-3of5 | consensus | consensus | 3 | 5 | 0.6682 | 0.6484 | — |
+| retest-phase3c::image-h9-c-diversity-3of5 | consensus | consensus | 3 | 5 | 0.6713 | 0.6542 | — |
+| retest-phase3c::image-h9-d-diversity-3of5 | consensus | consensus | 3 | 5 | 0.6688 | 0.664 | — |
+| retest-phase3c::image-h9-e-diversity-3of5 | consensus | consensus | 3 | 5 | 0.6705 | 0.6601 | — |
+| retest-phase3c::text-h9-a-diversity-4of5 | consensus | consensus | 4 | 5 | 0.7171 | 0.442 | — |
+| retest-phase3c::text-h9-b-diversity-4of5 | consensus | consensus | 4 | 5 | 0.6862 | 0.475 | — |
+| retest-phase3c::text-h9-d-diversity-4of5 | consensus | consensus | 4 | 5 | 0.7301 | 0.4838 | — |
+| retest-phase3c::text-h9-e-diversity-4of5 | consensus | consensus | 4 | 5 | 0.6943 | 0.4564 | — |
 | retest-h11-single-pass-384-t0::single-pass-run_1 | single-pass | none | — | 1 | 0.5065 | 0.0427 | 1093 |
 | retest-h11-single-pass-384-t0::single-pass-run_2 | single-pass | none | — | 1 | 0.4994 | 0.0427 | 1107 |
 | retest-h11-single-pass-384-t0::single-pass-run_3 | single-pass | none | — | 1 | 0.4961 | 0.0427 | 1113 |

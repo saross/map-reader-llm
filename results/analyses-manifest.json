@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-06-07T07:54:49Z",
+  "generated_at": "2026-06-07T14:18:46Z",
   "generator_version": "0.4.0",
   "analyses": [
     {
@@ -50,7 +50,7 @@
           "results/run-analyses.json",
           "results/paper-eval/n1/384px-14buf-mcc"
         ],
-        "last_extracted_at": "2026-06-07T07:54:49Z",
+        "last_extracted_at": "2026-06-07T14:18:46Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -105,7 +105,7 @@
           "results/run-analyses.json",
           "results/rescore-2026-06-05/pv-diag-384/consensus-sweep"
         ],
-        "last_extracted_at": "2026-06-07T07:54:49Z",
+        "last_extracted_at": "2026-06-07T14:18:46Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -161,7 +161,153 @@
           "results/run-analyses.json",
           "results/diversity-dividend-384"
         ],
-        "last_extracted_at": "2026-06-07T07:54:49Z",
+        "last_extracted_at": "2026-06-07T14:18:46Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "analysis_id": "phase3a-consensus-calibration",
+      "type": "sweep",
+      "conditions_compared": [
+        "retest-phase3a::image-t0.3-n5-4of5",
+        "retest-phase3a::image-t0.3-n10-8of10",
+        "retest-phase3a::image-t0.3-n30-22of30",
+        "retest-phase3a::image-t0.7-n5-4of5",
+        "retest-phase3a::image-t0.7-n10-7of10",
+        "retest-phase3a::image-t0.7-n30-18of30",
+        "retest-phase3a::image-t1.0-n5-4of5",
+        "retest-phase3a::image-t1.0-n10-7of10",
+        "retest-phase3a::image-t1.0-n30-19of30",
+        "retest-phase3a::text-t0.3-n5-5of5",
+        "retest-phase3a::text-t0.3-n10-8of10",
+        "retest-phase3a::text-t0.3-n30-23of30",
+        "retest-phase3a::text-t0.7-n5-4of5",
+        "retest-phase3a::text-t0.7-n10-8of10",
+        "retest-phase3a::text-t0.7-n30-24of30",
+        "retest-phase3a::text-t1.0-n5-4of5",
+        "retest-phase3a::text-t1.0-n10-7of10",
+        "retest-phase3a::text-t1.0-n30-22of30"
+      ],
+      "hypothesis_refs": [
+        "H3"
+      ],
+      "preregistered": "exploratory",
+      "deviations": [],
+      "predicted_outcome": "H3: consensus voting over K proposer passes improves localisation F1 over single-pass; vote threshold trades precision (high k) for recall (low k); the best-F1 threshold is config-dependent and rises with N.",
+      "tie_set": [],
+      "outcome": "Consensus vote-threshold x N calibration over 18 configs (2 tracks x 3 temperatures x N in {5,10,30}), re-scored at the 14-buffer + MCC standard (Era-1 340-tile, 512px, MINIMAL thinking). Each config's headline operating point is its best-F1@20m vote threshold. Best per track: image T0.7 N30 18-of-30 F1=0.6909 (MCC 0.4416); text T0.3 N30 23-of-30 F1=0.6921 (MCC 0.1807). Best-F1@20m rises with N (full N=30 pools win every cell) and ranges 0.639-0.692 across configs. A pronounced F1-vs-MCC divergence: text consensus localises comparably to image on F1 (~0.69) but has much lower tile-discrimination MCC (text 0.15-0.33 vs image 0.44-0.47) at the F1-optimal (recall-leaning) threshold. This registers the consensus calibration material; the preregistered statistical comparison against single-pass lives in results/retest/phase3a-consensus/. Note the MINIMAL-thinking caveat above \u2014 the diversity-dividend (HIGH-thinking) result is retest-phase3a-high / -replication.",
+      "paper_section": "Results",
+      "output_path": "results/rescore-2026-06-07/phase3",
+      "working_notes_obs": [],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/rescore-2026-06-07/phase3"
+        ],
+        "last_extracted_at": "2026-06-07T14:18:46Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "analysis_id": "phase3a-high-consensus-calibration",
+      "type": "sweep",
+      "conditions_compared": [
+        "retest-phase3a-high::text-high-t0.3-n5-4of5",
+        "retest-phase3a-high::text-high-t0.3-n10-8of10",
+        "retest-phase3a-high::text-high-t0.3-n30-23of30",
+        "retest-phase3a-high::text-high-t0.7-n5-4of5",
+        "retest-phase3a-high::text-high-t0.7-n10-7of10",
+        "retest-phase3a-high::text-high-t0.7-n30-22of30",
+        "retest-phase3a-high::text-high-t1.0-n5-4of5",
+        "retest-phase3a-high::text-high-t1.0-n10-8of10",
+        "retest-phase3a-high::text-high-t1.0-n30-23of30"
+      ],
+      "hypothesis_refs": [
+        "H3"
+      ],
+      "preregistered": "exploratory",
+      "deviations": [],
+      "predicted_outcome": "H3 + diversity dividend: HIGH-thinking proposer pools are more diverse, so a high vote threshold prunes their false positives and consensus recovers or exceeds minimal-thinking consensus.",
+      "tie_set": [],
+      "outcome": "Consensus calibration over 9 HIGH-thinking text configs (3 temperatures x N in {5,10,30}), 14-buffer + MCC, Era-1 340-tile. Best operating points cluster tightly near F1 0.77 at N=30: T1.0 23-of-30 F1=0.7747 (MCC 0.6425, the MCC leader), T0.3 23-of-30 F1=0.7744 (MCC 0.5759), T0.7 22-of-30 F1=0.7729 (MCC 0.5722). This is ~+0.08 F1 above the matched MINIMAL-thinking phase3a text consensus (~0.69) and substantially higher MCC (0.57-0.64 vs 0.15-0.33) \u2014 the diversity dividend: HIGH-thinking pools yield more varied proposals that a high vote threshold converts into both better localisation and far better tile discrimination. Best-F1@20m rises with N. Registers the calibration material; the formal HIGH-vs-MINIMAL test is retest-phase3a-replication and the 384px diversity-dividend-384 sibling.",
+      "paper_section": "Results",
+      "output_path": "results/rescore-2026-06-07/phase3",
+      "working_notes_obs": [],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/rescore-2026-06-07/phase3"
+        ],
+        "last_extracted_at": "2026-06-07T14:18:46Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "analysis_id": "phase3a-replication-thinking-calibration",
+      "type": "sweep",
+      "conditions_compared": [
+        "retest-phase3a-replication::text-high-t0.7-n5-4of5",
+        "retest-phase3a-replication::text-high-t0.7-n10-8of10",
+        "retest-phase3a-replication::text-high-t0.7-n30-21of30",
+        "retest-phase3a-replication::text-minimal-t0.7-n5-4of5",
+        "retest-phase3a-replication::text-minimal-t0.7-n10-8of10",
+        "retest-phase3a-replication::text-minimal-t0.7-n30-25of30"
+      ],
+      "hypothesis_refs": [
+        "H3"
+      ],
+      "preregistered": "exploratory",
+      "deviations": [],
+      "predicted_outcome": "Diversity dividend: at matched temperature (T=0.7) and modality (text), HIGH-thinking consensus exceeds MINIMAL-thinking consensus because higher-thinking pools are more diverse.",
+      "tie_set": [],
+      "outcome": "Direct HIGH-vs-MINIMAL thinking contrast at T=0.7 text under consensus, 14-buffer + MCC, Era-1 340-tile. At the full N=30 pool HIGH (21-of-30, F1=0.7705, MCC 0.5466) beats MINIMAL (25-of-30, F1=0.7033, MCC 0.3130) by +0.067 F1 and +0.234 MCC; the HIGH advantage holds at N=10 (0.7466 vs 0.7009) and N=5 (0.7129 vs 0.6905). This is the clean confirmation of the diversity dividend that the original phase3a could not provide (both its arms ran minimal): more proposal diversity from higher thinking, pruned by a high vote threshold, lifts both localisation and tile discrimination. Registers the calibration material; the formal paired-permutation test is in results/retest/phase3a-consensus/replication/.",
+      "paper_section": "Results",
+      "output_path": "results/rescore-2026-06-07/phase3",
+      "working_notes_obs": [],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/rescore-2026-06-07/phase3"
+        ],
+        "last_extracted_at": "2026-06-07T14:18:46Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "analysis_id": "phase3c-diversity-calibration",
+      "type": "sweep",
+      "conditions_compared": [
+        "retest-phase3c::image-h9-a-diversity-3of5",
+        "retest-phase3c::image-h9-b-diversity-3of5",
+        "retest-phase3c::image-h9-c-diversity-3of5",
+        "retest-phase3c::image-h9-d-diversity-3of5",
+        "retest-phase3c::image-h9-e-diversity-3of5",
+        "retest-phase3c::text-h9-a-diversity-4of5",
+        "retest-phase3c::text-h9-b-diversity-4of5",
+        "retest-phase3c::text-h9-d-diversity-4of5",
+        "retest-phase3c::text-h9-e-diversity-4of5"
+      ],
+      "hypothesis_refs": [
+        "H9"
+      ],
+      "preregistered": "exploratory",
+      "deviations": [],
+      "predicted_outcome": "H9: introducing diversity across the K consensus passes (instruction, image, temperature, or combined) improves accuracy over K identical passes.",
+      "tie_set": [],
+      "outcome": "H9 diversity calibration over 9 cross-variant diversity pools (replicate-mean over 5 replications), 14-buffer + MCC, Era-1 340-tile, HIGH thinking. H9 is REJECTED: at the best-F1@20m operating point each diverse condition is statistically indistinguishable from the identical-pass baseline A. Image (vote 3-of-5): baseline A F1=0.6640 (MCC 0.6603) vs diverse B 0.6682 / C 0.6713 / D 0.6688 / E 0.6705 (MCC 0.648-0.664) \u2014 all within ~0.007 F1 of baseline (original paired-permutation p>0.37 for every comparison). Text (vote 4-of-5): baseline A F1=0.7171 (MCC 0.4420) vs B 0.6862 / D 0.7301 / E 0.6943 (MCC 0.44-0.48); only temperature-diversity D edges baseline (+0.013) and even that was not significant (p~0.06). No diversity mechanism delivers a significant gain. Note image diversity pools carry notably high tile-discrimination MCC (~0.66), well above text (~0.45). Registers the calibration material; the preregistered permutation tests are in results/phase3c-diversity/.",
+      "paper_section": "Results",
+      "output_path": "results/rescore-2026-06-07/phase3c",
+      "working_notes_obs": [],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/rescore-2026-06-07/phase3c"
+        ],
+        "last_extracted_at": "2026-06-07T14:18:46Z",
         "extractor_version": "0.4.0"
       }
     }

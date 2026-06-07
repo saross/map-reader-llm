@@ -3918,6 +3918,766 @@
           "detections": "outputs/retest/phase2e/random"
         }
       ]
+    },
+    "retest-phase3a": {
+      "_note": "H3 consensus vote-threshold x N sweep, MINIMAL thinking (the original phase3a accidentally ran minimal \u2014 see retest-phase3a-replication). 2 tracks x 3 temps; N in {5,10,30} (first-N sub-pools). One citable condition per (cell x N) at best-F1@20m; non-headline thresholds -> deferred _ignored_evals. 14-buf+MCC re-score, Era-1 340-tile, curator GT, gemini-3-flash.",
+      "proposer_pools": {
+        "track1-image-t0.3": {
+          "modality": "image",
+          "path": "track1-image/T0.3"
+        },
+        "track1-image-t0.7": {
+          "modality": "image",
+          "path": "track1-image/T0.7"
+        },
+        "track1-image-t1.0": {
+          "modality": "image",
+          "path": "track1-image/T1.0"
+        },
+        "track2-text-t0.3": {
+          "modality": "text",
+          "path": "track2-text/T0.3"
+        },
+        "track2-text-t0.7": {
+          "modality": "text",
+          "path": "track2-text/T0.7"
+        },
+        "track2-text-t1.0": {
+          "modality": "text",
+          "path": "track2-text/T1.0"
+        }
+      },
+      "verifier_passes": {},
+      "conditions": [
+        {
+          "label": "image-t0.3-n5-4of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track1-image-t0.3",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.3__n5__t4/evaluation.json",
+          "detections": "outputs/retest/phase3a/track1-image/T0.3/consensus-n5/consensus_t4.geojson"
+        },
+        {
+          "label": "image-t0.3-n10-8of10",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track1-image-t0.3",
+          "n_passes": 10,
+          "vote_threshold": 8,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.3__n10__t8/evaluation.json",
+          "detections": "outputs/retest/phase3a/track1-image/T0.3/consensus-n10/consensus_t8.geojson"
+        },
+        {
+          "label": "image-t0.3-n30-22of30",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track1-image-t0.3",
+          "n_passes": 30,
+          "vote_threshold": 22,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.3__n30__t22/evaluation.json",
+          "detections": "outputs/retest/phase3a/track1-image/T0.3/consensus/consensus_t22.geojson"
+        },
+        {
+          "label": "image-t0.7-n5-4of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track1-image-t0.7",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.7__n5__t4/evaluation.json",
+          "detections": "outputs/retest/phase3a/track1-image/T0.7/consensus-n5/consensus_t4.geojson"
+        },
+        {
+          "label": "image-t0.7-n10-7of10",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track1-image-t0.7",
+          "n_passes": 10,
+          "vote_threshold": 7,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.7__n10__t7/evaluation.json",
+          "detections": "outputs/retest/phase3a/track1-image/T0.7/consensus-n10/consensus_t7.geojson"
+        },
+        {
+          "label": "image-t0.7-n30-18of30",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track1-image-t0.7",
+          "n_passes": 30,
+          "vote_threshold": 18,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.7__n30__t18/evaluation.json",
+          "detections": "outputs/retest/phase3a/track1-image/T0.7/consensus/consensus_t18.geojson"
+        },
+        {
+          "label": "image-t1.0-n5-4of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track1-image-t1.0",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T1.0__n5__t4/evaluation.json",
+          "detections": "outputs/retest/phase3a/track1-image/T1.0/consensus-n5/consensus_t4.geojson"
+        },
+        {
+          "label": "image-t1.0-n10-7of10",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track1-image-t1.0",
+          "n_passes": 10,
+          "vote_threshold": 7,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T1.0__n10__t7/evaluation.json",
+          "detections": "outputs/retest/phase3a/track1-image/T1.0/consensus-n10/consensus_t7.geojson"
+        },
+        {
+          "label": "image-t1.0-n30-19of30",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track1-image-t1.0",
+          "n_passes": 30,
+          "vote_threshold": 19,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a__track1-image__T1.0__n30__t19/evaluation.json",
+          "detections": "outputs/retest/phase3a/track1-image/T1.0/consensus/consensus_t19.geojson"
+        },
+        {
+          "label": "text-t0.3-n5-5of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track2-text-t0.3",
+          "n_passes": 5,
+          "vote_threshold": 5,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.3__n5__t5/evaluation.json",
+          "detections": "outputs/retest/phase3a/track2-text/T0.3/consensus-n5/consensus_t5.geojson"
+        },
+        {
+          "label": "text-t0.3-n10-8of10",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track2-text-t0.3",
+          "n_passes": 10,
+          "vote_threshold": 8,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.3__n10__t8/evaluation.json",
+          "detections": "outputs/retest/phase3a/track2-text/T0.3/consensus-n10/consensus_t8.geojson"
+        },
+        {
+          "label": "text-t0.3-n30-23of30",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track2-text-t0.3",
+          "n_passes": 30,
+          "vote_threshold": 23,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.3__n30__t23/evaluation.json",
+          "detections": "outputs/retest/phase3a/track2-text/T0.3/consensus/consensus_t23.geojson"
+        },
+        {
+          "label": "text-t0.7-n5-4of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track2-text-t0.7",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.7__n5__t4/evaluation.json",
+          "detections": "outputs/retest/phase3a/track2-text/T0.7/consensus-n5/consensus_t4.geojson"
+        },
+        {
+          "label": "text-t0.7-n10-8of10",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track2-text-t0.7",
+          "n_passes": 10,
+          "vote_threshold": 8,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.7__n10__t8/evaluation.json",
+          "detections": "outputs/retest/phase3a/track2-text/T0.7/consensus-n10/consensus_t8.geojson"
+        },
+        {
+          "label": "text-t0.7-n30-24of30",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track2-text-t0.7",
+          "n_passes": 30,
+          "vote_threshold": 24,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T0.7__n30__t24/evaluation.json",
+          "detections": "outputs/retest/phase3a/track2-text/T0.7/consensus/consensus_t24.geojson"
+        },
+        {
+          "label": "text-t1.0-n5-4of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track2-text-t1.0",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T1.0__n5__t4/evaluation.json",
+          "detections": "outputs/retest/phase3a/track2-text/T1.0/consensus-n5/consensus_t4.geojson"
+        },
+        {
+          "label": "text-t1.0-n10-7of10",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track2-text-t1.0",
+          "n_passes": 10,
+          "vote_threshold": 7,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T1.0__n10__t7/evaluation.json",
+          "detections": "outputs/retest/phase3a/track2-text/T1.0/consensus-n10/consensus_t7.geojson"
+        },
+        {
+          "label": "text-t1.0-n30-22of30",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track2-text-t1.0",
+          "n_passes": 30,
+          "vote_threshold": 22,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T1.0__n30__t22/evaluation.json",
+          "detections": "outputs/retest/phase3a/track2-text/T1.0/consensus/consensus_t22.geojson"
+        }
+      ]
+    },
+    "retest-phase3a-high": {
+      "_note": "H3 consensus sweep, HIGH thinking, text track only (image track never ran). 3 temps; N in {5,10,30}. One condition per (cell x N) at best-F1@20m. 14-buf+MCC, Era-1 340, curator GT.",
+      "proposer_pools": {
+        "track2-text-t0.3": {
+          "modality": "text",
+          "path": "track2-text/T0.3"
+        },
+        "track2-text-t0.7": {
+          "modality": "text",
+          "path": "track2-text/T0.7"
+        },
+        "track2-text-t1.0": {
+          "modality": "text",
+          "path": "track2-text/T1.0"
+        }
+      },
+      "verifier_passes": {},
+      "conditions": [
+        {
+          "label": "text-high-t0.3-n5-4of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track2-text-t0.3",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.3__n5__t4/evaluation.json",
+          "detections": "outputs/retest/phase3a-high/track2-text/T0.3/consensus-n5/consensus_t4.geojson"
+        },
+        {
+          "label": "text-high-t0.3-n10-8of10",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track2-text-t0.3",
+          "n_passes": 10,
+          "vote_threshold": 8,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.3__n10__t8/evaluation.json",
+          "detections": "outputs/retest/phase3a-high/track2-text/T0.3/consensus-n10/consensus_t8.geojson"
+        },
+        {
+          "label": "text-high-t0.3-n30-23of30",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track2-text-t0.3",
+          "n_passes": 30,
+          "vote_threshold": 23,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.3__n30__t23/evaluation.json",
+          "detections": "outputs/retest/phase3a-high/track2-text/T0.3/consensus/consensus_t23.geojson"
+        },
+        {
+          "label": "text-high-t0.7-n5-4of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track2-text-t0.7",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.7__n5__t4/evaluation.json",
+          "detections": "outputs/retest/phase3a-high/track2-text/T0.7/consensus-n5/consensus_t4.geojson"
+        },
+        {
+          "label": "text-high-t0.7-n10-7of10",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track2-text-t0.7",
+          "n_passes": 10,
+          "vote_threshold": 7,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.7__n10__t7/evaluation.json",
+          "detections": "outputs/retest/phase3a-high/track2-text/T0.7/consensus-n10/consensus_t7.geojson"
+        },
+        {
+          "label": "text-high-t0.7-n30-22of30",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track2-text-t0.7",
+          "n_passes": 30,
+          "vote_threshold": 22,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T0.7__n30__t22/evaluation.json",
+          "detections": "outputs/retest/phase3a-high/track2-text/T0.7/consensus/consensus_t22.geojson"
+        },
+        {
+          "label": "text-high-t1.0-n5-4of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track2-text-t1.0",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T1.0__n5__t4/evaluation.json",
+          "detections": "outputs/retest/phase3a-high/track2-text/T1.0/consensus-n5/consensus_t4.geojson"
+        },
+        {
+          "label": "text-high-t1.0-n10-8of10",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track2-text-t1.0",
+          "n_passes": 10,
+          "vote_threshold": 8,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T1.0__n10__t8/evaluation.json",
+          "detections": "outputs/retest/phase3a-high/track2-text/T1.0/consensus-n10/consensus_t8.geojson"
+        },
+        {
+          "label": "text-high-t1.0-n30-23of30",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track2-text-t1.0",
+          "n_passes": 30,
+          "vote_threshold": 23,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T1.0__n30__t23/evaluation.json",
+          "detections": "outputs/retest/phase3a-high/track2-text/T1.0/consensus/consensus_t23.geojson"
+        }
+      ]
+    },
+    "retest-phase3a-replication": {
+      "_note": "H3 clean HIGH-vs-MINIMAL thinking replication at T0.7 text (built because the original phase3a HIGH/min both used minimal). 2 cells (high, minimal); N in {5,10,30}. One condition per (cell x N) at best-F1@20m. 14-buf+MCC, Era-1 340.",
+      "proposer_pools": {
+        "high": {
+          "modality": "text",
+          "path": "high"
+        },
+        "minimal": {
+          "modality": "text",
+          "path": "minimal"
+        }
+      },
+      "verifier_passes": {},
+      "conditions": [
+        {
+          "label": "text-high-t0.7-n5-4of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "high",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a-replication__high__n5__t4/evaluation.json",
+          "detections": "outputs/retest/phase3a-replication/high/consensus-n5/consensus_t4.geojson"
+        },
+        {
+          "label": "text-high-t0.7-n10-8of10",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "high",
+          "n_passes": 10,
+          "vote_threshold": 8,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a-replication__high__n10__t8/evaluation.json",
+          "detections": "outputs/retest/phase3a-replication/high/consensus-n10/consensus_t8.geojson"
+        },
+        {
+          "label": "text-high-t0.7-n30-21of30",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "high",
+          "n_passes": 30,
+          "vote_threshold": 21,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a-replication__high__n30__t21/evaluation.json",
+          "detections": "outputs/retest/phase3a-replication/high/consensus/consensus_t21.geojson"
+        },
+        {
+          "label": "text-minimal-t0.7-n5-4of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "minimal",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a-replication__minimal__n5__t4/evaluation.json",
+          "detections": "outputs/retest/phase3a-replication/minimal/consensus-n5/consensus_t4.geojson"
+        },
+        {
+          "label": "text-minimal-t0.7-n10-8of10",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "minimal",
+          "n_passes": 10,
+          "vote_threshold": 8,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a-replication__minimal__n10__t8/evaluation.json",
+          "detections": "outputs/retest/phase3a-replication/minimal/consensus-n10/consensus_t8.geojson"
+        },
+        {
+          "label": "text-minimal-t0.7-n30-25of30",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "minimal",
+          "n_passes": 30,
+          "vote_threshold": 25,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3/phase3a-replication__minimal__n30__t25/evaluation.json",
+          "detections": "outputs/retest/phase3a-replication/minimal/consensus/consensus_t25.geojson"
+        }
+      ]
+    },
+    "retest-phase3c": {
+      "_note": "H9 diversity study (REJECTED \u2014 no diversity mechanism gives a significant gain). One condition per (track x H9 condition) cross-variant diversity pool (N=5, replicate-mean over 5 replications). 45 physical pass-variant pools registered as passes; the condition's proposer_pool names the diversity grouping (GAP-6: not a single physical pool -> benign pool-unresolved). 14-buf+MCC, Era-1 340, curator GT.",
+      "proposer_pools": {
+        "track1-image-h9-a-p1": {
+          "modality": "image",
+          "path": "track1-image/h9-A-p1"
+        },
+        "track1-image-h9-a-p2": {
+          "modality": "image",
+          "path": "track1-image/h9-A-p2"
+        },
+        "track1-image-h9-a-p3": {
+          "modality": "image",
+          "path": "track1-image/h9-A-p3"
+        },
+        "track1-image-h9-a-p4": {
+          "modality": "image",
+          "path": "track1-image/h9-A-p4"
+        },
+        "track1-image-h9-a-p5": {
+          "modality": "image",
+          "path": "track1-image/h9-A-p5"
+        },
+        "track1-image-h9-b-v1": {
+          "modality": "image",
+          "path": "track1-image/h9-B-v1"
+        },
+        "track1-image-h9-b-v2": {
+          "modality": "image",
+          "path": "track1-image/h9-B-v2"
+        },
+        "track1-image-h9-b-v3": {
+          "modality": "image",
+          "path": "track1-image/h9-B-v3"
+        },
+        "track1-image-h9-b-v4": {
+          "modality": "image",
+          "path": "track1-image/h9-B-v4"
+        },
+        "track1-image-h9-b-v5": {
+          "modality": "image",
+          "path": "track1-image/h9-B-v5"
+        },
+        "track1-image-h9-c-img1": {
+          "modality": "image",
+          "path": "track1-image/h9-C-img1"
+        },
+        "track1-image-h9-c-img2": {
+          "modality": "image",
+          "path": "track1-image/h9-C-img2"
+        },
+        "track1-image-h9-c-img3": {
+          "modality": "image",
+          "path": "track1-image/h9-C-img3"
+        },
+        "track1-image-h9-c-img4": {
+          "modality": "image",
+          "path": "track1-image/h9-C-img4"
+        },
+        "track1-image-h9-c-img5": {
+          "modality": "image",
+          "path": "track1-image/h9-C-img5"
+        },
+        "track1-image-h9-d-t1": {
+          "modality": "image",
+          "path": "track1-image/h9-D-t1"
+        },
+        "track1-image-h9-d-t2": {
+          "modality": "image",
+          "path": "track1-image/h9-D-t2"
+        },
+        "track1-image-h9-d-t3": {
+          "modality": "image",
+          "path": "track1-image/h9-D-t3"
+        },
+        "track1-image-h9-d-t4": {
+          "modality": "image",
+          "path": "track1-image/h9-D-t4"
+        },
+        "track1-image-h9-d-t5": {
+          "modality": "image",
+          "path": "track1-image/h9-D-t5"
+        },
+        "track1-image-h9-e-p1": {
+          "modality": "image",
+          "path": "track1-image/h9-E-p1"
+        },
+        "track1-image-h9-e-p2": {
+          "modality": "image",
+          "path": "track1-image/h9-E-p2"
+        },
+        "track1-image-h9-e-p3": {
+          "modality": "image",
+          "path": "track1-image/h9-E-p3"
+        },
+        "track1-image-h9-e-p4": {
+          "modality": "image",
+          "path": "track1-image/h9-E-p4"
+        },
+        "track1-image-h9-e-p5": {
+          "modality": "image",
+          "path": "track1-image/h9-E-p5"
+        },
+        "track2-text-h9-a-p1": {
+          "modality": "text",
+          "path": "track2-text/h9-A-p1"
+        },
+        "track2-text-h9-a-p2": {
+          "modality": "text",
+          "path": "track2-text/h9-A-p2"
+        },
+        "track2-text-h9-a-p3": {
+          "modality": "text",
+          "path": "track2-text/h9-A-p3"
+        },
+        "track2-text-h9-a-p4": {
+          "modality": "text",
+          "path": "track2-text/h9-A-p4"
+        },
+        "track2-text-h9-a-p5": {
+          "modality": "text",
+          "path": "track2-text/h9-A-p5"
+        },
+        "track2-text-h9-b-v1": {
+          "modality": "text",
+          "path": "track2-text/h9-B-v1"
+        },
+        "track2-text-h9-b-v2": {
+          "modality": "text",
+          "path": "track2-text/h9-B-v2"
+        },
+        "track2-text-h9-b-v3": {
+          "modality": "text",
+          "path": "track2-text/h9-B-v3"
+        },
+        "track2-text-h9-b-v4": {
+          "modality": "text",
+          "path": "track2-text/h9-B-v4"
+        },
+        "track2-text-h9-b-v5": {
+          "modality": "text",
+          "path": "track2-text/h9-B-v5"
+        },
+        "track2-text-h9-d-t1": {
+          "modality": "text",
+          "path": "track2-text/h9-D-t1"
+        },
+        "track2-text-h9-d-t2": {
+          "modality": "text",
+          "path": "track2-text/h9-D-t2"
+        },
+        "track2-text-h9-d-t3": {
+          "modality": "text",
+          "path": "track2-text/h9-D-t3"
+        },
+        "track2-text-h9-d-t4": {
+          "modality": "text",
+          "path": "track2-text/h9-D-t4"
+        },
+        "track2-text-h9-d-t5": {
+          "modality": "text",
+          "path": "track2-text/h9-D-t5"
+        },
+        "track2-text-h9-e-p1": {
+          "modality": "text",
+          "path": "track2-text/h9-E-p1"
+        },
+        "track2-text-h9-e-p2": {
+          "modality": "text",
+          "path": "track2-text/h9-E-p2"
+        },
+        "track2-text-h9-e-p3": {
+          "modality": "text",
+          "path": "track2-text/h9-E-p3"
+        },
+        "track2-text-h9-e-p4": {
+          "modality": "text",
+          "path": "track2-text/h9-E-p4"
+        },
+        "track2-text-h9-e-p5": {
+          "modality": "text",
+          "path": "track2-text/h9-E-p5"
+        }
+      },
+      "verifier_passes": {},
+      "conditions": [
+        {
+          "label": "image-h9-a-diversity-3of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track1-image-h9-a-diversity",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__A__t3/evaluation.json",
+          "detections": "outputs/retest/phase3c/diversity-consensus/track1-image/A"
+        },
+        {
+          "label": "image-h9-b-diversity-3of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track1-image-h9-b-diversity",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__B__t3/evaluation.json",
+          "detections": "outputs/retest/phase3c/diversity-consensus/track1-image/B"
+        },
+        {
+          "label": "image-h9-c-diversity-3of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track1-image-h9-c-diversity",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__C__t3/evaluation.json",
+          "detections": "outputs/retest/phase3c/diversity-consensus/track1-image/C"
+        },
+        {
+          "label": "image-h9-d-diversity-3of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track1-image-h9-d-diversity",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__D__t3/evaluation.json",
+          "detections": "outputs/retest/phase3c/diversity-consensus/track1-image/D"
+        },
+        {
+          "label": "image-h9-e-diversity-3of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track1-image-h9-e-diversity",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3c/phase3c__track1-image__E__t3/evaluation.json",
+          "detections": "outputs/retest/phase3c/diversity-consensus/track1-image/E"
+        },
+        {
+          "label": "text-h9-a-diversity-4of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track2-text-h9-a-diversity",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__A__t4/evaluation.json",
+          "detections": "outputs/retest/phase3c/diversity-consensus/track2-text/A"
+        },
+        {
+          "label": "text-h9-b-diversity-4of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track2-text-h9-b-diversity",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__B__t4/evaluation.json",
+          "detections": "outputs/retest/phase3c/diversity-consensus/track2-text/B"
+        },
+        {
+          "label": "text-h9-d-diversity-4of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track2-text-h9-d-diversity",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__D__t4/evaluation.json",
+          "detections": "outputs/retest/phase3c/diversity-consensus/track2-text/D"
+        },
+        {
+          "label": "text-h9-e-diversity-4of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "track2-text-h9-e-diversity",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-07/phase3c/phase3c__track2-text__E__t4/evaluation.json",
+          "detections": "outputs/retest/phase3c/diversity-consensus/track2-text/E"
+        }
+      ]
     }
   }
 }

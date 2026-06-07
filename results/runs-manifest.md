@@ -2,7 +2,7 @@
 
 # Runs manifest
 
-> Generated 2026-06-07T07:54:49Z · 28 row(s) · schema v1.0.
+> Generated 2026-06-07T14:18:46Z · 28 row(s) · schema v1.0.
 >
 > **Coverage**: all 28 runs (run-level facts; conditions/passes added as 3b batches land).
 
@@ -30,9 +30,9 @@
 | retest-phase2c | single-pass | 512 | 4-map-gs | curator | era-1-340 | — |
 | retest-phase2d | single-pass | 512 | 4-map-gs | curator | era-1-340 | — |
 | retest-phase2e | single-pass | 512 | 4-map-gs | curator | era-1-340 | — |
-| retest-phase3a | — | 512 | 4-map-gs | curator | era-1-340 | — |
-| retest-phase3a-high | — | 512 | 4-map-gs | curator | era-1-340 | — |
-| retest-phase3a-replication | — | 512 | 4-map-gs | curator | era-1-340 | — |
-| retest-phase3c | — | 512 | 4-map-gs | curator | era-1-340 | — |
+| retest-phase3a | consensus | 512 | 4-map-gs | curator | era-1-340 | — |
+| retest-phase3a-high | consensus | 512 | 4-map-gs | curator | era-1-340 | — |
+| retest-phase3a-replication | consensus | 512 | 4-map-gs | curator | era-1-340 | — |
+| retest-phase3c | consensus | 512 | 4-map-gs | curator | era-1-340 | — |
 | retest-h11-single-pass-384-t0 | single-pass | 384 | 4-map-gs | curator | era-2-487 | — |
 | verifier-t-pilot | proposer-verifier | 384 | 4-map-gs | curator | era-2-487 | — |
