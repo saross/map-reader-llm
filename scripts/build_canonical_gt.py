@@ -123,6 +123,10 @@ def main() -> int:
     ap.add_argument("--cluster-m", type=float, default=20.0)
     ap.add_argument("--auto-collapse-m", type=float, default=25.0,
                     help="Ring spread <= this is auto-collapsed by min-ring.")
+    ap.add_argument("--review-mixed-sentinel", action="store_true",
+                    help="Send clusters with BOTH a creditable mound and a 200 m "
+                         "out-of-range sentinel to re-review (default: auto-resolve "
+                         "to the creditable ring).")
     ap.add_argument("--output-dir", type=Path, required=True)
     args = ap.parse_args()
 
@@ -150,11 +154,15 @@ def main() -> int:
             n_auto_notmound += 1
             continue
 
+        has_sentinel_mound = any(
+            d["label"] == "mound" and d["buf"] == SENTINEL_BUFFER for d in items)
         bufs = [d["buf"] for d in mound_rows]
         if has_notmound:
             kind = "label_conflict"
         elif (max(bufs) - min(bufs)) > args.auto_collapse_m:
             kind = "ring_conflict"
+        elif has_sentinel_mound and args.review_mixed_sentinel:
+            kind = "mixed_sentinel"
         else:
             kind = "auto"
 
