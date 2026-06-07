@@ -27,13 +27,16 @@ numbers were computed from.
 
 CRS
 ---
-``apply_threshold`` emits centroids in the clustering CRS (EPSG:32635, metres).
-The 14-buffer scorer (``evaluate_detections.py``) treats a crs-less GeoJSON as
-WGS84 (RFC 7946) and reprojects to EPSG:32635 — so a crs-less file holding UTM
-metres would be silently misread (the historical F1=0 / NaN bug). We therefore
-reproject every materialised consensus back to **EPSG:4326** before writing,
-matching the on-disk format of the phase3a consensus GeoJSONs (which the scorer
-already handles correctly).
+``apply_threshold`` emits centroids in **EPSG:4326** (lon/lat) — verified
+empirically: a representative centroid is ``[25.766402, 42.489151]`` (Bulgaria),
+byte-identical in form to the on-disk phase3a consensus GeoJSONs. (The
+``analyse_diversity`` code path carries a harmless, internally-consistent CRS
+*mislabel* — it tags the same lon/lat geometries as EPSG:32635 for an
+intersection-only spatial join — but the stored coordinates are always WGS84.)
+We therefore write the consensus FeatureCollection **as-is**, exactly as
+``merge_passes`` does, so the 14-buffer scorer (which reads a crs-less GeoJSON
+as WGS84 per RFC 7946 and reprojects to the evaluation CRS) handles it
+identically to the phase3a consensus.
 
 Output layout (consumed by the dir-mode replicate-mean re-score)::
 
@@ -62,9 +65,6 @@ import json
 import sys
 from pathlib import Path
 
-import geopandas as gpd
-from shapely.geometry import mapping, shape
-
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
@@ -74,9 +74,6 @@ from analyse_diversity import (  # noqa: E402
     load_study_yaml,
 )
 from merge_passes import apply_threshold, cluster_across_passes  # noqa: E402
-
-CLUSTER_CRS = "EPSG:32635"
-STORAGE_CRS = "EPSG:4326"
 
 # Track -> (study YAML, detections study_dir).
 TRACKS = {
@@ -91,29 +88,6 @@ TRACKS = {
 }
 
 DEFAULT_OUT = "outputs/retest/phase3c/diversity-consensus"
-
-
-def reproject_fc_to_storage(consensus_fc: dict) -> dict:
-    """Reproject a consensus FeatureCollection from CLUSTER_CRS to STORAGE_CRS.
-
-    ``apply_threshold`` returns Point features in the clustering CRS (UTM
-    metres). This reprojects geometries back to WGS84 in place so the scorer
-    reads them correctly, preserving all feature properties.
-
-    Args:
-        consensus_fc: GeoJSON FeatureCollection dict from apply_threshold().
-
-    Returns:
-        The same dict, geometries reprojected to STORAGE_CRS.
-    """
-    feats = consensus_fc.get("features", [])
-    if not feats:
-        return consensus_fc
-    geoms = [shape(f["geometry"]) for f in feats]
-    reproj = gpd.GeoSeries(geoms, crs=CLUSTER_CRS).to_crs(STORAGE_CRS)
-    for feat, geom in zip(feats, reproj):
-        feat["geometry"] = mapping(geom)
-    return consensus_fc
 
 
 def materialise_condition(
@@ -158,8 +132,9 @@ def materialise_condition(
         clusters = cluster_across_passes(pass_detections)
         rep_dir.mkdir(parents=True, exist_ok=True)
         for t in range(1, total_passes + 1):
+            # apply_threshold emits WGS84 (lon/lat), matching the on-disk
+            # phase3a consensus; write as-is (no reprojection).
             consensus_fc = apply_threshold(clusters, t, total_passes)
-            consensus_fc = reproject_fc_to_storage(consensus_fc)
             out_path = rep_dir / f"consensus_t{t}.geojson"
             with open(out_path, "w") as fh:
                 json.dump(consensus_fc, fh, indent=2)
