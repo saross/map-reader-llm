@@ -1,0 +1,189 @@
+{
+  "_metadata": {
+    "adapter": "scripts/adapt_track2_evals_for_manifest.py",
+    "source_summary": "results/55maps-extended-gt-2026-06-07/TH7-k4/summary.json",
+    "gt_reference": "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv (773 phantoms, per-buffer gated) + inputs/vectors/references/student-mounds-55maps-reviewed.geojson (4,746)",
+    "metric": "corrected-F1 @ R (extended-GT-at-R Hungarian), tile-MCC",
+    "tile_classification_buffer_metres": 50,
+    "tile_classification_note": "MCC is reported at the 50 m deployment headline; it varies with R via the per-buffer gated extended GT \u2014 see the Track-2 summary.json / consolidated-track2.csv for the full per-buffer MCC.",
+    "buffers": [
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50,
+      75,
+      100,
+      125,
+      150
+    ],
+    "input_files": {
+      "detections": [
+        "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson"
+      ],
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "ground_truth": "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv (773 phantoms, per-buffer gated) + inputs/vectors/references/student-mounds-55maps-reviewed.geojson (4,746)"
+    }
+  },
+  "summary": {
+    "n_detections": 4164,
+    "buffers": [
+      {
+        "buffer_metres": 5,
+        "f1": 0.08552188552188553,
+        "precision": 0.0914985590778098,
+        "recall": 0.08027812895069532,
+        "f1_ci_lower": 0.07687090210264527,
+        "f1_ci_upper": 0.09430536777539471,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 10,
+        "f1": 0.2754208754208754,
+        "precision": 0.2946685878962536,
+        "recall": 0.25853350189633373,
+        "f1_ci_lower": 0.26121935962962245,
+        "f1_ci_upper": 0.2898614483264056,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 15,
+        "f1": 0.4787878787878788,
+        "precision": 0.5122478386167147,
+        "recall": 0.44943109987357777,
+        "f1_ci_lower": 0.4632421649616295,
+        "f1_ci_upper": 0.49431007257080734,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 20,
+        "f1": 0.6260381593714928,
+        "precision": 0.6697886647454371,
+        "recall": 0.5876527602191319,
+        "f1_ci_lower": 0.6112586883434332,
+        "f1_ci_upper": 0.6407818113842821,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 25,
+        "f1": 0.7102132435465768,
+        "precision": 0.7598463016330451,
+        "recall": 0.6666666666666666,
+        "f1_ci_lower": 0.6972023936759537,
+        "f1_ci_upper": 0.7231179430218896,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 30,
+        "f1": 0.756902356902357,
+        "precision": 0.8097982708933718,
+        "recall": 0.7104930467762326,
+        "f1_ci_lower": 0.7448568177514295,
+        "f1_ci_upper": 0.7686903712902629,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 35,
+        "f1": 0.7777777777777779,
+        "precision": 0.8321325648414986,
+        "recall": 0.7300884955752213,
+        "f1_ci_lower": 0.7664094264254397,
+        "f1_ci_upper": 0.7889419899012273,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 40,
+        "f1": 0.7867564534231201,
+        "precision": 0.8417387127761767,
+        "recall": 0.7385166455962916,
+        "f1_ci_lower": 0.7755415219075752,
+        "f1_ci_upper": 0.7976601069887042,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 45,
+        "f1": 0.7903479236812571,
+        "precision": 0.845581171950048,
+        "recall": 0.7418879056047197,
+        "f1_ci_lower": 0.7793812301750338,
+        "f1_ci_upper": 0.8012199913632613,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 50,
+        "f1": 0.8152278820375335,
+        "precision": 0.9128242074927954,
+        "recall": 0.7364851772912226,
+        "f1_ci_lower": 0.8050636523327125,
+        "f1_ci_upper": 0.8250979654306435,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 75,
+        "f1": 0.8045033670033671,
+        "precision": 0.9181075888568684,
+        "recall": 0.7159176029962547,
+        "f1_ci_lower": 0.7940951103183003,
+        "f1_ci_upper": 0.8144298547869712,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 100,
+        "f1": 0.8006253256904637,
+        "precision": 0.9224303554274735,
+        "recall": 0.7072362364205487,
+        "f1_ci_lower": 0.7902555405107581,
+        "f1_ci_upper": 0.8106253154037167,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 125,
+        "f1": 0.7990455441435833,
+        "precision": 0.9248318924111432,
+        "recall": 0.7033789954337899,
+        "f1_ci_lower": 0.788508298508053,
+        "f1_ci_upper": 0.8092174773365238,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      },
+      {
+        "buffer_metres": 150,
+        "f1": 0.7976842758192908,
+        "precision": 0.9265129682997119,
+        "recall": 0.7003085859502632,
+        "f1_ci_lower": 0.7871205061881007,
+        "f1_ci_upper": 0.8078036070744056,
+        "f1_ci_method": "percentile",
+        "ci_unreliable": false
+      }
+    ],
+    "tile_classification": {
+      "mcc": 0.6666252946918438,
+      "sensitivity": 0.6416004540295119,
+      "specificity": 0.9685070759417979,
+      "confusion": {
+        "tp": 2261,
+        "tn": 4859,
+        "fp": 158,
+        "fn": 1263
+      }
+    }
+  }
+}

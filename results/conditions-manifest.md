@@ -2,17 +2,24 @@
 
 # Conditions manifest
 
-> Generated 2026-06-05T07:31:40Z · 224 row(s) · schema v1.0.
+> Generated 2026-06-07T07:54:49Z · 231 row(s) · schema v1.0.
 >
-> **Coverage**: 224 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 231 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
 | 55maps-generalisation::verified-paired | proposer-verifier | verified | 4 | 5 | 0.6254 | 0.6509 | 4068 |
 | 55maps-image-generalisation::verified | proposer-verifier | verified | 3 | 5 | 0.5082 | 0.6927 | 4680 |
+| 55maps-image-generalisation::verified-k3-canonical-gt | proposer-verifier | verified | 3 | 5 | 0.5081688945469975 | 0.7104103204864493 | 4680 |
 | 55maps-text-high-generalisation::verified | proposer-verifier | verified | 4 | 5 | 0.626 | 0.648 | 4164 |
+| 55maps-text-high-generalisation::verified-k4-canonical-gt | proposer-verifier | verified | 4 | 5 | 0.6260381593714928 | 0.6666252946918438 | 4164 |
+| 55maps-text-high-generalisation::verified-k3-canonical-gt | proposer-verifier | verified | 3 | 5 | 0.6307175828787243 | 0.679608597108498 | 4786 |
 | 55maps-text-high-t0-3-generalisation::verified | proposer-verifier | verified | 4 | 5 | 0.6308 | 0.6541 | 4350 |
+| 55maps-text-high-t0-3-generalisation::verified-k4-canonical-gt | proposer-verifier | verified | 4 | 5 | 0.6308267370272647 | 0.6710705487171356 | 4350 |
+| 55maps-text-high-t0-3-generalisation::verified-k3-canonical-gt | proposer-verifier | verified | 3 | 5 | 0.6295720650709771 | 0.6903302334580523 | 4905 |
 | 55maps-text-min-generalisation::verified | proposer-verifier | verified | 4 | 5 | 0.6201 | 0.6264 | 3865 |
+| 55maps-text-min-generalisation::verified-k4-canonical-gt | proposer-verifier | verified | 4 | 5 | 0.6201370340262455 | 0.6411358134707998 | 3865 |
+| 55maps-text-min-generalisation::verified-k3-canonical-gt | proposer-verifier | verified | 3 | 5 | 0.6335734072022161 | 0.6579582748365398 | 4279 |
 | gold-standard-v2::consensus-3of5 | consensus | consensus | 3 | 5 | 0.5925 | 0.2964 | 868 |
 | gold-standard-v2::consensus-4of5 | consensus | consensus | 4 | 5 | 0.6999 | 0.4557 | 608 |
 | gold-standard-v2::consensus-5of5 | consensus | consensus | 5 | 5 | 0.7649 | 0.5791 | 420 |

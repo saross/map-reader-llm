@@ -2973,7 +2973,7 @@
       ]
     },
     "55maps-image-generalisation": {
-      "_note": "Batch B. Image-track out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). Image proposer (library_plus-hp, detect_brief-text-image.md) x text adversarial verifier (cross-modal). 1 verified condition at the 14-buffer+MCC re-score (consensus operating point 3of5). Consensus-3of5 + non-canonical mcc/backfill/cleaned-gt sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md.",
+      "_note": "Batch B. Image-track out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). Image proposer (library_plus-hp, detect_brief-text-image.md) x text adversarial verifier (cross-modal). 1 verified condition at the 14-buffer+MCC re-score (consensus operating point 3of5). Consensus-3of5 + non-canonical mcc/backfill/cleaned-gt sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md. | Session 105: also carries the canonical extended-GT (Track-2) conditions 'verified-k4-canonical-gt'/'verified-k3-canonical-gt' (paper reference; see results/55maps-extended-gt-2026-06-07/ and results/deployment-oracle-2026-06-06/deployment-oracle-findings.md). The existing 'verified' condition is the historical reviewed-student-GT (Track-1) score.",
       "proposer_pools": {
         "library_plus-hp": {
           "modality": "image",
@@ -3001,11 +3001,30 @@
           },
           "eval_path": "results/rescore-2026-05-31/55maps-image-generalisation/verified/evaluation.json",
           "detections": "outputs/55maps-image-generalisation/verified/verified_detections.geojson"
+        },
+        {
+          "label": "verified-k3-canonical-gt",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "library_plus-hp",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": null,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/55maps-extended-gt-2026-06-07/IM-k3/evaluation.json",
+          "detections": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+          "_note": "image, carried vote 3-of-5, vs canonical extended GT"
         }
       ]
     },
     "55maps-text-high-generalisation": {
-      "_note": "Batch B. text HIGH thinking, T=0.7 (the publishable recovered successor of 55maps-generalisation). Out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). detect_brief-text proposer x text adversarial verifier. 1 verified condition at the standardised 14-buffer+MCC re-score (consensus operating point 4of5). Consensus-4of5 + non-canonical sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md.",
+      "_note": "Batch B. text HIGH thinking, T=0.7 (the publishable recovered successor of 55maps-generalisation). Out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). detect_brief-text proposer x text adversarial verifier. 1 verified condition at the standardised 14-buffer+MCC re-score (consensus operating point 4of5). Consensus-4of5 + non-canonical sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md. | Session 105: also carries the canonical extended-GT (Track-2) conditions 'verified-k4-canonical-gt'/'verified-k3-canonical-gt' (paper reference; see results/55maps-extended-gt-2026-06-07/ and results/deployment-oracle-2026-06-06/deployment-oracle-findings.md). The existing 'verified' condition is the historical reviewed-student-GT (Track-1) score.",
       "proposer_pools": {
         "detect_brief-text": {
           "modality": "text",
@@ -3033,11 +3052,49 @@
           },
           "eval_path": "results/rescore-2026-05-31/55maps-text-high-generalisation/verified/evaluation.json",
           "detections": "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson"
+        },
+        {
+          "label": "verified-k4-canonical-gt",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/55maps-extended-gt-2026-06-07/TH7-k4/evaluation.json",
+          "detections": "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
+          "_note": "carry-forward (text HIGH T0.7, vote 4-of-5) re-scored vs canonical extended GT"
+        },
+        {
+          "label": "verified-k3-canonical-gt",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/55maps-extended-gt-2026-06-07/TH7-k3/evaluation.json",
+          "detections": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-generalisation/k3_verified.geojson",
+          "_note": "text HIGH T0.7, vote 3-of-5 (Session-104 vote=3 shell, prob>=0.15)"
         }
       ]
     },
     "55maps-text-high-t0-3-generalisation": {
-      "_note": "Batch B. text HIGH thinking, T=0.3 (re-scored vs the reviewed student GT 2026-06-01 to match the other four runs, per protocol-errata E56). Out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). detect_brief-text proposer x text adversarial verifier. 1 verified condition at the standardised 14-buffer+MCC re-score (consensus operating point 4of5). Consensus-4of5 + non-canonical sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md.",
+      "_note": "Batch B. text HIGH thinking, T=0.3 (re-scored vs the reviewed student GT 2026-06-01 to match the other four runs, per protocol-errata E56). Out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). detect_brief-text proposer x text adversarial verifier. 1 verified condition at the standardised 14-buffer+MCC re-score (consensus operating point 4of5). Consensus-4of5 + non-canonical sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md. | Session 105: also carries the canonical extended-GT (Track-2) conditions 'verified-k4-canonical-gt'/'verified-k3-canonical-gt' (paper reference; see results/55maps-extended-gt-2026-06-07/ and results/deployment-oracle-2026-06-06/deployment-oracle-findings.md). The existing 'verified' condition is the historical reviewed-student-GT (Track-1) score.",
       "proposer_pools": {
         "detect_brief-text": {
           "modality": "text",
@@ -3065,11 +3122,49 @@
           },
           "eval_path": "results/rescore-2026-05-31/55maps-text-high-t0.3-generalisation/verified/evaluation.json",
           "detections": "outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson"
+        },
+        {
+          "label": "verified-k4-canonical-gt",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/55maps-extended-gt-2026-06-07/T03-k4/evaluation.json",
+          "detections": "outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson",
+          "_note": "text HIGH T0.3, vote 4-of-5, vs canonical extended GT"
+        },
+        {
+          "label": "verified-k3-canonical-gt",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/55maps-extended-gt-2026-06-07/T03-k3/evaluation.json",
+          "detections": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-t0.3-generalisation/k3_verified.geojson",
+          "_note": "DEPLOYMENT ORACLE \u2014 text HIGH T0.3, vote 3-of-5 (vote=3 shell, prob>=0.15)"
         }
       ]
     },
     "55maps-text-min-generalisation": {
-      "_note": "Batch B. text MINIMAL thinking. Out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). detect_brief-text proposer x text adversarial verifier. 1 verified condition at the standardised 14-buffer+MCC re-score (consensus operating point 4of5). Consensus-4of5 + non-canonical sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md.",
+      "_note": "Batch B. text MINIMAL thinking. Out-of-sample generalisation on the 55-map student corpus (8541 tiles, reviewed student GT). detect_brief-text proposer x text adversarial verifier. 1 verified condition at the standardised 14-buffer+MCC re-score (consensus operating point 4of5). Consensus-4of5 + non-canonical sibling evals -> deferred _ignored_evals. See docs/methodology/55maps-generalisation-runs.md. | Session 105: also carries the canonical extended-GT (Track-2) conditions 'verified-k4-canonical-gt'/'verified-k3-canonical-gt' (paper reference; see results/55maps-extended-gt-2026-06-07/ and results/deployment-oracle-2026-06-06/deployment-oracle-findings.md). The existing 'verified' condition is the historical reviewed-student-GT (Track-1) score.",
       "proposer_pools": {
         "detect_brief-text": {
           "modality": "text",
@@ -3097,6 +3192,44 @@
           },
           "eval_path": "results/rescore-2026-05-31/55maps-text-min-generalisation/verified/evaluation.json",
           "detections": "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson"
+        },
+        {
+          "label": "verified-k4-canonical-gt",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": null,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/55maps-extended-gt-2026-06-07/TM-k4/evaluation.json",
+          "detections": "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson",
+          "_note": "text MINIMAL, vote 4-of-5, vs canonical extended GT"
+        },
+        {
+          "label": "verified-k3-canonical-gt",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/55maps-extended-gt-2026-06-07/TM-k3/evaluation.json",
+          "detections": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-min-generalisation/k3_verified.geojson",
+          "_note": "text MINIMAL, vote 3-of-5 (vote=3 shell, prob>=0.15)"
         }
       ]
     },
