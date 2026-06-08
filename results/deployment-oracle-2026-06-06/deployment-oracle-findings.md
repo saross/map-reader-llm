@@ -1,6 +1,6 @@
 # 55-map deployment oracle — carry-forward vs oracle-best (Session 104)
 
-> **Last revised**: 2026-06-07 (Session 105: Track-2 full-buffer + tile-MCC re-score and canonical-GT threshold permutations added — extends §4b, no §4b number changed). Prior same-day: canonical adjudicated-GT re-score (§4b). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-06-08 (Session 106: §8 now documents the vote=2 enrichment input chain and how the uncommitted `consensus-sweep/` intermediate is regenerated — no result number changed). Prior: 2026-06-07 (Session 105: Track-2 full-buffer + tile-MCC re-score and canonical-GT threshold permutations — extends §4b, no §4b number changed). See [§ Changelog](#changelog) for revision history.
 
 **Question.** The 4 GS (gold-standard) maps are the calibration+test instrument; the
 55-map student corpus is the out-of-sample deployment. We carried forward a PV
@@ -178,6 +178,15 @@ operator; requires the API gate and a further (delta-from-3-of-5) manual review.
   `results/deployment-oracle-2026-06-06/k3-review/<run>/{pass1-new, pass2-review, pass2-mounds-confirm}/human-review.csv`.
 - **Threshold scoring**: `compute_corrected_f1_multi_buffer.py` + `paired_permutation_corrected_55maps.py`
   → `k3-scoring/<run>/{k4-corrected, k3-corrected, perm-k3-vs-k4}/`.
+- **vote=2 GT-enrichment**: `scripts/build_vote2_enrichment_kit.py` reads the consensus
+  threshold sweep `consensus-sweep/<run>/consensus_t2.geojson` (the vote≥2 candidates)
+  → `results/deployment-oracle-2026-06-06/vote2-enrichment/` (committed; 10/213 vote=2
+  candidates promoted into the canonical GT, §4b). The `consensus-sweep/` intermediate
+  is **not committed** — it is deterministically regenerable ($0, ~5 min) via
+  `merge_passes.py --sweep` over each run's 5-pass proposer pool:
+  `python scripts/merge_passes.py --input-dir outputs/55maps-<run>-generalisation/proposer/<pool> --output-dir results/deployment-oracle-2026-06-06/consensus-sweep/55maps-<run>-generalisation --sweep`,
+  where `<pool>` is `library_plus-hp` for the image run and `detect_brief-text` for the
+  three text runs (`text-high`, `text-high-t0.3`, `text-min`).
 - **GS post-verifier sweep**: `results/deployment-oracle-2026-06-06/gs-postverifier-sweep/` (derived
   from `outputs/h11/pv-diag-384/<pool>/<temp>/{consensus-n5/consensus_t1.geojson, verified-v1-n5/probabilities.json}`).
 - **Config axis**: `results/deployment-oracle-2026-06-06/config-axis-fixedunion/`.
@@ -188,6 +197,18 @@ operator; requires the API gate and a further (delta-from-3-of-5) manual review.
 ---
 
 ## Changelog
+
+### 2026-06-08 — Document the vote=2 enrichment input chain (Session 106)
+
+**Trigger**: a Session-106 housekeeping pass found `consensus-sweep/` sitting
+untracked on sapphire (not on origin) and not documented in §8 — yet it is the
+input `build_vote2_enrichment_kit.py` reads to build the committed
+`vote2-enrichment/` kit, which contributed 10/213 vote=2 mounds to the canonical
+GT (§4b). **What changed**: §8 gains a "vote=2 GT-enrichment" bullet recording the
+chain and the exact `merge_passes.py --sweep` command that regenerates the
+intermediate. **What did NOT change**: no result, table, or number. The
+`consensus-sweep/` intermediate was discarded from sapphire after this note landed
+(deterministically regenerable from committed proposer outputs, $0).
 
 ### 2026-06-07 — Track-2 full-buffer + tile-MCC re-score and canonical-GT threshold permutations (Session 105)
 
