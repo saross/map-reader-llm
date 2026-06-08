@@ -3571,7 +3571,7 @@
       ]
     },
     "proposer-verifier-512": {
-      "_note": "Batch A residual (H11), thin Era-1 sibling of pv-384 at 512px / era-1-340. Only the adversarial-text verifier strategy was run here; 1 verified condition at its verifier-accepted operating point (Session 100, user-confirmed). proposer_pools EMPTY: the proposer dir holds only detections.geojson with NO meta (GAP-9 Era-1 weak provenance), so no proposer pass is extractable; condition references the pool by string -> benign pool-unresolved WARN. The 1 verifier_pass is a real sidecar meta (verified-adversarial-text.meta.json, 140 items, 0 failures). The v2 replicate re-run is excluded -> _ignored_evals at the deferred 3b close-out sweep.",
+      "_note": "Batch A residual (H11), thin Era-1 sibling of pv-384 at 512px / era-1-340. Only the adversarial-text verifier strategy was run here; 1 verified condition at its verifier-accepted operating point (Session 100, user-confirmed). proposer_pools EMPTY: the proposer dir holds only detections.geojson with NO meta (GAP-9 Era-1 weak provenance), so no proposer pass is extractable; condition references the pool by string -> benign pool-unresolved WARN. The 1 verifier_pass is a real sidecar meta (verified-adversarial-text.meta.json, 140 items, 0 failures). The v2 replicate re-run is excluded -> _ignored_evals at the deferred 3b close-out sweep. SIDELINED from the Era-1 leaderboard (Session 106 decision): thin GAP-9 provenance + n=1 -> superseded by the planned clean Era-1 PV verifier run (Stage D, planning/era1-leaderboard-plan-2026-06-08.md). Data kept (archive-never-delete); excluded from the leaderboard cell set.",
       "proposer_pools": {},
       "verifier_passes": {
         "verified-adversarial-text": "text"

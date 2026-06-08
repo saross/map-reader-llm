@@ -1,7 +1,9 @@
 # Era-1 (Gold-Standard) definitive leaderboard — plan
 
-**Created**: 2026-06-08 (Session 106). **Status**: PLAN ONLY — execute next session.
-**Compute**: all local ($0 API), on zbook/sapphire (never amd-tower).
+**Created**: 2026-06-08 (Session 106). **Updated**: 2026-06-08 (D1 → sideline dodgy
+PV-512 + add Stage D, a gated clean-verifier run). **Status**: PLAN ONLY — execute
+next session. **Compute**: Stages A/B/C are local $0 (zbook/sapphire, never
+amd-tower); **Stage D is a gated API verifier run, budget ≤$50**.
 
 ## Why this exists
 
@@ -128,24 +130,52 @@ not a single 512↔384 pair.
    Era-3 (327, leakage-clean) is the stricter set. Recommend Era-2 for the matched
    baselines (they live in pv-diag-384), noting the Era-3 leakage caveat.
 
+## Stage D — clean Era-1 PV grid (gated API run; replaces the dodgy PV-512)
+
+A small, fresh verifier pass to give clean, well-provenanced proposer-verifier cells
+at Era-1 — building toward a **clean cross-era grid: tile size (256/384/512) ×
+{consensus, single-pass} × {text, image}**, all verified with the production
+verifier. Executes **after Stage B** (the consensus selection is "~tier 1", so we
+need the tiering first) and **feeds a re-tier of the board + Stage C**.
+
+- **Verifier config**: `verify_adversarial.md`, `gemini-3-flash`(-preview), minimal
+  thinking, T=0.0, **n=1** (matches Era-2 proposer-verifier-384).
+- **Cells to verify** (review the exact cut together once Stage B tiers are in):
+  - **Consensus** (proposer→consensus→verifier): the leading **text + image**
+    consensus cells, ~Tier 1 of the Stage-B board.
+  - **Single-pass** (proposer→verifier): the clean **K=3 phase2b** single-pass text +
+    image — **already on disk, NO re-run needed** (confirmed: phase2b is single-pass
+    K=3, passes under `outputs/retest/phase2b/track{1-image,2-text}/`). Verify the
+    passes (n=1 verifier each) for a K=3 replicate, matching the single-pass structure.
+- **Mechanics**: generate candidate crops locally ($0); run the verifier (Gemini,
+  $) over each selected output; score the verified outputs at 14-buf+MCC; mint clean
+  `verified-*` conditions. **Sideline** `proposer-verifier-512::verified-adversarial-
+  text` (flag superseded in its `_note`; keep the data — archive-never-delete).
+- **Budget**: up to **$50** (est ~$2–10; anchor: 55-map verifier ~$0.0007/candidate,
+  Era-1 cells ~1–2k candidates each). **API review gate applies** — present
+  model/mode/#calls/$ for approval before running.
+- **Feeds**: the re-tiered leaderboard (clean PV cells in place of the dodgy one) and
+  the Stage-C grid (PV row of the tile × consensus/single × text/image matrix).
+- **Note**: 256 px (pv-diag-256) is text-only (no image at 256), so the grid's
+  256-image cell will be absent — state it rather than impute.
+
 ## Decisions — RESOLVED (Shawn, 2026-06-08)
 
-- **D1 — proposer-verifier-512: INCLUDE, with a provenance caveat.** The 1 verified
-  condition (`verified-adversarial-text`) is 14-buf+MCC complete and is the *only*
-  Era-1 proposer-verifier data point, so excluding it would leave the PV architecture
-  unrepresented on the Era-1 board. **Caveat to carry**: its proposer provenance is
-  thin — GAP-9 Era-1 weak provenance (the proposer dir holds only `detections.geojson`
-  with no meta, so the proposer pass isn't faithfully reconstructable; `proposer_pools`
-  empty → `pool-unresolved`), and it is **n=1** (no replicate), so its board position
-  carries more noise than the K=3 single-pass and consensus cells. **Argument for
-  deferral (rejected)**: if the paper made a *strong* PV-at-Era-1 claim, the thin
-  provenance + n=1 would be a vulnerability — but as one labelled, caveated cell on a
-  characterisation board, inclusion is the more complete and honest choice. → include,
-  flag the caveat in the leaderboard notes.
+- **D1 — SIDELINE the dodgy proposer-verifier-512; run a clean Era-2-matched verifier
+  instead (new Stage 0, gated API).** The existing `proposer-verifier-512::verified-
+  adversarial-text` is thin (GAP-9 weak provenance, `pool-unresolved`, n=1) and mirrors
+  no Era-2 PV cell cleanly. Sideline it from the leaderboard (keep the data; flag
+  superseded in its `_note`) and instead generate clean PV cells via Stage 0 below.
+  Budget approved: **up to $50** (est ~$2–10). Verifier config = **adversarial only**
+  (`verify_adversarial.md`, gemini-3-flash, minimal thinking, T=0.0), the production
+  carry-forward. Verifier passes = **n=1** (confirmed: Era-2 proposer-verifier-384 ran
+  a single verifier pass per condition; the `-v2` files are replicate re-runs, not
+  n=3) — replicate later eras = n=1.
 - **D2 — full board: tier ALL 42 consensus conditions** (per cell×N), not just
-  cell-champions, alongside the 36 single-pass + 1 PV = **79 cells**, in the usual
-  tiers. Rationale (Shawn): keep it comprehensive and **fully compatible with later
-  eras** so the same board shape carries across 256/384/512.
+  cell-champions, alongside the 36 single-pass + the **clean Stage-0 PV cells** (the
+  dodgy PV-512 excluded) = the usual tiers. Rationale (Shawn): keep it comprehensive
+  and **fully compatible with later eras** so the same board shape carries across
+  256/384/512.
 - **D3 — Stage C: compare ALL matched configs** (single-pass + consensus) across the
   **full tile-size sweep 256 / 384 / 512** (pv-diag-256 was decomposed this session,
   giving the 256 anchor). Rationale (Shawn): 512 px has real advantages (speed, cost),
@@ -153,20 +183,27 @@ not a single 512↔384 pair.
   *alongside* the speed/cost cost so users can choose their tile size — so the
   characterisation should be as complete as the matched configs allow, not minimal.
 
-## Execution order (next session, all local $0)
+## Execution order (next session)
 
-1. Stage A — adapt + run `n1_baseline_leaderboard_tiering.py` at 512 px over the 36
-   single-pass conditions → register `era1-single-pass-baseline-matrix`.
-2. Stage B — run `consensus_vs_baseline_tiering.py` over the **full 79-cell board**
-   (36 single-pass + 42 consensus + 1 PV, caveated) → register `era1-leaderboard`.
-3. Stage C — enumerate the matched configs across **256 / 384 / 512**, extract the
-   per-config F1@20 m size-curve (MCC per-size, not differenced) → register
-   `tile-size-sweep` (F1-led per the flags above).
-4. Tier-1 tests for any new/adapted harness; regenerate manifest; drift-check;
+1. Stage A ($0) — adapt + run `n1_baseline_leaderboard_tiering.py` at 512 px over the
+   36 single-pass conditions → register `era1-single-pass-baseline-matrix`.
+2. Stage B ($0) — run `consensus_vs_baseline_tiering.py` over the board (36 single-pass
+   + 42 consensus; **dodgy PV-512 sidelined**) → register `era1-leaderboard`. Review
+   the tiers together to pick the ~Tier-1 text + image consensus cells for Stage D.
+3. Stage D (**gated API, ≤$50**) — clean Era-1 PV grid: adversarial verifier (n=1) over
+   the selected consensus champions (text+image) + the clean phase2b single-pass
+   (text+image). API review gate first. Mint clean `verified-*` conditions; sideline
+   PV-512. Re-tier the leaderboard to fold the clean PV cells in.
+4. Stage C ($0) — the tile-size sweep grid across **256 / 384 / 512** × {consensus,
+   single-pass} × {text, image} (now with the clean PV row); F1@20 m size-curve, MCC
+   per-size → register `tile-size-sweep`.
+5. Tier-1 tests for any new/adapted harness; regenerate manifest; drift-check;
    commit + push; sync machines.
 
 ## What this does NOT need
 
-- No re-scoring / no API spend (data is 100% complete — including pv-diag-256, the
-  256 px anchor, decomposed 2026-06-08).
+- No re-scoring of existing data, and **no new proposer/detection runs** (all proposer
+  data is complete — including pv-diag-256, the 256 px anchor, decomposed 2026-06-08,
+  and the clean K=3 phase2b single-pass passes already on disk). The only API spend is
+  the Stage-D verifier pass (≤$50, gated).
 - No new detection runs.
