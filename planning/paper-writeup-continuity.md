@@ -20,7 +20,12 @@ The Era-1 plan's D1–D3 are RESOLVED (Shawn, 2026-06-08): **D1** SIDELINE the d
 
 - **✅ DONE (S106) — TODO #5: pv-diag-256 decomposed** (the 256px H11 diagnostic; 6 consensus geojsons re-scored at 14-buf+MCC → text-baseline single-pass + text-consensus-5of5 champion; non-headline → `_ignored_evals`). **Manifest now 28/28, ALL VALID** (275 conditions). 256px is the small-tile anchor for the Stage-C sweep (F1@20m orders 256 < 512 < 384: 0.46/0.69/0.79). Commit `f31f6dd8`.
 - **✅ DONE (S106) — TODO #6: cross-run provenance.** Added `source_run=gold-standard-v2` to verifier-t-pilot's 3 conditions (proposer genuinely cross-run from gs-v2). The remaining 30 `pool-unresolved` are **structural + documented, accepted as the verifier's honest by-design signal** (NOT loose ends): PV-384/512 own degenerate/weak-provenance stubs; pv-diag-384 baseline label-format; phase3c GAP-6 multi-pool diversity groupings; pv-diag-256 passes-not-materialised. `source_run` would misrepresent these (their passes are own-run or multi-pool, not foreign).
-- **CRS-contract Stages 1–2** (shared `lib_crs`, retire the ~89-script hard-coded EPSG:32635, derive CRS from data) — deferred to the generalised-pipeline build, scoped in `planning/generalised-pipeline-roadmap.md` WS1. (Only remaining carried item.)
+- **CRS-contract Stages 1–2** (shared `lib_crs`, retire the ~89-script hard-coded EPSG:32635, derive CRS from data) — deferred to the generalised-pipeline build, scoped in `planning/generalised-pipeline-roadmap.md` WS1.
+
+**Future actions — verifier robustness (AFTER the Era-1 results/documentation uplift; Shawn, S106):**
+
+- **Verifier N>1 / determinism check.** We have only ever run the verifier at **N=1**, on the assumption T=0.0 is deterministic — but T=0.0 is **not** fully deterministic (established earlier: the PV `-v2` replicate accepted-count drift at T=0.0). So run a **multi-verifier (N=5)** pass on a few GS PV configs and compare **"average of 5 runs"** vs a **5-run consensus verifier**. Expectation: little variation — but check it rather than assume. (Bears on every N=1 verified cell, incl. the Stage-D grid.)
+- **Higher-T consensus verifier.** Higher verifier temperature was worse at **N=1**, but might *help* as a **consensus verifier** — mirroring the proposer-side diversity dividend (diverse high-T passes pruned by a vote threshold). Try higher-T **consensus** verifier runs on a few GS PV configs and compare to the T=0.0 carry-forward.
 
 **✅ DONE this session (S106), beyond the phase3 decomposition:**
 
