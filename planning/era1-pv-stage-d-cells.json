@@ -1,0 +1,76 @@
+{
+  "cells": [
+    {
+      "name": "256-consensus-text-5of5",
+      "kind": "consensus",
+      "proposers": [
+        "outputs/h11/pv-diag-256/consensus/text-5of5.geojson"
+      ],
+      "exists": true,
+      "n": 1165
+    },
+    {
+      "name": "512-consensus-text-high",
+      "kind": "consensus",
+      "proposers": [
+        "outputs/retest/phase3a-high/track2-text/T1.0/consensus/consensus_t23.geojson"
+      ],
+      "exists": true,
+      "n": 442
+    },
+    {
+      "name": "512-consensus-image",
+      "kind": "consensus",
+      "proposers": [
+        "outputs/retest/phase3a/track1-image/T0.7/consensus/consensus_t18.geojson"
+      ],
+      "exists": true,
+      "n": 535
+    },
+    {
+      "name": "512-single-text-t0.0",
+      "kind": "single-pass",
+      "proposers": [
+        "outputs/retest/phase2b/track2-text/T0.0/run_1/detections_T0.0_run01.geojson",
+        "outputs/retest/phase2b/track2-text/T0.0/run_2/detections_T0.0_run02.geojson",
+        "outputs/retest/phase2b/track2-text/T0.0/run_3/detections_T0.0_run03.geojson"
+      ],
+      "exists": true,
+      "n": 2654,
+      "per_pass": [
+        884,
+        882,
+        888
+      ]
+    },
+    {
+      "name": "512-single-image-t0.0",
+      "kind": "single-pass",
+      "proposers": [
+        "outputs/retest/phase2b/track1-image/T0.0/run_1/detections_T0.0_run01.geojson",
+        "outputs/retest/phase2b/track1-image/T0.0/run_2/detections_T0.0_run02.geojson",
+        "outputs/retest/phase2b/track1-image/T0.0/run_3/detections_T0.0_run03.geojson"
+      ],
+      "exists": true,
+      "n": 2317,
+      "per_pass": [
+        777,
+        770,
+        770
+      ]
+    }
+  ],
+  "total_candidates": 7113,
+  "verifier_config": "prompts/configs/verify_adversarial-text.json",
+  "mode": "realtime",
+  "service_tier": "flex",
+  "iterations": 1,
+  "padding": 75,
+  "prob_t_sweep": [
+    0.1,
+    0.15,
+    0.2,
+    0.3,
+    0.5
+  ]
+}
