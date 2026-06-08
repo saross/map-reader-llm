@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-06-08T12:25:56Z",
+  "generated_at": "2026-06-08T12:27:08Z",
   "generator_version": "0.4.0",
   "analyses": [
     {
@@ -50,7 +50,7 @@
           "results/run-analyses.json",
           "results/paper-eval/n1/384px-14buf-mcc"
         ],
-        "last_extracted_at": "2026-06-08T12:25:56Z",
+        "last_extracted_at": "2026-06-08T12:27:08Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -105,7 +105,7 @@
           "results/run-analyses.json",
           "results/rescore-2026-06-05/pv-diag-384/consensus-sweep"
         ],
-        "last_extracted_at": "2026-06-08T12:25:56Z",
+        "last_extracted_at": "2026-06-08T12:27:08Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -161,7 +161,7 @@
           "results/run-analyses.json",
           "results/diversity-dividend-384"
         ],
-        "last_extracted_at": "2026-06-08T12:25:56Z",
+        "last_extracted_at": "2026-06-08T12:27:08Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -205,7 +205,7 @@
           "results/run-analyses.json",
           "results/rescore-2026-06-07/phase3"
         ],
-        "last_extracted_at": "2026-06-08T12:25:56Z",
+        "last_extracted_at": "2026-06-08T12:27:08Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -240,7 +240,7 @@
           "results/run-analyses.json",
           "results/rescore-2026-06-07/phase3"
         ],
-        "last_extracted_at": "2026-06-08T12:25:56Z",
+        "last_extracted_at": "2026-06-08T12:27:08Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -272,7 +272,7 @@
           "results/run-analyses.json",
           "results/rescore-2026-06-07/phase3"
         ],
-        "last_extracted_at": "2026-06-08T12:25:56Z",
+        "last_extracted_at": "2026-06-08T12:27:08Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -307,7 +307,7 @@
           "results/run-analyses.json",
           "results/rescore-2026-06-07/phase3c"
         ],
-        "last_extracted_at": "2026-06-08T12:25:56Z",
+        "last_extracted_at": "2026-06-08T12:27:08Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -394,7 +394,7 @@
           "results/run-analyses.json",
           "results/paper-eval/n1/512px-14buf-mcc"
         ],
-        "last_extracted_at": "2026-06-08T12:25:56Z",
+        "last_extracted_at": "2026-06-08T12:27:08Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -498,14 +498,9 @@
       "deviations": [],
       "predicted_outcome": "Definitive Era-1 board (H1-H9 cross-cut). H3: consensus voting over K proposer passes beats single-pass on localisation F1; the diversity dividend predicts HIGH-thinking (more diverse) pools recover or exceed minimal-thinking under consensus. H9: cross-pass diversity beats identical passes. Expected shape: HIGH-thinking text consensus tops F1 (~0.77); consensus >> single-pass; image trails on F1 but leads MCC.",
       "tie_set": [
-        "retest-phase3a-high::text-high-t1.0-n30-23of30",
-        "retest-phase3a-high::text-high-t0.3-n30-23of30",
-        "retest-phase3a-high::text-high-t0.7-n30-22of30",
-        "retest-phase3a-high::text-high-t1.0-n10-8of10",
-        "retest-phase3a-replication::text-high-t0.7-n30-21of30",
-        "retest-phase3a-high::text-high-t0.3-n10-8of10"
+        "retest-phase3a-high::verified-adv-text-high-t1.0-n30-23of30"
       ],
-      "outcome": "The DEFINITIVE Era-1 (Gold-Standard 4-map, 512px, 340-tile, curator GT) leaderboard: all 36 single-pass + all 42 consensus cells in one tiered board (dodgy PV-512 excluded, D1), round-robin tile-swap micro-F1 permutation (10k perms, seed 42, two-sided; BH-FDR q=0.05; 2103/3003 pairs significant -> 9 tiers) at 20m. Per the preregistered H3 plan the best (N, threshold) operating point vs the GS test tiles IS the characterisation deliverable (not in-sample). FINDINGS, all matching priors: (1) BEST CONFIG -- Tier 1 (tie_set) is a 6-member statistical tie of HIGH-thinking text consensus at N>=10 (F1 0.759-0.775), led by text-high-t1.0-n30-23of30 (F1 0.775, MCC 0.642); the clean HIGH-vs-MINIMAL replication champion text-high-t0.7-n30-21of30 (0.770) sits in Tier 1 too. (2) CONSENSUS DOMINATES SINGLE-PASS -- every one of the 42 consensus cells (Tiers 1-5, F1 0.639-0.775) outranks every single-pass cell; the best single pass, canonical-last (0.631), is rank 43. (3) DIVERSITY DIVIDEND, TIERED -- HIGH-thinking text consensus (~0.77, Tiers 1-2) >> minimal text consensus (~0.69-0.70, Tiers 3-4) >> text single-pass (~0.60, Tier 6). (4) F1-vs-MCC DIVERGENCE -- image consensus pools localise lower on F1 but discriminate far better at tile level: the image-h9 diversity pools sit at F1 ~0.664-0.671 / MCC ~0.65-0.66, well above text consensus at matched F1 (text-t0.3-n30 0.692 F1 / 0.181 MCC); text-HIGH wins BOTH (F1 0.77, MCC 0.55-0.64). (5) H9 DIVERSITY does not separate from the identical-pass baseline-A within its tier (consistent with the prior H9 rejection). All 78 cells reproduce their published F1@20m to <=0.0001. gemini-3-flash; MINIMAL thinking except phase3a-high/-replication (HIGH). The clean Era-1 proposer-verifier grid (gated Stage D) will be folded in by re-tiering this board. Artefacts: results/era1-leaderboard/tiering_20m.{json,md}; script scripts/era1_leaderboard_tiering.py.",
+      "outcome": "The DEFINITIVE Era-1 (Gold-Standard 4-map, 512px, 340-tile, curator GT) leaderboard, now WITH the clean Stage-D proposer-verifier cells folded in: 36 single-pass + 42 consensus + 4 verified-PV = 82 cells (dodgy PV-512 excluded, D1). Round-robin tile-swap micro-F1 permutation (10k perms, seed 42, two-sided; BH-FDR q=0.05; 2351/3321 pairs significant -> 10 tiers) at 20m. HEADLINE CHANGE vs the pre-PV board: Tier 1 is now a SOLE leader \u2014 verified-adv-text-high-t1.0-n30-23of30 (HIGH-thinking text consensus + adversarial verifier, F1 0.792, MCC 0.676) \u2014 statistically clear of everything below. PROPOSER-VERIFIER IS THE SINGLE BEST ERA-1 ARCHITECTURE: the verifier lifts the consensus champion (0.775 -> 0.792) just enough to break the old 6-way HIGH-consensus tie (now Tier 2, F1 0.747-0.775). CHEAP PV RIVALS EXPENSIVE CONSENSUS: verified-adv-text-t0.0 (a MINIMAL single-pass + verifier, 2 calls/tile) reaches Tier 2 (F1 0.770) \u2014 matching the 30-call HIGH-thinking consensus on F1 and BEATING it on MCC (0.789 vs ~0.55-0.64) \u2014 echoing Obs 174/175. PV LIFTS MCC across the board (verified-adv-image-t0.0 MCC 0.889, board-best, though mid F1 0.674; verified-adv-image-t0.7-n30 0.728/0.785). Consensus still dominates bare single-pass (every consensus cell > every bare single-pass). The 256 verified cell (F1 0.856) is NOT in this board \u2014 1032-tile scope \u2014 it lives in the tile-size-sweep consensus+PV row (see Obs 352). gemini-3-flash throughout; verifier = adversarial text-only, T=0.0, minimal, n=1, best-F1@20m prob_t per cell. Artefacts: results/era1-leaderboard/tiering_20m.{json,md}; outputs/era1-pv-stage-d/; script scripts/era1_leaderboard_tiering.py + run_era1_pv_stage_d.py.",
       "paper_section": "Results",
       "output_path": "results/era1-leaderboard",
       "working_notes_obs": [],
@@ -515,7 +510,7 @@
           "results/run-analyses.json",
           "results/era1-leaderboard"
         ],
-        "last_extracted_at": "2026-06-08T12:25:56Z",
+        "last_extracted_at": "2026-06-08T12:27:08Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -575,7 +570,7 @@
           "results/run-analyses.json",
           "results/tile-size-sweep"
         ],
-        "last_extracted_at": "2026-06-08T12:25:56Z",
+        "last_extracted_at": "2026-06-08T12:27:08Z",
         "extractor_version": "0.4.0"
       }
     }
