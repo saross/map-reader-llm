@@ -256,11 +256,11 @@ def consensus_to_gdf(
     points = [shape(f["geometry"]) for f in features]
     props_list = [f.get("properties", {}) for f in features]
     # CRS contract: apply_threshold emits WGS84 (EPSG:4326) since commit
-    # 8c8e101f. Declare that honestly and reproject to the analysis CRS
+    # 8c8e101fc. Declare that honestly and reproject to the analysis CRS
     # (TARGET_CRS = EPSG:32635) so the metric intersects-join below lands on the
     # UTM tile bounds (gdf_bounds is reprojected to TARGET_CRS in main()). The
     # pre-2026-06-08 code labelled these 4326 points as TARGET_CRS WITHOUT
-    # reprojecting; after 8c8e101f that placed every point ~5e5 m off the grid,
+    # reprojecting; after 8c8e101fc that placed every point ~5e5 m off the grid,
     # so the join matched no tile, source_tile became "unknown" for all
     # detections, and per-map F1 collapsed to 0 on any re-run. See
     # docs/methodology/spatial-reference.md (§ consensus voting path) and
@@ -284,6 +284,11 @@ def consensus_to_gdf(
     gdf_joined["source_tile"] = gdf_joined[
         "tile_name"
     ].fillna("unknown")
+    # Defensive: apply_threshold always emits 'subtype', but if a future producer
+    # omitted it the final column selection would KeyError. Default it (mirrors
+    # gdf_to_features) so the contract is robust to a missing property.
+    if "subtype" not in gdf_joined.columns:
+        gdf_joined["subtype"] = "mound"
 
     return gdf_joined[
         ["source_tile", "subtype", "geometry"]
