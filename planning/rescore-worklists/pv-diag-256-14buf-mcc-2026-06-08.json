@@ -1,0 +1,47 @@
+{
+  "_comment": "pv-diag-256 (256px H11 diagnostic, px256-1032 scope) consensus re-score at 14-buffer + MCC vs the 256 bounds + curator GT. text-baseline = single-pass; text-{1..5}of5 = consensus vote sweep. Decomposes the last undecomposed run (TODO #5) -> 28/28. Generated Session 106.",
+  "entries": [
+    {
+      "label": "pv-diag-256__text-baseline",
+      "detections": "outputs/h11/pv-diag-256/consensus/text-baseline.geojson",
+      "bounds": "inputs/vectors/bounds/256/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-08/pv-diag-256/text-baseline"
+    },
+    {
+      "label": "pv-diag-256__text-1of5",
+      "detections": "outputs/h11/pv-diag-256/consensus/text-1of5.geojson",
+      "bounds": "inputs/vectors/bounds/256/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-08/pv-diag-256/text-1of5"
+    },
+    {
+      "label": "pv-diag-256__text-2of5",
+      "detections": "outputs/h11/pv-diag-256/consensus/text-2of5.geojson",
+      "bounds": "inputs/vectors/bounds/256/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-08/pv-diag-256/text-2of5"
+    },
+    {
+      "label": "pv-diag-256__text-3of5",
+      "detections": "outputs/h11/pv-diag-256/consensus/text-3of5.geojson",
+      "bounds": "inputs/vectors/bounds/256/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-08/pv-diag-256/text-3of5"
+    },
+    {
+      "label": "pv-diag-256__text-4of5",
+      "detections": "outputs/h11/pv-diag-256/consensus/text-4of5.geojson",
+      "bounds": "inputs/vectors/bounds/256/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-08/pv-diag-256/text-4of5"
+    },
+    {
+      "label": "pv-diag-256__text-5of5",
+      "detections": "outputs/h11/pv-diag-256/consensus/text-5of5.geojson",
+      "bounds": "inputs/vectors/bounds/256/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/rescore-2026-06-08/pv-diag-256/text-5of5"
+    }
+  ]
+}
