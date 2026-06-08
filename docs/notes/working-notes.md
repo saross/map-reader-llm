@@ -18624,3 +18624,56 @@ winner (oracle T03-k3 by F1; image by MCC). Second, a clean control property:
 canonical phantom has a ring < 50 m, so the extended GT *is* the student GT there) —
 confirming the only thing that differs between the two tracks is the ground truth,
 which is the experimental-control story the two-reference design buys.
+
+## Observation 350: A `fix(crs)` commit silently broke a downstream consumer a month later — the latent-bug-under-stable-outputs reproducibility hazard (Session 106, 2026-06-08)
+
+*Source anchors: `reports/diversity-crs-mislabel-investigation-2026-06-08.md`
+(the adversarial investigation + git archaeology, verified 2026-06-08);
+`docs/methodology/spatial-reference.md` § "The consensus voting path — an
+in-memory CRS contract" (the durable contract + changelog, 2026-06-08);
+the breaking commit `8c8e101fc` "fix(crs): reproject consensus GeoJSON to
+EPSG:4326 at write time" (2026-04-11); the fix in `scripts/analyse_diversity.py`
+`consensus_to_gdf` + the guard `tests/test_analyse_diversity_crs.py` (landed via
+PR #10, squash-merged 2026-06-08); `planning/generalised-pipeline-roadmap.md`
+WS1 (Stages 1–2 of the CRS contract).*
+
+A correct, well-intentioned commit (`8c8e101fc`, "fix(crs): reproject consensus
+GeoJSON to EPSG:4326") changed `apply_threshold`'s **output CRS** from UTM
+(EPSG:32635) to WGS84 (EPSG:4326). One in-memory consumer,
+`analyse_diversity.consensus_to_gdf`, had been written when the output was UTM
+and **labelled it 32635 without reprojecting**. After the change that label was a
+lie: every consensus point landed ~5×10⁵ m off the UTM tile grid → the
+intersects-join matched no tile → `source_tile = "unknown"` for all detections →
+**F1 = 0 on any live re-run**. The break sat undetected for ~2 months.
+
+**Why it stayed hidden — the hazard worth internalising.** The Phase 3c diversity
+CSVs were generated *before* the break (2026-03-26) and were never regenerated, so
+the published numbers were correct and nothing downstream complained. The bug was
+invisible precisely because *the outputs were stable and the script was not
+re-run.* It surfaced only when this session's manifest work re-derived the
+diversity pools through a *different* path (`evaluate_detections`, which respects
+declared CRS) — and an adversarial agent then tried to reproduce the published
+numbers through the *original* path and hit F1=0. **A result that is published but
+not periodically reproduced is a latent-bug reservoir: the absence of a complaint
+is not evidence of correctness when nothing exercises the code.**
+
+**Two coupled root causes, both about contracts.** (1) CRS was tracked
+*out-of-band* — geometries flowed as bare dicts/tuples carrying no CRS metadata,
+so a producer changing its output CRS could not be caught by the consumer (the
+fix: carry CRS *with* the geometry; reproject explicitly; never relabel). (2) The
+project's verifier tests are coupled to *mutable repo data* and themselves broke
+twice this session as the data evolved (a re-scored run, an archived eval) — the
+same "snapshot assumed stable" failure mode one layer up. Both are recorded as
+durable guards: a boundary-pinning regression test for the CRS contract, and a
+deferred fixture-redesign note for the data-coupled tests
+(`planning/deferred-extensions.md`).
+
+**The forward lesson for the generalised pipeline.** The same `fix(crs)` that
+broke this *also* hard-codes EPSG:32635 across ~89 scripts and conflates "storage
+CRS" (4326, for files) with "analysis CRS" (32635, for metric work). A
+bring-your-own-maps pipeline receiving arbitrary-region data cannot survive
+either. So the durable fix is not the one-line reproject but an explicit,
+parametrised CRS contract (geometry carries CRS; one *derived* analysis CRS;
+storage egress separated from analysis; declared-not-guessed; tested at every
+boundary) — captured as WS1 of `generalised-pipeline-roadmap.md`. The narrow bug
+was the cheap symptom; the contract is the load-bearing fix.
