@@ -29,14 +29,20 @@ CRS
 ---
 ``apply_threshold`` emits centroids in **EPSG:4326** (lon/lat) — verified
 empirically: a representative centroid is ``[25.766402, 42.489151]`` (Bulgaria),
-byte-identical in form to the on-disk phase3a consensus GeoJSONs. (The
-``analyse_diversity`` code path carries a harmless, internally-consistent CRS
-*mislabel* — it tags the same lon/lat geometries as EPSG:32635 for an
-intersection-only spatial join — but the stored coordinates are always WGS84.)
-We therefore write the consensus FeatureCollection **as-is**, exactly as
-``merge_passes`` does, so the 14-buffer scorer (which reads a crs-less GeoJSON
-as WGS84 per RFC 7946 and reprojects to the evaluation CRS) handles it
-identically to the phase3a consensus.
+byte-identical in form to the on-disk phase3a consensus GeoJSONs. We therefore
+write the consensus FeatureCollection **as-is**, exactly as ``merge_passes``
+does, so the 14-buffer scorer (which reads a crs-less GeoJSON as WGS84 per
+RFC 7946 and reprojects to the evaluation CRS) handles it identically to the
+phase3a consensus.
+
+We **deliberately do NOT route through** ``analyse_diversity.consensus_to_gdf``:
+that function labels the WGS84 ``apply_threshold`` output as EPSG:32635 without
+reprojecting, so since the 2026-04-11 change that made ``apply_threshold`` emit
+4326 (commit ``8c8e101f``) every consensus point falls outside the UTM bounds →
+``source_tile = "unknown"`` → **F1 = 0 on a live re-run** (a latent bug, NOT
+cosmetic — see PR #10 / ``reports/diversity-crs-mislabel-investigation-2026-06-08.md``).
+The published Phase 3c CSVs predate the break and are unaffected; this
+materialiser bypasses the bug entirely.
 
 Output layout (consumed by the dir-mode replicate-mean re-score)::
 
