@@ -14,11 +14,13 @@ project state.
 
 **IMMEDIATE next work (S108) — the definitive Era-1 (Gold-Standard) leaderboard.** Plan written this session: **`planning/era1-leaderboard-plan-2026-06-08.md`**. Motivation (user steer): GS 4-map (characterisation, curator GT) and the 55-map run (generalisation, weaker student GT) are **different classes**; the GS thread must be complete on its own terms. **Era-1 is VERIFIED 14-buf+MCC complete** (79/79 conditions across 10 runs, 0 gaps — the phase2/phase3 re-scores already closed the data; **no re-scoring needed**). The work is 3 secondary analyses, **all local $0**: (A) the missing Era-1 single-pass baseline tiering (the n1 analogue at 512px, over the 36 phase2 conditions; `n1_baseline_leaderboard_tiering.py`); (B) the **definitive Era-1 leaderboard** (single-pass + consensus champions + PV, via `consensus_vs_baseline_tiering.py`); (C) the **Era-1↔384px tile-size comparison** on matched configs. **Key flags in the plan**: F1@20m is cross-era comparable but **tile-MCC is NOT** (tile counts differ 340/487/327 → different TN base) → headline tile-size effect on F1; tile-size is confounded with tile-set; D1–D3 open decisions (PV inclusion, cell granularity, Stage-C scope).
 
-**Also still open (smaller):**
+The Era-1 plan's D1–D3 are RESOLVED (Shawn, 2026-06-08): **D1** include PV-512 with a thin-provenance/n=1 caveat; **D2** full 79-cell board (all 42 consensus, not just champions); **D3** full 256/384/512 tile-size sweep on all matched configs (pipeline tile-size guidance). See the plan doc.
 
-- **TODO #5 — pv-diag-256**: the last undecomposed run (no-MCC archived `threshold_sweep`/`summary` shape, 256 scope) → MCC re-score or one-off schema relaxation; would take the manifest to **28/28**.
-- **TODO #6 — cross-run provenance**: the 31 benign `pool-unresolved` WARNs (pv-384/512, verifier-t-pilot, phase3c diversity-grouping refs) — annotate with a GAP-6 `source_run` or accept as the honest signal.
-- **CRS-contract Stages 1–2** (shared `lib_crs`, retire the ~89-script hard-coded EPSG:32635, derive CRS from data) — deferred to the generalised-pipeline build, scoped in `planning/generalised-pipeline-roadmap.md` WS1.
+**Also still open:**
+
+- **✅ DONE (S106) — TODO #5: pv-diag-256 decomposed** (the 256px H11 diagnostic; 6 consensus geojsons re-scored at 14-buf+MCC → text-baseline single-pass + text-consensus-5of5 champion; non-headline → `_ignored_evals`). **Manifest now 28/28, ALL VALID** (275 conditions). 256px is the small-tile anchor for the Stage-C sweep (F1@20m orders 256 < 512 < 384: 0.46/0.69/0.79). Commit `f31f6dd8`.
+- **✅ DONE (S106) — TODO #6: cross-run provenance.** Added `source_run=gold-standard-v2` to verifier-t-pilot's 3 conditions (proposer genuinely cross-run from gs-v2). The remaining 30 `pool-unresolved` are **structural + documented, accepted as the verifier's honest by-design signal** (NOT loose ends): PV-384/512 own degenerate/weak-provenance stubs; pv-diag-384 baseline label-format; phase3c GAP-6 multi-pool diversity groupings; pv-diag-256 passes-not-materialised. `source_run` would misrepresent these (their passes are own-run or multi-pool, not foreign).
+- **CRS-contract Stages 1–2** (shared `lib_crs`, retire the ~89-script hard-coded EPSG:32635, derive CRS from data) — deferred to the generalised-pipeline build, scoped in `planning/generalised-pipeline-roadmap.md` WS1. (Only remaining carried item.)
 
 **✅ DONE this session (S106), beyond the phase3 decomposition:**
 

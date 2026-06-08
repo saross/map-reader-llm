@@ -69,11 +69,13 @@ statement, not a max over separate sweeps.
 - **Harness**: `scripts/consensus_vs_baseline_tiering.py` (reuses the n1 tiering
   verbatim; consensus cells contribute integer per-tile TP/FP/FN from their single
   aggregated set, single-pass cells keep pass-averaged per-tile counts).
-- **Cell set** (to finalise — recommended): the 36 single-pass conditions + the
-  **consensus cell-champions** (best (N, threshold) operating point per phase3 cell:
-  6 phase3a + 3 phase3a-high + 2 replication + the phase3c diversity champions) +
-  the 1 PV-verified condition. The full per-N sweep stays in the calibration
-  analyses; the leaderboard shows one champion per cell for legibility.
+- **Cell set (D2 — FULL board)**: all **79 Era-1 conditions** — 36 single-pass +
+  **all 42 consensus conditions (per cell×N, not just cell-champions)** + the 1
+  PV-verified condition. Tier them in the usual way (greedy-clique over the
+  permutation+BH-FDR significance graph). Keeping all 42 (rather than collapsing to
+  cell-champions) keeps the board shape comprehensive and **compatible with the later
+  256/384 boards**. Expect a many-tier board; the calibration analyses remain the
+  per-config sweep detail.
 - **Output**: `results/era1-leaderboard/tiering_20m.{json,md}`; register as analysis
   `era1-leaderboard` (H1–H9 cross-cut) in `run-analyses.json`. Headline at 20 m;
   report MCC alongside (the F1-vs-MCC divergence is expected to recur).
@@ -81,20 +83,34 @@ statement, not a max over separate sweeps.
   (~0.77) should top F1; minimal single-pass and image trail; the diversity dividend
   is the story. Confirm with tiering.
 
-## Stage C — Era-1 (512 px) ↔ 384 px tile-size comparison
+## Stage C — tile-size comparison across the FULL sweep (256 / 384 / 512)
 
-Characterise the effect of reducing tile size, on **matched configurations**.
+Characterise the effect of tile size on **all matched configurations** (D3). We now
+have all three tile sizes scored at 14-buf+MCC: **256 px** (pv-diag-256, decomposed
+this session — text single-pass + 5-pass consensus sweep), **384 px** (Era 2/3:
+pv-diag-384 + n1 board + library), **512 px** (Era 1). So this is a 3-point sweep,
+not a single 512↔384 pair.
 
-- **Matched single-pass pairs (clean, 4)**: phase2b {text,image} × T{0.0,0.7} (512 px)
-  ↔ pv-diag-384 `baseline-flash-{text,image}-minimal-t-{0-0,0-7}` (384 px).
-- **Matched consensus pairs (to enumerate)**: Flash text/image consensus exists at
-  BOTH eras — phase3a (512, minimal) ↔ pv-diag-384 flash-minimal-text/image (384);
-  phase3a-high (512, HIGH text) ↔ pv-diag-384 flash-high-text (384). Enumerate the
-  model×modality×thinking×temp×(N,threshold)-matched consensus pairs to widen the
-  comparison beyond the 4 single-pass pairs.
-- **Method**: extract F1@20 m + MCC@20 m for each matched pair (512 vs 384), compute
-  Δ, and (optionally) a paired permutation if the per-tile sets support it. Register
-  as `era1-vs-384-tile-size` in `run-analyses.json`.
+- **Matched single-pass**: phase2b {text,image} × T{0.0,0.7} (512) ↔ pv-diag-384
+  `baseline-flash-{text,image}-minimal-t-{0-0,0-7}` (384) ↔ pv-diag-256 `text-baseline`
+  (256, text-only — image was not run at 256). Enumerate exactly what matches at all
+  three sizes vs only two.
+- **Matched consensus**: Flash text/image consensus exists at multiple sizes —
+  phase3a (512, minimal) ↔ pv-diag-384 flash-minimal-text/image (384) ↔ pv-diag-256
+  `text-consensus-5of5` (256); phase3a-high (512, HIGH text) ↔ pv-diag-384
+  flash-high-text (384). Enumerate the model×modality×thinking×temp×(N,threshold)
+  matched sets across sizes.
+- **Method**: extract F1@20 m (the cross-era-comparable metric) for every matched
+  config at each available tile size; tabulate the size→F1 curve per config; note the
+  apparent **non-monotonicity** (the headline single-pass/consensus numbers so far
+  order 256 < 512 < 384 at 20 m — 384 looks like a sweet spot, not "smaller is always
+  better"). Report MCC per-size (not differenced — tile-count base differs). Register
+  as `tile-size-sweep` in `run-analyses.json`.
+- **Pipeline tie-in (D3 rationale)**: this is a direct input to the "give-us-your-map"
+  pipeline (`planning/generalised-pipeline-roadmap.md`) — it lets a user trade tile
+  size against speed/cost. Present the accuracy-vs-tile-size curve next to the
+  speed/cost cost so users can choose. Consider adding a WS to the roadmap for
+  tile-size guidance, seeded by this analysis.
 
 ### ⚠ Methodological flags (decide before running Stage C)
 
@@ -112,28 +128,45 @@ Characterise the effect of reducing tile size, on **matched configurations**.
    Era-3 (327, leakage-clean) is the stricter set. Recommend Era-2 for the matched
    baselines (they live in pv-diag-384), noting the Era-3 leakage caveat.
 
-## Decisions for the user (resolve at execution)
+## Decisions — RESOLVED (Shawn, 2026-06-08)
 
-- **D1 — proposer-verifier-512 inclusion**: include the 1 verified condition in the
-  Era-1 leaderboard *with* a thin-provenance caveat (proposer pool is a GAP-9 stub),
-  or defer it? (It's 14-buf+MCC complete; the question is provenance, not data.)
-- **D2 — leaderboard cell granularity**: consensus *cell-champions* (recommended) vs
-  all 42 consensus conditions (per cell×N) on the board.
-- **D3 — Stage C scope**: single-pass-only (4 clean pairs) vs single-pass + matched
-  consensus pairs (wider, recommended).
+- **D1 — proposer-verifier-512: INCLUDE, with a provenance caveat.** The 1 verified
+  condition (`verified-adversarial-text`) is 14-buf+MCC complete and is the *only*
+  Era-1 proposer-verifier data point, so excluding it would leave the PV architecture
+  unrepresented on the Era-1 board. **Caveat to carry**: its proposer provenance is
+  thin — GAP-9 Era-1 weak provenance (the proposer dir holds only `detections.geojson`
+  with no meta, so the proposer pass isn't faithfully reconstructable; `proposer_pools`
+  empty → `pool-unresolved`), and it is **n=1** (no replicate), so its board position
+  carries more noise than the K=3 single-pass and consensus cells. **Argument for
+  deferral (rejected)**: if the paper made a *strong* PV-at-Era-1 claim, the thin
+  provenance + n=1 would be a vulnerability — but as one labelled, caveated cell on a
+  characterisation board, inclusion is the more complete and honest choice. → include,
+  flag the caveat in the leaderboard notes.
+- **D2 — full board: tier ALL 42 consensus conditions** (per cell×N), not just
+  cell-champions, alongside the 36 single-pass + 1 PV = **79 cells**, in the usual
+  tiers. Rationale (Shawn): keep it comprehensive and **fully compatible with later
+  eras** so the same board shape carries across 256/384/512.
+- **D3 — Stage C: compare ALL matched configs** (single-pass + consensus) across the
+  **full tile-size sweep 256 / 384 / 512** (pv-diag-256 was decomposed this session,
+  giving the 256 anchor). Rationale (Shawn): 512 px has real advantages (speed, cost),
+  and the "give-us-your-map" pipeline must present the smaller-tile accuracy gains
+  *alongside* the speed/cost cost so users can choose their tile size — so the
+  characterisation should be as complete as the matched configs allow, not minimal.
 
 ## Execution order (next session, all local $0)
 
-1. Stage A — adapt + run `n1_baseline_leaderboard_tiering.py` at 512 px → register
-   `era1-single-pass-baseline-matrix`.
-2. Stage B — run `consensus_vs_baseline_tiering.py` over the combined cell set →
-   register `era1-leaderboard`.
-3. Stage C — enumerate matched pairs, extract F1/MCC deltas → register
-   `era1-vs-384-tile-size` (F1-led per the flags above).
+1. Stage A — adapt + run `n1_baseline_leaderboard_tiering.py` at 512 px over the 36
+   single-pass conditions → register `era1-single-pass-baseline-matrix`.
+2. Stage B — run `consensus_vs_baseline_tiering.py` over the **full 79-cell board**
+   (36 single-pass + 42 consensus + 1 PV, caveated) → register `era1-leaderboard`.
+3. Stage C — enumerate the matched configs across **256 / 384 / 512**, extract the
+   per-config F1@20 m size-curve (MCC per-size, not differenced) → register
+   `tile-size-sweep` (F1-led per the flags above).
 4. Tier-1 tests for any new/adapted harness; regenerate manifest; drift-check;
    commit + push; sync machines.
 
 ## What this does NOT need
 
-- No re-scoring / no API spend (data is 100% complete).
+- No re-scoring / no API spend (data is 100% complete — including pv-diag-256, the
+  256 px anchor, decomposed 2026-06-08).
 - No new detection runs.
