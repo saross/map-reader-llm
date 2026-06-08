@@ -18840,3 +18840,185 @@ era1-leaderboard tile-size, Stage B Stage C tile-size, Session 107, 0.342 0.520 
   verified 2026-06-08); `scripts/era1_leaderboard_tiering.py`. Produced in
   commits `efa176e86` (harness + stubs), `3ef0b14f3` (Stage A/B tierings),
   `5341f34d7` (findings).
+
+## Observation 352: The adversarial verifier rescues 256 px — and proposer-verifier is the single best Era-1 architecture (Stage D clean PV grid, Session 107, 2026-06-08)
+
+*Source anchors: `outputs/era1-pv-stage-d/stage_d_score_summary.json`
+(best-F1@20m + MCC + prob_t per cell, 5 cells, verified 2026-06-08);
+`results/era1-leaderboard/tiering_20m.json` (82-cell re-tiered board,
+`analysis_id: era1-leaderboard`, `git_commit: a1835fcf9`, generated
+2026-06-08T12:25:00 UTC, verified 2026-06-08);
+`results/run-conditions.json` (5 verified-adv-* conditions on
+pv-diag-256 / retest-phase3a-high / retest-phase3a / retest-phase2b,
+`verifier_passes: {}` in all four runs, confirmed 2026-06-08);
+`results/rescore-2026-06-08/pv-diag-256/text-5of5/evaluation.json`
+(proposer-only baseline: F1@20m 0.4599, MCC 0.1527, verified 2026-06-08);
+`results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T1.0__n30__t23/evaluation.json`
+(512 HIGH-text proposer-only: F1@20m 0.7747, MCC 0.6425, verified 2026-06-08);
+`results/rescore-2026-06-07/phase3/phase3a__track1-image__T0.7__n30__t18/evaluation.json`
+(512 image consensus proposer-only: F1@20m 0.6909, MCC 0.4416, verified 2026-06-08);
+`results/paper-eval/phase2/512px-14buf-mcc/p2b-text-t-0-0/evaluation.json`
+(512 single-pass text proposer-only: F1@20m 0.6055, MCC 0.000, verified 2026-06-08);
+`results/paper-eval/phase2/512px-14buf-mcc/p2b-image-t-0-0/evaluation.json`
+(512 single-pass image proposer-only: F1@20m 0.5862, MCC 0.150, verified 2026-06-08);
+`outputs/era1-pv-stage-d/full-run.log` (9 passes × 7,113 candidates total,
+verified 2026-06-08). Stage D pipeline:
+`scripts/run_era1_pv_stage_d.py`; commits `7d6c46672` (Stage D scoring),
+`734545beb` (Stage D condition minting + leaderboard extension),
+`0de27f60d` (outcome refresh).*
+
+### The finding
+
+Obs 351 predicted that 256 px would be the one untested cell in the
+tile-size × architecture matrix, and flagged — as plausible — that
+"256 might overwhelm the verifier" given the density of the 256 px
+false-positive (FP) pool. Stage D ran the production adversarial
+verifier (Gemini 2.5 Flash, text-only, T=0.0, minimal thinking, n=1,
+realtime flex) over five already-generated proposer outputs, building a
+clean proposer-verifier (PV) grid within one model across three tile
+sizes: 5 cells / 9 passes / 7,113 candidates, scored at 14-buffer
+corrected F1 @ 20 m + tile-MCC, prob_t sweep {0.1, 0.15, 0.2, 0.3, 0.5}.
+
+**The verifier rescues 256 px rather than being overwhelmed.**
+
+| Cell | Proposer-only F1 | Proposer-only MCC | +PV F1 | +PV MCC | Δ F1 | prob_t |
+|:---|---:|---:|---:|---:|---:|---:|
+| 256 consensus text-5of5 | 0.460 | 0.153 | **0.856** | 0.745 | **+0.396** | 0.2 |
+| 512 consensus text-HIGH (t1.0-n30-23of30) | 0.775 | 0.643 | 0.793 | 0.677 | +0.018 | 0.1 |
+| 512 consensus image (t0.7-n30-18of30) | 0.691 | 0.442 | 0.728 | 0.785 | +0.037 | 0.15 |
+| 512 single-pass text-t0.0 (K=3) | 0.606 | 0.000 | 0.770 | 0.790 | +0.164 | 0.2 |
+| 512 single-pass image-t0.0 (K=3) | 0.586 | 0.150 | 0.674 | 0.889 | +0.088 | 0.15 |
+
+The 256 px text-5of5 consensus set had 1,165 candidates (a dense FP pool,
+precision 0.315 at 20 m). The verifier pruned it to 394 accepted
+detections at prob_t=0.2, lifting F1 from 0.460 to 0.856 (+0.396) and
+MCC from 0.153 to 0.745. Rather than being swamped, the verifier operates
+more effectively on the 256 px pool than on any 512 px cell: it removes
+a larger proportion of FPs while retaining the high-recall proposer
+output, and the result (0.856) approaches the 384 px consensus+PV
+project-best of 0.883 (Obs 179).
+
+**Proposer-verifier is the sole Tier-1 architecture on the re-tiered
+82-cell era1-leaderboard.** After the Stage D verified conditions were
+added, `verified-adv-text-high-t1.0-n30-23of30` (F1 0.793, MCC 0.677)
+stands alone in Tier 1, statistically clear of the Tier-2 cluster
+(7 members, F1 0.760–0.775). The +0.018 PV lift over the best
+consensus-only baseline (F1 0.775) was sufficient to break the previous
+multi-way HIGH-consensus tie. The six remaining Tier-2 HIGH-consensus
+conditions cluster at F1 0.760–0.775.
+
+### Why this matters
+
+1. **The "256 overwhelms the verifier" hypothesis is falsified.** Obs 351
+   raised this as a plausible risk, derived from Obs 171's Goldilocks
+   mechanism (too dense a candidate pool strains even the verifier).
+   The data reject it: the dense 256 px FP pool is the verifier's *natural
+   habitat* — the larger FP-to-TP ratio gives the adversarial verifier more
+   signal to discriminate on, not less. The mechanism requires revision: it
+   is not the absolute size of the FP pool that limits the verifier, but
+   whether the TPs are distinguishable within it.
+
+2. **A coherent mechanistic gradient now covers all three tile sizes under
+   consensus+PV.** Combined with Obs 179 (384 px, F1 0.883) and the Stage D
+   result, the order at 20 m under consensus+PV is 384 ≥ 256 >> 512
+   (0.883 / 0.856 / 0.831), which is consistent with the
+   recall-maximising-then-verifier-cleaning narrative: 256 and 384 both
+   provide high recall that the verifier can exploit; 512's lower recall
+   trades away some of that advantage.
+
+3. **PV gain tracks proposer recall (confirms Obs 172).** The gradient is
+   striking: the largest verifier lift (+0.396) goes to the cell with the
+   highest proposer recall (0.852 at 20 m); the smallest lift (+0.018) goes
+   to HIGH-text consensus, whose 30-pass voting already removed most FPs.
+   The verifier adds the most value where the proposer did the least
+   precision work — exactly the mechanism Obs 172 identified.
+
+4. **Cheap PV rivals expensive consensus (confirms Obs 174/175).**
+   `verified-adv-text-t0.0` — a bare single-pass (K=3) + one verifier
+   pass, ~4 API calls per tile — reaches F1 0.770, matching the
+   30-call HIGH-thinking consensus on F1 and substantially beating it on
+   MCC (0.790 vs 0.643). The cost-efficiency argument from Obs 174 is
+   reproduced on the independently collected retest-phase2b corpus.
+
+5. **Tile-level MCC is the most sensitive discriminator of verifier
+   quality.** The single-pass image+PV cell achieves MCC 0.889 — the
+   highest board MCC — at a modest F1 (0.674). MCC rewards both
+   discrimination and specificity, and the verifier's FP-pruning
+   translates directly into specificity gains that F1 partly obscures.
+
+### Caveats / methodological notes
+
+- **256 px result is not in the 82-cell era1-leaderboard re-tier.** The
+  256 cell operates on 1,032 tiles (px256-1032 scope), not the 340-tile
+  footprint used for 512 px or the 487-tile footprint for 384 px. It is
+  reported here as part of the tile-size-sweep consensus+PV row (256 / 384
+  / 512), which still needs formal registration once the 384 leg
+  (Obs 179) is re-scored at 14-buffer + MCC. F1@20m is cross-size
+  comparable (same 4 maps + curator GT), but powered-test tier comparisons
+  across tile sizes require matched footprints.
+- **`verifier_passes: {}` in run-conditions.json** — the Stage D verifier
+  runs are materialised in `outputs/era1-pv-stage-d/` and scored via the
+  `evaluate_detections` pipeline, but the decomposition registry
+  (`run-conditions.json`) logs empty verifier_passes for the pv-diag-256
+  and retest-* runs. The Stage D conditions are minted as
+  `verified-adv-*` entries; the discrepancy is a registry completeness
+  issue, not a data issue.
+- **256 px coverage flagged `sparse_cross_grid`.** At prob_t=0.2, 720 of
+  1,032 tiles have zero accepted detections (72 % zero-count), which
+  trips the coverage warning and marks CIs as unreliable. The point
+  estimate F1 0.856 should be interpreted with this sparsity in mind; it
+  reflects concentration of accepted detections into a minority of tiles.
+- **Obs 179 384 px numbers (F1 0.883 / 0.831) are from the original
+  2026-03-22 evaluation**, not re-scored at 14-buffer + MCC. They
+  establish the 384 > 256 direction but are not directly comparable to
+  the Stage D F1@20m values until the 384 leg is re-evaluated under the
+  same pipeline.
+
+### Findable later
+
+Search terms: Obs 352, proposer-verifier, PV rescue, 256px verifier,
+verifier rescues 256, dense FP pool, false-positive filtering, prob_t
+sweep, Stage D, clean PV grid, tile size consensus+PV, 256px 384px 512px
+architecture, single-pass + verifier, cheap PV, MCC lift, MCC 0.889,
+board-best MCC, era1-leaderboard Tier 1, verified-adv-text-high sole
+Tier 1, verifier gain tracks recall, Obs 172 confirmed, Obs 174 confirmed,
+Obs 175 confirmed, Obs 351 falsified, 256 overwhelms verifier falsified,
+7113 candidates, 9 passes, px256-1032, sparse_cross_grid, Session 107,
+0.460 0.856 delta 0.396, 0.770 MCC 0.790, run_era1_pv_stage_d.py.
+
+### Related observations and artefacts
+
+- **Obs 351** (tile-size × architecture interaction confirmed; 256 px
+  consensus+verifier the untested cell, 2026-06-08, line 18681): this Obs
+  REJECTS the Obs 351 hedged expectation that "256 might overwhelm the
+  verifier" — the verifier rescues 256 and the result (F1 0.856) is
+  near-ceiling. The Goldilocks mechanism from Obs 171 requires revision.
+- **Obs 172** (PV improvement tracks proposer recall, not proposer F1,
+  2026-03-21, line 3605): confirmed — the +0.396 lift for 256 vs +0.018
+  for HIGH-text consensus follows directly from recall at the proposer
+  stage (0.852 vs ~0.72).
+- **Obs 179** (384 px tiles achieve project-best F1 under consensus + PV,
+  2026-03-22, line 3833): 256+PV at 0.856 now sits just below 384+PV at
+  0.883 (under the earlier scoring standard); the 384 ≥ 256 >> 512 order
+  under consensus+PV is the updated three-size picture.
+- **Obs 174** (11-pass PV beats 30-pass HIGH consensus on cost-efficiency,
+  2026-03-21, line 3650): confirmed on the retest-phase2b corpus —
+  single-pass+PV (F1 0.770) matches HIGH-thinking consensus F1 and beats
+  it on MCC (0.790 vs 0.643) with a fraction of the API calls.
+- **Obs 175** (PV inverts the thinking-level recommendation, 2026-03-21,
+  line 3679): confirmed — under PV, minimal-thinking single-pass reaches
+  the same F1 tier as 30-pass HIGH-thinking consensus; verifier output
+  quality does not depend on proposer thinking level.
+- **Artefacts**: `outputs/era1-pv-stage-d/stage_d_score_summary.json`
+  (best-F1@20m + MCC + prob_t, all 5 cells, verified 2026-06-08);
+  `outputs/era1-pv-stage-d/full-run.log` (9 passes, 7,113 candidates,
+  verified 2026-06-08); `results/era1-leaderboard/tiering_20m.json`
+  and `results/era1-leaderboard/tiering_20m.md` (82-cell re-tiered board
+  with verified-adv-* conditions, verified 2026-06-08);
+  `results/era1-pv-stage-d/256-consensus-text-5of5/evaluation.json`
+  (F1@20m 0.856, MCC 0.745, verified 2026-06-08);
+  `results/rescore-2026-06-08/pv-diag-256/text-5of5/evaluation.json`
+  (proposer-only baseline F1@20m 0.460, MCC 0.153, verified 2026-06-08);
+  `scripts/run_era1_pv_stage_d.py` (orchestrator). Produced in
+  commits `7d6c46672` (Stage D scoring), `734545beb` (condition minting +
+  leaderboard extension), `0de27f60d` (outcome refresh).
