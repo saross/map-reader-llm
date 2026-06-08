@@ -1,0 +1,609 @@
+{
+  "analysis_id": "tile-size-sweep",
+  "metric": "f1",
+  "buffer_metres": 20,
+  "tile_counts": {
+    "256": 1032,
+    "384": 487,
+    "512": 340
+  },
+  "comparability_note": "F1@20 m is cross-size comparable (same 4 GS maps + curator GT, three tilings). Tile-MCC reported per size, NOT differenced (tile-count base differs: 1032/487/340).",
+  "provenance_caveats": [
+    "256 px anchor (pv-diag-256) is text-only, thin proposer provenance (temp/thinking not materialised; 1032-tile scope).",
+    "256 px consensus is consensus-only (no verifier); the decisive 256 consensus+verifier cell is untested (Obs 351).",
+    "image HIGH-thinking consensus exists at 384 but not 512 (phase3a-high image track never ran)."
+  ],
+  "generated_at_utc": "2026-06-08T07:22:40.725670+00:00",
+  "git_commit": "1ba5fa273",
+  "single_pass_isolation": [
+    {
+      "architecture": "single-pass",
+      "modality": "text",
+      "thinking": "minimal",
+      "temperature": "0.0",
+      "by_size": {
+        "256": 0.3417,
+        "384": 0.5196,
+        "512": 0.6055
+      },
+      "cells": {
+        "256": {
+          "ref": "pv-diag-256::text-baseline",
+          "f1": 0.3417,
+          "mcc": 0.0883,
+          "thin_provenance": true
+        },
+        "384": {
+          "ref": "pv-diag-384::baseline-flash-text-minimal-t-0-0-pv-baseline",
+          "f1": 0.5196,
+          "mcc": -0.0038,
+          "thin_provenance": false
+        },
+        "512": {
+          "ref": "retest-phase2b::text-t0.0",
+          "f1": 0.6055,
+          "mcc": 0.0,
+          "thin_provenance": false
+        }
+      },
+      "direction": "best=512px (\u0394+0.264 over 256\u2192512)"
+    },
+    {
+      "architecture": "single-pass",
+      "modality": "text",
+      "thinking": "minimal",
+      "temperature": "0.7",
+      "by_size": {
+        "384": 0.4883,
+        "512": 0.5842
+      },
+      "cells": {
+        "384": {
+          "ref": "pv-diag-384::baseline-flash-text-minimal-t-0-7",
+          "f1": 0.4883,
+          "mcc": 0.0784,
+          "thin_provenance": false
+        },
+        "512": {
+          "ref": "retest-phase2b::text-t0.7",
+          "f1": 0.5842,
+          "mcc": 0.0,
+          "thin_provenance": false
+        }
+      },
+      "direction": "best=512px (\u0394+0.096 over 384\u2192512)"
+    },
+    {
+      "architecture": "single-pass",
+      "modality": "image",
+      "thinking": "minimal",
+      "temperature": "0.0",
+      "by_size": {
+        "384": 0.5995,
+        "512": 0.5862
+      },
+      "cells": {
+        "384": {
+          "ref": "pv-diag-384::baseline-flash-image-minimal-t-0-0",
+          "f1": 0.5995,
+          "mcc": 0.3124,
+          "thin_provenance": false
+        },
+        "512": {
+          "ref": "retest-phase2b::image-t0.0",
+          "f1": 0.5862,
+          "mcc": 0.1496,
+          "thin_provenance": false
+        }
+      },
+      "direction": "flat (384\u2248512)"
+    },
+    {
+      "architecture": "single-pass",
+      "modality": "image",
+      "thinking": "minimal",
+      "temperature": "0.7",
+      "by_size": {
+        "384": 0.5534,
+        "512": 0.5366
+      },
+      "cells": {
+        "384": {
+          "ref": "pv-diag-384::baseline-flash-image-minimal-t-0-7",
+          "f1": 0.5534,
+          "mcc": 0.3295,
+          "thin_provenance": false
+        },
+        "512": {
+          "ref": "retest-phase2b::image-t0.7",
+          "f1": 0.5366,
+          "mcc": 0.1731,
+          "thin_provenance": false
+        }
+      },
+      "direction": "best=384px (\u0394-0.017 over 384\u2192512)"
+    }
+  ],
+  "consensus_isolation": [
+    {
+      "architecture": "consensus",
+      "modality": "text",
+      "thinking": "minimal",
+      "temperature": "0.3",
+      "by_size": {
+        "384": 0.6424,
+        "512": 0.6921
+      },
+      "cells": {
+        "384": {
+          "ref": "pv-diag-384::flash-minimal-text-n30-t07-text-t0.3-consensus-10of10",
+          "f1": 0.6424,
+          "mcc": 0.3129,
+          "n": 10,
+          "vote": 10
+        },
+        "512": {
+          "ref": "retest-phase3a::text-t0.3-n30-23of30",
+          "f1": 0.6921,
+          "mcc": 0.1807,
+          "n": 30,
+          "vote": 23
+        }
+      },
+      "direction": "best=512px (\u0394+0.050 over 384\u2192512)"
+    },
+    {
+      "architecture": "consensus",
+      "modality": "text",
+      "thinking": "minimal",
+      "temperature": "0.7",
+      "by_size": {
+        "384": 0.6611,
+        "512": 0.7033
+      },
+      "cells": {
+        "384": {
+          "ref": "pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-consensus-29of30",
+          "f1": 0.6611,
+          "mcc": 0.3814,
+          "n": 30,
+          "vote": 29
+        },
+        "512": {
+          "ref": "retest-phase3a-replication::text-minimal-t0.7-n30-25of30",
+          "f1": 0.7033,
+          "mcc": 0.313,
+          "n": 30,
+          "vote": 25
+        }
+      },
+      "direction": "best=512px (\u0394+0.042 over 384\u2192512)"
+    },
+    {
+      "architecture": "consensus",
+      "modality": "text",
+      "thinking": "minimal",
+      "temperature": "1.0",
+      "by_size": {
+        "384": 0.6667,
+        "512": 0.686
+      },
+      "cells": {
+        "384": {
+          "ref": "pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-consensus-9of10",
+          "f1": 0.6667,
+          "mcc": 0.4153,
+          "n": 10,
+          "vote": 9
+        },
+        "512": {
+          "ref": "retest-phase3a::text-t1.0-n30-22of30",
+          "f1": 0.686,
+          "mcc": 0.3332,
+          "n": 30,
+          "vote": 22
+        }
+      },
+      "direction": "best=512px (\u0394+0.019 over 384\u2192512)"
+    },
+    {
+      "architecture": "consensus",
+      "modality": "text",
+      "thinking": "high",
+      "temperature": "0.3",
+      "by_size": {
+        "384": 0.7891,
+        "512": 0.7744
+      },
+      "cells": {
+        "384": {
+          "ref": "pv-diag-384::flash-high-text-n5-text-t0.3-consensus-10of10",
+          "f1": 0.7891,
+          "mcc": 0.5874,
+          "n": 10,
+          "vote": 10
+        },
+        "512": {
+          "ref": "retest-phase3a-high::text-high-t0.3-n30-23of30",
+          "f1": 0.7744,
+          "mcc": 0.5759,
+          "n": 30,
+          "vote": 23
+        }
+      },
+      "direction": "flat (384\u2248512)"
+    },
+    {
+      "architecture": "consensus",
+      "modality": "text",
+      "thinking": "high",
+      "temperature": "0.7",
+      "by_size": {
+        "384": 0.8141,
+        "512": 0.7729
+      },
+      "cells": {
+        "384": {
+          "ref": "pv-diag-384::flash-high-text-n5-text-t0.7-consensus-26of30",
+          "f1": 0.8141,
+          "mcc": 0.6204,
+          "n": 30,
+          "vote": 26
+        },
+        "512": {
+          "ref": "retest-phase3a-high::text-high-t0.7-n30-22of30",
+          "f1": 0.7729,
+          "mcc": 0.5722,
+          "n": 30,
+          "vote": 22
+        }
+      },
+      "direction": "best=384px (\u0394-0.041 over 384\u2192512)"
+    },
+    {
+      "architecture": "consensus",
+      "modality": "text",
+      "thinking": "high",
+      "temperature": "1.0",
+      "by_size": {
+        "384": 0.7727,
+        "512": 0.7747
+      },
+      "cells": {
+        "384": {
+          "ref": "pv-diag-384::flash-high-text-n5-text-t1.0-consensus-9of10",
+          "f1": 0.7727,
+          "mcc": 0.5749,
+          "n": 10,
+          "vote": 9
+        },
+        "512": {
+          "ref": "retest-phase3a-high::text-high-t1.0-n30-23of30",
+          "f1": 0.7747,
+          "mcc": 0.6425,
+          "n": 30,
+          "vote": 23
+        }
+      },
+      "direction": "flat (384\u2248512)"
+    },
+    {
+      "architecture": "consensus",
+      "modality": "image",
+      "thinking": "minimal",
+      "temperature": "0.3",
+      "by_size": {
+        "512": 0.6661
+      },
+      "cells": {
+        "512": {
+          "ref": "retest-phase3a::image-t0.3-n30-22of30",
+          "f1": 0.6661,
+          "mcc": 0.2707,
+          "n": 30,
+          "vote": 22
+        }
+      },
+      "direction": "single-size"
+    },
+    {
+      "architecture": "consensus",
+      "modality": "image",
+      "thinking": "minimal",
+      "temperature": "0.7",
+      "by_size": {
+        "512": 0.6909
+      },
+      "cells": {
+        "512": {
+          "ref": "retest-phase3a::image-t0.7-n30-18of30",
+          "f1": 0.6909,
+          "mcc": 0.4416,
+          "n": 30,
+          "vote": 18
+        }
+      },
+      "direction": "single-size"
+    },
+    {
+      "architecture": "consensus",
+      "modality": "image",
+      "thinking": "minimal",
+      "temperature": "1.0",
+      "by_size": {
+        "512": 0.6792
+      },
+      "cells": {
+        "512": {
+          "ref": "retest-phase3a::image-t1.0-n30-19of30",
+          "f1": 0.6792,
+          "mcc": 0.4723,
+          "n": 30,
+          "vote": 19
+        }
+      },
+      "direction": "single-size"
+    },
+    {
+      "architecture": "consensus",
+      "modality": "image",
+      "thinking": "high",
+      "temperature": "0.3",
+      "by_size": {
+        "384": 0.7312
+      },
+      "cells": {
+        "384": {
+          "ref": "pv-diag-384::flash-high-image-n5-image-t0.3-consensus-9of10",
+          "f1": 0.7312,
+          "mcc": 0.6834,
+          "n": 10,
+          "vote": 9
+        }
+      },
+      "direction": "single-size"
+    },
+    {
+      "architecture": "consensus",
+      "modality": "image",
+      "thinking": "high",
+      "temperature": "0.7",
+      "by_size": {
+        "384": 0.75
+      },
+      "cells": {
+        "384": {
+          "ref": "pv-diag-384::flash-high-image-n5-image-t0.7-consensus-7of10",
+          "f1": 0.75,
+          "mcc": 0.6784,
+          "n": 10,
+          "vote": 7
+        }
+      },
+      "direction": "single-size"
+    },
+    {
+      "architecture": "consensus",
+      "modality": "image",
+      "thinking": "high",
+      "temperature": "1.0",
+      "by_size": {
+        "384": 0.735
+      },
+      "cells": {
+        "384": {
+          "ref": "pv-diag-384::flash-high-image-n5-image-t1.0-consensus-6of10",
+          "f1": 0.735,
+          "mcc": 0.6456,
+          "n": 10,
+          "vote": 6
+        }
+      },
+      "direction": "single-size"
+    }
+  ],
+  "best_per_size": {
+    "by_arch_modality": {
+      "256": {
+        "single-pass/text": {
+          "ref": "pv-diag-256::text-baseline",
+          "run": "pv-diag-256",
+          "label": "text-baseline",
+          "size": 256,
+          "architecture": "single-pass",
+          "model": "flash",
+          "modality": "text",
+          "thinking": null,
+          "temperature": null,
+          "n_passes": 1,
+          "vote": null,
+          "f1": 0.3417,
+          "mcc": 0.0883,
+          "thin_provenance": true
+        },
+        "consensus/text": {
+          "ref": "pv-diag-256::text-consensus-5of5",
+          "run": "pv-diag-256",
+          "label": "text-consensus-5of5",
+          "size": 256,
+          "architecture": "consensus",
+          "model": "flash",
+          "modality": "text",
+          "thinking": null,
+          "temperature": null,
+          "n_passes": 5,
+          "vote": 5,
+          "f1": 0.4599,
+          "mcc": 0.1527,
+          "thin_provenance": true
+        }
+      },
+      "384": {
+        "single-pass/image": {
+          "ref": "pv-diag-384::baseline-flash-image-minimal-t-0-0",
+          "run": "pv-diag-384",
+          "label": "baseline-flash-image-minimal-t-0-0",
+          "size": 384,
+          "architecture": "single-pass",
+          "model": "flash",
+          "modality": "image",
+          "thinking": "minimal",
+          "temperature": "0.0",
+          "n_passes": 1,
+          "vote": null,
+          "f1": 0.5995,
+          "mcc": 0.3124,
+          "thin_provenance": false
+        },
+        "single-pass/text": {
+          "ref": "pv-diag-384::baseline-flash-text-minimal-t-0-0-pv-baseline",
+          "run": "pv-diag-384",
+          "label": "baseline-flash-text-minimal-t-0-0-pv-baseline",
+          "size": 384,
+          "architecture": "single-pass",
+          "model": "flash",
+          "modality": "text",
+          "thinking": "minimal",
+          "temperature": "0.0",
+          "n_passes": 1,
+          "vote": null,
+          "f1": 0.5196,
+          "mcc": -0.0038,
+          "thin_provenance": false
+        },
+        "consensus/image": {
+          "ref": "pv-diag-384::flash-high-image-n5-image-t0.7-consensus-7of10",
+          "run": "pv-diag-384",
+          "label": "flash-high-image-n5-image-t0.7-consensus-7of10",
+          "size": 384,
+          "architecture": "consensus",
+          "model": "flash",
+          "modality": "image",
+          "thinking": "high",
+          "temperature": "0.7",
+          "n_passes": 10,
+          "vote": 7,
+          "f1": 0.75,
+          "mcc": 0.6784,
+          "thin_provenance": false
+        },
+        "consensus/text": {
+          "ref": "pv-diag-384::flash-high-text-n5-text-t0.7-consensus-26of30",
+          "run": "pv-diag-384",
+          "label": "flash-high-text-n5-text-t0.7-consensus-26of30",
+          "size": 384,
+          "architecture": "consensus",
+          "model": "flash",
+          "modality": "text",
+          "thinking": "high",
+          "temperature": "0.7",
+          "n_passes": 30,
+          "vote": 26,
+          "f1": 0.8141,
+          "mcc": 0.6204,
+          "thin_provenance": false
+        }
+      },
+      "512": {
+        "single-pass/text": {
+          "ref": "retest-phase2e::canonical-last",
+          "run": "retest-phase2e",
+          "label": "canonical-last",
+          "size": 512,
+          "architecture": "single-pass",
+          "model": "flash",
+          "modality": "text",
+          "thinking": "minimal",
+          "temperature": null,
+          "n_passes": 1,
+          "vote": null,
+          "f1": 0.6314,
+          "mcc": 0.2132,
+          "thin_provenance": false
+        },
+        "single-pass/image": {
+          "ref": "retest-phase2d::image-terse",
+          "run": "retest-phase2d",
+          "label": "image-terse",
+          "size": 512,
+          "architecture": "single-pass",
+          "model": "flash",
+          "modality": "image",
+          "thinking": "minimal",
+          "temperature": null,
+          "n_passes": 1,
+          "vote": null,
+          "f1": 0.6052,
+          "mcc": 0.2239,
+          "thin_provenance": false
+        },
+        "consensus/image": {
+          "ref": "retest-phase3a::image-t0.7-n30-18of30",
+          "run": "retest-phase3a",
+          "label": "image-t0.7-n30-18of30",
+          "size": 512,
+          "architecture": "consensus",
+          "model": "flash",
+          "modality": "image",
+          "thinking": "minimal",
+          "temperature": "0.7",
+          "n_passes": 30,
+          "vote": 18,
+          "f1": 0.6909,
+          "mcc": 0.4416,
+          "thin_provenance": false
+        },
+        "consensus/text": {
+          "ref": "retest-phase3a-high::text-high-t1.0-n30-23of30",
+          "run": "retest-phase3a-high",
+          "label": "text-high-t1.0-n30-23of30",
+          "size": 512,
+          "architecture": "consensus",
+          "model": "flash",
+          "modality": "text",
+          "thinking": "high",
+          "temperature": "1.0",
+          "n_passes": 30,
+          "vote": 23,
+          "f1": 0.7747,
+          "mcc": 0.6425,
+          "thin_provenance": false
+        }
+      }
+    },
+    "pro_note": {
+      "384/single-pass/image": {
+        "ref": "pv-diag-384::baseline-pro-image-medium-t-0-0",
+        "run": "pv-diag-384",
+        "label": "baseline-pro-image-medium-t-0-0",
+        "size": 384,
+        "architecture": "single-pass",
+        "model": "pro",
+        "modality": "image",
+        "thinking": null,
+        "temperature": "0.0",
+        "n_passes": 1,
+        "vote": null,
+        "f1": 0.6555,
+        "mcc": 0.8677,
+        "thin_provenance": false
+      },
+      "384/single-pass/text": {
+        "ref": "pv-diag-384::baseline-pro-text-medium-t-0-0",
+        "run": "pv-diag-384",
+        "label": "baseline-pro-text-medium-t-0-0",
+        "size": 384,
+        "architecture": "single-pass",
+        "model": "pro",
+        "modality": "text",
+        "thinking": null,
+        "temperature": "0.0",
+        "n_passes": 1,
+        "vote": null,
+        "f1": 0.7921,
+        "mcc": 0.7903,
+        "thin_provenance": false
+      }
+    }
+  }
+}

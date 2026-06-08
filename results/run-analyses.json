@@ -450,6 +450,59 @@
       "output_path": "results/era1-leaderboard",
       "working_notes_obs": [],
       "manually_verified_at": null
+    },
+    {
+      "analysis_id": "tile-size-sweep",
+      "type": "sweep",
+      "_note": "STAGE C of the Era-1 leaderboard plan (planning/era1-leaderboard-plan-2026-06-08.md): tile-size characterisation across 256 / 384 / 512 px, F1@20m-led. Two views via scripts/tile_size_sweep.py (pure tabulation over already-scored evals, $0): VIEW 1 = clean tile-size isolation (hold architecture x modality x thinking x temperature constant, vary only tile size, best-F1@20m operating point per size); VIEW 2 = best-achievable FLASH ceiling per (size x architecture x modality), model-matched (Pro ran only at 384, shown separately). Characterises Obs 351 / Obs 179: the optimal tile size depends on FP-filtering strength. F1@20m is cross-size comparable (same 4 GS maps + curator GT, three tilings); tile-MCC reported per size, NOT differenced (tile counts 1032/487/340). CAVEATS: 256 anchor (pv-diag-256) text-only, thin provenance; 256 consensus+verifier untested (Obs 351); image HIGH consensus exists at 384 but not 512. FINDING fields below stay null until human sign-off.",
+      "conditions_compared": [
+        "pv-diag-256::text-baseline",
+        "pv-diag-256::text-consensus-5of5",
+        "pv-diag-384::baseline-flash-image-minimal-t-0-0",
+        "pv-diag-384::baseline-flash-image-minimal-t-0-7",
+        "pv-diag-384::baseline-flash-text-minimal-t-0-0-pv-baseline",
+        "pv-diag-384::baseline-flash-text-minimal-t-0-7",
+        "pv-diag-384::baseline-pro-image-medium-t-0-0",
+        "pv-diag-384::baseline-pro-text-medium-t-0-0",
+        "pv-diag-384::flash-high-image-n5-image-t0.3-consensus-9of10",
+        "pv-diag-384::flash-high-image-n5-image-t0.7-consensus-7of10",
+        "pv-diag-384::flash-high-image-n5-image-t1.0-consensus-6of10",
+        "pv-diag-384::flash-high-text-n5-text-t0.3-consensus-10of10",
+        "pv-diag-384::flash-high-text-n5-text-t0.7-consensus-26of30",
+        "pv-diag-384::flash-high-text-n5-text-t1.0-consensus-9of10",
+        "pv-diag-384::flash-minimal-text-n30-t07-text-t0.3-consensus-10of10",
+        "pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-consensus-29of30",
+        "pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-consensus-9of10",
+        "retest-phase2b::image-t0.0",
+        "retest-phase2b::image-t0.7",
+        "retest-phase2b::text-t0.0",
+        "retest-phase2b::text-t0.7",
+        "retest-phase2d::image-terse",
+        "retest-phase2e::canonical-last",
+        "retest-phase3a-high::text-high-t0.3-n30-23of30",
+        "retest-phase3a-high::text-high-t0.7-n30-22of30",
+        "retest-phase3a-high::text-high-t1.0-n30-23of30",
+        "retest-phase3a-replication::text-minimal-t0.7-n30-25of30",
+        "retest-phase3a::image-t0.3-n30-22of30",
+        "retest-phase3a::image-t0.7-n30-18of30",
+        "retest-phase3a::image-t1.0-n30-19of30",
+        "retest-phase3a::text-t0.3-n30-23of30",
+        "retest-phase3a::text-t1.0-n30-22of30"
+      ],
+      "hypothesis_refs": [
+        "H11"
+      ],
+      "preregistered": "exploratory",
+      "deviations": [],
+      "predicted_outcome": "H11 (tile size): the prior expectation was non-monotonic with a 384px sweet spot. The refined hypothesis (Obs 351): the optimal tile size shifts with FP-filtering strength \u2014 single-pass (no filter) prefers larger tiles; strong filters (HIGH-thinking consensus, consensus+verifier) shift the optimum to 384; 256 falls under every architecture.",
+      "tie_set": [],
+      "outcome": "Tile-size characterisation across 256/384/512 px (F1@20m), gemini-3-flash, GS 4-map curator GT. The optimal tile size is ARCHITECTURE-DEPENDENT, consistent with the FP-filtering mechanism (Obs 351, Obs 179, Obs 171). CLEAN ISOLATION (hold architecture x modality x thinking x temperature constant, vary only size): single-pass text climbs monotonically with tile size (256=0.342 < 384=0.520 < 512=0.606) \u2014 with no FP filter, larger tiles give cleaner proposals; single-pass image is flat (384~0.600 ~ 512~0.586). Text MINIMAL consensus still prefers 512 (+0.02..+0.05 over 384 across T0.3/0.7/1.0) \u2014 a weak filter. Text HIGH consensus FLIPS to 384 (T0.7 0.814 > 512 0.773; T0.3 0.789 > 0.774; T1.0 ~tie) \u2014 the strong diversity+vote filter realises 384's higher recall. BEST-ACHIEVABLE FLASH CEILING per size: single-pass 512 (0.631) > 384 (0.520) > 256 (0.342); consensus 384 (0.814) > 512 (0.775) > 256 (0.460). So 384 owns the consensus ceiling, 512 owns the single-pass ceiling, and 256 trails under both. KEY GAP: 256 consensus+VERIFIER (the one architecture where 384 wins decisively) is untested \u2014 pv-diag-256 is consensus-only \u2014 so 'does 256 overwhelm even the verifier' is open (Obs 351); a cheap 256 consensus+PV run would close it. Pro single-pass ran only at 384 (pro-text 0.792, pro-image MCC 0.868) \u2014 shown for context, not a tile-size comparison. Artefacts: results/tile-size-sweep/tile_size_sweep.{json,md}; script scripts/tile_size_sweep.py.",
+      "paper_section": "Results",
+      "output_path": "results/tile-size-sweep",
+      "working_notes_obs": [
+        351
+      ],
+      "manually_verified_at": null
     }
   ]
 }
