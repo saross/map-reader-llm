@@ -18677,3 +18677,166 @@ parametrised CRS contract (geometry carries CRS; one *derived* analysis CRS;
 storage egress separated from analysis; declared-not-guessed; tested at every
 boundary) — captured as WS1 of `generalised-pipeline-roadmap.md`. The narrow bug
 was the cheap symptom; the contract is the load-bearing fix.
+
+## Observation 351: Tile-size × architecture interaction confirmed across three tile sizes — single-pass prefers larger tiles, the consensus/verifier filter shifts the optimum to 384px, and 256px consensus+verifier is the untested missing cell (Session 107, 2026-06-08)
+
+*Source anchors: `results/era1-leaderboard/tiering_20m.json` (Stage B board,
+`analysis_id: era1-leaderboard`, generated 2026-06-08, git `efa176e86`, verified
+2026-06-08); `results/paper-eval/n1/512px-14buf-mcc/tiering/tiering_20m.json`
+(Stage A single-pass board, `analysis_id: era1-single-pass-baseline-matrix`,
+generated 2026-06-08, git `efa176e86`, verified 2026-06-08);
+`results/run-conditions.json` (pv-diag-256 conditions: `verifier_passes: {}`,
+tile scope 1032, confirmed 2026-06-08; pv-diag-384 conditions: consensus-sweep
+paths, verified 2026-06-08; retest-phase2b: `results/paper-eval/phase2/512px-14buf-mcc/p2b-text-t-0-0/evaluation.json`
+and `p2b-image-t-0-0/evaluation.json`, verified 2026-06-08; retest-phase3a-high:
+`results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T1.0__n30__t23/evaluation.json`,
+verified 2026-06-08);
+`outputs/h11/pv-diag-256/consensus/text-5of5.geojson` (1,165 features, verified
+2026-06-08).*
+
+### The finding
+
+Shawn's tile-size model — "smaller tiles raise recall but lower precision; 384px
+has the highest F1 ceiling *if* you use consensus + verifier; in other
+architectures 512px usually wins" — is now confirmed and extended across three
+tile sizes (256, 384, 512 px) within a single model (Gemini 3 Flash), all scored
+at 14-buffer corrected F1 @ 20 m.
+
+#### Single-pass leg: monotonically increasing with tile size
+
+Without any FP filter, text single-pass is strictly ordered by tile size:
+
+| Tile | Condition | F1 @ 20 m |
+|---:|:---|---:|
+| 256 px | `pv-diag-256 :: text-baseline` | 0.342 |
+| 384 px | `pv-diag-384 :: baseline-flash-text-minimal-t-0-0-pv-baseline` | 0.520 |
+| 512 px | `retest-phase2b :: text-t0.0` | 0.606 |
+
+Image single-pass is flatter but preserves the direction (384 ≈ 0.600,
+512 ≈ 0.586; note image-t0.0 at 384 is the `baseline-flash-image-minimal-t-0-0`
+condition). Without FP pruning, larger tiles produce cleaner proposals and win
+outright.
+
+#### Filtering-strength gradient: optimal tile size slides downward as FP-filtering strengthens
+
+Adding successive layers of FP filtering shifts the optimal tile size from 512 to
+384:
+
+| Architecture | Best 256 F1 @ 20 m | Best 384 F1 @ 20 m | Best 512 F1 @ 20 m | Where 384 ranks |
+|:---|---:|---:|---:|:---|
+| Single-pass | 0.342 | 0.520 | 0.606 | worst |
+| HIGH-thinking consensus (text, no verifier) | 0.460 (text-5of5) | **0.814** (`flash-high-text-n5-text-t0.7-consensus-26of30`) | 0.775 (`text-high-t1.0-n30-23of30`) | best |
+| Consensus + verifier | — (untested) | **0.883** (Obs 179) | 0.831 (Obs 179) | best |
+
+One coherent monotone: as the FP filter strengthens, it is able to exploit the
+larger recall pool that finer tiling provides, and the optimum slides from 512 to
+384.
+
+#### 256px: bottom in every architecture tested so far
+
+256px falls under every configuration tested to date — single-pass (0.342) and
+consensus-only (text-5of5, 0.460) — consistent with the Obs 171 Goldilocks
+mechanism: the candidate pool at 256px is so dense that even a moderate consensus
+filter cannot bring it within the verifier's effective operating range.
+
+### Why this matters
+
+1. **A unified quantitative gradient replaces an anecdotal two-point
+   comparison.** Obs 179 established 384 > 512 under consensus + PV. This Obs
+   adds the 256px anchor at the bottom, the single-pass leg that shows 512 > 384
+   when the filter is absent, and the HIGH-thinking consensus midpoint. The
+   three-size, four-architecture matrix gives the paper a mechanistically
+   coherent narrative rather than an isolated headline result.
+
+2. **The mechanism (Obs 171, Obs 161) generalises cleanly.** "Smaller tiles trade
+   a linear recall gain for a quadratic FP increase; only a sufficiently strong
+   FP-pruning architecture realises the recall advantage" is no longer a
+   post-hoc explanation of a single comparison — it predicts the ordering across
+   all observed cells.
+
+3. **The one untested cell (256 + consensus + verifier) is the natural next
+   experiment.** If the mechanism is correct, it should succeed or fail
+   definitively: either the verifier tames the 256px FP pool (and 256 joins 384
+   as a viable tier-1 tile size) or it fails (and the gradient is confirmed as a
+   saturation phenomenon below 384px). Given the 256px text-5of5 consensus set
+   already exists on disk (1,165 candidates in
+   `outputs/h11/pv-diag-256/consensus/text-5of5.geojson`), the experiment
+   requires only crop generation (local, $0) + a single verifier pass (~1,165
+   calls at Flash minimal T=0.0, estimated ~$1).
+
+### Caveats / methodological notes
+
+- **pv-diag-256 has thin proposer provenance.** The 256px diagnostics cover only
+  text modality; temperature and thinking budget were not swept; the scope is
+  1,032 tiles (px256-1032), not the 487-tile Era-2 footprint used for 384px or
+  the 340-tile footprint used for 512px. The single-pass and consensus-only
+  numbers are therefore not fully paired against the 384/512 results: they
+  establish direction and order but not a formally powered comparison.
+- **"256 overwhelms the verifier" is inferred, not tested.** The run-conditions
+  decomposition confirms `verifier_passes: {}` (empty) and `outputs/h11/pv-diag-256/crops/`
+  directories exist as stubs but hold no artefacts. The inference that 256px
+  consensus+PV would struggle rests on Obs 171's mechanism and the
+  consensus-only F1 (0.460), not on a direct verifier run.
+- **HIGH-thinking consensus comparison is not tile-size-pure.** The 384px
+  `flash-high-text-n5-text-t0.7-consensus-26of30` uses a different proposer pool
+  (HIGH-thinking, N=5, T=0.7) from the 512px `text-high-t1.0-n30-23of30`
+  (HIGH-thinking, N=30, T=1.0). The comparison is informative but not a
+  controlled tile-size-only test.
+- **Obs 179 numbers are from the original 487-tile/435-mound evaluation
+  (2026-03-22), not re-scored at 14-buffer + MCC.** The F1=0.883 and F1=0.831
+  values cited in that Obs used a different evaluation standard from the
+  contemporary 14-buffer corrected-F1 pipeline. They establish the 384 > 512
+  direction under consensus + PV but are not directly comparable to the F1 @ 20 m
+  values in the table above.
+
+### Findable later
+
+Search terms: Obs 351, tile size interaction, 256px 384px 512px, architecture
+interaction, single-pass monotonic tile size, consensus verifier optimal tile,
+FP filtering gradient, recall precision tradeoff tile size, Goldilocks tile size,
+tile-size sweep, pv-diag-256 verifier untested, 256px missing cell, text-5of5
+1165 candidates, flash-high-text-n5-text-t0.7-consensus-26of30, text-high-t1.0-n30-23of30,
+era1-leaderboard tile-size, Stage B Stage C tile-size, Session 107, 0.342 0.520 0.606,
+0.460 0.814 0.775, consensus pool FP saturation, small-tile recall quadratic FP increase.
+
+### Related observations and artefacts
+
+- **Obs 179** (384px tiles achieve project-best F1 under consensus + PV,
+  2026-03-22, line 3833): established the 384 > 512 comparison at the two-size
+  level under consensus + PV (F1 0.883 vs 0.831, paired p ≤ 0.008). The present
+  Obs adds the third tile size (256), the single-pass leg, and the HIGH-thinking
+  consensus midpoint.
+- **Obs 171** (moderate consensus + PV is the optimal architecture, 2026-03-21,
+  line 3581): the Goldilocks mechanism — "too-loose consensus leaves so many FPs
+  that even the verifier can't filter them all" — is the theoretical backbone this
+  Obs generalises to the three-tile-size gradient.
+- **Obs 161** (single-pass 384-PV does not beat 512, 2026-03-15, line 3063):
+  established that without consensus pre-filtering the denser 384px FP pool
+  overwhelms the verifier; this Obs restates that as the single-pass leg of the
+  gradient and provides the quantitative 256/384/512 ordering.
+- **Artefacts**: `results/era1-leaderboard/tiering_20m.json` and
+  `results/era1-leaderboard/tiering_20m.md` (Stage B board, verified 2026-06-08);
+  `results/paper-eval/n1/512px-14buf-mcc/tiering/tiering_20m.json` and
+  `results/paper-eval/n1/512px-14buf-mcc/tiering/tiering_20m.md` (Stage A board,
+  verified 2026-06-08); `results/run-conditions.json` (pv-diag-256 and pv-diag-384
+  decompositions, verified 2026-06-08);
+  `results/rescore-2026-06-08/pv-diag-256/text-baseline/evaluation.json`
+  (F1@20m 0.342, verified 2026-06-08);
+  `results/rescore-2026-06-08/pv-diag-256/text-5of5/evaluation.json`
+  (F1@20m 0.460, verified 2026-06-08);
+  `results/paper-eval/n1/384px-14buf-mcc/flash-text-minimal-t-0-0-pv-baseline/evaluation.json`
+  (F1@20m 0.520, verified 2026-06-08);
+  `results/paper-eval/n1/384px-14buf-mcc/flash-image-minimal-t-0-0/evaluation.json`
+  (F1@20m 0.600, verified 2026-06-08);
+  `results/paper-eval/phase2/512px-14buf-mcc/p2b-text-t-0-0/evaluation.json`
+  (F1@20m 0.606, verified 2026-06-08);
+  `results/paper-eval/phase2/512px-14buf-mcc/p2b-image-t-0-0/evaluation.json`
+  (F1@20m 0.586, verified 2026-06-08);
+  `results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.7__consensus__t26/evaluation.json`
+  (F1@20m 0.814, verified 2026-06-08);
+  `results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T1.0__n30__t23/evaluation.json`
+  (F1@20m 0.775, verified 2026-06-08);
+  `outputs/h11/pv-diag-256/consensus/text-5of5.geojson` (1,165 features,
+  verified 2026-06-08); `scripts/era1_leaderboard_tiering.py`. Produced in
+  commits `efa176e86` (harness + stubs), `3ef0b14f3` (Stage A/B tierings),
+  `5341f34d7` (findings).
