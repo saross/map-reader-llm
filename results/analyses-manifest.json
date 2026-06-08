@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-06-08T04:19:21Z",
+  "generated_at": "2026-06-08T07:25:59Z",
   "generator_version": "0.4.0",
   "analyses": [
     {
@@ -50,7 +50,7 @@
           "results/run-analyses.json",
           "results/paper-eval/n1/384px-14buf-mcc"
         ],
-        "last_extracted_at": "2026-06-08T04:19:21Z",
+        "last_extracted_at": "2026-06-08T07:25:59Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -105,7 +105,7 @@
           "results/run-analyses.json",
           "results/rescore-2026-06-05/pv-diag-384/consensus-sweep"
         ],
-        "last_extracted_at": "2026-06-08T04:19:21Z",
+        "last_extracted_at": "2026-06-08T07:25:59Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -161,7 +161,7 @@
           "results/run-analyses.json",
           "results/diversity-dividend-384"
         ],
-        "last_extracted_at": "2026-06-08T04:19:21Z",
+        "last_extracted_at": "2026-06-08T07:25:59Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -205,7 +205,7 @@
           "results/run-analyses.json",
           "results/rescore-2026-06-07/phase3"
         ],
-        "last_extracted_at": "2026-06-08T04:19:21Z",
+        "last_extracted_at": "2026-06-08T07:25:59Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -240,7 +240,7 @@
           "results/run-analyses.json",
           "results/rescore-2026-06-07/phase3"
         ],
-        "last_extracted_at": "2026-06-08T04:19:21Z",
+        "last_extracted_at": "2026-06-08T07:25:59Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -272,7 +272,7 @@
           "results/run-analyses.json",
           "results/rescore-2026-06-07/phase3"
         ],
-        "last_extracted_at": "2026-06-08T04:19:21Z",
+        "last_extracted_at": "2026-06-08T07:25:59Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -307,7 +307,271 @@
           "results/run-analyses.json",
           "results/rescore-2026-06-07/phase3c"
         ],
-        "last_extracted_at": "2026-06-08T04:19:21Z",
+        "last_extracted_at": "2026-06-08T07:25:59Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "analysis_id": "era1-single-pass-baseline-matrix",
+      "type": "leaderboard",
+      "conditions_compared": [
+        "retest-phase2a::brief-text",
+        "retest-phase2a::brief-text-image",
+        "retest-phase2a::image-only",
+        "retest-phase2a::verbose-text",
+        "retest-phase2a::verbose-text-image",
+        "retest-phase2b::image-t0.0",
+        "retest-phase2b::image-t0.3",
+        "retest-phase2b::image-t0.7",
+        "retest-phase2b::image-t1.0",
+        "retest-phase2b::image-t1.3",
+        "retest-phase2b::text-t0.0",
+        "retest-phase2b::text-t0.3",
+        "retest-phase2b::text-t0.7",
+        "retest-phase2b::text-t1.0",
+        "retest-phase2b::text-t1.3",
+        "retest-phase2c::image-canonical",
+        "retest-phase2c::image-plus-hp",
+        "retest-phase2c::image-pure-positive-canon",
+        "retest-phase2c::image-scale-4",
+        "retest-phase2c::image-scale-8",
+        "retest-phase2c::image-exploratory-pure-positive-2hp",
+        "retest-phase2c::image-exploratory-pure-positive-4hp",
+        "retest-phase2c::image-exploratory-pure-positive-canon",
+        "retest-phase2c::text-canonical",
+        "retest-phase2c::text-plus-hp",
+        "retest-phase2c::text-pure-positive-canon",
+        "retest-phase2c::text-scale-4",
+        "retest-phase2c::text-scale-8",
+        "retest-phase2d::image-terse",
+        "retest-phase2d::image-verbose",
+        "retest-phase2d::text-terse",
+        "retest-phase2d::text-verbose",
+        "retest-phase2e::canonical-first",
+        "retest-phase2e::canonical-last",
+        "retest-phase2e::config-default",
+        "retest-phase2e::random"
+      ],
+      "hypothesis_refs": [
+        "H1",
+        "H4",
+        "H5",
+        "H7",
+        "H8"
+      ],
+      "preregistered": "exploratory",
+      "deviations": [],
+      "predicted_outcome": "Single-pass baseline characterisation on the Gold-Standard 4-map test tiles. H1 (phase2a) contrasts text-only vs image-using prompts without a committed directional winner; H7 (phase2b) expects T=0.0 optimal; H8 (phase2c) hint/scale variants; H5 (phase2d) verbosity; H4 (phase2e) few-shot ordering. No single config is preregistered to win; the deliverable is the tiered board + the best-achievable single-pass F1@20m as the baseline the consensus (H3) and PV (H2) architectures are measured against.",
+      "tie_set": [
+        "retest-phase2e::canonical-last",
+        "retest-phase2c::text-scale-4",
+        "retest-phase2c::text-scale-8",
+        "retest-phase2b::text-t0.3",
+        "retest-phase2e::config-default",
+        "retest-phase2b::text-t0.0",
+        "retest-phase2d::image-terse",
+        "retest-phase2c::text-canonical",
+        "retest-phase2c::text-pure-positive-canon",
+        "retest-phase2d::image-verbose",
+        "retest-phase2c::image-plus-hp",
+        "retest-phase2c::image-exploratory-pure-positive-4hp",
+        "retest-phase2e::canonical-first",
+        "retest-phase2d::text-terse",
+        "retest-phase2c::text-plus-hp",
+        "retest-phase2c::image-scale-8",
+        "retest-phase2b::image-t0.0",
+        "retest-phase2b::text-t0.7",
+        "retest-phase2c::image-scale-4",
+        "retest-phase2d::text-verbose"
+      ],
+      "outcome": "Era-1 (Gold-Standard 4-map, 512px, 340-tile, curator GT) single-pass baseline board, tiered by round-robin tile-swap micro-F1 permutation (10k perms, seed 42, two-sided; BH-FDR q=0.05; 227/630 pairs significant -> 4 tiers) at the 20m headline buffer. Per the preregistered H-series plan, the best (config) operating point against the known GS test-tile ground truth IS the characterisation deliverable (not in-sample to hedge). Tier 1 (tie_set) is a BROAD 20-of-36-cell statistical tie spanning F1 0.583-0.631, led by canonical-last (phase2e few-shot ordering, F1 0.631, MCC 0.213) -- the 340-tile GS test set cannot separate the stronger text and image single-pass configs from one another. Below: Tier 2 (8 cells, F1 0.568-0.581), Tier 3 (6, 0.502-0.537), Tier 4 (image-t1.3 0.492 + image-only 0.470). The metric-dependent-winner pattern recurs: text cells reach F1 ~0.60-0.61 at MCC ~0.0 while image cells trail on F1 but carry higher tile-discrimination MCC (image-verbose 0.603/0.281, verbose-text-image 0.517/0.291). Headline: single-pass alone tops out at F1 ~0.63 on the GS tiles; the consensus architectures (era1-leaderboard) lift this substantially (+0.14 best). gemini-3-flash, MINIMAL thinking; 14-buffer+MCC (Session 102 re-score, no re-run). Artefacts: results/paper-eval/n1/512px-14buf-mcc/tiering/tiering_20m.{json,md}; script scripts/era1_leaderboard_tiering.py.",
+      "paper_section": "Results",
+      "output_path": "results/paper-eval/n1/512px-14buf-mcc",
+      "working_notes_obs": [],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/paper-eval/n1/512px-14buf-mcc"
+        ],
+        "last_extracted_at": "2026-06-08T07:25:59Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "analysis_id": "era1-leaderboard",
+      "type": "leaderboard",
+      "conditions_compared": [
+        "retest-phase2a::brief-text",
+        "retest-phase2a::brief-text-image",
+        "retest-phase2a::image-only",
+        "retest-phase2a::verbose-text",
+        "retest-phase2a::verbose-text-image",
+        "retest-phase2b::image-t0.0",
+        "retest-phase2b::image-t0.3",
+        "retest-phase2b::image-t0.7",
+        "retest-phase2b::image-t1.0",
+        "retest-phase2b::image-t1.3",
+        "retest-phase2b::text-t0.0",
+        "retest-phase2b::text-t0.3",
+        "retest-phase2b::text-t0.7",
+        "retest-phase2b::text-t1.0",
+        "retest-phase2b::text-t1.3",
+        "retest-phase2c::image-canonical",
+        "retest-phase2c::image-plus-hp",
+        "retest-phase2c::image-pure-positive-canon",
+        "retest-phase2c::image-scale-4",
+        "retest-phase2c::image-scale-8",
+        "retest-phase2c::image-exploratory-pure-positive-2hp",
+        "retest-phase2c::image-exploratory-pure-positive-4hp",
+        "retest-phase2c::image-exploratory-pure-positive-canon",
+        "retest-phase2c::text-canonical",
+        "retest-phase2c::text-plus-hp",
+        "retest-phase2c::text-pure-positive-canon",
+        "retest-phase2c::text-scale-4",
+        "retest-phase2c::text-scale-8",
+        "retest-phase2d::image-terse",
+        "retest-phase2d::image-verbose",
+        "retest-phase2d::text-terse",
+        "retest-phase2d::text-verbose",
+        "retest-phase2e::canonical-first",
+        "retest-phase2e::canonical-last",
+        "retest-phase2e::config-default",
+        "retest-phase2e::random",
+        "retest-phase3a::image-t0.3-n5-4of5",
+        "retest-phase3a::image-t0.3-n10-8of10",
+        "retest-phase3a::image-t0.3-n30-22of30",
+        "retest-phase3a::image-t0.7-n5-4of5",
+        "retest-phase3a::image-t0.7-n10-7of10",
+        "retest-phase3a::image-t0.7-n30-18of30",
+        "retest-phase3a::image-t1.0-n5-4of5",
+        "retest-phase3a::image-t1.0-n10-7of10",
+        "retest-phase3a::image-t1.0-n30-19of30",
+        "retest-phase3a::text-t0.3-n5-5of5",
+        "retest-phase3a::text-t0.3-n10-8of10",
+        "retest-phase3a::text-t0.3-n30-23of30",
+        "retest-phase3a::text-t0.7-n5-4of5",
+        "retest-phase3a::text-t0.7-n10-8of10",
+        "retest-phase3a::text-t0.7-n30-24of30",
+        "retest-phase3a::text-t1.0-n5-4of5",
+        "retest-phase3a::text-t1.0-n10-7of10",
+        "retest-phase3a::text-t1.0-n30-22of30",
+        "retest-phase3a-high::text-high-t0.3-n5-4of5",
+        "retest-phase3a-high::text-high-t0.3-n10-8of10",
+        "retest-phase3a-high::text-high-t0.3-n30-23of30",
+        "retest-phase3a-high::text-high-t0.7-n5-4of5",
+        "retest-phase3a-high::text-high-t0.7-n10-7of10",
+        "retest-phase3a-high::text-high-t0.7-n30-22of30",
+        "retest-phase3a-high::text-high-t1.0-n5-4of5",
+        "retest-phase3a-high::text-high-t1.0-n10-8of10",
+        "retest-phase3a-high::text-high-t1.0-n30-23of30",
+        "retest-phase3a-replication::text-high-t0.7-n5-4of5",
+        "retest-phase3a-replication::text-high-t0.7-n10-8of10",
+        "retest-phase3a-replication::text-high-t0.7-n30-21of30",
+        "retest-phase3a-replication::text-minimal-t0.7-n5-4of5",
+        "retest-phase3a-replication::text-minimal-t0.7-n10-8of10",
+        "retest-phase3a-replication::text-minimal-t0.7-n30-25of30",
+        "retest-phase3c::image-h9-a-diversity-3of5",
+        "retest-phase3c::image-h9-b-diversity-3of5",
+        "retest-phase3c::image-h9-c-diversity-3of5",
+        "retest-phase3c::image-h9-d-diversity-3of5",
+        "retest-phase3c::image-h9-e-diversity-3of5",
+        "retest-phase3c::text-h9-a-diversity-4of5",
+        "retest-phase3c::text-h9-b-diversity-4of5",
+        "retest-phase3c::text-h9-d-diversity-4of5",
+        "retest-phase3c::text-h9-e-diversity-4of5"
+      ],
+      "hypothesis_refs": [
+        "H1",
+        "H3",
+        "H4",
+        "H5",
+        "H7",
+        "H8",
+        "H9"
+      ],
+      "preregistered": "exploratory",
+      "deviations": [],
+      "predicted_outcome": "Definitive Era-1 board (H1-H9 cross-cut). H3: consensus voting over K proposer passes beats single-pass on localisation F1; the diversity dividend predicts HIGH-thinking (more diverse) pools recover or exceed minimal-thinking under consensus. H9: cross-pass diversity beats identical passes. Expected shape: HIGH-thinking text consensus tops F1 (~0.77); consensus >> single-pass; image trails on F1 but leads MCC.",
+      "tie_set": [
+        "retest-phase3a-high::text-high-t1.0-n30-23of30",
+        "retest-phase3a-high::text-high-t0.3-n30-23of30",
+        "retest-phase3a-high::text-high-t0.7-n30-22of30",
+        "retest-phase3a-high::text-high-t1.0-n10-8of10",
+        "retest-phase3a-replication::text-high-t0.7-n30-21of30",
+        "retest-phase3a-high::text-high-t0.3-n10-8of10"
+      ],
+      "outcome": "The DEFINITIVE Era-1 (Gold-Standard 4-map, 512px, 340-tile, curator GT) leaderboard: all 36 single-pass + all 42 consensus cells in one tiered board (dodgy PV-512 excluded, D1), round-robin tile-swap micro-F1 permutation (10k perms, seed 42, two-sided; BH-FDR q=0.05; 2103/3003 pairs significant -> 9 tiers) at 20m. Per the preregistered H3 plan the best (N, threshold) operating point vs the GS test tiles IS the characterisation deliverable (not in-sample). FINDINGS, all matching priors: (1) BEST CONFIG -- Tier 1 (tie_set) is a 6-member statistical tie of HIGH-thinking text consensus at N>=10 (F1 0.759-0.775), led by text-high-t1.0-n30-23of30 (F1 0.775, MCC 0.642); the clean HIGH-vs-MINIMAL replication champion text-high-t0.7-n30-21of30 (0.770) sits in Tier 1 too. (2) CONSENSUS DOMINATES SINGLE-PASS -- every one of the 42 consensus cells (Tiers 1-5, F1 0.639-0.775) outranks every single-pass cell; the best single pass, canonical-last (0.631), is rank 43. (3) DIVERSITY DIVIDEND, TIERED -- HIGH-thinking text consensus (~0.77, Tiers 1-2) >> minimal text consensus (~0.69-0.70, Tiers 3-4) >> text single-pass (~0.60, Tier 6). (4) F1-vs-MCC DIVERGENCE -- image consensus pools localise lower on F1 but discriminate far better at tile level: the image-h9 diversity pools sit at F1 ~0.664-0.671 / MCC ~0.65-0.66, well above text consensus at matched F1 (text-t0.3-n30 0.692 F1 / 0.181 MCC); text-HIGH wins BOTH (F1 0.77, MCC 0.55-0.64). (5) H9 DIVERSITY does not separate from the identical-pass baseline-A within its tier (consistent with the prior H9 rejection). All 78 cells reproduce their published F1@20m to <=0.0001. gemini-3-flash; MINIMAL thinking except phase3a-high/-replication (HIGH). The clean Era-1 proposer-verifier grid (gated Stage D) will be folded in by re-tiering this board. Artefacts: results/era1-leaderboard/tiering_20m.{json,md}; script scripts/era1_leaderboard_tiering.py.",
+      "paper_section": "Results",
+      "output_path": "results/era1-leaderboard",
+      "working_notes_obs": [],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/era1-leaderboard"
+        ],
+        "last_extracted_at": "2026-06-08T07:25:59Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "analysis_id": "tile-size-sweep",
+      "type": "sweep",
+      "conditions_compared": [
+        "pv-diag-256::text-baseline",
+        "pv-diag-256::text-consensus-5of5",
+        "pv-diag-384::baseline-flash-image-minimal-t-0-0",
+        "pv-diag-384::baseline-flash-image-minimal-t-0-7",
+        "pv-diag-384::baseline-flash-text-minimal-t-0-0-pv-baseline",
+        "pv-diag-384::baseline-flash-text-minimal-t-0-7",
+        "pv-diag-384::baseline-pro-image-medium-t-0-0",
+        "pv-diag-384::baseline-pro-text-medium-t-0-0",
+        "pv-diag-384::flash-high-image-n5-image-t0.3-consensus-9of10",
+        "pv-diag-384::flash-high-image-n5-image-t0.7-consensus-7of10",
+        "pv-diag-384::flash-high-image-n5-image-t1.0-consensus-6of10",
+        "pv-diag-384::flash-high-text-n5-text-t0.3-consensus-10of10",
+        "pv-diag-384::flash-high-text-n5-text-t0.7-consensus-26of30",
+        "pv-diag-384::flash-high-text-n5-text-t1.0-consensus-9of10",
+        "pv-diag-384::flash-minimal-text-n30-t07-text-t0.3-consensus-10of10",
+        "pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-consensus-29of30",
+        "pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-consensus-9of10",
+        "retest-phase2b::image-t0.0",
+        "retest-phase2b::image-t0.7",
+        "retest-phase2b::text-t0.0",
+        "retest-phase2b::text-t0.7",
+        "retest-phase2d::image-terse",
+        "retest-phase2e::canonical-last",
+        "retest-phase3a-high::text-high-t0.3-n30-23of30",
+        "retest-phase3a-high::text-high-t0.7-n30-22of30",
+        "retest-phase3a-high::text-high-t1.0-n30-23of30",
+        "retest-phase3a-replication::text-minimal-t0.7-n30-25of30",
+        "retest-phase3a::image-t0.3-n30-22of30",
+        "retest-phase3a::image-t0.7-n30-18of30",
+        "retest-phase3a::image-t1.0-n30-19of30",
+        "retest-phase3a::text-t0.3-n30-23of30",
+        "retest-phase3a::text-t1.0-n30-22of30"
+      ],
+      "hypothesis_refs": [
+        "H11"
+      ],
+      "preregistered": "exploratory",
+      "deviations": [],
+      "predicted_outcome": "H11 (tile size): the prior expectation was non-monotonic with a 384px sweet spot. The refined hypothesis (Obs 351): the optimal tile size shifts with FP-filtering strength \u2014 single-pass (no filter) prefers larger tiles; strong filters (HIGH-thinking consensus, consensus+verifier) shift the optimum to 384; 256 falls under every architecture.",
+      "tie_set": [],
+      "outcome": "Tile-size characterisation across 256/384/512 px (F1@20m), gemini-3-flash, GS 4-map curator GT. The optimal tile size is ARCHITECTURE-DEPENDENT, consistent with the FP-filtering mechanism (Obs 351, Obs 179, Obs 171). CLEAN ISOLATION (hold architecture x modality x thinking x temperature constant, vary only size): single-pass text climbs monotonically with tile size (256=0.342 < 384=0.520 < 512=0.606) \u2014 with no FP filter, larger tiles give cleaner proposals; single-pass image is flat (384~0.600 ~ 512~0.586). Text MINIMAL consensus still prefers 512 (+0.02..+0.05 over 384 across T0.3/0.7/1.0) \u2014 a weak filter. Text HIGH consensus FLIPS to 384 (T0.7 0.814 > 512 0.773; T0.3 0.789 > 0.774; T1.0 ~tie) \u2014 the strong diversity+vote filter realises 384's higher recall. BEST-ACHIEVABLE FLASH CEILING per size: single-pass 512 (0.631) > 384 (0.520) > 256 (0.342); consensus 384 (0.814) > 512 (0.775) > 256 (0.460). So 384 owns the consensus ceiling, 512 owns the single-pass ceiling, and 256 trails under both. KEY GAP: 256 consensus+VERIFIER (the one architecture where 384 wins decisively) is untested \u2014 pv-diag-256 is consensus-only \u2014 so 'does 256 overwhelm even the verifier' is open (Obs 351); a cheap 256 consensus+PV run would close it. Pro single-pass ran only at 384 (pro-text 0.792, pro-image MCC 0.868) \u2014 shown for context, not a tile-size comparison. Artefacts: results/tile-size-sweep/tile_size_sweep.{json,md}; script scripts/tile_size_sweep.py.",
+      "paper_section": "Results",
+      "output_path": "results/tile-size-sweep",
+      "working_notes_obs": [
+        "Obs 351 \u2014 tile-size \u00d7 architecture interaction confirmed across three sizes; single-pass prefers larger tiles, the consensus/verifier filter shifts the optimum to 384px"
+      ],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/tile-size-sweep"
+        ],
+        "last_extracted_at": "2026-06-08T07:25:59Z",
         "extractor_version": "0.4.0"
       }
     }
