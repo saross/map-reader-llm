@@ -3593,7 +3593,8 @@
             "temperature": 0.0
           },
           "eval_path": "results/rescore-2026-05-31/proposer-verifier-512/verified-adversarial-text-accepted/evaluation.json",
-          "detections": "outputs/h11/proposer-verifier-512/verified-adversarial-text-accepted.geojson"
+          "detections": "outputs/h11/proposer-verifier-512/verified-adversarial-text-accepted.geojson",
+          "_note": "SIDELINED (D1, Session 107): superseded by the clean Era-1 Stage-D PV grid (verified-adv-* conditions on pv-diag-256 / retest-phase3a / -phase3a-high / -phase2b). Thin GAP-9 provenance, pool-unresolved, n=1. Data kept (archive-never-delete); excluded from era1-leaderboard."
         }
       ],
       "_ignored_evals": [
@@ -4239,6 +4240,44 @@
           "verifier_config": null,
           "eval_path": "results/paper-eval/phase2/512px-14buf-mcc/p2b-text-t-1-3/evaluation.json",
           "detections": "outputs/retest/phase2b/track2-text/T1.3"
+        },
+        {
+          "label": "verified-adv-text-t0.0",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "text-t0.0",
+          "source_run": "retest-phase2b",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": 0.2,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/era1-pv-stage-d/512-single-text-t0.0/evaluation.json",
+          "detections": "outputs/era1-pv-stage-d/512-single-text-t0.0/accepted_t0.2_passes"
+        },
+        {
+          "label": "verified-adv-image-t0.0",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "image-t0.0",
+          "source_run": "retest-phase2b",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/era1-pv-stage-d/512-single-image-t0.0/evaluation.json",
+          "detections": "outputs/era1-pv-stage-d/512-single-image-t0.0/accepted_t0.15_passes"
         }
       ],
       "_ignored_evals": [
@@ -4944,6 +4983,25 @@
           "verifier_config": null,
           "eval_path": "results/rescore-2026-06-07/phase3/phase3a__track2-text__T1.0__n30__t22/evaluation.json",
           "detections": "outputs/retest/phase3a/track2-text/T1.0/consensus/consensus_t22.geojson"
+        },
+        {
+          "label": "verified-adv-image-t0.7-n30-18of30",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "image-t0.7-n30-18of30",
+          "source_run": "retest-phase3a",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/era1-pv-stage-d/512-consensus-image/evaluation.json",
+          "detections": "outputs/era1-pv-stage-d/512-consensus-image/pass_1/accepted_t0.15.geojson"
         }
       ],
       "_ignored_evals": [
@@ -5326,6 +5384,25 @@
           "verifier_config": null,
           "eval_path": "results/rescore-2026-06-07/phase3/phase3a-high__track2-text__T1.0__n30__t23/evaluation.json",
           "detections": "outputs/retest/phase3a-high/track2-text/T1.0/consensus/consensus_t23.geojson"
+        },
+        {
+          "label": "verified-adv-text-high-t1.0-n30-23of30",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "text-high-t1.0-n30-23of30",
+          "source_run": "retest-phase3a-high",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": 0.1,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/era1-pv-stage-d/512-consensus-text-high/evaluation.json",
+          "detections": "outputs/era1-pv-stage-d/512-consensus-text-high/pass_1/accepted_t0.1.geojson"
         }
       ],
       "_ignored_evals": [
@@ -5993,6 +6070,25 @@
           "verifier_config": null,
           "eval_path": "results/rescore-2026-06-08/pv-diag-256/text-5of5/evaluation.json",
           "detections": "outputs/h11/pv-diag-256/consensus/text-5of5.geojson"
+        },
+        {
+          "label": "verified-adv-text-consensus-5of5",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "text-consensus-5of5",
+          "source_run": "pv-diag-256",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": 0.2,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/era1-pv-stage-d/256-consensus-text-5of5/evaluation.json",
+          "detections": "outputs/era1-pv-stage-d/256-consensus-text-5of5/pass_1/accepted_t0.2.geojson"
         }
       ],
       "_ignored_evals": [

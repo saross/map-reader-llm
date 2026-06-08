@@ -423,7 +423,11 @@
         "retest-phase3c::text-h9-a-diversity-4of5",
         "retest-phase3c::text-h9-b-diversity-4of5",
         "retest-phase3c::text-h9-d-diversity-4of5",
-        "retest-phase3c::text-h9-e-diversity-4of5"
+        "retest-phase3c::text-h9-e-diversity-4of5",
+        "retest-phase3a-high::verified-adv-text-high-t1.0-n30-23of30",
+        "retest-phase3a::verified-adv-image-t0.7-n30-18of30",
+        "retest-phase2b::verified-adv-text-t0.0",
+        "retest-phase2b::verified-adv-image-t0.0"
       ],
       "hypothesis_refs": [
         "H1",
@@ -500,7 +504,7 @@
       "paper_section": "Results",
       "output_path": "results/tile-size-sweep",
       "working_notes_obs": [
-        "Obs 351 — tile-size × architecture interaction confirmed across three sizes; single-pass prefers larger tiles, the consensus/verifier filter shifts the optimum to 384px"
+        "Obs 351 \u2014 tile-size \u00d7 architecture interaction confirmed across three sizes; single-pass prefers larger tiles, the consensus/verifier filter shifts the optimum to 384px"
       ],
       "manually_verified_at": null
     }
