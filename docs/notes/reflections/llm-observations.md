@@ -6312,3 +6312,35 @@ human overrode it ("we have context, finish it"), and finishing surfaced two gen
 gates were there. Deferral dressed up as prudence is just postponed risk. The honest move when
 something is delicate is to make its failure modes *cheap to detect now*, not to push the
 delicacy into a future session that will face the same gates with less context.
+
+## Session 106 — 2026-06-08 (subagents as a check on the *orchestrator's* beliefs, not just extra hands; and the production-vs-characterisation default mismatch)
+
+Session 105's lesson was that gates falsify the *agent's* output. This session extended it one
+level up: an independent subagent falsified the *orchestrator's framing*. I had concluded the
+diversity-analysis CRS mislabel was "cosmetic," and was about to log it as a low-priority
+won't-fix. The only thing that stopped that was a structural choice made for an unrelated
+reason — I scoped the CRS work as **investigate-and-deliver-a-PR, not blind-fix**, because the
+script was *validated* and the global policy flags validated-code changes for review. That gate
+existed to protect the code; it ended up protecting me from my own confident-but-wrong
+characterisation (the agent's adversarial trace showed a live F1=0 bug). The transferable
+pattern: when you (the orchestrator) hold a belief that determines a disposition — "this is
+harmless," "this is complete," "this can be deleted" — routing the work through an *independent*
+agent whose remit is to investigate rather than execute-your-belief is a cheap check on the
+belief itself. It is the multi-agent analogue of the anti-confabulation rule: an agent report,
+like a beacon, is a pointer not an authority — so I re-verified the agent's load-bearing
+headlines at source before acting on them (the "79/79 Era-1 complete" claim, the "stash is a
+strict subset" claim, the consensus-sweep provenance) — but the *converse* also holds: my own
+confident conclusions deserve an independent agent's scepticism before they harden into action.
+
+The second pattern was a default mismatch I should carry forward. Across the whole session,
+every time I offered a "recommended (lighter)" option beside a "comprehensive" one — headline-vs-
+per-N decomposition, passes-only-vs-built phase3c conditions, champions-vs-all-42 on the board,
+4-pairs-vs-all-matched configs — the human chose comprehensive, without exception. My default is
+tuned for "ship the smallest correct thing," which is correct for a *deployment* deliverable and
+wrong for a *characterisation* one, where completeness **is** the deliverable and a thin or
+partial cell is a hole in the scientific record, not an economy. The lesson is to read the
+*class* of work first: the Gold-Standard characterisation thread wants exhaustiveness; the
+55-map deployment thread wants the minimal sound result. Same instinct (economy) is a virtue in
+one and a vice in the other. He also applied this as a research-quality judgement I'd missed —
+declining to cite a thin n=1 weak-provenance cell to "complete" a board when a clean replacement
+cost ~$3 — which is the deployment-economy reflex leaking into a place it doesn't belong.

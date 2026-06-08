@@ -7005,3 +7005,70 @@ phase3a-replication / phase3c; manifest 23/28 runs decomposed). Then TODO #4–6
   untracked dir untouched. Cleaner pattern: commit+push from the producing machine.
 - The eCryptfs stat-dirty "modified files" artefact recurred at session start (≈19 files,
   identical content hashes) — benign, the same eCryptfs transient as Session 104.
+
+## Session 106 — 2026-06-08 — Era-1 phase3 + pv-diag-256 decomposed (28/28); CRS bug fixed; machines reconciled; Era-1 leaderboard planned
+
+A long multi-phase session. **$0 API** (all re-scores eval-only; the one planned API run —
+Stage D verifier grid — is deferred to S107). Commits `bfdcf512f`→`8834df44e`, all pushed;
+all three machines synced.
+
+**Manifest decomposition (the deferred TODO #3 + #4 + #5 + #6):**
+
+- **Era-1 phase3 (4 runs)** — `retest-phase3a` / `-high` / `-replication` / `-phase3c`,
+  comprehensive per-N grain. New scripts: `build_phase3_subpool_consensus.py` (regenerate
+  N=5/10 via `merge_passes --passes 1..N`), `materialise_phase3c_consensus.py` (45 H9
+  cross-variant diversity pools), `build_phase3_rescore_worklists.py`,
+  `author_phase3_conditions.py`. Re-scored **540 geojsons** at 14-buf+MCC on zbook (495
+  file-mode + 45 dir-mode replicate-mean), 540/540 ok. **42 conditions + 4 sweep analyses**,
+  all **signed off** (`manually_verified_at` 2026-06-08; thinking-levels verified at source).
+  Findings: diversity dividend confirmed (HIGH text ~0.77 ≫ minimal ~0.69; replication HIGH
+  0.7705 > MINIMAL 0.7033); H9 rejected; F1-vs-MCC divergence in minimal text.
+- **`_ignored_evals` close-out (#4)** — 1,247 deliberate exclusions across 18 runs
+  (`author_ignored_evals.py`); drift-check made sharp.
+- **pv-diag-256 (#5)** — re-scored its 6 consensus geojsons (256 px / px256-1032 / curator GT)
+  → `text-baseline` + `text-consensus-5of5` conditions → **manifest 28/28**. 256 px is the
+  small-tile anchor (F1@20m orders 256 < 512 < 384 — non-monotonic).
+- **Cross-run provenance (#6)** — `source_run=gold-standard-v2` on verifier-t-pilot's 3
+  conditions (genuine cross-run); remaining 30 `pool-unresolved` documented-accepted as
+  structural (PV own-stubs, pv-384 label-format, phase3c GAP-6 multi-pool, pv-256
+  passes-not-materialised).
+
+**Final manifest**: 28 runs / 275 conditions / 1114 passes / 7 analyses, **ALL VALID**;
+drift-check **15 pass / 13 partial / 0 fail** (13 partials = benign `geojson-missing` +
+`pool-unresolved` only).
+
+**CRS bug (PR #10, merged)** — a background agent found `analyse_diversity.consensus_to_gdf`
+mislabels `apply_threshold`'s 4326 output as 32635, a **live bug** (F1=0 on re-run) since
+`8c8e101fc` (2026-04-11). Fixed (declare 4326 + reproject) + regression test + contract docs
+(`spatial-reference.md` § consensus voting path, `scripts/README.md`). Published Phase 3c CSVs
+**unaffected** (predate the break; reproduced via `evaluate_detections` to ~0.001) and **not
+regenerated**. Reproducibility lesson → **Obs 350**.
+
+**`/audit`** — 4 parallel adversarial agents over the new scripts + the CRS fix; latent bugs
+fixed (all behaviour-preserving — manifest byte-identical); 2 data-coupled verifier tests
+repointed (phase3c→pv-diag-256; cleaned-GT eval→archive path).
+
+**Machine reconciliation** — config-axis orphan committed from zbook (`6b5f2690`); **sapphire
+brought from 29-behind → clean** (byte-identical `canonical-gt` removed; superseded
+`canonical-rescore` partial-stash + old `wbf` manifests discarded after verification;
+`consensus-sweep` documented in deployment-oracle findings §8 + discarded as regenerable).
+
+**Memory + planning** — 2 memories captured (GS-vs-55map class distinction; era definitions).
+**Era-1 leaderboard plan** written (`planning/era1-leaderboard-plan-2026-06-08.md`): Stages
+A/B/C ($0) + a gated **Stage D** verifier grid (≤$50). D1–D3 resolved with Shawn: sideline the
+dodgy PV-512 + build a clean tile × {consensus,single} × {text,image} PV grid; full board;
+full 256/384/512 sweep.
+
+### Contextual assumptions
+
+- **Session 106**, 2026-06-08. Compute on **zbook** (both hosts free by mid-session; amd-tower
+  compute-forbidden). $0 API this session.
+- **CRS correction in-session**: my early characterisation of the diversity CRS mislabel as
+  "cosmetic" was wrong (corrected to live bug); the phase3c manifest is unaffected because the
+  materialiser bypasses `consensus_to_gdf` (scores via `evaluate_detections`). Don't read the
+  early "harmless" commit message / first docstring as current truth — see PR #10 + Obs 350.
+- The eCryptfs stat-dirty "modified files" artefact persisted (benign, identical hashes);
+  explicit pathspecs used for every commit to avoid sweeping it.
+- Only carried-open item: CRS-contract Stages 1–2 (deferred to the generalised-pipeline build,
+  `planning/generalised-pipeline-roadmap.md` WS1). Next session executes the Era-1 leaderboard
+  plan (incl. the gated Stage-D verifier run).

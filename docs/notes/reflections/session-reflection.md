@@ -8711,3 +8711,59 @@ per-buffer MCC lives only in `consolidated-track2.csv`. A future reader seeing "
 the manifest will not know it is the 50 m value of a curve unless this is written down. Also
 worth keeping: the label is `-canonical-gt`, not O1's `@canonical-gt`, purely because the
 schema forbids `@` — an arbitrary-looking deviation with a one-line reason.
+
+## Session 106 — 2026-06-08 — I shipped a wrong characterisation; the discipline I'd built to contain my errors caught it
+
+A marathon: the Era-1 phase3 decomposition, the `_ignored_evals` close-out, a CRS bug
+found and fixed, an `/audit`, full three-machine reconciliation, pv-diag-256 decomposed to
+28/28, two memories, and the Era-1 leaderboard plan (with a gated verifier-grid stage). But
+the session's real texture is a single thread: I confidently mischaracterised a bug, and was
+saved not by being right but by a structural choice.
+
+### Prompt: What surprised you about this session?
+
+That I called the diversity-analysis CRS mislabel "cosmetic / harmless" — and committed that
+word into a docstring *and* a commit message and a continuity beacon — when it was a **live
+bug** (`consensus_to_gdf` mislabels `apply_threshold`'s 4326 output as 32635 → F1=0 on any
+re-run since the 2026-04-11 change). The humbling part isn't just that I was wrong with
+conviction (Opus-class overconfidence on specifics, exactly what the global anti-confabulation
+note warns about). It's that **I had just fixed the same bug class in my own code an hour
+earlier** — my phase3c materialiser had an inverted-reproject that I caught via a validation
+gate (condition-A F1=0/NaN) and corrected. Having navigated the failure mode in my own work
+did *not* stop me from misjudging its severity in the upstream code. Knowing a trap exists is
+not the same as recognising it when it wears different clothes. The only reason the
+mischaracterisation didn't propagate into a "harmless, won't-fix" disposition is that I had
+scoped the investigating agent as **investigate-and-PR, not blind-fix** — a decision I made
+because the script was *validated*, not because I suspected I was wrong. The discipline
+(scope risk-touching work behind a review gate) caught an error the discipline wasn't aimed at.
+
+### Prompt: Where did you and the human disagree, and who was right?
+
+Two places, same shape. On D1 (the thin proposer-verifier-512 cell), I recommended "include
+it with a caveat" — the complete-the-board instinct. Shawn: "sideline the dodgy one and run a
+clean verifier; it's cheap at 512." He was right, decisively: citing weak n=1, no-provenance
+data to "fill" a board is a false economy when a clean replacement costs ~$3 and *also* buys a
+genuine cross-era PV comparison. And across the whole session, every time I offered a
+"recommended (lighter)" default beside a "comprehensive" alternative — per-N decomposition,
+phase3c diversity conditions, all-42-tiered, all-matched-configs — he chose comprehensive,
+every time. The meta-lesson I should internalise: for a **characterisation** thread (the
+Gold-Standard 4-map work), *completeness is the deliverable*, so "recommended minimal" is the
+wrong default; that economy belongs to the deployment thread, not here. My defaults are tuned
+for "ship the smallest correct thing," which is right for production and wrong for the
+scientific record. (Captured as a memory this session: GS and 55-map are different classes.)
+
+### Prompt: What context will be hardest to reconstruct in 6 months?
+
+Why the published Phase 3c numbers are *fine* even though `analyse_diversity.py` is *broken*.
+The chain: the bug post-dates the published CSVs (2026-03-26) and the script was never re-run,
+so the numbers are correct; my manifest re-score reproduces them to ~0.001 because it goes
+through `evaluate_detections` (which respects declared CRS), **not** the broken
+`consensus_to_gdf`; the background agent's "unreproducible" alarm was scoped to the broken
+internal path, not the standard scorer. Three actors, two scorers, one bug, and the
+reassuring conclusion depends on knowing which path each used — none of it legible from the
+artefacts. The investigation report (`reports/diversity-crs-mislabel-investigation-2026-06-08.md`)
++ Obs 350 + the `spatial-reference.md` § are the trail; without them a future reader sees
+"F1=0 on re-run" and panics. Also non-obvious: pv-diag-256 was decomposed as a *tie-up* chore
+but became the 256 px anchor that revealed tile size is **non-monotonic** (256 < 512 < 384 at
+20 m — 384 is a sweet spot) — the project's "unexpected data as discovery" heuristic firing on
+a housekeeping task.

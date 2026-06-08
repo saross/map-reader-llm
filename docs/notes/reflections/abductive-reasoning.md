@@ -5404,3 +5404,49 @@ checked first. "ALL VALID" was true and irrelevant to the question the next tool
 `condition_id` pattern `^[a-z0-9-]+::[a-z0-9._-]+$` on the first validation — a default-following
 correction with no abductive content (the validator simply said no), resolved to `-canonical-gt`.
 Recorded only because the deviation from a human-agreed name will otherwise read as arbitrary.
+
+## Session 106 — 2026-06-08 — the same CRS bug, caught once and mischaracterised once; and an alarm that was right *and* over-scoped
+
+Two linked sequences on one bug class (a GeoDataFrame labelled with a CRS its coordinates
+aren't in), plus a default-following footnote. The instructive pairing: I diagnosed the bug
+correctly when it was *mine*, then misjudged its severity when it was *upstream* — having the
+corrected belief in hand did not transfer.
+
+**Sequence 1 (self-caught).**
+**Surprising fact:** my validation re-score of phase3c condition-A returned F1=0 / a NaN crash
+(every detection `source_tile = "unknown"`).
+**Probe:** inspected a written coordinate — `[22.5114, 0.00038]` (lon ~22.5, lat ~0), not
+Bulgaria. Arithmetic check: reprojecting a true WGS84 point `(25.7, 42.4)` while *mislabelling*
+it EPSG:32635 produces exactly `(22.51, 0.00038)`.
+**Revision:** my premise was wrong — `apply_threshold` already emits 4326 (confirmed empirically
+`[25.766, 42.489]`), so my materialiser's 32635→4326 reproject was corrupting coordinates. Fix:
+write the output as-is. (Caught entirely by the validation gate, before any bad data committed.)
+
+**Sequence 2 (mischaracterised, then corrected by an agent).**
+**Surprising fact:** the background CRS agent reported the analogous mislabel in
+`analyse_diversity.consensus_to_gdf` is a **live bug** (F1=0 on re-run) and that "the published
+Phase 3c CSVs are unreproducible from current disk data" — contradicting both my belief that it
+was "cosmetic/harmless" *and* my own validation, which had reproduced the published F1 to ~0.001
+an hour earlier.
+**Probe:** re-verified at source — (a) my materialiser does **not** route through
+`consensus_to_gdf` (it scores via `evaluate_detections`, which respects declared CRS); (b) the
+source run geojsons are genuinely 32635; (c) my committed re-score gives A-t4 0.7171 vs published
+0.7163; (d) the *buggy* path maps 556/556 points to no tile, the *fixed* path 0/556.
+**Revision:** two at once — "cosmetic" → "live bug" (the agent was right), and "unreproducible"
+→ "unreproducible **via the broken internal path only**; the published numbers are reproducible
+via the standard scorer." The reconciliation needed identifying which of two scorers each of
+three actors used. The generalisable lesson: an adversarial agent's contradictory alarm can be
+simultaneously **correct** (the bug is real) and **over-scoped** (its blast radius is narrower
+than claimed) — resolve it by pinning the *code path* behind each measurement, not by accepting
+or dismissing the alarm whole. And the meta-point across the pair: I held sequence 1's corrected
+belief ("this label-vs-coords class of bug is real and severe") and still defaulted to
+"cosmetic" for sequence 2. Recognising a failure mode in one guise does not inoculate against it
+in another; the structural gate (scope validated-code work as investigate-and-PR) did the
+inoculating that my pattern-memory failed to.
+
+**Footnote (default-following correction):** I proposed running the planned clean verifier at
+**n=3** ("more replicates = more robust"). The human questioned it ("I thought we always ran
+n=1"). **Probe:** Era-2 `proposer-verifier-384` has 8 single verifier-pass metas (the `-v2`
+files are replicate re-runs, deferred), i.e. n=1. **Revision:** match the established protocol
+(n=1), not an imported generic prior. No abductive content — recorded because I introduced a
+parameter the prior eras never used, and the human's memory of the protocol caught it.
