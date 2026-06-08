@@ -5450,3 +5450,38 @@ n=1"). **Probe:** Era-2 `proposer-verifier-384` has 8 single verifier-pass metas
 files are replicate re-runs, deferred), i.e. n=1. **Revision:** match the established protocol
 (n=1), not an imported generic prior. No abductive content — recorded because I introduced a
 parameter the prior eras never used, and the human's memory of the protocol caught it.
+
+
+## Session 107 — 2026-06-08 — I predicted the verifier would drown at 256; it rescued 256 instead
+
+**Surprising fact.** 256 px was the worst tile at consensus-only (F1 0.460, below 512's 0.775).
+I had just written Obs 351 flagging that 256-consensus+verifier was untested and might
+*overwhelm* the verifier — the denser FP pool past the point a filter can cope. Stage D ran the
+verifier over the 256 text-5of5 consensus and it scored **0.856** (+0.396), the largest delta
+in the grid.
+
+**Probe.** The smoke test (12 candidates/cell) showed 256 accepting only ~42% vs 83–100% at
+512 — I initially read that as the verifier struggling. The full run + 14-buf+MCC scoring
+showed the opposite: that low accept rate *is* the rescue — the verifier pruning 256's
+idiosyncratic FPs while keeping its high-recall TPs. Cross-checked against the mechanism
+(Obs 172: PV gain tracks proposer recall, not F1) and the gradient held: gain was +0.40 for the
+noisiest proposer (256 consensus), +0.16/+0.09 for bare single-pass, +0.018 for the already-clean
+512 HIGH-text consensus.
+
+**Revision.** "256 might overwhelm the verifier" → "the verifier *rescues* 256 — the smaller
+tile's recall is realisable once a strong enough FP filter is in the loop; 256 only fails when
+the filter is weak (consensus voting alone)." This *refines* rather than overturns the Obs 351
+mechanism: the architecture-dependence is real, but the rescue point sits further out than I
+predicted. Generalisable lesson: when I hold a mechanism that says "X is bad because of FP
+density," I must check whether the architecture under test contains a filter strong enough to
+flip the sign — I had the mechanism and still predicted the wrong sign because I stopped the
+reasoning one step early.
+
+**Footnote (default-following correction).** Shawn corrected me for *over-hedging* the
+cross-size comparability (the tile-set confound). **Probe:** the 256/384/512 tilings are of the
+same 4 maps + same curator GT, so mound-level F1@20m is comparable; the confound bites only
+tile-level MCC (tile-count-dependent TN base). **Revision:** report cross-size F1 as comparable;
+reserve the confound caveat for MCC. Then I *over*-corrected — let "strongest combo" (an
+overstatement) into the close-out — and caught it myself in warm context. The meta-pattern:
+removing a hedge is itself an error-prone move; the correction tends to overshoot into the
+opposite confident claim unless I re-state the new bound precisely. (Memory captured.)

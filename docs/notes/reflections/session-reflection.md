@@ -8767,3 +8767,54 @@ artefacts. The investigation report (`reports/diversity-crs-mislabel-investigati
 but became the 256 px anchor that revealed tile size is **non-monotonic** (256 < 512 < 384 at
 20 m — 384 is a sweet spot) — the project's "unexpected data as discovery" heuristic firing on
 a housekeeping task.
+
+## Session 107 — 2026-06-08 — the verifier rescued the tile size I'd written off; and a caveat I removed swung into an overstatement
+
+Executed the Era-1 leaderboard plan end to end (Stages A/B/C local; D a gated ~$5 flex PV
+run on zbook). Two things are worth keeping.
+
+### Prompt: What surprised you about this session?
+
+256 px. Going in — and in Obs 351, which I'd just written — the working hypothesis was that
+256's dense false-positive pool might *overwhelm* the verifier (the failure-mode tail of the
+Goldilocks mechanism). The data said the opposite, hard: 256-consensus went from F1 0.460
+(worst tile at consensus-only, below 512) to **0.856 with the verifier** — +0.396, the
+largest single delta in the whole grid. The smoke test had already whispered it (only ~42% of
+256 candidates accepted vs 83–100% at 512) but I read that as "the verifier is struggling"
+when it was actually "the verifier is doing exactly the FP-pruning 256 needs." The lesson that
+keeps recurring on this project: a high rejection rate is the filter *working*, not failing —
+the same asymmetry (TPs consistent, FPs idiosyncratic) that makes consensus voting work makes
+the verifier rescue the noisiest proposer. I had the mechanism (Obs 172) and still predicted
+the wrong sign for 256, because I let "smaller tile = denser FP pool = bad" run past the point
+where the filter changes the conclusion.
+
+### Prompt: What would you do differently if you replayed this session?
+
+Watch the swing. Shawn corrected me for *over-hedging* the cross-size comparability (the
+tile-set confound) — F1@20m is genuinely comparable across 256/384/512 because they're
+different tilings of the same maps + GT, and there's no more principled tile-size test. I took
+the correction — and then over-corrected, letting "smaller-tile+verifier is the strongest
+combo" into the continuity close-out, which the numbers don't support (384+PV ~0.88 likely
+still leads; the clean 256-vs-384 head-to-head is genuinely pending because the only 384
+figure is Obs 179's original-eval 0.883, not 14-buf+MCC). When a human removes one of my
+caveats, my correction overshoots into the opposite error. The catch this time was
+self-initiated in warm context ("is the written record precise?") — but I'd rather not need
+the catch. The discipline: when you drop a hedge, state the *new* bound precisely, don't just
+flip to the confident claim.
+
+### Prompt: What context will be hardest to reconstruct in 6 months?
+
+Why the headline "256+PV = 0.856 nearly matches 384" is *not* yet a clean result. The 384
+consensus+PV verified probabilities exist on disk (`pv-diag-384/verified/flash-high-text-*of*`)
+but their crop manifest is the 1-of-N union *superset* — the 6-of-10 set is a subset keyed to
+those IDs, and the flash-vs-pro-vs-medium verifier variant needs disambiguating — so a
+14-buf+MCC re-score needs manifest reconstruction, not a one-liner. That's why I held it for
+S108 rather than producing a fast-but-possibly-wrong number under Shawn's direct question. A
+future reader seeing "256≈384" should know the 384 leg of that comparison was never re-scored
+on the standard footing.
+
+### Texture
+
+A long, high-tempo session with a live operational wrinkle — zbook needed a restart mid-gated-run
+— handled by committing+pushing+mirroring the API outputs *first*. Calm because the preservation
+discipline (and the prior "commit API outputs" rule) made the restart a non-event.

@@ -6344,3 +6344,29 @@ partial cell is a hole in the scientific record, not an economy. The lesson is t
 one and a vice in the other. He also applied this as a research-quality judgement I'd missed —
 declining to cite a thin n=1 weak-provenance cell to "complete" a board when a clean replacement
 cost ~$3 — which is the deployment-economy reflex leaking into a place it doesn't belong.
+
+
+## Session 107 — 2026-06-08 (the human stays at the scientific junctures while delegating execution; and "comprehensive over minimal" held a fourth time)
+
+Shawn's mode this session was "continue, let me know if you need input" — genuine delegation of
+a multi-hour, multi-stage execution including a gated API run. But he re-engaged precisely at the
+*scientific* junctures, not the mechanical ones: he checked my consensus-vs-consensus+PV claim
+("does the table include a verifier step?" — it didn't, and the distinction mattered), he caught
+the untested-256 gap ("I thought we'd tested that"), and he asked the one question that exposed an
+overstatement in my own close-out ("how does 256 compare to 384?"). The pattern to carry: when a
+human delegates execution, the high-value moments to surface are the *interpretive* ones — a
+metric's meaning, a missing cell, a comparison's cleanliness — not progress pings. He didn't want
+status; he wanted to be pulled in when a claim's *validity* was at stake.
+
+Second, the S106 "comprehensive-over-minimal" default mismatch held a fourth time and then some:
+offered the choice, Shawn took the *maximal* PV grid and explicitly waved off cost ("even the
+non-flex cost is fine, even if it doubles or triples") and added PV-512 back in. For a
+*characterisation* deliverable, completeness is the deliverable; my economy reflex is miscalibrated
+here and I should stop offering "lighter" as the recommended default on the Gold-Standard thread.
+
+A third, smaller pattern: the operational discipline around the zbook restart was the right
+instinct without being asked — preserve the API spend (commit+push+mirror the probabilities) *before*
+the machine goes down, scrutinise anything that touches API-cost data, and never delete it on another
+machine's say-so. The "commit API outputs immediately" rule plus "extra scrutiny for spend-implicating
+deletions" turned a mid-run reboot into a non-event. Worth generalising: for any long external compute,
+the first question at any interruption is "is the irreplaceable output already in three places?"

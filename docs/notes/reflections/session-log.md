@@ -7072,3 +7072,52 @@ full 256/384/512 sweep.
 - Only carried-open item: CRS-contract Stages 1–2 (deferred to the generalised-pipeline build,
   `planning/generalised-pipeline-roadmap.md` WS1). Next session executes the Era-1 leaderboard
   plan (incl. the gated Stage-D verifier run).
+
+
+## Session 107 — 2026-06-08 — Era-1 (Gold-Standard) definitive leaderboard: Stages A/B/C/D complete, incl. a gated ~$5 PV run
+
+Executed `planning/era1-leaderboard-plan-2026-06-08.md` end to end.
+
+**Harness.** New generic `scripts/era1_leaderboard_tiering.py` (Shawn chose: one harness over the
+plan's two-script approach) — reuses the n1 tile-swap permutation + BH-FDR + greedy-clique machinery
+verbatim; one unified per-tile loader reads each cell's own eval `cli_args` to handle single-pass /
+consensus-single-set / phase3c-replicate-mean. Tier-1 + tier-2 tests; ruff clean.
+
+**Stage A** — `era1-single-pass-baseline-matrix` (36 single-pass): 4 tiers, Tier-1 tie = 20, leader
+`canonical-last` 0.631. **Stage B** — `era1-leaderboard`: 78 cells initially (36 single-pass + 42
+consensus; dodgy PV-512 excluded), consensus dominates bare single-pass; later extended to 82 with the
+Stage-D PV cells → re-tiered to a **sole Tier-1 leader**. **Stage C** — `tile-size-sweep`
+(`scripts/tile_size_sweep.py`): 256/384/512, F1@20m-led, model-matched (Flash) View 2; finding =
+tile-size optimum is architecture-dependent (single-pass 512>384>256; consensus(HIGH-text) 384>512;
+256 trails) → Obs 351.
+
+**Stage D (gated API).** Dry-run (9/9 proposers extract, 0 fail) → `/audit-config` READY → 5-cell
+smoke → full run: **7,113 candidates, gemini-3-flash adversarial text-only T0.0 minimal n=1, realtime
+flex, ~$5** (zbook). Materialised at a prob_t sweep {0.1..0.5} + scored 14-buf+MCC. Verified best-F1@20m
+per cell: 256-consensus 0.460→**0.856** (+0.396), 512-consensus-text-high 0.775→0.793, 512-consensus-image
+0.691→0.728, 512-single-text 0.606→0.770, 512-single-image 0.586→0.674. Minted 5 `verified-adv-*`
+conditions (appended to their proposer runs); sidelined PV-512 (D1, `_note`). Re-tier: `verified-adv-text-high`
+consensus+PV = **sole Tier-1 leader F1 0.792**; cheap minimal single-pass+PV (0.770) reaches the
+HIGH-consensus tier. Headline surprise → **Obs 352** (verifier rescues 256). Obs 351 also written
+(tile-size × architecture).
+
+**Manifest** regenerated: 280 conditions / 1114 passes / 10 analyses ALL VALID, drift-check clean.
+Outcomes authored for the 3 new analyses (pending Shawn's `manually_verified_at`). All 3 machines synced.
+Commits `efa176e86`→`1ed629606`. One memory captured (cross-size F1 comparability).
+
+### Contextual assumptions
+
+- **Session 107**, 2026-06-08. Compute on **zbook** (Shawn's "zbook here, sapphire there" split —
+  another session intermittently used sapphire). amd-tower compute-forbidden; light $0 tabulation +
+  dry-run ran locally, all heavy permutation/verify/scoring on zbook.
+- **zbook was restarted mid-session** (Shawn's request) during the gated run's wrap-up. All Stage-D API
+  outputs (9 probabilities.json + manifests + run.meta) were committed+pushed+mirrored to local *before*
+  the restart; crops (gitignored, 7,113 PNGs) survive on disk + are regenerable. Nothing lost.
+- **sapphire** had stray uncommitted *deletions* of tracked `canonical-gt` files (incl. API-output
+  probabilities.json) at session start — confirmed all committed upstream, restored via `git checkout` +
+  fast-forwarded (no API data at risk; restore, not delete).
+- The **256-vs-384 consensus+PV** comparison is NOT clean yet: the only 384 figure is Obs 179's
+  original-eval 0.883, not 14-buf+MCC. Deferred to S108 (needs crop-manifest reconstruction). Do not read
+  "256≈384" as measured.
+- Open for S108: tile-size-sweep consensus+PV row (incl. the 384 re-score), human sign-off on the 4
+  authored analyses, optional crop cleanup, optional Stage-D findings doc.
