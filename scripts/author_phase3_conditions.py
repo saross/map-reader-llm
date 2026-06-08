@@ -41,9 +41,15 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
+import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO_ROOT / "scripts"))
+
+import generate_post_run_report as g  # noqa: E402
+
 RESCORE = REPO_ROOT / "results" / "rescore-2026-06-07"
 CONDITIONS_JSON = REPO_ROOT / "results" / "run-conditions.json"
 
@@ -87,13 +93,21 @@ def read_f1_mcc(eval_dir: Path) -> tuple[float, dict] | None:
     if not ev.exists():
         return None
     d = json.loads(ev.read_text())
+    buffers = d.get("summary", {}).get("buffers", [])
     b20 = next(
-        (b for b in d["summary"]["buffers"] if b["buffer_metres"] == 20), None
+        (b for b in buffers if b.get("buffer_metres") == 20), None
     )
     if b20 is None:
         return None
-    mcc = d["summary"].get("tile_classification", {}).get("mcc", {})
-    return b20["f1_point"], mcc
+    f1 = b20.get("f1_point")
+    # Guard None / NaN: an evaluator emits NaN F1 in degenerate zero-detection
+    # cases. Returning it would let it win _best_threshold's first-set branch
+    # (NaN > x and x > NaN are both False, so it could never be beaten), silently
+    # selecting a NaN operating point. Treat as "no usable score" instead.
+    if f1 is None or math.isnan(f1):
+        return None
+    mcc = d.get("summary", {}).get("tile_classification", {}).get("mcc", {})
+    return f1, mcc
 
 
 def _best_threshold(eval_glob_dir: Path, label_prefix: str, n: int):
@@ -229,8 +243,15 @@ def main(argv: list[str] | None = None) -> int:
     all_rows: list[str] = []
     cond_ids: dict[str, list[str]] = {}
 
+    # Authoritative run directory from the registry (not string-derived), so the
+    # detections paths the conditions reference match what the verifier resolves.
+    registry = {
+        e["run_id"]: e
+        for e in g.load_run_registry().get("registry", [])
+    }
+
     for run_id, cells in PHASE3A_RUNS.items():
-        run_dir = f"outputs/retest/{run_id.replace('retest-', '')}"
+        run_dir = registry[run_id]["directory_path"].rstrip("/")
         pools, conditions, rows = build_phase3a(run_id, run_dir, cells)
         blocks[run_id] = {"proposer_pools": pools, "conditions": conditions}
         all_rows += [f"\n=== {run_id} ==="] + rows
@@ -280,15 +301,29 @@ def main(argv: list[str] | None = None) -> int:
         "proposer_pool names the diversity grouping (GAP-6: not a single physical "
         "pool -> benign pool-unresolved). 14-buf+MCC, Era-1 340, curator GT.",
     }
+    had_ignored = False
     for run_id, block in blocks.items():
-        doc["decomposition"][run_id] = {
+        existing = doc["decomposition"].get(run_id, {})
+        new_block = {
             "_note": notes[run_id],
             "proposer_pools": block["proposer_pools"],
             "verifier_passes": {},
             "conditions": block["conditions"],
         }
+        # Preserve a sibling _ignored_evals close-out (author_ignored_evals.py)
+        # rather than silently dropping it by wholesale block replacement. NB if
+        # the conditions/operating-points changed, the preserved set may be stale
+        # -> re-run author_ignored_evals.py to recompute (see reminder below).
+        if "_ignored_evals" in existing:
+            new_block["_ignored_evals"] = existing["_ignored_evals"]
+            had_ignored = True
+        doc["decomposition"][run_id] = new_block
     CONDITIONS_JSON.write_text(json.dumps(doc, indent=2) + "\n")
     print(f"\nWROTE {len(blocks)} run blocks to {CONDITIONS_JSON.relative_to(REPO_ROOT)}")
+    if had_ignored:
+        print("NOTE: preserved existing _ignored_evals. If operating points "
+              "changed, re-run scripts/author_ignored_evals.py --write to "
+              "recompute the waiver set.")
     return 0
 
 

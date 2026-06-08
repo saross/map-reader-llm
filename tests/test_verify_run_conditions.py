@@ -72,6 +72,12 @@ def test_verify_feature_count_drift_warns_not_fails():
     # correct scope, but n_detections != current geojson feature count — must WARN
     # for adjudication, NOT hard-fail. Real case: the 55maps text-min cleaned-GT eval
     # records 3861 detections; its geojson was refreshed to 3865 after the eval ran.
+    # NB (data-coupled): the cleaned-GT eval was archived in Session 105 (commit
+    # da2cf355) → results/55maps-cleaned-gt-evaluation/ moved to
+    # archive/55maps-superseded-gt-evals/; eval_path repointed there 2026-06-08 so
+    # the drift case (3861 vs 3865) still holds. (These verifier tests are coupled
+    # to mutable repo state and need repointing when data moves — see the note in
+    # planning/deferred-extensions.md on making them fixture-based.)
     registry_obj = load_run_registry()
     facts = load_run_facts()
     index = _g._build_eval_index()
@@ -85,7 +91,7 @@ def test_verify_feature_count_drift_warns_not_fails():
                 "aggregation": "verified",
                 "n_passes": 5,
                 "detections": "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson",
-                "eval_path": "results/55maps-cleaned-gt-evaluation/text-min/evaluation.json",
+                "eval_path": "archive/55maps-superseded-gt-evals/55maps-cleaned-gt-evaluation/text-min/evaluation.json",
             }],
         }
     }
@@ -177,12 +183,14 @@ def test_verify_flags_f1_all_zero():
 @pytest.mark.tier1
 def test_classify_flags_no_standard_scoring():
     # A run with materialised detection geojsons but ZERO standard evals is flagged
-    # for re-scoring. retest-phase3c (H9 diversity, scored by a non-standard pipeline)
-    # is the example — it sits deep in the backlog and is not yet standardised.
-    # (Data-coupled: once retest-phase3c is re-scored, repoint to another backlog run.)
+    # for re-scoring. pv-diag-256 (the archived threshold_sweep/summary shape, 256
+    # scope, no MCC) is the example — the last undecomposed backlog run (TODO #5).
+    # (Data-coupled: retest-phase3c was the previous example until it was re-scored
+    # to the standard in Session 106; repointed to pv-diag-256 2026-06-08. Once
+    # pv-diag-256 is decomposed too, repoint to another backlog run.)
     registry_obj = load_run_registry()
     index = _g._build_eval_index()
-    c = classify_run("retest-phase3c", registry_obj, index)
+    c = classify_run("pv-diag-256", registry_obj, index)
     assert c["n_evals"] == 0
     assert c["n_materialised_geojson"] > 0
     assert c["no_standard_scoring"]

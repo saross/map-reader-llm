@@ -169,6 +169,20 @@ def main(argv: list[str] | None = None) -> int:
     print(f"phase3c-diversity (dir-mode): {len(p3c)} entries "
           f"({sum(e['replicates'] for e in p3c)} replicate scorings)")
 
+    # Structural expectation: each phase3a cell yields 5+10+30 threshold files;
+    # each phase3c (track x condition) yields 5. A short count means a consensus
+    # dir is missing on disk and was silently skipped by the glob (run the build
+    # steps first) — warn loudly rather than emit a quietly-incomplete worklist.
+    n_cells = sum(len(v) for v in PHASE3A_CELLS.values())
+    exp_p3a = n_cells * (5 + 10 + 30)
+    exp_p3c = sum(len(conds) for conds in PHASE3C_CONDITIONS.values()) * 5
+    if len(p3a) != exp_p3a:
+        print(f"  WARNING: expected {exp_p3a} phase3-consensus entries, got "
+              f"{len(p3a)} — a consensus-n5/n10/30 dir is missing? Build first.")
+    if len(p3c) != exp_p3c:
+        print(f"  WARNING: expected {exp_p3c} phase3c-diversity entries, got "
+              f"{len(p3c)} — a diversity-pool dir is missing? Materialise first.")
+
     if args.dry_run:
         print("\nDRY-RUN — no worklists written.")
         return 0

@@ -122,6 +122,16 @@ def build_cell(input_dir: Path, n: int, execute: bool) -> tuple[bool, str]:
     if result.returncode != 0:
         return False, f"FAILED   {output_dir}\n{result.stderr.strip()[-500:]}"
     n_built = len(list(output_dir.glob("consensus_t*.geojson")))
+    if n_built != n:
+        # A sub-pool of N passes must yield exactly consensus_t1..tN. A mismatch
+        # means either stale files from an earlier run survive (merge_passes
+        # writes with exist_ok=True and does NOT purge the dir) or fewer than N
+        # passes loaded — both contaminate the downstream re-score worklist.
+        # Flag it rather than silently accepting a wrong file count.
+        return False, (
+            f"FAILED   {output_dir}  (expected {n} threshold GeoJSONs, found "
+            f"{n_built} — stale files or short pool; clean the dir and re-run)"
+        )
     return True, f"OK       {output_dir}  ({n_built} threshold GeoJSONs)"
 
 
@@ -160,7 +170,8 @@ def main(argv: list[str] | None = None) -> int:
 
     print(f"\nDone: {n_ok} ok, {n_fail} failed.")
     if not args.execute:
-        print("DRY-RUN — nothing built. Re-run with --execute (on zbook).")
+        print("DRY-RUN — nothing built. Re-run with --execute "
+              "(on zbook/sapphire, never amd-tower).")
     return 1 if n_fail else 0
 
 

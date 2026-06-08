@@ -131,8 +131,12 @@ def materialise_condition(
         pass_detections = load_replication_passes(
             study_dir, sub_conditions, k
         )
-        if not pass_detections:
-            msgs.append(f"SKIP     {rep_dir} — no passes loaded")
+        # Skip if no pass loaded OR every loaded pass is empty: an all-empty
+        # pool (e.g. {p1: [], p2: []}) is a truthy dict but would silently write
+        # 0-feature consensus GeoJSONs that the re-score then scores as F1=0
+        # rather than excluding. Treat it as a SKIP, not a (mis)materialisation.
+        if not pass_detections or not any(pass_detections.values()):
+            msgs.append(f"SKIP     {rep_dir} — no non-empty passes loaded")
             continue
 
         clusters = cluster_across_passes(pass_detections)

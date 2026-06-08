@@ -170,6 +170,26 @@ tooling that can be lifted rather than built fresh.
 
 ---
 
+## Fixture-based verifier tests (test fragility)
+
+**Source**: Session 106 (2026-06-08). Two `tests/test_verify_run_conditions.py`
+tests are coupled to **mutable repo data** and broke as the data evolved:
+
+- `test_classify_flags_no_standard_scoring` used `retest-phase3c` as its
+  "backlog run with no standard scoring" example — invalidated the moment
+  Session 106 re-scored phase3c to the standard. Repointed to `pv-diag-256`.
+- `test_verify_feature_count_drift_warns_not_fails` pointed at
+  `results/55maps-cleaned-gt-evaluation/...`, which Session 105 archived.
+  Repointed to the `archive/55maps-superseded-gt-evals/...` location.
+
+Both were one-line repoints, but the pattern recurs (each repoint is a fresh
+data dependency that will break again). **Deferred option**: redesign these
+tests to build a synthetic eval.json + geojson + decomposition in a tmp fixture
+(decoupled from the live tree), so they assert the verifier's *behaviour* rather
+than a snapshot of repo state. The friction is that `verify_run_conditions`
+resolves paths against `REPO_ROOT`, so a fixture redesign needs a path-root
+injection point — worth doing if these tests break a third time.
+
 <!-- New deferred-extensions sections go below. Use the same template:
      ## <topic>
 
