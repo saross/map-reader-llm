@@ -391,7 +391,12 @@ def load_cells(
     for r in resolved:
         cond, eval_path, cli = r["cond"], r["eval_path"], r["cli"]
         tp, fp, fn, n_passes = cell_per_tile(cli, gdf_ref, gdf_bounds, tile_order)
-        kind = "consensus" if cond.get("architecture") == "consensus" else "single-pass"
+        # Kind label: distinguish the three Era-1 architectures so the board
+        # does not mislabel proposer-verifier cells as single-pass.
+        kind = {
+            "consensus": "consensus",
+            "proposer-verifier": "verified-PV",
+        }.get(cond.get("architecture"), "single-pass")
         eval_f1 = board_f1_at_20m(eval_path)
         observed = micro_f1(tp.sum(), fp.sum(), fn.sum())
         cells.append(
@@ -444,7 +449,8 @@ def main() -> int:
     )
     print(f"Loaded {len(cells)} cells "
           f"({sum(c['kind'] == 'single-pass' for c in cells)} single-pass + "
-          f"{sum(c['kind'] == 'consensus' for c in cells)} consensus)", flush=True)
+          f"{sum(c['kind'] == 'consensus' for c in cells)} consensus + "
+          f"{sum(c['kind'] == 'verified-PV' for c in cells)} verified-PV)", flush=True)
 
     # --- Round-robin C(N, 2) float tile-swap permutation tests ---
     pairs = list(combinations(range(len(cells)), 2))
@@ -532,11 +538,13 @@ def _write_markdown(md_path: Path, result: dict, ordered: list[dict],
     """Write the human-readable tiering Markdown."""
     n_sp = sum(1 for c in ordered if c["kind"] == "single-pass")
     n_con = sum(1 for c in ordered if c["kind"] == "consensus")
+    n_pv = sum(1 for c in ordered if c["kind"] == "verified-PV")
     n_sig = sum(1 for r in result["pairwise"] if r["significant"])
+    pv_frag = f" + {n_pv} verified-PV" if n_pv else ""
     lines = [
         f"# Era-1 leaderboard — statistical tiering (20 m) — `{result['analysis_id']}`",
         "",
-        f"- **Cells**: {len(ordered)} ({n_sp} single-pass + {n_con} consensus), "
+        f"- **Cells**: {len(ordered)} ({n_sp} single-pass + {n_con} consensus{pv_frag}), "
         f"{result['n_tiles']} evaluation tiles",
         f"- **Metric**: micro-average F1 @ {result['buffer_metres']} m; "
         f"MCC reported (tile-level, buffer-agnostic — NOT cross-era comparable)",
