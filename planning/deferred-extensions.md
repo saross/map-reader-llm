@@ -22,6 +22,27 @@ future revisit does not have to re-derive the rationale.
 
 ---
 
+## Generalised extractor pipeline ("bring your own maps")
+
+**Source**: Session 106 (2026-06-08). Has its own dedicated roadmap —
+[`planning/generalised-pipeline-roadmap.md`](generalised-pipeline-roadmap.md) —
+because it is a distinct post-publication *product* direction with multiple
+workstreams, not a single deferred feature.
+
+**Vision**: ingest an arbitrary map corpus + target symbol/legend + a small set
+of calibration/test tiles, run the proposer → consensus → verifier → scoring
+stack, calibrate the operating point, and return a deployable extractor + an
+honest performance characterisation.
+
+**First identified prerequisite (WS1)**: an explicit, parametrised **CRS
+contract**. The code currently hard-codes the Bulgaria analysis CRS
+(EPSG:32635) in ~89 scripts and tracks CRS out-of-band — a hard blocker for
+arbitrary-region data. Stage 0 (repair + document the consensus-path contract)
+shipped in PR #10; Stages 1–2 (shared `lib_crs`, retire the hard-code, derive
+CRS from data) are in the roadmap. See
+[`docs/methodology/spatial-reference.md`](../docs/methodology/spatial-reference.md)
+§ "The consensus voting path".
+
 ## Candidate review app (`scripts/review_candidates.py`)
 
 **Source**: Originally specified in
