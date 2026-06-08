@@ -107,6 +107,8 @@ python scripts/merge_passes.py \
 
 **Output**: Consensus GeoJSON with vote counts, confidence, contributing passes.
 
+**CRS contract** (see [`docs/methodology/spatial-reference.md`](../docs/methodology/spatial-reference.md) § consensus voting path): clustering runs in the **analysis CRS (EPSG:32635, metres)** — the 20 m tolerance assumes UTM input — but `apply_threshold()` **reprojects centroids to EPSG:4326** on output (RFC 7946). Any in-memory consumer of `apply_threshold` (e.g. `analyse_diversity.consensus_to_gdf`) must reproject **back to the analysis CRS** before metric work; do not relabel without reprojecting. A 2026-04-11 change to this output CRS silently broke `consensus_to_gdf` (F1=0) until 2026-06-08 — the contract is now pinned by `tests/test_analyse_diversity_crs.py`.
+
 ---
 
 ## Evaluation & Analysis

@@ -38,6 +38,16 @@ Usage:
         --output-dir results/phase3c-diversity/track2-text \\
         --bootstrap 100
 
+CRS contract:
+    Clustering (via merge_passes) runs in the analysis CRS EPSG:32635 (UTM 35N,
+    metres). merge_passes.apply_threshold() reprojects its output centroids to
+    EPSG:4326 (RFC 7946). consensus_to_gdf() therefore reprojects that 4326
+    output BACK to EPSG:32635 before the metric spatial join against the UTM tile
+    bounds. Mislabelling 4326 points as 32635 (the bug fixed 2026-06-08, after a
+    2026-04-11 apply_threshold change introduced it) makes every detection
+    "unknown" and F1=0. Pinned by tests/test_analyse_diversity_crs.py; rationale
+    in docs/methodology/spatial-reference.md.
+
 Author: Shawn Ross, Claude Code
 Licence: Apache 2.0
 """
@@ -245,9 +255,19 @@ def consensus_to_gdf(
 
     points = [shape(f["geometry"]) for f in features]
     props_list = [f.get("properties", {}) for f in features]
+    # CRS contract: apply_threshold emits WGS84 (EPSG:4326) since commit
+    # 8c8e101f. Declare that honestly and reproject to the analysis CRS
+    # (TARGET_CRS = EPSG:32635) so the metric intersects-join below lands on the
+    # UTM tile bounds (gdf_bounds is reprojected to TARGET_CRS in main()). The
+    # pre-2026-06-08 code labelled these 4326 points as TARGET_CRS WITHOUT
+    # reprojecting; after 8c8e101f that placed every point ~5e5 m off the grid,
+    # so the join matched no tile, source_tile became "unknown" for all
+    # detections, and per-map F1 collapsed to 0 on any re-run. See
+    # docs/methodology/spatial-reference.md (§ consensus voting path) and
+    # reports/diversity-crs-mislabel-investigation-2026-06-08.md.
     gdf = gpd.GeoDataFrame(
-        props_list, geometry=points, crs=TARGET_CRS,
-    )
+        props_list, geometry=points, crs="EPSG:4326",
+    ).to_crs(TARGET_CRS)
 
     # Assign source_tile via spatial join against tile boundaries
     gdf_joined = gpd.sjoin(

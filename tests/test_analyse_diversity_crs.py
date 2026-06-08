@@ -17,12 +17,12 @@ These tests pin both halves of that contract so the mislabel investigated
 in ``reports/diversity-crs-mislabel-investigation-2026-06-08.md`` cannot
 silently regress.
 
-Two of the tests are marked ``xfail(strict=True)``: they assert the
-*desired* (fixed) behaviour of ``consensus_to_gdf``. Against the current
-(unfixed) ``analyse_diversity.py`` they are expected to fail; once the fix
-lands they should turn green (an unexpected pass under ``strict=True`` is
-itself a failure, prompting removal of the marker). This encodes the
-contract without falsely asserting the broken code is correct.
+All four tests assert the correct CRS contract and pass against the
+fixed ``analyse_diversity.consensus_to_gdf`` (the 2026-06-08 Stage-0 fix:
+it now declares ``apply_threshold``'s 4326 output honestly and reprojects
+to the analysis CRS before the spatial join). They previously carried
+``xfail(strict=True)`` markers against the unfixed code; those were removed
+when the fix landed.
 
 See the investigation report for the full git archaeology and the
 inertness analysis.
@@ -138,23 +138,15 @@ class TestApplyThresholdOutputCRS:
 
 @pytest.mark.tier1
 class TestConsensusToGdfCRSContract:
-    """Pin the desired CRS behaviour of ``consensus_to_gdf``.
+    """Pin the CRS behaviour of ``consensus_to_gdf``.
 
-    These assert the *fixed* contract. They are ``xfail(strict=True)``
-    against the current unfixed code (which mislabels the 4326 points as
-    EPSG:32635, breaking the spatial join). When the fix lands they turn
-    green and the markers should be removed.
+    These assert the contract honoured by the fixed code: the 4326 points
+    from ``apply_threshold`` are reprojected to the analysis CRS (EPSG:32635)
+    before the spatial join, so detections inside a tile are matched (not
+    tagged "unknown") and the returned geometry is genuine UTM. They guard
+    against a regression of the 2026-06-08 mislabel.
     """
 
-    @pytest.mark.xfail(
-        strict=True,
-        reason=(
-            "Current consensus_to_gdf mislabels apply_threshold's 4326 "
-            "output as EPSG:32635 (no reproject). The join finds no tile and "
-            "the detection is tagged 'unknown'. See "
-            "reports/diversity-crs-mislabel-investigation-2026-06-08.md."
-        ),
-    )
     def test_detection_inside_tile_gets_real_source_tile(self) -> None:
         """A detection inside a known tile must be assigned that tile.
 
@@ -178,14 +170,6 @@ class TestConsensusToGdfCRSContract:
             "bounds CRS before the spatial join."
         )
 
-    @pytest.mark.xfail(
-        strict=True,
-        reason=(
-            "Current consensus_to_gdf returns points whose stored coordinates "
-            "are 4326 lon/lat even though the GeoDataFrame is labelled "
-            "EPSG:32635. The fix reprojects them to genuine UTM magnitudes."
-        ),
-    )
     def test_output_geometry_is_genuine_utm(self) -> None:
         """Returned geometry must be in genuine UTM (easting > 100 000).
 
