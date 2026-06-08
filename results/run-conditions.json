@@ -3926,7 +3926,8 @@
             "temperature": 0.0
           },
           "eval_path": "results/rescore-2026-05-31/verifier-t-pilot/T0.0-vote4-prob0.20/evaluation.json",
-          "detections": "outputs/verifier-t-pilot/T0.0/materialised/vote4_prob0.20.geojson"
+          "detections": "outputs/verifier-t-pilot/T0.0/materialised/vote4_prob0.20.geojson",
+          "source_run": "gold-standard-v2"
         },
         {
           "label": "verified-t0-5",
@@ -3944,7 +3945,8 @@
             "temperature": 0.5
           },
           "eval_path": "results/rescore-2026-05-31/verifier-t-pilot/T0.5-vote4-prob0.20/evaluation.json",
-          "detections": "outputs/verifier-t-pilot/T0.5/materialised/vote4_prob0.20.geojson"
+          "detections": "outputs/verifier-t-pilot/T0.5/materialised/vote4_prob0.20.geojson",
+          "source_run": "gold-standard-v2"
         },
         {
           "label": "verified-t1-0",
@@ -3962,7 +3964,8 @@
             "temperature": 1.0
           },
           "eval_path": "results/rescore-2026-05-31/verifier-t-pilot/T1.0-vote4-prob0.20/evaluation.json",
-          "detections": "outputs/verifier-t-pilot/T1.0/materialised/vote4_prob0.20.geojson"
+          "detections": "outputs/verifier-t-pilot/T1.0/materialised/vote4_prob0.20.geojson",
+          "source_run": "gold-standard-v2"
         }
       ]
     },
@@ -5960,6 +5963,43 @@
         "results/rescore-2026-06-07/phase3c/phase3c__track2-text__E__t2/evaluation.json",
         "results/rescore-2026-06-07/phase3c/phase3c__track2-text__E__t3/evaluation.json",
         "results/rescore-2026-06-07/phase3c/phase3c__track2-text__E__t5/evaluation.json"
+      ]
+    },
+    "pv-diag-256": {
+      "_note": "256px H11 tile-size diagnostic (px256-1032 scope, 1032 tiles, curator GT). Re-scored at 14-buf+MCC (Session 106) from the 6 on-disk consensus geojsons. text-baseline = single-pass; text-{1..5}of5 = 5-pass consensus vote sweep. One citable single-pass + the best-F1@20m consensus champion (text-5of5, F1 0.460); non-headline thresholds -> _ignored_evals. Proposer passes were NOT materialised as run_* dirs (only consensus + crops), so proposer_pools is empty and conditions reference the pool by string (benign pool-unresolved; pv-384/512 precedent). 256px is the small-tile anchor for the tile-size comparison: F1@20m orders 256 < 512 < 384 (0.46 / 0.69 / 0.79).",
+      "proposer_pools": {},
+      "verifier_passes": {},
+      "conditions": [
+        {
+          "label": "text-baseline",
+          "architecture": "single-pass",
+          "aggregation": "none",
+          "proposer_pool": "text",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-08/pv-diag-256/text-baseline/evaluation.json",
+          "detections": "outputs/h11/pv-diag-256/consensus/text-baseline.geojson"
+        },
+        {
+          "label": "text-consensus-5of5",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "text",
+          "n_passes": 5,
+          "vote_threshold": 5,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/rescore-2026-06-08/pv-diag-256/text-5of5/evaluation.json",
+          "detections": "outputs/h11/pv-diag-256/consensus/text-5of5.geojson"
+        }
+      ],
+      "_ignored_evals": [
+        "results/rescore-2026-06-08/pv-diag-256/text-1of5/evaluation.json",
+        "results/rescore-2026-06-08/pv-diag-256/text-2of5/evaluation.json",
+        "results/rescore-2026-06-08/pv-diag-256/text-3of5/evaluation.json",
+        "results/rescore-2026-06-08/pv-diag-256/text-4of5/evaluation.json"
       ]
     }
   }

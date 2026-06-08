@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-06-07T14:18:46Z · 273 row(s) · schema v1.0.
+> Generated 2026-06-08T05:08:10Z · 275 row(s) · schema v1.0.
 >
-> **Coverage**: 273 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 275 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -127,6 +127,8 @@
 | proposer-verifier-384::verified-cascade-adversarial-checklist | proposer-verifier | verified | — | 1 | 0.5036 | 0.4313 | 264 |
 | proposer-verifier-384::verified-cascade-checklist-adversarial | proposer-verifier | verified | — | 1 | 0.495 | 0.4121 | 260 |
 | proposer-verifier-512::verified-adversarial-text | proposer-verifier | verified | — | 1 | 0.1931 | 0.235 | 72 |
+| pv-diag-256::text-baseline | single-pass | none | — | 1 | 0.3417 | 0.0883 | 1828 |
+| pv-diag-256::text-consensus-5of5 | consensus | consensus | 5 | 5 | 0.4599 | 0.1527 | 1165 |
 | pv-diag-384::baseline-flash-image-high-t-0-7 | single-pass | none | — | 1 | 0.4986 | 0.6019 | — |
 | pv-diag-384::baseline-flash-image-minimal-t-0-0 | single-pass | none | — | 1 | 0.5995 | 0.3124 | 746 |
 | pv-diag-384::baseline-flash-image-minimal-t-0-7 | single-pass | none | — | 1 | 0.5534 | 0.3295 | — |
