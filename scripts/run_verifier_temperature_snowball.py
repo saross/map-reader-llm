@@ -13,13 +13,17 @@
 #
 # THE LADDER (Shawn-approved, Session 109). Verify the >=3-of-5 proposer band of
 # the two GS cells (the productive band; the 1of5 union was the worst input in
-# Stage 1) at N=5, climbing 0.0 -> 0.3 -> 0.7 -> 1.0:
-#   - run T; analyse; take the best CONSENSUS/mean operating point F1@20 m per
-#     cell over the band (consensus_vt x prob_t).
-#   - advance to the next temperature ONLY IF the better cell improves over the
-#     PREVIOUS temperature by more than --margin (default 0.005, the determinism
-#     noise floor from Stage 1) — otherwise stop. This snowballs while a real
-#     diversity dividend exists and refuses to chase noise.
+# Stage 1) at N=5, climbing 0.0 -> 0.3 -> 0.7 -> 1.0 — but PER CELL INDEPENDENTLY:
+#   - at each temperature, run + analyse only the cells still "live"; take the
+#     best CONSENSUS/mean operating point F1@20 m per cell over the band
+#     (consensus_vt x prob_t).
+#   - a cell ADVANCES to the next temperature iff ITS best-consensus F1 beats
+#     ITS previous temperature by more than --margin (default 0.005, the
+#     determinism noise floor from Stage 1); otherwise that cell STALLS and is
+#     not re-verified at higher temperatures.
+#   - so 256 can keep climbing while 384 has already peaked (and vice versa) —
+#     each tile size finds its own optimal verifier temperature, with no wasted
+#     spend on a stalled cell. The ladder ends when every cell has stalled.
 #
 # HELD CONSTANT (only temperature changes): model (gemini-3-flash), thinking
 # (minimal, from the config), proposer band (>=3of5), N=5, text-only verifier,
@@ -120,58 +124,84 @@ def do_dry_run(cells: list[dict], ladder: list[float], margin: float,
     print(f"Worst case (all {len(ladder)} temperatures fire): "
           f"{per_temp_calls * len(ladder):,} calls ~= ${per_temp_flex * len(ladder):.2f} flex",
           flush=True)
-    print(f"\nDECISION RULE: advance to the next temperature only if the better "
-          f"cell's best-consensus F1@20m improves over the PREVIOUS temperature "
-          f"by > {margin}. Stop otherwise.", flush=True)
+    print(f"\nDECISION RULE (per-cell INDEPENDENT): each cell advances to the next "
+          f"temperature iff ITS best-consensus F1@20m beats ITS previous "
+          f"temperature by > {margin}; otherwise that cell stalls and is not "
+          f"re-verified higher. 256 and 384 climb independently; the ladder ends "
+          f"when every cell has stalled. Worst case (both climb all rungs) is the "
+          f"full cost above.", flush=True)
 
 
-def do_run(cells: list[dict], ladder: list[float], margin: float, iterations: int,
-           workers: int, cells_path: Path, outroot: Path, results_dir: Path) -> dict:
-    """Execute the snowball; return the trajectory record (also written to disk)."""
+def do_run(spec: dict, ladder: list[float], margin: float, iterations: int,
+           workers: int, outroot: Path, results_dir: Path) -> dict:
+    """Execute the per-cell-INDEPENDENT snowball; return the trajectory.
+
+    Each cell climbs its OWN temperature ladder. At each rung only the cells
+    still improving ("live") are verified, and a cell drops out the moment its
+    best-consensus F1@20 m fails to beat ITS previous temperature by > margin.
+    So 256 can advance to a higher temperature while 384 has already stalled —
+    a peaked cell is never re-verified (no wasted spend), and the comparison is
+    always against that cell's own previous temperature.
+    """
+    cells = spec["cells"]
     cfg = json.loads(VERIFIER_CONFIG.read_text())
-    print(f"=== SNOWBALL — held constant: model={cfg.get('model')}, "
-          f"thinking={cfg.get('thinking_level')}, N={iterations}, flex; "
-          f"only temperature varies ===", flush=True)
+    print(f"=== SNOWBALL (per-cell independent) — held constant: "
+          f"model={cfg.get('model')}, thinking={cfg.get('thinking_level')}, "
+          f"N={iterations}, flex; only temperature varies ===", flush=True)
 
-    prev = baseline_t0(cells)
+    prev = baseline_t0(cells)                       # per-cell best-consensus F1
+    live = {c["name"]: True for c in cells}         # which cells keep climbing
+    stalled_at = {c["name"]: None for c in cells}   # temperature each cell stalled at
     print(f"T=0.0 baseline (best-consensus F1@20m per cell): {prev}", flush=True)
 
-    trajectory = [{"temperature": 0.0, "best_consensus_f1": prev, "source": "stage1"}]
+    trajectory = [{"temperature": 0.0, "best_consensus_f1": dict(prev),
+                   "source": "stage1"}]
     for t in ladder:
-        print(f"\n########## TEMPERATURE {t} ##########", flush=True)
+        live_names = [c["name"] for c in cells if live[c["name"]]]
+        if not live_names:
+            print("\nAll cells have stalled — ladder complete.", flush=True)
+            break
+        print(f"\n########## TEMPERATURE {t} (live: {live_names}) ##########", flush=True)
+        # Sub-spec with only the live cells, so the driver + analyser touch
+        # (and spend on) ONLY those — a stalled cell is not re-verified.
+        sub = dict(spec)
+        sub["cells"] = [c for c in cells if live[c["name"]]]
+        sub_path = results_dir / f"_snowball_subspec_T{t}.json"
+        sub_path.write_text(json.dumps(sub))
         run([sys.executable, str(DRIVER), "--full", "--temperature", str(t),
-             "--cells", str(cells_path), "--output-root", str(outroot),
+             "--cells", str(sub_path), "--output-root", str(outroot),
              "--workers", str(workers)])
         run([sys.executable, str(ANALYSER), "--temperature", str(t),
-             "--cells", str(cells_path), "--output-root", str(outroot),
+             "--cells", str(sub_path), "--output-root", str(outroot),
              "--out-dir", str(results_dir)])
-        cur = best_consensus_f1(results_dir, t)
-        deltas = {cell: round(cur[cell] - prev.get(cell, 0.0), 4) for cell in cur}
-        best_delta = max(deltas.values()) if deltas else 0.0
-        advance = best_delta > margin
-        within_noise = 0.0 < best_delta <= margin
-        rec = {"temperature": t, "best_consensus_f1": cur, "delta_vs_prev": deltas,
-               "best_delta": best_delta, "advanced": advance,
-               "within_noise_floor": within_noise}
+        cur = best_consensus_f1(results_dir, t)     # only the live cells present
+        rec = {"temperature": t, "live_cells": live_names,
+               "best_consensus_f1": cur, "delta_vs_prev": {}, "advanced": {}}
+        for name in live_names:
+            delta = round(cur.get(name, 0.0) - prev[name], 4)
+            rec["delta_vs_prev"][name] = delta
+            if delta > margin:
+                rec["advanced"][name] = True
+                prev[name] = cur[name]
+                print(f"  {name}: F1={cur[name]:.4f} (delta {delta:+.4f} > {margin}) "
+                      f"-> ADVANCE", flush=True)
+            else:
+                rec["advanced"][name] = False
+                live[name] = False
+                stalled_at[name] = t
+                reason = "within noise floor" if delta > 0 else "no improvement"
+                print(f"  {name}: F1={cur.get(name, 0.0):.4f} (delta {delta:+.4f}) "
+                      f"-> STALL ({reason}); not pursued at higher T", flush=True)
         trajectory.append(rec)
-        print(f"  T={t}: best-consensus F1={cur}", flush=True)
-        print(f"  delta vs previous: {deltas} "
-              f"(best {best_delta:+.4f}, margin {margin})", flush=True)
-        # Write incrementally so a mid-ladder crash preserves the trajectory
-        # so far (API spend is already checkpointed per temperature by run_pv).
+        # Write incrementally so a mid-ladder crash preserves progress (API spend
+        # is already checkpointed per temperature by run_pv).
         (results_dir / "snowball_summary.json").write_text(json.dumps(
             {"ladder": ladder, "margin": margin, "iterations": iterations,
+             "baseline_T0.0": baseline_t0(cells), "stalled_at": stalled_at,
              "trajectory": trajectory}, indent=2))
-        if not advance:
-            reason = ("within the noise floor" if within_noise
-                      else "no improvement")
-            print(f"  STOP — best delta {best_delta:+.4f} is {reason}; "
-                  f"higher temperature not pursued.", flush=True)
-            break
-        print(f"  ADVANCE — best delta {best_delta:+.4f} > {margin}; continuing.", flush=True)
-        prev = cur
 
     out = {"ladder": ladder, "margin": margin, "iterations": iterations,
+           "baseline_T0.0": baseline_t0(cells), "stalled_at": stalled_at,
            "trajectory": trajectory}
     (results_dir / "snowball_summary.json").write_text(json.dumps(out, indent=2))
     print(f"\nWrote {results_dir / 'snowball_summary.json'}", flush=True)
@@ -204,8 +234,8 @@ def main() -> int:
     if args.dry_run:
         do_dry_run(cells, ladder, margin, iterations)
     if args.run:
-        do_run(cells, ladder, margin, iterations, args.workers,
-               args.cells, args.output_root, args.results_dir)
+        do_run(spec, ladder, margin, iterations, args.workers,
+               args.output_root, args.results_dir)
     return 0
 
 
