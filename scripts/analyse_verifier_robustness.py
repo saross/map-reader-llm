@@ -19,12 +19,14 @@
 #      which INPUT maximises post-verifier F1@20 m. (Verify the union once;
 #      every input level is a post-hoc filter.)
 #
-# CRS: candidate centroids are EPSG:32635 (matching build_post_verifier_geojson);
-# accepted sets are built as 32635 points and reprojected to 4326 for scoring,
-# mirroring that audited path exactly (avoids the Obs-350 mislabel class of bug).
+# CRS: candidate centroids are EPSG:32635, which is ALSO the evaluation CRS
+# (lib_advanced_metrics.DEFAULT_CRS), so accepted sets are built as 32635 points
+# and scored directly — no reprojection (the redundant 32635->4326->32635 round
+# trip is avoided; ground truth + bounds load via load_geojson at 32635 too).
 #
-# Scoring reuses scripts/evaluate_detections.py (14-buffer corrected-F1 + MCC),
-# with accepted-set dedup so identical sets are scored once.
+# Scoring reuses the audited point metric via lib_advanced_metrics.
+# score_detection_set (F1@20 m + tile-MCC, NO bootstrap), with ground truth and
+# bounds loaded once and accepted-set dedup so identical sets are scored once.
 #
 # Usage:
 #     python scripts/analyse_verifier_robustness.py --temperature 0.0
@@ -81,27 +83,36 @@ def load_candidate_table(manifest_path: Path, probs_path: Path) -> list[dict]:
     manifest = json.loads(manifest_path.read_text())
     results = json.loads(probs_path.read_text())["results"]
 
-    # Gather per-iteration probabilities, keyed by integer candidate id.
-    iters_by_cid: dict[int, list[float]] = {}
+    # Gather per-iteration probabilities, keyed by integer candidate id, with
+    # the iteration index parsed EXPLICITLY (not inferred from dict-insertion
+    # order) so ``iter_probs[k-1]`` reliably refers to verifier iteration k.
+    iters_by_cid: dict[int, dict[int, float]] = {}
     for key, val in results.items():
         if not isinstance(val, dict):
             continue
         p = val.get("mound_probability")
         if not isinstance(p, (int, float)):
             continue
-        # key form: candidate_00042_iter3  ->  cid=42
+        # key form: candidate_00042_iter3 -> cid=42, iter=3 (1-indexed).
+        # An n=1 run emits bare candidate_00042 -> iter defaults to 1.
+        base, _, iter_part = key.partition("_iter")
         try:
-            cid = int(key.split("_iter")[0].split("_")[-1])
+            cid = int(base.split("_")[-1])
+            it = int(iter_part) if iter_part else 1
         except (ValueError, IndexError):
             continue
-        iters_by_cid.setdefault(cid, []).append(float(p))
+        iters_by_cid.setdefault(cid, {})[it] = float(p)
 
     table = []
     for c in manifest["candidates"]:
         cid = c["candidate_id"]
-        probs = iters_by_cid.get(cid)
-        if not probs:
+        iters = iters_by_cid.get(cid)
+        if not iters:
             continue
+        # Order by iteration number (iter1, iter2, ...). Strict-mode verify
+        # guarantees every candidate has all N iterations, so this is a dense
+        # [iter1..iterN] list; ragged data would simply omit the gaps.
+        probs = [iters[i] for i in sorted(iters)]
         table.append({
             "cid": cid,
             "x": float(c["centroid_x"]),
@@ -218,9 +229,17 @@ def summarise(cell_result: dict, prob_ts: list[float]) -> dict:
     """
     grid = cell_result["grid"]
     n_iter = cell_result["n_iterations"]
+    if not grid:
+        return {"cell": cell_result["cell"], "best_operating_point": None,
+                "determinism_by_proposer_k": []}
 
-    # Best overall operating point (the proposer-input answer).
-    best = max(grid, key=lambda g: g["f1_20m"])
+    # Best overall operating point (the proposer-input answer). Restrict to
+    # REPRODUCIBLE rules — the N-run consensus or the mean — so the headline is
+    # never a single stochastic iter{k} draw. Ties break on the first match,
+    # i.e. lowest proposer_k then the rule order (consensus_vt1..vtN, mean).
+    reproducible = [g for g in grid
+                    if g["rule"].startswith("consensus_vt") or g["rule"] == "mean"]
+    best = max(reproducible, key=lambda g: g["f1_20m"])
 
     # Determinism: at the best single-run prob_t per proposer_k, spread across iters.
     determinism = []
@@ -240,7 +259,7 @@ def summarise(cell_result: dict, prob_ts: list[float]) -> dict:
         determinism.append({
             "proposer_k": pk, "prob_t": best_pt,
             "single_run_f1_mean": round(best_mean, 4) if best_f1s else None,
-            "single_run_f1_sd": round(statistics.pstdev(best_f1s), 4) if len(best_f1s) > 1 else 0.0,
+            "single_run_f1_sd": round(statistics.pstdev(best_f1s), 4) if len(best_f1s) > 1 else None,
             "single_run_f1_min": round(min(best_f1s), 4) if best_f1s else None,
             "single_run_f1_max": round(max(best_f1s), 4) if best_f1s else None,
             "consensus_majority_f1": round(cons, 4) if cons is not None else None,

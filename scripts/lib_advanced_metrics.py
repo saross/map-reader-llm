@@ -896,7 +896,13 @@ def score_detection_set(
     bootstrap on *every* call — ~20 s/set, so a 600-set grid takes ~3 hours.
     Calling the point functions in-process drops that to milliseconds/set. The
     metric is identical (the CLI wraps these same two functions); only the
-    redundant bootstrap + subprocess + I/O overhead is removed.
+    redundant bootstrap + subprocess + I/O overhead is removed. The F1 /
+    precision / recall point values match the CLI exactly; the one deliberate
+    difference is that an *undefined* MCC (degenerate tile confusion matrix) is
+    returned here as ``None`` rather than coerced to ``0.0`` as the CLI's
+    ``_safe_round`` does — ``None`` is the more honest "undefined", and callers
+    should rank/aggregate on F1 (or guard ``None``) rather than treat a missing
+    MCC as zero discrimination.
 
     **When NOT to use this**: for a single authoritative cell evaluation where
     you need the published F1/MCC bootstrap CIs, use ``evaluate_detections.py``

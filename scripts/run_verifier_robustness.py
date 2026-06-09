@@ -164,9 +164,12 @@ def report_probabilities(probs_path: Path, iterations: int) -> None:
               f"(inspect {probs_path})", flush=True)
         return
     n_cand = len(by_cand)
-    # Per-candidate accept count at prob_t=0.2, across the N iterations.
-    accept_counts = [sum(1 for p in ps if p >= 0.2) for ps in by_cand.values()]
-    unanimous = sum(1 for c in accept_counts if c in (0, iterations))
+    # Per-candidate: a candidate is unanimous if ALL of ITS iterations agree
+    # (0 accepts or all-of-len accepts). Using len(ps) per candidate — not the
+    # global ``iterations`` — keeps the SPLIT% honest if a candidate is missing
+    # an iteration (the global-count version would miscount it as SPLIT).
+    unanimous = sum(1 for ps in by_cand.values()
+                    if sum(1 for p in ps if p >= 0.2) in (0, len(ps)))
     split = n_cand - unanimous
     mean_p = sum(p for ps in by_cand.values() for p in ps) / sum(len(ps) for ps in by_cand.values())
     print(f"  candidates={n_cand}, mean_prob={mean_p:.3f}, "
