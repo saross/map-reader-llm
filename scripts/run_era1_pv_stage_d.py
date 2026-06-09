@@ -70,9 +70,12 @@ DEFAULT_CELLS = BASE_DIR / "planning" / "era1-pv-stage-d-cells.json"
 DEFAULT_OUTROOT = BASE_DIR / "outputs" / "era1-pv-stage-d"
 VERIFIER_CONFIG = BASE_DIR / "prompts" / "configs" / "verify_adversarial-text.json"
 GROUND_TRUTH = BASE_DIR / "inputs" / "vectors" / "references" / "mounds-reference.geojson"
-# Each cell's evaluation bounds depend on its tile size (256 vs 512).
+# Each cell's evaluation bounds depend on its tile size (256 / 384 / 512). The
+# 384 px run is the Era-2 487-tile scope (inputs/vectors/bounds/384/...); the
+# 512 px run is the 340-tile Era-1 scope (the un-suffixed bounds file).
 BOUNDS_BY_SIZE = {
     256: BASE_DIR / "inputs" / "vectors" / "bounds" / "256" / "full_evaluation_bounds.geojson",
+    384: BASE_DIR / "inputs" / "vectors" / "bounds" / "384" / "full_evaluation_bounds.geojson",
     512: BASE_DIR / "inputs" / "vectors" / "bounds" / "full_evaluation_bounds.geojson",
 }
 BUFFERS = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100, 125, 150]
@@ -112,8 +115,32 @@ def subset_geojson(src: Path, dst: Path, n: int) -> int:
 
 
 def pass_dirs(cell: dict, outroot: Path) -> list[tuple[Path, Path, Path]]:
-    """Return (proposer, crops_dir, verified_dir) per pass for a cell."""
+    """Return (proposer, crops_dir, verified_dir) per pass for a cell.
+
+    Two cell shapes are supported:
+
+    1. ``proposers`` (the default): each proposer is (re-)extracted + verified
+       into ``outroot/<cell>/pass_i/{crops,verified}`` by --full, then scored.
+    2. ``verified_pools`` (the carry-forward shape): the verifier has ALREADY
+       run and its ``candidate_manifest.json`` + ``probabilities.json`` live on
+       disk under the listed pool directory. We point ``crops``/``verified`` at
+       that same pool so the --score path materialises the prob_t sweep + scores
+       it with the IDENTICAL code path used for the (re-extracted) cells. This is
+       how the 384 leg reuses the pre-verified pv-diag-384 carry-forward outputs
+       (zero new API spend) while still being scored by this script.
+
+    The build/score machinery only reads ``crops/candidate_manifest.json`` and
+    ``verified/probabilities.json``, so for a ``verified_pools`` cell both the
+    crops and verified directories resolve to the same on-disk pool.
+    """
     out = []
+    if cell.get("verified_pools"):
+        for pool in cell["verified_pools"]:
+            pool_dir = BASE_DIR / pool
+            # crops + verified both resolve to the pool: it holds the manifest
+            # AND the probabilities the carry-forward verifier already produced.
+            out.append((pool_dir, pool_dir, pool_dir))
+        return out
     for i, prop in enumerate(cell["proposers"], 1):
         base = outroot / cell["name"] / f"pass_{i}"
         out.append((BASE_DIR / prop, base / "crops", base / "verified"))
@@ -189,8 +216,14 @@ def _report_probabilities(probs_path: Path) -> None:
           f"min={min(probs):.3f} max={max(probs):.3f}", flush=True)
 
 
-def do_score(cells: list[dict], outroot: Path, prob_sweep: list[float]) -> None:
-    """Materialise each pass at the prob_t sweep + score at 14-buf+MCC."""
+def do_score(cells: list[dict], outroot: Path, prob_sweep: list[float],
+             summary_name: str = "stage_d_score_summary.json") -> None:
+    """Materialise each pass at the prob_t sweep + score at 14-buf+MCC.
+
+    ``summary_name`` lets a follow-up run (e.g. the 384 carry-forward leg added
+    after the original five cells were scored) write its own summary file rather
+    than clobbering the existing ``stage_d_score_summary.json``.
+    """
     print("=== SCORE — materialise (prob_t sweep) + 14-buffer+MCC ===", flush=True)
     summary = {}
     for cell in cells:
@@ -214,7 +247,7 @@ def do_score(cells: list[dict], outroot: Path, prob_sweep: list[float]) -> None:
         summary[cell["name"]] = best
         print(f"  >>> {cell['name']} BEST: prob_t={best['prob_t']} "
               f"F1@20m={best['f1']:.4f} MCC={best['mcc']}", flush=True)
-    out = outroot / "stage_d_score_summary.json"
+    out = outroot / summary_name
     out.write_text(json.dumps(summary, indent=2))
     print(f"\nWrote {out}", flush=True)
 
@@ -258,6 +291,10 @@ def main() -> int:
     parser.add_argument("--score", action="store_true")
     parser.add_argument("--smoke-n", type=int, default=12)
     parser.add_argument("--workers", type=int, default=12)
+    parser.add_argument("--summary-name", default="stage_d_score_summary.json",
+                        help="Filename for the --score summary (under --output-root). "
+                             "Override to avoid clobbering an existing summary when "
+                             "scoring an additional cell, e.g. the 384 carry-forward leg.")
     args = parser.parse_args()
 
     spec = json.loads(args.cells.read_text())
@@ -274,7 +311,7 @@ def main() -> int:
     if args.full:
         do_full(cells, args.output_root, args.workers)
     if args.score:
-        do_score(cells, args.output_root, prob_sweep)
+        do_score(cells, args.output_root, prob_sweep, args.summary_name)
     return 0
 
 

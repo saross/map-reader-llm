@@ -1,0 +1,30 @@
+{
+  "_README": "The 384 leg of the Stage-D consensus+PV head-to-head, added 2026-06-09 (Session 108). The original five Stage-D cells (era1-pv-stage-d-cells.json) re-extracted + re-verified their proposers via a gated API run. The 384 leg needs NO new API spend: the carry-forward adversarial verifier (gemini-3-flash, verify_adversarial-text, T=0.0, minimal, n=1) ALREADY ran over the pv-diag-384 HIGH-text consensus pools in March 2026, and its candidate_manifest.json + probabilities.json are on disk. This cell points run_era1_pv_stage_d.py --score at the matched pool (flash-high-text-16of30, the best-F1 operating point of the N=30 HIGH-text consensus family, matching the 512 cell's N=30 HIGH-text champion consensus_t23=23-of-30) via the verified_pools shape, so the 384 number is produced by the IDENTICAL build+score code that made 256/512. Run with --summary-name stage_d_score_summary_384.json so the existing five-cell summary is not clobbered.",
+  "cells": [
+    {
+      "name": "384-consensus-text-high",
+      "kind": "consensus",
+      "verified_pools": [
+        "outputs/h11/pv-diag-384/verified/flash-high-text-16of30"
+      ],
+      "verifier_source": "outputs/h11/pv-diag-384/verified/flash-high-text-1of30/run.meta.json",
+      "verifier_provenance": "gemini-3-flash-preview, verify_adversarial-text (verify_adversarial.md, example_count=0), thinking_level=minimal, temperature=0.0, n=1 — the Stage-D carry-forward verifier",
+      "proposer_provenance": "flash-high-text proposer, N=30 passes, consensus vote_threshold=16 (16-of-30); best-F1 operating point of the N=30 HIGH-text family in results/h11-384-pv-diagnostic/summary.json",
+      "exists": true,
+      "n": 729
+    }
+  ],
+  "total_candidates": 729,
+  "verifier_config": "prompts/configs/verify_adversarial-text.json",
+  "mode": "realtime",
+  "service_tier": "flex",
+  "iterations": 1,
+  "padding": 75,
+  "prob_t_sweep": [
+    0.1,
+    0.15,
+    0.2,
+    0.3,
+    0.5
+  ]
+}
