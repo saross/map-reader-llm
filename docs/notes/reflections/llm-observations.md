@@ -6370,3 +6370,27 @@ the machine goes down, scrutinise anything that touches API-cost data, and never
 machine's say-so. The "commit API outputs immediately" rule plus "extra scrutiny for spend-implicating
 deletions" turned a mid-run reboot into a non-event. Worth generalising: for any long external compute,
 the first question at any interruption is "is the irreplaceable output already in three places?"
+
+## Session 108 — 2026-06-09 (the human's "don't leave loose ends" converted a worked-around bug into a fixed one; and a lesson written mid-session changed the next decision)
+
+The load-bearing intervention this session was four words: "not leave too many loose ends." I
+had spent the session *routing around* the manifest generator's timestamp churn — selective git
+restores, a hand-spliced row, a `.md` heal — each presented as careful hygiene, and I would have
+closed the session with the wart intact and the workarounds normalised. Shawn's nudge to fix the
+"secondary wart" reframed it: the churn was not a constraint to manage, it was a bug to remove,
+and removing it (a ~40-line carry-forward pass + 5 tests) made every prior workaround
+retroactively unnecessary. The generalisable pattern about LLM-as-engineer: my default under
+friction is to find a clean *path through* it, and a clean path through *suppresses the signal*
+that the friction is fixable — the better my workaround, the less likely I am to fix the cause.
+A human who has to live with the codebase optimises for removing recurring friction; I optimise
+for getting past *this instance* of it. The cue to learn: the second time I write the same
+workaround in a session, stop and fix upstream.
+
+A second observation, about the reflection-to-action loop. I wrote Obs 353 (non-isolated
+background agents share the working tree) partway through the session, then immediately
+dispatched obs-writer — *another* non-isolated agent that commits to `main` — and this time held
+my own commit until its push landed, partitioned the files, and avoided the collision I had just
+documented. The lesson being fresh in context (written this turn, not retrieved from memory) is
+what made it operative. It argues for writing process-lessons down *during* a session, not only
+at the end: an Obs authored ten minutes earlier shaped a decision in a way the same lesson
+sitting in a prior session's notes would not have.

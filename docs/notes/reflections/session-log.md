@@ -7121,3 +7121,60 @@ Commits `efa176e86`→`1ed629606`. One memory captured (cross-size F1 comparabil
   "256≈384" as measured.
 - Open for S108: tile-size-sweep consensus+PV row (incl. the 384 re-score), human sign-off on the 4
   authored analyses, optional crop cleanup, optional Stage-D findings doc.
+
+## Session 108 — 2026-06-09 — 384 consensus+PV leg landed; 3 Era-1 boards signed; rationalisation complete; generator timestamp-churn fixed
+
+Closed all four carried-open Stage-D follow-ups, completed the results/intermediate-documentation
+rationalisation, and fixed a tooling wart. **$0 API** (the 384 leg was an on-disk re-score of
+existing verifier outputs on zbook).
+
+**384 consensus+PV leg (background agent + independent verification).** Dispatched a non-isolated
+background agent (general-purpose, computed on zbook) to disambiguate + re-score the 384 leg. It
+identified the carry-forward-matched verified pool (`flash-high-text-16of30`; provenance confirmed
+exact vs `prompts/configs/verify_adversarial-text.json` from `flash-high-text-1of30/run.meta.json`)
+and scored it 14-buf+MCC: **F1@20m 0.8902 / MCC 0.7903, prob_t 0.2**. I re-verified the number, the
+cross-size GT (same `mounds-reference.geojson` across 256/384/512), and the provenance at source
+before building on it. **384 leads 256 (0.890 > 0.856 > 512 0.792) — confirms Obs 179, not a
+surprise.** The old `proposer-verifier-384::verified-adversarial-text` (F1 0.471) is single-pass+PV
+(different arch, not superseded). Registered `pv-diag-384::verified-adv-text-consensus-16of30`
+(manifest 280→**281 ALL VALID**); `tile_size_sweep.py` View 3 populated; stale "256
+consensus+verifier untested" caveat corrected.
+
+**Sign-offs.** Verified all three Era-1 board outcomes against source tiering files and signed:
+`era1-single-pass-baseline-matrix` + `era1-leaderboard` (`2026-06-09T01:22:50Z`); `tile-size-sweep`
+(`2026-06-09T01:52:52Z`, outcome rewritten with the consensus+PV head-to-head + Obs 352). Held
+`tile-size-sweep` until the 384 leg landed (its outcome had called the 256 cell "untested").
+`pv-diag-384-consensus-calibration` left unsigned BY DESIGN (calibration material; verified sibling
+`diversity-dividend-384` is signed) — Shawn's call.
+
+**Cleanup + docs.** Deleted 7,113 gitignored crop PNGs (**278.7 MB**) under `crops/crops/` on zbook
+(verified 0 tracked / 0 non-PNG first; the 9 tracked `candidate_manifest.json` in `crops/`
+preserved). Wrote consolidated `results/era1-pv-stage-d/stage-d-findings.md` (6-cell PV grid,
+revision-policy banner; roundings reconciled to the signed board).
+
+**Tooling fix.** Fixed the manifest generator's timestamp churn (`_stabilise_timestamps`: carry
+forward `last_extracted_at`/`generated_at` for unchanged rows → no-op regen byte-identical; +5
+tier1 tests). Repointed a stale `no_standard_scoring` test to a synthetic run (the decomposition
+backlog it relied on is now empty). Full tier1 suite **1134 passed, 0 failed**.
+
+**Obs + continuity.** Obs 353 (non-isolated background agents share the working tree; recommends
+worktree isolation / explicit path partitioning) via obs-writer (`223c041e1`). Continuity updated:
+S108 closed, S109 tee'd up = verifier robustness (gated API). All 3 machines synced at `88ed7005f`.
+Commits `fed4364ee`→`88ed7005f`.
+
+### Contextual assumptions
+
+- **Session 108**, 2026-06-09. Compute on **zbook** (sapphire shared with another session per the
+  S107 split); amd-tower local-only for orientation + light tabulation.
+- **Two non-isolated background agents** (the 384-leg re-score, then obs-writer) ran in the *shared*
+  working tree and committed to `main` concurrently with the foreground. History stayed strictly
+  linear; recovered via explicit pathspecs + behind-checks + selective restores. This is the
+  substance of Obs 353.
+- The **384 leg was $0** — a re-score of verifier outputs already on disk from the S107/March PV
+  runs. The agent was instructed to HALT (not spend) if a clean re-score required re-running the
+  verifier; it did not need to.
+- **Rationalisation COMPLETE** as of this session: 28/28 runs decomposed, 281 conditions / 1114
+  passes / 10 analyses (9 signed), drift-check ALL VALID. The one remaining unsigned analysis is
+  intentional.
+- Open for S109: verifier robustness (N>1 determinism, higher-T consensus verifier) — both GATED
+  API. Then paper §Results prose, 55-map integration, CRS-contract (deferred).

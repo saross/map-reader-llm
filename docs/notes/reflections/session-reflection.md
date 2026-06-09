@@ -8818,3 +8818,50 @@ on the standard footing.
 A long, high-tempo session with a live operational wrinkle — zbook needed a restart mid-gated-run
 — handled by committing+pushing+mirroring the API outputs *first*. Calm because the preservation
 discipline (and the prior "commit API outputs" rule) made the restart a non-event.
+
+## Session 108 — 2026-06-09 — I worked around a bug three times before the human asked me to fix it
+
+The 384 leg landed exactly as S107 predicted (384 leads 256, 0.890 > 0.856 — the carry-forward
+call held, no surprise), the three Era-1 boards got signed, and the multi-week rationalisation
+finished. But the session's real lesson was about a tooling wart I dodged instead of fixing.
+
+### Prompt: What would you do differently if you replayed this session?
+
+Fix the generator's timestamp churn *first*, before doing anything that touched the manifests.
+Three separate times this session I worked *around* it: I `git checkout`-restored churned
+manifests to keep a sign-off commit clean; I hand-spliced one condition row into the on-disk
+conditions-manifest to avoid 814 lines of timestamp noise; I healed a `.json`/`.md`
+`generated_at` mismatch the splice had left. Each recovery was clean and I narrated it as
+prudent. But all three were made *unnecessary* by the ~40-line generator fix — and I only wrote
+that fix when Shawn asked me to ("resolve the secondary wart … not leave too many loose ends").
+Worse, mid-session I had explicitly *rationalised* the workaround: I reasoned that the churn was
+"established repo behaviour" and that "fighting the tooling risks inconsistency." That was the
+tell. When I find myself doing the same careful workaround twice, the friction is a defect to
+remove at the source, not a constraint to get better at dodging. I treated a bug as a fact of
+the world because routing around it kept working.
+
+### Prompt: What was different about this session compared to recent ones?
+
+It was a *finishing* session, not a discovery one. S107 had a genuine surprise (256 rescued);
+S108 had none — the headline confirmed a prediction, and the work was sign-offs, a crop
+deletion, a consolidated findings doc, a tooling fix, a stale-test repoint. The texture of
+finishing is different: the satisfaction is in closing the register cleanly (28/28, drift-check
+ALL VALID, manifests now legible) rather than learning something new. Two process notes stood
+out. First, I ran *two* non-isolated background agents (the 384-leg re-score, then obs-writer)
+in the shared working tree, both committing to `main` while I committed too — and the second
+time I anticipated the collision because I'd *just written the Obs about it* (Obs 353). Writing
+the lesson down changed my very next action: I held my continuity commit until obs-writer's push
+landed. That is the most direct "reflection → behaviour" loop I have had on this project.
+Second, completing the rationalisation *broke a test*: clearing the decomposition backlog made
+the `no_standard_scoring` guard fail on its own (now-decomposed) example. Success invalidated
+the test that guarded the failure — a tidy reminder that data-coupled tests rot when the data
+they assume goes away; the fix was to decouple it (a synthetic run).
+
+### Texture
+
+Calm, long, productive. A "tie up the loose ends" session that kept finding one more thread —
+but each thread was real and worth pulling (the wart fix and the stale test were both genuine
+improvements surfaced by doing the work properly rather than declaring done). The verification
+discipline held: I re-derived the agent's headline 384 number, its provenance, and its
+cross-size ground truth from source before building on it, rather than trusting a well-written
+agent report — and it checked out.

@@ -5485,3 +5485,42 @@ reserve the confound caveat for MCC. Then I *over*-corrected — let "strongest 
 overstatement) into the close-out — and caught it myself in warm context. The meta-pattern:
 removing a hedge is itself an error-prone move; the correction tends to overshoot into the
 opposite confident claim unless I re-state the new bound precisely. (Memory captured.)
+
+## Session 108 — 2026-06-09 — I treated a fixable bug as a fixed constraint, and rationalised the workaround out loud
+
+**Surprising fact.** (Surfaced by a human nudge, not by data.) Asked to "resolve the secondary
+wart" — the manifest generator re-stamping `last_extracted_at` on every row each run, producing
+~2,230-line pure-timestamp diffs — I expected a design trade-off I would have to argue around.
+It was a straightforward bug: ~40 lines (carry forward on-disk timestamps for unchanged rows)
+made no-op regenerations byte-identical.
+
+**Probe.** Why had I not fixed it earlier the same session, when the churn had actively
+obstructed me three times? Re-reading my own mid-session reasoning: during the conditions-
+manifest splice I had written that the churn was "established repo behaviour" and that selective
+restores were the pragmatic call because "fighting the tooling risks inconsistency." I had
+*constructed a justification* for the workaround — treating the churn as a property of the world
+(the generator just does this) rather than a defect (the generator does this *wrongly*). The
+evidence against my framing was already in hand: the churn served no purpose (the timestamps it
+rewrote carried no information that had changed), and I was paying for it repeatedly.
+
+**Revision.** "The manifest timestamp churn is inherent repo behaviour to be worked around" →
+"it was an unintended re-stamp bug; the fix is upstream and cheap, and it dissolves the whole
+class of workaround." The deeper revision is about my own failure mode: a sufficiently clean
+workaround suppresses the impulse to fix the cause — competence at routing around friction is
+anti-correlated with removing it. Generalisable probe: when I catch myself justifying *why* a
+recurring friction is acceptable, treat that justification as a smell, not a conclusion — the
+act of rationalising a workaround is itself evidence the thing should be fixed.
+
+**Footnote 1 (hypothesis confirmed).** The S107 carry-forward predicted "384 likely still leads
+256; do not read 256≈384 as measured." S108's clean 14-buf+MCC re-score confirmed it: 384
+consensus+PV 0.890 > 256 0.856. The prediction held — and the discipline of refusing to *state*
+the comparison until it was measured (S107) is what made the confirmation meaningful rather than
+circular.
+
+**Footnote 2 (a belief refuted by running the full suite).** Implicit belief: "the suite is
+green." Running it surfaced a pre-existing failure — `test_classify_flags_no_standard_scoring`
+asserting `pv-diag-256` had zero standard evals. Probe: mine? No — it failed at HEAD,
+independent of my changes; the test was data-coupled to a backlog run since decomposed.
+Revision: completing the rationalisation *emptied the backlog the test guarded*, so the test
+could no longer find a live example; the fix is to decouple it from live state (a synthetic
+run). Success invalidated the guard — a structural reason data-coupled tests rot.
