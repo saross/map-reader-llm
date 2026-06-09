@@ -1,0 +1,121 @@
+{
+  "temperature": 0.0,
+  "summaries": [
+    {
+      "cell": "384-flash-high-text-1of5-union",
+      "best_operating_point": {
+        "proposer_k": 4,
+        "rule": "consensus_vt1",
+        "prob_t": 0.15,
+        "n_accepted": 402,
+        "f1_20m": 0.8721624850657108,
+        "mcc": 0.7620501319667458
+      },
+      "determinism_by_proposer_k": [
+        {
+          "proposer_k": 1,
+          "prob_t": 0.4,
+          "single_run_f1_mean": 0.7257,
+          "single_run_f1_sd": 0.0037,
+          "single_run_f1_min": 0.7193,
+          "single_run_f1_max": 0.7298,
+          "consensus_majority_f1": 0.7289
+        },
+        {
+          "proposer_k": 2,
+          "prob_t": 0.2,
+          "single_run_f1_mean": 0.8213,
+          "single_run_f1_sd": 0.0053,
+          "single_run_f1_min": 0.8171,
+          "single_run_f1_max": 0.8317,
+          "consensus_majority_f1": 0.8216
+        },
+        {
+          "proposer_k": 3,
+          "prob_t": 0.2,
+          "single_run_f1_mean": 0.8472,
+          "single_run_f1_sd": 0.0032,
+          "single_run_f1_min": 0.8426,
+          "single_run_f1_max": 0.8525,
+          "consensus_majority_f1": 0.8488
+        },
+        {
+          "proposer_k": 4,
+          "prob_t": 0.15,
+          "single_run_f1_mean": 0.8601,
+          "single_run_f1_sd": 0.0072,
+          "single_run_f1_min": 0.8498,
+          "single_run_f1_max": 0.8689,
+          "consensus_majority_f1": 0.8564
+        },
+        {
+          "proposer_k": 5,
+          "prob_t": 0.15,
+          "single_run_f1_mean": 0.8339,
+          "single_run_f1_sd": 0.0046,
+          "single_run_f1_min": 0.8286,
+          "single_run_f1_max": 0.8394,
+          "consensus_majority_f1": 0.8331
+        }
+      ]
+    },
+    {
+      "cell": "256-text-1of5-union",
+      "best_operating_point": {
+        "proposer_k": 5,
+        "rule": "mean",
+        "prob_t": 0.15,
+        "n_accepted": 398,
+        "f1_20m": 0.8636911942098915,
+        "mcc": 0.749694476758351
+      },
+      "determinism_by_proposer_k": [
+        {
+          "proposer_k": 1,
+          "prob_t": 0.2,
+          "single_run_f1_mean": 0.8092,
+          "single_run_f1_sd": 0.0045,
+          "single_run_f1_min": 0.8052,
+          "single_run_f1_max": 0.8174,
+          "consensus_majority_f1": 0.819
+        },
+        {
+          "proposer_k": 2,
+          "prob_t": 0.2,
+          "single_run_f1_mean": 0.8351,
+          "single_run_f1_sd": 0.0048,
+          "single_run_f1_min": 0.8288,
+          "single_run_f1_max": 0.8415,
+          "consensus_majority_f1": 0.8439
+        },
+        {
+          "proposer_k": 3,
+          "prob_t": 0.2,
+          "single_run_f1_mean": 0.8526,
+          "single_run_f1_sd": 0.0039,
+          "single_run_f1_min": 0.8467,
+          "single_run_f1_max": 0.8578,
+          "consensus_majority_f1": 0.8611
+        },
+        {
+          "proposer_k": 4,
+          "prob_t": 0.2,
+          "single_run_f1_mean": 0.85,
+          "single_run_f1_sd": 0.0043,
+          "single_run_f1_min": 0.8431,
+          "single_run_f1_max": 0.8554,
+          "consensus_majority_f1": 0.8588
+        },
+        {
+          "proposer_k": 5,
+          "prob_t": 0.15,
+          "single_run_f1_mean": 0.8555,
+          "single_run_f1_sd": 0.0025,
+          "single_run_f1_min": 0.8519,
+          "single_run_f1_max": 0.8585,
+          "consensus_majority_f1": 0.862
+        }
+      ]
+    }
+  ]
+}
