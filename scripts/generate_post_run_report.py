@@ -1046,6 +1046,99 @@ def render_manifest(manifest: str, obj: dict, json_rel: str) -> str:
     return head + table + "\n"
 
 
+# --------------------------------------------------------------------------- #
+# Timestamp stabilisation — keep no-op regenerations byte-identical
+# --------------------------------------------------------------------------- #
+
+#: Fields stamped to "now" on every run. Carried forward from the on-disk
+#: manifest for any row (or whole manifest) whose substantive content is
+#: unchanged, so a regeneration that adds/edits one row touches only that row
+#: (plus the manifest ``generated_at``) instead of re-stamping every row. Without
+#: this, a one-condition change rewrites ``last_extracted_at`` on all ~1100 rows
+#: and produces a multi-thousand-line pure-timestamp diff that destroys git
+#: diff/blame legibility on the manifests.
+_TS_FIELDS = frozenset({"last_extracted_at", "generated_at"})
+
+#: manifest name → its row identity field (matches old rows to new ones).
+_ROW_ID_FIELD = {
+    "runs": "run_id", "conditions": "condition_id", "passes": "pass_id",
+    "analyses": "analysis_id", "run-registry": "run_id",
+}
+
+
+def _strip_ts(value: Any) -> Any:
+    """Return a deep copy with every timestamp field blanked, for content compare."""
+    if isinstance(value, dict):
+        return {k: ("" if k in _TS_FIELDS else _strip_ts(v)) for k, v in value.items()}
+    if isinstance(value, list):
+        return [_strip_ts(v) for v in value]
+    return value
+
+
+def _carry_timestamps(new: Any, old: Any) -> None:
+    """Copy timestamp values from ``old`` into ``new`` in place.
+
+    Recurses only where the two are structurally identical (same dict keys / list
+    lengths). The caller guarantees ``new`` and ``old`` are equal once timestamps
+    are stripped, so this only ever overwrites timestamp values, never content.
+    """
+    if isinstance(new, dict) and isinstance(old, dict) and set(new) == set(old):
+        for k in new:
+            if k in _TS_FIELDS and k in old:
+                new[k] = old[k]
+            else:
+                _carry_timestamps(new[k], old[k])
+    elif isinstance(new, list) and isinstance(old, list) and len(new) == len(old):
+        for new_item, old_item in zip(new, old):
+            _carry_timestamps(new_item, old_item)
+
+
+def _stabilise_timestamps(manifest: str, new_obj: dict, json_path: Path) -> None:
+    """Carry forward on-disk timestamps for unchanged content, mutating ``new_obj``.
+
+    Re-stamps ``last_extracted_at`` only on rows whose substantive content actually
+    changed, and keeps the manifest ``generated_at`` stable unless some row
+    changed — so a no-op regeneration is byte-identical and a one-row change shows
+    only that row (plus ``generated_at``). The timestamps carried forward are
+    valid ISO strings already on disk, so the object stays schema-valid.
+
+    Args:
+        manifest: manifest name (selects the row identity field).
+        new_obj: the freshly-assembled manifest object (mutated in place).
+        json_path: path to the existing on-disk manifest; a no-op if it is absent
+            or unreadable (the first generation keeps fresh timestamps).
+    """
+    if not json_path.exists():
+        return
+    try:
+        old_obj = json.loads(json_path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return
+
+    array_key = _array_key(manifest)
+    id_field = _ROW_ID_FIELD.get(manifest)
+    old_by_id = {
+        row.get(id_field): row
+        for row in old_obj.get(array_key, [])
+        if isinstance(row, dict)
+    } if id_field else {}
+
+    for row in new_obj.get(array_key, []):
+        if not isinstance(row, dict):
+            continue
+        old_row = old_by_id.get(row.get(id_field))
+        if old_row is not None and _strip_ts(row) == _strip_ts(old_row):
+            _carry_timestamps(row, old_row)
+
+    # Manifest-level generated_at: keep stable iff nothing else changed.
+    if (
+        "generated_at" in new_obj
+        and "generated_at" in old_obj
+        and _strip_ts(new_obj) == _strip_ts(old_obj)
+    ):
+        new_obj["generated_at"] = old_obj["generated_at"]
+
+
 def write_manifests(bundles: dict[str, list[dict]], at: str, registry: Registry) -> dict[str, tuple]:
     """Validate and write each manifest (JSON + rendered MD); never write an invalid one.
 
@@ -1064,6 +1157,7 @@ def write_manifests(bundles: dict[str, list[dict]], at: str, registry: Registry)
         json_rel = MANIFEST_FILES[manifest]
         if not errors:
             json_path = REPO_ROOT / json_rel
+            _stabilise_timestamps(manifest, obj, json_path)
             json_path.write_text(json.dumps(obj, indent=2) + "\n", encoding="utf-8")
             json_path.with_suffix(".md").write_text(
                 render_manifest(manifest, obj, json_rel), encoding="utf-8")

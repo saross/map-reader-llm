@@ -26,6 +26,9 @@ from __future__ import annotations
 import pytest
 
 from scripts.generate_post_run_report import (
+    _carry_timestamps,
+    _stabilise_timestamps,
+    _strip_ts,
     assemble_manifest,
     build_analyses,
     build_manifests,
@@ -389,3 +392,93 @@ def test_analyses_leaderboard_finding(registry):
         assert f"n1-pro-rerun-384::{corner}" in lb["conditions_compared"]
         assert f"n1-outstanding-384::{corner}" not in lb["conditions_compared"]
     assert "_note" not in lb  # additionalProperties:false — sidecar note not emitted
+
+
+# --------------------------------------------------------------------------- #
+# Timestamp stabilisation — no-op regenerations stay byte-identical so manifest
+# git diffs show only real changes (no per-row last_extracted_at churn).
+# --------------------------------------------------------------------------- #
+
+
+@pytest.mark.tier1
+def test_strip_ts_blanks_timestamps_recursively():
+    obj = {
+        "generated_at": "T1",
+        "rows": [{"id": "a", "provenance": {"last_extracted_at": "T2", "x": 1}}],
+    }
+    stripped = _strip_ts(obj)
+    assert stripped["generated_at"] == ""
+    assert stripped["rows"][0]["provenance"]["last_extracted_at"] == ""
+    assert stripped["rows"][0]["provenance"]["x"] == 1  # content preserved
+    assert obj["generated_at"] == "T1"  # original untouched (deep copy)
+
+
+@pytest.mark.tier1
+def test_carry_timestamps_copies_only_timestamp_values():
+    new = {"id": "a", "provenance": {"last_extracted_at": "NEW", "f1": 0.9}}
+    old = {"id": "a", "provenance": {"last_extracted_at": "OLD", "f1": 0.9}}
+    _carry_timestamps(new, old)
+    assert new["provenance"]["last_extracted_at"] == "OLD"  # timestamp carried
+    assert new["provenance"]["f1"] == 0.9  # content untouched
+
+
+@pytest.mark.tier1
+def test_stabilise_timestamps_noop_regen_is_byte_identical(tmp_path):
+    import json
+
+    disk = {
+        "schema_version": "1.0",
+        "generated_at": "OLD",
+        "conditions": [
+            {"condition_id": "r::a", "n_passes": 1,
+             "provenance": {"last_extracted_at": "OLD", "source_files": ["x"]}},
+        ],
+    }
+    path = tmp_path / "conditions-manifest.json"
+    path.write_text(json.dumps(disk, indent=2) + "\n")
+    # A fresh build: identical content, but every timestamp re-stamped to "NOW".
+    fresh = json.loads(json.dumps(disk).replace("OLD", "NOW"))
+    _stabilise_timestamps("conditions", fresh, path)
+    assert fresh["generated_at"] == "OLD"
+    assert fresh["conditions"][0]["provenance"]["last_extracted_at"] == "OLD"
+    # The whole object is byte-identical to disk → no git diff.
+    assert json.dumps(fresh, indent=2) + "\n" == path.read_text()
+
+
+@pytest.mark.tier1
+def test_stabilise_timestamps_restamps_only_changed_row(tmp_path):
+    import json
+
+    disk = {
+        "schema_version": "1.0",
+        "generated_at": "OLD",
+        "conditions": [
+            {"condition_id": "r::a", "f1": 1,
+             "provenance": {"last_extracted_at": "OLD", "source_files": ["x"]}},
+            {"condition_id": "r::b", "f1": 2,
+             "provenance": {"last_extracted_at": "OLD", "source_files": ["x"]}},
+        ],
+    }
+    path = tmp_path / "conditions-manifest.json"
+    path.write_text(json.dumps(disk, indent=2) + "\n")
+    fresh = {
+        "schema_version": "1.0",
+        "generated_at": "NOW",
+        "conditions": [
+            {"condition_id": "r::a", "f1": 1,
+             "provenance": {"last_extracted_at": "NOW", "source_files": ["x"]}},
+            {"condition_id": "r::b", "f1": 99,  # this row changed
+             "provenance": {"last_extracted_at": "NOW", "source_files": ["x"]}},
+        ],
+    }
+    _stabilise_timestamps("conditions", fresh, path)
+    assert fresh["conditions"][0]["provenance"]["last_extracted_at"] == "OLD"  # unchanged row
+    assert fresh["conditions"][1]["provenance"]["last_extracted_at"] == "NOW"  # changed row
+    assert fresh["generated_at"] == "NOW"  # a row changed → manifest stamp bumps
+
+
+@pytest.mark.tier1
+def test_stabilise_timestamps_absent_file_keeps_fresh(tmp_path):
+    fresh = {"schema_version": "1.0", "generated_at": "NOW", "conditions": []}
+    _stabilise_timestamps("conditions", fresh, tmp_path / "does-not-exist.json")
+    assert fresh["generated_at"] == "NOW"  # first generation keeps fresh timestamps
