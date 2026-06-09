@@ -1,0 +1,32 @@
+{
+  "_description": "Session 109 verifier-robustness cells. We verify the 1-of-5 PROPOSER union once (per verifier temperature) at N iterations, then derive every proposer-vote input level (1of5..5of5) as a free post-hoc subset (the union geojson carries vote_count per feature) AND the verifier-determinism analysis (avg-of-N single runs vs an N-run consensus verifier). Stage 1 = T=0.0 only; later stages add 0.3/0.7/1.0 one notch at a time.",
+  "cells": [
+    {
+      "name": "384-flash-high-text-1of5-union",
+      "size": 384,
+      "kind": "proposer-union",
+      "proposer": "outputs/h11/pv-diag-384/consensus/flash-high-text-1of5.geojson",
+      "n_union": 3736,
+      "proposer_vote_cumulative": {"1of5": 3736, "2of5": 1376, "3of5": 855, "4of5": 584, "5of5": 415},
+      "note": "The leading 384 GS consensus+PV proposer (flash-high-text). 63% of the 1of5 union is single-pass-only (vote_count=1) -> the FP-heavy permissive extreme."
+    },
+    {
+      "name": "256-text-1of5-union",
+      "size": 256,
+      "kind": "proposer-union",
+      "proposer": "outputs/h11/pv-diag-256/consensus/text-1of5.geojson",
+      "n_union": 2558,
+      "proposer_vote_cumulative": {"1of5": 2558, "2of5": 1909, "3of5": 1645, "4of5": 1423, "5of5": 1165},
+      "note": "The 256 rescue cell (Obs 352). Smaller tiles benefit most from verifier efficacy; vote_count=5 dominates (1165)."
+    }
+  ],
+  "verifier_config": "prompts/configs/verify_adversarial-text.json",
+  "iterations": 5,
+  "padding": 75,
+  "service_tier": "flex",
+  "mode": "realtime",
+  "stage1_temperatures": [0.0],
+  "planned_later_temperatures": [0.3, 0.7, 1.0],
+  "prob_t_sweep": [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5],
+  "flex_per_call_usd": 0.000697
+}
