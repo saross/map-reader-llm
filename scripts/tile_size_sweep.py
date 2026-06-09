@@ -126,6 +126,24 @@ SINGLE_PASS_MATCHED = {
 # placed in the text-T0.0 row as the project baseline but flagged thin-provenance.
 THIN_PROVENANCE_REFS = {"pv-diag-256::text-baseline", "pv-diag-256::text-consensus-5of5"}
 
+# --- VIEW 3 matched consensus+PV cells (the clean Stage-D head-to-head). -------
+# Each entry: {size: "<run>::<label>"}. These are the consensus champions VERIFIED
+# with the production carry-forward adversarial verifier (gemini-3-flash,
+# verify_adversarial-text, T=0.0, minimal, n=1), scored at 14-buffer + tile-MCC,
+# best-F1@20 m operating point per size. This is the consensus+PV analogue of
+# SINGLE_PASS_MATCHED. The 384 ref (pv-diag-384::verified-adv-text-consensus-
+# 16of30) is registered by a FOREGROUND session; until it lands in
+# run-conditions.json, by_ref.get() returns None and build_pv_view() renders an
+# em-dash for that size + drops fully-empty rows, so this view NO-OPS GRACEFULLY
+# rather than erroring before the registration is applied.
+PV_MATCHED = {
+    ("text", "consensus+PV"): {
+        256: "pv-diag-256::verified-adv-text-consensus-5of5",
+        384: "pv-diag-384::verified-adv-text-consensus-16of30",
+        512: "retest-phase3a-high::verified-adv-text-high-t1.0-n30-23of30",
+    },
+}
+
 
 def git_commit() -> str:
     """Return the short HEAD commit hash, or ``"unknown"`` on failure."""
@@ -338,9 +356,51 @@ def build_views(cells: list[dict]) -> dict:
             "direction": _direction({s: c["f1"] for s, c in best.items()}),
         })
 
+    # --- VIEW 3: consensus+PV matched (Stage-D head-to-head) ---
+    pv_rows = build_pv_view(by_ref)
+
     view2 = best_per_size_architecture(cells)
     return {"single_pass_isolation": sp_rows, "consensus_isolation": con_rows,
-            "best_per_size": view2}
+            "pv_matched": pv_rows, "best_per_size": view2}
+
+
+def build_pv_view(by_ref: dict[str, dict]) -> list[dict]:
+    """Build the matched consensus+PV rows from PV_MATCHED.
+
+    Resolves each size's registered condition via ``by_ref``. A ref that is not
+    (yet) in run-conditions.json resolves to ``None`` -> the size renders as an
+    em-dash, so this view degrades gracefully before the foreground registers
+    the new PV condition(s). Rows where NO size resolves are dropped entirely, so
+    the table is empty (not erroring) until at least one PV cell is registered.
+
+    Args:
+        by_ref: Map of ``"<run>::<label>"`` -> loaded cell dict.
+
+    Returns:
+        List of row dicts (one per PV_MATCHED entry that has >=1 resolved size),
+        each with ``by_size`` (F1@20 m), ``cells`` (full per-size detail) and a
+        tile-size ``direction`` annotation.
+    """
+    rows = []
+    for (modality, arch), size_refs in PV_MATCHED.items():
+        per_size = {}
+        for size, ref in size_refs.items():
+            c = by_ref.get(ref)
+            per_size[size] = ({
+                "ref": ref, "f1": c["f1"], "mcc": c["mcc"],
+                "n": c["n_passes"], "vote": c["vote"],
+            } if c else None)
+        # Drop the row only if NOTHING resolved (keeps the view a no-op until at
+        # least one PV cell is in the manifest).
+        if not any(per_size.values()):
+            continue
+        by_size = {s: (v["f1"] if v else None) for s, v in per_size.items()}
+        rows.append({
+            "architecture": arch, "modality": modality,
+            "by_size": by_size, "cells": per_size,
+            "direction": _direction(by_size),
+        })
+    return rows
 
 
 def main() -> int:
@@ -427,6 +487,25 @@ def _write_markdown(md_path: Path, result: dict) -> None:
             f"{_fmt(bs.get(256))} | {_fmt(bs.get(384))} | {_fmt(bs.get(512))} | "
             f"{r['direction']} |"
         )
+    pv_rows = result.get("pv_matched", [])
+    if pv_rows:
+        lines += [
+            "",
+            "## View 3 — consensus+PV matched (Stage-D head-to-head; carry-forward verifier)",
+            "",
+            "Consensus champion VERIFIED with the production adversarial verifier "
+            "(gemini-3-flash, verify_adversarial-text, T=0.0, minimal, n=1), scored at "
+            "14-buffer + tile-MCC, best-F1@20 m operating point per size.",
+            "",
+            "| modality | arch | 256 | 384 | 512 | direction |",
+            "|---|---|---:|---:|---:|---|",
+        ]
+        for r in pv_rows:
+            bs = r["by_size"]
+            lines.append(
+                f"| {r['modality']} | {r['architecture']} | {_fmt(bs.get(256))} | "
+                f"{_fmt(bs.get(384))} | {_fmt(bs.get(512))} | {r['direction']} |"
+            )
     lines += [
         "",
         "## View 2 — best-achievable FLASH ceiling per (size × architecture × modality)",
