@@ -181,16 +181,26 @@ def test_verify_flags_f1_all_zero():
 
 
 @pytest.mark.tier1
-def test_classify_flags_no_standard_scoring():
+def test_classify_flags_no_standard_scoring(tmp_path):
     # A run with materialised detection geojsons but ZERO standard evals is flagged
-    # for re-scoring. pv-diag-256 (the archived threshold_sweep/summary shape, 256
-    # scope, no MCC) is the example — the last undecomposed backlog run (TODO #5).
-    # (Data-coupled: retest-phase3c was the previous example until it was re-scored
-    # to the standard in Session 106; repointed to pv-diag-256 2026-06-08. Once
-    # pv-diag-256 is decomposed too, repoint to another backlog run.)
-    registry_obj = load_run_registry()
-    index = _g._build_eval_index()
-    c = classify_run("pv-diag-256", registry_obj, index)
+    # `no_standard_scoring` (results scored only by a non-standard leaderboard/sweep,
+    # or not at all → needs re-scoring). Built from a synthetic run so it does NOT
+    # couple to a live decomposition-backlog run: the real backlog was cleared once
+    # all 28 runs were decomposed and re-scored (Session 108). This previously
+    # pointed at retest-phase3c, then pv-diag-256 — both since standardised, which
+    # is exactly why a live example no longer exists. The synthetic run also pins
+    # the materialised-count rule: aggregation/verified geojsons count, but raw
+    # proposer `run_N/` passes and `crops/` do not.
+    run_dir = tmp_path / "synthetic-run"
+    run_dir.mkdir()
+    fc = '{"type": "FeatureCollection", "features": []}'
+    (run_dir / "consensus_t4.geojson").write_text(fc)  # a materialised aggregation output
+    (run_dir / "run_1").mkdir()
+    (run_dir / "run_1" / "raw.geojson").write_text(fc)  # raw proposer pass — excluded
+    (run_dir / "crops").mkdir()
+    (run_dir / "crops" / "candidate.geojson").write_text(fc)  # crop output — excluded
+    registry_obj = {"registry": [{"run_id": "synthetic-run", "directory_path": str(run_dir)}]}
+    c = classify_run("synthetic-run", registry_obj, index={})
     assert c["n_evals"] == 0
-    assert c["n_materialised_geojson"] > 0
+    assert c["n_materialised_geojson"] == 1  # only consensus_t4.geojson; run_N/ + crops/ excluded
     assert c["no_standard_scoring"]
