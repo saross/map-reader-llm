@@ -19250,3 +19250,48 @@ through more absolute FPs than it gains real mounds.
 3. **MCC stays comparatively flat** (0.73–0.79) where F1 swings 0.13 — the
    tile-level discrimination survives the FP flood that point-level F1
    punishes (the recurring F1-vs-MCC divergence).
+
+## Observation 356: A higher-temperature CONSENSUS verifier does not help — the proposer-side diversity dividend does not transfer to the verifier (Session 109, 2026-06-09)
+
+*Source anchors: `results/verifier-robustness/snowball_summary.json` and
+`results/verifier-robustness/robustness_grid_T0.3.json` (verified 2026-06-09);
+driver `scripts/run_verifier_temperature_snowball.py` (per-cell greedy snowball);
+raw outputs `outputs/verifier-robustness/{384-flash-high-text,256-text}-ge3of5/T0.3/verified/`;
+findings `results/verifier-robustness/verifier-robustness-findings.md` § 7.*
+
+### The finding
+
+Stage 1 showed a 5-run consensus verifier ≈ a single run at T=0.0 (no
+diversity to pool; [[Obs 354]]). The open hypothesis: a *higher*-temperature
+verifier decorrelates the N passes, so a higher-T **consensus** verifier might
+mirror the proposer-side diversity dividend (diverse high-T passes pruned by a
+vote). Stage 2 tested it with a **per-cell greedy snowball** over the **≥3-of-5
+band** (the productive input from [[Obs 355]]) at N=5, climbing T=0.3 → 0.7 →
+1.0 and advancing a cell only if its best-consensus F1@20 m beat its own
+previous temperature by > 0.005. Thinking held at minimal; only temperature
+varied. **Both cells stalled at the first rung (T=0.3); T=0.7 and T=1.0 never
+ran:**
+
+| cell | T=0.0 | T=0.3 | Δ |
+|---|---:|---:|---:|
+| 384-flash-high-text ≥3of5 | 0.8722 | 0.8739 | +0.0017 (within noise) |
+| 256-text ≥3of5 | 0.8637 | 0.8582 | −0.0055 (worse) |
+
+Higher verifier temperature produced more **noise** diversity (256
+inter-iteration split 3.2 % → 5.7 %) but no **signal** diversity: the consensus
+of noisier passes ≈ the clean T=0.0 result (384) or slightly worse (256).
+
+### Why it matters
+
+The diversity dividend is a **proposer** phenomenon (HIGH-thinking / high-T
+*generation* of diverse candidates); it does **not** transfer to the verifier's
+bounded per-candidate adversarial judgement. Together with [[Obs 354]] this
+**vindicates the production carry-forward verifier (gemini-3-flash, T=0.0,
+minimal, n=1) on two axes** — neither more passes nor higher temperature
+improves it. No new citable champion is minted; the robustness study confirms
+the existing Stage-D grid rather than overturning it. The early calibration
+pilot's choice of minimal/T=0.0 is retrospectively validated. **Open ($0):** the
+thinking axis, via an on-disk HIGH-thinking verifier prior (identical except
+`thinking_level: high`, T=0.0) — to be scored next session. Cost of this
+finding: ~$8.71 flex (the snowball's per-cell early stop saved the T=0.7/1.0
+spend).

@@ -1,19 +1,28 @@
-# Verifier-robustness — findings (Stage 1, T=0.0)
+# Verifier-robustness — findings
 
-> **Last revised**: 2026-06-09 (Stage-1 publication — the T=0.0 determinism +
-> proposer-input results). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-06-09 (Stage-2 — the higher-T consensus verifier was
+> rejected: both cells stalled at T=0.3). See [§ Changelog](#changelog) for
+> revision history.
 
 This document is the citable home for the **verifier-robustness** programme
-(Session 109). It answers two questions that bear on **every n=1 verified cell
+(Session 109). It answers three questions that bear on **every n=1 verified cell
 in the paper** — the Stage-D PV grid, the 55-map deployment oracle, and all
 proposer-verifier cells. Pre-run design and gating are recorded separately in
 [`outputs/verifier-robustness/experiment_intent.md`](../../outputs/verifier-robustness/experiment_intent.md).
 
-**Stage 1 (this document)** runs the production verifier at **N=5 iterations,
-T=0.0** over the **1-of-5 proposer union** of the two Gold-Standard
-consensus+PV cells (the leading 384 `flash-high-text` and the 256 rescue cell),
-deriving every proposer-vote input level (1of5→5of5) as a free post-hoc subset.
-Later stages add the verifier temperature 0.3 / 0.7 / 1.0 one notch at a time.
+**Headline**: the production carry-forward verifier — **gemini-3-flash, T=0.0,
+minimal thinking, n=1** — is **vindicated on every axis tested**. Run-to-run
+non-determinism is negligible at F1 (§ 2); a higher-temperature *consensus*
+verifier does **not** help (§ 7); and the optimal *input* is a pre-filtered
+proposer pool, not the permissive union (§ 3). No variant beats the
+carry-forward.
+
+- **Stage 1** (T=0.0): verify the **1-of-5 proposer union** of the two
+  Gold-Standard consensus+PV cells (the leading 384 `flash-high-text` and the
+  256 rescue cell) at **N=5**, deriving every proposer-vote input level
+  (1of5→5of5) as a free post-hoc subset — § 2 (determinism), § 3 (input).
+- **Stage 2** (temperature): a per-cell greedy snowball climbing the verifier
+  temperature 0.3 → 0.7 → 1.0 on the **≥3-of-5 band** — § 7.
 
 ## 1. The run
 
@@ -131,7 +140,44 @@ consensus (≥3–4 of 5), not the maximal-recall union.
   `scripts/analyse_verifier_robustness.py`
 - Reusable scorer: `lib_advanced_metrics.score_detection_set` (bootstrap-free
   point F1/MCC for grid analyses)
+- Stage-2 artefacts: `results/verifier-robustness/snowball_summary.json`,
+  `robustness_{grid,summary}_T0.3.json`; `outputs/verifier-robustness/<cell>/T0.3/verified/`;
+  driver `scripts/run_verifier_temperature_snowball.py`
 - Pre-run intent: `outputs/verifier-robustness/experiment_intent.md`
+
+## 7. Stage 2 — a higher-temperature consensus verifier does not help
+
+The Stage-1 finding that consensus ≈ single-run at T=0.0 (§ 2) left one
+hypothesis open: a *higher*-temperature verifier decorrelates the N passes, so a
+higher-T **consensus** verifier might mirror the proposer-side diversity
+dividend. Stage 2 tested it with a **per-cell greedy snowball**
+(`run_verifier_temperature_snowball.py`): verify the **≥3-of-5 band** (the
+productive band from § 3) at N=5, climbing T=0.3 → 0.7 → 1.0, advancing a cell
+to the next temperature only if its best-consensus F1@20 m beats its *own*
+previous temperature by > 0.005 (the § 2 noise floor). Each tile size climbs
+independently. Held constant: model, **minimal thinking**, band, N=5, flex.
+
+**Result: both cells stalled at the first rung (T=0.3); T=0.7 and T=1.0 never
+ran.**
+
+| cell | T=0.0 (best consensus) | T=0.3 | Δ | verdict |
+|---|---:|---:|---:|---|
+| 384-flash-high-text ≥3of5 | 0.8722 | 0.8739 | **+0.0017** | stall (within noise) |
+| 256-text ≥3of5 | 0.8637 | 0.8582 | **−0.0055** | stall (worse) |
+
+The higher-T **consensus verifier hypothesis is rejected**. Raising verifier
+temperature produces more *noise* diversity (the 256 inter-iteration split rose
+3.2 % → 5.7 % at T=0.3) but no *signal* diversity: the consensus of noisier
+passes ≈ the clean T=0.0 result for 384, and is slightly worse for 256. The
+proposer-side diversity dividend (HIGH-thinking, high-T *proposer*) does **not**
+transfer to the verifier's per-candidate adversarial judgement. **The T=0.0
+carry-forward verifier stands as optimal.** Cost: one rung, ~$8.71 flex (the
+snowball's early stop saved the T=0.7/1.0 spend).
+
+**Thinking axis (open, $0 to close):** an existing on-disk HIGH-thinking
+verifier pool (`flash-high-text-…-flash-high-verifier`, identical to the
+carry-forward except `thinking_level: high`, T=0.0) lets the minimal-vs-high
+comparison be scored for free — pending in the next session.
 
 ## See also
 
@@ -140,19 +186,37 @@ consensus (≥3–4 of 5), not the maximal-recall union.
   proposer lineages.
 - **Preceding experiment(s)**: `results/era1-pv-stage-d/384-leg-recon.md` — the
   384 `flash-high-text` proposer/verifier provenance reused here.
-- **Follow-up experiment(s)**: verifier-robustness Stage 2+ (higher-T consensus
-  verifier, T=0.3 → 0.7 → 1.0) — to be added to this document.
+- **Follow-up experiment(s)**: thinking axis — score the free on-disk
+  HIGH-thinking verifier prior (T=0.0); optional `medium` only if warranted.
 - **Follow-up experiment(s)**: the pencilled `384-flash-high-image-1of5-union`
   image-proposer tranche (`planning/verifier-robustness-cells.json`
-  `_deferred_cells`).
+  `_deferred_cells`) — verify the ≥3-of-5 band, not the union (§ 3).
 - **Run output directory**: `outputs/verifier-robustness/`.
 - **Working-notes Observations**: Obs 354 — verifier T=0.0 determinism is
   negligible at F1 level (n=1 vindicated); Obs 355 — the 1-of-5 union is the
-  worst verifier input (verifier does not rescue the FP flood).
+  worst verifier input (verifier does not rescue the FP flood); Obs 356 — a
+  higher-T consensus verifier does not help (both cells stall at T=0.3).
 - **Decisions / Errata**: E56 governs verifier prob_t diagnostics only; no
   preregistration amendment needed for a robustness check.
 
 ## Changelog
+
+### 2026-06-09 — Stage-2 (higher-T consensus verifier rejected)
+
+**Refresh trigger**: the Stage-2 temperature snowball completed (commit
+`af9214554`). Added § 7 and the headline. **Both cells stalled at T=0.3** — 384
+0.8722 → 0.8739 (+0.0017, within noise), 256 0.8637 → 0.8582 (−0.0055) — so
+T=0.7/1.0 never ran. The higher-T consensus verifier hypothesis is rejected; the
+T=0.0 carry-forward stands.
+
+| claim | before (Stage 1) | after (Stage 2) |
+|---|---|---|
+| higher-T consensus verifier | open hypothesis | rejected (both stall at T=0.3) |
+| title / scope | "Stage 1, T=0.0" | spans Stage 1 + Stage 2 |
+
+What did NOT change: the Stage-1 determinism (§ 2) and proposer-input (§ 3)
+results. The thinking axis remains open (free on-disk HIGH-thinking prior to be
+scored next session).
 
 ### 2026-06-09 — Stage-1 publication (T=0.0)
 
