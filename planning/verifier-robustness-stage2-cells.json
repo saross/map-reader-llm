@@ -1,0 +1,36 @@
+{
+  "_description": "Session 109 Stage-2 verifier-robustness cells: the >=3-of-5 PROPOSER band of the two GS cells (the productive band identified in Stage 1, where the 1of5 union was worst). Verified at N=5 across the verifier temperature ladder (0.3/0.7/1.0) with thinking held CONSTANT at minimal (the config default) so temperature is the only parameter that changes. The analysis sweeps proposer-vote 3/4/5 within the band as free subsets.",
+  "cells": [
+    {
+      "name": "384-flash-high-text-ge3of5",
+      "size": 384,
+      "kind": "proposer-band",
+      "proposer": "outputs/h11/pv-diag-384/consensus/flash-high-text-ge3of5.geojson",
+      "n_union": 855,
+      "proposer_vote_cumulative": {"3of5": 855, "4of5": 584, "5of5": 415},
+      "stage1_T0.0_best_consensus_f1": 0.8722,
+      "note": ">=3of5 band of the leading 384 flash-high-text proposer (855 of the 3736 union)."
+    },
+    {
+      "name": "256-text-ge3of5",
+      "size": 256,
+      "kind": "proposer-band",
+      "proposer": "outputs/h11/pv-diag-256/consensus/text-ge3of5.geojson",
+      "n_union": 1645,
+      "proposer_vote_cumulative": {"3of5": 1645, "4of5": 1423, "5of5": 1165},
+      "stage1_T0.0_best_consensus_f1": 0.8637,
+      "note": ">=3of5 band of the 256 text proposer (1645 of the 2558 union)."
+    }
+  ],
+  "verifier_config": "prompts/configs/verify_adversarial-text.json",
+  "iterations": 5,
+  "padding": 75,
+  "service_tier": "flex",
+  "mode": "realtime",
+  "thinking_level": "minimal (held constant from the config across the whole temperature sweep)",
+  "temperature_ladder": [0.3, 0.7, 1.0],
+  "snowball_margin": 0.005,
+  "prob_t_sweep": [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5],
+  "flex_per_call_usd": 0.000697,
+  "cost_per_temperature": {"band_candidates": 2500, "calls": 12500, "flex_usd": 8.71}
+}

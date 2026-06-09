@@ -300,6 +300,9 @@ def main() -> int:
         all_results.append(res)
         all_summaries.append(summ)
         bop = summ["best_operating_point"]
+        if bop is None:
+            print("  best F1@20m=NA (empty grid — no candidates joined)", flush=True)
+            continue
         print(f"  best F1@20m={bop['f1_20m']:.4f} (proposer {bop['proposer_k']}of5, "
               f"{bop['rule']}, prob_t={bop['prob_t']}, MCC={bop['mcc']})", flush=True)
         for d in summ["determinism_by_proposer_k"]:
