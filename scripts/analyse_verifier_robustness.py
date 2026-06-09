@@ -41,19 +41,23 @@ from __future__ import annotations
 import argparse
 import json
 import statistics
-import subprocess
 import sys
-import tempfile
 from pathlib import Path
 
 import geopandas as gpd
+from shapely.geometry import Point
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(BASE_DIR))
+from scripts.evaluate_detections import load_geojson  # noqa: E402
+from scripts.lib_advanced_metrics import score_detection_set  # noqa: E402
+
+# Evaluation CRS is EPSG:32635 (lib_advanced_metrics.DEFAULT_CRS); candidate
+# centroids are already in 32635, so no reprojection is needed for scoring.
+EVAL_CRS = "EPSG:32635"
 DEFAULT_CELLS = BASE_DIR / "planning" / "verifier-robustness-cells.json"
 DEFAULT_OUTROOT = BASE_DIR / "outputs" / "verifier-robustness"
 GROUND_TRUTH = BASE_DIR / "inputs" / "vectors" / "references" / "mounds-reference.geojson"
-EVAL = BASE_DIR / "scripts" / "evaluate_detections.py"
-BUFFERS = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100, 125, 150]
 BOUNDS_BY_SIZE = {
     256: BASE_DIR / "inputs" / "vectors" / "bounds" / "256" / "full_evaluation_bounds.geojson",
     384: BASE_DIR / "inputs" / "vectors" / "bounds" / "384" / "full_evaluation_bounds.geojson",
@@ -142,70 +146,62 @@ def accepted_cids(table: list[dict], proposer_k: int, rule: str, prob_t: float) 
     return frozenset(out)
 
 
-def score_cids(cids: frozenset[int], table: list[dict], size: int,
-               workdir: Path) -> tuple[float, float | None]:
-    """Build the accepted geojson (32635 -> 4326) and score F1@20 m + MCC.
+def score_cids(cids: frozenset[int], by_cid: dict[int, dict],
+               gdf_ref: gpd.GeoDataFrame,
+               gdf_bounds: gpd.GeoDataFrame) -> tuple[float, float | None]:
+    """Score an accepted candidate set in-process (point F1@20 m + tile-MCC).
 
-    Mirrors build_post_verifier_geojson's CRS handling exactly.
+    Builds the detection GeoDataFrame in EPSG:32635 directly — the candidate
+    centroid CRS and the evaluation CRS coincide, so no reprojection or file
+    round-trip is needed — and calls the shared bootstrap-free scorer
+    (:func:`score_detection_set`). ``gdf_ref`` / ``gdf_bounds`` are loaded once
+    by the caller and reused across every set in the grid.
     """
     if not cids:
         return 0.0, None
-    workdir.mkdir(parents=True, exist_ok=True)
-    by_cid = {r["cid"]: r for r in table}
-    feats = []
-    for cid in cids:
-        r = by_cid[cid]
-        feats.append({
-            "type": "Feature",
-            "geometry": {"type": "Point", "coordinates": [r["x"], r["y"]]},
-            "properties": {"candidate_id": str(cid), "source_tile": r["source_tile"]},
-        })
-    gdf = gpd.GeoDataFrame.from_features(feats, crs="EPSG:32635").to_crs("EPSG:4326")
-    det_path = workdir / "accepted.geojson"
-    gdf.to_file(det_path, driver="GeoJSON")
-
-    out_dir = workdir / "eval"
-    cmd = [sys.executable, str(EVAL), "--detections", str(det_path),
-           "--ground-truth", str(GROUND_TRUTH), "--bounds", str(BOUNDS_BY_SIZE[size]),
-           "--buffers", *[str(b) for b in BUFFERS], "--mcc", "--output-dir", str(out_dir)]
-    subprocess.run(cmd, check=True, cwd=BASE_DIR, capture_output=True)
-    summary = json.loads((out_dir / "evaluation.json").read_text())["summary"]
-    f1 = next(b["f1"] for b in summary["buffers"] if b["buffer_metres"] == 20)
-    mcc = summary.get("tile_classification", {}).get("mcc", {}).get("point")
-    return float(f1), mcc
+    sel = [by_cid[c] for c in cids]
+    gdf_det = gpd.GeoDataFrame(
+        {"geometry": [Point(r["x"], r["y"]) for r in sel],
+         "source_tile": [r["source_tile"] for r in sel]},
+        crs=EVAL_CRS,
+    )
+    res = score_detection_set(gdf_det, gdf_ref, gdf_bounds,
+                              buffer_metres=20, compute_mcc=True)
+    return res["f1"], res["mcc"]
 
 
 def analyse_cell(cell: dict, outroot: Path, temperature: float,
-                 prob_ts: list[float], n_iter: int) -> dict:
+                 prob_ts: list[float], n_iter: int,
+                 gdf_ref: gpd.GeoDataFrame) -> dict:
     """Compute the determinism + proposer-input grid for one cell."""
     name = cell["name"]
     size = cell["size"]
     crops = outroot / name / "crops" / "candidate_manifest.json"
     probs = outroot / name / f"T{temperature}" / "verified" / "probabilities.json"
     table = load_candidate_table(crops, probs)
+    by_cid = {r["cid"]: r for r in table}
     n_present = len(table)
     # Infer the proposer vote ceiling actually present (usually 5).
     max_pk = max((r["vote_count"] for r in table), default=0)
+    gdf_bounds = load_geojson(BOUNDS_BY_SIZE[size])  # loaded once per cell
 
     cache: dict[frozenset[int], tuple[float, float | None]] = {}
-    with tempfile.TemporaryDirectory() as td:
-        tdp = Path(td)
 
-        def scored(cids: frozenset[int]) -> tuple[float, float | None]:
-            if cids not in cache:
-                cache[cids] = score_cids(cids, table, size, tdp / str(len(cache)))
-            return cache[cids]
+    def scored(cids: frozenset[int]) -> tuple[float, float | None]:
+        if cids not in cache:
+            cache[cids] = score_cids(cids, by_cid, gdf_ref, gdf_bounds)
+        return cache[cids]
 
-        grid = []  # one row per (proposer_k, rule, prob_t)
-        rules = [f"iter{k}" for k in range(1, n_iter + 1)] \
-            + [f"consensus_vt{v}" for v in range(1, n_iter + 1)] + ["mean"]
-        for pk in range(1, max_pk + 1):
-            for rule in rules:
-                for pt in prob_ts:
-                    cids = accepted_cids(table, pk, rule, pt)
-                    f1, mcc = scored(cids)
-                    grid.append({"proposer_k": pk, "rule": rule, "prob_t": pt,
-                                 "n_accepted": len(cids), "f1_20m": f1, "mcc": mcc})
+    grid = []  # one row per (proposer_k, rule, prob_t)
+    rules = [f"iter{k}" for k in range(1, n_iter + 1)] \
+        + [f"consensus_vt{v}" for v in range(1, n_iter + 1)] + ["mean"]
+    for pk in range(1, max_pk + 1):
+        for rule in rules:
+            for pt in prob_ts:
+                cids = accepted_cids(table, pk, rule, pt)
+                f1, mcc = scored(cids)
+                grid.append({"proposer_k": pk, "rule": rule, "prob_t": pt,
+                             "n_accepted": len(cids), "f1_20m": f1, "mcc": mcc})
 
     return {"cell": name, "size": size, "n_candidates": n_present,
             "max_proposer_k": max_pk, "n_iterations": n_iter,
@@ -276,10 +272,11 @@ def main() -> int:
     prob_ts = args.prob_t if args.prob_t is not None else spec["prob_t_sweep"]
 
     args.out_dir.mkdir(parents=True, exist_ok=True)
+    gdf_ref = load_geojson(GROUND_TRUTH)  # ground truth loaded once for all cells
     all_results, all_summaries = [], []
     for cell in spec["cells"]:
         print(f"=== analysing {cell['name']} (T={args.temperature}) ===", flush=True)
-        res = analyse_cell(cell, args.output_root, args.temperature, prob_ts, n_iter)
+        res = analyse_cell(cell, args.output_root, args.temperature, prob_ts, n_iter, gdf_ref)
         summ = summarise(res, prob_ts)
         all_results.append(res)
         all_summaries.append(summ)

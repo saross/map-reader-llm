@@ -875,6 +875,60 @@ def aggregate_tile_metrics(
     return precision, recall, f1
 
 
+def score_detection_set(
+    gdf_det: gpd.GeoDataFrame,
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+    buffer_metres: int = 20,
+    compute_mcc: bool = True,
+) -> dict:
+    """Fast, bootstrap-free POINT scorer for grid / sweep analyses.
+
+    This is the reusable primitive for scoring **many** detection sets against
+    the same ground truth — threshold sweeps, operating-point grids, robustness
+    matrices. It returns only point estimates (no bootstrap CIs) and does no
+    file I/O, so the caller loads ``gdf_ref`` / ``gdf_bounds`` ONCE and reuses
+    them across every set.
+
+    **Why this exists** (use it instead of shelling out to
+    ``evaluate_detections.py`` in a loop): the CLI wrapper reloads the ground
+    truth + bounds, writes/reads a GeoJSON, and runs a 1,000-iteration BCa
+    bootstrap on *every* call — ~20 s/set, so a 600-set grid takes ~3 hours.
+    Calling the point functions in-process drops that to milliseconds/set. The
+    metric is identical (the CLI wraps these same two functions); only the
+    redundant bootstrap + subprocess + I/O overhead is removed.
+
+    **When NOT to use this**: for a single authoritative cell evaluation where
+    you need the published F1/MCC bootstrap CIs, use ``evaluate_detections.py``
+    (or :func:`evaluate_single_run`) — the CIs are the point of those.
+
+    Args:
+        gdf_det: Detection GeoDataFrame in EPSG:32635 (:data:`DEFAULT_CRS`).
+            For MCC it must carry a ``source_tile`` column.
+        gdf_ref: Ground-truth references (EPSG:32635).
+        gdf_bounds: Tile boundaries defining evaluation scope (EPSG:32635,
+            with a ``tile_name`` column for MCC).
+        buffer_metres: Match radius for F1 (default 20 m, the headline buffer).
+        compute_mcc: If True, also compute the point tile-level MCC.
+
+    Returns:
+        ``{"f1", "precision", "recall", "n_detections", "mcc"}``. ``mcc`` is
+        ``None`` when ``compute_mcc`` is False or there are no detections.
+    """
+    n_det = len(gdf_det)
+    if n_det == 0:
+        return {"f1": 0.0, "precision": 0.0, "recall": 0.0,
+                "n_detections": 0, "mcc": None}
+    precision, recall, f1 = calculate_f1_internal(
+        gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_metres,
+    )
+    mcc = None
+    if compute_mcc:
+        mcc = calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds).get("mcc")
+    return {"f1": float(f1), "precision": float(precision),
+            "recall": float(recall), "n_detections": n_det, "mcc": mcc}
+
+
 def calculate_f1_internal(
     gdf_det: gpd.GeoDataFrame,
     gdf_ref: gpd.GeoDataFrame,
