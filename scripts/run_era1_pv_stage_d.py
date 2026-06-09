@@ -236,6 +236,10 @@ def do_score(cells: list[dict], outroot: Path, prob_sweep: list[float],
                 manifest = crops / "candidate_manifest.json"
                 probs = verified / "probabilities.json"
                 acc = outroot / cell["name"] / f"pass_{i}" / f"accepted_t{prob_t}.geojson"
+                # build_post_verifier_geojson.py (gdf.to_file) does not create
+                # parent dirs. The --full path makes pass_i during extraction; a
+                # verified_pools cell skips extraction, so create it here.
+                acc.parent.mkdir(parents=True, exist_ok=True)
                 run([sys.executable, str(BUILD_PV), "--manifest", str(manifest),
                      "--probabilities", str(probs), "--threshold", str(prob_t),
                      "--output", str(acc)])
