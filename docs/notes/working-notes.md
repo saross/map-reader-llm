@@ -19022,3 +19022,150 @@ Obs 175 confirmed, Obs 351 falsified, 256 overwhelms verifier falsified,
   `scripts/run_era1_pv_stage_d.py` (orchestrator). Produced in
   commits `7d6c46672` (Stage D scoring), `734545beb` (condition minting +
   leaderboard extension), `0de27f60d` (outcome refresh).
+
+## Observation 353: Non-isolated background agents share the working tree — concurrency discipline for parallel agent + foreground work (Session 108, 2026-06-09)
+
+*Source anchors: git log on `main`, commits `221ca7d33`–`c0273f208`
+(Session 108, verified 2026-06-09 via `git log --oneline --reverse
+8a038f744..c0273f208`); `scripts/generate_post_run_report.py`
+(manifest generator, verified 2026-06-09);
+`scripts/run_era1_pv_stage_d.py` (agent orchestrator, verified
+2026-06-09).*
+
+### The finding
+
+In Session 108 a file-mutating background agent (Claude `Agent` tool,
+`run_in_background`, **with no worktree isolation**) ran the 384-leg
+consensus+PV re-score while the foreground (main session) simultaneously
+did analysis sign-off edits. Because the agent was not isolated, it
+operated in the **same working directory**, the **same git repository**,
+and the **same branch** (`main`), committing concurrently with the
+foreground. The two sides' commits interleaved on a single linear
+history (chronological order):
+
+| Commit | Side | Subject |
+|:---|:---|:---|
+| `221ca7d33` | agent | feat(stage-d): add 384 consensus+PV leg via carry-forward verifier |
+| `0b0202da2` | agent | fix(stage-d): mkdir pass dir before build for verified_pools cells |
+| `fed4364ee` | foreground | docs(analyses): sign off 2 Era-1 boards |
+| `48b56fdd6` | agent | feat(stage-d): score 384 consensus+PV leg + tile-size View 3 |
+| `4532a896b` | foreground | feat(stage-d): register 384 consensus+PV cell |
+| `9451f1b39` | foreground | docs(analyses): sign off tile-size-sweep (consensus+PV) |
+
+The concrete hazard that materialised: a tree-wide manifest
+regeneration in the foreground (`python scripts/generate_post_run_report.py
+--write --all`, which `rglob`s every `evaluation.json` under `results/`)
+swept up the agent's in-progress output files, entangling the
+foreground's focused sign-off commit with the agent's work.
+
+### What contained it
+
+The recovery discipline that kept history strictly linear:
+
+1. **Explicit pathspecs on every commit** (`git add <specific path>`),
+   never `git add -A` — so each side only ever staged its own files.
+2. **Selective `git checkout HEAD -- <manifest>`** to discard
+   timestamp-only regeneration churn (see the secondary finding below)
+   and keep each commit to its real change.
+3. **`git fetch` + a behind/ahead check** (`git rev-list --left-right
+   --count origin/main...HEAD`) immediately before every push.
+
+Result: history stayed strictly linear (agent → agent → foreground →
+agent → foreground → foreground), no fork, nothing lost, all pushes
+fast-forward.
+
+**Cross-machine wrinkle.** The agent computed on zbook (per the project
+compute-location rule) but committed via the local amd-tower working
+tree. This left the 384 output files present as **redundant untracked
+files on zbook** (identical to the committed versions). When re-syncing
+zbook later, `git pull --ff-only` aborted ("untracked working tree files
+would be overwritten by merge"). Resolved by `git clean -fd` of exactly
+the three conflicting output paths — verified redundant first (already
+committed and on origin) — then `--ff-only`. All three machines ended
+at the same commit, clean.
+
+### Why this matters
+
+This episode is a concurrency near-miss rather than a failure: the
+working discipline (explicit pathspecs, fetch-before-push) absorbed the
+shared-tree collision without data loss. But the margin was narrow. A
+single `git add .` anywhere during the session would have swept the
+other side's staged or unstaged files into the wrong commit. The
+**hazard is latent by default** when using the `Agent` tool without
+worktree isolation: there is no structural enforcement, only discipline
+— and discipline degrades under context pressure. The secondary finding
+(timestamp churn) amplifies the hazard because it turns a focused
+manifest commit into an hundreds-of-lines diff that obscures any
+accidental sweeping.
+
+The appropriate structural fix (a git worktree) would have made the
+collision impossible regardless of pathspec discipline, at the cost of
+a slightly more complex agent launch. For any future agent that writes
+files and commits, the default should be isolation, not discipline.
+
+### Caveats / methodological notes
+
+- **The interleaving worked here because file ownership was naturally
+  disjoint.** The agent owned `results/era1-pv-stage-d/` and its
+  scripts; the foreground owned `results/run-conditions.json`,
+  `results/run-analyses.json`, and the analysis sign-off docs. Disjoint
+  path sets meant the only collision risk was at commit / push
+  sequencing, not at file content. If the two sides had written to
+  overlapping files, explicit pathspecs alone would not have been
+  sufficient.
+- **`git clean -fd` on zbook was safe here** because the three paths
+  had been committed to origin before the clean was run. This should
+  always be verified before executing `clean`; the verify-git-tracked
+  discipline (see MEMORY.md) applies equally to cleaning redundant
+  untracked files.
+- **The `--ff-only` guard is load-bearing.** If the remote had diverged
+  (a fork had formed), `--ff-only` would have aborted rather than
+  silently merging. Using `--ff-only` as the default push/pull mode is
+  the correct posture for solo-author repos under concurrent agent use.
+
+### Secondary finding: manifest timestamp churn
+
+`scripts/generate_post_run_report.py` re-stamps `last_extracted_at =
+now` (and `generated_at`) on **every** conditions-manifest and
+passes-manifest row on every `--write` run, regardless of whether
+anything changed. A single 1-condition addition produced approximately
+2,230 lines of pure-timestamp diff in `results/passes-manifest.json`.
+This destroys `git diff` / `git blame` legibility on the manifests and
+makes drift-review noisy. The recommended fix: a generator option to
+preserve stable extraction timestamps, only re-stamping rows whose
+underlying metadata actually changed, so manifest commits show only real
+changes.
+
+### Findable later
+
+Search terms: Obs 353, background agent, worktree isolation, shared
+working tree, concurrent commits, concurrent agent foreground, explicit
+pathspecs, linear history, manifest timestamp churn, last_extracted_at,
+generate_post_run_report, ff-only abort, git clean redundant untracked,
+cross-machine reconciliation, zbook commit via amd-tower, Session 108,
+concurrency discipline, agent tool run_in_background, git add -A hazard,
+fetch before push, left-right count, disjoint file ownership, verify
+git tracked before clean, passes-manifest timestamp churn, 2230 lines diff.
+
+### Related observations and artefacts
+
+- **Obs 350** (the `fix(crs)` latent-bug reproducibility hazard, Session
+  106, 2026-06-08, line 18628): sibling "process discipline" entry on
+  the reproducibility axis — Obs 350 covers how a well-intentioned commit
+  silently corrupts a downstream consumer over time; this Obs covers how
+  concurrent agent + foreground commits risk entangling each other's work.
+  Both resolve via explicit structural discipline rather than relying on
+  things not going wrong.
+- The episode also exercised two standing project rules: the **global
+  concurrent-session discipline** (explicit pathspecs, re-verify 0-behind
+  before commit/push, per CLAUDE.md) and the **verify-git-tracked-before-
+  delete / clean discipline** (per MEMORY.md `feedback_verify_git_tracked_before_delete.md`).
+  Neither is an Obs entry; they are cited here as the operational context
+  this episode validated.
+- **Artefacts**: agent commits `221ca7d33` (add 384 leg),
+  `0b0202da2` (mkdir fix), `48b56fdd6` (score 384 leg + tile-size View 3);
+  foreground commits `fed4364ee` (sign off 2 Era-1 boards),
+  `4532a896b` (register 384 condition), `9451f1b39` (sign off tile-size-sweep);
+  all on `main`, verified 2026-06-09. Generator:
+  `scripts/generate_post_run_report.py`. Agent orchestrator:
+  `scripts/run_era1_pv_stage_d.py`.
