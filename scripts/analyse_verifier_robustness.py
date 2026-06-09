@@ -150,6 +150,7 @@ def score_cids(cids: frozenset[int], table: list[dict], size: int,
     """
     if not cids:
         return 0.0, None
+    workdir.mkdir(parents=True, exist_ok=True)
     by_cid = {r["cid"]: r for r in table}
     feats = []
     for cid in cids:
