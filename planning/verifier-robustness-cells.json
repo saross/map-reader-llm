@@ -20,6 +20,29 @@
       "note": "The 256 rescue cell (Obs 352). Smaller tiles benefit most from verifier efficacy; vote_count=5 dominates (1165)."
     }
   ],
+  "_deferred_cells": [
+    {
+      "name": "384-flash-high-image-1of5-union",
+      "size": 384,
+      "kind": "proposer-union",
+      "modality": "image",
+      "proposer": "outputs/h11/pv-diag-384/consensus/flash-high-image-1of5.geojson",
+      "n_union": 2017,
+      "proposer_vote_cumulative": {"1of5": 2017, "2of5": 741, "3of5": 506, "4of5": 388, "5of5": 282},
+      "status": "PENCILLED — NOT YET RUN (separate gated tranche; not in the active cells[] list)",
+      "rationale": "The image analogue of the winning text cell: same model (flash) + HIGH thinking, image modality. Likely the high-performing 384px image track. The verifier stays text-only (verify_adversarial-text.json) — Shawn confirmed an image-USING verifier was tested and did not help; only the PROPOSER modality differs.",
+      "alternatives_considered": {
+        "image-1of5": {"n_union": 1123, "note": "plainer image family (likely minimal thinking)"},
+        "pro-high-image-1of5": {"n_union": 841, "note": "Pro-model image; smaller union"}
+      },
+      "cost_notes": {
+        "full_1of5_union_T0.0_N5": {"calls": 10085, "flex_usd": 7.03},
+        "narrowed_2of5_T0.0_N5": {"calls": 3705, "flex_usd": 2.58},
+        "narrowed_3of5_T0.0_N5": {"calls": 2530, "flex_usd": 1.76},
+        "decision_rule": "Choose the proposer-vote band to verify from the TEXT-run patterns: if the permissive 1of5 union performs badly post-verifier (the verifier cannot rescue the single-pass FP flood), verify only the productive band (>=2of5 or >=3of5) rather than the full union, per Shawn (S109). Before the gated verify, score the image consensus-only F1 (free, on disk) to confirm it is high-performing, mirroring how the text cell's lineage was validated."
+      }
+    }
+  ],
   "verifier_config": "prompts/configs/verify_adversarial-text.json",
   "iterations": 5,
   "padding": 75,
