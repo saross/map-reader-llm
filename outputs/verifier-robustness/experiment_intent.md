@@ -107,14 +107,23 @@ results.
 - **Preceding experiment(s)**: `results/era1-pv-stage-d/384-leg-recon.md` — the
   384 flash-high-text proposer / verifier provenance reused here.
 - **Follow-up experiment(s)**: `results/verifier-robustness/verifier-robustness-findings.md`
-  — the results narrative (authored once analysis completes).
+  — Stage-1 results (determinism + proposer-input optimisation).
 - **Run output directory**: `outputs/verifier-robustness/`.
-- **Working-notes Observations**: None yet (Obs authored with results).
+- **Working-notes Observations**: Obs 354 — T=0.0 verifier determinism is
+  negligible at F1 (n=1 vindicated); Obs 355 — the 1-of-5 union is the worst
+  verifier input.
 - **Decisions / Errata**: E56 governs verifier prob_t diagnostics only (dated
   scope-clarification, 2026-06-06); no preregistration amendment needed for a
   robustness check.
 
 ## Changelog
+
+### 2026-06-09 — Stage-1 cross-references (post-data)
+
+Stage-1 T=0.0 results landed (`results/verifier-robustness/verifier-robustness-findings.md`).
+Updated the See-also block to point to the findings doc (determinism +
+proposer-input) and to Obs 354 / 355. No design or cost claim changed — this is
+a back-fill-on-touch cross-reference update only.
 
 ### 2026-06-09 — Original publication (pre-data)
 

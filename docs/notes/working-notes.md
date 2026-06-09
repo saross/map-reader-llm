@@ -19169,3 +19169,84 @@ git tracked before clean, passes-manifest timestamp churn, 2230 lines diff.
   all on `main`, verified 2026-06-09. Generator:
   `scripts/generate_post_run_report.py`. Agent orchestrator:
   `scripts/run_era1_pv_stage_d.py`.
+
+## Observation 354: The T=0.0 verifier is non-deterministic per-candidate (~3% flip) but negligibly so at F1 — n=1 verification is vindicated (Session 109, 2026-06-09)
+
+*Source anchors: `results/verifier-robustness/robustness_summary_T0.0.json`
+and `..._grid_T0.0.json` (verified 2026-06-09); raw outputs
+`outputs/verifier-robustness/{384-flash-high-text,256-text}-1of5-union/T0.0/verified/probabilities.json`;
+free prior pair `outputs/wbf/e47-propose-brief-n5/verified-v1` vs `-v2`
+(both `gemini-3-flash`, T=0.0, minimal, n=1); analysis
+`scripts/analyse_verifier_robustness.py` at commit `7ef2679cb`.*
+
+### The finding
+
+Every verified cell in the project is **n=1**, on the assumption that the
+production verifier (`verify_adversarial-text.json`: gemini-3-flash,
+T=0.0, minimal, text-only) is deterministic. It is **not** — at the
+candidate level **~3 % of candidates flip** accept/reject across
+independent T=0.0 runs (the 256 cell: 81 / 2,558 split across 5
+iterations at prob_t 0.2; the free e47 `v1`/`v2` pair on identical config
+disagreed on 115 / 3,890 = 2.96 %). But running the verifier at **N=5
+iterations** and scoring each iteration independently shows the flicker
+**washes out at the aggregate (tile) level**: the F1 spread across the 5
+single runs is **SD 0.0025–0.0072** at every proposer-vote level (worst
+min–max spread ~0.019, at 384 / 4of5). Two corollaries: (a) the **5-run
+consensus ≈ the single-run mean** (within ~0.001–0.01) — no consensus
+benefit at T=0.0, expected since five near-identical passes carry no
+diversity; (b) the **verifier-vote threshold barely moves F1** (vt1→vt5
+spans ~0.02).
+
+### Why it matters
+
+Every n=1 verified cell in the paper — the Stage-D PV grid, the 55-map
+deployment oracle, all proposer-verifier cells — carries only **~±0.005
+F1** of hidden run-to-run noise (worst-case single-draw deviation ~0.01),
+far below the tier gaps the paper reports. **The n=1 verification
+protocol is sound; no cell needs re-running at N>1 for determinism
+reasons.** This is the reassuring confirmation the whole verified-results
+backbone rested on. (Caveat: T=0.0 and text proposer/verifier only;
+higher-T determinism and the image-proposer crop distribution are later
+stages. The absence of any consensus benefit at T=0.0 is the baseline
+against which the planned higher-T *consensus* verifier is tested.)
+
+## Observation 355: The 1-of-5 proposer union is the WORST verifier input — the verifier does not rescue the single-pass false-positive flood (Session 109, 2026-06-09)
+
+*Source anchors: `results/verifier-robustness/robustness_grid_T0.0.json`
+(per-proposer-k best F1@20 m, verified 2026-06-09);
+`results/verifier-robustness/verifier-robustness-findings.md` § 3;
+proposer unions `outputs/h11/pv-diag-384/consensus/flash-high-text-1of5.geojson`
+(3,736 cands) and `outputs/h11/pv-diag-256/consensus/text-1of5.geojson`
+(2,558 cands), each carrying `vote_count` per feature.*
+
+### The finding
+
+We verified the **1-of-5 proposer union** (every candidate proposed by
+≥1 of 5 passes) once, then derived every proposer-vote input level
+(1of5→5of5) as a free post-hoc subset, to find the optimal *input* to the
+verifier. The hypothesis behind the union was "feed the verifier maximal
+recall and let it prune the false positives". The data **rejects** it: the
+permissive 1-of-5 union is the **worst** input at both cells (384: F1
+0.734; 256: 0.827). F1 climbs as the proposer is tightened, to an
+**inverted-U peak at 4-of-5 (384: 0.872)** / a **3–5-of-5 plateau (256:
+~0.86)**, then (for 384) falls again at the over-strict 5of5. As the
+proposer loosens, precision falls faster than recall rises, so the
+verifier — which has a non-zero per-candidate FP-survival rate — lets
+through more absolute FPs than it gains real mounds.
+
+### Why it matters
+
+1. **Refines Obs 352** ("the verifier rescues 256"): the verifier rescues
+   a *moderately filtered* proposer pool well, but the permissive union
+   much less so. The optimal verifier *input* is a pre-filtered consensus
+   (≥3–4 of 5), not the maximal-recall union.
+2. **Directly sizes the pencilled image-proposer tranche**
+   (`384-flash-high-image-1of5-union`, `_deferred_cells` in
+   `planning/verifier-robustness-cells.json`): **do not pay for the full
+   1-of-5 image union** — verify the **≥3-of-5 band** (~506 cands /
+   ~$1.76 flex) rather than the union (~2,017 cands / ~$7.03). The text
+   patterns answered the "might not need the full union" question with a
+   clear *no*.
+3. **MCC stays comparatively flat** (0.73–0.79) where F1 swings 0.13 — the
+   tile-level discrimination survives the FP flood that point-level F1
+   punishes (the recurring F1-vs-MCC divergence).
