@@ -10,11 +10,11 @@
   "comparability_note": "F1@20 m is cross-size comparable (same 4 GS maps + curator GT, three tilings). Tile-MCC reported per size, NOT differenced (tile-count base differs: 1032/487/340).",
   "provenance_caveats": [
     "256 px anchor (pv-diag-256) is text-only, thin proposer provenance (temp/thinking not materialised; 1032-tile scope).",
-    "256 px consensus is consensus-only (no verifier); the decisive 256 consensus+verifier cell is untested (Obs 351).",
+    "256 px consensus+verifier IS now tested (Stage-D, Obs 352, View 3: F1 0.856); its proposer is the plain text 5-of-5 (N=5) family, whereas 384/512 share the HIGH-text N=30 lineage (HIGH-text was not run at 256), so the 256 PV cell is its own thin-provenance anchor.",
     "image HIGH-thinking consensus exists at 384 but not 512 (phase3a-high image track never ran)."
   ],
-  "generated_at_utc": "2026-06-08T07:22:40.725670+00:00",
-  "git_commit": "1ba5fa273",
+  "generated_at_utc": "2026-06-09T01:38:31.335580+00:00",
+  "git_commit": "48b56fdd6",
   "single_pass_isolation": [
     {
       "architecture": "single-pass",
@@ -402,6 +402,41 @@
       "direction": "single-size"
     }
   ],
+  "pv_matched": [
+    {
+      "architecture": "consensus+PV",
+      "modality": "text",
+      "by_size": {
+        "256": 0.8558,
+        "384": 0.8902,
+        "512": 0.7925
+      },
+      "cells": {
+        "256": {
+          "ref": "pv-diag-256::verified-adv-text-consensus-5of5",
+          "f1": 0.8558,
+          "mcc": 0.7448,
+          "n": 1,
+          "vote": null
+        },
+        "384": {
+          "ref": "pv-diag-384::verified-adv-text-consensus-16of30",
+          "f1": 0.8902,
+          "mcc": 0.7903,
+          "n": 1,
+          "vote": null
+        },
+        "512": {
+          "ref": "retest-phase3a-high::verified-adv-text-high-t1.0-n30-23of30",
+          "f1": 0.7925,
+          "mcc": 0.6765,
+          "n": 1,
+          "vote": null
+        }
+      },
+      "direction": "best=384px (\u0394-0.063 over 256\u2192512)"
+    }
+  ],
   "best_per_size": {
     "by_arch_modality": {
       "256": {
@@ -436,6 +471,22 @@
           "f1": 0.4599,
           "mcc": 0.1527,
           "thin_provenance": true
+        },
+        "proposer-verifier/text": {
+          "ref": "pv-diag-256::verified-adv-text-consensus-5of5",
+          "run": "pv-diag-256",
+          "label": "verified-adv-text-consensus-5of5",
+          "size": 256,
+          "architecture": "proposer-verifier",
+          "model": "flash",
+          "modality": "text",
+          "thinking": null,
+          "temperature": null,
+          "n_passes": 1,
+          "vote": null,
+          "f1": 0.8558,
+          "mcc": 0.7448,
+          "thin_provenance": false
         }
       },
       "384": {
@@ -502,6 +553,22 @@
           "f1": 0.8141,
           "mcc": 0.6204,
           "thin_provenance": false
+        },
+        "proposer-verifier/text": {
+          "ref": "pv-diag-384::verified-adv-text-consensus-16of30",
+          "run": "pv-diag-384",
+          "label": "verified-adv-text-consensus-16of30",
+          "size": 384,
+          "architecture": "proposer-verifier",
+          "model": "flash",
+          "modality": "text",
+          "thinking": null,
+          "temperature": null,
+          "n_passes": 1,
+          "vote": null,
+          "f1": 0.8902,
+          "mcc": 0.7903,
+          "thin_provenance": false
         }
       },
       "512": {
@@ -535,6 +602,38 @@
           "vote": null,
           "f1": 0.6052,
           "mcc": 0.2239,
+          "thin_provenance": false
+        },
+        "proposer-verifier/text": {
+          "ref": "retest-phase3a-high::verified-adv-text-high-t1.0-n30-23of30",
+          "run": "retest-phase3a-high",
+          "label": "verified-adv-text-high-t1.0-n30-23of30",
+          "size": 512,
+          "architecture": "proposer-verifier",
+          "model": "flash",
+          "modality": "text",
+          "thinking": "high",
+          "temperature": "1.0",
+          "n_passes": 1,
+          "vote": null,
+          "f1": 0.7925,
+          "mcc": 0.6765,
+          "thin_provenance": false
+        },
+        "proposer-verifier/image": {
+          "ref": "retest-phase3a::verified-adv-image-t0.7-n30-18of30",
+          "run": "retest-phase3a",
+          "label": "verified-adv-image-t0.7-n30-18of30",
+          "size": 512,
+          "architecture": "proposer-verifier",
+          "model": "flash",
+          "modality": "image",
+          "thinking": "minimal",
+          "temperature": "0.7",
+          "n_passes": 1,
+          "vote": null,
+          "f1": 0.7275,
+          "mcc": 0.7853,
           "thin_provenance": false
         },
         "consensus/image": {

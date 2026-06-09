@@ -2330,6 +2330,25 @@
           "verifier_config": null,
           "eval_path": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/image-n5__image-t1.0__consensus-n5__t4/evaluation.json",
           "detections": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n5/consensus_t4.geojson"
+        },
+        {
+          "label": "verified-adv-text-consensus-16of30",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-high-text-consensus-16of30",
+          "source_run": "pv-diag-384",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": 0.2,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0
+          },
+          "eval_path": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json",
+          "detections": "outputs/era1-pv-stage-d/384-consensus-text-high/pass_1/accepted_t0.2.geojson"
         }
       ],
       "_ignored_evals": [

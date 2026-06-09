@@ -50,8 +50,10 @@
 #  * The 256 px anchor (pv-diag-256) is TEXT-ONLY with thin proposer provenance
 #    (temperature + thinking level not materialised; 1032-tile scope), so its
 #    cells are flagged and not force-matched to a specific temperature row.
-#  * The 256 px consensus cell is consensus-ONLY (no verifier); the decisive
-#    256 consensus+verifier cell is untested (Obs 351).
+#  * The 256 px consensus+verifier cell IS now tested (Stage-D, Obs 352, View 3:
+#    F1 0.856) -- but its proposer is the PLAIN text 5-of-5 (N=5) family, whereas
+#    384/512 share the HIGH-text N=30 lineage (HIGH-text was not run at 256), so
+#    the 256 PV cell is its own thin-provenance anchor.
 #  * image HIGH-thinking consensus exists at 384 but NOT at 512 (the
 #    phase3a-high image track never ran), so that row is 384-only.
 #
@@ -426,8 +428,10 @@ def main() -> int:
         "provenance_caveats": [
             "256 px anchor (pv-diag-256) is text-only, thin proposer provenance "
             "(temp/thinking not materialised; 1032-tile scope).",
-            "256 px consensus is consensus-only (no verifier); the decisive 256 "
-            "consensus+verifier cell is untested (Obs 351).",
+            "256 px consensus+verifier IS now tested (Stage-D, Obs 352, View 3: "
+            "F1 0.856); its proposer is the plain text 5-of-5 (N=5) family, whereas "
+            "384/512 share the HIGH-text N=30 lineage (HIGH-text was not run at 256), "
+            "so the 256 PV cell is its own thin-provenance anchor.",
             "image HIGH-thinking consensus exists at 384 but not 512 (phase3a-high "
             "image track never ran).",
         ],

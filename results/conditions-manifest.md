@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-06-08T12:25:56Z · 280 row(s) · schema v1.0.
+> Generated 2026-06-09T01:38:31Z · 281 row(s) · schema v1.0.
 >
-> **Coverage**: 280 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 281 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -169,6 +169,7 @@
 | pv-diag-384::image-n5-image-t0.7-consensus-n5-4of5 | consensus | consensus | 4 | 5 | 0.6639 | 0.3898 | 523 |
 | pv-diag-384::image-n5-image-t1.0-consensus-8of10 | consensus | consensus | 8 | 10 | 0.6459 | 0.4424 | 466 |
 | pv-diag-384::image-n5-image-t1.0-consensus-n5-4of5 | consensus | consensus | 4 | 5 | 0.6461 | 0.4188 | 506 |
+| pv-diag-384::verified-adv-text-consensus-16of30 | proposer-verifier | verified | — | 1 | 0.8902 | 0.7903 | 412 |
 | h12-v2::greedy-r1-hn-heavy | consensus | greedy | 4 | 5 | 0.7084 | 0.6956 | 240 |
 | h12-v2::greedy-r2-balanced | consensus | greedy | 4 | 5 | 0.7171 | 0.7168 | 236 |
 | h12-v2::greedy-r3-hp-heavy | consensus | greedy | 4 | 5 | 0.6876 | 0.7169 | 254 |
