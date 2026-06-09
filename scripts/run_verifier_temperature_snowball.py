@@ -217,7 +217,10 @@ def main() -> int:
     p.add_argument("--results-dir", type=Path, default=DEFAULT_RESULTS)
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--run", action="store_true")
-    p.add_argument("--workers", type=int, default=20)
+    p.add_argument("--workers", type=int, default=14,
+                   help="Parallel verify workers. Default 14: zbook has 16 "
+                        "physical cores and MUST keep 2 free or it crashes "
+                        "(operator constraint). Do not exceed 14 on zbook.")
     p.add_argument("--margin", type=float, default=None,
                    help="Min improvement over the previous temperature to advance "
                         "(default: from the cells spec, else 0.005)")
