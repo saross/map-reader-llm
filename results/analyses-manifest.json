@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-06-08T12:27:08Z",
+  "generated_at": "2026-06-09T01:54:38Z",
   "generator_version": "0.4.0",
   "analyses": [
     {
@@ -50,7 +50,7 @@
           "results/run-analyses.json",
           "results/paper-eval/n1/384px-14buf-mcc"
         ],
-        "last_extracted_at": "2026-06-08T12:27:08Z",
+        "last_extracted_at": "2026-06-09T01:54:38Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -105,7 +105,7 @@
           "results/run-analyses.json",
           "results/rescore-2026-06-05/pv-diag-384/consensus-sweep"
         ],
-        "last_extracted_at": "2026-06-08T12:27:08Z",
+        "last_extracted_at": "2026-06-09T01:54:38Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -161,7 +161,7 @@
           "results/run-analyses.json",
           "results/diversity-dividend-384"
         ],
-        "last_extracted_at": "2026-06-08T12:27:08Z",
+        "last_extracted_at": "2026-06-09T01:54:38Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -205,7 +205,7 @@
           "results/run-analyses.json",
           "results/rescore-2026-06-07/phase3"
         ],
-        "last_extracted_at": "2026-06-08T12:27:08Z",
+        "last_extracted_at": "2026-06-09T01:54:38Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -240,7 +240,7 @@
           "results/run-analyses.json",
           "results/rescore-2026-06-07/phase3"
         ],
-        "last_extracted_at": "2026-06-08T12:27:08Z",
+        "last_extracted_at": "2026-06-09T01:54:38Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -272,7 +272,7 @@
           "results/run-analyses.json",
           "results/rescore-2026-06-07/phase3"
         ],
-        "last_extracted_at": "2026-06-08T12:27:08Z",
+        "last_extracted_at": "2026-06-09T01:54:38Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -307,7 +307,7 @@
           "results/run-analyses.json",
           "results/rescore-2026-06-07/phase3c"
         ],
-        "last_extracted_at": "2026-06-08T12:27:08Z",
+        "last_extracted_at": "2026-06-09T01:54:38Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -394,7 +394,7 @@
           "results/run-analyses.json",
           "results/paper-eval/n1/512px-14buf-mcc"
         ],
-        "last_extracted_at": "2026-06-08T12:27:08Z",
+        "last_extracted_at": "2026-06-09T01:54:38Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -510,7 +510,7 @@
           "results/run-analyses.json",
           "results/era1-leaderboard"
         ],
-        "last_extracted_at": "2026-06-08T12:27:08Z",
+        "last_extracted_at": "2026-06-09T01:54:38Z",
         "extractor_version": "0.4.0"
       }
     },
@@ -520,6 +520,7 @@
       "conditions_compared": [
         "pv-diag-256::text-baseline",
         "pv-diag-256::text-consensus-5of5",
+        "pv-diag-256::verified-adv-text-consensus-5of5",
         "pv-diag-384::baseline-flash-image-minimal-t-0-0",
         "pv-diag-384::baseline-flash-image-minimal-t-0-7",
         "pv-diag-384::baseline-flash-text-minimal-t-0-0-pv-baseline",
@@ -535,6 +536,7 @@
         "pv-diag-384::flash-minimal-text-n30-t07-text-t0.3-consensus-10of10",
         "pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-consensus-29of30",
         "pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-consensus-9of10",
+        "pv-diag-384::verified-adv-text-consensus-16of30",
         "retest-phase2b::image-t0.0",
         "retest-phase2b::image-t0.7",
         "retest-phase2b::text-t0.0",
@@ -544,6 +546,7 @@
         "retest-phase3a-high::text-high-t0.3-n30-23of30",
         "retest-phase3a-high::text-high-t0.7-n30-22of30",
         "retest-phase3a-high::text-high-t1.0-n30-23of30",
+        "retest-phase3a-high::verified-adv-text-high-t1.0-n30-23of30",
         "retest-phase3a-replication::text-minimal-t0.7-n30-25of30",
         "retest-phase3a::image-t0.3-n30-22of30",
         "retest-phase3a::image-t0.7-n30-18of30",
@@ -558,19 +561,20 @@
       "deviations": [],
       "predicted_outcome": "H11 (tile size): the prior expectation was non-monotonic with a 384px sweet spot. The refined hypothesis (Obs 351): the optimal tile size shifts with FP-filtering strength \u2014 single-pass (no filter) prefers larger tiles; strong filters (HIGH-thinking consensus, consensus+verifier) shift the optimum to 384; 256 falls under every architecture.",
       "tie_set": [],
-      "outcome": "Tile-size characterisation across 256/384/512 px (F1@20m), gemini-3-flash, GS 4-map curator GT. The optimal tile size is ARCHITECTURE-DEPENDENT, consistent with the FP-filtering mechanism (Obs 351, Obs 179, Obs 171). CLEAN ISOLATION (hold architecture x modality x thinking x temperature constant, vary only size): single-pass text climbs monotonically with tile size (256=0.342 < 384=0.520 < 512=0.606) \u2014 with no FP filter, larger tiles give cleaner proposals; single-pass image is flat (384~0.600 ~ 512~0.586). Text MINIMAL consensus still prefers 512 (+0.02..+0.05 over 384 across T0.3/0.7/1.0) \u2014 a weak filter. Text HIGH consensus FLIPS to 384 (T0.7 0.814 > 512 0.773; T0.3 0.789 > 0.774; T1.0 ~tie) \u2014 the strong diversity+vote filter realises 384's higher recall. BEST-ACHIEVABLE FLASH CEILING per size: single-pass 512 (0.631) > 384 (0.520) > 256 (0.342); consensus 384 (0.814) > 512 (0.775) > 256 (0.460). So 384 owns the consensus ceiling, 512 owns the single-pass ceiling, and 256 trails under both. KEY GAP: 256 consensus+VERIFIER (the one architecture where 384 wins decisively) is untested \u2014 pv-diag-256 is consensus-only \u2014 so 'does 256 overwhelm even the verifier' is open (Obs 351); a cheap 256 consensus+PV run would close it. Pro single-pass ran only at 384 (pro-text 0.792, pro-image MCC 0.868) \u2014 shown for context, not a tile-size comparison. Artefacts: results/tile-size-sweep/tile_size_sweep.{json,md}; script scripts/tile_size_sweep.py.",
+      "outcome": "Tile-size characterisation across 256/384/512 px (F1@20m), gemini-3-flash, GS 4-map curator GT. The optimal tile size is ARCHITECTURE-DEPENDENT, consistent with the FP-filtering mechanism (Obs 351, Obs 179, Obs 171). CLEAN ISOLATION (hold architecture x modality x thinking x temperature constant, vary only size): single-pass text climbs monotonically with tile size (256=0.342 < 384=0.520 < 512=0.606) -- with no FP filter, larger tiles give cleaner proposals; single-pass image is flat (384~0.600 ~ 512~0.586). Text MINIMAL consensus still prefers 512 (+0.02..+0.05 over 384 across T0.3/0.7/1.0) -- a weak filter. Text HIGH consensus FLIPS to 384 (T0.7 0.814 > 512 0.773; T0.3 0.789 > 0.774; T1.0 ~tie) -- the strong diversity+vote filter realises 384's higher recall. CONSENSUS+VERIFIER head-to-head (View 3; Stage-D carry-forward adversarial verifier, gemini-3-flash minimal T=0.0 n=1; 14-buf+MCC; best prob_t per cell): 384=0.890 > 256=0.856 > 512=0.793 -- best=384px (delta +0.034 over 256). Two findings: (1) 384 STILL leads at consensus+PV, as it does at consensus-only, confirming the Obs 179 prior (NOT a surprise); (2) the verifier RESCUES 256 (Obs 352): 256 consensus jumps from 0.460 consensus-only (WORST) to 0.856 consensus+PV (+0.396), LEAPFROGGING 512 to take second -- so the per-architecture order is single-pass 512>384>256, consensus-only 384>512>256, consensus+PV 384>256>512. Obs 351's open question -- does 256 overwhelm even the verifier? -- is now answered: NO, the verifier rescues 256, but 384 retains the lead. CAVEAT: the 256 PV cell is the plain text 5-of-5 (N=5) family, whereas 384/512 share the HIGH-text N=30 lineage (HIGH-text not run at 256), so 256 stays a thin-provenance anchor; tile size is confounded with tile set (1032/487/340), so F1@20m is the cross-size headline and tile-MCC is reported per size, never differenced. BEST-ACHIEVABLE FLASH CEILING per size (consensus-only): 384 (0.814) > 512 (0.775) > 256 (0.460); single-pass 512 (0.631) > 384 (0.520) > 256 (0.342). Pro single-pass ran only at 384 (pro-text 0.792, pro-image MCC 0.868) -- context, not a tile-size comparison. Artefacts: results/tile-size-sweep/tile_size_sweep.{json,md} (now incl. View 3); recon results/era1-pv-stage-d/384-leg-recon.md; script scripts/tile_size_sweep.py.",
       "paper_section": "Results",
       "output_path": "results/tile-size-sweep",
       "working_notes_obs": [
-        "Obs 351 \u2014 tile-size \u00d7 architecture interaction confirmed across three sizes; single-pass prefers larger tiles, the consensus/verifier filter shifts the optimum to 384px"
+        "Obs 351 \u2014 tile-size \u00d7 architecture interaction confirmed across three sizes; single-pass prefers larger tiles, the consensus/verifier filter shifts the optimum to 384px",
+        "Obs 352 \u2014 the verifier rescues 256px consensus (0.460->0.856, +0.396), leapfrogging 512 to 2nd; 384 retains the consensus+PV lead (0.890), so 256 does not overwhelm the verifier"
       ],
-      "manually_verified_at": null,
+      "manually_verified_at": "2026-06-09T01:52:52Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/tile-size-sweep"
         ],
-        "last_extracted_at": "2026-06-08T12:27:08Z",
+        "last_extracted_at": "2026-06-09T01:54:38Z",
         "extractor_version": "0.4.0"
       }
     }
