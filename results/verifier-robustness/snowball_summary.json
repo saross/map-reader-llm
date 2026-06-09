@@ -1,0 +1,46 @@
+{
+  "ladder": [
+    0.3,
+    0.7,
+    1.0
+  ],
+  "margin": 0.005,
+  "iterations": 5,
+  "baseline_T0.0": {
+    "384-flash-high-text-ge3of5": 0.8722,
+    "256-text-ge3of5": 0.8637
+  },
+  "stalled_at": {
+    "384-flash-high-text-ge3of5": 0.3,
+    "256-text-ge3of5": 0.3
+  },
+  "trajectory": [
+    {
+      "temperature": 0.0,
+      "best_consensus_f1": {
+        "384-flash-high-text-ge3of5": 0.8722,
+        "256-text-ge3of5": 0.8637
+      },
+      "source": "stage1"
+    },
+    {
+      "temperature": 0.3,
+      "live_cells": [
+        "384-flash-high-text-ge3of5",
+        "256-text-ge3of5"
+      ],
+      "best_consensus_f1": {
+        "384-flash-high-text-ge3of5": 0.8739495798319328,
+        "256-text-ge3of5": 0.8581730769230769
+      },
+      "delta_vs_prev": {
+        "384-flash-high-text-ge3of5": 0.0017,
+        "256-text-ge3of5": -0.0055
+      },
+      "advanced": {
+        "384-flash-high-text-ge3of5": false,
+        "256-text-ge3of5": false
+      }
+    }
+  ]
+}
