@@ -42,6 +42,8 @@ import sys
 from pathlib import Path
 
 import geopandas as gpd
+import numpy as np
+from scipy.spatial import cKDTree
 from shapely.geometry import Point
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -78,21 +80,38 @@ def to_32635(gj: Path) -> gpd.GeoDataFrame:
     return gdf.set_crs(crs, allow_override=True).to_crs("EPSG:32635")
 
 
-def coord_key(x: float, y: float) -> tuple[int, int]:
-    """Coordinate identity key at 0.1 m resolution (EPSG:32635 metres)."""
-    return (round(x * 10), round(y * 10))
+def nn_match(fresh: gpd.GeoDataFrame, committed: gpd.GeoDataFrame,
+             tol_m: float = 1.0) -> tuple[np.ndarray, np.ndarray]:
+    """Nearest-neighbour match fresh -> committed (both EPSG:32635).
+
+    The committed unions are serialised at ~1e-6 degree precision (~0.1 m
+    quantisation), so exact coordinate keys fail; empirically every fresh
+    feature has a unique committed counterpart within 0.07 m. Returns
+    (distances, committed indices) for each fresh feature.
+    """
+    ca = np.c_[committed.geometry.x, committed.geometry.y]
+    fa = np.c_[fresh.geometry.x, fresh.geometry.y]
+    d, idx = cKDTree(ca).query(fa)
+    return d, idx
 
 
 def geometry_gate(fresh: gpd.GeoDataFrame, committed: gpd.GeoDataFrame,
-                  label: str) -> bool:
-    """Check the fresh re-merge reproduces the committed union geometry."""
-    fk = {coord_key(g.x, g.y) for g in fresh.geometry}
-    ck = {coord_key(g.x, g.y) for g in committed.geometry}
-    ok = fk == ck
-    print(f"  gate [{label}]: fresh {len(fresh)} vs committed {len(committed)} "
-          f"features; coord sets {'IDENTICAL' if ok else 'DIFFER'}"
-          + ("" if ok else f" (only-fresh {len(fk - ck)}, only-committed {len(ck - fk)})"),
-          flush=True)
+                  label: str, tol_m: float = 1.0) -> bool:
+    """Check the fresh re-merge reproduces the committed union geometry.
+
+    PASS requires: equal feature counts, every fresh feature within
+    ``tol_m`` of a committed feature, a one-to-one mapping, and 100 %
+    vote_count agreement across the mapping.
+    """
+    d, idx = nn_match(fresh, committed, tol_m)
+    one_to_one = len(set(idx)) == len(idx)
+    votes_ok = bool((fresh["vote_count"].to_numpy()
+                     == committed["vote_count"].to_numpy()[idx]).all())
+    ok = (len(fresh) == len(committed) and float(d.max()) <= tol_m
+          and one_to_one and votes_ok)
+    print(f"  gate [{label}]: fresh {len(fresh)} vs committed {len(committed)}; "
+          f"max NN dist {d.max():.3f} m; one-to-one={one_to_one}; "
+          f"votes-agree={votes_ok} -> {'PASS' if ok else 'FAIL'}", flush=True)
     return ok
 
 
@@ -142,15 +161,17 @@ def main() -> int:
     table10 = load_candidate_table(
         PVD / "verified/flash-high-text-1of10/candidate_manifest.json",
         PVD / "verified/flash-high-text-1of10/probabilities.json")
-    passes_by_coord = {coord_key(g.x, g.y): p for g, p in zip(
-        g_high.geometry, g_high["contributing_passes"])}
-    n_unmatched = 0
+    # Manifest centroids carry the committed union's quantisation -> NN join
+    # (1 m tolerance; clusters are tens of metres apart, mapping is unique).
+    cand_pts = gpd.GeoDataFrame(
+        {"geometry": [Point(r["x"], r["y"]) for r in table10]}, crs=EVAL_CRS)
+    d, idx = nn_match(cand_pts, g_high)
+    n_unmatched = int((d > 1.0).sum())
     derived = []
-    for r in table10:
-        cp = passes_by_coord.get(coord_key(r["x"], r["y"]))
-        if cp is None:
-            n_unmatched += 1
+    for r, dist, j in zip(table10, d, idx):
+        if dist > 1.0:
             continue
+        cp = g_high["contributing_passes"].iloc[j]
         if isinstance(cp, str):  # geopandas may deliver list columns as strings
             cp = json.loads(cp.replace("'", '"'))
         first5 = sum(1 for p in cp if p in FIRST5)
