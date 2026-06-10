@@ -1,0 +1,108 @@
+{
+  "scope": "GS 384px / 487 tiles / curator GT / 20 m",
+  "cell": "zero-diversity anchor: 1x minimal-thinking T=0.0 text proposer + n=1 carry-forward adversarial-text verifier",
+  "proposer": {
+    "model": "gemini-3-flash",
+    "config": "detect_brief-text",
+    "thinking_level": "minimal",
+    "temperature": 0.0,
+    "passes": 1,
+    "tile_scope": "487 tiles (486 completed, 1 failed: K-35-052-4_32635_x0_y2352.png)",
+    "detections_geojson": "outputs/h11/pv-diag-384/text-baseline/text-t0.0/run_1/detections_text-t0.0_run01.geojson"
+  },
+  "verifier": {
+    "model": "gemini-3-flash",
+    "config": "verify_adversarial-text",
+    "thinking_level": "minimal",
+    "temperature": 0.0,
+    "iterations": 1,
+    "probabilities": "outputs/h11/pv-diag-384/verified/text-baseline/probabilities.json"
+  },
+  "candidate_manifest": "outputs/h11/pv-diag-384/crops/text-baseline/candidate_manifest.json",
+  "pool": {
+    "n": 1047,
+    "recall_ceiling_20m": 0.8851,
+    "f1_max_at_ceiling": 0.939
+  },
+  "sweep": [
+    {
+      "prob_t": 0.05,
+      "f1": 0.6443,
+      "mcc": 0.4157,
+      "precision": 0.5073,
+      "recall": 0.8828,
+      "n_accepted": 757
+    },
+    {
+      "prob_t": 0.1,
+      "f1": 0.7393,
+      "mcc": 0.5984,
+      "precision": 0.6408,
+      "recall": 0.8736,
+      "n_accepted": 593
+    },
+    {
+      "prob_t": 0.15,
+      "f1": 0.8142,
+      "mcc": 0.8328,
+      "precision": 0.7888,
+      "recall": 0.8414,
+      "n_accepted": 464
+    },
+    {
+      "prob_t": 0.2,
+      "f1": 0.8125,
+      "mcc": 0.8372,
+      "precision": 0.7896,
+      "recall": 0.8368,
+      "n_accepted": 461
+    },
+    {
+      "prob_t": 0.25,
+      "f1": 0.7931,
+      "mcc": 0.8413,
+      "precision": 0.7977,
+      "recall": 0.7885,
+      "n_accepted": 430
+    },
+    {
+      "prob_t": 0.3,
+      "f1": 0.7931,
+      "mcc": 0.8413,
+      "precision": 0.7977,
+      "recall": 0.7885,
+      "n_accepted": 430
+    },
+    {
+      "prob_t": 0.4,
+      "f1": 0.7893,
+      "mcc": 0.8376,
+      "precision": 0.7995,
+      "recall": 0.7793,
+      "n_accepted": 424
+    },
+    {
+      "prob_t": 0.5,
+      "f1": 0.7776,
+      "mcc": 0.8189,
+      "precision": 0.8054,
+      "recall": 0.7517,
+      "n_accepted": 406
+    }
+  ],
+  "best": {
+    "prob_t": 0.15,
+    "f1_20m": 0.8142,
+    "mcc": 0.8328,
+    "precision": 0.7888,
+    "recall": 0.8414,
+    "n_accepted": 464,
+    "geojson": "results/verifier-robustness/min-thinking-sets/text-baseline-1pass-n1-pt0.15.geojson"
+  },
+  "comparison": {
+    "min6_5pass_t07_f1": 0.8708,
+    "min6_pool_ceiling": 0.9195,
+    "min11_10pass_t07_f1": 0.8835,
+    "diversity_dividend_min6_minus_anchor": 0.0566
+  }
+}
