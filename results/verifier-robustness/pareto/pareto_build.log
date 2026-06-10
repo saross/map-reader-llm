@@ -1,0 +1,28 @@
+=== cheap end (5-prop + n=1 verifier, 6 passes) ===
+  cheap6 pool: 3736 candidates, proposer votes 1..5
+  cheap6 best: F1@20m=0.8641 MCC=0.769 at 4of5, pt0.15 (n=389)
+INFO: Created 389 records
+
+=== ladder rungs (verification gates) ===
+  gate ok: min10 F1@20m=0.8739 MCC=0.771
+INFO: Created 418 records
+  gate ok: nof10 F1@20m=0.8769 MCC=0.790
+  gate ok: headline31 F1@20m=0.8902 MCC=0.790
+  gate ok: opmax35 F1@20m=0.8951 MCC=0.794
+
+=== round-robin tile-swap permutations (10 pairs, 10k, seed 42) ===
+  cheap6      vs min10       diff=-0.0099 p=0.0288 bh=0.0960 [ns] (adjacent)
+  cheap6      vs nof10       diff=-0.0128 p=0.2086 bh=0.2607 [ns] (span)
+  cheap6      vs headline31  diff=-0.0261 p=0.0398 bh=0.0995 [ns] (span)
+  cheap6      vs opmax35     diff=-0.0310 p=0.0119 bh=0.0960 [ns] (span)
+  min10       vs nof10       diff=-0.0030 p=0.7852 bh=0.7852 [ns] (adjacent)
+  min10       vs headline31  diff=-0.0163 p=0.1711 bh=0.2444 [ns] (span)
+  min10       vs opmax35     diff=-0.0212 p=0.0668 bh=0.1336 [ns] (span)
+  nof10       vs headline31  diff=-0.0133 p=0.0991 bh=0.1652 [ns] (adjacent)
+  nof10       vs opmax35     diff=-0.0182 p=0.0273 bh=0.0960 [ns] (span)
+  headline31  vs opmax35     diff=-0.0049 p=0.3630 bh=0.4033 [ns] (adjacent)
+
+  tiers: [['opmax35', 'headline31', 'nof10', 'min10', 'cheap6']]
+
+0/10 pairs significant after BH-FDR -> 1 tier(s).
+Wrote results/verifier-robustness/pareto/pareto_leaderboard.json + results/verifier-robustness/pareto/pareto_leaderboard.png

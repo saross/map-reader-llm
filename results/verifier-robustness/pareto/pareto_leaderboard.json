@@ -1,0 +1,279 @@
+{
+  "scope": "GS 384px / 487 tiles / curator GT / F1@20m, best op per rung",
+  "ladder": [
+    {
+      "label": "cheap6",
+      "passes": 6,
+      "split": [
+        5,
+        1
+      ],
+      "f1": 0.8640776699029127,
+      "mcc": 0.7693268390812246,
+      "op": "4of5 / n=1 / pt0.15",
+      "source": "this script (new)",
+      "geojson": "results/verifier-robustness/pareto/cheap6-4of5-n1-pt0.15.geojson",
+      "tier": 1
+    },
+    {
+      "label": "min10",
+      "passes": 10,
+      "split": [
+        5,
+        5
+      ],
+      "f1": 0.8739495798319328,
+      "mcc": 0.7712526554232313,
+      "op": "4of5 / mean / pt0.15 (N=5 min T0.3 verifier)",
+      "source": "matrix_tiering.json",
+      "geojson": "results/verifier-robustness/matrix-sets/min-T0.3.geojson",
+      "tier": 1
+    },
+    {
+      "label": "nof10",
+      "passes": 11,
+      "split": [
+        10,
+        1
+      ],
+      "f1": 0.876905041031653,
+      "mcc": 0.7902523838362319,
+      "op": "6of10 / n=1 / pt0.2",
+      "source": "nof10_comparison.log",
+      "geojson": "results/verifier-robustness/pareto/nof10-6of10-n1-pt0.2.geojson",
+      "tier": 1
+    },
+    {
+      "label": "headline31",
+      "passes": 31,
+      "split": [
+        30,
+        1
+      ],
+      "f1": 0.8902007083825267,
+      "mcc": 0.7902523838362319,
+      "op": "16of30 / n=1 / pt0.2 (registered headline)",
+      "source": "pv-diag-384::verified-adv-text-consensus-16of30",
+      "geojson": "outputs/era1-pv-stage-d/384-consensus-text-high/pass_1/accepted_t0.2.geojson",
+      "tier": 1
+    },
+    {
+      "label": "opmax35",
+      "passes": 35,
+      "split": [
+        30,
+        5
+      ],
+      "f1": 0.8951048951048951,
+      "mcc": 0.7940767140129934,
+      "op": "16of30 / consensus_vt3 / pt0.15 (N=5 min T0.3 verifier)",
+      "source": "robustness_summary_T0.3.json",
+      "geojson": "results/verifier-robustness/opmax-sets/opmax-16of30-N5minT0.3-vt3-pt0.15.geojson",
+      "tier": 1
+    }
+  ],
+  "context": [
+    {
+      "label": "high10",
+      "passes": 10,
+      "split": [
+        5,
+        5
+      ],
+      "f1": 0.8764,
+      "mcc": null,
+      "op": "4of5 / consensus_vt5 / pt0.3 (N=5 HIGH T0.3 verifier, ~3x cost)",
+      "source": "matrix_tiering.json",
+      "note": "statistically tied with min10 (matrix tier 1)"
+    },
+    {
+      "label": "pro6-flashvf",
+      "passes": 6,
+      "split": [
+        5,
+        1
+      ],
+      "f1": 0.8491,
+      "mcc": 0.73,
+      "op": "3of5 / n=1 / pt0.15 (Pro 3.1 proposer + Flash verifier)",
+      "source": "pro_pv.log",
+      "note": "different proposer model; S110 model comparison"
+    },
+    {
+      "label": "pro6-provf",
+      "passes": 6,
+      "split": [
+        5,
+        1
+      ],
+      "f1": 0.8506,
+      "mcc": 0.73,
+      "op": "3of5 / n=1 / pt0.15 (Pro 3.1 proposer + Pro verifier)",
+      "source": "pro_pv.log",
+      "note": "different proposer + verifier model"
+    }
+  ],
+  "tiers": [
+    [
+      "opmax35",
+      "headline31",
+      "nof10",
+      "min10",
+      "cheap6"
+    ]
+  ],
+  "pairwise": [
+    {
+      "a": "cheap6",
+      "b": "min10",
+      "adjacent": true,
+      "f1_a": 0.864078,
+      "f1_b": 0.87395,
+      "observed_diff": -0.009872,
+      "p_value": 0.0288,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": -5.4e-05,
+      "null_std": 0.004554,
+      "bh_adjusted_p": 0.096,
+      "significant": false
+    },
+    {
+      "a": "cheap6",
+      "b": "nof10",
+      "adjacent": false,
+      "f1_a": 0.864078,
+      "f1_b": 0.876905,
+      "observed_diff": -0.012827,
+      "p_value": 0.2086,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 2.8e-05,
+      "null_std": 0.010185,
+      "bh_adjusted_p": 0.26075,
+      "significant": false
+    },
+    {
+      "a": "cheap6",
+      "b": "headline31",
+      "adjacent": false,
+      "f1_a": 0.864078,
+      "f1_b": 0.890201,
+      "observed_diff": -0.026123,
+      "p_value": 0.0398,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 6.2e-05,
+      "null_std": 0.012662,
+      "bh_adjusted_p": 0.0995,
+      "significant": false
+    },
+    {
+      "a": "cheap6",
+      "b": "opmax35",
+      "adjacent": false,
+      "f1_a": 0.864078,
+      "f1_b": 0.895105,
+      "observed_diff": -0.031027,
+      "p_value": 0.0119,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 3.4e-05,
+      "null_std": 0.012444,
+      "bh_adjusted_p": 0.096,
+      "significant": false
+    },
+    {
+      "a": "min10",
+      "b": "nof10",
+      "adjacent": true,
+      "f1_a": 0.87395,
+      "f1_b": 0.876905,
+      "observed_diff": -0.002955,
+      "p_value": 0.7852,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 8.2e-05,
+      "null_std": 0.010372,
+      "bh_adjusted_p": 0.7852,
+      "significant": false
+    },
+    {
+      "a": "min10",
+      "b": "headline31",
+      "adjacent": false,
+      "f1_a": 0.87395,
+      "f1_b": 0.890201,
+      "observed_diff": -0.016251,
+      "p_value": 0.1711,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 0.000115,
+      "null_std": 0.012056,
+      "bh_adjusted_p": 0.244429,
+      "significant": false
+    },
+    {
+      "a": "min10",
+      "b": "opmax35",
+      "adjacent": false,
+      "f1_a": 0.87395,
+      "f1_b": 0.895105,
+      "observed_diff": -0.021155,
+      "p_value": 0.0668,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 8.7e-05,
+      "null_std": 0.011648,
+      "bh_adjusted_p": 0.1336,
+      "significant": false
+    },
+    {
+      "a": "nof10",
+      "b": "headline31",
+      "adjacent": true,
+      "f1_a": 0.876905,
+      "f1_b": 0.890201,
+      "observed_diff": -0.013296,
+      "p_value": 0.0991,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 3.2e-05,
+      "null_std": 0.008127,
+      "bh_adjusted_p": 0.165167,
+      "significant": false
+    },
+    {
+      "a": "nof10",
+      "b": "opmax35",
+      "adjacent": false,
+      "f1_a": 0.876905,
+      "f1_b": 0.895105,
+      "observed_diff": -0.0182,
+      "p_value": 0.0273,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 5e-06,
+      "null_std": 0.008347,
+      "bh_adjusted_p": 0.096,
+      "significant": false
+    },
+    {
+      "a": "headline31",
+      "b": "opmax35",
+      "adjacent": true,
+      "f1_a": 0.890201,
+      "f1_b": 0.895105,
+      "observed_diff": -0.004904,
+      "p_value": 0.363,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": -2.6e-05,
+      "null_std": 0.004978,
+      "bh_adjusted_p": 0.403333,
+      "significant": false
+    }
+  ],
+  "method": "consensus_per_tile + permutation_test_float, C(5,2)=10 round-robin, 10k tile-swap, seed 42, two-sided; BH-FDR q=0.05; greedy-clique tiers (matrix/Era-1 board machinery)",
+  "figure": "results/verifier-robustness/pareto/pareto_leaderboard.png"
+}
