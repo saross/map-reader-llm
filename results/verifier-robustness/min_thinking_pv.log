@@ -1,0 +1,38 @@
+
+=== text-min-t07-5pass: 974 candidates, proposer votes 1..5 ===
+  1of5: bestF1=0.5742  MCC=0.507  prob_t=0.2
+  2of5: bestF1=0.6000  MCC=0.506  prob_t=0.15
+  3of5: bestF1=0.5926  MCC=0.495  prob_t=0.15
+  4of5: bestF1=0.5782  MCC=0.498  prob_t=0.15
+  5of5: bestF1=0.5472  MCC=0.481  prob_t=0.15
+INFO: Created 235 records
+  >>> BEST text-min-t07-5pass: F1@20m=0.6000 MCC=0.506 at 2of5, pt0.15 (n=235) -> results/verifier-robustness/min-thinking-sets/text-min-t07-5pass-2of5-n1-pt0.15.geojson
+
+=== text-min-t07-10pass: 1939 candidates, proposer votes 1..10 ===
+  1of10: bestF1=0.7949  MCC=0.775  prob_t=0.2
+  2of10: bestF1=0.8381  MCC=0.812  prob_t=0.2
+  3of10: bestF1=0.8499  MCC=0.816  prob_t=0.2
+  4of10: bestF1=0.8656  MCC=0.816  prob_t=0.2
+  5of10: bestF1=0.8809  MCC=0.814  prob_t=0.2
+  6of10: bestF1=0.8835  MCC=0.807  prob_t=0.2
+  7of10: bestF1=0.8649  MCC=0.801  prob_t=0.2
+  8of10: bestF1=0.8604  MCC=0.791  prob_t=0.2
+  9of10: bestF1=0.8455  MCC=0.763  prob_t=0.15
+  10of10: bestF1=0.8127  MCC=0.731  prob_t=0.15
+INFO: Created 389 records
+  >>> BEST text-min-t07-10pass: F1@20m=0.8835 MCC=0.807 at 6of10, pt0.2 (n=389) -> results/verifier-robustness/min-thinking-sets/text-min-t07-10pass-6of10-n1-pt0.2.geojson
+
+=== text-min-t07-5pass-n30lineage: 1593 candidates, proposer votes 1..5 ===
+  1of5: bestF1=0.8284  MCC=0.788  prob_t=0.15
+  2of5: bestF1=0.8625  MCC=0.790  prob_t=0.15
+  3of5: bestF1=0.8698  MCC=0.796  prob_t=0.15
+  4of5: bestF1=0.8708  MCC=0.787  prob_t=0.15
+  5of5: bestF1=0.8458  MCC=0.759  prob_t=0.15
+INFO: Created 378 records
+  >>> BEST text-min-t07-5pass-n30lineage: F1@20m=0.8708 MCC=0.787 at 4of5, pt0.15 (n=378) -> results/verifier-robustness/min-thinking-sets/text-min-t07-5pass-n30lineage-4of5-n1-pt0.15.geojson
+
+=== comparison (F1@20m, GS 384/487, curator GT) ===
+  min6  (5 MIN prop + 1 vf):  0.6000  (n30-lineage replicate 0.8708)
+  high6 (5 HIGH prop + 1 vf): 0.8641  <- pareto 'cheap6'
+  min11 (10 MIN prop + 1 vf): 0.8835
+  high11(10 HIGH prop + 1 vf):0.8769
