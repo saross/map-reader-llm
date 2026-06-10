@@ -1,0 +1,17 @@
+=== re-merging unions with the current merge_passes ===
+=== geometry gates vs committed unions ===
+  gate [flash-high 1of10]: fresh 5866 vs committed 5866; max NN dist 0.069 m; one-to-one=True; votes-agree=True -> PASS
+  gate [text-n10 1of10 (V3 side)]: fresh 1939 vs committed 1939; max NN dist 0.069 m; one-to-one=True; votes-agree=True -> PASS
+=== sweep A: first-5-of-10 derived (committed 10-pool probs) ===
+  joined 5866/5866 candidates (0 unmatched); first-5 union size 3749
+=== sweep B: true 5-pass pool (committed) ===
+
+k       derived A      true B    delta  verdict
+1of5      0.7510      0.7403  +0.0107  EXCEEDS
+2of5      0.8397      0.8299  +0.0099  EXCEEDS
+3of5      0.8627      0.8529  +0.0098  EXCEEDS
+4of5      0.8727      0.8641  +0.0086  EXCEEDS
+5of5      0.8424      0.8372  +0.0052  ok
+
+VERDICT: FAIL — do NOT use the shortcut; investigate before launch (worst per-k delta 0.0107, tolerance 0.0075)
+Wrote results/verifier-robustness/first5of10-validation/validation.json
