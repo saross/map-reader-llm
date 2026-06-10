@@ -80,7 +80,12 @@ DEFAULT_OUTROOT = BASE_DIR / "outputs" / "verifier-robustness"
 VERIFIER_CONFIG = BASE_DIR / "prompts" / "configs" / "verify_adversarial-text.json"
 RUN_PV = BASE_DIR / "scripts" / "run_pv.py"
 PADDING = 75  # 150 px crops — the carry-forward, identical to Stage-D
-FLEX_PER_CALL = 0.000697  # calibrated to the Session-107 actuals (7,113 -> $4.96)
+FLEX_PER_CALL = 0.000697  # minimal-thinking, calibrated to S107 actuals (7,113 -> $4.96)
+# Per-call cost multiplier vs minimal, driven by thinking tokens (billed as
+# output). Measured: the on-disk HIGH verifier averaged ~935 thinking-tokens/call
+# (run.meta usage_stats.total_thoughts_tokens / candidates), ~= 3x minimal. Medium
+# is an estimate (no measured run); refine if a medium run lands.
+THINKING_COST_MULT = {"minimal": 1.0, "medium": 2.2, "high": 3.0}
 
 
 def run(cmd: list[str], **kw) -> subprocess.CompletedProcess:
@@ -94,9 +99,23 @@ def crops_dir(cell: dict, outroot: Path) -> Path:
     return outroot / cell["name"] / "crops"
 
 
-def verified_dir(cell: dict, outroot: Path, temperature: float) -> Path:
-    """Verified outputs are namespaced by verifier temperature."""
-    return outroot / cell["name"] / f"T{temperature}" / "verified"
+def temp_tag(temperature: float, thinking_level: str | None) -> str:
+    """Output namespace tag: ``T<temp>`` (minimal/default) or ``T<temp>-<level>``.
+
+    Minimal is the config default, so it keeps the bare ``T<temp>`` tag for
+    backward compatibility with the Stage-1/2 outputs; an overridden thinking
+    level (e.g. high) gets its own ``T<temp>-high`` namespace so a same-temperature
+    minimal and high run never collide.
+    """
+    if thinking_level in (None, "minimal"):
+        return f"T{temperature}"
+    return f"T{temperature}-{thinking_level}"
+
+
+def verified_dir(cell: dict, outroot: Path, temperature: float,
+                 thinking_level: str | None = None) -> Path:
+    """Verified outputs are namespaced by verifier temperature (+ thinking)."""
+    return outroot / cell["name"] / temp_tag(temperature, thinking_level) / "verified"
 
 
 def subset_geojson(src: Path, dst: Path, n: int) -> int:
@@ -127,15 +146,20 @@ def extract(proposer: Path, out_crops: Path, dry_run: bool = False) -> None:
 
 
 def verify(out_crops: Path, out_verified: Path, iterations: int,
-           temperature: float, workers: int) -> None:
-    """Verify crops at N iterations and a fixed temperature (realtime flex)."""
-    run([sys.executable, str(RUN_PV), "verify",
-         "--crops-dir", str(out_crops),
-         "--verifier-config", str(VERIFIER_CONFIG),
-         "--output-dir", str(out_verified),
-         "--mode", "realtime", "--service-tier", "flex",
-         "--iterations", str(iterations), "--temperature", str(temperature),
-         "--workers", str(workers)])
+           temperature: float, workers: int, thinking_level: str | None = None) -> None:
+    """Verify crops at N iterations, a fixed temperature, and (optionally) a
+    thinking-level override (realtime flex). When ``thinking_level`` is None the
+    verifier config's value (minimal) is used; only temperature changes."""
+    cmd = [sys.executable, str(RUN_PV), "verify",
+           "--crops-dir", str(out_crops),
+           "--verifier-config", str(VERIFIER_CONFIG),
+           "--output-dir", str(out_verified),
+           "--mode", "realtime", "--service-tier", "flex",
+           "--iterations", str(iterations), "--temperature", str(temperature),
+           "--workers", str(workers)]
+    if thinking_level:
+        cmd += ["--thinking-level", thinking_level]
+    run(cmd)
 
 
 def report_probabilities(probs_path: Path, iterations: int) -> None:
@@ -178,61 +202,65 @@ def report_probabilities(probs_path: Path, iterations: int) -> None:
 
 
 def do_dry_run(cells: list[dict], outroot: Path, iterations: int,
-               temperature: float) -> None:
+               temperature: float, thinking_level: str | None = None) -> None:
     """Validate every union extracts cleanly (no API) + print the cost table."""
     total_cands = 0
+    level = thinking_level or "minimal"
+    mult = THINKING_COST_MULT.get(level, 1.0)
     print(f"=== DRY RUN — extract --dry-run per cell (no API); "
-          f"iterations={iterations}, temperature={temperature}, tier=flex ===",
-          flush=True)
+          f"iterations={iterations}, temperature={temperature}, thinking={level}, "
+          f"tier=flex ===", flush=True)
     for cell in cells:
         n = cell["n_union"]
         total_cands += n
         print(f"\n--- {cell['name']} ({n} union candidates) ---", flush=True)
         extract(BASE_DIR / cell["proposer"], crops_dir(cell, outroot), dry_run=True)
     calls = total_cands * iterations
-    flex = calls * FLEX_PER_CALL
-    print(f"\n=== {total_cands} union candidates x {iterations} iterations "
-          f"= {calls:,} calls — est ${flex:.2f} flex / ${flex * 2:.2f} standard "
+    flex = calls * FLEX_PER_CALL * mult
+    note = f" (thinking={level}, ~{mult:g}x minimal per-call)" if mult != 1.0 else ""
+    print(f"\n=== {total_cands} candidates x {iterations} iterations = {calls:,} calls"
+          f"{note} — est ${flex:.2f} flex / ${flex * 2:.2f} standard "
           f"(this temperature only) ===", flush=True)
 
 
 def do_smoke(cells: list[dict], outroot: Path, n: int, iterations: int,
-             temperature: float, workers: int) -> None:
+             temperature: float, workers: int, thinking_level: str | None = None) -> None:
     """Subset each cell to ~n candidates, extract + verify, report iteration spread."""
+    level = thinking_level or "minimal"
     print(f"=== SMOKE — first {n} candidates per cell, N={iterations} @ T={temperature}, "
-          f"flex verify ===", flush=True)
+          f"thinking={level}, flex verify ===", flush=True)
     for cell in cells:
         prop = BASE_DIR / cell["proposer"]
         base = outroot / "_smoke" / cell["name"]
         subset = base / "subset.geojson"
         k = subset_geojson(prop, subset, n)
         crops = base / "crops"
-        verified = base / f"T{temperature}" / "verified"
+        verified = base / temp_tag(temperature, thinking_level) / "verified"
         print(f"\n--- {cell['name']}: {k} candidates ---", flush=True)
         extract(subset, crops)
-        verify(crops, verified, iterations, temperature, workers)
+        verify(crops, verified, iterations, temperature, workers, thinking_level)
         report_probabilities(verified / "probabilities.json", iterations)
 
 
 def do_full(cells: list[dict], outroot: Path, iterations: int,
-            temperature: float, workers: int) -> None:
+            temperature: float, workers: int, thinking_level: str | None = None) -> None:
     """Extract (idempotent) + verify every union candidate at N iterations."""
-    print(f"=== FULL RUN — extract + verify N={iterations} @ T={temperature} "
-          f"(realtime flex) ===", flush=True)
+    level = thinking_level or "minimal"
+    print(f"=== FULL RUN — extract + verify N={iterations} @ T={temperature}, "
+          f"thinking={level} (realtime flex) ===", flush=True)
     for cell in cells:
         print(f"\n########## {cell['name']} ({cell['n_union']} candidates) ##########",
               flush=True)
         crops = crops_dir(cell, outroot)
         # Idempotent extract: skip if the manifest already exists (crops are
-        # temperature-independent, so a later-temperature run reuses them).
+        # temperature- AND thinking-independent, so any later run reuses them).
         if (crops / "candidate_manifest.json").exists():
             print(f"  crops already extracted at {crops} — reusing", flush=True)
         else:
             extract(BASE_DIR / cell["proposer"], crops)
-        verify(crops, verified_dir(cell, outroot, temperature), iterations,
-               temperature, workers)
-        report_probabilities(verified_dir(cell, outroot, temperature) / "probabilities.json",
-                             iterations)
+        vdir = verified_dir(cell, outroot, temperature, thinking_level)
+        verify(crops, vdir, iterations, temperature, workers, thinking_level)
+        report_probabilities(vdir / "probabilities.json", iterations)
 
 
 def main() -> int:
@@ -249,23 +277,29 @@ def main() -> int:
     parser.add_argument("--iterations", type=int, default=None,
                         help="Verifier iterations (default: from the cells spec)")
     parser.add_argument("--smoke-n", type=int, default=12)
-    parser.add_argument("--workers", type=int, default=12)
+    parser.add_argument("--workers", type=int, default=14)
+    parser.add_argument("--thinking-level", type=str, default=None,
+                        choices=["minimal", "low", "medium", "high"],
+                        help="Override the verifier config's thinking level "
+                             "(default: None -> config's minimal). high ~= 3x "
+                             "the per-call cost. Output is namespaced T<temp>-<level>.")
     args = parser.parse_args()
 
     spec = json.loads(args.cells.read_text())
     cells = spec["cells"]
     iterations = args.iterations if args.iterations is not None else spec["iterations"]
+    tl = args.thinking_level
 
     if not any([args.dry_run, args.smoke, args.full]):
         parser.error("pick one of --dry-run / --smoke / --full")
 
     if args.dry_run:
-        do_dry_run(cells, args.output_root, iterations, args.temperature)
+        do_dry_run(cells, args.output_root, iterations, args.temperature, tl)
     if args.smoke:
         do_smoke(cells, args.output_root, args.smoke_n, iterations,
-                 args.temperature, args.workers)
+                 args.temperature, args.workers, tl)
     if args.full:
-        do_full(cells, args.output_root, iterations, args.temperature, args.workers)
+        do_full(cells, args.output_root, iterations, args.temperature, args.workers, tl)
     return 0
 
 

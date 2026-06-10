@@ -1,0 +1,34 @@
+{
+  "_description": "Session 110 Stage-3: complete the {T0.0, T0.3, T0.7} x {minimal, high} verifier matrix over the 384px >=3-of-5 proposer band (855 cands, N=5). Tests whether higher thinking helps as a CONSENSUS verifier (a single high-thinking pass HURTS — Obs 357 prelim — but the permissive vt1 union of diverse passes may recover the lost recall, cf. the +0.003..0.006 minimal-consensus benefit). Held constant: model gemini-3-flash, band, N=5, text-only, flex; only temperature and thinking_level vary (one at a time per run).",
+  "cells": [
+    {
+      "name": "384-flash-high-text-ge3of5",
+      "size": 384,
+      "kind": "proposer-band",
+      "proposer": "outputs/h11/pv-diag-384/consensus/flash-high-text-ge3of5.geojson",
+      "n_union": 855,
+      "proposer_vote_cumulative": {"3of5": 855, "4of5": 584, "5of5": 415}
+    }
+  ],
+  "verifier_config": "prompts/configs/verify_adversarial-text.json",
+  "iterations": 5,
+  "padding": 75,
+  "service_tier": "flex",
+  "mode": "realtime",
+  "prob_t_sweep": [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5],
+  "flex_per_call_usd_minimal": 0.000697,
+  "high_thinking_cost_multiplier": 3.0,
+  "matrix_runs_NEW": [
+    {"temperature": 0.7, "thinking": "minimal", "calls": 4275, "est_flex_usd": 2.98},
+    {"temperature": 0.7, "thinking": "high", "calls": 4275, "est_flex_usd": 8.94},
+    {"temperature": 0.3, "thinking": "high", "calls": 4275, "est_flex_usd": 8.94}
+  ],
+  "matrix_runs_EXISTING_free": [
+    {"temperature": 0.0, "thinking": "minimal", "source": "Stage 1 (1of5 union, subset to >=3of5)"},
+    {"temperature": 0.3, "thinking": "minimal", "source": "Stage 2 (>=3of5 band)"},
+    {"temperature": 0.0, "thinking": "high", "source": "on-disk high-vf n=1 prior (NOT N=5 consensus)"}
+  ],
+  "total_new_spend_est_flex_usd": 20.86,
+  "approved_ceiling_usd": 35,
+  "note_T0.0_high": "The matrix's T=0.0/high cell is currently the n=1 free prior (high-vf), NOT an N=5 consensus. At T=0.0 the 5 high passes are near-identical (low diversity) so an N=5 run would ~= the n=1 prior; adding it (+~$8.94 flex, total ~$29.8 < $35) would make the matrix fully N=5-matched. Flagged for Shawn; not included by default."
+}

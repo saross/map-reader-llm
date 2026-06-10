@@ -181,14 +181,23 @@ def score_cids(cids: frozenset[int], by_cid: dict[int, dict],
     return res["f1"], res["mcc"]
 
 
+def temp_tag(temperature: float, thinking_level: str | None) -> str:
+    """Output namespace tag, mirroring run_verifier_robustness.temp_tag:
+    ``T<temp>`` for minimal/default, ``T<temp>-<level>`` for an overridden level."""
+    if thinking_level in (None, "minimal"):
+        return f"T{temperature}"
+    return f"T{temperature}-{thinking_level}"
+
+
 def analyse_cell(cell: dict, outroot: Path, temperature: float,
                  prob_ts: list[float], n_iter: int,
-                 gdf_ref: gpd.GeoDataFrame) -> dict:
+                 gdf_ref: gpd.GeoDataFrame, thinking_level: str | None = None) -> dict:
     """Compute the determinism + proposer-input grid for one cell."""
     name = cell["name"]
     size = cell["size"]
     crops = outroot / name / "crops" / "candidate_manifest.json"
-    probs = outroot / name / f"T{temperature}" / "verified" / "probabilities.json"
+    probs = (outroot / name / temp_tag(temperature, thinking_level)
+             / "verified" / "probabilities.json")
     table = load_candidate_table(crops, probs)
     by_cid = {r["cid"]: r for r in table}
     n_present = len(table)
@@ -284,18 +293,25 @@ def main() -> int:
                    help="prob_t sweep (default: from cells spec)")
     p.add_argument("--out-dir", type=Path,
                    default=BASE_DIR / "results" / "verifier-robustness")
+    p.add_argument("--thinking-level", type=str, default=None,
+                   choices=["minimal", "low", "medium", "high"],
+                   help="Read the thinking-namespaced verified dir (default: "
+                        "None -> T<temp>; else T<temp>-<level>).")
     args = p.parse_args()
 
     spec = json.loads(args.cells.read_text())
     n_iter = args.iterations if args.iterations is not None else spec["iterations"]
     prob_ts = args.prob_t if args.prob_t is not None else spec["prob_t_sweep"]
+    tl = args.thinking_level
 
     args.out_dir.mkdir(parents=True, exist_ok=True)
     gdf_ref = load_geojson(GROUND_TRUTH)  # ground truth loaded once for all cells
     all_results, all_summaries = [], []
     for cell in spec["cells"]:
-        print(f"=== analysing {cell['name']} (T={args.temperature}) ===", flush=True)
-        res = analyse_cell(cell, args.output_root, args.temperature, prob_ts, n_iter, gdf_ref)
+        print(f"=== analysing {cell['name']} (T={args.temperature}, "
+              f"thinking={tl or 'minimal'}) ===", flush=True)
+        res = analyse_cell(cell, args.output_root, args.temperature, prob_ts, n_iter,
+                           gdf_ref, tl)
         summ = summarise(res, prob_ts)
         all_results.append(res)
         all_summaries.append(summ)
@@ -311,12 +327,14 @@ def main() -> int:
                   f"[{d['single_run_f1_min']},{d['single_run_f1_max']}] | "
                   f"consensus {d['consensus_majority_f1']}", flush=True)
 
-    tag = f"T{args.temperature}"
+    tag = temp_tag(args.temperature, tl)
     (args.out_dir / f"robustness_grid_{tag}.json").write_text(
-        json.dumps({"temperature": args.temperature, "iterations": n_iter,
-                    "prob_t_sweep": prob_ts, "cells": all_results}, indent=2))
+        json.dumps({"temperature": args.temperature, "thinking_level": tl or "minimal",
+                    "iterations": n_iter, "prob_t_sweep": prob_ts,
+                    "cells": all_results}, indent=2))
     (args.out_dir / f"robustness_summary_{tag}.json").write_text(
-        json.dumps({"temperature": args.temperature, "summaries": all_summaries}, indent=2))
+        json.dumps({"temperature": args.temperature, "thinking_level": tl or "minimal",
+                    "summaries": all_summaries}, indent=2))
     print(f"\nWrote {args.out_dir}/robustness_{{grid,summary}}_{tag}.json", flush=True)
     return 0
 
