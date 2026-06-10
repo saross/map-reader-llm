@@ -1,21 +1,32 @@
 # Verifier-robustness — findings
 
-> **Last revised**: 2026-06-09 (Stage-2 — the higher-T consensus verifier was
-> rejected: both cells stalled at T=0.3). See [§ Changelog](#changelog) for
-> revision history.
+> **Last revised**: 2026-06-10 (Stage 3 thinking × temperature matrix, the
+> model and compute-allocation deep-dive, the operational maximum and its
+> permutation test, and the pass-budget Pareto board). See
+> [§ Changelog](#changelog) for revision history.
 
 This document is the citable home for the **verifier-robustness** programme
-(Session 109). It answers three questions that bear on **every n=1 verified cell
-in the paper** — the Stage-D PV grid, the 55-map deployment oracle, and all
+(Sessions 109–111). It answers the questions that bear on **every n=1 verified
+cell in the paper** — the Stage-D PV grid, the 55-map deployment oracle, and all
 proposer-verifier cells. Pre-run design and gating are recorded separately in
 [`outputs/verifier-robustness/experiment_intent.md`](../../outputs/verifier-robustness/experiment_intent.md).
 
 **Headline**: the production carry-forward verifier — **gemini-3-flash, T=0.0,
 minimal thinking, n=1** — is **vindicated on every axis tested**. Run-to-run
 non-determinism is negligible at F1 (§ 2); a higher-temperature *consensus*
-verifier does **not** help (§ 7); and the optimal *input* is a pre-filtered
-proposer pool, not the permissive union (§ 3). No variant beats the
-carry-forward.
+verifier does **not** help (§ 7); the optimal *input* is a pre-filtered
+proposer pool, not the permissive union (§ 3); thinking level and temperature
+make no significant F1 difference at N=5, and high thinking *hurts* a single
+pass (§ 8); a stronger (Pro) verifier model buys nothing (§ 9); at equal cost,
+passes are better spent on the proposer than the verifier (§ 10); and the
+0.8951 operational maximum is **not** significantly above the 0.890 headline
+(§ 11). The whole 6→35-pass budget ladder sits in **one statistical tier**
+(§ 12).
+
+**The meta-rule, confirmed on every axis: on a within-noise tie, take the
+cheaper configuration** — n=1 over consensus, minimal over high thinking,
+Flash over Pro, proposer passes over verifier passes. The carry-forward
+verifier is cost-optimal everywhere it has been tested.
 
 - **Stage 1** (T=0.0): verify the **1-of-5 proposer union** of the two
   Gold-Standard consensus+PV cells (the leading 384 `flash-high-text` and the
@@ -65,6 +76,9 @@ spread ~0.019). Two corollaries:
   consensus F1 lands within ~0.001–0.01 of the single-run mean (e.g. 384/3of5:
   consensus 0.8488 vs mean 0.8472). There is **no consensus benefit at T=0.0** —
   expected, since five near-identical T=0.0 passes carry no diversity to pool.
+  *Stage-3 refinement (§ 8): this reading applies to the **majority** vote; a
+  permissive aggregation (vt1 union at T=0.0, mean-probability at T=0.3) does
+  beat the expected single pass by ~+0.012.*
 - **The verifier-vote threshold barely moves F1.** At the 384 optimum (4of5,
   prob_t 0.15) the vt1→vt5 sweep spans only 0.8522–0.8722; at the 256 optimum
   (5of5, prob_t 0.15), 0.8396–0.8620.
@@ -143,6 +157,21 @@ consensus (≥3–4 of 5), not the maximal-recall union.
 - Stage-2 artefacts: `results/verifier-robustness/snowball_summary.json`,
   `robustness_{grid,summary}_T0.3.json`; `outputs/verifier-robustness/<cell>/T0.3/verified/`;
   driver `scripts/run_verifier_temperature_snowball.py`
+- Stage-3 artefacts (§ 8–10): `matrix_tiering.json` + `matrix-sets/` (best-op
+  geojsons), `robustness_{grid,summary}_T0.{3,7}-high.json`,
+  `robustness_{grid,summary}_T0.7.json`, `high_thinking_prior.log`,
+  `nof10_comparison.log`, `pro_pv.log`; scripts `run_stage3_matrix.sh`,
+  `tier_verifier_matrix.py`, `score_high_thinking_prior.py`,
+  `score_nof10_comparison.py`, `score_pro_pv.py`
+- Operational-maximum artefacts (§ 11):
+  `robustness_{grid,summary}_T0.3-16of30.json` (re-homed from the T0.3 names
+  in Session 111 after an overwrite — see `--out-suffix` in
+  `analyse_verifier_robustness.py`), `opmax.log`,
+  `opmax_vs_headline_permutation.json` + `opmax-sets/`;
+  script `permutation_opmax_vs_headline.py`
+- Pareto artefacts (§ 12): `pareto/pareto_leaderboard.{json,png}`,
+  `pareto/pareto_build.log`, the cheap6/nof10 best-op geojsons;
+  script `build_pareto_leaderboard.py`
 - Pre-run intent: `outputs/verifier-robustness/experiment_intent.md`
 
 ## 7. Stage 2 — a higher-temperature consensus verifier does not help
@@ -174,10 +203,123 @@ transfer to the verifier's per-candidate adversarial judgement. **The T=0.0
 carry-forward verifier stands as optimal.** Cost: one rung, ~$8.71 flex (the
 snowball's early stop saved the T=0.7/1.0 spend).
 
-**Thinking axis (open, $0 to close):** an existing on-disk HIGH-thinking
-verifier pool (`flash-high-text-…-flash-high-verifier`, identical to the
-carry-forward except `thinking_level: high`, T=0.0) lets the minimal-vs-high
-comparison be scored for free — pending in the next session.
+**Thinking axis: CLOSED in Stage 3 (§ 8)** — the free on-disk HIGH-thinking
+prior was scored, the medium prior alongside it, and the full thinking ×
+temperature matrix run and tiered. High thinking *hurts* a single verifier
+pass and merely reaches parity under consensus.
+
+## 8. Stage 3 — the thinking × temperature matrix is one statistical tier at N=5
+
+Stage 3 completed the verifier configuration space: a **thinking (minimal/high)
+× temperature (0.0/0.3/0.7) matrix** on the 384 ≥3-of-5 band (855 candidates,
+N=5; three new cells × 4,275 calls, est **$20.86 flex** —
+`planning/verifier-robustness-stage3-384-cells.json`), tiered with the
+project-canonical round-robin (`scripts/tier_verifier_matrix.py`: 15 pairs,
+10k tile-swap, seed 42, BH-FDR q=0.05, greedy-clique —
+`matrix_tiering.json`).
+
+| rank | config | F1@20 m | tier | best operating point |
+|---|---|---:|---:|---|
+| 1 | high T0.3 (N=5) | 0.8764 | 1 | 4of5 / consensus_vt5 / pt0.3 |
+| 2 | min T0.3 (N=5) | 0.8739 | 1 | 4of5 / mean / pt0.15 |
+| 3 | high T0.7 (N=5) | 0.8739 | 1 | 4of5 / consensus_vt5 / pt0.4 |
+| 4 | min T0.0 (N=5) | 0.8722 | 1 | 4of5 / consensus_vt1 / pt0.15 |
+| 5 | min T0.7 (N=5) | 0.8709 | 1 | 4of5 / consensus_vt2 / pt0.2 |
+| 6 | **high T0.0 (n=1)** | **0.8519** | **2** | 4of5 / mean / pt0.5 |
+
+- **All five N=5 configurations are ONE tier** (0/10 pairs among them
+  significant): neither temperature nor thinking level moves F1 once the
+  verifier runs at N=5. The only Tier-2 cell is the *single-pass* high-thinking
+  prior — all 5 significant pairs are it-vs-others.
+- **High thinking HURTS a single verifier pass.** At the 4-of-5 input:
+  minimal n=1 0.8659 > medium 0.8545 > high 0.8519
+  (`high_thinking_prior.log`, $0 on-disk re-scores). The adversarial prompt
+  plus more thinking produces more spurious rejections and lower recall;
+  consensus rescues high thinking back to tier parity.
+- **What high thinking buys at N=5 is MCC, not F1**: high T0.3 MCC 0.789 vs
+  minimal T0.3 0.771 (+0.018) at ~3× the verifier cost.
+- **Aggregation refinement** (corrects the § 2 majority-vote reading): a
+  PERMISSIVE consensus beats the *expected* single pass by ~+0.012 — at T=0.0
+  the vt1 union (0.8722 vs single-run mean 0.8601), at T=0.3 the
+  mean-probability rule (0.8739). Strict/unanimous voting hurts. Note
+  `mean-prob` is a real materialisable operating point (average the five
+  probabilities, threshold once); the single-pass mean is **not** a detection
+  set — it is E[F1] over five separate sets.
+
+## 9. Model roles — Pro is a better proposer, an equal (so dearer) verifier
+
+`gemini-3.1-pro-preview` artefacts already on disk allowed a $0 re-score
+(`pro_pv.log`):
+
+- **As a bare proposer Pro wins its tiers**: single-pass 0.763, consensus
+  0.836 (`results/leaderboard/per-architecture/cross-architecture-era2_20m_f1.md`).
+- **As a PV proposer Pro loses**: Pro 5-pass + Flash verifier 0.8491, + Pro
+  verifier 0.8506 (both 3of5 / pt0.15) ≪ Flash 5-pass + verifier 0.8739. The
+  verifier needs a **high-recall** proposer to prune; Pro's 504-candidate pool
+  is already precise, leaving the verifier little to do.
+- **The verifier model barely matters** (Pro-vf 0.8506 ≈ Flash-vf 0.8491):
+  keep the cheap Flash verifier. (Flex rates, recorded June 2026: Flash 3
+  $0.25/$1.50, Flash 3.5 $0.75/$4.50, Pro 3.1 $1.00/$6.00 per 1M in/out.)
+
+## 10. Compute allocation — spend passes on the proposer, not the verifier
+
+At approximately equal pass budgets (`nof10_comparison.log`, $0 re-score):
+**10-proposer + 1-verifier (11 passes) 0.8769** (6of10 / pt0.2) ≥
+**5-proposer + 5-verifier (10 passes) 0.8739** (minimal) / 0.8764 (high).
+Proposer diversity dominates verifier diversity at equal cost — consistent
+with § 7 (no verifier-side diversity dividend) and § 2 (verifier flicker
+washes out). Both sit at ~98.5 % of the 30-pass headline 0.890.
+
+## 11. Operational maximum — verifier consensus does NOT lift the 30-pass proposer
+
+The best-available stack was tested: the **16-of-30 headline proposer pool**
+(729 candidates) re-verified at **N=5 minimal T=0.3 consensus** (3,645 calls,
+**$2.54 flex**; `robustness_{grid,summary}_T0.3-16of30.json`). Best operating
+point: consensus_vt3 / pt0.15, 423 accepted — **F1@20 m 0.8951, MCC 0.794**,
+vs the registered n=1-verifier headline **0.8902** (412 accepted, pt0.2).
+
+**The +0.0049 lift is NOT significant**: paired tile-swap permutation
+(10k, seed 42, two-sided, 487 tiles) gives **p = 0.363** — the observed
+difference sits at the null SD (0.0050)
+(`opmax_vs_headline_permutation.json`, verification gates reproduced both
+cells exactly). Per the meta-rule, **30-prop + n=1 verifier (0.890) stays the
+practical ceiling**; 0.8951 is a numerical high only. This is the 30-pass
+confirmation of § 2/§ 8: verifier consensus adds nothing the cheap single
+pass does not already provide.
+
+## 12. The pass-budget Pareto board — the whole ladder is one tier
+
+The passes-vs-F1 board (`scripts/build_pareto_leaderboard.py`;
+`pareto/pareto_leaderboard.{json,png}`; the 6-pass cheap end scored fresh
+here, every other rung gate-verified against its committed record):
+
+| total passes | config (proposer + verifier) | F1@20 m | MCC | best op |
+|---:|---|---:|---:|---|
+| 6 | 5-prop + n=1 vf (**cheap end, new**) | 0.8641 | 0.769 | 4of5 / pt0.15 |
+| 10 | 5-prop + N=5 min T0.3 vf | 0.8739 | 0.771 | 4of5 / mean / pt0.15 |
+| 11 | 10-prop + n=1 vf | 0.8769 | 0.790 | 6of10 / pt0.2 |
+| 31 | 30-prop (16of30) + n=1 vf (**headline**) | 0.8902 | 0.790 | pt0.2 |
+| 35 | 30-prop (16of30) + N=5 vf (opmax) | 0.8951 | 0.794 | vt3 / pt0.15 |
+
+Context rows: high-thinking 10-pass 0.8764 (tied with minimal, § 8); Pro
+6-pass 0.8491/0.8506 (§ 9).
+
+**Round-robin result: 0/10 pairs significant after BH-FDR → ONE statistical
+tier from 6 to 35 passes.** Adjacent rung-steps are clearly noise (raw p
+0.03–0.79). The spans are more interesting: cheap6 vs opmax35 (+0.031) has
+raw p = 0.012 but BH-adjusted 0.096 — **suggestive that the 30-pass rungs
+genuinely lead, not confirmed at q = 0.05**. Two honest readings, stated in
+order of evidential weight:
+
+1. **The 487-tile GS instrument cannot resolve a +0.03 F1 difference at this
+   significance standard** (the familiar GS-plateau resolving-power limit,
+   Obs 347). The point estimates climb monotonically and the per-rung
+   operating points are stable, so the ladder ordering is probably real but
+   unprovable in-sample.
+2. **Every rung is statistically defensible.** By the meta-rule, the budget
+   recommendation is the cheap end: **6 passes ≈ 0.864** — ~97 % of the
+   35-pass numerical maximum at ~17 % of the pass budget. The 0.890
+   headline (31 passes) remains the showcase/ceiling configuration.
 
 ## See also
 
@@ -186,20 +328,50 @@ comparison be scored for free — pending in the next session.
   proposer lineages.
 - **Preceding experiment(s)**: `results/era1-pv-stage-d/384-leg-recon.md` — the
   384 `flash-high-text` proposer/verifier provenance reused here.
-- **Follow-up experiment(s)**: thinking axis — score the free on-disk
-  HIGH-thinking verifier prior (T=0.0); optional `medium` only if warranted.
 - **Follow-up experiment(s)**: the pencilled `384-flash-high-image-1of5-union`
   image-proposer tranche (`planning/verifier-robustness-cells.json`
   `_deferred_cells`) — verify the ≥3-of-5 band, not the union (§ 3).
+- **Follow-up experiment(s)**: Flash 3.5 bare-proposer tranche (~$46 flex,
+  parked) — the only angle a stronger model might win, since the PV
+  architecture disadvantages precise proposers (§ 9).
 - **Run output directory**: `outputs/verifier-robustness/`.
 - **Working-notes Observations**: Obs 354 — verifier T=0.0 determinism is
   negligible at F1 level (n=1 vindicated); Obs 355 — the 1-of-5 union is the
   worst verifier input (verifier does not rescue the FP flood); Obs 356 — a
-  higher-T consensus verifier does not help (both cells stall at T=0.3).
+  higher-T consensus verifier does not help (both cells stall at T=0.3);
+  Obs 357 — the cost meta-rule (on a within-noise tie, take the cheaper
+  config; the 6→35-pass ladder is one statistical tier).
 - **Decisions / Errata**: E56 governs verifier prob_t diagnostics only; no
   preregistration amendment needed for a robustness check.
 
 ## Changelog
+
+### 2026-06-10 — Stage 3 + model/cost deep-dive + operational maximum + Pareto board
+
+**Refresh trigger**: Session 110 ran the thinking × temperature matrix
+(~$20.86 flex) and the operational-maximum cell (~$2.54 flex) plus four $0
+re-scores (high-thinking prior, nof10, Pro PV, matrix tiering); Session 111
+ran the opmax-vs-headline permutation test and built the pass-budget Pareto
+board (both $0). Added §§ 8–12, the meta-rule headline, a § 2 aggregation
+refinement note, and closed the § 7 thinking-axis loose end.
+
+| claim | before | after |
+|---|---|---|
+| thinking/temperature at N=5 | untested | one statistical tier (§ 8) |
+| thinking at n=1 | open ($0 to close) | high HURTS a single pass (§ 8) |
+| consensus vs single pass | "no benefit" (majority read) | permissive consensus +0.012 (§ 8) |
+| verifier model | assumed Flash | Pro ≈ Flash as verifier; keep Flash (§ 9) |
+| pass allocation | untested | proposer ≥ verifier at equal cost (§ 10) |
+| ceiling | 0.890 (n=1 headline) | 0.8951 numerical high, NOT significant (p=0.363) — 0.890 stands (§ 11) |
+| budget guidance | none | 6→35-pass ladder one tier; cheap end 0.864 at 6 passes (§ 12) |
+
+What did NOT change: §§ 2–3 and § 7 results stand (with the § 2 majority-vote
+reading refined); the carry-forward verifier remains the production
+configuration; no new champion is minted. Data-integrity note: the opmax run
+had overwritten `robustness_{grid,summary}_T0.3.json`; the Stage-2 snowball
+content was restored and the opmax content re-homed to
+`robustness_{grid,summary}_T0.3-16of30.json` (commit `7d85b00ef`), with an
+`--out-suffix` guard added to the analyser.
 
 ### 2026-06-09 — Stage-2 (higher-T consensus verifier rejected)
 
