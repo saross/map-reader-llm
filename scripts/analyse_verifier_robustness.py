@@ -297,6 +297,14 @@ def main() -> int:
                    choices=["minimal", "low", "medium", "high"],
                    help="Read the thinking-namespaced verified dir (default: "
                         "None -> T<temp>; else T<temp>-<level>).")
+    p.add_argument("--out-suffix", type=str, default="",
+                   help="Suffix appended to the output tag (e.g. '16of30' -> "
+                        "robustness_grid_T0.3-16of30.json). REQUIRED when "
+                        "analysing a different cells spec at a (temperature, "
+                        "thinking) combination that already has results — "
+                        "without it the new run SILENTLY OVERWRITES the "
+                        "existing grid/summary (this clobbered the Stage-2 "
+                        "snowball T0.3 files in Session 110).")
     args = p.parse_args()
 
     spec = json.loads(args.cells.read_text())
@@ -328,6 +336,8 @@ def main() -> int:
                   f"consensus {d['consensus_majority_f1']}", flush=True)
 
     tag = temp_tag(args.temperature, tl)
+    if args.out_suffix:
+        tag = f"{tag}-{args.out_suffix}"
     (args.out_dir / f"robustness_grid_{tag}.json").write_text(
         json.dumps({"temperature": args.temperature, "thinking_level": tl or "minimal",
                     "iterations": n_iter, "prob_t_sweep": prob_ts,

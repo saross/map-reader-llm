@@ -8,7 +8,8 @@
 #   A (opmax):    16-of-30 flash-high-text proposer + N=5 MINIMAL T=0.3
 #                 verifier majority consensus (consensus_vt3, prob_t 0.15,
 #                 423 accepted) — F1@20m 0.8951 (results/verifier-robustness/
-#                 robustness_summary_T0.3.json, commit 1271b98a3).
+#                 robustness_summary_T0.3-16of30.json; landed at 1271b98a3,
+#                 re-homed to the -16of30 suffix in Session 111).
 #   B (headline): the SAME 16-of-30 proposer pool + the production n=1
 #                 carry-forward verifier (T=0.0, minimal, prob_t 0.2,
 #                 412 accepted) — the registered project headline

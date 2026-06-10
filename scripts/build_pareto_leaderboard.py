@@ -87,7 +87,7 @@ LADDER_GEOJSON = [
     ("opmax35", 35, (30, 5),
      OPMAX_SETS / "opmax-16of30-N5minT0.3-vt3-pt0.15.geojson", 0.8951,
      "16of30 / consensus_vt3 / pt0.15 (N=5 min T0.3 verifier)",
-     "robustness_summary_T0.3.json"),
+     "robustness_summary_T0.3-16of30.json"),
 ]
 
 CONTEXT_ROWS = [
