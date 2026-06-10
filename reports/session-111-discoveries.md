@@ -1,7 +1,8 @@
 # Session 111 — discoveries dossier (for review, 2026-06-11 AM)
 
-> **Last revised**: 2026-06-10 (original publication, end of Session 111
-> overnight block). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-06-11 (overnight update: the Flash 3.5 tranche
+> completed and § 11 records the verdict). See [§ Changelog](#changelog)
+> for revision history.
 
 Compiled at Shawn's request before the morning review: every substantive
 finding of the session, with anchors. Findings 1–5 belong to the
@@ -125,6 +126,32 @@ documented family). Every condition gated on eval-F1 reproduction + the
 feature-count cross-check. No new champion (recorded in
 `headline_rationale`).
 
+## 11. Flash 3.5 verdict: it wins in NO role at the minimal operating point
+
+The tranche completed overnight (≈ on budget; 10 clean passes, all three
+verifier legs, the single 503-dropped candidate patched via cleanup). The
+2×2×2 at best (k, prob_t), n=5 method-matched (F1@20m / tile-MCC):
+
+| | F3 verifier | F3.5 verifier |
+|---|---|---|
+| **F3 proposer** (n10 / n5) | **0.8835** / 0.8681 | 0.8689 / 0.8547 |
+| **F3.5 proposer** (n10 / n5) | 0.8480 / 0.8462 | 0.8362 / 0.8345 |
+| bare consensus (n10) | F3 0.6204 | F3.5 0.6196 |
+
+- **Harness self-validation**: the F3×F3 cell reproduces the committed
+  min11 exactly (0.8835 at 6of10/pt0.2).
+- **As a bare proposer**: dead tie (0.620 vs 0.620) — the "stronger model
+  might be a better proposer" angle closes at minimal thinking.
+- **As a PV proposer**: −0.036 — the recall-ceiling mechanism (§ 4) again:
+  F3.5's union is 1,132 candidates vs F3's 1,939, with **53 % at 10/10
+  votes** (union/pass 1.33; the Pro pattern — consistency without
+  coverage, and PV needs coverage).
+- **As a verifier**: −0.012..−0.015 on both pools — the carry-forward F3
+  verifier wins outright at a third of the price.
+- Significance tests pending (morning, $0), but the −0.036 proposer gap is
+  ~5× the noise scale. Anchors: `results/flash35-2x2/analysis-full.{json,log}`,
+  `outputs/flash35-pv-2x2/` (commits `68c4f0e29`, `f04063513`).
+
 ## Decisions awaiting Shawn (morning)
 
 1. **GS working precision**: 30 m (plateau-onset criterion, text-PV) vs
@@ -141,6 +168,13 @@ feature-count cross-check. No new champion (recorded in
    queued, will fold findings 3–5 into the findings doc alongside it.
 
 ## Changelog
+
+### 2026-06-11 — Flash 3.5 verdict added (§ 11)
+
+**Refresh trigger**: the tranche completed overnight; § 11 records the
+2×2×2 outcome (Flash 3.5 wins in no role at minimal thinking; the
+all-Flash-3 stack stands). § 8's "in flight" status is superseded by § 11.
+Nothing else changed.
 
 ### 2026-06-10 — Original publication
 
