@@ -1,0 +1,24 @@
+{
+  "_description": "Session 110 operational-maximum: re-verify the HEADLINE 16-of-30 flash-high-text proposer (729 cands — the pool behind the project F1@20m record 0.890, which used an n=1 verifier) at N=5 consensus with the best-performing tied verifier config from the matrix tiering: MINIMAL thinking, T=0.3 (per-cell independent decision rule; minimal because all N=5 configs are statistically tied, T=0.3 to give the consensus some diversity to aggregate). Tests whether the verifier-consensus lift (~+0.012 over a single pass on the 5-pass proposer) transfers to the 30-pass proposer and nudges 0.890 -> ~0.90. The analysis sweeps the internal 16..30-of-30 proposer thresholds x verifier-vote x prob_t.",
+  "cells": [
+    {
+      "name": "384-flash-high-text-16of30",
+      "size": 384,
+      "kind": "proposer-consensus",
+      "proposer": "outputs/h11/pv-diag-384/consensus/flash-high-text-16of30.geojson",
+      "n_union": 729,
+      "note": "vote_count>=16 subset of the flash-high-text-1of30 union; the 0.890 headline pool."
+    }
+  ],
+  "verifier_config": "prompts/configs/verify_adversarial-text.json",
+  "iterations": 5,
+  "padding": 75,
+  "service_tier": "flex",
+  "mode": "realtime",
+  "prob_t_sweep": [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5],
+  "flex_per_call_usd": 0.000697,
+  "est_calls": 3645,
+  "est_flex_usd": 2.54,
+  "verifier_temperature": 0.3,
+  "verifier_thinking": "minimal"
+}
