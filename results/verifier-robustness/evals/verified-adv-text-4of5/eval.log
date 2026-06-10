@@ -1,0 +1,10 @@
+INFO: Detection files: 1
+INFO: Loading ground truth: /home/shawn/Code/map-reader-llm/inputs/vectors/references/mounds-reference.geojson
+INFO: Loading bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
+INFO: Reference: 569 mounds, 487 evaluation tiles
+INFO: Evaluating: cheap6-4of5-n1-pt0.15.geojson
+INFO:   20m: F1=0.864 [0.842, 0.883], P=0.915 [0.892, 0.931], R=0.818 [0.784, 0.847] [sparse coverage: 57.9% zero-tiles]
+INFO:   MCC=0.769 [0.729, 0.806], Sens=0.786, Spec=0.965
+INFO: JSON written: results/verifier-robustness/evals/verified-adv-text-4of5/evaluation.json
+INFO: CSV written: results/verifier-robustness/evals/verified-adv-text-4of5/evaluation.csv
+INFO: Markdown written: results/verifier-robustness/evals/verified-adv-text-4of5/evaluation.md
