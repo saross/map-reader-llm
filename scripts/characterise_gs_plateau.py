@@ -135,7 +135,7 @@ def main() -> int:
                       key=lambda r: -r["onset_m"])
 
     def table(title, summ):
-        lines = [f"\n### {title}\n",
+        lines = [f"\n## {title}\n",
                  "| group | n | onset median | p90 | max | tail drift (med) |",
                  "|---|---:|---:|---:|---:|---:|"]
         lines += [f"| {s['group']} | {s['n']} | {s['onset_median']:g} m "
@@ -157,7 +157,7 @@ def main() -> int:
           table("By modality", by_mod),
           table("By thinking level", by_think),
           table("By temperature", by_temp),
-          "\n### Late-plateau conditions (onset >= 50 m)\n"]
+          "\n## Late-plateau conditions (onset >= 50 m)\n"]
     if outliers:
         md += ["| condition | onset | F1@20 | F1@onset | tail drift |",
                "|---|---:|---:|---:|---:|"]

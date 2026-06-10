@@ -4,13 +4,13 @@
 
 Conditions analysed: **259** (skipped: {'non-gs-corpus': 12, 'lt10-buffers': 24})
 
-### Overall
+## Overall
 
 | group | n | onset median | p90 | max | tail drift (med) |
 |---|---:|---:|---:|---:|---:|
 | ALL-GS | 259 | 35 m | 100 | 150 | +0.0068 |
 
-### By architecture/aggregation
+## By architecture/aggregation
 
 | group | n | onset median | p90 | max | tail drift (med) |
 |---|---:|---:|---:|---:|---:|
@@ -18,7 +18,7 @@ Conditions analysed: **259** (skipped: {'non-gs-corpus': 12, 'lt10-buffers': 24}
 | consensus/consensus | 100 | 35 m | 75 | 125 | +0.0059 |
 | proposer-verifier/verified | 37 | 30 m | 125 | 150 | +0.0046 |
 
-### By tile size
+## By tile size
 
 | group | n | onset median | p90 | max | tail drift (med) |
 |---|---:|---:|---:|---:|---:|
@@ -26,7 +26,7 @@ Conditions analysed: **259** (skipped: {'non-gs-corpus': 12, 'lt10-buffers': 24}
 | 512px | 83 | 40 m | 100 | 150 | +0.0076 |
 | 256px | 3 | 150 m | 150 | 150 | +0.0000 |
 
-### By modality
+## By modality
 
 | group | n | onset median | p90 | max | tail drift (med) |
 |---|---:|---:|---:|---:|---:|
@@ -34,7 +34,7 @@ Conditions analysed: **259** (skipped: {'non-gs-corpus': 12, 'lt10-buffers': 24}
 | image | 80 | 75 m | 125 | 150 | +0.0054 |
 | unknown | 43 | 35 m | 75 | 125 | +0.0078 |
 
-### By thinking level
+## By thinking level
 
 | group | n | onset median | p90 | max | tail drift (med) |
 |---|---:|---:|---:|---:|---:|
@@ -43,7 +43,7 @@ Conditions analysed: **259** (skipped: {'non-gs-corpus': 12, 'lt10-buffers': 24}
 | minimal | 19 | 30 m | 75 | 75 | +0.0081 |
 | medium | 8 | 55 m | 75 | 75 | +0.0063 |
 
-### By temperature
+## By temperature
 
 | group | n | onset median | p90 | max | tail drift (med) |
 |---|---:|---:|---:|---:|---:|
@@ -52,7 +52,7 @@ Conditions analysed: **259** (skipped: {'non-gs-corpus': 12, 'lt10-buffers': 24}
 | T0.3 | 25 | 35 m | 75 | 150 | +0.0058 |
 | T0.0 | 20 | 57.5 m | 125 | 150 | +0.0060 |
 
-### Late-plateau conditions (onset >= 50 m)
+## Late-plateau conditions (onset >= 50 m)
 
 | condition | onset | F1@20 | F1@onset | tail drift |
 |---|---:|---:|---:|---:|
