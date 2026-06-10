@@ -75,10 +75,40 @@ DETECT_FLAGS=(--config "$PROP_CONFIG" --manifest "$MANIFEST"
 echo "=== Stage P: 10 x F3.5 minimal T0.7 proposer passes ($MODE) ==="
 PASSES=10
 [ "$MODE" = smoke ] && PASSES=1
+# Driver exit codes: 0 = clean, 1 = setup error (abort), 2 = partial failure
+# (>=1 failed tile). On exit 2, re-invoke ONCE — the incremental-write resume
+# retries exactly the unprocessed/failed tiles (processed_tiles property).
+# A pass still partial after the resume is tolerated down to a 485/487 floor
+# (transient parse failures; the zero-diversity baseline carries one too) and
+# documented in the log; below the floor we abort.
 for n in $(seq 1 "$PASSES"); do
     echo "--- pass $n/$PASSES ---"
+    rc=0
     $PY scripts/4_detect_mounds_batch.py "${DETECT_FLAGS[@]}" \
-        --output-dir "$OUT/proposer/run_$n"
+        --output-dir "$OUT/proposer/run_$n" || rc=$?
+    if [ "$rc" = 2 ] && [ "$MODE" = full ]; then
+        echo "pass $n: partial failure (exit 2) — resuming once"
+        rc=0
+        $PY scripts/4_detect_mounds_batch.py "${DETECT_FLAGS[@]}" \
+            --output-dir "$OUT/proposer/run_$n" || rc=$?
+    fi
+    if [ "$rc" = 2 ] && [ "$MODE" = full ]; then
+        n_done=$($PY - "$OUT/proposer/run_$n" <<'PYEOF'
+import json, sys, glob
+gj = glob.glob(sys.argv[1] + "/detections-*.geojson")
+print(len(json.load(open(gj[0])).get("processed_tiles", [])) if gj else 0)
+PYEOF
+)
+        if [ "$n_done" -ge 485 ]; then
+            echo "pass $n: still partial after resume ($n_done/487) — accepted, documented"
+            rc=0
+        else
+            echo "pass $n: only $n_done/487 tiles after resume — aborting"; exit 2
+        fi
+    fi
+    if [ "$rc" != 0 ]; then
+        echo "pass $n: fatal error (exit $rc) — aborting"; exit "$rc"
+    fi
 done
 
 if [ "$MODE" != full ]; then
