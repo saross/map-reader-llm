@@ -107,7 +107,8 @@ def sweep(table: list[dict], max_k: int, gdf_ref, gdf_bounds,
             if not sel:
                 continue
             gdf = gpd.GeoDataFrame(
-                {"geometry": [Point(r["x"], r["y"]) for r in sel]}, crs=EVAL_CRS)
+                {"geometry": [Point(r["x"], r["y"]) for r in sel],
+                 "source_tile": [r["source_tile"] for r in sel]}, crs=EVAL_CRS)
             f1 = score_detection_set(gdf, gdf_ref, gdf_bounds, buffer_metres=20,
                                      compute_mcc=False)["f1"]
             if f1 > best["f1"]:
