@@ -1,0 +1,184 @@
+{
+  "version": "2.0",
+  "source_geojson": "/home/shawn/Code/map-reader-llm/outputs/verifier-robustness/_smoke/384-flash-high-text-1of5-union/subset.geojson",
+  "rasters_dir": "/home/shawn/Code/map-reader-llm/inputs/rasters",
+  "tiles_dir": "/home/shawn/Code/map-reader-llm/inputs/tiles",
+  "padding": 75,
+  "crop_dimensions": "150x150",
+  "total_detections": 12,
+  "successful_extractions": 12,
+  "failed_extractions": 0,
+  "raster_crops": 12,
+  "tile_fallback_crops": 0,
+  "missing_sources": [],
+  "candidates": [
+    {
+      "candidate_id": 0,
+      "crop_file": "crops/candidate_00000.png",
+      "source_tile": "K-35-052-4_32635_x0_y0.png",
+      "centroid_x": 398619.581523,
+      "centroid_y": 4705669.439272,
+      "cropped_from": "raster",
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y0.png",
+        "subtype": "burial_mound",
+        "vote_count": 1,
+        "total_passes": 5
+      }
+    },
+    {
+      "candidate_id": 1,
+      "crop_file": "crops/candidate_00001.png",
+      "source_tile": "K-35-052-4_32635_x0_y0.png",
+      "centroid_x": 398619.581522,
+      "centroid_y": 4704830.289394,
+      "cropped_from": "raster",
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y0.png",
+        "subtype": "burial_mound",
+        "vote_count": 3,
+        "total_passes": 5
+      }
+    },
+    {
+      "candidate_id": 2,
+      "crop_file": "crops/candidate_00002.png",
+      "source_tile": "K-35-052-4_32635_x0_y1008.png",
+      "centroid_x": 398278.470464,
+      "centroid_y": 4700102.383667,
+      "cropped_from": "raster",
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y1008.png",
+        "subtype": "burial_mound",
+        "vote_count": 5,
+        "total_passes": 5
+      }
+    },
+    {
+      "candidate_id": 3,
+      "crop_file": "crops/candidate_00003.png",
+      "source_tile": "K-35-052-4_32635_x0_y1008.png",
+      "centroid_x": 397412.321572,
+      "centroid_y": 4699540.791349,
+      "cropped_from": "raster",
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y1008.png",
+        "subtype": "triangulation_mound",
+        "vote_count": 1,
+        "total_passes": 5
+      }
+    },
+    {
+      "candidate_id": 4,
+      "crop_file": "crops/candidate_00004.png",
+      "source_tile": "K-35-052-4_32635_x0_y1344.png",
+      "centroid_x": 397240.515495,
+      "centroid_y": 4697714.79865,
+      "cropped_from": "raster",
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y1344.png",
+        "subtype": "burial_mound",
+        "vote_count": 5,
+        "total_passes": 5
+      }
+    },
+    {
+      "candidate_id": 5,
+      "crop_file": "crops/candidate_00005.png",
+      "source_tile": "K-35-052-4_32635_x0_y1344.png",
+      "centroid_x": 397315.1636,
+      "centroid_y": 4697689.980079,
+      "cropped_from": "raster",
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y1344.png",
+        "subtype": "burial_mound",
+        "vote_count": 1,
+        "total_passes": 5
+      }
+    },
+    {
+      "candidate_id": 6,
+      "crop_file": "crops/candidate_00006.png",
+      "source_tile": "K-35-052-4_32635_x0_y1680.png",
+      "centroid_x": 398459.896142,
+      "centroid_y": 4697232.327552,
+      "cropped_from": "raster",
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y1680.png",
+        "subtype": "burial_mound",
+        "vote_count": 4,
+        "total_passes": 5
+      }
+    },
+    {
+      "candidate_id": 7,
+      "crop_file": "crops/candidate_00007.png",
+      "source_tile": "K-35-052-4_32635_x0_y1680.png",
+      "centroid_x": 398383.131725,
+      "centroid_y": 4697181.872744,
+      "cropped_from": "raster",
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y1680.png",
+        "subtype": "burial_mound",
+        "vote_count": 5,
+        "total_passes": 5
+      }
+    },
+    {
+      "candidate_id": 8,
+      "crop_file": "crops/candidate_00008.png",
+      "source_tile": "K-35-052-4_32635_x0_y1680.png",
+      "centroid_x": 397815.382862,
+      "centroid_y": 4696649.139229,
+      "cropped_from": "raster",
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y1680.png",
+        "subtype": "triangulation_mound",
+        "vote_count": 1,
+        "total_passes": 5
+      }
+    },
+    {
+      "candidate_id": 9,
+      "crop_file": "crops/candidate_00009.png",
+      "source_tile": "K-35-052-4_32635_x0_y1680.png",
+      "centroid_x": 397733.616252,
+      "centroid_y": 4696130.065549,
+      "cropped_from": "raster",
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y1680.png",
+        "subtype": "benchmark_mound",
+        "vote_count": 5,
+        "total_passes": 5
+      }
+    },
+    {
+      "candidate_id": 10,
+      "crop_file": "crops/candidate_00010.png",
+      "source_tile": "K-35-052-4_32635_x0_y2016.png",
+      "centroid_x": 397287.651541,
+      "centroid_y": 4695073.640946,
+      "cropped_from": "raster",
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y2016.png",
+        "subtype": "burial_mound",
+        "vote_count": 5,
+        "total_passes": 5
+      }
+    },
+    {
+      "candidate_id": 11,
+      "crop_file": "crops/candidate_00011.png",
+      "source_tile": "K-35-052-4_32635_x0_y2016.png",
+      "centroid_x": 398339.651127,
+      "centroid_y": 4694227.308432,
+      "cropped_from": "raster",
+      "properties": {
+        "source_tile": "K-35-052-4_32635_x0_y2016.png",
+        "subtype": "burial_mound",
+        "vote_count": 5,
+        "total_passes": 5
+      }
+    }
+  ]
+}

@@ -1,0 +1,430 @@
+{
+  "version": "1.0",
+  "mode": "realtime",
+  "verifier_config": "verify_adversarial-text",
+  "iterations": 5,
+  "threshold": 0.5,
+  "total_candidates": 12,
+  "consensus": {
+    "0": {
+      "candidate_id": 0,
+      "vote_count": 0,
+      "total_iterations": 5,
+      "mean_probability": 0.01,
+      "min_probability": 0.0,
+      "max_probability": 0.05,
+      "iterations": [
+        {
+          "key": "candidate_00000_iter1",
+          "mound_probability": 0.05,
+          "reasoning": "The symbol lacks the defining 'sunburst' rays of a burial mound. It is clearly a spot height (black dot) marking a specific elevation point on a ridge, situated along a dashed boundary line. The absence of outward-radiating lines makes a mound interpretation highly unlikely."
+        },
+        {
+          "key": "candidate_00000_iter2",
+          "mound_probability": 0.0,
+          "reasoning": "The symbol lacks the defining 'sunburst' rays of a burial mound. It is a standard spot height (black dot) located on a ridge, indicated by the contour lines. The surrounding black marks are part of a linear boundary feature rather than radial mound indicators."
+        },
+        {
+          "key": "candidate_00000_iter3",
+          "mound_probability": 0.0,
+          "reasoning": "The symbol lacks the characteristic 'sunburst' or 'gear' pattern of outward-radiating lines required for a burial mound. The black dot is a standard spot height marker, and the surrounding marks are part of the topographic representation of the terrain and land cover, not a mound symbol."
+        },
+        {
+          "key": "candidate_00000_iter4",
+          "mound_probability": 0.0,
+          "reasoning": "The symbol lacks the 'gear' or 'sunburst' rays required for a mound. The black dot is a standard cartographic representation for a spot height, and the surrounding lines are natural contour lines indicating the shape of the ridge, not man-made mound features."
+        },
+        {
+          "key": "candidate_00000_iter5",
+          "mound_probability": 0.0,
+          "reasoning": "The symbol lacks the defining 'sunburst' or 'gear' pattern of outward-radiating rays required for a burial mound. The central black dot is a standard spot height marker, and the surrounding dots are part of a linear boundary feature. There is no visual evidence of a topographic mound symbol here."
+        }
+      ]
+    },
+    "1": {
+      "candidate_id": 1,
+      "vote_count": 0,
+      "total_iterations": 5,
+      "mean_probability": 0.05,
+      "min_probability": 0.0,
+      "max_probability": 0.1,
+      "iterations": [
+        {
+          "key": "candidate_00001_iter1",
+          "mound_probability": 0.05,
+          "reasoning": "The symbol lacks the characteristic orange-brown circular core and the uniform outward-radiating 'sunburst' rays of a burial mound. Instead, it appears to be a specific survey point or spot height (172.1) marked on a linear infrastructure feature. The radiating lines seen nearby are part of the embankment symbology, not a mound."
+        },
+        {
+          "key": "candidate_00001_iter2",
+          "mound_probability": 0.1,
+          "reasoning": "The symbol lacks the characteristic orange-brown circular center and the uniform 'sunburst' rays of a burial mound. Instead, it appears to be a black survey mark (possibly a small triangulation point or simple spot height) placed at a specific point along a linear man-made feature. The radiating lines seen nearby are actually hachures indicating the slope of the embankment, not a mound."
+        },
+        {
+          "key": "candidate_00001_iter3",
+          "mound_probability": 0.0,
+          "reasoning": "The symbol lacks the characteristic orange-brown sunburst pattern or the specific black triangle/square with radiating rays required for a burial mound. Instead, it is a black crosshair used to indicate the precise location of the 172.1 elevation point on a man-made embankment. The 'rays' visible nearby are actually the hachures of the embankment, not a radial mound pattern."
+        },
+        {
+          "key": "candidate_00001_iter4",
+          "mound_probability": 0.0,
+          "reasoning": "The symbol lacks the characteristic 'sunburst' or 'gear' pattern of outward-radiating lines required for a burial mound. It is a black cartographic mark used to pinpoint the exact location of the 172.1 elevation measurement on a ridge or embankment, rather than a distinct terrain feature like a kurgan."
+        },
+        {
+          "key": "candidate_00001_iter5",
+          "mound_probability": 0.1,
+          "reasoning": "The symbol lacks the characteristic orange-brown circular core and the distinct, short radiating 'sunburst' rays of a burial mound. Its proximity to the railway embankment and the elevation text '172.1' suggests it is a specific survey point or spot height marker. The 'X' shape is likely a cartographic indicator for the exact location of the measured elevation rather than a mound symbol."
+        }
+      ]
+    },
+    "2": {
+      "candidate_id": 2,
+      "vote_count": 0,
+      "total_iterations": 5,
+      "mean_probability": 0.07,
+      "min_probability": 0.05,
+      "max_probability": 0.1,
+      "iterations": [
+        {
+          "key": "candidate_00002_iter1",
+          "mound_probability": 0.1,
+          "reasoning": "The symbol lacks the characteristic 'sunburst' pattern of outward-radiating rays. The black marks nearby appear to be part of the hachuring for the riverbank or embankment rather than associated with the small circle as a mound symbol. There is no orange-brown coloration typical of a kurgan."
+        },
+        {
+          "key": "candidate_00002_iter2",
+          "mound_probability": 0.05,
+          "reasoning": "The symbol lacks the essential radiating rays required to identify a burial mound. It appears to be a small circle used as a point marker or part of a land-use boundary (possibly a small clearing or specific vegetation point) adjacent to a linear feature."
+        },
+        {
+          "key": "candidate_00002_iter3",
+          "mound_probability": 0.05,
+          "reasoning": "The symbol lacks the defining characteristic of a burial mound: the outward-radiating rays. It appears to be a small topographic or land-use detail situated near a gully or stream. There is no evidence of the 'gear' or 'sunburst' pattern required for a mound classification."
+        },
+        {
+          "key": "candidate_00002_iter4",
+          "mound_probability": 0.1,
+          "reasoning": "The symbol lacks the characteristic 'sunburst' pattern of short, straight rays radiating outward from a central point. Instead, the black marks are elongated and parallel to the linear features in the crop, which is more consistent with topographic hachures for a slope or a small depression near a watercourse."
+        },
+        {
+          "key": "candidate_00002_iter5",
+          "mound_probability": 0.05,
+          "reasoning": "The symbol lacks the defining characteristics of a burial mound, specifically the radiating hachure lines. It appears to be a small point of interest or a specific marker along a linear feature (like a trail or boundary), or potentially a small well/spring symbol given its proximity to the blue line, but it is definitely not a mound."
+        }
+      ]
+    },
+    "3": {
+      "candidate_id": 3,
+      "vote_count": 1,
+      "total_iterations": 5,
+      "mean_probability": 0.26,
+      "min_probability": 0.1,
+      "max_probability": 0.65,
+      "iterations": [
+        {
+          "key": "candidate_00003_iter1",
+          "mound_probability": 0.1,
+          "reasoning": "The symbol lacks the standard 'sunburst' pattern of a burial mound. Instead of short lines radiating outward from a central point, it is a closed geometric star shape. This is more consistent with Soviet map symbology for specific types of vegetation or terrain features (like a meadow or scrub indicator) rather than a kurgan."
+        },
+        {
+          "key": "candidate_00003_iter2",
+          "mound_probability": 0.15,
+          "reasoning": "The symbol lacks the distinct 'sunburst' or 'gear' pattern required for a burial mound. The lines do not clearly radiate outward from a central point; instead, they form a jagged, hollow shape that more closely resembles a small depression or a specific vegetation cluster marker used on Soviet topographic maps."
+        },
+        {
+          "key": "candidate_00003_iter3",
+          "mound_probability": 0.65,
+          "reasoning": "While the symbol has a 'sunburst' appearance, the lack of a distinct central circle or survey marker (triangle/square) makes it ambiguous. The lines appear to be part of the contour layer (orange-brown) and could represent a small pit or depression rather than an elevated mound. However, the radiating pattern is quite symmetrical, which is a hallmark of the kurgan symbol, making it difficult to fully dismiss."
+        },
+        {
+          "key": "candidate_00003_iter4",
+          "mound_probability": 0.2,
+          "reasoning": "While the symbol is orange-brown, it lacks the standard 'sunburst' hachure pattern of a burial mound. The points are integrated into the shape of the outline (forming a star) rather than radiating outward from a central mound symbol. Its proximity to other land-cover markers suggests it is a specific vegetation or terrain classification symbol."
+        },
+        {
+          "key": "candidate_00003_iter5",
+          "mound_probability": 0.2,
+          "reasoning": "While the symbol has a 'sunburst' appearance, the lines do not radiate outward from a central core; instead, they form a hollow star or polygon shape. This is more consistent with a specific vegetation or soil type symbol (like brushwood or scrub) used on Soviet-style maps, especially given the proximity to other scattered point symbols in the immediate area."
+        }
+      ]
+    },
+    "4": {
+      "candidate_id": 4,
+      "vote_count": 0,
+      "total_iterations": 5,
+      "mean_probability": 0.08,
+      "min_probability": 0.05,
+      "max_probability": 0.1,
+      "iterations": [
+        {
+          "key": "candidate_00004_iter1",
+          "mound_probability": 0.05,
+          "reasoning": "The symbol is a standard Soviet map representation for a benchmark or survey point. While it is a prominent point on the map, it lacks the specific 'sunburst' or 'gear' pattern of outward-radiating lines required to identify it as being situated on a burial mound."
+        },
+        {
+          "key": "candidate_00004_iter2",
+          "mound_probability": 0.1,
+          "reasoning": "The symbol is a standard Soviet map representation of a benchmark. While there are some nearby black dots and dashes related to field boundaries or vegetation, they do not form the characteristic 'sunburst' pattern of outward-radiating lines required to identify a mound. The primary feature is the survey marker itself."
+        },
+        {
+          "key": "candidate_00004_iter3",
+          "mound_probability": 0.1,
+          "reasoning": "The symbol is a standard Soviet cartographic representation of a benchmark (leveling point). While there are some small dots or noise nearby, they do not form the characteristic 'sunburst' pattern of rays required to indicate a mound. The presence of a precise elevation number (154.7) is typical for survey markers."
+        },
+        {
+          "key": "candidate_00004_iter4",
+          "mound_probability": 0.1,
+          "reasoning": "The symbol is a standard Soviet map representation of a benchmark or survey point. While there are some stray dots and line fragments nearby (likely representing vegetation or soil type), they do not form the characteristic sunburst pattern required for a burial mound classification."
+        },
+        {
+          "key": "candidate_00004_iter5",
+          "mound_probability": 0.05,
+          "reasoning": "The symbol is a standard Soviet cartographic representation of a benchmark. While it marks a specific elevation point, it lacks the 'sunburst' or 'gear' pattern of outward-radiating lines required to indicate that the marker is situated on a burial mound."
+        }
+      ]
+    },
+    "5": {
+      "candidate_id": 5,
+      "vote_count": 5,
+      "total_iterations": 5,
+      "mean_probability": 0.99,
+      "min_probability": 0.95,
+      "max_probability": 1.0,
+      "iterations": [
+        {
+          "key": "candidate_00005_iter1",
+          "mound_probability": 1.0,
+          "reasoning": "The symbol displays a classic 'sunburst' pattern with a central orange-brown circle and distinct short lines radiating outward. This is the specific cartographic representation for a burial mound (kurgan) on Soviet-style maps. While it is near other elevation markers, the radiating lines are a unique feature of the mound symbol that cannot be explained as a simple spot height or triangulation point. No other non-mound interpretation fits the specific geometry of the outward rays."
+        },
+        {
+          "key": "candidate_00005_iter2",
+          "mound_probability": 0.95,
+          "reasoning": "The symbol exhibits a classic 'sunburst' pattern with a central orange circle and distinct outward-radiating rays. This is the standard Soviet cartographic representation for a burial mound (kurgan). While it is positioned near elevation text, the geometry of the radiating lines is too deliberate and symmetrical to be a random artefact or a standard spot height dot. No other non-mound interpretation (like a triangulation point or benchmark) fits because the central shape is not a black triangle or square, and the rays are clearly present."
+        },
+        {
+          "key": "candidate_00005_iter3",
+          "mound_probability": 1.0,
+          "reasoning": "The symbol perfectly matches the cartographic definition of a burial mound (kurgan). It lacks the black geometric shapes (triangle or square) that would indicate a standalone survey marker, and the rays are clearly oriented outward, which distinguishes it from inward-pointing contour depressions or unrelated vegetation marks."
+        },
+        {
+          "key": "candidate_00005_iter4",
+          "mound_probability": 1.0,
+          "reasoning": "The symbol is a classic orange-brown 'sunburst' pattern. It features a central circular core with distinct, short lines radiating outward in all directions. This is the standard cartographic representation for a burial mound (kurgan) on Soviet-style topographic maps. The presence of the number '1' to the left likely indicates the height of the mound in meters, which is a common annotation for these features."
+        },
+        {
+          "key": "candidate_00005_iter5",
+          "mound_probability": 1.0,
+          "reasoning": "The symbol is a classic orange-brown 'sunburst' pattern. It features a clear central circle with distinct, short lines radiating outward in all directions. This perfectly matches the cartographic standard for a burial mound (kurgan) on Soviet-style topographic maps. There are no plausible alternative interpretations that account for this specific radial geometry and color."
+        }
+      ]
+    },
+    "6": {
+      "candidate_id": 6,
+      "vote_count": 0,
+      "total_iterations": 5,
+      "mean_probability": 0.04,
+      "min_probability": 0.0,
+      "max_probability": 0.05,
+      "iterations": [
+        {
+          "key": "candidate_00006_iter1",
+          "mound_probability": 0.05,
+          "reasoning": "The symbol lacks the characteristic 'sunburst' or 'gear' pattern of outward-radiating rays required for a burial mound. Instead, it consists of distinct, separate vegetation icons (circles and a v-mark) placed within a shaded area. There is no central orange-brown circle or black survey marker with radiating lines."
+        },
+        {
+          "key": "candidate_00006_iter2",
+          "mound_probability": 0.0,
+          "reasoning": "The symbols are simple black circles without the 'sunburst' pattern required for a burial mound. Their placement within a green polygon suggests they represent specific types of vegetation (likely orchards or individual trees) or land-use features rather than topographic elevations."
+        },
+        {
+          "key": "candidate_00006_iter3",
+          "mound_probability": 0.05,
+          "reasoning": "The symbols at the center lack the characteristic 'sunburst' or 'gear' pattern of outward-radiating rays required for a burial mound. Instead, they appear to be standard cartographic symbols for specific vegetation types or terrain textures (likely scrub or rocky ground) consistent with the surrounding stippled pattern and green land-use shading."
+        },
+        {
+          "key": "candidate_00006_iter4",
+          "mound_probability": 0.05,
+          "reasoning": "The symbols lack the characteristic orange-brown sunburst or radiating rays required for a burial mound. They appear to be standard map symbols for scattered vegetation or a specific land-use boundary, as they are integrated into a shaded green polygon and lack topographic elevation indicators."
+        },
+        {
+          "key": "candidate_00006_iter5",
+          "mound_probability": 0.05,
+          "reasoning": "The symbols lack the characteristic radiating rays (sunburst pattern) required for a burial mound. Instead, they appear to be standard map symbols for specific vegetation types (likely orchards or scattered trees) or land-use boundaries, as evidenced by their repetition and placement within a shaded polygon."
+        }
+      ]
+    },
+    "7": {
+      "candidate_id": 7,
+      "vote_count": 0,
+      "total_iterations": 5,
+      "mean_probability": 0.01,
+      "min_probability": 0.0,
+      "max_probability": 0.05,
+      "iterations": [
+        {
+          "key": "candidate_00007_iter1",
+          "mound_probability": 0.05,
+          "reasoning": "The central symbol lacks the mandatory orange-brown outward-radiating rays required for a burial mound. It appears to be a blue circular symbol, likely representing a well or a specific spot height marker, whereas the actual mound symbol is located in the upper portion of the crop, not the center."
+        },
+        {
+          "key": "candidate_00007_iter2",
+          "mound_probability": 0.0,
+          "reasoning": "The color is the primary disqualifier for a burial mound. Burial mounds (kurgans) are consistently depicted in orange-brown to match contour lines. This symbol is blue, matching the nearby stream/river line, and lacks the radiating 'sunburst' rays characteristic of a mound. It is clearly a water-related feature."
+        },
+        {
+          "key": "candidate_00007_iter3",
+          "mound_probability": 0.0,
+          "reasoning": "The symbol lacks the characteristic orange-brown color and outward-radiating rays required for a burial mound. Instead, it is rendered in blue, indicating a water-related feature. While there is an actual burial mound symbol (orange sunburst) at the top of the crop near the number 152.5, the central candidate is clearly a well."
+        },
+        {
+          "key": "candidate_00007_iter4",
+          "mound_probability": 0.0,
+          "reasoning": "The symbol lacks the characteristic orange-brown color and radiating rays of a burial mound. Furthermore, it is rendered in blue, indicating a hydrographic feature rather than a topographic elevation. While there is a burial mound symbol (orange sunburst) at the top of the image near the number 152.5, the central candidate is clearly a water feature."
+        },
+        {
+          "key": "candidate_00007_iter5",
+          "mound_probability": 0.0,
+          "reasoning": "The symbol lacks the characteristic orange-brown color and radiating 'sunburst' rays of a burial mound. Furthermore, it is blue, indicating a water feature rather than a topographic elevation. There is a burial mound symbol visible at the top left of the crop (near the number 152.5) for comparison, which highlights that the central blue symbol is distinct and unrelated to mounds."
+        }
+      ]
+    },
+    "8": {
+      "candidate_id": 8,
+      "vote_count": 0,
+      "total_iterations": 5,
+      "mean_probability": 0.21000000000000002,
+      "min_probability": 0.15,
+      "max_probability": 0.3,
+      "iterations": [
+        {
+          "key": "candidate_00008_iter1",
+          "mound_probability": 0.3,
+          "reasoning": "While there is a central black dot and radiating lines, their placement on a major road suggests they are likely marking a specific elevation point (146.7) on a man-made embankment or bridge/culvert structure rather than a natural burial mound. The rays do not form a complete circle around the point."
+        },
+        {
+          "key": "candidate_00008_iter2",
+          "mound_probability": 0.15,
+          "reasoning": "The symbol lacks the distinct 'sunburst' symmetry required for a burial mound. Its placement exactly on the road centerline suggests it is a point of interest for the road network (like a specific elevation point 146.7) rather than a separate topographic feature like a kurgan. The radiating lines do not clearly point outward from a central hub."
+        },
+        {
+          "key": "candidate_00008_iter3",
+          "mound_probability": 0.2,
+          "reasoning": "While the symbol has small radiating-like marks, its position exactly on the road suggests it is more likely a specific road feature or a spot height marker (the dot) where the crossing lines are either part of a local boundary intersection or cartographic noise. Burial mounds are typically located in open fields, not directly on the centerline of a major roadway. The 'rays' are incomplete and do not surround the central point uniformly."
+        },
+        {
+          "key": "candidate_00008_iter4",
+          "mound_probability": 0.2,
+          "reasoning": "While there is a black central mark and some radiating lines, the context of the symbol being integrated into a major road line suggests it is a point of interest for the road (like a benchmark or bridge) rather than an isolated burial mound. The 'rays' do not form a complete circle and are likely artifacts of the road's symbology or a survey marker placed on the road's elevated embankment."
+        },
+        {
+          "key": "candidate_00008_iter5",
+          "mound_probability": 0.2,
+          "reasoning": "The symbol lacks the characteristic circular or oval central shape of a burial mound. Instead, it is a solid black oval/dot superimposed on a road. The radiating lines do not form a complete 360-degree sunburst; they are perpendicular to the road, which is a common way to denote a specific surveyed point (spot height 146.7) on a man-made embankment or road segment."
+        }
+      ]
+    },
+    "9": {
+      "candidate_id": 9,
+      "vote_count": 3,
+      "total_iterations": 5,
+      "mean_probability": 0.64,
+      "min_probability": 0.2,
+      "max_probability": 1.0,
+      "iterations": [
+        {
+          "key": "candidate_00009_iter1",
+          "mound_probability": 0.2,
+          "reasoning": "While the symbol is orange-brown, it appears as a small hollow polygon or cluster of dots rather than a central point with outward-radiating hachures. Its proximity to the road/boundary infrastructure suggests it is a cartographic detail related to the land use or a specific point of interest rather than a topographic mound."
+        },
+        {
+          "key": "candidate_00009_iter2",
+          "mound_probability": 1.0,
+          "reasoning": "A thorough search for non-mound interpretations fails. The symbol is not a triangulation point or benchmark as it lacks a black triangle or square. It is not a contour feature or vegetation boundary because the rays are perfectly symmetrical and radiate outward from a central point rather than following a linear path. The orange-brown color and 'gear' shape are the definitive cartographic representation of a burial mound."
+        },
+        {
+          "key": "candidate_00009_iter3",
+          "mound_probability": 0.8,
+          "reasoning": "While the symbol has a 'sunburst' appearance with outward-radiating rays in orange-brown, which is characteristic of a burial mound, its placement right on the edge of a developed area (indicated by the black hatching and text) makes it slightly more likely to be a map artefact or a specific boundary marker. However, the visual morphology is a very strong match for a mound."
+        },
+        {
+          "key": "candidate_00009_iter4",
+          "mound_probability": 0.2,
+          "reasoning": "While the symbol is orange-brown, it lacks the characteristic 'sunburst' pattern of short, distinct rays radiating from a central dot. Instead, it appears as a continuous geometric outline. Its proximity to the '\u0441\u0432\u0438\u043d.' (likely '\u0441\u0432\u0438\u043d\u043e\u0444\u0435\u0440\u043c\u0430' or pig farm) text and the boundary of the green area suggests it may be a specific land-use or agricultural marker rather than a burial mound."
+        },
+        {
+          "key": "candidate_00009_iter5",
+          "mound_probability": 1.0,
+          "reasoning": "The symbol perfectly matches the definition of a burial mound. It is orange-brown in color and features the required outward-radiating rays. It is not a triangulation point or benchmark because it lacks a black triangle or square, and it is not a contour feature because the rays are clearly organized around a central point rather than following a line of elevation. No plausible non-mound interpretation exists for this specific sunburst graphic."
+        }
+      ]
+    },
+    "10": {
+      "candidate_id": 10,
+      "vote_count": 5,
+      "total_iterations": 5,
+      "mean_probability": 0.9960000000000001,
+      "min_probability": 0.98,
+      "max_probability": 1.0,
+      "iterations": [
+        {
+          "key": "candidate_00010_iter1",
+          "mound_probability": 1.0,
+          "reasoning": "While the symbol is near complex terrain, it exhibits the classic 'sunburst' pattern with distinct, short lines radiating outward from a central orange-brown oval. Furthermore, the Cyrillic text '\u043a\u0443\u0440' (short for '\u043a\u0443\u0440\u0433\u0430\u043d' or burial mound) is visible immediately to the right, providing explicit cartographic confirmation that overrides alternative topographic interpretations."
+        },
+        {
+          "key": "candidate_00010_iter2",
+          "mound_probability": 1.0,
+          "reasoning": "Despite the adversarial check, the evidence for a burial mound is overwhelming. The symbol features a distinct orange-brown oval with clear, short lines (rays) radiating outward in a 'sunburst' pattern, which is the classic Soviet cartographic symbol for a kurgan. Furthermore, the Cyrillic text '\u043a\u0443\u0440.' (short for '\u043a\u0443\u0440\u0433\u0430\u043d') is visible immediately to the right of the symbol, providing explicit textual confirmation."
+        },
+        {
+          "key": "candidate_00010_iter3",
+          "mound_probability": 1.0,
+          "reasoning": "Despite the proximity to natural features, the symbol exhibits the classic 'sunburst' pattern with distinct, short orange-brown rays radiating outward from a central oval. Furthermore, the Cyrillic text '\u043a\u0443\u0440' (short for '\u043a\u0443\u0440\u0433\u0430\u043d' or mound) is visible immediately to the right, providing explicit cartographic confirmation that this is a burial mound."
+        },
+        {
+          "key": "candidate_00010_iter4",
+          "mound_probability": 1.0,
+          "reasoning": "The symbol displays the classic 'sunburst' pattern with distinct, short orange-brown rays radiating outward from a central oval. Furthermore, the Cyrillic text '\u043a\u0443\u0440' (short for \u043a\u0443\u0440\u0433\u0430\u043d, meaning burial mound) is visible immediately to the right of the symbol, providing definitive cartographic confirmation that overrides any natural interpretation."
+        },
+        {
+          "key": "candidate_00010_iter5",
+          "mound_probability": 0.98,
+          "reasoning": "While the color matches natural contours, the symbol exhibits the classic 'sunburst' pattern with distinct outward-radiating rays around a central circle. Furthermore, the Cyrillic text '\u043a\u0443\u0440' (kur) is visible immediately to the right, which is the standard abbreviation for '\u043a\u0443\u0440\u0433\u0430\u043d' (burial mound) on Soviet maps. This textual confirmation makes the non-mound interpretation highly unlikely."
+        }
+      ]
+    },
+    "11": {
+      "candidate_id": 11,
+      "vote_count": 5,
+      "total_iterations": 5,
+      "mean_probability": 0.97,
+      "min_probability": 0.85,
+      "max_probability": 1.0,
+      "iterations": [
+        {
+          "key": "candidate_00011_iter1",
+          "mound_probability": 1.0,
+          "reasoning": "The non-mound interpretations (triangulation point, benchmark, or contour feature) are rejected because the symbol lacks the solid black geometric shapes of survey markers and possesses the classic outward-radiating rays characteristic of a mound. Furthermore, the text '\u041c\u043e\u0433\u0438\u043b\u0430' (Mogila) visible in the bottom left is the Russian/Ukrainian word for 'grave' or 'mound', providing linguistic confirmation of the feature type in this immediate area."
+        },
+        {
+          "key": "candidate_00011_iter2",
+          "mound_probability": 1.0,
+          "reasoning": "The symbol perfectly matches the cartographic definition of a burial mound: orange-brown color, central circle, and outward-radiating rays. The accompanying text '\u041c\u043e\u0433\u0438\u043b\u0430' (Mogila) in the vicinity is the Russian/Ukrainian word for 'grave' or 'mound', and the number '3' indicates the height of the mound in meters. There is no plausible non-mound interpretation (like a triangulation point or benchmark) because those would be black and lack the radiating rays seen here."
+        },
+        {
+          "key": "candidate_00011_iter3",
+          "mound_probability": 0.85,
+          "reasoning": "The symbol is located next to the word '\u041c\u043e\u0433\u0438\u043b\u0430' (Mound/Grave), which strongly suggests a burial mound. However, the visual representation shows a very clear central dot (spot height) and a height value '3'. The 'rays' are extremely short and irregular, making it difficult to distinguish them from standard map noise or the edges of a small circular contour. Despite the adversarial check, the proximity to the label '\u0417\u0430\u0439\u0447\u0430 \u041c\u043e\u0433\u0438\u043b\u0430' and the classic orange-brown sunburst structure makes a mound the most likely interpretation."
+        },
+        {
+          "key": "candidate_00011_iter4",
+          "mound_probability": 1.0,
+          "reasoning": "The visual evidence perfectly matches the definition of a burial mound. The outward-radiating rays in the specific orange-brown color are the diagnostic feature of this feature type on Soviet maps. Furthermore, the nearby text '\u041c\u043e\u0433\u0438\u043b\u0430' (Mogila) is the Russian/Ukrainian word for 'grave' or 'mound', providing linguistic confirmation of the symbol's identity. No other non-mound interpretation is plausible given these features."
+        },
+        {
+          "key": "candidate_00011_iter5",
+          "mound_probability": 1.0,
+          "reasoning": "The visual evidence for a mound is definitive. The radiating rays point outward from a central circle, matching the specific cartographic symbol for a kurgan. There is no black triangle or square present to suggest a standalone survey marker, and the symbol is explicitly labeled with the word '\u041c\u043e\u0433\u0438\u043b\u0430' (Mogila), which translates to 'grave' or 'mound' in Russian/Ukrainian, further confirming its identity."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,16 @@
+=== analysing 384-flash-high-text-1of5-union (T=0.0) ===
+  best F1@20m=0.8722 (proposer 4of5, consensus_vt1, prob_t=0.15, MCC=0.7620501319667458)
+    proposer 1of5 @ prob_t=0.4: single-run F1 0.7257±0.0037 [0.7193,0.7298] | consensus 0.7289
+    proposer 2of5 @ prob_t=0.2: single-run F1 0.8213±0.0053 [0.8171,0.8317] | consensus 0.8216
+    proposer 3of5 @ prob_t=0.2: single-run F1 0.8472±0.0032 [0.8426,0.8525] | consensus 0.8488
+    proposer 4of5 @ prob_t=0.15: single-run F1 0.8601±0.0072 [0.8498,0.8689] | consensus 0.8564
+    proposer 5of5 @ prob_t=0.15: single-run F1 0.8339±0.0046 [0.8286,0.8394] | consensus 0.8331
+=== analysing 256-text-1of5-union (T=0.0) ===
+  best F1@20m=0.8637 (proposer 5of5, mean, prob_t=0.15, MCC=0.749694476758351)
+    proposer 1of5 @ prob_t=0.2: single-run F1 0.8092±0.0045 [0.8052,0.8174] | consensus 0.819
+    proposer 2of5 @ prob_t=0.2: single-run F1 0.8351±0.0048 [0.8288,0.8415] | consensus 0.8439
+    proposer 3of5 @ prob_t=0.2: single-run F1 0.8526±0.0039 [0.8467,0.8578] | consensus 0.8611
+    proposer 4of5 @ prob_t=0.2: single-run F1 0.85±0.0043 [0.8431,0.8554] | consensus 0.8588
+    proposer 5of5 @ prob_t=0.15: single-run F1 0.8555±0.0025 [0.8519,0.8585] | consensus 0.862
+
+Wrote /home/shawn/Code/map-reader-llm/results/verifier-robustness/robustness_{grid,summary}_T0.0.json

@@ -1,0 +1,34 @@
+=== materialising best-op detection sets ===
+INFO: Created 402 records
+  min-T0.0: F1@20m=0.8722  (4of5, consensus_vt1, pt0.15, n_acc=402)
+INFO: Created 398 records
+  min-T0.3: F1@20m=0.8739  (4of5, mean, pt0.15, n_acc=398)
+INFO: Created 394 records
+  min-T0.7: F1@20m=0.8709  (4of5, consensus_vt2, pt0.2, n_acc=394)
+INFO: Created 429 records
+  high-T0.0: F1@20m=0.8519  (4of5, mean, pt0.5, n_acc=429)
+INFO: Created 398 records
+  high-T0.3: F1@20m=0.8764  (4of5, consensus_vt5, pt0.3, n_acc=398)
+INFO: Created 398 records
+  high-T0.7: F1@20m=0.8739  (4of5, consensus_vt5, pt0.4, n_acc=398)
+
+=== round-robin tile-swap permutation (15 pairs, 10k, seed 42) ===
+
+FDR: 5/15 pairs significant at q=0.05 -> 2 tier(s)
+
+rank config         F1@20m  tier  operating point
+1    high-T0.3      0.8764     1  4of5/consensus_vt5/pt0.3
+2    min-T0.3       0.8739     1  4of5/mean/pt0.15
+3    high-T0.7      0.8739     1  4of5/consensus_vt5/pt0.4
+4    min-T0.0       0.8722     1  4of5/consensus_vt1/pt0.15
+5    min-T0.7       0.8709     1  4of5/consensus_vt2/pt0.2
+6    high-T0.0      0.8519     2  4of5/mean/pt0.5
+
+=== significant pairs (BH q<0.05) ===
+  high-T0.0 vs high-T0.3: diff=-0.0245 p=0.0000 bh=0.0000
+  min-T0.3 vs high-T0.0: diff=+0.0221 p=0.0004 bh=0.0025
+  high-T0.0 vs high-T0.7: diff=-0.0221 p=0.0005 bh=0.0025
+  min-T0.0 vs high-T0.0: diff=+0.0203 p=0.0017 bh=0.0064
+  min-T0.7 vs high-T0.0: diff=+0.0191 p=0.0093 bh=0.0279
+
+Wrote results/verifier-robustness/matrix_tiering.json
