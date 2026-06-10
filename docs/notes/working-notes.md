@@ -19295,3 +19295,144 @@ thinking axis, via an on-disk HIGH-thinking verifier prior (identical except
 `thinking_level: high`, T=0.0) — to be scored next session. Cost of this
 finding: ~$8.71 flex (the snowball's per-cell early stop saved the T=0.7/1.0
 spend).
+
+## Observation 357: The cost meta-rule — on a within-noise tie, take the cheaper configuration; the 6→35-pass Pareto ladder is one statistical tier (Session 111, 2026-06-10)
+
+*Source anchors: `results/verifier-robustness/verifier-robustness-findings.md`
+§§ 8–12 (citable write-up, commit `dc2881e5e`);
+`results/verifier-robustness/opmax_vs_headline_permutation.json`;
+`results/verifier-robustness/high_thinking_prior.log`;
+`results/verifier-robustness/pro_pv.log`;
+`results/verifier-robustness/nof10_comparison.log`;
+`results/verifier-robustness/matrix_tiering.json`;
+`results/verifier-robustness/pareto/pareto_leaderboard.json`;
+scripts `scripts/permutation_opmax_vs_headline.py` and
+`scripts/build_pareto_leaderboard.py`.*
+
+### The finding
+
+Every axis of the Sessions 109–111 verifier-robustness programme converged on
+the same answer: when two configurations are statistically tied, **the cheaper
+one wins**. The meta-rule distils four separate results:
+
+**1. N=5 consensus verifier vs n=1 (§ 11)**
+The operational maximum — 16-of-30 proposer pool + N=5 minimal T=0.3 consensus
+verifier — scores F1@20 m **0.8951** vs the registered n=1-verifier headline
+**0.8902**. The paired tile-swap permutation (10k, seed 42, two-sided, 487
+tiles) gives **p = 0.363** — the +0.0049 lift sits at exactly one null standard
+deviation and is nowhere near significant. Per the meta-rule, **0.890 stays the
+practical ceiling; 0.8951 is a numerical high only**
+(`opmax_vs_headline_permutation.json`).
+
+**2. High thinking vs minimal thinking (§ 8)**
+High thinking *hurts* a single verifier pass. At the 4-of-5 proposer band:
+minimal n=1 **0.8659** > medium n=1 **0.8545** > high n=1 **0.8519**
+(`high_thinking_prior.log`). Under N=5 consensus, high thinking merely reaches
+tier parity with minimal — all five N=5 configurations (thinking × temperature)
+form one statistical tier (0/10 pairs significant). What high thinking buys at
+N=5 is **MCC, not F1**: high T=0.3 MCC 0.789 vs minimal T=0.3 MCC 0.771
+(+0.018) at approximately 3× the verifier cost (`verifier-robustness-findings.md`
+§ 8).
+
+**3. Flash vs Pro as verifier (§ 9)**
+Pro-vf **0.8506** ≈ Flash-vf **0.8491** (both 3-of-5, pt0.15; `pro_pv.log`) —
+the verifier model barely matters. Notably, Pro is a **better bare proposer**
+(single-pass 0.763, consensus 0.836) but a **worse PV partner** than Flash
+(0.849–0.851 vs Flash 0.8739): the proposer-verifier stack needs a
+high-recall proposer pool to prune; Pro's already-precise 504-candidate pool
+leaves the verifier little to do.
+
+**4. Proposer passes vs verifier passes at equal cost (§ 10)**
+10-proposer + 1-verifier (11 passes) **0.8769** ≥ 5-proposer + 5-verifier
+(10 passes) **0.8739** (`nof10_comparison.log`). Proposer diversity dominates
+verifier diversity at equal cost.
+
+**Capstone — the pass-budget Pareto board (§ 12, $0 cost to produce)**
+
+The five Flash-ladder rungs from 6 to 35 total passes, round-robin tested
+(C(5,2) = 10 pairs, 10k tile-swap permutation each, BH-FDR q = 0.05):
+
+| total passes | config | F1@20 m | MCC | best op |
+|---:|---|---:|---:|---|
+| 6 | 5-prop + n=1 vf (cheap end) | 0.8641 | 0.769 | 4of5 / pt0.15 |
+| 10 | 5-prop + N=5 min T=0.3 vf | 0.8739 | 0.771 | 4of5 / mean / pt0.15 |
+| 11 | 10-prop + n=1 vf | 0.8769 | 0.790 | 6of10 / pt0.2 |
+| 31 | 30-prop (16of30) + n=1 vf (headline) | 0.8902 | 0.790 | pt0.2 |
+| 35 | 30-prop (16of30) + N=5 vf (opmax) | 0.8951 | 0.794 | vt3 / pt0.15 |
+
+**0/10 round-robin pairs significant after BH-FDR → one statistical tier.**
+The 6-pass cheap end reaches approximately 97% of the 35-pass numerical maximum
+at approximately 17% of the pass budget.
+
+### Why this matters
+
+This is the closing synthesis of the entire verifier-robustness programme and
+has direct paper implications:
+
+1. **Every n=1 verified cell in the paper is cost-optimal**, not just
+   vindicated for determinism ([[Obs 354]]). The programme has now confirmed the
+   production carry-forward verifier (gemini-3-flash, T=0.0, minimal, n=1) on
+   every axis tested.
+2. **The 0.890 headline is the paper's citable ceiling.** The +0.005 opmax lift
+   is real as a point estimate (the ladder climbs monotonically) but
+   unconfirmable on the 487-tile GS instrument.
+3. **The cost meta-rule is a generalisable design principle.** On the verifier
+   side, additional passes, higher temperature, and a stronger model all fail
+   to beat the cheap baseline at statistical significance. This is the inverse
+   of the proposer side ([[Obs 141]]), where diversity paid.
+4. **Practical budget guidance**: for future runs on the same instrument, 6
+   passes (~$0.60/map) is statistically defensible; 31 passes (~$3.10/map) is
+   the showcase configuration. Both are in the same tier.
+
+### Caveats / methodological notes
+
+The largest span on the Pareto board — cheap6 vs opmax35, Δ = +0.031 — has raw
+p = 0.012 but BH-adjusted p = 0.096, which falls just outside q = 0.05. This
+is **suggestive** that the 30-pass rungs genuinely lead, but **not confirmable**
+on the current 487-tile GS instrument. The familiar resolving-power limit
+([[Obs 347]]) means the point-estimate ordering is probably real, yet the
+statistical test cannot distinguish it from noise at this tile count. Both
+honest readings are valid: (a) the instrument cannot resolve +0.031 at this
+standard; (b) every rung is statistically defensible, so the meta-rule
+recommends the cheap end.
+
+The MCC advantage of high-thinking consensus (+0.018 vs minimal) is real and
+worth noting if the paper needs to argue for tile-level discrimination rather
+than point-level F1 — but it comes at ~3× the verifier cost with no F1 gain.
+
+### Findable later
+
+cost meta-rule verifier robustness; Pareto leaderboard pass budget; 6 passes
+97 percent headline; cheap6 opmax35 one tier; BH-FDR round-robin permutation;
+proposer passes vs verifier passes equal cost; high thinking hurts single pass;
+Pro verifier Flash verifier equal; N=5 consensus opmax p=0.363 not significant;
+0.8951 vs 0.890 practical ceiling; 487-tile resolving power limit; within-noise
+tie cheaper wins; nof10 6of10 0.8769; verifier-robustness-findings.md §§8-12;
+Sessions 109-111 synthesis; build_pareto_leaderboard
+
+### Related observations and artefacts
+
+- **[[Obs 354]]** (T=0.0 verifier non-determinism negligible at F1 — n=1
+  vindicated on the determinism axis; this Obs generalises the vindication to
+  all remaining axes)
+- **[[Obs 355]]** (1-of-5 proposer union is the worst verifier input — the
+  verifier cannot rescue a permissive pool; establishes the productive input
+  band used in opmax and Pareto)
+- **[[Obs 356]]** (higher-T consensus verifier does not help — both cells
+  stall at T=0.3; directly leads to the thinking-axis and model-comparison
+  stages this Obs synthesises)
+- **[[Obs 347]]** (GS-calibration plateaus and the 55-map resolving-power
+  limit — the caveat this Obs relies on to explain why cheap6 vs opmax35 is
+  suggestive but unconfirmable)
+- **[[Obs 141]]** (the proposer-side diversity dividend from HIGH-thinking
+  passes — the programme confirms this does NOT transfer to the verifier side)
+
+**Artefacts**: `results/verifier-robustness/verifier-robustness-findings.md`
+§§ 8–12 (commit `dc2881e5e`); `results/verifier-robustness/opmax_vs_headline_permutation.json`;
+`results/verifier-robustness/high_thinking_prior.log`;
+`results/verifier-robustness/pro_pv.log`;
+`results/verifier-robustness/nof10_comparison.log`;
+`results/verifier-robustness/matrix_tiering.json`;
+`results/verifier-robustness/pareto/pareto_leaderboard.json`;
+`scripts/permutation_opmax_vs_headline.py`;
+`scripts/build_pareto_leaderboard.py`.
