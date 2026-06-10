@@ -1,0 +1,64 @@
+{
+  "temperature": 0.7,
+  "thinking_level": "minimal",
+  "summaries": [
+    {
+      "cell": "384-flash-high-text-ge3of5",
+      "best_operating_point": {
+        "proposer_k": 4,
+        "rule": "consensus_vt2",
+        "prob_t": 0.2,
+        "n_accepted": 394,
+        "f1_20m": 0.870928829915561,
+        "mcc": 0.7712526554232313
+      },
+      "determinism_by_proposer_k": [
+        {
+          "proposer_k": 1,
+          "prob_t": 0.2,
+          "single_run_f1_mean": 0.8425,
+          "single_run_f1_sd": 0.0038,
+          "single_run_f1_min": 0.8359,
+          "single_run_f1_max": 0.8476,
+          "consensus_majority_f1": 0.8519
+        },
+        {
+          "proposer_k": 2,
+          "prob_t": 0.2,
+          "single_run_f1_mean": 0.8425,
+          "single_run_f1_sd": 0.0038,
+          "single_run_f1_min": 0.8359,
+          "single_run_f1_max": 0.8476,
+          "consensus_majority_f1": 0.8519
+        },
+        {
+          "proposer_k": 3,
+          "prob_t": 0.2,
+          "single_run_f1_mean": 0.8425,
+          "single_run_f1_sd": 0.0038,
+          "single_run_f1_min": 0.8359,
+          "single_run_f1_max": 0.8476,
+          "consensus_majority_f1": 0.8519
+        },
+        {
+          "proposer_k": 4,
+          "prob_t": 0.15,
+          "single_run_f1_mean": 0.8534,
+          "single_run_f1_sd": 0.0046,
+          "single_run_f1_min": 0.846,
+          "single_run_f1_max": 0.8589,
+          "consensus_majority_f1": 0.8634
+        },
+        {
+          "proposer_k": 5,
+          "prob_t": 0.15,
+          "single_run_f1_mean": 0.8276,
+          "single_run_f1_sd": 0.0032,
+          "single_run_f1_min": 0.8238,
+          "single_run_f1_max": 0.8335,
+          "consensus_majority_f1": 0.837
+        }
+      ]
+    }
+  ]
+}

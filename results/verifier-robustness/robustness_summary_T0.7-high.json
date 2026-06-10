@@ -1,0 +1,64 @@
+{
+  "temperature": 0.7,
+  "thinking_level": "high",
+  "summaries": [
+    {
+      "cell": "384-flash-high-text-ge3of5",
+      "best_operating_point": {
+        "proposer_k": 4,
+        "rule": "consensus_vt5",
+        "prob_t": 0.4,
+        "n_accepted": 398,
+        "f1_20m": 0.8739495798319328,
+        "mcc": 0.7927091072984884
+      },
+      "determinism_by_proposer_k": [
+        {
+          "proposer_k": 1,
+          "prob_t": 0.5,
+          "single_run_f1_mean": 0.8111,
+          "single_run_f1_sd": 0.0027,
+          "single_run_f1_min": 0.8062,
+          "single_run_f1_max": 0.8135,
+          "consensus_majority_f1": 0.8278
+        },
+        {
+          "proposer_k": 2,
+          "prob_t": 0.5,
+          "single_run_f1_mean": 0.8111,
+          "single_run_f1_sd": 0.0027,
+          "single_run_f1_min": 0.8062,
+          "single_run_f1_max": 0.8135,
+          "consensus_majority_f1": 0.8278
+        },
+        {
+          "proposer_k": 3,
+          "prob_t": 0.5,
+          "single_run_f1_mean": 0.8111,
+          "single_run_f1_sd": 0.0027,
+          "single_run_f1_min": 0.8062,
+          "single_run_f1_max": 0.8135,
+          "consensus_majority_f1": 0.8278
+        },
+        {
+          "proposer_k": 4,
+          "prob_t": 0.5,
+          "single_run_f1_mean": 0.8509,
+          "single_run_f1_sd": 0.0042,
+          "single_run_f1_min": 0.8445,
+          "single_run_f1_max": 0.8568,
+          "consensus_majority_f1": 0.8588
+        },
+        {
+          "proposer_k": 5,
+          "prob_t": 0.5,
+          "single_run_f1_mean": 0.8376,
+          "single_run_f1_sd": 0.0017,
+          "single_run_f1_min": 0.835,
+          "single_run_f1_max": 0.8401,
+          "consensus_majority_f1": 0.8405
+        }
+      ]
+    }
+  ]
+}
