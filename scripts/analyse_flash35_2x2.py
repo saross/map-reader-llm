@@ -205,12 +205,13 @@ def main() -> int:
         u = union.copy()
 
         def first_tile(v) -> str:
-            """First contributing tile from a source_tiles list (or its string form)."""
-            if isinstance(v, (list, tuple)):
-                return v[0] if v else ""
+            """First contributing tile from source_tiles (list/ndarray/str forms)."""
             if isinstance(v, str):
                 return v.strip("[] ").split(",")[0].strip("'\" ")
-            return ""
+            try:  # list, tuple, or numpy array (geopandas delivers ndarray)
+                return str(v[0]) if len(v) else ""
+            except TypeError:
+                return ""
         col = "source_tiles" if "source_tiles" in u.columns else "source_tile"
         u["source_tile_"] = [first_tile(v) for v in u[col]]
         lookup = passes_lookup(union)
