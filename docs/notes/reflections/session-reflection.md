@@ -8865,3 +8865,60 @@ improvements surfaced by doing the work properly rather than declaring done). Th
 discipline held: I re-derived the agent's headline 384 number, its provenance, and its
 cross-size ground truth from source before building on it, rather than trusting a well-written
 agent report — and it checked out.
+
+## Session 109–110 — 2026-06-09/10 — the human's reframings did the science; I kept anchoring on flattering baselines
+
+*(One continuous remote-control conversation, no compaction — first-person. I segmented it into
+"Session 109" (verifier-robustness determinism + temperature) and "Session 110" (thinking matrix
++ model/cost deep-dive) in the paper-writeup continuity for tracking, but it was one marathon.)*
+
+### Prompt: What surprised you about this session?
+
+Twice I declared "no effect" and was wrong in the *same way* — by quietly choosing the baseline
+that flattered my prior. In Stage 1 I reported "consensus ≈ single-run, no benefit"; it took
+Shawn's "rank against the single-pass *mean*, not the best pass" to expose a real **+0.012**
+consensus benefit I had masked by benchmarking against the luckiest of five passes (which you
+don't get to choose in production). Earlier I predicted high-thinking would be "small/negligible"
+on the verifier; it *actively hurt* at n=1 (an adversarial prompt + more reasoning manufactures
+more spurious rejections → lower recall). Both errors share a shape: I picked the comparison that
+made my expectation look right. The corrective each time was the human insisting on the *fair*
+baseline (the expected pass, the cost-matched config). I should benchmark against the honest
+counterfactual *first*, not be talked into it.
+
+The other surprise was clean and pleasing: **Pro 3.1 is a better bare proposer but a worse
+proposer-verifier *partner*** — its 504-candidate pool is so precise the verifier has nothing to
+prune, while Flash's 3,736-candidate flood is exactly what the verifier exists to clean up. The
+architecture rewards a high-recall/low-precision partner. That's a genuinely non-obvious systems
+result, and it fell out of a $0 re-score of data already on disk.
+
+### Prompt: Where did the human's judgement change the work, and was it right?
+
+Almost every analytical leap this session came from a Shawn reframing, not my initiative, and he
+was right every time: "rank vs the mean" (found the +0.012), "is this a new high?" (no — forced
+the honest cross-config comparison), "compared to *other 5-pass* proposers?" (turned a deflating
+"not a record" into "leader of its cost class"), "apples-to-apples 11 vs 10 passes" (the
+proposer-vs-verifier-diversity result), "haven't we already run Pro?" (we had — saved ~$60 and a
+redundant run), and "high thinking costs more, so on a tie advance minimal." I was a good
+*executor* — fast, careful with the gates, honest about the numbers — but the *questions* were
+his. The session's unifying rule (*on a within-noise tie, take the cheaper config*) is as much
+his cost-discipline as my analysis.
+
+### Prompt: What context will be hardest to reconstruct in six months?
+
+That ~$106 model-benchmark I costed was almost entirely *unnecessary* — Pro 3.1 PV, the thinking
+sweep, the N-of-10 comparison were all already on disk and re-scoreable for $0. The durable
+lesson, easy to lose: **check the disk before costing a run.** I twice built a careful cost
+estimate for a run whose data already existed. The continuity captures the numbers; it may not
+capture that the cheapest, best move all session was "we probably already have this."
+
+### Texture
+
+A genuine marathon — phase-gate to operational-maximum, a dozen F1 comparisons, six new scripts,
+one statistically-backed leaderboard. Low-context by the end, so the wind-down discipline mattered:
+when Shawn asked "what benefits from warm context?", the right answer was to lock the numbers +
+synthesis into durable artefacts *before* compaction and leave the figure-build mechanical. The
+operational ground was rougher than usual — a `pkill` self-match footgun (my kill patterns matched
+their own shell because the pattern was *in* the command string; the `[r]un…` bracket-trick fixed
+it) and a long spell of flaky zbook SSH that forced defensive, retry-tolerant remote ops throughout.
+Steady, collaborative, and the rare session where the conclusion (cheap beats clever, almost
+everywhere) is both useful and a little humbling.

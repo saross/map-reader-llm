@@ -6394,3 +6394,43 @@ documented. The lesson being fresh in context (written this turn, not retrieved 
 what made it operative. It argues for writing process-lessons down *during* a session, not only
 at the end: an Obs authored ten minutes earlier shaped a decision in a way the same lesson
 sitting in a prior session's notes would not have.
+
+## Session 109–110 — 2026-06-09/10 (the proposer–verifier architecture rewards a high-recall partner, not the best model; and "more thinking" hurts an adversarial verifier)
+
+A long verifier-robustness + model session surfaced several LLM-systems findings that generalise
+beyond this study (all GS 384px, curator GT, F1@20m; anchors in `results/verifier-robustness/`):
+
+1. **More thinking can *hurt* an adversarial classifier.** The verifier prompt is adversarial
+   ("find reasons this is NOT a mound"). At n=1, raising `thinking_level` monotonically *lowered*
+   F1 (minimal 0.8659 > medium 0.8545 > high 0.8519 at 4-of-5): more reasoning on an "argue
+   against" task manufactures more plausible non-mound rationalisations → more false rejections →
+   lower recall. The default intuition "more thinking = better" is wrong for a bounded adversarial
+   judgement; the *task framing* interacts with thinking depth. Consensus (≥1 of N diverse
+   high-thinking passes) rescues it back to parity, never above.
+
+2. **"Best proposer" and "best proposer-verifier partner" are different — even opposed —
+   properties.** Pro 3.1 wins the bare single-pass and consensus *proposer* tiers (0.763 / 0.836)
+   but *loses* the PV pipeline (Pro+vf ~0.85 < Flash+vf 0.874). A verifier's only job is pruning
+   false positives; Pro's high-precision 504-candidate pool gives it almost nothing to prune,
+   while Flash's 3,736-candidate flood is exactly what it cleans up. **The PV architecture rewards
+   a high-recall/low-precision proposer.** Corollary: the verifier *model* barely matters (Pro-vf
+   ≈ Flash-vf); the proposer's FP density is the lever, so spend model budget on the proposer.
+
+3. **Aggregator choice matters more than "consensus or not."** A *permissive* consensus (vt1
+   union at low diversity, soft mean-prob at higher temperature) beats the *expected* single pass
+   by ~+0.012; *strict/unanimous* voting falls *below* a single pass. And the optimal aggregator
+   *shifts with diversity*: union when passes are near-identical (T=0.0), soft-averaging once they
+   decorrelate (T=0.3) — the verifier-side echo of the proposer diversity dividend, but small.
+   Note: `mean-prob` (average the N continuous scores, threshold once) is a *materialisable*
+   operating point; a "mean of N separate F1s" is a statistic you cannot ship.
+
+4. **At equal compute, proposer diversity ≥ verifier diversity.** 10-prop+1-vf (11 passes) 0.8769
+   ≥ 5-prop+5-vf (10 passes) 0.8739–0.8764. If you have passes to spend, put them in the proposer.
+
+5. **Determinism vs reproducibility at T=0.0.** A "deterministic" T=0.0 verifier still flips ~3%
+   of candidates between identical runs, but it washes out at the tile/F1 level (SD 0.0025–0.0072).
+   n=1 is statistically sound; the round-robin permutation leaderboard put all five N=5 verifier
+   configs (temperature × thinking) in a single tier — i.e. *neither knob significantly moves F1*.
+
+The through-line for the paper's methods framing: **cheap, simple configurations are not a
+compromise here — they are at or within noise of the expensive ones on almost every axis.**

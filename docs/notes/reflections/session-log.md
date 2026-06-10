@@ -7178,3 +7178,59 @@ Commits `fed4364ee`→`88ed7005f`.
   intentional.
 - Open for S109: verifier robustness (N>1 determinism, higher-T consensus verifier) — both GATED
   API. Then paper §Results prose, 55-map integration, CRS-contract (deferred).
+
+## Session 109–110 — 2026-06-09/10 — verifier robustness fully resolved (statistical) + model/cost deep-dive
+
+One continuous remote-control conversation; segmented in the continuity as S109 (determinism +
+temperature) and S110 (thinking matrix + model/cost). All findings GS 384px/487-tile, curator GT,
+F1@20m; artefacts under `results/verifier-robustness/`.
+
+**Stage 1 — determinism (T=0.0, N=5 over the 1-of-5 union of two GS cells; $21.93 flex, 31,470
+calls, 0 fail).** n=1 vindicated: single-run F1 SD 0.0025–0.0072 (Obs 354). The 1-of-5 union is the
+*worst* verifier input — optimum 4-of-5 (384: 0.872) / 3–5of5 plateau (256: ~0.86); the verifier
+does not rescue the FP flood (Obs 355). Built `run_verifier_robustness.py`,
+`analyse_verifier_robustness.py`, `lib_advanced_metrics.score_detection_set` (bootstrap-free point
+scorer — fixed a 3 h→seconds grid-scoring anti-pattern).
+
+**Stage 2 — temperature snowball ($8.71 flex).** Per-cell greedy snowball over the ≥3of5 band;
+higher-T *minimal* consensus rejected — both cells stalled at T=0.3 (Obs 356).
+`run_verifier_temperature_snowball.py`.
+
+**Stage 3 — thinking×temperature matrix ($20.86 flex) + round-robin tiering.** 6 configs
+(min/high × T0.0/T0.3/T0.7). Added `--thinking-level` to the driver/analyser (namespaced
+`T<temp>-<level>`; high ≈ 3× cost). `tier_verifier_matrix.py` ran the C(6,2) tile-swap permutation
+(10k, seed 42) + BH-FDR + greedy-clique → **all five N=5 configs in ONE tier** (`matrix_tiering.json`);
+only high-thinking *n=1* is Tier 2 (0.8519). F1s: minT0.0 0.8722, minT0.3 0.8739, minT0.7 0.8709,
+highT0.3 0.8764, highT0.7 0.8739.
+
+**Free $0 re-scores (data already on disk).** Thinking sweep (`high_thinking_prior.log`): high
+HURTS at n=1 (min 0.8659 > med 0.8545 > high 0.8519 at 4of5). Pro 3.1 PV (`pro_pv.log`,
+`score_pro_pv.py`): Pro is a better bare proposer but worse PV partner (Pro+vf 0.849–0.851 << Flash
+0.874); verifier model barely matters. N-of-10 (`nof10_comparison.log`): 10-prop+1-vf 0.8769 ≥
+5-prop+5-vf 0.8739/0.8764 (proposer ≥ verifier diversity at equal cost). Consensus exploded view
+(`robustness_grid_T0.0/T0.3.json`): permissive consensus beats the *expected* single pass +0.012;
+strict voting hurts.
+
+**Operational maximum ($2.54 flex).** 16of30 proposer + N=5 minimal T=0.3 verifier =
+**0.8951** (`opmax.log`) vs the 0.890 n=1 headline: +0.005, right at the noise boundary —
+**significance pending a pairwise permutation (flagged S111 priority, Shawn)**.
+
+**Model costing (no spend).** Pulled Gemini flex rates (June 2026): Flash3 $0.25/$1.50, Flash3.5
+$0.75/$4.50 (3× Flash3), Pro3.1 $1.00/$6.00. Flash 3.5 parked (~$46 bare-proposer tranche, the
+only angle a stronger model might win). The unifying result: **on a within-noise tie, take the
+cheaper config** — carry-forward (gemini-3-flash, minimal, T=0.0) is cost-optimal on every axis.
+Commits through `8740f6a9d`; local + zbook synced.
+
+### Contextual assumptions
+
+- **Sessions 109–110**, 2026-06-09/10, one remote-control conversation. Compute on **zbook**
+  (14-worker cap — 16 physical cores, leave 2 free or it crashes, per Shawn); amd-tower
+  compute-forbidden (orientation/tabulation only); sapphire shared (Shawn cleared stray workers).
+- **SSH was flaky throughout**; kills required the bracket-trick (`pkill -9 -f "[r]un…"`) to avoid
+  a `pkill` self-match (the kill pattern was *in* the command string, so it killed its own shell).
+  Long runs were launched detached (`setsid nohup … </dev/null`) + watched by background pollers.
+- The most valuable comparisons (Pro PV, thinking sweep, N-of-10) were **$0 re-scores of on-disk
+  data** — a ~$106 model-benchmark and a ~$61 Pro run were both averted by checking the disk first.
+- Open for S111: the opmax-vs-headline permutation (priority); the Pareto leaderboard (passes vs F1)
+  + adjacent-tier permutations; the cost-vs-F1 Obs (357+) + findings-doc integration; manifest
+  registration of verifier-robustness (first-class, no new champion); Flash 3.5 (parked).

@@ -5524,3 +5524,42 @@ independent of my changes; the test was data-coupled to a backlog run since deco
 Revision: completing the rationalisation *emptied the backlog the test guarded*, so the test
 could no longer find a live example; the fix is to decouple it from live state (a synthetic
 run). Success invalidated the guard — a structural reason data-coupled tests rot.
+
+## Session 109–110 — 2026-06-09/10 — I twice chose the baseline that confirmed my prior, and a precise model made a worse partner
+
+**Surprising fact.** (Surfaced by a human reframing, not data.) I had reported, and repeated, that
+the N=5 *consensus* verifier gives "no benefit over a single pass" at T=0.0. Shawn asked me to rank
+the consensus rules against the single-pass **mean**, not the best single pass — and a real
+**+0.012** consensus benefit appeared (permissive vt1-union / soft-mean over the *expected* pass),
+where I had been seeing ~+0.003 against the *luckiest* of five.
+
+**Probe.** Why had I missed a +0.012 effect twice? Because I had silently benchmarked against the
+best single pass — a baseline you cannot obtain in production (you get *a* pass, not the best of
+five). The honest counterfactual is the expected pass (the mean). The same failure had already
+fired once this session: I predicted high-thinking would be "negligible" on the verifier, then it
+*actively hurt* at n=1 — I had implicitly compared to the strongest reading of my prior rather than
+running the fair test. Two instances, one shape: **I select the comparison that flatters the
+expectation I walked in with.**
+
+**Revision.** "Consensus ≈ single pass, no benefit" → "a *permissive* consensus beats the
+*expected* single pass by ~+0.012; strict voting hurts; the benefit was real and I masked it with
+an unobtainable baseline." Generalisable probe: when I state a null result, immediately ask *which
+baseline*, and whether that baseline is the one a deployer actually gets. A null against a
+best-case reference is not a null.
+
+**Second revision (a clean systems surprise, this one data-driven).** Prior expectation: Pro 3.1,
+being the *better proposer* (it wins the single-pass and consensus proposer tiers), would make the
+better proposer-verifier pipeline. The $0 re-score refuted it — Pro+verifier (~0.85) lost to
+Flash+verifier (0.874). Probe: why would a *worse* proposer win the PV? Because the verifier's only
+job is pruning false positives, and Pro's pool (504 precise candidates) gives it almost nothing to
+prune, while Flash's flood (3,736) is exactly what it cleans up. Revision: **the PV architecture
+rewards a high-recall/low-precision proposer, so "best proposer" and "best PV partner" are
+different — even opposed — properties.** The verifier *model* barely mattered (Pro-vf ≈ Flash-vf);
+the proposer's FP density is the lever (cf. Obs 172).
+
+**Footnote (the unifying rule).** Every axis tested — N (n=1 vs consensus), thinking (minimal vs
+high), model (Flash vs Pro), and compute allocation (proposer- vs verifier-diversity) — resolved
+to a within-noise tie, and the cost-broken tie always favoured the cheaper option. "On a tie within
+noise, take the cheaper config" is not a slogan I imposed; it is where four independent comparisons
+converged, with the round-robin permutation leaderboard (all five N=5 verifier configs in one tier)
+as the statistical anchor.
