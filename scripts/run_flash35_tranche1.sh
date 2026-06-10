@@ -81,8 +81,23 @@ PASSES=10
 # retries exactly the unprocessed/failed tiles, and T=0.7 re-rolls transient
 # parse failures. A pass still partial after 5 attempts is tolerated down to
 # a 485/487 floor (documented in the log); below the floor we abort.
+tiles_done() {
+    $PY - "$1" <<'PYEOF'
+import json, sys, glob
+gj = glob.glob(sys.argv[1] + "/detections-*.geojson")
+print(len(json.load(open(gj[0])).get("processed_tiles", [])) if gj else 0)
+PYEOF
+}
+
 for n in $(seq 1 "$PASSES"); do
     echo "--- pass $n/$PASSES ---"
+    # Re-invoking the driver on a COMPLETE pass yields "0 remaining" ->
+    # result None -> exit 1 (setup-error semantics) — so skip complete
+    # passes up front (resume-safe re-entry after any interruption).
+    if [ "$MODE" = full ] && [ "$(tiles_done "$OUT/proposer/run_$n")" -ge 487 ]; then
+        echo "pass $n: already complete — skipping"
+        continue
+    fi
     rc=0
     for attempt in 1 2 3 4 5; do
         rc=0
@@ -93,12 +108,7 @@ for n in $(seq 1 "$PASSES"); do
         echo "pass $n attempt $attempt: partial failure (exit 2) — resuming"
     done
     if [ "$rc" = 2 ] && [ "$MODE" = full ]; then
-        n_done=$($PY - "$OUT/proposer/run_$n" <<'PYEOF'
-import json, sys, glob
-gj = glob.glob(sys.argv[1] + "/detections-*.geojson")
-print(len(json.load(open(gj[0])).get("processed_tiles", [])) if gj else 0)
-PYEOF
-)
+        n_done=$(tiles_done "$OUT/proposer/run_$n")
         if [ "$n_done" -ge 485 ]; then
             echo "pass $n: still partial after 5 attempts ($n_done/487) — accepted, documented"
             rc=0
