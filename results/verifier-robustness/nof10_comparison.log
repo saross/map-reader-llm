@@ -1,0 +1,17 @@
+flash-high-text-1of10 union: 5866 candidates, max proposer vote 10
+
+=== 10-pass proposer (k-of-10) + n=1 carry-forward verifier ===
+  1of10: bestF1=0.6625  MCC=0.798  prob_t=0.5
+  2of10: bestF1=0.7983  MCC=0.799  prob_t=0.25
+  3of10: bestF1=0.8428  MCC=0.804  prob_t=0.2
+  4of10: bestF1=0.8555  MCC=0.815  prob_t=0.25
+  5of10: bestF1=0.8717  MCC=0.793  prob_t=0.2
+  6of10: bestF1=0.8769  MCC=0.790  prob_t=0.2
+  7of10: bestF1=0.8720  MCC=0.785  prob_t=0.2
+  8of10: bestF1=0.8713  MCC=0.776  prob_t=0.2
+  9of10: bestF1=0.8564  MCC=0.748  prob_t=0.2
+  10of10: bestF1=0.8081  MCC=0.718  prob_t=0.15
+
+>>> BEST 10-pass proposer + n=1 verifier (11 passes): F1@20m=0.8769 at 6-of-10, prob_t=0.2
+>>> 5-pass proposer + N=5 verifier (10 passes):           F1@20m=0.8739
+>>> delta (10-prop+1-vf) - (5-prop+5-vf) = +0.0030
