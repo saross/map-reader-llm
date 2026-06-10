@@ -43,6 +43,7 @@ for row in $CELLS; do
     mkdir -p "$out"
     echo "launching $label"
     $PY scripts/evaluate_detections.py --detections "$det" --bounds "$bounds" \
+        --buffers 5 10 15 20 25 30 35 40 45 50 75 100 125 150 \
         --mcc --label "$label" --output-dir "$out" \
         > "$out/eval.log" 2>&1 &
     pids+=($!)
