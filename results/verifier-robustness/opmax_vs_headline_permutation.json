@@ -1,0 +1,33 @@
+{
+  "question": "is the opmax +0.005 lift over the 0.890 n=1-verifier headline real?",
+  "cell_a": {
+    "label": "opmax-16of30-N5minT0.3",
+    "geojson": "results/verifier-robustness/opmax-sets/opmax-16of30-N5minT0.3-vt3-pt0.15.geojson",
+    "op": "proposer>=16of30 / consensus_vt3 / pt0.15",
+    "f1": 0.8951048951048951,
+    "mcc": 0.7940767140129934,
+    "n_accepted": 423
+  },
+  "cell_b": {
+    "label": "headline-16of30-n1T0.0",
+    "geojson": "outputs/era1-pv-stage-d/384-consensus-text-high/pass_1/accepted_t0.2.geojson",
+    "op": "proposer>=16of30 / n=1 / pt0.2",
+    "condition": "pv-diag-384::verified-adv-text-consensus-16of30",
+    "f1": 0.8902007083825267,
+    "mcc": 0.7902523838362319,
+    "n_detections": 412
+  },
+  "test": {
+    "f1_a": 0.895105,
+    "f1_b": 0.890201,
+    "observed_diff": 0.004904,
+    "p_value": 0.363,
+    "n_permutations": 10000,
+    "n_tiles": 487,
+    "null_mean": 2.6e-05,
+    "null_std": 0.004978
+  },
+  "significant_at_0.05": false,
+  "verdict": "NOT significant - cost rule applies: 30-prop + n=1 verifier (0.890) stays the practical ceiling; 0.8951 is a numerical high only",
+  "method": "float tile-swap micro-F1 permutation (permutation_test_float), single preregistered pair, no FDR correction"
+}
