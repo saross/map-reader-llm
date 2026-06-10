@@ -114,7 +114,7 @@ PVD_CONDITIONS = [
      5, 4, 0.5, vf(FLASH_VF, "high", 0.0, 1, None),
      "results/verifier-robustness/matrix-sets/high-T0.0.geojson", 0.8519),
     ("verified-adv-text-medium-vf-4of5", "flash-high-text-1of5",
-     5, 4, 0.2, vf(FLASH_VF, "medium", 0.0, 1, None),
+     5, 4, 0.25, vf(FLASH_VF, "medium", 0.0, 1, None),
      "results/verifier-robustness/condition-sets/medium-vf-4of5.geojson", 0.8545),
     ("verified-adv-pro-text-flash-vf-3of5", "pro-high-text-1of5",
      5, 3, 0.15, vf(FLASH_VF, "minimal", 0.0, 1, None),
