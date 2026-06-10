@@ -3,7 +3,20 @@ INFO: Loading ground truth: /home/shawn/Code/map-reader-llm/inputs/vectors/refer
 INFO: Loading bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
 INFO: Reference: 569 mounds, 487 evaluation tiles
 INFO: Evaluating: pro-flash-vf-3of5.geojson
+INFO:   5m: F1=0.164 [0.139, 0.190], P=0.184 [0.156, 0.214], R=0.147 [0.124, 0.170] [sparse coverage: 57.5% zero-tiles]
+INFO:   10m: F1=0.542 [0.511, 0.579], P=0.611 [0.576, 0.645], R=0.487 [0.455, 0.527] [sparse coverage: 58.3% zero-tiles]
+INFO:   15m: F1=0.762 [0.731, 0.792], P=0.859 [0.834, 0.886], R=0.685 [0.646, 0.724] [sparse coverage: 59.1% zero-tiles]
 INFO:   20m: F1=0.849 [0.825, 0.875], P=0.957 [0.940, 0.969], R=0.763 [0.724, 0.802] [sparse coverage: 59.3% zero-tiles]
+INFO:   25m: F1=0.864 [0.840, 0.887], P=0.974 [0.962, 0.984], R=0.777 [0.740, 0.813] [sparse coverage: 59.3% zero-tiles]
+INFO:   30m: F1=0.864 [0.840, 0.887], P=0.974 [0.962, 0.984], R=0.777 [0.740, 0.813] [sparse coverage: 59.3% zero-tiles]
+INFO:   35m: F1=0.867 [0.842, 0.889], P=0.977 [0.965, 0.986], R=0.779 [0.743, 0.815] [sparse coverage: 59.3% zero-tiles]
+INFO:   40m: F1=0.867 [0.842, 0.889], P=0.977 [0.965, 0.986], R=0.779 [0.743, 0.815] [sparse coverage: 59.3% zero-tiles]
+INFO:   45m: F1=0.867 [0.842, 0.889], P=0.977 [0.965, 0.986], R=0.779 [0.743, 0.815] [sparse coverage: 59.3% zero-tiles]
+INFO:   50m: F1=0.867 [0.842, 0.889], P=0.977 [0.965, 0.986], R=0.779 [0.743, 0.815] [sparse coverage: 59.3% zero-tiles]
+INFO:   75m: F1=0.870 [0.845, 0.892], P=0.980 [0.969, 0.988], R=0.782 [0.746, 0.818] [sparse coverage: 59.3% zero-tiles]
+INFO:   100m: F1=0.870 [0.845, 0.892], P=0.980 [0.969, 0.988], R=0.782 [0.746, 0.818] [sparse coverage: 59.3% zero-tiles]
+INFO:   125m: F1=0.870 [0.845, 0.892], P=0.980 [0.969, 0.988], R=0.782 [0.746, 0.818] [sparse coverage: 59.3% zero-tiles]
+INFO:   150m: F1=0.870 [0.845, 0.892], P=0.980 [0.969, 0.988], R=0.782 [0.746, 0.818] [sparse coverage: 59.3% zero-tiles]
 INFO:   MCC=0.730 [0.691, 0.766], Sens=0.703, Spec=0.988
 INFO: JSON written: results/verifier-robustness/evals/verified-adv-pro-text-flash-vf-3of5/evaluation.json
 INFO: CSV written: results/verifier-robustness/evals/verified-adv-pro-text-flash-vf-3of5/evaluation.csv

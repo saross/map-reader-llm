@@ -3,7 +3,20 @@ INFO: Loading ground truth: /home/shawn/Code/map-reader-llm/inputs/vectors/refer
 INFO: Loading bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
 INFO: Reference: 569 mounds, 487 evaluation tiles
 INFO: Evaluating: opmax-16of30-N5minT0.3-vt3-pt0.15.geojson
+INFO:   5m: F1=0.333 [0.300, 0.362], P=0.338 [0.304, 0.367], R=0.329 [0.295, 0.359] [sparse coverage: 54.6% zero-tiles]
+INFO:   10m: F1=0.720 [0.692, 0.751], P=0.730 [0.697, 0.762], R=0.710 [0.680, 0.744] [sparse coverage: 56.3% zero-tiles]
+INFO:   15m: F1=0.862 [0.842, 0.886], P=0.875 [0.851, 0.898], R=0.851 [0.825, 0.880] [sparse coverage: 57.3% zero-tiles]
 INFO:   20m: F1=0.895 [0.879, 0.914], P=0.908 [0.884, 0.925], R=0.883 [0.861, 0.909] [sparse coverage: 57.3% zero-tiles]
+INFO:   25m: F1=0.904 [0.889, 0.922], P=0.917 [0.895, 0.935], R=0.892 [0.871, 0.916] [sparse coverage: 57.5% zero-tiles]
+INFO:   30m: F1=0.916 [0.902, 0.933], P=0.929 [0.909, 0.947], R=0.903 [0.883, 0.926] [sparse coverage: 57.5% zero-tiles]
+INFO:   35m: F1=0.916 [0.902, 0.933], P=0.929 [0.909, 0.947], R=0.903 [0.883, 0.926] [sparse coverage: 57.5% zero-tiles]
+INFO:   40m: F1=0.916 [0.902, 0.933], P=0.929 [0.909, 0.947], R=0.903 [0.883, 0.926] [sparse coverage: 57.5% zero-tiles]
+INFO:   45m: F1=0.916 [0.902, 0.933], P=0.929 [0.909, 0.947], R=0.903 [0.883, 0.926] [sparse coverage: 57.5% zero-tiles]
+INFO:   50m: F1=0.916 [0.902, 0.933], P=0.929 [0.909, 0.947], R=0.903 [0.883, 0.926] [sparse coverage: 57.5% zero-tiles]
+INFO:   75m: F1=0.918 [0.904, 0.934], P=0.931 [0.913, 0.948], R=0.906 [0.884, 0.928] [sparse coverage: 57.5% zero-tiles]
+INFO:   100m: F1=0.921 [0.907, 0.937], P=0.934 [0.914, 0.951], R=0.908 [0.886, 0.931] [sparse coverage: 57.5% zero-tiles]
+INFO:   125m: F1=0.923 [0.910, 0.940], P=0.936 [0.917, 0.952], R=0.910 [0.888, 0.932] [sparse coverage: 57.5% zero-tiles]
+INFO:   150m: F1=0.923 [0.910, 0.940], P=0.936 [0.917, 0.952], R=0.910 [0.888, 0.932] [sparse coverage: 57.5% zero-tiles]
 INFO:   MCC=0.794 [0.757, 0.830], Sens=0.825, Spec=0.957
 INFO: JSON written: results/verifier-robustness/evals/verified-384-16of30-t0-3-n5-opmax/evaluation.json
 INFO: CSV written: results/verifier-robustness/evals/verified-384-16of30-t0-3-n5-opmax/evaluation.csv

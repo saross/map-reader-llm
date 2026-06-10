@@ -3,7 +3,20 @@ INFO: Loading ground truth: /home/shawn/Code/map-reader-llm/inputs/vectors/refer
 INFO: Loading bounds: inputs/vectors/bounds/256/full_evaluation_bounds.geojson
 INFO: Reference: 569 mounds, 1032 evaluation tiles
 INFO: Evaluating: vr-256-union-t0-0-n5.geojson
+INFO:   5m: F1=0.449 [0.398, 0.495], P=0.467 [0.412, 0.519], R=0.432 [0.383, 0.479] [sparse coverage: 71.3% zero-tiles]
+INFO:   10m: F1=0.767 [0.724, 0.805], P=0.799 [0.751, 0.837], R=0.738 [0.690, 0.780] [sparse coverage: 71.7% zero-tiles]
+INFO:   15m: F1=0.842 [0.802, 0.873], P=0.877 [0.834, 0.910], R=0.810 [0.764, 0.850] [sparse coverage: 71.9% zero-tiles]
 INFO:   20m: F1=0.864 [0.829, 0.892], P=0.899 [0.861, 0.929], R=0.831 [0.786, 0.868] [sparse coverage: 72.1% zero-tiles]
+INFO:   25m: F1=0.871 [0.837, 0.900], P=0.907 [0.869, 0.934], R=0.838 [0.794, 0.875] [sparse coverage: 72.2% zero-tiles]
+INFO:   30m: F1=0.873 [0.840, 0.901], P=0.910 [0.873, 0.937], R=0.840 [0.797, 0.878] [sparse coverage: 72.2% zero-tiles]
+INFO:   35m: F1=0.876 [0.844, 0.902], P=0.912 [0.877, 0.938], R=0.842 [0.797, 0.878] [sparse coverage: 72.2% zero-tiles]
+INFO:   40m: F1=0.876 [0.844, 0.902], P=0.912 [0.877, 0.938], R=0.842 [0.797, 0.878] [sparse coverage: 72.2% zero-tiles]
+INFO:   45m: F1=0.876 [0.844, 0.902], P=0.912 [0.877, 0.938], R=0.842 [0.797, 0.878] [sparse coverage: 72.2% zero-tiles]
+INFO:   50m: F1=0.876 [0.844, 0.902], P=0.912 [0.877, 0.938], R=0.842 [0.797, 0.878] [sparse coverage: 72.2% zero-tiles]
+INFO:   75m: F1=0.876 [0.844, 0.902], P=0.912 [0.877, 0.938], R=0.842 [0.797, 0.878] [sparse coverage: 72.2% zero-tiles]
+INFO:   100m: F1=0.876 [0.844, 0.902], P=0.912 [0.877, 0.938], R=0.842 [0.797, 0.878] [sparse coverage: 72.2% zero-tiles]
+INFO:   125m: F1=0.876 [0.844, 0.902], P=0.912 [0.877, 0.938], R=0.842 [0.797, 0.878] [sparse coverage: 72.2% zero-tiles]
+INFO:   150m: F1=0.883 [0.850, 0.909], P=0.920 [0.885, 0.945], R=0.849 [0.804, 0.885] [sparse coverage: 72.2% zero-tiles]
 INFO:   MCC=0.750 [0.705, 0.797], Sens=0.733, Spec=0.968
 INFO: JSON written: results/verifier-robustness/evals/verified-256-union-t0-0-n5/evaluation.json
 INFO: CSV written: results/verifier-robustness/evals/verified-256-union-t0-0-n5/evaluation.csv

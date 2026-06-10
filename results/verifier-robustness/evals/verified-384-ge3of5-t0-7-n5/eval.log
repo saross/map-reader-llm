@@ -3,7 +3,20 @@ INFO: Loading ground truth: /home/shawn/Code/map-reader-llm/inputs/vectors/refer
 INFO: Loading bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
 INFO: Reference: 569 mounds, 487 evaluation tiles
 INFO: Evaluating: min-T0.7.geojson
+INFO:   5m: F1=0.306 [0.272, 0.340], P=0.322 [0.284, 0.355], R=0.292 [0.259, 0.329] [sparse coverage: 54.6% zero-tiles]
+INFO:   10m: F1=0.697 [0.670, 0.731], P=0.734 [0.705, 0.768], R=0.664 [0.635, 0.700] [sparse coverage: 56.3% zero-tiles]
+INFO:   15m: F1=0.828 [0.804, 0.852], P=0.871 [0.846, 0.892], R=0.789 [0.758, 0.821] [sparse coverage: 57.1% zero-tiles]
 INFO:   20m: F1=0.871 [0.851, 0.890], P=0.916 [0.894, 0.934], R=0.830 [0.800, 0.858] [sparse coverage: 57.3% zero-tiles]
+INFO:   25m: F1=0.885 [0.867, 0.904], P=0.931 [0.910, 0.947], R=0.844 [0.814, 0.871] [sparse coverage: 57.3% zero-tiles]
+INFO:   30m: F1=0.895 [0.878, 0.914], P=0.942 [0.923, 0.958], R=0.853 [0.824, 0.882] [sparse coverage: 57.3% zero-tiles]
+INFO:   35m: F1=0.895 [0.878, 0.914], P=0.942 [0.923, 0.958], R=0.853 [0.824, 0.882] [sparse coverage: 57.3% zero-tiles]
+INFO:   40m: F1=0.895 [0.878, 0.914], P=0.942 [0.923, 0.958], R=0.853 [0.824, 0.882] [sparse coverage: 57.3% zero-tiles]
+INFO:   45m: F1=0.895 [0.878, 0.914], P=0.942 [0.923, 0.958], R=0.853 [0.824, 0.882] [sparse coverage: 57.3% zero-tiles]
+INFO:   50m: F1=0.895 [0.878, 0.914], P=0.942 [0.923, 0.958], R=0.853 [0.824, 0.882] [sparse coverage: 57.3% zero-tiles]
+INFO:   75m: F1=0.897 [0.880, 0.916], P=0.944 [0.926, 0.961], R=0.855 [0.828, 0.884] [sparse coverage: 57.3% zero-tiles]
+INFO:   100m: F1=0.900 [0.883, 0.918], P=0.947 [0.930, 0.963], R=0.857 [0.829, 0.885] [sparse coverage: 57.3% zero-tiles]
+INFO:   125m: F1=0.900 [0.883, 0.918], P=0.947 [0.930, 0.963], R=0.857 [0.829, 0.885] [sparse coverage: 57.3% zero-tiles]
+INFO:   150m: F1=0.900 [0.883, 0.918], P=0.947 [0.930, 0.963], R=0.857 [0.829, 0.885] [sparse coverage: 57.3% zero-tiles]
 INFO:   MCC=0.771 [0.731, 0.808], Sens=0.799, Spec=0.957
 INFO: JSON written: results/verifier-robustness/evals/verified-384-ge3of5-t0-7-n5/evaluation.json
 INFO: CSV written: results/verifier-robustness/evals/verified-384-ge3of5-t0-7-n5/evaluation.csv
