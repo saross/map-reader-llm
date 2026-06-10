@@ -18,7 +18,7 @@ project state.
 - **Thinking at n=1 (`high_thinking_prior.log`)**: high thinking HURTS a single verifier pass — at 4of5: min-n1 0.8659 > medium 0.8545 > high 0.8519 (adversarial prompt + more thinking → more spurious rejections → lower recall). Consensus rescues it to tier parity.
 - **Model — Pro 3.1 ALREADY ON DISK, re-scored $0 (`pro_pv.log`)**: `gemini-3.1-pro-preview` is a BETTER bare proposer (single-pass 0.763, consensus 0.836 — wins those tiers, `results/leaderboard/per-architecture/cross-architecture-era2_20m_f1.md`) but a WORSE PV partner: Pro 5-pass + Flash-vf 0.8491 / + Pro-vf 0.8506 (both 3of5) << Flash 5-pass+vf 0.874. The verifier needs a HIGH-RECALL proposer to prune (Pro's 504-cand pool is already precise → little to prune); the verifier MODEL barely matters (Pro-vf ≈ Flash-vf → keep the cheap Flash verifier).
 - **Compute allocation (`nof10_comparison.log`)**: at equal cost, proposer diversity ≥ verifier diversity — 10-prop+1-vf (11 passes) 0.8769 (6of10) ≥ 5-prop+5-vf (10 passes) 0.8739/0.8764. Both ~98% of the 30-pass headline 0.890 (`era1-pv-stage-d/stage-d-findings.md`).
-- **Operational maximum**: 16of30 proposer + N=5 MINIMAL T=0.3 verifier (best TIED config — temperature is FREE so T0.3 for consensus diversity; minimal because tied-cheapest, NOT high) — RAN ~$2.54 flex. **RESULT = [SLOT IN from `results/verifier-robustness/opmax.log`: ___ vs headline 0.890]**. (`planning/verifier-robustness-opmax-cells.json`)
+- **Operational maximum (DONE, ~$2.54 flex, commit `1271b98a3`)**: 16of30 proposer + N=5 MINIMAL T=0.3 verifier majority consensus = **0.8951** (best at the full 16of30 pool — labelled "proposer 1of5" by the analysis's hardcoded "of5" string, a cosmetic bug; consensus_vt3, prob_t 0.15, MCC 0.794) vs the **0.890** n=1-verifier headline. **+0.005, but within ~1 SD** (single-run SD 0.0044) → marginal/within-noise nudge at 5× verifier cost. **Per the cost rule, the 30-pass proposer + n=1 verifier (0.890) stays the practical ceiling**; 0.8951 is a numerical high, not a real improvement. (`results/verifier-robustness/opmax.log`, `planning/verifier-robustness-opmax-cells.json`)
 - **Model flex rates (June 2026, ai.google.dev/gemini-api/docs/pricing)**: Flash3 $0.25/$1.50, Flash3.5 $0.75/$4.50 (=3× Flash3), Pro3.1 $1.00/$6.00 (≤200K) per 1M in/out. **Flex available for all three.**
 
 **PARETO DATA (passes vs F1@20m) — ready to plot S111:**
@@ -30,11 +30,11 @@ project state.
 | 11 | 10-prop + 1-vf | 0.8769 | nof10_comparison.log |
 | ~6 | Pro 5-prop + 1-vf | 0.849–0.851 | pro_pv.log |
 | 31 | 30-prop + 1-vf (16of30) | 0.890 | stage-d headline |
-| 35 | 30-prop + 5-vf (opmax) | [pending opmax.log] | opmax run |
+| 35 | 30-prop + 5-vf (opmax) | 0.8951 | opmax.log (+0.005 vs 0.890, within ~1 SD) |
 
 **IMMEDIATE next work (S111):**
 
-1. **Slot in the operational-max result** (`opmax.log`) → does 0.890 → ~0.90 (new ceiling) or does the verifier consensus not lift the 30-pass proposer?
+1. ✅ **DONE (S110): operational max = 0.8951** (+0.005 vs 0.890, within ~1 SD → verifier consensus does NOT meaningfully lift the 30-pass proposer; 0.890 n=1 stays the practical ceiling). See the operational-maximum finding above.
 2. **Build the Pareto leaderboard** — passes-vs-F1 figure + targeted pairwise tile-swap permutations between adjacent pass-budget tiers (is 0.890 sig > 0.8769? is 0.8769 sig > 0.8739? — almost certainly NOT). Data captured above + in committed logs; mechanical. Score the 5–6-pass cheap end ($0).
 3. **Write the cost-vs-F1 / which-model-for-which-role Obs (357+)** + fold the matrix + tiering + model + cost findings into `verifier-robustness-findings.md` (new §Stage 3 + a Pareto/cost section). Put the meta-rule (tie → cheaper) front and centre.
 4. **Manifest registration** of verifier-robustness (Shawn wants FIRST-CLASS + citable; no new champion — carry-forward stands). Confirm form with Shawn; then `generate_post_run_report.py --all` + drift-check.
