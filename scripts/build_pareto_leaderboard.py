@@ -184,16 +184,22 @@ def plot_figure(ladder: list[dict], context: list[dict], pairs: list[dict]) -> P
     ys = [c["f1"] for c in ladder]
     ax.plot(xs, ys, "o-", color="#1f77b4", lw=1.5, ms=7, zorder=3,
             label="Flash ladder (gemini-3-flash proposer + verifier)")
+    # Per-label annotation offsets chosen to avoid collisions (opmax sits at
+    # the axes corner; min10/high10 coincide at x=10; the two Pro cells stack).
+    offsets = {"opmax35": (-8, 4, "right"), "high10": (-42, -16, "center"),
+               "pro6-provf": (0, 8, "center"), "pro6-flashvf": (0, -20, "center")}
     for c in ladder:
         tier = f" (T{c['tier']})" if "tier" in c else ""
+        dx, dy, ha = offsets.get(c["label"], (0, 9, "center"))
         ax.annotate(f"{c['label']}{tier}\n{c['f1']:.4f}", (c["passes"], c["f1"]),
-                    textcoords="offset points", xytext=(0, 9), ha="center", fontsize=8)
+                    textcoords="offset points", xytext=(dx, dy), ha=ha, fontsize=8)
     for c in context:
         marker, colour = ("s", "#ff7f0e") if c["label"].startswith("pro") else ("o", "#888888")
         ax.scatter([c["passes"]], [c["f1"]], marker=marker, facecolors="none",
                    edgecolors=colour, s=55, zorder=3)
+        dx, dy, ha = offsets.get(c["label"], (0, -20, "center"))
         ax.annotate(f"{c['label']}\n{c['f1']:.4f}", (c["passes"], c["f1"]),
-                    textcoords="offset points", xytext=(0, -20), ha="center",
+                    textcoords="offset points", xytext=(dx, dy), ha=ha,
                     fontsize=7, color=colour)
     # P-value labels at the midpoint of each adjacent ladder segment.
     for p in pairs:
@@ -207,6 +213,9 @@ def plot_figure(ladder: list[dict], context: list[dict], pairs: list[dict]) -> P
                label="Pro 3.1 proposer (context)")
     ax.scatter([], [], marker="o", facecolors="none", edgecolors="#888888",
                label="HIGH-thinking verifier (context)")
+    all_f1 = [c["f1"] for c in ladder] + [c["f1"] for c in context]
+    ax.set_ylim(min(all_f1) - 0.004, max(all_f1) + 0.004)
+    ax.set_xlim(3.5, 38)
     ax.set_xlabel("total passes (proposer + verifier)")
     ax.set_ylabel("F1@20 m (best operating point)")
     ax.set_title("Pass budget vs F1@20 m — GS 384 px proposer-verifier "
