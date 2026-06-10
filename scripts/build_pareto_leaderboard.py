@@ -21,8 +21,11 @@
 # Method (project-canonical, reused verbatim): materialise each rung's
 # best-operating-point detection set, verify it reproduces its recorded
 # F1@20 m (gate), compute per-tile TP/FP/FN (Hungarian per map, 20 m), then
-# permutation_test_float (10k, seed 42, two-sided) on the four adjacent pairs,
-# BH-FDR corrected at q=0.05 within that four-pair family.
+# the FULL C(5,2)=10 round-robin permutation_test_float (10k, seed 42,
+# two-sided), BH-FDR at q=0.05, and greedy-clique tiers — the same board
+# machinery as the matrix and Era-1 leaderboards. Adjacent pairs answer the
+# continuity's rung-step questions; the span pairs guard against the
+# "no single step significant, but the cumulative climb is" trap.
 #
 # COST: $0 (on-disk re-score). Single process; the cheap-end sweep is ~40
 # Hungarian scorings — run on zbook per the project compute rule.
@@ -54,7 +57,10 @@ from scripts.apply_fdr_correction import apply_bh_correction  # noqa: E402
 from scripts.consensus_vs_baseline_tiering import consensus_per_tile  # noqa: E402
 from scripts.evaluate_detections import load_geojson  # noqa: E402
 from scripts.lib_advanced_metrics import score_detection_set  # noqa: E402
-from scripts.n1_baseline_leaderboard_tiering import permutation_test_float  # noqa: E402
+from scripts.n1_baseline_leaderboard_tiering import (  # noqa: E402
+    greedy_clique_tiers,
+    permutation_test_float,
+)
 
 VERIFIED = BASE_DIR / "outputs" / "h11" / "pv-diag-384" / "verified"
 MATRIX_SETS = BASE_DIR / "results" / "verifier-robustness" / "matrix-sets"
@@ -179,7 +185,8 @@ def plot_figure(ladder: list[dict], context: list[dict], pairs: list[dict]) -> P
     ax.plot(xs, ys, "o-", color="#1f77b4", lw=1.5, ms=7, zorder=3,
             label="Flash ladder (gemini-3-flash proposer + verifier)")
     for c in ladder:
-        ax.annotate(f"{c['label']}\n{c['f1']:.4f}", (c["passes"], c["f1"]),
+        tier = f" (T{c['tier']})" if "tier" in c else ""
+        ax.annotate(f"{c['label']}{tier}\n{c['f1']:.4f}", (c["passes"], c["f1"]),
                     textcoords="offset points", xytext=(0, 9), ha="center", fontsize=8)
     for c in context:
         marker, colour = ("s", "#ff7f0e") if c["label"].startswith("pro") else ("o", "#888888")
@@ -246,36 +253,51 @@ def main() -> int:
                        "f1": res["f1"], "mcc": res["mcc"], "op": op, "source": source,
                        "geojson": str(Path(gj).relative_to(BASE_DIR))})
 
-    print("\n=== adjacent-pair tile-swap permutations (10k, seed 42) ===", flush=True)
+    print("\n=== round-robin tile-swap permutations (10 pairs, 10k, seed 42) ===",
+          flush=True)
     per_tile = {c["label"]: consensus_per_tile(Path(c["geojson"]), gdf_ref, gdf_bounds,
                                                tile_order) for c in ladder}
-    adjacent = [("cheap6", "min10"), ("min10", "nof10"), ("nof10", "headline31"),
-                ("headline31", "opmax35")]
+    labels = [c["label"] for c in ladder]
+    adjacent = set(zip(labels, labels[1:]))
     pairs = []
-    for a, b in adjacent:
-        res = permutation_test_float(*per_tile[a], *per_tile[b],
-                                     n_permutations=N_PERMUTATIONS, seed=SEED)
-        pairs.append({"a": a, "b": b, **res})
+    for i, a in enumerate(labels):
+        for b in labels[i + 1:]:
+            res = permutation_test_float(*per_tile[a], *per_tile[b],
+                                         n_permutations=N_PERMUTATIONS, seed=SEED)
+            pairs.append({"a": a, "b": b, "adjacent": (a, b) in adjacent, **res})
     adjusted = apply_bh_correction([p["p_value"] for p in pairs], q=0.05)
+    significant = {}
     for p, adj in zip(pairs, adjusted):
         p["bh_adjusted_p"] = round(adj, 6)
         p["significant"] = bool(adj < 0.05)
+        significant[frozenset({p["a"], p["b"]})] = p["significant"]
         flag = "SIG" if p["significant"] else "ns"
+        kind = "adjacent" if p["adjacent"] else "span"
         print(f"  {p['a']:<11} vs {p['b']:<11} diff={p['observed_diff']:+.4f} "
-              f"p={p['p_value']:.4f} bh={p['bh_adjusted_p']:.4f} [{flag}]", flush=True)
+              f"p={p['p_value']:.4f} bh={p['bh_adjusted_p']:.4f} [{flag}] ({kind})",
+              flush=True)
 
-    fig_path = plot_figure(ladder, CONTEXT_ROWS, pairs)
+    ordered = sorted(ladder, key=lambda c: c["f1"], reverse=True)
+    tiers = greedy_clique_tiers([c["label"] for c in ordered], significant)
+    tier_of = {ref: t for t, members in enumerate(tiers, 1) for ref in members}
+    for c in ladder:
+        c["tier"] = tier_of[c["label"]]
+    print(f"\n  tiers: {tiers}", flush=True)
+
+    fig_path = plot_figure(ladder, CONTEXT_ROWS, [p for p in pairs if p["adjacent"]])
 
     out = {"scope": "GS 384px / 487 tiles / curator GT / F1@20m, best op per rung",
-           "ladder": ladder, "context": CONTEXT_ROWS, "adjacent_pairs": pairs,
-           "method": "consensus_per_tile + permutation_test_float, 10k tile-swap, "
-                     "seed 42, two-sided; BH-FDR q=0.05 within the 4-pair family",
+           "ladder": ladder, "context": CONTEXT_ROWS, "tiers": tiers, "pairwise": pairs,
+           "method": "consensus_per_tile + permutation_test_float, C(5,2)=10 round-robin, "
+                     "10k tile-swap, seed 42, two-sided; BH-FDR q=0.05; greedy-clique "
+                     "tiers (matrix/Era-1 board machinery)",
            "figure": str(fig_path.relative_to(BASE_DIR))}
     out_json = OUT_DIR / "pareto_leaderboard.json"
     out_json.write_text(json.dumps(out, indent=2) + "\n")
 
     n_sig = sum(1 for p in pairs if p["significant"])
-    print(f"\n{n_sig}/4 adjacent pairs significant after BH-FDR.", flush=True)
+    print(f"\n{n_sig}/10 pairs significant after BH-FDR -> {len(tiers)} tier(s).",
+          flush=True)
     print(f"Wrote {out_json.relative_to(BASE_DIR)} + {fig_path.relative_to(BASE_DIR)}",
           flush=True)
     return 0
