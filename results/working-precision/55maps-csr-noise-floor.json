@@ -1,0 +1,264 @@
+{
+  "method": {
+    "csr_null": "per-map Poisson chance-matching, GT honours per-buffer phantom gating",
+    "ambiguity": "fraction of GT mounds whose nearest neighbour is within 2R (cross-matching risk)"
+  },
+  "gt_nn_percentiles_m": {
+    "10": 64.80796032874935,
+    "25": 113.27766296527929,
+    "50": 374.79373404953185,
+    "75": 854.7510497294899
+  },
+  "ambiguity_by_buffer": {
+    "5": 0.0007247689798876608,
+    "10": 0.0030802681645225585,
+    "15": 0.019568762456966843,
+    "20": 0.03279579633991665,
+    "25": 0.04312375430331582,
+    "30": 0.07918101105272694,
+    "35": 0.11777495923174489,
+    "40": 0.14712810291719514,
+    "45": 0.18626562783112882,
+    "50": 0.2132632723319442,
+    "75": 0.31763000543576736,
+    "100": 0.36999456423265087,
+    "125": 0.4194600471099837,
+    "150": 0.4527994201848161
+  },
+  "cells": [
+    {
+      "cell": "T03-k3 (oracle)",
+      "detections": "results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-t0.3-generalisation/k3_verified.geojson",
+      "n_detections": 4905,
+      "curve": [
+        {
+          "buffer_m": 5,
+          "f1_observed": 0.08703761268262356,
+          "f1_null": 0.0,
+          "ambiguity_frac": 0.001
+        },
+        {
+          "buffer_m": 10,
+          "f1_observed": 0.2791420578178427,
+          "f1_null": 0.0001,
+          "ambiguity_frac": 0.003,
+          "obs_step_gain": 0.1921,
+          "null_step_gain": 0.0001
+        },
+        {
+          "buffer_m": 15,
+          "f1_observed": 0.47083203813076363,
+          "f1_null": 0.0001,
+          "ambiguity_frac": 0.02,
+          "obs_step_gain": 0.1917,
+          "null_step_gain": 0.0
+        },
+        {
+          "buffer_m": 20,
+          "f1_observed": 0.6295720650709771,
+          "f1_null": 0.0002,
+          "ambiguity_frac": 0.033,
+          "obs_step_gain": 0.1587,
+          "null_step_gain": 0.0001
+        },
+        {
+          "buffer_m": 25,
+          "f1_observed": 0.7182675370427934,
+          "f1_null": 0.0004,
+          "ambiguity_frac": 0.043,
+          "obs_step_gain": 0.0887,
+          "null_step_gain": 0.0002
+        },
+        {
+          "buffer_m": 30,
+          "f1_observed": 0.7651020619624909,
+          "f1_null": 0.0005,
+          "ambiguity_frac": 0.079,
+          "obs_step_gain": 0.0468,
+          "null_step_gain": 0.0001
+        },
+        {
+          "buffer_m": 35,
+          "f1_observed": 0.7895554864780853,
+          "f1_null": 0.0007,
+          "ambiguity_frac": 0.118,
+          "obs_step_gain": 0.0245,
+          "null_step_gain": 0.0002
+        },
+        {
+          "buffer_m": 40,
+          "f1_observed": 0.8003315718578385,
+          "f1_null": 0.001,
+          "ambiguity_frac": 0.147,
+          "obs_step_gain": 0.0108,
+          "null_step_gain": 0.0003
+        },
+        {
+          "buffer_m": 45,
+          "f1_observed": 0.8079991710703555,
+          "f1_null": 0.0012,
+          "ambiguity_frac": 0.186,
+          "obs_step_gain": 0.0077,
+          "null_step_gain": 0.0002
+        },
+        {
+          "buffer_m": 50,
+          "f1_observed": 0.8476058017087225,
+          "f1_null": 0.0016,
+          "ambiguity_frac": 0.213,
+          "obs_step_gain": 0.0396,
+          "null_step_gain": 0.0004
+        },
+        {
+          "buffer_m": 75,
+          "f1_observed": 0.8435334309419229,
+          "f1_null": 0.0036,
+          "ambiguity_frac": 0.318,
+          "obs_step_gain": -0.0041,
+          "null_step_gain": 0.002
+        },
+        {
+          "buffer_m": 100,
+          "f1_observed": 0.8413312693498451,
+          "f1_null": 0.0065,
+          "ambiguity_frac": 0.37,
+          "obs_step_gain": -0.0022,
+          "null_step_gain": 0.0029
+        },
+        {
+          "buffer_m": 125,
+          "f1_observed": 0.841233140655106,
+          "f1_null": 0.0102,
+          "ambiguity_frac": 0.419,
+          "obs_step_gain": -0.0001,
+          "null_step_gain": 0.0037
+        },
+        {
+          "buffer_m": 150,
+          "f1_observed": 0.8413673900518532,
+          "f1_null": 0.0146,
+          "ambiguity_frac": 0.453,
+          "obs_step_gain": 0.0001,
+          "null_step_gain": 0.0044
+        }
+      ]
+    },
+    {
+      "cell": "TH7-k4 (carry-forward)",
+      "detections": "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
+      "n_detections": 4164,
+      "curve": [
+        {
+          "buffer_m": 5,
+          "f1_observed": 0.08552188552188553,
+          "f1_null": 0.0,
+          "ambiguity_frac": 0.001
+        },
+        {
+          "buffer_m": 10,
+          "f1_observed": 0.2754208754208754,
+          "f1_null": 0.0001,
+          "ambiguity_frac": 0.003,
+          "obs_step_gain": 0.1899,
+          "null_step_gain": 0.0001
+        },
+        {
+          "buffer_m": 15,
+          "f1_observed": 0.4787878787878788,
+          "f1_null": 0.0001,
+          "ambiguity_frac": 0.02,
+          "obs_step_gain": 0.2034,
+          "null_step_gain": 0.0
+        },
+        {
+          "buffer_m": 20,
+          "f1_observed": 0.6260381593714928,
+          "f1_null": 0.0002,
+          "ambiguity_frac": 0.033,
+          "obs_step_gain": 0.1473,
+          "null_step_gain": 0.0001
+        },
+        {
+          "buffer_m": 25,
+          "f1_observed": 0.7102132435465768,
+          "f1_null": 0.0004,
+          "ambiguity_frac": 0.043,
+          "obs_step_gain": 0.0842,
+          "null_step_gain": 0.0002
+        },
+        {
+          "buffer_m": 30,
+          "f1_observed": 0.756902356902357,
+          "f1_null": 0.0005,
+          "ambiguity_frac": 0.079,
+          "obs_step_gain": 0.0467,
+          "null_step_gain": 0.0001
+        },
+        {
+          "buffer_m": 35,
+          "f1_observed": 0.7777777777777779,
+          "f1_null": 0.0007,
+          "ambiguity_frac": 0.118,
+          "obs_step_gain": 0.0209,
+          "null_step_gain": 0.0002
+        },
+        {
+          "buffer_m": 40,
+          "f1_observed": 0.7867564534231201,
+          "f1_null": 0.0009,
+          "ambiguity_frac": 0.147,
+          "obs_step_gain": 0.009,
+          "null_step_gain": 0.0002
+        },
+        {
+          "buffer_m": 45,
+          "f1_observed": 0.7903479236812571,
+          "f1_null": 0.0011,
+          "ambiguity_frac": 0.186,
+          "obs_step_gain": 0.0036,
+          "null_step_gain": 0.0002
+        },
+        {
+          "buffer_m": 50,
+          "f1_observed": 0.8152278820375335,
+          "f1_null": 0.0015,
+          "ambiguity_frac": 0.213,
+          "obs_step_gain": 0.0249,
+          "null_step_gain": 0.0004
+        },
+        {
+          "buffer_m": 75,
+          "f1_observed": 0.8045033670033671,
+          "f1_null": 0.0034,
+          "ambiguity_frac": 0.318,
+          "obs_step_gain": -0.0107,
+          "null_step_gain": 0.0019
+        },
+        {
+          "buffer_m": 100,
+          "f1_observed": 0.8006253256904637,
+          "f1_null": 0.006,
+          "ambiguity_frac": 0.37,
+          "obs_step_gain": -0.0039,
+          "null_step_gain": 0.0026
+        },
+        {
+          "buffer_m": 125,
+          "f1_observed": 0.7990455441435833,
+          "f1_null": 0.0094,
+          "ambiguity_frac": 0.419,
+          "obs_step_gain": -0.0016,
+          "null_step_gain": 0.0034
+        },
+        {
+          "buffer_m": 150,
+          "f1_observed": 0.7976842758192908,
+          "f1_null": 0.0135,
+          "ambiguity_frac": 0.453,
+          "obs_step_gain": -0.0014,
+          "null_step_gain": 0.0041
+        }
+      ]
+    }
+  ]
+}
