@@ -2349,6 +2349,120 @@
           },
           "eval_path": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json",
           "detections": "outputs/era1-pv-stage-d/384-consensus-text-high/pass_1/accepted_t0.2.geojson"
+        },
+        {
+          "label": "verified-adv-text-4of5",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-high-text-1of5",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-text-4of5/evaluation.json",
+          "detections": "results/verifier-robustness/pareto/cheap6-4of5-n1-pt0.15.geojson"
+        },
+        {
+          "label": "verified-adv-text-6of10",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-high-text-1of10",
+          "n_passes": 10,
+          "vote_threshold": 6,
+          "prob_threshold": 0.2,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-text-6of10/evaluation.json",
+          "detections": "results/verifier-robustness/pareto/nof10-6of10-n1-pt0.2.geojson"
+        },
+        {
+          "label": "verified-adv-text-high-vf-4of5",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-high-text-1of5",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": 0.5,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "high",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-text-high-vf-4of5/evaluation.json",
+          "detections": "results/verifier-robustness/matrix-sets/high-T0.0.geojson"
+        },
+        {
+          "label": "verified-adv-text-medium-vf-4of5",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-high-text-1of5",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": 0.25,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "medium",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-text-medium-vf-4of5/evaluation.json",
+          "detections": "results/verifier-robustness/condition-sets/medium-vf-4of5.geojson"
+        },
+        {
+          "label": "verified-adv-pro-text-flash-vf-3of5",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "pro-high-text-1of5",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-pro-text-flash-vf-3of5/evaluation.json",
+          "detections": "results/verifier-robustness/condition-sets/pro-flash-vf-3of5.geojson"
+        },
+        {
+          "label": "verified-adv-pro-text-pro-vf-3of5",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "pro-high-text-1of5",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3.1-pro-preview",
+            "thinking_level": "medium",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-pro-text-pro-vf-3of5/evaluation.json",
+          "detections": "results/verifier-robustness/condition-sets/pro-pro-vf-3of5.geojson"
         }
       ],
       "_ignored_evals": [
@@ -6115,6 +6229,228 @@
         "results/rescore-2026-06-08/pv-diag-256/text-2of5/evaluation.json",
         "results/rescore-2026-06-08/pv-diag-256/text-3of5/evaluation.json",
         "results/rescore-2026-06-08/pv-diag-256/text-4of5/evaluation.json"
+      ]
+    },
+    "verifier-robustness": {
+      "_note": "Verifier-only run: re-verifies pv-diag-384 / pv-diag-256 proposer pools under varied verifier configs (S109-110). One citable condition per verifier config at its best F1@20m operating point (the settled decomposition pattern); the full sweeps live in results/verifier-robustness/robustness_grid_*.json. NO new champion (see run-facts headline_rationale).",
+      "proposer_pools": {},
+      "verifier_passes": {
+        "384-union-t0-0": {
+          "modality": "text",
+          "path": "384-flash-high-text-1of5-union/T0.0"
+        },
+        "256-union-t0-0": {
+          "modality": "text",
+          "path": "256-text-1of5-union/T0.0"
+        },
+        "384-ge3of5-t0-3": {
+          "modality": "text",
+          "path": "384-flash-high-text-ge3of5/T0.3"
+        },
+        "256-ge3of5-t0-3": {
+          "modality": "text",
+          "path": "256-text-ge3of5/T0.3"
+        },
+        "384-ge3of5-t0-7": {
+          "modality": "text",
+          "path": "384-flash-high-text-ge3of5/T0.7"
+        },
+        "384-ge3of5-t0-3-high": {
+          "modality": "text",
+          "path": "384-flash-high-text-ge3of5/T0.3-high"
+        },
+        "384-ge3of5-t0-7-high": {
+          "modality": "text",
+          "path": "384-flash-high-text-ge3of5/T0.7-high"
+        },
+        "384-16of30-t0-3": {
+          "modality": "text",
+          "path": "384-flash-high-text-16of30/T0.3"
+        }
+      },
+      "conditions": [
+        {
+          "label": "verified-384-union-t0-0-n5",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-high-text-1of5",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0,
+            "iterations": 5,
+            "consensus_rule": "consensus_vt1"
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-384-union-t0-0-n5/evaluation.json",
+          "detections": "results/verifier-robustness/matrix-sets/min-T0.0.geojson",
+          "source_run": "pv-diag-384"
+        },
+        {
+          "label": "verified-256-union-t0-0-n5",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "text-1of5",
+          "n_passes": 5,
+          "vote_threshold": 5,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0,
+            "iterations": 5,
+            "consensus_rule": "mean"
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-256-union-t0-0-n5/evaluation.json",
+          "detections": "results/verifier-robustness/condition-sets/vr-256-union-t0-0-n5.geojson",
+          "source_run": "pv-diag-256",
+          "scope_override": {
+            "test_set_id": "px256-1032",
+            "bounds_path": "inputs/vectors/bounds/256/full_evaluation_bounds.geojson",
+            "n_test_tiles": 1032,
+            "calibration_set_id": null,
+            "n_calibration_tiles": null
+          }
+        },
+        {
+          "label": "verified-256-ge3of5-t0-3-n5",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "text-1of5",
+          "n_passes": 5,
+          "vote_threshold": 5,
+          "prob_threshold": 0.2,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.3,
+            "iterations": 5,
+            "consensus_rule": "consensus_vt2"
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-256-ge3of5-t0-3-n5/evaluation.json",
+          "detections": "results/verifier-robustness/condition-sets/vr-256-ge3of5-t0-3-n5.geojson",
+          "source_run": "pv-diag-256",
+          "scope_override": {
+            "test_set_id": "px256-1032",
+            "bounds_path": "inputs/vectors/bounds/256/full_evaluation_bounds.geojson",
+            "n_test_tiles": 1032,
+            "calibration_set_id": null,
+            "n_calibration_tiles": null
+          }
+        },
+        {
+          "label": "verified-384-ge3of5-t0-3-n5",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-high-text-1of5",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.3,
+            "iterations": 5,
+            "consensus_rule": "mean"
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-384-ge3of5-t0-3-n5/evaluation.json",
+          "detections": "results/verifier-robustness/matrix-sets/min-T0.3.geojson",
+          "source_run": "pv-diag-384"
+        },
+        {
+          "label": "verified-384-ge3of5-t0-7-n5",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-high-text-1of5",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": 0.2,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.7,
+            "iterations": 5,
+            "consensus_rule": "consensus_vt2"
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-384-ge3of5-t0-7-n5/evaluation.json",
+          "detections": "results/verifier-robustness/matrix-sets/min-T0.7.geojson",
+          "source_run": "pv-diag-384"
+        },
+        {
+          "label": "verified-384-ge3of5-t0-3-high-n5",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-high-text-1of5",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": 0.3,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "high",
+            "temperature": 0.3,
+            "iterations": 5,
+            "consensus_rule": "consensus_vt5"
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-384-ge3of5-t0-3-high-n5/evaluation.json",
+          "detections": "results/verifier-robustness/matrix-sets/high-T0.3.geojson",
+          "source_run": "pv-diag-384"
+        },
+        {
+          "label": "verified-384-ge3of5-t0-7-high-n5",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-high-text-1of5",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": 0.4,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "high",
+            "temperature": 0.7,
+            "iterations": 5,
+            "consensus_rule": "consensus_vt5"
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-384-ge3of5-t0-7-high-n5/evaluation.json",
+          "detections": "results/verifier-robustness/matrix-sets/high-T0.7.geojson",
+          "source_run": "pv-diag-384"
+        },
+        {
+          "label": "verified-384-16of30-t0-3-n5-opmax",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-high-text-consensus-16of30",
+          "n_passes": 1,
+          "vote_threshold": null,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.3,
+            "iterations": 5,
+            "consensus_rule": "consensus_vt3"
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-384-16of30-t0-3-n5-opmax/evaluation.json",
+          "detections": "results/verifier-robustness/opmax-sets/opmax-16of30-N5minT0.3-vt3-pt0.15.geojson",
+          "source_run": "pv-diag-384"
+        }
       ]
     }
   }

@@ -169,6 +169,12 @@
       "directory_path": "outputs/verifier-t-pilot",
       "status": "active",
       "notes": "one run (verifier-temperature pilot, H2-exploratory; T0.0 baseline + T0.5/T1.0 = new verifier passes -> conditions). Owns new API work, unlike wbf. GAP-10/E55: true verifier temp is in run.log ('Temperature override:'), not configuration.temperature (which reads 0.0); metas corrected non-destructively (temperature_effective). Eval bounds=None -> scope from another source."
+    },
+    {
+      "run_id": "verifier-robustness",
+      "directory_path": "outputs/verifier-robustness",
+      "status": "active",
+      "notes": "Verifier-robustness programme (Sessions 109-110, ~$53 flex): Stage 1 N=5 determinism on the 384/256 1-of-5 unions (T=0.0), Stage 2 temperature snowball (ge3of5 band, stalled at T=0.3), Stage 3 thinking x temperature matrix + the 16of30 operational maximum. Verifier-only API run; ALL proposer pools are cross-run (pv-diag-384 / pv-diag-256, recorded per-condition via source_run). Findings: results/verifier-robustness/verifier-robustness-findings.md."
     }
   ]
 }

@@ -684,6 +684,33 @@
       "_flags": [
         "exploratory (revisits Phase 3d); Obs 286/287; GT partly built from T=0.0 verified output (self-eval-bias caveat); E55 swept-temp metadata; T0.0 baseline lives at outputs/gs/gold-standard-v2/verified-v1/"
       ]
+    },
+    "verifier-robustness": {
+      "primary_hypothesis": "H2",
+      "also_informs": [
+        "H3"
+      ],
+      "purpose": "Verifier-robustness programme: determinism (n=1 vindicated), proposer-input band, temperature/thinking matrix, model roles, compute allocation, operational maximum, pass-budget Pareto. Meta-rule: on a within-noise tie, take the cheaper config.",
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-2-487",
+        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": null,
+      "headline_rationale": "Deliberately none \u2014 NO new champion. The carry-forward headline pv-diag-384::verified-adv-text-consensus-16of30 (0.890) stands: the operational maximum here (verified-384-16of30-t0-3-n5-opmax, 0.8951) is NOT significant over it (paired tile-swap permutation p=0.363, results/verifier-robustness/opmax_vs_headline_permutation.json), so per the cost meta-rule (Obs 357) it is a numerical high only.",
+      "historical_aliases": [],
+      "_scope_confidence": "HIGH",
+      "_scope_source": "scripts in repo: 384 cells score against bounds/384/full_evaluation_bounds.geojson (era-2-487); the two 256 cells carry scope_override px256-1032",
+      "_flags": [
+        "mixed tile-size run: 6 conditions at 384/487 tiles, 2 at 256/1032 (scope_override)",
+        "verifier-only API run \u2014 all proposer pools cross-run (source_run per condition)",
+        "S110 opmax run initially clobbered robustness_{grid,summary}_T0.3.json; repaired + re-homed to -16of30 names, --out-suffix guard added (commit 7d85b00ef)"
+      ]
     }
   }
 }

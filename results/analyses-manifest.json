@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-06-09T01:54:38Z",
+  "generated_at": "2026-06-10T08:30:41Z",
   "generator_version": "0.4.0",
   "analyses": [
     {
@@ -575,6 +575,89 @@
           "results/tile-size-sweep"
         ],
         "last_extracted_at": "2026-06-09T01:54:38Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "analysis_id": "verifier-robustness-matrix",
+      "type": "leaderboard",
+      "conditions_compared": [
+        "verifier-robustness::verified-384-union-t0-0-n5",
+        "verifier-robustness::verified-384-ge3of5-t0-3-n5",
+        "verifier-robustness::verified-384-ge3of5-t0-7-n5",
+        "verifier-robustness::verified-384-ge3of5-t0-3-high-n5",
+        "verifier-robustness::verified-384-ge3of5-t0-7-high-n5",
+        "pv-diag-384::verified-adv-text-high-vf-4of5"
+      ],
+      "hypothesis_refs": [
+        "H2"
+      ],
+      "preregistered": "exploratory",
+      "deviations": [],
+      "predicted_outcome": "Open robustness question (S109 carry-forward): does verifier temperature or thinking level matter once the verifier runs at N=5? The proposer-side diversity dividend (Obs 141) suggests higher temperature/thinking might add useful diversity; the Stage-2 snowball stall suggested not.",
+      "tie_set": [
+        "verifier-robustness::verified-384-ge3of5-t0-3-high-n5",
+        "verifier-robustness::verified-384-ge3of5-t0-3-n5",
+        "verifier-robustness::verified-384-ge3of5-t0-7-high-n5",
+        "verifier-robustness::verified-384-union-t0-0-n5",
+        "verifier-robustness::verified-384-ge3of5-t0-7-n5"
+      ],
+      "outcome": "ALL FIVE N=5 configs are ONE statistical tier (0/10 pairs significant among them; F1@20m 0.8709-0.8764): neither temperature nor thinking moves F1 at N=5. Only the single-pass HIGH-thinking prior drops to Tier 2 (0.8519; all 5 significant pairs involve it) \u2014 high thinking HURTS a single verifier pass (min n=1 0.8659 > medium 0.8545 > high 0.8519 at the 4of5 input) and merely reaches parity under consensus, buying +0.018 MCC (0.789 vs 0.771) at ~3x cost. Aggregation refinement: a PERMISSIVE consensus (vt1 union at T=0.0, mean-probability at T=0.3) beats the expected single pass by ~+0.012; strict/unanimous voting hurts. Per the cost meta-rule the production carry-forward (minimal, T=0.0, n=1) stays optimal. Source: results/verifier-robustness/matrix_tiering.json.",
+      "paper_section": "Results",
+      "output_path": "results/verifier-robustness",
+      "working_notes_obs": [
+        "Obs 354 \u2014 verifier T=0.0 determinism negligible at F1 (n=1 vindicated)",
+        "Obs 356 \u2014 higher-T consensus verifier does not help (snowball stall)",
+        "Obs 357 \u2014 the cost meta-rule: on a within-noise tie, take the cheaper config"
+      ],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/verifier-robustness"
+        ],
+        "last_extracted_at": "2026-06-10T08:30:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "analysis_id": "pass-budget-pareto",
+      "type": "leaderboard",
+      "conditions_compared": [
+        "pv-diag-384::verified-adv-text-4of5",
+        "verifier-robustness::verified-384-ge3of5-t0-3-n5",
+        "pv-diag-384::verified-adv-text-6of10",
+        "pv-diag-384::verified-adv-text-consensus-16of30",
+        "verifier-robustness::verified-384-16of30-t0-3-n5-opmax"
+      ],
+      "hypothesis_refs": [
+        "H2",
+        "H3"
+      ],
+      "preregistered": "exploratory",
+      "deviations": [],
+      "predicted_outcome": "S110 continuity: adjacent pass-budget rungs are 'almost certainly NOT' significantly separated; the opmax +0.005 over the headline sits at ~1.15x the single-run SD and was flagged for a targeted permutation test rather than pre-judged.",
+      "tie_set": [
+        "verifier-robustness::verified-384-16of30-t0-3-n5-opmax",
+        "pv-diag-384::verified-adv-text-consensus-16of30",
+        "pv-diag-384::verified-adv-text-6of10",
+        "verifier-robustness::verified-384-ge3of5-t0-3-n5",
+        "pv-diag-384::verified-adv-text-4of5"
+      ],
+      "outcome": "The full Flash ladder (6 -> 35 total passes; 0.8641 / 0.8739 / 0.8769 / 0.8902 / 0.8951) is ONE statistical tier: 0/10 round-robin pairs significant after BH-FDR q=0.05. The targeted opmax-vs-headline pair: +0.0049, p=0.363 \u2014 verifier consensus does NOT lift the 30-pass proposer; 0.890 stays the practical ceiling. The largest span (cheap6 vs opmax35, +0.031) has raw p=0.012 but BH 0.096 \u2014 suggestive that the 30-pass rungs lead, unprovable on the 487-tile instrument (GS-plateau resolving power, Obs 347). Budget recommendation per the cost meta-rule: the 6-pass cheap end (0.8641) is ~97% of the numerical maximum at ~17% of the pass budget. Sources: results/verifier-robustness/pareto/pareto_leaderboard.json, results/verifier-robustness/opmax_vs_headline_permutation.json.",
+      "paper_section": "Results",
+      "output_path": "results/verifier-robustness/pareto",
+      "working_notes_obs": [
+        "Obs 357 \u2014 the cost meta-rule: on a within-noise tie, take the cheaper config",
+        "Obs 347 \u2014 GS-plateau resolving-power heuristics (invoked by the span caveat)"
+      ],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/verifier-robustness/pareto"
+        ],
+        "last_extracted_at": "2026-06-10T08:30:41Z",
         "extractor_version": "0.4.0"
       }
     }

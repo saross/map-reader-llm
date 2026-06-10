@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-06-08T12:25:56Z · 281 row(s) · schema v1.0.
+> Generated 2026-06-10T08:30:41Z · 295 row(s) · schema v1.0.
 >
-> **Coverage**: 281 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 295 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -170,6 +170,12 @@
 | pv-diag-384::image-n5-image-t1.0-consensus-8of10 | consensus | consensus | 8 | 10 | 0.6459 | 0.4424 | 466 |
 | pv-diag-384::image-n5-image-t1.0-consensus-n5-4of5 | consensus | consensus | 4 | 5 | 0.6461 | 0.4188 | 506 |
 | pv-diag-384::verified-adv-text-consensus-16of30 | proposer-verifier | verified | — | 1 | 0.8902 | 0.7903 | 412 |
+| pv-diag-384::verified-adv-text-4of5 | proposer-verifier | verified | 4 | 5 | 0.8641 | 0.7693 | 389 |
+| pv-diag-384::verified-adv-text-6of10 | proposer-verifier | verified | 6 | 10 | 0.8769 | 0.7903 | 418 |
+| pv-diag-384::verified-adv-text-high-vf-4of5 | proposer-verifier | verified | 4 | 5 | 0.8519 | 0.6992 | 429 |
+| pv-diag-384::verified-adv-text-medium-vf-4of5 | proposer-verifier | verified | 4 | 5 | 0.8545 | 0.7208 | 424 |
+| pv-diag-384::verified-adv-pro-text-flash-vf-3of5 | proposer-verifier | verified | 3 | 5 | 0.8491 | 0.7302 | 347 |
+| pv-diag-384::verified-adv-pro-text-pro-vf-3of5 | proposer-verifier | verified | 3 | 5 | 0.8506 | 0.7302 | 348 |
 | h12-v2::greedy-r1-hn-heavy | consensus | greedy | 4 | 5 | 0.7084 | 0.6956 | 240 |
 | h12-v2::greedy-r2-balanced | consensus | greedy | 4 | 5 | 0.7171 | 0.7168 | 236 |
 | h12-v2::greedy-r3-hp-heavy | consensus | greedy | 4 | 5 | 0.6876 | 0.7169 | 254 |
@@ -289,3 +295,11 @@
 | verifier-t-pilot::verified-t0-0 | proposer-verifier | verified | 4 | 5 | 0.8507 | 0.7778 | 369 |
 | verifier-t-pilot::verified-t0-5 | proposer-verifier | verified | 4 | 5 | 0.8561 | 0.7714 | 371 |
 | verifier-t-pilot::verified-t1-0 | proposer-verifier | verified | 4 | 5 | 0.8422 | 0.7562 | 370 |
+| verifier-robustness::verified-384-union-t0-0-n5 | proposer-verifier | verified | 4 | 5 | 0.8722 | 0.7621 | 402 |
+| verifier-robustness::verified-256-union-t0-0-n5 | proposer-verifier | verified | 5 | 5 | 0.8637 | 0.7497 | 398 |
+| verifier-robustness::verified-256-ge3of5-t0-3-n5 | proposer-verifier | verified | 5 | 5 | 0.8582 | 0.7301 | 401 |
+| verifier-robustness::verified-384-ge3of5-t0-3-n5 | proposer-verifier | verified | 4 | 5 | 0.8739 | 0.7713 | 398 |
+| verifier-robustness::verified-384-ge3of5-t0-7-n5 | proposer-verifier | verified | 4 | 5 | 0.8709 | 0.7713 | 394 |
+| verifier-robustness::verified-384-ge3of5-t0-3-high-n5 | proposer-verifier | verified | 4 | 5 | 0.8764 | 0.789 | 398 |
+| verifier-robustness::verified-384-ge3of5-t0-7-high-n5 | proposer-verifier | verified | 4 | 5 | 0.8739 | 0.7927 | 398 |
+| verifier-robustness::verified-384-16of30-t0-3-n5-opmax | proposer-verifier | verified | — | 1 | 0.8951 | 0.7941 | 423 |

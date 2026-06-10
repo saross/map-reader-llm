@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-06-08T12:25:56Z",
+  "generated_at": "2026-06-10T08:30:41Z",
   "generator_version": "0.4.0",
   "runs": [
     {
@@ -949,6 +949,39 @@
           "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
         ],
         "last_extracted_at": "2026-06-08T12:25:56Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "run_id": "verifier-robustness",
+      "directory_path": "outputs/verifier-robustness",
+      "primary_hypothesis": "H2",
+      "also_informs": [
+        "H3"
+      ],
+      "purpose": "Verifier-robustness programme: determinism (n=1 vindicated), proposer-input band, temperature/thinking matrix, model roles, compute allocation, operational maximum, pass-budget Pareto. Meta-rule: on a within-noise tie, take the cheaper config.",
+      "run_type": "proposer-verifier",
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-2-487",
+        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": null,
+      "headline_rationale": "Deliberately none \u2014 NO new champion. The carry-forward headline pv-diag-384::verified-adv-text-consensus-16of30 (0.890) stands: the operational maximum here (verified-384-16of30-t0-3-n5-opmax, 0.8951) is NOT significant over it (paired tile-swap permutation p=0.363, results/verifier-robustness/opmax_vs_headline_permutation.json), so per the cost meta-rule (Obs 357) it is a numerical high only.",
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-06-10T08:30:41Z",
         "extractor_version": "0.4.0"
       }
     }

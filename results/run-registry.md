@@ -2,9 +2,9 @@
 
 # Run registry
 
-> Generated 2026-05-30T08:03:46Z · 28 row(s) · schema v1.0.
+> Generated 2026-05-30T08:03:46Z · 29 row(s) · schema v1.0.
 >
-> **Coverage**: all 28 runs (hand-verified input).
+> **Coverage**: all 29 runs (hand-verified input).
 
 | run_id | directory_path | status |
 |---|---|---|
@@ -36,3 +36,4 @@
 | retest-phase3c | outputs/retest/phase3c | active |
 | retest-h11-single-pass-384-t0 | outputs/retest/h11-single-pass-384-t0 | active |
 | verifier-t-pilot | outputs/verifier-t-pilot | active |
+| verifier-robustness | outputs/verifier-robustness | active |
