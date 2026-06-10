@@ -1,0 +1,66 @@
+{
+  "scope": "GS 384px / 487 tiles / curator GT / 20 m",
+  "note": "recall ceiling = union GT coverage (max recall any verifier could deliver); f1_max = 2R/(1+R) (ceiling F1 at perfect precision); union_per_pass measures inter-pass proposal diversity",
+  "pools": [
+    {
+      "pool": "pro-high-t07-5pass",
+      "n_union": 504,
+      "per_pass_mean": 437.7,
+      "union_per_pass": 1.15,
+      "recall_ceiling_20m": 0.8322,
+      "f1_max_at_ceiling": 0.9084,
+      "best_pv_f1_20m": 0.8506,
+      "crs_detected": "EPSG:32635"
+    },
+    {
+      "pool": "flash-min-t07-5pass",
+      "n_union": 1593,
+      "per_pass_mean": 1103.9,
+      "union_per_pass": 1.44,
+      "recall_ceiling_20m": 0.9195,
+      "f1_max_at_ceiling": 0.9581,
+      "best_pv_f1_20m": 0.8708,
+      "crs_detected": "EPSG:32635"
+    },
+    {
+      "pool": "flash-min-t07-10pass",
+      "n_union": 1939,
+      "per_pass_mean": 1121.8,
+      "union_per_pass": 1.73,
+      "recall_ceiling_20m": 0.9195,
+      "f1_max_at_ceiling": 0.9581,
+      "best_pv_f1_20m": 0.8835,
+      "crs_detected": "EPSG:32635"
+    },
+    {
+      "pool": "flash-high-t07-5pass",
+      "n_union": 3736,
+      "per_pass_mean": 1520.6,
+      "union_per_pass": 2.46,
+      "recall_ceiling_20m": 0.9425,
+      "f1_max_at_ceiling": 0.9704,
+      "best_pv_f1_20m": 0.8641,
+      "crs_detected": "EPSG:32635"
+    },
+    {
+      "pool": "flash-high-t07-30pass",
+      "n_union": 11771,
+      "per_pass_mean": null,
+      "union_per_pass": null,
+      "recall_ceiling_20m": 0.9632,
+      "f1_max_at_ceiling": 0.9813,
+      "best_pv_f1_20m": null,
+      "crs_detected": "EPSG:32635"
+    },
+    {
+      "pool": "flash-high-16of30-headline-pool",
+      "n_union": 729,
+      "per_pass_mean": null,
+      "union_per_pass": null,
+      "recall_ceiling_20m": 0.9057,
+      "f1_max_at_ceiling": 0.9505,
+      "best_pv_f1_20m": 0.8951,
+      "crs_detected": "EPSG:32635"
+    }
+  ]
+}
