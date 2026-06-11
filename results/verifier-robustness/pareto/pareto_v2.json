@@ -3,6 +3,12 @@
     "min_pass_usd": 0.3,
     "high_pass_usd": 0.9,
     "vf_call_usd": 0.000697,
+    "production_scale": {
+      "tiles_gs": 487,
+      "tiles_55map": 8541,
+      "factor": 17.54,
+      "note": "crops/tile from GS pools; 55-map corpus sparser -> slight upper bound; flex == batch pricing on Gemini 3"
+    },
     "basis": "verifier rate measured (opmax run); proposer pass from measured per-call tokens at F3 flex rates; HIGH = 3x minimal (thinking-token dominance)"
   },
   "tiers": [
@@ -28,6 +34,7 @@
       "f1": 0.8951,
       "passes": 35,
       "est_cost_usd": 29.54,
+      "est_cost_55map_usd": 518.08,
       "proposer": "30xHIGH",
       "verifier": "n=5 over 729 crops",
       "tier": 1
@@ -37,6 +44,7 @@
       "f1": 0.8902,
       "passes": 31,
       "est_cost_usd": 27.51,
+      "est_cost_55map_usd": 482.44,
       "proposer": "30xHIGH",
       "verifier": "n=1 over 729 crops",
       "tier": 1
@@ -46,6 +54,7 @@
       "f1": 0.8835,
       "passes": 11,
       "est_cost_usd": 4.35,
+      "est_cost_55map_usd": 76.32,
       "proposer": "10xMIN",
       "verifier": "n=1 over 1939 crops",
       "tier": 1
@@ -55,6 +64,7 @@
       "f1": 0.8784,
       "passes": 6,
       "est_cost_usd": 2.61,
+      "est_cost_55map_usd": 45.69,
       "proposer": "5xMIN",
       "verifier": "n=1 over 1586 crops",
       "tier": 1
@@ -64,6 +74,7 @@
       "f1": 0.8769,
       "passes": 11,
       "est_cost_usd": 13.09,
+      "est_cost_55map_usd": 229.55,
       "proposer": "10xHIGH",
       "verifier": "n=1 over 5866 crops",
       "tier": 1
@@ -73,6 +84,7 @@
       "f1": 0.8739,
       "passes": 10,
       "est_cost_usd": 7.48,
+      "est_cost_55map_usd": 131.18,
       "proposer": "5xHIGH",
       "verifier": "n=5 over 855 crops",
       "tier": 1
@@ -82,6 +94,7 @@
       "f1": 0.8641,
       "passes": 6,
       "est_cost_usd": 7.1,
+      "est_cost_55map_usd": 124.59,
       "proposer": "5xHIGH",
       "verifier": "n=1 over 3736 crops",
       "tier": 1
