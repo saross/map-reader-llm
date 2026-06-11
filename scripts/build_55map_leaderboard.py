@@ -71,14 +71,20 @@ NAMES = {
 
 
 def canonical_gt_at(r_m: float) -> gpd.GeoDataFrame:
-    """The canonical GT at buffer R: reviewed students + phantoms gated <= R."""
+    """The canonical GT at buffer R: reviewed students + phantoms gated <= R.
+
+    Carries ``source_map`` (required by the per-map Hungarian matcher):
+    students from their own property, phantoms from the review CSV.
+    """
     s = gpd.read_file(STUDENT_GT).to_crs("EPSG:32635")
     pts = list(s.geometry)
+    maps = list(s["source_map"])
     with open(PHANTOMS) as fh:
         for row in csv.DictReader(fh):
             if float(row["buffer_metres"]) <= r_m:
                 pts.append(Point(float(row["x"]), float(row["y"])))
-    return gpd.GeoDataFrame({"geometry": pts}, crs="EPSG:32635")
+                maps.append(row["map_name"])
+    return gpd.GeoDataFrame({"geometry": pts, "source_map": maps}, crs="EPSG:32635")
 
 
 def main() -> int:
