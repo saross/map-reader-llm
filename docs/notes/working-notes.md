@@ -20181,3 +20181,195 @@ qualifier; instrument resolution paper caveat
 verified 2026-06-11);
 `outputs/55maps-text-min-generalisation/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-18.meta.json`;
 `outputs/55maps-text-min-generalisation/verified/run.meta.json`.
+
+## Observation 363: The completeness sweep — 18 never-swept PV pools scored, the Pro verifier matters on high-recall pools, and the headline survives a global-optimum check (Session 113, 2026-06-11)
+
+*Source anchors: `results/verifier-robustness/unswept_pools_sweep.json`
+and `results/verifier-robustness/unswept_pools_sweep.log` (147-dir audit
++ 18-cell sweep; generated 2026-06-11T06:33:29Z; verified 2026-06-11);
+`results/verifier-robustness/pro_vf_permutations.json` (Pro-vf vs high6 /
+headline31 / min11 tile-swap permutation tests, 10,000 permutations, 487
+tiles; verified 2026-06-11);
+`results/working-precision/gs-t03-pv-cell.json` (GS text HIGH T0.3 5-pass
+PV cell, Run A, $2.06; verified 2026-06-11);
+`results/55map-leaderboard/gs-vs-55map-transfer.md` (transfer table with
+all four deployed configurations; updated 2026-06-11).*
+
+### The finding
+
+**A systematic audit of all 147 verified PV directories** classified the
+corpus and swept every genuinely unswept cell at $0 additional cost:
+
+| category | count |
+|---|---:|
+| already swept (prior sessions) | 19 |
+| duplicate-format dirs (byte-identical) | 6 |
+| band / verifier-draw replicates | 103 |
+| in-flight excluded (T0.3 run mid-flight) | 1 |
+| **genuinely unswept — swept now** | **18** |
+| **total in scope** | **147** |
+
+The 18 genuinely unswept cells are all now characterised at best operating
+point (20 m) and at 50 m operational value. Full table in
+`unswept_pools_sweep.json` / `unswept_pools_sweep.log`.
+
+**Headline finding — the Pro verifier model matters on a high-recall
+pool.** The flash-HIGH 5-pass union (3,736 candidates) re-verified with the
+Pro verifier yields F1@20 m = **0.8792** at 4of5/pt0.25 (n = 393). Compared
+against the same union with the Flash carry-forward verifier (high6, F1 =
+0.8641), the permutation test gives:
+
+| comparison | F1 (Pro-vf) | F1 (other) | Δ | p (tile-swap, 10k) |
+|---|---:|---:|---:|---:|
+| Pro-vf vs Flash carry-forward (high6) | 0.8792 | 0.8641 | **+0.0151** | **0.019** |
+| Pro-vf vs headline 31-pass (high31) | 0.8792 | 0.8902 | −0.0110 | 0.410 |
+| Pro-vf vs min11 | 0.8792 | 0.8835 | −0.0043 | 0.765 |
+
+**Honesty caveat**: the Pro-vf / high6 pair was selected for testing after
+seeing the sweep results — this is a hypothesis-generating contrast, not a
+confirmatory one. The p = 0.019 would not survive a multiple-testing
+correction for all pairwise comparisons in the sweep; it is exploratory.
+
+**Global-optimum check on the headline.** The full 30-pass union (11,771
+candidates) had never been swept across all k-of-30 × prob\_t operating
+points. The sweep confirms the global optimum is exactly the registered
+headline configuration:
+
+| proposer\_k | F1@20 m | prob\_t | n accepted |
+|---:|---:|---:|---:|
+| **16of30** | **0.8902** | **0.2** | **412** |
+| 17of30 | 0.8899 | 0.2 | 410 |
+| 15of30 | 0.8852 | 0.2 | 419 |
+
+No hidden operating point exceeds 0.8902; the registered headline is the
+true optimum of its pool.
+
+**T0.3 GS comparator closure.** The T0.3 proposer (text HIGH, T=0.3,
+5-pass + carry-forward n=1 verifier) was the last uncharacterised deployed
+configuration. Run A ($2.06, 2,954/2,954 clean): F1@20 m = **0.8783**,
+F1@50 m = **0.9045**, best op 4of5/pt0.2. The 55-map transfer table is
+now complete:
+
+| config | GS F1@50 m | 55-map k3 F1@50 m | Δ |
+|---|---:|---:|---:|
+| text HIGH T0.3 | 0.9045 | 0.8476 | −0.057 |
+| text HIGH T0.7 | 0.8908 | 0.8425 | −0.048 |
+| text MIN T0.7 | 0.8996 | 0.8127 | −0.087 |
+| image HIGH T0.7 | 0.8771 | 0.7987 | −0.078 |
+
+The deployment champion (T0.7-HIGH) *started lower* on the GS instrument
+but *degraded less* in transfer: −0.048 HIGH-T0.7 < −0.057 HIGH-T0.3 <
+−0.078 image < −0.087 MIN.
+
+### Why this matters
+
+**1. Obs 359's "verifier model barely matters" finding is pool-dependent.**
+Obs 359 measured the Pro verifier over the Pro *proposer* pool (504
+candidates, low n\_accepted relative to the 5-pass Flash-HIGH union of
+3,736). On a high-recall pool the verifier model contributes measurably
+(+0.015 raw). The mechanism is consistent with the recall-ceiling framing:
+where the pool has more borderline true positives the Pro verifier's
+discrimination earns its keep. On a saturated or precision-limited pool
+(Obs 359's Pro-proposer pool), verifier model selection is not the binding
+constraint.
+
+**2. Production frontier is unchanged.** At Pro verifier rates (~$0.0028
+per call × 3,736 candidates = ~$10), the Flash-HIGH 5-pass + Pro-vf cell
+(0.8792) is dominated on both cost and F1 by min11 (0.8835, lower cost).
+The finding refines the scope of Obs 359 but does not move the Pareto
+frontier or the deployment recommendation.
+
+**3. The headline is globally optimal — no hidden operating point exists.**
+The sweep across all 30 vote bands confirms 16of30/pt0.2 (F1 = 0.8902,
+n = 412) is the true maximum of the 30-pass pool. The paper-registered
+configuration is not merely a local optimum within the evaluated bands; it
+is the global optimum of its pool. This is the strongest possible closure
+on the headline robustness.
+
+**4. Transfer table is complete and the deployment ordering is established.**
+T0.7-HIGH is empirically the best transferrer among deployed configurations
+(smallest degradation). T0.3-HIGH degraded more (−0.057) despite a higher
+GS starting point (0.9045 vs 0.8908) — the better in-distribution performer
+is not necessarily the better transferrer. This framing is available for
+the generalisation section of the paper.
+
+**5. The 103 replicate directories are a free resource.** The 17 independent
+March-era draws among the 103 band/draw replicates (March 2026, independent
+verifier runs at T=0.0, n=1) are a no-cost determinism corpus. Their
+existence independently corroborates Obs 354's ~3% candidate-level
+non-determinism finding: independent draws with identical configuration show
+the same candidate-level probability divergence documented there, without
+requiring any additional API spend.
+
+### Caveats / methodological notes
+
+The Pro-vf vs high6 contrast (p = 0.019) is exploratory — it was selected
+after inspecting the sweep. This is an important qualification: the result
+is consistent with the pool-recall-ceiling mechanism but cannot be claimed
+as a pre-specified hypothesis test. It should be reported as a secondary,
+hypothesis-generating observation.
+
+The "total dirs in scope" figure from the sweep JSON is **147**, not 146 as
+stated in the session specification. The verified figure from the source is
+used throughout this Obs.
+
+The transfer deltas are reported to three decimal places in the source file
+(`gs-vs-55map-transfer.md`) and rounded to three significant figures in the
+table above (−0.048 etc.). The rounded figures match the specification.
+
+The F1@50 m for T0.7-HIGH in the transfer table (GS side: 0.8908) is taken
+directly from `gs-vs-55map-transfer.md`, which reports it as 0.8908. Note
+that the GS text-HIGH T0.7 5-pass cell's best-op F1@50 m as reported in
+prior sessions was 0.8908; the T0.3 GS F1@50 m = 0.9045 is from
+`gs-t03-pv-cell.json` (verified here).
+
+### Findable later
+
+completeness sweep 147 PV directories audit; 18 unswept cells swept;
+19 already swept; 103 band replicates; 6 duplicate format dirs; Pro
+verifier high-recall pool; Pro-vf 0.8792 4of5 pt0.25; high6 0.8641
+verifier delta +0.0151; p=0.019 exploratory post-hoc; headline 0.8902
+global optimum confirmed; 16of30 pt0.2 n=412 global max; 30-pass union
+11771 candidates; no hidden operating point; T0.3 GS comparator closed;
+Run A 2.06 USD 2954 clean; T0.3 0.8783 20m 0.9045 50m 4of5 pt0.2;
+transfer table complete; T0.7-HIGH best transferrer −0.048; T0.3-HIGH
+−0.057 started higher degraded more; image −0.078 MIN −0.087; 17
+independent March draws free determinism corpus; recall-ceiling verifier
+mechanism; Pro verifier pool-dependent; production frontier unchanged;
+unswept_pools_sweep; pro_vf_permutations; gs-t03-pv-cell; gs-vs-55map-transfer;
+Obs 359 refined; verifier model barely matters qualified; post-hoc caveat
+
+### Related observations and artefacts
+
+- **[[Obs 359]]** (verifier model barely matters — refined by this Obs:
+  that finding holds on the recall-ceiling-bound Pro-proposer pool; on
+  the larger Flash-HIGH union with higher recall, the Pro verifier model
+  contributes +0.015 raw; the production frontier is unchanged because
+  Pro-vf is dominated by min11)
+- **[[Obs 362]]** (the transfer narrative completed here — the T0.3
+  comparator that was in-flight at Obs 362 is now characterised, the
+  transfer table is complete, and the deployment ordering established)
+- **[[Obs 354]]** (T=0.0 verifier non-determinism ~3% per candidate —
+  the 17 independent March-era draw replicates among the 103 band dirs
+  are an independent corroboration of that finding at zero additional cost)
+- **[[Obs 360]]** (working precisions and the image modality plateau — the
+  image cells in the sweep show F1@20 m 0.72–0.79, F1@50 m 0.81–0.88,
+  with MCC 0.80–0.89 far exceeding F1@20 m, consistent with the tiles-found,
+  points-off pattern documented there)
+- **[[Obs 347]]** (GS resolving-power limit — the GS instrument's ±0.03
+  noise floor is the reason the Pro-vf +0.015 advantage was undetected in
+  prior characterisation; it is within the noise floor of the 487-tile
+  instrument and only surfaced when the sweep isolated the contrast)
+
+**Artefacts**: `results/verifier-robustness/unswept_pools_sweep.json`
+(full 18-cell sweep table; verified 2026-06-11);
+`results/verifier-robustness/unswept_pools_sweep.log`
+(per-band sweep trace and summary; verified 2026-06-11);
+`results/verifier-robustness/pro_vf_permutations.json`
+(Pro-vf permutation tests vs high6 / headline31 / min11;
+verified 2026-06-11);
+`results/working-precision/gs-t03-pv-cell.json`
+(T0.3 GS comparator, Run A; verified 2026-06-11);
+`results/55map-leaderboard/gs-vs-55map-transfer.md`
+(complete transfer table with all four deployed configurations;
+updated 2026-06-11).
