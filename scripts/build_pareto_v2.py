@@ -43,8 +43,8 @@ from scripts.n1_baseline_leaderboard_tiering import (  # noqa: E402
 
 BOUNDS = BASE_DIR / "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
 OUT_DIR = BASE_DIR / "results/verifier-robustness/pareto"
-MIN_PASS_USD = 0.30
-HIGH_PASS_USD = 0.90
+MIN_PASS_USD = 0.54   # recalibrated from the TM cost manifest (measured tokens at flex)
+HIGH_PASS_USD = 1.61  # 3x minimal (thinking-token dominance)
 VF_CALL_USD = 0.000697
 # 55-map production scaling (Shawn, 2026-06-11): the real-world costing is a
 # deployment over the 8,541-tile generalisation corpus. Both cost components
