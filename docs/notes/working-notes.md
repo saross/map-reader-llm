@@ -20017,3 +20017,167 @@ independence assumption not grossly wrong; generalisation metric epistemics
 **Artefacts**: `results/working-precision/gs-miss-correlation.json`;
 `results/working-precision/gs-miss-correlation.log`;
 `scripts/measure_miss_correlation_gs.py`.
+
+## Observation 362: The GS min≈high tie REVERSED at deployment — the cost meta-rule's scope must be qualified by instrument resolution (Session 112, 2026-06-11)
+
+*Source anchors: `results/55map-leaderboard/55map_leaderboard_50m.json`
+(7-cell 55-map leaderboard, 8,541 tiles, 10,000-permutation tile-swap
+round-robin, BH-FDR q = 0.05; tiers and pairwise table verified 2026-06-11);
+`results/verifier-robustness/min_vs_high_permutations.json` (GS permutation
+tests: min6 vs high6, min11 vs high11, min11 vs headline31; verified 2026-06-11);
+`results/verifier-robustness/pareto/pareto_v2.json` (cost model for
+55-map-scale projections; verified 2026-06-11);
+`outputs/55maps-text-min-generalisation/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-18.meta.json`
+(proposer pass meta confirming min recipe; verified 2026-06-11);
+`outputs/55maps-text-min-generalisation/verified/run.meta.json`
+(verifier config: gemini-3-flash, T=0.0, minimal, n=1; verified 2026-06-11).*
+
+### The finding
+
+**The min6 recipe has been deployed at production.** The
+`55maps-text-min-generalisation` run (condition `TM-k3`) is exactly the min6
+recipe: `gemini-3-flash`, `detect_brief-text`, T=0.7, minimal thinking,
+5 proposer passes, carry-forward n=1 adversarial verifier — confirmed from
+pass metas and `verified/run.meta.json`.
+
+**On the GS instrument (487 tiles), minimal and HIGH thinking were a
+statistical tie** (`min_vs_high_permutations.json`):
+
+| comparison | min F1@20 m | high / headline F1 | Δ | p |
+|---|---:|---:|---:|---:|
+| min6 vs high6 | 0.8708 | 0.8641 | +0.0068 | 0.656 |
+| min11 vs high11 | 0.8835 | 0.8769 | +0.0066 | 0.591 |
+| min11 vs headline31 | 0.8835 | 0.8902 | −0.0067 | 0.562 |
+
+**On the 55-map instrument (8,541 tiles), the tie is reversed and resolves
+decisively.** At 50 m buffer, round-robin (18/21 BH-significant pairs),
+`TM-k3` (minimal, 5+1 passes) and `TH7-k3` (HIGH, 5+1 passes) sit two
+tiers apart:
+
+| tier | cell | F1@50 m | MCC |
+|---:|---|---:|---:|
+| T1 | T03-k3 oracle, TH7-k3 | 0.8476, 0.8425 | 0.690, 0.680 |
+| T2 | T03-k4 | 0.8359 | 0.671 |
+| T3 | TH7-k4 carry-forward, **TM-k3** | 0.8152, **0.8127** | 0.667, 0.658 |
+| T4 | IM-k3 | 0.7987 | 0.710 |
+| T5 | TM-k4 | 0.7831 | 0.641 |
+
+The TH7-k3 vs TM-k3 pair: observed Δ = +0.030, p = 0.000 (< 0.001 after BH
+on 8,541 tiles). The GS instrument could not detect this gap; the 55-map
+instrument resolves it at the highest significance level in the leaderboard.
+
+**This is not a contradiction — it is bounded ignorance resolved.** The
+487-tile GS instrument lacks the resolving power to separate configurations
+within approximately ±0.03 F1 ([[Obs 347]], [[Obs 358]]). The observed tie
+at ±0.007 (minimal ahead) is well inside that noise floor. Deployment on
+a 17× larger corpus supplied the resolution the GS instrument could not,
+and HIGH thinking won.
+
+### Why this matters
+
+**1. The cost meta-rule ([[Obs 357]]) is scope-limited by instrument
+resolution.** The meta-rule states: on a within-noise tie, take the cheaper
+configuration. The rule is sound, but the qualification now matters:
+a tie measured on an instrument that cannot resolve ±0.03 is weak evidence
+for production. On the GS instrument, every rung from 6 to 35 passes is
+statistically one tier — including the min6 vs high6 comparison. That
+instrument-level parity does not licence the claim that minimal and HIGH
+are equivalent at production scale. Where deployment evidence exists, it
+**overrides** a characterisation tie.
+
+**2. The deployment-evidenced production text configuration is HIGH thinking
+at k3 (TH7-k3), not minimal.** TH7-k3 sits in Tier 1 (F1@50 m = 0.8425);
+TM-k3 sits in Tier 3 (F1@50 m = 0.8127). The cost premium is real:
+per `pareto_v2.json` (55-map scale projections from the GS cost model),
+min6 costs approximately $46 per 55-map run vs high6's approximately $125.
+That $79 difference buys +0.030 F1 and two tiers of resolving power on the
+canonical production instrument.
+
+**3. The plausible mechanism** ([[Obs 359]] bounds this): on the GS sheets,
+minimal thinking saturates Flash's pool recall ceiling in approximately 5
+passes (ceiling 0.920 vs HIGH's 0.943 — a modest +0.023 advantage). The
+GS sheets are a narrow, well-characterised 4-map subset; the 55-map corpus
+spans 55 geographically and cartographically diverse sheets. HIGH thinking's
+larger, more diverse candidate pool likely earns its keep precisely on the
+harder or distribution-shifted sheets that the GS corpus cannot exhibit.
+The recall-ceiling saturation observed on the GS sheets ([[Obs 359]]) may
+be GS-specific.
+
+**4. Practical consequences — four points the paper must carry:**
+
+- **(a) Scope qualifier on the cost meta-rule.** The rule holds where the
+  tie is measured on an instrument with resolution ≥ the difference of
+  consequence. A GS tie at ±0.007 with ±0.03 noise is not strong evidence
+  for deployment parity. Any paper claim that cites the cost meta-rule
+  should note this scope.
+- **(b) Production text config is TH7-k3, not TM-k3.** The deployed min
+  run is a known Tier 3 result; it is correctly retained in the leaderboard
+  as evidence, not displaced.
+- **(c) min11 is untested at production scale.** Its GS MCC crown (F1 =
+  0.8835, Pareto-efficient on the GS cost frontier) and the Pareto v2
+  position do not licence extrapolation to 55-map performance — the GS
+  instrument cannot resolve the +0.0127 gap between min11 and headline31,
+  and no 55-map run exists for min11.
+- **(d) The Pareto v2 production column must carry a caveat.** The F1 column
+  in `pareto_v2.json` is GS-characterised (487-tile, 20 m buffer). The only
+  production evidence for a minimal rung on the 55-map instrument shows
+  −0.030 relative to the matched HIGH configuration.
+
+### Caveats / methodological notes
+
+The TM-k3 condition ran with the GS-calibrated k3 threshold (3-of-5 votes)
+carried forward unchanged, as did TH7-k3. The comparison is therefore
+at matched threshold; the −0.030 gap is a genuine thinking-level effect,
+not a threshold transfer artefact ([[Obs 358]] established that the threshold
+axis accounts for +0.027 of the carry-forward penalty, not for this
+within-tier comparison).
+
+The cost projections (~$46, ~$125) are from the GS-calibrated cost model
+in `pareto_v2.json`. The basis is measured GS-corpus token counts scaled
+by the 55-map/GS tile factor (17.54×); they are upper bounds for sparser
+55-map tiles (noted in the cost model metadata).
+
+The GS p-value range stated in the user spec ("p = 0.59–0.66") was an
+approximation. The verified file values span p = 0.562–0.656 (three
+comparisons); the low end is min11 vs headline31, p = 0.562. All three
+comparisons remain non-significant; the substantive conclusion is unchanged.
+
+### Findable later
+
+cost meta-rule scope instrument resolution; GS tie reversed deployment;
+TM-k3 Tier 3 0.8127; TH7-k3 Tier 1 0.8425; min HIGH reversal 55-map;
+min6 high6 GS parity p=0.656; deployment overrides characterisation tie;
+55maps-text-min-generalisation production config; HIGH thinking 55-map
+diverse sheets distribution shift; recall ceiling GS-specific saturation;
+pareto v2 GS-characterised caveat; min11 untested production scale; cost
+46 USD 125 USD 55-map; production text config TH7-k3; two tiers apart
+8541 tiles; bounded ignorance resolved; 487-tile noise floor 0.03;
+min_vs_high_permutations; 55map_leaderboard_50m; pareto_v2; Obs 357 scope
+qualifier; instrument resolution paper caveat
+
+### Related observations and artefacts
+
+- **[[Obs 357]]** (the cost meta-rule — this Obs qualifies its scope:
+  the rule is valid only where the tie is measured on an instrument that
+  could detect a difference of consequence; a GS tie at ±0.007 with
+  ±0.03 noise is insufficient evidence for production parity)
+- **[[Obs 358]]** (the threshold-axis instance of the same instrument-resolution
+  lesson — the GS k3≈k4 plateau materialised as a +0.027 deployment penalty;
+  this Obs is the thinking-level instance of the same failure mode)
+- **[[Obs 359]]** (GS parity + pool recall ceiling — the minimal recall-ceiling
+  saturation on the GS sheets is the proposed mechanism; this Obs bounds
+  that finding to the GS context and flags that it may not transfer to the
+  55-map corpus)
+- **[[Obs 347]]** (GS resolving-power limit — the ±0.03 noise floor that
+  concealed the min vs HIGH gap is the same resolving-power constraint
+  documented there; deployment on 8,541 tiles resolved what 487 tiles
+  could not)
+
+**Artefacts**: `results/55map-leaderboard/55map_leaderboard_50m.json`
+(pairwise table + tier assignments; verified 2026-06-11);
+`results/verifier-robustness/min_vs_high_permutations.json`
+(GS permutation tests; verified 2026-06-11);
+`results/verifier-robustness/pareto/pareto_v2.json` (cost model;
+verified 2026-06-11);
+`outputs/55maps-text-min-generalisation/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-18.meta.json`;
+`outputs/55maps-text-min-generalisation/verified/run.meta.json`.
