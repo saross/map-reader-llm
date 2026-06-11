@@ -412,9 +412,15 @@ on the diverse 55-map sheets, and the § 13 recall-ceiling saturation may
 be GS-specific. **Consequences**: (a) the meta-rule holds only where the
 tie's instrument could detect a difference of consequence; (b) deployment
 evidence overrides characterisation ties — the deployment-evidenced
-production text config is HIGH thinking at k3; (c) the min6 → min11
-production lift experiment (~$60 flex, Shawn-approved) is RUNNING — it
-tests whether pass count closes the gap; (d) **CLOSED 2026-06-11**: the
+production text config is HIGH thinking at k3; (c) **ANSWERED 2026-06-11
+(Run B, ~$60)**: pass count closes about HALF the thinking gap — the
+min11 uplift (10 minimal passes + band verifier) scores **0.8290** @ 50 m
+(5of10/pt0.15), significantly above TM-k3 (+0.0163, p < 0.0001) and
+significantly below TH7-k3 (−0.0134, p = 0.0026). Both steps resolve, so
+the production choice is a genuine cost/quality trade (~$105 for 0.829
+vs ~$150 for 0.843 at recalibrated production rates), not a tie; note
+the deployment optimum again sat looser than GS (5of10 vs the GS-best
+6of10 — the k3 lesson recurring at n = 10); (d) **CLOSED 2026-06-11**: the
 T0.3 proposer is now GS-characterised (Run A, $2.06: 0.8783 @ 20 m /
 0.9045 @ 50 m, 4of5/pt0.2) — the transfer table is complete, final deltas
 HIGH-T0.7 −0.048 < HIGH-T0.3 −0.057 < image −0.078 < MIN −0.087: the
