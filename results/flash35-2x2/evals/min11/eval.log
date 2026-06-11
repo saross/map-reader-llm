@@ -1,0 +1,23 @@
+INFO: Detection files: 1
+INFO: Loading ground truth: /home/shawn/Code/map-reader-llm/inputs/vectors/references/mounds-reference.geojson
+INFO: Loading bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
+INFO: Reference: 569 mounds, 487 evaluation tiles
+INFO: Evaluating: text-min-t07-10pass-6of10-n1-pt0.2.geojson
+INFO:   5m: F1=0.413 [0.373, 0.447], P=0.437 [0.396, 0.475], R=0.391 [0.353, 0.426] [sparse coverage: 55.9% zero-tiles]
+INFO:   10m: F1=0.750 [0.720, 0.782], P=0.794 [0.764, 0.824], R=0.710 [0.680, 0.748] [sparse coverage: 57.3% zero-tiles]
+INFO:   15m: F1=0.842 [0.820, 0.866], P=0.892 [0.869, 0.914], R=0.798 [0.772, 0.828] [sparse coverage: 57.7% zero-tiles]
+INFO:   20m: F1=0.883 [0.866, 0.901], P=0.936 [0.917, 0.953], R=0.837 [0.814, 0.865] [sparse coverage: 57.7% zero-tiles]
+INFO:   25m: F1=0.893 [0.876, 0.910], P=0.946 [0.929, 0.962], R=0.846 [0.823, 0.874] [sparse coverage: 57.7% zero-tiles]
+INFO:   30m: F1=0.900 [0.883, 0.917], P=0.954 [0.937, 0.969], R=0.853 [0.829, 0.879] [sparse coverage: 57.7% zero-tiles]
+INFO:   35m: F1=0.900 [0.883, 0.917], P=0.954 [0.937, 0.969], R=0.853 [0.829, 0.879] [sparse coverage: 57.7% zero-tiles]
+INFO:   40m: F1=0.900 [0.883, 0.917], P=0.954 [0.937, 0.969], R=0.853 [0.829, 0.879] [sparse coverage: 57.7% zero-tiles]
+INFO:   45m: F1=0.903 [0.886, 0.919], P=0.956 [0.939, 0.972], R=0.855 [0.831, 0.881] [sparse coverage: 57.7% zero-tiles]
+INFO:   50m: F1=0.903 [0.886, 0.919], P=0.956 [0.939, 0.972], R=0.855 [0.831, 0.881] [sparse coverage: 57.7% zero-tiles]
+INFO:   75m: F1=0.905 [0.889, 0.921], P=0.959 [0.942, 0.974], R=0.857 [0.834, 0.883] [sparse coverage: 57.7% zero-tiles]
+INFO:   100m: F1=0.908 [0.892, 0.923], P=0.961 [0.945, 0.977], R=0.860 [0.835, 0.886] [sparse coverage: 57.7% zero-tiles]
+INFO:   125m: F1=0.908 [0.892, 0.923], P=0.961 [0.945, 0.977], R=0.860 [0.835, 0.886] [sparse coverage: 57.7% zero-tiles]
+INFO:   150m: F1=0.908 [0.892, 0.923], P=0.961 [0.945, 0.977], R=0.860 [0.835, 0.886] [sparse coverage: 57.7% zero-tiles]
+INFO:   MCC=0.807 [0.772, 0.839], Sens=0.808, Spec=0.981
+INFO: JSON written: results/flash35-2x2/evals/min11/evaluation.json
+INFO: CSV written: results/flash35-2x2/evals/min11/evaluation.csv
+INFO: Markdown written: results/flash35-2x2/evals/min11/evaluation.md
