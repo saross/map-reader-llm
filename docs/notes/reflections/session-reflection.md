@@ -8761,8 +8761,8 @@ through `evaluate_detections` (which respects declared CRS), **not** the broken
 `consensus_to_gdf`; the background agent's "unreproducible" alarm was scoped to the broken
 internal path, not the standard scorer. Three actors, two scorers, one bug, and the
 reassuring conclusion depends on knowing which path each used — none of it legible from the
-artefacts. The investigation report (`reports/diversity-crs-mislabel-investigation-2026-06-08.md`)
-+ Obs 350 + the `spatial-reference.md` § are the trail; without them a future reader sees
+artefacts. The investigation report
+(`reports/diversity-crs-mislabel-investigation-2026-06-08.md`) + Obs 350 + the `spatial-reference.md` § are the trail; without them a future reader sees
 "F1=0 on re-run" and panics. Also non-obvious: pv-diag-256 was decomposed as a *tie-up* chore
 but became the 256 px anchor that revealed tile size is **non-monotonic** (256 < 512 < 384 at
 20 m — 384 is a sweet spot) — the project's "unexpected data as discovery" heuristic firing on
