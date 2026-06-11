@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-06-08T12:25:56Z",
+  "generated_at": "2026-06-11T12:20:12Z",
   "generator_version": "0.4.0",
   "passes": [
     {
@@ -15484,43 +15484,6 @@
       "provenance": {
         "source_files": [
           "outputs/h11/pv-diag-384/verified/text-1of10/run.meta.json"
-        ],
-        "last_extracted_at": "2026-06-08T12:25:56Z",
-        "extractor_version": "0.4.0"
-      }
-    },
-    {
-      "pass_id": "pv-diag-384::verified-text-1of5::run1",
-      "run_id": "pv-diag-384",
-      "proposer_pool": "verified-text-1of5",
-      "pass_n": 1,
-      "model_used": "gemini-3-flash",
-      "model_requested": "gemini-3-flash",
-      "model_version": null,
-      "modality": "text",
-      "thinking_level": "minimal",
-      "temperature": 0.0,
-      "instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
-      "library_hash": "no_examples",
-      "status": "ok",
-      "n_tiles_processed": 0,
-      "tokens": {
-        "input_billed": 0,
-        "input_cached": 0,
-        "output": 0,
-        "thinking": 0,
-        "total": 0
-      },
-      "cost_usd": 0.0,
-      "wall_clock_s": 0.006755,
-      "timestamps": {
-        "start": "2026-03-23T05:23:58.851101+00:00",
-        "end": "2026-03-23T05:23:58.857856+00:00"
-      },
-      "retries": 0,
-      "provenance": {
-        "source_files": [
-          "outputs/h11/pv-diag-384/verified/text-1of5/run.meta.json"
         ],
         "last_extracted_at": "2026-06-08T12:25:56Z",
         "extractor_version": "0.4.0"
@@ -41238,6 +41201,709 @@
           "outputs/verifier-t-pilot/T1.0/run.meta.json"
         ],
         "last_extracted_at": "2026-06-08T12:25:56Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "flash35-pv-2x2::flash35-min-text-1of10::run1",
+      "run_id": "flash35-pv-2x2",
+      "proposer_pool": "flash35-min-text-1of10",
+      "pass_n": 1,
+      "model_used": "gemini-3.5-flash",
+      "model_requested": "gemini-3.5-flash",
+      "model_version": "gemini-3.5-flash",
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 734478,
+        "input_cached": 0,
+        "output": 57770,
+        "thinking": 0,
+        "total": 792248
+      },
+      "cost_usd": 0.5405490000000001,
+      "wall_clock_s": 780.316903,
+      "timestamps": {
+        "start": "2026-06-10T13:11:31.343218+00:00",
+        "end": "2026-06-10T13:27:57.048880+00:00"
+      },
+      "retries": 177,
+      "provenance": {
+        "source_files": [
+          "outputs/flash35-pv-2x2/proposer/run_1/detections-detect_brief-text-3.5-flash-2026-06-10.meta.json"
+        ],
+        "last_extracted_at": "2026-06-11T12:20:12Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "flash35-pv-2x2::flash35-min-text-1of10::run10",
+      "run_id": "flash35-pv-2x2",
+      "proposer_pool": "flash35-min-text-1of10",
+      "pass_n": 10,
+      "model_used": "gemini-3.5-flash",
+      "model_requested": "gemini-3.5-flash",
+      "model_version": "gemini-3.5-flash",
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 731474,
+        "input_cached": 0,
+        "output": 58193,
+        "thinking": 0,
+        "total": 789667
+      },
+      "cost_usd": 0.540316,
+      "wall_clock_s": 27.099076,
+      "timestamps": {
+        "start": "2026-06-10T16:48:40.154511+00:00",
+        "end": "2026-06-10T16:49:07.253587+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/flash35-pv-2x2/proposer/run_10/detections-detect_brief-text-3.5-flash-2026-06-11.meta.json"
+        ],
+        "last_extracted_at": "2026-06-11T12:20:12Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "flash35-pv-2x2::flash35-min-text-1of10::run2",
+      "run_id": "flash35-pv-2x2",
+      "proposer_pool": "flash35-min-text-1of10",
+      "pass_n": 2,
+      "model_used": "gemini-3.5-flash",
+      "model_requested": "gemini-3.5-flash",
+      "model_version": "gemini-3.5-flash",
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 734478,
+        "input_cached": 0,
+        "output": 58155,
+        "thinking": 0,
+        "total": 792633
+      },
+      "cost_usd": 0.541704,
+      "wall_clock_s": 594.179114,
+      "timestamps": {
+        "start": "2026-06-10T13:27:58.533139+00:00",
+        "end": "2026-06-10T13:40:58.383446+00:00"
+      },
+      "retries": 294,
+      "provenance": {
+        "source_files": [
+          "outputs/flash35-pv-2x2/proposer/run_2/detections-detect_brief-text-3.5-flash-2026-06-10.meta.json"
+        ],
+        "last_extracted_at": "2026-06-11T12:20:12Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "flash35-pv-2x2::flash35-min-text-1of10::run3",
+      "run_id": "flash35-pv-2x2",
+      "proposer_pool": "flash35-min-text-1of10",
+      "pass_n": 3,
+      "model_used": "gemini-3.5-flash",
+      "model_requested": "gemini-3.5-flash",
+      "model_version": "gemini-3.5-flash",
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "partial",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 734478,
+        "input_cached": 0,
+        "output": 57824,
+        "thinking": 0,
+        "total": 792302
+      },
+      "cost_usd": 0.540711,
+      "wall_clock_s": 1323.572289,
+      "timestamps": {
+        "start": "2026-06-10T13:41:00.020446+00:00",
+        "end": "2026-06-10T14:03:05.059246+00:00"
+      },
+      "retries": 880,
+      "provenance": {
+        "source_files": [
+          "outputs/flash35-pv-2x2/proposer/run_3/detections-detect_brief-text-3.5-flash-2026-06-10.meta.json"
+        ],
+        "last_extracted_at": "2026-06-11T12:20:12Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "flash35-pv-2x2::flash35-min-text-1of10::run4",
+      "run_id": "flash35-pv-2x2",
+      "proposer_pool": "flash35-min-text-1of10",
+      "pass_n": 4,
+      "model_used": "gemini-3.5-flash",
+      "model_requested": "gemini-3.5-flash",
+      "model_version": "gemini-3.5-flash",
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 735980,
+        "input_cached": 0,
+        "output": 58559,
+        "thinking": 0,
+        "total": 794539
+      },
+      "cost_usd": 0.543667,
+      "wall_clock_s": 1331.039261,
+      "timestamps": {
+        "start": "2026-06-10T14:26:49.462280+00:00",
+        "end": "2026-06-10T14:49:04.573116+00:00"
+      },
+      "retries": 470,
+      "provenance": {
+        "source_files": [
+          "outputs/flash35-pv-2x2/proposer/run_4/detections-detect_brief-text-3.5-flash-2026-06-11.meta.json"
+        ],
+        "last_extracted_at": "2026-06-11T12:20:12Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "flash35-pv-2x2::flash35-min-text-1of10::run5",
+      "run_id": "flash35-pv-2x2",
+      "proposer_pool": "flash35-min-text-1of10",
+      "pass_n": 5,
+      "model_used": "gemini-3.5-flash",
+      "model_requested": "gemini-3.5-flash",
+      "model_version": "gemini-3.5-flash",
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 731474,
+        "input_cached": 0,
+        "output": 58334,
+        "thinking": 0,
+        "total": 789808
+      },
+      "cost_usd": 0.540739,
+      "wall_clock_s": 1845.529946,
+      "timestamps": {
+        "start": "2026-06-10T14:49:05.905742+00:00",
+        "end": "2026-06-10T15:19:52.836959+00:00"
+      },
+      "retries": 839,
+      "provenance": {
+        "source_files": [
+          "outputs/flash35-pv-2x2/proposer/run_5/detections-detect_brief-text-3.5-flash-2026-06-11.meta.json"
+        ],
+        "last_extracted_at": "2026-06-11T12:20:12Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "flash35-pv-2x2::flash35-min-text-1of10::run6",
+      "run_id": "flash35-pv-2x2",
+      "proposer_pool": "flash35-min-text-1of10",
+      "pass_n": 6,
+      "model_used": "gemini-3.5-flash",
+      "model_requested": "gemini-3.5-flash",
+      "model_version": "gemini-3.5-flash",
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 731474,
+        "input_cached": 0,
+        "output": 58906,
+        "thinking": 0,
+        "total": 790380
+      },
+      "cost_usd": 0.542455,
+      "wall_clock_s": 908.437061,
+      "timestamps": {
+        "start": "2026-06-10T15:19:54.187624+00:00",
+        "end": "2026-06-10T15:35:02.624685+00:00"
+      },
+      "retries": 347,
+      "provenance": {
+        "source_files": [
+          "outputs/flash35-pv-2x2/proposer/run_6/detections-detect_brief-text-3.5-flash-2026-06-11.meta.json"
+        ],
+        "last_extracted_at": "2026-06-11T12:20:12Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "flash35-pv-2x2::flash35-min-text-1of10::run7",
+      "run_id": "flash35-pv-2x2",
+      "proposer_pool": "flash35-min-text-1of10",
+      "pass_n": 7,
+      "model_used": "gemini-3.5-flash",
+      "model_requested": "gemini-3.5-flash",
+      "model_version": "gemini-3.5-flash",
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 734478,
+        "input_cached": 0,
+        "output": 58459,
+        "thinking": 0,
+        "total": 792937
+      },
+      "cost_usd": 0.542616,
+      "wall_clock_s": 1676.200554,
+      "timestamps": {
+        "start": "2026-06-10T15:35:04.013160+00:00",
+        "end": "2026-06-10T16:03:02.918952+00:00"
+      },
+      "retries": 579,
+      "provenance": {
+        "source_files": [
+          "outputs/flash35-pv-2x2/proposer/run_7/detections-detect_brief-text-3.5-flash-2026-06-11.meta.json"
+        ],
+        "last_extracted_at": "2026-06-11T12:20:12Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "flash35-pv-2x2::flash35-min-text-1of10::run8",
+      "run_id": "flash35-pv-2x2",
+      "proposer_pool": "flash35-min-text-1of10",
+      "pass_n": 8,
+      "model_used": "gemini-3.5-flash",
+      "model_requested": "gemini-3.5-flash",
+      "model_version": "gemini-3.5-flash",
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 732976,
+        "input_cached": 0,
+        "output": 59014,
+        "thinking": 0,
+        "total": 791990
+      },
+      "cost_usd": 0.54353,
+      "wall_clock_s": 1659.455197,
+      "timestamps": {
+        "start": "2026-06-10T16:03:04.257345+00:00",
+        "end": "2026-06-10T16:30:45.105157+00:00"
+      },
+      "retries": 1369,
+      "provenance": {
+        "source_files": [
+          "outputs/flash35-pv-2x2/proposer/run_8/detections-detect_brief-text-3.5-flash-2026-06-11.meta.json"
+        ],
+        "last_extracted_at": "2026-06-11T12:20:12Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "flash35-pv-2x2::flash35-min-text-1of10::run9",
+      "run_id": "flash35-pv-2x2",
+      "proposer_pool": "flash35-min-text-1of10",
+      "pass_n": 9,
+      "model_used": "gemini-3.5-flash",
+      "model_requested": "gemini-3.5-flash",
+      "model_version": "gemini-3.5-flash",
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 487,
+      "tokens": {
+        "input_billed": 735980,
+        "input_cached": 0,
+        "output": 60740,
+        "thinking": 0,
+        "total": 796720
+      },
+      "cost_usd": 0.55021,
+      "wall_clock_s": 1068.502431,
+      "timestamps": {
+        "start": "2026-06-10T16:30:46.611743+00:00",
+        "end": "2026-06-10T16:48:38.804742+00:00"
+      },
+      "retries": 360,
+      "provenance": {
+        "source_files": [
+          "outputs/flash35-pv-2x2/proposer/run_9/detections-detect_brief-text-3.5-flash-2026-06-11.meta.json"
+        ],
+        "last_extracted_at": "2026-06-11T12:20:12Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "flash35-pv-2x2::verified-f3vf::run1",
+      "run_id": "flash35-pv-2x2",
+      "proposer_pool": "verified-f3vf",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+      "library_hash": "no_examples",
+      "status": "ok",
+      "n_tiles_processed": 1,
+      "tokens": {
+        "input_billed": 1792,
+        "input_cached": 0,
+        "output": 165,
+        "thinking": 0,
+        "total": 1957
+      },
+      "cost_usd": 0.001391,
+      "wall_clock_s": 34.152397,
+      "timestamps": {
+        "start": "2026-06-10T18:40:46.000778+00:00",
+        "end": "2026-06-10T18:41:20.153175+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/flash35-pv-2x2/verified-f3vf/run.meta.json"
+        ],
+        "last_extracted_at": "2026-06-11T12:20:12Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "flash35-pv-2x2::verified-f35vf::run1",
+      "run_id": "flash35-pv-2x2",
+      "proposer_pool": "verified-f35vf",
+      "pass_n": 1,
+      "model_used": "gemini-3.5-flash",
+      "model_requested": "gemini-3.5-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+      "library_hash": "no_examples",
+      "status": "ok",
+      "n_tiles_processed": 1132,
+      "tokens": {
+        "input_billed": 2028544,
+        "input_cached": 0,
+        "output": 163742,
+        "thinking": 0,
+        "total": 2192286
+      },
+      "cost_usd": 1.505498,
+      "wall_clock_s": 663.427129,
+      "timestamps": {
+        "start": "2026-06-10T18:41:21.186703+00:00",
+        "end": "2026-06-10T18:52:24.613832+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/flash35-pv-2x2/verified-f35vf/run.meta.json"
+        ],
+        "last_extracted_at": "2026-06-11T12:20:12Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "flash35-pv-2x2::min-f3-verified-f35vf::run1",
+      "run_id": "flash35-pv-2x2",
+      "proposer_pool": "min-f3-verified-f35vf",
+      "pass_n": 1,
+      "model_used": "gemini-3.5-flash",
+      "model_requested": "gemini-3.5-flash",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+      "library_hash": "no_examples",
+      "status": "ok",
+      "n_tiles_processed": 1939,
+      "tokens": {
+        "input_billed": 3474688,
+        "input_cached": 0,
+        "output": 278417,
+        "thinking": 0,
+        "total": 3753105
+      },
+      "cost_usd": 2.572595,
+      "wall_clock_s": 355.640394,
+      "timestamps": {
+        "start": "2026-06-10T18:52:37.604972+00:00",
+        "end": "2026-06-10T18:58:33.245366+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/flash35-pv-2x2/min-f3-verified-f35vf/run.meta.json"
+        ],
+        "last_extracted_at": "2026-06-11T12:20:12Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-min-n10-uplift::detect_brief-text-min-n10::run10",
+      "run_id": "55maps-text-min-n10-uplift",
+      "proposer_pool": "detect_brief-text-min-n10",
+      "pass_n": 10,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 12828582,
+        "input_cached": 0,
+        "output": 954532,
+        "thinking": 0,
+        "total": 13783114
+      },
+      "cost_usd": 9.277887,
+      "wall_clock_s": 922.239479,
+      "timestamps": {
+        "start": "2026-06-11T07:50:57.234364+00:00",
+        "end": "2026-06-11T08:06:19.473843+00:00"
+      },
+      "retries": 40,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-min-n10-uplift/proposer/run_10/detections-detect_brief-text-3-flash-2026-06-11.meta.json"
+        ],
+        "last_extracted_at": "2026-06-11T12:20:12Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-min-n10-uplift::detect_brief-text-min-n10::run6",
+      "run_id": "55maps-text-min-n10-uplift",
+      "proposer_pool": "detect_brief-text-min-n10",
+      "pass_n": 6,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 12828582,
+        "input_cached": 0,
+        "output": 968107,
+        "thinking": 0,
+        "total": 13796689
+      },
+      "cost_usd": 9.318612,
+      "wall_clock_s": 2756.767892,
+      "timestamps": {
+        "start": "2026-06-11T06:13:01.370726+00:00",
+        "end": "2026-06-11T06:59:26.412879+00:00"
+      },
+      "retries": 20,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-min-n10-uplift/proposer/run_6/detections-detect_brief-text-3-flash-2026-06-11.meta.json"
+        ],
+        "last_extracted_at": "2026-06-11T12:20:12Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-min-n10-uplift::detect_brief-text-min-n10::run7",
+      "run_id": "55maps-text-min-n10-uplift",
+      "proposer_pool": "detect_brief-text-min-n10",
+      "pass_n": 7,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 12830084,
+        "input_cached": 0,
+        "output": 974474,
+        "thinking": 0,
+        "total": 13804558
+      },
+      "cost_usd": 9.338464,
+      "wall_clock_s": 1168.775937,
+      "timestamps": {
+        "start": "2026-06-11T06:59:28.185217+00:00",
+        "end": "2026-06-11T07:18:58.657226+00:00"
+      },
+      "retries": 6,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-min-n10-uplift/proposer/run_7/detections-detect_brief-text-3-flash-2026-06-11.meta.json"
+        ],
+        "last_extracted_at": "2026-06-11T12:20:12Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-min-n10-uplift::detect_brief-text-min-n10::run8",
+      "run_id": "55maps-text-min-n10-uplift",
+      "proposer_pool": "detect_brief-text-min-n10",
+      "pass_n": 8,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 12828582,
+        "input_cached": 0,
+        "output": 954465,
+        "thinking": 0,
+        "total": 13783047
+      },
+      "cost_usd": 9.277686,
+      "wall_clock_s": 985.897059,
+      "timestamps": {
+        "start": "2026-06-11T07:19:00.242089+00:00",
+        "end": "2026-06-11T07:35:26.139148+00:00"
+      },
+      "retries": 108,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-min-n10-uplift/proposer/run_8/detections-detect_brief-text-3-flash-2026-06-11.meta.json"
+        ],
+        "last_extracted_at": "2026-06-11T12:20:12Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-min-n10-uplift::detect_brief-text-min-n10::run9",
+      "run_id": "55maps-text-min-n10-uplift",
+      "proposer_pool": "detect_brief-text-min-n10",
+      "pass_n": 9,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": "gemini-3-flash-preview",
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.7,
+      "instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "library_hash": "8580ecb2258b64a0fdbcee707714bc9dd8f8e698a29d304e3980dac18a831cb4",
+      "status": "ok",
+      "n_tiles_processed": 8541,
+      "tokens": {
+        "input_billed": 12828582,
+        "input_cached": 0,
+        "output": 968329,
+        "thinking": 0,
+        "total": 13796911
+      },
+      "cost_usd": 9.319278,
+      "wall_clock_s": 927.353724,
+      "timestamps": {
+        "start": "2026-06-11T07:35:27.908253+00:00",
+        "end": "2026-06-11T07:50:55.261977+00:00"
+      },
+      "retries": 0,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-min-n10-uplift/proposer/run_9/detections-detect_brief-text-3-flash-2026-06-11.meta.json"
+        ],
+        "last_extracted_at": "2026-06-11T12:20:12Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "pass_id": "55maps-text-min-n10-uplift::verified-3of10::run1",
+      "run_id": "55maps-text-min-n10-uplift",
+      "proposer_pool": "verified-3of10",
+      "pass_n": 1,
+      "model_used": "gemini-3-flash-preview",
+      "model_requested": "gemini-3-flash-preview",
+      "model_version": null,
+      "modality": "text",
+      "thinking_level": "minimal",
+      "temperature": 0.0,
+      "instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+      "library_hash": "no_examples",
+      "status": "ok",
+      "n_tiles_processed": 16484,
+      "tokens": {
+        "input_billed": 29535744,
+        "input_cached": 0,
+        "output": 2588179,
+        "thinking": 0,
+        "total": 32123923
+      },
+      "cost_usd": 22.532409,
+      "wall_clock_s": 1038.819633,
+      "timestamps": {
+        "start": "2026-06-11T08:30:44.773003+00:00",
+        "end": "2026-06-11T08:48:03.592636+00:00"
+      },
+      "retries": 2,
+      "provenance": {
+        "source_files": [
+          "outputs/55maps-text-min-n10-uplift/verified-3of10/run.meta.json"
+        ],
+        "last_extracted_at": "2026-06-11T12:20:12Z",
         "extractor_version": "0.4.0"
       }
     }

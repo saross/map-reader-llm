@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-06-10T08:30:41Z",
+  "generated_at": "2026-06-11T12:20:12Z",
   "generator_version": "0.4.0",
   "runs": [
     {
@@ -982,6 +982,76 @@
           "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
         ],
         "last_extracted_at": "2026-06-10T08:30:41Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "run_id": "flash35-pv-2x2",
+      "directory_path": "outputs/flash35-pv-2x2",
+      "primary_hypothesis": null,
+      "also_informs": [
+        "flash-vs-flash35",
+        "pv-strategy"
+      ],
+      "purpose": "Model-role 2x2x2: is Flash 3.5 a better bare proposer, PV proposer, or verifier than Flash 3 at the minimal operating point? (The S110 parking note: bare proposer was the only angle a stronger model might win.)",
+      "run_type": "mixed",
+      "tile_size_px": 384,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "era-2-487",
+        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "n_test_tiles": 487,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": null,
+      "headline_rationale": "Deliberately none \u2014 a model comparison, not a champion search: Flash 3.5 wins in NO role (bare-proposer numerical tie 0.6196 vs 0.6204; PV proposer -0.0355, p=0.035 targeted tile-swap \u2014 the one resolved role gap; verifier -0.012..-0.015, within-noise ties, at 3x the price). The all-Flash-3 production stack stands (findings SS 14; results/flash35-2x2/flash35_permutations.json).",
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+          "outputs/flash35-pv-2x2/proposer/run_1/detections-detect_brief-text-3.5-flash-2026-06-10.meta.json"
+        ],
+        "last_extracted_at": "2026-06-11T12:20:12Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "run_id": "55maps-text-min-n10-uplift",
+      "directory_path": "outputs/55maps-text-min-n10-uplift",
+      "primary_hypothesis": null,
+      "also_informs": [
+        "deployment-uplift",
+        "pass-budget"
+      ],
+      "purpose": "Run B: does PASS COUNT close the -0.030 deployment thinking gap (Obs 362)? 10 minimal passes + band verifier vs TM-k3 and TH7-k3 at the canonical 50 m buffer.",
+      "run_type": "proposer-verifier",
+      "tile_size_px": 384,
+      "corpus": "55-map",
+      "gt_reference": "combined",
+      "scope": {
+        "test_set_id": "55maps-8541",
+        "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+        "n_test_tiles": 8541,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": null,
+      "headline_rationale": "Single-condition run; the citable cell is verified-5of10-canonical-gt (0.8290 @ 50 m, 5of10/pt0.15): significantly above TM-k3 (+0.0163, p<1e-4) and significantly below TH7-k3 (-0.0134, p=0.0026) \u2014 a priced cost/quality trade, not a tie (Obs 364).",
+      "post_run_report_path": null,
+      "working_notes_obs": [],
+      "historical_aliases": [],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+          "outputs/55maps-text-min-n10-uplift/proposer/run_10/detections-detect_brief-text-3-flash-2026-06-11.meta.json"
+        ],
+        "last_extracted_at": "2026-06-11T12:20:12Z",
         "extractor_version": "0.4.0"
       }
     }

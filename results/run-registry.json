@@ -175,6 +175,18 @@
       "directory_path": "outputs/verifier-robustness",
       "status": "active",
       "notes": "Verifier-robustness programme (Sessions 109-110, ~$53 flex): Stage 1 N=5 determinism on the 384/256 1-of-5 unions (T=0.0), Stage 2 temperature snowball (ge3of5 band, stalled at T=0.3), Stage 3 thinking x temperature matrix + the 16of30 operational maximum. Verifier-only API run; ALL proposer pools are cross-run (pv-diag-384 / pv-diag-256, recorded per-condition via source_run). Findings: results/verifier-robustness/verifier-robustness-findings.md."
+    },
+    {
+      "run_id": "flash35-pv-2x2",
+      "directory_path": "outputs/flash35-pv-2x2",
+      "status": "active",
+      "notes": "Flash 3.5 model-role 2x2x2 (Sessions 111-112, ~$34 flex): 10 gemini-3.5-flash MINIMAL-thinking T=0.7 detect_brief-text proposer passes on the GS 487 (384 px), three verifier legs (F3 vf over the F3.5 pool; F3.5 vf over the F3.5 pool; F3.5 vf over the cross-run F3 minimal pool), n in {5,10} via the verify-once shortcut (n=5 method-matched derivations are analysis-internal). Verdict: Flash 3.5 wins in NO role at the minimal operating point \u2014 the all-Flash-3 stack stands. Analysis: results/flash35-2x2/; findings verifier-robustness-findings.md SS 14; runbook scripts/run_flash35_tranche1.sh."
+    },
+    {
+      "run_id": "55maps-text-min-n10-uplift",
+      "directory_path": "outputs/55maps-text-min-n10-uplift",
+      "status": "active",
+      "notes": "Run B (Session 112-113, ~$60 flex, Shawn-approved): the min11 deployment uplift \u2014 10 gemini-3-flash MINIMAL-thinking T=0.7 detect_brief-text proposer passes over the 55-map corpus (8,541 tiles), the >=3-of-10 band cropped (16,482 candidates) + the carry-forward n=1 verifier. Answers Obs 362's open question: pass count closes about HALF the deployment thinking gap (Obs 364). Scored vs the canonical extended GT at 50 m (results/55map-leaderboard/min11_uplift_cell.json; Track-2 eval results/55maps-extended-gt-2026-06-07/TM-n10-k5/)."
     }
   ]
 }

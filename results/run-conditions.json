@@ -2463,6 +2463,126 @@
           },
           "eval_path": "results/verifier-robustness/evals/verified-adv-pro-text-pro-vf-3of5/evaluation.json",
           "detections": "results/verifier-robustness/condition-sets/pro-pro-vf-3of5.geojson"
+        },
+        {
+          "label": "verified-adv-text-min-true-3of5",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "text-min-t07-true-1of5",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/flash35-2x2/evals/min6-true/evaluation.json",
+          "detections": "results/verifier-robustness/min-thinking-sets/text-min-t07-TRUE-5pass-3of5-n1-pt0.15.geojson",
+          "_note": "min6 (TRUE merge): first-5 union of the text-n10 minimal lineage, re-cropped and re-verified after the stale partial-coverage text-1of5 union was excluded (make-up run ~$1.11, S112; min6_true_makeup.json). Pareto v2 'min6' efficient rung ($3.81)."
+        },
+        {
+          "label": "verified-adv-text-min-n30lineage-4of5",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-minimal-text-t07-1of5",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/flash35-2x2/evals/min6-n30lineage/evaluation.json",
+          "detections": "results/verifier-robustness/min-thinking-sets/text-min-t07-5pass-n30lineage-4of5-n1-pt0.15.geojson",
+          "_note": "min6 (n30 lineage): first-5 of the 30-pass minimal study; the min6 stand-in in min_vs_high_permutations.json (p=0.656 vs high6)."
+        },
+        {
+          "label": "verified-adv-text-min-6of10",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "text-1of10",
+          "n_passes": 10,
+          "vote_threshold": 6,
+          "prob_threshold": 0.2,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/flash35-2x2/evals/min11/evaluation.json",
+          "detections": "results/verifier-robustness/min-thinking-sets/text-min-t07-10pass-6of10-n1-pt0.2.geojson",
+          "_note": "min11: 10-pass minimal union + carry-forward verifier. Best tile-MCC on the PV board (0.807); Pareto v2 'min11' efficient rung ($6.75); the F3xF3 corner of the Flash 3.5 2x2x2 (harness self-validation)."
+        },
+        {
+          "label": "verified-adv-text-t03-4of5",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-high-text-t03-1of5",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": 0.2,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-text-t03-4of5/evaluation.json",
+          "detections": "results/verifier-robustness/condition-sets/t03-4of5-n1-pt0.2.geojson",
+          "_note": "Run A ($2.06, S112): GS characterisation of the deployment champion's proposer (text HIGH T=0.3) \u2014 completes the GS-vs-55map transfer table (0.9045 @ 50 m; results/working-precision/gs-t03-pv-cell.json)."
+        },
+        {
+          "label": "verified-adv-image-3of5",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-high-image-1of5",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-image-3of5/evaluation.json",
+          "detections": "results/verifier-robustness/condition-sets/image-3of5-n1-pt0.15.geojson",
+          "_note": "GS image PV cell (HIGH T=0.7 5-pass + carry-forward verifier): the image row of the transfer table (0.8771 @ 50 m) and the image-modality 75 m plateau material (Obs 360; results/working-precision/gs-image-pv-cell.json)."
+        },
+        {
+          "label": "verified-adv-text-pro-vf-4of5",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-high-text-1of5",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": 0.25,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3.1-pro-preview",
+            "thinking_level": "medium",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-text-pro-vf-4of5/evaluation.json",
+          "detections": "results/verifier-robustness/min-thinking-sets/high6-PRO-vf-4of5-pt0.25.geojson",
+          "_note": "Completeness-sweep discovery (Obs 363): the Pro verifier over the Flash-HIGH 5-pass union \u2014 +0.015 vs the Flash verifier on the same pool (raw p=0.019, post-hoc), ns vs the headline (p=0.41) and min11 (p=0.76). Refines Obs 359's 'verifier model barely matters' to high-recall pools; dominated by min11 on cost."
         }
       ],
       "_ignored_evals": [
@@ -6450,6 +6570,142 @@
           "eval_path": "results/verifier-robustness/evals/verified-384-16of30-t0-3-n5-opmax/evaluation.json",
           "detections": "results/verifier-robustness/opmax-sets/opmax-16of30-N5minT0.3-vt3-pt0.15.geojson",
           "source_run": "pv-diag-384"
+        }
+      ]
+    },
+    "flash35-pv-2x2": {
+      "_note": "Flash 3.5 2x2x2 at the n=10 grain: one citable condition per registered corner at its best (k, prob_t) operating point (the settled decomposition pattern). The F3-proposer x F3-verifier corner is NOT duplicated here \u2014 it is pv-diag-384::verified-adv-text-min-6of10 (min11, 0.8835), which the tranche reproduced exactly (harness self-validation). The n=5 cells are method-matched first-5 derivations, analysis-internal (results/flash35-2x2/analysis-full.json). The f3prop pool is cross-run (pv-diag-384 text-n10 minimal lineage).",
+      "proposer_pools": {
+        "flash35-min-text-1of10": {
+          "modality": "text",
+          "path": "proposer"
+        },
+        "f3-min-text-1of10": {
+          "modality": "text",
+          "path": "consensus/f3-min-text-1of10-with-passes.geojson"
+        }
+      },
+      "verifier_passes": {
+        "verified-f3vf": {
+          "modality": "text",
+          "path": "verified-f3vf"
+        },
+        "verified-f35vf": {
+          "modality": "text",
+          "path": "verified-f35vf"
+        },
+        "min-f3-verified-f35vf": {
+          "modality": "text",
+          "path": "min-f3-verified-f35vf"
+        }
+      },
+      "conditions": [
+        {
+          "label": "f35prop-bare-10of10",
+          "architecture": "consensus",
+          "aggregation": "consensus",
+          "proposer_pool": "flash35-min-text-1of10",
+          "n_passes": 10,
+          "vote_threshold": 10,
+          "prob_threshold": null,
+          "verifier_config": null,
+          "eval_path": "results/flash35-2x2/evals/f35prop-bare-n10-10of10/evaluation.json",
+          "detections": "results/flash35-2x2/best-op-sets/f35prop-bare-n10-10of10.geojson"
+        },
+        {
+          "label": "f35prop-f3vf-4of10",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash35-min-text-1of10",
+          "n_passes": 10,
+          "vote_threshold": 4,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/flash35-2x2/evals/f35prop-f3vf-n10-4of10-pt0.15/evaluation.json",
+          "detections": "results/flash35-2x2/best-op-sets/f35prop-f3vf-n10-4of10-pt0.15.geojson"
+        },
+        {
+          "label": "f35prop-f35vf-4of10",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash35-min-text-1of10",
+          "n_passes": 10,
+          "vote_threshold": 4,
+          "prob_threshold": 0.25,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3.5-flash",
+            "thinking_level": "minimal",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/flash35-2x2/evals/f35prop-f35vf-n10-4of10-pt0.25/evaluation.json",
+          "detections": "results/flash35-2x2/best-op-sets/f35prop-f35vf-n10-4of10-pt0.25.geojson"
+        },
+        {
+          "label": "f3prop-f35vf-6of10",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "f3-min-text-1of10",
+          "n_passes": 10,
+          "vote_threshold": 6,
+          "prob_threshold": 0.25,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3.5-flash",
+            "thinking_level": "minimal",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/flash35-2x2/evals/f3prop-f35vf-n10-6of10-pt0.25/evaluation.json",
+          "detections": "results/flash35-2x2/best-op-sets/f3prop-f35vf-n10-6of10-pt0.25.geojson",
+          "source_run": "pv-diag-384"
+        }
+      ]
+    },
+    "55maps-text-min-n10-uplift": {
+      "_note": "Run B uplift: one citable condition at the best deployment operating point (5of10/pt0.15) vs the canonical extended GT. MIXED-PROVENANCE POOL (the n-passes-over WARN is the honest by-design signal, per the S106 settled position): passes 1-5 are the 55maps-text-min-generalisation deployment passes; passes 6-10 are this run's (proposer/run_6..run_10; uplift-full.log Stage P). The k(3..10) x prob_t sweep lives in results/55map-leaderboard/min11-uplift-score.log and min11_uplift_cell.json.",
+      "proposer_pools": {
+        "detect_brief-text-min-n10": {
+          "modality": "text",
+          "path": "proposer"
+        }
+      },
+      "verifier_passes": {
+        "verified-3of10": {
+          "modality": "text",
+          "path": "verified-3of10"
+        }
+      },
+      "conditions": [
+        {
+          "label": "verified-5of10-canonical-gt",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "detect_brief-text-min-n10",
+          "n_passes": 10,
+          "vote_threshold": 5,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/55maps-extended-gt-2026-06-07/TM-n10-k5/evaluation.json",
+          "detections": "results/55map-leaderboard/min11-uplift-5of10-pt0.15.geojson",
+          "_note": "min11 uplift, vote 5-of-10 (prob>=0.15), vs canonical extended GT; best deployment op sat looser than the GS-best 6of10 \u2014 the k3 lesson recurring at n=10 (Obs 364)"
         }
       ]
     }

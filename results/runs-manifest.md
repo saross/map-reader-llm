@@ -2,9 +2,9 @@
 
 # Runs manifest
 
-> Generated 2026-06-10T08:30:41Z · 29 row(s) · schema v1.0.
+> Generated 2026-06-11T12:20:12Z · 31 row(s) · schema v1.0.
 >
-> **Coverage**: all 29 runs (run-level facts; conditions/passes added as 3b batches land).
+> **Coverage**: all 31 runs (run-level facts; conditions/passes added as 3b batches land).
 
 | run_id | type | tile_px | corpus | gt | scope | headline |
 |---|---|---|---|---|---|---|
@@ -37,3 +37,5 @@
 | retest-h11-single-pass-384-t0 | single-pass | 384 | 4-map-gs | curator | era-2-487 | — |
 | verifier-t-pilot | proposer-verifier | 384 | 4-map-gs | curator | era-2-487 | — |
 | verifier-robustness | proposer-verifier | 384 | 4-map-gs | curator | era-2-487 | — |
+| flash35-pv-2x2 | mixed | 384 | 4-map-gs | curator | era-2-487 | — |
+| 55maps-text-min-n10-uplift | proposer-verifier | 384 | 55-map | combined | 55maps-8541 | — |

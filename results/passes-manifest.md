@@ -2,9 +2,9 @@
 
 # Passes manifest
 
-> Generated 2026-06-08T12:25:56Z · 1114 row(s) · schema v1.0.
+> Generated 2026-06-11T12:20:12Z · 1132 row(s) · schema v1.0.
 >
-> **Coverage**: 1114 pass(es) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 1132 pass(es) across the decomposed runs (sub-step 3b in progress).
 
 | pass_id | model | modality | think | T | status | tiles | cost_usd |
 |---|---|---|---|---|---|---|---|
@@ -426,7 +426,6 @@
 | pv-diag-384::verified-pro-text-minimal-verifier::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 0 | 0.0 |
 | pv-diag-384::verified-text-10of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 0 | 0.0 |
 | pv-diag-384::verified-text-1of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 0 | 0.0 |
-| pv-diag-384::verified-text-1of5::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 0 | 0.0 |
 | pv-diag-384::verified-text-2of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 0 | 0.0 |
 | pv-diag-384::verified-text-2of5::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 0 | 0.0 |
 | pv-diag-384::verified-text-3of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 0 | 0.0 |
@@ -1122,3 +1121,22 @@
 | retest-h11-single-pass-384-t0::brief-text-t0::run9 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | 0.0 |
 | verifier-t-pilot::t0-5::run1 | gemini-3-flash-preview | text | minimal | 0.5 | ok | 627 | 0.851831 |
 | verifier-t-pilot::t1-0::run1 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 614 | 0.854939 |
+| flash35-pv-2x2::flash35-min-text-1of10::run1 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | 0.5405490000000001 |
+| flash35-pv-2x2::flash35-min-text-1of10::run10 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | 0.540316 |
+| flash35-pv-2x2::flash35-min-text-1of10::run2 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | 0.541704 |
+| flash35-pv-2x2::flash35-min-text-1of10::run3 | gemini-3.5-flash | text | minimal | 0.7 | partial | 487 | 0.540711 |
+| flash35-pv-2x2::flash35-min-text-1of10::run4 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | 0.543667 |
+| flash35-pv-2x2::flash35-min-text-1of10::run5 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | 0.540739 |
+| flash35-pv-2x2::flash35-min-text-1of10::run6 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | 0.542455 |
+| flash35-pv-2x2::flash35-min-text-1of10::run7 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | 0.542616 |
+| flash35-pv-2x2::flash35-min-text-1of10::run8 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | 0.54353 |
+| flash35-pv-2x2::flash35-min-text-1of10::run9 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | 0.55021 |
+| flash35-pv-2x2::verified-f3vf::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1 | 0.001391 |
+| flash35-pv-2x2::verified-f35vf::run1 | gemini-3.5-flash | text | minimal | 0.0 | ok | 1132 | 1.505498 |
+| flash35-pv-2x2::min-f3-verified-f35vf::run1 | gemini-3.5-flash | text | minimal | 0.0 | ok | 1939 | 2.572595 |
+| 55maps-text-min-n10-uplift::detect_brief-text-min-n10::run10 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | 9.277887 |
+| 55maps-text-min-n10-uplift::detect_brief-text-min-n10::run6 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | 9.318612 |
+| 55maps-text-min-n10-uplift::detect_brief-text-min-n10::run7 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | 9.338464 |
+| 55maps-text-min-n10-uplift::detect_brief-text-min-n10::run8 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | 9.277686 |
+| 55maps-text-min-n10-uplift::detect_brief-text-min-n10::run9 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | 9.319278 |
+| 55maps-text-min-n10-uplift::verified-3of10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 16484 | 22.532409 |
