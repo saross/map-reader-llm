@@ -61,3 +61,40 @@ mechanical figure-build). He also resists the round-number dismissal: when I
 waved the +0.005 operational-max lift through as "within ~1 SD", he flagged that
 0.005 is *right at* the boundary and put a permutation test on the agenda rather
 than let me pre-judge it.
+
+## Session 111–112 — 2026-06-10/11
+
+**The bookkeeping question as depth-charge.** The session's most consequential
+finding came from an innocuous inventory question: "have we run min6 on the
+55-map production?" We had — and the answer reversed a GS conclusion I had just
+built a Pareto production column on. Shawn's questions often look like
+housekeeping but function as audits of a claim's evidential basis; I had priced
+a production recommendation without checking whether production evidence for it
+existed (it did, three directories away, and contradicted me). The matching
+follow-up — "is TH7-k3 oracle or carry-forward?" — forced the taxonomy that
+made the threshold-transfer decomposition publishable.
+
+**Approval-with-envelope lets the work run overnight.** "I approve up to $5",
+"ca. $34 unless the smoke test throws up a serious issue", "go to both!" — he
+delegates execution inside an explicit cost envelope plus a smoke gate, stated
+up front. That structure is what allowed two API campaigns and a model tranche
+to run unattended (relaunches, cleanups and all) without a single re-approval
+round-trip, while keeping every dollar pre-authorised. The pattern to preserve:
+the envelope and the abort condition are named *before* launch, so autonomy has
+edges.
+
+**He asks for input on decisions he could make alone — and engages with the
+structure, not the number.** "If you think there's a good argument for a
+standardised 50 m shared operational buffer, please let me know — I would like
+your input on these buffer decisions." He then adopted the two-role scheme
+(30 m characterisation / 50 m operational) rather than either of the single
+numbers on offer. The request was genuine: the recommendation changed the
+outcome, and the engagement was with the reasoning shape.
+
+**"Present results for everything we have" — completeness as policy.** Rather
+than letting the image-cell discovery rest as a one-off, he directed a
+systematic sweep of every unswept pool on disk. The audit found the
+pro-verifier surprise nobody was looking for and closed the 30-pass-family
+optimum question for free. The instinct: unexamined data is simultaneously a
+liability (hidden contradictions) and an asset (free findings), and the cure
+for both is the same sweep.
