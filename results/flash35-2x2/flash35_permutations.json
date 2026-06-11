@@ -1,0 +1,46 @@
+{
+  "method": "float tile-swap micro-F1 permutation (permutation_test_float), Hungarian per map at 20 m, curator GT, 487 tiles",
+  "n_permutations": 10000,
+  "seed": 42,
+  "pairs": [
+    {
+      "question": "proposer-role: F3.5 pool vs F3 pool under the same F3 verifier",
+      "a": "f35prop-f3vf",
+      "b": "min11",
+      "f1_a": 0.84796,
+      "f1_b": 0.883495,
+      "observed_diff": -0.035535,
+      "p_value": 0.0349,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 8e-05,
+      "null_std": 0.017125
+    },
+    {
+      "question": "verifier-role on the F3.5 pool: F3.5 verifier vs F3 verifier",
+      "a": "f35prop-f35vf",
+      "b": "f35prop-f3vf",
+      "f1_a": 0.836228,
+      "f1_b": 0.84796,
+      "observed_diff": -0.011732,
+      "p_value": 0.1703,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": -3.4e-05,
+      "null_std": 0.008349
+    },
+    {
+      "question": "verifier-role on the F3 pool: F3.5 verifier vs F3 verifier",
+      "a": "f3prop-f35vf",
+      "b": "min11",
+      "f1_a": 0.868932,
+      "f1_b": 0.883495,
+      "observed_diff": -0.014563,
+      "p_value": 0.0998,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 8e-05,
+      "null_std": 0.00887
+    }
+  ]
+}

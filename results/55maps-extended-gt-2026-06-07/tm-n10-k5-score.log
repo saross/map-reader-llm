@@ -1,0 +1,109 @@
+=== Track-2 engine: TM-n10-k5 (results/55map-leaderboard/min11-uplift-5of10-pt0.15.geojson) ===
+/home/shawn/Code/map-reader-llm/scripts/compute_corrected_f1_multi_buffer.py:187: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  phantoms = pd.concat([y_mounds, t_mounds], ignore_index=True)
+/home/shawn/Code/map-reader-llm/scripts/compute_corrected_f1_multi_buffer.py:187: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  phantoms = pd.concat([y_mounds, t_mounds], ignore_index=True)
+/home/shawn/Code/map-reader-llm/scripts/compute_corrected_f1_multi_buffer.py:187: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  phantoms = pd.concat([y_mounds, t_mounds], ignore_index=True)
+/home/shawn/Code/map-reader-llm/scripts/compute_corrected_f1_multi_buffer.py:187: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  phantoms = pd.concat([y_mounds, t_mounds], ignore_index=True)
+/home/shawn/Code/map-reader-llm/scripts/compute_corrected_f1_multi_buffer.py:187: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  phantoms = pd.concat([y_mounds, t_mounds], ignore_index=True)
+Loading inputs...
+  Reprojecting detections from EPSG:4326 to EPSG:32635
+  detections: 4,361
+  student GT: 4,746
+  bounds tiles: 8,541
+  review (yesterday): 0
+  review (today):     773
+  excluded sentinels (>150 m shell, buffer_metres=200): 10
+
+--- Buffer R = 5 m ---
+R=5m  TP=461  FP=3900  FN=4285  n_ref_student=4746  n_reviewer_promoted=0  n_ref_ext_scoped=4746
+  P=0.1057  R=0.0971  F1=0.1012
+  95% CIs — P=[0.0961, 0.1153] R=[0.0881, 0.1062] F1=[0.0920, 0.1105]
+  MCC=0.6525  tiles TP/TN/FP/FN=2221/4897/263/1160
+
+--- Buffer R = 10 m ---
+R=10m  TP=1430  FP=2931  FN=3316  n_ref_student=4746  n_reviewer_promoted=0  n_ref_ext_scoped=4746
+  P=0.3279  R=0.3013  F1=0.3140
+  95% CIs — P=[0.3123, 0.3439] R=[0.2867, 0.3161] F1=[0.2996, 0.3289]
+  MCC=0.6525  tiles TP/TN/FP/FN=2221/4897/263/1160
+
+--- Buffer R = 15 m ---
+R=15m  TP=2295  FP=2066  FN=2451  n_ref_student=4746  n_reviewer_promoted=0  n_ref_ext_scoped=4746
+  P=0.5263  R=0.4836  F1=0.5040
+  95% CIs — P=[0.5097, 0.5436] R=[0.4671, 0.5001] F1=[0.4887, 0.5199]
+  MCC=0.6525  tiles TP/TN/FP/FN=2221/4897/263/1160
+
+--- Buffer R = 20 m ---
+R=20m  TP=2947  FP=1414  FN=1799  n_ref_student=4746  n_reviewer_promoted=0  n_ref_ext_scoped=4746
+  P=0.6758  R=0.6209  F1=0.6472
+  95% CIs — P=[0.6597, 0.6920] R=[0.6045, 0.6373] F1=[0.6325, 0.6618]
+  MCC=0.6525  tiles TP/TN/FP/FN=2221/4897/263/1160
+
+--- Buffer R = 25 m ---
+R=25m  TP=3333  FP=1028  FN=1413  n_ref_student=4746  n_reviewer_promoted=0  n_ref_ext_scoped=4746
+  P=0.7643  R=0.7023  F1=0.7320
+  95% CIs — P=[0.7499, 0.7786] R=[0.6867, 0.7177] F1=[0.7193, 0.7447]
+  MCC=0.6525  tiles TP/TN/FP/FN=2221/4897/263/1160
+
+--- Buffer R = 30 m ---
+R=30m  TP=3502  FP=859  FN=1244  n_ref_student=4746  n_reviewer_promoted=0  n_ref_ext_scoped=4746
+  P=0.8030  R=0.7379  F1=0.7691
+  95% CIs — P=[0.7894, 0.8165] R=[0.7229, 0.7527] F1=[0.7573, 0.7808]
+  MCC=0.6525  tiles TP/TN/FP/FN=2221/4897/263/1160
+
+--- Buffer R = 35 m ---
+R=35m  TP=3584  FP=777  FN=1162  n_ref_student=4746  n_reviewer_promoted=0  n_ref_ext_scoped=4746
+  P=0.8218  R=0.7552  F1=0.7871
+  95% CIs — P=[0.8088, 0.8348] R=[0.7407, 0.7692] F1=[0.7761, 0.7981]
+  MCC=0.6525  tiles TP/TN/FP/FN=2221/4897/263/1160
+
+--- Buffer R = 40 m ---
+R=40m  TP=3625  FP=736  FN=1121  n_ref_student=4746  n_reviewer_promoted=0  n_ref_ext_scoped=4746
+  P=0.8312  R=0.7638  F1=0.7961
+  95% CIs — P=[0.8182, 0.8443] R=[0.7496, 0.7778] F1=[0.7853, 0.8067]
+  MCC=0.6525  tiles TP/TN/FP/FN=2221/4897/263/1160
+
+--- Buffer R = 45 m ---
+R=45m  TP=3642  FP=719  FN=1104  n_ref_student=4746  n_reviewer_promoted=0  n_ref_ext_scoped=4746
+  P=0.8351  R=0.7674  F1=0.7998
+  95% CIs — P=[0.8223, 0.8480] R=[0.7532, 0.7814] F1=[0.7891, 0.8105]
+  MCC=0.6525  tiles TP/TN/FP/FN=2221/4897/263/1160
+
+--- Buffer R = 50 m ---
+R=50m  TP=3947  FP=414  FN=1214  n_ref_student=4746  n_reviewer_promoted=415  n_ref_ext_scoped=5161
+  P=0.9051  R=0.7648  F1=0.8290
+  95% CIs — P=[0.8954, 0.9144] R=[0.7512, 0.7783] F1=[0.8190, 0.8385]
+  MCC=0.6725  tiles TP/TN/FP/FN=2309/4842/175/1215
+
+--- Buffer R = 75 m ---
+R=75m  TP=3970  FP=391  FN=1370  n_ref_student=4746  n_reviewer_promoted=594  n_ref_ext_scoped=5340
+  P=0.9103  R=0.7434  F1=0.8185
+  95% CIs — P=[0.9009, 0.9195] R=[0.7297, 0.7570] F1=[0.8084, 0.8281]
+  MCC=0.6710  tiles TP/TN/FP/FN=2312/4828/172/1229
+
+--- Buffer R = 100 m ---
+R=100m  TP=3982  FP=379  FN=1449  n_ref_student=4746  n_reviewer_promoted=685  n_ref_ext_scoped=5431
+  P=0.9131  R=0.7332  F1=0.8133
+  95% CIs — P=[0.9038, 0.9222] R=[0.7192, 0.7469] F1=[0.8032, 0.8230]
+  MCC=0.6692  tiles TP/TN/FP/FN=2312/4818/172/1239
+
+--- Buffer R = 125 m ---
+R=125m  TP=3989  FP=372  FN=1486  n_ref_student=4746  n_reviewer_promoted=729  n_ref_ext_scoped=5475
+  P=0.9147  R=0.7286  F1=0.8111
+  95% CIs — P=[0.9054, 0.9238] R=[0.7145, 0.7423] F1=[0.8008, 0.8209]
+  MCC=0.6683  tiles TP/TN/FP/FN=2312/4813/172/1244
+
+--- Buffer R = 150 m ---
+R=150m  TP=3997  FP=364  FN=1512  n_ref_student=4746  n_reviewer_promoted=763  n_ref_ext_scoped=5509
+  P=0.9165  R=0.7255  F1=0.8099
+  95% CIs — P=[0.9074, 0.9255] R=[0.7115, 0.7393] F1=[0.7998, 0.8197]
+  MCC=0.6683  tiles TP/TN/FP/FN=2312/4813/172/1244
+
+Wrote /home/shawn/Code/map-reader-llm/results/55maps-extended-gt-2026-06-07/TM-n10-k5/corrected-f1.csv
+Wrote /home/shawn/Code/map-reader-llm/results/55maps-extended-gt-2026-06-07/TM-n10-k5/summary.json
+Wrote /home/shawn/Code/map-reader-llm/results/55maps-extended-gt-2026-06-07/TM-n10-k5/report_autogen.md
+gate ok: corrected-F1@50 0.829028 vs committed 0.829028 (|delta| 0.000000)
+adapted: results/55maps-extended-gt-2026-06-07/TM-n10-k5/evaluation.json  n_det=4361  F1@50=0.8290  MCC@50=0.6725
