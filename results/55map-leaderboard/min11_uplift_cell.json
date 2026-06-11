@@ -1,0 +1,31 @@
+{
+  "cell": "min11-uplift (10x minimal T0.7 passes + n=1 carry-forward vf, >=3of10 band)",
+  "best_op": "5of10/pt0.15",
+  "n": 4361,
+  "f1_50": 0.829,
+  "p_50": 0.9051,
+  "r_50": 0.7648,
+  "mcc": 0.6725,
+  "permutations": {
+    "TM-k3": {
+      "f1_a": 0.829028,
+      "f1_b": 0.812712,
+      "observed_diff": 0.016316,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -3e-05,
+      "null_std": 0.003203
+    },
+    "TH7-k3": {
+      "f1_a": 0.829028,
+      "f1_b": 0.842465,
+      "observed_diff": -0.013438,
+      "p_value": 0.0026,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -3.7e-05,
+      "null_std": 0.004332
+    }
+  }
+}
