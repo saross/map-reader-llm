@@ -1,8 +1,8 @@
 # Session 111 — discoveries dossier (for review, 2026-06-11 AM)
 
-> **Last revised**: 2026-06-11 (overnight update: the Flash 3.5 tranche
-> completed and § 11 records the verdict). See [§ Changelog](#changelog)
-> for revision history.
+> **Last revised**: 2026-06-11 (S113: the pending § 11 significance tests
+> are run — proposer loss resolved, verifier losses are cost-rule ties).
+> See [§ Changelog](#changelog) for revision history.
 
 Compiled at Shawn's request before the morning review: every substantive
 finding of the session, with anchors. Findings 1–5 belong to the
@@ -148,8 +148,12 @@ verifier legs, the single 503-dropped candidate patched via cleanup). The
   coverage, and PV needs coverage).
 - **As a verifier**: −0.012..−0.015 on both pools — the carry-forward F3
   verifier wins outright at a third of the price.
-- Significance tests pending (morning, $0), but the −0.036 proposer gap is
-  ~5× the noise scale. Anchors: `results/flash35-2x2/analysis-full.{json,log}`,
+- ~~Significance tests pending (morning, $0)~~ **RUN (S113,
+  `results/flash35-2x2/flash35_permutations.json`)**: the −0.0355
+  proposer gap is resolved (p = 0.035 raw, targeted tile-swap); both
+  verifier-role gaps are within-noise ties (p = 0.17 / p = 0.10) — the
+  verifier verdict rests on the cost meta-rule (3× price for no measured
+  gain). Anchors: `results/flash35-2x2/analysis-full.{json,log}`,
   `outputs/flash35-pv-2x2/` (commits `68c4f0e29`, `f04063513`).
 
 ## Decisions (status as of 2026-06-11)
@@ -173,6 +177,14 @@ verifier legs, the single 503-dropped candidate patched via cleanup). The
    rename) + the findings-doc fold-in of the post-S111 results.
 
 ## Changelog
+
+### 2026-06-11 (S113) — Flash 3.5 significance tests run (§ 11)
+
+**Refresh trigger**: Session 113 ran the three pending role permutations
+($0, zbook). § 11's "significance tests pending" bullet is struck and
+replaced with the results: proposer-role loss resolved (p = 0.035 raw);
+verifier-role losses are within-noise ties (p = 0.17 / p = 0.10) decided
+by the cost meta-rule. The § 11 verdict is unchanged.
 
 ### 2026-06-11 — Flash 3.5 verdict added (§ 11)
 

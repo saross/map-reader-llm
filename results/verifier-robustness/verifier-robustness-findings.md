@@ -1,9 +1,8 @@
 # Verifier-robustness — findings
 
-> **Last revised**: 2026-06-11 (Sessions 111–112 second wave: the
-> minimal-thinking rungs and recall-ceiling mechanism, the Flash 3.5
-> 2×2×2 verdict, the cost-weighted Pareto v2, and — critically — the
-> deployment reversal that scope-qualifies the cost meta-rule). See
+> **Last revised**: 2026-06-11 (Session 113: the Flash 3.5 role
+> permutations — proposer loss resolved at p = 0.035, verifier losses are
+> cost-rule ties — and the second-wave manifest registration). See
 > [§ Changelog](#changelog) for revision history.
 
 This document is the citable home for the **verifier-robustness** programme
@@ -363,7 +362,13 @@ it loses −0.036 (0.8480 vs 0.8835 under the same F3 verifier) — its union
 is 1,132 candidates vs Flash 3's 1,939 with **53 % at 10/10 votes**
 (union/pass 1.32): the Pro pattern of consistency-without-coverage, and PV
 needs coverage; as a **verifier** it loses −0.012..−0.015 on both pools at
-3× the price. The all-Flash-3 stack stands (`results/flash35-2x2/`,
+3× the price. Targeted permutations (S113, the tests § 11 of the dossier
+left pending; `results/flash35-2x2/flash35_permutations.json`): the
+**proposer-role loss is statistically resolved** (−0.0355, p = 0.035 raw;
+marginal under BH across the three role tests), while both verifier-role
+losses are within-noise ties (p = 0.17 own-pool, p = 0.10 F3-pool) — so
+the verifier verdict rests on the cost meta-rule (Obs 357: a tie at 3×
+the price loses). The all-Flash-3 stack stands (`results/flash35-2x2/`,
 harness self-validated by reproducing min11 exactly).
 
 ## 15. Pareto v2 — the cost-weighted frontier
@@ -464,6 +469,23 @@ flags live at `results/metric-leaderboards/` (GS @ 30 m; 55-map @ 50 m).
   preregistration amendment needed for a robustness check.
 
 ## Changelog
+
+### 2026-06-11 (S113) — Flash 3.5 role permutations; second-wave manifest registration
+
+**Refresh trigger**: Session 113 ran the three Flash 3.5 model-role
+permutations § 11 of the review dossier left pending ($0, zbook), and
+registered the second wave in the manifest (runs `flash35-pv-2x2` and
+`55maps-text-min-n10-uplift`; 6 pv-diag-384 additions; analyses
+`min-vs-high-thinking-pv`, `pass-budget-pareto-v2`, `flash35-model-roles`,
+`unswept-pools-completeness`). § 14 sharpened:
+
+| claim | before | after |
+|---|---|---|
+| F3.5 proposer-role loss (−0.0355) | "~5× noise scale", untested | resolved, p = 0.035 raw |
+| F3.5 verifier-role losses | "−0.012..−0.015 at 3×" | within-noise ties (p = 0.17 / 0.10) → cost rule decides |
+
+What did NOT change: the § 14 verdict (Flash 3.5 wins in no role) and
+every other section stand; the all-Flash-3 stack remains production.
 
 ### 2026-06-11 (later) — unswept-pools sweep, T0.3 closure, cost recalibration
 
