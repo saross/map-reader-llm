@@ -7234,3 +7234,67 @@ Commits through `8740f6a9d`; local + zbook synced.
 - Open for S111: the opmax-vs-headline permutation (priority); the Pareto leaderboard (passes vs F1)
   + adjacent-tier permutations; the cost-vs-F1 Obs (357+) + findings-doc integration; manifest
   registration of verifier-robustness (first-class, no new champion); Flash 3.5 (parked).
+
+## Session 111–112 — 2026-06-10/11 — opmax settled; min rungs + deployment reversal; Flash 3.5 verdict; working precisions; two approved runs closed same-day
+
+One continuous conversation (first Fable 5 session on this project), spanning the S111 priorities
+and a second wave. All findings anchored under `results/`; Obs 357–364 staged; manifest at 29 runs
+/ 295 conditions / 12 analyses ALL VALID after the verifier-robustness registration.
+
+**S111 priorities executed.** Opmax vs headline paired permutation: +0.0049, **p = 0.363** — the
+n=1 carry-forward verifier stays the practical ceiling (Obs 357 follow-through). Pass-budget
+Pareto: round-robin over 6→35 passes = ONE tier (0/10 sig); cheap end scored (high6 0.8641).
+Obs 357 (cost meta-rule) + findings §§8–12 + first-class manifest registration (run #29, 8 + 6
+conditions, 2 analyses, drift-check 16 pass / 13 partial / 0 fail). Repairs en route: S110's opmax
+run had clobbered the Stage-2 T0.3 grids (restored; `--out-suffix` guard added); registration
+evals initially carried one buffer (`DEFAULT_BUFFERS=[20]`; re-run at the 14-buffer standard).
+
+**Minimal-thinking rungs + mechanism.** min6 family (derived 0.8681 / n30-lineage 0.8708 / true
+make-up 0.8784) and min11 0.8835 all statistically tied with the 31-pass headline on GS; recall
+ceilings (`pool_recall_ceilings.json`): minimal T0.7 saturates at 0.9195 in 5 passes; zero-
+diversity anchor 0.8142; the consensus-era diversity dividend is obsolete under PV **on GS**
+(Obs 359). Pareto v2: cost axis (later recalibrated ×1.8 to the TM cost manifest's measured
+tokens), efficient set {min6, min11, high31, high35}.
+
+**Flash 3.5 tranche (~$34 approved): wins in NO role.** 10 passes + 3 verifier legs (2×2×2,
+method-matched n=5 after the first5-of-10 validation found a +0.005–0.011 derivation bias);
+bare tie (0.6196 vs 0.6204), PV proposer −0.036 (union 1,132, 53 % at 10/10 votes — the
+consistency-without-coverage pattern), verifier −0.012..−0.015 at 3× price. Harness
+self-validated by reproducing min11 exactly. Operational: three relaunches (set -e on partial-
+failure exit 2; re-entrancy on "0 remaining" exit 1; a 503-dropped candidate patched via
+`run_pv.py cleanup`).
+
+**Working precisions (Shawn decisions).** GS 30 m (text plateau onset; image plateaus ~75 m —
+modality dominates) / 55-map 50 m (CSR null negligible ≤150 m; gains die at 50; attribution
+ambiguity binds first, GT NN p10 = 65 m; 415/773 phantoms gate at 50 — caveated). 55-map
+canonical-GT leaderboard at 50 m: 18/21 pairs sig → 5 tiers; T1 = {T03-k3 0.8476, TH7-k3 0.8425};
+every k3 out-tiers its k4. GT epistemics (Obs 361): precision review-verified; recall a measured
+upper bound — GS miss-correlation 1.5–1.7× ⇒ 55-map recall inflated ~2.4–2.7 % (4/435 double-
+misses; the system recovered 16/20 in-bounds student misses).
+
+**The deployment reversal (Obs 362).** min6 ≡ the TM deployment: TM-k3 0.8127 (T3) vs TH7-k3
+0.8425 (T1) — the GS min≈high tie REVERSED (−0.030) on the resolving instrument; meta-rule
+scope-qualified (a tie is only as strong as its ruler). Transfer table (all four deployed configs,
+completed by Run A): deltas −0.048 HIGH-T0.7 < −0.057 HIGH-T0.3 < −0.078 image < −0.087 MIN;
+T0.3 was the best GS performer at 50 m (0.9045) — started higher, degraded more.
+
+**Completeness sweep (Obs 363).** 147 verified dirs audited: 18 never-swept cells scored ($0).
+Pro verifier over the Flash-HIGH union 0.8792 (+0.015 vs high6, raw p = 0.019, post-hoc; tied
+with headline/min11; dominated by min11 — frontier unchanged). The full 30-pass union's global
+optimum IS the registered headline (0.8902 reproduced). Metric-led boards (MCC/P/R + flags) for
+both tracks: min11 takes the GS MCC crown (0.807); Pro+vf the precision crown (0.974).
+
+**Two approved runs, same-day.** Run A ($2.06): T0.3 GS comparator — 0.8783 @20 / 0.9045 @50.
+Run B (~$60): the min6 → min11 production uplift — **0.8290 @50 (5of10/pt0.15); +0.0163 vs TM-k3
+(p < 0.0001), −0.0134 vs TH7-k3 (p = 0.0026)** — pass count closes HALF the thinking gap; a
+priced trade now, not a tie (Obs 364). One $0-cost silent failure en route (empty band from wrong
+raster dirs; runbook now pins sources + gates band size).
+
+### Contextual assumptions
+
+Compute on zbook throughout (sapphire reserved/untouched — needs a sync); flaky SSH shaped the
+detached-launch + monitor + waiter pattern; flex ≡ batch pricing on Gemini 3 underlies every cost
+figure; the TM cost manifest prices at STANDARD rates (its $18.67/pass = ~$9.40 flex) — future
+cost readers must check the pricing basis of recorded manifests. Carried open: second-wave
+manifest registration (min6 family, Flash 3.5, T0.3, pro-vf, uplift), 55-map board refresh with
+the uplift cell, Shawn sign-offs, sapphire sync.

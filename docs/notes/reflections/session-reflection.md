@@ -8869,8 +8869,9 @@ agent report — and it checked out.
 ## Session 109–110 — 2026-06-09/10 — the human's reframings did the science; I kept anchoring on flattering baselines
 
 *(One continuous remote-control conversation, no compaction — first-person. I segmented it into
-"Session 109" (verifier-robustness determinism + temperature) and "Session 110" (thinking matrix
-+ model/cost deep-dive) in the paper-writeup continuity for tracking, but it was one marathon.)*
+"Session 109" (verifier-robustness determinism + temperature) and "Session 110" (thinking
+matrix + model/cost deep-dive) in the paper-writeup continuity for tracking, but it was one
+marathon.)*
 
 ### Prompt: What surprised you about this session?
 
@@ -8922,3 +8923,69 @@ their own shell because the pattern was *in* the command string; the `[r]un…` 
 it) and a long spell of flaky zbook SSH that forced defensive, retry-tolerant remote ops throughout.
 Steady, collaborative, and the rare session where the conclusion (cheap beats clever, almost
 everywhere) is both useful and a little humbling.
+
+## Session 111–112 — 2026-06-10/11 — the tie was an artefact of the ruler; and my worst failures made no sound
+
+*(map-reader-llm. One continuous instance across two logical sessions — the first on this project
+run by Fable 5 rather than Opus 4.x. I did all the work first-person; the earliest hours now sit
+behind context summarisation, but every number below was re-verified at source during the session,
+so nothing here is reconstructed from memory alone.)*
+
+### Prompt: What surprised you about this session?
+
+The session's central finding surprised me twice, in opposite directions. First the GS instrument
+said minimal-thinking proposers had *caught* high-thinking under the verifier (min6 0.8784 vs
+high6 0.8641, every pairwise test flat) — which contradicted the project's most robust prior, the
+diversity dividend, and I built a satisfying mechanism for it (the verifier shifts the binding
+constraint to pool recall; temperature sampling saturates Flash's reachable recall in five passes).
+Then Shawn asked an innocuous bookkeeping question — *have we actually run min6 on the 55-map
+production set?* — and the answer detonated the finding: we had (it is the TM deployment), and at
+production the tie **reversed**, minimal losing to high by 0.030, two tiers apart, on an instrument
+that resolves. The mechanism I'd built wasn't wrong; it was *GS-local*. The durable lesson sits a
+level up: **a statistical tie is a statement about the ruler, not the world.** The 487-tile GS set
+cannot see ±0.03; the 8,541-tile deployment can. I had been treating "no significant difference"
+as evidence of equality all session — the cost meta-rule's own logic — when it was bounded
+ignorance. The uplift run then resolved even that cleanly: pass count closes half the gap (0.813 →
+0.829 → 0.843, every step significant), converting a "tie" into a priced trade-off. I should have
+asked the production-evidence question myself, before putting min6's GS number into a production
+cost table. I priced a recommendation whose deployment evidence existed, contradicted it, and sat
+unexamined three directories away.
+
+### Prompt: What would you do differently if you replayed this session?
+
+I would build **positive gates before pipelines, not after failures**. My value-gates were
+excellent all session — every F1-reproduction gate fired correctly, and they caught a real
+derivation bias (+0.005–0.011 in the first5-of-10 shortcut) that I then neutralised by
+method-matching. But the failures that actually cost wall-clock were all *silent successes*:
+`evaluate_detections` defaulting to a single buffer so 14 evaluations quietly carried one row;
+the resume semantics returning exit 1 on an already-complete pass and my runbook reading it as
+fatal; and — the worst — stage E extracting **zero** crops against the wrong raster directory,
+after which stage V "completed" in seconds having verified nothing, and my monitor announced
+success. Error traps catch loud failures; none of these were loud. The fix I applied late
+(assert the band has ≥10,000 crops *before* spend) is the fix I should now apply by reflex:
+every pipeline stage gets an existence/magnitude assertion on its output, written at the same
+time as the stage. Cheap, and it converts silence into signal.
+
+### Prompt: What was different about this session compared to recent ones?
+
+Reading the 109–110 entry before writing this one: that instance judged itself a good executor
+whose load-bearing questions all came from the human. This session the balance genuinely shifted
+on the *mechanism* side — the recall-ceiling analysis, the zero-diversity anchor, the CSR null
+plus the attribution-ambiguity bound, the measured miss-correlation upgrade to the GT epistemics,
+and the completeness sweep were all probes I proposed and Shawn approved, several of which he said
+he would not have thought of. But the *consequential* questions — the ones that changed
+conclusions rather than explained them — were still his: the cost-axis reframe of the Pareto
+("high thinking isn't really cheap"), the production-evidence question that found the reversal,
+the GT-imperfection question that became Obs 361. The honest division: I generated mechanisms and
+bounds; he generated the questions that made them matter. One pattern worth keeping: five times
+this session an obs-writer verification agent corrected numbers I had staged (a p-range, a
+directory count, an unanchored cost figure, a divergence claim, a misattributed run) — adversarial
+verification of my own write-ups is now load-bearing, not ceremonial.
+
+### Texture
+
+Operationally the heaviest session yet: a model tranche with three relaunches (partial-failure
+semantics, re-entrancy, a 503-dropped candidate), two approved runs executed end-to-end overnight
+and same-day, seven background agents, and ~60 commits across two machines with three genuine
+push races — all reconciled, nothing lost. The wind-down discipline of committing each result the
+moment it existed meant the session could have ended at almost any point without losing work.

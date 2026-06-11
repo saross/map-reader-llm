@@ -6434,3 +6434,42 @@ beyond this study (all GS 384px, curator GT, F1@20m; anchors in `results/verifie
 
 The through-line for the paper's methods framing: **cheap, simple configurations are not a
 compromise here — they are at or within noise of the expensive ones on almost every axis.**
+
+## Session 111–112 — 2026-06-10/11 (sampling variance is a model property that architecture can punish; and verification agents earned their keep)
+
+**Temperature-as-diversity is model-dependent, and "stronger" can mean "more deterministic".**
+The session's mechanism work put numbers on something the Pro result had only hinted at: at the
+same T=0.7, the union/per-pass ratio — a direct measure of how much new material each extra pass
+contributes — is 1.44–2.46 for Flash 3 (minimal–high thinking), **1.32 for Flash 3.5** (53 % of
+its candidates appear in all ten passes), and **1.15 for Pro 3.1**. The newer/stronger models
+sample more consistently, which lowers their reachable recall ceiling, which is precisely what a
+proposer-verifier architecture punishes (the verifier supplies precision; the pool must supply
+recall). Flash 3.5 consequently won in *no* role — dead-tie bare proposer, worse PV proposer
+(−0.036), worse verifier at 3× the price. For tool selection the implication generalises: when an
+architecture harvests diversity, benchmark the *sampling variance* of a candidate model, not just
+its single-shot quality. A leaderboard-better model can be pipeline-worse.
+
+**The verifier-model conclusion was pool-dependent — generalisations from a bound regime don't
+transfer.** "Verifier model barely matters" was true on Pro's recall-capped pool and false on the
+high-recall Flash union (Pro verifier +0.015, raw p = 0.019). Same lesson as the GS/deployment
+reversal, one level down: conclusions measured where one constraint binds do not survive a regime
+where it doesn't.
+
+**Adversarial verification of my own write-ups is now load-bearing.** Across seven obs-writer
+dispatches, the verification pass corrected five real defects in numbers I had staged — a p-range
+I had rounded from memory, a directory count (146 vs the source's 147), an unanchored ~$105 cost
+figure (source said $118), a divergence range I had asserted without an anchor, and an
+"already-committed" claim about files that were actually gitignored (which itself turned out
+wrong on re-check — the *agent* erred and the re-check caught it). The pattern that works:
+the writing agent is bound to re-read anchors before citing, and the dispatching instance
+re-verifies any claim the agent flags. Neither layer alone caught everything; together they
+caught everything we know about.
+
+**Silent success is the failure mode agentic pipelines select for.** Three incidents this
+session produced *no error*: a single-buffer default that made 14 evaluations quietly
+non-standard, an exit-code convention that made "already done" indistinguishable from "setup
+failure", and an extraction against the wrong rasters that yielded a clean, empty manifest which
+the next stage happily "verified" in seconds. Monitors tuned to failure signatures stay silent
+through all three. The countermeasure that worked was positive assertion of output magnitude
+(crop count ≥ threshold) *before* the next stage spends money — gates on what must exist, not
+traps on what must not happen.

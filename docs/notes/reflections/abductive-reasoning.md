@@ -5563,3 +5563,41 @@ to a within-noise tie, and the cost-broken tie always favoured the cheaper optio
 noise, take the cheaper config" is not a slogan I imposed; it is where four independent comparisons
 converged, with the round-robin permutation leaderboard (all five N=5 verifier configs in one tier)
 as the statistical anchor.
+
+## Session 111–112 — 2026-06-10/11 — a refuted first hypothesis, a two-stage reversal, and an absence that looked like success
+
+*(Conditions met: three distinct surprise → probe → revision chains, one with a clean refutation
+of my first hypothesis.)*
+
+**Chain 1 — the 0.60 anomaly: first hypothesis refuted by a designed probe.** The text-minimal
+5-pass pool scored 0.60 where its lineage siblings scored 0.87 — uniformly depressed across every
+threshold, MCC pinned at ~0.5. My first hypothesis was a misaligned probability↔candidate join
+(the index-join pattern has known traps). I designed a discriminating probe: if the join were
+scrambled, the vote↔probability correlation should collapse to ~0. It didn't — r = +0.398,
+indistinguishable from healthy pools. Hypothesis refuted in one measurement. The second probe
+(tile coverage) found the real cause instantly: the union covered only 230 of 471 tiles — a stale
+artefact built mid-study before pass resumes completed. The general shape: when a *uniform*
+degradation appears, test signal-integrity before signal-quality; a single designed correlation
+check separated "wrong wiring" from "missing input" for the cost of one calculation.
+
+**Chain 2 — the two-stage belief revision on thinking level.** Stage one: GS evidence overturned
+the diversity-dividend prior (minimal ≈ high under the verifier, all pairs flat), and I built a
+mechanism that fit (recall-ceiling saturation). Stage two: a bookkeeping question ("have we run
+min6 at production?") surfaced deployment evidence that overturned the overturning — minimal
+loses by 0.030, two tiers, on the instrument that resolves. The revision that survived is
+meta-level: the GS "tie" was an artefact of instrument resolution (±0.03 invisible on 487 tiles),
+and the mechanism was real but regime-local. The uplift experiment then *quantified* the residual
+(pass count closes half the gap, both halves significant). Pattern for the investigation: when new
+evidence contradicts a finding, check whether the finding was ever more than the null resolution
+of its instrument — "no difference detected" and "no difference" came apart twice this session
+(thinking level; verifier model), both times along the same axis (which constraint binds in which
+regime).
+
+**Chain 3 — surprise carried by an absence.** Stage V of the uplift "completed" seconds after
+starting. Nothing was wrong in any log; the surprise registered only because the elapsed time
+violated an expectation I hadn't written down (16K crops cannot verify in two minutes). The probe
+(count the band crops: zero) found an extraction that had succeeded against the wrong rasters.
+Abductively interesting because the anomaly had no error signature at all — the inference ran
+from a *temporal* prior, not from any system signal, and a monitor without that prior had
+announced success. Hypotheses about what should be true (magnitudes, durations, counts) catch a
+class of failure that hypotheses about what might go wrong cannot.
