@@ -1,0 +1,53 @@
+{
+  "true_min6_makeup": {
+    "cell": "text-n10 lineage, TRUE first-5 union (1,586 cands) + carry-forward n=1 verifier",
+    "source": {
+      "union": "outputs/h11/pv-diag-384/consensus/text-min-t07-true-1of5.geojson",
+      "probs": "outputs/h11/pv-diag-384/verified/text-min-t07-true-1of5/probabilities.json"
+    },
+    "sweep_f1_mcc_pt": {
+      "1of5": [
+        0.8268,
+        0.779,
+        0.15
+      ],
+      "2of5": [
+        0.8627,
+        0.793,
+        0.15
+      ],
+      "3of5": [
+        0.8784,
+        0.79,
+        0.15
+      ],
+      "4of5": [
+        0.8673,
+        0.773,
+        0.15
+      ],
+      "5of5": [
+        0.8414,
+        0.762,
+        0.15
+      ]
+    },
+    "best": {
+      "op": "3of5/pt0.15",
+      "f1_20m": 0.8784,
+      "mcc": 0.79
+    },
+    "family": {
+      "derived_first5of10": 0.8681,
+      "n30_lineage_min6": 0.8708
+    }
+  },
+  "flash35_pool_diversity": {
+    "union_n": 1132,
+    "per_pass_mean": 848.8,
+    "n_passes": 11,
+    "union_per_pass": 1.33,
+    "votes_10of10": 598,
+    "frac_10of10": 0.528
+  }
+}
