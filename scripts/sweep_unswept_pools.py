@@ -304,6 +304,16 @@ DUPLICATE_FORMAT = {
 }
 
 
+# Pools excluded because a CONCURRENT session is still writing them (verified
+# mid-flight on zbook at enumeration time). Sweep these once they land in git.
+IN_FLIGHT = {
+    "flash-high-text-t03-1of5":
+        "mid-flight verification by a concurrent session (probabilities.json at "
+        "1800/2954 candidates, no run.meta.json, mtime minutes old at sweep time); "
+        "untracked on zbook only — excluded, sweep when complete and committed",
+}
+
+
 def classify_band_dirs() -> list[dict]:
     """Enumerate the k-of-N band directories (k >= 2) and tag each one.
 
@@ -316,7 +326,7 @@ def classify_band_dirs() -> list[dict]:
     text-min-t07-true-1of5) and are tagged accordingly.
     """
     classified_elsewhere = (
-        set(ALREADY_SWEPT) | set(DUPLICATE_FORMAT)
+        set(ALREADY_SWEPT) | set(DUPLICATE_FORMAT) | set(IN_FLIGHT)
         | {c["probs"] for c in CELLS}
     )
     out = []
@@ -327,7 +337,13 @@ def classify_band_dirs() -> list[dict]:
         if not probs_path.exists():
             out.append({"dir": d.name, "kind": "no_probabilities"})
             continue
-        head = json.loads(probs_path.read_text())
+        try:
+            head = json.loads(probs_path.read_text())
+        except json.JSONDecodeError:
+            # A concurrent session may be mid-write; do not let one partial
+            # file abort the whole sweep.
+            out.append({"dir": d.name, "kind": "unparseable_mid_write"})
+            continue
         kind = "derived_subset" if head.get("source") else (
             "independent_draw" if (d / "run.meta.json").exists() else "unknown")
         entry = {"dir": d.name, "kind": kind,
@@ -454,11 +470,13 @@ def main() -> int:
     gdf_bounds = load_geojson(BOUNDS_BY_SIZE[384])  # all unswept cells are 384 px
 
     band_dirs = classify_band_dirs()
+    in_flight = {k: v for k, v in IN_FLIGHT.items() if (VERIFIED / k).is_dir()}
     n_dirs = sum(1 for d in VERIFIED.iterdir() if d.is_dir()) + len(VR_SWEPT)
     print(f"in scope: {n_dirs} dirs | already swept: "
           f"{len(ALREADY_SWEPT) + len(VR_SWEPT)} | duplicate-format: "
           f"{len(DUPLICATE_FORMAT)} | band (draw-replicate/derived): "
-          f"{len(band_dirs)} | unswept cells to sweep: {len(CELLS)}", flush=True)
+          f"{len(band_dirs)} | in-flight excluded: {len(in_flight)} | "
+          f"unswept cells to sweep: {len(CELLS)}", flush=True)
 
     results = []
     for cell in CELLS:
@@ -496,10 +514,12 @@ def main() -> int:
             "already_swept_verifier_robustness": VR_SWEPT,
             "duplicate_format_dirs": DUPLICATE_FORMAT,
             "band_dirs_not_swept": band_dirs,
+            "in_flight_excluded": in_flight,
             "counts": {
                 "already_swept": len(ALREADY_SWEPT) + len(VR_SWEPT),
                 "duplicate_format": len(DUPLICATE_FORMAT),
                 "band_draw_replicates": len(band_dirs),
+                "in_flight_excluded": len(in_flight),
                 "unswept_swept_now": len(CELLS),
             },
         },
