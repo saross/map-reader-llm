@@ -1,0 +1,20 @@
+canonical GT at 50 m: 5161 points; 8541 tiles
+  T03-k3 (oracle)          board F1@50=0.8476 eval=0.8476 ok
+  T03-k4                   board F1@50=0.8359 eval=0.8359 ok
+  TH7-k3                   board F1@50=0.8425 eval=0.8425 ok
+  TH7-k4 (carry-forward)   board F1@50=0.8152 eval=0.8152 ok
+  TM-k3                    board F1@50=0.8127 eval=0.8127 ok
+  TM-k4                    board F1@50=0.7831 eval=0.7831 ok
+  IM-k3                    board F1@50=0.7987 eval=0.7987 ok
+
+=== round-robin (7 cells, 10k tile-swap, seed 42) ===
+18/21 pairs significant -> 5 tier(s)
+1. T03-k3 (oracle)          T1  F1@50 0.8476  MCC 0.690
+2. TH7-k3                   T1  F1@50 0.8425  MCC 0.680
+3. T03-k4                   T2  F1@50 0.8359  MCC 0.671
+4. TH7-k4 (carry-forward)   T3  F1@50 0.8152  MCC 0.667
+5. TM-k3                    T3  F1@50 0.8127  MCC 0.658
+6. IM-k3                    T4  F1@50 0.7987  MCC 0.710
+7. TM-k4                    T5  F1@50 0.7831  MCC 0.641
+
+Wrote results/55map-leaderboard/
