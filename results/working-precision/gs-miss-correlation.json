@@ -1,0 +1,57 @@
+{
+  "n_curator_in_bounds": 435,
+  "student_radius_m": 50.0,
+  "student_miss_rate": 0.046,
+  "system": "outputs/era1-pv-stage-d/384-consensus-text-high/pass_1/accepted_t0.2.geojson",
+  "by_system_radius": [
+    {
+      "system_radius_m": 20.0,
+      "both_found": 361,
+      "students_only": 54,
+      "system_only": 16,
+      "both_miss": 4,
+      "system_miss_rate": 0.1333,
+      "double_miss_observed": 0.0092,
+      "double_miss_independence": 0.0061,
+      "correlation_ratio": 1.5,
+      "fisher_odds": 1.67,
+      "fisher_p": 0.323,
+      "implied_55map_p_neither": 0.0237,
+      "implied_55map_recall_inflation_factor": 1.0242
+    },
+    {
+      "system_radius_m": 30.0,
+      "both_found": 367,
+      "students_only": 48,
+      "system_only": 16,
+      "both_miss": 4,
+      "system_miss_rate": 0.1195,
+      "double_miss_observed": 0.0092,
+      "double_miss_independence": 0.0055,
+      "correlation_ratio": 1.67,
+      "fisher_odds": 1.91,
+      "fisher_p": 0.281,
+      "implied_55map_p_neither": 0.0264,
+      "implied_55map_recall_inflation_factor": 1.0271
+    },
+    {
+      "system_radius_m": 50.0,
+      "both_found": 367,
+      "students_only": 48,
+      "system_only": 16,
+      "both_miss": 4,
+      "system_miss_rate": 0.1195,
+      "double_miss_observed": 0.0092,
+      "double_miss_independence": 0.0055,
+      "correlation_ratio": 1.67,
+      "fisher_odds": 1.91,
+      "fisher_p": 0.281,
+      "implied_55map_p_neither": 0.0264,
+      "implied_55map_recall_inflation_factor": 1.0271
+    }
+  ],
+  "transfer_inputs": {
+    "ms_55": 0.091,
+    "mm_55_oracle_at_50m": 0.1734
+  }
+}

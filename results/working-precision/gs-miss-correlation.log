@@ -1,0 +1,16 @@
+curator mounds in eval bounds: 435 | students 556 | system detections 412
+student miss rate @ 50 m: 0.046 (prior whole-sheet derivation: 0.091)
+
+system radius 20 m: both 361 | students-only 54 | system-only 16 | both-miss 4
+  system miss 0.133; double-miss obs 0.0092 vs independence 0.0061 -> ratio 1.50 (Fisher OR 1.67, p=3.23e-01)
+  implied 55-map P(neither) = 0.0237 -> reported recall inflated by ~2.4%
+
+system radius 30 m: both 367 | students-only 48 | system-only 16 | both-miss 4
+  system miss 0.120; double-miss obs 0.0092 vs independence 0.0055 -> ratio 1.67 (Fisher OR 1.91, p=2.81e-01)
+  implied 55-map P(neither) = 0.0264 -> reported recall inflated by ~2.7%
+
+system radius 50 m: both 367 | students-only 48 | system-only 16 | both-miss 4
+  system miss 0.120; double-miss obs 0.0092 vs independence 0.0055 -> ratio 1.67 (Fisher OR 1.91, p=2.81e-01)
+  implied 55-map P(neither) = 0.0264 -> reported recall inflated by ~2.7%
+
+Wrote results/working-precision/gs-miss-correlation.json
