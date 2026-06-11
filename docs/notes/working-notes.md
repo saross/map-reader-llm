@@ -19851,3 +19851,169 @@ Obs 347 resolving power limit
 `results/working-precision/55maps-csr-noise-floor.log`;
 `results/verifier-robustness/evals/verified-384-16of30-t0-3-n5-opmax/evaluation.json`;
 `results/verifier-robustness/evals/verified-384-16of30-t0-3-n5-opmax/eval.log`.
+
+## Observation 361: Generalisation-metric epistemics — precision is review-verified, recall is a measured upper bound (+~2.5–2.7%), the double-miss blind spot quantified on the GS sheets (Session 112, 2026-06-11)
+
+*Source anchors: `results/working-precision/gs-miss-correlation.json`
+and `results/working-precision/gs-miss-correlation.log` (2×2 double-miss
+analysis on GS sheets, 3 system-radius conditions; verified 2026-06-11);
+`scripts/measure_miss_correlation_gs.py` (the measurement script;
+verified 2026-06-11).*
+
+### The finding
+
+**The 55-map canonical GT (773 reviewed mounds) cannot contain mounds missed
+by both the students and the system.** The consequence is structural: every
+metric computed against this GT inherits asymmetric epistemics.
+
+- **Precision is review-adjudicated.** Every counted false positive (FP)
+  survived human review — reported precision is honestly conservative (residual
+  student FPs < 1% contribute to the denominator, not the numerator, so they
+  penalise recall slightly, not precision).
+
+- **Recall is structurally an upper bound.** The double-miss set — mounds
+  that exist in reality but were missed by both the students and the production
+  system — is absent from the GT denominator. Reported recall overestimates true
+  recall by the fraction of the real population in that set.
+
+- **F1 inherits ~half the recall bias.** Tile-MCC is slightly optimistic but
+  true-negative-diluted (the vast majority of tiles are TN, which attenuates
+  the optimism).
+
+**The empirical 2×2 (GS sheets, `gs-miss-correlation.json`):**
+
+Corpus: GS sheets, 435 in-bounds curator mounds; students evaluated at 50 m;
+production headline system evaluated at 20 m, 30 m, and 50 m.
+At the 30 m system radius:
+
+| cell | count |
+|---|---:|
+| both found | 367 |
+| students only | 48 |
+| system only | 16 |
+| **both miss** | **4** |
+
+Students missed 20 of 435 in-bounds mounds (4.6%); the system found 16 of
+those 20 (80%) — the machine complements the student digitisation precisely on
+the human failure set (§ "Auxiliary finding" below).
+
+**Correlation between the two miss processes:**
+
+| quantity | 20 m radius | 30 m radius |
+|---|---:|---:|
+| double-miss observed | 0.92% | 0.92% |
+| double-miss (independence) | 0.61% | 0.55% |
+| correlation ratio | 1.50 | **1.67** |
+| Fisher OR | 1.67 | 1.91 |
+| Fisher p | 0.323 | **0.281** |
+
+The point estimate is mildly super-independent (the two sources fail on an
+overlapping subset of hard cases), but only 4 events — not significant
+(p ≈ 0.3).
+
+**Transfer to the 55-map track** (using 30 m row; whole-sheet student miss
+rate 9.1%, oracle system miss @50 m = 17.3%):
+
+- P(neither finds a mound) ≈ **2.64%**
+- Reported recall inflated by approximately **2.7%**
+- F1 inflated by approximately **1.3–1.4%**
+
+Sensitivity framing for the paper (oracle F1@50 m = 0.848,
+`[[Obs 360]]`):
+
+| scenario | adjusted F1 |
+|---|---:|
+| +3% true population | ~0.836 |
+| +5% true population | ~0.829 |
+
+At 20 m the same analysis gives P(neither) = 2.37%, recall inflation ~2.4%;
+the two-row range is **2.4–2.7%** recall inflation — the 2–5% band assumed in
+earlier session notes now has an empirical lower bound.
+
+**Auxiliary finding — machine complements student on the student failure set:**
+of the 20 in-bounds mounds students missed, the system found 16 (80%). This is
+directly relevant to the participatory-GIS framing: machine detection adds value
+precisely where human digitisation is weakest.
+
+### Why this matters
+
+1. **These are the paper's load-bearing epistemic caveats for the recall and
+   F1 claims.** Every downstream comparison (vs prior work, vs human-only
+   baselines) should be qualified: precision is honest, recall is an upper
+   bound, and the blind spot is now quantified. The +2.7% recall inflation
+   at 30 m and the oracle sensitivity range (0.848 → ~0.829 at +5%) are
+   the citable precision statements for the methods section.
+
+2. **The GS in-bounds miss rate (4.6%) vs the whole-sheet derivation (9.1%)
+   locates the GS eval pool at the low end of the per-map spread.** The GS
+   sheets are a subset of the study area where the system performs well and
+   the student digitisation is relatively complete; the transfer to the 55-map
+   corpus conservatively uses the whole-sheet 9.1% figure, not the
+   in-bounds 4.6%.
+
+3. **The mild correlation (ratio 1.5–1.7) means the independence assumption
+   used in earlier sensitivity estimates was not grossly wrong**, but the
+   true blind-spot probability is somewhat larger than the independence
+   model predicts. The point estimate should be reported as "mildly
+   super-independent" rather than independent; the Fisher test cannot
+   distinguish this from independence with 4 events.
+
+4. **The 80% machine coverage of the student failure set is a standalone
+   positive finding.** It quantifies the complementarity claim in concrete
+   terms for the participatory-GIS framing: the machine does not simply
+   replicate the student, it preferentially recovers the cases the student
+   missed.
+
+### Caveats / methodological notes
+
+The analysis is run on the GS sheets (487-tile, 384-px corpus), not the
+55-map generalisation corpus directly. Transfer relies on two inputs:
+(a) the 9.1% whole-sheet student miss rate derived from the 55-map corpus
+and (b) the 17.3% oracle system miss rate at 50 m from the 55-map evaluation.
+Both are taken from `gs-miss-correlation.json` (`transfer_inputs`).
+
+The in-bounds student miss rate (4.6%) is lower than the whole-sheet 9.1%
+because the GS eval polygon selects a subset of tiles where the field review
+was most systematic; the per-map spread is 3.6–15.9% (noted in spec). Using
+9.1% for transfer is conservative.
+
+Fisher exact test has very low power at n = 4 double-miss events. The
+correlation ratio (1.67 at 30 m) and Fisher OR (1.91) are point estimates
+that could shift substantially with more data. The conclusion "not
+significantly super-independent but mildly so in point estimate" is as strong
+a statement as the data support.
+
+The sensitivity framing (oracle 0.848 → ~0.836/~0.829) is a linear
+approximation derived from the recall inflation factor; it is approximate
+to within ~1–2% of F1 across the range shown.
+
+### Findable later
+
+double-miss blind spot GT denominator upper bound recall; precision
+review-adjudicated honest conservative; both-miss 4 events GS sheets 435
+in-bounds; students 50m miss rate 4.6 percent in-bounds 9.1 percent
+whole-sheet; correlation ratio 1.5 1.67 Fisher OR 1.91 p 0.28 0.32; P neither
+2.37 2.64 percent; recall inflation 2.4 2.7 percent; F1 inflation 1.3 percent;
+oracle 0.848 sensitivity 0.836 plus-3-percent 0.829 plus-5-percent; machine
+finds 80 percent of student failures; participatory-GIS complementarity; 773
+canonical GT structural blind spot; canonical GT double-miss bias; ms-55 9.1
+percent mm-55-oracle 17.3 percent; gs-miss-correlation; measure_miss_correlation_gs;
+Obs 360 oracle F1 50m; transfer_inputs recall_inflation_factor 1.0271;
+independence assumption not grossly wrong; generalisation metric epistemics
+
+### Related observations and artefacts
+
+- **[[Obs 358]]** (the 55-map 50 m leaderboard — the headline F1 values
+  that inherit the recall upper-bound property are reported there; this Obs
+  quantifies the epistemic ceiling on those values)
+- **[[Obs 347]]** (GS-calibration resolving power — the GS instrument's
+  limited resolving power is compounded by the blind-spot: the GT itself
+  is structurally incomplete; both constraints apply when interpreting GS
+  results)
+- **[[Obs 360]]** (working precisions — the oracle F1@50 m = 0.848 used in
+  the sensitivity framing is confirmed there; the 2.7% recall inflation
+  figure is a methodological companion to that Obs)
+
+**Artefacts**: `results/working-precision/gs-miss-correlation.json`;
+`results/working-precision/gs-miss-correlation.log`;
+`scripts/measure_miss_correlation_gs.py`.
