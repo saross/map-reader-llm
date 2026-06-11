@@ -1,0 +1,13 @@
+=== rungs (gates vs committed records) ===
+  min6       F1=0.8784 (record 0.8784)  est $2.61
+  min11      F1=0.8835 (record 0.8835)  est $4.35
+  high6      F1=0.8641 (record 0.8641)  est $7.10
+  high5+5vf  F1=0.8739 (record 0.8739)  est $7.48
+  high11     F1=0.8769 (record 0.8769)  est $13.09
+  high31     F1=0.8902 (record 0.8902)  est $27.51
+  high35     F1=0.8951 (record 0.8951)  est $29.54
+
+=== round-robin (21 pairs, 10k, seed 42) ===
+0/21 significant -> 1 tier(s): [['high35', 'high31', 'min11', 'min6', 'high11', 'high5+5vf', 'high6']]
+Pareto-efficient set: ['min6', 'min11', 'high31', 'high35']
+Wrote results/verifier-robustness/pareto/pareto_v2.{json,png}
