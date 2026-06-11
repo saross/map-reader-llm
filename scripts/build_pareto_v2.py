@@ -12,9 +12,9 @@
 #
 # COST MODEL (estimates, basis stated):
 #   - F3 verifier call: $0.000697 measured (opmax run: $2.54 / 3,645 calls).
-#   - F3 MINIMAL proposer pass: 487 calls x ~$0.0006/call (per-call tokens
-#     measured from the F3.5 smoke at ~1.24 K/call, priced at F3 flex
-#     $0.25/$1.50 per 1M in/out) ~= $0.30/pass.
+#   - F3 MINIMAL proposer pass: $0.54 at GS scale — recalibrated from the
+#     TM run's cost manifest (25.7M in / 1.95M out tokens per 8,541-tile
+#     pass => ~$9.40/pass at F3 flex rates; scaled by 487/8541).
 #   - HIGH proposer pass ~= 3x minimal (thinking-token dominance; the S110
 #     verifier matrix measured exactly 3.0x for high-vs-min verifier calls).
 #   - Verifier leg cost scales with the pool's CROP COUNT (per-rung below).

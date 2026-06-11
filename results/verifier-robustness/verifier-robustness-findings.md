@@ -263,9 +263,17 @@ project-canonical round-robin (`scripts/tier_verifier_matrix.py`: 15 pairs,
   verifier 0.8506 (both 3of5 / pt0.15) ≪ Flash 5-pass + verifier 0.8739. The
   verifier needs a **high-recall** proposer to prune; Pro's 504-candidate pool
   is already precise, leaving the verifier little to do.
-- **The verifier model barely matters** (Pro-vf 0.8506 ≈ Flash-vf 0.8491):
-  keep the cheap Flash verifier. (Flex rates, recorded June 2026: Flash 3
-  $0.25/$1.50, Flash 3.5 $0.75/$4.50, Pro 3.1 $1.00/$6.00 per 1M in/out.)
+- **The verifier model barely matters on the PRO pool** (Pro-vf 0.8506 ≈
+  Flash-vf 0.8491): there, the recall ceiling binds everything. **Refinement
+  (S112, unswept-pools sweep)**: on the high-recall Flash HIGH 5-pass union
+  the verifier model DOES matter — the Pro verifier scores **0.8792** vs the
+  Flash carry-forward's 0.8641 (+0.015, raw p = 0.019; post-hoc-selected
+  pair, hypothesis-generating), statistically tied with the headline
+  (p = 0.41) and min11 (p = 0.76). It is nonetheless **dominated by min11 on
+  both cost and F1** (~$10 of Pro verifier calls), so the frontier and the
+  cheap-Flash-verifier production choice stand. (Flex rates, recorded June
+  2026: Flash 3 $0.25/$1.50, Flash 3.5 $0.75/$4.50, Pro 3.1 $1.00/$6.00 per
+  1M in/out.)
 
 ## 10. Compute allocation — spend passes on the proposer, not the verifier
 
@@ -369,19 +377,21 @@ batch pricing**. All seven rungs remain ONE statistical tier (0/21 pairs).
 
 | rung | F1@20m | GS run | 55-map production | frontier |
 |---|---:|---:|---:|---|
-| min6 | 0.8784 | $2.61 | ~$46 | ✓ |
-| min11 | 0.8835 | $4.35 | ~$76 | ✓ |
-| high6 | 0.8641 | $7.10 | ~$125 | dominated |
-| high5+5vf | 0.8739 | $7.48 | ~$131 | dominated |
-| high11 | 0.8769 | $13.09 | ~$230 | dominated |
-| high31 (headline) | 0.8902 | $27.51 | ~$482 | ✓ |
-| high35 (opmax) | 0.8951 | $29.54 | ~$518 | ✓ |
+| min6 | 0.8784 | $3.81 | ~$67 | ✓ |
+| min11 | 0.8835 | $6.75 | ~$118 | ✓ |
+| high6 | 0.8641 | $10.65 | ~$187 | dominated |
+| high5+5vf | 0.8739 | $11.03 | ~$193 | dominated |
+| high11 | 0.8769 | $20.19 | ~$354 | dominated |
+| high31 (headline) | 0.8902 | $48.81 | ~$856 | ✓ |
+| high35 (opmax) | 0.8951 | $50.84 | ~$892 | ✓ |
 
-Production costs scale both components by the tile factor (8,541/487), so
-the frontier shape is unchanged; crops/tile from the GS pools (the 55-map
-corpus is sparser → slight upper bounds). **The F1 column is
-GS-characterised — see § 16 before reading the min rungs as production
-recommendations.**
+Costs recalibrated 2026-06-11 to the TM run's MEASURED token load
+(~$9.40 per 8,541-tile minimal pass at flex; the earlier smoke-derived
+model under-priced proposer passes 1.8×); efficient set unchanged.
+Production costs scale both components by the tile factor (8,541/487);
+crops/tile from the GS pools (the 55-map corpus is sparser → slight
+upper bounds). **The F1 column is GS-characterised — see § 16 before
+reading the min rungs as production recommendations.**
 
 ## 16. The deployment reversal — scope-qualifying the meta-rule
 
@@ -402,10 +412,14 @@ on the diverse 55-map sheets, and the § 13 recall-ceiling saturation may
 be GS-specific. **Consequences**: (a) the meta-rule holds only where the
 tie's instrument could detect a difference of consequence; (b) deployment
 evidence overrides characterisation ties — the deployment-evidenced
-production text config is HIGH thinking at k3 (~$125/run); (c) min11 is
-untested at production (a ~$38–50 lift experiment would test whether pass
-count closes the gap); (d) the T0.3 proposer — the deployment champion —
-has no GS-side verifier characterisation (closable for ~$2–3).
+production text config is HIGH thinking at k3; (c) the min6 → min11
+production lift experiment (~$60 flex, Shawn-approved) is RUNNING — it
+tests whether pass count closes the gap; (d) **CLOSED 2026-06-11**: the
+T0.3 proposer is now GS-characterised (Run A, $2.06: 0.8783 @ 20 m /
+0.9045 @ 50 m, 4of5/pt0.2) — the transfer table is complete, final deltas
+HIGH-T0.7 −0.048 < HIGH-T0.3 −0.057 < image −0.078 < MIN −0.087: the
+deployment champion *started higher and degraded more*; T0.7-HIGH remains
+the best transferrer.
 
 ## 17. Board coverage and scope (documentation note)
 
@@ -444,6 +458,19 @@ flags live at `results/metric-leaderboards/` (GS @ 30 m; 55-map @ 50 m).
   preregistration amendment needed for a robustness check.
 
 ## Changelog
+
+### 2026-06-11 (later) — unswept-pools sweep, T0.3 closure, cost recalibration
+
+**Refresh trigger**: the systematic sweep of 18 never-swept PV pools
+(`unswept_pools_sweep.json`), Run A (the T0.3 GS comparator, $2.06), and
+the TM-cost-manifest recalibration of the Pareto cost model. § 9 refined
+(the verifier model DOES matter on high-recall pools: Pro-vf 0.8792 over
+the Flash HIGH union, +0.015 raw p = 0.019, post-hoc-selected; dominated
+by min11 — frontier unchanged); § 15 dollar columns recalibrated (×~1.8,
+efficient set unchanged); § 16 (c) the min11 uplift is running, (d) the
+T0.3 gap is closed and the transfer table complete. Also recorded by the
+sweep: the full 30-pass union's global optimum IS the registered 16of30
+headline (0.8902 reproduced exactly — no hidden better operating point).
 
 ### 2026-06-11 — Second wave: min rungs, Flash 3.5, Pareto v2, the deployment reversal
 
