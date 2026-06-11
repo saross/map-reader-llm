@@ -1,0 +1,338 @@
+# Results — working draft
+
+> **Last revised**: 2026-06-11 (Session 113 — first prose draft; begun the
+> session the evidential skeleton closed). See [§ Changelog](#changelog)
+> for revision history.
+
+**Status**: first full-prose draft for collaborative revision. Every number
+is anchored to a registered manifest condition or analysis
+(`results/conditions-manifest.md`, `results/analyses-manifest.md`); section
+order follows the study's evidential arc rather than run chronology.
+`[DRAFT NOTE: …]` marks points needing Shawn's decision, a figure, or
+numbers still to be pulled. Companion outline: `docs/methods-outline.md`.
+
+---
+
+## R0. Reading guide: instruments, metrics, and statistical conventions
+
+Two evaluation instruments run through everything that follows, and the
+distinction governs how each result may be read. The **gold-standard (GS)
+instrument** — four Soviet 1:50,000 sheets, curator-adjudicated ground
+truth — is the *characterisation* instrument: it measures how well a
+configuration can localise burial-mound symbols against known ground truth,
+at each configuration's own best operating point, per the preregistered
+H-series analysis plan. The **55-map instrument** — 8,541 tiles, a
+canonical extended ground truth of 4,746 reviewed student digitisations
+plus 773 adjudicated phantom mounds — is the *deployment* instrument: it
+measures what a configuration calibrated on the GS sheets actually delivers
+on a large, diverse, unseen corpus. Results on the first instrument are
+reported as characterisations, not in-sample claims to hedge; results on
+the second carry the calibrate-then-deploy interpretation, including its
+failures (§ R6).
+
+Headline metrics are buffered F1 at an empirically derived **working
+precision** per instrument (§ R1), reported alongside tile-level Matthews
+correlation coefficient (MCC) wherever the inputs support it. Statistical
+comparison uses one machinery throughout: paired tile-swap micro-F1
+permutation tests (10,000 permutations, seed 42, two-sided),
+Benjamini–Hochberg false-discovery-rate (FDR) correction at q = 0.05, and
+greedy-clique tiering, so that "Tier 1" always means "statistically
+inseparable from the board leader". Tile sets differ by instrument and tile
+size (GS 512 px: 340 tiles; GS 384 px: 487; GS 256 px: 1,032; 55-map:
+8,541), so cross-era comparison is descriptive while within-era tiers carry
+the statistics.
+
+[DRAFT NOTE: cross-reference the Methods subsections for GT construction,
+the matching algorithm (Hungarian, per map), and bootstrap CIs once Methods
+prose lands.]
+
+## R1. Working precisions are empirical properties of the system, not free parameters
+
+Buffer radius is the analyst's largest free parameter, so we derived it
+from the data rather than asserting it. On the GS instrument, plateau-onset
+analysis of all 259 conditions with full buffer curves (every later step
+≤ 0.005 F1) puts the **text pipeline's localisation plateau at 30 m**
+(~6 px at map scale) — proposer–verifier (PV) architectures plateau at
+30 m, consensus at 35 m, single-pass at 40 m — while **image-modality
+localisation plateaus at 75 m**, roughly 2.5× looser; modality, not
+architecture, is the dominant factor
+(`results/working-precision/gs-plateau-characterisation.{json,md}`). For
+the production text-PV family the buffer curve is flat between 30 m and
+50 m, so GS headline values are insensitive to the choice within that
+range.
+
+On the 55-map instrument three independent lines converge on a **50 m
+operational buffer**: (i) a complete-spatial-randomness null shows chance
+matching is negligible at every canonical radius (null F1 ≤ 0.015 even at
+150 m); (ii) observed marginal gains die at 50 m while chance creep
+continues; and (iii) the attribution-ambiguity bound bites first — the
+ground truth's 10th-percentile nearest-neighbour spacing is 65 m, so 21 %
+of mounds are already at cross-match risk at 50 m and 42 % at 125 m
+(`results/working-precision/55maps-csr-noise-floor.{json,log}`). The 50 m
+buffer is also ~2× the measured student digitisation jitter. GS results
+are therefore quoted at 20 m (the preregistered radius) or 30 m (the
+plateau), and all 55-map results at 50 m.
+
+## R2. Single-pass baselines: a broad statistical tie at modest performance
+
+[DRAFT NOTE: this subsection compresses the preregistered H1/H4/H5/H7/H8
+single-factor results into one board-led narrative; the per-hypothesis
+detail tables go to supplementary material. Confirm that framing.]
+
+No single-pass configuration separates from the pack. On the Era-1 board
+(512 px, 340 tiles, curator GT, F1@20 m) the 36 single-pass cells resolve
+into only four tiers, and Tier 1 is a 20-cell statistical tie spanning
+F1 0.583–0.631, led numerically by a few-shot-ordering variant
+(`canonical-last`, F1 0.631, MCC 0.213; analysis
+`era1-single-pass-baseline-matrix`, 227/630 pairs significant). The
+single-factor manipulations the study preregistered — modality and prompt
+elaboration (H1), example ordering (H4), negative-text treatment (H5),
+temperature (H7), example-library composition (H8) — all land inside or
+near that tie: the GS instrument cannot separate the stronger single-pass
+configs from one another. Two robust patterns do emerge: text-modality
+prompts dominate image-only prompts at the bottom of the board, and a
+metric trade-off recurs in which text cells reach F1 ≈ 0.60 at
+near-zero MCC while image cells trade F1 for far better tile
+discrimination. Single-pass performance, at best ~0.63 F1, is the floor
+every architectural intervention below is measured against.
+
+## R3. Consensus voting buys real performance; its mechanism is pass diversity
+
+Consensus voting over repeated passes (H3) delivers the study's first
+large, statistically clean gain. Pooling N independent passes and
+thresholding on cross-pass vote count lifts the text pipeline from the
+single-pass tie (~0.63) to 0.69–0.77 at each pool's best (N, threshold)
+operating point — and the size of the lift depends on *pass diversity*,
+not merely pass count. HIGH-thinking passes, which sample more diversely,
+reach ~0.77 where minimal-thinking passes reach ~0.69 at matched N (the
+"diversity dividend"; analysis `diversity-dividend-384`, both preregistered
+claims confirmed; replication +0.067 F1, +0.234 MCC). Deliberately
+engineered diversity, however, adds nothing: the preregistered H9 test of
+cross-variant pooling (prompt/modality/temperature mixtures) found no
+significant gain over a same-variant baseline pool (all p > 0.37 image,
+> 0.06 text) — temperature sampling already supplies what engineering was
+supposed to add. Strict unanimity hurts; permissive-to-mid thresholds win.
+The consensus-era reading of these results — buy diversity with HIGH
+thinking — is revised, but not contradicted, by the verifier results in
+§ R5: the dividend is real for consensus-*only* architectures and obsolete
+once a verifier stage exists.
+
+## R4. The proposer–verifier architecture is the best architecture on every tile size
+
+Adding an adversarial verification stage (H2) — an independent
+text-prompted pass that re-examines a crop around each candidate and
+assigns an acceptance probability — is the single best architectural move
+in the study, on every tile size tested.
+
+On the Era-1 definitive board (82 cells: 36 single-pass + 42 consensus + 4
+clean PV cells), the sole Tier-1 leader is HIGH-thinking text consensus
+*plus* the adversarial verifier (F1 0.792, MCC 0.676), statistically clear
+of everything below — the verifier's lift (0.775 → 0.792) is what breaks
+the old six-way consensus tie (analysis `era1-leaderboard`, 2,351/3,321
+pairs significant, 10 tiers). Just as consequentially for budgets, a
+MINIMAL single-pass plus verifier — two calls per tile — reaches the same
+tier as the 30-call HIGH-thinking consensus (0.770), beating it on MCC.
+
+The verifier also interacts strongly with tile size (H11). The tile-size
+optimum is architecture-dependent: single-pass climbs monotonically with
+tile size (256 px 0.342 < 384 px 0.520 < 512 px 0.606 in the clean
+isolation), because without any false-positive filter larger tiles give
+cleaner context; consensus prefers 384 px; and under consensus + verifier
+the ordering is **384 (0.890) > 256 (0.856) > 512 (0.792)** (analysis
+`tile-size-sweep`). The most striking single number is the verifier's
+rescue of 256 px: the same 256 px consensus pool scores 0.460 bare and
+0.856 verified (+0.396) — small tiles flood the proposer with false
+positives that the verifier is then very good at pruning.
+
+The study headline follows: **F1@20 m 0.890 / MCC 0.790** on the GS 384 px
+instrument, from 30 HIGH-thinking text passes, a ≥16-of-30 consensus vote,
+and a single adversarial verifier pass
+(`pv-diag-384::verified-adv-text-consensus-16of30`). A completeness sweep
+of all 18 never-swept proposer pools later confirmed this is the global
+optimum of the 30-pass union, not an artefact of the operating points
+swept (analysis `unswept-pools-completeness`, Obs 363).
+
+## R5. Verifier robustness: every cheaper option ties, so the cheap stack wins
+
+A dedicated robustness programme (~$53 flex) stress-tested every parameter
+of the production verifier (gemini-3-flash, adversarial text, minimal
+thinking, T = 0.0, n = 1). The summary is uniform: **nothing more expensive
+is measurably better** (citable home:
+`results/verifier-robustness/verifier-robustness-findings.md`).
+
+- **Determinism / n = 1.** Five-fold verifier replication shows single-run
+  SD of 0.0025–0.0072 F1 with consensus ≈ mean — the n = 1 production
+  verifier is vindicated (Obs 354).
+- **Temperature and thinking.** A thinking × temperature matrix at N = 5 is
+  one statistical tier (0/10 pairs significant, F1 0.8709–0.8764); only
+  single-pass HIGH thinking *drops* a tier (0.8519) — more deliberation
+  makes a lone adversarial pass more spuriously rejecting (analysis
+  `verifier-robustness-matrix`).
+- **Verifier consensus.** Even at the headline's 30-pass proposer, an N = 5
+  verifier consensus lifts F1 only +0.0049 (0.8951 vs 0.8902), p = 0.363 —
+  a numerical high, not a new ceiling (analysis `pass-budget-pareto`).
+- **Compute allocation.** At equal call budget, proposer passes beat
+  verifier passes (10-proposer + 1-verifier 0.8769 ≥ 5 + 5 0.8739–0.8764).
+- **Verifier model.** A Pro-class verifier ties the Flash verifier on the
+  pools that matter and costs more; one refinement from the completeness
+  sweep is that on *high-recall* pools the Pro verifier shows a small
+  post-hoc advantage (0.8792, raw p = 0.019, not multiplicity-controlled),
+  itself dominated on cost (Obs 363).
+- **Proposer and verifier model upgrades.** Neither Gemini Pro 3.1 nor
+  Flash 3.5 wins any role. Pro is a genuinely better *bare* proposer but a
+  worse PV partner — its near-deterministic sampling caps pool recall. The
+  Flash 3.5 2×2×2 (proposer × verifier × n; ~$34) ties bare (0.6196 vs
+  0.6204), loses as PV proposer (−0.0355, p = 0.035 — the one
+  statistically resolved role gap), and ties as verifier at 3× the price
+  (p = 0.17 / 0.10), so the cost rule decides against it (analysis
+  `flash35-model-roles`).
+
+These results crystallised into the programme's meta-rule: **on a
+within-noise tie, take the cheaper configuration** (Obs 357) — and on the
+GS instrument the cheaper option pointed the same way on every axis tested
+(n = 1 over consensus, minimal over high, Flash over Pro and Flash 3.5,
+proposer passes over verifier passes). Section R6 qualifies the rule's
+scope.
+
+The mechanism unifying these findings is that **the verifier shifts the
+binding constraint from precision to pool recall** (Obs 359). Once a
+verifier prunes false positives, what limits F1 is whether the proposer
+pool *contains* the mounds at all. Temperature-sampled diversity is the
+cheapest way to raise reachable recall: minimal-thinking T = 0.7 passes
+saturate Flash's recall ceiling at 0.9195 within ~5 passes (passes 6–10
+add zero new ground-truth mounds, only vote evidence); HIGH thinking adds
+volume (union growth per pass 2.46 vs 1.44) but only +0.023 of ceiling;
+and a zero-diversity anchor (a single T = 0.0 pass + verifier) scores
+0.8142 — temperature diversity is worth +0.057, about 60 % of it via the
+ceiling lift. The consensus-era diversity dividend (§ R3) is thereby
+*explained and retired* for PV architectures: at equal pass count,
+minimal-thinking proposers reach statistical parity with HIGH (min6 0.8784
+vs high6 0.8641, p = 0.66; min11 0.8835 vs high11 0.8769, p = 0.59; min11
+vs the 31-pass headline, p = 0.56; analysis `min-vs-high-thinking-pv`) —
+on the GS instrument. The same comparison reverses at deployment (§ R6).
+
+## R6. The cost frontier, and what deployment does to it
+
+Re-pricing the pass ladder in dollars (measured token loads, June 2026
+flex rates; a HIGH-thinking pass costs ~3× a minimal one) collapses the
+frontier onto four rungs (analysis `pass-budget-pareto-v2`; all seven
+rungs remain one statistical F1 tier, 0/21 pairs):
+
+| rung | F1@20 m (GS) | GS run cost | 55-map production (est.) | frontier |
+|---|---:|---:|---:|---|
+| min6 (5 minimal passes + vf) | 0.8784 | $3.81 | ~$67 | efficient |
+| min11 (10 minimal passes + vf) | 0.8835 | $6.75 | ~$118 | efficient |
+| high6 | 0.8641 | $10.65 | ~$187 | dominated |
+| high5+5vf | 0.8739 | $11.03 | ~$193 | dominated |
+| high11 | 0.8769 | $20.19 | ~$354 | dominated |
+| high31 (headline) | 0.8902 | $48.81 | ~$856 | efficient |
+| high35 (opmax) | 0.8951 | $50.84 | ~$892 | efficient |
+
+Read naively, the table says: buy minimal thinking; the entire HIGH ladder
+is dominated. **Deployment says otherwise, and this is one of the study's
+central findings.** The min6 recipe had already run at production scale as
+the 55-map text-minimal deployment: on the 55-map canonical board it
+scores 0.8127 (Tier 3), two tiers below the HIGH-thinking equivalent at
+the matched threshold (TH7-k3, 0.8425, Tier 1) — the GS tie, where minimal
+was numerically *ahead*, reverses by −0.030 on the instrument with the
+statistical power to resolve it (Obs 362). The transfer table makes the
+pattern systematic — every configuration degrades from GS to deployment,
+and they do not degrade equally (GS F1@50 m → 55-map F1@50 m):
+
+| config | GS @50 m | 55-map @50 m | transfer delta |
+|---|---:|---:|---:|
+| text HIGH T0.7 | 0.8908 | 0.8425 | −0.048 |
+| text HIGH T0.3 | 0.9045 | 0.8476 | −0.057 |
+| image HIGH T0.7 | 0.8771 | 0.7987 | −0.078 |
+| text MIN T0.7 | 0.8996 | 0.8127 | −0.087 |
+
+(`results/55map-leaderboard/gs-vs-55map-transfer.md`; the GS T0.3 cell —
+the deployment champion's proposer, characterised at $2.06 — completed
+this table.) The deployment champion *started higher on GS and degraded
+more*; HIGH-T0.7 transfers best. GS clustering at 0.88–0.90 concealed
+differential deployment robustness.
+
+Two consequences follow. First, the cost meta-rule (Obs 357) is
+**scope-qualified**: it holds only where the tie's instrument could have
+detected a difference of consequence — the 487-tile GS instrument cannot
+resolve ±0.03, and deployment evidence overrides characterisation ties.
+Second, the gap is partly *buyable*: doubling the minimal pass count
+(Run B, ~$60) closes about half of it. The 10-minimal-pass uplift cell
+scores 0.8290 at 50 m — significantly above the 5-pass minimal deployment
+(+0.0163, p < 10⁻⁴) and significantly below the HIGH-thinking cell
+(−0.0134, p = 0.0026) — converting the thinking choice at deployment into
+a priced cost/quality trade (~$105 for 0.829 vs ~$150 for 0.843 at
+production rates) rather than a tie (Obs 364; run
+`55maps-text-min-n10-uplift`).
+
+## R7. Deployment: the 55-map canonical board
+
+The deployment board (canonical extended GT, 50 m, eight cells, 24/28
+pairs significant, five tiers; analysis `55map-canonical-leaderboard-50m`):
+
+| rank | cell | tier | F1@50 | tile-MCC |
+|---:|---|---:|---:|---:|
+| 1 | text HIGH T0.3, vote 3-of-5 (oracle) | 1 | 0.8476 | 0.690 |
+| 2 | text HIGH T0.7, vote 3-of-5 | 1 | 0.8425 | 0.680 |
+| 3 | text HIGH T0.3, vote 4-of-5 | 2 | 0.8359 | 0.671 |
+| 4 | text MIN, 10 passes, vote 5-of-10 (uplift) | 2 | 0.8290 | 0.672 |
+| 5 | text HIGH T0.7, vote 4-of-5 (carry-forward) | 3 | 0.8152 | 0.667 |
+| 6 | text MIN, vote 3-of-5 | 3 | 0.8127 | 0.658 |
+| 7 | image, vote 3-of-5 | 4 | 0.7987 | **0.710** |
+| 8 | text MIN, vote 4-of-5 | 5 | 0.7831 | 0.641 |
+
+Three deployment lessons sit in this table. **(i) The calibrate→deploy gap
+is a threshold-transfer failure, not a model failure** (Obs 358): the
+configuration carried forward from GS calibration (T0.7 × 4-of-5) left
++0.032 F1 on the table against the joint oracle (T0.3 × 3-of-5, 0.8476,
+p < 0.001), and the threshold axis alone accounts for most of it — vote
+3-of-5 beats the carried 4-of-5 for all three text configurations
+(+0.012 to +0.030, all p < 0.001). On the GS sheets those thresholds had
+sat on a statistical plateau; at deployment scale the plateau resolves,
+and it resolves *looser* — a pattern that recurred when the uplift cell's
+best deployment threshold (5-of-10) again sat looser than its GS optimum
+(6-of-10). **(ii) Thinking level is a priced trade** (§ R6). **(iii) The
+F1/MCC trade-off recurs at deployment**: the image configuration ranks
+seventh on F1 but carries the board's best tile-MCC (0.710) — for survey
+prioritisation, where tile-level discrimination matters more than exact
+counts, the image pipeline is not the loser the F1 column suggests.
+
+[DRAFT NOTE: decide whether the oracle cell (post-hoc threshold) leads
+the table or is reported as a sensitivity row — preregistration framing
+favours reporting the carry-forward as primary with the oracle as the
+measured deployment gap. The current table orders by F1 for readability.]
+
+## R8. What the ground truth can and cannot support
+
+Because every metric above is bounded by the reference data, we measured
+the reference data's own error structure rather than assuming it away
+(Obs 361). **Precision is review-verified**: the canonical 55-map GT
+absorbed a human review of every cross-configuration detection cluster,
+including 773 adjudicated phantom mounds absent from the student
+digitisation, so reported precision is robust to GT omissions.
+**Recall is a measured upper bound**: on the GS sheets, where a curator
+reference exists, configurations miss mounds the GT contains at a rate
+implying reported 55-map recall is inflated by ~2.4–2.7 %; because the
+double-miss correlation between independent configurations is only
+1.5–1.7× (4/435 GS double-misses), mounds missed by *every* configuration
+— invisible to detection-led review — are rare but non-zero. We therefore
+present deployment recall with a +3 %/+5 % sensitivity band rather than a
+point correction, the band chosen wide because the correlation estimate
+rests on four events (`results/working-precision/gs-miss-correlation.*`).
+
+[DRAFT NOTE: this subsection may belong in Discussion rather than
+Results — Shawn to decide. It reads as a results-of-validation subsection
+here.]
+
+---
+
+## Changelog
+
+### 2026-06-11 — Original publication
+
+First prose draft (Session 113), written immediately after the
+second-wave manifest registration closed the evidential skeleton:
+findings doc §§ 1–17, the transfer table, working precisions, GT
+epistemics, Pareto v2, and the refreshed 8-cell 55-map board. All
+numbers anchored to registered conditions/analyses as of manifest state
+31 runs / 306 conditions / 17 analyses (commit `a17d6bba3`).
