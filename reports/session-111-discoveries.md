@@ -152,20 +152,25 @@ verifier legs, the single 503-dropped candidate patched via cleanup). The
   ~5× the noise scale. Anchors: `results/flash35-2x2/analysis-full.{json,log}`,
   `outputs/flash35-pv-2x2/` (commits `68c4f0e29`, `f04063513`).
 
-## Decisions awaiting Shawn (morning)
+## Decisions (status as of 2026-06-11)
 
-1. **GS working precision**: 30 m (plateau-onset criterion, text-PV) vs
-   50 m (single cross-track value; identical numbers for text-PV) — then
-   the working-precision leaderboard (F1/P/R/CIs + MCC) gets built at it.
-2. **55-map working buffer 50 m** — confirm (the three-line case above).
-3. **Make-up run option B** (≈ $1.15) — approve/decline
-   (`planning/min6-makeup-run-plan-2026-06-10.md`).
-4. **Metric-board flags**: P or R < 0.5 floor + min/max < 0.6 imbalance
-   marker — confirm thresholds (boards deferred until Flash 3.5 can join).
-5. **Sign-off** (`manually_verified_at`): the two new analyses;
-   plus proposed new Obs for findings 3–4 and 6–7.
-6. **Pareto v2** (cost axis, min6/min11 rungs, `cheap6`→`high6` rename) —
-   queued, will fold findings 3–5 into the findings doc alongside it.
+1. **RESOLVED — buffers**: 30 m = GS characterisation precision; 50 m =
+   shared operational buffer (55-map canonical + any cross-track table);
+   difference explained via ~2× student jitter. 55-map leaderboard built
+   at 50 m (`results/55map-leaderboard/`, 5 tiers).
+2. **RESOLVED — make-up plan**: A (derived min6 0.8681) + B (true min6
+   0.8784, 1,586/1,586 verified, ≈$1.11) both executed; stale union
+   archived.
+3. **RESOLVED — GT epistemics presentation**: report the +3 %/+5 %
+   sensitivity band with the measured 2.4–2.7 % central estimate
+   (double-miss correlation 1.5–1.7×, Obs 361) — wide band preferred
+   because the ratio rests on 4 events.
+4. **OPEN — metric-board flags**: P or R < 0.5 floor + min/max < 0.6
+   imbalance marker — confirm thresholds (Flash 3.5 cells now available).
+5. **OPEN — sign-off** (`manually_verified_at`): verifier-robustness-matrix
+   + pass-budget-pareto analyses; Obs 358–361 are staged.
+6. **OPEN — Pareto v2** (cost axis, min6/min11 rungs, `cheap6`→`high6`
+   rename) + the findings-doc fold-in of the post-S111 results.
 
 ## Changelog
 
