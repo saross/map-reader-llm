@@ -46,6 +46,18 @@ OUT_DIR = BASE_DIR / "results/verifier-robustness/pareto"
 MIN_PASS_USD = 0.30
 HIGH_PASS_USD = 0.90
 VF_CALL_USD = 0.000697
+# 55-map production scaling (Shawn, 2026-06-11): the real-world costing is a
+# deployment over the 8,541-tile generalisation corpus. Both cost components
+# scale with the tile factor (proposer passes by tiles; verifier crops by
+# candidate density x tiles), so the frontier SHAPE is unchanged — only the
+# dollar axis scales. Crops/tile is taken from the GS pools; the 55-map
+# corpus is sparser (0.60 GT mounds/tile vs 0.89 on GS), so these are
+# slightly conservative (upper-bound) estimates. Flex pricing == batch
+# pricing on Gemini 3 (both 50% of standard), so the figures hold for
+# either execution mode.
+TILES_GS = 487
+TILES_55 = 8541
+SCALE_55 = TILES_55 / TILES_GS
 
 # (rung, F1@20m record, geojson, proposer passes x cost, verifier crops x N)
 RUNGS = [
@@ -87,12 +99,15 @@ def main() -> int:
         if abs(f1 - expect) > 0.0005:
             sys.exit(f"GATE FAIL {name}: board F1 {f1:.4f} vs record {expect}")
         cost = np_ * ppc + crops * nvf * VF_CALL_USD
+        cost_55 = cost * SCALE_55
         cells.append({"rung": name, "f1": round(float(f1), 4),
                       "passes": np_ + nvf, "est_cost_usd": round(cost, 2),
+                      "est_cost_55map_usd": round(cost_55, 2),
                       "proposer": f"{np_}x{'MIN' if ppc == MIN_PASS_USD else 'HIGH'}",
                       "verifier": f"n={nvf} over {crops} crops",
                       "tp": tp, "fp": fp, "fn": fn})
-        print(f"  {name:<10} F1={f1:.4f} (record {expect})  est ${cost:.2f}", flush=True)
+        print(f"  {name:<10} F1={f1:.4f} (record {expect})  GS ${cost:.2f}  "
+              f"55-map production ~${cost_55:.0f}", flush=True)
 
     print("\n=== round-robin (21 pairs, 10k, seed 42) ===", flush=True)
     pairs, significant = [], {}
@@ -147,6 +162,11 @@ def main() -> int:
     (OUT_DIR / "pareto_v2.json").write_text(json.dumps({
         "cost_model": {"min_pass_usd": MIN_PASS_USD, "high_pass_usd": HIGH_PASS_USD,
                        "vf_call_usd": VF_CALL_USD,
+                       "production_scale": {"tiles_gs": TILES_GS, "tiles_55map": TILES_55,
+                                            "factor": round(SCALE_55, 2),
+                                            "note": "crops/tile from GS pools; 55-map "
+                                                    "corpus sparser -> slight upper bound; "
+                                                    "flex == batch pricing on Gemini 3"},
                        "basis": "verifier rate measured (opmax run); proposer pass "
                                 "from measured per-call tokens at F3 flex rates; "
                                 "HIGH = 3x minimal (thinking-token dominance)"},
