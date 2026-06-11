@@ -6,7 +6,8 @@
       "TH7-k3"
     ],
     [
-      "T03-k4"
+      "T03-k4",
+      "TM-n10-k5 (uplift)"
     ],
     [
       "TH7-k4 (carry-forward)",
@@ -58,6 +59,19 @@
       "recall_50": 0.7701995737260221,
       "mcc": 0.6710705487171356,
       "n_detections": 4350
+    },
+    {
+      "name": "TM-n10-k5 (uplift)",
+      "condition_id": "55maps-text-min-n10-uplift::verified-5of10-canonical-gt",
+      "f1_50": 0.8290275152278933,
+      "ci": [
+        0.8189696777645061,
+        0.8385456531507105
+      ],
+      "precision_50": 0.9050676450355423,
+      "recall_50": 0.7647742685526061,
+      "mcc": 0.6724579910368705,
+      "n_detections": 4361
     },
     {
       "name": "TH7-k4 (carry-forward)",
@@ -138,7 +152,7 @@
       "n_tiles": 8541,
       "null_mean": 4.1e-05,
       "null_std": 0.003386,
-      "bh_adjusted_p": 0.133455,
+      "bh_adjusted_p": 0.131807,
       "significant": false
     },
     {
@@ -198,6 +212,20 @@
       "significant": true
     },
     {
+      "a": "T03-k3 (oracle)",
+      "b": "TM-n10-k5 (uplift)",
+      "f1_a": 0.847606,
+      "f1_b": 0.829028,
+      "observed_diff": 0.018578,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 7.9e-05,
+      "null_std": 0.004227,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
       "a": "T03-k4",
       "b": "TH7-k3",
       "f1_a": 0.835874,
@@ -208,7 +236,7 @@
       "n_tiles": 8541,
       "null_mean": 3.2e-05,
       "null_std": 0.003663,
-      "bh_adjusted_p": 0.077037,
+      "bh_adjusted_p": 0.078064,
       "significant": false
     },
     {
@@ -268,6 +296,20 @@
       "significant": true
     },
     {
+      "a": "T03-k4",
+      "b": "TM-n10-k5 (uplift)",
+      "f1_a": 0.835874,
+      "f1_b": 0.829028,
+      "observed_diff": 0.006847,
+      "p_value": 0.1213,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 7.1e-05,
+      "null_std": 0.0044,
+      "bh_adjusted_p": 0.130631,
+      "significant": false
+    },
+    {
       "a": "TH7-k3",
       "b": "TH7-k4 (carry-forward)",
       "f1_a": 0.842465,
@@ -324,6 +366,20 @@
       "significant": true
     },
     {
+      "a": "TH7-k3",
+      "b": "TM-n10-k5 (uplift)",
+      "f1_a": 0.842465,
+      "f1_b": 0.829028,
+      "observed_diff": 0.013438,
+      "p_value": 0.0026,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 3.7e-05,
+      "null_std": 0.004332,
+      "bh_adjusted_p": 0.003467,
+      "significant": true
+    },
+    {
       "a": "TH7-k4 (carry-forward)",
       "b": "TM-k3",
       "f1_a": 0.815228,
@@ -362,7 +418,21 @@
       "n_tiles": 8541,
       "null_mean": 7.7e-05,
       "null_std": 0.005203,
-      "bh_adjusted_p": 0.002231,
+      "bh_adjusted_p": 0.00238,
+      "significant": true
+    },
+    {
+      "a": "TH7-k4 (carry-forward)",
+      "b": "TM-n10-k5 (uplift)",
+      "f1_a": 0.815228,
+      "f1_b": 0.829028,
+      "observed_diff": -0.0138,
+      "p_value": 0.0031,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 4.4e-05,
+      "null_std": 0.004607,
+      "bh_adjusted_p": 0.003945,
       "significant": true
     },
     {
@@ -394,6 +464,20 @@
       "significant": true
     },
     {
+      "a": "TM-k3",
+      "b": "TM-n10-k5 (uplift)",
+      "f1_a": 0.812712,
+      "f1_b": 0.829028,
+      "observed_diff": -0.016316,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 3e-05,
+      "null_std": 0.003203,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
       "a": "TM-k4",
       "b": "IM-k3",
       "f1_a": 0.783071,
@@ -404,7 +488,35 @@
       "n_tiles": 8541,
       "null_mean": 0.000109,
       "null_std": 0.005772,
-      "bh_adjusted_p": 0.006794,
+      "bh_adjusted_p": 0.006696,
+      "significant": true
+    },
+    {
+      "a": "TM-k4",
+      "b": "TM-n10-k5 (uplift)",
+      "f1_a": 0.783071,
+      "f1_b": 0.829028,
+      "observed_diff": -0.045956,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 7.9e-05,
+      "null_std": 0.003841,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "a": "IM-k3",
+      "b": "TM-n10-k5 (uplift)",
+      "f1_a": 0.798699,
+      "f1_b": 0.829028,
+      "observed_diff": -0.030328,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -3.3e-05,
+      "null_std": 0.005445,
+      "bh_adjusted_p": 0.0,
       "significant": true
     }
   ]
