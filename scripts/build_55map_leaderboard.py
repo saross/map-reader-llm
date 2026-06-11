@@ -129,7 +129,8 @@ def main() -> int:
             "name": name, "condition_id": f"{run_id}::{label}",
             "f1_50": ev50["f1"], "ci": [ev50["f1_ci_lower"], ev50["f1_ci_upper"]],
             "precision_50": ev50["precision"], "recall_50": ev50["recall"],
-            "mcc": ev.get("tile_classification", {}).get("mcc", {}).get("point"),
+            "mcc": (lambda m: m.get("point") if isinstance(m, dict) else m)(
+                ev.get("tile_classification", {}).get("mcc")),
             "n_detections": ev["n_detections"],
             "tp": tp, "fp": fp, "fn": fn})
 
