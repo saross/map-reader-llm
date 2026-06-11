@@ -19436,3 +19436,418 @@ Sessions 109-111 synthesis; build_pareto_leaderboard
 `results/verifier-robustness/pareto/pareto_leaderboard.json`;
 `scripts/permutation_opmax_vs_headline.py`;
 `scripts/build_pareto_leaderboard.py`.
+
+## Observation 358: The 55-map 50 m leaderboard resolves 5 tiers — the deployment penalty is entirely a vote-threshold transfer failure (Session 112, 2026-06-11)
+
+*Source anchors: `results/55map-leaderboard/55map_leaderboard_50m.json`
+(all 7 cells gate-reproduced their committed evals exactly; pairwise table
+includes 21 round-robin pairs with BH-adjusted p-values; verified 2026-06-11);
+`scripts/build_55map_leaderboard.py`.*
+
+### The finding
+
+The first tiered leaderboard on the 55-map generalisation track, evaluated at
+50 m buffer, 8,541 tiles, 10,000-permutation tile-swap round-robin (BH-FDR
+q = 0.05):
+
+| tier | cell(s) | F1@50 m | MCC |
+|---:|---|---:|---:|
+| T1 | T03-k3 oracle, TH7-k3 | 0.8476, 0.8425 | 0.690, 0.680 |
+| T2 | T03-k4 | 0.8359 | 0.671 |
+| T3 | TH7-k4 carry-forward, TM-k3 | 0.8152, 0.8127 | 0.667, 0.658 |
+| T4 | IM-k3 | 0.7987 | **0.710** |
+| T5 | TM-k4 | 0.7831 | 0.641 |
+
+**18/21 round-robin pairs significant after BH-FDR → 5 tiers.** Unlike the
+GS 487-tile instrument ([[Obs 347]]), the 8,541-tile 55-map set **resolves**:
+the 487-tile instrument cannot distinguish a +0.03 F1 gap; the 55-map
+instrument separates every tier except the T3 within-tier pair
+(TH7-k4 vs TM-k3, p = 0.584) and the T1 pair
+(T03-k3 vs TH7-k3, p = 0.127, BH 0.133).
+
+**Deployment-axis decomposition** (baseline = TH7-k4 carry-forward, 0.8152):
+
+| axis changed | resulting cell | F1@50 m | gain vs carry-forward | tier reached |
+|---|---|---:|---:|---|
+| none (carry-forward) | TH7-k4 | 0.8152 | — | T3 |
+| threshold k4→k3 (keep TH7) | TH7-k3 | 0.8425 | +0.027 | T1 |
+| temperature T=0.7→T=0.3 (keep k4) | T03-k4 | 0.8359 | +0.021 | T2 |
+| both | T03-k3 oracle | 0.8476 | +0.032 | T1 |
+
+The +0.032 joint gain is **sub-additive** (+0.027 + 0.021 = 0.048 expected
+if additive). At k3, temperature adds nothing significant: TH7-k3 ≈ oracle
+(same tier, p = 0.127).
+
+**IM-k3 (image): the F1-vs-MCC divergence again.** IM-k3 sits in T4 by F1
+(0.7987) but has the **best MCC of all cells (0.710)**, ahead of T03-k3
+oracle (0.690). The image modality's tile-level discrimination is strong,
+but point-level F1 suffers — consistent with prior findings
+(cf. [[Obs 355]] § 3).
+
+### Why this matters
+
+1. **The deployment penalty of a real GS-calibrated run is entirely a
+   vote-threshold transfer failure.** The carry-forward TH7-k4 ran with k4
+   (the GS-optimal threshold); on the 55-map corpus, k3 is decisively better.
+   The threshold axis alone recovers the full gap to Tier 1 (+0.027 → TH7-k3,
+   same tier as the oracle).
+
+2. **This was predictable in kind.** The GS calibration sat on a k3≈k4
+   plateau (ns, p ≈ 0.12 between those two thresholds, Session 104,
+   [[Obs 347]]). A calibration plateau signals that the axis is unresolved
+   at source; deploying at either end is a coin flip. The 55-map corpus,
+   with 17× more tiles, resolves the axis decisively — and the carry-forward
+   happened to land on the inferior end.
+
+3. **Mitigation heuristic** ([[Obs 347]] extended): when GS calibration
+   leaves an axis on a non-significant plateau, deploy the recall-permissive
+   end (lower k, lower threshold) or budget a deployment-side threshold check.
+   A post-hoc threshold sweep over the verifier output probabilities is free
+   once the verifier outputs exist.
+
+4. **The 55-map instrument resolves** where the GS instrument does not.
+   This confirms the prior diagnosis that the 487-tile GS corpus lacks the
+   resolving power to separate configurations within roughly ±0.03 F1.
+
+### Caveats / methodological notes
+
+The oracle condition (T03-k3) uses a threshold calibrated on the 55-map
+corpus itself — it is not a deployable carry-forward and is included as a
+performance ceiling, not a deployable configuration. All other conditions
+carried forward their GS-calibrated operating points unchanged.
+
+MCC values are tile-level (binary mound/not-mound per 384-px tile) and are
+lower than GS MCC partly because the 55-map corpus has a different tile
+geometry and GT density. The IM-k3 MCC-vs-F1 divergence warrants a dedicated
+investigation before the paper claims image-modality tile-level discrimination
+is superior.
+
+### Findable later
+
+55-map leaderboard 50m tiers; deployment penalty threshold transfer failure;
+TH7-k4 carry-forward baseline 0.8152; T03-k3 oracle 0.8476; k3 vs k4
+threshold axis; 18/21 significant BH-FDR; 8541 tiles resolves; GS plateau
+deployment risk; sub-additive threshold temperature gain; IM-k3 MCC 0.710
+image F1-MCC divergence; recall-permissive deployment heuristic;
+build_55map_leaderboard; vote-threshold transfer failure; 55map-leaderboard-50m
+
+### Related observations and artefacts
+
+- **[[Obs 347]]** (GS-calibration plateaus and the resolving-power limit —
+  this Obs is its deployment confirmation: the plateau on the threshold axis
+  at calibration time materialised as a deployment penalty)
+- **[[Obs 352]]** (proposer-verifier architecture on the GS corpus — the
+  TH7-k4 carry-forward derives from this Stage-D selection)
+- **[[Obs 355]]** (verifier does not rescue permissive inputs; MCC-vs-F1
+  divergence noted there is visible again in IM-k3)
+
+**Artefacts**: `results/55map-leaderboard/55map_leaderboard_50m.json`
+(pairwise table + tier assignments; verified 2026-06-11);
+`results/55map-leaderboard/55map-leaderboard-50m.md` (human-readable report);
+`scripts/build_55map_leaderboard.py`.
+
+## Observation 359: The diversity dividend does not survive the verifier — pool recall ceiling is the binding constraint (Session 112, 2026-06-11)
+
+*Source anchors: `results/verifier-robustness/min_vs_high_permutations.json`
+(permutation tests: min6 vs high6, min11 vs high11, min11 vs headline31;
+verified 2026-06-11); `results/verifier-robustness/pool_recall_ceilings.json`
+and `results/verifier-robustness/pool_recall_ceilings.log` (recall ceilings
+and union/pass ratios by pool; verified 2026-06-11);
+`results/verifier-robustness/zero_diversity_anchor.json` (1-pass T=0.0 +
+n=1 vf baseline; verified 2026-06-11);
+`results/verifier-robustness/min_thinking_pv.log` (min-thinking PV sweeps,
+including n30-lineage replicate; verified 2026-06-11);
+`results/flash35-2x2/analysis-full.json` and
+`results/flash35-2x2/analysis-full.log` (Flash 3.5 2×2 grid; verified
+2026-06-11); `results/verifier-robustness/pro_pv.log` (Pro PV results;
+verified 2026-06-11).*
+
+### The finding
+
+**At equal pass count under the production adversarial verifier (PV),
+MINIMAL-thinking proposers reach statistical parity with HIGH-thinking
+proposers** across three matched comparisons (10,000-permutation tile-swap,
+487 tiles, GS 384-px corpus, 20 m buffer):
+
+| comparison | min F1 | high F1 | Δ | p |
+|---|---:|---:|---:|---:|
+| min6 vs high6 (5 prop + 1 vf) | 0.8708 | 0.8641 | +0.0068 | 0.656 |
+| min11 vs high11 (10 prop + 1 vf) | 0.8835 | 0.8769 | +0.0066 | 0.591 |
+| min11 vs headline31 (30 prop + 1 vf) | 0.8835 | 0.8902 | −0.0067 | 0.562 |
+
+Note: min6 here is the n30-lineage replicate (5 minimal-thinking passes drawn
+from the 30-pass pool, 4-of-5 / pt0.15, F1 = 0.8708); the parallel
+same-run-lineage min6 (5 fresh minimal passes, 2-of-5 / pt0.15) scores 0.6000
+because the independent minimal pool is much smaller (974 candidates),
+demonstrating the dependence on pool composition as well as thinking level.
+
+**Mechanism — pool recall ceiling is the binding constraint**
+(`pool_recall_ceilings.json`):
+
+| pool | union/pass | recall ceiling @20 m | best PV F1 |
+|---|---:|---:|---:|
+| pro-high-t07-5pass | 1.15 | 0.832 | 0.851 |
+| flash-min-t07-5pass (n30-lineage) | 1.44 | 0.920 | 0.871 |
+| flash-min-t07-10pass | 1.73 | 0.920 | 0.884 |
+| flash-high-t07-5pass | 2.46 | 0.943 | 0.864 |
+
+The verifier shifts the binding constraint from precision to pool recall: once
+the GT mounds reachable by the pool are fixed, the verifier can only improve
+precision within that ceiling. Temperature sampling at minimal thinking
+saturates Flash's reachable recall in ~5 passes (0.920; the 10-pass lineage
+also reaches 0.920 — passes 6–10 added **zero new GT mounds**). HIGH thinking
+adds volume (union/pass 2.46 vs 1.44) but only +0.023 recall ceiling over
+minimal (0.943 vs 0.920).
+
+The **zero-diversity anchor** (1 pass T=0.0 + n=1 vf) scores F1@20 m = 0.8142
+(`zero_diversity_anchor.json`). Temperature diversity buys **+0.057** (to
+0.8708 for min6), with ~60% of that gain attributable to the recall ceiling
+lift (0.920 vs 0.885 anchor ceiling → +0.035 ceiling units; residual is
+precision improvement from proposer vote filtering).
+
+**Model corollary — Flash 3.5 and Pro 3.1 win in no role**
+(`analysis-full.json`, `pro_pv.log`):
+
+- **Pro 3.1**: union/pass 1.15 (precise, low diversity); recall ceiling 0.832;
+  best PV F1 0.851 (3-of-5, pt0.15). Pro is a stronger bare proposer
+  (consensus 0.836 vs Flash 3 0.620) but a weaker PV partner — the high-precision
+  pool leaves the verifier little to prune.
+- **Flash 3.5**: 1,132 union candidates over 10 passes; 53% of candidates
+  at 10/10 vote count (vs 32% for Flash 3); bare proposer F1 = 0.6196 vs
+  Flash 3 = 0.6204 — statistical dead-tie at the proposer level; as a verifier,
+  Flash 3.5 costs −0.012..−0.015 F1 vs Flash 3 verifier at approximately 3×
+  the per-call price (best f3prop-f35vf 0.8689 vs f3prop-f3vf 0.8835;
+  f35prop-f3vf 0.8480 vs f35prop-f35vf 0.8362). The all-Flash-3 minimal stack
+  is cost-optimal in every role.
+
+The **true-min6 make-up cell** (5 fresh minimal passes, independent run,
+3-of-5 / pt0.15) scored F1 = 0.8784, MCC = 0.790 — bracketing the min6 family
+(n30-lineage 0.8708 / derived-5pass 0.8681) within the noise scale and
+confirming the lineage comparisons are not artefacts of pool composition.
+
+### Why this matters
+
+1. **The diversity dividend ([[Obs 141]]) is real for consensus-only
+   architectures but is obsolete under PV.** Under consensus (no verifier),
+   HIGH-thinking diverse proposals directly determine the output. Under PV,
+   the verifier renormalises the signal: what matters is whether the pool
+   can cover the GT mounds, not how diverse the FPs are. Minimal thinking
+   saturates Flash's pool recall at ~5 passes — the dividend is already cashed.
+
+2. **Extends [[Obs 357]]'s cost meta-rule to the proposer side.** On the
+   proposer side, the expensive HIGH-thinking configuration offers a larger
+   recall ceiling (+0.023) but zero improvement to verified F1 per permutation
+   test. On the verifier side ([[Obs 357]]), additional passes and higher
+   temperature both fail to beat the cheap baseline. The cost meta-rule now
+   applies end-to-end.
+
+3. **Flash 3.5 and Pro 3.1 are not substitutes for Flash 3 in this
+   architecture.** Pro is useful as a standalone proposer (consensus 0.836)
+   but not in PV role. Flash 3.5's low-diversity output (53% unanimous) means
+   it cannot exploit temperature sampling — the diversity mechanism that powers
+   the PV architecture is absent.
+
+4. **Practical budget guidance**: 5 minimal-thinking passes from the 30-pass
+   pool lineage (~$0.35/map proposer cost) matches 31 passes
+   (~$3.10/map) within noise. The 30-pass showcase configuration remains the
+   paper ceiling, but the minimal-5 replicate is a cost-defensible operational
+   configuration.
+
+### Caveats / methodological notes
+
+The min6 = 0.8708 result is the **n30-lineage replicate** (draws from the
+existing 30-pass pool rather than 5 freshly generated passes). The fresh
+5-pass cell (make-up run, 0.8784) confirms this is not an artefact of the
+shared pool, but Shawn should note the lineage distinction if this comparison
+appears in a paper table.
+
+Flash 3.5 union/pass (noted as ~1.33 in session-level computation) is not
+stored in `pool_recall_ceilings.json`, which covers Flash 3 and Pro pools
+only; the 53%-unanimous figure is derived directly from `analysis-full.json`
+(k=10 count 598/1132 candidates).
+
+All permutation tests are on the 487-tile GS instrument — the resolving-power
+caveat ([[Obs 347]]) applies. The parity conclusions are robust given p > 0.55
+in all three comparisons.
+
+### Findable later
+
+diversity dividend PV architecture pool recall ceiling; minimal thinking
+parity HIGH thinking permutation; flash-min-t07 n30-lineage min6 0.8708;
+high6 0.8641 p=0.656; min11 0.8835 headline31 0.8902 p=0.562; union per pass
+1.44 vs 2.46; recall ceiling 0.920 saturates 5 passes; zero diversity anchor
+0.8142; temperature diversity buys 0.057; Flash 3.5 53 percent unanimous
+weak proposer; Pro 3.1 precise pool low recall ceiling 0.832; cost meta-rule
+proposer side; all-Flash-3 cost-optimal; make-up cell 0.8784 MCC 0.790;
+verifier-robustness pool_recall_ceilings; Obs 141 diversity dividend obsolete
+under PV; min_vs_high_permutations
+
+### Related observations and artefacts
+
+- **[[Obs 141]]** (the original proposer-side diversity dividend from HIGH-thinking
+  passes — this Obs establishes that the dividend is real for consensus-only
+  architectures but does not survive the PV verifier stage)
+- **[[Obs 354]]** (T=0.0 verifier non-determinism negligible at F1 — the
+  n=1 production verifier used throughout this comparison is sound)
+- **[[Obs 355]]** (1-of-5 union is the worst verifier input — the productive
+  input band used here is the pre-filtered consensus pool)
+- **[[Obs 357]]** (cost meta-rule on the verifier side — this Obs extends the
+  same principle to the proposer side)
+
+**Artefacts**: `results/verifier-robustness/min_vs_high_permutations.json`;
+`results/verifier-robustness/pool_recall_ceilings.json`;
+`results/verifier-robustness/pool_recall_ceilings.log`;
+`results/verifier-robustness/zero_diversity_anchor.json`;
+`results/verifier-robustness/min_thinking_pv.log`;
+`results/flash35-2x2/analysis-full.json`;
+`results/flash35-2x2/analysis-full.log`;
+`results/verifier-robustness/pro_pv.log`.
+
+## Observation 360: Empirically derived working precisions — GS 30 m (text-PV) with a 75 m image plateau; 55-map capped at 50 m (Session 112, 2026-06-11)
+
+*Source anchors: `results/working-precision/gs-plateau-characterisation.json`
+and `results/working-precision/gs-plateau-characterisation.md` (259-condition
+plateau sweep, verified 2026-06-11);
+`results/working-precision/55maps-csr-noise-floor.json` and
+`results/working-precision/55maps-csr-noise-floor.log` (CSR null model and
+ambiguity analysis over 55-map corpus; verified 2026-06-11);
+`results/verifier-robustness/evals/verified-384-16of30-t0-3-n5-opmax/evaluation.json`
+and `eval.log` (opmax F1/P at 30 m and 50 m; verified 2026-06-11);
+`docs/methodology/preregistration/protocol-errata.md` (pixel scale
+confirmation: ~5 m/px at 384 px tiles).*
+
+### The finding
+
+**Part A — GS plateau characterisation (259 conditions)**
+
+Criterion: plateau onset = smallest canonical buffer where every subsequent
+step gain ≤ 0.005 F1 (`gs-plateau-characterisation.json`, 259 conditions
+analysed, 36 skipped).
+
+| group | n | onset median | onset p90 |
+|---|---:|---:|---:|
+| ALL-GS | 259 | 35 m | 100 m |
+| single-pass / none | 122 | 40 m | 100 m |
+| consensus / consensus | 100 | 35 m | 75 m |
+| proposer-verifier / verified | 37 | **30 m** | 125 m |
+| text modality | 136 | **30 m** | 75 m |
+| image modality | 80 | **75 m** | 125 m |
+
+**The dominant factor is modality**: text onset 30 m vs image onset 75 m
+(~2.5× looser image localisation). PV architectures plateau earliest at 30 m
+median, reflecting the precision-first pruning by the adversarial verifier.
+
+For the **production text-PV family (opmax)**: F1@30 m = F1@50 m = **0.9161**,
+P@30 m = P@50 m = **0.9291** (`evaluation.json`). The plateau is flat from 30 m
+through 50 m — the two buffers are numerically identical at 4 decimal places.
+At ~5 m/px for 384-px tiles, 30 m = 6 px — this is the smallest practically
+meaningful buffer given the detection box rounding in the pipeline.
+
+**Part B — 55-map CSR noise floor and ambiguity analysis**
+
+| buffer (m) | F1 null (CSR) | ambiguity fraction | obs step gain (oracle) |
+|---:|---:|---:|---:|
+| 20 | 0.0002 | 3.3% | — |
+| 30 | 0.0005 | 7.9% | — |
+| 45 | 0.0012 | 18.6% | 0.0077 |
+| 50 | 0.0016 | **21.3%** | 0.0396 |
+| 75 | 0.0036 | 31.8% | −0.004 |
+| 150 | 0.0146 | 45.3% | — |
+
+CSR chance-matching null remains negligible at every canonical buffer (null
+F1 ≤ 0.015 at 150 m). Observed marginal gains die at 50 m (the 45→50 step is
+anomalously large at +0.040 for the oracle, then −0.004 at 75 m — see caveat).
+
+**Attribution ambiguity**: the GT nearest-neighbour p10 = 65 m (full value
+64.8 m); median spacing = 375 m (full value 374.8 m). At R = 50 m, **21% of
+GT mounds** are at cross-matching risk (nearest neighbour within 100 m);
+at R = 125 m, 42%.
+
+**Phantom gating composition**: of 773 phantoms (student-only detections
+excluded from canonical GT), **415 gate at exactly 50 m** — the review SOP
+anchor. This concentration drives the anomalous 45→50 step gain and means
+the oracle F1@50 m is partly a GT-composition artefact.
+
+**Part C — Agreed working precisions** (Shawn, 2026-06-11)
+
+| context | working precision | rationale |
+|---|---:|---|
+| GS characterisation | **30 m** | text-PV plateau onset; identical values 30–50 m |
+| Shared operational buffer (cross-track tables) | **50 m** | free for GS text-PV (identical values); 55-map noise floor; ≈ 2× student jitter (~20–25 m) |
+
+The 50 m shared buffer is **free for the GS text-PV family** (F1@30 = F1@50
+exactly), so no information is lost by reporting at 50 m for cross-instrument
+comparability. The ~20–25 m student positional jitter estimate (Shawn's
+domain knowledge) supports 50 m as the minimum operationally meaningful
+attribution radius: 50 ≈ 2× jitter, and median mound spacing (375 m) ensures
+negligible confusion between distinct features.
+
+### Why this matters
+
+1. **Resolves the longstanding GS-vs-deployment buffer mismatch.** The GS
+   corpus has always been evaluated primarily at 20 m (the registered
+   precision); 30 m is now the confirmed empirical plateau for the text-PV
+   production family. The 50 m operational buffer is simultaneously (a) free
+   at GS (identical values) and (b) the 55-map noise floor — a single number
+   serves both instruments.
+
+2. **The image-modality 75 m plateau has direct paper consequences.** If image
+   results are reported at 20–30 m, they are measured well before the plateau
+   and comparisons to text results at 30 m understate the image advantage at
+   its natural operating precision. The paper should report image conditions
+   at their natural plateau buffer or note the difference explicitly.
+
+3. **The 415/773 phantom composition caveat is load-bearing.** The 45→50 step
+   gain on the 55-map corpus is not primarily a signal precision finding — it
+   is driven by GT curation decisions (the 50 m review SOP). Any report of
+   55-map F1@50 m should acknowledge this.
+
+4. **Cross-track tables can use 50 m without information loss.** The decision
+   aligns all instruments (GS text-PV, GS image, 55-map) at a single reporting
+   buffer that is consistent with both the noise floor and the field attribution
+   standard.
+
+### Caveats / methodological notes
+
+The 30 m GS working precision applies to the **text-PV production family**
+specifically. The image-modality plateau at 75 m means the two modalities
+should not be compared at the same buffer without a note about the difference
+in natural operating precision.
+
+The 55-map 50 m cap is driven partly by GT composition (415/773 phantoms gated
+at 50 m) and partly by the 21% cross-match ambiguity. The 45→50 step gain for
+the oracle (+0.040) is anomalously large relative to adjacent steps and should
+be treated as a GT-composition signal rather than a precision signal.
+
+The "~20–25 m student jitter" figure is Shawn's domain estimate from field
+review experience, not derived from the anchor files; it is cited as
+interpretive context for the 50 m choice.
+
+### Findable later
+
+working precision GS 30m text-PV plateau; image plateau 75m modality factor;
+50m operational buffer cross-track tables; CSR null negligible 150m; GT
+nearest-neighbour p10 65m; ambiguity fraction 21 percent at 50m; 415 of 773
+phantoms gate 50m review SOP; opmax F1@30m = F1@50m = 0.9161; precision 0.9291;
+plateau onset proposer-verifier 30m consensus 35m single-pass 40m; 259
+conditions analysed; 5m per pixel 384px tiles; 30m = 6px; median mound spacing
+375m; student jitter 25m; GS characterisation 30m deployment 50m;
+gs-plateau-characterisation; 55maps-csr-noise-floor; working-precision;
+Obs 347 resolving power limit
+
+### Related observations and artefacts
+
+- **[[Obs 347]]** (GS-calibration plateaus and the resolving-power limit —
+  this Obs provides the empirical plateau-onset characterisation that Obs 347
+  flags as a methodological concern; the 30 m finding confirms the registered
+  20 m precision is below the natural operating plateau of the text-PV family)
+- **[[Obs 357]]** (the cost meta-rule — the 30 m working precision is
+  consistent with the opmax and headline configurations tested there,
+  which are now confirmed to plateau at 30 m)
+
+**Artefacts**: `results/working-precision/gs-plateau-characterisation.json`;
+`results/working-precision/gs-plateau-characterisation.md`;
+`results/working-precision/55maps-csr-noise-floor.json`;
+`results/working-precision/55maps-csr-noise-floor.log`;
+`results/verifier-robustness/evals/verified-384-16of30-t0-3-n5-opmax/evaluation.json`;
+`results/verifier-robustness/evals/verified-384-16of30-t0-3-n5-opmax/eval.log`.
