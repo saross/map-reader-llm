@@ -8,13 +8,14 @@
 # at 50 m, CSR chance-matching negligible, attribution ambiguity rises
 # steeply beyond).
 #
-# CELLS: the seven canonical-GT conditions (the S105 two-reference set).
+# CELLS: the seven canonical-GT conditions (the S105 two-reference set) +
+# the S113 min11-uplift cell (Run B; manifest run 55maps-text-min-n10-uplift).
 # REFERENCE: the canonical adjudicated GT at R=50 — 4,746 reviewed student
 # points + the 415 phantoms gated <= 50 m (per-buffer gating per
 # build_canonical_gt; phantoms ARE additional GT points for matching).
 #
 # METHOD (project-canonical): per-tile TP/FP/FN at 50 m (Hungarian per map,
-# 8,541-tile order) -> C(7,2)=21 round-robin tile-swap micro-F1 permutation
+# 8,541-tile order) -> full round-robin tile-swap micro-F1 permutation
 # tests (10k, seed 42, two-sided) -> BH-FDR q=0.05 -> greedy-clique tiers.
 # GATE: each cell's per-tile micro-F1 must reproduce its committed
 # evaluation F1@50m within 0.003 (mechanism equivalence check).
@@ -67,6 +68,7 @@ NAMES = {
     ("55maps-text-min-generalisation", "verified-k3-canonical-gt"): "TM-k3",
     ("55maps-text-min-generalisation", "verified-k4-canonical-gt"): "TM-k4",
     ("55maps-image-generalisation", "verified-k3-canonical-gt"): "IM-k3",
+    ("55maps-text-min-n10-uplift", "verified-5of10-canonical-gt"): "TM-n10-k5 (uplift)",
 }
 
 
