@@ -1,8 +1,9 @@
 # Verifier-robustness — findings
 
-> **Last revised**: 2026-06-10 (Stage 3 thinking × temperature matrix, the
-> model and compute-allocation deep-dive, the operational maximum and its
-> permutation test, and the pass-budget Pareto board). See
+> **Last revised**: 2026-06-11 (Sessions 111–112 second wave: the
+> minimal-thinking rungs and recall-ceiling mechanism, the Flash 3.5
+> 2×2×2 verdict, the cost-weighted Pareto v2, and — critically — the
+> deployment reversal that scope-qualifies the cost meta-rule). See
 > [§ Changelog](#changelog) for revision history.
 
 This document is the citable home for the **verifier-robustness** programme
@@ -23,10 +24,15 @@ passes are better spent on the proposer than the verifier (§ 10); and the
 (§ 11). The whole 6→35-pass budget ladder sits in **one statistical tier**
 (§ 12).
 
-**The meta-rule, confirmed on every axis: on a within-noise tie, take the
-cheaper configuration** — n=1 over consensus, minimal over high thinking,
-Flash over Pro, proposer passes over verifier passes. The carry-forward
-verifier is cost-optimal everywhere it has been tested.
+**The meta-rule: on a within-noise tie, take the cheaper configuration** —
+n=1 over consensus, minimal over high thinking, Flash over Pro, proposer
+passes over verifier passes. The carry-forward verifier is cost-optimal
+everywhere it has been tested. **SCOPE QUALIFICATION (§ 16, Obs 362)**: a
+tie is only as strong as the instrument that measured it — the GS
+minimal-vs-high tie *reversed* at 55-map deployment (−0.030,
+tier-separated), so where deployment evidence exists it overrides a
+characterisation tie, and GS ties at ±0.03 resolution do not licence
+production extrapolation.
 
 - **Stage 1** (T=0.0): verify the **1-of-5 proposer union** of the two
   Gold-Standard consensus+PV cells (the leading 384 `flash-high-text` and the
@@ -321,6 +327,99 @@ order of evidential weight:
    35-pass numerical maximum at ~17 % of the pass budget. The 0.890
    headline (31 passes) remains the showcase/ceiling configuration.
 
+## 13. Minimal-thinking rungs — the diversity dividend does not survive the verifier
+
+At equal pass count under PV, MINIMAL-thinking proposers reach statistical
+parity with HIGH on the GS instrument (min6 0.8784 true-merge / 0.8708
+n30-lineage vs high6 0.8641, p = 0.66; min11 0.8835 vs high11 0.8769,
+p = 0.59; min11 vs the 31-pass headline p = 0.56 —
+`min_vs_high_permutations.json`, `min6_true_makeup.json`). **Mechanism**
+(`pool_recall_ceilings.json`, `zero_diversity_anchor.json`): the verifier
+shifts the binding constraint from precision to **pool recall**; T = 0.7
+sampling at minimal thinking saturates Flash's reachable recall in ~5
+passes (0.9195 — the 10-pass lineage adds *zero* new GT mounds); HIGH
+thinking adds volume (union/pass 2.46 vs 1.44) but only +0.023 ceiling.
+The zero-diversity anchor (1 × T=0.0 pass + n=1 vf) scores 0.8142 — so
+temperature diversity buys +0.057, ~60 % of it via the ceiling lift —
+while carrying the board's second-best tile-MCC (0.833). min11 holds the
+best MCC on the PV board (0.807). The consensus-era diversity dividend
+(Obs 141) is real for consensus-only architectures and **obsolete under
+PV** (Obs 359). *But see § 16: GS parity did not transfer to deployment.*
+
+## 14. Flash 3.5 — wins in no role at the minimal operating point
+
+The 2×2×2 tranche (proposer × verifier model × n∈{5,10}, ~$34 flex,
+method-matched n=5 derivation per `first5of10-validation/`): as a **bare
+proposer** Flash 3.5 ties Flash 3 (0.6196 vs 0.6204); as a **PV proposer**
+it loses −0.036 (0.8480 vs 0.8835 under the same F3 verifier) — its union
+is 1,132 candidates vs Flash 3's 1,939 with **53 % at 10/10 votes**
+(union/pass 1.32): the Pro pattern of consistency-without-coverage, and PV
+needs coverage; as a **verifier** it loses −0.012..−0.015 on both pools at
+3× the price. The all-Flash-3 stack stands (`results/flash35-2x2/`,
+harness self-validated by reproducing min11 exactly).
+
+## 15. Pareto v2 — the cost-weighted frontier
+
+The passes-axis board (§ 12) is superseded by the cost-weighted v2
+(`pareto/pareto_v2.{json,png}`; proposer-centric rung names — the old
+"cheap6" is **high6**, the third most expensive way to buy ~0.87). Cost
+model: measured verifier rate ($0.000697/call), proposer pass from
+measured per-call tokens at F3 flex rates, HIGH = 3× minimal; **flex ≡
+batch pricing**. All seven rungs remain ONE statistical tier (0/21 pairs).
+
+| rung | F1@20m | GS run | 55-map production | frontier |
+|---|---:|---:|---:|---|
+| min6 | 0.8784 | $2.61 | ~$46 | ✓ |
+| min11 | 0.8835 | $4.35 | ~$76 | ✓ |
+| high6 | 0.8641 | $7.10 | ~$125 | dominated |
+| high5+5vf | 0.8739 | $7.48 | ~$131 | dominated |
+| high11 | 0.8769 | $13.09 | ~$230 | dominated |
+| high31 (headline) | 0.8902 | $27.51 | ~$482 | ✓ |
+| high35 (opmax) | 0.8951 | $29.54 | ~$518 | ✓ |
+
+Production costs scale both components by the tile factor (8,541/487), so
+the frontier shape is unchanged; crops/tile from the GS pools (the 55-map
+corpus is sparser → slight upper bounds). **The F1 column is
+GS-characterised — see § 16 before reading the min rungs as production
+recommendations.**
+
+## 16. The deployment reversal — scope-qualifying the meta-rule
+
+The min6 recipe has *already run* at production: it is the
+`55maps-text-min-generalisation` deployment (config verified at source —
+same model, prompt, T = 0.7, minimal thinking, 5-pass + carry-forward
+verifier). On the 55-map canonical-GT board at 50 m, **TM-k3 (0.8127,
+Tier 3) sits two tiers below TH7-k3 (0.8425, Tier 1)** at the matched
+threshold — the GS tie (minimal ahead +0.007, ns) **reversed by −0.030**
+on the instrument that resolves (18/21 pairs significant). The full
+transfer picture (`results/55map-leaderboard/gs-vs-55map-transfer.md`,
+@ 50 m): text HIGH −0.048, image −0.078, text MIN −0.087 — GS clustering
+at 0.88–0.90 concealed differential deployment robustness, and minimal
+text *led* on GS before degrading hardest. Interpretation (Obs 362): not
+a contradiction but bounded ignorance resolved — the 487-tile instrument
+cannot resolve ±0.03; HIGH thinking's diversity plausibly earns its keep
+on the diverse 55-map sheets, and the § 13 recall-ceiling saturation may
+be GS-specific. **Consequences**: (a) the meta-rule holds only where the
+tie's instrument could detect a difference of consequence; (b) deployment
+evidence overrides characterisation ties — the deployment-evidenced
+production text config is HIGH thinking at k3 (~$125/run); (c) min11 is
+untested at production (a ~$38–50 lift experiment would test whether pass
+count closes the gap); (d) the T0.3 proposer — the deployment champion —
+has no GS-side verifier characterisation (closable for ~$2–3).
+
+## 17. Board coverage and scope (documentation note)
+
+The leaderboard stock-take (S111) found ~48 % of the 295 manifest
+conditions on no statistically tiered board. This is by design, not
+omission: the absentees are per-N decomposition grains whose aggregates
+are ranked, errata-preserved material (e.g. the T=1.0 `consensus-384-t1-0`
+run, E43), and the H8/H10/H12 greedy/WBF cells, which are preregistered
+hypothesis tests reported in their preregistered form. Cross-era boards
+are structurally impossible for paired tile-swap tests (disjoint tile
+sets); cross-era comparison is descriptive, with within-era tiers doing
+the statistics. Metric-led (MCC/P/R) rankings with degenerate-trade-off
+flags live at `results/metric-leaderboards/` (GS @ 30 m; 55-map @ 50 m).
+
 ## See also
 
 - **Preceding experiment(s)**: `results/era1-pv-stage-d/stage-d-findings.md` —
@@ -345,6 +444,28 @@ order of evidential weight:
   preregistration amendment needed for a robustness check.
 
 ## Changelog
+
+### 2026-06-11 — Second wave: min rungs, Flash 3.5, Pareto v2, the deployment reversal
+
+**Refresh trigger**: Sessions 111–112's post-fold work — the
+minimal-thinking PV rungs and recall-ceiling mechanism (§ 13, Obs 359),
+the Flash 3.5 2×2×2 tranche (§ 14), the cost-weighted Pareto v2 with
+55-map production costs (§ 15, superseding § 12's passes axis), the
+GS-vs-deployment transfer table and the min/high reversal that
+scope-qualifies the headline meta-rule (§ 16, Obs 362), and the board-
+coverage note (§ 17).
+
+| claim | before | after |
+|---|---|---|
+| diversity dividend | HIGH ≫ MIN (consensus era) | obsolete under PV **on GS** (§ 13) |
+| binding constraint under PV | precision (implicit) | pool recall ceiling (§ 13) |
+| stronger models | Pro worse PV partner | Flash 3.5 wins in NO role (§ 14) |
+| Pareto axis | passes (§ 12) | estimated flex-$ + production costs (§ 15) |
+| meta-rule scope | unqualified | qualified by instrument resolution (§ 16) |
+| production text config | (GS tie → min) | deployment-evidenced: HIGH at k3 (§ 16) |
+
+What did NOT change: §§ 1–11 stand; the carry-forward verifier remains
+production; no new champion. Obs 358–362 staged this wave.
 
 ### 2026-06-10 — Stage 3 + model/cost deep-dive + operational maximum + Pareto board
 
