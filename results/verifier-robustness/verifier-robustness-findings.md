@@ -406,7 +406,8 @@ same model, prompt, T = 0.7, minimal thinking, 5-pass + carry-forward
 verifier). On the 55-map canonical-GT board at 50 m, **TM-k3 (0.8127,
 Tier 3) sits two tiers below TH7-k3 (0.8425, Tier 1)** at the matched
 threshold — the GS tie (minimal ahead +0.007, ns) **reversed by −0.030**
-on the instrument that resolves (18/21 pairs significant). The full
+on the instrument that resolves (24/28 pairs significant on the
+refreshed 8-cell board, S113; 18/21 on the original 7-cell). The full
 transfer picture (`results/55map-leaderboard/gs-vs-55map-transfer.md`,
 @ 50 m): text HIGH −0.048, image −0.078, text MIN −0.087 — GS clustering
 at 0.88–0.90 concealed differential deployment robustness, and minimal
@@ -473,11 +474,15 @@ flags live at `results/metric-leaderboards/` (GS @ 30 m; 55-map @ 50 m).
 ### 2026-06-11 (S113) — Flash 3.5 role permutations; second-wave manifest registration
 
 **Refresh trigger**: Session 113 ran the three Flash 3.5 model-role
-permutations § 11 of the review dossier left pending ($0, zbook), and
+permutations § 11 of the review dossier left pending ($0, zbook),
 registered the second wave in the manifest (runs `flash35-pv-2x2` and
 `55maps-text-min-n10-uplift`; 6 pv-diag-384 additions; analyses
 `min-vs-high-thinking-pv`, `pass-budget-pareto-v2`, `flash35-model-roles`,
-`unswept-pools-completeness`). § 14 sharpened:
+`unswept-pools-completeness`, `55map-canonical-leaderboard-50m`), and
+refreshed the 55-map canonical board with the uplift cell (8 cells,
+24/28 pairs significant, 5 tiers — the uplift shares Tier 2 with T03-k4
+rather than minting a sixth tier; § 16's board citation updated).
+§ 14 sharpened:
 
 | claim | before | after |
 |---|---|---|

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-06-11T12:20:12Z",
+  "generated_at": "2026-06-11T12:24:49Z",
   "generator_version": "0.4.0",
   "analyses": [
     {
@@ -818,6 +818,45 @@
           "results/verifier-robustness"
         ],
         "last_extracted_at": "2026-06-11T12:20:12Z",
+        "extractor_version": "0.4.0"
+      }
+    },
+    {
+      "analysis_id": "55map-canonical-leaderboard-50m",
+      "type": "leaderboard",
+      "conditions_compared": [
+        "55maps-text-high-t0-3-generalisation::verified-k3-canonical-gt",
+        "55maps-text-high-generalisation::verified-k3-canonical-gt",
+        "55maps-text-high-t0-3-generalisation::verified-k4-canonical-gt",
+        "55maps-text-min-n10-uplift::verified-5of10-canonical-gt",
+        "55maps-text-high-generalisation::verified-k4-canonical-gt",
+        "55maps-text-min-generalisation::verified-k3-canonical-gt",
+        "55maps-image-generalisation::verified-k3-canonical-gt",
+        "55maps-text-min-generalisation::verified-k4-canonical-gt"
+      ],
+      "hypothesis_refs": [],
+      "preregistered": "exploratory",
+      "deviations": [],
+      "predicted_outcome": "S113 continuity: tiers likely become 6 with the uplift cell inserted between TM-k3 and TH7-k3 (Obs 364: both pairwise steps resolve, so the uplift should occupy its own tier on the instrument that resolves).",
+      "tie_set": [
+        "55maps-text-high-t0-3-generalisation::verified-k3-canonical-gt",
+        "55maps-text-high-generalisation::verified-k3-canonical-gt"
+      ],
+      "outcome": "5 tiers, 24/28 pairs significant after BH-FDR. Board (F1@50, tier): T03-k3 (oracle) 0.8476 (T1); TH7-k3 0.8425 (T1); T03-k4 0.8359 (T2); TM-n10-k5 (uplift) 0.8290 (T2); TH7-k4 (carry-forward) 0.8152 (T3); TM-k3 0.8127 (T3); IM-k3 0.7987 (T4); TM-k4 0.7831 (T5). The uplift (TM-n10-k5) confirms Obs 364 on the full board: pass count closes about half the deployment thinking gap \u2014 significantly above TM-k3, significantly below TH7-k3 \u2014 making minimal-thinking deployment a priced cost/quality trade rather than a tie.",
+      "paper_section": "Results",
+      "output_path": "results/55map-leaderboard",
+      "working_notes_obs": [
+        "Obs 358 \u2014 the 55-map 50 m board (threshold-transfer failure)",
+        "Obs 362 \u2014 the deployment reversal (scope-qualifies the cost meta-rule)",
+        "Obs 364 \u2014 the min11 uplift (pass count closes half the thinking gap)"
+      ],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/55map-leaderboard"
+        ],
+        "last_extracted_at": "2026-06-11T12:24:49Z",
         "extractor_version": "0.4.0"
       }
     }
