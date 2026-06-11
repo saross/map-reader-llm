@@ -42,8 +42,8 @@ project state.
 
 **Carry-forward (not in the docs):**
 
-- **sapphire has NOT been synced all session** — `ssh sapphire`, pull
-  before any work there. local + zbook + origin are identical.
+- All THREE machines (local, zbook, sapphire) synced at handoff
+  (`7113de5b7`); working trees clean.
 - The TM `cost_manifest.json` prices at STANDARD rates ($18.67/pass =
   ~$9.40 flex) — check the pricing basis of any recorded cost manifest
   before reusing its dollars. Flex ≡ batch on Gemini 3 underpins all
