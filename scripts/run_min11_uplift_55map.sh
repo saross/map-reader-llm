@@ -102,8 +102,18 @@ $PY scripts/merge_passes.py --input-dir "$OUT/proposer-all" \
     --output "$OUT/consensus/text-min-3of10.geojson"
 
 echo "=== Stage E: crops for the >=3-of-10 band ==="
+# 55-map sources (NOT the GS defaults): the original TM crops record
+# rasters_dir inputs/rasters/Russian1981_32635 + tiles_384_55maps.
 $PY scripts/run_pv.py extract --proposer "$OUT/consensus/text-min-3of10.geojson" \
-    --output-dir "$OUT/crops-3of10" --padding 75
+    --output-dir "$OUT/crops-3of10" --padding 75 \
+    --rasters-dir inputs/rasters/Russian1981_32635 \
+    --tiles-dir inputs/tiles_384_55maps
+n_band=$($PY -c "import json; print(len(json.load(open('$OUT/crops-3of10/candidate_manifest.json'))['candidates']))")
+if [ "$n_band" -lt 10000 ]; then
+    echo "GATE FAIL: band crops $n_band < 10000 (expected ~16,500) — aborting V"
+    exit 1
+fi
+echo "band crops: $n_band (gate ok)"
 
 echo "=== Stage V: carry-forward verifier over the band (n=1, flex) ==="
 $PY scripts/run_pv.py verify --crops-dir "$OUT/crops-3of10" \
