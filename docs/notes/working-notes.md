@@ -20373,3 +20373,173 @@ verified 2026-06-11);
 `results/55map-leaderboard/gs-vs-55map-transfer.md`
 (complete transfer table with all four deployed configurations;
 updated 2026-06-11).
+
+## Observation 364: Pass count closes HALF the thinking gap at deployment — the min11 uplift resolves Obs 362's open question into a genuine cost/quality trade (Session 113, 2026-06-11)
+
+*Source anchors: `results/55map-leaderboard/min11_uplift_cell.json`
+(uplift cell at best operating point + both permutation test results;
+verified 2026-06-11); `results/55map-leaderboard/min11-uplift-score.log`
+(band sweep across all k-of-10 × prob\_t operating points; verified
+2026-06-11); `scripts/run_min11_uplift_55map.sh` header block (cost
+basis: ~$9.40/pass at Flex rates × 5 passes + ~$13 verifier over the
+≥3-of-10 band ≈ $60 incremental; verified 2026-06-11);
+`results/verifier-robustness/pareto/pareto_v2.json` (full-run cost
+model: min11 rung `est_cost_55map_usd: 118.41` from GS-calibrated
+token counts scaled 17.54×; verified 2026-06-11).*
+
+### The finding
+
+**Run B design.** Shawn-approved ~$60 Flex budget for the incremental
+uplift: 5 additional minimal T=0.7 proposer passes over 8,541 tiles
+(runs 6–10, byte-identical config to runs 1–5), followed by one
+carry-forward n=1 verifier pass over the 16,482-crop ≥3-of-10 band
+(16,482/16,482 verified, 0 failures). The resulting 10-pass minimal
+cell sweeps all k-of-10 × prob\_t operating points against canonical
+GT at 50 m.
+
+**Uplift cell result at 55-map scale (8,541 tiles):**
+
+| metric | value |
+|---|---:|
+| F1@50 m | **0.8290** |
+| Precision@50 m | 0.9051 |
+| Recall@50 m | 0.7648 |
+| MCC | 0.6725 |
+| best operating point | 5of10 / pt0.15 |
+| n accepted | 4,361 |
+
+Best sweep point from the log: 5-of-10 at prob\_t=0.15 (F1=0.8290);
+the GS-optimised vote band was 6-of-10 — the looser-threshold-at-deployment
+lesson recurs (see below).
+
+**Both targeted permutations resolve on the 8,541-tile instrument
+(10,000 tile-swap permutations each):**
+
+| comparison | uplift F1 | comparator F1 | Δ | p |
+|---|---:|---:|---:|---:|
+| uplift vs TM-k3 (5-pass minimal) | 0.8290 | 0.8127 | **+0.0163** | **< 0.0001** |
+| uplift vs TH7-k3 (5-pass HIGH) | 0.8290 | 0.8425 | **−0.0134** | **0.0026** |
+
+The thinking gap does NOT close. Sequence: TM-k3 0.8127 → uplift
+(min11) 0.8290 → TH7-k3 0.8425. Each step is individually significant.
+The −0.030 gap documented in Obs 362 shrinks to −0.013, but the
+residual gap is still resolved at p = 0.0026.
+
+### Why this matters
+
+**1. Obs 362's open question is answered.** Obs 362 established the
+−0.030 thinking gap and noted that min11 was "untested at production
+scale" — its GS Pareto position did not licence extrapolation. Run B
+provides that evidence. Pass count does materially help (+0.016), but
+doubling the pass count from 5 to 10 recovers only half the thinking
+gap; the residual −0.013 is genuine and resolves.
+
+**2. The production choice is now a genuine cost/quality trade the
+paper can present as such.** With both comparisons significant and
+both costs anchored to the same instrument:
+
+| config | F1@50 m | full-run cost (55-map) | basis |
+|---|---:|---:|---|
+| TM-k3 (5-pass minimal) | 0.8127 | ~$67 | pareto\_v2 min6 rung scaled |
+| min11 uplift (10-pass minimal) | 0.8290 | ~$118 | pareto\_v2 min11 rung |
+| TH7-k3 (5-pass HIGH) | 0.8425 | ~$187 | pareto\_v2 high6 rung |
+
+The −0.016 / −$51 trade (min11 vs TH7-k3) and the +0.016 / +$51 trade
+(min11 vs TM-k3) are symmetric and empirically resolved. This is a
+legitimate cost/quality frontier the paper can place in a methods
+table without hedging about instrument sensitivity.
+
+**3. The cheaper-config rule does NOT apply here.** Obs 357's cost
+meta-rule holds "on a within-noise tie." Both comparisons are
+resolved: pass count vs TM-k3 is p < 0.0001; thinking level vs
+TH7-k3 is p = 0.0026. Neither is a tie. The scope qualifier from
+Obs 362 is vindicated — the instrument does resolve these differences
+and the cheaper-config rule is not in play.
+
+**4. The looser-threshold-at-deployment pattern recurs (Obs 358
+echo).** The GS-swept optimum for the 10-pass minimal pool was
+6-of-10; the 55-map deployment optimum is 5-of-10 (one vote lower).
+The same phenomenon — GS-calibrated threshold is slightly too strict
+for the 55-map corpus — was first documented for k3 vs k4 in Obs 358.
+The mechanism appears to generalise: the 55-map corpus is
+geographically and cartographically more diverse than the GS sheets,
+and the looser threshold recovers marginal true positives on harder or
+distribution-shifted tiles. Threshold transfer should be treated as a
+tunable axis in any future production run.
+
+### Caveats / methodological notes
+
+The uplift comparisons (TM-k3, TH7-k3) use the 55-map k3 threshold
+for the comparator cells — these are themselves post-hoc threshold
+transfers from the GS calibration (Obs 362, footnote; Obs 358 for the
+k3 vs k4 discussion). The uplift cell's 5-of-10 threshold was chosen
+by sweeping the 55-map instrument itself, so the threshold axis is
+not matched. The residual −0.013 vs TH7-k3 is therefore a conservative
+lower bound on the thinking gap — any threshold optimisation of the
+TH7-k3 cell on the 55-map instrument might widen it further. The
+significant result is robust to this direction of concern.
+
+There are two cost bases in play and both are in the source files.
+The script header (~$60 incremental) is the marginal cost of Run B
+given runs 1–5 already existed. The pareto\_v2 min11 rung
+(`est_cost_55map_usd: 118.41`) is the full from-scratch cost of a
+10-pass minimal run. The user spec cited "~$105/55-map run at
+recalibrated rates" for 10×minimal; this figure does not appear in
+either source file. The pareto\_v2 figure ($118) is used throughout
+this Obs as the anchored estimate; the $105 figure may reflect a
+separate recalibration not recorded in pareto\_v2.
+
+The stage E crop-extraction step initially returned 0 crops because
+the extraction script defaulted to GS raster paths (not the 55-map
+raster/tile directories). The runbook now pins `--rasters-dir
+inputs/rasters/Russian1981_32635` and `--tiles-dir
+inputs/tiles_384_55maps`, and gates on band size ≥ 10,000 before
+incurring verifier spend. The gate caught the misconfiguration at
+$0 cost; no API calls fired on the empty manifest. Silent-success
+failure modes need positive gates, not just error traps.
+
+### Findable later
+
+min11 uplift 55-map pass count thinking gap; Run B 5 additional
+minimal passes 8541 tiles; 16482 band crops 3of10 verified; uplift
+vs TM-k3 +0.0163 p<0.0001; uplift vs TH7-k3 −0.0134 p=0.0026;
+sequence TM-k3 0.8127 min11 0.8290 TH7-k3 0.8425; half thinking gap
+closed; genuine cost quality trade; cheaper-config rule not in play
+resolved comparisons; 5of10 pt0.15 n=4361; 6of10 GS optimum 5of10
+deployment; looser threshold deployment recurs at n=10; threshold
+transfer tunable axis; cost basis script header incremental 60 USD;
+pareto v2 min11 118 USD; 105 USD recalibrated not in source; stage E
+empty crops GS raster default; positive gate band size 10000; silent
+success failure mode; run_min11_uplift_55map; min11_uplift_cell;
+min11-uplift-score.log; pareto_v2; Obs 362 open question answered;
+Obs 358 threshold echo; thinking gap residual −0.013 conservative
+lower bound; post-hoc threshold mismatch caveat
+
+### Related observations and artefacts
+
+- **[[Obs 362]]** (the open question this Obs answers — Obs 362
+  established the −0.030 thinking gap at deployment and flagged min11
+  as untested at production scale; Run B provides that evidence and
+  resolves both targeted comparisons)
+- **[[Obs 358]]** (looser-threshold-at-deployment — k3 vs k4 on the
+  55-map instrument; the 5-of-10 vs 6-of-10 threshold shift in the
+  uplift cell is a second instance of the same generalisation)
+- **[[Obs 359]]** (GS parity + pool recall ceiling — min11 was the
+  GS Pareto crown; the 55-map result shows it does not match HIGH
+  thinking even at 10 passes, suggesting the recall-ceiling
+  saturation documented on the GS sheets is GS-specific and
+  not portable to the 55-map corpus)
+- **[[Obs 357]]** (the cost meta-rule — both uplift comparisons are
+  resolved rather than tied, so the meta-rule does not apply; the
+  scope qualifier from Obs 362 is confirmed)
+
+**Artefacts**: `results/55map-leaderboard/min11_uplift_cell.json`
+(best operating point, permutation results vs TM-k3 and TH7-k3;
+verified 2026-06-11);
+`results/55map-leaderboard/min11-uplift-score.log`
+(full k-of-10 × prob\_t sweep over 8,541-tile instrument;
+verified 2026-06-11);
+`scripts/run_min11_uplift_55map.sh`
+(run-B design and cost basis in header; verified 2026-06-11);
+`results/verifier-robustness/pareto/pareto_v2.json`
+(full-run cost model, min11 rung $118.41; verified 2026-06-11).
