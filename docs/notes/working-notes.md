@@ -20711,3 +20711,268 @@ Obs 357 cost meta-rule granular companion; Obs 358 55-map board Tier 1
 verified 2026-06-12);
 `results/55map-leaderboard/55map_leaderboard_50m.json`
 (8-cell board, tier assignments; verified 2026-06-12).
+
+## Observation 366: Sign-off walkthrough rider — corrections to Obs 358–365 and the resolving-power interpolation (Session 113, 2026-06-12)
+
+*Source anchors: `reports/token-load-audit-2026-06-12.md` (§§ 1, 5–6, 10:
+corrected per-pass costs and billing-console corroboration; verified 2026-06-12);
+`results/verifier-robustness/pareto/pareto_v2.json` (GS-run costs min6 $2.43
+/ high31 $69.21; 55-map costs min6 $42.60 / high6 $246.22; verified at
+commit `d638fba22`); `results/verifier-robustness/min_vs_high_permutations.json`
+(GS permutation null SDs at 487 tiles: 0.01127–0.01483; verified 2026-06-12);
+`results/55map-leaderboard/55map_leaderboard_50m.json` (55-map pairwise
+null SDs at 8,541 tiles: 0.00263–0.00577, median s ≈ 0.41 after
+null\_std × √8541; verified 2026-06-12); `reports/session-113-signoff-package.md`
+(sign-off record for Obs 357–365, 2026-06-12; commit `e90eb96c5`); commits
+`a70198c6a` (16-cell promotion to first-class pv-diag-384),
+`7d3cd88b2` (billing-console corroboration, audit § 10).*
+
+### The finding
+
+Shawn reviewed Obs 357–365 item by item during Session 113 (2026-06-12) and
+accepted all nine. This Obs records, append-only, the corrections and
+clarifications that emerged from the walkthrough. Every item was explicitly
+approved. No existing Obs text is modified.
+
+**§ 1 — Obs 358 headline rephrase.**
+The headline "the deployment penalty is *entirely* a vote-threshold transfer
+failure" overstates. Temperature alone contributes +0.021 (T03-k4 reaches
+Tier 2 on its own; `55map_leaderboard_50m.json` pairwise, verified), and a
+further +0.005 at k3 (ns, p = 0.127 on 8,541 tiles — same source). Shawn's
+preferred phrasing: "the deployment penalty is MOSTLY a vote-threshold
+transfer failure, with temperature carry-forward also suboptimal." A matter
+of emphasis, not error; the mitigation heuristics in Obs 358 stand.
+
+**§ 2 — The resolving-power interpolation.**
+How large a calibration dataset would have grounded the decisions the GS
+instrument got wrong? The tile-swap permutation null SD scales as
+s/√N\_tiles, validated at both ends of the corpus:
+
+- GS (487 tiles): null SDs 0.0113–0.0148, giving per-tile noise
+  s ≈ 0.25–0.33 (`min_vs_high_permutations.json`).
+- 55-map (8,541 tiles): null SDs 0.0026–0.0058, median
+  s ≈ 0.41 (`55map_leaderboard_50m.json` pairwise, 28 pairs).
+
+Required calibration size N = (k × s / Δ)², with k = 2.0 (p < 0.05) or
+k = 2.8 (~80% power), using the deployment-population s = 0.41:
+
+| decision axis | deployment Δ | tiles (p < .05) | tiles (80% power) | ~sheets | ~mounds |
+|---|--:|--:|--:|--:|--:|
+| vote threshold k4 → k3 | 0.027 | ~900 | ~1,800 | ~12 | ~1,100 |
+| temperature (at k4) | 0.021 | ~1,600 | ~3,100 | ~20 | ~1,900 |
+| min vs HIGH thinking | 0.030 | ~770 | ~1,500 | ~10 | ~900 |
+| pass-count uplift step | 0.013 | ~3,800 | ~7,400 | ~48 | ~4,500 |
+| temperature at k3 | 0.005 | ~26,000 | ~51,000 | ~330 | ~31,000 |
+
+(sheets at ~155 tiles/map; mounds at ~0.60/tile on the 55-map corpus.
+Arithmetic verified against N = (k × 0.41 / Δ)²; sheets = N / 155;
+mounds = N × 0.60.)
+
+Three qualifications:
+
+(i) **Representativeness beats size.** The GS failures were not only a power
+problem: the threshold direction reversed on the curated GS sheets, and
+the min/HIGH tie was genuinely real on them. More tiles of the *same* sheets
+would have converged confidently on the wrong answer. The numbers assume
+sheets sampled from the deployment population.
+
+(ii) **The cheaper protection remains the mitigation heuristics.** A
+representative ~20-sheet calibration is ~36% of the eventual deployment
+corpus — a substantial upfront cost. The cheaper protection remains the
+heuristics in Obs 358: deploy recall-permissive on plateaus, and budget
+for a deployment-side threshold sweep.
+
+(iii) **The temperature-at-k3 distinction is unresolvable at feasible
+scale.** The +0.005 difference (ns, p = 0.127 on 8,541 tiles) needs
+~6× the entire 55-map corpus, consistent with its observed non-significance.
+
+**§ 3 — Obs 359 corrections.**
+
+(i) The sentence characterising the "same-run-lineage min6" score of 0.6000
+(974 candidates) as "demonstrating the dependence on pool composition" is
+imprecise. That pool is the diagnosed PARTIAL-COVERAGE stale union (230/471
+tiles, the S111 data-integrity catch; archived with diagnosis). The low score
+demonstrates broken tile coverage rather than a clean comparison of pool
+composition. The valid same-lineage figure is the make-up cell (0.8784), as
+Obs 359 itself states later.
+
+(ii) The budget-guidance dollars (~$0.35/map vs ~$3.10/map) are doubly
+stale: they reflect smoke-era rates with thinking unbilled. Audited
+GS-run-scale figures from `pareto_v2.json` at commit `d638fba22`:
+min6 **$2.43** vs high31 **$69.21**. The cost ratio moves from ~9× to
+**~28×**; the conclusion (HIGH thinking is disproportionately expensive
+on GS) strengthens.
+
+**§ 4 — Obs 362 corrections.**
+
+(i) The cost sentence "min6 ~$46 vs high6 ~$125; $79 buys +0.030 and two
+tiers" predates the token-load audit. Audited 55-map production figures
+from `pareto_v2.json` (regenerated at `d638fba22`): min6 **~$43** vs
+high6 **~$246** — a **~$203** premium. The trade is real either way;
+HIGH's price roughly tripled under the audit.
+
+(ii) Point (c) of Obs 362's "Why this matters" section — "min11 is untested
+at production scale" — was superseded the next day by Run B: the min11
+uplift IS min11 at production scale (0.8290 @ 50 m, Obs 364). The open
+question is now answered.
+
+**§ 5 — Obs 363 notes.**
+
+(i) The Pro-verifier rate (~$0.0028/call, ~$10/leg) likely understates
+actual cost: the Pro verifier ran medium thinking, and recorded costs
+omitted thinking tokens (token-load audit §§ 1, 5). The min11-dominance
+conclusion is unaffected — it strengthens.
+
+(ii) Disposition update: 17 of the 18 swept cells were promoted to
+first-class pv-diag-384 conditions on 2026-06-12 (Shawn: "make everything
+that can be first-class first-class"; commit `a70198c6a`). Cell #1 is not
+separately minted because its optimum IS the registered headline condition.
+The re-signed unswept-pools-completeness analysis records the disposition.
+
+**§ 6 — Obs 364 corrections.**
+
+(i) The cost table (~$67 / ~$118 / ~$187) is pre-audit. Audited recipe costs
+from `token-load-audit-2026-06-12.md` §§ 5–6:
+
+| config | pre-audit cost | audited cost |
+|---|--:|--:|
+| TM-k3 (5-pass minimal) | ~$67 | **~$32** |
+| TM-n10-k5 uplift (10-pass minimal) | ~$118 | **~$58** |
+| TH7-k3 (5-pass HIGH T0.7) | ~$187 | **~$207** |
+
+The symmetric "+/−$51" framing of Obs 364 becomes +$26 (pass-count step,
+TM-k3 → uplift) vs −$149 (thinking step, uplift → TH7-k3). The cost/quality
+trade is genuine either way; the scale of the thinking premium is much larger
+than the pre-audit framing suggested.
+
+(ii) The untraceable "~$105" that Obs 364 rightly declined to anchor is now
+explained: it was the interim recalibrated estimate (~$9.40/pass × 10 +
+verifier). The audited value is ~$58. Obs 364's anti-confabulation caveat
+is vindicated.
+
+(iii) The "~$60 incremental" figure in the `run_min11_uplift_55map.sh`
+script header was computed at the pre-audit per-pass rate. Audited
+as-run incremental: **~$34.5** (5 × $4.65 + $11.27 verifier;
+audit § 6), corroborated by the Google billing console June dailies for
+10–11 June (audit § 10), which exclude the pre-audit figure.
+
+**§ 7 — Obs 365 correction.**
+The methodological coda in Obs 365 states "pre-audit cost model (whole-run
+estimates ~$105 for the uplift vs ~$207 for T03-k3)". The label is
+imprecise: **~$207 is TH7-k3's AUDITED cost** (5 × $40.19 + $6.42;
+audit § 6), not T03-k3's pre-audit estimate. The pre-audit T03-k3 estimate
+under the 3× model was ~$151. The per-mound figures the coda derives
+($0.14 vs $0.44) were computed from the correct $105/$151 pair and stand
+unchanged.
+
+**§ 8 — Grounding.**
+All audited costs above are corroborated against the Google billing console
+(token-load audit § 10, figures supplied by Shawn 2026-06-12 AEST; commit
+`7d3cd88b2`). The 18 April single-day match: billed $402.08 vs $419.64
+predicted for the three campaign proposer legs (−4%) — excludes the legacy
+manifest figures by ~3×. The June 10–11 dailies exclude the pre-audit
+uplift cost, consistent with the audited ~$34.5 incremental.
+
+### Why this matters
+
+**1. The corrections are paper-load-bearing.** Five of the seven corrected
+Obs entries (358, 359, 362, 364, 365) contain dollar figures that would
+be cited or derived from in a cost-effectiveness section. The audited rates
+move several figures by 2–5×, change a cost ratio from ~9× to ~28×, and
+flip the per-mound ordering on the cost frontier (Obs 365 coda). Readers
+and future agents should use this Obs's audited figures wherever the
+originals appear in cross-references.
+
+**2. The resolving-power interpolation (§ 2) closes Obs 347's qualitative
+bound.** Obs 347 established that the GS instrument cannot resolve ±0.03 F1.
+Section 2 here quantifies, per decision axis, exactly how many tiles and
+sheets a calibration dataset would have needed to detect each gap with
+statistical power — given s drawn from the *deployment* population rather
+than the GS noise floor. This is the number the paper's "limitations"
+section needs when motivating the study design's calibration corpus.
+
+**3. The append-only correction pattern.** These corrections were made as
+a rider rather than by editing the originals, following the project's
+never-modify-existing-Obs rule. Cross-referencing consumers should read
+this Obs alongside the original for the corrected figures.
+
+### Caveats / methodological notes
+
+The resolving-power table uses a single s = 0.41 (median null-SD-derived
+per-tile noise across 28 pairwise 55-map comparisons). The median pools
+comparisons with widely different per-tile variances (range
+s ≈ 0.24–0.53); for comparisons in the lower end of that range, the
+required N values in the table are conservative. The table is intended as
+an order-of-magnitude guide, not precise sample-size planning.
+
+The ~155 tiles/sheet figure used for sheet counts is 8,541 / 55 = 155.3,
+rounded. The ~0.60 mounds/tile is 5,161 mounds / 8,541 tiles = 0.604,
+rounded. Both rounded figures propagate small errors into the sheet and
+mound columns; the order-of-magnitude reading is unaffected.
+
+The Obs 364 audited cost table above (§ 6(i)) uses TH7-k3 (T0.7) at ~$207,
+consistent with audit § 6's text-high corrected spend. T03-k3 (T0.3) is
+separately priced at ~$261 (5 × $50.82 + $6.90; audit § 6). The Obs 364
+original refers to TH7-k3 as the HIGH-thinking comparator throughout; the
+correction preserves that framing.
+
+### Findable later
+
+sign-off walkthrough rider Session 113; corrections Obs 358 359 362 363 364
+365; append-only corrections; resolving-power interpolation calibration
+dataset size; power table N = (k s / Delta) squared; per-tile noise s 0.41
+deployment; GS null SD 0.0113 0.0148 487 tiles; 55-map null SD 0.0026 0.0058
+8541 tiles; vote threshold k4 k3 900 tiles p05; temperature at k4 1600 tiles;
+min HIGH thinking 770 tiles; pass-count uplift 3800 tiles; temperature at k3
+26000 tiles unreachable; 155 tiles per sheet 0.60 mounds per tile; 20-sheet
+calibration 36 percent deployment; representativeness beats size; threshold
+direction reversed GS calibration failure; pareto_v2 min6 2.43 high31 69.21
+28x cost ratio; min6 43 high6 246 55map audited; 203 premium HIGH thinking;
+token-load audit reversal; TM-k3 32 uplift 58 TH7-k3 207 audited recipe costs;
++26 pass-count step −149 thinking step; pre-audit 67 118 187; ~105 recalibrated
+now 58 anti-confabulation vindicated; 34.5 incremental audited billing console
+corroborated; 402.08 billed 419.64 predicted April; Obs 365 coda 207 label
+TH7-k3 audited not T03-k3 pre-audit; 105 151 per-mound figures stand; partial
+coverage stale union S111 data-integrity 230/471 tiles; Pro verifier medium
+thinking omitted thinking tokens understated; 17 of 18 cells first-class
+promotion a70198c6a; d638fba22 pareto v2 regenerated; e90eb96c5 sign-off;
+7d3cd88b2 billing corroboration; audit sections 1 5 6 10
+
+### Related observations and artefacts
+
+- **[[Obs 358]]** (headline rephrased in § 1 — "mostly a vote-threshold
+  transfer failure, with temperature carry-forward also suboptimal"; mitigation
+  heuristics unchanged)
+- **[[Obs 359]]** (corrected in § 3 — partial-coverage stale union clarification;
+  budget-guidance dollars revised from ~9× to ~28× cost ratio at audited rates)
+- **[[Obs 362]]** (corrected in § 4 — audited 55-map costs min6 ~$43 vs high6
+  ~$246, ~$203 premium; "min11 untested" open question answered by Obs 364)
+- **[[Obs 363]]** (annotated in § 5 — Pro-verifier rate understated due to
+  thinking-token omission; 17 of 18 cells promoted to first-class at `a70198c6a`)
+- **[[Obs 364]]** (corrected in § 6 — audited recipe costs TM-k3 ~$32 / uplift
+  ~$58 / TH7-k3 ~$207; incremental ~$34.5; ~$105 recalibrated estimate
+  explained and superseded)
+- **[[Obs 365]]** (corrected in § 7 — ~$207 label is TH7-k3 audited, not
+  T03-k3 pre-audit; per-mound figures $0.14 / $0.44 from $105/$151 pair stand)
+- **[[Obs 357]]** (cost meta-rule — dollar inputs to § 16(c) of the findings
+  report moved; meta-rule scope itself unaffected)
+- **[[Obs 347]]** (GS resolving-power limit — § 2 here quantifies, per decision
+  axis, the calibration corpus size needed given deployment-population noise)
+
+**Artefacts**:
+`reports/token-load-audit-2026-06-12.md`
+(§§ 1, 5–6: corrected per-pass and whole-run costs; § 10: billing-console
+corroboration; verified 2026-06-12);
+`results/verifier-robustness/pareto/pareto_v2.json`
+(GS-run and 55-map production costs at commit `d638fba22`; verified
+2026-06-12);
+`results/verifier-robustness/min_vs_high_permutations.json`
+(GS null SDs at 487 tiles, basis for GS s range; verified 2026-06-12);
+`results/55map-leaderboard/55map_leaderboard_50m.json`
+(55-map pairwise null SDs at 8,541 tiles, basis for deployment s = 0.41;
+verified 2026-06-12);
+`reports/session-113-signoff-package.md`
+(sign-off record for Obs 357–365; commit `e90eb96c5`; verified 2026-06-12);
+commit `a70198c6a` (16-cell promotion to first-class pv-diag-384);
+commit `7d3cd88b2` (billing-console corroboration added to audit § 10);
+commit `d638fba22` (pareto v2 regenerated at audited costs).
