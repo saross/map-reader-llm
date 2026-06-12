@@ -1,15 +1,23 @@
 # Results — working draft
 
-> **Last revised**: 2026-06-12 (token-load audit: § R6 dollars rebuilt at
-> audited flex rates; Obs 365 frontier decomposition added). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-06-13 (Session 114: the three § R2/§ R7/§ R8
+> draft notes resolved; § R9 — GT-free selection — added; § R5 programme
+> cost corrected to the as-run ≈ $54). Prior: 2026-06-12 (token-load
+> audit: § R6 dollars rebuilt at audited flex rates; Obs 365 frontier
+> decomposition added). See [§ Changelog](#changelog) for revision
+> history.
 
 **Status**: first full-prose draft for collaborative revision. Every number
 is anchored to a registered manifest condition or analysis
-(`results/conditions-manifest.md`, `results/analyses-manifest.md`); section
+(`results/conditions-manifest.md`, `results/analyses-manifest.md`), except
+§ R9, which is anchored to its committed findings document and results
+JSON (`results/gtfree-selection/`); section
 order follows the study's evidential arc rather than run chronology.
 `[DRAFT NOTE: …]` marks points needing Shawn's decision, a figure, or
-numbers still to be pulled. Companion outline: `docs/methods-outline.md`.
+numbers still to be pulled; `[Resolved …]` marks decisions taken in
+Session 114 and recorded in the Changelog — Shawn retains the veto on
+review. Companion outline: `docs/methods-outline.md` (cost-reporting
+basis now specified there as § 5.4).
 
 ---
 
@@ -75,9 +83,13 @@ plateau), and all 55-map results at 50 m.
 
 ## R2. Single-pass baselines: a broad statistical tie at modest performance
 
-[DRAFT NOTE: this subsection compresses the preregistered H1/H4/H5/H7/H8
-single-factor results into one board-led narrative; the per-hypothesis
-detail tables go to supplementary material. Confirm that framing.]
+This subsection compresses the preregistered single-factor results
+(H1, H4, H5, H7, H8) into one board-led narrative: each hypothesis was
+tested as registered, the per-hypothesis detail tables go to
+supplementary material, and the body reports the pattern they share —
+because that shared pattern, not any single-factor effect, is the
+finding. [Resolved 2026-06-13: board-led compression adopted; see
+Changelog.]
 
 No single-pass configuration separates from the pack. On the Era-1 board
 (512 px, 340 tiles, curator GT, F1@20 m) the 36 single-pass cells resolve
@@ -154,7 +166,8 @@ swept (analysis `unswept-pools-completeness`, Obs 363).
 
 ## R5. Verifier robustness: every cheaper option ties, so the cheap stack wins
 
-A dedicated robustness programme (~$53 flex) stress-tested every parameter
+A dedicated robustness programme (≈ $54 flex as-run, recorded at run
+time) stress-tested every parameter
 of the production verifier (gemini-3-flash, adversarial text, minimal
 thinking, T = 0.0, n = 1). The summary is uniform: **nothing more expensive
 is measurably better** (citable home:
@@ -274,7 +287,16 @@ recall (+319 mounds at +225 false positives for ~$206).
 ## R7. Deployment: the 55-map canonical board
 
 The deployment board (canonical extended GT, 50 m, eight cells, 24/28
-pairs significant, five tiers; analysis `55map-canonical-leaderboard-50m`):
+pairs significant, five tiers; analysis `55map-canonical-leaderboard-50m`)
+is ordered by F1 because it is the board; **the study's primary
+deployment claim is the carry-forward row** (0.8152) — the operating
+point actually committed to before deployment, per the
+calibrate-then-deploy protocol. Every row above it relaxes at least one
+carried-forward setting (vote threshold, temperature, or pass count)
+after seeing deployment results; those rows are reported not as achieved
+performance but as the measured deployment gap — what better calibration
+transfer would have bought (lesson i below), with the joint oracle
+(+0.032) as its upper bound:
 
 | rank | cell | tier | F1@50 | tile-MCC |
 |---:|---|---:|---:|---:|
@@ -303,10 +325,9 @@ seventh on F1 but carries the board's best tile-MCC (0.710) — for survey
 prioritisation, where tile-level discrimination matters more than exact
 counts, the image pipeline is not the loser the F1 column suggests.
 
-[DRAFT NOTE: decide whether the oracle cell (post-hoc threshold) leads
-the table or is reported as a sensitivity row — preregistration framing
-favours reporting the carry-forward as primary with the oracle as the
-measured deployment gap. The current table orders by F1 for readability.]
+[Resolved 2026-06-13: carry-forward primary, oracle as the measured
+deployment gap, table F1-ordered as the board — implemented in the
+subsection lead; see Changelog.]
 
 ## R8. What the ground truth can and cannot support
 
@@ -326,13 +347,104 @@ present deployment recall with a +3 %/+5 % sensitivity band rather than a
 point correction, the band chosen wide because the correlation estimate
 rests on four events (`results/working-precision/gs-miss-correlation.*`).
 
-[DRAFT NOTE: this subsection may belong in Discussion rather than
-Results — Shawn to decide. It reads as a results-of-validation subsection
-here.]
+[Resolved 2026-06-13: stays in Results as a results-of-validation
+subsection — everything above is a measured quantity (review-verified
+precision, the measured recall bound, the double-miss correlation), and
+§ R9 and the deployment claims depend on it. The *implications* (what GT
+scarcity means for survey practice) move to Discussion; see Changelog.]
+
+## R9. Selecting a configuration without ground truth
+
+Production discovery runs — the use case this pipeline exists for — land
+on map corpora with no reference data at all. The study's closing
+analysis asks whether the deployment lessons of §§ R6–R7 can be applied
+there, and the answer has three parts (citable home:
+`results/gtfree-selection/gtfree-selection-findings.md`; this thread is
+anchored to its committed findings document and
+`gtfree_selection.json` rather than to a manifest-registered analysis).
+
+First, building a bigger calibration reference is not the realistic
+alternative. The permutation machinery's noise scaling (null SD
+∝ 1/√N_tiles, validated at both ends of the corpus) prices the
+counterfactual: grounding the decisions the GS instrument got wrong
+would have needed ~10–20 sheets (~900–1,900 mounds) per decision axis at
+80 % power — up to roughly a third of the eventual deployment corpus,
+curated up front — and, decisively, sheets sampled from the *deployment
+population*: the vote-threshold direction actually reversed on the
+curated GS sheets, so more tiles of the same sheets would have converged
+confidently on the wrong answer. Representativeness, not size, was the
+binding failure (Obs 366 § 2).
+
+Second, deploying the calibration *tie-set* instead is affordable.
+Because threshold sweeps are free post hoc (verify a permissive band
+once, sweep vote/probability thresholds on the recorded verifier
+probabilities) and pass pools nest (a 10-pass campaign contains its
+5-pass rung under the first-N rule), the end-of-calibration tie-set —
+thinking level, temperature, modality, pass count — collapses to four
+proposer pools: ~25 passes, ~$733 audited flex on the 8,541-tile corpus.
+That is within ~2 % of what the study's five deployment campaigns
+actually spent (≈ $722, audit § 6) — the programme converged on the
+minimal covering design incrementally, without having planned it
+(Obs 367).
+
+Third — the new result — the best run can then be identified **from the
+runs alone**. A leave-one-family-out (LOFO) consensus pseudo-ground-truth
+— union the *other three* configuration families' detections,
+single-linkage cluster at 50 m, keep clusters supported by ≥ 2 distinct
+families, score each cell against its own family's held-out reference —
+ranks the eight deployment cells at **Spearman ρ = +0.881** against the
+true canonical board, with no cell ever evaluated against a reference
+containing its own family's detections. The GT-free top pick (TH7-k3) is
+statistically tied with the true winner on the real board (p = 0.127):
+the "miss" sits inside a tie the 8,541-tile instrument itself cannot
+resolve, and the cost meta-rule then breaks the residual tie at exactly
+the scope § R6 qualified it to. Two boundary conditions frame the
+result. The consensus must be permissive: requiring unanimity of the
+other families *inverts* the ranking (ρ = −0.095), because a unanimous
+reference amplifies the double-miss blind spot § R8 measures for the
+real GT — the pseudo-ranking is therefore precision-tilted, and the
+practitioner should keep the recall-permissive lean that the
+threshold-transfer lesson (§ R7) independently recommends. And the
+validation is a retrodiction on one corpus, one symbol type, and eight
+cells; a prospective, preregistered application to a new corpus is the
+natural test. The four-step field protocol (deploy the tie-set → rank by
+LOFO vote ≥ 2 agreement → break the residual tie by cost with a
+recall-permissive lean → sanity-check with the free vote-distribution
+and density diagnostics) is specified in the findings document, § 5.
 
 ---
 
 ## Changelog
+
+### 2026-06-13 — Draft notes resolved; § R9 added (Session 114)
+
+**Refresh trigger**: the Session-114 continuity plan (resolve the three
+draft notes, fold in the S113 closing-chain material). All three
+decisions are Claude's, taken under the S114 "resolve" instruction, and
+each is marked `[Resolved …]` in place so Shawn can veto on review:
+
+- **§ R2 (framing)**: board-led compression of the H1/H4/H5/H7/H8
+  single-factor results adopted; per-hypothesis detail tables to
+  supplementary material. Rationale: the hypotheses share one outcome
+  (inside or near the Tier-1 tie) — serial reporting would repeat
+  "no separation" five times.
+- **§ R7 (oracle ordering)**: carry-forward (0.8152) is the primary
+  deployment claim; the oracle and other relaxed rows are the measured
+  deployment gap, upper-bounded by the joint oracle's +0.032. Table
+  stays F1-ordered as the board. Rationale: preregistration framing —
+  the carried operating point is what the protocol committed to.
+- **§ R8 (placement)**: stays in Results as results-of-validation
+  (measured quantities); implications move to Discussion.
+- **§ R9 added**: the GT-free selection protocol (calibration-corpus
+  power analysis → deploy-and-evaluate covering design → LOFO consensus
+  ranking, ρ = +0.881, vote ≥ 3 inversion, retrodiction caveat).
+  Anchored to `results/gtfree-selection/` (not a manifest analysis);
+  preamble anchoring claim qualified accordingly.
+- **§ R5**: programme cost "~$53 flex" corrected to "≈ $54 flex as-run"
+  (sum of the recorded run costs $21.93 + $20.86 + $8.71 + $2.54).
+- Methods cost-reporting basis written up as `docs/methods-outline.md`
+  § 5.4 (audited basis, billing corroboration, lower-bound caveat,
+  write-time gate).
 
 ### 2026-06-12 — § R6 dollars rebuilt from the token-load audit
 

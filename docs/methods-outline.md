@@ -240,6 +240,35 @@ supplementary materials alongside the full preregistration text.
 - Per-condition metrics computed as mean across K runs (K=10 for phases
   2a–2e; K=30 for Phase 3a)
 
+### 5.4 Cost Measurement and Reporting Basis
+
+[Added 2026-06-13 (Session 114); source:
+`reports/token-load-audit-2026-06-12.md`. Cite audited dollars ONLY.]
+
+- **Audited basis**: every dollar figure in the paper is computed from
+  per-request token metadata priced at June 2026 Gemini flex-tier rates
+  (Flash 3 $0.25/$1.50 per 1M input/output tokens), with **thinking
+  tokens billed at the output rate** — verified against
+  <https://ai.google.dev/gemini-api/docs/pricing> (retrieved 2026-06-12).
+- **Why an audit was needed**: recorded run-time cost manifests carried
+  three defect classes — recovery-merge double-counting (2–3× on three
+  of four deployment campaigns), standard-tier rates recorded for runs
+  executed at flex, and omitted thinking tokens (HIGH-thinking passes
+  under-priced ~1.4×). Corrected per-pass costs (8,541-tile deployment):
+  minimal text $4.66, HIGH text T0.7 $40.19, HIGH text T0.3 $50.82,
+  image (cached) $39.07 — a true min : HIGH ratio of **8.6×** per pass,
+  not the 3× of the superseded model.
+- **Billing-console corroboration**: audited predictions match the
+  Google billing console (ground truth) — 18 April single-day check:
+  $402.08 billed vs $419.64 predicted (−4%) for the three campaign
+  proposer legs, excluding the legacy manifest figures by ~3×; June
+  10–11 dailies consistent with the audited uplift incremental (~$34.5).
+- **Lower-bound caveat**: clean token loads are lower bounds — retry
+  spend is not recorded on disk (audit § 8). Total corrected spend
+  across the five 55-map deployment campaigns ≈ $722 flex (audit § 6).
+- **Write-time gate**: any dollar entering paper text must carry its
+  pricing basis (audited flex, per-item metadata) and date.
+
 ## 6. Reproducibility and Transparency
 
 ### 6.1 Preregistration
