@@ -55,10 +55,43 @@ GS_CELLS = {
     "f3prop+f35vf (6of10)": f"{F35.relative_to(BASE_DIR)}/f3prop-f35vf-n10-6of10-pt0.25/evaluation.json",
     "f35prop-bare (10of10)": f"{F35.relative_to(BASE_DIR)}/f35prop-bare-n10-10of10/evaluation.json",
 }
+
+# Cells promoted to first-class on 2026-06-12 (the unswept-pools sweep
+# promotion, commit a70198c6a; disposition in Obs 366 § 5) plus the
+# Session-113 registrations (Run A T0.3 GS cell, the image-PV cells, the
+# Pro-verifier-over-Flash-pool cells). Labelled by their pv-diag-384
+# condition IDs — see results/conditions-manifest.md for each cell's
+# composition. Added to the board 2026-06-13 (Session 114 currency sweep).
+PROMOTED_GS_CELLS = [
+    "verified-adv-text-t03-4of5",
+    "verified-adv-text-pro-vf-4of5",
+    "verified-adv-text-baseline",
+    "verified-adv-text-baseline-medium-vf",
+    "verified-adv-text-baseline-pro-vf",
+    "verified-adv-image-3of5",
+    "verified-adv-image-min-3of5",
+    "verified-adv-image-min-6of10",
+    "verified-adv-image-baseline",
+    "verified-adv-image-baseline-medium-vf",
+    "verified-adv-image-baseline-pro-vf",
+    "verified-adv-pro-text-medium-vf-3of5",
+    "verified-adv-pro-text-baseline",
+    "verified-adv-pro-text-baseline-medium-vf",
+    "verified-adv-pro-text-baseline-pro-vf",
+    "verified-adv-pro-image-pro-vf-3of5",
+    "verified-adv-pro-image-baseline",
+    "verified-adv-pro-image-baseline-medium-vf",
+    "verified-adv-pro-image-baseline-pro-vf",
+]
+for _cid in PROMOTED_GS_CELLS:
+    GS_CELLS[_cid] = f"{VR.relative_to(BASE_DIR)}/{_cid}/evaluation.json"
+
 M55_CELLS = {
     "T03-k3 (oracle)": "T03-k3", "T03-k4": "T03-k4", "TH7-k3": "TH7-k3",
     "TH7-k4 (carry-forward)": "TH7-k4", "TM-k3": "TM-k3", "TM-k4": "TM-k4",
     "IM-k3": "IM-k3",
+    # The Run-B min11 uplift cell (added to the canonical board in S113).
+    "TM-n10-k5 (uplift)": "TM-n10-k5",
 }
 
 # min11 (text-n10 MINIMAL pool) and high11 (flash-high HIGH pool,
@@ -120,7 +153,14 @@ def emit(track: str, cells: dict[str, dict], buffer_m: int) -> None:
           "> Rankings with bootstrap CIs from the standard evaluations. "
           "Statistical TIERING remains F1-led (see the per-architecture and "
           "55-map boards); flags: `P!`/`R!` = precision/recall < 0.5, `~` = "
-          "min(P,R)/max(P,R) < 0.6. Flags mark, they do not exclude."]
+          "min(P,R)/max(P,R) < 0.6. Flags mark, they do not exclude.",
+          ">",
+          "> **Membership refreshed 2026-06-13** (Session 114): adds the "
+          "cells promoted to first-class on 2026-06-12 (unswept-pools "
+          "promotion, commit `a70198c6a`) and the S113 registrations; the "
+          "55-map track adds the Run-B uplift cell. Promoted cells are "
+          "labelled by condition ID (`results/conditions-manifest.md`). "
+          "No dollar figures appear here; nothing is audit-affected."]
     for metric in ("MCC", "precision", "recall"):
         md += board(cells, metric, buffer_m)
     stem = OUT_DIR / f"{track}-{buffer_m}m"
