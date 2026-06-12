@@ -21178,3 +21178,207 @@ lower-bound caveat; § 10: billing-console corroboration; verified
 `results/verifier-robustness/pareto/pareto_v2.json`
 (rung est\_cost\_55map\_usd values including high31 $1,213.72 and
 high6 $246.22; verified 2026-06-13 at commit `d638fba22`).
+
+## Observation 368: A serviceable no-GT evaluation — leave-one-family-out consensus ranks production runs at rho = +0.88 and picks a true Tier-1 winner (Session 113, 2026-06-13)
+
+*Source anchors: `results/gtfree-selection/gtfree-selection-findings.md`
+(commit `eacfbaff8`; primary findings document, all numbers re-verified
+2026-06-13); `results/gtfree-selection/gtfree_selection.json` (commit
+`3c38acc94`; canonical numerical results — Spearman correlations,
+pseudo-GT sizes, per-cell pseudo-F1 and true-F1; all values
+re-verified 2026-06-13); `results/55map-leaderboard/55map_leaderboard_50m.json`
+(T03-k3 vs TH7-k3 pair: p\_value 0.1271, significant False,
+n\_tiles 8541, 24/28 significant; re-verified 2026-06-13);
+`scripts/test_gtfree_selection.py` (commit `59f7e919a`; the
+script that produced the results).*
+
+### The finding
+
+Most production discovery corpora have no legacy digitisation —
+no ground truth to validate against. Obs 367 showed that deploying
+the calibration tie-set is cheap (~25 passes, ~$733 on an 8,541-tile
+corpus), but deploy-and-evaluate still requires an *evaluator*. This
+Obs asks: can the best configuration be identified **from the runs
+alone**, without any reference labels?
+
+**Design — leave-one-family-out (LOFO) consensus pseudo-GT.** The
+eight 55-map board cells group into four configuration families
+by proposer recipe: T03 (text HIGH T = 0.3), TH7 (text HIGH
+T = 0.7), TM (text MINIMAL T = 0.7, including the 10-pass uplift),
+and IM (image HIGH). For each family F, a pseudo-ground-truth is
+built from the *other* three families' k3 detection sets: union
+the three sets, single-linkage cluster at 50 m, keep clusters
+supported by ≥ 2 distinct families (primary) or ≥ 3 (sensitivity),
+centroid = pseudo-mound. Each cell is then scored against its own
+family's pseudo-GT using the standard board machinery (Hungarian
+matching per map, 50 m buffer) — the anti-circularity device that
+ensures no cell is evaluated against a reference containing its
+own detections.
+
+**Primary results (vote ≥ 2)** — pseudo-GT sizes 4,399–4,539 points
+(true GT: 5,161):
+
+| Cell | Pseudo-F1 (GT-free) | True F1@50 | True tier |
+|---|--:|--:|--:|
+| TH7-k3 | **0.8933** | 0.8425 | **1** |
+| T03-k4 | 0.8895 | 0.8359 | 2 |
+| T03-k3 (oracle) | 0.8844 | 0.8476 | 1 |
+| TH7-k4 (carry-forward) | 0.8841 | 0.8152 | 3 |
+| TM-n10-k5 (uplift) | 0.8675 | 0.8290 | 2 |
+| TM-k3 | 0.8624 | 0.8127 | 3 |
+| IM-k3 | 0.8159 | 0.7987 | 4 |
+| TM-k4 | 0.8387 | 0.7831 | 5 |
+
+**Spearman(pseudo, true) = +0.881** over all eight cells; **+0.857**
+over the seven text cells
+(`gtfree_selection.json`: `spearman_all8: 0.881`,
+`spearman_text7: 0.8571`). The top pick, TH7-k3 (pseudo-F1 0.8933),
+is **statistically tied with the true winner** T03-k3 on the real
+board (both Tier 1; pairwise p = 0.1271, ns; n = 8,541 tiles). The
+GT-free "miss" sits inside a tie the instrument itself cannot resolve
+— at the available resolution the GT-free practitioner picks
+correctly, and the cost meta-rule (Obs 357) legitimately breaks the
+residual tie within the Obs 362 scope qualification.
+
+**Sensitivity — vote ≥ 3 (unanimous-of-others).** The ranking
+**collapses**: Spearman −0.095 over all eight cells; −0.536 over
+text-only cells; reference sizes 3,285–3,654 points. A unanimous
+consensus reference is so conservative that it inverts the ranking —
+the diagnostic *requires* permissive consensus (vote ≥ 2).
+
+### The test
+
+Script `scripts/test_gtfree_selection.py` (commit `59f7e919a`).
+Runs both vote thresholds; outputs `gtfree_selection.json` (commit
+`3c38acc94`). Validated against `results/55map-leaderboard/55map_leaderboard_50m.json`
+via Spearman rank correlation and top-pick agreement. No new
+proposer runs required — the test re-uses the k3 detection sets
+already materialised for the 55-map board.
+
+### Why this matters
+
+**1. Completes the production protocol.** Most real deployment
+corpora have no legacy digitisation. This converts the project's
+contribution from "architecture and configuration trade-space
+characterised against GT" to "plus a serviceable selection
+diagnostic usable on production discovery runs lacking GT"
+(Shawn's framing, 2026-06-13). Combined with Obs 366 § 2 (curated
+calibration is unaffordable at the needed scale) and Obs 367
+(deploying the tie-set is cheap), this closes the loop: deploy,
+rank GT-free, tie-break by cost.
+
+**2. The four-step no-GT protocol (the citable deliverable):**
+
+1. **Deploy the calibration tie-set** (~25 passes / ~$733 covering
+   design, Obs 367), exploiting free post-hoc threshold sweeps and
+   nested pass counts.
+2. **Rank candidates by LOFO vote ≥ 2 consensus agreement** (this
+   Obs; permissive consensus only — vote ≥ 3 inverts).
+3. **Expect the top picks to be statistically tied**; break the
+   final tie by **cost** (Obs 357, within its Obs 362 scope
+   qualification), with a recall-permissive lean (§ below).
+4. **Sanity-check with the free diagnostics**: vote-distribution
+   diversity (union/pass growth, unanimity fraction — the signal
+   that predicted Flash 3.5's PV failure before any scoring,
+   Obs 359); detection count against archaeological density priors
+   (count alone: Spearman +0.71 over eight cells, 3-for-3 within
+   families, but fails across modality — IM has the third-highest
+   count and the second-worst F1); and nearest-neighbour spacing
+   against feature morphology.
+
+**3. Precision tilt is a systematic, predictable bias.** The
+pseudo-GT cannot contain mounds that fewer than two families found —
+an amplified version of the Obs 361 double-miss blind spot. It
+under-rewards recall: within-family k4-above-k3 inversions appear
+(pseudo ranks T03-k4 over T03-k3; truth is the reverse), and the
+pseudo-F1 spread is compressed (0.816–0.893 vs true 0.783–0.848).
+A practitioner should read the pseudo-ranking as precision-tilted
+and apply a recall-permissive lean — the same direction as the
+Obs 358 deployment-threshold lesson, arrived at by an independent
+route. Pseudo-F1 absolute values are **not** comparable to true F1;
+only ranks carry information.
+
+### Caveats / methodological notes
+
+Retrodiction on one corpus, one symbol type, eight cells, four
+families — the Spearman rests on eight points. The protocol has not
+been tested prospectively; a pre-registered application to a new
+corpus is the natural follow-up.
+
+Families are unequally correlated: T03 and TH7 share the HIGH-text
+recipe (temperature apart), so each flatters the other's pseudo-GT;
+IM contributes the most independent signal. With fewer or more
+correlated candidate configurations, the consensus reference would
+weaken — configuration diversity in the deployed tie-set is part
+of what makes the evaluator work.
+
+Top-pick resolution is bounded by the validating instrument's own
+tie: the method cannot out-resolve the true board.
+
+The clustering (single-linkage, 50 m) uses the same radius as the
+operational matching buffer; chain-merging risk is low at the
+corpus's 375 m median mound spacing but is untested on denser
+feature types.
+
+### Findable later
+
+no-ground-truth GT-free run selection evaluation; leave-one-family-out
+LOFO pseudo-GT consensus; vote threshold permissive ≥ 2; Spearman
++0.881 all eight cells; Spearman +0.857 text-only seven cells;
+rho 0.88; pseudo-GT sizes 4399 4407 4538 4539; true GT 5161;
+vote3 collapse −0.095 −0.536; reference 3285–3654; TH7-k3 top pick
+pseudo-F1 0.8933; T03-k3 oracle true winner Tier 1; pairwise p 0.1271
+not significant tied; 8541 tiles; Tier 1 tie T03-k3 TH7-k3; four-step
+no-GT protocol citable deliverable; deploy calibration tie-set free
+threshold sweep nested pass counts; cost meta-rule Obs 357 Obs 362
+tie-break recall-permissive; precision-tilted bias; double-miss blind
+spot amplified Obs 361; k4-above-k3 inversion pseudo ranking; compressed
+pseudo-F1 spread 0.816–0.893 vs true 0.783–0.848; detection count
+proxy Spearman +0.71 fails across modality; IM image cross-modality
+failure third count second-worst F1; unanimity fraction diversity
+diagnostic Obs 359 PV failure; vote-distribution union growth; four
+families T03 TH7 TM IM; families unequally correlated HIGH-text
+temperature; single-linkage clustering 50 m 375 m median spacing;
+gtfree_selection.json; gtfree-selection-findings.md; commit eacfbaff8
+3c38acc94 59f7e919a; scripts/test_gtfree_selection.py;
+results/gtfree-selection; serviceable no-GT eval Shawn verdict
+2026-06-13; Session 113 2026-06-13
+
+### Related observations and artefacts
+
+- **[[Obs 367]]** (the covering design = step 1 of the four-step
+  protocol; establishes what deploying the tie-set costs and
+  why it is the preferred alternative to curated-GT expansion)
+- **[[Obs 366]]** (the power analysis motivating the GT-free route —
+  § 2's resolving-power table shows curated calibration is too
+  expensive at the needed scale)
+- **[[Obs 361]]** (double-miss epistemics; the precision-tilt bias
+  here is its amplified analogue — the pseudo-GT inherits the
+  same structural blind spot as the true GT, compounded by the
+  multi-family consensus requirement)
+- **[[Obs 358]]** (recall-permissive deployment lesson — the
+  precision-tilt finding arrives at the same direction by an
+  independent route; the 8-cell 55-map board is the validating
+  instrument)
+- **[[Obs 357]]** (the cost meta-rule that breaks the top tie in
+  step 3 of the protocol; Obs 362 qualifies its scope)
+- **[[Obs 362]]** (scope qualification for the cost meta-rule —
+  instrument-resolution caveat that bounds where the tie-break
+  applies)
+- **[[Obs 359]]** (the unanimity/diversity diagnostic precedent —
+  the vote-distribution signal that predicted Flash 3.5's PV
+  failure before any scoring; step 4 sanity-check)
+
+**Artefacts**:
+`results/gtfree-selection/gtfree-selection-findings.md`
+(primary findings document; commit `eacfbaff8`; verified 2026-06-13);
+`results/gtfree-selection/gtfree_selection.json`
+(canonical numerical results — Spearman correlations, pseudo-GT
+sizes, per-cell pseudo-F1 and true-F1; commit `3c38acc94`;
+verified 2026-06-13);
+`scripts/test_gtfree_selection.py`
+(LOFO pseudo-GT test script; commit `59f7e919a`);
+`results/55map-leaderboard/55map_leaderboard_50m.json`
+(true board used for validation; T03-k3 vs TH7-k3 pair
+p = 0.1271 ns, 24/28 significant, n = 8,541 tiles;
+verified 2026-06-13).
