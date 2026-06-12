@@ -21382,3 +21382,104 @@ verified 2026-06-13);
 (true board used for validation; T03-k3 vs TH7-k3 pair
 p = 0.1271 ns, 24/28 significant, n = 8,541 tiles;
 verified 2026-06-13).
+
+## Observation 369: The tile-MCC counter-board replicates across all three instruments — a present/not-present tile signal is a production detection deliverable in its own right (Session 114, 2026-06-13)
+
+*Source anchors: `results/metric-leaderboards/gs-era2-pv-family-30m.{md,json}`
+and `results/metric-leaderboards/55map-canonical-50m.{md,json}`
+(regenerated at commit `0a05a4ef9` by
+`scripts/build_metric_leaderboards.py`; all values re-verified
+2026-06-13);
+`results/verifier-robustness/evals/verified-adv-image-baseline-pro-vf/evaluation.json`
+(tile-MCC 0.8887, confusion tp 215 / fp 13 / fn 14 / tn 245; verified
+2026-06-13);
+`results/55maps-extended-gt-2026-06-07/IM-k3/evaluation.json`
+(tile-MCC 0.7104, confusion tp 2,483 / fp 181 / fn 1,041 / tn 4,836;
+verified 2026-06-13); `results/analyses-manifest.md` `era1-leaderboard`
+row (verified-adv-image-t0.0 MCC 0.889, board-best, mid F1 0.674);
+`docs/paper/discussion-seeds.md` Seed 4 (commit `1f12ed063`).*
+
+### The finding
+
+The Session-114 refresh of the metric-led leaderboards (membership
+extended to the 2026-06-12 first-class promotion, 20 → 39 GS cells;
+55-map track 7 → 8 with the uplift cell) moved the GS MCC crown from
+min11 (tile-MCC 0.8068) to **`verified-adv-image-baseline-pro-vf` —
+a single Flash image pass plus a Pro verifier — at tile-MCC 0.8887**
+(F1@30 m only 0.7966). Image + verifier cells sweep the MCC top ranks
+(medium-vf 0.8848, flash-vf 0.8766, pro-image+pro-vf 0.8499,
+image-min-3of5 0.8461). The precision crown (Pro-proposer cells,
+0.9741) and recall crown (opmax35, 0.9034) are unchanged.
+
+**The pattern now replicates on all three instruments:**
+
+| instrument | best tile-MCC cell | MCC | its F1 standing |
+|---|---|--:|---|
+| Era-1 512 px (340 tiles) | verified-adv-image-t0.0 | 0.889 | mid F1 0.674 |
+| GS Era-2 384 px (487 tiles) | verified-adv-image-baseline-pro-vf | 0.889 | F1@30 0.797 |
+| 55-map deployment (8,541 tiles) | IM-k3 | 0.710 | 7th of 8 (F1@50 0.799) |
+
+**Data-integrity check (not a bug).** Four refreshed cells across two
+*different* proposers share an identical tile confusion matrix
+(tp 199 / tn 247 / fp 11 / fn 30, MCC 0.8328) — flagged as a possible
+scoring artefact and investigated before acceptance. Recomputation from
+each cell's own committed geojson
+(`results/verifier-robustness/sweep-sets/`, 464 vs 465 features) via
+`lib_advanced_metrics.calculate_tile_classification` reproduced the
+identical totals, while the per-buffer F1/P/R curves and bootstrap
+distributions differ: different per-tile classification vectors
+coinciding on the same aggregate totals — a genuine coincidence, not a
+pipeline error.
+
+**Mechanism (legible across instruments).** Tile-level MCC is
+localisation-free. The image modality's weakness is localisation (75 m
+plateau vs the text pipeline's 30 m;
+`results/working-precision/gs-plateau-characterisation`), not tile-level
+detection — and the verifier, not consensus volume, is what controls its
+false-positive tiles. The modality that loses the coordinate-level F1
+race is the study's best tile-level discriminator.
+
+**Deployment-scale screening numbers.** At the 55-map scale IM-k3's
+tile confusion (tp 2,483 / fp 181 / fn 1,041 / tn 4,836 over 8,541
+tiles, 3,524 mound-bearing) gives sensitivity 0.705, specificity 0.964,
+and tile-level precision 2,483 / 2,664 = **0.932**: as a pure
+present/not-present screen, the image + verifier pipeline flags ~31 %
+of corpus tiles, captures ~70 % of mound-bearing tiles, and ~93 % of
+the tiles it flags genuinely contain mounds.
+
+### Why this matters
+
+**1. The tile signal is a deliverable, not a diagnostic.** Shawn's
+framing (2026-06-13): tiles are small enough that a present/not-present
+signal could be used for detection in a production environment. At the
+production scale (~5 m/px; the 30 m text plateau ≈ 6 px), a 384 px tile
+is ≈ 1.9 km × 1.9 km on the ground — a usable survey-prioritisation
+unit. A cheap two-call-per-tile image + verifier stack can therefore
+serve as a production detection instrument for workflows that consume
+*tiles* (field survey prioritisation, targeted re-inspection), while
+being nowhere near the coordinate-F1 frontier.
+
+**2. Metric choice is use-case choice.** Coordinate-consuming workflows
+(gazetteer building, per-mound inventories) want the text PV stack and
+its F1 frontier; tile-consuming workflows are better served by the
+image + verifier stack at a fraction of the cost. This sharpens the
+F1-vs-MCC divergence thread (recurring since the phase3c image pools
+and the era1 board) from "image cells carry oddly high MCC" into a
+deployment recommendation, and strengthens § R7 lesson (iii) of the
+results draft.
+
+**3. Robustness.** Replication across two GS tile sizes and the
+deployment instrument makes this the most consistent cross-cutting
+pattern in the metric-led views — it survived an instrument change, a
+tile-size change, and a 17× scale-up in tile count.
+
+Cross-references:
+
+- **[[Obs 352]]** (the verifier rescues 256 px — the same
+  verifier-as-FP-control mechanism, on the F1 axis).
+- **[[Obs 361]]** (GT epistemics — the tile-precision figure above
+  inherits the canonical GT's review-verified precision).
+- **[[Obs 363]]** (the completeness sweep that promoted the cells whose
+  registration triggered this board refresh).
+- `docs/paper/discussion-seeds.md` Seed 4 — the Discussion-side
+  write-up of this observation, staged in the same session.
