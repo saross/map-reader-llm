@@ -251,7 +251,33 @@ before any regeneration: (1) sum from `per_item_metadata`, never merge
 pre-recovery backups additively; (2) price at the run's recorded
 `service_tier`; (3) bill thinking tokens at the output rate.
 
+## 10. Billing-console corroboration (Shawn, 2026-06-12, AEST dailies)
+
+The ground-truth cross-check § 6 requested. Google dashboard figures
+supplied in-session (account timezone AEST):
+
+| window | billed | audited prediction | verdict |
+|---|--:|--:|---|
+| 18 Apr (TM + TH7 + image proposer day) | $402.08 | $419.64 (three proposer legs) | **match, −4 %** — excludes the manifests' $1,281 for the same runs by 3× |
+| 26 Apr (t0.3 campaign day) | $528.01 | ~$261 + retries | audited rate + the § 8 retry caveat (t0.3 logged 12,322 retries); residual partly unattributed |
+| 18 Apr–7 May window | $1,122.90 | ~$700 (four campaigns) + other April runs | consistent; full attribution would need a per-day predicted series |
+| 9–11 Jun dailies | $62.21 / $33.75 / $41.21 | session spends at audited rates | **the pre-audit uplift figure ($58.5) is excluded** — it would require negative Flash 3.5 spend on 10–11 Jun; the audited $34.5 fits |
+
+Conclusions: (a) the audited per-pass rates are corroborated by the
+cleanest single-day natural experiment (18 Apr); (b) retry overhead is
+real and material (the § 8 lower-bound caveat deserves quantification in
+any paper cost claim); (c) the corrected uplift cost is confirmed
+against the dailies.
+
 ## Changelog
+
+### 2026-06-12 (even later) — billing-console corroboration added (§ 10)
+
+Shawn supplied AEST daily/window totals from the Google dashboard;
+§ 10 records the reconciliation. The 18 April single-day match
+(billed $402.08 vs audited $419.64 for the three campaign proposer
+legs) corroborates the audited rates and excludes the legacy manifest
+figures; the June dailies exclude the pre-audit uplift cost.
 
 ### 2026-06-12 (later) — § 9 recommendation EXECUTED
 
