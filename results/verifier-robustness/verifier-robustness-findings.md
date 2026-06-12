@@ -1,8 +1,9 @@
 # Verifier-robustness — findings
 
-> **Last revised**: 2026-06-11 (Session 113: the Flash 3.5 role
-> permutations — proposer loss resolved at p = 0.035, verifier losses are
-> cost-rule ties — and the second-wave manifest registration). See
+> **Last revised**: 2026-06-12 (token-load audit: the cost model was
+> rebuilt from per-item metadata — the prior calibration sat on a 2×
+> double-counted manifest and unbilled thinking tokens; § 15 dollars and
+> the § 16(c) production trade recomputed; frontier shape unchanged). See
 > [§ Changelog](#changelog) for revision history.
 
 This document is the citable home for the **verifier-robustness** programme
@@ -376,27 +377,35 @@ harness self-validated by reproducing min11 exactly).
 The passes-axis board (§ 12) is superseded by the cost-weighted v2
 (`pareto/pareto_v2.{json,png}`; proposer-centric rung names — the old
 "cheap6" is **high6**, the third most expensive way to buy ~0.87). Cost
-model: measured verifier rate ($0.000697/call), proposer pass from
-measured per-call tokens at F3 flex rates, HIGH = 3× minimal; **flex ≡
+model (token-load audit, 2026-06-12 —
+`reports/token-load-audit-2026-06-12.md`): verifier $0.000693/call
+(measured); minimal pass $0.266 at GS (ten measured 55-map passes,
+$4.66/8,541-tile pass, scaled by 487/8,541); HIGH pass $2.29 at GS
+(five measured 55-map T0.7 passes, $40.19/8,541-tile pass with
+~2,693 thinking tokens/tile billed at the output rate); **flex ≡
 batch pricing**. All seven rungs remain ONE statistical tier (0/21 pairs).
 
 | rung | F1@20m | GS run | 55-map production | frontier |
 |---|---:|---:|---:|---|
-| min6 | 0.8784 | $3.81 | ~$67 | ✓ |
-| min11 | 0.8835 | $6.75 | ~$118 | ✓ |
-| high6 | 0.8641 | $10.65 | ~$187 | dominated |
-| high5+5vf | 0.8739 | $11.03 | ~$193 | dominated |
-| high11 | 0.8769 | $20.19 | ~$354 | dominated |
-| high31 (headline) | 0.8902 | $48.81 | ~$856 | ✓ |
-| high35 (opmax) | 0.8951 | $50.84 | ~$892 | ✓ |
+| min6 | 0.8784 | $2.43 | ~$43 | ✓ |
+| min11 | 0.8835 | $4.00 | ~$70 | ✓ |
+| high6 | 0.8641 | $14.04 | ~$246 | dominated |
+| high5+5vf | 0.8739 | $14.41 | ~$253 | dominated |
+| high11 | 0.8769 | $26.97 | ~$473 | dominated |
+| high31 (headline) | 0.8902 | $69.21 | ~$1,214 | ✓ |
+| high35 (opmax) | 0.8951 | $71.23 | ~$1,249 | ✓ |
 
-Costs recalibrated 2026-06-11 to the TM run's MEASURED token load
-(~$9.40 per 8,541-tile minimal pass at flex; the earlier smoke-derived
-model under-priced proposer passes 1.8×); efficient set unchanged.
-Production costs scale both components by the tile factor (8,541/487);
-crops/tile from the GS pools (the 55-map corpus is sparser → slight
-upper bounds). **The F1 column is GS-characterised — see § 16 before
-reading the min rungs as production recommendations.**
+Costs rebuilt 2026-06-12 from per-item token metadata: the 2026-06-11
+calibration sat on a 2× double-counted cost manifest (minimal passes
+priced 2× too high) and a "HIGH = 3× minimal" extrapolation that left
+proposer thinking tokens unbilled (HIGH passes priced 1.4× too LOW);
+the true min : HIGH ratio is 8.6×. The efficient set is unchanged —
+min got cheaper and HIGH dearer monotonically, so no dominance
+relation flipped. Production costs scale both components by the tile
+factor (8,541/487) and now agree with the measured deployment passes
+by construction; crops/tile from the GS pools (the 55-map corpus is
+sparser → slight upper bounds). **The F1 column is GS-characterised —
+see § 16 before reading the min rungs as production recommendations.**
 
 ## 16. The deployment reversal — scope-qualifying the meta-rule
 
@@ -423,8 +432,11 @@ production text config is HIGH thinking at k3; (c) **ANSWERED 2026-06-11
 min11 uplift (10 minimal passes + band verifier) scores **0.8290** @ 50 m
 (5of10/pt0.15), significantly above TM-k3 (+0.0163, p < 0.0001) and
 significantly below TH7-k3 (−0.0134, p = 0.0026). Both steps resolve, so
-the production choice is a genuine cost/quality trade (~$105 for 0.829
-vs ~$150 for 0.843 at recalibrated production rates), not a tie; note
+the production choice is a genuine cost/quality trade (~$58 for 0.829 vs
+~$207 for 0.843 at audited flex rates — min11-uplift as-run: 10 × $4.66
+proposer + $11.27 verifier; TH7-k3 as-run: 5 × $40.19 + $6.42, thinking
+tokens billed; the 2026-06-12 audit widened the gap from ~1.4× to ~3.6×,
+strengthening the cheap option's case per dollar), not a tie; note
 the deployment optimum again sat looser than GS (5of10 vs the GS-best
 6of10 — the k3 lesson recurring at n = 10); (d) **CLOSED 2026-06-11**: the
 T0.3 proposer is now GS-characterised (Run A, $2.06: 0.8783 @ 20 m /
@@ -470,6 +482,43 @@ flags live at `results/metric-leaderboards/` (GS @ 30 m; 55-map @ 50 m).
   preregistration amendment needed for a robustness check.
 
 ## Changelog
+
+### 2026-06-12 — Token-load audit: cost model rebuilt from per-item metadata
+
+**Refresh trigger**: the token-load audit
+(`reports/token-load-audit-2026-06-12.md`) of the four 55-map deployment
+cost manifests found (a) the 2026-05-03 recovery merge double-counted
+token totals (text-min and text-high manifests 2×, image 3×; the t0.3
+manifest clean), (b) all four manifests priced at standard rates although
+every run executed at flex, and (c) all four omitted thinking tokens,
+which Gemini bills at the output rate (verified at
+<https://ai.google.dev/gemini-api/docs/pricing>, retrieved 2026-06-12).
+The Pareto cost model inherited (a) via the TM manifest (`MIN_PASS_USD`
+2× too high) and (c) via the "HIGH = 3× minimal" extrapolation
+(`HIGH_PASS_USD` 1.4× too low). Constants rebuilt from per-item token
+metadata; artefacts regenerated on zbook (commit `d638fba22`).
+
+| claim | before | after |
+|---|---|---|
+| minimal pass, GS / 8,541 tiles | $0.54 / ~$9.40 | $0.266 / $4.66 |
+| HIGH T0.7 pass, GS / 8,541 tiles | $1.61 / ~$28 | $2.29 / $40.19 |
+| verifier call | $0.000697 | $0.000693 |
+| § 15 min6 GS / production | $3.81 / ~$67 | $2.43 / ~$43 |
+| § 15 min11 GS / production | $6.75 / ~$118 | $4.00 / ~$70 |
+| § 15 high6 GS / production | $10.65 / ~$187 | $14.04 / ~$246 |
+| § 15 high5+5vf GS / production | $11.03 / ~$193 | $14.41 / ~$253 |
+| § 15 high11 GS / production | $20.19 / ~$354 | $26.97 / ~$473 |
+| § 15 high31 GS / production | $48.81 / ~$856 | $69.21 / ~$1,214 |
+| § 15 high35 GS / production | $50.84 / ~$892 | $71.23 / ~$1,249 |
+| § 16(c) production trade | ~$105 vs ~$150 (1.4×) | ~$58 vs ~$207 (3.6×) |
+
+What did NOT change: every F1, permutation result, and tier (the re-run
+reproduced 0/21 significant, one tier); the Pareto-efficient set
+{min6, min11, high31, high35}; the § 16 verdicts (the deployment-evidenced
+production text config remains HIGH thinking at k3 — the audit moves
+dollars, not deltas, though it strengthens min11-uplift's case per
+dollar); §§ 1–14 historical spend figures (minimal-thinking verifier runs,
+correctly priced at flex within rounding).
 
 ### 2026-06-11 (S113) — Flash 3.5 role permutations; second-wave manifest registration
 

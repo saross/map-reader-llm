@@ -1,7 +1,7 @@
 # Session 113 — sign-off package for Shawn
 
-> **Last revised**: 2026-06-11 (compiled at the close of the S113
-> registration wave). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-06-12 (token-load audit outcome appended as
+> § 5.4). See [§ Changelog](#changelog) for revision history.
 
 Everything queued for human review after the second-wave manifest
 registration, the 55-map board refresh, and the Flash 3.5 permutation
@@ -65,6 +65,23 @@ or in the paper narrative; the sweep JSON preserves them citably enough.
    committed sweep value to six decimal places (0.829028) — strong
    mechanism-equivalence evidence between the corrected-F1 engine and
    the board scorer.
+4. **Token-load audit (2026-06-12,
+   `reports/token-load-audit-2026-06-12.md`)**: the 55-map cost
+   manifests are unreliable — the 2026-05-03 recovery merge
+   double-counted token totals (text-min and text-high 2×, image 3×;
+   t0.3 clean), all four priced standard instead of flex, and none
+   billed thinking tokens. The Pareto cost model inherited both errors;
+   rebuilt from per-item metadata (min pass $4.66, HIGH T0.7 $40.19,
+   image HIGH $39.07 per 8,541-tile pass at flex; verifier
+   $0.000693/call). **Efficient set and all F1/tier results unchanged**;
+   dollars moved (min rungs ~36% down, HIGH rungs up — high31 production
+   ~$856 → ~$1,214; the § 16(c) trade is now ~$58 vs ~$207). True total
+   spend across the five 55-map campaigns ≈ $722 flex (lower bound;
+   retry attempts unrecorded) — **cross-check against the Google billing
+   console**, which is ground truth. Recommendation: regenerate the
+   three corrupted manifests (and re-price t0.3) in a dedicated pass —
+   not done in the audit; the fix list for the generator is in audit
+   § 9.
 
 ## 6. Registration conventions adopted (flag if you disagree)
 
@@ -80,6 +97,15 @@ or in the paper narrative; the sweep JSON preserves them citably enough.
   `gemini-3-flash-preview` for manifest consistency.
 
 ## Changelog
+
+### 2026-06-12 — Token-load audit appended
+
+Added § 5.4 summarising the token-load audit of the 55-map cost
+manifests and the resulting cost-model rebuild (constants commit
+`7360c54c4`; regenerated Pareto artefacts `d638fba22`). Headline cost
+figures it supersedes: minimal pass ~$9.40 → $4.66, HIGH pass
+"3× minimal" → $40.19 measured (8,541 tiles, flex, thinking billed).
+No other section touched.
 
 ### 2026-06-11 — Original publication
 
