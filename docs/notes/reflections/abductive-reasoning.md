@@ -5601,3 +5601,39 @@ Abductively interesting because the anomaly had no error signature at all — th
 from a *temporal* prior, not from any system signal, and a monitor without that prior had
 announced success. Hypotheses about what should be true (magnitudes, durations, counts) catch a
 class of failure that hypotheses about what might go wrong cannot.
+
+## Session 113 — 2026-06-11/13 — a three-step abduction nailed the cost model; strictness inverted a consensus; a predicted tier failed to mint
+
+**Sequence 1 — the cost-model abduction (clean, externally validated).** Surprising fact: while
+building a cost column, the TH7 manifest's per-pass cost ($22.80) reconstructed *exactly* as
+input×rate + output×rate — with 46M thinking tokens per pass contributing nothing. Hypothesis A:
+thinking tokens are unbilled by Google. Probe: the pricing page — refuted; "output price
+(including thinking tokens)". Revised hypothesis B: the manifest generator omits them. While
+probing, a second surprising fact: TM/TH7 record ~3,000 input tokens/tile where the one clean
+manifest records ~1,500, and TH7's tiles_processed is 85,250 for a 5×8,541-tile run. Hypothesis C:
+the recovery merge double-counted. Probe: per-item metadata sums (deduplicated by item id) — both
+confirmed; a third defect (standard rates recorded for flex runs) surfaced in the same pass. The
+chain closed with two independent validations: an adversarial audit agent reproduced the corrected
+loads from original metas, and the human's billing console matched the corrected prediction within
+4% on the cleanest single-day natural experiment while excluding the legacy figures by 3×. Note
+the epistemic texture: each error was individually invisible because the three partially cancelled
+into plausible totals — only a *cross-source* consistency demand (one table, mixed provenance)
+made any of them observable.
+
+**Sequence 2 — strictness inverted the consensus reference.** Belief: a stricter consensus
+pseudo-GT (vote ≥ 3 of three other config families) should be a *cleaner* reference than vote ≥ 2
+— fewer false pseudo-mounds, better ranking. Test: both variants against the true board. Outcome:
+vote ≥ 2 ranks at Spearman +0.88; vote ≥ 3 *inverts* to −0.10 (text-only −0.54). Revision: a
+consensus reference inherits the double-miss blind spot of its contributors, and strictness
+amplifies it past the point where the reference rewards recall at all — reference quality is not
+monotone in agreement strictness. The prior (strict = clean) came from precision-thinking; the
+evaluation regime is recall-bound, and the two pull opposite ways.
+
+**Sequence 3 — a registered prediction failed, informatively.** The continuity predicted the
+refreshed 55-map board would mint a sixth tier (the uplift sitting between TM-k3 and TH7-k3,
+both steps individually significant). The board kept five tiers: the uplift is statistically
+indistinguishable from T03-k4 — a cell from a *different* config family at a different threshold
+— and they share Tier 2. The targeted pairwise results (Obs 364) and the round-robin tiering are
+both correct; the miss was assuming pairwise resolution against two specific comparators implies
+clique separation against all eight. Recorded as predicted-vs-outcome in the registered analysis,
+which is exactly what the prediction field is for.

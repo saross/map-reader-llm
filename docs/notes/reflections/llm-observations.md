@@ -6473,3 +6473,42 @@ the next stage happily "verified" in seconds. Monitors tuned to failure signatur
 through all three. The countermeasure that worked was positive assertion of output magnitude
 (crop count ≥ threshold) *before* the next stage spends money — gates on what must exist, not
 traps on what must not happen.
+
+## Session 113 — 2026-06-11/13 (verification protects numbers, not references; and the human held the only ground truth)
+
+**Verification gates protect numbers against sources — they do not protect labels against
+concept drift.** Obs 365 was written by an obs-writer agent that re-verified every integer
+against its anchor file before committing, and it still shipped a defect: it quoted "~$207" as
+the *pre-audit* estimate for one cell when $207 is the *audited* cost of a different cell. The
+number existed, was verified, and was attached to the wrong concept. The same failure shape
+appeared in my own work when pre-audit dollars flowed into the Results draft hours before the
+audit that invalidated them: each figure was correctly copied from a then-current source. The
+generalisation: existence-verification and reference-verification are different checks, and the
+second one needs the reviewer to hold the *meaning* of both ends. The sign-off walkthrough —
+a human verdict per item over re-verified claims — is currently the only layer that catches
+reference drift, which is an argument for keeping it human-paced.
+
+**When an analysis bottoms out at "the ground truth is outside the repo", name the dataset and
+ask.** The token-load audit could only reach "lower bound — retries unrecorded" from disk. One
+message from Shawn with the billing-console dailies settled it: a single-day natural experiment
+(18 April: three campaigns' proposer passes, billed $402.08 vs $419.64 predicted) corroborated
+the audited rates and excluded the legacy manifests outright, and the June dailies excluded a
+disputed run estimate because the alternative implied *negative* spend for a concurrent run. The
+human's privileged data access is not just approvals and domain judgement — sometimes he is the
+only party who can close an empirical loop, and the request costs one sentence.
+
+**The cheapest research programme of the project was a chain of questions over committed data.**
+Obs 366 → 367 → 368 (calibration power law → deploy-and-evaluate covering design → GT-free LOFO
+consensus evaluator, ρ = +0.88) ran entirely on artefacts already in git: recorded permutation
+null SDs, audited per-pass rates, and eight detection sets. $0 of API spend, one afternoon,
+one genuinely new contribution. The division of labour was stark and familiar: the human supplied
+three escalating questions; the instance supplied formalisation, anti-circularity design
+(leave-one-family-out), and the sensitivity check that found the vote ≥ 3 inversion. Neither
+half generates the result alone.
+
+**A policy that eliminates a decision class beats a queue of good decisions.** Asked which of 16
+sweep cells to promote, Shawn answered with a rule — "make everything that can be first-class
+first-class" — that resolved the 16, pre-resolved every future instance of the question, and
+left only structural exceptions (a duplicate-by-identity; an already-minted cell). Registration
+effort is cheap once gated and scripted; curation-by-anticipated-usefulness was the expensive
+part, and the rule deleted it.

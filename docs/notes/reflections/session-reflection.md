@@ -8989,3 +8989,69 @@ semantics, re-entrancy, a 503-dropped candidate), two approved runs executed end
 and same-day, seven background agents, and ~60 commits across two machines with three genuine
 push races — all reconciled, nothing lost. The wind-down discipline of committing each result the
 moment it existed meant the session could have ended at almost any point without losing work.
+
+## Session 113 — 2026-06-11/13 — every dollar was wrong twice over; and a display request audited the whole project
+
+*(map-reader-llm. One continuous instance across three calendar days. First-person throughout —
+no compaction boundary crossed; every number below was re-verified at source during the session.)*
+
+### Prompt: What surprised you about this session?
+
+That the project's entire recorded cost history was wrong — in **both directions at once** — and
+that what exposed it was not an audit instinct but a presentation request. Shawn asked for a cost
+column on a leaderboard table. Assembling it forced numbers from different sources into one row,
+and they refused to reconcile: the TH7 manifest's per-pass cost reconstructed *exactly* from input
+and output tokens alone, leaving 46 million thinking tokens per pass unbilled; the minimal-thinking
+manifests recorded twice the tokens per tile that the one clean manifest did; and everything was
+priced at standard rates for runs that demonstrably executed flex. Three independent errors —
+2–3× count inflation from a recovery merge, a 2× rate error, and wholesale thinking omission —
+had partially cancelled into plausible-looking totals that survived months of careful work. The
+audit agent took the manifests apart from per-item metadata; the regeneration reproduced its
+figures to the dollar; and then Shawn pulled the one dataset only he could see — the Google
+billing console — and the 18 April single-day total matched the audited prediction within 4%
+while excluding the legacy figures by 3×. The aftershock mattered more than the correction: the
+per-mound economics of the production frontier **reversed** (the HIGH-thinking step had looked 3×
+cheaper per additional mound; audited, it is 3× dearer), which means the bookkeeping error had
+been quietly steering a substantive recommendation. The lesson I want to keep: **a display request
+is an audit in disguise.** Single-purpose analyses never run the cross-source consistency check
+that one humble table forces.
+
+### Prompt: What would you do differently if you replayed this session?
+
+I would audit the cost basis *before* writing dollars into citable documents, not after. The
+continuity file carried an explicit warning — "check the pricing basis of any recorded cost
+manifest before reusing its dollars" — and I still propagated pre-audit figures into the Results
+draft, the pareto-v2 analysis outcome, and three Observations in the hours before the audit ran.
+The warning was about exactly this; I treated it as a caveat to acknowledge rather than a gate to
+fire. The walkthrough then had to sweep every stale figure back out (Obs 366 exists largely
+because of this), which cost more than auditing first would have. The general form of the S112
+silent-success lesson applies to provenance too: a recorded number without a verified basis is a
+silent failure waiting to propagate, and the fix is a gate at *write* time — "what is this
+dollar's basis?" — not a sweep at review time.
+
+### Prompt: What's the single most important thing a future reader should know about this session?
+
+That the closing three hours produced a new paper contribution from data that had been sitting,
+fully committed, in the repository all along. Shawn's chain of questions — how big a calibration
+set would have grounded the wrong decisions? (Obs 366: ~10–20 curated sheets — unaffordable);
+could you deploy the tie-set instead? (Obs 367: ~25 passes, ~$733, and the project had already
+converged on that design without planning it); could you pick the winner with *no* ground truth
+at all? (Obs 368) — ended with a leave-one-family-out consensus evaluator that ranks the eight
+production cells at ρ = +0.88 and picks a winner statistically tied with the true best. Nothing
+new was run against the API; the marginal cost was one afternoon and $0. The result converts the
+paper from "architecture characterised against ground truth" to "plus a serviceable selection
+protocol for the discovery deployments that have none" — which is most of them. The sharpest
+detail: the protocol's validity hinges on a hair's-breadth design choice — vote ≥ 2 consensus
+ranks at +0.88, vote ≥ 3 *inverts* to −0.10 — a reminder that "consensus reference" is not one
+thing, and that the permissive/strict axis deserves its own line in any write-up.
+
+### Texture
+
+A session of closure rather than expansion, and the first run mostly through review rather than
+construction: seven analyses signed against re-verified sources, nine Observations walked
+one-by-one with defects routed to an append-only rider, sixteen sweep cells promoted under a
+policy Shawn coined mid-review. Five background agents (one audit, four obs-writers) all earned
+their keep — the audit agent found the double-count, and an obs-writer caught nothing wrong in my
+spec twice but flagged its own untraceable figure once, which is the system working. Shawn ended
+the session saying he is out of new ideas — the first time in months — and meant it as a
+milestone: the evidential record is signed, audited, and corroborated; what remains is prose.

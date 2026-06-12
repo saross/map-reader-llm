@@ -7298,3 +7298,55 @@ figure; the TM cost manifest prices at STANDARD rates (its $18.67/pass = ~$9.40 
 cost readers must check the pricing basis of recorded manifests. Carried open: second-wave
 manifest registration (min6 family, Flash 3.5, T0.3, pro-vf, uplift), 55-map board refresh with
 the uplift cell, Shawn sign-offs, sapphire sync.
+
+## Session 113 — 2026-06-11/13 — second wave registered; cost history audited and corroborated; sign-off queue cleared; GT-free evaluation validated; §Results prose begun
+
+**Registration and boards ($0 API).** Second-wave manifest registration per the S111 author/gate
+pattern: 6 pv-diag-384 additions (min6 true/n30-lineage, min11, T0.3 GS cell, GS image PV cell,
+Pro-verifier cell), run #30 `flash35-pv-2x2` (4 conditions), run #31 `55maps-text-min-n10-uplift`
+(0.8290@50 vs canonical GT; the Track-2 engine reproduced the committed sweep value to 6 d.p.).
+Flash 3.5 role permutations closed the pending S112 gap (proposer loss resolved p=0.035; verifier
+losses are cost-rule ties). 55-map board refreshed to 8 cells (24/28 significant, 5 tiers — the
+predicted sixth tier did not mint; uplift ties T03-k4 in T2). Five new analyses registered;
+`docs/paper/results-draft.md` begun (8 subsections, full prose).
+
+**Token-load audit (background agent) + manifest regeneration.** All four 55-map cost manifests
+were wrong: 2–3× token double-counts (recovery merge), standard rates recorded for flex runs,
+thinking tokens unbilled. Corrected flex rates (per 8,541-tile pass): minimal $4.66, HIGH-T0.7
+$40.19, HIGH-T0.3 $50.82, image $39.07; verifier $0.000693/call. True min:HIGH ratio 8.6× (not
+the extrapolated 3×). Pareto v2 regenerated (efficient set unchanged; production column min6 ~$43
+… high31 ~$1,214); §16(c) trade now ~$58 vs ~$207. Generator fixed (`--pricing-tier` audited
+path; per-item union; stub-verifier reconstruction; 4 new tier1 tests) and all four manifests
+regenerated (originals archived). **Billing-console corroboration** (Shawn's dashboard, AEST):
+18 Apr billed $402.08 vs $419.64 predicted (−4%) — excludes legacy figures 3×; June dailies
+exclude the pre-audit uplift estimate. Stale dollars swept from the Results draft, the unsigned
+pareto-v2 outcome, and the dossier; per-mound frontier economics reversed (Obs 365).
+
+**Sign-off queue (interactive walkthrough).** Seven analyses signed (16/17; calibration sweep
+unsigned by design). Obs 357–365 reviewed one-by-one against re-verified sources; all accepted;
+defects routed to the append-only rider Obs 366 (358 headline rephrase; 359's artefact
+mischaracterisation + stale dollars; 362/364 audited costs; 365's mislabelled comparator; the
+calibration power table). 16 sweep cells promoted to first-class (Shawn: "everything that can be
+first-class") — manifest now **31 runs / 322 conditions / 1132 passes / 17 analyses**, drift-check
+0 fail. User-observations curated (3 of 4 S111–112 candidates kept) + S113 batch added.
+
+**The closing chain (Obs 366→368, $0).** Power interpolation: grounding the wrong GS calls needs
+~10–20 representative sheets (~1,000–2,000 mounds); temperature-at-k3 unresolvable at any feasible
+scale. Deploy-and-evaluate covering design: ~25 passes / ~$733 — the project's actual deployment
+spend (~$722–734) was the minimal covering design, converged on incrementally (Obs 367). GT-free
+selection test: LOFO vote≥2 consensus pseudo-GT ranks the 8 cells at Spearman +0.881 and picks a
+true Tier-1 winner (tied with the true best at p=0.127); vote≥3 inverts (−0.095) — permissive
+consensus required. Findings: `results/gtfree-selection/gtfree-selection-findings.md`; Obs 368.
+
+**Hygiene.** Full tier1 suite green (1,136 passed; two stale registry-count guards advanced
+28→31). Superseded artefacts archived (7-cell board; legacy cost manifests). All three machines
+synced throughout; ~30 commits `7aa28475b`→`2950d51e9`+; **$0 API spend** for the entire session.
+
+**Next session (S114):** final results/intermediate-docs check, then §Results prose in earnest
+(the draft's three `[DRAFT NOTE]` decisions are the on-ramp). Shawn: "out of new ideas /
+improvements" — construction phase closed.
+
+**Contextual assumptions:** any dollar figure in documents or Observations dated before
+2026-06-12 is pre-audit; the audited basis is `reports/token-load-audit-2026-06-12.md` (and its
+§ 10 billing corroboration). Obs 366 is the canonical map from stale figures to corrected ones.
+Recorded clean token loads remain lower bounds (retry attempts are unrecorded on disk).
