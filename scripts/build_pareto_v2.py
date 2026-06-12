@@ -10,13 +10,20 @@
 #   - an ESTIMATED FLEX-COST axis;
 #   - a refreshed C(7,2)=21 round-robin + BH-FDR + greedy-clique tiers.
 #
-# COST MODEL (estimates, basis stated):
-#   - F3 verifier call: $0.000697 measured (opmax run: $2.54 / 3,645 calls).
-#   - F3 MINIMAL proposer pass: $0.54 at GS scale — recalibrated from the
-#     TM run's cost manifest (25.7M in / 1.95M out tokens per 8,541-tile
-#     pass => ~$9.40/pass at F3 flex rates; scaled by 487/8541).
-#   - HIGH proposer pass ~= 3x minimal (thinking-token dominance; the S110
-#     verifier matrix measured exactly 3.0x for high-vs-min verifier calls).
+# COST MODEL (token-load audit, 2026-06-12 — see
+# reports/token-load-audit-2026-06-12.md; supersedes the 2026-06-11
+# manifest-derived calibration, which was built on a 2x double-counted
+# cost manifest and a "3x minimal" HIGH extrapolation):
+#   - F3 verifier call: $0.000693 measured (opmax run per-meta recompute:
+#     $2.5257 / 3,645 calls; deployment verifiers 0.000684-0.000698).
+#   - F3 MINIMAL proposer pass: $0.266 at GS scale — ten measured 55-map
+#     minimal passes (1,502 in + ~114 out tokens/tile, zero thinking,
+#     flex $4.66/8,541-tile pass) scaled by 487/8541.
+#   - F3 HIGH proposer pass: $2.29 at GS scale — five measured 55-map
+#     T0.7 HIGH passes (adds ~2,693 thinking tokens/tile billed at the
+#     $1.50/M output rate => flex $40.19/8,541-tile pass) scaled by
+#     487/8541; inside the GS-measured bracket [T1.0 $2.15, T0.3 $2.64].
+#     True min:HIGH ratio is 8.6x, not the previous 3x.
 #   - Verifier leg cost scales with the pool's CROP COUNT (per-rung below).
 #
 # Usage (zbook):  .venv/bin/python scripts/build_pareto_v2.py
@@ -43,9 +50,9 @@ from scripts.n1_baseline_leaderboard_tiering import (  # noqa: E402
 
 BOUNDS = BASE_DIR / "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
 OUT_DIR = BASE_DIR / "results/verifier-robustness/pareto"
-MIN_PASS_USD = 0.54   # recalibrated from the TM cost manifest (measured tokens at flex)
-HIGH_PASS_USD = 1.61  # 3x minimal (thinking-token dominance)
-VF_CALL_USD = 0.000697
+MIN_PASS_USD = 0.266  # ten measured 55-map minimal passes, scaled by 487/8541 (audit 2026-06-12)
+HIGH_PASS_USD = 2.29  # five measured 55-map T0.7 HIGH passes incl. thinking tokens, scaled
+VF_CALL_USD = 0.000693
 # 55-map production scaling (Shawn, 2026-06-11): the real-world costing is a
 # deployment over the 8,541-tile generalisation corpus. Both cost components
 # scale with the tile factor (proposer passes by tiles; verifier crops by
@@ -167,9 +174,15 @@ def main() -> int:
                                             "note": "crops/tile from GS pools; 55-map "
                                                     "corpus sparser -> slight upper bound; "
                                                     "flex == batch pricing on Gemini 3"},
-                       "basis": "verifier rate measured (opmax run); proposer pass "
-                                "from measured per-call tokens at F3 flex rates; "
-                                "HIGH = 3x minimal (thinking-token dominance)"},
+                       "basis": "token-load audit 2026-06-12 "
+                                "(reports/token-load-audit-2026-06-12.md): all three "
+                                "rates measured from per-item metadata at F3 flex "
+                                "rates with thinking billed at the output rate; "
+                                "MIN/HIGH from the 55-map deployment passes scaled "
+                                "by 487/8541 (replaces the manifest-derived MIN, "
+                                "which was 2x double-counted, and the 'HIGH = 3x "
+                                "minimal' extrapolation, which under-priced "
+                                "proposer thinking 1.4x)"},
         "tiers": tiers, "pareto_efficient": eff,
         "rungs": [{k: v for k, v in c.items() if k not in ("tp", "fp", "fn")}
                   | {"tier": tier_of[c["rung"]]} for c in ordered],
