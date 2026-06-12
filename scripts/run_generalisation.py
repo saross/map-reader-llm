@@ -1036,12 +1036,152 @@ def _read_token_counts(usage: dict[str, Any]) -> dict[str, int]:
     }
 
 
-def aggregate_cost_manifest(rcfg: ResolvedRunConfig) -> Path:
+# ---------------------------------------------------------------------------
+# Audited pricing (token-load audit, 2026-06-12; see
+# reports/token-load-audit-2026-06-12.md, commit 93e226f3a). Rates
+# verified at https://ai.google.dev/gemini-api/docs/pricing on
+# 2026-06-12: the output price INCLUDES thinking tokens; context-cached
+# input is $0.05/1M at every tier; flex == batch on Gemini 3. The
+# legacy manifests took ``cost_estimate.total_cost_usd`` from each meta
+# verbatim — priced at standard rates regardless of the run's actual
+# service tier, with thinking tokens omitted entirely — and the
+# additive backup merge could double-count recovery-merged metas. The
+# audited path fixes all three: tokens come from a per-item UNION
+# (deduped by ``item_id``), cost is recomputed from those tokens at an
+# operator-stated tier, and thinking bills at the output rate.
+_PRICING_USD_PER_1M: dict[str, dict[str, dict[str, float]]] = {
+    "gemini-3-flash-preview": {
+        "standard": {"input": 0.50, "output": 3.00, "cached_input": 0.05},
+        "flex": {"input": 0.25, "output": 1.50, "cached_input": 0.05},
+        "batch": {"input": 0.25, "output": 1.50, "cached_input": 0.05},
+    },
+}
+
+# Per-call rate used to RECONSTRUCT a stub verifier leg. The
+# cleanup-overwrite pattern leaves ``verified/run.meta.json`` recording
+# only the final (tiny) cleanup batch; the original batch's backup is
+# gitignored, so on a synced clone the per-item data is unrecoverable.
+# Measured basis: the t0.3 deployment verifier — 9,910 calls, $6.90
+# flex (audit § 5; deployment-run range $0.000684–0.000698/call).
+_VERIFIER_RECON_USD_PER_CALL: dict[str, float] = {
+    "standard": 0.001392,
+    "flex": 0.000696,
+    "batch": 0.000696,
+}
+
+# per_item_metadata token-field names → our canonical bucket names.
+# Gemini writes thinking as ``thoughts_tokens`` and the cached subset
+# of input as ``cached_input_tokens`` at the item level.
+_PER_ITEM_TOKEN_FIELDS: dict[str, str] = {
+    "input_tokens": "input_tokens",
+    "output_tokens": "output_tokens",
+    "cached_tokens": "cached_input_tokens",
+    "thinking_tokens": "thoughts_tokens",
+    "total_tokens": "total_tokens",
+}
+
+
+def _union_per_item_tokens(
+    sources: list[dict[str, Any]],
+) -> tuple[dict[str, int], list[str]] | None:
+    """Sum token counts over the per-item UNION of several meta dicts.
+
+    The audited replacement for the additive backup merge: where the
+    same item appears in more than one source (a recovery-merged live
+    meta plus its pre-recovery backup, or a cleanup batch overlapping
+    the original), the LAST source's entry wins, so nothing is counted
+    twice. Callers therefore order sources oldest → newest (backups
+    first, live meta last).
+
+    Args:
+        sources: Meta dicts in oldest → newest order.
+
+    Returns:
+        ``(token_sums, sorted_item_ids)`` keyed by the canonical bucket
+        names, or ``None`` if no source carries ``per_item_metadata``
+        (the caller falls back to ``usage_stats``).
+    """
+    by_id: dict[str, dict[str, Any]] = {}
+    found = False
+    for src in sources:
+        items = src.get("per_item_metadata") or []
+        if items:
+            found = True
+        for item in items:
+            item_id = item.get("item_id")
+            if item_id:
+                by_id[item_id] = item
+    if not found:
+        return None
+    sums = {key: 0 for key in _PER_ITEM_TOKEN_FIELDS}
+    for item in by_id.values():
+        tokens = item.get("tokens") or {}
+        for our_key, item_key in _PER_ITEM_TOKEN_FIELDS.items():
+            sums[our_key] += int(tokens.get(item_key, 0) or 0)
+    return sums, sorted(by_id)
+
+
+def _price_tokens(
+    tokens: dict[str, int], model: str, pricing_tier: str,
+) -> dict[str, float]:
+    """Price a token-bucket dict at the audited per-tier rates.
+
+    Thinking tokens bill at the output rate (verified at the pricing
+    page, 2026-06-12); the cached subset of input bills at the cache
+    rate instead of the input rate. Raises ``KeyError`` for an unknown
+    model or tier so a silent zero-cost row can never enter a manifest.
+    """
+    rates = _PRICING_USD_PER_1M[model][pricing_tier]
+    cached = min(tokens["cached_tokens"], tokens["input_tokens"])
+    non_cached = tokens["input_tokens"] - cached
+    input_cost = (
+        non_cached * rates["input"] + cached * rates["cached_input"]
+    ) / 1_000_000
+    output_cost = (
+        (tokens["output_tokens"] + tokens["thinking_tokens"])
+        * rates["output"] / 1_000_000
+    )
+    return {
+        "input_cost_usd": input_cost,
+        "output_cost_usd": output_cost,
+        "total_cost_usd": input_cost + output_cost,
+    }
+
+
+def _meta_model(meta: dict[str, Any]) -> str:
+    """Best-effort model name for pricing (config first, then pricing_used)."""
+    return (
+        meta.get("configuration", {}).get("model")
+        or meta.get("cost_estimate", {}).get("pricing_used", {}).get("model")
+        or ""
+    )
+
+
+def aggregate_cost_manifest(
+    rcfg: ResolvedRunConfig, pricing_tier: str = "recorded",
+) -> Path:
     """Scan per-run meta files and write ``cost_manifest.json``.
 
     Called at the end of ``all`` and available as its own subcommand for
     re-building the manifest without rerunning anything.
+
+    Args:
+        rcfg: Resolved run configuration.
+        pricing_tier: ``"recorded"`` (default) reproduces the legacy
+            behaviour — each meta's own ``cost_estimate`` is taken
+            verbatim and backups merge additively. ``"standard"`` /
+            ``"flex"`` / ``"batch"`` switch to the audited derivation
+            (token-load audit, 2026-06-12): tokens are summed over the
+            per-item union (deduped by ``item_id``, so recovery-merged
+            metas cannot double-count), cost is recomputed from those
+            tokens at the named tier with thinking billed at the output
+            rate, and a stub verifier meta (the cleanup-overwrite
+            pattern) is reconstructed from the verified-call count at
+            the measured per-call rate.
     """
+    audited = pricing_tier != "recorded"
+    fallback_warnings: list[str] = []
+    models_seen: set[str] = set()
     p = rcfg.proposer
     proposer_output = rcfg.output_dir / "proposer" / Path(p["config"]).stem
     verified_dir = rcfg.output_dir / "verified"
@@ -1086,25 +1226,55 @@ def aggregate_cost_manifest(rcfg: ResolvedRunConfig) -> Path:
             continue
         meta, used_backups = _read_meta_with_backups(meta_files[0])
         _record_backups(used_backups)
-        cost = (
-            meta.get("cost_estimate", {}).get("total_cost_usd", 0.0) or 0.0
-        )
-        usage = meta.get("usage_stats", {})
+        exec_stats = meta.get("execution_stats", {})
+        items_fail = int(exec_stats.get("items_failed", 0))
+
+        # Token + item derivation. Audited mode prefers the per-item
+        # union (immune to recovery-merge double-counting); legacy mode
+        # keeps the additively merged usage_stats and recorded costs.
+        union = None
+        if audited:
+            sources = [_read_meta(p) for p in used_backups]
+            sources.append(_read_meta(meta_files[0]))
+            union = _union_per_item_tokens(sources)
+        if union is not None:
+            pass_tokens, item_ids = union
+            items_proc = len(item_ids)
+            completed_items: list[str] = item_ids
+        else:
+            if audited:
+                fallback_warnings.append(
+                    f"proposer {run_dir.name}: no per_item_metadata — "
+                    "tokens from (merged) usage_stats",
+                )
+            pass_tokens = _read_token_counts(meta.get("usage_stats", {}))
+            items_proc = int(exec_stats.get("items_processed", 0))
+            completed_items = [
+                t for t in exec_stats.get("completed_items", [])
+                if isinstance(t, str)
+            ]
+        if audited:
+            model = _meta_model(meta)
+            models_seen.add(model)
+            cost = _price_tokens(pass_tokens, model, pricing_tier)[
+                "total_cost_usd"
+            ]
+        else:
+            cost = (
+                meta.get("cost_estimate", {}).get("total_cost_usd", 0.0)
+                or 0.0
+            )
         proposer_cost += cost
-        pass_tokens = _read_token_counts(usage)
         for k, v in pass_tokens.items():
             proposer_tokens[k] += v
         ts = meta.get("timestamp", {})
         duration = ts.get("duration_seconds") or 0.0
         proposer_wall_s += duration
-        exec_stats = meta.get("execution_stats", {})
-        items_proc = int(exec_stats.get("items_processed", 0))
-        items_fail = int(exec_stats.get("items_failed", 0))
         tiles_processed += items_proc
         tiles_failed += items_fail
 
-        # Per-map tile attribution
-        for tile_name in exec_stats.get("completed_items", []):
+        # Per-map tile attribution (audited mode: deduped item ids).
+        for tile_name in completed_items:
             m = tile_to_map(tile_name)
             per_map_tile_count[m] = per_map_tile_count.get(m, 0) + 1
         for tile_name in exec_stats.get("failed_items", []):
@@ -1136,18 +1306,75 @@ def aggregate_cost_manifest(rcfg: ResolvedRunConfig) -> Path:
         verified_dir / "run.meta.json",
     )
     _record_backups(verifier_backups_used)
-    verifier_cost = (
-        verifier_meta.get("cost_estimate", {}).get("total_cost_usd", 0.0)
-        or 0.0
-    )
-    v_usage = verifier_meta.get("usage_stats", {})
-    verifier_tokens = _read_token_counts(v_usage)
     verifier_wall_s = (
         verifier_meta.get("timestamp", {}).get("duration_seconds") or 0.0
     )
     v_exec = verifier_meta.get("execution_stats", {})
-    cands_processed = int(v_exec.get("items_processed", 0))
     cands_failed = int(v_exec.get("items_failed", 0))
+    verifier_extra: dict[str, Any] = {}
+
+    v_union = None
+    if audited:
+        v_sources = [_read_meta(p) for p in verifier_backups_used]
+        v_sources.append(_read_meta(verified_dir / "run.meta.json"))
+        v_union = _union_per_item_tokens(v_sources)
+    if v_union is not None:
+        verifier_tokens, v_ids = v_union
+        cands_processed = len(v_ids)
+    else:
+        if audited:
+            fallback_warnings.append(
+                "verifier: no per_item_metadata — tokens from (merged) "
+                "usage_stats",
+            )
+        verifier_tokens = _read_token_counts(
+            verifier_meta.get("usage_stats", {}),
+        )
+        cands_processed = int(v_exec.get("items_processed", 0))
+    if audited:
+        v_model = _meta_model(verifier_meta)
+        models_seen.add(v_model)
+        verifier_cost = _price_tokens(verifier_tokens, v_model, pricing_tier)[
+            "total_cost_usd"
+        ]
+    else:
+        verifier_cost = (
+            verifier_meta.get("cost_estimate", {}).get("total_cost_usd", 0.0)
+            or 0.0
+        )
+
+    # Stub-verifier reconstruction (audited mode only). The cleanup-
+    # overwrite pattern leaves run.meta.json recording only the final
+    # tiny cleanup batch while probabilities.json proves the full call
+    # count. Where the meta covers under half the proven calls, the leg
+    # is reconstructed from the call count at the measured per-call
+    # rate. Token sums are NOT reconstructed (no per-item data exists);
+    # the manifest flags this so totals stay interpretable.
+    if audited:
+        probs_path = verified_dir / "probabilities.json"
+        probs = _read_meta(probs_path)
+        n_calls = len(probs.get("results", {}) or {})
+        if n_calls and cands_processed < 0.5 * n_calls:
+            rate = _VERIFIER_RECON_USD_PER_CALL[pricing_tier]
+            verifier_extra = {
+                "reconstructed": True,
+                "meta_derived_cost_usd": round(verifier_cost, 4),
+                "meta_derived_calls": cands_processed,
+                "reconstruction": {
+                    "n_calls": n_calls,
+                    "usd_per_call": rate,
+                    "basis": (
+                        "verified/probabilities.json call count x measured "
+                        "per-call rate (token-load audit, 2026-06-12, s5); "
+                        "the live run.meta.json is a cleanup-overwrite stub "
+                        "and the original batch's backup is unavailable on "
+                        "this clone. Verifier token sums are NOT "
+                        "reconstructed."
+                    ),
+                },
+            }
+            verifier_cost = n_calls * rate
+            cands_processed = n_calls
 
     # ---- Totals ----
     total_cost = round(proposer_cost + verifier_cost, 4)
@@ -1260,6 +1487,43 @@ def aggregate_cost_manifest(rcfg: ResolvedRunConfig) -> Path:
         # successfully recovered the lost cost from a sibling backup.
         "_metadata": {
             "cleanup_recovery_metas_merged": cleanup_recovery_metas_merged,
+            "pricing": (
+                {
+                    "pricing_tier": pricing_tier,
+                    "rates_usd_per_1m": {
+                        m: _PRICING_USD_PER_1M[m][pricing_tier]
+                        for m in sorted(models_seen)
+                        if m in _PRICING_USD_PER_1M
+                    },
+                    "thinking_billed_as_output": True,
+                    "token_derivation": (
+                        "per-item union deduped by item_id; usage_stats "
+                        "fallback where flagged"
+                    ),
+                    "fallback_warnings": fallback_warnings,
+                    "wall_clock_note": (
+                        "durations and failure counts remain meta-recorded "
+                        "and may include merged recovery batches"
+                    ),
+                    "basis": (
+                        "token-load audit 2026-06-12 "
+                        "(reports/token-load-audit-2026-06-12.md); rates "
+                        "verified at ai.google.dev/gemini-api/docs/pricing "
+                        "2026-06-12"
+                    ),
+                }
+                if audited else
+                {
+                    "pricing_tier": "recorded",
+                    "note": (
+                        "legacy behaviour: costs taken verbatim from each "
+                        "meta's cost_estimate (standard-rate, thinking "
+                        "unbilled) with additive backup merge — see "
+                        "reports/token-load-audit-2026-06-12.md before "
+                        "reusing these dollars"
+                    ),
+                }
+            ),
         },
         "totals": {
             "cost_usd": total_cost,
@@ -1286,6 +1550,7 @@ def aggregate_cost_manifest(rcfg: ResolvedRunConfig) -> Path:
                 "tokens": verifier_tokens,
                 "candidates_processed": cands_processed,
                 "candidates_failed": cands_failed,
+                **verifier_extra,
             },
             "extract_crops": {
                 "candidates_extracted": len(
@@ -1626,7 +1891,9 @@ def cmd_aggregate_cost(args: argparse.Namespace) -> int:
     if args.dry_run:
         _dry_run_banner(rcfg)
         return 0
-    aggregate_cost_manifest(rcfg)
+    aggregate_cost_manifest(
+        rcfg, pricing_tier=getattr(args, "pricing_tier", "recorded"),
+    )
     return 0
 
 
@@ -2001,6 +2268,15 @@ def build_arg_parser() -> argparse.ArgumentParser:
 
     agg_p = sub.add_parser(
         "aggregate-cost", help="(Re)build cost_manifest.json",
+    )
+    agg_p.add_argument(
+        "--pricing-tier",
+        choices=["recorded", "standard", "flex", "batch"],
+        default="recorded",
+        help="Cost basis: 'recorded' takes each meta's own cost_estimate "
+             "verbatim (legacy); a named tier recomputes cost from "
+             "per-item token sums at audited rates, billing thinking "
+             "tokens at the output rate (token-load audit, 2026-06-12).",
     )
     add_shared(agg_p)
     add_proposer_flags(agg_p)
