@@ -1,0 +1,23 @@
+INFO: Detection files: 1
+INFO: Loading ground truth: /home/shawn/Code/map-reader-llm/inputs/vectors/references/mounds-reference.geojson
+INFO: Loading bounds: inputs/vectors/bounds/384/full_evaluation_bounds.geojson
+INFO: Reference: 569 mounds, 487 evaluation tiles
+INFO: Evaluating: verified-adv-text-baseline-medium-vf.geojson
+INFO:   5m: F1=0.427 [0.390, 0.464], P=0.413 [0.377, 0.450], R=0.441 [0.401, 0.480] [sparse coverage: 54.0% zero-tiles]
+INFO:   10m: F1=0.704 [0.673, 0.736], P=0.682 [0.648, 0.714], R=0.729 [0.695, 0.763] [sparse coverage: 55.0% zero-tiles]
+INFO:   15m: F1=0.791 [0.763, 0.816], P=0.766 [0.734, 0.799], R=0.818 [0.786, 0.843] [sparse coverage: 55.2% zero-tiles]
+INFO:   20m: F1=0.824 [0.800, 0.847], P=0.798 [0.767, 0.827], R=0.853 [0.826, 0.876] [sparse coverage: 55.4% zero-tiles]
+INFO:   25m: F1=0.836 [0.812, 0.855], P=0.809 [0.779, 0.837], R=0.864 [0.839, 0.887] [sparse coverage: 55.4% zero-tiles]
+INFO:   30m: F1=0.840 [0.818, 0.859], P=0.813 [0.783, 0.842], R=0.869 [0.844, 0.890] [sparse coverage: 55.4% zero-tiles]
+INFO:   35m: F1=0.844 [0.822, 0.864], P=0.817 [0.788, 0.843], R=0.874 [0.849, 0.896] [sparse coverage: 55.4% zero-tiles]
+INFO:   40m: F1=0.849 [0.826, 0.868], P=0.822 [0.793, 0.849], R=0.878 [0.853, 0.901] [sparse coverage: 55.4% zero-tiles]
+INFO:   45m: F1=0.849 [0.826, 0.868], P=0.822 [0.793, 0.849], R=0.878 [0.853, 0.901] [sparse coverage: 55.4% zero-tiles]
+INFO:   50m: F1=0.849 [0.826, 0.868], P=0.822 [0.793, 0.849], R=0.878 [0.853, 0.901] [sparse coverage: 55.4% zero-tiles]
+INFO:   75m: F1=0.851 [0.829, 0.869], P=0.824 [0.795, 0.851], R=0.880 [0.855, 0.902] [sparse coverage: 55.4% zero-tiles]
+INFO:   100m: F1=0.853 [0.832, 0.872], P=0.826 [0.797, 0.853], R=0.883 [0.857, 0.905] [sparse coverage: 55.4% zero-tiles]
+INFO:   125m: F1=0.856 [0.835, 0.874], P=0.828 [0.799, 0.855], R=0.885 [0.860, 0.907] [sparse coverage: 55.4% zero-tiles]
+INFO:   150m: F1=0.856 [0.835, 0.874], P=0.828 [0.799, 0.855], R=0.885 [0.860, 0.907] [sparse coverage: 55.4% zero-tiles]
+INFO:   MCC=0.837 [0.808, 0.873], Sens=0.869, Spec=0.961
+INFO: JSON written: results/verifier-robustness/evals/verified-adv-text-baseline-medium-vf/evaluation.json
+INFO: CSV written: results/verifier-robustness/evals/verified-adv-text-baseline-medium-vf/evaluation.csv
+INFO: Markdown written: results/verifier-robustness/evals/verified-adv-text-baseline-medium-vf/evaluation.md
