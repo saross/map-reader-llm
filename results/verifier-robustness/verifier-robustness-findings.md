@@ -1,9 +1,12 @@
 # Verifier-robustness — findings
 
-> **Last revised**: 2026-06-12 (token-load audit: the cost model was
-> rebuilt from per-item metadata — the prior calibration sat on a 2×
-> double-counted manifest and unbilled thinking tokens; § 15 dollars and
-> the § 16(c) production trade recomputed; frontier shape unchanged). See
+> **Last revised**: 2026-06-13 (currency sweep: the one remaining
+> pre-audit dollar — Run B's "~$60" launch estimate in § 16(c) —
+> corrected to the audited as-run ~$34.5). Prior: 2026-06-12
+> (token-load audit: the cost model was rebuilt from per-item metadata —
+> the prior calibration sat on a 2× double-counted manifest and unbilled
+> thinking tokens; § 15 dollars and the § 16(c) production trade
+> recomputed; frontier shape unchanged). See
 > [§ Changelog](#changelog) for revision history.
 
 This document is the citable home for the **verifier-robustness** programme
@@ -428,7 +431,9 @@ be GS-specific. **Consequences**: (a) the meta-rule holds only where the
 tie's instrument could detect a difference of consequence; (b) deployment
 evidence overrides characterisation ties — the deployment-evidenced
 production text config is HIGH thinking at k3; (c) **ANSWERED 2026-06-11
-(Run B, ~$60)**: pass count closes about HALF the thinking gap — the
+(Run B, as-run ~$34.5 audited flex; the ~$60 in the launch script header
+was a pre-audit estimate — Obs 366 § 6)**: pass count closes about HALF
+the thinking gap — the
 min11 uplift (10 minimal passes + band verifier) scores **0.8290** @ 50 m
 (5of10/pt0.15), significantly above TM-k3 (+0.0163, p < 0.0001) and
 significantly below TH7-k3 (−0.0134, p = 0.0026). Both steps resolve, so
@@ -482,6 +487,16 @@ flags live at `results/metric-leaderboards/` (GS @ 30 m; 55-map @ 50 m).
   preregistration amendment needed for a robustness check.
 
 ## Changelog
+
+### 2026-06-13 — Currency sweep: last pre-audit dollar corrected (§ 16)
+
+**Refresh trigger**: the Session-114 final currency sweep before §Results
+prose. One stale figure remained: § 16(c) introduced Run B with its
+pre-audit launch estimate "~$60"; the audited as-run incremental is
+**~$34.5** (5 × $4.66 proposer + $11.27 verifier; token-load audit § 6,
+billing-corroborated § 10; Obs 366 § 6). No result number, tier, or
+conclusion changed. The § 16(c) trade figures (~$58 vs ~$207) were
+already audited and are unchanged.
 
 ### 2026-06-12 — Token-load audit: cost model rebuilt from per-item metadata
 

@@ -1,10 +1,22 @@
 # Experimental Progression: From Preregistered Design to Production Pipeline
 
+> **Last revised**: 2026-06-13 (currency sweep: dollar figures flagged as
+> pre-audit — see the cost-basis note below). See
+> [§ Changelog](#changelog) for revision history.
+
 **Purpose**: Reference document for the paper's methods section,
 characterising the three-phase experimental progression, what was tested
 where, and why the design evolved.
 
 **Date**: 2026-03-30
+
+> **Cost-basis note (2026-06-13)**: dollar figures in this document
+> predate the 2026-06-12 token-load audit
+> (`reports/token-load-audit-2026-06-12.md`) and are retained as
+> historical context only. The audit found recorded costs understated
+> thinking-token spend and, for some manifests, double-counted recovery
+> merges. Any dollar entering paper text must come from the audited
+> basis, not from here.
 
 ---
 
@@ -312,3 +324,26 @@ stratified resampling (1,000 iterations, seed 42).
 three-phase structure (exploration → validation → optimisation) provides
 a natural narrative for presenting the experimental design and its
 evolution.*
+
+---
+
+## Changelog
+
+### 2026-06-13 — Cost-basis note added (currency sweep)
+
+**Refresh trigger**: the Session-114 final currency sweep before
+§Results prose. The Obs 205 cost comparison ("Flash + PV at ~$3 …
+Pro consensus at ~$54") predates the 2026-06-12 token-load audit; a
+cost-basis note now directs readers to the audited basis. The
+qualitative conclusion (Flash + pipeline dominates Pro on cost) is
+unaffected and strengthens under the audit (Pro thinking tokens were
+unbilled in the recorded figures). No other content changed.
+
+### 2026-03-30 — Original publication
+
+Methods-section reference document: the three-phase experimental
+progression (exploration → validation → optimisation), what was tested
+where, and why the design evolved. Written before the 55-map
+generalisation campaigns, the token-load audit, and the working-precision
+derivations; results quoted are GS-instrument values as of late March
+2026.
