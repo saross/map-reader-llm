@@ -20543,3 +20543,171 @@ verified 2026-06-11);
 (run-B design and cost basis in header; verified 2026-06-11);
 `results/verifier-robustness/pareto/pareto_v2.json`
 (full-run cost model, min11 rung $118.41; verified 2026-06-11).
+
+## Observation 365: The production frontier's two steps buy different things — pass count is a strict improvement, thinking level is a recall-for-precision trade (Session 113, 2026-06-12)
+
+*Source anchors: `results/55maps-extended-gt-2026-06-07/TM-k3/summary.json`,
+`results/55maps-extended-gt-2026-06-07/TM-n10-k5/summary.json`,
+`results/55maps-extended-gt-2026-06-07/T03-k3/summary.json`
+(R\_m = 50 rows carry the TP/FP/FN integers; verified 2026-06-12);
+`reports/token-load-audit-2026-06-12.md` (§§ 5–6: corrected per-pass
+and whole-run costs; verified 2026-06-12); audit commits
+`7360c54c4` (cost-model fix), `d638fba22` (Pareto v2 regenerated),
+`93e226f3a` (audit report).*
+
+### The finding
+
+Confusion-matrix decomposition of the three Pareto-efficient 55-map
+deployment cells at R\_m = 50 m (canonical extended ground truth, 5,161
+mounds in range), priced at audited flex recipe costs (minimal pass
+$4.66/pass, HIGH-T0.3 pass $50.82/pass, verifier $0.000693/call;
+`reports/token-load-audit-2026-06-12.md` §§ 5–6):
+
+| cell | recipe cost | TP | FP | FN | P | R |
+|---|--:|--:|--:|--:|---:|---:|
+| TM-k3 (5 minimal passes, 3-of-5) | ~$32 | 3,836 | 443 | 1,325 | 0.897 | 0.743 |
+| TM-n10-k5 uplift (10 minimal passes, 5-of-10) | ~$58 | 3,947 | 414 | 1,214 | 0.905 | 0.765 |
+| T03-k3 oracle (5 HIGH-T0.3 passes, 3-of-5) | ~$264 | 4,266 | 639 | 895 | 0.870 | 0.827 |
+
+Source cross-check: TP/FP/FN at R\_m = 50 m confirmed directly from the
+three `summary.json` files (verified 2026-06-12). n\_ref\_extended = 5,161
+in all three files.
+
+**Step 1 — double the minimal passes (+$26, TM-k3 → uplift):**
++111 mounds found AND −29 false positives — **strictly better on both
+axes.** Cost per additional mound: $26 / 111 ≈ **~$0.23/mound.**
+
+**Step 2 — switch to HIGH-T0.3 at 3-of-5 (+$206, uplift → T03-k3):**
++319 mounds found at the price of +225 additional false positives.
+Cost per additional mound: $206 / 319 ≈ **~$0.65/mound.** Approximately
+0.7 extra FP per extra TP. Precision falls from 0.905 to 0.870; recall
+rises from 0.765 to 0.827.
+
+F1 reports both steps as monotonic gains (0.813 → 0.829 → 0.848) and
+hides the asymmetry. Step 1 is unambiguously beneficial; Step 2 is a
+recall-for-precision swap — which step is worth buying depends on the
+downstream miss-cost vs false-positive cost (field-checking time per
+flagged crop).
+
+**Deployment recommendation under cost framing:**
+
+- FP-sensitive survey prioritisation (field budget limited; false leads
+  expensive): the uplift cell (~$58) is the sweet spot — strict
+  improvement over TM-k3 at 0.23/mound, no precision penalty.
+- Maximal inventory recovery (miss-cost high; every mound matters):
+  T03-k3 (~$264) recovers 319 additional mounds but spends 2.8× more
+  and introduces 225 extra FP.
+
+### Methodological coda — the token-load audit reversed the per-mound ordering
+
+Under the pre-audit cost model (whole-run estimates ~$105 for the
+uplift vs ~$207 for T03-k3, per Obs 364's sourced pareto\_v2 entries),
+Step 2 appeared ~3× cheaper per additional mound ($0.14) than Step 1
+($0.44): the large recipe-cost gap was not yet visible. At audited flex
+rates the ordering inverts: Step 1 is ~$0.23/mound, Step 2 is
+~$0.65/mound. **Cost-model corrections can flip qualitative readings of
+a cost frontier, not merely rescale its axis.** This is a stronger
+result than "the costs moved" — the practitioner's choice between the
+two steps was affected, not just repriced.
+
+### Why this matters
+
+**1. The paper needs a confusion-matrix table, not just F1.** F1's
+harmonic mean conceals whether a quality gain comes from precision,
+recall, or both. The table above is the form in which the cost/quality
+trade is paper-citable: a reader comparing survey strategies needs to
+know that Step 2 trades precision for recall, not just that F1 rose
+by 0.019.
+
+**2. Survey-context cost weighting is explicit.** FP cost and FN cost
+are not equal in archaeological survey: a false positive wastes
+field-checking time; a false negative loses a mound permanently. The
+$0.23 vs $0.65 per-mound figures, together with the ~0.7 FP/TP ratio
+of Step 2, give practitioners the inputs to compute their own breakeven.
+
+**3. The audit's qualitative impact is a reproducibility lesson.** A
+cost frontier evaluated at pre-audit rates would have pointed toward
+Step 2 as the better-value option. The corrected rates reverse that
+reading. Any published cost-effectiveness claim in this project should
+cite the audited figures and note that the pre-audit manifests were
+wrong in multiple directions (Obs 364 caveats; audit report § 1).
+
+### Caveats / methodological notes
+
+Recipe costs are computed as: pass cost × n\_passes + verifier
+$0.000693/call × n\_crops. The TM-k3 and T03-k3 verifier crop counts
+(12,390 and 13,945 respectively per the spec) cannot be directly traced
+to a single `run.meta.json` `items_processed` field — the vote-3-shell
+verifier leg combines call records across the deployment pipeline. The
+`vote3-verify` run.meta for TM-k3 records `items_processed: 2,220`
+(unique candidates at the vote threshold), while 12,390 is the total
+crops entering the shell. Both figures are consistent with the ~$32
+recipe cost ($23.30 passes + $8.59 for 12,390 × $0.000693). Verified
+arithmetic: the recipe cost figures pass the cross-check; the source of
+the 12,390 and 13,945 figures is the session spec rather than a single
+directly audited file, so treat the recipe costs as ~$32 and ~$264
+(±$1) rather than exact.
+
+The uplift cell (~$58) is costed at the full from-scratch recipe (10
+passes + band verifier $11.27), matching audit § 6's ~$34.5 incremental
+(5 new passes + verifier) plus 5 × $4.66 for the already-run passes.
+
+The T03-k3 cell ("oracle") is Pareto-efficient on the 55-map board but
+sits in Tier 1 jointly with TH7-k3, which has lower recall (R = 0.812)
+and lower FP count (from the leaderboard; TH7-k3 not decomposed here).
+This Obs focuses on the three cells from the spec; TH7-k3 is
+documented in Obs 358.
+
+Precision and recall values above are rounded to three decimal places
+from the summary.json floats (P = 0.8965, R = 0.7433 for TM-k3;
+P = 0.9051, R = 0.7648 for uplift; P = 0.8697, R = 0.8266 for T03-k3).
+
+### Findable later
+
+confusion matrix decomposition three Pareto cells TM-k3 uplift T03-k3;
+TP FP FN at R=50m 5161 mounds in range; step 1 strictly better both
+axes 111 mounds minus 29 FP 0.23 per mound; step 2 recall precision
+trade 319 mounds 225 FP 0.65 per mound 0.7 FP per TP; F1 monotonic
+hides asymmetry; recipe cost 32 58 264 audited flex; token-load audit
+reversed per-mound ordering qualitative flip; cost model correction not
+rescale flip; pre-audit 105 207 step 2 appeared cheaper; audit 32 58
+264 step 1 cheaper per mound; survey prioritisation FP sensitive uplift
+sweet spot; maximal inventory recovery T03-k3; practitioner breakeven
+miss-cost FP-cost; recipe cost 12390 13945 crops verifier leg; 4.66
+per pass minimal 50.82 HIGH T0.3; 0.000693 per verifier call; 7360c54c4
+d638fba22 93e226f3a audit commits; 55maps-extended-gt-2026-06-07;
+token-load-audit-2026-06-12; verifier-robustness-findings 15 16c;
+Obs 364 open question repriced; Obs 362 deployment frontier;
+Obs 357 cost meta-rule granular companion; Obs 358 55-map board Tier 1
+
+### Related observations and artefacts
+
+- **[[Obs 364]]** (the min11 uplift run — Obs 364 documents the uplift
+  design, the two permutation tests, and the ~$60 incremental cost;
+  this Obs decomposes the same three cells into TP/FP/FN at audited
+  recipe costs and identifies the precision/recall asymmetry hidden by F1)
+- **[[Obs 362]]** (deployment evidence overrides characterisation ties —
+  the three cells analysed here are the deployment-side frontier whose
+  reversal Obs 362 documented; this Obs prices the steps of that frontier)
+- **[[Obs 357]]** (the cost meta-rule on within-noise ties — this Obs
+  is the granular what-the-dollars-buy companion; neither step here is
+  a tie, so the meta-rule is not invoked, but the per-mound cost table
+  is the evidence base the rule would draw on)
+- **[[Obs 358]]** (the 55-map 50 m leaderboard — TM-k3, the uplift cell,
+  and T03-k3 all sit on the board characterised there; Tier 1: T03-k3
+  and TH7-k3; Tier 2: T03-k4 and uplift)
+
+**Artefacts**:
+`results/55maps-extended-gt-2026-06-07/TM-k3/summary.json`
+(R\_m = 50 row: TP 3,836, FP 443, FN 1,325; verified 2026-06-12);
+`results/55maps-extended-gt-2026-06-07/TM-n10-k5/summary.json`
+(R\_m = 50 row: TP 3,947, FP 414, FN 1,214; verified 2026-06-12);
+`results/55maps-extended-gt-2026-06-07/T03-k3/summary.json`
+(R\_m = 50 row: TP 4,266, FP 639, FN 895; verified 2026-06-12);
+`reports/token-load-audit-2026-06-12.md`
+(§§ 5–6: per-pass and whole-run audited flex costs; verified 2026-06-12);
+`results/verifier-robustness/verifier-robustness-findings.md`
+(§ 15 Pareto v2 table; § 16(c) audited production trade ~$58 vs ~$207;
+verified 2026-06-12);
+`results/55map-leaderboard/55map_leaderboard_50m.json`
+(8-cell board, tier assignments; verified 2026-06-12).
