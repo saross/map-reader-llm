@@ -20976,3 +20976,205 @@ verified 2026-06-12);
 commit `a70198c6a` (16-cell promotion to first-class pv-diag-384);
 commit `7d3cd88b2` (billing-console corroboration added to audit § 10);
 commit `d638fba22` (pareto v2 regenerated at audited costs).
+
+## Observation 367: Deploy-and-evaluate beats curated-GT expansion for breaking calibration ties — the minimal covering design is ~25 passes / ~$733, and the project converged on it incrementally (Session 113, 2026-06-13)
+
+*Source anchors: `reports/token-load-audit-2026-06-12.md` (§§ 5–6:
+per-pass and whole-run audited flex costs; § 6 total ~$722 across
+five campaigns; § 10: billing-console corroboration; verified 2026-06-13);
+`results/55map-leaderboard/55map_leaderboard_50m.json` (8 cells,
+24/28 pairwise significant; verified 2026-06-13 — `len(data["cells"])
+== 8`, `n_sig == 24`, `len(pairwise) == 28`);
+`results/verifier-robustness/pareto/pareto_v2.json` (GS-run costs
+min6 $2.43 / high31 $69.21; 55-map high6 $246.22; verified 2026-06-13
+at commit `d638fba22`).*
+
+### The finding
+
+Obs 366 § 2 established the resolving-power table: grounding the
+calibration decisions the Gold Standard (GS) instrument got wrong
+would require a curated reference of ~10–20 representative sheets
+(~900–1,900 mounds at 80 % power) — a substantial upfront human
+investment before any production survey run. This Obs quantifies
+the alternative: deploy the GS tie-set directly on the full target
+corpus and evaluate outputs.
+
+Two structural facts collapse the cost of the deploy-and-evaluate
+route:
+
+1. **The THRESHOLD axis is free post-hoc.** Verify a permissive
+   band once per pool and sweep vote/probability thresholds on the
+   recorded verifier probabilities — the Obs 358 mitigation. No
+   additional proposer passes are needed to resolve threshold ties.
+
+2. **PASS-COUNT variants are nested.** A 10-pass pool contains its
+   5-pass subset under the first-N rule, so a single 10-pass campaign
+   serves all shorter-pass rungs simultaneously.
+
+Together, the end-of-GS tie set — thinking level, temperature within
+HIGH, modality, pass count — collapses to FOUR proposer pools. Per
+the audited flex rates from `reports/token-load-audit-2026-06-12.md`
+§§ 5–6 (minimal pass $4.66, HIGH-T0.7 pass $40.19, HIGH-T0.3 pass
+$50.82, image-HIGH pass $39.07, verifier $0.000693/call):
+
+| Pool | Passes | Audited cost |
+|---|--:|--:|
+| Minimal T0.7 (covers 5-pass AND 10-pass + all thresholds) | 10 | ~$47 |
+| HIGH T0.7 | 5 | ~$201 |
+| HIGH T0.3 | 5 | ~$254 |
+| Image HIGH | 5 | ~$195 |
+| Carry-forward verifier over the four permissive bands (~52k crops) | — | ~$36 |
+| **Total** | **25** | **~$733** |
+
+Arithmetic: 10 × $4.66 + 5 × $40.19 + 5 × $50.82 + 5 × $39.07 +
+52,000 × $0.000693 = $46.60 + $200.95 + $254.10 + $195.35 + $36.04
+= **$733.04**. Per-line "~$" figures in the table are rounded;
+the exact sum is $733.
+
+The 30-pass ceiling rung is deliberately deferred: GS places
+high31 ≈ 31 passes in one statistical tier with the four proposed
+pools above, so escalate (+ ~$1,000 at the audited rate for high31
+at production scale; `pareto_v2.json` `est_cost_55map_usd: 1213.72`)
+only if the cheaper rungs disappoint at deployment.
+
+**The punchline.** The project actually spent ~$722 across the four
+deployment campaigns plus the uplift (audit § 6 total:
+$23.4 + $207.4 + $261.0 + $195.4 + $34.5 = $721.7; lower-bound caveat per audit § 8
+— retry overhead and thinking-token omissions mean true billing is
+somewhat higher, corroborated by the Google billing console at ~$402
+for the 18 April natural experiment vs $419.64 predicted). The minimal
+covering design arrived at ~$733 (pre-verifier arithmetic) against
+the as-run ~$722; the gap is within the retry/lower-bound margin.
+The deployment programme converged on the minimal covering design
+incrementally, without having planned it as such, and resolved
+everything resolvable on the 55-map board: 24 of 28 pairwise
+comparisons are statistically significant (`55map_leaderboard_50m.json`,
+verified 2026-06-13), instantiating the Obs 358 refreshed 8-cell board.
+
+*Cost note: the spec submitted for this Obs cited ~$735 as the as-run
+total "with consistent verifier reconstruction". The audit's sourced
+figure is ~$722 (§ 6) with a stated lower-bound caveat. The $733
+design figure and $722 as-run figure are used here per the source;
+the ~$13 discrepancy versus the spec's ~$735 is within the audit's
+own acknowledged retry-overhead uncertainty.*
+
+### Why this matters
+
+**1. The production calibration recipe is NOT "build a bigger GT".**
+For discovery runs on new map corpora — the participatory-GIS
+deployment scenario where no curated reference exists — the practical
+answer is: deploy the tie-set, exploit free threshold sweeps and nested
+pass counts, and evaluate on whatever reference exists. The ~$733
+design budget for a complete resolution campaign is low enough to be
+a line item in any funded survey project, versus weeks of expert or
+student curation for the equivalent GT expansion.
+
+**2. Incremental campaigns can retrospectively constitute a plan.**
+The project ran four campaigns without consciously designing a minimal
+covering set, yet arrived at one. Recognising this after the fact
+clarifies what a prospective version of the same programme would look
+like: specify the four pools upfront, run in parallel, and use the
+first-N nesting to avoid redundant passes.
+
+**3. The GT-scarcity variant is tractable.** Because candidate RANKING
+uses paired comparisons on shared tiles, a curated GT on a random
+~10-sheet subsample (~1,500 tiles) suffices to rank all candidates
+at ~80 % power on the binding 0.03-scale axes (Obs 366 § 2 power law,
+k = 2.8, s = 0.41). Hybrid strategy: deploy everywhere, curate a
+random subsample, rank, pick. The full deployment runs are still the
+survey product — the subsample curation is calibration overhead only.
+
+**4. A fully GT-free variant is under preliminary test.** Initial
+probe (in-session, not yet committed to a dedicated results file):
+Spearman(F1@50, n\_detections) = +0.71 across the 8 board cells,
+3-for-3 within config families, with the image cell as the instructive
+cross-modality failure (3rd-highest detection count, 7th F1, precision
+floor at 0.840). A leave-one-family-out pseudo-GT test is running as
+follow-up. If that test confirms the signal, the calibration cost
+could fall further — detection-count proxies require no reference GT
+at all. Flag for a dedicated Obs once the test completes.
+
+### Caveats / methodological notes
+
+The ~$733 design figure assumes flex pricing (pay-as-you-go) at the
+measured rates from `token-load-audit-2026-06-12.md` § 5. These are
+lower bounds: retry overhead is unmeasured and material (audit § 8;
+the t0.3 campaign alone logged 12,322 retries, potentially adding up
+to ~29 % to that leg). Published figures should cite the lower-bound
+qualifier.
+
+The four-pool structure assumes HIGH thinking at T0.7 and T0.3 are
+separately informative (i.e. the temperature tie from GS is unresolved
+at deployment until tested). If deployment data show no T0.7/T0.3
+gap (both in the same tier), the HIGH column collapses to one pool and
+cost falls by ~$254. Conversely, if modality introduces a meaningful
+interaction not visible in the 8-cell GS board, a 5th pool may be
+warranted.
+
+The Spearman correlation cited in § 4 above (+0.71, 8 cells) is an
+in-session exploratory figure, not from a committed results file.
+Treat it as a pointer for follow-up work, not a citable claim.
+
+The ~$1,000 escalation cost for the high31 ceiling rung is derived
+from `pareto_v2.json` `est_cost_55map_usd: 1213.72` (for high31,
+31 passes), minus the 5-pass HIGH T0.7 already in the baseline plan
+(~$201), giving ~$1,013. This is an illustrative order-of-magnitude
+figure.
+
+### Findable later
+
+deploy-and-evaluate calibration ties minimal covering design; ~$733
+twenty-five passes four pools; threshold axis free post-hoc Obs 358
+mitigation; pass count nested first-N rule; incremental campaigns
+retrospective plan; minimal T0.7 10 passes $47; HIGH T0.7 5 passes
+$201; HIGH T0.3 5 passes $254; image HIGH 5 passes $195; verifier
+52k crops $36; total 733 audited flex lower bound; as-run $722
+audit section 6; calibration recipe new corpora participatory GIS
+deployment scenario; GT-scarcity variant 10-sheet subsample 1500
+tiles 80 percent power; hybrid deploy everywhere curate subsample
+rank pick; GT-free variant Spearman F1@50 n_detections +0.71 eight
+cells; image cell cross-modality failure 3rd count 7th F1 precision
+floor 0.840; leave-one-family-out pseudo-GT test; 24 of 28 pairwise
+significant 55-map board 8541 tiles; high31 ceiling rung $1000
+escalation 1213.72 pareto_v2; retry overhead lower bound caveat
+12322 retries t0.3; $722 vs $733 vs $735 discrepancy retry margin;
+token-load-audit-2026-06-12 sections 5 6 8 10; 4.66 per pass minimal
+40.19 HIGH T0.7 50.82 HIGH T0.3 39.07 image HIGH; 0.000693 verifier
+per call; billing console 402 April 18 natural experiment 419.64
+predicted; Session 113 2026-06-13
+
+### Related observations and artefacts
+
+- **[[Obs 366]]** (sign-off walkthrough rider — § 2's resolving-power
+  table is the direct foundation of this Obs; the power-law interpolation
+  establishes the cost of the curated-GT alternative that deploy-and-evaluate
+  dominates)
+- **[[Obs 358]]** (the 8-cell 55-map board and the free threshold sweep
+  mitigation — the board's 24/28 significance is the headline outcome this
+  Obs explains; the threshold-sweep heuristic is the mechanism that makes
+  the THRESHOLD axis free post-hoc)
+- **[[Obs 362]]** (deployment evidence overrides characterisation ties —
+  this Obs builds on Obs 362's insight that real deployment data, not
+  calibration, resolves instrument-level ties)
+- **[[Obs 364]]** (pass-count uplift as the nested first-N instance —
+  the uplift is the concrete example of the nesting property exploited
+  in the covering-design analysis)
+- **[[Obs 357]]** (cost meta-rule whose ties the covering-design runs
+  break — this Obs is the quantitative companion explaining what ~$733
+  buys in terms of resolvable calibration pairs)
+- **[[Obs 365]]** (what the resolved frontier steps buy — the confusion-matrix
+  decomposition of the three Pareto cells, priced at the same audited
+  flex rates used in this Obs)
+
+**Artefacts**:
+`reports/token-load-audit-2026-06-12.md`
+(§§ 5–6: audited per-pass flex rates, basis for the ~$733 design
+total; § 6 table: as-run campaign spends totalling ~$722; § 8: retry
+lower-bound caveat; § 10: billing-console corroboration; verified
+2026-06-13);
+`results/55map-leaderboard/55map_leaderboard_50m.json`
+(8 cells, 28 pairwise comparisons, 24 significant; verified
+2026-06-13);
+`results/verifier-robustness/pareto/pareto_v2.json`
+(rung est\_cost\_55map\_usd values including high31 $1,213.72 and
+high6 $246.22; verified 2026-06-13 at commit `d638fba22`).
