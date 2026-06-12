@@ -1,8 +1,8 @@
 # Results — working draft
 
-> **Last revised**: 2026-06-11 (Session 113 — first prose draft; begun the
-> session the evidential skeleton closed). See [§ Changelog](#changelog)
-> for revision history.
+> **Last revised**: 2026-06-12 (token-load audit: § R6 dollars rebuilt at
+> audited flex rates; Obs 365 frontier decomposition added). See
+> [§ Changelog](#changelog) for revision history.
 
 **Status**: first full-prose draft for collaborative revision. Every number
 is anchored to a registered manifest condition or analysis
@@ -213,20 +213,22 @@ on the GS instrument. The same comparison reverses at deployment (§ R6).
 
 ## R6. The cost frontier, and what deployment does to it
 
-Re-pricing the pass ladder in dollars (measured token loads, June 2026
-flex rates; a HIGH-thinking pass costs ~3× a minimal one) collapses the
-frontier onto four rungs (analysis `pass-budget-pareto-v2`; all seven
-rungs remain one statistical F1 tier, 0/21 pairs):
+Re-pricing the pass ladder in dollars (per-item token metadata at June
+2026 flex rates, thinking tokens billed at the output rate; a
+HIGH-thinking deployment pass costs ~8.6× a minimal one — token-load
+audit, 2026-06-12) collapses the frontier onto four rungs (analysis
+`pass-budget-pareto-v2`; all seven rungs remain one statistical F1 tier,
+0/21 pairs):
 
 | rung | F1@20 m (GS) | GS run cost | 55-map production (est.) | frontier |
 |---|---:|---:|---:|---|
-| min6 (5 minimal passes + vf) | 0.8784 | $3.81 | ~$67 | efficient |
-| min11 (10 minimal passes + vf) | 0.8835 | $6.75 | ~$118 | efficient |
-| high6 | 0.8641 | $10.65 | ~$187 | dominated |
-| high5+5vf | 0.8739 | $11.03 | ~$193 | dominated |
-| high11 | 0.8769 | $20.19 | ~$354 | dominated |
-| high31 (headline) | 0.8902 | $48.81 | ~$856 | efficient |
-| high35 (opmax) | 0.8951 | $50.84 | ~$892 | efficient |
+| min6 (5 minimal passes + vf) | 0.8784 | $2.43 | ~$43 | efficient |
+| min11 (10 minimal passes + vf) | 0.8835 | $4.00 | ~$70 | efficient |
+| high6 | 0.8641 | $14.04 | ~$246 | dominated |
+| high5+5vf | 0.8739 | $14.41 | ~$253 | dominated |
+| high11 | 0.8769 | $26.97 | ~$473 | dominated |
+| high31 (headline) | 0.8902 | $69.21 | ~$1,214 | efficient |
+| high35 (opmax) | 0.8951 | $71.23 | ~$1,249 | efficient |
 
 Read naively, the table says: buy minimal thinking; the entire HIGH ladder
 is dominated. **Deployment says otherwise, and this is one of the study's
@@ -257,13 +259,17 @@ Two consequences follow. First, the cost meta-rule (Obs 357) is
 detected a difference of consequence — the 487-tile GS instrument cannot
 resolve ±0.03, and deployment evidence overrides characterisation ties.
 Second, the gap is partly *buyable*: doubling the minimal pass count
-(Run B, ~$60) closes about half of it. The 10-minimal-pass uplift cell
-scores 0.8290 at 50 m — significantly above the 5-pass minimal deployment
-(+0.0163, p < 10⁻⁴) and significantly below the HIGH-thinking cell
-(−0.0134, p = 0.0026) — converting the thinking choice at deployment into
-a priced cost/quality trade (~$105 for 0.829 vs ~$150 for 0.843 at
-production rates) rather than a tie (Obs 364; run
-`55maps-text-min-n10-uplift`).
+(Run B; as-run ≈ $35 at audited flex rates) closes about half of it. The
+10-minimal-pass uplift cell scores 0.8290 at 50 m — significantly above
+the 5-pass minimal deployment (+0.0163, p < 10⁻⁴) and significantly below
+the HIGH-thinking cell (−0.0134, p = 0.0026) — converting the thinking
+choice at deployment into a priced cost/quality trade (~$58 for 0.829 vs
+~$207 for 0.843 at audited production rates) rather than a tie (Obs 364;
+run `55maps-text-min-n10-uplift`). The confusion-matrix decomposition of
+the frontier steps (Obs 365) shows the two purchases differ in kind: the
+pass-count step is a strict improvement (+111 mounds *and* −29 false
+positives for ~$26), while the thinking-level step trades precision for
+recall (+319 mounds at +225 false positives for ~$206).
 
 ## R7. Deployment: the 55-map canonical board
 
@@ -327,6 +333,18 @@ here.]
 ---
 
 ## Changelog
+
+### 2026-06-12 — § R6 dollars rebuilt from the token-load audit
+
+**Refresh trigger**: the token-load audit
+(`reports/token-load-audit-2026-06-12.md`) found the prior cost model
+sat on a 2× double-counted manifest with thinking tokens unbilled.
+§ R6's Pareto table and the production trade were rebuilt at audited
+flex rates (min:HIGH ratio 3× → 8.6×; trade ~$105 vs ~$150 → ~$58 vs
+~$207; high31 production ~$856 → ~$1,214), and the Obs 365
+confusion-matrix decomposition of the frontier steps was added. The
+frontier's efficient set, every F1 value, and all statistical claims
+are unchanged.
 
 ### 2026-06-11 — Original publication
 

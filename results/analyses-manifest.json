@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-06-11T12:24:49Z",
+  "generated_at": "2026-06-12T02:11:35Z",
   "generator_version": "0.4.0",
   "analyses": [
     {
@@ -734,7 +734,7 @@
         "verifier-robustness::verified-384-ge3of5-t0-3-n5",
         "pv-diag-384::verified-adv-text-4of5"
       ],
-      "outcome": "All seven rungs remain ONE statistical tier (0/21 pairs significant after BH-FDR) \u2014 extra spend cannot be shown to buy F1 on this instrument. Pareto-efficient set: min6 $3.81/0.8784, min11 $6.75/0.8835, high31 $48.81/0.8902, high35 $50.84/0.8951; DOMINATED: high6 ($10.65/0.8641 \u2014 v1's 'cheap6' is in fact the third most expensive way to buy ~0.87), high5+5vf ($11.03/0.8739), high11 ($20.19/0.8769). 55-map production column (tile factor 8541/487, crops/tile from the GS pools \u2014 slight upper bounds): min6 ~$67, min11 ~$118, high31 ~$856, high35 ~$892. Costs recalibrated 2026-06-11 to measured tokens (~$9.40 per 8,541-tile minimal pass at flex; the smoke-derived model under-priced proposer passes 1.8x) \u2014 the efficient set was unchanged by the recalibration. SCOPE (Obs 362): the F1 column is GS-characterised; at deployment the minimal rungs degrade hardest (transfer deltas HIGH-T0.7 -0.048 < HIGH-T0.3 -0.057 < image -0.078 < MIN -0.087), so the min rungs are NOT production recommendations without the findings SS 16 qualification.",
+      "outcome": "All seven rungs remain ONE statistical tier (0/21 pairs significant after BH-FDR) \u2014 extra spend cannot be shown to buy F1 on this instrument. Pareto-efficient set: min6 $2.43/0.8784, min11 $4.00/0.8835, high31 $69.21/0.8902, high35 $71.23/0.8951; DOMINATED: high6 ($14.04/0.8641 \u2014 v1's 'cheap6' is in fact the third most expensive way to buy ~0.87), high5+5vf ($14.41/0.8739), high11 ($26.97/0.8769). 55-map production column (tile factor 8541/487, crops/tile from the GS pools \u2014 slight upper bounds): min6 ~$43, min11 ~$70, high31 ~$1,214, high35 ~$1,249. Costs REBUILT 2026-06-12 from per-item token metadata (token-load audit): the 2026-06-11 calibration sat on a 2x double-counted cost manifest (minimal passes priced 2x too high) and an extrapolated 'HIGH = 3x minimal' that left proposer thinking tokens unbilled (HIGH passes priced 1.4x too LOW); the efficient set was UNCHANGED by the audit (min got cheaper and HIGH dearer monotonically). SCOPE (Obs 362): the F1 column is GS-characterised; at deployment the minimal rungs degrade hardest (transfer deltas HIGH-T0.7 -0.048 < HIGH-T0.3 -0.057 < image -0.078 < MIN -0.087), so the min rungs are NOT production recommendations without the findings SS 16 qualification.",
       "paper_section": "Results",
       "output_path": "results/verifier-robustness/pareto",
       "working_notes_obs": [
@@ -748,7 +748,7 @@
           "results/run-analyses.json",
           "results/verifier-robustness/pareto"
         ],
-        "last_extracted_at": "2026-06-11T12:20:12Z",
+        "last_extracted_at": "2026-06-12T02:11:35Z",
         "extractor_version": "0.4.0"
       }
     },

@@ -260,7 +260,9 @@ def test_run_registry_input_valid_and_in_sync(registry):
     # the registry is now a hand-authored INPUT the generator reads, not synthesises (B1)
     reg = load_run_registry()
     assert validate_manifest("run-registry", reg, registry) == []
-    assert len(reg["registry"]) == 28  # +1: n1-pro-rerun-384 (E57 genuine-Pro re-run)
+    # 29: +verifier-robustness (S111); 31: +flash35-pv-2x2,
+    # +55maps-text-min-n10-uplift (S113 second wave)
+    assert len(reg["registry"]) == 31
     assert "generator_version" not in reg  # run-registry schema is closed; no generator_version
     # registry and facts must describe the same run set (the B1 drift guard)
     assert drift_check(reg["registry"], load_run_facts()) == []
@@ -288,7 +290,9 @@ def test_run_conditions_sidecar_in_sync(registry):
 def test_manifest_envelopes_valid(registry):
     at = "2026-05-30T00:00:00Z"
     _reg, run_rows, conditions, passes, analyses, warnings = build_manifests(at)
-    assert len(run_rows) == 28  # +1: n1-pro-rerun-384 (E57 genuine-Pro re-run)
+    # 29: +verifier-robustness (S111); 31: +flash35-pv-2x2,
+    # +55maps-text-min-n10-uplift (S113 second wave)
+    assert len(run_rows) == 31
     assert warnings == []
 
     runs_obj = assemble_manifest("runs", run_rows, at)

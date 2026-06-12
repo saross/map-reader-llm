@@ -1,8 +1,8 @@
 # Session 111 — discoveries dossier (for review, 2026-06-11 AM)
 
-> **Last revised**: 2026-06-11 (S113: the pending § 11 significance tests
-> are run — proposer loss resolved, verifier losses are cost-rule ties).
-> See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-06-12 (§ 3 cost ratios corrected from the
+> token-load audit: 1/8 → 1/17, HIGH ≈ 3× → 8.6× minimal). See
+> [§ Changelog](#changelog) for revision history.
 
 Compiled at Shawn's request before the morning review: every substantive
 finding of the session, with anchors. Findings 1–5 belong to the
@@ -31,11 +31,13 @@ The largest span (raw p = 0.012, BH 0.096) is suggestive, unprovable on the
 At equal pass count, MINIMAL-thinking proposers reach statistical parity
 with HIGH (min6 0.8708 vs high6 0.8641, p = 0.66; min11 0.8835 vs high11
 0.8769, p = 0.59) — and **min11 vs the 31-pass headline is p = 0.56** at
-roughly 1/8 the estimated cost. min11 carries the best MCC on the PV board
-(0.807). The consensus-era dividend (Obs 141) is real for consensus-only
-architectures and obsolete under PV. Cost-recast frontier: HIGH proposer
-passes ≈ 3× minimal, so the dollar-axis frontier collapses onto the
-minimal-thinking rungs. Anchors:
+roughly ~~1/8~~ **1/17 (audited)** the estimated cost. min11 carries the
+best MCC on the PV board (0.807). The consensus-era dividend (Obs 141) is
+real for consensus-only architectures and obsolete under PV. Cost-recast
+frontier: HIGH proposer passes ≈ ~~3×~~ **8.6× (token-load audit,
+2026-06-12 — thinking tokens bill at the output rate)** minimal, so the
+dollar-axis frontier collapses onto the minimal-thinking rungs — more
+strongly than first estimated. Anchors:
 `results/verifier-robustness/min_thinking_pv.log`,
 `min_vs_high_permutations.json`. **Proposed Obs (morning): the
 strongest new-finding candidate of the session.**
@@ -177,6 +179,14 @@ verifier legs, the single 503-dropped candidate patched via cleanup). The
    rename) + the findings-doc fold-in of the post-S111 results.
 
 ## Changelog
+
+### 2026-06-12 — § 3 cost ratios corrected from the token-load audit
+
+**Refresh trigger**: the token-load audit
+(`reports/token-load-audit-2026-06-12.md`). § 3's "1/8 the cost" and
+"HIGH ≈ 3× minimal" were pre-audit estimates; audited rates make them
+1/17 and 8.6× — the minimal-rung conclusion strengthens. The F1 values
+and p-values are untouched.
 
 ### 2026-06-11 (S113) — Flash 3.5 significance tests run (§ 11)
 
