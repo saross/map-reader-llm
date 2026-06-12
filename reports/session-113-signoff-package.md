@@ -79,10 +79,14 @@ or in the paper narrative; the sweep JSON preserves them citably enough.
    True total
    spend across the five 55-map campaigns ≈ $722 flex (lower bound;
    retry attempts unrecorded) — **cross-check against the Google billing
-   console**, which is ground truth. Recommendation: regenerate the
-   three corrupted manifests (and re-price t0.3) in a dedicated pass —
-   not done in the audit; the fix list for the generator is in audit
-   § 9.
+   console**, which is ground truth. ~~Recommendation: regenerate the
+   three corrupted manifests (and re-price t0.3) in a dedicated pass~~
+   **DONE (Shawn-directed, 2026-06-12)**: generator fixed
+   (`--pricing-tier` audited path, commit `dc8ac772c`) and all four
+   manifests regenerated at flex with stub verifier legs reconstructed
+   (commit `8e142df9c`); originals archived to
+   `archive/superseded-cost-manifests-2026-06-12/`. Corrected campaign
+   totals: $30.44 / $207.34 / $261.02 / $200.83.
 
 ## 6. Registration conventions adopted (flag if you disagree)
 

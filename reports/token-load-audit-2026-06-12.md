@@ -253,6 +253,22 @@ pre-recovery backups additively; (2) price at the run's recorded
 
 ## Changelog
 
+### 2026-06-12 (later) — § 9 recommendation EXECUTED
+
+The generator received the three § 9 fixes as an opt-in
+`--pricing-tier` audited path (`scripts/run_generalisation.py`, commit
+`dc8ac772c`; default `recorded` keeps legacy behaviour; 4 new tier1
+tests). All four manifests regenerated at flex (commit `8e142df9c`);
+superseded originals archived to
+`archive/superseded-cost-manifests-2026-06-12/`. Regenerated per-pass
+costs land inside this audit's measured ranges; tiles 42,705 = 5 ×
+8,541 per run. One deliberate divergence from § 6: the regeneration
+reconstructs EVERY stub verifier leg from its proven call count
+(text-min +$7.08 over the stub, image +$5.48), where § 6's table had
+mixed bases — corrected campaign totals are $30.44 / $207.34 /
+$261.02 / $200.83 (five-campaign total with the uplift ≈ $734 flex,
+still a lower bound for retries).
+
 ### 2026-06-12 — Original publication
 
 Token-load audit conducted against the four 55-map cost manifests, the
