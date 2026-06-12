@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-06-12T06:59:01Z",
+  "generated_at": "2026-06-12T07:16:30Z",
   "generator_version": "0.4.0",
   "analyses": [
     {
@@ -793,8 +793,24 @@
       "analysis_id": "unswept-pools-completeness",
       "type": "sweep",
       "conditions_compared": [
-        "pv-diag-384::verified-adv-text-pro-vf-4of5",
-        "pv-diag-384::verified-adv-image-3of5"
+        "pv-diag-384::verified-adv-image-3of5",
+        "pv-diag-384::verified-adv-image-baseline",
+        "pv-diag-384::verified-adv-image-baseline-medium-vf",
+        "pv-diag-384::verified-adv-image-baseline-pro-vf",
+        "pv-diag-384::verified-adv-image-min-3of5",
+        "pv-diag-384::verified-adv-image-min-6of10",
+        "pv-diag-384::verified-adv-pro-image-baseline",
+        "pv-diag-384::verified-adv-pro-image-baseline-medium-vf",
+        "pv-diag-384::verified-adv-pro-image-baseline-pro-vf",
+        "pv-diag-384::verified-adv-pro-image-pro-vf-3of5",
+        "pv-diag-384::verified-adv-pro-text-baseline",
+        "pv-diag-384::verified-adv-pro-text-baseline-medium-vf",
+        "pv-diag-384::verified-adv-pro-text-baseline-pro-vf",
+        "pv-diag-384::verified-adv-pro-text-medium-vf-3of5",
+        "pv-diag-384::verified-adv-text-baseline",
+        "pv-diag-384::verified-adv-text-baseline-medium-vf",
+        "pv-diag-384::verified-adv-text-baseline-pro-vf",
+        "pv-diag-384::verified-adv-text-pro-vf-4of5"
       ],
       "hypothesis_refs": [
         "H2",
@@ -811,13 +827,13 @@
         "Obs 363 \u2014 the completeness sweep (this analysis)",
         "Obs 359 \u2014 verifier-model scope refinement"
       ],
-      "manually_verified_at": "2026-06-12T06:59:01Z",
+      "manually_verified_at": "2026-06-12T07:16:28Z",
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/verifier-robustness"
         ],
-        "last_extracted_at": "2026-06-12T06:59:01Z",
+        "last_extracted_at": "2026-06-12T07:16:30Z",
         "extractor_version": "0.4.0"
       }
     },

@@ -686,10 +686,26 @@
     {
       "analysis_id": "unswept-pools-completeness",
       "type": "sweep",
-      "_note": "Completeness sweep (S112-113 / Obs 363): all 18 never-PV-swept proposer pools under outputs/h11/pv-diag-384 scored at their best (proposer-k x prob_t) operating points (scripts/sweep_unswept_pools.py; results/verifier-robustness/unswept_pools_sweep.json, pro_vf_permutations.json). TWO sweep cells are minted as citable conditions (verified-adv-text-pro-vf-4of5 and verified-adv-image-3of5); the remaining 16 stay analysis-internal PENDING Shawn's citability decision (S113 continuity). Like pv-diag-384-consensus-calibration, this registers calibration/completeness material, not a finding board.",
+      "_note": "Completeness sweep (S112-113 / Obs 363): all 18 never-PV-swept proposer pools under outputs/h11/pv-diag-384 scored at their best (proposer-k x prob_t) operating points (scripts/sweep_unswept_pools.py; results/verifier-robustness/unswept_pools_sweep.json, pro_vf_permutations.json). DISPOSITION (Shawn, 2026-06-12: make everything that can be first-class first-class): 17 of the 18 sweep cells are now first-class pv-diag-384 conditions \u2014 cell #2 minted in the morning wave (verified-adv-text-pro-vf-4of5), the other 16 in this promotion (scripts/author_sweep_promotions.py); cell #1 is NOT separately minted because its optimum IS the registered headline (verified-adv-text-consensus-16of30 \u2014 promotion would duplicate it). Like pv-diag-384-consensus-calibration, this registers completeness material, not a finding board.",
       "conditions_compared": [
-        "pv-diag-384::verified-adv-text-pro-vf-4of5",
-        "pv-diag-384::verified-adv-image-3of5"
+        "pv-diag-384::verified-adv-image-3of5",
+        "pv-diag-384::verified-adv-image-baseline",
+        "pv-diag-384::verified-adv-image-baseline-medium-vf",
+        "pv-diag-384::verified-adv-image-baseline-pro-vf",
+        "pv-diag-384::verified-adv-image-min-3of5",
+        "pv-diag-384::verified-adv-image-min-6of10",
+        "pv-diag-384::verified-adv-pro-image-baseline",
+        "pv-diag-384::verified-adv-pro-image-baseline-medium-vf",
+        "pv-diag-384::verified-adv-pro-image-baseline-pro-vf",
+        "pv-diag-384::verified-adv-pro-image-pro-vf-3of5",
+        "pv-diag-384::verified-adv-pro-text-baseline",
+        "pv-diag-384::verified-adv-pro-text-baseline-medium-vf",
+        "pv-diag-384::verified-adv-pro-text-baseline-pro-vf",
+        "pv-diag-384::verified-adv-pro-text-medium-vf-3of5",
+        "pv-diag-384::verified-adv-text-baseline",
+        "pv-diag-384::verified-adv-text-baseline-medium-vf",
+        "pv-diag-384::verified-adv-text-baseline-pro-vf",
+        "pv-diag-384::verified-adv-text-pro-vf-4of5"
       ],
       "hypothesis_refs": [
         "H2",
@@ -706,7 +722,7 @@
         "Obs 363 \u2014 the completeness sweep (this analysis)",
         "Obs 359 \u2014 verifier-model scope refinement"
       ],
-      "manually_verified_at": "2026-06-12T06:59:01Z"
+      "manually_verified_at": "2026-06-12T07:16:28Z"
     },
     {
       "analysis_id": "55map-canonical-leaderboard-50m",

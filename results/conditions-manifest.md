@@ -2,9 +2,9 @@
 
 # Conditions manifest
 
-> Generated 2026-06-11T12:20:12Z · 306 row(s) · schema v1.0.
+> Generated 2026-06-12T07:16:30Z · 322 row(s) · schema v1.0.
 >
-> **Coverage**: 306 condition(s) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 322 condition(s) across the decomposed runs (sub-step 3b in progress).
 
 | condition_id | arch | agg | vote | n | F1@20m | MCC | n_det |
 |---|---|---|---|---|---|---|---|
@@ -182,6 +182,22 @@
 | pv-diag-384::verified-adv-text-t03-4of5 | proposer-verifier | verified | 4 | 5 | 0.8783 | 0.7834 | 403 |
 | pv-diag-384::verified-adv-image-3of5 | proposer-verifier | verified | 3 | 5 | 0.7778 | 0.8268 | 411 |
 | pv-diag-384::verified-adv-text-pro-vf-4of5 | proposer-verifier | verified | 4 | 5 | 0.8792 | 0.7947 | 393 |
+| pv-diag-384::verified-adv-image-min-3of5 | proposer-verifier | verified | 3 | 5 | 0.7673 | 0.8461 | 420 |
+| pv-diag-384::verified-adv-image-min-6of10 | proposer-verifier | verified | 6 | 10 | 0.789 | 0.8032 | 399 |
+| pv-diag-384::verified-adv-image-baseline | proposer-verifier | verified | 1 | 1 | 0.7167 | 0.8766 | 511 |
+| pv-diag-384::verified-adv-image-baseline-medium-vf | proposer-verifier | verified | 1 | 1 | 0.73 | 0.8848 | 513 |
+| pv-diag-384::verified-adv-image-baseline-pro-vf | proposer-verifier | verified | 1 | 1 | 0.7309 | 0.8887 | 509 |
+| pv-diag-384::verified-adv-text-baseline | proposer-verifier | verified | 1 | 1 | 0.8142 | 0.8328 | 464 |
+| pv-diag-384::verified-adv-text-baseline-medium-vf | proposer-verifier | verified | 1 | 1 | 0.8244 | 0.8372 | 465 |
+| pv-diag-384::verified-adv-text-baseline-pro-vf | proposer-verifier | verified | 1 | 1 | 0.8263 | 0.8328 | 463 |
+| pv-diag-384::verified-adv-pro-text-medium-vf-3of5 | proposer-verifier | verified | 3 | 5 | 0.8495 | 0.7302 | 349 |
+| pv-diag-384::verified-adv-pro-image-pro-vf-3of5 | proposer-verifier | verified | 3 | 5 | 0.7112 | 0.8499 | 434 |
+| pv-diag-384::verified-adv-pro-text-baseline | proposer-verifier | verified | 1 | 1 | 0.7696 | 0.7823 | 394 |
+| pv-diag-384::verified-adv-pro-text-baseline-medium-vf | proposer-verifier | verified | 1 | 1 | 0.7842 | 0.7872 | 399 |
+| pv-diag-384::verified-adv-pro-text-baseline-pro-vf | proposer-verifier | verified | 1 | 1 | 0.7861 | 0.7908 | 402 |
+| pv-diag-384::verified-adv-pro-image-baseline | proposer-verifier | verified | 1 | 1 | 0.6196 | 0.8232 | 485 |
+| pv-diag-384::verified-adv-pro-image-baseline-medium-vf | proposer-verifier | verified | 1 | 1 | 0.6281 | 0.8328 | 463 |
+| pv-diag-384::verified-adv-pro-image-baseline-pro-vf | proposer-verifier | verified | 1 | 1 | 0.6178 | 0.8328 | 465 |
 | h12-v2::greedy-r1-hn-heavy | consensus | greedy | 4 | 5 | 0.7084 | 0.6956 | 240 |
 | h12-v2::greedy-r2-balanced | consensus | greedy | 4 | 5 | 0.7171 | 0.7168 | 236 |
 | h12-v2::greedy-r3-hp-heavy | consensus | greedy | 4 | 5 | 0.6876 | 0.7169 | 254 |

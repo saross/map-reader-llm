@@ -2583,6 +2583,326 @@
           "eval_path": "results/verifier-robustness/evals/verified-adv-text-pro-vf-4of5/evaluation.json",
           "detections": "results/verifier-robustness/min-thinking-sets/high6-PRO-vf-4of5-pt0.25.geojson",
           "_note": "Completeness-sweep discovery (Obs 363): the Pro verifier over the Flash-HIGH 5-pass union \u2014 +0.015 vs the Flash verifier on the same pool (raw p=0.019, post-hoc), ns vs the headline (p=0.41) and min11 (p=0.76). Refines Obs 359's 'verifier model barely matters' to high-recall pools; dominated by min11 on cost."
+        },
+        {
+          "label": "verified-adv-image-min-3of5",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "image-1of5",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-image-min-3of5/evaluation.json",
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-image-min-3of5.geojson",
+          "_note": "Completeness-sweep promotion (Shawn, 2026-06-12: everything first-class). Sweep cell: 'image-min-t07-5pass + flash-min vf' (unswept_pools_sweep.json; Obs 363)."
+        },
+        {
+          "label": "verified-adv-image-min-6of10",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "image-1of10",
+          "n_passes": 10,
+          "vote_threshold": 6,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-image-min-6of10/evaluation.json",
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-image-min-6of10.geojson",
+          "_note": "Completeness-sweep promotion (Shawn, 2026-06-12: everything first-class). Sweep cell: 'image-min-t07-10pass + flash-min vf' (unswept_pools_sweep.json; Obs 363)."
+        },
+        {
+          "label": "verified-adv-image-baseline",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "image-baseline",
+          "n_passes": 1,
+          "vote_threshold": 1,
+          "prob_threshold": 0.2,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-image-baseline/evaluation.json",
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-image-baseline.geojson",
+          "_note": "Completeness-sweep promotion (Shawn, 2026-06-12: everything first-class). Sweep cell: 'image-min-t00-baseline + flash-min vf' (unswept_pools_sweep.json; Obs 363)."
+        },
+        {
+          "label": "verified-adv-image-baseline-medium-vf",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "image-baseline",
+          "n_passes": 1,
+          "vote_threshold": 1,
+          "prob_threshold": 0.25,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "medium",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-image-baseline-medium-vf/evaluation.json",
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-image-baseline-medium-vf.geojson",
+          "_note": "Completeness-sweep promotion (Shawn, 2026-06-12: everything first-class). Sweep cell: 'image-min-t00-baseline + flash-med vf' (unswept_pools_sweep.json; Obs 363)."
+        },
+        {
+          "label": "verified-adv-image-baseline-pro-vf",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "image-baseline",
+          "n_passes": 1,
+          "vote_threshold": 1,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3.1-pro-preview",
+            "thinking_level": "medium",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-image-baseline-pro-vf/evaluation.json",
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-image-baseline-pro-vf.geojson",
+          "_note": "Completeness-sweep promotion (Shawn, 2026-06-12: everything first-class). Sweep cell: 'image-min-t00-baseline + pro vf' (unswept_pools_sweep.json; Obs 363)."
+        },
+        {
+          "label": "verified-adv-text-baseline",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "text-baseline",
+          "n_passes": 1,
+          "vote_threshold": 1,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-text-baseline/evaluation.json",
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-text-baseline.geojson",
+          "_note": "Completeness-sweep promotion (Shawn, 2026-06-12: everything first-class). Sweep cell: 'text-min-t00-baseline + flash-min vf' (unswept_pools_sweep.json; Obs 363)."
+        },
+        {
+          "label": "verified-adv-text-baseline-medium-vf",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "text-baseline",
+          "n_passes": 1,
+          "vote_threshold": 1,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "medium",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-text-baseline-medium-vf/evaluation.json",
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-text-baseline-medium-vf.geojson",
+          "_note": "Completeness-sweep promotion (Shawn, 2026-06-12: everything first-class). Sweep cell: 'text-min-t00-baseline + flash-med vf' (unswept_pools_sweep.json; Obs 363)."
+        },
+        {
+          "label": "verified-adv-text-baseline-pro-vf",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "text-baseline",
+          "n_passes": 1,
+          "vote_threshold": 1,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3.1-pro-preview",
+            "thinking_level": "medium",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-text-baseline-pro-vf/evaluation.json",
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-text-baseline-pro-vf.geojson",
+          "_note": "Completeness-sweep promotion (Shawn, 2026-06-12: everything first-class). Sweep cell: 'text-min-t00-baseline + pro vf' (unswept_pools_sweep.json; Obs 363)."
+        },
+        {
+          "label": "verified-adv-pro-text-medium-vf-3of5",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "pro-high-text-1of5",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": 0.05,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "medium",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-pro-text-medium-vf-3of5/evaluation.json",
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-pro-text-medium-vf-3of5.geojson",
+          "_note": "Completeness-sweep promotion (Shawn, 2026-06-12: everything first-class). Sweep cell: 'pro-high-text-5pass + flash-med vf' (unswept_pools_sweep.json; Obs 363)."
+        },
+        {
+          "label": "verified-adv-pro-image-pro-vf-3of5",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "pro-high-image-1of5",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": 0.05,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3.1-pro-preview",
+            "thinking_level": "medium",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-pro-image-pro-vf-3of5/evaluation.json",
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-pro-image-pro-vf-3of5.geojson",
+          "_note": "Completeness-sweep promotion (Shawn, 2026-06-12: everything first-class). Sweep cell: 'pro-high-image-5pass + pro vf' (unswept_pools_sweep.json; Obs 363)."
+        },
+        {
+          "label": "verified-adv-pro-text-baseline",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "pro-medium-text-baseline",
+          "n_passes": 1,
+          "vote_threshold": 1,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-pro-text-baseline/evaluation.json",
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-pro-text-baseline.geojson",
+          "_note": "Completeness-sweep promotion (Shawn, 2026-06-12: everything first-class). Sweep cell: 'pro-med-text-baseline + flash-min vf' (unswept_pools_sweep.json; Obs 363)."
+        },
+        {
+          "label": "verified-adv-pro-text-baseline-medium-vf",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "pro-medium-text-baseline",
+          "n_passes": 1,
+          "vote_threshold": 1,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "medium",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-pro-text-baseline-medium-vf/evaluation.json",
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-pro-text-baseline-medium-vf.geojson",
+          "_note": "Completeness-sweep promotion (Shawn, 2026-06-12: everything first-class). Sweep cell: 'pro-med-text-baseline + flash-med vf' (unswept_pools_sweep.json; Obs 363)."
+        },
+        {
+          "label": "verified-adv-pro-text-baseline-pro-vf",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "pro-medium-text-baseline",
+          "n_passes": 1,
+          "vote_threshold": 1,
+          "prob_threshold": 0.15,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3.1-pro-preview",
+            "thinking_level": "medium",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-pro-text-baseline-pro-vf/evaluation.json",
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-pro-text-baseline-pro-vf.geojson",
+          "_note": "Completeness-sweep promotion (Shawn, 2026-06-12: everything first-class). Sweep cell: 'pro-med-text-baseline + pro vf' (unswept_pools_sweep.json; Obs 363)."
+        },
+        {
+          "label": "verified-adv-pro-image-baseline",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "pro-medium-image-baseline",
+          "n_passes": 1,
+          "vote_threshold": 1,
+          "prob_threshold": 0.1,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "minimal",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-pro-image-baseline/evaluation.json",
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-pro-image-baseline.geojson",
+          "_note": "Completeness-sweep promotion (Shawn, 2026-06-12: everything first-class). Sweep cell: 'pro-med-image-baseline + flash-min vf' (unswept_pools_sweep.json; Obs 363)."
+        },
+        {
+          "label": "verified-adv-pro-image-baseline-medium-vf",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "pro-medium-image-baseline",
+          "n_passes": 1,
+          "vote_threshold": 1,
+          "prob_threshold": 0.05,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3-flash-preview",
+            "thinking_level": "medium",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-pro-image-baseline-medium-vf/evaluation.json",
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-pro-image-baseline-medium-vf.geojson",
+          "_note": "Completeness-sweep promotion (Shawn, 2026-06-12: everything first-class). Sweep cell: 'pro-med-image-baseline + flash-med vf' (unswept_pools_sweep.json; Obs 363)."
+        },
+        {
+          "label": "verified-adv-pro-image-baseline-pro-vf",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "pro-medium-image-baseline",
+          "n_passes": 1,
+          "vote_threshold": 1,
+          "prob_threshold": 0.05,
+          "verifier_config": {
+            "variant": "v1",
+            "instruction_file": "verify_adversarial.md",
+            "model": "gemini-3.1-pro-preview",
+            "thinking_level": "medium",
+            "temperature": 0.0,
+            "iterations": 1
+          },
+          "eval_path": "results/verifier-robustness/evals/verified-adv-pro-image-baseline-pro-vf/evaluation.json",
+          "detections": "results/verifier-robustness/sweep-sets/verified-adv-pro-image-baseline-pro-vf.geojson",
+          "_note": "Completeness-sweep promotion (Shawn, 2026-06-12: everything first-class). Sweep cell: 'pro-med-image-baseline + pro vf' (unswept_pools_sweep.json; Obs 363)."
         }
       ],
       "_ignored_evals": [
