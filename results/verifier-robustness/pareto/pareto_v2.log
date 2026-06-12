@@ -1,11 +1,11 @@
 === rungs (gates vs committed records) ===
-  min6       F1=0.8784 (record 0.8784)  GS $3.81  55-map production ~$67
-  min11      F1=0.8835 (record 0.8835)  GS $6.75  55-map production ~$118
-  high6      F1=0.8641 (record 0.8641)  GS $10.65  55-map production ~$187
-  high5+5vf  F1=0.8739 (record 0.8739)  GS $11.03  55-map production ~$193
-  high11     F1=0.8769 (record 0.8769)  GS $20.19  55-map production ~$354
-  high31     F1=0.8902 (record 0.8902)  GS $48.81  55-map production ~$856
-  high35     F1=0.8951 (record 0.8951)  GS $50.84  55-map production ~$892
+  min6       F1=0.8784 (record 0.8784)  GS $2.43  55-map production ~$43
+  min11      F1=0.8835 (record 0.8835)  GS $4.00  55-map production ~$70
+  high6      F1=0.8641 (record 0.8641)  GS $14.04  55-map production ~$246
+  high5+5vf  F1=0.8739 (record 0.8739)  GS $14.41  55-map production ~$253
+  high11     F1=0.8769 (record 0.8769)  GS $26.97  55-map production ~$473
+  high31     F1=0.8902 (record 0.8902)  GS $69.21  55-map production ~$1214
+  high35     F1=0.8951 (record 0.8951)  GS $71.23  55-map production ~$1249
 
 === round-robin (21 pairs, 10k, seed 42) ===
 0/21 significant -> 1 tier(s): [['high35', 'high31', 'min11', 'min6', 'high11', 'high5+5vf', 'high6']]
