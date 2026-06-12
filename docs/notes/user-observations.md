@@ -89,3 +89,32 @@ pro-verifier surprise nobody was looking for and closed the 30-pass-family
 optimum question for free. The instinct: unexamined data is simultaneously a
 liability (hidden contradictions) and an asset (free findings), and the cure
 for both is the same sweep.
+
+## Session 113 — 2026-06-12 (approved in-session)
+
+**He supplies the one dataset only he can see — and it settles the audit.**
+The token-load audit's conclusions rested on reconstructed token counts until
+Shawn pulled the Google billing-console dailies (AEST) on request: the 18
+April single-day figure matched the audited rates within 4% and excluded the
+legacy manifests by 3×, and the June dailies excluded the pre-audit uplift
+cost outright. The pattern: when an analysis bottoms out at "the ground truth
+is outside the repo", he fetches it rather than letting the lower-bound caveat
+stand — and supplying it promptly turned a plausible audit into a corroborated
+one.
+
+**"Make everything that can be first-class first-class."** Asked whether 16
+sweep cells should stay analysis-internal, he generalised the question into a
+registration policy: if the data and metadata exist to pass the gates, the
+cell becomes a condition — no curation by anticipated usefulness. The two
+principled exceptions (a cell whose optimum duplicates an existing condition;
+one already minted) survived because they are structural, not judgement calls.
+The policy removes a whole class of future "is X citable?" decisions.
+
+**The interactive sign-off walkthrough as a review format.** Working the
+sign-off queue together — each analysis presented with its claim, its
+re-verified numbers, and one flagged caveat; each Obs walked with blemishes
+routed to an append-only rider — caught real defects that batch sign-off
+would have missed (a stale cost table, an artefact mischaracterised as a
+finding, a mislabelled comparator). His verdict cadence ("accept, next?")
+kept it fast; the format's value was that every signature now has a
+verification trail behind it.
