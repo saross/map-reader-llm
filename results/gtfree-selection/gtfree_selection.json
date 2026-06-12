@@ -1,0 +1,160 @@
+{
+  "design": "leave-one-family-out cross-config consensus pseudo-GT; single-linkage clustering at 50 m; families T03/TH7/TM/IM with k3 representatives; scored vs the canonical-GT board (results/55map-leaderboard/55map_leaderboard_50m.json)",
+  "radius_m": 50.0,
+  "vote2": {
+    "pseudo_gt_sizes": {
+      "T03": 4399,
+      "TH7": 4407,
+      "TM": 4538,
+      "IM": 4539
+    },
+    "cells": [
+      {
+        "cell": "T03-k3 (oracle)",
+        "family": "T03",
+        "pseudo_f1": 0.8844,
+        "pseudo_precision": 0.8387,
+        "pseudo_recall": 0.9352,
+        "true_f1": 0.8476058017087225
+      },
+      {
+        "cell": "T03-k4",
+        "family": "T03",
+        "pseudo_f1": 0.8895,
+        "pseudo_precision": 0.8945,
+        "pseudo_recall": 0.8845,
+        "true_f1": 0.8358742508674167
+      },
+      {
+        "cell": "TH7-k3",
+        "family": "TH7",
+        "pseudo_f1": 0.8933,
+        "pseudo_precision": 0.8579,
+        "pseudo_recall": 0.9317,
+        "true_f1": 0.8424650648436715
+      },
+      {
+        "cell": "TH7-k4 (carry-forward)",
+        "family": "TH7",
+        "pseudo_f1": 0.8841,
+        "pseudo_precision": 0.9099,
+        "pseudo_recall": 0.8598,
+        "true_f1": 0.8152278820375335
+      },
+      {
+        "cell": "TM-k3",
+        "family": "TM",
+        "pseudo_f1": 0.8624,
+        "pseudo_precision": 0.8885,
+        "pseudo_recall": 0.8378,
+        "true_f1": 0.8127118644067797
+      },
+      {
+        "cell": "TM-k4",
+        "family": "TM",
+        "pseudo_f1": 0.8387,
+        "pseudo_precision": 0.9118,
+        "pseudo_recall": 0.7766,
+        "true_f1": 0.7830711278528694
+      },
+      {
+        "cell": "TM-n10-k5 (uplift)",
+        "family": "TM",
+        "pseudo_f1": 0.8675,
+        "pseudo_precision": 0.8851,
+        "pseudo_recall": 0.8506,
+        "true_f1": 0.8290275152278933
+      },
+      {
+        "cell": "IM-k3",
+        "family": "IM",
+        "pseudo_f1": 0.8159,
+        "pseudo_precision": 0.8036,
+        "pseudo_recall": 0.8286,
+        "true_f1": 0.7986993191748807
+      }
+    ],
+    "spearman_all8": 0.881,
+    "spearman_text7": 0.8571,
+    "top_pick_pseudo": "TH7-k3",
+    "top_pick_true": "T03-k3 (oracle)"
+  },
+  "vote3": {
+    "pseudo_gt_sizes": {
+      "T03": 3285,
+      "TH7": 3289,
+      "TM": 3594,
+      "IM": 3654
+    },
+    "cells": [
+      {
+        "cell": "T03-k3 (oracle)",
+        "family": "T03",
+        "pseudo_f1": 0.7834,
+        "pseudo_precision": 0.654,
+        "pseudo_recall": 0.9766,
+        "true_f1": 0.8476058017087225
+      },
+      {
+        "cell": "T03-k4",
+        "family": "T03",
+        "pseudo_f1": 0.8113,
+        "pseudo_precision": 0.712,
+        "pseudo_recall": 0.9428,
+        "true_f1": 0.8358742508674167
+      },
+      {
+        "cell": "TH7-k3",
+        "family": "TH7",
+        "pseudo_f1": 0.7933,
+        "pseudo_precision": 0.6692,
+        "pseudo_recall": 0.9739,
+        "true_f1": 0.8424650648436715
+      },
+      {
+        "cell": "TH7-k4 (carry-forward)",
+        "family": "TH7",
+        "pseudo_f1": 0.8139,
+        "pseudo_precision": 0.7284,
+        "pseudo_recall": 0.9222,
+        "true_f1": 0.8152278820375335
+      },
+      {
+        "cell": "TM-k3",
+        "family": "TM",
+        "pseudo_f1": 0.8142,
+        "pseudo_precision": 0.749,
+        "pseudo_recall": 0.8918,
+        "true_f1": 0.8127118644067797
+      },
+      {
+        "cell": "TM-k4",
+        "family": "TM",
+        "pseudo_f1": 0.8065,
+        "pseudo_precision": 0.7783,
+        "pseudo_recall": 0.837,
+        "true_f1": 0.7830711278528694
+      },
+      {
+        "cell": "TM-n10-k5 (uplift)",
+        "family": "TM",
+        "pseudo_f1": 0.8196,
+        "pseudo_precision": 0.7475,
+        "pseudo_recall": 0.9071,
+        "true_f1": 0.8290275152278933
+      },
+      {
+        "cell": "IM-k3",
+        "family": "IM",
+        "pseudo_f1": 0.7711,
+        "pseudo_precision": 0.6865,
+        "pseudo_recall": 0.8793,
+        "true_f1": 0.7986993191748807
+      }
+    ],
+    "spearman_all8": -0.0952,
+    "spearman_text7": -0.5357,
+    "top_pick_pseudo": "TM-n10-k5 (uplift)",
+    "top_pick_true": "T03-k3 (oracle)"
+  }
+}
