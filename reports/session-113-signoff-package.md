@@ -74,8 +74,9 @@ or in the paper narrative; the sweep JSON preserves them citably enough.
    rebuilt from per-item metadata (min pass $4.66, HIGH T0.7 $40.19,
    image HIGH $39.07 per 8,541-tile pass at flex; verifier
    $0.000693/call). **Efficient set and all F1/tier results unchanged**;
-   dollars moved (min rungs ~36% down, HIGH rungs up — high31 production
-   ~$856 → ~$1,214; the § 16(c) trade is now ~$58 vs ~$207). True total
+   dollars moved (min rungs 36–41% down, HIGH rungs 31–42% up — high31
+   production ~$856 → ~$1,214; the § 16(c) trade is now ~$58 vs ~$207).
+   True total
    spend across the five 55-map campaigns ≈ $722 flex (lower bound;
    retry attempts unrecorded) — **cross-check against the Google billing
    console**, which is ground truth. Recommendation: regenerate the
