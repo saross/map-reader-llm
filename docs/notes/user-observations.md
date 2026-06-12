@@ -74,15 +74,6 @@ existed (it did, three directories away, and contradicted me). The matching
 follow-up — "is TH7-k3 oracle or carry-forward?" — forced the taxonomy that
 made the threshold-transfer decomposition publishable.
 
-**Approval-with-envelope lets the work run overnight.** "I approve up to $5",
-"ca. $34 unless the smoke test throws up a serious issue", "go to both!" — he
-delegates execution inside an explicit cost envelope plus a smoke gate, stated
-up front. That structure is what allowed two API campaigns and a model tranche
-to run unattended (relaunches, cleanups and all) without a single re-approval
-round-trip, while keeping every dollar pre-authorised. The pattern to preserve:
-the envelope and the abort condition are named *before* launch, so autonomy has
-edges.
-
 **He asks for input on decisions he could make alone — and engages with the
 structure, not the number.** "If you think there's a good argument for a
 standardised 50 m shared operational buffer, please let me know — I would like
