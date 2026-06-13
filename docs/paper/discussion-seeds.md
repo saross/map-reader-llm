@@ -1,6 +1,8 @@
 # Discussion — seed paragraphs
 
-> **Last revised**: 2026-06-13 (original publication, Session 114). See
+> **Last revised**: 2026-06-13 (Seed 4 statistical upgrade: the
+> tile-MCC permutation tiering lands IM-k3 as the sole Tier-1 cell;
+> same-day original publication). See
 > [§ Changelog](#changelog) for revision history.
 
 **Status**: seed paragraphs only — draft prose for the Discussion
@@ -108,9 +110,32 @@ the survey consumes coordinates or tiles* — a cheap two-call-per-tile
 image + verifier stack is the best tile-prioritisation instrument in
 the study while being nowhere near the F1 frontier.
 
+**Statistical upgrade (same day)**: the deployment-scale leg of this
+claim now carries permutation backing
+(`results/metric-leaderboards/55map-mcc-tiering.{md,json}`, 10k
+tile-swap on the MCC statistic + BH-FDR, gate 8/8 exact): **IM-k3 is
+the sole Tier-1 cell on the MCC axis** — all seven of its pairwise
+comparisons are significant, including against the F1 oracle T03-k3
+(ΔMCC +0.020, BH p = 0.0056), and the BCa CIs are now on the board.
+The image cell's MCC lead is a resolved statistical fact at 8,541
+tiles, not a numerical ordering. Note the tile-level inversion of the
+F1 board's tier structure: the F1 oracle drops to MCC Tier 2, and the
+carry-forward sits in MCC Tier 3 with the uplift.
+
 ---
 
 ## Changelog
+
+### 2026-06-13 (later) — Seed 4 statistical upgrade
+
+**Refresh trigger**: Shawn requested the alternate-metric permutation
+with CIs. `scripts/mcc_tiering_55map.py` (zbook, $0; gate 8/8 exact)
+tiers the 55-map board on the MCC statistic: 20/28 pairs significant,
+five tiers, **IM-k3 sole Tier 1** (significant against every other
+cell, incl. the F1 oracle at BH p = 0.0056). Seed 4's claim upgrades
+from "best tile-MCC numerically" to "statistically clear sole leader
+on the tile axis"; BCa MCC CIs (already on disk in the Track-2
+summaries) now render on the metric board.
 
 ### 2026-06-13 — Original publication
 
