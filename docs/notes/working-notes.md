@@ -21483,3 +21483,76 @@ Cross-references:
   registration triggered this board refresh).
 - `docs/paper/discussion-seeds.md` Seed 4 — the Discussion-side
   write-up of this observation, staged in the same session.
+
+## Observation 370: Rider to Obs 369 — the deployment-scale tile-MCC lead is now statistically resolved: IM-k3 is the SOLE Tier-1 cell (Session 114, 2026-06-13)
+
+*Source anchors: `results/metric-leaderboards/55map-mcc-tiering.{json,md}`
+(commit `69b2ecc62`; 20/28 pairs significant, 5 tiers, gate 8/8 exact;
+all values re-verified 2026-06-13);
+`scripts/mcc_tiering_55map.py` (commit `d067007f1`; the tiering harness
+with 7 tier-1 tests); `results/55map-leaderboard/55map_leaderboard_50m.json`
+(the F1 board whose tiers this inverts; verified 2026-06-13).*
+
+### The finding
+
+Obs 369 § "deployment-scale" reported IM-k3's tile-MCC lead (0.7104)
+as a numerical ordering — the 55-map metric board carried no statistics
+on the MCC axis. Shawn requested the alternate-metric permutation with
+CIs (2026-06-13). It is now run (`mcc_tiering_55map.py` on zbook,
+$0; round-robin tile-swap on the MCC statistic, 10k, seed 42,
+two-sided + BH-FDR q = 0.05 + greedy-clique tiers — the project-canonical
+machinery, imported verbatim from the F1 board; each cell's per-tile
+present/not-present vectors rebuilt and gated to reproduce the committed
+`summary.json` confusion matrices EXACTLY, 8/8).
+
+**Result: IM-k3 is the sole Tier-1 cell on the MCC axis.** All seven
+of its pairwise comparisons are significant after BH-FDR, including
+against the F1 oracle T03-k3 (ΔMCC +0.0201, BH p = 0.0056). 20/28 pairs
+significant → five tiers. The 95 % CIs were already on disk — the
+Track-2 engine wrote BCa MCC CIs at scoring time
+(`tile_classification.mcc_CI`); the manifest adapter had merely dropped
+them, and the board generator now recovers them (IM-k3 [0.697, 0.723]).
+
+**The tier structure inverts the F1 board at the top:**
+
+| cell | F1 tier | MCC tier |
+|---|--:|--:|
+| IM-k3 | 4 | **1** |
+| T03-k3 (oracle) | 1 | 2 |
+| TH7-k3 | 1 | 2 |
+| TM-n10-k5 (uplift) | 2 | 3 |
+| T03-k4 | 2 | 3 |
+| TH7-k4 (carry-forward) | 3 | 3 |
+| TM-k3 | 3 | 4 |
+| TM-k4 | 5 | 5 |
+
+The F1 Tier-4 cell is the MCC sole leader; the F1 oracle drops to MCC
+Tier 2; only TM-k4 (bottom) is invariant. Within the text family the
+MCC tiers still respect the F1 ordering (every k3-above-k4 difference
+significant), so the inversion is specifically a *modality* effect, not
+noise — exactly the Obs 369 mechanism (image's weakness is localisation,
+not tile discrimination), now with statistical backing at the
+deployment instrument.
+
+### Why this matters
+
+Obs 369's claim upgrades from "best tile-MCC numerically" to "the
+statistically clear sole leader on the tile axis": for survey-
+prioritisation workflows that consume tiles rather than coordinates,
+the cheap two-call image + verifier stack is not merely ahead but
+*resolvably* ahead at 8,541 tiles, while remaining outside the
+coordinate-F1 frontier. This is the empirical core of § R7 lesson (iii)
+and Discussion Seed 4; it does NOT change Obs 369's other two
+instruments (the GS boards remain F1-untiered on the MCC axis — that
+tiering was not requested and is not run here).
+
+Cross-references:
+
+- **[[Obs 369]]** (the parent — this rider supplies the significance
+  its § "deployment-scale" paragraph left open; no Obs 369 text edited,
+  per the append-only rule).
+- **[[Obs 347]]** (GS-plateau resolving power — the 8,541-tile
+  deployment instrument has the power the 487-tile GS instrument lacks,
+  which is why the MCC lead resolves here and not on GS).
+- `docs/paper/discussion-seeds.md` Seed 4 changelog (2026-06-13 later) —
+  the Discussion-side record of the same upgrade.
