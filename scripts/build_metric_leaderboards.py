@@ -186,6 +186,14 @@ def main() -> int:
     for name, d in M55_CELLS.items():
         c = load_cell(M55 / d / "evaluation.json", 50)
         if c:
+            # The manifest adapter drops the engine's BCa MCC CIs; recover
+            # them from the Track-2 summary.json (tile_classification.mcc_CI
+            # at the 50 m headline) so the MCC-led board carries intervals.
+            summary = json.loads((M55 / d / "summary.json").read_text())
+            row50 = next(r for r in summary["results"] if r["R_m"] == 50)
+            ci = row50["tile_classification"].get("mcc_CI")
+            if ci:
+                c["mcc_ci"] = [round(ci[0], 4), round(ci[1], 4)]
             m55[name] = c
     emit("55map-canonical", m55, 50)
     return 0
