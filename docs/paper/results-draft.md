@@ -2,10 +2,11 @@
 
 > **Last revised**: 2026-06-13 (Session 114: the three § R2/§ R7/§ R8
 > draft notes resolved; § R9 — GT-free selection — added; § R5 programme
-> cost corrected to the as-run ≈ $54). Prior: 2026-06-12 (token-load
-> audit: § R6 dollars rebuilt at audited flex rates; Obs 365 frontier
-> decomposition added). See [§ Changelog](#changelog) for revision
-> history.
+> cost corrected to the as-run ≈ $54; § R7 lesson (iii) strengthened with
+> the registered MCC tiering — IM-k3 sole Tier-1). Prior: 2026-06-12
+> (token-load audit: § R6 dollars rebuilt at audited flex rates; Obs 365
+> frontier decomposition added). See [§ Changelog](#changelog) for
+> revision history.
 
 **Status**: first full-prose draft for collaborative revision. Every number
 is anchored to a registered manifest condition or analysis
@@ -320,10 +321,20 @@ sat on a statistical plateau; at deployment scale the plateau resolves,
 and it resolves *looser* — a pattern that recurred when the uplift cell's
 best deployment threshold (5-of-10) again sat looser than its GS optimum
 (6-of-10). **(ii) Thinking level is a priced trade** (§ R6). **(iii) The
-F1/MCC trade-off recurs at deployment**: the image configuration ranks
-seventh on F1 but carries the board's best tile-MCC (0.710) — for survey
-prioritisation, where tile-level discrimination matters more than exact
-counts, the image pipeline is not the loser the F1 column suggests.
+F1/MCC trade-off recurs at deployment, and it is statistically
+resolved**: the image configuration ranks seventh on F1 but carries the
+board's best tile-MCC (0.710), and re-tiering the same eight cells on
+the MCC statistic — the identical permutation machinery, applied to the
+present/not-present tile signal rather than coordinate F1 — makes the
+image cell the **sole Tier-1 cell** on that axis, statistically clear of
+all seven others including the F1 oracle (ΔMCC +0.020, BH p = 0.006;
+analysis `55map-canonical-leaderboard-mcc-50m`, 20/28 pairs significant,
+five tiers). The MCC tier order inverts the F1 board's top while the text
+family keeps its F1 ordering, so the reversal is a modality effect rather
+than noise. For survey prioritisation, where tile-level discrimination
+matters more than exact counts, the image pipeline is not the loser the
+F1 column suggests — it is the resolved best instrument, at two calls per
+tile.
 
 [Resolved 2026-06-13: carry-forward primary, oracle as the measured
 deployment gap, table F1-ordered as the board — implemented in the
@@ -415,6 +426,17 @@ and density diagnostics) is specified in the findings document, § 5.
 ---
 
 ## Changelog
+
+### 2026-06-13 (later) — § R7 lesson (iii) given statistical backing
+
+**Refresh trigger**: Shawn requested the alternate-metric permutation
+with CIs. The MCC re-tiering of the deployment board
+(`results/metric-leaderboards/55map-mcc-tiering.{md,json}`; now the
+registered analysis `55map-canonical-leaderboard-mcc-50m`) lands IM-k3
+as the sole Tier-1 cell on the tile axis (significant vs all seven,
+incl. the F1 oracle at BH p = 0.006). Lesson (iii) was upgraded from a
+numerical MCC lead to a resolved sole-Tier-1 statistical claim; no other
+result changed. See Obs 369/370.
 
 ### 2026-06-13 — Draft notes resolved; § R9 added (Session 114)
 
