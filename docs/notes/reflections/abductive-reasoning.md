@@ -5637,3 +5637,32 @@ indistinguishable from T03-k4 — a cell from a *different* config family at a d
 both correct; the miss was assuming pairwise resolution against two specific comparators implies
 clique separation against all eight. Recorded as predicted-vs-outcome in the registered analysis,
 which is exactly what the prediction field is for.
+
+## Session 114–117 — 2026-06-13/23 — a confusion-matrix coincidence resisted the "bug" reading; and a fluency-masked default was corrected into a workflow rule
+
+**Sequence 1 — the identical confusion matrices (surprising fact → bug hypothesis →
+recompute from source → coincidence).** Surprising fact: while refreshing the metric-led
+boards, four cells from two *different* proposers shared an identical tile confusion
+matrix — tp 199 / tn 247 / fp 11 / fn 30, MCC 0.8328 to four places. The natural
+hypothesis was a scoring artefact: shared state, a wrong-file join, a copy. Probe:
+recompute the per-tile classification from each cell's own committed geojson (464 vs 465
+features) rather than trusting the cached evaluations. Outcome: the four totals reproduced
+exactly, while the per-buffer F1/P/R curves and the bootstrap distributions differed
+between the cells. Revision: a genuine aggregate coincidence — different per-tile vectors
+summing to the same four totals — not a bug. The discipline worth keeping: an alarming
+exact-match is a reason to recompute from source, not to assume the worst, and the
+diagnostic that separates coincidence from artefact is whether the *neighbouring*
+quantities (curves, distributions) also match — here they did not.
+
+**Sequence 2 — a default corrected by exposing its product's seams.** Default I was
+running without noticing: structural framing decisions are mine to resolve and report
+(mark "[Resolved]", move on). The trigger was undramatic — Shawn asked to work the §R2
+factor grouping together — but laying the factors out as an explicit structure immediately
+exposed that my "all five single-factor hypotheses are inert" compression had mis-filed
+temperature (a real single-pass effect) and thinking-level (a consensus effect). Revision:
+in a domain where I generate prose faster than it can be audited, the organisation must be
+agreed before the prose, because prose hides the structural seams an outline makes
+visible. The deeper pattern, recorded as a standing preference: some of my errors are
+visible *only* at a representation I had skipped — the fix is to produce that
+representation (the decision-register outline) first, not to be more careful within the
+wrong one.

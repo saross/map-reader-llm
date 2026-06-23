@@ -7350,3 +7350,60 @@ improvements" — construction phase closed.
 2026-06-12 is pre-audit; the audited basis is `reports/token-load-audit-2026-06-12.md` (and its
 § 10 billing corroboration). Obs 366 is the canonical map from stale figures to corrected ones.
 Recorded clean token loads remain lower bounds (retry attempts are unrecorded on disk).
+
+## Session 114–117 — 2026-06-13/23 — currency sweep; MCC tiering registered; reader-facing docs; outline-first pivot; pre-travel sync audit and continuity rebuild
+
+**Currency sweep + metric boards ($0 API).** Swept `results/**.md` + `reports/**.md` for
+stale pre-audit dollars: the one residual (verifier-robustness § 16(c) Run B "~$60")
+corrected to the audited ~$34.5; `experimental-progression.md` given a cost-basis note +
+banner. Metric-led leaderboards refreshed to post-promotion membership
+(`scripts/build_metric_leaderboards.py`; 20→39 GS cells + the uplift cell on the 55-map
+board): GS MCC crown moved min11 0.807 → `verified-adv-image-baseline-pro-vf` 0.889; an
+identical-confusion-matrix coincidence across four cells verified (recompute from source)
+as not-a-bug.
+
+**§Results prose drafted, then reframed as a zero-draft.** `docs/paper/results-draft.md`
+R0–R9: the three `[DRAFT NOTE]`s resolved (§R2 board-led compression, §R7
+carry-forward-primary, §R8 stays Results-as-validation), §R9 (GT-free protocol) added,
+Methods cost-basis § 5.4 written, §R7 lesson (iii) strengthened with the MCC tiering.
+*Subsequently* reclassified as a zero-draft reference under the outline-first pivot
+(below) — not to be extended until its outline is agreed.
+
+**MCC tiering registered first-class.** `scripts/mcc_tiering_55map.py` (zbook, $0;
+round-robin tile-swap permutation on the MCC statistic, 10k/seed 42 + BH-FDR +
+greedy-clique tiers; gate 8/8 exact confusion reproduction; 7 tier1 tests): IM-k3 is the
+SOLE Tier-1 cell on tile-MCC (0.7104; 20/28 pairs significant; sig vs all seven incl. the
+F1 oracle, BH p=0.006). BCa CIs recovered from the Track-2 summaries onto the board.
+Registered analysis `55map-canonical-leaderboard-mcc-50m` (manifest 17→18 analyses, ALL
+VALID, drift 0; `manually_verified_at` left blank for Shawn). Obs 369 (the tile-MCC
+counter-board replicates across all three instruments) + Obs 370 (rider: the sole-Tier-1
+upgrade).
+
+**Reader-facing docs.** `docs/paper/discussion-seeds.md` (Seeds 1–4; Seed 4 upgraded with
+the MCC tiering). `reports/key-findings-summary-2026-06-23.md` — a ~2.5-page
+detailed-abstract summary for DK colleagues (approach; what matters/doesn't; GS + 55-map
+Pareto incl. the calibrate-then-deploy reversal), DRAFT for Shawn's review before
+circulation.
+
+**Outline-first pivot.** Shawn's standing preference (saved memory
+`2026-06-14-cf9913c80a94`): agree the outline/structure collaboratively before prose; do
+not pre-resolve structural calls solo. Strawman `docs/paper/results-outline.md` written —
+15 decisions D1–D15 flagged OPEN; Shawn is mid-review. This is now the active task.
+
+**Pre-travel sync audit + continuity rebuild.** Verified all three machines; a file-level
+diff of the gitignored surface confirmed nothing valuable stranded on sapphire (7,016
+sapphire-only files, all archived cache / virtualenv / stale logs; residual 0).
+`inputs/tiles_256/` (185 MB) is amd-tower-only but not needed for write-up and regenerable
+on zbook from its rasters. Continuity doc (`planning/paper-writeup-continuity.md`)
+rewritten into a self-sufficient launch brief (new NEXT SESSION (118) block; old S114
+block demoted; lead updated). Final pre-travel sync: all three machines at `e1dd9733d`.
+
+**Next session (S118):** resume the `results-outline.md` review (decisions D1–D15), then
+draft §Results prose only once a section's structure is agreed.
+
+**Contextual assumptions:** Shawn is working from zbook for ~3 weeks (travel); sapphire is
+effectively offline-for-him and is the heavy-compute host. The outline-first rule (memory
+`2026-06-14-cf9913c80a94`) governs all write-up work — surface structural decisions OPEN,
+do not pre-resolve. `docs/paper/results-draft.md` is a zero-draft, not a draft. This
+session's journal/Obs commits land after the `e1dd9733d` final sync; the machines were
+re-synced at wind-down.

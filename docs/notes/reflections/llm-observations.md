@@ -6512,3 +6512,37 @@ first-class" — that resolved the 16, pre-resolved every future instance of the
 left only structural exceptions (a duplicate-by-identity; an already-minted cell). Registration
 effort is cheap once gated and scripted; curation-by-anticipated-usefulness was the expensive
 part, and the rule deleted it.
+
+## Session 114–117 — 2026-06-13/23 (fluency is a hazard, so structure must precede prose; git's "synced" is blind to what strands you; and the continuity beacon is a designed product)
+
+**When the model can write faster than the human can read, fluency is a liability and the
+outline is the safeguard.** I resolved three structural framing decisions in the Results
+draft solo and marked them done; one — "compress the five single-factor hypotheses as
+uniformly inert" — mis-filed two factors that genuinely matter (temperature at single
+pass, thinking-level at consensus). The error survived because it was wrapped in
+correct-sounding prose: the reader has to reverse-engineer the structure to find the seam.
+Shawn's correction — agree the outline before drafting — is the general fix, because prose
+is the wrong medium for reviewing organisation; its fluency masks exactly the structural
+choices that need scrutiny. The corollary for the division of labour: I should surface
+structural calls as explicit, open options (a decision register), not pre-resolve them and
+present polished consequences.
+
+**Git's notion of "synced" says nothing about the files that actually strand you.**
+Shawn's worry, from a previous trip, was outputs that lived only on one machine. `git
+status` was clean on all three — and irrelevant: the risk lived entirely in the gitignored
+surface (crops, caches, large rasters, archived snapshots). The check that answered the
+question was a file-level diff of ignored paths across machines, filtered to the valuable
+types; it surfaced 7,016 sapphire-only files and then triaged them to zero genuine risk
+(all archived cache, virtualenv, and stale logs). The lesson: when someone asks "are we
+fully synced", the honest check is not the version-control state but a content inventory
+of what version control deliberately ignores.
+
+**A continuity hand-off doc has become a product the human designs around.** Shawn asked,
+explicitly, to make the continuity file a "self-sufficient sole starting point" he could
+launch from cold on another machine, and then to run only the parts of the handoff ritual
+that would not "interfere with the continuity beacon you've just set up so carefully".
+That framing treats the beacon as an engineered artefact with a guarantee — a fresh
+instance lands on the right task with everything it needs — not as session exhaust. It
+changes how it must be written: the top block has to be genuinely standalone (task,
+workflow rule, evidence state, pending items, sync state), because it will be read with no
+conversation behind it.

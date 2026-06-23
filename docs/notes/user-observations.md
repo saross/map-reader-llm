@@ -118,3 +118,30 @@ would have missed (a stale cost table, an artefact mischaracterised as a
 finding, a mislabelled comparator). His verdict cadence ("accept, next?")
 kept it fast; the format's value was that every signature now has a
 verification trail behind it.
+
+## Session 114–117 — 2026-06-13/23 (candidates — pending Shawn's review on return)
+
+**The structure correction: he wants in on organisation before prose, not
+after.** I had resolved three framing decisions in the Results draft and
+marked them "[Resolved]", treating structural calls as mine to make and
+report. Shawn reframed the *process* rather than the answers — "work with me
+on an outline first, then drafting … be more directly and consistently
+involved in the organisation/structure phase." It was a correction to a
+default of mine: my "compress the five single-factor hypotheses as uniformly
+inert" call had mis-filed two factors that genuinely matter (temperature at
+single pass, thinking-level at consensus), and the error was invisible in
+prose but obvious once the factors were laid out as a structure. The division
+of labour he is asking for: I surface structure as explicit open options, he
+settles them, then I draft. The principle he named — fluent prose hides the
+seams an outline exposes — is now a standing preference (memory
+`2026-06-14-cf9913c80a94`).
+
+**He designs his handoff infrastructure and expects it protected.** Two
+requests in one breath: make the continuity file "a self-sufficient sole
+starting point" he can launch from cold on zbook, and then run only the
+handoff parts that "won't interfere with the continuity beacon you've just
+set up so carefully." He treats the beacon as an engineered product with a
+guarantee — a fresh instance lands on the right task with everything it needs
+— and explicitly fenced it off from the automated ritual that would otherwise
+overwrite it. The steer for me: a hand-crafted launch artefact is
+authoritative; defer to it, do not clobber it.

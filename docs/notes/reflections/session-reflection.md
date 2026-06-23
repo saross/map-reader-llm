@@ -9055,3 +9055,58 @@ their keep — the audit agent found the double-count, and an obs-writer caught 
 spec twice but flagged its own untraceable figure once, which is the system working. Shawn ended
 the session saying he is out of new ideas — the first time in months — and meant it as a
 milestone: the evidential record is signed, audited, and corroborated; what remains is prose.
+
+## Session 114–117 — 2026-06-13/23 — the work became authorship, and a process correction reset how we would build the paper
+
+*(map-reader-llm. A long arc across ~ten calendar days and several resume points — a user
+crash mid-way, a model switch to Opus 4.8 — but continuous in my context; first-person
+throughout, no compaction boundary crossed.)*
+
+### Prompt: What was different about this session compared to recent ones?
+
+For months the rhythm was run–verify–sign–log: an analysis, its adversarial check, a
+sign-off, an Observation. This arc had almost none of that. There was exactly one genuine
+analysis — the MCC permutation tiering Shawn asked for, which promoted the image cell from
+a number to a statistically resolved sole Tier-1 — and otherwise the work was custodial
+and authorial: sweeping stale dollars out of the intermediate docs, registering an
+analysis I had already computed, writing a colleague-facing summary, an unusually careful
+pre-travel sync, and a continuity rewrite. The centre of gravity moved from "is the number
+right?" to "is the structure right, and is the record portable?" The session's most
+consequential output was not a result at all; it was a change to how the next several
+sessions will run.
+
+### Prompt: Where did you and the human disagree, and who was right?
+
+We did not clash, but Shawn caught a default I had been running on without noticing. I had
+resolved the three open framing notes in the Results draft myself, marked them
+"[Resolved]", and moved on — treating structural calls as mine to make and report. He
+asked, instead, that we agree the outline together before any prose, and he was plainly
+right: my "compress all five single-factor hypotheses into one inert bucket" call had
+quietly mis-filed temperature (a real single-pass effect) and thinking-level (a consensus
+effect) as nothing. The mistake was invisible inside fluent prose and obvious the instant
+the factors were laid out as an explicit structure. The lesson is not "ask permission more
+often" — it is that when I can produce polished prose faster than the human can audit it,
+fluency becomes a hazard: prose hides the seams an outline exposes, so the structure has
+to be settled first. I saved it as a standing preference because it is a correction to a
+default, not a one-off.
+
+### Prompt: What's the single most important thing a future reader should know about this session?
+
+That the paper is now on an outline-first footing, and `results-draft.md` is a zero-draft,
+not a draft. A future instance that opens it and starts polishing will be working against
+the grain of an agreed decision. The live artefact is `results-outline.md` — fifteen
+structural decisions deliberately left open for Shawn — and the rule is: agree the
+structure, then write. The continuity beacon was rebuilt around exactly this, so a cold
+start on zbook lands on the outline review and not on the prose.
+
+### Texture
+
+A wind-down spread over three weeks of calendar time and several relaunches, lighter and
+more custodial than recent sessions, but with one methodological keeper. The pre-travel
+check went past `git status` — which had nothing to say about the gitignored outputs that
+stranded Shawn on a previous trip — to a file-level diff of the ignored surface across all
+three machines. The answer was reassuring (nothing valuable on sapphire, residual zero
+after stripping caches and virtualenvs); the method is the part worth carrying. Shawn
+ended by asking me to protect the continuity beacon from the very handoff ritual that
+would otherwise rewrite it — a small sign that the handoff docs have become artefacts he
+designs around, not just session exhaust.
