@@ -444,10 +444,74 @@ own H1–H8 classification.
   whether Results needs a confirmatory-first ordering** — worth noting that
   H1–H8 map almost entirely onto R2–R4, so a confirmatory-first reading is
   nearly satisfied by the agreed spine already.
-- **Also required either way**: the paper must account for registered-but-not
-  -executed hypotheses (H6, H10, H13 per the tracking matrix; H14/H15
-  deferred). Silence on these is the specific thing a reviewer checking the
-  OSF record will catch.
+- **Also required either way**: the paper must account for
+  registered-but-unexecuted hypotheses. Silence on these is the specific
+  thing a reviewer checking the OSF record will catch. **Corrected
+  2026-07-27** — an earlier revision of this line listed H10 as unexecuted on
+  the authority of the stale tracking matrix; the D17 inventory establishes
+  that **H10 and H12 both ran to completion** (see the reconciliation below).
+  The genuinely unexecuted set is **H6, H13, H14, H15** (plus H2 Condition C).
+
+### D17 inventory — findings (2026-07-27)
+
+Four parallel read-only inventories reconciled the preregistration, the
+tracking matrix and the manifest per hypothesis. Full detail in the four
+inventory documents; the load-bearing conclusions:
+
+**Executed and registered (candidates for `preregistered-with-deviation`)**:
+H1, H2 (Condition B only), H3, H4, H5, H7, H8, H9, H10, H11, H12.
+
+**Not executed**: **H6** (the registered Phase-4 transfer study — 13
+`PLACEHOLDER` strings remain in `studies/phase4-transfer.yaml`; a *different*
+Pro-vs-Flash experiment was labelled H6 post hoc, which **E41** already
+declares "an exploratory extension rather than a strict implementation of
+H6"); **H13** (only arm A ran, as the study's fixed 12.5 % tiling — no
+overlap contrast exists); **H14** and **H15** (registered as deferred; no
+non-Google model was ever called, and the four multi-model conditions split
+models by *pipeline stage*, not within a voting pool); **H2 Condition C**
+(fine-to-coarse — no `expand_*` configs exist; dropped without an erratum).
+
+**The `exploratory` label has a traceable origin**:
+`docs/methodology/preregistration/analysis-summary.md:82` says of H2
+"Treated as exploratory due to preliminary evidence of no benefit",
+contradicting `osf/preregistration.md:453` (`Confirmatory (architectural)`)
+and `execution-plan.md:743` ("H2 and H6 remain confirmatory"). The label
+appears to have propagated from a derived summary that was never corrected.
+**Exception**: `n1-baseline-matrix-384`'s `exploratory` label was *argued*
+(`docs/methodology/n1-baseline-matrix.md:405-411`) — do not overwrite it in a
+bulk pass.
+
+**⚠ Three systemic issues that outrank the relabelling**
+
+1. **The registered inference method is not the method used.**
+   `grep -c -i permutation` on `osf/preregistration.md` returns **0**; the
+   registered inference is bootstrap CIs + Benjamini-Hochberg FDR at q = 0.05
+   "across confirmatory hypotheses" (`:270`). The tile-swap micro-F1
+   permutation used across *every* leaderboard is unregistered, and **E45**
+   mis-describes it as "preregistered (Section 3.5)". Needs an erratum and a
+   Methods statement; it does not invalidate anything (permutation is
+   arguably the better test) but it cannot be presented as registered.
+2. **The registered family-level BH-FDR across H1–H8 was deferred and appears
+   never to have been run as one family.** Per-phase FDR exists in separate
+   artefacts (`retest-production-summary.md:209`, `:278`). This constrains the
+   wording of every "preregistered and significant" claim.
+3. **Three completed preregistered factors are invisible.** `h8-v2`, `h10`
+   and `h12-v2` ran to completion, are in the runs/conditions manifests, and
+   are referenced by **zero** of the 18 analyses — and appear nowhere in
+   `results-draft.md`. All three returned nulls. Authoring their analysis rows
+   is a prerequisite to the manifest ever representing H8/H10/H12 correctly.
+
+**Schema blocker**: `not-executed` is not a legal enum value
+(`docs/manifest-schemas/analyses-manifest.schema.json:48`), and the enum
+cannot distinguish "registered as exploratory" from "post-hoc". Either amend
+the schema or carry a separate hypothesis-level table. **This is the first
+decision to take**, because it determines the shape of everything else.
+
+**Also newly surfaced**: the H7 escalation trigger fired (text T=1.3 0.5442 >
+T=1.0 0.5335, `osf/preregistration.md:731`) and was not honoured — no
+T=1.6/T=2.0 runs exist and no erratum covers it. And **E56** rules H3's
+swept-optimal reporting *preregistered* rather than in-sample, which is
+favourable and should not be given away.
 
 ---
 
