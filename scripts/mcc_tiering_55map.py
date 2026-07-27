@@ -40,6 +40,7 @@
 # ============================================================================
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -53,7 +54,9 @@ sys.path.insert(0, str(BASE_DIR))
 sys.path.insert(0, str(BASE_DIR / "scripts"))
 from scripts.apply_fdr_correction import apply_bh_correction  # noqa: E402
 from scripts.compute_corrected_f1_multi_buffer import (  # noqa: E402
+    ATTRIBUTION_RESOLUTION_NOTE,
     DEFAULT_CRS,
+    PAIRED_CI_NOTE,
     build_extended_gt,
     build_phantom_gdf,
 )
@@ -245,9 +248,81 @@ def _load_cell_inputs(track2_dir: Path) -> tuple[gpd.GeoDataFrame, dict]:
     return gdf_det, row50["tile_classification"]
 
 
-def main() -> int:
-    """Build the 55-map tile-MCC permutation tiering."""
+def render_md(out: dict) -> str:
+    """Render the board markdown from the results dict (== the committed JSON).
+
+    Kept separate from the compute path so the citable document can be
+    regenerated verbatim — e.g. after a methodological note is revised — without
+    re-running the permutation tests. ``main(rebuild_md_only=True)`` uses this
+    against the committed ``55map-mcc-tiering.json``.
+
+    Args:
+        out: The results mapping written to ``55map-mcc-tiering.json``. Must
+            carry ``cells`` (tier-annotated, MCC-descending), ``pairwise``,
+            ``tiers``, ``n_significant``, ``n_pairs``, ``n_permutations`` and
+            ``seed``.
+
+    Returns:
+        The full markdown document as a single string (no trailing newline).
+
+    Example:
+        >>> doc = render_md(json.loads(Path("55map-mcc-tiering.json").read_text()))
+        >>> doc.splitlines()[0]
+        '# 55-map canonical board — tile-MCC permutation tiering @ 50 m'
+    """
+    n_sig, n_pairs = out["n_significant"], out["n_pairs"]
+    md = [
+        "# 55-map canonical board — tile-MCC permutation tiering @ 50 m",
+        "",
+        "> Alternate-metric (tile-MCC) statistical tiering for the eight"
+        " canonical-GT cells: round-robin tile-swap permutation on the MCC"
+        f" statistic ({out['n_permutations'] // 1000}k, seed {out['seed']},"
+        " two-sided) + BH-FDR q=0.05 + greedy-clique tiers — the same machinery"
+        f" as the F1-led board. {n_sig}/{n_pairs} pairs significant ->"
+        f" {len(out['tiers'])} tier(s). 95% CIs are the Track-2 engine's BCa"
+        " bootstrap CIs, carried from `summary.json`. Gate: rebuilt"
+        " per-tile confusion matrices reproduce the committed evaluations"
+        " exactly (8/8).",
+        "",
+        "| rank | cell | tier | MCC | 95% CI | sens | spec | tp/fp/fn/tn |",
+        "|---:|---|---:|---:|---|---:|---:|---|",
+    ]
+    for i, c in enumerate(out["cells"], 1):
+        lo, hi = c["mcc_ci"] if c["mcc_ci"] else (None, None)
+        ci = f"[{lo:.3f}, {hi:.3f}]" if lo is not None else "—"
+        cf = c["confusion"]
+        md.append(
+            f"| {i} | {c['name']} | {c['tier']} | {c['mcc']:.4f} | {ci} "
+            f"| {c['sensitivity']:.3f} | {c['specificity']:.3f} "
+            f"| {cf['tp']}/{cf['fp']}/{cf['fn']}/{cf['tn']} |")
+    md += ["", "## Reading this board", "", PAIRED_CI_NOTE, "",
+           ATTRIBUTION_RESOLUTION_NOTE, "",
+           "## Pairwise (BH-adjusted)", "",
+           "| pair | ΔMCC | p | BH p | sig |", "|---|---:|---:|---:|---|"]
+    for p in sorted(out["pairwise"], key=lambda x: x["bh_adjusted_p"]):
+        md.append(f"| {p['a']} vs {p['b']} | {p['observed_diff']:+.4f} "
+                  f"| {p['p_value']:.4f} | {p['bh_adjusted_p']:.4f} "
+                  f"| {'yes' if p['significant'] else 'ns'} |")
+    return "\n".join(md)
+
+
+def main(rebuild_md_only: bool = False) -> int:
+    """Build the 55-map tile-MCC permutation tiering.
+
+    Args:
+        rebuild_md_only: When True, skip all computation and re-render the
+            markdown from the committed JSON. Used to refresh prose in the
+            citable document without disturbing any number.
+    """
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    if rebuild_md_only:
+        src = OUT_DIR / "55map-mcc-tiering.json"
+        out = json.loads(src.read_text())
+        (OUT_DIR / "55map-mcc-tiering.md").write_text(render_md(out) + "\n")
+        print(f"rebuilt {OUT_DIR.relative_to(BASE_DIR)}/55map-mcc-tiering.md "
+              f"from {src.name} (no recomputation)", flush=True)
+        return 0
 
     gdf_bounds = gpd.read_file(BOUNDS)
     if gdf_bounds.crs is None:
@@ -330,41 +405,18 @@ def main() -> int:
     }
     (OUT_DIR / "55map-mcc-tiering.json").write_text(json.dumps(out, indent=2) + "\n")
 
-    md = [
-        "# 55-map canonical board — tile-MCC permutation tiering @ 50 m",
-        "",
-        "> Alternate-metric (tile-MCC) statistical tiering for the eight"
-        " canonical-GT cells: round-robin tile-swap permutation on the MCC"
-        f" statistic ({N_PERMUTATIONS // 1000}k, seed {SEED}, two-sided)"
-        " + BH-FDR q=0.05 + greedy-clique tiers — the same machinery as the"
-        f" F1-led board. {n_sig}/{len(pairs)} pairs significant ->"
-        f" {len(tiers)} tier(s). 95% CIs are the Track-2 engine's BCa"
-        " bootstrap CIs, carried from `summary.json`. Gate: rebuilt"
-        " per-tile confusion matrices reproduce the committed evaluations"
-        " exactly (8/8).",
-        "",
-        "| rank | cell | tier | MCC | 95% CI | sens | spec | tp/fp/fn/tn |",
-        "|---:|---|---:|---:|---|---:|---:|---|",
-    ]
-    for i, c in enumerate(ordered, 1):
-        lo, hi = c["mcc_ci"] if c["mcc_ci"] else (None, None)
-        ci = f"[{lo:.3f}, {hi:.3f}]" if lo is not None else "—"
-        cf = c["confusion"]
-        md.append(
-            f"| {i} | {c['name']} | {tier_of[c['name']]} | {c['mcc']:.4f} | {ci} "
-            f"| {c['sensitivity']:.3f} | {c['specificity']:.3f} "
-            f"| {cf['tp']}/{cf['fp']}/{cf['fn']}/{cf['tn']} |")
-    md += ["", "## Pairwise (BH-adjusted)", "",
-           "| pair | ΔMCC | p | BH p | sig |", "|---|---:|---:|---:|---|"]
-    for p in sorted(pairs, key=lambda x: x["bh_adjusted_p"]):
-        md.append(f"| {p['a']} vs {p['b']} | {p['observed_diff']:+.4f} "
-                  f"| {p['p_value']:.4f} | {p['bh_adjusted_p']:.4f} "
-                  f"| {'yes' if p['significant'] else 'ns'} |")
-    (OUT_DIR / "55map-mcc-tiering.md").write_text("\n".join(md) + "\n")
+    (OUT_DIR / "55map-mcc-tiering.md").write_text(render_md(out) + "\n")
     print(f"wrote {OUT_DIR.relative_to(BASE_DIR)}/55map-mcc-tiering.{{json,md}}",
           flush=True)
     return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--rebuild-md",
+        action="store_true",
+        help="Re-render 55map-mcc-tiering.md from the committed JSON without "
+             "re-running the permutation tests (prose-only refresh).",
+    )
+    raise SystemExit(main(rebuild_md_only=parser.parse_args().rebuild_md))

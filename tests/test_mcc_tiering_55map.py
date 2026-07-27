@@ -30,9 +30,14 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.lib_advanced_metrics import calculate_tile_classification  # noqa: E402
+from scripts.compute_corrected_f1_multi_buffer import (  # noqa: E402
+    ATTRIBUTION_RESOLUTION_NOTE,
+    PAIRED_CI_NOTE,
+)
 from scripts.mcc_tiering_55map import (  # noqa: E402
     mcc_from_confusion,
     permutation_test_mcc,
+    render_md,
     tile_vectors,
 )
 
@@ -152,3 +157,61 @@ def test_tile_vectors_reproduces_engine_confusion() -> None:
     # Pin the boundary semantics explicitly: t00 TP, t01 FN (populated via
     # the boundary point, no detections), t10 TN, t11 FP.
     assert rebuilt == {"tp": 1, "tn": 1, "fp": 1, "fn": 1}
+
+
+# --------------------------------------------------------------------------- #
+# 4. render_md — the markdown renderer split out from the compute path so the
+#    citable board can be re-rendered from the committed JSON (--rebuild-md).
+#    These pin that the numbers in the table come from the payload verbatim and
+#    that the two methodological notes are actually emitted.
+# --------------------------------------------------------------------------- #
+
+_PAYLOAD = {
+    "n_permutations": 10_000,
+    "seed": 42,
+    "n_significant": 1,
+    "n_pairs": 1,
+    "tiers": [["A"], ["B"]],
+    "cells": [
+        {"name": "A", "tier": 1, "mcc": 0.7104, "mcc_ci": [0.697, 0.723],
+         "sensitivity": 0.705, "specificity": 0.964,
+         "confusion": {"tp": 2483, "fp": 181, "fn": 1041, "tn": 4836}},
+        {"name": "B", "tier": 2, "mcc": 0.6903, "mcc_ci": None,
+         "sensitivity": 0.699, "specificity": 0.953,
+         "confusion": {"tp": 2462, "fp": 235, "fn": 1062, "tn": 4782}},
+    ],
+    "pairwise": [{"a": "A", "b": "B", "observed_diff": 0.0201,
+                  "p_value": 0.0036, "bh_adjusted_p": 0.0056,
+                  "significant": True}],
+}
+
+
+@pytest.mark.tier1
+def test_render_md_emits_payload_numbers_verbatim():
+    """Table cells are formatted from the payload, not recomputed."""
+    doc = render_md(_PAYLOAD)
+    assert "| 1 | A | 1 | 0.7104 | [0.697, 0.723] | 0.705 | 0.964 | 2483/181/1041/4836 |" in doc
+    # A cell with no CI on disk renders an em-dash rather than crashing.
+    assert "| 2 | B | 2 | 0.6903 | — |" in doc
+    assert "| A vs B | +0.0201 | 0.0036 | 0.0056 | yes |" in doc
+    assert "1/1 pairs significant -> 2 tier(s)" in doc
+
+
+@pytest.mark.tier1
+def test_render_md_carries_both_methodological_notes():
+    """The paired-CI and attribution-resolution notes reach the citable doc.
+
+    These guard the sign-off caveats: a reader must be able to see why
+    overlapping marginal CIs coexist with significant paired tests, and that
+    the extended GT collapses to the student GT below R = 50 m.
+    """
+    doc = render_md(_PAYLOAD)
+    assert PAIRED_CI_NOTE in doc
+    assert ATTRIBUTION_RESOLUTION_NOTE in doc
+    assert "below R = 50 m the\nextended ground truth reduces to the reviewed student ground truth" in doc
+
+
+@pytest.mark.tier1
+def test_render_md_is_deterministic():
+    """Same payload -> byte-identical document (no timestamps, no ordering churn)."""
+    assert render_md(_PAYLOAD) == render_md(_PAYLOAD)

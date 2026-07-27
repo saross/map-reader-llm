@@ -29,6 +29,7 @@
 # ============================================================================
 from __future__ import annotations
 
+import argparse
 import csv
 import json
 import sys
@@ -42,6 +43,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR))
 sys.path.insert(0, str(BASE_DIR / "scripts"))
 from scripts.apply_fdr_correction import apply_bh_correction  # noqa: E402
+from scripts.compute_corrected_f1_multi_buffer import (  # noqa: E402
+    ATTRIBUTION_RESOLUTION_NOTE,
+    PAIRED_CI_NOTE,
+)
 from scripts.lib_advanced_metrics import compute_per_tile_tp_fp_fn  # noqa: E402
 from scripts.n1_baseline_leaderboard_tiering import (  # noqa: E402
     greedy_clique_tiers,
@@ -89,9 +94,66 @@ def canonical_gt_at(r_m: float) -> gpd.GeoDataFrame:
     return gpd.GeoDataFrame({"geometry": pts, "source_map": maps}, crs="EPSG:32635")
 
 
-def main() -> int:
-    """Build the 50 m canonical-GT board with round-robin tiers."""
+def render_md(payload: dict) -> str:
+    """Render the F1 board markdown from the results dict (== the committed JSON).
+
+    Split out from the compute path so the citable document can be regenerated
+    verbatim — e.g. after a methodological note is revised — without re-running
+    the permutation tests. ``main(rebuild_md_only=True)`` uses this against the
+    committed ``55map_leaderboard_50m.json``.
+
+    Args:
+        payload: The mapping written to ``55map_leaderboard_50m.json``. Must
+            carry ``cells`` (F1-descending), ``pairwise`` and ``tiers``.
+
+    Returns:
+        The full markdown document as a single string (no trailing newline).
+
+    Example:
+        >>> doc = render_md(json.loads(Path("55map_leaderboard_50m.json").read_text()))
+        >>> doc.splitlines()[0]
+        '# 55-map generalisation leaderboard — canonical GT @ 50 m'
+    """
+    tier_of = {n: t for t, members in enumerate(payload["tiers"], 1) for n in members}
+    pairs = payload["pairwise"]
+    n_sig = sum(1 for p in pairs if p["significant"])
+    md = ["# 55-map generalisation leaderboard — canonical GT @ 50 m",
+          "",
+          f"> Working buffer 50 m per the noise-floor derivation "
+          f"(`results/working-precision/55maps-csr-noise-floor.json`). "
+          f"Round-robin tile-swap permutation (10k, seed 42) + BH-FDR q=0.05 "
+          f"+ greedy-clique tiers; {n_sig}/{len(pairs)} pairs significant.",
+          "",
+          "| rank | cell | tier | F1@50 | 95% CI | P@50 | R@50 | tile-MCC | n |",
+          "|---:|---|---:|---:|---|---:|---:|---:|---:|"]
+    for i, c in enumerate(payload["cells"], 1):
+        mcc = f"{c['mcc']:.3f}" if c["mcc"] is not None else "—"
+        md.append(f"| {i} | {c['name']} | {tier_of[c['name']]} | {c['f1_50']:.4f} "
+                  f"| [{c['ci'][0]:.4f}, {c['ci'][1]:.4f}] | {c['precision_50']:.4f} "
+                  f"| {c['recall_50']:.4f} | {mcc} | {c['n_detections']} |")
+    md += ["", "## Reading this board", "", PAIRED_CI_NOTE, "",
+           ATTRIBUTION_RESOLUTION_NOTE]
+    return "\n".join(md)
+
+
+def main(rebuild_md_only: bool = False) -> int:
+    """Build the 50 m canonical-GT board with round-robin tiers.
+
+    Args:
+        rebuild_md_only: When True, skip all computation and re-render the
+            markdown from the committed JSON. Used to refresh prose in the
+            citable document without disturbing any number.
+    """
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    if rebuild_md_only:
+        src = OUT_DIR / "55map_leaderboard_50m.json"
+        payload = json.loads(src.read_text())
+        (OUT_DIR / "55map-leaderboard-50m.md").write_text(render_md(payload) + "\n")
+        print(f"rebuilt {OUT_DIR.relative_to(BASE_DIR)}/55map-leaderboard-50m.md "
+              f"from {src.name} (no recomputation)", flush=True)
+        return 0
+
     gdf_bounds = gpd.read_file(BOUNDS)
     if gdf_bounds.crs is None:
         gdf_bounds = gdf_bounds.set_crs("EPSG:4326")
@@ -158,32 +220,29 @@ def main() -> int:
     n_sig = sum(1 for p in pairs if p["significant"])
     print(f"{n_sig}/{len(pairs)} pairs significant -> {len(tiers)} tier(s)", flush=True)
 
-    md = ["# 55-map generalisation leaderboard — canonical GT @ 50 m",
-          "",
-          f"> Working buffer 50 m per the noise-floor derivation "
-          f"(`results/working-precision/55maps-csr-noise-floor.json`). "
-          f"Round-robin tile-swap permutation (10k, seed 42) + BH-FDR q=0.05 "
-          f"+ greedy-clique tiers; {n_sig}/{len(pairs)} pairs significant.",
-          "",
-          "| rank | cell | tier | F1@50 | 95% CI | P@50 | R@50 | tile-MCC | n |",
-          "|---:|---|---:|---:|---|---:|---:|---:|---:|"]
     for i, c in enumerate(ordered, 1):
         mcc = f"{c['mcc']:.3f}" if c["mcc"] is not None else "—"
-        md.append(f"| {i} | {c['name']} | {tier_of[c['name']]} | {c['f1_50']:.4f} "
-                  f"| [{c['ci'][0]:.4f}, {c['ci'][1]:.4f}] | {c['precision_50']:.4f} "
-                  f"| {c['recall_50']:.4f} | {mcc} | {c['n_detections']} |")
         print(f"{i}. {c['name']:<24} T{tier_of[c['name']]}  F1@50 {c['f1_50']:.4f}  "
               f"MCC {mcc}", flush=True)
 
-    (OUT_DIR / "55map-leaderboard-50m.md").write_text("\n".join(md) + "\n")
-    (OUT_DIR / "55map_leaderboard_50m.json").write_text(json.dumps({
+    payload = {
         "buffer_m": BUFFER_M, "tiers": tiers,
         "cells": [{k: v for k, v in c.items() if k not in ("tp", "fp", "fn")}
                   for c in ordered],
-        "pairwise": pairs}, indent=2, default=float) + "\n")
+        "pairwise": pairs}
+    (OUT_DIR / "55map-leaderboard-50m.md").write_text(render_md(payload) + "\n")
+    (OUT_DIR / "55map_leaderboard_50m.json").write_text(
+        json.dumps(payload, indent=2, default=float) + "\n")
     print(f"\nWrote {OUT_DIR.relative_to(BASE_DIR)}/", flush=True)
     return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--rebuild-md",
+        action="store_true",
+        help="Re-render 55map-leaderboard-50m.md from the committed JSON without "
+             "re-running the permutation tests (prose-only refresh).",
+    )
+    raise SystemExit(main(rebuild_md_only=parser.parse_args().rebuild_md))

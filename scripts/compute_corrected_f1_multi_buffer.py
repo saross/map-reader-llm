@@ -85,6 +85,50 @@ DEFAULT_BUFFERS = (50, 75, 100, 125, 150)
 SENTINEL_BUFFER_EXCLUDED = 200  # today's ">150 m" shell — EXCLUDE from all R
 REF_MAP_COL = "source_map"  # student GT column (matches lib_advanced_metrics)
 
+# --- Citable methodological notes emitted into generated 55-map board docs ---
+# These live here, beside `build_phantom_gdf` (the function that implements the
+# per-buffer gating they describe), so the prose and the behaviour cannot drift
+# apart. Generated board markdowns import and emit them verbatim; do NOT
+# hand-edit the rendered .md files, which are overwritten on regeneration.
+
+ATTRIBUTION_RESOLUTION_NOTE = """\
+**Attribution resolution (55-map deployment corpus).** Two distinct sources of
+spatial imprecision affect this reference, and they behave differently:
+
+1. *Student-digitised mounds* (n = 4,746) carry roughly 20–25 m of positional
+   jitter — continuous error in where a recorded mound sits.
+2. *Reviewer-confirmed phantoms* (n = 773 — model detections that human
+   verification found to be real mounds the students had missed) carry their
+   match distance only as a **25 m ring anchored at 50 m**: a mound within 50 m
+   of the detection was recorded as "50 m", the next ring as "75 m", and so on.
+   This error is interval-censored, not continuous.
+
+Phantoms enter the extended ground truth only at R >= their recorded ring
+(`build_phantom_gdf`): detections we cannot localise at the scoring radius are
+not credited. Because the tightest available ring is 50 m, **below R = 50 m the
+extended ground truth reduces to the reviewed student ground truth** — Track-2
+results are distinct from Track-1 only at R >= 50 m, and sub-50 m Track-2
+figures penalise correct detections of student-missed mounds. The 55-map
+headline is therefore reported at 50 m, and the full 14-buffer sweep should be
+read as descriptive rather than as evidence of sub-25 m precision differences.
+This applies to the 55-map deployment corpus only; the gold-standard corpus
+uses curator ground truth and is unaffected.
+
+Review coverage was pooled across all four proposer configurations
+(`build_canonical_gt.py` `CARRIED_RUNS`) and deduplicated by 20 m clustering,
+each cluster taking the tightest ring any run achieved, so the reference is
+config-agnostic. The additional k3-shell review pass covered the three text
+configurations only, so any residual enrichment asymmetry favours the text
+cells."""
+
+PAIRED_CI_NOTE = """\
+**Confidence intervals vs significance.** The 95% intervals in the board table
+are *marginal* per-cell BCa bootstrap intervals; the significance tests are
+*paired* tile-swap permutations over the same tiles. Overlapping intervals are
+therefore consistent with a significant paired difference — the paired test
+removes between-tile variance that the marginal intervals retain. Read the
+BH-adjusted pairwise table below, not interval overlap, for significance."""
+
 
 @dataclass(frozen=True)
 class BufferResult:
