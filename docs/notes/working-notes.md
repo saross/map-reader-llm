@@ -21556,3 +21556,116 @@ Cross-references:
   which is why the MCC lead resolves here and not on GS).
 - `docs/paper/discussion-seeds.md` Seed 4 changelog (2026-06-13 later) —
   the Discussion-side record of the same upgrade.
+
+## Observation 371: Rider to Obs 360 — "phantom" is mis-glossed, and the 50 m buffer's bias runs the opposite way to what Obs 360 implies (Session 118, 2026-07-27)
+
+*Source anchors: `scripts/compute_corrected_f1_multi_buffer.py:154–156`
+(the gated-GT docstring) and `:176` (`build_phantom_gdf`);
+`scripts/build_canonical_gt.py:15–24` (clustering / auto-collapse rules)
+and `:58,64` (`CARRIED_RUNS` / `K3_RUNS`);
+`results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv`
+(773 rows, all `human_label == mound`; ring counts re-derived
+2026-07-27: 415 at 50 m, 179 at 75, 91 at 100, 44 at 125, 34 at 150, 10
+at the 200 sentinel); commits `98fa79aa7` (the board notes) and
+`45d0148cd` (the MCC sign-off). All values re-verified 2026-07-27.*
+
+### The correction
+
+Obs 360 glosses the 773 phantoms as "student-only detections **excluded
+from** canonical GT". That is backwards. The code is unambiguous: a
+phantom is a **model detection that human review confirmed to be a real
+mound the students had missed**, and phantoms are *additions* to the
+reviewed student GT, not exclusions from it —
+`build_phantom_gdf` selects rows where `human_label == 'mound'`, and the
+engine docstring records that they "gate in at R >= 50 m, flipping FP
+tiles to TP where the model found a student-missed mound".
+
+**No number is affected.** The gating behaviour, every published 55-map
+figure, and both boards are correct; this is a wording defect in the
+observation only. It is corrected here rather than in place, per the
+append-only rule.
+
+### The clarification (Shawn, 2026-07-27)
+
+The 55-map reference carries **two distinct** sources of spatial
+imprecision, which Obs 360 ran together into a single "~25 m" figure:
+
+| source | population | error structure |
+|---|---:|---|
+| student-digitised mounds | 4,746 | ~20–25 m positional jitter, **continuous** |
+| reviewer-confirmed phantoms | 773 | 25 m rings anchored at 50 m, **interval-censored** |
+
+The ring structure is a property of the review protocol: a mound within
+50 m of a detection was recorded "50 m", the next ring "75 m", and so on.
+The bottom bin therefore spans 0–50 m, which is why 415 of 773 phantoms
+carry a 50 m ring — a censoring floor, not a curation preference for 50 m.
+
+### The polarity correction — this matters for the paper
+
+Obs 360 says the oracle F1@50 m "is partly a GT-composition artefact",
+which reads as *50 m flatters the result*. The mechanism runs the other
+way. Because the tightest available ring is 50 m, **below R = 50 m the
+extended GT reduces to the reviewed student GT** — Track 2 and Track 1
+are the same evaluation there. Sub-50 m Track-2 figures therefore
+*penalise* the model for correctly detecting mounds that human review
+confirmed to be real.
+
+So **50 m is the minimum defensible buffer for Track 2, not a generous
+one**, and the anomalous 45→50 m step gain (oracle: +0.0077 at 40→45,
+**+0.0396** at 45→50, −0.0041 at 50→75) is the moment the extended GT
+comes into force, not an inflation. This is a stronger position than the
+current documentation claims and should be stated that way in § R1 and
+in the Methods buffer derivation.
+
+### Provenance — the reference is config-agnostic, and the residual tilt is against the image cell
+
+Checked while writing the board notes, because a reviewer will ask
+whether IM-k3's sole-Tier-1 MCC standing is self-favouring (the extended
+GT being built from human-confirmed *model* detections):
+
+- The phantom pool was reviewed across **all four proposer
+  configurations** (`CARRIED_RUNS`), then clustered at 20 m so one
+  cluster is one real feature, each taking the **tightest ring any run
+  achieved**. A mound enters the GT once regardless of which config(s)
+  proposed it, and any config detecting it earns the TP. The reference is
+  config-agnostic.
+- The additional k3-shell review pass (`K3_RUNS`) covered the **three
+  text configs only** — image was carried-review only. Any residual
+  enrichment asymmetry therefore favours the **text** cells.
+
+**IM-k3's tile-MCC lead is consequently conservative**, not inflated —
+it wins on an axis whose reference was, if anything, enriched against it.
+
+### Committed follow-up (deferred, not abandoned)
+
+Shawn's judgement (2026-07-27): the review should have recorded the
+**centre point of the nearest real mound** and derived the distance,
+rather than binning to rings. The remedy is a re-review of the 773
+phantoms with a click-the-centre interface — everything else (mound type,
+map, label) inherits, so the task is **≈ 1 hour** of review plus the UI.
+
+**This is committed as future work, deliberately deferred.** Doing it now
+would change the GT mid-write-up and cascade into re-scoring 8 cells ×
+14 buffers, re-tiering both boards, and re-verifying every 55-map figure
+in `docs/paper/results-draft.md`. Shawn's expectation is that it will not
+move things substantially, and to the extent it does it will be in the
+project's favour (sub-50 m Track-2 evaluation currently penalises correct
+detections). The paper should state the limitation **with the hour
+attached** — "resolvable at approximately one hour of re-review" — which
+is a far stronger position than an open-ended caveat, and makes it the
+natural response if a reviewer presses on the GS-vs-55-map buffer
+mismatch in the transfer table.
+
+Cross-references:
+
+- **[[Obs 360]]** (the parent — working precisions; its "excluded from"
+  gloss and its artefact-polarity claim are both corrected here; no
+  Obs 360 text edited).
+- **[[Obs 369]]** / **[[Obs 370]]** (the tile-MCC counter-board and its
+  sole-Tier-1 rider — the provenance finding above is the answer to the
+  obvious challenge against them).
+- `results/metric-leaderboards/55map-mcc-tiering.md` and
+  `results/55map-leaderboard/55map-leaderboard-50m.md` § "Reading this
+  board" — the reader-facing statement of all of the above, emitted from
+  `ATTRIBUTION_RESOLUTION_NOTE` / `PAIRED_CI_NOTE` so prose and behaviour
+  cannot drift.

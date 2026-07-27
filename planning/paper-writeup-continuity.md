@@ -75,13 +75,47 @@ is a ZERO-DRAFT reference — do NOT extend it until its outline is agreed.**
   summary for DK colleagues — DRAFT for Shawn's review before circulation;
   the quickest length trim is folding its §4 takeaways into §3).
 
-### Pending sign-off
+### Pending sign-off — ✅ CLEARED 2026-07-27 (Session 118)
 
-`manually_verified_at` on **`55map-canonical-leaderboard-mcc-50m`** is the
-only unsigned analysis (left blank by design for Shawn; everything else is
-signed). Set it when he accepts the MCC board.
+`manually_verified_at` on **`55map-canonical-leaderboard-mcc-50m`** set to
+`2026-07-27T05:28:40Z` (commit `45d0148cd`). 18 analyses, ALL VALID; the
+only remaining blank is `pv-diag-384-consensus-calibration`, unsigned **by
+design**. Signed with three caveats attached rather than resolved away —
+the paired-vs-marginal CI reading, the 50 m attribution resolution, and the
+exploratory registration retained. See **Obs 371** and commit `98fa79aa7`.
+
+### 📌 COMMITTED FUTURE WORK — phantom re-review with point-marking
+
+**Shawn's commitment, 2026-07-27; deliberately deferred, not abandoned.**
+
+The 55-map review recorded phantom match distances as **25 m rings anchored
+at 50 m** rather than marking the mound centre and deriving the distance.
+Consequence (Obs 371): below R = 50 m the extended GT reduces to the
+reviewed student GT, so sub-50 m Track-2 figures penalise correct
+detections of student-missed mounds.
+
+- **The remedy**: re-review the 773 phantoms with a click-the-centre
+  interface; mound type / map / label all inherit. **≈ 1 hour** of review
+  plus building the UI.
+- **Why not now**: it changes the GT mid-write-up and cascades into
+  re-scoring 8 cells × 14 buffers, re-tiering both boards, and re-verifying
+  every 55-map figure in `docs/paper/results-draft.md`.
+- **Expected impact** (Shawn): not substantial, and favourable to the
+  project where it does move.
+- **How to write it up meanwhile**: state the limitation **with the hour
+  attached** — "resolvable at approximately one hour of re-review" — which
+  is far stronger than an open-ended caveat and makes it the natural
+  response if a reviewer presses on the GS-vs-55-map buffer mismatch in the
+  transfer table.
 
 ### Carry-forward (rules & gotchas, not in the docs)
+
+- **The 50 m buffer is a FLOOR, not a generous choice** (Obs 371, correcting
+  Obs 360's polarity). Do NOT repeat Obs 360's "F1@50 m is partly a
+  GT-composition artefact" framing — the bias runs the other way. Also: a
+  "phantom" is a model detection human review confirmed as a real
+  student-missed mound (an **addition** to GT); Obs 360's "excluded from
+  canonical GT" gloss is wrong.
 
 - **COST-BASIS RULE**: audited basis = `reports/token-load-audit-2026-06-12.md`
   (+ § 10 billing corroboration); clean token loads are LOWER BOUNDS (retry
