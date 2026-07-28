@@ -1,5 +1,14 @@
 # Analysis Summary
 
+> **NOT PART OF THE OSF LODGEMENT.** The registration comprises exactly three
+> documents, all in `osf/` (`osf/README.md:3,9-11`); this file is not one of
+> them. It is a plain-language companion and **must not be cited as "the
+> preregistration"** — cite `osf/preregistration.md` for any claim about what
+> was registered. Where this summary and the lodged text differ, the lodged
+> text governs (this file's H3 précis, for example, omits §8.5's explicit
+> greedy-clustering specification — see D17 audit FALSE-13). Banner added
+> 2026-07-28 (D17 audit U4).
+
 **Purpose**: Plain-language overview of the statistical analysis plan for non-specialist readers.
 
 **Last updated**: 2026-01-31

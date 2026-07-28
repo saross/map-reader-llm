@@ -1,5 +1,13 @@
 # Phase 1 Remaining Tasks
 
+> **NOT PART OF THE OSF LODGEMENT.** The registration comprises exactly three
+> documents, all in `osf/` (`osf/README.md:3,9-11`); this file is not one of
+> them. It is a working document: pre-lodgement content here fed into writing
+> the registration but does not license a "the preregistration says" claim,
+> and post-lodgement content is operational, not registered. Cite
+> `osf/preregistration.md` for registered content. Banner added 2026-07-28
+> (D17 audit, structural fix).
+
 **Created**: 2026-01-23
 **Status**: Ready to execute
 
@@ -98,6 +106,7 @@ After Phase 1 completes:
 Phase 1 has no dependencies on other phases — it can run immediately.
 
 Phase 1 outputs (hard example library) are required by:
+
 - Phase 2a-2e (all use library configs)
 - Phase 3a, 3c, 3d (all use library configs)
 - Phase 4 (uses optimal library from Phase 2c)

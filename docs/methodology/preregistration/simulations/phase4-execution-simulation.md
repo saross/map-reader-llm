@@ -1,5 +1,13 @@
 # Phase 4 Execution Simulation
 
+> **NOT PART OF THE OSF LODGEMENT.** The registration comprises exactly three
+> documents, all in `osf/` (`osf/README.md:3,9-11`); this file is not one of
+> them. It is a working document: pre-lodgement content here fed into writing
+> the registration but does not license a "the preregistration says" claim,
+> and post-lodgement content is operational, not registered. Cite
+> `osf/preregistration.md` for registered content. Banner added 2026-07-28
+> (D17 audit, structural fix).
+
 **Purpose**: Detailed walkthrough of Phase 4 (H6: Flash→Pro Transfer Testing) to identify operational requirements and scaffolding needs.
 
 **Status**: Simulation only — not actual execution
@@ -323,7 +331,12 @@ Phase 4 uses OFAT (One-Factor-At-a-Time) sensitivity testing, not a full factori
 - Sequential decisions: if Factor A needs adjustment, test A first before B
 - Benjamini-Hochberg is designed for simultaneous multiple comparisons, not sequential OFAT
 
-### Decision Thresholds (from preregistration)
+### Decision Thresholds (mixed provenance)
+
+> **Correction (2026-07-28, D17 audit U3)**: only the 0.03 (registered without
+> the CI condition), 10 %, and 20 % thresholds are in the registration
+> (`osf/preregistration.md:677,683,689`); the 0.05 and 0.10 baseline rows are
+> operational additions. An earlier heading here read "(from preregistration)".
 
 | Sub-phase | Threshold | Interpretation |
 |-----------|-----------|----------------|

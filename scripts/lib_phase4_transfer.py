@@ -19,16 +19,21 @@ from enum import Enum
 
 
 # =============================================================================
-# Constants (from preregistration)
+# Constants (mixed provenance — D17 audit U3, 2026-07-28)
+# Registered (H6): the 0.03 rule (osf/preregistration.md:677, registered
+# WITHOUT the CI condition), >10% relative (:683), >20% (:689). Operational
+# additions with no registered source: the 0.05 transfer-success and 0.10
+# investigate thresholds, and the "CI excludes 0" augmentation of the 0.03
+# rule.
 # =============================================================================
 
 # Phase 4a: Baseline transfer thresholds (F1 = harmonic mean of precision and recall)
-BASELINE_TRANSFER_THRESHOLD = 0.05  # |delta F1| <= 0.05 -> transfer success
-BASELINE_INVESTIGATE_THRESHOLD = 0.10  # |delta F1| > 0.10 -> investigate
+BASELINE_TRANSFER_THRESHOLD = 0.05  # |delta F1| <= 0.05 -> transfer success (operational)
+BASELINE_INVESTIGATE_THRESHOLD = 0.10  # |delta F1| > 0.10 -> investigate (operational)
 
 # Phase 4b: One-Factor-At-a-Time (OFAT) sensitivity threshold
 # CI = Confidence Interval (95% bootstrap percentile)
-FACTOR_ADJUSTMENT_THRESHOLD = 0.03  # delta F1 >= 0.03 AND CI excludes 0 -> flag
+FACTOR_ADJUSTMENT_THRESHOLD = 0.03  # delta F1 >= 0.03 (registered) AND CI excludes 0 (operational augmentation)
 
 # Phase 4c: Voting threshold transfer
 VOTING_THRESHOLD_DIFFERENCE = 0.10  # >10% relative difference -> flag

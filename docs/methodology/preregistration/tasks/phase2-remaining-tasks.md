@@ -1,5 +1,13 @@
 # Phase 2 Remaining Tasks
 
+> **NOT PART OF THE OSF LODGEMENT.** The registration comprises exactly three
+> documents, all in `osf/` (`osf/README.md:3,9-11`); this file is not one of
+> them. It is a working document: pre-lodgement content here fed into writing
+> the registration but does not license a "the preregistration says" claim,
+> and post-lodgement content is operational, not registered. Cite
+> `osf/preregistration.md` for registered content. Banner added 2026-07-28
+> (D17 audit, structural fix).
+
 **Created**: 2026-01-21
 **Status**: Phase 1 complete; prerequisites resolved
 
@@ -32,7 +40,15 @@ After each sub-phase completes, update the YAML files for subsequent phases.
 | Phase 2d | Determine optimal H5 treatment | `phase2e` YAML: `carried_forward.optimal_h5_treatment` | ☐ Pending |
 | Phase 2e | Document final optimal config | Phase 3 preparation | ☐ Pending |
 
-### Decision Rules (from preregistration)
+### Decision Rules (operational, declared in the Phase 2 study YAMLs — NOT preregistered)
+
+> **Correction (2026-07-28, D17 audit FALSE-7)**: an earlier heading here read
+> "(from preregistration)". None of the five rules below appears in any lodged
+> document — the preregistration specifies **no** carry-forward selection or
+> tie-break rules. These are operational rules adopted at execution time in
+> the study YAMLs. This heading was the upstream source that made the
+> "preregistered decision rule" attributions in the Phase 2b–2e carry-forward
+> documents look legitimate.
 
 - **2a → 2b**: Select M/E with highest mean F1. If tied (overlapping 95% CIs), prefer simpler (image-only > brief > verbose).
 - **2b → 2c**: Select temperature with highest mean F1. If T=1.0 within 0.02 F1 of best, prefer T=1.0.

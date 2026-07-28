@@ -1,5 +1,13 @@
 # Phase 4 Remaining Tasks
 
+> **NOT PART OF THE OSF LODGEMENT.** The registration comprises exactly three
+> documents, all in `osf/` (`osf/README.md:3,9-11`); this file is not one of
+> them. It is a working document: pre-lodgement content here fed into writing
+> the registration but does not license a "the preregistration says" claim,
+> and post-lodgement content is operational, not registered. Cite
+> `osf/preregistration.md` for registered content. Banner added 2026-07-28
+> (D17 audit, structural fix).
+
 **Created**: 2026-01-23
 **Status**: Scaffolding complete — awaiting Phase 2-3 results
 
@@ -64,7 +72,14 @@ After Phase 2-3 completes, these values must be extracted and applied to Phase 4
 
 ---
 
-## Decision Thresholds (From Preregistration)
+## Decision Thresholds (mixed provenance — see note)
+
+> **Correction (2026-07-28, D17 audit U3)**: an earlier heading here read
+> "(From Preregistration)". Only three of the five thresholds are registered —
+> ≥0.03 F1 (`osf/preregistration.md:677`, *without* the CI condition, which was
+> added at implementation), >10 % relative (`:683`), and >20 % (`:689`). The
+> 0.05 transfer-success and 0.10 investigate thresholds are operational
+> additions with no registered source.
 
 These thresholds are already implemented in `lib_phase4_transfer.py`:
 

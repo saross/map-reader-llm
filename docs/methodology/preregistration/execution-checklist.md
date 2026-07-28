@@ -1,5 +1,13 @@
 # Preregistration Execution Checklist
 
+> **NOT PART OF THE OSF LODGEMENT.** The registration comprises exactly three
+> documents, all in `osf/` (`osf/README.md:3,9-11`); this file is not one of
+> them. It is a working document: pre-lodgement content here fed into writing
+> the registration but does not license a "the preregistration says" claim,
+> and post-lodgement content is operational, not registered. Cite
+> `osf/preregistration.md` for registered content. Banner added 2026-07-28
+> (D17 audit, structural fix).
+
 **Purpose**: Working checklist for tracking preregistration tasks. This file can be updated after the preregistration document is lodged.
 
 **Associated preregistration**: `preregistration.md` v4.7
