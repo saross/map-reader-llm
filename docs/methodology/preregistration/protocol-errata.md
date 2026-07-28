@@ -2062,3 +2062,56 @@ the deviations table in the paper gains one disclosure row.
 **Reference artefacts**: `planning/audit-and-completion-plan.md` § 6.1;
 `results/phase2b-carry-forward-parameters.md:35-70` (retest curve);
 `reports/d17-inventory/unexecuted-register.md` § 4 (T-01).
+
+---
+
+### E61: H4b trigger wording clarified — "main effect" designates the registered directional contrast; H4b to run as unregistered exploratory on the full GS corpus
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-07-28 (PI decision, Session 119) |
+| Type | Clarification |
+| Commit | — |
+| Files | `osf/preregistration.md:1100` (trigger), `:546` (directional hypothesis), `:570-574` (planned contrasts); `results/phase2e-carry-forward-parameters.md` |
+| Impact | Settles whether H4b is an owed registered experiment (it is not), and fixes H4's primary test ahead of the family-level BH-FDR analysis |
+
+**The ambiguity**: the registered H4b trigger reads "H4 main effect is
+significant (FDR-corrected p < 0.05)" — but H4's registered analysis contains
+no omnibus "main effect" test. "Main effect" is analysis-of-variance
+vocabulary surviving from the pre-v4.7 draft; the v4.7 statistical
+reconciliation replaced per-hypothesis ANOVA with pairwise bootstrap
+comparisons and two named planned contrasts (canonical-first vs
+canonical-last; optimal vs random) without updating the trigger's wording.
+Two readings were defensible: (1) the registered *directional* contrast
+(H1: canonical-last > canonical-first, `osf:546`); (2) "any ordering effect"
+(supported by the Simplification rationale's parenthetical "does ordering
+matter?", `osf:560`).
+
+**PI decision (2026-07-28)**: **reading (1) is adopted.** Rationale: it is
+the only test H4 formally hypothesises (the H0/H1 statement); H4b's own
+Background ("If canonical placement matters (H4)…") points at the
+canonical-position contrast; and "main effect" is demonstrably a drafting
+residue. Reading (2) rests on a parenthetical in a cost-justification
+paragraph.
+
+**Consequence under the adopted reading**: Phase 2e's directional contrast
+is null (canonical-last 0.609 vs canonical-first 0.579; 0/6 comparisons
+FDR-significant) — **the H4b trigger never fired and H4b is not an owed
+registered experiment**. This clarification is recorded *before* the
+family-level BH-FDR analysis runs, so the designation of H4's primary test
+(the directional contrast) is not conditioned on seeing which contrast
+survives the seven-member family correction.
+
+**Disposition (also PI, 2026-07-28)**: H4b's two cells (HP-first vs
+HN-first within the hard block) will nevertheless be run as **unregistered
+exploratory**, buying off the interpretive ambiguity entirely at small cost
+— and over the **full gold-standard corpus rather than the registered
+60-tile holdout**, because the 60-tile set lacks the power to separate
+conditions (the E36 lesson). Instrument choice (Era-1 512 px/340-tile vs
+Era-2 384 px/487-tile) and cost are settled at run-authoring time; per
+§ 6.4 of `planning/audit-and-completion-plan.md`, the registry entry,
+conditions, and `predicted_outcome` must be authored and committed with
+`status: planned` **before** the run executes.
+
+**Reference artefacts**: `planning/audit-and-completion-plan.md` § 6.3;
+`reports/d17-inventory/fable-adversarial-review-2026-07-28.md`.

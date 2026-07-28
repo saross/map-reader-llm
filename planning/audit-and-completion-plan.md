@@ -218,6 +218,17 @@ matrix. Detail in `unexecuted-register.md`.
 | `h1-h8-me-sensitivity` | H1 × H8 | 3 cells at the scale-4 library | ~$45–51 |
 | `h5-hn-only` | H5 | 1 cell | ~$2 |
 | `h2-condition-c` | H2 | fine-to-coarse, GS | needs costing |
+| `h4b-hphn-ordering` | H4b (**unregistered exploratory** — E61) | 2 cells (HP-first vs HN-first), full GS corpus, image track | needs costing (~2× `h5-hn-only` per instrument) |
+
+**H4b note (E61, PI decision 2026-07-28)**: reading adopted for the H4b
+trigger = the registered directional contrast (null → H4b not owed); the two
+cells run anyway as unregistered exploratory over the full GS corpus (60
+tiles under-powered, per E36). Instrument to settle at authoring: lean
+**Era-2 384 px/487-tile** (current instrument, standing 384 px preference,
+highest power, and faithfulness does not bind an unregistered run) vs Era-1
+512 px/340-tile (comparability with Phase 2e's H4 numbers). Author registry
+entry + `predicted_outcome` with `status: planned` and commit BEFORE
+execution (§ 6.4).
 
 `h7-escalation` is removed from this list per § 6.1.
 
@@ -518,3 +529,10 @@ plus the embargo-field discrepancy (checklist says "None"; OSF API records
 4. Whether to record resolved model strings (`gemini-3-flash-preview`)
    project-wide, or keep the requested alias — deliberately deferred when the
    manifest bug was fixed.
+5. ~~"H4 main effect": omnibus or registered directional contrast?~~ —
+   **RESOLVED 2026-07-28 (E61)**: directional contrast adopted; H4b not owed;
+   two H4b cells to run anyway as unregistered exploratory on the full GS
+   corpus (see § 6.3).
+6. Embargo — **RESOLVED 2026-07-28**: deliberately set for double-blind
+   review, not extended, expired 2026-06-30; registration now public. May
+   constrain journal choice (journals requiring anonymised preregistrations).
