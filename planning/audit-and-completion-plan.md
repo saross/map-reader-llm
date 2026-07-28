@@ -486,7 +486,15 @@ results-draft.md diversity passage corrected (U5/U12). Tier-1 1,178 passed.
    BH-FDR — now also motivated by the corrected E45 (registered bootstrap+FDR
    must accompany permutation results). Runs on sapphire.
 4. **Publish the trigger census** as an artefact (C5).
-5. **The three unrun probes** from the Fable review § 5 Q4.
+5. **Two of the three unrun probes** from the Fable review § 5 Q4: the
+   execution→errata inverse census and the passes-manifest field probe.
+   The third (numbers-vs-artefacts sweep of paper-bound prose) is
+   **DROPPED per Shawn 2026-07-28**: all paper-bound text will be
+   regenerated from the source documents using the new prose-generation
+   skill, so auditing the existing prose is wasted effort. The corollary:
+   the *source* documents (`results/**`, `reports/**`) are now the binding
+   accuracy constraint for regeneration — which is what the correction pass
+   just addressed.
 6. Legacy markdownlint debt in `preregistration/simulations/` (20 errors,
    pre-existing; `osf/` files must NEVER be lint-fixed — they are frozen).
 
@@ -502,8 +510,11 @@ plus the embargo-field discrepancy (checklist says "None"; OSF API records
    current instrument (384 px GS, 487 tiles)? Only the first is the registered
    test.
 2. H2 Condition C crop size: 1024 px or 896 px (the spec says both)?
-3. Do the four GS sheets span more than one province? Needed for an accurate
-   study-area description.
+3. Do the four GS sheets span more than one province? — PI answer
+   (2026-07-28): unknown, never tracked against Bulgarian internal divisions;
+   resolvable by projecting the four sheet extents onto a provinces layer if
+   the regenerated study-area description needs it. (Cheap GIS check; can be
+   done on request.)
 4. Whether to record resolved model strings (`gemini-3-flash-preview`)
    project-wide, or keep the requested alias — deliberately deferred when the
    manifest bug was fixed.

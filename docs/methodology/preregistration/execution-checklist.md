@@ -70,7 +70,7 @@
 | OSF Project URL | <https://osf.io/h9x4g> |
 | Registration timestamp | 2026-01-31 12:54:09 UTC (23:54 AEDT; corrected 2026-07-28 — see above) |
 | DOI (if assigned) | |
-| Embargo end date (if any) | OSF API records `embargo_end_date: 2026-06-30` (now public); an earlier entry here said "None" — PI to confirm which is right |
+| Embargo end date (if any) | 2026-06-30 (expired; registration now public). PI confirmed 2026-07-28: embargo was set deliberately to keep double-blind review available, but the paper overran the worst-case timeline and the embargo was not extended. Consequence: journals requiring author-anonymised preregistrations may now be excluded. An earlier entry here said "None" — incorrect. |
 
 ---
 
