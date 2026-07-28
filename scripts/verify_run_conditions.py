@@ -374,18 +374,36 @@ def classify_run(run_id: str, registry_obj: dict, index: dict) -> dict:
 def classify_all() -> list[dict]:
     """Classify every EXECUTED registered run for the re-scoring worklist.
 
-    ``status: planned`` runs are skipped. They have no directory and no
-    evaluations by design, so classifying one yields a row of zeros that is
-    indistinguishable from an executed run whose evaluations are missing — and
-    ``no_standard_scoring`` evaluates to False on it (``0 == 0 and 0 > 0``), so it
-    would not even be flagged. A silently mis-classified planned run is worse than
-    a crash, because it enters the worklist looking like real but unscored work.
+    A ``status: planned`` run is skipped ONLY when its directory does not exist.
+    A genuinely planned run has no directory and no evaluations by design, so
+    classifying one yields a row of zeros indistinguishable from an executed run
+    whose evaluations are missing — and ``no_standard_scoring`` is False on it
+    (``0 == 0 and 0 > 0``), so it is not even flagged.
+
+    But the label is not evidence. ``classify_run`` reads the disk regardless of
+    status, so for a run left marked ``planned`` after it actually ran, the old
+    zero-row was *informative* — and where geojsons existed without evaluations it
+    raised ``no_standard_scoring`` outright. Skipping on the label alone would
+    convert that signal into silence, which is a worse failure than the one it
+    fixes. Skipping on evidence keeps both properties.
+
+    ``load_run_registry`` independently rejects a ``planned`` entry whose
+    directory already exists, so in practice this branch should be unreachable via
+    the normal path; it is retained because this function may be handed a registry
+    object by other means, and because defence that costs one filesystem check is
+    worth having under a label this consequential.
     """
     registry_obj = g.load_run_registry()
     index = g._build_eval_index()
-    return [classify_run(e["run_id"], registry_obj, index)
-            for e in registry_obj.get("registry", [])
-            if isinstance(e, dict) and e.get("status") != "planned"]
+    keep = []
+    for e in registry_obj.get("registry", []):
+        if not isinstance(e, dict):
+            continue
+        if (e.get("status") == "planned"
+                and not (g.REPO_ROOT / e.get("directory_path", "")).is_dir()):
+            continue
+        keep.append(classify_run(e["run_id"], registry_obj, index))
+    return keep
 
 
 def _print_report(reports: list[dict]) -> None:

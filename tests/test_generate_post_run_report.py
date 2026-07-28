@@ -625,7 +625,7 @@ def test_write_once_blocks_silent_prediction_rewrite(tmp_path):
     """The H7 failure mode: a prediction restated to match the finding."""
     path = _analyses_file(tmp_path, "T=1.0 will be optimal")
     fresh = {"analyses": [{"analysis_id": "a1", "predicted_outcome": "T=0.0 will be optimal"}]}
-    errors = check_write_once_predictions(fresh, path)
+    errors, _ = check_write_once_predictions(fresh, path)
     assert len(errors) == 1
     assert "WRITE-ONCE" in errors[0]
     assert "predicted_outcome_amended" in errors[0]  # tells the author the legal route
@@ -638,12 +638,14 @@ def test_write_once_allows_first_set_unchanged_and_explicit_amendment(tmp_path):
     # null -> value: always allowed (this IS the act of predicting).
     blank = _analyses_file(tmp_path, None)
     assert check_write_once_predictions(
-        {"analyses": [{"analysis_id": "a1", "predicted_outcome": "declines"}]}, blank) == []
+        {"analyses": [{"analysis_id": "a1", "predicted_outcome": "declines"}]},
+        blank)[0] == []
 
     path = _analyses_file(tmp_path, "declines")
     # Unchanged: the no-op regeneration case.
     assert check_write_once_predictions(
-        {"analyses": [{"analysis_id": "a1", "predicted_outcome": "declines"}]}, path) == []
+        {"analyses": [{"analysis_id": "a1", "predicted_outcome": "declines"}]},
+        path)[0] == []
     # Explicitly amended: allowed, and the amendment is preserved in the row.
     amended = {"analyses": [{
         "analysis_id": "a1",
@@ -652,16 +654,16 @@ def test_write_once_allows_first_set_unchanged_and_explicit_amendment(tmp_path):
                                       "date": "2026-07-28",
                                       "previous": "declines"},
     }]}
-    assert check_write_once_predictions(amended, path) == []
+    assert check_write_once_predictions(amended, path)[0] == []
 
 
 @pytest.mark.tier1
 def test_write_once_is_inert_on_first_generation_and_new_rows(tmp_path):
     """No prior manifest, or an analysis_id not previously present, protects nothing."""
-    assert check_write_once_predictions({"analyses": []}, tmp_path / "absent.json") == []
+    assert check_write_once_predictions({"analyses": []}, tmp_path / "absent.json")[0] == []
     path = _analyses_file(tmp_path, "declines")
     new_row = {"analyses": [{"analysis_id": "a2", "predicted_outcome": "anything"}]}
-    assert check_write_once_predictions(new_row, path) == []
+    assert check_write_once_predictions(new_row, path)[0] == []
 
 
 # --------------------------------------------------------------------------- #
@@ -707,13 +709,13 @@ def test_amendment_unblocks_the_write_once_guard(tmp_path):
         "analyses": [{"analysis_id": "a1", "predicted_outcome": "original prediction"}],
     }))
     built = {"analyses": [build_analyses([_AMEND_SPEC], "2026-07-28T00:00:00Z")[0]]}
-    assert check_write_once_predictions(built, path) == []
+    assert check_write_once_predictions(built, path)[0] == []
 
     # ...and without the amendment the same rewrite is still refused.
     bare = dict(_AMEND_SPEC)
     del bare["predicted_outcome_amended"]
     built_bare = {"analyses": [build_analyses([bare], "2026-07-28T00:00:00Z")[0]]}
-    assert len(check_write_once_predictions(built_bare, path)) == 1
+    assert len(check_write_once_predictions(built_bare, path)[0]) == 1
 
 
 @pytest.mark.tier1
@@ -731,16 +733,18 @@ def test_planned_run_with_facts_is_not_falsely_reported_missing():
 
 
 @pytest.mark.tier1
-def test_planned_run_needs_no_directory_path(tmp_path, monkeypatch):
+def test_planned_run_directory_is_never_touched(tmp_path, monkeypatch):
     """AUDIT M2: directory_path was dereferenced before the planned skip.
 
-    The schema says a planned run's path "need not exist yet", and the easiest
-    thing to author omits it entirely — which raised KeyError instead of skipping.
+    The field IS required by the schema (a planned run must declare its intended
+    path); it is the DIRECTORY that need not exist. This pins that the build loop
+    never touches the path for a run that has not executed — the ordering the M2
+    fix established.
     """
     import scripts.generate_post_run_report as gen
 
-    entry = {"run_id": "h7-escalation", "status": "planned",
-             "planned_at": "2026-07-28T00:00:00Z"}
+    entry = {"run_id": "h7-escalation", "directory_path": "outputs/h7-escalation",
+             "status": "planned", "planned_at": "2026-07-28T00:00:00Z"}
     monkeypatch.setattr(gen, "load_run_registry", lambda: {"registry": [entry]})
     monkeypatch.setattr(gen, "load_run_facts", lambda: {})
     monkeypatch.setattr(gen, "load_run_conditions", lambda: {})
@@ -919,10 +923,14 @@ def test_registry_is_validated_on_load(tmp_path):
     bad = tmp_path / "run-registry.json"
     bad.write_text(json.dumps({"schema_version": "1.0", "registry": [
         {"run_id": "x", "directory_path": "outputs/x", "status": "planed"}]}))
-    with pytest.raises(SystemExit) as exc:
+    with pytest.raises(gen.RunRegistryInvalid) as exc:
         gen.load_run_registry(bad)
-    assert "run-registry.json is INVALID" in str(exc.value)
+    assert "is INVALID" in str(exc.value)
     assert "'planed' is not one of" in str(exc.value)
+    # AUDIT M-1: the message must name the file it was ACTUALLY given.
+    assert str(bad) in str(exc.value)
+    # AUDIT L-6: and identify the entry by run_id, not just array index.
+    assert "run_id='x'" in str(exc.value)
 
 
 @pytest.mark.tier1
@@ -933,26 +941,163 @@ def test_planned_run_without_planned_at_is_rejected(tmp_path):
     bad = tmp_path / "run-registry.json"
     bad.write_text(json.dumps({"schema_version": "1.0", "registry": [
         {"run_id": "x", "directory_path": "outputs/x", "status": "planned"}]}))
-    with pytest.raises(SystemExit):
+    with pytest.raises(gen.RunRegistryInvalid) as exc:
         gen.load_run_registry(bad)
+    # Assert the SPECIFIC violation, so an unrelated schema tightening
+    # cannot keep this test green while it stops testing its own name.
+    assert "'planned_at' is a required property" in str(exc.value)
 
 
 @pytest.mark.tier1
-def test_disappearing_prediction_is_warned_about(tmp_path, capsys):
+def test_disappearing_prediction_is_warned_about(tmp_path):
     """AUDIT C3 mitigation: a vanished row takes its prediction history with it.
 
     Not a closure — the delete-then-re-add bypass remains open until the
     append-only ledger exists. This makes step one visible in the build log.
+
+    The warning is RETURNED rather than printed (AUDIT M-3) so the caller can emit
+    it only when the write actually proceeds; a blocked build writes nothing, so
+    the vanished row is still on disk and still protected.
     """
     path = tmp_path / "analyses-manifest.json"
     path.write_text(json.dumps({"schema_version": "1.0", "analyses": [
         {"analysis_id": "a1", "predicted_outcome": "T=1.0 will be optimal"}]}))
-    assert check_write_once_predictions({"analyses": []}, path) == []
-    err = capsys.readouterr().err
-    assert "DISAPPEARED" in err and "a1" in err and "T=1.0 will be optimal" in err
+    errors, warnings = check_write_once_predictions({"analyses": []}, path)
+    assert errors == []
+    assert len(warnings) == 1
+    assert "DISAPPEARED" in warnings[0] and "a1" in warnings[0]
+    assert "T=1.0 will be optimal" in warnings[0]
 
     # A row that never carried a prediction is not worth warning about.
     path.write_text(json.dumps({"schema_version": "1.0", "analyses": [
         {"analysis_id": "a2", "predicted_outcome": None}]}))
-    check_write_once_predictions({"analyses": []}, path)
-    assert "DISAPPEARED" not in capsys.readouterr().err
+    assert check_write_once_predictions({"analyses": []}, path)[1] == []
+    # ...nor is an EMPTY-STRING prediction (pins `not in (None, "")`, which a
+    # mutation to `is not None` would otherwise leave green).
+    path.write_text(json.dumps({"schema_version": "1.0", "analyses": [
+        {"analysis_id": "a3", "predicted_outcome": ""}]}))
+    assert check_write_once_predictions({"analyses": []}, path)[1] == []
+
+
+@pytest.mark.tier1
+def test_present_row_never_triggers_the_disappearance_warning(tmp_path):
+    """The warning must key on ABSENCE, not merely on carrying a prediction.
+
+    AUDIT: dropping the `- new_ids` set difference left the whole suite green
+    while the warning fired on every build for every row with a prediction —
+    destroying the signal-to-noise property the mitigation entirely depends on.
+    """
+    path = tmp_path / "analyses-manifest.json"
+    row = {"analysis_id": "a1", "predicted_outcome": "T=1.0 will be optimal"}
+    path.write_text(json.dumps({"schema_version": "1.0", "analyses": [row]}))
+    assert check_write_once_predictions({"analyses": [dict(row)]}, path)[1] == []
+
+
+@pytest.mark.tier1
+def test_disappearance_scan_survives_odd_on_disk_analysis_ids(tmp_path):
+    """AUDIT L-3/L-4: the guard reads an UNVALIDATED file, so ids may be junk.
+
+    A row missing analysis_id maps to None and a hand-edited one may be any type;
+    a bare sorted() raised TypeError from inside the very guard meant to survive
+    hand edits.
+    """
+    path = tmp_path / "analyses-manifest.json"
+    path.write_text(json.dumps({"schema_version": "1.0", "analyses": [
+        {"predicted_outcome": "no id at all"},
+        {"analysis_id": 7, "predicted_outcome": "numeric id"},
+        {"analysis_id": "a1", "predicted_outcome": "normal"}]}))
+    errors, warnings = check_write_once_predictions({"analyses": []}, path)
+    assert errors == []
+    assert len(warnings) == 3          # all three reported, none crashes the build
+
+
+@pytest.mark.tier1
+def test_registry_rejects_duplicate_run_ids(tmp_path):
+    """AUDIT L-2: run_id is the primary key but consumers disagreed on which wins.
+
+    This module's --run lookup takes the first via next(); author_phase3_conditions
+    and author_ignored_evals build dicts that keep the last. The schema has no
+    uniqueness constraint, so the loader enforces it.
+    """
+    import scripts.generate_post_run_report as gen
+
+    bad = tmp_path / "run-registry.json"
+    bad.write_text(json.dumps({"schema_version": "1.0", "registry": [
+        {"run_id": "x", "directory_path": "outputs/x"},
+        {"run_id": "x", "directory_path": "outputs/x-again"}]}))
+    with pytest.raises(gen.RunRegistryInvalid) as exc:
+        gen.load_run_registry(bad)
+    assert "duplicate" in str(exc.value)
+
+
+@pytest.mark.tier1
+def test_planned_run_whose_directory_exists_is_rejected(tmp_path, monkeypatch):
+    """The label is not evidence — check it against the filesystem.
+
+    A run left marked `planned` after it actually ran would vanish from BOTH the
+    manifest build and the re-scoring worklist, silently. This is the invariant
+    that makes trusting the label safe in those two places.
+    """
+    import scripts.generate_post_run_report as gen
+
+    monkeypatch.setattr(gen, "REPO_ROOT", tmp_path)
+    (tmp_path / "outputs" / "already-ran").mkdir(parents=True)
+    bad = tmp_path / "run-registry.json"
+    bad.write_text(json.dumps({"schema_version": "1.0", "registry": [
+        {"run_id": "already-ran", "directory_path": "outputs/already-ran",
+         "status": "planned", "planned_at": "2026-07-28T00:00:00Z"}]}))
+    with pytest.raises(gen.RunRegistryInvalid) as exc:
+        gen.load_run_registry(bad)
+    assert "already exists" in str(exc.value)
+
+
+@pytest.mark.tier1
+def test_unreadable_registry_reports_in_the_same_voice(tmp_path):
+    """AUDIT L-1: the two likeliest input failures still produced bare tracebacks."""
+    import scripts.generate_post_run_report as gen
+
+    with pytest.raises(gen.RunRegistryInvalid):
+        gen.load_run_registry(tmp_path / "does-not-exist.json")
+    malformed = tmp_path / "run-registry.json"
+    malformed.write_text("{not json")
+    with pytest.raises(gen.RunRegistryInvalid):
+        gen.load_run_registry(malformed)
+
+
+@pytest.mark.tier1
+def test_main_reports_a_planned_run_rather_than_claiming_it_is_absent(
+        tmp_path, monkeypatch, capsys):
+    """AUDIT M4/M-5: this branch shipped with no coverage at all.
+
+    Deleting it left the 1170-test suite green while --run <planned-id> printed a
+    false statement about a run sitting in the registry.
+    """
+    import scripts.generate_post_run_report as gen
+
+    planned = {"run_id": "h7-escalation", "directory_path": "outputs/h7-escalation",
+               "status": "planned", "planned_at": "2026-07-28T00:00:00Z"}
+    monkeypatch.setattr(gen, "load_run_registry", lambda: {"registry": [planned]})
+    monkeypatch.setattr(gen, "load_run_facts", lambda: {})
+    monkeypatch.setattr(gen, "load_run_conditions", lambda: {})
+    monkeypatch.setattr(gen, "load_run_analyses", lambda: [])
+
+    assert gen.main(["--run", "h7-escalation"]) == 0
+    captured = capsys.readouterr()
+    assert "is PLANNED" in captured.err
+    assert "No run" not in captured.err          # the false claim M4 removed
+
+    # AUDIT M-6: --write must NOT report success having written nothing.
+    assert gen.main(["--run", "h7-escalation", "--write"]) != 0
+
+
+@pytest.mark.tier1
+def test_main_still_reports_a_genuinely_absent_run(tmp_path, monkeypatch, capsys):
+    """The M4 branch must not swallow the real not-found case."""
+    import scripts.generate_post_run_report as gen
+
+    monkeypatch.setattr(gen, "load_run_registry", lambda: {"registry": []})
+    monkeypatch.setattr(gen, "load_run_facts", lambda: {})
+    monkeypatch.setattr(gen, "load_run_conditions", lambda: {})
+    monkeypatch.setattr(gen, "load_run_analyses", lambda: [])
+    assert gen.main(["--run", "ghost"]) == 2
+    assert "No run 'ghost'" in capsys.readouterr().err

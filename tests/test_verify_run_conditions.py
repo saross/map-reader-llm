@@ -204,3 +204,36 @@ def test_classify_flags_no_standard_scoring(tmp_path):
     assert c["n_evals"] == 0
     assert c["n_materialised_geojson"] == 1  # only consensus_t4.geojson; run_N/ + crops/ excluded
     assert c["no_standard_scoring"]
+
+
+@pytest.mark.tier1
+def test_classify_all_skips_planned_runs_on_evidence_not_label(tmp_path, monkeypatch):
+    """AUDIT M10/M-4: classify_all had no test at all, and the label is not evidence.
+
+    A genuinely planned run (no directory) yields a row of zeros indistinguishable
+    from an executed run whose evaluations are missing, so it is skipped. But a run
+    left MARKED planned after it actually ran must still be classified — the old
+    zero-row was informative there, and skipping on the label alone would convert
+    that signal into silence.
+    """
+    import scripts.verify_run_conditions as v
+
+    monkeypatch.setattr(v.g, "REPO_ROOT", tmp_path)
+    (tmp_path / "outputs" / "has-run").mkdir(parents=True)
+    entries = [
+        {"run_id": "active-run", "directory_path": "outputs/active-run"},
+        {"run_id": "truly-planned", "directory_path": "outputs/truly-planned",
+         "status": "planned", "planned_at": "2026-07-28T00:00:00Z"},
+        {"run_id": "has-run", "directory_path": "outputs/has-run",
+         "status": "planned", "planned_at": "2026-07-28T00:00:00Z"},
+    ]
+    monkeypatch.setattr(v.g, "load_run_registry", lambda: {"registry": entries})
+    monkeypatch.setattr(v.g, "_build_eval_index", lambda: {})
+    monkeypatch.setattr(v, "classify_run",
+                        lambda rid, reg, idx: {"run_id": rid, "verdict": "PASS",
+                                               "discrepancies": []})
+
+    ids = [r["run_id"] for r in v.classify_all()]
+    assert "active-run" in ids
+    assert "truly-planned" not in ids   # no directory -> genuinely not executed
+    assert "has-run" in ids             # mis-marked but materialised -> still visible

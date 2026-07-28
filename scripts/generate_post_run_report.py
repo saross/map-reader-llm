@@ -41,7 +41,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
+import textwrap
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -752,6 +754,55 @@ def build_run_row(run_id: str, directory_path: str, facts: dict,
     }
 
 
+#: Exit code for a malformed hand-authored INPUT, distinct from the code ``main``
+#: returns when the generator produced a bad row. Conflating the two hid which of
+#: the two very different fixes an operator needed.
+EXIT_BAD_INPUT: int = 3
+
+
+class RunRegistryInvalid(ValueError):
+    """The hand-authored run registry is unusable.
+
+    A raised exception rather than ``sys.exit`` so that library-ish callers — the
+    verifier, the authoring scripts, the tests — can decide what to do, while
+    ``main`` still fails fast. Terminating the process from inside a loader would
+    make it impossible for any caller to handle a bad registry gracefully.
+    """
+
+
+def _name_registry_errors(problems: list[str], entries: list) -> list[str]:
+    """Rewrite ``registry/<i>/...`` paths to also carry the offending ``run_id``.
+
+    jsonschema reports array positions; every other diagnostic in this project is
+    keyed by the stable identifier. Positional-only errors force the reader to go
+    and count entries, which is exactly the friction the fail-fast was meant to
+    remove.
+
+    Args:
+        problems: raw error strings, some beginning ``registry/<index>``.
+        entries: the registry array, used to look the index back up.
+
+    Returns:
+        The same list with a ``(run_id='…')`` annotation added where resolvable.
+
+    Example:
+        >>> _name_registry_errors(["registry/0/status: bad"], [{"run_id": "h7"}])
+        ["registry[0] (run_id='h7')/status: bad"]
+    """
+    out: list[str] = []
+    for problem in problems:
+        match = re.match(r"^registry/(\d+)(.*)$", problem)
+        if not match:
+            out.append(problem)
+            continue
+        idx, rest = int(match.group(1)), match.group(2)
+        entry = entries[idx] if idx < len(entries) and isinstance(entries[idx], dict) else {}
+        rid = entry.get("run_id")
+        label = f"registry[{idx}]" + (f" (run_id={rid!r})" if rid else "")
+        out.append(f"{label}{rest}")
+    return out
+
+
 def load_run_registry(path: Path | None = None) -> dict:
     """Load the hand-authored run registry — the generator's INPUT (decision B1).
 
@@ -767,16 +818,69 @@ def load_run_registry(path: Path | None = None) -> dict:
     the status. Both the planned-run and write-once features hinge on fields in this
     file, so it fails fast here instead, naming the offending entry.
 
+    Three checks beyond the schema, each closing a hole the schema cannot express:
+
+    1. **Unreadable input** — a missing file or malformed JSON is reported in the
+       same voice, not as a bare traceback.
+    2. **Duplicate ``run_id``** — the schema has no uniqueness constraint, and
+       downstream consumers silently disagree about which wins (this module takes
+       the first via ``next(...)``; ``author_phase3_conditions`` and
+       ``author_ignored_evals`` build dicts that keep the last).
+    3. **A ``planned`` entry whose directory already exists.** The label declares
+       intent, and two consumers now trust it as evidence that nothing has been
+       executed — the build skips row emission, and ``verify_run_conditions``
+       skips the re-scoring worklist. A run left marked ``planned`` after it ran
+       would therefore vanish from both silently. Checking the label against the
+       filesystem converts that failure from silent to loud, which is what makes
+       trusting the label safe anywhere else.
+
+    Args:
+        path: registry to load; defaults to ``results/run-registry.json``.
+
+    Returns:
+        The whole manifest object (envelope + ``registry`` list).
+
     Raises:
-        SystemExit: if the registry does not satisfy ``run-registry.schema.json``.
+        RunRegistryInvalid: if the file is unreadable, fails its schema, carries
+            duplicate ``run_id``s, or marks an already-materialised run ``planned``.
+            Callers that want a process exit should catch it and choose a code;
+            ``main`` uses ``EXIT_BAD_INPUT`` so a malformed hand-authored input is
+            distinguishable from a generator-produced bad row.
     """
-    obj = _load_json(path or REPO_ROOT / "results" / "run-registry.json")
+    resolved = path or REPO_ROOT / "results" / "run-registry.json"
+    try:
+        obj = _load_json(resolved)
+    except (OSError, json.JSONDecodeError) as exc:
+        raise RunRegistryInvalid(f"{resolved} could not be read: {exc}") from exc
+
     registry, _ = load_schema_registry()
-    errors = validate_manifest("run-registry", obj, registry)
-    if errors:
-        sys.exit(
-            "results/run-registry.json is INVALID — fix it before generating:\n  "
-            + "\n  ".join(errors)
+    problems = list(validate_manifest("run-registry", obj, registry))
+    entries = obj.get("registry", []) if isinstance(obj, dict) else []
+
+    if not problems:  # these presuppose a schema-valid shape
+        seen: dict[str, int] = {}
+        for i, entry in enumerate(entries):
+            rid = entry["run_id"]
+            if rid in seen:
+                problems.append(
+                    f"registry[{i}] (run_id={rid!r}): duplicate of registry[{seen[rid]}] "
+                    f"— run_id is the primary key and consumers disagree on which wins"
+                )
+            seen[rid] = i
+            if entry.get("status") == "planned":
+                d = REPO_ROOT / entry["directory_path"]
+                if d.is_dir():
+                    problems.append(
+                        f"registry[{i}] (run_id={rid!r}): status is 'planned' but "
+                        f"{entry['directory_path']} already exists — promote it to "
+                        f"'active', or the run will be skipped by both the manifest "
+                        f"build and the re-scoring worklist"
+                    )
+
+    if problems:
+        raise RunRegistryInvalid(
+            f"{resolved} is INVALID — fix it before generating:\n  "
+            + "\n  ".join(_name_registry_errors(problems, entries))
         )
     return obj
 
@@ -1247,7 +1351,9 @@ def report_planned_runs(registry: list[dict], now: datetime | None = None) -> li
     return lines
 
 
-def check_write_once_predictions(new_obj: dict, json_path: Path) -> list[str]:
+def check_write_once_predictions(
+    new_obj: dict, json_path: Path
+) -> tuple[list[str], list[str]]:
     """Refuse to silently rewrite a ``predicted_outcome`` that is already on disk.
 
     A prediction is only evidence of foresight if it cannot be edited once the
@@ -1272,26 +1378,32 @@ def check_write_once_predictions(new_obj: dict, json_path: Path) -> list[str]:
             means first generation, so there is nothing to protect.
 
     Returns:
-        One error string per illegal rewrite; empty when every prediction is
-        either unchanged, newly set, or explicitly amended.
+        ``(errors, warnings)``. Errors are blocking — one per illegal rewrite,
+        empty when every prediction is unchanged, newly set, or explicitly
+        amended. Warnings are advisory (the C3 disappearance notice) and are
+        RETURNED rather than printed so the caller can emit them only when the
+        write actually proceeds: a build blocked by an unrelated error writes
+        nothing, so the vanished row is still on disk and still protected, and
+        warning about it there would be false and would recur on every retry.
     """
     if not json_path.exists():
         print(f"WARN: {json_path.name} absent — write-once prediction guard is "
               f"DISARMED for this build (nothing on disk to protect).",
               file=sys.stderr)
-        return []
+        return [], []
     try:
         old_obj = json.loads(json_path.read_text(encoding="utf-8"))
     except (json.JSONDecodeError, OSError) as exc:
         print(f"WARN: {json_path.name} unreadable ({exc}) — write-once prediction "
               f"guard is DISARMED for this build.", file=sys.stderr)
-        return []
+        return [], []
 
     old_by_id = {
         row.get("analysis_id"): row
         for row in old_obj.get("analyses", [])
         if isinstance(row, dict)
     }
+    warnings: list[str] = []
     # C3 MITIGATION (not a closure). The guard compares manifest to manifest, so a
     # row that DISAPPEARS takes its prediction history with it: delete an analysis,
     # build, re-add it with a different prediction, build again — and no step is
@@ -1305,16 +1417,22 @@ def check_write_once_predictions(new_obj: dict, json_path: Path) -> list[str]:
         row.get("analysis_id") for row in new_obj.get("analyses", [])
         if isinstance(row, dict)
     }
-    for gone in sorted(k for k in old_by_id.keys() - new_ids if k):
-        if old_by_id[gone].get("predicted_outcome") not in (None, ""):
-            print(
-                f"WARN: analysis '{gone}' has DISAPPEARED from the manifest and it "
-                f"carried a prediction. Its predicted_outcome is no longer protected "
-                f"by the write-once guard — re-adding this analysis_id later will not "
-                f"be checked against it. Recorded on disk: "
-                f"{old_by_id[gone].get('predicted_outcome')!r}",
-                file=sys.stderr,
-            )
+    # `key=str` because analysis_id is read from an unvalidated on-disk file: a row
+    # missing the key maps to None, and a hand-edited one could be any type, either
+    # of which makes a bare sorted() raise from inside the very guard that exists to
+    # survive hand edits.
+    for gone in sorted(old_by_id.keys() - new_ids, key=str):
+        was = old_by_id[gone].get("predicted_outcome")
+        if was in (None, ""):
+            continue
+        label = gone if gone else f"<row with no analysis_id: {gone!r}>"
+        warnings.append(
+            f"analysis '{label}' has DISAPPEARED from the manifest and it carried a "
+            f"prediction. Its predicted_outcome is no longer protected by the "
+            f"write-once guard — re-adding this analysis_id later will not be "
+            f"checked against it. Recorded on disk: "
+            f"{textwrap.shorten(repr(was), width=200, placeholder=' …')}"
+        )
     errors: list[str] = []
     for row in new_obj.get("analyses", []):
         if not isinstance(row, dict):
@@ -1348,7 +1466,7 @@ def check_write_once_predictions(new_obj: dict, json_path: Path) -> list[str]:
             f"add a 'predicted_outcome_amended' object (reason + date) to the row in "
             f"results/run-analyses.json. On disk: {was!r} -> proposed: {now_val!r}"
         )
-    return errors
+    return errors, warnings
 
 
 def _stabilise_timestamps(manifest: str, new_obj: dict, json_path: Path) -> None:
@@ -1421,6 +1539,7 @@ def write_manifests(bundles: dict[str, list[dict]], at: str, registry: Registry)
     """
     out: dict[str, tuple] = {}
     staged: list[tuple[str, dict, Path, str]] = []
+    advisories: list[str] = []
     for manifest, rows in bundles.items():
         obj = assemble_manifest(manifest, rows, at)
         errors = validate_manifest(manifest, obj, registry)
@@ -1429,19 +1548,29 @@ def write_manifests(bundles: dict[str, list[dict]], at: str, registry: Registry)
         if manifest == "analyses":
             # Write-once guard runs alongside schema validation so a rewritten
             # prediction blocks the write exactly as a schema violation would.
-            errors = errors + check_write_once_predictions(obj, json_path)
+            write_once_errors, write_once_warnings = check_write_once_predictions(
+                obj, json_path)
+            errors = errors + write_once_errors
+            advisories.extend(write_once_warnings)
         out[manifest] = (len(rows), errors, json_rel)
         if not errors:
             staged.append((manifest, obj, json_path, json_rel))
 
     if any(errors for _, errors, _ in out.values()):
-        return out  # nothing written; every manifest keeps its previous content
+        # Nothing written; every manifest keeps its previous content — so the
+        # advisories are deliberately DROPPED. A vanished row is still on disk and
+        # still protected when the write does not happen, and warning about it here
+        # would be false and would recur on every retry until the blocking error is
+        # fixed, destroying the signal the mitigation depends on.
+        return out
 
     for manifest, obj, json_path, json_rel in staged:
         _stabilise_timestamps(manifest, obj, json_path)
         json_path.write_text(json.dumps(obj, indent=2) + "\n", encoding="utf-8")
         json_path.with_suffix(".md").write_text(
             render_manifest(manifest, obj, json_rel), encoding="utf-8")
+    for advisory in advisories:
+        print(f"WARN: {advisory}", file=sys.stderr)
     return out
 
 
@@ -1567,8 +1696,12 @@ def build_manifests(at: str, only: str | None = None) -> tuple:
             # Declared intent, not yet executed: emit NO rows. The manifests describe
             # what exists on disk, and inventing rows for a run with no artefacts
             # would be exactly the confusion this status exists to prevent. Planned
-            # runs surface via report_planned_runs instead. NOTE: this must stay
-            # ABOVE the directory_path lookup — a planned run need not have one.
+            # runs surface via report_planned_runs instead. The skip stays above
+            # the directory_path lookup so this loop never touches a path for a
+            # run that has not executed. NOTE: the field itself IS required by
+            # the schema — a planned run must declare its INTENDED path; it is
+            # the directory that need not exist yet (and load_run_registry
+            # rejects a planned entry whose directory DOES exist).
             continue
         directory_path = entry["directory_path"]
         run_facts = facts.get(run_id, {})
@@ -1728,7 +1861,13 @@ def draft_run(run_id: str) -> dict:
 
 
 def main(argv: list[str] | None = None) -> int:
-    """Entry point. Returns a process exit code."""
+    """Entry point. Returns a process exit code.
+
+    Exit codes: 0 success; 1 a generated row or manifest failed validation;
+    2 a bad CLI argument; ``EXIT_BAD_INPUT`` (3) the hand-authored run registry is
+    unusable. The last is separated from 1 because the two demand entirely
+    different fixes — edit your input, versus investigate the extractor.
+    """
     args = build_arg_parser().parse_args(argv)
 
     if args.self_test:
@@ -1745,8 +1884,12 @@ def main(argv: list[str] | None = None) -> int:
     if args.all or args.run:
         schema_reg, _ = load_schema_registry()
         at = utc_now_iso()
-        registry_obj, run_rows, conditions, passes, analyses, warnings = build_manifests(
-            at, only=args.run)
+        try:
+            registry_obj, run_rows, conditions, passes, analyses, warnings = build_manifests(
+                at, only=args.run)
+        except RunRegistryInvalid as exc:
+            print(str(exc), file=sys.stderr)
+            return EXIT_BAD_INPUT
 
         if args.run and not run_rows:
             # A PLANNED run legitimately produces no rows, so "not in the registry"
@@ -1762,9 +1905,16 @@ def main(argv: list[str] | None = None) -> int:
                     print(f"  {line}")
                 print(f"Run '{args.run}' is PLANNED — declared but not yet executed, "
                       f"so it emits no manifest rows by design.", file=sys.stderr)
-                return 0
-            print(f"No run '{args.run}' in results/run-registry.json.", file=sys.stderr)
-            return 2
+                # --write must NOT report success here: it would be the only path in
+                # main returning 0 from a --write that wrote nothing, and a wrapper
+                # treating 0 as "manifests refreshed" would be misled. Fall through
+                # to the existing single-run write refusal instead.
+                if not args.write:
+                    return 0
+            else:
+                print(f"No run '{args.run}' in results/run-registry.json.",
+                      file=sys.stderr)
+                return 2
 
         if warnings:
             print("=== registry ↔ facts drift ===")
