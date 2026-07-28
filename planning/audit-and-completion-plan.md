@@ -247,6 +247,43 @@ before the data exists cannot later be rewritten as a confirmation — which is
 precisely how the H7 inversion, the invented H6 budget rationale, and the
 H2-C rationalisation became possible.
 
+### 6.4a Verification practices for code (settled 2026-07-28)
+
+Derived from what actually worked across three rounds of auditing the manifest
+machinery. The datum worth keeping: **fresh-context adversarial review found
+every real defect; the author's own tests found none** — including a critical
+bug that shipped while passing 31/31 of its author's tests.
+
+**ADOPTED — the two-lens audit.** Written into the `/audit` command
+(`~/personal-assistant/commands/audit.md`, commit `491a225`): commit before
+delegating; never audit your own work in your own context; run two *orthogonal*
+lenses (implementation correctness, test adequacy) in fresh context, read-only,
+with `git checkout` forbidden. Lens B is new and is the one that finds why a
+defect got past review.
+
+**ADOPTED — the pipeline-fixture rule.** *Any test asserting on a generated
+object must build it through the real constructor, never by hand.* A hand-built
+fixture can encode a shape the code path cannot emit, so the test passes against
+an object that never exists in production. This is exactly how the write-once
+guard shipped unusable: its escape hatch was tested against a manifest row
+`build_analyses` could not produce. No tooling required; now enforced by Lens B.
+
+**RECORDED, NOT ADOPTED — coverage measurement.** `pytest-cov` is not installed.
+It would objectively surface untested branches, but Lens B's "is the wiring
+tested?" question found the same gap without it, so the marginal value is now
+small. Reach for it if this machinery is substantially extended.
+
+**RECORDED, NOT ADOPTED — automated mutation testing.** `mutmut` or
+`cosmic-ray`, scoped to changed modules only (each mutant re-runs the suite).
+This is the technique that actually found the green-test bypasses — done by hand
+it found one, done systematically by an agent it found five. Worth automating if
+the guard logic grows; not worth it while the append-only ledger is about to
+replace most of it.
+
+**NOT ADOPTED — property-based testing** (`hypothesis`). Good structural fit for
+a JSON-in/rows-out generator with crisp invariants, but the highest-effort item
+and not justified before the paper.
+
 ### 6.5 Verification infrastructure (design pending)
 
 Build an agent pair over a skill, per the adversarial-reviewer pilot: the
@@ -404,6 +441,43 @@ continuously.
   The repo copy is byte-identical from the registration commit to HEAD, but
   the OSF side has not been fetched. An API key exists at
   `~/personal-assistant/.env` (do not read it into context).
+
+## 7a. Session status — resume here (2026-07-28)
+
+**Machinery work is DONE and committed.** Repairs (2) and (3) are implemented,
+audited twice, and green: `f607adf20` (implementation + first audit fixes),
+`0a85abb14` (M3/M4/M10/C3), `b92d0c6f2` (second-audit resolutions), plus
+`491a225` in `personal-assistant` (the `/audit` command). Tier-1 at 1,178
+passed. Manifests ALL VALID. Nothing is left half-done.
+
+**The paper's actual exposure is untouched.** None of the 22 FALSE or 12
+UNLICENSED attributions is corrected yet. That is where the residual risk sits,
+and it is the queue to resume on.
+
+**Next actions, highest value first:**
+
+1. **The four substitution sources** (§ 3) — roughly 130 sites cascade from
+   four fixes, so this is the highest-density correction available.
+2. **The small, isolated corrections** — each independently verified and safe to
+   do in any order: `experimental-progression.md:49-50` (1:50,000 not 1:25,000;
+   not the Kazanlak Valley), `:264-266` (PV *was* preregistered),
+   `methods-outline.md:341` (invented budget rationale),
+   `hypothesis-tracking.md:86-87` (invalid H2-C reason),
+   `n1-baseline-matrix.md:401` (the H7 inversion).
+3. **The H7 erratum** — substance agreed (do not run T=1.6; see § 6.1), format
+   settled (model it on E56: Date / Type / Commit / Impact table, Description,
+   Verification, Blast radius, Resolution, Reference artefacts). Must record
+   *why* the corpus changed — the 60-tile set lacked the power to separate
+   conditions, per E36 — since that makes the deviation a sound methodological
+   choice rather than a bare departure.
+4. **The duplicate E47** in `working-notes.md:6556`, which collides with the
+   canonical E47 and is absent from the errata register.
+5. **The nine zero-cost analyses** (§ 6.2), starting with the family-level
+   BH-FDR now that the family definition is settled. Runs on sapphire.
+
+**Not started, needs a decision or a gate**: the paid batch (§ 6.3, three runs
+after H7 was removed); the commitment ledger (repair (1), which also closes C3);
+the OSF-side verification (§ 7).
 
 ## 8. Open questions for the PI
 
