@@ -474,15 +474,15 @@ The following `execution-plan.md` references have been updated to match Phase 2 
 
 ### Medium Priority (Helpful but Not Blocking)
 
-4. **H9 text variant instruction files**
+1. **H9 text variant instruction files**
    - Create 5 semantically equivalent versions of optimal instruction
    - Maintain consistent structure, vary wording
 
-5. **H9 image resampling logic**
+2. **H9 image resampling logic**
    - Add `--resample-examples` flag or wrapper script
    - Implement frequency-capped random sampling
 
-6. **H2 candidate extraction pipeline**
+3. **H2 candidate extraction pipeline**
    - Script to crop regions around proposer detections
    - Generate candidate manifest for verifier input
 
