@@ -488,7 +488,7 @@ Additionally, the function globbed for `*.geojson` files, but the batch detectio
    - `bootstrap_multi_run_ci()`: Resamples tiles (n=60 with replacement), computes F1 per run on the same tile sample, averages across runs. CI = 2.5th/97.5th percentiles.
    - `bootstrap_multi_run_effect_size_ci()`: Same tile resampling for paired condition comparison.
 
-This preserves the tile as the resampling unit (per preregistration §3.5) while correctly handling the K=10 repeated-measures structure.
+This preserves the tile as the resampling unit (fixed pre-lodgement in Decision 10, `decisions-log.md:337`; the registered §3.5 specifies only "95% bootstrapped CIs" — attribution corrected 2026-07-28, D17 audit U1) while correctly handling the K=10 repeated-measures structure.
 
 **Validation**: Run against 3 existing image-only runs. Per-run F1 values: 0.435, 0.388, 0.360 — matching the expected ~0.36–0.44 range observed during sanity checks.
 
@@ -612,7 +612,7 @@ A secondary instance of the same bug affected `bootstrap_tile_classification_ci(
 - `test_aggregate_with_duplicate_tiles`: Verifies a tile sampled 3× contributes 3× its TP/FP/FN
 - `test_bootstrap_ci_contains_point_estimate`: Verifies the 95% CI contains the point estimate
 
-**Protocol impact**: None. The preregistered statistical method (bootstrap with tile-level resampling, §3.5) is unchanged. This corrects an implementation bug in how resampled tiles were passed to the matching functions. The `analysis_report.json` was also regenerated from the current (valid) data after the fix.
+**Protocol impact**: None. The statistical method (bootstrap CIs, registered §3.5; tile-level resampling unit fixed pre-lodgement in Decision 10 — attribution corrected 2026-07-28, D17 audit U1) is unchanged. This corrects an implementation bug in how resampled tiles were passed to the matching functions. The `analysis_report.json` was also regenerated from the current (valid) data after the fix.
 
 ### E27: Dual-track carry-forward from Phase 2a (OFAT deviation)
 
@@ -866,8 +866,10 @@ equally to both conditions, partially cancelling in the difference.
 Production-run results use the corrected implementation.
 
 **Context**: This correction is outside the formally preregistered
-analysis protocol. The preregistration specifies bootstrap resampling
-at the tile level (Section 3.5) but does not specify the spatial
+analysis protocol. The preregistration specifies 95% bootstrapped CIs
+(Section 3.5); the tile-level resampling unit was fixed pre-lodgement in
+Decision 10 (attribution corrected 2026-07-28, D17 audit U1). Neither
+specifies the spatial
 matching granularity (per-tile vs per-map) within each bootstrap
 iteration. The correction aligns the bootstrap matching with the
 point-estimate matching method, which is the methodologically
@@ -1752,7 +1754,7 @@ levels; (c) N = 5 and N = 10 consensus threshold sweeps at each cell.
 | Commit | TBD |
 | Impact | None (preregistered methodology unchanged) |
 
-**Description**: The preregistration (Section 3.5) specifies bootstrap resampling at **1 000 iterations** with the percentile method (2.5th / 97.5th) and tile-level resampling. All scripts that evaluate preregistered conditions — `evaluate_detections.py`, `compute-pairwise-effect-sizes.py`, `evaluate_pv_results.py`, `compare_wbf_vs_greedy.py`, `analyse_secondary_effects_text.py`, and the shared `lib_advanced_metrics.bootstrap_ci` default — use 1 000 iterations, matching the preregistration.
+**Description** (attribution corrected 2026-07-28, D17 audit U1): the registered text specifies 95% bootstrapped CIs (Section 3.5); the **1 000-iteration** count, percentile method (2.5th / 97.5th), and tile-level resampling unit were fixed pre-lodgement in **Decision 10** (`decisions-log.md:337`) and do not appear in the lodged registration. They are pre-specified analysis parameters, not registered ones. All scripts that evaluate preregistered conditions — `evaluate_detections.py`, `compute-pairwise-effect-sizes.py`, `evaluate_pv_results.py`, `compare_wbf_vs_greedy.py`, `analyse_secondary_effects_text.py`, and the shared `lib_advanced_metrics.bootstrap_ci` default — use 1 000 iterations, matching the preregistration.
 
 Several **post-hoc** analyses (not specified in the preregistration) use **10 000 iterations** instead. These analyses are characterised by narrow effect sizes where CI precision at 2-3 decimal places is material for narrative clarity:
 
@@ -1764,17 +1766,17 @@ Several **post-hoc** analyses (not specified in the preregistration) use **10 00
 
 **Rationale for the split**:
 
-1. **The preregistration locks 1 000 for primary evaluation** — any deviation on preregistered conditions would require a deviation-class errata entry, not a clarification. The 1 000-iteration setting remains untouched for those.
+1. **Decision 10 fixed 1 000 for primary evaluation pre-lodgement** — the setting remains untouched for preregistered conditions; because the count is pre-specified rather than registered, changing it for post-hoc analyses is a clarification, not a deviation.
 2. **10 000 is selectively applied to post-hoc analyses where CI precision determines narrative clarity** — the preregistration does not constrain methodology for analyses it did not specify.
 3. **Runtime is not a binding constraint for post-hoc analyses**: they run once on a single corpus, not across the hundreds-of-conditions leaderboard matrix. The 10× cost is absorbable for a one-off authoring run.
 
 **Paper methods wording (suggested)**:
 
-> Confidence intervals on primary F1, precision, and recall are derived from 1 000-iteration tile-level bootstrap resampling (preregistered Section 3.5, percentile method 2.5th / 97.5th). Post-hoc analyses — human-reviewed corrected F1 (single- and multi-buffer), subtype classification, and review-UI calibration cross-tabs — use 10 000 iterations to tighten CIs on narrow effect sizes; the resampling unit and percentile method are unchanged.
+> Confidence intervals on primary F1, precision, and recall are derived from 1 000-iteration tile-level bootstrap resampling (95% bootstrapped CIs per registered §3.5; 1 000 iterations, percentile method 2.5th / 97.5th, and tile-level unit pre-specified in Decision 10 before lodgement). Post-hoc analyses — human-reviewed corrected F1 (single- and multi-buffer), subtype classification, and review-UI calibration cross-tabs — use 10 000 iterations to tighten CIs on narrow effect sizes; the resampling unit and percentile method are unchanged.
 
 **Reference artefacts**:
 
-- Preregistration Section 3.5: `docs/methodology/preregistration/decisions-log.md:337`
+- Registered §3.5 (95% bootstrapped CIs): `osf/preregistration.md:293`; parameter source Decision 10: `docs/methodology/preregistration/decisions-log.md:337` (this line previously mislabelled the decisions log as "Preregistration Section 3.5" — corrected 2026-07-28)
 - Primary bootstrap defaults: `scripts/evaluate_detections.py` (`DEFAULT_BOOTSTRAP = 1000`); `scripts/lib_advanced_metrics.py::bootstrap_ci` default `n_iterations = 1000`
 - Post-hoc 10 000-iteration scripts: enumerated above
 - CI-metadata registry (per-file iteration count): `results/ci-metadata-registry.md`
@@ -1825,7 +1827,7 @@ Several **post-hoc** analyses (not specified in the preregistration) use **10 00
 | Commit | TBD |
 | Impact | Medium — governs how diagnostic operating points are reported; the headline pipeline is unaffected (binary verdict) |
 
-**Description**: The headline proposer-verifier pipeline (gold-standard-v2) applies the verifier as a **binary accept/reject verdict** — its `verified` condition records `prob_threshold = null`, so no probability cutoff is tuned. The preregistered calibrate-then-test split governs the **consensus vote threshold** (Phase 1 baseline calibration on the 20 held-out calibration tiles, ≥3/5).
+**Description**: The headline proposer-verifier pipeline (gold-standard-v2) applies the verifier as a **binary accept/reject verdict** — its `verified` condition records `prob_threshold = null`, so no probability cutoff is tuned. The consensus vote threshold was calibrated on the 20 held-out Phase 1 calibration tiles (≥3/5). (Attribution corrected 2026-07-28, D17 audit: the registered ≥3/5 threshold, `osf/preregistration.md:1450-1451`, governs hard-example mining in §8.4.1 Step 2 — which FNs/FPs qualify as HP/HN candidates — not consensus vote-threshold calibration; the calibrate-then-test split for the vote threshold is an execution-time practice, not a registered one.)
 
 The verifier's continuous `mound_probability` is explored only in the **diagnostic** runs (pv-diag-384 / the Session 78 verifier-calibration matrix). There the per-cell operating point `(vote_t, prob_t)` is selected by sweeping the grid and taking the F1-optimum at the 20 m buffer — and that selection is performed **on the 487-tile evaluation scope, which is the test set** (`scripts/score_leaderboard_cells.py`; `results/verifier-calibration-matrix/README.md` Phase B). There is **no calibration-tile verifier data** to select on: the verifier never ran on the 20 calibration tiles (excluded from the 487-tile scope; pv-diag ∩ calibration = 0). So any single `prob_t`-thresholded F1 quoted for these diagnostics is an **in-sample, test-set-optimised** number, not a calibrated one.
 
@@ -1842,13 +1844,13 @@ The verifier's continuous `mound_probability` is explored only in the **diagnost
 
 **Reference artefacts**: `results/verifier-calibration-matrix/README.md` (Phase B); `results/run-conditions.json` (gs-v2 `prob_threshold: null`); `inputs/tiles/calibration_manifest.json`; `results/rescore-2026-05-31/pv-diag-384/sweep/`; working-notes Obs 269 + 277; `planning/session-78-matrix-calibration-summary.md`.
 
-**Update (2026-06-06 — scope clarification, H3 consensus characterisation).** This erratum governs the **verifier probability-threshold** diagnostics only. It does **not** make the **H3 consensus-voting characterisation** (the Phase 3a / pv-diag-384 vote-threshold sweep, realised as the `diversity-dividend-384` finding) an "in-sample" limitation. The preregistered H3 analysis plan (`analysis-summary.md` §H3) is *"compare voted F1 vs single-pass mean F1"* with output *"threshold sweep curves showing **optimal (N, threshold) combinations**"* — so reporting each configuration's best (N, threshold) operating point against the test-tile ground truth is the **preregistered method**, and the deliverable of a study whose stated purpose is to characterise how well VLM symbol extraction localises mounds against known ground truth. Three operating-point provenances must be kept distinct and **not** conflated under one "in-sample" label:
+**Update (2026-06-06 — scope clarification, H3 consensus characterisation).** This erratum governs the **verifier probability-threshold** diagnostics only. It does **not** make the **H3 consensus-voting characterisation** (the Phase 3a / pv-diag-384 vote-threshold sweep, realised as the `diversity-dividend-384` finding) an "in-sample" limitation. The preregistered H3 analysis plan (`osf/preregistration.md:519-521` — "Compare single-pass mean F1 vs voted F1 at each (N, threshold) combination", "Generate threshold sweep curves", "Identify optimal (N, threshold)"; citation corrected 2026-07-28, D17 audit U4 — the original cited `analysis-summary.md`, which is not a lodged document) — so reporting each configuration's best (N, threshold) operating point against the test-tile ground truth is the **preregistered method**, and the deliverable of a study whose stated purpose is to characterise how well VLM symbol extraction localises mounds against known ground truth. Three operating-point provenances must be kept distinct and **not** conflated under one "in-sample" label:
 
 1. **Phase-1 baseline consensus** — vote threshold ≥3/5, calibration-selected on the 20 held-out calibration tiles, used to build the hard-case example library. Calibrated.
 2. **H3 consensus characterisation** (Phase 3a / pv-diag-384; `diversity-dividend-384`) — best (N, threshold) swept against the test tiles. **Preregistered method, not a hedge** — the test tiles are the measurement instrument, and best-achievable performance is the result.
 3. **Verifier `prob_t` diagnostics** (this erratum) — selected on the 487-tile test set with no held-out verifier data. In-sample; report as sensitivity curves.
 
-The calibrate → test → produce logic (and any "in-sample vs deployable" framing) belongs to the **55-map generalisation** deployment, where the carried-forward configuration is reported against corrected student ground truth alongside the oracle-best on the 55-map set (the carry-forward − best delta). It does not apply to the GS test-tile characterisation, which is the whole point of the test tiles. No preregistration amendment is required: H3's swept-optimal reporting was preregistered (`analysis-summary.md` §H3).
+The calibrate → test → produce logic (and any "in-sample vs deployable" framing) belongs to the **55-map generalisation** deployment, where the carried-forward configuration is reported against corrected student ground truth alongside the oracle-best on the 55-map set (the carry-forward − best delta). It does not apply to the GS test-tile characterisation, which is the whole point of the test tiles. No preregistration amendment is required: H3's swept-optimal reporting was preregistered (`osf/preregistration.md:519-521`; citation corrected 2026-07-28 — see above).
 
 ---
 

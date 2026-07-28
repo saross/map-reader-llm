@@ -944,7 +944,7 @@ modes section OR opening paragraph of a "methods limits" sub-section.
 
 **Figure / table references**: Shell-wise lift table (directly
 reproducible from `buffer-band-lift/shell.csv`); reliability diagram for
-D-S posterior at the preregistered prior showing the single-value
+D-S posterior at the Sobotkova-derived 5 % prior showing the single-value
 degeneracy (`ds-human-crosstab/reliability_plot.png`).
 
 **Trace**:

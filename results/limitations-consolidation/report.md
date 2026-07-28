@@ -1,5 +1,8 @@
 # Limitations consolidation — 55-map VLM burial-mound detection study
 
+> **Last revised**: 2026-07-28 (preregistration-attribution corrections, D17
+> audit). See [§ Changelog](#changelog) for revision history.
+
 **Created**: 2026-04-24 (Session 76).
 **Purpose**: Consolidate all substantive limitations of the study into a single paper-citation source, ordered by likely paper-section priority (data quality → methodology → coverage → calibration → process deviations). Each limitation states the finding, the source of truth, the quantification (where available), and the paper-implication framing.
 
@@ -12,11 +15,11 @@ The study has **four first-order limitations** that materially shape what the pa
 1. **v2 verifier contamination** (`archive/v2-verifier-contamination/`): the v2 verifier prompt was calibrated on the gold-standard false-positive set before evaluation, violating held-out evaluation. All v2-on-GS results are quarantined; the paper cites only v1-verifier results.
 2. **H10/H12 v1 retracted probe** (`archive/h10-h12-v1-retracted-probe/`): a 2026-04-11 run with `include_example_images: false` on a text-only proposer silently omitted the entire library; the null result was tautological. Data physically moved to archive in Session 75 (commit `52404476`); the clean cross-hypothesis coverage lives in H8 v2 + H12 v2.
 3. **Student-GT positional noise and completeness** on the 55-map generalisation corpus: the extended-buffer analysis shows a ~25 – 35 m rightward shift of the 55-map F1 curve relative to the curator-GT gold-standard curve, indicating position noise of that magnitude. Per-candidate human review of the VLM-only candidates finds 45.9 % phantom-TP rate (472 / 1,028 at 50 m) — student GT missed ~10 % of mounds in the VLM-only candidate set. Both effects drag down the uncorrected F1 headline.
-4. **Dawid-Skene structural inadequacy on the VLM-only slice** (Obs 273): 2-annotator binary D-S with all items in the same response-pattern class yields AUC = 0.500 regardless of prior. D-S is retained as a preregistered comparator but cannot be used as a per-item discriminator on this slice.
+4. **Dawid-Skene structural inadequacy on the VLM-only slice** (Obs 273): 2-annotator binary D-S with all items in the same response-pattern class yields AUC = 0.500 regardless of prior. D-S is retained as a comparator (a post-hoc method adopted for the 55-map ground-truth reconciliation — not preregistered; D17 audit FALSE-12) but cannot be used as a per-item discriminator on this slice.
 
 A further **~15 second-order limitations** covering preregistered protocol deviations, coverage gaps in the experimental matrix, and calibration issues are catalogued in §§2 – 7 below. The paper's Limitations section should anchor on §§2 – 5 (first-order); §§6 – 7 are available as supporting citations and scope notes.
 
-**One-line paper claim for the Limitations section opener**: "Four limitations materially shape the claims available from this study: a methodological quarantine of the v2 verifier prompt (calibration-on-test); a methodological retraction of the H10 / H12 v1 library probe (silent library omission); position noise on the 55-map student ground truth (~25 – 35 m empirical shift); and a structural inadequacy of the 2-annotator Dawid-Skene aggregate posterior on the VLM-only candidate slice (AUC = 0.500 by identifiability construction). The first three are fully mitigated by downstream artefacts (v1 verifier citation only; clean H8 v2 / H12 v2 cross-hypothesis replacement; per-candidate human review). The fourth is an inherent scope limit of the preregistered D-S framing."
+**One-line paper claim for the Limitations section opener**: "Four limitations materially shape the claims available from this study: a methodological quarantine of the v2 verifier prompt (calibration-on-test); a methodological retraction of the H10 / H12 v1 library probe (silent library omission); position noise on the 55-map student ground truth (~25 – 35 m empirical shift); and a structural inadequacy of the 2-annotator Dawid-Skene aggregate posterior on the VLM-only candidate slice (AUC = 0.500 by identifiability construction). The first three are fully mitigated by downstream artefacts (v1 verifier citation only; clean H8 v2 / H12 v2 cross-hypothesis replacement; per-candidate human review). The fourth is an inherent scope limit of the two-annotator D-S framing (a post-hoc method adopted for ground-truth reconciliation, not preregistered)."
 
 ## 2. First-order limitations (4)
 
@@ -75,11 +78,11 @@ A further **~15 second-order limitations** covering preregistered protocol devia
 | Source of truth | `results/55maps-image-generalisation/ds-human-crosstab/report.md`; `results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/report.md` |
 | Obs anchor | Obs 273 |
 | Quantified | AUC = 0.500 on the VLM-only slice regardless of prior (tested across grid of ~100 prior values) |
-| Mitigation | Paper uses verifier probability + human review as item-level signals; D-S retained as preregistered comparator with explicit inadequacy-disclosure |
+| Mitigation | Paper uses verifier probability + human review as item-level signals; D-S retained as post-hoc comparator with explicit inadequacy-disclosure |
 
-**Finding**: with only two binary annotators (student GT, VLM pipeline) and all VLM-only candidates in the same response-pattern class (student = 0, VLM = 1), the 2-annotator Dawid-Skene model assigns an identical posterior to every item. Item-level AUC is degenerate at 0.500. This is a combinatorial consequence of the preregistered 2-annotator design, not a prior-choice failure — confirmed empirically by sweeping priors across the grid `[0.01, 0.99]` (see §8 of `dawid-skene-v2-data-driven-prior/report.md`).
+**Finding**: with only two binary annotators (student GT, VLM pipeline) and all VLM-only candidates in the same response-pattern class (student = 0, VLM = 1), the 2-annotator Dawid-Skene model assigns an identical posterior to every item. Item-level AUC is degenerate at 0.500. This is a combinatorial consequence of the 2-annotator design, not a prior-choice failure — confirmed empirically by sweeping priors across the grid `[0.01, 0.99]` (see §8 of `dawid-skene-v2-data-driven-prior/report.md`).
 
-**Paper implication**: the paper must state that the preregistered D-S analysis is **structurally inadequate for item-level ranking** on the VLM-only slice. The aggregate-rate estimator remains functional with a well-specified prior (at prior = 0.17 the v2 posterior matches the empirical rate to 4 decimals) but per-item ranking requires a third annotator. The paper's per-item confidence reporting uses the verifier probability (also flawed; see §3 below) and the human-review labels.
+**Paper implication**: the paper must state that the post-hoc D-S analysis is **structurally inadequate for item-level ranking** on the VLM-only slice. The aggregate-rate estimator remains functional with a well-specified prior (at prior = 0.17 the v2 posterior matches the empirical rate to 4 decimals) but per-item ranking requires a third annotator. The paper's per-item confidence reporting uses the verifier probability (also flawed; see §3 below) and the human-review labels.
 
 ## 3. Calibration / evaluation limitations (3)
 
@@ -152,9 +155,9 @@ These are preregistered-vs-executed deviations documented as errata. Each is a s
 | Quantified | 157 downstream references to the UNINTENDED-T1.0 dirs; 487 tiles per run |
 | Mitigation | UNINTENDED-T1.0 dirs retained with dual-role framing (origin = error, retention = serendipitous Era 2 T = 1.0 coverage); not archived |
 
-**Finding**: the consensus-384 runs were executed at T = 1.0 due to a YAML-propagation failure; the preregistered setting was T = 0.7. The runs are retained because they provide an independent Era 2 T = 1.0 coverage that the preregistered Phase 2b (340 tiles, T = 1.0) data does not extend to.
+**Finding**: the consensus-384 runs were executed at T = 1.0 due to a YAML-propagation failure; the intended setting — declared in the study YAML and carried forward from production, not preregistered (E43; D17 audit FALSE-21) — was T = 0.7. The runs are retained because they provide an independent Era 2 T = 1.0 coverage that the Phase 2b retest (340 tiles, T = 1.0) data does not extend to.
 
-**Paper implication**: any cross-reference to the `consensus-384-UNINTENDED-T1.0` or `single-pass-384-UNINTENDED-T1.0` directories must state the T = 1.0 condition came from a preregistered error; scientific T = 1.0 evidence anchors on Phase 2b (Obs 116 / 177 / 209), not E43 data. The `outputs/h11/*/UNINTENDED-T1.0/README.md` banners document the dual-role framing.
+**Paper implication**: any cross-reference to the `consensus-384-UNINTENDED-T1.0` or `single-pass-384-UNINTENDED-T1.0` directories must state the T = 1.0 condition came from a configuration error (E43); scientific T = 1.0 evidence anchors on Phase 2b (Obs 116 / 177 / 209), not E43 data. The `outputs/h11/*/UNINTENDED-T1.0/README.md` banners document the dual-role framing.
 
 ### 4.4 E47 — Primary spatial matching buffer reverted to preregistered 20 m
 
@@ -182,9 +185,9 @@ These are preregistered-vs-executed deviations documented as errata. Each is a s
 
 | Source | `docs/methodology/preregistration/protocol-errata.md` lines 1670+ |
 |---|---|
-| Quantified | 1,000 iterations for preregistered primary F1; 10,000 for post-hoc narrow-effect analyses (corrected-F1, subtype classification, verifier calibration) |
+| Quantified | 1,000 iterations for primary F1 (fixed pre-lodgement in Decision 10, `decisions-log.md:337`; the registered text specifies only 95% bootstrapped CIs); 10,000 for post-hoc narrow-effect analyses (corrected-F1, subtype classification, verifier calibration) |
 
-**Finding**: the preregistered bootstrap iteration count was 1,000. Several post-hoc analyses with narrow effect sizes used 10,000 iterations for tighter CIs.
+**Finding**: the project's bootstrap iteration count of 1,000 was fixed pre-lodgement in Decision 10 (not in the registered text — D17 audit U1). Several post-hoc analyses with narrow effect sizes used 10,000 iterations for tighter CIs.
 
 **Paper implication**: CI widths are comparable within each iteration-count family; direct CI-width comparisons across the two families are not commensurable. The CI metadata registry (`results/ci-metadata-registry.md`) documents every run's bootstrap setting; paper tables should cite per-row iteration count where it varies.
 
@@ -293,12 +296,12 @@ Covered under E43 above; retention framing documented in the `outputs/h11/*/UNIN
 Highest-impact to lowest:
 
 1. **§2.3 Student-GT position noise + incompleteness** — materially shifts every per-corpus F1 claim; requires explicit mitigation (corrected-F1 + extended-buffer argument).
-2. **§2.4 Dawid-Skene 2-annotator inadequacy** (Obs 273) — the preregistered aggregate method is structurally unable to rank items on the VLM-only slice.
+2. **§2.4 Dawid-Skene 2-annotator inadequacy** (Obs 273) — the post-hoc aggregate method is structurally unable to rank items on the VLM-only slice.
 3. **§2.1 v2 verifier contamination** — methodology-transparency requirement; paper-headline v1-verifier is clean.
 4. **§3.1 Verifier miscalibration** (Obs 269) — weakens the per-candidate confidence story; cites the verifier-calibration artefact.
 5. **§3.2 Attractor-pull 125 m cap** (Obs 272) — practitioner-tolerance scope limit.
 6. **§2.2 H10 / H12 v1 retraction** — transparency; mitigated by v2 artefacts.
-7. **§4 Methodological deviations (E1–E54)** — scope + preregistered framing; each noted individually where relevant.
+7. **§4 Methodological deviations (E1–E60)** — scope + preregistered framing; each noted individually where relevant.
 8. **§5 Coverage gaps** — follow-up-ready, not blocking.
 9. **§6 Process limitations** + **§7 Preserved-but-superseded** — transparency + archive policy.
 
@@ -306,7 +309,7 @@ Highest-impact to lowest:
 
 > This study has several limitations that shape the available claims. First, the 55-map student ground truth has empirical position noise of approximately 25 – 35 m (quantified by comparing the F1-curve plateau shift between the 4-map curator-annotated gold-standard corpus and the 55-map student corpus; see Supplementary extended-buffer analysis) and is incomplete: per-candidate human review of the 1,028 VLM-only candidates at 50 m matching tolerance finds 45.9 % (472 / 1,028) to be confirmed mounds missed by the student GT. The uncorrected F1 at 20 m on the 55-map corpus therefore understates detection quality; the corrected F1 at 50 m after human-review rescue is the conservative paper-citation figure (F1 ≥ 0.830).
 >
-> Second, the preregistered Dawid-Skene (D-S) aggregate-posterior analysis is structurally unable to rank individual VLM-only candidates on this slice. With two binary annotators (student GT, VLM pipeline) and all VLM-only candidates in the same `(student = 0, VLM = 1)` response-pattern class, D-S assigns an identical posterior to every item by identifiability construction, yielding item-level AUC = 0.500 regardless of the prior on student false-negative rate. We retain D-S as a preregistered comparator and explicitly flag its inadequacy for per-item ranking on the VLM-only slice.
+> Second, the Dawid-Skene (D-S) aggregate-posterior analysis — a post-hoc method adopted for ground-truth reconciliation, with its 5 % student-false-negative prior taken from Sobotkova et al. (2023) — is structurally unable to rank individual VLM-only candidates on this slice. With two binary annotators (student GT, VLM pipeline) and all VLM-only candidates in the same `(student = 0, VLM = 1)` response-pattern class, D-S assigns an identical posterior to every item by identifiability construction, yielding item-level AUC = 0.500 regardless of the prior on student false-negative rate. We retain D-S as a comparator and explicitly flag its inadequacy for per-item ranking on the VLM-only slice.
 >
 > Third, a v2 verifier prompt was calibrated against the gold-standard false-positive set before evaluation, violating held-out evaluation principle (calibration-on-test). All v2-on-gold-standard results are quarantined under `archive/v2-verifier-contamination/`. All paper-cited verifier probabilities and derived calibration metrics use v1-verifier results, which were not exposed to gold-standard FPs during development.
 >
@@ -327,7 +330,7 @@ Highest-impact to lowest:
 - `archive/flawed-audit-2026-04-19/NOTE.md` — prior audit retraction.
 - `archive/outputs-pre-retest-60-tile/phase2b/` — pre-retest pilot data.
 - `docs/methodology/v2-verifier-contamination-policy.md` — quarantine policy.
-- `docs/methodology/preregistration/protocol-errata.md` — E1 – E54 errata register.
+- `docs/methodology/preregistration/protocol-errata.md` — E1 – E60 errata register.
 - `docs/notes/reflections/working-notes.md` §Obs 260 / 263 / 267 / 268 / 269 / 272 / 273.
 - `results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.md` — corrected-F1 lower bound.
 - `results/55maps-image-generalisation/corrected-f1-multi-buffer/report.md` — multi-buffer corrected F1.
@@ -348,3 +351,24 @@ This is a synthesis doc. All limitations are derivable from the source artefacts
 **Level-up / regeneration cadence**: this doc should be touched only when a new first-order limitation is discovered or when an existing limitation's mitigation changes status (e.g., the image-vs-text paired test is eventually run, which would move §5.1 from "not available" to "resolved").
 
 **Toolchain**: hand-authored synthesis; no scripted regeneration.
+
+## Changelog
+
+### 2026-07-28 — Preregistration-attribution corrections (D17 audit)
+
+**Refresh trigger**: the Session-118/119 preregistration-integrity audit
+(`reports/d17-inventory/prereg-attribution-sweep.md` FALSE-12, FALSE-21, U1,
+S5). Dawid–Skene was never registered (zero hits in any lodged document or
+the errata) — every "preregistered" qualifier on D-S is replaced with the
+accurate post-hoc framing, which also deletes a self-inflicted Limitations
+admission about a "preregistered analysis" that never was; the 5 % prior is
+attributed to Sobotkova et al. (2023). The UNINTENDED-T1.0 intended setting
+(T = 0.7) is re-attributed from "preregistered" to the study YAML / carried
+production value (E43). The 1,000-iteration bootstrap count is attributed to
+pre-lodgement Decision 10, not the registered text. Errata ranges updated
+E1–E54 → E1–E60. **No quantitative claim, finding, or mitigation changed.**
+
+### 2026-04-24 — Original publication
+
+Synthesis of all substantive limitations into a single paper-citation
+source (Session 76); see the header block for scope and method.

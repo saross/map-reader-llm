@@ -9,7 +9,9 @@ plus pairwise comparisons against minimal and Proposer-Verifier (PV) baselines.
 
 Designed to run on sapphire (12C/24T AMD Ryzen 9 7900) with multiprocessing.
 
-Pool sizes follow preregistration section 3.8 first-N convention:
+Pool sizes follow the first-N convention (registered in §3.8 for N=5
+and N=10 within a K=10 design; N=30 sub-pooling and the omission of
+§3.8's second N=5 pool are unregistered extensions, D17 audit U2):
   - N=5  uses runs 1-5,  vote thresholds 1..5
   - N=10 uses runs 1-10, vote thresholds 1..10
   - N=30 uses runs 1-30, vote thresholds 1..30

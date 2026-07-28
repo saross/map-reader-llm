@@ -326,7 +326,7 @@ def precompute_clusters(
             standardised.append((run_num, gdf))
 
         for pool_size in pool_sizes:
-            # Select runs: first N (preregistration Section 3.8)
+            # Select runs: first N (per prereg §3.8 for N=5/N=10; larger N unregistered — D17 U2)
             selected = [
                 (rn, gdf)
                 for rn, gdf in standardised
@@ -552,9 +552,13 @@ def generate_summary_md(
             f"(K={metadata.get('n_bootstrap', 1000)} iterations)"
         ),
         "",
-        "Pool selection follows the first-N convention "
-        "(preregistration Section 3.8): N=5 uses runs 1-5, "
-        "N=10 uses runs 1-10, etc.",
+        "Pool selection uses the first-N convention: N=5 uses runs 1-5, "
+        "N=10 uses runs 1-10, and larger N take the first N runs. "
+        "The preregistration (\u00a73.8) specifies first-N pooling for "
+        "N=5 and N=10 within a K=10 design and additionally specifies a "
+        "second N=5 pool (runs 6-10) for an independent estimate; "
+        "sub-pooling of larger run pools, and the omission of the second "
+        "N=5 pool, are unregistered extensions (D17 audit U2).",
         "",
     ])
 
@@ -970,7 +974,7 @@ Examples:
         "n_bootstrap": args.bootstrap,
         "random_seed": args.seed,
         "pool_selection": (
-            "first-N (preregistration Section 3.8)"
+            "first-N (prereg \u00a73.8 for N=5/N=10; larger N unregistered, D17 U2)"
         ),
         "temperatures": args.temperatures,
         "pool_sizes": args.pool_sizes,

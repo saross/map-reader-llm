@@ -216,8 +216,11 @@ weak hint, not a finding, and should be stated as such in the paper.
 
 At t=3, scale-8 leads (F1=0.730); at t=4, scale-4 leads (F1=0.733);
 at t=5, scale-4 again leads (F1=0.632). The "best library" depends
-on which consensus threshold one picks, and the preregistered t=4
-primary operating point gives a different winner than t=3. This
+on which consensus threshold one picks, and the production t=4
+operating point (adopted 2026-04-15 by user preference, E52 — the
+registration specifies a full threshold grid search with no a priori
+selection, `osf/preregistration.md:1908`; D17 audit FALSE-17) gives a
+different winner than t=3. The full sweep is reported. This
 threshold-dependence is itself evidence that between-condition
 variance is consensus noise rather than real structure in library
 design — a point that mirrors the H12 v2 finding (Obs 239) and

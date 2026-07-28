@@ -3,8 +3,11 @@
 > **Last revised**: 2026-06-06 (original publication — the diversity-dividend
 > statistical test, Session 103). See [§ Changelog](#changelog) for revision history.
 
-The **diversity-dividend test** (preregistered hypothesis **H3**) asks two
-linked questions about consensus voting over multiple Vision Language Model
+The **diversity-dividend test** asks two
+linked questions (the second is preregistered **H3**, `osf/preregistration.md:501`;
+the first — thinking-level diversity — is a post-registration question: the
+registration fixes `thinking_level=minimal` (§8.2, §8.9) and registered H9's
+diversity mechanisms are text, image, and temperature only — D17 audit U5) about consensus voting over multiple Vision Language Model
 (VLM) proposer passes:
 
 1. **Diversity dividend** — does **HIGH-thinking** consensus (more diverse
@@ -98,9 +101,11 @@ consensus reaches the expensive Pro single-pass tier on localisation F1.**
 ## Operating-point reading
 
 This is a **characterisation** against known test-tile ground truth, not a
-deployment prediction. The preregistered H3 analysis plan
-(`analysis-summary.md` §H3) is "compare voted F1 vs single-pass mean F1" with
-output "threshold sweep curves showing **optimal (N, threshold) combinations**".
+deployment prediction. The registered H3 analysis plan
+(`osf/preregistration.md:519-521`; citation corrected 2026-07-28, D17 audit U4)
+is "Compare single-pass mean F1 vs voted F1 at each (N, threshold) combination"
+with "threshold sweep curves" and "Identify **optimal (N, threshold)**" as
+outputs.
 So reporting each configuration's **best (N, threshold)** operating point is the
 preregistered method — the study's purpose is to measure how well VLM symbol
 extraction *can* localise mounds. Best-achievable performance is the deliverable.
@@ -149,7 +154,7 @@ best (N, threshold) and the production N=5 operating points; and the best Flash
 HIGH-text consensus forms a three-member Tier-1 tie with the two genuine-Pro
 single-pass text leaders. Framing (Session 103 discussion): the best
 (N, threshold) operating point against test-tile ground truth is the
-preregistered H3 characterisation (`analysis-summary.md` §H3), **not** an
+registered H3 characterisation (`osf/preregistration.md:519-521`), **not** an
 in-sample limitation — the earlier E56-style "in-sample caveat" wording was
 imported in error from the verifier prob_t rule (a distinct case; see E56
 Update 2026-06-06) and has been replaced with an operating-point-sensitivity

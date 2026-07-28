@@ -169,4 +169,4 @@ For each (temperature, pool_size, threshold) combination:
 6. F1 evaluation uses 20 m spatial matching tolerance
 7. Bootstrapped 95% CIs use tile-level resampling (K=1000 iterations)
 
-Pool selection follows the first-N convention (preregistration Section 3.8): N=5 uses runs 1-5, N=10 uses runs 1-10, etc.
+Pool selection uses the first-N convention: N=5 uses runs 1-5, N=10 uses runs 1-10, and larger N take the first N runs. The preregistration (§3.8) specifies first-N pooling for N=5 and N=10 within a K=10 design and additionally specifies a second N=5 pool (runs 6-10) for an independent estimate; sub-pooling of larger run pools, and the omission of the second N=5 pool, are unregistered extensions (D17 audit U2).

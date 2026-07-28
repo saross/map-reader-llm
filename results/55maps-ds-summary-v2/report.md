@@ -18,8 +18,10 @@ relative position of any run in any §4 ranking.
 **Runs analysed**: T=0.3 (`55maps-text-high-t0.3-generalisation`), T=0.7
 (`55maps-text-high-generalisation`), image (`55maps-image-generalisation`),
 text-MIN (`55maps-text-min-generalisation`).
-**Aggregator**: `scripts/analyse_dawid_skene.py` (canonical), preregistered
-fixed-prior fit (student sensitivity 0.95, specificity 1.0, fixed in EM).
+**Aggregator**: `scripts/analyse_dawid_skene.py` (canonical), post-hoc
+fixed-prior fit (student sensitivity 0.95, specificity 1.0, fixed in EM;
+D-S is not preregistered — D17 audit FALSE-12; the 5 % student-FN prior
+derives from Sobotkova et al. 2023).
 **Cross-tab**: `scripts/analyse_ds_vs_human_review.py` (degenerate-posterior
 diagnostic against multi-buffer human review).
 
@@ -288,7 +290,7 @@ the D-S number for those two.
 This gap is **not** evidence that one method is wrong; it reflects
 that the corrected-F1-multi-buffer pipeline incorporates **today's
 multi-buffer human-review evidence** as part of its extended ground
-truth, while D-S uses only the preregistered fixed prior.
+truth, while D-S uses only the fixed Sobotkova-derived prior.
 
 ## 5. Surprising patterns — flagged
 

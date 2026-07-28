@@ -22,7 +22,7 @@ the *same* canonical consensus builder that produced the on-disk N=30 GeoJSONs
 (via ``build_all_consensus.py``). The N sub-pool is selected with
 ``--passes 1,..,N`` which restricts to ``run_1..run_N`` *by parsed run number*
 (``merge_passes.load_pass_detections``) — i.e. the **first N passes**, the
-preregistered Section 3.8 sub-pool rule also used by
+first-N sub-pool rule (registered in §3.8 for N=5/N=10 within K=10; sub-pooling K=30 is an unregistered extension, D17 audit U2) also used by
 ``analyse_consensus_sweep.py`` (its ``rn <= pool_size`` filter). Using the one
 clustering implementation across all N keeps every minted condition internally
 comparable; the 14-buffer re-score is the authoritative measurement and
