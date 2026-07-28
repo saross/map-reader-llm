@@ -1032,7 +1032,9 @@ def bootstrap_ci(
     methodological upgrade applied in commit ``feat(bootstrap): replace
     percentile method with BCa`` (2026-04-29):
 
-    * **Resampling unit**: tiles (the preregistered unit of analysis).
+    * **Resampling unit**: tiles (fixed pre-lodgement in Decision 10,
+      ``decisions-log.md:337``; the registered text specifies only "95%
+      bootstrapped CIs", §3.5 — D17 audit U1).
     * **Resampling method**: with replacement (standard bootstrap).
     * **CI method**: Bias-Corrected and Accelerated (BCa) via
       :func:`scipy.stats.bootstrap`. Adjusts for both bias and skew of
@@ -1316,9 +1318,10 @@ def bootstrap_multi_run_ci(
     3. Average metrics across runs
     4. CI = 2.5th/97.5th percentiles of the mean-metric distribution
 
-    This preserves tiles as the resampling unit (per preregistration
-    section 3.5) while correctly handling the K=10 repeated-measures
-    structure. Errata E22: replaces the prior approach of merging all
+    This preserves tiles as the resampling unit (fixed pre-lodgement in
+    Decision 10; the registered §3.5 specifies only "95% bootstrapped
+    CIs" — D17 audit U1) while correctly handling the K=10
+    repeated-measures structure. Errata E22: replaces the prior approach of merging all
     runs and computing one F1, which inflated detection counts K-fold.
 
     Args:
@@ -1838,8 +1841,9 @@ def bootstrap_tile_classification_ci(
     """
     BCa bootstrap 95 % CIs for tile-level MCC, sensitivity, and specificity.
 
-    Aligned with preregistration Section 3.5: tile-level resampling with
-    replacement. Uses :func:`scipy.stats.bootstrap` with ``method='BCa'``
+    Tile-level resampling with replacement (unit fixed pre-lodgement in
+    Decision 10; the registered §3.5 specifies only "95% bootstrapped
+    CIs" — D17 audit U1). Uses :func:`scipy.stats.bootstrap` with ``method='BCa'``
     via :func:`_bca_ci_from_indices`. Each per-tile classification label
     (TP / TN / FP / FN) is held in arrays indexed by tile, and the
     bootstrap statistic is computed per resample by counting labels in

@@ -46,8 +46,20 @@ p < 0.05 after FDR correction).
 
 ### Decision Rule Applied
 
-The preregistered decision rule states: "Select condition with highest F1."
-Minimal has the highest point estimate in both tracks:
+The decision rule declared in the Phase 2d study YAML
+(`studies/phase2d-h5-negtext.yaml:133-139`): select the level with
+highest mean F1 only if terse or verbose *significantly* improves on
+minimal; "If no significant differences: Use Minimal (simplest) as
+default — Occam's razor." This is an operational rule adopted at
+execution time — the preregistration specifies no carry-forward
+selection rule, and an earlier version of this section quoted a
+"Select condition with highest F1" rule that exists in no document
+(corrected 2026-07-28, D17 audit FALSE-5). Applied here: Track 1 has
+0/3 significant comparisons, so minimal is selected under the
+no-significant-difference Occam's-razor branch; Track 2's single
+significant comparison favours minimal (+0.114 vs verbose), so no
+alternative significantly improves on it. Minimal also happens to hold
+the highest point estimate in both tracks:
 
 - Track 1: minimal (0.609) > verbose (0.578) > terse (0.571)
 - Track 2: minimal (0.660) > terse (0.602) > verbose (0.548)

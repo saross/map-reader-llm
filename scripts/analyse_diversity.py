@@ -9,13 +9,18 @@ compared to identical passes (H9).
 
 Implements the consensus_diversity analysis method specified in the
 Phase 3c study YAMLs (Yet Another Markup Language). For each condition,
-groups sub-conditions into replications using the preregistered rule:
+groups sub-conditions into replications using the grouping rule declared
+in the Phase 3c study YAMLs (not preregistered — the registration
+specifies only that each condition is run 5 times,
+osf/preregistration.md:894):
 
     Replication k = {run_k from sub-condition p1, run_k from p2, ..., run_k from p5}
 
 Then applies consensus voting with a configurable threshold sweep and
 evaluates F1 against ground truth. Conditions are compared using paired
-permutation tests on tile-level F1 scores (preregistration Section 3.5).
+permutation tests on tile-level F1 scores (unregistered inference
+method; the registration specifies bootstrap CIs with BH-FDR — see
+protocol erratum E45).
 
 Supports both tracks:
     Track 1 (image): 5 conditions (A, B, C, D, E), 5 passes, 5 replications

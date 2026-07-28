@@ -25,8 +25,11 @@
 # Method (project-canonical, reused verbatim from tier_verifier_matrix.py):
 # materialise both detection sets, compute per-tile TP/FP/FN (Hungarian per
 # map, 20 m, fixed 487-tile order), then the float tile-swap micro-F1
-# permutation test (10k, seed 42, two-sided). ONE preregistered pair — no
-# multiple-comparison correction applies.
+# permutation test (10k, seed 42, two-sided). ONE pre-specified contrast,
+# chosen before the test was run but NOT preregistered (the registered planned
+# contrasts are enumerated per hypothesis; this opmax-vs-headline pair is a
+# post-hoc production comparison). Reported without multiple-comparison
+# correction and labelled post-hoc (D17 audit U11).
 #
 # Verification gates (script aborts if either fails):
 #   1. opmax set reproduces n_accepted=423 and F1@20m 0.8951 (4 d.p.).
@@ -198,7 +201,8 @@ def main() -> int:
                    **headline_eval},
         "test": res, "significant_at_0.05": significant, "verdict": verdict,
         "method": "float tile-swap micro-F1 permutation (permutation_test_float), "
-                  "single preregistered pair, no FDR correction",
+                  "single pre-specified post-hoc pair (not preregistered), "
+                  "no FDR correction",
     }, indent=2) + "\n")
     print(f"\nWrote {OUT_JSON.relative_to(BASE_DIR)}", flush=True)
     return 0

@@ -4,9 +4,13 @@ Generalisation-Run Pipeline Orchestrator
 ========================================
 
 End-to-end publishable launcher for a single map-reader-llm generalisation
-run. Orchestrates the preregistered four-stage pipeline
+run. Orchestrates the production four-stage pipeline
 (proposer → consensus → verifier → evaluation) with comprehensive
-reproducibility metadata and cost tracking.
+reproducibility metadata and cost tracking. The proposer and consensus
+stages implement the preregistered detection and voting protocol
+(osf/preregistration.md §§8.5, 3.8); the verifier stage implements
+registered H2 Condition B at production scale, with post-registration
+elaborations recorded in protocol erratum E37.
 
 Published alongside the paper as part of the reproducibility kit. The
 headline paper run is invoked as a single command::

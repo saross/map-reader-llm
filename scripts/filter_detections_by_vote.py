@@ -14,7 +14,10 @@ is the greedy candidate set restricted to ``vote_count`` in {4, 5} (i.e. >= 4 of
 5 passes). This script applies the same restriction to any candidate GeoJSON so
 that, for example, a WBF candidate set can be scored at the same vote threshold
 as its greedy counterpart (the apples-to-apples comparator used by the
-preregistered greedy-vs-WBF equivalence test, ``vote_t = 4`` at K = 5).
+post-hoc greedy-vs-WBF equivalence check established in Decision 26,
+``vote_t = 4`` at K = 5; neither WBF nor the t=4 operating point is
+preregistered — the registration specifies greedy clustering, §8.5, with a
+full threshold grid search and no a priori threshold selection).
 
 The filter is purely structural: every feature property is preserved untouched;
 only features failing the ``vote_count`` threshold are dropped. The CRS block and

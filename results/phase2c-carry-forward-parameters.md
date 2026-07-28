@@ -51,10 +51,17 @@ selected as the optimal library for subsequent phases.**
 
 ### Decision Rule Applied
 
-The preregistered decision rule states: "Rank by F1; if best differs from
-canonical by < 0.02, prefer canonical for simplicity." The difference
-between plus-hp (0.609) and canonical (0.528) is +0.081 — well outside
-the 0.02 simplicity threshold. plus-hp is therefore selected.
+The decision rule declared in the Phase 2c study YAML
+(`studies/phase2c-h8-library.yaml:188-193`): "Select library with
+highest mean F1." / "If multiple libraries have overlapping 95% CIs with
+the best, prefer smaller library (fewer examples) for parsimony." This
+is an operational rule adopted at execution time — the preregistration
+specifies no carry-forward selection rule, and an earlier version of
+this section quoted a "Rank by F1 … prefer canonical" rule that exists
+in no document anywhere in the repository (corrected 2026-07-28, D17
+audit FALSE-4). plus-hp (0.609) has the highest mean F1, +0.081 over
+canonical (0.528), and is selected under the YAML rule's primary
+criterion.
 
 ### Mechanism
 

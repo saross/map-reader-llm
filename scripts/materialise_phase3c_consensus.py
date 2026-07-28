@@ -12,8 +12,10 @@ diversity-pool consensus GeoJSONs on disk.
 
 What a "diversity pool" is
 --------------------------
-Per the preregistered grouping rule (studies/phase3c-h9-diversity-track*.yaml,
-``consensus_design.grouping_rule``):
+Per the grouping rule declared in the Phase 3c study YAMLs
+(studies/phase3c-h9-diversity-track*.yaml, ``consensus_design.grouping_rule``;
+not preregistered — the registration specifies only that each condition is run
+5 times, osf/preregistration.md:894):
 
     Replication k = {run_k from sub-condition p1, ..., run_k from p5}
 

@@ -335,7 +335,8 @@ def bootstrap_tile_level_ci(
 
     Delegates to ``lib_advanced_metrics.compute_per_tile_tp_fp_fn`` — the
     same function the production ``bootstrap_ci`` uses — so this matches
-    the preregistered tile-resampling convention. Per-tile TP/FP/FN is
+    the project's tile-resampling convention (fixed pre-lodgement in
+    Decision 10, not in the registered text — D17 audit U1). Per-tile TP/FP/FN is
     computed *once* against the extended GT at R, then each bootstrap
     iteration resamples tiles with replacement and re-aggregates counts
     using a vectorised ``np.bincount`` dot product — ~50× faster than the

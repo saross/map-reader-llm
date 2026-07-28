@@ -53,11 +53,17 @@ carries forward unchanged from Phase 2d.
 
 ### Decision Rule Applied
 
-The preregistered decision rule states: "Select ordering with highest mean F1."
-Config-default and canonical-last are tied at F1=0.609. Protocol guidance
-specifies: if config-default is within 0.02 F1 of the best, prefer
-config-default for consistency with prior phases. Config-default meets this
-criterion (ΔF1 = −0.003 vs canonical-last bootstrap mean).
+The decision rule declared in the Phase 2e study YAML
+(`studies/phase2e-h4-ordering.yaml:127-128`): "Select ordering with
+highest mean F1", with a 0.02-F1 tie-break preferring the config
+default. Both the selection rule and the tie-break are operational rules
+adopted at execution time — the preregistration gives H4 pairwise
+bootstrap comparisons with an "Advance to Stage 2 if" criterion
+(`osf/preregistration.md:570-574`) and specifies no carry-forward
+selection or tie-break rule (corrected 2026-07-28, D17 audit FALSE-3/6).
+Config-default and canonical-last are tied at F1=0.609; config-default
+meets the YAML tie-break criterion (ΔF1 = −0.003 vs canonical-last
+bootstrap mean) and is preferred for consistency with prior phases.
 
 ### Mechanism
 

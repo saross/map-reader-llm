@@ -171,9 +171,12 @@ inferior. See working-notes Obs 274 and `docs/methodology/preregistration/protoc
 
 ### Decision rule
 
-The preregistered decision rule: "If T=1.0 (default) is within 0.02 F1
-of best, prefer T=1.0 for simplicity." T=1.0 is NOT within 0.02 of
-best on either track:
+The decision rule declared in the study YAML
+(`studies/retest/phase2b-h7-temperature.yaml:109`): "If T=1.0 (default)
+is within 0.02 F1 of best, prefer T=1.0 for simplicity." This is an
+operational tie-break adopted at execution time — the preregistration
+specifies no carry-forward tie-break rule (corrected 2026-07-28, D17
+audit FALSE-3). T=1.0 is NOT within 0.02 of best on either track:
 
 - Track 1 image: T=0.0 − T=1.0 = +0.060 F1 (well outside 0.02)
 - Track 2 text: T=0.3 − T=1.0 = +0.073 F1 (well outside 0.02)
