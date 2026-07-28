@@ -449,42 +449,52 @@ continuously.
   the OSF side has not been fetched. An API key exists at
   `~/personal-assistant/.env` (do not read it into context).
 
-## 7a. Session status — resume here (2026-07-28)
+## 7a. Session status — resume here (updated 2026-07-28, Session 119/Fable)
 
-**Machinery work is DONE and committed.** Repairs (2) and (3) are implemented,
-audited twice, and green: `f607adf20` (implementation + first audit fixes),
-`0a85abb14` (M3/M4/M10/C3), `b92d0c6f2` (second-audit resolutions), plus
-`491a225` in `personal-assistant` (the `/audit` command). Tier-1 at 1,178
-passed. Manifests ALL VALID. Nothing is left half-done.
+**The adversarial review is DONE**:
+`reports/d17-inventory/fable-adversarial-review-2026-07-28.md` (`fdc711145`).
+Headlines: OSF-side verification CLOSED (posted `updated/` set byte-identical
+to the repo lodged copies; lodgement actually 12:54:09 UTC — the 23:54 figure
+was AEDT mislabelled as UTC); C1–C6 survive spot-checking; C5's trigger census
+was never published (write `reports/d17-inventory/trigger-census.md` before
+using P4); P2's "~80 % four substitutions" does not reproduce (~a third of
+sites; six single-source families cover ~three-quarters); three unrun probes
+named (numbers-vs-artefacts sweep of paper-bound prose; execution→errata
+inverse census; passes-manifest field probe).
 
-**The paper's actual exposure is untouched.** None of the 22 FALSE or 12
-UNLICENSED attributions is corrected yet. That is where the residual risk sits,
-and it is the queue to resume on.
+**The correction pass is SUBSTANTIALLY DONE** (commits `2c354ca2e` →
+this one): all § 7a-items 1–4 of the previous version of this block are
+complete — the five isolated corrections; the four substitution-source root
+fixes + directory banners; the carry-forward chain (FALSE-3/4/5/6); E37 and
+E45 corrected in place; **E58/E59/E60 filed**; E10 reclassified
+Clarification→Deviation with its E11/E12/E13 cascade; E22/E26/E35/E49/E53/
+E54/E56 attribution corrections; Decision 26 corrected (greedy IS registered,
+§8.5); the D-S family (FALSE-12) de-"preregistered" across all results docs;
+the first-N boilerplate (U2) fixed in 39 summaries + 3 scripts;
+run-analyses.json citations repointed and manifests regenerated (drift clean);
+results-draft.md diversity passage corrected (U5/U12). Tier-1 1,178 passed.
 
-**Next actions, highest value first:**
+**Remaining, next session:**
 
-1. **The four substitution sources** (§ 3) — roughly 130 sites cascade from
-   four fixes, so this is the highest-density correction available.
-2. **The small, isolated corrections** — each independently verified and safe to
-   do in any order: `experimental-progression.md:49-50` (1:50,000 not 1:25,000;
-   not the Kazanlak Valley), `:264-266` (PV *was* preregistered),
-   `methods-outline.md:341` (invented budget rationale),
-   `hypothesis-tracking.md:86-87` (invalid H2-C reason),
-   `n1-baseline-matrix.md:401` (the H7 inversion).
-3. **The H7 erratum** — substance agreed (do not run T=1.6; see § 6.1), format
-   settled (model it on E56: Date / Type / Commit / Impact table, Description,
-   Verification, Blast radius, Resolution, Reference artefacts). Must record
-   *why* the corpus changed — the 60-tile set lacked the power to separate
-   conditions, per E36 — since that makes the deviation a sound methodological
-   choice rather than a bare departure.
-4. **The duplicate E47** in `working-notes.md:6556`, which collides with the
-   canonical E47 and is absent from the errata register.
-5. **The nine zero-cost analyses** (§ 6.2), starting with the family-level
-   BH-FDR now that the family definition is settled. Runs on sapphire.
+1. **Notes-file sites** (reflections + working-notes families: FALSE-11
+   permutation traces, D-S ×7, FALSE-17/18 families, U4 ×6) — sweep
+   recommends appended dated correction notes, not edits; consider one new
+   Obs rider covering the lot.
+2. **Two new errata** queued in § 5 (HIGH-thinking-on-Flash; stale v4.6
+   header of the posted primary document).
+3. **The nine zero-cost analyses** (§ 6.2), starting with the family-level
+   BH-FDR — now also motivated by the corrected E45 (registered bootstrap+FDR
+   must accompany permutation results). Runs on sapphire.
+4. **Publish the trigger census** as an artefact (C5).
+5. **The three unrun probes** from the Fable review § 5 Q4.
+6. Legacy markdownlint debt in `preregistration/simulations/` (20 errors,
+   pre-existing; `osf/` files must NEVER be lint-fixed — they are frozen).
 
-**Not started, needs a decision or a gate**: the paid batch (§ 6.3, three runs
-after H7 was removed); the commitment ledger (repair (1), which also closes C3);
-the OSF-side verification (§ 7).
+**Not started, needs a decision or a gate**: the paid batch (§ 6.3); the
+commitment ledger (repair (1), closes C3). **Needs Shawn**: § 8 questions,
+plus the embargo-field discrepancy (checklist says "None"; OSF API records
+`embargo_end_date: 2026-06-30`), and the H4 omnibus-vs-contrast question
+(decides whether H4b is owed).
 
 ## 8. Open questions for the PI
 

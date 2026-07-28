@@ -1,5 +1,12 @@
 # Tile Selection: Methodological Observations
 
+> **STALE — predates the holdout expansion.** This document describes the
+> pre-expansion 20-tile holdout (28 mounds); the lodged design is 60 holdout
+> tiles with 79 mounds (`osf/preregistration.md:234`). Its "preregistered
+> estimate (40-60 symbols)" has no source in any lodged document (D17 audit
+> FALSE-22). Retained as a historical design note; do not cite against the
+> registration. Banner added 2026-07-28.
+
 *Reference notes on design choices and implications*
 
 ---
@@ -67,7 +74,7 @@ Proportional sampling would concentrate ~72% of holdout tiles on Elenovo and Rak
 ### Holdout mound count
 
 - 28 mounds in holdout set
-- Toward lower end of preregistered estimate (40-60 symbols)
+- Toward lower end of the drafting-era working estimate (40-60 symbols; not in any lodged document)
 - Detectable effect size: F1 ≈ 0.10-0.12 (vs. 0.08 with larger sample)
 
 This is adequate for directional predictions but limits precision on effect size estimates.

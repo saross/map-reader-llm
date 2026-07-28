@@ -4,13 +4,13 @@ This document tracks implementation tasks and stretch goals for the Map Reader L
 
 **Last Updated**: 2026-01-19
 
-> **Note**: Hypothesis testing is now formalised in the preregistration document (`docs/methodology/preregistration/osf/preregistration.md` v4.2). This document covers implementation-specific tasks and exploratory ideas not in the preregistration.
+> **Note**: Hypothesis testing is now formalised in the preregistration document (`docs/methodology/preregistration/osf/preregistration.md`; lodged 2026-01-31 as v4.7 content). This document covers implementation-specific tasks and exploratory ideas not in the preregistration.
 
 ---
 
 ## Status: Preregistration Complete
 
-All 15 hypotheses are formalised in the preregistration (v4.2). The sequential OFAT design tests factors one at a time, carrying optimal parameters forward.
+All 15 hypotheses are formalised in the preregistration (lodged v4.7 content, 2026-01-31; hypothesis content changed substantially after v4.2). The sequential OFAT design tests factors one at a time, carrying optimal parameters forward.
 
 | Hypothesis | Description | Phase |
 |------------|-------------|-------|
@@ -145,7 +145,7 @@ Given a new map sheet with its legend, automatically:
 
 ### Preregistration & Documentation (2026-01)
 
-- [x] **Preregistration finalised** (v4.2): All 15 hypotheses defined
+- [x] **Preregistration finalised** (lodged 2026-01-31, v4.7 content): All 15 hypotheses defined
 - [x] **Execution plan created**: Phased OFAT implementation timeline
 - [x] **Prompts appendix aligned**: All instruction and config files documented
 

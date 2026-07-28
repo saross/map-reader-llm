@@ -219,20 +219,20 @@ The sentence is applied uniformly across all H5 conditions (Minimal, Terse, Verb
 
 ---
 
-### E10: 50m recognition/localisation threshold determined
+### E10: 50m recognition/localisation threshold — post-hoc narrowing of the registered HP definition (reclassified 2026-07-28)
 
 | Field | Value |
 |-------|-------|
-| Date | 2026-02-02 |
-| Type | Clarification |
+| Date | 2026-02-02 (original); **reclassified 2026-07-28** |
+| Type | Deviation (originally recorded as Clarification) |
 | Files | `outputs/phase1-library/fp-fn-register.md`, `docs/methodology/preregistration/decisions-log.md` (Decision 11) |
 | Impact | Determines which FNs qualify as hard positive candidates |
 
-**Description**: The preregistration (§8.4.2) specifies that hard positive examples are drawn from recognition failures — false negatives where the model failed to detect a mound — rather than localisation errors where the model detected the mound but placed it inaccurately. The specific distance threshold separating these categories was left to empirical determination.
+**Description (corrected 2026-07-28, D17 audit FALSE-20)**: the preregistration draws hard positives from false negatives (`osf/preregistration.md:1450` "Ground truth mounds missed in ≥3/5 passes"; `:1510` "FN mining") **without distinguishing recognition failures from localisation errors** — under the registered definition, a mound detected but mislocalised beyond the tolerance is an FN and an eligible HP candidate. The recognition/localisation distinction and its threshold are post-hoc additions (the project's own notes agree: `working-notes.md:1471` calls it "a distinction the preregistration did not anticipate"). This entry originally described the distinction as registered; that description is withdrawn.
 
 Analysis of the Phase 1 FN distance distribution revealed a distributional cliff between 30m and 50m: below 30m, FNs cluster tightly (clear localisation errors); above 50m, FNs are sparse and widely dispersed (clear recognition failures). The 30–50m range is ambiguous. A 50m threshold was selected as the boundary, yielding 9 recognition failures and 15 localisation failures from 24 total FNs.
 
-**Protocol impact**: None. This is an empirical determination within the latitude granted by the preregistration. The threshold is documented with distributional evidence in Decision 11.
+**Protocol impact (corrected 2026-07-28)**: this deviation **narrows the registered HP pool** — restricting HP selection to recognition failures reduced the pool to 4, which cascaded into E11 (Scale-16/32 deferred), E12 (H9 image diversity reduced to HN-only), and E13 (H12 deferred). The narrowing is empirically motivated (distributional cliff, Decision 11) but unregistered. E51 later re-mined 108 HP under a v2 definition and re-enabled Scale-16/32, partly undoing the cascade.
 
 ---
 
@@ -1404,7 +1404,7 @@ instead uses a cold-start production config with the following changes:
 | Thinking level | (unspecified, implied minimal) | HIGH |
 | Instruction file | image-only | detect_brief-text-image (text+image) |
 | Examples | Full baseline library (17) | Cold-start: legend + nulls only (9) |
-| Crop size | 128px | 150px (aligned with verifier standard) |
+| Crop size | 128px (implementation choice, E8 — not registered) | 150px (aligned with verifier standard) |
 
 **Rationale**: The cold-start config better simulates a realistic deployment
 scenario — a user approaching new maps with only legend reference images. The
@@ -1662,8 +1662,11 @@ impact experimental validity.
 | Sections | §H3 (preregistration lines 497–531), Phase 3a study YAML |
 | Impact | H3 image-track consensus analysis reported on Era 2 scope (487 tiles, 384 px) rather than Era 1 (340 tiles, 512 px) |
 
-**Description**: The preregistered Phase 3a study
-(`studies/retest/phase3a-h3-voting-track1-high.yaml`) defined K = 30
+**Description**: The Phase 3a image-track study YAML
+(`studies/retest/phase3a-h3-voting-track1-high.yaml`) — which implements
+registered H3 extended voting (`osf/preregistration.md:512`) with an
+unregistered HIGH-thinking factor (attribution corrected 2026-07-28, D17
+audit U6; a study YAML is not the preregistration) — defined K = 30
 consensus voting experiments for the image track at 512 px (Era 1, 340
 tiles) with HIGH thinking at T = 0.3, T = 0.7, and T = 1.0. The study
 manifest was generated (2026-03-18) and run directories created, but the
