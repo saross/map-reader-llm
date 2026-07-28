@@ -119,3 +119,66 @@ face value would have given a true-but-useless answer; the anecdote was the spec
 request, treat the story as the real test to pass, not colour — here it meant
 diffing gitignored files across machines, not reading `git status`. Listen for
 the burn behind the ask.
+
+## claude-obs 4 — 2026-07-28: Shawn chose integrity over a deadline he had set an hour earlier, and named the escalation trigger in advance
+
+**Pattern.** He opened the session wanting a paper drafted by the end of the week.
+Within two hours the audit had found an erratum contradicting its own preregistration,
+and he said: "the audit is more important than the deadline, we need to do this right…
+We're aiming for publication in a top-tier journal." He then did something more
+unusual than the decision itself — he pre-committed the condition for widening it:
+run a triaged audit, "with the option of escalating if we find a lot of errors, and
+grow concerned that some errors might be masking others and we need to unravel the
+entire knot."
+
+**Lesson.** I had framed the deadline/audit conflict as a four-option trade-off and
+recommended triage. He took the recommendation but added the thing I had left out —
+a stated trigger for abandoning it. That converts "we'll see how it goes" into a
+decision rule, and it is the same move he asks of the preregistration: name in advance
+what would change your mind.
+
+**How to apply.** When offering a scoped-down option, propose the escalation condition
+with it. "Triaged, escalating to full if X" is a better recommendation than "triaged"
+plus an unstated intention to reassess.
+
+## claude-obs 5 — 2026-07-28: he redirected me to the artefact when four agent passes over prose had failed
+
+**Pattern.** Two errors in a citable report — the corpus described as "Soviet 1:25,000
+topographic map sheets covering the Kazanlak Valley" when it is 1:50,000 and not
+Kazanlak — had survived four separate agent passes over the documentation. When I
+brought them to him as a discrepancy for adjudication, he did not adjudicate from
+memory. He said: "maps are available under inputs/rasters — they should all have
+metadata," and separately, "check the extent of the map sheets we did use against a
+large-scale map with regions marked." Minutes later the GeoTIFF headers settled both:
+sheets spanning 15′ × 10′ are 1:50,000 by the graticule, and the four sheets span
+165 km, nowhere near Kazanlak.
+
+**Lesson.** He also named the generalisation before I did: "both errors are pretty much
+invisible unless you know the material, which is a problem for scaling up verification
+with LLMs." The errors were internally consistent prose — no cross-document check could
+catch them, because the mismatch was with the world. Verification chains have to
+terminate in something that is not prose.
+
+**How to apply.** When a documentary claim resists confirmation, stop reading documents
+and ask what physical or generated artefact encodes the same fact — raster headers,
+file counts, tile geometry, billing records. And when the answer is "nothing does,"
+say so plainly rather than assembling more prose.
+
+## claude-obs 6 — 2026-07-28: I let tractability set the agenda, and he had to pull me back
+
+**Pattern.** After the audit surfaced 22 false attributions to the preregistration, I
+spent the rest of the session on manifest machinery — three rounds of adversarial audit
+across ~200 lines of guard code. Good work, and it caught a bug that would have broken
+the build. But not one of the 22 attributions is corrected. Shawn ended a message with
+"I do want to pivot back to the paper verification itself," and later asked directly
+whether we should close the session.
+
+**Lesson.** The machinery had tests, went green, and felt finished; the correction pass
+has none of those properties and is where the paper's actual exposure sits. I optimised
+for the problem with a satisfying completion signal. This is a self-critique about
+prioritisation, not about the work being wrong.
+
+**How to apply.** When a session forks into "fix the process" and "fix the record", say
+out loud which one carries the risk, and re-state it at each handover point. If I find
+myself on the third iteration of something with a green test suite while a manual
+correction backlog is untouched, that is the signal — not a reason to do a fourth.

@@ -6546,3 +6546,46 @@ instance lands on the right task with everything it needs — not as session exh
 changes how it must be written: the top block has to be genuinely standalone (task,
 workflow rule, evidence state, pending items, sync state), because it will be read with no
 conversation behind it.
+
+## Session 118 — 2026-07-27/28 (fresh-context review found every defect and self-review found none; orthogonal beats redundant; and a tooling artefact propagated as fact through three agents)
+
+**Author-context review is worthless on your own code, and this session measured it.**
+I wrote a write-once prediction guard, tested it, and shipped it green at 31/31. The
+feature was structurally unusable: its documented escape hatch (`predicted_outcome_amended`)
+was never copied by `build_analyses`, which enumerates its row keys, and was absent from a
+schema with `additionalProperties: false`. All eighteen live analyses carry a non-null
+prediction, so the next legitimate edit to any of them would have hard-failed the build
+with an error instructing the author to do something impossible — making a hand-edit of the
+generated manifest the only escape, which is precisely the tampering the guard existed to
+prevent. Two fresh-context agents found it in one pass. I had reviewed the same code twice.
+
+**Orthogonal lenses find disjoint defect classes; redundant ones agree with each other.**
+The productive pattern was two agents asked *different* questions over the same change:
+"does this code do what it claims" and "assume it is wrong — would these tests catch it?"
+Lens A found the bug; Lens B found *why it got past review* — "well-written unit tests of
+three pure functions, and no integration test anywhere," which is a better finding than the
+bug, because it generalises. Deleting the four-line wiring that connected the guard to the
+write path left the entire suite green. That is now codified in `/audit` rather than living
+in whoever remembers to construct it.
+
+**A tooling artefact propagated as established fact through three successive agents.** A
+line-based `grep` over pretty-printed JSON returned nothing; that absence was reported as
+"the field is absent from all ten files" by one agent, repeated by a second, and reached me
+as a premise for a data-integrity concern. The field was present in all 1,187 metadata
+files. Negative results from tools need the same standard of proof as positive claims — and
+I only caught it because two agents contradicted each other, not because I was sceptical.
+
+**Verify against the least-writable artefact available.** Two errors in a citable report —
+the corpus described as 1:25,000 Kazanlak Valley when it is 1:50,000 and not Kazanlak —
+survived four agent passes over the documentation, because they were internally consistent
+prose. The mismatch was with the world, not with another document. What settled it in
+minutes was the GeoTIFF headers: a sheet spanning 15′ × 10′ is 1:50,000 whatever anyone
+remembers. Prose about prose is the weakest link in a verification chain; some claims have
+no artefact anchor at all and need a human who was there.
+
+**Concurrency: I created the hazard I had just documented, then repeated it.** I authorised
+an audit agent to apply mutations and restore via `git checkout` on an *uncommitted* file;
+it did, destroying work recoverable from no commit, and reconstructed it by hand. Nothing
+was lost, by luck. Within the hour I ran a mutation check myself on the same uncommitted
+file. Both are now closed by a rule in `/audit`: commit before delegating, and restore by
+re-applying the inverse edit, never by checkout.

@@ -9110,3 +9110,68 @@ after stripping caches and virtualenvs); the method is the part worth carrying. 
 ended by asking me to protect the continuity beacon from the very handoff ritual that
 would otherwise rewrite it — a small sign that the handoff docs have become artefacts he
 designs around, not just session exhaust.
+
+## Session 118 — 2026-07-27/28 — the outline review that became an integrity audit, and the guard that shipped broken
+
+*(map-reader-llm. First-person throughout; no compaction boundary crossed. First session
+on Opus 5. Shawn opened by asking me to confirm that reviewing the Results outline was the
+next step — it was — and we never got to it.)*
+
+### Prompt: What would you do differently if you replayed this session?
+
+I would have gone to the preregistration before believing anything written about it. The
+session's first real finding — that erratum E37 asserts "the preregistration did not
+include a two-stage Proposer-Verifier pipeline" when the registration names it at `:457`
+and prints the verifier's own prompt in the registered appendix — I got *wrong first*. An
+agent told me H2 was `preregistered-with-deviation`; I then read E37 myself, treated the
+erratum as authoritative over the document it describes, and told Shawn a confirmatory
+framing wasn't available. He said "I know we considered it," and he was right. The lesson
+is not about that erratum. It is that I had spent the whole morning establishing that
+intermediate documentation is unreliable, and then took an intermediate document's word
+over the source anyway. Knowing the rule and applying it are different skills.
+
+The larger thing I would change is the allocation. I ran three rounds of adversarial audit
+across ~200 lines of guard code, and it was good work — it found a bug that would have
+hard-failed the build on the next legitimate edit — but the paper's actual exposure is 22
+false attributions to the preregistration, and not one of them is fixed. Shawn had to say
+"I do want to pivot back to the paper verification itself." Machinery is more tractable
+than a correction pass: it has tests, it goes green, it feels finished. I let tractability
+set the agenda, and it took the human to notice.
+
+### Prompt: What felt uncertain or unresolved at the end?
+
+Whether the audit is anywhere near complete. Every layer we probed produced more than the
+layer above predicted. A hypothesis inventory found six formally labelled triggers; a
+census keyed on the same registration found forty-three conditionals, sixteen
+point-estimate-only, six fired-and-unhonoured. A prior pass listed five unexecuted
+hypotheses; the unexecuted register found forty-six registered items, including a
+triggered exploratory that four earlier passes missed because everyone was reading the
+execution plan's list rather than the registration's. The pattern is not "we found the
+errors" — it is "each probe returned roughly what it was pointed at." I have no basis for
+estimating what a probe we did not think to run would return.
+
+And the machinery does not touch the part that matters. All eighteen registered predictions
+were authored under the old regime, post-hoc, in the same act as their outcomes. The
+write-once guard makes that harder *next time*; it cannot retro-validate a single existing
+one, and the audit already found one (H7) recorded as confirming a prediction the
+registration never made. I am not confident the frame "we have fixed the process" is doing
+anything other than making the unfixed record feel addressed.
+
+### Prompt: What decision or trade-off made today will look arbitrary without this session's context?
+
+Not running T=1.6. On its face it is a preregistered escalation that fired and that we
+declined to honour, which is exactly the shape of the six unhonoured triggers we spent the
+day cataloguing as a problem. The reasoning is three-layered and none of it survives in a
+one-line summary: the trigger's condition is *false on the corpus the registration
+specified* (60-tile: T=1.0 exceeds T=1.3 on both tracks); it fires only on the 340-tile
+corpus adopted under E36 because the registered one lacked the power to separate
+conditions; and on that corpus the margin does not survive replication — paired
+permutations give p = 0.247, 0.910, 0.926 across three replicates of the same condition,
+with two of three favouring the opposite temperature. A future reader seeing "trigger
+fired, not honoured, erratum filed" without those three facts will read it as the thing we
+were criticising, not as its refutation.
+
+The same applies to the C3 decision — mitigate now, close later — which looks like
+deferral unless you know the closure is an artefact repair (1) is building anyway, and that
+the alternative (checking git history) buys nothing extra at the cost of coupling a JSON
+generator to git state.

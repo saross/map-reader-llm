@@ -5666,3 +5666,82 @@ visible. The deeper pattern, recorded as a standing preference: some of my error
 visible *only* at a representation I had skipped — the fix is to produce that
 representation (the decision-register outline) first, not to be more careful within the
 wrong one.
+
+## Session 118 — 2026-07-28 — an erratum that contradicted its own registration; and a fired trigger whose premise was false on the registered corpus
+
+**Session:** 64b33adf-139d-4efa-a2f2-b8108ba50f53
+**Instance:** primary
+
+### Surprising fact
+
+Erratum E37 states: "The preregistration did not include a two-stage Proposer-Verifier
+pipeline. The PV approach was developed after observing…" — and classifies the entire
+headline architecture as a post-hoc Deviation. But H2 Condition B is registered at
+`osf/preregistration.md:457` as "**Coarse-to-fine (proposer-verifier)**: Liberal first pass
+identifies candidates; strict second pass verifies," with an implementation spec at
+`:472-476` and the verifier's own system instruction and JSON config printed in the
+registered appendix (`preregistration-appendix-prompts.md` § 1.6.2, "Used by: H2 (Stage 2)").
+A study that prints its verifier's prompt in the registration cannot be said not to have
+registered a verifier. The amendment record contradicted the document it amends.
+
+### Probe
+
+Two competing explanations: (a) the repo copy of the registration drifted after OSF
+lodgement, so E37 was true of what was posted; or (b) E37 is simply wrong. A forensic pass
+established: PV is present in **all 28 revisions** from 2025-12-31 (originally numbered H3,
+consolidated to H2 at v4.0); the last commit touching `preregistration.md` is
+`bd65c007f` at 12:34 UTC on 2026-01-31, **11h20m before** the OSF registration timestamp of
+23:54 UTC; and the file is byte-identical from that commit to HEAD. No drift. Separately,
+`preregistration-coverage.md:187` registers a *gated-optimisation contingency* — pipeline ×
+other-factor interactions to be explored "only if this threshold is met" — and the
+threshold was met, so the PV optimisation campaign executes a registered branch.
+
+### Belief revision
+
+The headline result moves from "post-hoc extension" to a preregistered confirmatory
+hypothesis whose registered directional prediction ("neither two-stage architecture will
+improve F1") was **refuted**, whose registered stopping rule (≥0.05 F1) **fired**, and whose
+follow-on optimisation was itself a **registered contingency**. Five things genuinely exceed
+the spec (a consensus proposer pool rather than a single low-threshold pass; binary verdict
+where the appendix specified raw probabilities; adversarial prompt framing; crop geometry;
+verifier consensus size) — enumerating them precisely is what makes the confirmatory claim
+defensible rather than an overreach. More generally: **the errata register is itself a
+source of error**, and it is the amendment record a reviewer trusts most. E10, E45 and E54
+each misdescribe the registration too.
+
+### What would change this belief
+
+Fetching the OSF-posted artefact at `osf.io/tybgq` and finding it differs from blob
+`fa221b30f395feb7ef0c9425c36eae0b94e917ba`. The repo-side chain is airtight; the OSF side
+has not been retrieved, and that is the one link still taken on inference.
+
+---
+
+### Second episode — the trigger that fires only on the substituted corpus
+
+**Surprising fact.** The H7 temperature-escalation trigger (`osf:731`) fired: on the 340-tile
+corpus, T=1.3 (0.544) exceeds T=1.0 (0.533). It was never honoured, and no erratum covers
+it — apparently a registered obligation quietly dropped.
+
+**Probe.** Shawn asked whether the gap was significant, since all CIs overlap. The registered
+inference (paired bootstrap) gives ΔF1 −0.0357, CI [−0.0908, +0.0137], p = 0.204. He then
+asked for paired permutations, expecting greater discriminatory power. Run on sapphire
+across three replicates: p = 0.247, 0.910, 0.926 — and the **sign is not consistent**, with
+run01 favouring T=1.3 and runs 02–03 favouring T=1.0 by 0.002. The aggregate that fired the
+trigger is carried entirely by one replicate. Then the trigger census checked the *registered*
+60-tile K=10 corpus: T=1.0 exceeds T=1.3 by +0.0386 (text) and +0.0218 (image). On the data
+the registration specified, the trigger's condition is false on the point estimate, on both
+tracks.
+
+**Belief revision.** The obligation is an artefact of the corpus substitution (E36, adopted
+because the 60-tile set lacked the power to separate conditions), not of the phenomenon.
+More usefully: sixteen of the study's forty-three registered conditionals are
+point-estimate-only, and only one names its uncertainty treatment at all. A preregistered
+trigger must specify four things, not three — the statistic, the comparison scope, the
+uncertainty criterion that counts as "better", and *when* it is evaluated, since a
+determination frozen against a superseded dataset quietly expires. That is a transferable
+methodological finding, not a local repair.
+
+**What this is not.** Not a claim that behaviour above T=1.3 was characterised. It was not
+measured; the decline is inferred from five levels across two corpora plus a mechanism
+(precision falls faster than recall as sampling entropy rises). The paper must say so.

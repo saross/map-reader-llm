@@ -7407,3 +7407,71 @@ effectively offline-for-him and is the heavy-compute host. The outline-first rul
 do not pre-resolve. `docs/paper/results-draft.md` is a zero-draft, not a draft. This
 session's journal/Obs commits land after the `e1dd9733d` final sync; the machines were
 re-synced at wind-down.
+
+## Session 118 — 2026-07-27/28 — preregistration-integrity audit; manifest-architecture repairs
+
+**Opened** as a request to confirm that reviewing `docs/paper/results-outline.md` was the
+next step, and to clear the one pending analysis sign-off. Both done in the first hour; the
+sign-off surfaced an inconsistency that escalated into a four-part audit. Shawn's ruling:
+"the audit is more important than the deadline, we need to do this right."
+
+### Sign-off and outline
+
+- `55map-canonical-leaderboard-mcc-50m` signed (`2026-07-27T05:28:40Z`, commit `45d0148cd`).
+  18 analyses, ALL VALID. Signed with three caveats attached rather than resolved away.
+- **Obs 371** written — rider correcting Obs 360 on two counts: "phantom" is glossed
+  backwards (they are model detections human review confirmed as real student-missed mounds,
+  i.e. *additions* to GT), and the 50 m buffer's bias runs opposite to what Obs 360 implies
+  (below R = 50 m the extended GT reduces to the student GT, so sub-50 m figures *penalise*
+  correct detections). 50 m is a floor, not a generous choice.
+- `results-outline.md` v1: **D1–D4 settled** (architecture-ascending as two explicit parts +
+  a named seam; both headlines early; F1-vs-MCC threaded; cost split across both levels),
+  D12 settled (elevate recall-ceiling). Anti-double-telling convention added as a standing
+  rule with a home-and-callback table. **D16–D17 raised** on preregistration handling.
+
+### The audit (11 reports, `reports/d17-inventory/`, ~8,000 lines)
+
+- **Per-hypothesis inventory** H1–H15 + full E1–E57 errata census. Unexecuted set is H6,
+  H13, H14, H15, H2-C. **H10 and H12 both ran** despite the tracking matrix; an earlier
+  revision of the outline would have put a false disclosure in the paper.
+- **E37 audit**: PV *was* preregistered (H2 Condition B; verifier prompt in the registered
+  appendix). No drift — file byte-identical from the registration commit to HEAD, committed
+  11h20m before the OSF timestamp.
+- **Attribution sweep**: **22 FALSE, 12 UNLICENSED** across 1,060 candidate matches in 126
+  files. ~80 % reduces to four substitutions. Structural driver: working documents share a
+  directory with the lodged registration.
+- **Unexecuted register**: 46 registered items — 17 experiments, 25 analyses, 6 triggers of
+  which 4 unhonoured. Nine items are $0.
+- **Trigger census**: 43 conditionals; 16 point-estimate-only; only one names its uncertainty
+  treatment. Two inverse errors (obligations *missed*, not over-created).
+- **Data-layer trial** (`pro-high-text` provenance): **clean**. Genuinely Pro, no value
+  moves, affected metadata class closed at 12 metas / 4 pools, zero new mis-dispatches
+  corpus-wide. One real defect fixed: 10 passes mislabelled in the passes manifest.
+- **Transcript-index diagnostic**: 40 % of indexed `user` chunks are not the user's words
+  (87.5 % for chunks > 2,000 chars); 292 of 804 session directories unindexed; April 2026
+  recoverable in a third store.
+
+### Machinery (repairs 2 and 3)
+
+Write-once predictions and `status: planned`, plus M3/M4/M10 and a C3 mitigation.
+Three audit rounds. The first shipped a **critical bug** — the escape hatch did not exist
+end to end — which passed 31/31 of its own tests. Commits `f607adf20`, `0a85abb14`,
+`b92d0c6f2`. Tier-1 **1,178 passed**. `/audit` command rewritten with the two-lens pattern
+(`personal-assistant` `491a225`).
+
+### Decided
+
+BH-FDR family = one primary test per hypothesis (7; H6 never ran), all-contrasts as
+sensitivity. Manifest schema needs **no** change — it models analyses; a hypothesis register
+is a separate artefact. Documentation strategy: **split by derivability** — generate what is
+derivable, keep interpretive prose but anchor and verify; quarantine-and-promote, not
+rewrite. **Do not run T=1.6** (§ 6.1). C3: mitigate now, close with the ledger.
+
+### Contextual assumptions
+
+The corpus questions (1:50,000 not 1:25,000; not the Kazanlak Valley) were settled against
+GeoTIFF headers because no documentary source could settle them — four agent passes over
+prose had missed both. The T=1.6 decision rests on the 60-tile result, which only came to
+light *after* Shawn had already said "let's just run it"; he was not overruled, the evidence
+changed. Compute ran on sapphire per the standing rule; a parallel `personal-assistant`
+session was active throughout, so all commits there used explicit pathspecs.
