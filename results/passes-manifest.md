@@ -2,7 +2,7 @@
 
 # Passes manifest
 
-> Generated 2026-06-11T12:20:12Z · 1132 row(s) · schema v1.0.
+> Generated 2026-07-28T00:51:41Z · 1132 row(s) · schema v1.0.
 >
 > **Coverage**: 1132 pass(es) across the decomposed runs (sub-step 3b in progress).
 
@@ -310,17 +310,17 @@
 | pv-diag-384::image-n5-image-t1.0::run7 | gemini-3-flash-preview | image | minimal | 1.0 | partial | 487 | 3.980765 |
 | pv-diag-384::image-n5-image-t1.0::run8 | gemini-3-flash-preview | image | minimal | 1.0 | partial | 487 | 3.984077 |
 | pv-diag-384::image-n5-image-t1.0::run9 | gemini-3-flash-preview | image | minimal | 1.0 | partial | 487 | 3.98625 |
-| pv-diag-384::pro-high-image-n5-image-t0.7::run1 | gemini-3-flash | image | high | 0.7 | ok | 487 | 0.0 |
-| pv-diag-384::pro-high-image-n5-image-t0.7::run2 | gemini-3-flash | image | high | 0.7 | ok | 487 | 0.0 |
-| pv-diag-384::pro-high-image-n5-image-t0.7::run3 | gemini-3-flash | image | high | 0.7 | ok | 487 | 0.0 |
-| pv-diag-384::pro-high-image-n5-image-t0.7::run4 | gemini-3-flash | image | high | 0.7 | ok | 487 | 0.0 |
-| pv-diag-384::pro-high-image-n5-image-t0.7::run5 | gemini-3-flash | image | high | 0.7 | ok | 487 | 0.0 |
-| pv-diag-384::pro-high-text-n5-text-t0.7::run1 | gemini-3-flash | text | high | 0.7 | ok | 487 | 0.0 |
+| pv-diag-384::pro-high-image-n5-image-t0.7::run1 | gemini-3.1-pro-preview | image | high | 0.7 | ok | 487 | 0.0 |
+| pv-diag-384::pro-high-image-n5-image-t0.7::run2 | gemini-3.1-pro-preview | image | high | 0.7 | ok | 487 | 0.0 |
+| pv-diag-384::pro-high-image-n5-image-t0.7::run3 | gemini-3.1-pro-preview | image | high | 0.7 | ok | 487 | 0.0 |
+| pv-diag-384::pro-high-image-n5-image-t0.7::run4 | gemini-3.1-pro-preview | image | high | 0.7 | ok | 487 | 0.0 |
+| pv-diag-384::pro-high-image-n5-image-t0.7::run5 | gemini-3.1-pro-preview | image | high | 0.7 | ok | 487 | 0.0 |
+| pv-diag-384::pro-high-text-n5-text-t0.7::run1 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | 0.0 |
 | pv-diag-384::pro-high-text-n5-text-t0.7::run10 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | 0.0 |
-| pv-diag-384::pro-high-text-n5-text-t0.7::run2 | gemini-3-flash | text | high | 0.7 | ok | 487 | 0.0 |
-| pv-diag-384::pro-high-text-n5-text-t0.7::run3 | gemini-3-flash | text | high | 0.7 | ok | 487 | 0.0 |
-| pv-diag-384::pro-high-text-n5-text-t0.7::run4 | gemini-3-flash | text | high | 0.7 | ok | 487 | 0.0 |
-| pv-diag-384::pro-high-text-n5-text-t0.7::run5 | gemini-3-flash | text | high | 0.7 | ok | 487 | 0.0 |
+| pv-diag-384::pro-high-text-n5-text-t0.7::run2 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | 0.0 |
+| pv-diag-384::pro-high-text-n5-text-t0.7::run3 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | 0.0 |
+| pv-diag-384::pro-high-text-n5-text-t0.7::run4 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | 0.0 |
+| pv-diag-384::pro-high-text-n5-text-t0.7::run5 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | 0.0 |
 | pv-diag-384::pro-high-text-n5-text-t0.7::run6 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | 0.0 |
 | pv-diag-384::pro-high-text-n5-text-t0.7::run7 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | 0.0 |
 | pv-diag-384::pro-high-text-n5-text-t0.7::run8 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | 0.0 |

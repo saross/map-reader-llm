@@ -370,14 +370,43 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                 model_version = next(
                     (it.get("model_version") for it in pim if it.get("model_version")), None)
             else:
-                # Era-1 batch-API shape (GAP-9): no per-item record. configuration.model
-                # is the best available authoritative value (the verifier path uses the
-                # same fallback); the tile count is in execution_stats. `or 0` guards an
-                # explicit-null items_processed (which would break the n_proc==0 status
-                # test and the schema's integer requirement).
+                # Era-1 batch-API shape (GAP-9): no per-item record. The tile count is
+                # in execution_stats; `or 0` guards an explicit-null items_processed
+                # (which would break the n_proc==0 status test and the schema's integer
+                # requirement).
+                #
+                # MODEL IDENTITY: prefer cost_estimate.pricing_used.model over
+                # configuration.model. Per E57's 2026-06-03 Update (protocol-errata.md
+                # § E57), configuration.model is an unreliable TEMPLATE DEFAULT — it is
+                # serialised from the base config without the per-study model override —
+                # whereas pricing_used.model is derived from the model actually
+                # dispatched (lib_batch_api submits and prices from one variable). An
+                # earlier revision of this branch called configuration.model "the best
+                # available authoritative value"; that was wrong, and it mislabelled the
+                # ten pv-diag-384 pro-high-{text,image}-n5 runs 1-5 as gemini-3-flash
+                # when they were dispatched as gemini-3.1-pro-preview.
+                #
+                # SCOPE: the override fires only on a CROSS-FAMILY disagreement (a
+                # genuinely different model). Where the two strings differ only by
+                # alias resolution — `gemini-3-flash` vs `gemini-3-flash-preview`, one
+                # a prefix of the other — the recorded value is left alone. Those 744
+                # rows describe the same model, and rewriting the project's
+                # model-of-record string is a separate decision from fixing a
+                # mislabelled model family.
                 n_proc = es.get("items_processed") or 0
-                model_used = cfg.get("model", "")
-                model_requested = cfg.get("model")
+                cfg_model = cfg.get("model", "")
+                priced_model = (
+                    (meta.get("cost_estimate") or {}).get("pricing_used") or {}
+                ).get("model")
+                cross_family = bool(
+                    priced_model
+                    and cfg_model
+                    and not priced_model.startswith(cfg_model)
+                    and not cfg_model.startswith(priced_model)
+                )
+                authoritative_model = priced_model if cross_family else cfg_model
+                model_used = authoritative_model
+                model_requested = authoritative_model or None
                 model_version = None
             # E57: a few pools carry a flash template-default in BOTH config.model AND
             # per_item_metadata.model_used even though the study YAML dispatched a

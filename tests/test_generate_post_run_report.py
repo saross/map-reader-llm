@@ -486,3 +486,59 @@ def test_stabilise_timestamps_absent_file_keeps_fresh(tmp_path):
     fresh = {"schema_version": "1.0", "generated_at": "NOW", "conditions": []}
     _stabilise_timestamps("conditions", fresh, tmp_path / "does-not-exist.json")
     assert fresh["generated_at"] == "NOW"  # first generation keeps fresh timestamps
+
+
+@pytest.mark.tier1
+def test_cross_family_model_override_prefers_pricing_used(registry):
+    """E57: a cross-family config/pricing disagreement resolves to pricing_used.model.
+
+    `pv-diag-384::pro-high-text-n5` runs 1-5 carry `configuration.model =
+    gemini-3-flash` (an unreliable template default, serialised without the
+    per-study Pro override) while `cost_estimate.pricing_used.model` records the
+    model actually dispatched. Per E57's 2026-06-03 Update, pricing_used is
+    authoritative. Regression guard: these ten passes were previously published
+    as Flash.
+    """
+    ctx = {
+        "run_id": "pv-diag-384",
+        "directory_path": "outputs/h11/pv-diag-384",
+        "scope": {},
+        "proposer_pools": {
+            "pro-high-text-n5-text-t0.7": {
+                "modality": "text", "path": "pro-high-text-n5/text-t0.7"},
+        },
+        "verifier_passes": {},
+        "conditions": [],
+    }
+    passes = extract_passes(ctx)
+    assert passes, "expected the pro-high-text pool to yield passes"
+    for p in passes:
+        assert validate_row("passes", p, registry) == []
+    early = [p for p in passes if p["pass_n"] <= 5]
+    assert early, "runs 1-5 are the cross-family cases"
+    for p in early:
+        assert p["model_used"] == "gemini-3.1-pro-preview"
+        assert p["model_requested"] == "gemini-3.1-pro-preview"
+
+
+@pytest.mark.tier1
+def test_alias_resolution_does_not_rewrite_model_of_record(registry):
+    """A same-family suffix difference must NOT trigger the override.
+
+    `gemini-3-flash` vs `gemini-3-flash-preview` is alias resolution, not a
+    different model. Rewriting the project's model-of-record string is a separate
+    decision from correcting a mislabelled family, and letting the override fire
+    here would churn ~744 pass rows. Pins the prefix test in both directions.
+    """
+    ctx = {
+        "run_id": "retest-phase2a",
+        "directory_path": "outputs/retest/phase2a",
+        "scope": {},
+        "proposer_pools": {"brief-text": {"modality": "text", "path": "brief-text"}},
+        "verifier_passes": {},
+        "conditions": [],
+    }
+    passes = extract_passes(ctx)
+    assert passes
+    for p in passes:
+        assert p["model_used"] == "gemini-3-flash"  # NOT ...-preview
