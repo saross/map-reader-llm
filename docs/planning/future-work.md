@@ -66,12 +66,14 @@ These are not in the preregistration but may be worth exploring:
 ### 3.1 Cross-Provider Ensemble
 
 Test whether mixing models improves consensus:
+
 - Gemini Pro + Claude Sonnet + GPT-4o consensus
 - Compare to single-provider consensus
 
 ### 3.2 Automated Hard Negative Mining
 
 Systematic FP analysis pipeline:
+
 - Cluster FPs by visual similarity
 - Generate hard negative categories automatically
 - Feed back into prompt library
