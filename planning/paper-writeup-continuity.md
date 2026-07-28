@@ -8,11 +8,80 @@ project state.
 
 ---
 
-## 🎯 NEXT SESSION (118) — RESUME THE RESULTS-OUTLINE REVIEW (outline-first; draft prose ONLY once a section's structure is agreed) [Sessions 114–117 CLOSED 2026-06-23; Shawn travelling ~3 weeks, working from zbook]
+## 🎯 NEXT SESSION (119) — ADVERSARIAL REVIEW OF THE SESSION-118 AUDIT, THEN THE CORRECTION PASS [Session 118 CLOSED 2026-07-28; next session runs in **Fable** by Shawn's choice, for a second opinion from a different model]
 
-> **This block is the self-sufficient sole starting point. Everything
-> needed to launch is here; deeper detail is pointed to by path. Read this
-> block, then `docs/paper/results-outline.md`, and resume.**
+> **This block is the self-sufficient sole starting point.** Read it, then
+> `planning/fable-review-brief-2026-07-28.md` — that brief is written to be
+> *argued with*, not absorbed, and is the session's primary input. Deeper
+> detail is pointed to by path.
+
+### Why this session exists
+
+Session 118 opened as a request to confirm that the Results-outline review was
+next (it was) and to clear one analysis sign-off. The sign-off surfaced an
+inconsistency that escalated into a four-part preregistration-integrity audit.
+Shawn's ruling, one hour after setting an end-of-week paper deadline: *"the
+audit is more important than the deadline, we need to do this right."*
+
+Shawn is deliberately running this session in a **different model** to get an
+independent read on (a) what the audit found, (b) whether the patterns we drew
+from it are real, (c) whether the fixes are sound and proportionate, and
+(d) what probe we have not thought to run. He also wants a sense of how Fable
+and Opus 5 differ. **Do not simply ratify the prior session's conclusions** —
+the brief names three specific reasons to distrust its author.
+
+### The single most important fact
+
+**The paper's actual exposure is untouched.** The audit found 22 FALSE and 12
+UNLICENSED attributions to the preregistration; **none is corrected**. Session
+118 spent its second half on manifest machinery instead, and Shawn had to
+redirect: *"I do want to pivot back to the paper verification itself."* If the
+review is short, go to the correction pass.
+
+### What landed in Session 118
+
+- **MCC board signed** (`45d0148cd`); **Obs 371** written (rider correcting
+  Obs 360 — "phantom" glossed backwards; the 50 m buffer is a floor, not a
+  generous choice).
+- **`docs/paper/results-outline.md` v1**: D1–D4 and D12 settled; D16–D17 raised
+  on preregistration handling.
+- **The audit**: 11 reports, ~8,000 lines, `reports/d17-inventory/`. Reading
+  order at `step0-summary.md`.
+- **Machinery**: write-once predictions + `status: planned`, audited three
+  times (the first round shipped a critical bug that passed 31/31 of its own
+  tests). Tier-1 1,178 passed.
+- **`/audit` rewritten** with the two-lens pattern (personal-assistant
+  `491a225`).
+
+### Decisions taken (do not re-litigate without new evidence)
+
+BH-FDR family = one primary test per hypothesis (7; H6 never ran), all-contrasts
+as sensitivity · manifest schema needs **no** change · documentation strategy is
+split-by-derivability, quarantine-and-promote · **do not run T=1.6** · C3
+mitigate now, close with the ledger. All recorded with reasoning in
+`planning/audit-and-completion-plan.md` §§ 4, 6.1, 6.6.
+
+### Where to go after the review
+
+`planning/audit-and-completion-plan.md` § 7a is the resumption block. Highest
+value first: the four substitution sources (~130 sites cascade from four fixes);
+five small isolated corrections; the H7 erratum; the duplicate E47; the nine
+zero-cost analyses.
+
+### Open questions needing Shawn
+
+(1) Was "H4 **main effect**" the omnibus or the registered directional contrast?
+It decides whether H4b is an owed experiment. (2) Do the four GS sheets span more
+than one province — needed for an accurate study-area description. (3) H2
+Condition C: faithful-to-registration (512 px Era-1) or current instrument
+(384 px GS)? (4) Its crop size — the spec says both 1024 px (`osf:482`) and
+896 px (appendix `:1144`).
+
+### ⚠ Historical note
+
+The block below this one is the **Session 114–117** brief, which pointed at the
+outline review. That review is still genuinely open (D5–D11, D13–D17) — it was
+displaced, not completed.
 
 ### The one thing we are doing
 
