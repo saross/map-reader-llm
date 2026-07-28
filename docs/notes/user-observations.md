@@ -145,3 +145,33 @@ guarantee — a fresh instance lands on the right task with everything it needs
 — and explicitly fenced it off from the automated ritual that would otherwise
 overwrite it. The steer for me: a hand-crafted launch artefact is
 authoritative; defer to it, do not clobber it.
+
+## Session 118 — 2026-07-28 (candidates — pending Shawn's review)
+
+*Drafted at handoff by Claude Opus 5. Accept / edit / discard / replace. Silence
+holds these over; it does not discard them.*
+
+**Candidate 1 — the deadline/integrity call, and pre-committing the escalation.**
+You reversed your own end-of-week deadline within two hours of setting it, once
+the audit found an erratum contradicting its own preregistration — and then added
+the thing I had left out of my recommendation: a stated condition for widening
+the scope ("escalating if we find a lot of errors, and grow concerned that some
+errors might be masking others"). Worth recording whether that framing was
+useful, or whether I should have offered the escalation trigger unprompted.
+
+**Candidate 2 — redirecting me to the artefact.** When I brought you the map-scale
+and study-area discrepancy for adjudication, you did not adjudicate from memory —
+you pointed me at `inputs/rasters` and at checking sheet extents against a region
+map. That closed in minutes what four agent passes over prose had missed. Did
+that feel like a normal correction, or like a gap in how I was approaching
+verification?
+
+**Candidate 3 — the T=1.6 reversal.** You said "let's just run it"; I then found
+the trigger does not fire on the registered 60-tile corpus and recommended not
+running. You accepted. Was raising that *after* you had decided the right call,
+or should I have found it before presenting the option?
+
+**Candidate 4 — machinery vs record.** You wrote "I do want to pivot back to the
+paper verification itself," and later asked whether we should close the session.
+I read both as a signal I had over-invested in the manifest machinery while the
+22 false attributions sat untouched. Was that the intent, or am I over-reading?

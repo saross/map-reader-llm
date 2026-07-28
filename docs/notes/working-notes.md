@@ -21669,3 +21669,40 @@ Cross-references:
   board" — the reader-facing statement of all of the above, emitted from
   `ATTRIBUTION_RESOLUTION_NOTE` / `PAIRED_CI_NOTE` so prose and behaviour
   cannot drift.
+
+<!-- HANDOFF CANDIDATES — Session 118, 2026-07-28. Drafted at session close by
+     Claude Opus 5; PENDING Shawn's accept/edit/discard. Held over, not
+     discarded, if unanswered. Promote to numbered Observations (372+) on
+     acceptance, via /observe or the obs-writer agent. -->
+
+### Candidate Obs A — the registered inference method is not the method used
+
+Every leaderboard in the study (era1, both 55-map boards, the MCC tiering) rests
+on a tile-swap micro-F1 permutation test. `grep -c -i permutation` on
+`docs/methodology/preregistration/osf/preregistration.md` returns **0**; the
+registered inference is bootstrap CIs plus Benjamini-Hochberg FDR at q = 0.05
+"across confirmatory hypotheses" (`:270`), and the registered family-level FDR
+appears never to have been run as one family
+(`results/retest/retest-production-summary.md:209`, `:278`). Erratum **E45**
+compounds this by describing the permutation test as "preregistered (Section
+3.5)". Permutation is arguably the better instrument for paired tile data — the
+issue is not validity but provenance: it cannot be presented as what was
+promised. Needs an erratum plus a Methods statement, and the registered
+bootstrap+FDR results reported alongside.
+
+### Candidate Obs B — a preregistered trigger needs four things, not one
+
+Of 43 conditionals in the registration, **16 are point-estimate-only and only one
+names its uncertainty treatment at all** — the H7 escalation, which names the
+weakest one. That trigger fired on a +0.011 F1 gap on one of two tracks. Paired
+permutations across three replicates of the same condition give p = 0.247, 0.910,
+0.926, with the sign **reversing** between replicates; and on the 60-tile K=10
+corpus the registration actually specified, T=1.0 exceeds T=1.3 on both tracks,
+so the trigger does not fire at all. Six of 22 execution-gating conditionals have
+a firing status determined by how "better" is read rather than by the data.
+A registered trigger must name the statistic, the comparison scope, the
+uncertainty criterion, and the moment of evaluation — a determination frozen
+against a dataset the study later supersedes quietly expires. Two inverse errors
+were also found (obligations *missed*, not over-created), including H4b, whose
+"not triggered" determination was made on 60-tile data and never revisited after
+the 340-tile retest made the contrast BH-significant.
