@@ -14,7 +14,7 @@ where information lives and how sources relate.
 |:---------|:-----------------|:----------|:--------------|
 | [Working notes](../notes/working-notes.md) | Observations — findings, mechanisms, lessons | Obs N | 1–165 |
 | [Decisions log](preregistration/decisions-log.md) | Methodology decisions with rationale | Decision N | 1–21 |
-| [Protocol errata](preregistration/protocol-errata.md) | Deviations, corrections, clarifications | EN | E1–E34 |
+| [Protocol errata](preregistration/protocol-errata.md) | Deviations, corrections, clarifications | EN | E1–E60 |
 | [Hypothesis tracking](preregistration/hypothesis-tracking.md) | Hypothesis status and condition mapping | H1–H15 | All updated |
 | [Execution checklist](preregistration/execution-checklist.md) | Phase completion tracking | Phases | Through 3d |
 | Results files (`results/`) | Statistical outputs per phase | Per-phase | 2a–H11 |

@@ -427,7 +427,7 @@ and five others.
 **Gaps**: no proposer-vs-verifier paired test; fragmented narrative
 across the 12 unarchived subdirs; UNINTENDED runs unresolved.
 
-**Working-notes**: Erratum E47 — Proposer Prompt Substitution (`detect_brief-text` used instead of preregistered `propose_brief`; `docs/notes/reflections/working-notes.md` line 6553). Note: this is distinct from protocol-errata E47 (`docs/methodology/preregistration/protocol-errata.md` line 1233, buffer-matching revert), which shares the identifier by historical re-numbering.
+**Working-notes**: Erratum E47 — Proposer Prompt Substitution (`detect_brief-text` used instead of preregistered `propose_brief`; `docs/notes/working-notes.md:6556` — the path cited here previously, `docs/notes/reflections/working-notes.md:6553`, does not exist). Note: this deviation was promoted to the canonical register as **E58** on 2026-07-28 (it had shared the E47 identifier with the buffer-matching revert by historical re-numbering).
 
 ### B4. `h12-v2` HP:HN ratio
 

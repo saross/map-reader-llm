@@ -891,21 +891,78 @@ consistent choice.
 
 ---
 
-### E37: Proposer-Verifier (PV) pipeline introduced as post-hoc extension
+### E37: Proposer-Verifier (PV) pipeline — production implementation of registered H2 Condition B (corrected 2026-07-28)
 
 | Field | Value |
 |-------|-------|
-| Date | 2026-03-15 |
-| Type | Deviation |
+| Date | 2026-03-15 (original); **corrected 2026-07-28** — see Withdrawal |
+| Type | Correction (originally recorded as Deviation) |
 | Commit | `f9d40e0` (library), `5d72593` (orchestrator) |
 | Files | `scripts/lib_verifier.py`, `scripts/run_pv.py`, `scripts/evaluate_pv_results.py` |
-| Impact | New two-stage detection architecture; achieves F1=0.831, surpassing all preregistered approaches |
+| Impact | Reclassifies the headline PV result from "unregistered post-hoc extension" to **confirmatory H2 outcome: the registered null prediction is falsified and the registered stopping rule fired** |
 
-**Description**: The preregistration did not include a two-stage Proposer-Verifier pipeline. The PV approach was developed after observing that single-stage detection produced many false positives that a second-stage verifier could filter. The verifier receives candidate crop images and classifies them as mound/not-mound using an adversarial prompt framing. The PV pipeline was first piloted on the 60-tile holdout (F1=0.796, Obs 150) and then validated and optimised on the 340-tile corpus.
+**Withdrawal (2026-07-28)**: this erratum's original Description opened with
+"The preregistration did not include a two-stage Proposer-Verifier pipeline."
+**That sentence is withdrawn as false.** The preregistration registers the
+coarse-to-fine proposer-verifier architecture as H2 Condition B
+(`osf/preregistration.md:457`, `:466-476`, including "Stage 1: Detection with
+lower confidence threshold / Stage 2: Crop candidate regions, verify with
+focused prompt"); the verifier prompt is lodged in the registered appendix
+(§1.6.2 `verify_brief.md`, `preregistration-appendix-prompts.md:1088-1128`)
+with its JSON config (`:1622-1640`) and the H2 execution protocol (`:1584`).
+The original Impact line ("surpassing all preregistered approaches") and the
+original Protocol-impact claim ("an extension beyond the preregistered
+design") are withdrawn on the same basis. Identified by the 2026-07-27/28
+preregistration-integrity audit
+(`reports/d17-inventory/e37-pv-preregistration-audit.md`; attribution sweep
+FALSE-8); the repo copy of the registration was verified byte-identical to
+the OSF-posted artefact on 2026-07-28.
 
-The PV pipeline supports both Batch API and real-time API execution modes. The published software offers both modes to end users. Verifier optimisation (Phase 1) tested crop size (40–300px), consensus (N=1 vs N=5), and verifier strategy (adversarial, checklist, brief) — all parameters were found to be insensitive (Obs 166, 167, 169).
+**Corrected description**: The registered H2 prediction was a null — "Neither
+two-stage architecture will improve F1 over single-stage detection with
+voting" (`osf:461`). **That prediction is falsified.** PV's improvement
+exceeded the registered stopping rule — "Two-stage architectures will only be
+pursued further if either demonstrates F1 at least 0.05 higher than
+single-stage" (`osf:491`) — whose firing is what licensed further pursuit,
+and it activated the registered optimisation contingency in the coverage
+document (`preregistration-coverage.md:187`: pipeline optimisation "only if
+this threshold is met"). The production PV programme is that registered
+contingency, exercised.
 
-**Protocol impact**: The PV pipeline is an extension beyond the preregistered design, not a replacement. All preregistered analyses (H1–H9) are evaluated independently of PV. The PV results are reported as an additional finding demonstrating that two-stage architectures can substantially improve VLM detection accuracy.
+What this erratum correctly records is a set of **implementation elaborations
+beyond the registered Condition-B specification**:
+
+1. **Consensus proposer pool** — the registered Stage 1 is a single liberal
+   detection pass; production feeds the verifier from a consensus union of
+   passes. Registered-contingent (Condition A's consensus baseline), but not
+   what Condition B literally specified.
+2. **Binary application of the verifier verdict** in the headline pipeline
+   (`prob_threshold = null`, E56) versus the registered direct use of raw
+   `mound_probability` scores (`preregistration-appendix-prompts.md:1584`).
+   The deviation is in the *handling*: the production adversarial prompt
+   still elicits raw probabilities.
+3. **Adversarial prompt framing** — the registered verifier prompt is a
+   neutral classifier; E39 establishes strategy choice is not load-bearing.
+4. **Crop geometry** — the registration is silent on crop extraction (E8).
+5. **Verifier consensus size** — the registration is silent; N=1 vs N=5 was
+   tested and found insensitive (Obs 166, 167, 169).
+
+The PV approach was operationalised after observing that single-stage
+detection produced many false positives that a second-stage verifier could
+filter. The PV pipeline was first piloted on the 60-tile holdout (F1=0.796,
+Obs 150) and then validated and optimised on the 340-tile corpus. It
+supports both Batch API and real-time API execution modes; the published
+software offers both modes to end users. Verifier optimisation (Phase 1)
+tested crop size (40–300px), consensus (N=1 vs N=5), and verifier strategy
+(adversarial, checklist, brief) — all parameters were found to be
+insensitive (Obs 166, 167, 169).
+
+**Protocol impact (corrected)**: the headline PV result is a confirmatory H2
+outcome — registered null falsified, registered stopping rule fired — with
+the five elaborations above recorded as implementation-level deviations from
+the registered Condition-B specification. All other preregistered analyses
+(H1–H9) remain evaluated independently of PV. Cross-references: E38, E39,
+E56, E58 (the registered proposer prompt was never used).
 
 ---
 
@@ -1094,18 +1151,34 @@ analyses, T=0.0, Flash MINIMAL, Batch API). Submitted 2026-03-25.
 
 ---
 
-### E45: Pairwise permutation test statistic changed from macro-average to micro-average F1
+### E45: Unregistered inference method — tile-swap permutation testing (corrected 2026-07-28; originally "test statistic changed from macro-average to micro-average")
 
 | Field | Value |
 |-------|-------|
-| Date | 2026-03-26 |
-| Type | Deviation |
-| Preregistration ref | Section 3.5 |
+| Date | 2026-03-26 (original); **corrected 2026-07-28** — see Correction |
+| Type | Deviation (unregistered inference method adopted) |
+| Preregistration ref | None — no permutation test is registered. The registered method is bootstrap CIs (§3.5, `osf/preregistration.md:293`) with BH-FDR (§3.1, `:270`) |
 | Files | `scripts/pairwise_permutation_test.py` (new, replaces `scripts/paired_permutation_consensus.py`) |
-| Impact | Different test statistic produces different ΔF1 and p-values for the same comparison |
+| Impact | **High.** Permutation-based inference underlies every leaderboard, tiering, and pairwise-significance claim in the project; it is an unregistered substitution for the registered method, not an amendment to a registered one |
 
-**Description**: The preregistered pairwise permutation test (Section 3.5)
-specifies tile-level resampling with a sign-flip permutation on per-tile
+**Correction (2026-07-28)**: this erratum originally opened "The
+preregistered pairwise permutation test (Section 3.5) specifies tile-level
+resampling with a sign-flip permutation…". **There was never a preregistered
+permutation test to deviate from.** `permutation` appears zero times in the
+lodged registration (normalised whole-file scan; the lodged appendix's three
+hits all concern H4 example-order shuffling), and §3.5 is a five-bullet
+reporting section specifying effect sizes with 95 % bootstrapped CIs. The
+sign-flip macro-average test this entry described as "preregistered" was
+itself an unregistered post-registration implementation
+(`paired_permutation_consensus.py`). Both it and its replacement are
+unregistered inference methods. The registered analysis for confirmatory
+hypotheses is bootstrap CIs + BH-FDR, and must be reported alongside
+permutation results wherever confirmatory claims are made. Identified by the
+2026-07-27/28 audit (attribution sweep FALSE-9; independently reached at
+`docs/paper/results-outline.md:486-493`).
+
+**Description (original, premise corrected above)**: The earlier sign-flip
+test computed tile-level resampling with a sign-flip permutation on per-tile
 F1 differences. This computes the **macro-average** F1 difference — each
 tile receives equal weight regardless of how many detections or references
 it contains.
@@ -1849,3 +1922,138 @@ The leaderboard's `n1-baseline-matrix-384` board membership (`results/run-analys
 **Completeness addendum (n=3 top-up).** Finalising the board, all four medium-thinking Pro cells were brought to n=3. This surfaced a *separate* data-quality issue isolated to the two **pv-diag medium-t-0-0** cells: their `run_1` batch passes had ~5 % unretried tile failures (25/23 of 487), which had depressed their scores (`pro-text-medium-t-0-0` 0.763, `pro-image-medium-t-0-0` 0.606). Recovered to 487/487 via the standard resume-merge path (genuine Pro, single round each), they score 0.792 / 0.655. The intermediate "sole leader" reading recorded above the addendum line was an artefact of the incomplete `run_1`; with coverage fixed, `pro-text-medium-t-0-0` ties the leader. Commits: `c06aceee` (initial E57 rewrite), `309e08de`/`c07c5776`/`28c8438a`/`0f32ec00`/`e857c7b5` (top-up, recovery, union glob, re-score, re-tier).
 
 **Verification**: `per_item_metadata.model_version` re-read at source across all affected pools; `results/passes-manifest.json` shows the 8 `n1-outstanding-384` pro-* passes as `gemini-3-flash-preview` and the `n1-pro-rerun-384` passes as `gemini-3.1-pro-preview`. Cross-references: Obs 336 (leaderboard finding), Obs 337 (billing reconciliation), Obs 338 (genuine-Pro re-run), Obs 339 (n=3 top-up + recovery), `docs/methodology/n1-baseline-matrix.md`.
+
+---
+
+### E58: Registered H2 proposer prompt (`propose_brief`) never used — `detect_brief-text` substituted in all PV experiments
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-04-08 (deviation identified and analysed); **registered here 2026-07-28** |
+| Type | Deviation |
+| Commit | `5e7601d7` (prompt refinement, never invoked); analysis in `docs/notes/working-notes.md:6556-6790` |
+| Files | `prompts/system-instructions/propose_brief.md` (registered, unused); `scripts/run_h2_pilot.py:12` |
+| Impact | Medium — every PV experiment used a non-registered proposer prompt; measured comparison shows the substitution was conservative under N=1 but superior under production consensus |
+
+**Register-integrity note**: this deviation was analysed in full on
+2026-04-08 under the heading "Erratum E47" in `docs/notes/working-notes.md`
+(`:6556`), a number that collides with the canonical register's E47 (20 m
+buffer reversion) and was never entered here. It is promoted to **E58**
+(2026-07-28, D17 audit); the working-notes analysis remains the reference
+artefact.
+
+**Description**: the registration's Config Files table
+(`osf/preregistration.md:2015`) specifies `propose_*.json` + `verify_*.json`
+for H2, and the proposer prompt is lodged in full in the registered appendix
+(`preregistration-appendix-prompts.md:1042-1086`, §1.6.1, including "This is
+Stage 1 of a two-stage pipeline; a verifier will filter false positives.").
+The `propose_brief.md` prompt was written 2026-01-20 and refined 2026-02-03
+— and **never invoked in any experiment**. All PV experiments from Phase 3d
+through H11 production reused `detect_brief-text` outputs as proposer input,
+a pragmatic cost-saving reuse of existing Phase 2d detections
+(`run_h2_pilot.py:12`) that then persisted.
+
+The two prompts differ by two lines (title, and the candidate/verifier
+framing sentence). A 2026-04-08 N=1 comparison found the registered proposer
+substantially better in the single-pass pipeline (F1 0.716 vs 0.573,
+recall +35 pp — consistent with the framing effect; comparison partly
+confounded with v2 exclusions). Under production **consensus**, however, the
+relationship reverses: `detect_brief-text` with 4-of-5 consensus proved
+superior, and the final assessment (`working-notes.md:6786`) is that the
+substitution "was accidentally the right design choice".
+
+**Protocol impact**: PV results implement registered H2 Condition B (see
+corrected E37) with a non-registered proposer prompt. The paper must not
+describe the production proposer as the registered one. Reference artefacts:
+`docs/notes/working-notes.md:6556-6790`;
+`results/documentation-audit/results-audit-2026-04-21.md:430`.
+
+---
+
+### E59: H2 Condition C (fine-to-coarse) — registered confirmatory condition never executed, never formally dropped
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-07-28 (omission spans 2026-02 → present) |
+| Type | Deviation |
+| Commit | — (records an omission, not a change) |
+| Files | `osf/preregistration.md:469`, `:478-482`; `preregistration-appendix-prompts.md:1129-1160` (registered verification prompt, §1.7.1) |
+| Impact | Medium-high — one of three registered H2 conditions has no result and no decision trail |
+
+**Description**: the registration specifies H2 Condition C — standard
+detection on 512 px tiles with 5-pass voting; candidates at 2/5–3/5
+agreement re-queried at ~1024 px with a verification prompt
+(`osf/preregistration.md:478-482`). It was never executed. The forensic
+reconstruction (`reports/d17-inventory/step0-fine-to-coarse-archaeology.md`)
+found: (1) the operational execution plan listed only Conditions A and B
+from 2026-01-01, a week *before* the registration's A/B/C table
+(2026-01-08) — a drafting mismatch never reconciled; (2) the PI was asked
+twice on 2026-03-07 to confirm C stays dropped and answered other topics
+(verified against the full raw session archive, 4,201 records, 2026-07-28);
+(3) a 2026-03-15 note claiming C was deprioritised because "the
+coarse-to-fine results were strong enough" is invalid under the registered
+design — the registered prediction was a null for *both* architectures, so
+a strong Condition-B result is the registered trigger to pursue two-stage
+architectures further, not a licence to stop (that note is corrected in
+`hypothesis-tracking.md`).
+
+**Protocol impact**: H2's registered test is two-thirds executed. Condition
+B's result stands as a confirmatory falsification of the registered null
+(corrected E37); Condition C's contribution is unknowable without running
+it. Running it now is feasible (~1–1.5 days; Stage 1 exists in
+`outputs/retest/phase3a/`; `extract_candidates.py --padding 512` produces
+the crops; two open PI decisions — corpus and crop size, the spec giving
+both 1024 px at `osf:482` and 896 px at appendix `:1144`). Whether to run
+it or disclose it as unexecuted is an open PI decision
+(`planning/audit-and-completion-plan.md` § 8).
+
+---
+
+### E60: H7 escalation trigger — fired as written on the expanded corpus; escalation judged uninformative and not run
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-07-28 (decision 2026-07-28; trigger events 2026-02 / 2026-03) |
+| Type | Deviation (registered conditional evaluated; escalation not conducted) |
+| Commit | — |
+| Files | `osf/preregistration.md:731`; `results/retest/pairwise-bootstrap-comparisons.json`; `archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md` |
+| Impact | Low-medium — two registered exploratory cells (T=1.6, T=2.0) not run; the scientific question they target is already answered |
+
+**Description**: the registration (`osf/preregistration.md:731`) commits:
+"If T=1.3 yields higher F1 than T=1.0 (point estimate, same M/E and H5
+condition), exploratory testing at T=1.6 and T=2.0 will be conducted at the
+optimal configuration to characterise the upper bound of the
+temperature-performance curve."
+
+**On the corpus the registration specified** (60-tile K=10 holdout), the
+trigger **never fired**: T=1.0 exceeds T=1.3 on both tracks (image 0.4578 >
+0.4387; text 0.5687 > 0.5258;
+`archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md`).
+The trigger fired only on the E36-expanded 340-tile retest, and only on the
+text track (T=1.3 0.544 > T=1.0 0.533, point estimate). E36 records why the
+corpus changed: the 60-tile set lacked the power to separate conditions —
+a sound methodological choice, but it means the firing occurred on an
+unregistered corpus.
+
+**Why escalation was judged uninformative**: the triggering difference is
+statistically indistinguishable from noise (ΔF1 −0.0357, 95 % CI
+[−0.0908, +0.0137], p = 0.204); the direction **reverses** on the image
+track (+0.0210, p = 0.290); the two levels compared are the worst two of
+five on the text track; and the full five-level curve is monotone declining,
+with T=0.3 significantly better than both T=1.0 and T=1.3. Characterising
+the "upper bound" of a curve already known to decline, on a trigger that is
+noise on an unregistered corpus and absent on the registered one, answers no
+open question: the benefit-above-vendor-default question is decisively
+negative.
+
+**Resolution**: T=1.6 / T=2.0 escalation is **not run** (decision recorded
+at `planning/audit-and-completion-plan.md` § 6.1, 2026-07-28). This erratum
+discloses the registered conditional, both evaluations of its firing
+condition, and the disposition.
+
+**Blast radius**: none on reported results (no existing number changes);
+the deviations table in the paper gains one disclosure row.
+
+**Reference artefacts**: `planning/audit-and-completion-plan.md` § 6.1;
+`results/phase2b-carry-forward-parameters.md:35-70` (retest curve);
+`reports/d17-inventory/unexecuted-register.md` § 4 (T-01).

@@ -6555,6 +6555,11 @@ The v2 prompt fix attacks this directly at the verifier level.
 
 ## Erratum E47: Proposer Prompt Substitution — `detect_brief-text` Used Instead of Preregistered `propose_brief` (2026-04-08)
 
+> **Superseded numbering (2026-07-28)**: the "E47" used in this heading
+> collides with the canonical register's E47 (20 m buffer reversion) and was
+> never entered in `protocol-errata.md`. This deviation is now registered
+> there as **E58**; this analysis remains its reference artefact.
+
 ### The deviation
 
 The preregistration (§ Appendix, Config Files table) specifies

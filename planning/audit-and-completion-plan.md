@@ -121,20 +121,27 @@ preregistration says" claim.
 
 ## 5. Correction backlog
 
-**Errata to file** (none of these exist yet):
+**Errata to file** — ALL FILED 2026-07-28 (Session 119, Fable):
 
-- E37 correction — retitle, re-type *Deviation* → *Correction*, open with an
-  explicit withdrawal, state the falsified prediction, the fired stopping
-  rule, the activated `coverage.md:187` optimisation contingency, and the five
-  genuine elaborations beyond the registered spec.
-- H2 Condition C — never executed, never formally dropped.
-- Unregistered inference method — the leaderboards use tile-swap permutation;
-  the registered method is bootstrap + BH-FDR (`osf:270`). E45 mis-describes
-  permutation as registered.
-- H7 escalation trigger — fired, not honoured (see § 6.1 for the recommended
-  disposition).
-- Duplicate erratum — `working-notes.md:6556` declares a second "E47"
-  colliding with the canonical E47 and absent from the register.
+- [x] E37 correction — retitled, re-typed, explicit withdrawal, falsified
+  prediction + fired stopping rule + `coverage.md:187` contingency + five
+  elaborations (item 2 phrased as *application* of the verdict, per the
+  Fable review § 4.1).
+- [x] H2 Condition C — filed as **E59**.
+- [x] Unregistered inference method — E45 corrected in place (retitled;
+  premise withdrawn; registered method stated).
+- [x] H7 escalation trigger — filed as **E60**, including the Fable-review
+  strengthening: on the registered 60-tile corpus the trigger never fired
+  (verified at `archive/outputs-pre-retest-60-tile/phase2b/`).
+- [x] Duplicate erratum — promoted to **E58**; superseded-numbering note at
+  `working-notes.md:6556`; broken anchor in
+  `results-audit-2026-04-21.md:430` fixed.
+- [ ] NEW (Fable review): erratum for the systematic HIGH-thinking-on-Flash
+  deviation (currently no erratum; E40 covers only Pro) — sweep U5's
+  "related gap".
+- [ ] NEW (Fable review): erratum recording the posted `preregistration.md`'s
+  stale v4.6 header/footer (the way E1 recorded the README's stale date);
+  paper should cite the OSF archive's `updated/` folder.
 
 **Document corrections**:
 
