@@ -1,8 +1,8 @@
 # Experimental Progression: From Preregistered Design to Production Pipeline
 
-> **Last revised**: 2026-06-13 (currency sweep: dollar figures flagged as
-> pre-audit — see the cost-basis note below). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-07-28 (preregistration-attribution corrections
+> from the D17 audit sweep). See [§ Changelog](#changelog) for revision
+> history.
 
 **Purpose**: Reference document for the paper's methods section,
 characterising the three-phase experimental progression, what was tested
@@ -23,7 +23,9 @@ where, and why the design evolved.
 ## Overview
 
 This study followed a preregistered One-Factor-At-a-Time (OFAT)
-sequential design (OSF registration v4.6, 2026-01-14) that was
+sequential design (OSF registration, lodged 2026-01-31; v4.7 content —
+the posted file's own header retains a stale v4.6 label, see the errata)
+that was
 progressively adapted as findings accumulated. The experimental
 progression has three phases:
 
@@ -36,7 +38,7 @@ progression has three phases:
    487 tiles at 384px, focusing on factors identified as significant
 
 All deviations from the preregistration are documented in the protocol
-errata (47 entries, E1–E47) maintained alongside the preregistration
+errata (57 entries, E1–E57) maintained alongside the preregistration
 document.
 
 ---
@@ -47,10 +49,14 @@ document.
 
 The preregistration specified a sequential OFAT design testing five
 prompt engineering factors on a 60-tile holdout set drawn from four
-Soviet 1:25,000 topographic map sheets covering the Kazanlak Valley,
-Bulgaria. The tile size (512×512 pixels, 448px stride with 64px overlap)
-was selected during a calibration pilot (2026-01-07) comparing 256px,
-512px, and 1024px tiles at N=1 (single-pass) performance.
+Soviet 1:50,000 topographic map sheets covering the Thracian Plain and
+surrounding areas, Bulgaria (K-35-052-4_32635, K-35-053-3_Elenovo,
+K-35-062-2_Rakovski, K-35-078-1_Lesovo; `osf/preregistration.md:42`,
+`:1919-1920`). The tile size (512×512 pixels, 448px stride with 64px
+overlap) was selected during a calibration pilot (2026-01-07) comparing
+256px, 512px, and 1024px tiles at K=5 passes with a 2-of-5 voting
+threshold (`archive/pilot-tile-size/outputs/pilot_decision.md`;
+preregistration §12.2).
 
 The OFAT sequence tested each factor in order, carrying optimal
 parameters forward:
@@ -117,9 +123,11 @@ was driven by:
    meaningful comparison impossible
 2. **FDR attrition**: Only 1/10 Phase 2a comparisons survived
    multiple-comparison correction
-3. **Preregistration accommodation**: The preregistration anticipated
-   the possibility of expanding the evaluation set (Section 3.5:
-   "robustness checks on the full corpus")
+3. **Documented deviation**: the expansion is recorded as a
+   Deviation-class erratum (E36, `protocol-errata.md:878`). The
+   preregistration did not anticipate evaluation-set expansion — it
+   reserved the 281-tile pool for Stage 2 (`osf/preregistration.md:76`);
+   §3.5's "robustness checks" concern spatial tolerance only
 
 ### What was re-run
 
@@ -142,9 +150,9 @@ tiles:
 During the 512px validation phase, two architectural innovations were
 developed that were not in the original preregistration:
 
-1. **HIGH thinking consensus** (errata E32): The preregistration fixed
-   thinking at MINIMAL (Section 8.9), but exploratory experiments found
-   that HIGH thinking produced better consensus outcomes despite worse
+1. **HIGH thinking consensus**: The preregistration fixed thinking at
+   MINIMAL (Section 8.9), but exploratory experiments found that HIGH
+   thinking produced better consensus outcomes despite worse
    N=1 performance — the diversity dividend (Obs 141). This motivated
    systematic comparison of HIGH vs MINIMAL at consensus level.
 
@@ -179,9 +187,11 @@ adequate statistical power:
 ### Tile-size diagnostic
 
 The preregistered tile-size calibration (Phase 0, 2026-01-07) selected
-512px tiles based on N=1 performance. H11, a preregistered conditional
-hypothesis (to be tested if F1 < 0.85), triggered a diagnostic
-comparison of 256px, 384px, and 512px tiles (2026-03-22–23).
+512px on single-scale precision-recall balance, run at K=5 passes with
+a 2-of-5 voting threshold (`pilot_decision.md`; preregistration §12.2).
+H11, a preregistered conditional hypothesis (to be tested if F1 < 0.85),
+triggered a diagnostic comparison of 256px, 384px, and 512px tiles
+(2026-03-22–23).
 
 The diagnostic revealed a **tile-size × architecture interaction**
 (Obs 203): 384px tiles outperform 512px in the consensus+PV pipeline
@@ -191,9 +201,9 @@ more potential targets) at the cost of precision. The consensus pipeline
 exploits this high-recall raw material — it can filter diverse false
 positives but cannot resurrect missed detections.
 
-This crossover was invisible to the preregistered N=1 screening because
-the pipeline architecture that exploits it was developed after the
-tile-size decision was locked in. The finding generalises: for
+This crossover was invisible to the preregistered single-stage
+screening because the consensus+PV pipeline architecture that exploits
+it was developed after the tile-size decision was locked in. The finding generalises: for
 multi-stage detection pipelines, first-stage parameters should be
 optimised for recall, not F1.
 
@@ -250,7 +260,7 @@ The 384px production evaluation produced the study's headline results:
 |---|---|---|---|
 | Tile size | 512px | 512px → 384px (H11) | Crossover: 384px better for pipeline (Obs 203) |
 | Evaluation set | 60 tiles | 60 → 340 → 487 tiles | Statistical power (E36) |
-| Thinking level | MINIMAL (fixed) | MINIMAL and HIGH | Diversity dividend (Obs 141, E32) |
+| Thinking level | MINIMAL (fixed) | MINIMAL and HIGH | Diversity dividend (Obs 141; no erratum yet — E40 covers only Pro's MINIMAL unavailability) |
 | Pipeline | Single-pass + consensus | + Proposer-Verifier | Post-registration extension (E37) |
 | Spatial tolerance | 20m primary | 20m primary (E47, reverting E46) | Preregistration alignment |
 | Temperature | 5 levels tested | T=0.7 adopted for production | T=1.0 confirmed poor (Phase 2b) |
@@ -261,9 +271,15 @@ The evolution from preregistered OFAT design to production pipeline is
 not a weakness — it is the finding. The preregistration tested the
 hypothesis space that the literature suggested was important (prompt
 engineering variables). The result — that none of those variables
-matter — redirected the investigation toward architectural innovations
-(consensus, PV) that the preregistration could not have anticipated
-because they did not yet exist in the VLM feature detection literature.
+matter — redirected the investigation toward the architectural factors.
+Both architectures were themselves registered: consensus voting as H3,
+and the proposer-verifier pipeline as H2 Condition B
+(`osf/preregistration.md:455-476`), with a registered *null* prediction
+that neither two-stage architecture would help. That prediction was
+falsified, and the registered stopping rule (≥0.05 F1, `osf:491`) fired
+— licensing the pursuit of PV at production scale (see the corrected
+E37). What the preregistration did not anticipate is the *scale* of the
+effect and the optimisation layer built on it, not the architecture.
 
 The three-phase structure maps to a natural scientific progression:
 
@@ -328,6 +344,24 @@ evolution.*
 ---
 
 ## Changelog
+
+### 2026-07-28 — Preregistration-attribution corrections (D17 audit)
+
+**Refresh trigger**: the Session-118/119 preregistration-integrity audit
+(`reports/d17-inventory/prereg-attribution-sweep.md`, findings FALSE-14,
+FALSE-15, U10, S2, S3; Fable review Finding 4). Corrections:
+
+| before | after |
+| :--- | :--- |
+| corpus "1:25,000 … Kazanlak Valley" | 1:50,000, Thracian Plain and surrounding areas, four named sheets |
+| tile-size pilot "at N=1 (single-pass)" (×2) | K=5 passes, 2-of-5 voting (per `pilot_decision.md` and prereg §12.2) |
+| §3.5 quoted as "robustness checks on the full corpus" | fabricated quotation removed; expansion cited to erratum E36 |
+| "OSF registration v4.6, 2026-01-14" | lodged 2026-01-31, v4.7 content (posted header retains stale v4.6 label) |
+| "errata (47 entries, E1–E47)" | 57 entries, E1–E57 |
+| HIGH-thinking deviation attributed to E32 (×2) | E32 concerns temperature; deviation currently has no erratum |
+
+What did NOT change: the three-phase narrative, all findings and
+observations, all cost figures, and the deviations table's substance.
 
 ### 2026-06-13 — Cost-basis note added (currency sweep)
 

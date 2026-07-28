@@ -5,8 +5,10 @@ inspection; no repository files were created, edited, or committed).
 
 **Registration of record**: `docs/methodology/preregistration/osf/preregistration.md`
 (v4.6 in the header at `:9`, v4.7 in the changelog at `:2394`). All `preregistration.md:N`
-anchors below are to that file. Lodged **2026-01-31 23:54 UTC**
-(`docs/methodology/preregistration/execution-checklist.md:61`).
+anchors below are to that file. Lodged **2026-01-31 12:54:09 UTC** (23:54
+AEDT; the execution-checklist entry this originally cited mislabelled the
+local time as UTC — corrected 2026-07-28 against the OSF API, see
+`reports/d17-inventory/fable-adversarial-review-2026-07-28.md` Finding 2).
 
 **The bright line.** Anything decided before lodgement fed into writing the registration
 and is baked in. Pre-lodgement drafting material is used below only to explain *why the

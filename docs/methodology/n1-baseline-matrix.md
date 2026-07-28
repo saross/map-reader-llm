@@ -398,9 +398,14 @@ Two cross-cutting reads:
   F1 0.600), and the genuine Pro-image cells match Flash on F1 while dominating MCC.
   The pre-E57 board's apparent "Flash image-MINIMAL beats weak Pro" was an **artefact
   of the Flash-misdispatched anti-diagonal** (E57): those four cells were Flash, not
-  Pro, and genuine Pro at the same corners scores 0.59–0.80. **H7's preregistered
-  T=0.0 optimum is cleanly supported within Pro text**: the two Tier-1 cells are both
-  T=0.0 and the two Tier-2 cells are both T=0.7 — a clear T=0.0 > T=0.7 ordering.
+  Pro, and genuine Pro at the same corners scores 0.59–0.80. **H7's registered
+  prediction is falsified, and the direction is consistent across Pro text**: the
+  preregistration predicted T=1.0 (vendor recommended) optimal, with lower
+  temperatures degrading performance (`osf/preregistration.md:711`); instead the two
+  Tier-1 cells are both T=0.0 and the two Tier-2 cells are both T=0.7 — a clear
+  T=0.0 > T=0.7 ordering, reversing the registered vendor-recommendation prediction.
+  (T=0.0 is a registered *level*, not a registered optimum; corrected 2026-07-28,
+  D17 audit FALSE-16.)
 
 **Manifest linkage and preregistration.** The finding is recorded in the
 analyses manifest row `n1-baseline-matrix-384` (`tie_set`, `outcome`,

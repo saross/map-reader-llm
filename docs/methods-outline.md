@@ -4,7 +4,7 @@ Draft outline for the methods section of a journal article reporting the
 VLM burial mound detection study. Structured to reflect the preregistered
 design while transparently documenting deviations.
 
-Key methodological decisions include: (1) **model selection** — use of Gemini 3 Flash (Google's `gemini-3-flash-preview`) as a cost-effective, free-tier model with sufficient capability for detection tasks at consensus scales up to K=30; (2) **design strategy** — sequential One-Factor-At-A-Time (OFAT) design with adaptive dual-track extension to preserve preregistered pipeline scope while exploring unexpected findings; (3) **spatial tolerance** — 20 m matching threshold to account for georeferencing error, symbol centroid ambiguity, and map digitisation precision; (4) **consensus voting approach** — pooling K=10–30 independent runs with cross-pass clustering and optimal threshold identification to improve precision through diversity; (5) **two-stage proposer-verifier approach** — high-recall proposer pass followed by independent verification of candidates with diagnostic checklists and voting thresholds; (6) **statistical methods** — 95% bootstrap confidence intervals (1,000 iterations) with Benjamini-Hochberg FDR correction across confirmatory hypotheses; and (7) **matching algorithm** — Hungarian algorithm for globally optimal one-to-one spatial assignment to prevent double-counting. A dedicated subsection (§6.3) documents the human–LLM collaborative development process, drawing on 50+ archived session transcripts and structured reflections to demonstrate how AI-assisted research methodology enabled systematic implementation at scale while preserving human scientific judgement.
+Key methodological decisions include: (1) **model selection** — use of Gemini 3 Flash (Google's `gemini-3-flash-preview`) as a cost-effective, free-tier model with sufficient capability for detection tasks at consensus scales up to K=30; (2) **design strategy** — sequential One-Factor-At-A-Time (OFAT) design with adaptive dual-track extension to preserve preregistered pipeline scope while exploring unexpected findings; (3) **spatial tolerance** — 20 m matching threshold to account for georeferencing error, symbol centroid ambiguity, and map digitisation precision; (4) **consensus voting approach** — pooling K=10–30 independent runs with cross-pass clustering and optimal threshold identification to improve precision through diversity; (5) **two-stage proposer-verifier approach** — high-recall proposer pass followed by independent verification of candidates with diagnostic checklists and voting thresholds; (6) **statistical methods** — 95% bootstrap confidence intervals with Benjamini-Hochberg FDR correction across confirmatory hypotheses (the registered text specifies bootstrap CIs and FDR; the iteration count of 1,000, percentile method, and tile-level resampling unit were fixed pre-lodgement in Decision 10, `decisions-log.md:337`, and are reported as pre-specified analysis parameters, not registered ones); and (7) **matching algorithm** — Hungarian algorithm for globally optimal one-to-one spatial assignment to prevent double-counting. A dedicated subsection (§6.3) documents the human–LLM collaborative development process, drawing on 50+ archived session transcripts and structured reflections to demonstrate how AI-assisted research methodology enabled systematic implementation at scale while preserving human scientific judgement.
 
 **Status**: Outline only — not yet prose. Intended as a scaffold for
 collaborative drafting.
@@ -13,7 +13,8 @@ collaborative drafting.
 
 ## 1. Study Design Overview
 
-- Preregistered, stranded-factorial study (OSF registration, 2026-01-31)
+- Preregistered, sequential OFAT study (OSF registration, 2026-01-31;
+  the stranded-factorial design was v3.5 — superseded before lodgement)
 - 15 hypotheses: 8 confirmatory (H1–H8), 7 exploratory (H9–H15)
 - Sequential One-Factor-At-A-Time (OFAT) design with carry-forward of
   optimal parameters between phases
@@ -163,8 +164,11 @@ tracks:
   ordering phases skipped (no images to compose/order); carried through
   to Phase 3a voting
 
-This is additive — all preregistered tests were executed on Track 1;
-Track 2 added scope to explore the unexpected finding. The modest
+This is additive — Track 1 followed the full preregistered OFAT
+sequence, with three documented reductions in scope (H5's 3×3 factorial
+collapsed to OFAT, E28; H8 Scale-16/32 deferred, E11, later re-run under
+E51; H2 Condition C not executed — erratum pending), while Track 2 added
+scope to explore the unexpected finding. The modest
 additional cost (~$55 for extra temperature cells) was justified by the
 scientific value of understanding the text-only pathway.
 
@@ -273,9 +277,11 @@ supplementary materials alongside the full preregistration text.
 
 ### 6.1 Preregistration
 
-- Registered at OSF prior to confirmatory data collection (2026-01-31)
-- Protocol version 4.6 with versioned changelog
-- All deviations documented in a living errata log (30+ entries) with
+- Registered at OSF prior to confirmatory data collection (2026-01-31,
+  12:54 UTC)
+- Protocol v4.7 content with versioned changelog (the posted file's
+  header retains a stale v4.6 label — see the errata)
+- All deviations documented in a living errata log (57 entries) with
   classification (correction / clarification / deviation) and impact
   assessment
 
@@ -338,7 +344,7 @@ AI-assisted research methodology is planned as a separate contribution.
 
 | Hypothesis | Reason Deferred |
 |-----------|----------------|
-| H6 (Flash → Pro transfer) | Not started; budget prioritised for Flash experiments |
+| H6 (Flash → Pro transfer) | Not executed as registered (20-tile holdout at 512 px, K=10, OFAT factors); deliberately deferred 2026-03-11 for a competing paper deadline, then superseded by the exploratory 487-tile/384 px genuine-Pro comparison (E41, E57 Update) |
 | H10 (Training pool size) | Hard positive pool exhausted at 4 examples |
 | H12 (HP:HN ratio) | Depends on H10 (larger HP pool) |
 | H13 (Overlap/stride) | Low priority; would require re-tiling |

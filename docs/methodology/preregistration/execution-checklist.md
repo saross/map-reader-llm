@@ -46,7 +46,9 @@
   - No embargo set
 - [x] Obtain timestamp confirmation (2026-01-31)
   - OSF registration URL: <https://osf.io/tybgq/overview>
-  - Timestamp: 2026-01-31 23:54 UTC
+  - Timestamp: 2026-01-31 12:54:09 UTC (23:54 AEDT; an earlier entry here
+    mislabelled the local time as UTC — corrected 2026-07-28 against the OSF
+    API `date_registered` field)
 
 ---
 
@@ -58,9 +60,9 @@
 |-------|-------|
 | OSF Registration URL | <https://osf.io/tybgq/overview> |
 | OSF Project URL | <https://osf.io/h9x4g> |
-| Registration timestamp | 2026-01-31 23:54 UTC |
+| Registration timestamp | 2026-01-31 12:54:09 UTC (23:54 AEDT; corrected 2026-07-28 — see above) |
 | DOI (if assigned) | |
-| Embargo end date (if any) | None |
+| Embargo end date (if any) | OSF API records `embargo_end_date: 2026-06-30` (now public); an earlier entry here said "None" — PI to confirm which is right |
 
 ---
 

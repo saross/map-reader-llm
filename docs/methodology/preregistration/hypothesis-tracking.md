@@ -2,7 +2,14 @@
 
 **Purpose**: Map preregistered hypotheses to their experimental conditions, configs, and status.
 
-**Last updated**: 2026-04-15
+**Last updated**: 2026-07-28 (D17 audit corrections: H2-C note, H6 row, H9
+status — see `reports/d17-inventory/prereg-attribution-sweep.md` FALSE-2, S7,
+U12)
+
+> **Caution**: this file has carried stale and invented content (D17 audit,
+> 2026-07-28) and should be **generated, not hand-maintained** — see
+> `planning/audit-and-completion-plan.md` § 5. Verify against
+> `osf/preregistration.md` and the manifests before citing.
 
 ---
 
@@ -15,7 +22,7 @@
 | H3 | Consensus Voting | N, threshold | 3a | Complete | 2026-03-07 |
 | H4 | Example Ordering | Ordering | 2e | Complete | 2026-02-12 |
 | H5 | Negative Text Treatment | Text level | 2d | Complete | 2026-02-12 |
-| H6 | Flash→Pro Transfer | Model | 4 | Not started | — |
+| H6 | Flash→Pro Transfer | Model | 4 | Not executed as registered; superseded by exploratory 487-tile/384 px genuine-Pro comparison (E41, E57 Update) | 2026-06-03 |
 | H7 | Temperature | T | 2b | Complete | 2026-02-08 |
 | H8 | Library Composition/Scaling | Library size | 2c | Complete | 2026-02-09 |
 
@@ -25,7 +32,7 @@
 
 | ID | Hypothesis | Factor | Tier | Status | Date |
 |----|------------|--------|------|--------|------|
-| H9 | Diversity Mechanisms | Text/Image/Temp diversity | A | Complete (implicit) | 2026-03-07 |
+| H9 | Diversity Mechanisms | Text/Image/Temp diversity | A | Partially tested (H9-D only; H9-B/C/E not run) | 2026-03-07 |
 | H10 | Training Pool Size | Pool size | B | Not started (HP pool exhausted) | — |
 | H11 | Tile Size Effects | Tile dimensions | B | Complete (384 pathway closed) | 2026-03-15 |
 | H12 | HP:HN Ratio | Hard example ratio | B | In progress — h12-v2 (deferral resolved by H10 v2 pool mining; see errata E52) | 2026-04-15 |
@@ -83,8 +90,17 @@ see Observation 163 regarding model drift and the corrected v2 result
 | Proposer-verifier | Coarse-to-fine | Standard (text-only) | 0.768 (pre-correction) |
 | Proposer-verifier | Coarse-to-fine | Checklist (text-only) | 0.782 (pre-correction) |
 
-**Note**: Fine-to-coarse (H2-C) was not tested — the coarse-to-fine results
-were strong enough that context expansion was deprioritised.
+**Note**: Fine-to-coarse (H2 Condition C, `osf/preregistration.md:469`) was
+**not executed**, and no decision to drop it is on record (asked twice on
+2026-03-07, unanswered — see
+`reports/d17-inventory/step0-fine-to-coarse-archaeology.md`). This is an
+unexecuted registered confirmatory condition and requires a Deviation-class
+erratum. An earlier note here claimed it was deprioritised because "the
+coarse-to-fine results were strong enough"; that reasoning is invalid under
+the registered design — the registration predicted *neither* architecture
+would help, so a strong coarse-to-fine result falsifies the prediction and is
+the registered trigger to pursue two-stage architectures further, not to stop
+(corrected 2026-07-28, D17 audit FALSE-2).
 
 ---
 
@@ -241,11 +257,16 @@ in decisions-log.md.
 
 Tests whether diversity in prompts, images, or temperature improves voting.
 
-**Status (2026-03-07)**: Implicitly tested via Phase 3a parameter variation.
-Prompt/parameter diversity does not improve consensus — confirmed null result.
-The formal H9-A through H9-E conditions were not run as separate experiments;
-the finding emerged from Phase 3a's multi-temperature, multi-run design which
-inherently tested temperature diversity (H9-D).
+**Status (2026-03-07, corrected 2026-07-28)**: Partially tested. Temperature
+diversity does not improve consensus (H9-D, tested incidentally via Phase 3a's
+multi-temperature, multi-run design). Text diversity (H9-B), image diversity
+(H9-C), and full diversity (H9-E) were **not tested** — the formal H9-A
+through H9-E conditions were never run as separate experiments, and E12
+records that H9-C could only ever have run as HN-diversity-only. A null for
+registered H9 as a whole cannot be asserted on this evidence (D17 audit U12).
+Note the tension with the post-registration diversity-dividend finding: a
+diversity mechanism H9 did not register (thinking level) *does* improve
+consensus substantially.
 
 | Condition | Text | Images | Temperature | Description |
 |-----------|------|--------|-------------|-------------|
@@ -281,7 +302,7 @@ Phase 2d: H5 (Negative Text) → optimal text           ✓ COMPLETE (minimal)
 Phase 2e: H4 (Ordering) → optimal ordering             ✓ COMPLETE (no effect)
     ↓
     ├── Phase 3a: H3 (Voting N=30)                     ✓ COMPLETE
-    ├── Phase 3c: H9 (Diversity — implicit)            ✓ COMPLETE
+    ├── Phase 3c: H9 (Diversity — H9-D only)           ◐ PARTIAL
     └── Phase 3c/3d: H2 (Two-Stage)                    ✓ COMPLETE
     ↓
     └── H11 (Tile Size — exploratory)                  ✓ COMPLETE (384 closed)
