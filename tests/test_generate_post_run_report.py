@@ -23,9 +23,14 @@ Asserts:
 
 from __future__ import annotations
 
+from datetime import datetime, timedelta, timezone
+
+import json
+
 import pytest
 
 from scripts.generate_post_run_report import (
+    PLANNED_STALE_DAYS,
     _carry_timestamps,
     _stabilise_timestamps,
     _strip_ts,
@@ -33,6 +38,7 @@ from scripts.generate_post_run_report import (
     build_analyses,
     build_manifests,
     build_run_row,
+    check_write_once_predictions,
     draft_run,
     drift_check,
     extract_conditions,
@@ -43,6 +49,7 @@ from scripts.generate_post_run_report import (
     load_run_facts,
     load_run_registry,
     load_schema_registry,
+    report_planned_runs,
     validate_manifest,
     validate_row,
 )
@@ -542,3 +549,358 @@ def test_alias_resolution_does_not_rewrite_model_of_record(registry):
     assert passes
     for p in passes:
         assert p["model_used"] == "gemini-3-flash"  # NOT ...-preview
+
+
+# --------------------------------------------------------------------------- #
+# status: planned — declaring intent before execution (repair (3), 2026-07-28)
+# --------------------------------------------------------------------------- #
+
+_PLANNED = {
+    "run_id": "h7-escalation",
+    "directory_path": "outputs/h7-escalation",
+    "status": "planned",
+    "planned_at": "2026-07-28T00:00:00Z",
+}
+
+
+@pytest.mark.tier1
+def test_drift_check_exempts_planned_runs():
+    """A planned run has no facts and no decomposition BY DESIGN — not a drift."""
+    assert drift_check([_PLANNED], facts={}, conditions={}) == []
+    # An ACTIVE run with no facts is still a drift; the exemption is status-scoped.
+    active = dict(_PLANNED, status="active")
+    assert any("NO facts entry" in w for w in drift_check([active], facts={}, conditions={}))
+
+
+@pytest.mark.tier1
+def test_drift_check_flags_decomposed_planned_run():
+    """Decomposing a run that has not executed is its own, distinctly-worded error."""
+    warnings = drift_check([_PLANNED], facts={}, conditions={"h7-escalation": {}})
+    assert len(warnings) == 1
+    assert "registry status is 'planned'" in warnings[0]
+    # Must NOT be mistaken for an ordinary orphan decomposition.
+    assert "NOT in the registry" not in warnings[0]
+
+
+@pytest.mark.tier1
+def test_report_planned_runs_ages_and_flags_stale():
+    """Planned runs are the only build output that mentions them, so age is shown."""
+    fresh = report_planned_runs([_PLANNED], now=datetime(2026, 7, 29, tzinfo=timezone.utc))
+    assert fresh == ["PLANNED  h7-escalation  (declared 1d ago)"]
+
+    stale_day = datetime(2026, 7, 28, tzinfo=timezone.utc) + timedelta(
+        days=PLANNED_STALE_DAYS)
+    stale = report_planned_runs([_PLANNED], now=stale_day)
+    assert "STALE" in stale[0]
+
+    # Non-planned entries are ignored entirely.
+    assert report_planned_runs([dict(_PLANNED, status="active")]) == []
+
+
+@pytest.mark.tier1
+def test_report_planned_runs_survives_missing_or_bad_date():
+    """A malformed planned_at must not break the build — it degrades to a note."""
+    no_date = report_planned_runs([{"run_id": "x", "status": "planned"}])
+    assert "no planned_at recorded" in no_date[0]
+    bad = report_planned_runs([{"run_id": "x", "status": "planned", "planned_at": "soon"}])
+    assert "unparseable" in bad[0]
+
+
+# --------------------------------------------------------------------------- #
+# Write-once predictions (repair (2), 2026-07-28)
+# --------------------------------------------------------------------------- #
+
+def _analyses_file(tmp_path, predicted):
+    """Write a minimal on-disk analyses manifest carrying one prediction."""
+    p = tmp_path / "analyses-manifest.json"
+    p.write_text(json.dumps({
+        "schema_version": "1.0",
+        "analyses": [{"analysis_id": "a1", "predicted_outcome": predicted}],
+    }))
+    return p
+
+
+@pytest.mark.tier1
+def test_write_once_blocks_silent_prediction_rewrite(tmp_path):
+    """The H7 failure mode: a prediction restated to match the finding."""
+    path = _analyses_file(tmp_path, "T=1.0 will be optimal")
+    fresh = {"analyses": [{"analysis_id": "a1", "predicted_outcome": "T=0.0 will be optimal"}]}
+    errors = check_write_once_predictions(fresh, path)
+    assert len(errors) == 1
+    assert "WRITE-ONCE" in errors[0]
+    assert "predicted_outcome_amended" in errors[0]  # tells the author the legal route
+    assert "T=1.0 will be optimal" in errors[0]      # and shows what is being overwritten
+
+
+@pytest.mark.tier1
+def test_write_once_allows_first_set_unchanged_and_explicit_amendment(tmp_path):
+    """Setting, re-writing identically, and declared amendment are all legal."""
+    # null -> value: always allowed (this IS the act of predicting).
+    blank = _analyses_file(tmp_path, None)
+    assert check_write_once_predictions(
+        {"analyses": [{"analysis_id": "a1", "predicted_outcome": "declines"}]}, blank) == []
+
+    path = _analyses_file(tmp_path, "declines")
+    # Unchanged: the no-op regeneration case.
+    assert check_write_once_predictions(
+        {"analyses": [{"analysis_id": "a1", "predicted_outcome": "declines"}]}, path) == []
+    # Explicitly amended: allowed, and the amendment is preserved in the row.
+    amended = {"analyses": [{
+        "analysis_id": "a1",
+        "predicted_outcome": "rises",
+        "predicted_outcome_amended": {"reason": "pilot invalidated the premise",
+                                      "date": "2026-07-28",
+                                      "previous": "declines"},
+    }]}
+    assert check_write_once_predictions(amended, path) == []
+
+
+@pytest.mark.tier1
+def test_write_once_is_inert_on_first_generation_and_new_rows(tmp_path):
+    """No prior manifest, or an analysis_id not previously present, protects nothing."""
+    assert check_write_once_predictions({"analyses": []}, tmp_path / "absent.json") == []
+    path = _analyses_file(tmp_path, "declines")
+    new_row = {"analyses": [{"analysis_id": "a2", "predicted_outcome": "anything"}]}
+    assert check_write_once_predictions(new_row, path) == []
+
+
+# --------------------------------------------------------------------------- #
+# Regression tests for the 2026-07-28 /audit findings on the two repairs above.
+# Each pins a defect that SHIPPED and was caught by adversarial review, not by
+# the original tests — which is itself the argument for these existing.
+# --------------------------------------------------------------------------- #
+
+_AMEND_SPEC = {
+    "analysis_id": "a1",
+    "type": "leaderboard",
+    "conditions_compared": ["some-run::some-condition"],
+    "output_path": "results/nowhere",
+    "predicted_outcome": "revised prediction",
+    "predicted_outcome_amended": {"reason": "pilot invalidated the premise",
+                                  "date": "2026-07-28",
+                                  "previous": "original prediction"},
+}
+
+
+@pytest.mark.tier1
+def test_amendment_survives_build_and_validates(registry):
+    """AUDIT C1: the write-once escape hatch did not exist end to end.
+
+    `predicted_outcome_amended` was checked by the guard but never copied by
+    `build_analyses` (which enumerates its row keys) and was absent from the
+    analyses schema (`additionalProperties: false`). The guard was therefore a
+    permanent deadlock for every analysis already carrying a prediction, and its
+    error message told authors to do something impossible. Both halves are pinned
+    here: the key must reach the built row AND the row must validate.
+    """
+    row = build_analyses([_AMEND_SPEC], "2026-07-28T00:00:00Z")[0]
+    assert row["predicted_outcome_amended"]["reason"] == "pilot invalidated the premise"
+    assert validate_row("analyses", row, registry) == []
+
+
+@pytest.mark.tier1
+def test_amendment_unblocks_the_write_once_guard(tmp_path):
+    """The escape hatch must actually release the guard on a real built row."""
+    path = tmp_path / "analyses-manifest.json"
+    path.write_text(json.dumps({
+        "schema_version": "1.0",
+        "analyses": [{"analysis_id": "a1", "predicted_outcome": "original prediction"}],
+    }))
+    built = {"analyses": [build_analyses([_AMEND_SPEC], "2026-07-28T00:00:00Z")[0]]}
+    assert check_write_once_predictions(built, path) == []
+
+    # ...and without the amendment the same rewrite is still refused.
+    bare = dict(_AMEND_SPEC)
+    del bare["predicted_outcome_amended"]
+    built_bare = {"analyses": [build_analyses([bare], "2026-07-28T00:00:00Z")[0]]}
+    assert len(check_write_once_predictions(built_bare, path)) == 1
+
+
+@pytest.mark.tier1
+def test_planned_run_with_facts_is_not_falsely_reported_missing():
+    """AUDIT M1: the exemption was applied to one direction of the set algebra only.
+
+    A planned run may legitimately have a facts entry — corpus, GT and scope are
+    exactly what one authors when declaring intent — and was then reported as
+    absent from the registry it was sitting in.
+    """
+    assert drift_check([_PLANNED], facts={"h7-escalation": {}}, conditions={}) == []
+    # The same check still fires for a genuinely unregistered facts entry.
+    assert any("NOT in the registry" in w
+               for w in drift_check([], facts={"ghost": {}}, conditions={}))
+
+
+@pytest.mark.tier1
+def test_planned_run_needs_no_directory_path(tmp_path, monkeypatch):
+    """AUDIT M2: directory_path was dereferenced before the planned skip.
+
+    The schema says a planned run's path "need not exist yet", and the easiest
+    thing to author omits it entirely — which raised KeyError instead of skipping.
+    """
+    import scripts.generate_post_run_report as gen
+
+    entry = {"run_id": "h7-escalation", "status": "planned",
+             "planned_at": "2026-07-28T00:00:00Z"}
+    monkeypatch.setattr(gen, "load_run_registry", lambda: {"registry": [entry]})
+    monkeypatch.setattr(gen, "load_run_facts", lambda: {})
+    monkeypatch.setattr(gen, "load_run_conditions", lambda: {})
+    monkeypatch.setattr(gen, "load_run_analyses", lambda: [])
+
+    _, run_rows, conditions, passes, analyses, warnings = gen.build_manifests(
+        "2026-07-28T00:00:00Z")
+    assert run_rows == [] and conditions == [] and passes == []
+    assert warnings == []  # a planned run is not drift
+
+
+@pytest.mark.tier1
+def test_lowercase_rfc3339_zone_designator_parses():
+    """AUDIT L4: RFC 3339 permits lowercase 'z'; fromisoformat does not accept it."""
+    line = report_planned_runs(
+        [{"run_id": "x", "status": "planned", "planned_at": "2026-07-28t00:00:00z"}],
+        now=datetime(2026, 7, 29, tzinfo=timezone.utc))[0]
+    assert "declared 1d ago" in line and "unparseable" not in line
+
+
+# --------------------------------------------------------------------------- #
+# INTEGRATION — the gap the /audit identified: every unit test above stops at the
+# function boundary, three layers short of the write. Deleting the four-line
+# wiring in write_manifests, or the planned-run `continue`, left the whole suite
+# green. These exercise write_manifests itself.
+# --------------------------------------------------------------------------- #
+
+def _sandbox_manifests(tmp_path, monkeypatch):
+    """Point the writer at a throwaway tree so the real results/ is untouched."""
+    import scripts.generate_post_run_report as gen
+    monkeypatch.setattr(gen, "REPO_ROOT", tmp_path)
+    (tmp_path / "results").mkdir(parents=True, exist_ok=True)
+    return gen
+
+
+def _analysis_spec(predicted, amended=None):
+    spec = {
+        "analysis_id": "a1",
+        "type": "leaderboard",
+        "conditions_compared": ["some-run::some-condition"],
+        "output_path": "results/nowhere",
+        "predicted_outcome": predicted,
+    }
+    if amended:
+        spec["predicted_outcome_amended"] = amended
+    return spec
+
+
+@pytest.mark.tier1
+def test_write_manifests_refuses_a_rewritten_prediction_end_to_end(
+        tmp_path, monkeypatch, registry):
+    """AUDIT C1: removing the guard's wiring left every unit test green.
+
+    Exercises the real path — assemble, validate, guard, write — and asserts the
+    on-disk file is unchanged by the refused rewrite. This is the historical H7
+    failure mode tested where it actually has to be stopped.
+    """
+    gen = _sandbox_manifests(tmp_path, monkeypatch)
+    at = "2026-07-28T00:00:00Z"
+    path = tmp_path / gen.MANIFEST_FILES["analyses"]
+
+    first = gen.build_analyses([_analysis_spec("T=1.0 will be optimal")], at)
+    assert gen.write_manifests({"analyses": first}, at, registry)["analyses"][1] == []
+    assert "T=1.0 will be optimal" in path.read_text()
+
+    rewritten = gen.build_analyses([_analysis_spec("T=0.0 was preregistered")], at)
+    errors = gen.write_manifests({"analyses": rewritten}, at, registry)["analyses"][1]
+    assert errors and "WRITE-ONCE" in errors[0]
+    assert "T=1.0 will be optimal" in path.read_text()   # disk untouched
+    assert "T=0.0 was preregistered" not in path.read_text()
+
+
+@pytest.mark.tier1
+def test_write_manifests_accepts_a_targeted_amendment_end_to_end(
+        tmp_path, monkeypatch, registry):
+    """The documented escape hatch must work through the real pipeline.
+
+    AUDIT C2: the escape hatch was previously tested only against a hand-built
+    fixture the pipeline could not produce, which is exactly how a permanent
+    deadlock shipped with seven tests green.
+    """
+    gen = _sandbox_manifests(tmp_path, monkeypatch)
+    at = "2026-07-28T00:00:00Z"
+    path = tmp_path / gen.MANIFEST_FILES["analyses"]
+
+    gen.write_manifests(
+        {"analyses": gen.build_analyses([_analysis_spec("T=1.0 will be optimal")], at)},
+        at, registry)
+
+    amended = gen.build_analyses([_analysis_spec(
+        "T=0.0 will be optimal",
+        {"reason": "pilot invalidated the premise", "date": "2026-07-28",
+         "previous": "T=1.0 will be optimal"})], at)
+    assert gen.write_manifests({"analyses": amended}, at, registry)["analyses"][1] == []
+    assert "T=0.0 will be optimal" in path.read_text()
+
+
+@pytest.mark.tier1
+def test_stale_amendment_does_not_permanently_unlock(tmp_path, monkeypatch, registry):
+    """AUDIT C4: any truthy amendment used to skip the check forever.
+
+    `previous` must match what is on disk, so an amendment is spent when used and
+    a leftover one cannot make the row freely rewritable on later builds.
+    """
+    gen = _sandbox_manifests(tmp_path, monkeypatch)
+    at = "2026-07-28T00:00:00Z"
+    amendment = {"reason": "pilot invalidated the premise", "date": "2026-07-28",
+                 "previous": "T=1.0 will be optimal"}
+
+    gen.write_manifests(
+        {"analyses": gen.build_analyses([_analysis_spec("T=1.0 will be optimal")], at)},
+        at, registry)
+    gen.write_manifests(
+        {"analyses": gen.build_analyses(
+            [_analysis_spec("T=0.0 will be optimal", amendment)], at)}, at, registry)
+
+    # Same amendment, third distinct prediction: `previous` is now stale.
+    third = gen.build_analyses([_analysis_spec("something else entirely", amendment)], at)
+    errors = gen.write_manifests({"analyses": third}, at, registry)["analyses"][1]
+    assert errors and "does not match what is on disk" in errors[0]
+
+
+@pytest.mark.tier1
+def test_write_manifests_is_all_or_nothing(tmp_path, monkeypatch, registry):
+    """AUDIT M5: a tripped guard used to leave three of four manifests written."""
+    gen = _sandbox_manifests(tmp_path, monkeypatch)
+    at = "2026-07-28T00:00:00Z"
+
+    gen.write_manifests(
+        {"analyses": gen.build_analyses([_analysis_spec("T=1.0 will be optimal")], at)},
+        at, registry)
+    runs_path = tmp_path / gen.MANIFEST_FILES["runs"]
+    assert not runs_path.exists()
+
+    # A valid runs bundle alongside a blocked analyses bundle: neither may land.
+    bad = gen.build_analyses([_analysis_spec("rewritten")], at)
+    out = gen.write_manifests({"runs": [], "analyses": bad}, at, registry)
+    assert out["analyses"][1]          # analyses blocked
+    assert out["runs"][1] == []        # runs itself was fine...
+    assert not runs_path.exists()      # ...but was NOT written
+
+
+@pytest.mark.tier1
+def test_planned_run_is_excluded_from_generated_manifests(tmp_path, monkeypatch):
+    """AUDIT C5: replacing the planned `continue` with `if False:` stayed green.
+
+    The exclusion is the headline promise of repair (3) and had no coverage: the
+    live registry contains no planned entries, so nothing reached the branch.
+    """
+    gen = _sandbox_manifests(tmp_path, monkeypatch)
+    planned = {"run_id": "h7-escalation", "directory_path": "outputs/h7-escalation",
+               "status": "planned", "planned_at": "2026-07-28T00:00:00Z"}
+    monkeypatch.setattr(gen, "load_run_registry", lambda: {"registry": [planned]})
+    monkeypatch.setattr(gen, "load_run_facts", lambda: {"h7-escalation": {}})
+    monkeypatch.setattr(gen, "load_run_conditions", lambda: {})
+    monkeypatch.setattr(gen, "load_run_analyses", lambda: [])
+
+    _, run_rows, conditions, passes, _, warnings = gen.build_manifests(
+        "2026-07-28T00:00:00Z")
+    assert [r["run_id"] for r in run_rows] == []
+    assert conditions == [] and passes == [] and warnings == []
+    # ...and it is visible in the build output rather than silently absent.
+    assert gen.report_planned_runs([planned])[0].startswith("PLANNED  h7-escalation")

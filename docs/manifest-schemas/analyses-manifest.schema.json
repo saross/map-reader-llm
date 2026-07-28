@@ -56,7 +56,18 @@
         },
         "predicted_outcome": {
           "type": ["string", "null"],
-          "description": "HUMAN-authored. What the preregistration predicted, for the predicted-vs-actual comparison."
+          "description": "HUMAN-authored. What the preregistration predicted, for the predicted-vs-actual comparison. WRITE-ONCE: once non-null, the generator refuses to overwrite it (a prediction is only evidence of foresight if it cannot be edited once the result is known). To change it legitimately, add predicted_outcome_amended."
+        },
+        "predicted_outcome_amended": {
+          "type": ["object", "null"],
+          "description": "HUMAN-authored. The declared, auditable escape hatch from the write-once rule on predicted_outcome. Its presence permits the rewrite AND records it in the manifest, so an amended prediction is visibly amended rather than silently restated.",
+          "properties": {
+            "reason": { "type": "string", "description": "Why the prediction changed. A result being known is NOT a reason." },
+            "date": { "type": "string", "description": "ISO-8601 date on which the amendment was made." },
+            "previous": { "type": ["string", "null"], "description": "The EXACT superseded prediction as it stands on disk. Required, and checked: an amendment whose previous does not match the on-disk value is rejected, so an amendment supersedes one specific prediction rather than unlocking the field permanently." }
+          },
+          "required": ["reason", "date", "previous"],
+          "additionalProperties": false
         },
         "tie_set": {
           "type": "array",

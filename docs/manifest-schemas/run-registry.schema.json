@@ -29,8 +29,16 @@
         },
         "status": {
           "type": "string",
-          "enum": ["active", "archived"],
-          "default": "active"
+          "enum": ["planned", "active", "archived"],
+          "default": "active",
+          "description": "'planned' declares intent BEFORE execution: the run is held in the registry but excluded from the generated manifests, which describe only what exists on disk. Its directory_path is the intended location and need not exist yet. Promote to 'active' once the run has executed."
+        },
+        "planned_at": {
+          "oneOf": [
+            { "$ref": "common-defs.schema.json#/$defs/isoDateTime" },
+            { "type": "null" }
+          ],
+          "description": "ISO-8601 timestamp at which the run was declared planned. Drives the staleness warning; only meaningful while status is 'planned'. REQUIRED when status is 'planned' \u2014 without it the staleness alarm can never fire, which would silently exempt exactly the carelessly-authored entries it exists to catch."
         },
         "notes": {
           "type": ["string", "null"],
@@ -38,6 +46,12 @@
         }
       },
       "required": ["run_id", "directory_path"],
+      "allOf": [
+        {
+          "if": { "properties": { "status": { "const": "planned" } }, "required": ["status"] },
+          "then": { "required": ["planned_at"] }
+        }
+      ],
       "additionalProperties": false
     }
   }

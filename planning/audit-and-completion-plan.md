@@ -257,6 +257,104 @@ mandatory anchors; the **verifier** works in fresh context and asks an
 diffs. Do not sample the errata: at this error density, "two errors found by
 luck predicted a field of them."
 
+### 6.6 Manifest architecture — the principled repair
+
+**Diagnosis: the manifest system models artefacts, not commitments.** Every
+entity is validated against something that already exists on disk — `run`
+requires a `directory_path`, `conditions_compared` is FK-checked against built
+conditions, and `drift_check` reconciles three sources that all describe what
+happened. There is no representation of intent, obligation, or authority.
+
+All three audit failure classes trace to that one gap:
+
+| audit finding | root cause |
+|---|---|
+| H7 inversion; invented H6 rationale; H2-C rationalisation | no timestamped intent — prediction and outcome authored in a single act |
+| 4 unhonoured triggers; 46 unexecuted registered items | no place for "promised, not done" |
+| 22 FALSE attributions | no link from a claim back to its authority |
+
+The repair is a **second spine** beside the artefact spine:
+
+```text
+ARTEFACT (exists today)          COMMITMENT (missing)
+run -> conditions -> passes      commitment -> obligation -> discharge
+         |                                          ^
+      analyses --------------------------------------
+```
+
+#### The four changes, by value per effort
+
+**(1) Commitment ledger — `results/commitments.json`.** The registration
+decomposed into atomic checkable rows: `commitment_id`, `source` (file + line
+in the lodged text), `kind` (hypothesis / condition / factor / trigger /
+analysis / disclosure), verbatim `statement`, **`decision_statistic` and
+`uncertainty_treatment`**, `status` (open / discharged / waived),
+`discharged_by`, `waiver` (E-number).
+
+`drift_check` then gains a fourth check: **any commitment still `open` with no
+waiver warns at every regeneration.** The 46-item unexecuted register stops
+being an audit discovery and becomes a standing line in the build output.
+
+The `uncertainty_treatment` field encodes the H7 lesson structurally: a
+trigger that cannot state how "better" is characterised **fails validation at
+authoring time**, before it can create a phantom obligation.
+
+The ledger should be authored **at lodgement, from the registration, before
+execution**. For this project it is retrospective — but the content already
+exists in `unexecuted-register.md` and the trigger census; what is missing is
+making it live.
+
+**(2) Write-once predictions.** `predicted_outcome` becomes immutable: the
+generator refuses to modify a non-null value. Amendment requires an explicit
+`predicted_outcome_amended` object carrying reason and date, which then
+surfaces in the manifest. Makes the H7 inversion *structurally impossible*
+rather than merely discouraged. **Implemented 2026-07-28.**
+
+**(3) `status: planned` on runs.** Planned runs are held in the registry but
+excluded from the generated manifests, which continue to describe only what
+exists. A `planned_at` date supports a staleness warning. This makes the
+honest ordering — intent, then execution, then outcome — representable at all.
+With (2), the prediction precedes the data by construction rather than by
+discipline. **Implemented 2026-07-28.**
+
+**(4) Source anchors on authority claims.** Any field asserting registration
+authority carries a resolvable `source`; the generator validates that it
+resolves. Converts the attribution sweep — which cost one agent 378 k tokens —
+into a build-time check.
+
+**(5) Filesystem authority separation** (not code). `preregistration/lodged/`
+with a hash manifest versus `preregistration/working/`. The structural driver
+of the attribution problem was working documents sharing a directory with the
+lodgement; a hash manifest also makes OSF drift detectable.
+
+#### Deliberately not built
+
+- **Not a workflow engine.** The discipline is the point; automating execution
+  addresses no finding.
+- **Not automated verification of interpretive claims.** Paper-B is explicit
+  that reliability transfers exactly as far as a structural check exists.
+  "We deprioritised C because B was strong" has no anchor and never will.
+- **Not a database.** Git supplies the timestamping and *is* the audit log;
+  JSON plus commits is the right substrate.
+
+#### Sequencing
+
+- **This project**: (2) and (3) first — small, and they protect the runs about
+  to be launched. (1) once the trigger census lands, since that supplies the
+  trigger rows and the unexecuted register supplies the hypothesis rows. (4)
+  and (5) with the documentation revision.
+- **Future vision projects**: build (1) first, at preregistration time. The
+  ledger costs almost nothing when authored from a live registration, and
+  everything else hangs off it.
+
+#### The framing worth keeping
+
+Every fact this audit surfaced was already on disk; nothing was hidden or
+lost. It took five agents and two days because the system had no way to
+surface *"you promised X and have not done it"*. The commitment ledger is what
+converts audit into monitoring — a thing run once, versus a thing that reports
+continuously.
+
 ## 7. Held elsewhere
 
 - **Transcript infrastructure fixes** — being handled in a separate

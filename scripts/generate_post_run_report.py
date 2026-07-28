@@ -74,7 +74,7 @@ SCHEMA_DIR: Path = REPO_ROOT / "docs" / "manifest-schemas"
 #: per-pool ``model_of_record`` override (E57) for pools whose recorded meta carries a
 #: model template-default. Landed alongside the N=1 baseline-matrix + batch-pass
 #: publishing.
-GENERATOR_VERSION: str = "0.4.0"
+GENERATOR_VERSION: str = "0.5.0"
 
 #: Manifest format version embedded at the top of each emitted manifest. Must
 #: match the ``schema_version`` const in the schema files.
@@ -862,6 +862,12 @@ def build_analyses(specs: list[dict], at: str | None = None) -> list[dict]:
             "preregistered": spec.get("preregistered"),
             "deviations": spec.get("deviations", []),
             "predicted_outcome": spec.get("predicted_outcome"),
+            # Carried through so the write-once escape hatch actually reaches the
+            # built row. Without this the guard in check_write_once_predictions can
+            # never see an amendment (the row literal below is the whole row, and
+            # the schema sets additionalProperties: false), which would deadlock
+            # every legitimate revision to an existing prediction.
+            "predicted_outcome_amended": spec.get("predicted_outcome_amended"),
             "tie_set": spec.get("tie_set", []),
             "outcome": spec.get("outcome"),
             "paper_section": spec.get("paper_section"),
@@ -937,19 +943,42 @@ def drift_check(
     the expected mid-fan-out state (it simply has no conditions/passes yet). An empty
     list means the inputs are in sync.
     """
-    reg_ids = {e["run_id"] for e in registry}
+    # PLANNED runs declare intent before execution: they have no directory, no facts
+    # and no decomposition BY DESIGN, so they are exempt from every drift check below.
+    # They are reported separately (see report_planned_runs) rather than silently
+    # dropped. Excluding them here is what lets the registry hold a plan while the
+    # manifests continue to describe only what exists on disk.
+    entries = [e for e in registry if isinstance(e, dict) and "run_id" in e]
+    planned_ids = {e["run_id"] for e in entries if e.get("status") == "planned"}
+    reg_ids = {e["run_id"] for e in entries} - planned_ids
     fact_ids = set(facts)
     warnings = [f"registry run '{rid}' has NO facts entry" for rid in sorted(reg_ids - fact_ids)]
-    warnings += [f"facts run '{rid}' is NOT in the registry" for rid in sorted(fact_ids - reg_ids)]
+    # `- planned_ids` on BOTH sides: a planned run may legitimately have a facts
+    # entry (corpus, GT and scope are exactly what you author when declaring
+    # intent), and without this it would be falsely reported as absent from the
+    # registry it is sitting in.
+    warnings += [
+        f"facts run '{rid}' is NOT in the registry"
+        for rid in sorted(fact_ids - reg_ids - planned_ids)
+    ]
     if conditions is not None:
         cond_ids = set(conditions)
+        # A decomposition for a PLANNED run is its own error: conditions describe
+        # scored results, so decomposing a run that has not executed means either the
+        # status is stale or the decomposition is speculative. Reported distinctly so
+        # it is not mistaken for an ordinary missing-registry-row orphan.
+        warnings += [
+            f"run-conditions run '{rid}' is decomposed but its registry status is "
+            f"'planned' — promote it to 'active' or remove the decomposition"
+            for rid in sorted(cond_ids & planned_ids)
+        ]
         warnings += [
             f"run-conditions run '{rid}' is NOT in the registry"
-            for rid in sorted(cond_ids - reg_ids)
+            for rid in sorted(cond_ids - reg_ids - planned_ids)
         ]
         warnings += [
             f"run-conditions run '{rid}' has NO facts entry"
-            for rid in sorted(cond_ids - fact_ids)
+            for rid in sorted(cond_ids - fact_ids - planned_ids)
         ]
     return warnings
 
@@ -1122,6 +1151,165 @@ def _carry_timestamps(new: Any, old: Any) -> None:
             _carry_timestamps(new_item, old_item)
 
 
+#: Days a run may sit at ``status: planned`` before the build flags it. Chosen to be
+#: longer than a normal author→execute turnaround but short enough that a forgotten
+#: intent surfaces within one working month — the failure this whole mechanism exists
+#: to prevent was 46 registered items going unexecuted and unnoticed for far longer.
+PLANNED_STALE_DAYS: int = 30
+
+
+def _normalise_iso(raw: str) -> str:
+    """Normalise an ISO-8601/RFC 3339 string for ``datetime.fromisoformat``.
+
+    RFC 3339 § 5.6 permits lowercase ``t`` and ``z``; ``fromisoformat`` accepts
+    lowercase ``t`` but not a lowercase ``z`` designator, and on some versions
+    neither ``Z`` form. Upper-casing the zone designator and mapping it to an
+    explicit offset covers every form the schema admits.
+
+    Args:
+        raw: a candidate timestamp string, trusted only to be a string.
+
+    Returns:
+        A string ``datetime.fromisoformat`` can parse, or the input unchanged when
+        no normalisation applies (in which case the caller's ``ValueError`` handler
+        reports it as unparseable).
+
+    Example:
+        >>> _normalise_iso("2026-07-28t00:00:00z")
+        '2026-07-28t00:00:00+00:00'
+    """
+    if raw.endswith(("z", "Z")):
+        return raw[:-1] + "+00:00"
+    return raw
+
+
+def report_planned_runs(registry: list[dict], now: datetime | None = None) -> list[str]:
+    """Describe every ``status: planned`` registry entry, flagging stale plans.
+
+    Planned runs emit no manifest rows (they have no artefacts), so without this
+    they would be invisible in the build output — the failure mode that let 46
+    registered items go unexecuted and unnoticed. A plan older than
+    ``PLANNED_STALE_DAYS`` is called out: an intent that has sat undischarged for a
+    month is either forgotten or should be waived explicitly.
+
+    Args:
+        registry: the hand-authored ``registry`` array from run-registry.json.
+        now: comparison instant for staleness; defaults to the current UTC time.
+            Injected by the tests so the staleness boundary is deterministic.
+
+    Returns:
+        One human-readable line per planned run, empty if there are none.
+
+    Example:
+        >>> report_planned_runs([{"run_id": "h7-escalation", "status": "planned",
+        ...                       "planned_at": "2026-07-28T00:00:00Z"}],
+        ...                     now=datetime(2026, 7, 29, tzinfo=timezone.utc))
+        ['PLANNED  h7-escalation  (declared 1d ago)']
+    """
+    now = datetime.now(timezone.utc) if now is None else now
+    lines: list[str] = []
+    for entry in registry:
+        if not isinstance(entry, dict) or entry.get("status") != "planned":
+            continue
+        run_id = entry.get("run_id", "?")
+        raw = entry.get("planned_at")
+        age_txt, stale = "no planned_at recorded", False
+        if raw:
+            try:
+                declared = datetime.fromisoformat(_normalise_iso(str(raw)))
+                if declared.tzinfo is None:
+                    declared = declared.replace(tzinfo=timezone.utc)
+                days = (now - declared).days
+                age_txt = f"declared {days}d ago"
+                stale = days >= PLANNED_STALE_DAYS
+            except ValueError:
+                age_txt = f"unparseable planned_at {raw!r}"
+        suffix = "  ** STALE — discharge or waive **" if stale else ""
+        lines.append(f"PLANNED  {run_id}  ({age_txt}){suffix}")
+    return lines
+
+
+def check_write_once_predictions(new_obj: dict, json_path: Path) -> list[str]:
+    """Refuse to silently rewrite a ``predicted_outcome`` that is already on disk.
+
+    A prediction is only evidence of foresight if it cannot be edited once the
+    result is known. This project's audit found three cases where a registered
+    prediction was quietly restated to match the finding — most starkly H7, whose
+    registered prediction (T=1.0 optimal) was recorded as a "preregistered T=0.0
+    optimum" after T=0.0 won. Nothing in the tooling prevented it.
+
+    So: once ``predicted_outcome`` is non-null on disk, changing it is an ERROR,
+    not a warning — returned through the same channel as schema violations, which
+    ``write_manifests`` already treats as blocking. A legitimate amendment is made
+    explicitly by adding a ``predicted_outcome_amended`` object (reason + date) to
+    the hand-authored row, which is preserved in the manifest as a visible record
+    that the prediction moved and why.
+
+    Setting a prediction for the first time (null -> value) is always allowed;
+    clearing one is not.
+
+    Args:
+        new_obj: the freshly-assembled analyses manifest object.
+        json_path: path to the existing on-disk analyses manifest. Absent file
+            means first generation, so there is nothing to protect.
+
+    Returns:
+        One error string per illegal rewrite; empty when every prediction is
+        either unchanged, newly set, or explicitly amended.
+    """
+    if not json_path.exists():
+        print(f"WARN: {json_path.name} absent — write-once prediction guard is "
+              f"DISARMED for this build (nothing on disk to protect).",
+              file=sys.stderr)
+        return []
+    try:
+        old_obj = json.loads(json_path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError) as exc:
+        print(f"WARN: {json_path.name} unreadable ({exc}) — write-once prediction "
+              f"guard is DISARMED for this build.", file=sys.stderr)
+        return []
+
+    old_by_id = {
+        row.get("analysis_id"): row
+        for row in old_obj.get("analyses", [])
+        if isinstance(row, dict)
+    }
+    errors: list[str] = []
+    for row in new_obj.get("analyses", []):
+        if not isinstance(row, dict):
+            continue
+        old_row = old_by_id.get(row.get("analysis_id"))
+        if old_row is None:
+            continue
+        was, now_val = old_row.get("predicted_outcome"), row.get("predicted_outcome")
+        if was in (None, "") or was == now_val:
+            continue
+        # An amendment must SUPERSEDE A SPECIFIC PREDICTION, not unlock the field.
+        # Requiring `previous` to equal what is actually on disk means an amendment
+        # is spent when it is used: leaving a stale one in the sidecar does not make
+        # the row freely rewritable on every later build, and the manifest alone
+        # then shows exactly what moved and to what.
+        amendment = row.get("predicted_outcome_amended") or {}
+        if amendment.get("previous") == was:
+            continue
+        if amendment:
+            errors.append(
+                f"analysis '{row.get('analysis_id')}': predicted_outcome_amended is "
+                f"present but its 'previous' does not match what is on disk, so it "
+                f"does not supersede the current prediction. Set previous to the "
+                f"exact on-disk value. On disk: {was!r}; amendment claims previous: "
+                f"{amendment.get('previous')!r}"
+            )
+            continue
+        errors.append(
+            f"analysis '{row.get('analysis_id')}': predicted_outcome is WRITE-ONCE and "
+            f"already set on disk; refusing to overwrite it. To change it legitimately, "
+            f"add a 'predicted_outcome_amended' object (reason + date) to the row in "
+            f"results/run-analyses.json. On disk: {was!r} -> proposed: {now_val!r}"
+        )
+    return errors
+
+
 def _stabilise_timestamps(manifest: str, new_obj: dict, json_path: Path) -> None:
     """Carry forward on-disk timestamps for unchanged content, mutating ``new_obj``.
 
@@ -1178,19 +1366,41 @@ def write_manifests(bundles: dict[str, list[dict]], at: str, registry: Registry)
 
     Returns:
         manifest → (n_rows, errors, json_rel) — errors empty on success.
+
+    Note:
+        ALL-OR-NOTHING. Every manifest is assembled and checked before ANY is
+        written, so a failure in one never leaves the set half-refreshed. This
+        matters more since the write-once prediction guard was added: before it,
+        the only error source here was schema failure, which ``main`` already
+        gates on upstream, so a partial write was effectively unreachable. The
+        guard trips on a routine human edit, which makes the partial-write path
+        expected rather than theoretical — and a manifest set where three files
+        describe a newer state than the fourth is precisely the kind of quiet
+        inconsistency this project's audit had to untangle.
     """
     out: dict[str, tuple] = {}
+    staged: list[tuple[str, dict, Path, str]] = []
     for manifest, rows in bundles.items():
         obj = assemble_manifest(manifest, rows, at)
         errors = validate_manifest(manifest, obj, registry)
         json_rel = MANIFEST_FILES[manifest]
-        if not errors:
-            json_path = REPO_ROOT / json_rel
-            _stabilise_timestamps(manifest, obj, json_path)
-            json_path.write_text(json.dumps(obj, indent=2) + "\n", encoding="utf-8")
-            json_path.with_suffix(".md").write_text(
-                render_manifest(manifest, obj, json_rel), encoding="utf-8")
+        json_path = REPO_ROOT / json_rel
+        if manifest == "analyses":
+            # Write-once guard runs alongside schema validation so a rewritten
+            # prediction blocks the write exactly as a schema violation would.
+            errors = errors + check_write_once_predictions(obj, json_path)
         out[manifest] = (len(rows), errors, json_rel)
+        if not errors:
+            staged.append((manifest, obj, json_path, json_rel))
+
+    if any(errors for _, errors, _ in out.values()):
+        return out  # nothing written; every manifest keeps its previous content
+
+    for manifest, obj, json_path, json_rel in staged:
+        _stabilise_timestamps(manifest, obj, json_path)
+        json_path.write_text(json.dumps(obj, indent=2) + "\n", encoding="utf-8")
+        json_path.with_suffix(".md").write_text(
+            render_manifest(manifest, obj, json_rel), encoding="utf-8")
     return out
 
 
@@ -1309,9 +1519,17 @@ def build_manifests(at: str, only: str | None = None) -> tuple:
     conditions_all: list[dict] = []
     passes_all: list[dict] = []
     for entry in entries:
-        run_id, directory_path = entry["run_id"], entry["directory_path"]
+        run_id = entry["run_id"]
         if only and run_id != only:
             continue
+        if entry.get("status") == "planned":
+            # Declared intent, not yet executed: emit NO rows. The manifests describe
+            # what exists on disk, and inventing rows for a run with no artefacts
+            # would be exactly the confusion this status exists to prevent. Planned
+            # runs surface via report_planned_runs instead. NOTE: this must stay
+            # ABOVE the directory_path lookup — a planned run need not have one.
+            continue
+        directory_path = entry["directory_path"]
         run_facts = facts.get(run_id, {})
         conditions: list[dict] = []
         if run_id in decomposition:
@@ -1497,6 +1715,16 @@ def main(argv: list[str] | None = None) -> int:
             print("=== registry ↔ facts drift ===")
             for w in warnings:
                 print(f"  WARN: {w}")
+            print()
+
+        planned_lines = report_planned_runs(registry_obj.get("registry", []))
+        if planned_lines:
+            # Planned runs emit no manifest rows, so this is the ONLY place they
+            # appear. Printing them every build is the point: an undischarged
+            # intent should be visible without anyone remembering to look.
+            print("=== planned runs (declared, not yet executed) ===")
+            for line in planned_lines:
+                print(f"  {line}")
             print()
 
         all_valid = True

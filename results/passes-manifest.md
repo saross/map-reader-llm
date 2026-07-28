@@ -1,8 +1,8 @@
-<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/passes-manifest.json by scripts/generate_post_run_report.py v0.4.0. Edit the source-of-truth files and regenerate. -->
+<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/passes-manifest.json by scripts/generate_post_run_report.py v0.5.0. Edit the source-of-truth files and regenerate. -->
 
 # Passes manifest
 
-> Generated 2026-07-28T00:51:41Z · 1132 row(s) · schema v1.0.
+> Generated 2026-07-28T04:56:05Z · 1132 row(s) · schema v1.0.
 >
 > **Coverage**: 1132 pass(es) across the decomposed runs (sub-step 3b in progress).
 
