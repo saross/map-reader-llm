@@ -79,6 +79,7 @@ Systematic FP analysis pipeline:
 ### 3.3 Active Learning Loop
 
 Prioritise ambiguous cases for human review:
+
 - Identify low-confidence detections
 - Request human annotation
 - Update training set iteratively
@@ -125,6 +126,7 @@ until after other parameters (modality, text treatment, ordering) are finalised.
 **Goal**: Zero-shot generalisation from legend to detection
 
 Given a new map sheet with its legend, automatically:
+
 1. Extract symbol definitions from legend
 2. Generate appropriate few-shot examples
 3. Construct detection prompt
