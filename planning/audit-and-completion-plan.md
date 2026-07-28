@@ -322,6 +322,43 @@ authority carries a resolvable `source`; the generator validates that it
 resolves. Converts the attribution sweep — which cost one agent 378 k tokens —
 into a build-time check.
 
+#### C3 — the open bypass in the write-once guard (DECIDED 2026-07-28)
+
+**The hole.** The guard compares the incoming manifest against the one currently
+on disk, so a row that *disappears* takes its prediction history with it. Delete
+an analysis from `results/run-analyses.json`, build (the row vanishes), re-add
+the same `analysis_id` with a different prediction, build again — **no step is
+blocked**. Renaming `analysis_id` achieves it in a single build. This is the
+historical failure mode surviving the repair.
+
+**Decision (Shawn, 2026-07-28): (b) now, (d) later.**
+
+- **(b) — DONE.** `check_write_once_predictions` now emits a loud `WARN` to
+  stderr when an analysis carrying a non-empty prediction disappears from the
+  manifest, quoting the prediction that is losing protection. This raises the
+  cost of the bypass and makes step one visible in the build log. It does **not**
+  close the hole.
+- **(d) — TODO, with the commitment ledger.** An **append-only prediction
+  ledger** that never loses rows: deleting an analysis removes it from the
+  manifest but not from the ledger, so re-adding it is checked against the
+  original prediction. This is the same artefact repair (1) needs, so building
+  it once serves both.
+
+**Options considered and rejected**:
+
+- *(a) accept and document* — cheapest, but leaves a claim we would have to
+  soften in the paper for no gain once (d) is being built anyway.
+- *(c) check against git history* rather than the working manifest. Conceptually
+  the right answer, since git already **is** the audit log. Rejected because it
+  couples the generator to git state (shallow clones, detached HEAD, ordering
+  relative to the commit) in a script that otherwise touches only JSON — and the
+  ledger buys the same guarantee with a plain file.
+
+**Until (d) lands, the honest claim about this machinery is "prediction
+rewriting is DETECTABLE", not "structurally impossible".** Any paper or
+methods text describing the guard must use the weaker wording. This is recorded
+here so the stronger phrasing is not reached for by habit.
+
 **(5) Filesystem authority separation** (not code). `preregistration/lodged/`
 with a hash manifest versus `preregistration/working/`. The structural driver
 of the attribution problem was working documents sharing a directory with the

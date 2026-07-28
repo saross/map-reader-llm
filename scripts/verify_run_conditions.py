@@ -372,11 +372,20 @@ def classify_run(run_id: str, registry_obj: dict, index: dict) -> dict:
 
 
 def classify_all() -> list[dict]:
-    """Classify every registered run for the re-scoring worklist."""
+    """Classify every EXECUTED registered run for the re-scoring worklist.
+
+    ``status: planned`` runs are skipped. They have no directory and no
+    evaluations by design, so classifying one yields a row of zeros that is
+    indistinguishable from an executed run whose evaluations are missing — and
+    ``no_standard_scoring`` evaluates to False on it (``0 == 0 and 0 > 0``), so it
+    would not even be flagged. A silently mis-classified planned run is worse than
+    a crash, because it enters the worklist looking like real but unscored work.
+    """
     registry_obj = g.load_run_registry()
     index = g._build_eval_index()
     return [classify_run(e["run_id"], registry_obj, index)
-            for e in registry_obj.get("registry", [])]
+            for e in registry_obj.get("registry", [])
+            if isinstance(e, dict) and e.get("status") != "planned"]
 
 
 def _print_report(reports: list[dict]) -> None:

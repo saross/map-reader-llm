@@ -759,8 +759,26 @@ def load_run_registry(path: Path | None = None) -> dict:
     ``directory_path``); the generator READS it and never synthesises it. Returns
     the whole manifest object (envelope + ``registry`` list) so the caller can both
     iterate the runs and re-render the Markdown view.
+
+    VALIDATED ON LOAD. Unlike the four generated manifests, this file is an *input*
+    and was previously never checked against its schema at build time — so a typo
+    such as ``status: "planed"`` fell straight through the planned-run skip and died
+    much later on a missing facts key, with an error naming neither the registry nor
+    the status. Both the planned-run and write-once features hinge on fields in this
+    file, so it fails fast here instead, naming the offending entry.
+
+    Raises:
+        SystemExit: if the registry does not satisfy ``run-registry.schema.json``.
     """
-    return _load_json(path or REPO_ROOT / "results" / "run-registry.json")
+    obj = _load_json(path or REPO_ROOT / "results" / "run-registry.json")
+    registry, _ = load_schema_registry()
+    errors = validate_manifest("run-registry", obj, registry)
+    if errors:
+        sys.exit(
+            "results/run-registry.json is INVALID — fix it before generating:\n  "
+            + "\n  ".join(errors)
+        )
+    return obj
 
 
 def load_run_facts(path: Path | None = None) -> dict[str, dict]:
@@ -1274,6 +1292,29 @@ def check_write_once_predictions(new_obj: dict, json_path: Path) -> list[str]:
         for row in old_obj.get("analyses", [])
         if isinstance(row, dict)
     }
+    # C3 MITIGATION (not a closure). The guard compares manifest to manifest, so a
+    # row that DISAPPEARS takes its prediction history with it: delete an analysis,
+    # build, re-add it with a different prediction, build again — and no step is
+    # blocked. Renaming analysis_id does the same in one build. That is the
+    # historical failure mode surviving, so the disappearance is surfaced loudly
+    # here to raise its cost and make step one visible in the build log. The
+    # closure is an append-only prediction ledger that never loses rows (repair (1),
+    # planning/audit-and-completion-plan.md § 6.6); until that exists the honest
+    # claim is "detectable", NOT "structurally impossible".
+    new_ids = {
+        row.get("analysis_id") for row in new_obj.get("analyses", [])
+        if isinstance(row, dict)
+    }
+    for gone in sorted(k for k in old_by_id.keys() - new_ids if k):
+        if old_by_id[gone].get("predicted_outcome") not in (None, ""):
+            print(
+                f"WARN: analysis '{gone}' has DISAPPEARED from the manifest and it "
+                f"carried a prediction. Its predicted_outcome is no longer protected "
+                f"by the write-once guard — re-adding this analysis_id later will not "
+                f"be checked against it. Recorded on disk: "
+                f"{old_by_id[gone].get('predicted_outcome')!r}",
+                file=sys.stderr,
+            )
     errors: list[str] = []
     for row in new_obj.get("analyses", []):
         if not isinstance(row, dict):
@@ -1708,6 +1749,20 @@ def main(argv: list[str] | None = None) -> int:
             at, only=args.run)
 
         if args.run and not run_rows:
+            # A PLANNED run legitimately produces no rows, so "not in the registry"
+            # would be a false statement about a run that is sitting in it — and the
+            # early return would pre-empt the planned report that explains why.
+            named = next(
+                (e for e in registry_obj.get("registry", [])
+                 if isinstance(e, dict) and e.get("run_id") == args.run),
+                None,
+            )
+            if named is not None and named.get("status") == "planned":
+                for line in report_planned_runs([named]):
+                    print(f"  {line}")
+                print(f"Run '{args.run}' is PLANNED — declared but not yet executed, "
+                      f"so it emits no manifest rows by design.", file=sys.stderr)
+                return 0
             print(f"No run '{args.run}' in results/run-registry.json.", file=sys.stderr)
             return 2
 

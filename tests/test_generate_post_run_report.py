@@ -904,3 +904,55 @@ def test_planned_run_is_excluded_from_generated_manifests(tmp_path, monkeypatch)
     assert conditions == [] and passes == [] and warnings == []
     # ...and it is visible in the build output rather than silently absent.
     assert gen.report_planned_runs([planned])[0].startswith("PLANNED  h7-escalation")
+
+
+@pytest.mark.tier1
+def test_registry_is_validated_on_load(tmp_path):
+    """AUDIT M3: the registry is an INPUT and was never schema-checked at build time.
+
+    A one-character status typo previously fell through the planned-run skip and
+    died much later on a missing facts key, in an error naming neither the registry
+    nor the status. Both new features hinge on this field.
+    """
+    import scripts.generate_post_run_report as gen
+
+    bad = tmp_path / "run-registry.json"
+    bad.write_text(json.dumps({"schema_version": "1.0", "registry": [
+        {"run_id": "x", "directory_path": "outputs/x", "status": "planed"}]}))
+    with pytest.raises(SystemExit) as exc:
+        gen.load_run_registry(bad)
+    assert "run-registry.json is INVALID" in str(exc.value)
+    assert "'planed' is not one of" in str(exc.value)
+
+
+@pytest.mark.tier1
+def test_planned_run_without_planned_at_is_rejected(tmp_path):
+    """The staleness alarm cannot fire without planned_at, so the schema requires it."""
+    import scripts.generate_post_run_report as gen
+
+    bad = tmp_path / "run-registry.json"
+    bad.write_text(json.dumps({"schema_version": "1.0", "registry": [
+        {"run_id": "x", "directory_path": "outputs/x", "status": "planned"}]}))
+    with pytest.raises(SystemExit):
+        gen.load_run_registry(bad)
+
+
+@pytest.mark.tier1
+def test_disappearing_prediction_is_warned_about(tmp_path, capsys):
+    """AUDIT C3 mitigation: a vanished row takes its prediction history with it.
+
+    Not a closure — the delete-then-re-add bypass remains open until the
+    append-only ledger exists. This makes step one visible in the build log.
+    """
+    path = tmp_path / "analyses-manifest.json"
+    path.write_text(json.dumps({"schema_version": "1.0", "analyses": [
+        {"analysis_id": "a1", "predicted_outcome": "T=1.0 will be optimal"}]}))
+    assert check_write_once_predictions({"analyses": []}, path) == []
+    err = capsys.readouterr().err
+    assert "DISAPPEARED" in err and "a1" in err and "T=1.0 will be optimal" in err
+
+    # A row that never carried a prediction is not worth warning about.
+    path.write_text(json.dumps({"schema_version": "1.0", "analyses": [
+        {"analysis_id": "a2", "predicted_outcome": None}]}))
+    check_write_once_predictions({"analyses": []}, path)
+    assert "DISAPPEARED" not in capsys.readouterr().err
