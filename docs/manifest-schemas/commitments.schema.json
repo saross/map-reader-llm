@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://faims.edu.au/vlm-burial-mound-detection/manifest-schemas/commitments.schema.json",
+  "title": "Commitment ledger",
+  "description": "The lodged registration decomposed into atomic checkable obligations — the second spine beside the artefact spine (planning/audit-and-completion-plan.md § 6.6; planning/audit-charter.md § 7 Phase 1). Authored from the three lodged documents only (docs/methodology/preregistration/osf/, per osf/README.md:3,9-11); retrospective for this project, at-lodgement for future ones. Every statement is a verbatim span from the lodged text, mechanically verified by scripts/validate_commitments.py. A trigger commitment that cannot state all five trigger-rule elements fails validation at authoring time (the H7 lesson: a trigger that cannot say how 'better' is characterised must not create an obligation).",
+  "type": "object",
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "generated_at": { "$ref": "common-defs.schema.json#/$defs/isoDateTime" },
+    "source_documents": {
+      "type": "array",
+      "description": "The lodged documents this ledger decomposes, pinned by git blob so drift is detectable.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file": { "type": "string" },
+          "git_blob": {
+            "type": "string",
+            "description": "Abbreviated git blob hash of the lodged file at decomposition time.",
+            "pattern": "^[0-9a-f]{7,40}$"
+          },
+          "role": { "type": "string", "enum": ["primary", "appendix-prompts", "coverage"] }
+        },
+        "required": ["file", "git_blob", "role"],
+        "additionalProperties": false
+      },
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "commitments": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/commitment" }
+    }
+  },
+  "required": ["schema_version", "generated_at", "source_documents", "commitments"],
+  "additionalProperties": false,
+  "$defs": {
+    "commitment": {
+      "type": "object",
+      "properties": {
+        "commitment_id": {
+          "type": "string",
+          "description": "Stable primary key, sequential in source order at first authoring; never renumbered once the ledger is committed.",
+          "pattern": "^CMT-\\d{4}$"
+        },
+        "source": {
+          "type": "object",
+          "description": "Locator into the lodged text. Lines are 1-indexed and inclusive; the verbatim statement must appear within them.",
+          "properties": {
+            "file": {
+              "type": "string",
+              "enum": [
+                "docs/methodology/preregistration/osf/preregistration.md",
+                "docs/methodology/preregistration/osf/preregistration-appendix-prompts.md",
+                "docs/methodology/preregistration/osf/preregistration-coverage.md"
+              ]
+            },
+            "lines": {
+              "type": "array",
+              "items": { "type": "integer", "minimum": 1 },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "section": {
+              "type": "string",
+              "description": "Nearest enclosing heading, e.g. 'H7' or '3.1 Significance Testing'."
+            }
+          },
+          "required": ["file", "lines", "section"],
+          "additionalProperties": false
+        },
+        "kind": {
+          "type": "string",
+          "description": "Plan § 6.6 vocabulary. hypothesis = a registered prediction; condition = an experimental cell that must be run; factor = a factor/level definition constraining what may be run; trigger = a decision rule creating a conditional obligation; analysis = a statistical procedure or reporting obligation; disclosure = an explicit exclusion, caveat, or deviation licence in the lodged text.",
+          "enum": ["hypothesis", "condition", "factor", "trigger", "analysis", "disclosure"]
+        },
+        "statement": {
+          "type": "string",
+          "description": "VERBATIM span from the lodged text — never paraphrase. Mechanically verified against the cited lines.",
+          "minLength": 10
+        },
+        "normalised_obligation": {
+          "type": "string",
+          "description": "One-sentence plain restatement of what must be done or reported. Explicitly NOT verbatim; convenience only, carries no authority."
+        },
+        "hypothesis": {
+          "oneOf": [ { "type": "string" }, { "type": "null" } ],
+          "description": "Hypothesis tag where applicable (H1–H15, H4b, HN-only); null for cross-cutting commitments."
+        },
+        "decision_statistic": {
+          "oneOf": [ { "type": "string" }, { "type": "null" } ],
+          "description": "The statistic that discharges or tests this commitment (plan § 6.6), e.g. 'F1@20m', 'MCC', 'permutation p, FDR-corrected'. Null only for kinds with nothing to compute (e.g. disclosure)."
+        },
+        "uncertainty_treatment": {
+          "oneOf": [ { "type": "string" }, { "type": "null" } ],
+          "description": "How uncertainty is handled when assessing the commitment (plan § 6.6, the H7 lesson), e.g. 'bootstrap 95% CI, 10k iterations, seed 42', 'BH-FDR q<0.05'."
+        },
+        "trigger": {
+          "oneOf": [ { "$ref": "#/$defs/triggerRule" }, { "type": "null" } ],
+          "description": "Required (non-null) when kind=trigger; must be null otherwise."
+        },
+        "status": {
+          "type": "string",
+          "description": "open = promised, not yet discharged and not waived (drift_check warns on these at every regeneration); discharged = executed/reported, evidence in discharged_by; waived = formally amended away by an erratum named in waiver.",
+          "enum": ["open", "discharged", "waived"]
+        },
+        "discharged_by": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "runs": { "type": "array", "items": { "type": "string" } },
+                "conditions": { "type": "array", "items": { "type": "string" } },
+                "analyses": { "type": "array", "items": { "type": "string" } },
+                "evidence": {
+                  "type": "string",
+                  "description": "Free-text pointer where manifest ids alone are insufficient (e.g. a results artefact path)."
+                }
+              },
+              "additionalProperties": false
+            },
+            { "type": "null" }
+          ]
+        },
+        "waiver": {
+          "oneOf": [
+            { "type": "string", "pattern": "^E\\d+$" },
+            { "type": "null" }
+          ],
+          "description": "Erratum number licensing non-execution or amendment. Validated to exist in protocol-errata.md."
+        },
+        "notes": {
+          "oneOf": [ { "type": "string" }, { "type": "null" } ],
+          "description": "Cross-references (e.g. the § 7 summary-table line duplicating this commitment), ambiguities, or extraction caveats."
+        }
+      },
+      "required": [
+        "commitment_id", "source", "kind", "statement", "normalised_obligation",
+        "hypothesis", "decision_statistic", "uncertainty_treatment", "trigger",
+        "status", "discharged_by", "waiver", "notes"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "const": "trigger" } } },
+          "then": { "properties": { "trigger": { "$ref": "#/$defs/triggerRule" } } }
+        },
+        {
+          "if": { "properties": { "status": { "const": "discharged" } } },
+          "then": { "not": { "properties": { "discharged_by": { "const": null } } } }
+        },
+        {
+          "if": { "properties": { "status": { "const": "waived" } } },
+          "then": { "properties": { "waiver": { "type": "string" } } }
+        }
+      ]
+    },
+    "triggerRule": {
+      "type": "object",
+      "description": "The five-element trigger rule (audit-charter § 7 Phase 1). All five must be present and non-empty for a trigger to create an obligation — a trigger that cannot state them fails at authoring time.",
+      "properties": {
+        "statistic": { "type": "string", "minLength": 2 },
+        "comparison_scope": { "type": "string", "minLength": 2 },
+        "uncertainty_criterion": { "type": "string", "minLength": 2 },
+        "evaluation_moment": { "type": "string", "minLength": 2 },
+        "evaluation_corpus": { "type": "string", "minLength": 2 }
+      },
+      "required": [
+        "statistic", "comparison_scope", "uncertainty_criterion",
+        "evaluation_moment", "evaluation_corpus"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
