@@ -2279,7 +2279,7 @@
       },
       "kind": "factor",
       "statement": "**Text-modality consistency**: Identical text is used across modalities (Brief-text = Brief+image text; Verbose-text = Verbose+image text). This isolates the effect of adding visual examples.",
-      "normalised_obligation": "Use byte-identical prompt text between the text-only and text+image variants at each elaboration level, so that only the presence of visual examples differs.",
+      "normalised_obligation": "Use identical prompt text between the text-only and text+image variants at each elaboration level (Brief-text = Brief+image text; Verbose-text = Verbose+image text).",
       "hypothesis": "H1",
       "decision_statistic": null,
       "uncertainty_treatment": null,
@@ -2287,7 +2287,7 @@
       "status": "open",
       "discharged_by": null,
       "waiver": null,
-      "notes": "[chunk-3.json] Checkable against the lodged prompt appendix; the appendix is a separate document outside this range."
+      "notes": "[chunk-3.json] Checkable against the lodged prompt appendix; the appendix is a separate document outside this range. [adjudication 2026-07-29] obligation reworded to track the lodged text (v3 D2: source says 'identical', not 'byte-identical')"
     },
     {
       "commitment_id": "CMT-0102",
@@ -2547,7 +2547,7 @@
         ],
         "section": "H2"
       },
-      "kind": "factor",
+      "kind": "condition",
       "statement": "**Test**: Compare at optimal single-stage configuration:",
       "normalised_obligation": "Run the H2 architecture comparison at the optimal single-stage configuration, holding that configuration fixed across the three conditions.",
       "hypothesis": "H2",
@@ -2557,7 +2557,7 @@
       "status": "open",
       "discharged_by": null,
       "waiver": null,
-      "notes": "[chunk-3.json] 'Optimal single-stage configuration' is not defined within the assigned range; the text does not say which prior hypothesis determines it (contrast H4's explicit 'Fixed parameters' list at line 566)."
+      "notes": "[chunk-3.json] 'Optimal single-stage configuration' is not defined within the assigned range; the text does not say which prior hypothesis determines it (contrast H4's explicit 'Fixed parameters' list at line 566). [adjudication 2026-07-29] retyped factor->condition (v3 D1: scoping constraint, no level defined)"
     },
     {
       "commitment_id": "CMT-0114",
@@ -3439,7 +3439,7 @@
       "status": "open",
       "discharged_by": null,
       "waiver": null,
-      "notes": "[chunk-3.json] Explicit design exclusion; full committed block: lines 556–562, whose bullets state the consequences ('Answers the primary question (does ordering matter?)', 'Saves 6 cells', 'Avoids underpowered interaction tests'). The six excluded cells are not enumerated in this range."
+      "notes": "[chunk-3.json] Explicit design exclusion; full committed block: lines 556–560, whose bullets state the consequences ('Answers the primary question (does ordering matter?)', 'Saves 6 cells', 'Avoids underpowered interaction tests'). The six excluded cells are not enumerated in this range. [adjudication 2026-07-29] committed-block note corrected to lines 556-560 (v3 D3: line 562 belongs wholly to CMT-0153)"
     },
     {
       "commitment_id": "CMT-0153",
@@ -3605,7 +3605,7 @@
       "status": "open",
       "discharged_by": null,
       "waiver": null,
-      "notes": "[chunk-3.json] Kept as a single commitment because the second contrast ('Optimal vs Random') does not carry its obligation independently of the bullet. 'Optimal' here means the better of the two canonical placements and is selected post hoc from the same data — a possible circularity worth adjudication."
+      "notes": "[chunk-3.json] Kept as a single commitment because the second contrast ('Optimal vs Random') does not carry its obligation independently of the bullet. 'Optimal' here means the better of the two canonical placements and is selected post hoc from the same data — a possible circularity worth adjudication. [adjudication 2026-07-29] split into per-contrast rows REJECTED (v3 D4 adjudication: both contrasts share source line 571; single-line bundling is within grain rules) — asymmetry with the per-contrast H1 rows noted"
     },
     {
       "commitment_id": "CMT-0160",
@@ -3779,7 +3779,7 @@
       },
       "kind": "factor",
       "statement": "- **Terse**: 1-2 sentences: \"Do not detect triangulation points, benchmarks, or similar cartographic symbols. These may appear similar but are not burial mounds.\"",
-      "normalised_obligation": "The Terse level must use the quoted one-to-two sentence exclusion text verbatim.",
+      "normalised_obligation": "The Terse negative-text condition adds the registered exclusion sentence to the prompt; the lodged text does not require any particular wording to be reproduced verbatim across documents.",
       "hypothesis": "H5",
       "decision_statistic": null,
       "uncertainty_treatment": null,
@@ -3787,7 +3787,7 @@
       "status": "open",
       "discharged_by": null,
       "waiver": null,
-      "notes": "[chunk-4.json] This is the only H5 level whose exclusion text is committed as an exact quotation, so it is directly string-checkable against the prompt artefacts."
+      "notes": "[chunk-4.json] This is the only H5 level whose exclusion text is committed as an exact quotation, so it is directly string-checkable against the prompt artefacts. [adjudication 2026-07-29] verbatim requirement removed (v4 D6: source states no such requirement, and preregistration.md:597 vs appendix:1403 wording differs — a verbatim obligation would make the lodged corpus self-inconsistent)"
     },
     {
       "commitment_id": "CMT-0168",
@@ -4599,17 +4599,23 @@
         ],
         "section": "H6: Optimisations Transfer from Gemini 3 Flash to Pro"
       },
-      "kind": "disclosure",
+      "kind": "trigger",
       "statement": "**Scope limitation**: Full per-model optimisation only if Pro demonstrates substantially superior cost-effectiveness (≥20% higher F1 at comparable cost, OR comparable F1 at ≤50% cost).",
       "normalised_obligation": "Disclose that full per-model optimisation for Pro is out of scope unless Pro shows substantially superior cost-effectiveness (at least 20% higher F1 at comparable cost, or comparable F1 at 50% or less of the cost).",
       "hypothesis": "H6",
       "decision_statistic": "F1 and cost (>=20% higher F1 at comparable cost, OR comparable F1 at <=50% cost)",
       "uncertainty_treatment": "ABSENT — point-estimate ratios with no uncertainty criterion; 'comparable' is undefined",
-      "trigger": null,
+      "trigger": {
+        "statistic": "F1 and cost (cost-effectiveness of Pro vs Flash)",
+        "comparison_scope": "Pro vs Flash: >=20% higher F1 at comparable cost, OR comparable F1 at <=50% cost",
+        "uncertainty_criterion": "ABSENT — thresholds stated with no uncertainty treatment",
+        "evaluation_moment": "after the H6 Flash->Pro transfer assessment (Stage 1)",
+        "evaluation_corpus": "ABSENT — not stated at line 691"
+      },
       "status": "open",
       "discharged_by": null,
       "waiver": null,
-      "notes": "[chunk-4.json] Recorded as a disclosure because the text labels it a scope limitation, but it is equally readable as a trigger; flagged for adjudication. 'Comparable cost' and 'comparable F1' carry no tolerance band."
+      "notes": "[chunk-4.json] Recorded as a disclosure because the text labels it a scope limitation, but it is equally readable as a trigger; flagged for adjudication. 'Comparable cost' and 'comparable F1' carry no tolerance band. [adjudication 2026-07-29] retyped disclosure->trigger with five-element block (v4 D7: quantitative conditional creating a conditional obligation)"
     },
     {
       "commitment_id": "CMT-0204",
@@ -5835,17 +5841,23 @@
         ],
         "section": "H8: Library Composition and Scaling"
       },
-      "kind": "disclosure",
+      "kind": "trigger",
       "statement": "If fewer than 16 distinct HPs or HNs are available, Scale-32 (and possibly Scale-16) will be capped at the maximum available, maintaining 1:1 ratio.",
       "normalised_obligation": "Disclose that Scale-32, and possibly Scale-16, may be capped at the maximum available hard examples while preserving the 1:1 ratio.",
       "hypothesis": "H8",
       "decision_statistic": null,
       "uncertainty_treatment": null,
-      "trigger": null,
+      "trigger": {
+        "statistic": "count of distinct available hard positives and hard negatives",
+        "comparison_scope": "available HP/HN pool vs the 16-per-class requirement for Scale-32 (and possibly Scale-16)",
+        "uncertainty_criterion": "deterministic count (fewer than 16 distinct)",
+        "evaluation_moment": "library construction, before the H8 scaling runs",
+        "evaluation_corpus": "training set (36 mounds across 20 tiles); failures pooled across K=10 baseline runs"
+      },
       "status": "open",
       "discharged_by": null,
       "waiver": null,
-      "notes": "[chunk-4.json] Broader than the table footnote at line 773, which mentions only Scale-32; recorded as a disclosure of a possible design shortfall as well as a capping rule. If Scale-16 is capped, contrasts S2 and S3 (lines 790-791) no longer test the stated hard-example counts."
+      "notes": "[chunk-4.json] Broader than the table footnote at line 773, which mentions only Scale-32; recorded as a disclosure of a possible design shortfall as well as a capping rule. If Scale-16 is capped, contrasts S2 and S3 (lines 790-791) no longer test the stated hard-example counts. [adjudication 2026-07-29] retyped disclosure->trigger with five-element block (v4 D8: the Scale-16/32 capping branch is a decision rule)"
     },
     {
       "commitment_id": "CMT-0258",
@@ -5997,7 +6009,7 @@
       },
       "kind": "analysis",
       "statement": "These analyses will be conducted and reported but are not confirmatory.",
-      "normalised_obligation": "All § 6 exploratory analyses must be executed and reported, even though they are not confirmatory.",
+      "normalised_obligation": "Every § 6 exploratory analysis actually run must be reported as exploratory/non-confirmatory; execution itself is tier-gated (Tier B budget-dependent, Tier C deferred, triggered items conditional).",
       "hypothesis": null,
       "decision_statistic": "ABSENT — no statistic named for the § 6 block as a whole; per-hypothesis statistics are given in the individual entries.",
       "uncertainty_treatment": "ABSENT — no uncertainty procedure stated; § 6 exploratory tests are explicitly excluded from FDR correction (line 835) and no alternative (confidence interval, permutation test, alpha) is named.",
@@ -6005,7 +6017,7 @@
       "status": "open",
       "discharged_by": null,
       "waiver": null,
-      "notes": "[chunk-5.json] Blanket obligation covering every § 6 hypothesis (H9–H15, H4b, HN-only). Its 'will be conducted and reported' wording sits in tension with the Tier B budget gate (line 902) and the Tier C deferral (line 1054), which license non-execution — flagged as an internal inconsistency for adjudication."
+      "notes": "[chunk-5.json] Blanket obligation covering every § 6 hypothesis (H9–H15, H4b, HN-only). Its 'will be conducted and reported' wording sits in tension with the Tier B budget gate (line 902) and the Tier C deferral (line 1054), which license non-execution — flagged as an internal inconsistency for adjudication. [adjudication 2026-07-29] obligation narrowed (v5 D9: previous reading would false-flag the registered H14/H15 deferrals); see CMT-0287, CMT-0348, CMT-0357"
     },
     {
       "commitment_id": "CMT-0265",
@@ -6969,7 +6981,7 @@
       "status": "open",
       "discharged_by": null,
       "waiver": null,
-      "notes": "[chunk-5.json] Two-limb disjunctive trigger; three of five elements absent and the second limb is entirely qualitative. Nested inside the Tier B budget gate (line 902)."
+      "notes": "[chunk-5.json] Two-limb disjunctive trigger; three of five elements absent and the second limb is entirely qualitative. Nested inside the Tier B budget gate (line 902). [adjudication 2026-07-29] ADJUDICATION FLAG: see CMT-0503 — contradictory H11 trigger directions in the lodged text (v6 D10)"
     },
     {
       "commitment_id": "CMT-0308",
@@ -11347,7 +11359,7 @@
       "status": "open",
       "discharged_by": null,
       "waiver": null,
-      "notes": "[chunk-6.json] Three of five trigger elements absent. H11 is elsewhere Tier B exploratory and resource-conditional (lines 2174, 1167), so this trigger and the Tier 4 licence can conflict."
+      "notes": "[chunk-6.json] Three of five trigger elements absent. H11 is elsewhere Tier B exploratory and resource-conditional (lines 2174, 1167), so this trigger and the Tier 4 licence can conflict. [adjudication 2026-07-29] ADJUDICATION FLAG: direct contradiction with CMT-0307 — same statistic and threshold (F1 0.85), opposite firing directions for H11 (v6 D10); source-document defect, both rows faithful"
     },
     {
       "commitment_id": "CMT-0504",
@@ -11821,7 +11833,7 @@
         ],
         "section": "H5 Conditions (Negative Text Treatment)"
       },
-      "kind": "factor",
+      "kind": "condition",
       "statement": "#### H5 Conditions (Negative Text Treatment)",
       "normalised_obligation": "All three H5 conditions must hold library composition constant at Scale-8 (Canon+ 4, Canon- 2, HP 4, HN 4, Null 3; total 17), varying only the instruction-file text treatment for negatives.",
       "hypothesis": "H5",
@@ -11831,7 +11843,7 @@
       "status": "open",
       "discharged_by": null,
       "waiver": null,
-      "notes": "[chunk-7.json] Full committed block: lines 54–64 (heading, introductory sentence, composition table, and the note that composition is identical across H5 levels)."
+      "notes": "[chunk-7.json] Full committed block: lines 54–64 (heading, introductory sentence, composition table, and the note that composition is identical across H5 levels). [adjudication 2026-07-29] retyped factor->condition (v7 D11: consistency with CMT-0526)"
     },
     {
       "commitment_id": "CMT-0526",
@@ -11941,7 +11953,7 @@
       "status": "open",
       "discharged_by": null,
       "waiver": null,
-      "notes": "[chunk-7.json] Umbrella timing obligation governing lines 92–167 (hard negatives, hard positives, H9 prompt variants, and the OSF finalisation upload). The individual items are recorded separately."
+      "notes": "[chunk-7.json] Umbrella timing obligation governing lines 92–167 (hard negatives, hard positives, H9 prompt variants, and the OSF finalisation upload). The individual items are recorded separately. [adjudication 2026-07-29] open-science undertaking with a hard temporal gate (upload BEFORE any holdout evaluation); kind stays 'analysis' per the schema's reporting-obligation reading (v7 D13, partial)"
     },
     {
       "commitment_id": "CMT-0531",
@@ -12139,7 +12151,7 @@
       "status": "open",
       "discharged_by": null,
       "waiver": null,
-      "notes": "[chunk-7.json] Reporting/transparency obligation. Full committed block: lines 159–167."
+      "notes": "[chunk-7.json] Reporting/transparency obligation. Full committed block: lines 159–167. [adjudication 2026-07-29] open-science undertaking with a hard temporal gate (upload BEFORE any holdout evaluation); kind stays 'analysis' per the schema's reporting-obligation reading (v7 D13, partial)"
     },
     {
       "commitment_id": "CMT-0540",
@@ -13863,7 +13875,7 @@
         ],
         "section": "3.1 Sequential OFAT Design (H1, H7, H8, H5, H4)"
       },
-      "kind": "factor",
+      "kind": "condition",
       "statement": "**Design**: Sequential One-Factor-At-a-Time (OFAT), carrying optimal parameters forward:",
       "normalised_obligation": "Execute the phases in sequence, carrying each phase's optimal parameter setting forward into the next phase.",
       "hypothesis": null,
@@ -13873,7 +13885,7 @@
       "status": "open",
       "discharged_by": null,
       "waiver": null,
-      "notes": "[chunk-8.json] Kind ambiguous (design rule constraining what may be run, recorded as factor). Flagged: 'optimal' is load-bearing across all five phases yet undefined in this document — an H7-lesson-shaped gap."
+      "notes": "[chunk-8.json] Kind ambiguous (design rule constraining what may be run, recorded as factor). Flagged: 'optimal' is load-bearing across all five phases yet undefined in this document — an H7-lesson-shaped gap. [adjudication 2026-07-29] retyped factor->condition (v8 D16: OFAT execution rule, not a level)"
     },
     {
       "commitment_id": "CMT-0618",
@@ -14066,12 +14078,12 @@
       "normalised_obligation": "Report mean F1, standard deviation, and a 95% confidence interval for every condition.",
       "hypothesis": null,
       "decision_statistic": "mean F1",
-      "uncertainty_treatment": "SD and 95% CI across the K=10 runs; the CI method (e.g. bootstrap) is not stated in this document",
+      "uncertainty_treatment": "SD and 95% CI across the K=10 runs; the CI method is not stated in § 3.1, but the changelog (line 258) records the v2.6 reconciliation to bootstrap CI + FDR throughout (see CMT-0701).",
       "trigger": null,
       "status": "open",
       "discharged_by": null,
       "waiver": null,
-      "notes": "[chunk-8.json] Changelog line 258 records the v2.6 reconciliation to bootstrap CI + FDR, but the body text here states neither the CI construction method nor any multiplicity correction."
+      "notes": "[chunk-8.json] Changelog line 258 records the v2.6 reconciliation to bootstrap CI + FDR, but the body text here states neither the CI construction method nor any multiplicity correction. [adjudication 2026-07-29] uncertainty_treatment corrected (v8 D14: 'not stated in this document' was false — line 258 states it)"
     },
     {
       "commitment_id": "CMT-0627",
@@ -14176,12 +14188,12 @@
       "normalised_obligation": "All pairwise elaboration comparisons must be derivable from, and reportable out of, the M/E factor cells of the main factorial.",
       "hypothesis": "H2",
       "decision_statistic": "ABSENT — no statistic named for the pairwise comparisons",
-      "uncertainty_treatment": "ABSENT — no multiplicity correction stated despite promising all pairwise comparisons",
+      "uncertainty_treatment": "Multiplicity correction not stated at this line; the changelog (line 258) commits the document to FDR throughout (see CMT-0701). Residual gap is the absence at the promising line, not in the document.",
       "trigger": null,
       "status": "open",
       "discharged_by": null,
       "waiver": null,
-      "notes": "[chunk-8.json] Availability claim that functions as a reporting promise; flagged because 'all pairwise' comparisons without a stated correction is a multiplicity exposure."
+      "notes": "[chunk-8.json] Availability claim that functions as a reporting promise; flagged because 'all pairwise' comparisons without a stated correction is a multiplicity exposure. [adjudication 2026-07-29] qualified per v8 D15"
     },
     {
       "commitment_id": "CMT-0632",
@@ -15660,6 +15672,150 @@
       "discharged_by": null,
       "waiver": null,
       "notes": "[chunk-8.json] Flagged (H7 lesson): unoperationalised condition and unquantified response."
+    },
+    {
+      "commitment_id": "CMT-0697",
+      "source": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "lines": [
+          317,
+          321
+        ],
+        "section": "3.8 Evaluation Protocol"
+      },
+      "kind": "analysis",
+      "statement": "**Rationale**: Independent runs provide unbiased estimates of each factor's effect without assuming voting (which is itself under test in H3). This design:\n\n- Avoids circular application of voting when testing other hypotheses\n- Enables proper variance-based statistical comparisons\n- Allows post-hoc computation of voted results for comparison",
+      "normalised_obligation": "For every hypothesis except H3, the decision statistic is computed over the unvoted independent-run distribution; voted results may be computed post hoc for comparison only.",
+      "hypothesis": null,
+      "decision_statistic": "unvoted per-run F1 distribution (all hypotheses except H3)",
+      "uncertainty_treatment": "variance-based comparisons across K independent runs",
+      "trigger": null,
+      "status": "open",
+      "discharged_by": null,
+      "waiver": null,
+      "notes": "[adjudication 2026-07-29] verifier-2 miss: the non-circularity constraint CMT-0069/0070/0071 depend on. GATE 1 FLAG: in tension with the project's greedy-consensus primary aggregation practice (cf. E52) — needs PI adjudication."
+    },
+    {
+      "commitment_id": "CMT-0698",
+      "source": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "lines": [
+          759,
+          759
+        ],
+        "section": "8.4 Few-Shot Library"
+      },
+      "kind": "factor",
+      "statement": "| Hard Examples | HP + HN combined |",
+      "normalised_obligation": "The term 'Hard Examples' denotes hard positives and hard negatives combined — the unit the H8 scaling arm is indexed on.",
+      "hypothesis": "H8",
+      "decision_statistic": null,
+      "uncertainty_treatment": null,
+      "trigger": null,
+      "status": "open",
+      "discharged_by": null,
+      "waiver": null,
+      "notes": "[adjudication 2026-07-29] verifier-4 miss: sixth terminology-table entry; siblings CMT-0225-0229."
+    },
+    {
+      "commitment_id": "CMT-0699",
+      "source": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "lines": [
+          1156,
+          1156
+        ],
+        "section": "7.1 Confirmatory Hypotheses"
+      },
+      "kind": "trigger",
+      "statement": "| H5 (negative text) | Terse helps, verbose diminishing returns; effect consistent across M/E | Bootstrap interaction test (3 M/E × 3 H5) | Significant H5 main effect, recall stable, M/E × H5 interaction non-significant |",
+      "normalised_obligation": "H5 advances to Stage 2 only if the H5 main effect is significant, recall is stable, AND the M/E x H5 interaction is non-significant.",
+      "hypothesis": "H5",
+      "decision_statistic": "H5 main effect; M/E x H5 interaction (bootstrap interaction test); recall",
+      "uncertainty_treatment": "significance of main effect; non-significance of interaction; recall stability criterion ABSENT (not operationalised)",
+      "trigger": {
+        "statistic": "H5 main effect + M/E x H5 interaction (bootstrap interaction test, 3 M/E x 3 H5) + recall",
+        "comparison_scope": "3 M/E x 3 H5 cells",
+        "uncertainty_criterion": "main effect significant; interaction non-significant; recall 'stable' — stability threshold ABSENT",
+        "evaluation_moment": "Stage 1 -> Stage 2 advancement decision",
+        "evaluation_corpus": "ABSENT — not restated in § 7.1"
+      },
+      "status": "open",
+      "discharged_by": null,
+      "waiver": null,
+      "notes": "[adjudication 2026-07-29] verifier-6 miss: third conjunct (interaction non-significance) absent from CMT-0188; prediction recorded at CMT-0174 is not a decision rule."
+    },
+    {
+      "commitment_id": "CMT-0700",
+      "source": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "lines": [
+          1152,
+          1152
+        ],
+        "section": "7.1 Confirmatory Hypotheses"
+      },
+      "kind": "trigger",
+      "statement": "| H1 (M/E level) | Text modality no effect; verbose no benefit | Planned contrasts | Significant M/E effect or interaction |",
+      "normalised_obligation": "H1 advances to Stage 2 if the M/E effect OR the interaction is significant under planned contrasts.",
+      "hypothesis": "H1",
+      "decision_statistic": "M/E main effect or interaction (planned contrasts)",
+      "uncertainty_treatment": "significance per § 3.1",
+      "trigger": {
+        "statistic": "M/E main effect or interaction (planned contrasts)",
+        "comparison_scope": "5 modality/elaboration levels",
+        "uncertainty_criterion": "significance (§ 3.1 criteria)",
+        "evaluation_moment": "Stage 1 -> Stage 2 advancement decision",
+        "evaluation_corpus": "ABSENT — not restated in § 7.1"
+      },
+      "status": "open",
+      "discharged_by": null,
+      "waiver": null,
+      "notes": "[adjudication 2026-07-29] verifier-6 miss: the 'or interaction' alternative sufficient condition is absent from CMT-0110."
+    },
+    {
+      "commitment_id": "CMT-0701",
+      "source": {
+        "file": "docs/methodology/preregistration/osf/preregistration-coverage.md",
+        "lines": [
+          258,
+          258
+        ],
+        "section": "Changelog"
+      },
+      "kind": "analysis",
+      "statement": "- v2.6: Aligned with preregistration.md v4.7 — statistical methodology reconciliation (ANOVA → bootstrap CI + FDR throughout)",
+      "normalised_obligation": "Bootstrap confidence intervals with FDR correction apply throughout the coverage document's cells (v2.6 reconciliation with preregistration.md v4.7).",
+      "hypothesis": null,
+      "decision_statistic": "bootstrap CI + FDR",
+      "uncertainty_treatment": "bootstrap confidence intervals; FDR multiplicity correction",
+      "trigger": null,
+      "status": "open",
+      "discharged_by": null,
+      "waiver": null,
+      "notes": "[adjudication 2026-07-29] verifier-8 miss: the only in-document statement of the CI method and multiplicity correction; see CMT-0626/CMT-0631."
+    },
+    {
+      "commitment_id": "CMT-0702",
+      "source": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "lines": [
+          410,
+          410
+        ],
+        "section": "H1"
+      },
+      "kind": "condition",
+      "statement": "**Test**: Compare detection performance across 5 modality/elaboration levels:",
+      "normalised_obligation": "H1 is tested by comparing detection performance across the five modality/elaboration levels.",
+      "hypothesis": "H1",
+      "decision_statistic": null,
+      "uncertainty_treatment": null,
+      "trigger": null,
+      "status": "open",
+      "discharged_by": null,
+      "waiver": null,
+      "notes": "[adjudication 2026-07-29] umbrella row added per v3 D5 for convention-consistency with the line-463 (CMT-0113) and line-548 (CMT-0148) umbrella rows."
     }
   ]
 }

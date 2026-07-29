@@ -1,9 +1,16 @@
 # C1 extraction instructions — commitment decomposition of the lodged text
 
-**Version**: 1.0 (2026-07-29). **Controller**: `planning/audit-charter.md`
-§ 7 Phase 1. **Schema**: `docs/manifest-schemas/commitments.schema.json`.
-**Consumers**: extraction agents (one per chunk); the assembly step
-renumbers ids and validates with `scripts/validate_commitments.py`.
+**Version**: 1.1 (2026-07-29; v1.0 same day). **Controller**:
+`planning/audit-charter.md` § 7 Phase 1. **Schema**:
+`docs/manifest-schemas/commitments.schema.json`. **Consumers**: extraction
+agents (one per chunk); the assembly step renumbers ids and validates with
+`scripts/validate_commitments.py`.
+
+**v1.1 convention** (adjudication ruling, see
+`c1-adjudication-2026-07-29.md`): pure phase-carry-forward selection rules
+("use the X-optimal from phase Y") are `condition` rows; carry-forward
+rules with an outcome-conditional branch ("…or default if no significant
+effect") are `trigger` rows with five-element blocks.
 
 ## Task
 
