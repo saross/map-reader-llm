@@ -24,6 +24,7 @@ Asserts:
 from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 
 import json
 
@@ -65,7 +66,9 @@ def registry():
 @pytest.mark.tier1
 def test_all_six_schemas_load():
     _reg, contents = load_schema_registry()
-    assert len(contents) == 6  # runs/conditions/passes/analyses/run-registry/common-defs
+    # runs/conditions/passes/analyses/run-registry/common-defs + commitments
+    # (the commitment spine, Phase 1 of the verification programme)
+    assert len(contents) == 7
 
 
 @pytest.mark.tier1
@@ -1101,3 +1104,70 @@ def test_main_still_reports_a_genuinely_absent_run(tmp_path, monkeypatch, capsys
     monkeypatch.setattr(gen, "load_run_analyses", lambda: [])
     assert gen.main(["--run", "ghost"]) == 2
     assert "No run 'ghost'" in capsys.readouterr().err
+
+
+# --------------------------------------------------------------------------- #
+# Open-commitment guard (Phase 1 — the commitment spine's standing warning)
+# --------------------------------------------------------------------------- #
+
+def _cmt(cid: str, status: str, **over) -> dict:
+    """Minimal commitment row for guard tests (schema shape, guard fields only)."""
+    row = {
+        "commitment_id": cid,
+        "source": {"file": "docs/methodology/preregistration/osf/preregistration.md",
+                   "lines": [1, 2], "section": "H7"},
+        "kind": "trigger",
+        "statement": "verbatim span placeholder",
+        "normalised_obligation": "Run the escalation condition if the trigger fires.",
+        "status": status,
+    }
+    row.update(over)
+    return row
+
+
+@pytest.mark.tier1
+def test_open_commitment_check_flags_only_open_rows():
+    """Open rows warn; discharged and waived rows stay silent."""
+    from scripts.generate_post_run_report import open_commitment_check
+
+    ledger = {"commitments": [
+        _cmt("CMT-0001", "open"),
+        _cmt("CMT-0002", "discharged"),
+        _cmt("CMT-0003", "waived"),
+    ]}
+    lines = open_commitment_check(ledger=ledger)
+    assert len(lines) == 1
+    assert lines[0].startswith("CMT-0001 [trigger] H7:")
+
+
+@pytest.mark.tier1
+def test_open_commitment_check_clean_ledger_is_silent():
+    """A ledger with nothing open produces no warnings."""
+    from scripts.generate_post_run_report import open_commitment_check
+
+    ledger = {"commitments": [_cmt("CMT-0001", "discharged"),
+                              _cmt("CMT-0002", "waived")]}
+    assert open_commitment_check(ledger=ledger) == []
+
+
+@pytest.mark.tier1
+def test_open_commitment_check_absent_ledger_warns():
+    """An absent ledger is itself a warning — pre-Phase-1 must not read clean."""
+    from scripts.generate_post_run_report import open_commitment_check
+
+    lines = open_commitment_check(path=Path("/nonexistent/commitments.json"))
+    assert len(lines) == 1
+    assert "ABSENT" in lines[0]
+
+
+@pytest.mark.tier1
+def test_open_commitment_check_truncates_long_obligations():
+    """Obligation text is truncated so the build output stays scannable."""
+    from scripts.generate_post_run_report import open_commitment_check
+
+    ledger = {"commitments": [
+        _cmt("CMT-0001", "open", normalised_obligation="x" * 200),
+    ]}
+    (line,) = open_commitment_check(ledger=ledger)
+    assert line.endswith("...")
+    assert len(line) < 130

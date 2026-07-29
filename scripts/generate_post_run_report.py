@@ -1105,6 +1105,43 @@ def drift_check(
     return warnings
 
 
+def open_commitment_check(
+    ledger: dict | None = None, path: Path | None = None
+) -> list[str]:
+    """The commitment-spine guard — the drift check's fourth input (Phase 1).
+
+    Any commitment still ``open`` — promised in the lodged registration,
+    neither discharged by execution evidence nor waived by an erratum —
+    warns at every regeneration (audit-charter § 7 Phase 1;
+    audit-and-completion-plan § 6.6). Unhonoured registration promises are
+    a standing line in the build output, not an audit discovery. An absent
+    ledger is itself a warning: the pre-Phase-1 state must not read as
+    clean.
+    """
+    if ledger is None:
+        ledger_path = path or REPO_ROOT / "results" / "commitments.json"
+        try:
+            ledger = _load_json(ledger_path)
+        except FileNotFoundError:
+            return [
+                "commitment ledger results/commitments.json is ABSENT — the "
+                "open-commitment guard cannot run (Phase 1 incomplete, or the "
+                "ledger has moved)"
+            ]
+    lines: list[str] = []
+    for cmt in ledger.get("commitments", []):
+        if cmt.get("status") != "open":
+            continue
+        obligation = (cmt.get("normalised_obligation") or "").strip()
+        if len(obligation) > 90:
+            obligation = obligation[:87] + "..."
+        lines.append(
+            f"{cmt.get('commitment_id', '?')} [{cmt.get('kind', '?')}] "
+            f"{cmt.get('source', {}).get('section', '?')}: {obligation}"
+        )
+    return lines
+
+
 # --------------------------------------------------------------------------- #
 # Manifest assembly, whole-manifest validation, and rendering
 # --------------------------------------------------------------------------- #
@@ -1930,6 +1967,19 @@ def main(argv: list[str] | None = None) -> int:
             print("=== planned runs (declared, not yet executed) ===")
             for line in planned_lines:
                 print(f"  {line}")
+            print()
+
+        open_commitments = open_commitment_check()
+        if open_commitments:
+            # Same rationale as planned runs, one spine over: a registration
+            # promise that is neither discharged nor waived stays visible at
+            # every build (audit-charter § 7 Phase 1).
+            print(
+                f"=== {len(open_commitments)} open commitment(s) "
+                f"(registered, neither discharged nor waived) ==="
+            )
+            for line in open_commitments:
+                print(f"  WARN: {line}")
             print()
 
         all_valid = True
