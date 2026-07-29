@@ -1,7 +1,6 @@
 # Phase 0 — verification programme scoping report
 
-> **Last revised**: 2026-07-29 (GATE 0 partial ruling; Sol rates
-> verified against official OpenAI pricing; worst-case budget added).
+> **Last revised**: 2026-07-29 (PI decision record externalised verbatim).
 > See [§ Changelog](#changelog) for revision history.
 
 **Controller**: `planning/audit-charter.md` (§ 7 Phase 0). **Executor**:
@@ -288,7 +287,44 @@ Per-batch API review gates still apply before each launch.
    (≤ $60 ceiling) to GATE 3 with pilot-calibrated numbers.
 6. **Charter fixes**: approve landing § 6's six text fixes as commits.
 
+## 8. PI decision record — verbatim
+
+GATE 0 was ruled in-session on 2026-07-29. The PI's turns are quoted
+verbatim below (typography preserved) as the attestation source for the
+§ 7 ruling summaries; implementing commits: `a1bd74f49` (charter
+fixes), `a8dcbb5b6` (cost verification), `2794539b8` (gate closure).
+
+**Turn 1** (with the official OpenAI pricing URL and a screenshot of
+the `gpt-5.6-sol` pricing table attached):
+
+> Official OpenAI pricing can be found here:
+> <https://developers.openai.com/api/docs/pricing>
+>
+> Regarding Section 7 Gate 0 decision list:
+>
+> 1. Approve
+> 2. Approve
+> 3. Approve
+> 4. Approve
+> 5. I don't want to get caught short, please check estimate against
+> the pricing I provided above.
+> 6. Approve the Section 6 fixes -- generalise / cascade solutions
+> where possible to make these decisions durable
+>
+> Please confirm costs and I'll approve the run
+
+**Turn 2** (after the worst-case-honest budget was presented):
+
+> I approve this spend up to $150 (just to give us a bit more
+> headroom). Gate 0 passed, please proceed to Phase 1.
+
 ## Changelog
+
+### 2026-07-29 — PI decision record externalised
+
+At the PI's request, the two in-session GATE 0 ruling turns are now
+quoted verbatim in § 8 as the attestation source for the § 7 ruling
+summaries (previously paraphrase-only). No ruling content changed.
 
 ### 2026-07-29 — GATE 0 partial ruling; official pricing verification
 

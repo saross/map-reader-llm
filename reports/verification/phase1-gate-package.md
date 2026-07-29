@@ -1,7 +1,6 @@
 # Phase 1 — GATE 1 package (commitments and execution)
 
-> **Last revised**: 2026-07-29 (GATE 1 PASSED with directives;
-> phase3c thinking-level verification recorded). See
+> **Last revised**: 2026-07-29 (PI decision record externalised verbatim). See
 > [§ Changelog](#changelog) for revision history.
 
 **Controller**: `planning/audit-charter.md` § 7 Phase 1. **Executor**:
@@ -235,7 +234,83 @@ record.
    1,132 passes × 20 fields + 322 conditions × 16 on sapphire; Opus
    triage of discrepancies only; US$0).
 
+## 7. PI decision record — verbatim
+
+GATE 1 was ruled in-session on 2026-07-29 across four PI turns, quoted
+verbatim below (typography preserved) as the attestation source for
+the § 6 ruling summary and charter § 10 item 7. The first two turns
+triggered the finding-3 and finding-10 revisions; the third triggered
+the defence pass; the fourth is the ruling proper. Implementing
+commits: `3766414be`, `442585f6b` (finding revisions), `3ec7b8a2f`
+(defence pass), `614c84b7b` (rulings recorded).
+
+**Turn 1** (finding 3 query):
+
+> For (3) can you confirm that 'holdout evaluation began 2026-02-06'?
+> That sounds too early. When was the registration? I'm sure I didn't
+> begin evaluation until afte the prereg was lodged.
+
+**Turn 2** (finding 10 query):
+
+> For (10) I thought we'd alread addressed the issue that we thought
+> text was 'academic only' but it proved the most effective -- was the
+> editorialising 'academic only' binding? Did we lodge any errata?
+
+**Turn 3** (the reliability challenge that produced the defence pass
+and charter rule 13):
+
+> ok, I am concerned that working only from memory I found that 2 of
+> 12 Headline finders were, if not incorrect, in need of serious
+> qualification. How do you suggest that we ensure that the other 10
+> are reliable?
+
+**Turn 4** (the GATE 1 ruling):
+
+> This is great - can we bake this check into the process for
+> redeployment in the monitor and in other repo reviews?
+>
+> Yes, I agree, the prereg was overbaked and contained contradictions.
+> We should file errata to recognise them and take the one that seems
+> to fit the spirit of the campaign and explain our reasoning, since
+> no matter what it will be a post-facto decision with results in
+> hand.
+>
+> Also, reading the findings, let's just make a policy -- if some
+> promised metric or analysis was omitted but can be run now, we just
+> run it (baring excessive API expense, although even with APO calls
+> I'll dedicate a few hundred dollars to sorting things out, so
+> emphasis on *excessive*).
+>
+> With that in mind, for the decision list:
+>
+> 1. can we run the promised metrics and display them alongside the
+> eventually-chosen one? Perhaps a side-by-side comparison can then
+> demonstrate why we changed?
+> 2. with the erratum: for the unlicensed study families, they are all
+> extensions of the proposer-verifer aren't they? So they are
+> *additional* studies that weren't planned? I thought we had some
+> language about serendipidous studies? Otherwise yes, agree with
+> erratumn 1. For high-thinking errata, yes, but be careful that the
+> setting really was high thinking and not just mis-recorded, we found
+> a few problems like that (thinking level, model misrecorded), I
+> think we've caught them all be be warned. Errata 3-6 approved.
+> 3. For the registered eight-hypothesis BH-FDR family, can we just
+> run it now? Otherwise erratum and a discussion (or maybe method?)
+> disclosure (why did we deviate?)
+> 4. I'd like to try to discharge as many of the 211 open set items as
+> possible -- can we do that at the end of the audit? If so, we'll
+> need a plan.
+> 5. Yes, approve phase 2 start
+
 ## Changelog
+
+### 2026-07-29 — PI decision record externalised
+
+At the PI's request, the four in-session GATE 1 turns (two finding
+queries, the reliability challenge, and the ruling proper) are now
+quoted verbatim in § 7 as the attestation source for the § 6 summary
+and charter § 10 item 7 (previously paraphrase-only). No ruling
+content changed.
 
 ### 2026-07-29 — GATE 1 passed with directives
 
