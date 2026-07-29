@@ -230,11 +230,11 @@ corrections, moves on. **GATE** = PI review before proceeding.
   proposed foreground/background split. Produces
   `reports/verification/phase0-scope.md`. **GATE 0**: PI approves scope,
   budget, and executor assignment. *(Claimed and executed 2026-07-29,
-  Claude Fable 5 interactive session; report produced. GATE 0 partially
-  ruled 2026-07-29 — decisions 1–4 and 6 approved; decision 5 (Sol
-  budget) awaiting PI confirmation of the officially verified cost
-  figures, § 10 item 6.)*
-- [ ] **Phase 1 — commitments and execution (C1, C2).** Build
+  Claude Fable 5 interactive session; report produced. **GATE 0 PASSED
+  2026-07-29** — all six decisions approved; cross-model spend capped at
+  US$150, § 10 item 6.)*
+- [ ] **Phase 1 — commitments and execution (C1, C2).** *(Claimed
+  2026-07-29, Claude Fable 5 interactive session.)* Build
   `results/commitments.json` from the lodged text (subsumes publishing the
   trigger census; five-element trigger rule: statistic, comparison scope,
   uncertainty criterion, evaluation moment, **evaluation corpus**). Run the
@@ -360,6 +360,10 @@ runs, asynchronous batch jobs). Assignment guidance (PI economics,
    (matching the third-party figures); revised worst-case-honest budget
    (Stage A ≤ US$15 worst case, expected $3–8; programme expected $25–60,
    absolute worst ~$120) awaiting PI confirmation before any Sol spend.
+   **Ruled 2026-07-29 (same review, follow-up turn): decision 5 approved
+   with headroom — cross-model (Sol + tiebreak) spend capped at US$150
+   programme-wide. GATE 0 PASSED; Phase 1 unlocked.** Per-batch API
+   review gates still apply before each launch.
 
 Also settled in the same review: the stratum rule and working-notes dual
 role (§ 2), the interpretive-ATTESTED extension (§ 3), orthogonal

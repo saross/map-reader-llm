@@ -269,10 +269,12 @@ and foreground/background definitions, § 10 ruling record.
 
 ## 7. GATE 0 decision list
 
-**Ruling status (PI, 2026-07-29)**: decisions 1–4 approved as proposed;
-decision 6 approved with the generalise/cascade instruction (landed,
-§ 6); decision 5 pending PI confirmation of the § 4.3
-officially-verified figures and worst-case bounds before any Sol spend.
+**Ruling status — GATE 0 PASSED (PI, 2026-07-29)**: decisions 1–4
+approved as proposed; decision 6 approved with the generalise/cascade
+instruction (landed, § 6); decision 5 approved after verification of
+the § 4.3 figures, with headroom — **cross-model spend capped at
+US$150 programme-wide** (above the ~$120 absolute worst case).
+Per-batch API review gates still apply before each launch.
 
 1. **Scope**: approve § 1.4 rulings (methodology-subset reading;
    exclusions; six tracking/errata docs in the mine).
@@ -306,7 +308,9 @@ Numerical claims that moved:
 Not changed: corpus enumeration, strata, all claim counts, executor
 assignment, foreground/background split. Charter fixes (decision 6)
 landed as commit `a1bd74f49`. This revision's own commit is referenced
-from the git history of this file.
+from the git history of this file. Later the same day the PI approved
+decision 5 with a US$150 programme-wide cross-model spend cap —
+**GATE 0 PASSED**, Phase 1 unlocked.
 
 ### 2026-07-29 — Original publication
 
