@@ -1,0 +1,2576 @@
+{
+  "_README": "Errata licence register — Phase 1 C2 census input (audit-charter § 7). Decomposed from protocol-errata.md by two Opus 5 agents (2026-07-29), quotes mechanically verified verbatim (44 whitespace-only re-anchorings applied to the E31-E61 half; no paraphrase found).",
+  "schema_version": "1.0",
+  "source": "docs/methodology/preregistration/protocol-errata.md",
+  "entries": [
+    {
+      "erratum_id": "E1",
+      "title": "Stale version/date in OSF companion README",
+      "lines": [
+        21,
+        34
+      ],
+      "date": "2026-01-31",
+      "type": "Correction",
+      "commit": "a9ed78b",
+      "impact": "None (cosmetic)",
+      "licences": [
+        {
+          "scope": "documentation",
+          "description": "Corrects a stale date (2026-01-14) in the OSF companion README to 2026-01-31, aligning version metadata across the three OSF companion documents; no protocol content changed.",
+          "factors": null,
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "These are companion metadata files, not the preregistration document itself."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E2",
+      "title": "Missing execution fields in Phase 1 config",
+      "lines": [
+        36,
+        61
+      ],
+      "date": "2026-02-01",
+      "type": "Correction",
+      "commit": null,
+      "impact": "Would have prevented execution or produced non-preregistered results",
+      "licences": [
+        {
+          "scope": "correction",
+          "description": "Adds five missing execution fields to the Phase 1 library config so the batch script runs at the preregistered parameter values rather than crashing or silently using script defaults (notably temperature 0.1 instead of 1.0).",
+          "factors": {
+            "model": "gemini-3-flash",
+            "temperature": "1.0",
+            "instruction_file": "detect_image-only.md",
+            "thinking_level": "minimal",
+            "max_output_tokens": "8192"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "Added the five fields to `library_pure-positive-canon.json`, matching the values specified in the preregistration (Section 8.9) and the pattern established in other detection configs (e.g., `detect_image-only.json`)."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E3",
+      "title": "SDK migration for Gemini ThinkingConfig support",
+      "lines": [
+        63,
+        78
+      ],
+      "date": "2026-02-01",
+      "type": "Correction",
+      "commit": null,
+      "impact": "Would have prevented all detections (100% failure rate)",
+      "licences": [
+        {
+          "scope": "correction",
+          "description": "Migrates the batch detection script from the deprecated google-generativeai SDK (v0.8.6) to google-genai (v1.56.0) so that ThinkingConfig, and hence the registered thinking-level factor, is supported at all.",
+          "factors": {
+            "thinking_level": "supported via types.ThinkingConfig"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "Migrated to the `google-genai` SDK (v1.56.0) which supports `types.ThinkingConfig` natively."
+        },
+        {
+          "scope": "factor-level",
+          "description": "Licenses substitution of the API-available model endpoint gemini-3-flash-preview wherever the preregistration names gemini-3-flash, via a name-resolution mapping; treated as the same model.",
+          "factors": {
+            "model": "gemini-3-flash-preview"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "the preregistered model name `gemini-3-flash` does not exist as an API endpoint — the current API name is `gemini-3-flash-preview`. Added model name resolution logic to map the preregistered name to the API-available variant."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E4",
+      "title": "Tile bounds generation Y-axis inversion",
+      "lines": [
+        80,
+        97
+      ],
+      "date": "2026-02-01",
+      "type": "Correction",
+      "commit": null,
+      "impact": "Evaluation reported near-zero F1 due to misscoped references",
+      "licences": [
+        {
+          "scope": "correction",
+          "description": "Fixes a Y-axis inversion in tile bounds generation (metadata[1] is minY, not maxY) that shifted every tile ~2565 m south, plus GeoJSON property naming; calibration bounds regenerated.",
+          "factors": null,
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "Corrected the metadata interpretation (`metadata[1]` is `minY`), fixed property names, and regenerated `calibration_bounds.geojson` from the current calibration manifest."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E5",
+      "title": "Evaluation pipeline reference path and column name bugs",
+      "lines": [
+        99,
+        116
+      ],
+      "date": "2026-02-01",
+      "type": "Correction",
+      "commit": null,
+      "impact": "Evaluation silently returned no references, reporting near-zero metrics",
+      "licences": [
+        {
+          "scope": "correction",
+          "description": "Fixes three evaluation-infrastructure bugs: reference directory path (inputs/vectors/references/), source_tiles list vs source_tile string, and the same path bug in analyse_study_effects.py.",
+          "factors": null,
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "These are implementation bugs in evaluation infrastructure; the preregistered evaluation methodology is unchanged."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E6",
+      "title": "Pipeline contract validation (post-Phase 1 hardening)",
+      "lines": [
+        118,
+        142
+      ],
+      "date": "2026-02-01",
+      "type": "Correction",
+      "commit": null,
+      "impact": "Prevents recurrence of E4-E5 silent failures in Phase 2+",
+      "licences": [
+        {
+          "scope": "correction",
+          "description": "Adds three categories of contract validation (loud reference-loading failure, bounds metadata spot-check, seven pipeline-contract integration tests) so stage-boundary bugs fail loudly rather than silently in Phase 2 onwards.",
+          "factors": null,
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "These are infrastructure hardening measures that do not change the preregistered methodology."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E7",
+      "title": "Evaluation reference scoping hardened against boundary effects",
+      "lines": [
+        144,
+        171
+      ],
+      "date": "2026-02-01",
+      "type": "Correction",
+      "commit": null,
+      "impact": "Preventive — no change to Phase 1 calibration metrics; prevents latent bug from manifesting in denser tile configurations (Phase 2+)",
+      "licences": [
+        {
+          "scope": "correction",
+          "description": "Replaces union_all() reference scoping with per-tile sjoin at three sites and scopes references unbuffered before applying the 20 m match buffer; Phase 1 metrics unchanged.",
+          "factors": {
+            "spatial_tolerance": "20 m"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "Extracted a shared helper function `scope_references_to_tiles()` using `gpd.sjoin()` with `predicate='intersects'` against individual tile polygons, replacing all three `union_all()` sites."
+        },
+        {
+          "scope": "analysis",
+          "description": "Licenses an expanded default spatial-tolerance sweep, adding a 40 m level for the two-dimensional failure ranking framework.",
+          "factors": {
+            "spatial_tolerance_curve": "10, 20, 30, 40, 50 m"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "the `spatial_tolerance_curve()` default buffer list was updated from `[10, 20, 30, 50]` to `[10, 20, 30, 40, 50]` to include the 40m tolerance level used in the two-dimensional failure ranking framework."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E8",
+      "title": "Hard example crops extracted from full map GeoTIFFs",
+      "lines": [
+        173,
+        199
+      ],
+      "date": "2026-02-02",
+      "type": "Clarification",
+      "commit": null,
+      "impact": "Crops may include map content from outside the detection tile boundary",
+      "licences": [
+        {
+          "scope": "procedure",
+          "description": "Licenses extracting all hard-example crops from the full map GeoTIFFs, centred on the target coordinate, rather than from the 512x512 detection tiles as the preregistration implicitly assumed; crops may therefore cross tile boundaries.",
+          "factors": {
+            "hard_example_crop_source": "full map GeoTIFF",
+            "detection_tile_size": "512 px"
+          },
+          "hypotheses": [
+            "H8"
+          ],
+          "study_families": null,
+          "quote": "all hard example crops (both hard positives and hard negatives) were extracted as 128×128 pixel regions from the full map GeoTIFFs (`inputs/rasters/*.tif`), not from the 512×512 detection tiles."
+        },
+        {
+          "scope": "procedure",
+          "description": "Fixes the unregistered hard-example crop size at 128x128 px and flags crop size as a future exploratory (OFAT) variable.",
+          "factors": {
+            "hard_example_crop_size": "128"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "Crop size is flagged as a future exploratory variable (64, 128, 256, 512px OFAT experiment)."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E9",
+      "title": "Centre-pointing language added to detection prompts",
+      "lines": [
+        201,
+        220
+      ],
+      "date": "2026-02-02",
+      "type": "Clarification",
+      "commit": null,
+      "impact": "Adds instructional text not specified in preregistration",
+      "licences": [
+        {
+          "scope": "procedure",
+          "description": "Licenses adding a centre-pointing sentence to the preamble of all 11 detection system instructions, applied uniformly across H5 levels so that factor orthogonality is preserved.",
+          "factors": {
+            "h5_negative_text": "minimal, terse, verbose (all levels)"
+          },
+          "hypotheses": [
+            "H5"
+          ],
+          "study_families": null,
+          "quote": "The sentence is applied uniformly across all H5 conditions (Minimal, Terse, Verbose) to preserve factor orthogonality — centre-pointing is spatial orientation, distinct from H5's diagnostic text treatment."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E10",
+      "title": "50m recognition/localisation threshold — post-hoc narrowing of the registered HP definition (reclassified 2026-07-28)",
+      "lines": [
+        222,
+        237
+      ],
+      "date": "2026-02-02 (original); reclassified 2026-07-28",
+      "type": "Deviation (originally recorded as Clarification)",
+      "commit": null,
+      "impact": "Determines which FNs qualify as hard positive candidates",
+      "licences": [
+        {
+          "scope": "procedure",
+          "description": "Licenses a post-hoc recognition/localisation distinction with a 50 m boundary applied to false negatives when selecting hard positives — an addition the registered FN-mining definition does not contain.",
+          "factors": {
+            "hp_recognition_threshold": "50 m"
+          },
+          "hypotheses": [
+            "H8",
+            "H9",
+            "H12"
+          ],
+          "study_families": null,
+          "quote": "The recognition/localisation distinction and its threshold are post-hoc additions"
+        },
+        {
+          "scope": "procedure",
+          "description": "Records the consequence of the narrowing: the registered hard-positive pool shrinks to 4, cascading into the E11, E12, and E13 deferrals; E51 later re-mined 108 HP under a v2 definition.",
+          "factors": {
+            "hp_pool_size": "4"
+          },
+          "hypotheses": [
+            "H8",
+            "H9",
+            "H12"
+          ],
+          "study_families": [
+            "h8-v2",
+            "h12-v2"
+          ],
+          "quote": "this deviation **narrows the registered HP pool** — restricting HP selection to recognition failures reduced the pool to 4, which cascaded into E11 (Scale-16/32 deferred), E12 (H9 image diversity reduced to HN-only), and E13 (H12 deferred)."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E11",
+      "title": "Scale-16 and Scale-32 library conditions capped",
+      "lines": [
+        239,
+        256
+      ],
+      "date": "2026-02-02",
+      "type": "Clarification",
+      "commit": null,
+      "impact": "H8 conditions 6–7 deferred; scaling contrasts S2 and S3 deferred to post-H10",
+      "licences": [
+        {
+          "scope": "condition",
+          "description": "Licenses NOT executing the Scale-16 and Scale-32 library conditions (H8 conditions 6-7): both configs are marked deferred with empty example arrays, and scaling contrasts S2 and S3 are postponed to post-H10.",
+          "factors": {
+            "library_condition": "scale-16, scale-32",
+            "library_status": "deferred"
+          },
+          "hypotheses": [
+            "H8"
+          ],
+          "study_families": [
+            "h8-v2"
+          ],
+          "quote": "Both config files are marked `\"status\": \"deferred\"` with empty example arrays. H8 contrasts C1–C3, S1, and B1 remain fully testable. Scaling contrasts S2 and S3 are deferred to post-H10 (calibration tile expansion)."
+        },
+        {
+          "scope": "procedure",
+          "description": "Frames the deferral as activation of a preregistered contingency path (capping at the maximum available HP/HN while preserving the 1:1 ratio) rather than a deviation.",
+          "factors": {
+            "hp_hn_ratio": "1:1",
+            "hp_pool_size": "4"
+          },
+          "hypotheses": [
+            "H8"
+          ],
+          "study_families": null,
+          "quote": "If fewer than 16 distinct HPs or HNs are available, Scale-32 (and possibly Scale-16) will be capped at the maximum available while preserving 1:1 ratio."
+        }
+      ],
+      "waives_execution": true
+    },
+    {
+      "erratum_id": "E12",
+      "title": "H9 image diversity runs as HN-diversity-only (HP frozen)",
+      "lines": [
+        258,
+        273
+      ],
+      "date": "2026-02-02",
+      "type": "Clarification",
+      "commit": null,
+      "impact": "H9-C tests HN rotation only; HP diversity is untestable",
+      "licences": [
+        {
+          "scope": "condition",
+          "description": "Licenses running H9-C (image diversity) as hard-negative rotation only, with the hard-positive channel frozen across passes; the HP-diversity half of the registered factor is not executed and is deferred to post-H10.",
+          "factors": {
+            "h9c_image_diversity": "HN rotation only",
+            "hp_pool_size": "4"
+          },
+          "hypotheses": [
+            "H9"
+          ],
+          "study_families": null,
+          "quote": "Due to HP pool exhaustion (E11), the HP channel is frozen: 4 slots, 4 examples, every HP appears in every pass. Only HN examples rotate across passes. HP diversity is untestable with the current pool."
+        }
+      ],
+      "waives_execution": true
+    },
+    {
+      "erratum_id": "E13",
+      "title": "H12 (HP:HN ratio) deferred to post-H10",
+      "lines": [
+        275,
+        292
+      ],
+      "date": "2026-02-02",
+      "type": "Deviation",
+      "commit": null,
+      "impact": "Exploratory hypothesis H12 postponed",
+      "licences": [
+        {
+          "scope": "condition",
+          "description": "Licenses NOT executing H12 (HP:HN ratio) at this point: with HP capped at 4 the only feasible ratios confound ratio with total library size, so the hypothesis is postponed until the HP pool expands after H10.",
+          "factors": {
+            "hp_hn_ratio": "deferred (HP capped at 4)"
+          },
+          "hypotheses": [
+            "H12"
+          ],
+          "study_families": [
+            "h12-v2"
+          ],
+          "quote": "Deferring to post-H10 preserves the possibility of an informative, symmetric test."
+        }
+      ],
+      "waives_execution": true
+    },
+    {
+      "erratum_id": "E14",
+      "title": "Verbose instruction word count exceeds preregistered range",
+      "lines": [
+        294,
+        309
+      ],
+      "date": "2026-02-04",
+      "type": "Clarification",
+      "commit": null,
+      "impact": "Minor — verbose M/E level ~80 words above target",
+      "licences": [
+        {
+          "scope": "factor-level",
+          "description": "Licenses a verbose-level instruction text of 779 words — roughly 80 words above the preregistered brief-to-verbose range — as a conservative deviation that if anything amplifies the H1 M/E effect.",
+          "factors": {
+            "me_level": "verbose-text, verbose-text-image",
+            "verbose_word_count": "779"
+          },
+          "hypotheses": [
+            "H1"
+          ],
+          "study_families": null,
+          "quote": "Iterative prompt refinement across Sessions 12–14 (decision procedure restructuring, centre-pointing language, exclusion criteria updates) has grown the verbose-level instruction text to 779 words. The brief-to-verbose ratio is now approximately 1:3.7 (213:779), which exceeds the preregistered range by ~80 words."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E15",
+      "title": "Inconsistent pass count references in preregistration appendix",
+      "lines": [
+        311,
+        333
+      ],
+      "date": "2026-02-04",
+      "type": "Correction",
+      "commit": null,
+      "impact": "None (internal inconsistency in submitted preregistration; execution used the correct value)",
+      "licences": [
+        {
+          "scope": "documentation",
+          "description": "Records two stale \"≥3/10\" pass-count references in the preregistration appendix (HP selection, HN TBD table) as residual draft text superseded by the operative ≥3/5 procedure.",
+          "factors": {
+            "vote_threshold": "≥3/5"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "The stale \"≥3/10\" references are residual from an earlier draft and do not reflect intended methodology."
+        },
+        {
+          "scope": "factor-level",
+          "description": "Confirms Phase 1 baseline calibration executed at K=5 passes, the value specified by the operative appendix procedure; the threshold is moot because all 24 FNs were complete misses.",
+          "factors": {
+            "n_passes": "5",
+            "vote_threshold": "≥3/5"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "Phase 1 was executed with K=5 passes as specified by the operative procedure."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E16",
+      "title": "Prompt text shifted from cartographic naming to visual descriptions",
+      "lines": [
+        335,
+        353
+      ],
+      "date": "2026-02-03",
+      "type": "Clarification",
+      "commit": "2d46311",
+      "impact": "Changes wording of preregistered prompt text without altering prompt structure or factor design",
+      "licences": [
+        {
+          "scope": "procedure",
+          "description": "Licenses rewording exclusion categories and feature descriptions in all 10 detection instructions from cartographic identity names to visual appearance descriptions, applied uniformly across H5 conditions; structure, factor design, and example library unchanged.",
+          "factors": {
+            "h5_negative_text": "minimal, terse, verbose (all levels)"
+          },
+          "hypotheses": [
+            "H5"
+          ],
+          "study_families": null,
+          "quote": "these were systematically revised to use visual appearance descriptions"
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E17",
+      "title": "Execution plan and Phase 2 YAMLs contained erroneous N=5 passes multiplier",
+      "lines": [
+        355,
+        372
+      ],
+      "date": "2026-02-05",
+      "type": "Correction",
+      "commit": null,
+      "impact": "Would have run 5× more API calls than preregistered, at 5× the cost",
+      "licences": [
+        {
+          "scope": "correction",
+          "description": "Removes the erroneous within-run passes: 5 multiplier from all five Phase 2 study YAMLs and the execution-plan cost formulas, restoring the registered K=10 independent single-pass design and flat run_{run}/ output paths.",
+          "factors": {
+            "n_passes": "1 (single-pass)",
+            "k_runs": "10",
+            "tiles": "60"
+          },
+          "hypotheses": null,
+          "study_families": [
+            "retest-phase2a",
+            "retest-phase2b",
+            "retest-phase2c",
+            "retest-phase2d",
+            "retest-phase2e"
+          ],
+          "quote": "Removed the `passes` field from all five Phase 2 YAML files."
+        },
+        {
+          "scope": "analysis",
+          "description": "Confirms H3 voting is tested post-hoc by re-pooling the same K=10 single-pass runs (N=5 from runs 1-5, N=10 from all runs) rather than by additional API calls.",
+          "factors": {
+            "n_passes_pooled": "5 (runs 1-5), 10 (all runs)"
+          },
+          "hypotheses": [
+            "H3"
+          ],
+          "study_families": [
+            "retest-phase2a",
+            "retest-phase2b",
+            "retest-phase2c",
+            "retest-phase2d",
+            "retest-phase2e"
+          ],
+          "quote": "voting analysis (H3) is performed post-hoc by re-pooling the same K=10 single-pass runs (N=5 from runs 1–5, N=10 from all runs) without additional API calls."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E18",
+      "title": "Config naming convention clarification (§8.7.4 _minimal suffix)",
+      "lines": [
+        374,
+        389
+      ],
+      "date": "2026-02-05",
+      "type": "Clarification",
+      "commit": null,
+      "impact": "None (naming simplification only)",
+      "licences": [
+        {
+          "scope": "documentation",
+          "description": "Clarifies that the unsuffixed detect_*.json configs are the H5=Minimal variants referenced in §8.7.4 as detect_*_minimal.json; only non-default H5 levels carry _terse/_verbose suffixes.",
+          "factors": {
+            "h5_negative_text": "minimal (unsuffixed config)"
+          },
+          "hypotheses": [
+            "H5"
+          ],
+          "study_families": null,
+          "quote": "This is a naming simplification: the unsuffixed config IS the H5=Minimal variant."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E19",
+      "title": "Validation bounds generated from wrong manifest",
+      "lines": [
+        391,
+        418
+      ],
+      "date": "2026-02-05",
+      "type": "Correction",
+      "commit": null,
+      "impact": "Evaluation reported F1 ~0.1 instead of ~0.4 for sanity check runs",
+      "licences": [
+        {
+          "scope": "correction",
+          "description": "Regenerates validation_bounds.geojson from validation_manifest.json (60 tiles) after it had been built from the calibration set; corrects sanity-check F1 from ~0.08-0.11 to 0.360-0.435.",
+          "factors": {
+            "evaluation_set": "60-tile validation",
+            "spatial_tolerance": "20 m"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "Regenerated `validation_bounds.geojson` from `validation_manifest.json` using the `create_bounds_geojson()` function, producing 60 tile features matching the validation manifest."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E20",
+      "title": "Standardised \"holdout\" → \"validation\" naming across codebase",
+      "lines": [
+        420,
+        450
+      ],
+      "date": "2026-02-05",
+      "type": "Clarification",
+      "commit": null,
+      "impact": "None (internal naming only)",
+      "licences": [
+        {
+          "scope": "documentation",
+          "description": "Licenses the codebase using \"validation\" where the preregistration §2.1 says \"holdout\" for the 60-tile evaluation set; the 281-tile reserve keeps the holdout sense. Naming only, tile sets unchanged.",
+          "factors": {
+            "evaluation_set": "60-tile validation (prereg 'holdout')"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "The tile sets are unchanged; only internal naming is standardised."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E21",
+      "title": "Stale `passes` parameter in analysis script",
+      "lines": [
+        452,
+        469
+      ],
+      "date": "2026-02-05",
+      "type": "Correction",
+      "commit": null,
+      "impact": "Would have caused analysis to look for non-existent pass subdirectories",
+      "licences": [
+        {
+          "scope": "correction",
+          "description": "Removes the vestigial passes=5 parameter and pass-subdirectory traversal from the Phase 2 analysis loader, and fixes detection-file globbing for extensionless outputs.",
+          "factors": {
+            "n_passes": "1 (flat run_K/ output structure)"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "Removed `passes` parameter. Rewrote file discovery to iterate `run_*` directories directly and glob `detections_*` files with explicit exclusion of `.meta.json`, `_fp.*`, and `_fn.*` files."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E22",
+      "title": "Per-run evaluation architecture (was merged, now per-run)",
+      "lines": [
+        471,
+        497
+      ],
+      "date": "2026-02-05",
+      "type": "Correction",
+      "commit": null,
+      "impact": "Previous merged approach would have produced nonsensical precision values",
+      "licences": [
+        {
+          "scope": "analysis",
+          "description": "Licenses computing F1/precision/recall per run rather than on all K=10 runs merged, with per_run_metrics.csv as the intermediate artefact and two new multi-run bootstrap functions for the repeated-measures structure.",
+          "factors": {
+            "k_runs": "10",
+            "evaluation_unit": "per run"
+          },
+          "hypotheses": null,
+          "study_families": [
+            "retest-phase2a",
+            "retest-phase2b",
+            "retest-phase2c",
+            "retest-phase2d",
+            "retest-phase2e"
+          ],
+          "quote": "Rewrote evaluation to compute F1 per run independently"
+        },
+        {
+          "scope": "analysis",
+          "description": "Records the corrected attribution for the tile-level bootstrap resampling unit: fixed pre-lodgement in Decision 10, not specified by registered §3.5, which states only that 95% bootstrapped CIs will be used.",
+          "factors": {
+            "bootstrap_resampling_unit": "tile",
+            "bootstrap_n_tiles": "60"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "This preserves the tile as the resampling unit (fixed pre-lodgement in Decision 10, `decisions-log.md:337`; the registered §3.5 specifies only \"95% bootstrapped CIs\" — attribution corrected 2026-07-28, D17 audit U1)"
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E23",
+      "title": "Enhanced API metadata capture (citation, prompt block reason, prompt safety)",
+      "lines": [
+        499,
+        522
+      ],
+      "date": "2026-02-05",
+      "type": "Correction",
+      "commit": null,
+      "impact": "Three Gemini API fields were silently discarded; now captured",
+      "licences": [
+        {
+          "scope": "correction",
+          "description": "Captures three previously discarded Gemini API metadata fields (citation metadata, prompt block reason value, prompt-level safety ratings) into LLMResponseMetadata and thence .meta.json.",
+          "factors": null,
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "This captures additional API-provided metadata for transparency. The detection methodology is unchanged."
+        },
+        {
+          "scope": "documentation",
+          "description": "Records that the three image-only runs completed before the fix permanently lack these metadata fields; all subsequent runs carry them.",
+          "factors": {
+            "me_level": "image-only",
+            "runs_without_fields": "3"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "The 3 existing image-only runs (completed before this fix) lack these fields. This is unavoidable as the data cannot be recovered retroactively. All subsequent runs capture them."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E24",
+      "title": "Dry-run checkpoint corruption bug in run_phase2.py",
+      "lines": [
+        524,
+        541
+      ],
+      "date": "2026-02-05",
+      "type": "Correction",
+      "commit": null,
+      "impact": "Dry runs corrupted checkpoint state, preventing correct resume",
+      "licences": [
+        {
+          "scope": "correction",
+          "description": "Guards checkpoint writes behind if not dry_run so that --dry-run no longer marks execution units complete; the corrupted checkpoint (3 -> 50 units) was manually restored before data collection resumed.",
+          "factors": null,
+          "hypotheses": null,
+          "study_families": [
+            "retest-phase2a"
+          ],
+          "quote": "Wrapped checkpoint updates in an `if not dry_run:` guard so that dry runs never modify the persistent checkpoint state."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E25",
+      "title": "Modality manipulation not implemented — text-only conditions received images",
+      "lines": [
+        543,
+        580
+      ],
+      "date": "2026-02-06",
+      "type": "Correction",
+      "commit": null,
+      "impact": "20 runs (brief-text × 10, verbose-text × 10) tested wrong modality; must be re-run",
+      "licences": [
+        {
+          "scope": "correction",
+          "description": "Adds the include_example_images config field and the conditional skip in the batch script so that the registered text-only H1 levels actually receive no example images; brief-text and verbose-text configs set it false.",
+          "factors": {
+            "me_level": "brief-text, verbose-text",
+            "include_example_images": "false"
+          },
+          "hypotheses": [
+            "H1"
+          ],
+          "study_families": [
+            "retest-phase2a"
+          ],
+          "quote": "The batch detection script (`4_detect_mounds_batch.py`) unconditionally loaded and sent all 17 example images from the config's `examples` array to the API, regardless of condition. No conditional logic existed to skip images for text-only conditions. All 5 conditions received identical image content."
+        },
+        {
+          "scope": "condition",
+          "description": "Scopes re-execution to the two text-only conditions (20 runs, 1,200 calls, ~$2.60) and rules the pre-fix data invalid for the H1 modality question while retaining secondary value; the three image-using conditions stand.",
+          "factors": {
+            "me_level": "brief-text, verbose-text",
+            "runs_reexecuted": "20"
+          },
+          "hypotheses": [
+            "H1"
+          ],
+          "study_families": [
+            "retest-phase2a"
+          ],
+          "quote": "Only brief-text and verbose-text conditions (20 runs) require re-execution. The other 3 conditions (image-only, brief-text-image, verbose-text-image) correctly received images and are valid."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E26",
+      "title": "Bootstrap CI bias from reference de-duplication on resampled tiles",
+      "lines": [
+        582,
+        615
+      ],
+      "date": "2026-02-06",
+      "type": "Correction",
+      "commit": null,
+      "impact": "Bootstrap CIs were systematically deflated; point estimates unaffected",
+      "licences": [
+        {
+          "scope": "analysis",
+          "description": "Refactors all seven bootstrap functions to pre-compute per-tile TP/FP/FN and aggregate with duplicates handled, removing the reference de-duplication that deflated CIs (e.g. point F1 0.4252 vs CI [0.254, 0.373]); point estimates were never affected.",
+          "factors": {
+            "bootstrap_resampling_unit": "tile"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "Per-run F1 point estimates (in `per_run_metrics.csv`) were always correct — they use `calculate_f1_internal()` which does not resample tiles. Only the bootstrap CIs were biased."
+        },
+        {
+          "scope": "analysis",
+          "description": "Licenses per-tile rather than per-map spatial matching inside the bootstrap as an approximation, on the grounds that cross-tile matches within the 20 m buffer are negligible at these tile sizes.",
+          "factors": {
+            "bootstrap_matching_unit": "per tile",
+            "spatial_tolerance": "20 m"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "The fix uses per-tile matching rather than per-map matching (as `calculate_f1_internal()` does). Cross-tile matches within the 20 m buffer are negligible given tile sizes (hundreds of metres)."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E27",
+      "title": "Dual-track carry-forward from Phase 2a (OFAT deviation)",
+      "lines": [
+        617,
+        641
+      ],
+      "date": "2026-02-06",
+      "type": "Deviation",
+      "commit": null,
+      "impact": "Phases 2b–2e carry two M/E levels instead of one; text-only track skips 2c, defers 2d/2e",
+      "licences": [
+        {
+          "scope": "condition",
+          "description": "Licenses carrying two M/E levels forward from Phase 2a instead of the single optimum the registered OFAT design specifies: brief-text-image on the full 2b-2e chain and brief-text on a targeted track, each with independent optimal parameters.",
+          "factors": {
+            "me_level": "brief-text-image (Track 1), brief-text (Track 2)"
+          },
+          "hypotheses": [
+            "H1"
+          ],
+          "study_families": [
+            "retest-phase2b",
+            "retest-phase2c",
+            "retest-phase2d",
+            "retest-phase2e"
+          ],
+          "quote": "The preregistered OFAT design (§8.3.1a) specifies selecting a single optimal M/E level from Phase 2a and carrying it forward through all subsequent phases."
+        },
+        {
+          "scope": "procedure",
+          "description": "Licenses NOT executing Phase 2c for the text-only track and deferring Phases 2d and 2e for it, on the grounds that those phases are structurally incompatible with a text-only winner; any text-only results from deferred phases are exploratory.",
+          "factors": {
+            "me_level": "brief-text (Track 2)"
+          },
+          "hypotheses": [
+            "H8",
+            "H5",
+            "H4"
+          ],
+          "study_families": [
+            "retest-phase2c",
+            "retest-phase2d",
+            "retest-phase2e"
+          ],
+          "quote": "**brief-text** (Track 2): receives targeted tests — Phase 2b temperature testing; Phase 2c skipped; Phases 2d and 2e deferred pending results"
+        }
+      ],
+      "waives_execution": true
+    },
+    {
+      "erratum_id": "E28",
+      "title": "H5 instruction text adapted for Phase 2d (HN image references removed, OFAT simplification)",
+      "lines": [
+        643,
+        667
+      ],
+      "date": "2026-02-11",
+      "type": "Deviation",
+      "commit": null,
+      "impact": "Changes wording of preregistered instruction text; simplifies Phase 2d design",
+      "licences": [
+        {
+          "scope": "procedure",
+          "description": "Licenses trimming Guideline 3 (and the verbose exclusion intro) in the terse and verbose instruction files because the hard-negative images they referenced were dropped once Phase 2c selected plus-hp; the minimal instruction is deliberately left unmodified, accepting a minor confound rather than re-running 1,200 calls.",
+          "factors": {
+            "h5_negative_text": "terse, verbose",
+            "library_condition": "plus-hp (no HN)"
+          },
+          "hypotheses": [
+            "H5",
+            "H8"
+          ],
+          "study_families": [
+            "retest-phase2d"
+          ],
+          "quote": "Guideline 3 in terse and verbose instruction files was trimmed from two sentences to one"
+        },
+        {
+          "scope": "procedure",
+          "description": "Licenses NOT executing the preregistered 3x3 (M/E x H5) factorial for Phase 2d, replacing it with single-factor OFAT at the carried-forward optimal M/E per track: 3 cells (1 reused, 2 new) per track; M/E x H5 interactions become untestable.",
+          "factors": {
+            "design": "3 H5 levels x 1 M/E level per track",
+            "me_level": "brief-text-image"
+          },
+          "hypotheses": [
+            "H5",
+            "H1"
+          ],
+          "study_families": [
+            "retest-phase2d"
+          ],
+          "quote": "The preregistered 3×3 factorial (3 M/E levels × 3 H5 levels) is replaced by single-factor OFAT testing H5 at the carried-forward optimal M/E level per track."
+        },
+        {
+          "scope": "condition",
+          "description": "Activates the text-only Track 2 for Phase 2d, which E27/Decision 16 had deferred, because precision is the bottleneck in both modalities.",
+          "factors": {
+            "me_level": "brief-text (Track 2)",
+            "temperature": "0.0"
+          },
+          "hypotheses": [
+            "H5"
+          ],
+          "study_families": [
+            "retest-phase2d"
+          ],
+          "quote": "Track 2 (text-only brief-text) was deferred for Phase 2d in Decision 16 but is now activated."
+        }
+      ],
+      "waives_execution": true
+    },
+    {
+      "erratum_id": "E29",
+      "title": "`reorder_examples()` canonical-first was a no-op",
+      "lines": [
+        669,
+        693
+      ],
+      "date": "2026-02-12",
+      "type": "Correction",
+      "commit": null,
+      "impact": "All prior phases used config-file order unknowingly; no results affected",
+      "licences": [
+        {
+          "scope": "correction",
+          "description": "Records that canonical-first ordering was a no-op returning config-file order [C+, HP, C-, null], so Phases 2a-2d all ran the config-default ordering; no prior results are invalidated because the flag was never set.",
+          "factors": {
+            "example_ordering": "config-default ([C+, HP, C−, null])"
+          },
+          "hypotheses": [
+            "H4"
+          ],
+          "study_families": [
+            "retest-phase2a",
+            "retest-phase2b",
+            "retest-phase2c",
+            "retest-phase2d"
+          ],
+          "quote": "All prior phases (2a–2d) used the default ordering from the config file, which is what they were intended to use — the `canonical-first` flag was never explicitly set in those phases."
+        },
+        {
+          "scope": "factor-level",
+          "description": "Splits the ordering factor into an explicit config-default no-op and a true canonical-first grouping, and implements canonical-last and random with exhaustive category filtering, so H4 can be tested with genuinely distinct levels.",
+          "factors": {
+            "example_ordering": "config-default, canonical-first ([C+, C−, HP, null]), canonical-last, random"
+          },
+          "hypotheses": [
+            "H4"
+          ],
+          "study_families": [
+            "retest-phase2e"
+          ],
+          "quote": "Explicit no-op returning examples in JSON config-file order (the ordering all prior phases actually used)"
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E30",
+      "title": "Phase 2e tests 4 ordering conditions instead of preregistered 3",
+      "lines": [
+        695,
+        724
+      ],
+      "date": "2026-02-12",
+      "type": "Deviation",
+      "commit": null,
+      "impact": "Adds 1 condition (10 runs, 600 API calls) to Phase 2e",
+      "licences": [
+        {
+          "scope": "condition",
+          "description": "Licenses a fourth Phase 2e ordering condition beyond the three in the execution plan, adding config-default as an explicit baseline distinct from true canonical-first.",
+          "factors": {
+            "example_ordering": "config-default, canonical-first, canonical-last, random"
+          },
+          "hypotheses": [
+            "H4"
+          ],
+          "study_families": [
+            "retest-phase2e"
+          ],
+          "quote": "The execution plan (§Phase 2e) specifies 3 ordering conditions: canonical-first, canonical-last, and random. Phase 2e now tests 4 conditions by adding `config-default` as an explicit baseline distinct from `canonical-first`."
+        },
+        {
+          "scope": "procedure",
+          "description": "Licenses satisfying the added config-default condition by symlink reuse of the Phase 2c plus-hp outputs (10 pre-checkpointed units) rather than new API calls; units rise 30 -> 40 with no net cost increase.",
+          "factors": {
+            "example_ordering": "config-default",
+            "library_condition": "plus-hp"
+          },
+          "hypotheses": [
+            "H4"
+          ],
+          "study_families": [
+            "retest-phase2e",
+            "retest-phase2c"
+          ],
+          "quote": "The `config-default` baseline is reused from Phase 2c plus-hp outputs via symlinks, adding no additional API cost for those 10 runs."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E31",
+      "title": "Deterministic runs at T=0.0 copied instead of re-executed",
+      "lines": [
+        726,
+        745
+      ],
+      "date": "2026-02-12",
+      "type": "Deviation",
+      "commit": null,
+      "impact": null,
+      "licences": [
+        {
+          "scope": "procedure",
+          "description": "Licenses copying detection outputs from an already-completed replicate instead of re-executing against the API, for the 4 remaining deterministic (T=0.0, fixed-ordering) Phase 2e units. Field table is a bullet list (Date/Phase/Type/Severity: Low) with no Impact row.",
+          "factors": {
+            "temperature": "0.0",
+            "ordering": "canonical-first, canonical-last",
+            "n_passes": "10"
+          },
+          "hypotheses": [
+            "H4"
+          ],
+          "study_families": null,
+          "quote": "For 4 remaining deterministic units (canonical-first/run\\_1, canonical-last/run\\_3, canonical-last/run\\_6, canonical-last/run\\_8), detection outputs were copied from an existing completed run in the same condition rather than re-executing against the API."
+        },
+        {
+          "scope": "analysis",
+          "description": "Licenses treating copied replicates as equivalent to executed ones in bootstrap analysis; deterministic conditions legitimately show zero within-condition variance.",
+          "factors": {
+            "temperature": "0.0"
+          },
+          "hypotheses": [
+            "H4"
+          ],
+          "study_families": null,
+          "quote": "Bootstrap CIs for deterministic conditions will show zero within-condition variance regardless of whether runs were executed or copied."
+        }
+      ],
+      "waives_execution": true
+    },
+    {
+      "erratum_id": "E32",
+      "title": "Phase 3a uses T=0.3/T=0.7 instead of carry-forward T=0.0",
+      "lines": [
+        747,
+        766
+      ],
+      "date": "2026-02-12",
+      "type": "Deviation",
+      "commit": null,
+      "impact": null,
+      "licences": [
+        {
+          "scope": "factor-level",
+          "description": "Licenses running Phase 3a consensus voting at T=0.3 and T=0.7 in place of the registered carry-forward T=0.0, because consensus voting is meaningless on identical (deterministic) runs. Field table is a bullet list (Date/Phase/Type/Severity: Low) with no Impact row.",
+          "factors": {
+            "temperature": "0.3, 0.7"
+          },
+          "hypotheses": [
+            "H3"
+          ],
+          "study_families": [
+            "retest-phase3a"
+          ],
+          "quote": "Phase 3a tests consensus voting at T=0.3 and T=0.7 instead of the carry-forward T=0.0."
+        },
+        {
+          "scope": "analysis",
+          "description": "Licenses evaluating consensus voting against the T=0.0 single-run baseline rather than against a same-temperature single-run baseline.",
+          "factors": {
+            "temperature": "0.0"
+          },
+          "hypotheses": [
+            "H3"
+          ],
+          "study_families": [
+            "retest-phase3a"
+          ],
+          "quote": "The consensus voting comparison is against the T=0.0 single-run baseline, not against single-run performance at the same temperature."
+        }
+      ],
+      "waives_execution": true
+    },
+    {
+      "erratum_id": "E33",
+      "title": "Verifier crop extraction reads from tiles instead of source rasters",
+      "lines": [
+        768,
+        793
+      ],
+      "date": "2026-03-12",
+      "type": "Correction",
+      "commit": null,
+      "impact": "Mounds near tile edges receive asymmetrically truncated crops, potentially biasing verifier decisions",
+      "licences": [
+        {
+          "scope": "correction",
+          "description": "Code fix: crops are now extracted from the parent GeoTIFF with boundless reads so every crop is exactly padding*2 square, rather than being clamped at tile boundaries.",
+          "factors": {
+            "crop_source": "source GeoTIFF raster (boundless)"
+          },
+          "hypotheses": [
+            "H2"
+          ],
+          "study_families": null,
+          "quote": "Modified both scripts to resolve each detection's `source_tile` to its parent GeoTIFF raster (in `inputs/rasters/`), then extract the crop with `boundless=True`."
+        },
+        {
+          "scope": "procedure",
+          "description": "Licenses (indeed mandates) re-running all affected Phase 3d proposer-verifier experiments with corrected crop extraction, with the pre-fix results archived rather than deleted.",
+          "factors": null,
+          "hypotheses": [
+            "H2"
+          ],
+          "study_families": null,
+          "quote": "All affected verifier experiments to be re-run with corrected crop extraction. Original results archived to `archive/phase3d-pre-e33/` for comparison."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E34",
+      "title": "Thinking-level not propagated through batch/subprocess execution units",
+      "lines": [
+        795,
+        824
+      ],
+      "date": "2026-03-15",
+      "type": "Correction",
+      "commit": null,
+      "impact": "`--thinking-level` CLI override silently dropped when running via `run_phase2.py`",
+      "licences": [
+        {
+          "scope": "correction",
+          "description": "Pure code fix: thinking_level is now copied into execution-unit dicts and a --thinking-level flag added to the detect script and batch library. Caught before any affected data was collected, so no protocol licence attaches.",
+          "factors": {
+            "thinking_level": "propagated from condition to execution unit"
+          },
+          "hypotheses": null,
+          "study_families": [
+            "retest-phase3a-replication"
+          ],
+          "quote": "The fix was applied\nbefore any replication data was collected, so no results are affected."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E35",
+      "title": "Bootstrap per-tile matching caused recall bias from reference double-counting",
+      "lines": [
+        826,
+        878
+      ],
+      "date": "2026-03-15",
+      "type": "Correction",
+      "commit": null,
+      "impact": "Bootstrap CIs for all prior phases had a small recall bias (bootstrap mean ~7 pp below point estimate at 340 tiles)",
+      "licences": [
+        {
+          "scope": "correction",
+          "description": "Code fix: per-tile Hungarian matching inside the bootstrap replaced by per-map matching with TP/FP/FN then distributed to tiles, eliminating reference double-counting across the 64-px tile overlap.",
+          "factors": null,
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "Rewrote `compute_per_tile_tp_fp_fn()` to match **per map**\n(identical to `calculate_f1_internal`), then distribute TP/FP/FN to\ntiles: TPs and FPs assigned to the detection's `source_tile`,\nunmatched FNs assigned to the reference's primary tile (nearest\ncentroid via `_assign_refs_to_primary_tiles()`)."
+        },
+        {
+          "scope": "analysis",
+          "description": "Licenses fixing the spatial-matching granularity within each bootstrap iteration (per-map, not per-tile) as an unregistered but methodologically consistent analysis choice; the registration constrains only the CI method, not the matching granularity.",
+          "factors": null,
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "Neither\nspecifies the spatial\nmatching granularity (per-tile vs per-map) within each bootstrap\niteration. The correction aligns the bootstrap matching with the\npoint-estimate matching method, which is the methodologically\nconsistent choice."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E36",
+      "title": "340-tile production retest replaces 60-tile holdout evaluation",
+      "lines": [
+        880,
+        894
+      ],
+      "date": "2026-03-17",
+      "type": "Deviation",
+      "commit": "f06afb7",
+      "impact": "All Phase 2–3 results re-evaluated on larger corpus; statistical power substantially increased",
+      "licences": [
+        {
+          "scope": "procedure",
+          "description": "Licenses replacing the registered 60-tile holdout evaluation with a 340-tile corpus and re-running all Phase 2a–3a conditions from scratch on it.",
+          "factors": {
+            "n_tiles": "340",
+            "evaluation_corpus": "full_evaluation_bounds (4 map sheets, 569 references)"
+          },
+          "hypotheses": null,
+          "study_families": [
+            "retest-phase2a",
+            "retest-phase2b",
+            "retest-phase2c",
+            "retest-phase2d",
+            "retest-phase2e",
+            "retest-phase3a",
+            "retest-phase3c"
+          ],
+          "quote": "The evaluation corpus was expanded to 340 tiles (569 ground truth mounds across 4 map sheets) to achieve adequate statistical power. All Phase 2a–3a conditions were re-run from scratch on the full corpus."
+        },
+        {
+          "scope": "factor-level",
+          "description": "Licenses reducing replicate count K from the registered 10 to 1–3 for single-pass conditions (retaining K=30 for consensus voting) — registered replicates deliberately not executed.",
+          "factors": {
+            "n_passes": "1-3 (single-pass), 30 (consensus)"
+          },
+          "hypotheses": null,
+          "study_families": [
+            "retest-phase2a",
+            "retest-phase2b",
+            "retest-phase2c",
+            "retest-phase2d",
+            "retest-phase2e",
+            "retest-phase3a"
+          ],
+          "quote": "K was reduced from 10 to 1–3 for single-pass conditions (340 tiles provide sufficient power) and retained at K=30 for consensus voting."
+        },
+        {
+          "scope": "analysis",
+          "description": "Licenses treating 340-tile results as superseding the 60-tile holdout results for all conditions, with the 60-tile results retained as historical reference.",
+          "factors": {
+            "n_tiles": "340"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "Results from the 340-tile corpus supersede the 60-tile holdout results for all conditions."
+        }
+      ],
+      "waives_execution": true
+    },
+    {
+      "erratum_id": "E37",
+      "title": "Proposer-Verifier (PV) pipeline — production implementation of registered H2 Condition B (corrected 2026-07-28)",
+      "lines": [
+        896,
+        969
+      ],
+      "date": "2026-03-15 (original); **corrected 2026-07-28** — see Withdrawal",
+      "type": "Correction (originally recorded as Deviation)",
+      "commit": "`f9d40e0` (library), `5d72593` (orchestrator)",
+      "impact": "Reclassifies the headline PV result from \"unregistered post-hoc extension\" to **confirmatory H2 outcome: the registered null prediction is falsified and the registered stopping rule fired**",
+      "licences": [
+        {
+          "scope": "correction",
+          "description": "CORRECTION BLOCK PRESENT (dated Withdrawal, 2026-07-28): the entry's original opening sentence, original Impact line and original Protocol-impact claim are withdrawn as false. PV is registered as H2 Condition B; the headline PV result is reclassified as a confirmatory H2 outcome, not an unregistered extension.",
+          "factors": null,
+          "hypotheses": [
+            "H2"
+          ],
+          "study_families": [
+            "gold-standard-v2",
+            "proposer-verifier-384",
+            "proposer-verifier-512",
+            "pv-diag-384"
+          ],
+          "quote": "The preregistration registers the\ncoarse-to-fine proposer-verifier architecture as H2 Condition B"
+        },
+        {
+          "scope": "analysis",
+          "description": "Licenses reporting the production PV programme as the exercised registered contingency: the registered H2 null is falsified and the registered 0.05-F1 stopping rule fired, which is what licensed further pursuit of two-stage architectures.",
+          "factors": null,
+          "hypotheses": [
+            "H2"
+          ],
+          "study_families": [
+            "gold-standard-v2",
+            "proposer-verifier-384",
+            "proposer-verifier-512"
+          ],
+          "quote": "The production PV programme is that registered\ncontingency, exercised."
+        },
+        {
+          "scope": "condition",
+          "description": "Elaboration 1 — licenses feeding the verifier from a consensus union of proposer passes instead of the registered single liberal Stage-1 detection pass.",
+          "factors": {
+            "proposer_pool": "consensus union of passes"
+          },
+          "hypotheses": [
+            "H2"
+          ],
+          "study_families": [
+            "gold-standard-v2",
+            "proposer-verifier-384",
+            "pv-diag-384"
+          ],
+          "quote": "the registered Stage 1 is a single liberal\n   detection pass; production feeds the verifier from a consensus union of\n   passes."
+        },
+        {
+          "scope": "procedure",
+          "description": "Elaboration 2 — licenses applying the verifier as a binary accept/reject verdict (prob_threshold null) in the headline pipeline, instead of the registered direct use of raw mound_probability scores.",
+          "factors": {
+            "prob_threshold": "null (binary verdict)"
+          },
+          "hypotheses": [
+            "H2"
+          ],
+          "study_families": [
+            "gold-standard-v2"
+          ],
+          "quote": "**Binary application of the verifier verdict** in the headline pipeline\n   (`prob_threshold = null`, E56) versus the registered direct use of raw\n   `mound_probability` scores (`preregistration-appendix-prompts.md:1584`)."
+        },
+        {
+          "scope": "factor-level",
+          "description": "Elaboration 3 — licenses the adversarial verifier prompt framing in place of the registered neutral-classifier verifier prompt.",
+          "factors": {
+            "verifier_strategy": "adversarial"
+          },
+          "hypotheses": [
+            "H2"
+          ],
+          "study_families": [
+            "gold-standard-v2",
+            "proposer-verifier-384",
+            "pv-diag-384"
+          ],
+          "quote": "**Adversarial prompt framing** — the registered verifier prompt is a\n   neutral classifier; E39 establishes strategy choice is not load-bearing."
+        },
+        {
+          "scope": "procedure",
+          "description": "Elaboration 4 — licenses the project's crop-extraction geometry, on which the registration is silent (cross-reference E8).",
+          "factors": null,
+          "hypotheses": [
+            "H2"
+          ],
+          "study_families": null,
+          "quote": "**Crop geometry** — the registration is silent on crop extraction (E8)."
+        },
+        {
+          "scope": "factor-level",
+          "description": "Elaboration 5 — licenses the choice of verifier consensus size (N=1 vs N=5), on which the registration is silent; tested and found insensitive.",
+          "factors": {
+            "verifier_consensus_n": "1, 5"
+          },
+          "hypotheses": [
+            "H2"
+          ],
+          "study_families": [
+            "pv-diag-384",
+            "proposer-verifier-384"
+          ],
+          "quote": "**Verifier consensus size** — the registration is silent; N=1 vs N=5 was\n   tested and found insensitive (Obs 166, 167, 169)."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E38",
+      "title": "Dual-mode API architecture (batch and real-time)",
+      "lines": [
+        971,
+        985
+      ],
+      "date": "2026-03-20",
+      "type": "Clarification",
+      "commit": "5d72593",
+      "impact": "Technical implementation choice; no effect on results",
+      "licences": [
+        {
+          "scope": "procedure",
+          "description": "Licenses executing any PV run in either Gemini Batch API or real-time mode interchangeably; mode affects only speed, cost and quota, not prompts or results.",
+          "factors": {
+            "execution_mode": "batch, realtime"
+          },
+          "hypotheses": [
+            "H2"
+          ],
+          "study_families": null,
+          "quote": "Both modes produce identical prompts and results — the mode affects only execution speed, cost (Batch API is 50% cheaper), and quota management."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E39",
+      "title": "Verifier strategy equivalence confirmed at production scale",
+      "lines": [
+        987,
+        1001
+      ],
+      "date": "2026-03-21",
+      "type": "Clarification",
+      "commit": "9a1b9e1",
+      "impact": "Adversarial verifier selected as default; all three strategies produce equivalent F1",
+      "licences": [
+        {
+          "scope": "factor-level",
+          "description": "Licenses retaining the adversarial verifier strategy as the production default, on the finding that adversarial, checklist and brief are statistically indistinguishable at 340-tile scale.",
+          "factors": {
+            "verifier_strategy": "adversarial (default; checklist and brief equivalent)"
+          },
+          "hypotheses": [
+            "H2"
+          ],
+          "study_families": [
+            "proposer-verifier-384",
+            "pv-diag-384"
+          ],
+          "quote": "The adversarial strategy was retained as the default for consistency with the pilot and because its adversarial framing provides the most interpretable rejection reasoning."
+        },
+        {
+          "scope": "analysis",
+          "description": "Licenses treating verifier strategy as a non-load-bearing factor in reporting PV results (robustness finding, so results need not be replicated across strategies).",
+          "factors": {
+            "verifier_strategy": "not load-bearing"
+          },
+          "hypotheses": [
+            "H2"
+          ],
+          "study_families": [
+            "proposer-verifier-384",
+            "pv-diag-384"
+          ],
+          "quote": "The choice of verifier strategy is not load-bearing for the PV results."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E40",
+      "title": "Gemini 3.1 Pro requires MEDIUM thinking — deviation from §8.2/§8.9",
+      "lines": [
+        1003,
+        1017
+      ],
+      "date": "2026-03-24",
+      "type": "Deviation",
+      "commit": "pending",
+      "impact": "Pro results use MEDIUM or HIGH thinking instead of preregistered MINIMAL",
+      "licences": [
+        {
+          "scope": "factor-level",
+          "description": "Licenses running Gemini 3.1 Pro at MEDIUM thinking (single-pass) and HIGH thinking (consensus) instead of the preregistered MINIMAL, because the model does not support MINIMAL — registered Pro-at-MINIMAL cells are therefore not executable.",
+          "factors": {
+            "model": "gemini-3.1-pro-preview",
+            "thinking_level": "medium (single-pass), high (consensus)"
+          },
+          "hypotheses": null,
+          "study_families": [
+            "pv-diag-384",
+            "n1-pro-rerun-384"
+          ],
+          "quote": "Single-pass Pro experiments use MEDIUM thinking; consensus Pro experiments use HIGH thinking (motivated by the post-registration finding that HIGH thinking benefits consensus voting at strict thresholds, Obs 183)."
+        },
+        {
+          "scope": "analysis",
+          "description": "Licenses reporting Pro-vs-Flash comparisons as confounding model capability with thinking budget, framed as an inherent model constraint rather than a design choice.",
+          "factors": {
+            "model": "gemini-3.1-pro-preview",
+            "thinking_level": "minimal (unavailable)"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "Gemini 3.1 Pro (the current Pro model, API name `gemini-3.1-pro-preview`) does not support MINIMAL thinking — the lowest available level is MEDIUM."
+        }
+      ],
+      "waives_execution": true
+    },
+    {
+      "erratum_id": "E41",
+      "title": "384px tile size and full evaluation set used for Pro comparison",
+      "lines": [
+        1019,
+        1033
+      ],
+      "date": "2026-03-24",
+      "type": "Deviation",
+      "commit": "pending",
+      "impact": "More statistical power but different evaluation scope than preregistered H6",
+      "licences": [
+        {
+          "scope": "factor-level",
+          "description": "Licenses evaluating the Flash-to-Pro comparison on 487 tiles at 384 px instead of the registered H6 20-tile stratified holdout at 512 px.",
+          "factors": {
+            "tile_size": "384 px",
+            "n_tiles": "487",
+            "model": "gemini-3.1-pro-preview"
+          },
+          "hypotheses": [
+            "H6"
+          ],
+          "study_families": [
+            "pv-diag-384"
+          ],
+          "quote": "Our Pro comparison uses 487 tiles at 384px — the optimal tile size identified by the H11 diagnostic (Obs 181)."
+        },
+        {
+          "scope": "analysis",
+          "description": "Licenses characterising the Pro comparison as an exploratory extension rather than a strict H6 implementation, and leaves the registered H6 Phase 1 (20-tile, 512 px) unexecuted but available.",
+          "factors": {
+            "tile_size": "512 px",
+            "n_tiles": "20"
+          },
+          "hypotheses": [
+            "H6"
+          ],
+          "study_families": null,
+          "quote": "H6 Phase 1 (20-tile holdout at 512px) remains available for future execution if a strict preregistration-compliant comparison is needed."
+        }
+      ],
+      "waives_execution": true
+    },
+    {
+      "erratum_id": "E42",
+      "title": "Metadata bug — `configuration.model` in meta.json reports config default, not resolved model",
+      "lines": [
+        1035,
+        1096
+      ],
+      "date": "2026-03-25 (initial); 2026-03-25 (corrected)",
+      "type": "Correction",
+      "commit": "pending",
+      "impact": "meta.json `configuration.model` field was unreliable when `--model` CLI override was used; led to incorrect E42 initial diagnosis",
+      "licences": [
+        {
+          "scope": "correction",
+          "description": "Code fix plus reversal of an incorrect diagnosis: a model_override parameter now records the resolved model in metadata, and the four Pro pool directories mis-renamed to flash-* were restored to their Pro labels (confirmed Pro by GeoJSON properties, logs and pricing).",
+          "factors": {
+            "model": "gemini-3.1-pro-preview (proposer), gemini-3-flash (verifier)"
+          },
+          "hypotheses": null,
+          "study_families": [
+            "pv-diag-384"
+          ],
+          "quote": "**Fix applied** (Session 57): Added `model_override` parameter to\n`LLMMetadataTracker.__init__()`."
+        },
+        {
+          "scope": "procedure",
+          "description": "Establishes an audit rule: model identity must be cross-checked across multiple independent metadata sources rather than read from a single field.",
+          "factors": null,
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "Never trust a single metadata field for audit purposes."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E43",
+      "title": "consensus-384 executed at T=1.0 instead of T=0.7",
+      "lines": [
+        1098,
+        1127
+      ],
+      "date": "2026-03-25 (discovered during configuration audit)",
+      "type": "Deviation",
+      "commit": null,
+      "impact": "30 runs × 487 tiles executed at wrong temperature; corrected baseline produced separately",
+      "licences": [
+        {
+          "scope": "condition",
+          "description": "Licenses preserving and analysing the 30 unintended T=1.0 consensus runs as temperature-sensitivity data rather than discarding them; the directory is renamed with an explanatory README.",
+          "factors": {
+            "temperature": "1.0",
+            "tile_size": "384 px",
+            "n_passes": "30",
+            "model": "gemini-3-flash",
+            "thinking_level": "minimal"
+          },
+          "hypotheses": [
+            "H11"
+          ],
+          "study_families": [
+            "consensus-384-t1-0"
+          ],
+          "quote": "The T=1.0 data is preserved and used in the T=0.7 vs\nT=1.0 temperature sensitivity analysis (Obs 190: dF1 ~+0.15, p<0.0001 at\nall pool sizes — T=0.7 dramatically outperforms T=1.0)."
+        },
+        {
+          "scope": "condition",
+          "description": "Identifies the corrected T=0.7 Flash MINIMAL consensus baseline that replaces the mis-executed run.",
+          "factors": {
+            "temperature": "0.7",
+            "tile_size": "384 px",
+            "n_passes": "30",
+            "model": "gemini-3-flash",
+            "thinking_level": "minimal"
+          },
+          "hypotheses": [
+            "H11"
+          ],
+          "study_families": [
+            "pv-diag-384"
+          ],
+          "quote": "`outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/`\n(30 runs, 487 tiles, T=0.7, Flash MINIMAL, produced Session 56)."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E44",
+      "title": "single-pass-384 executed at T=1.0 instead of T=0.0",
+      "lines": [
+        1129,
+        1154
+      ],
+      "date": "2026-03-25 (discovered during configuration audit)",
+      "type": "Deviation",
+      "commit": null,
+      "impact": "10 runs × 240 tiles executed at wrong temperature; corrected rerun in progress",
+      "licences": [
+        {
+          "scope": "condition",
+          "description": "Licenses preserving (archived, not deleted) the 10 unintended T=1.0 single-pass runs while excluding them from all published analysis.",
+          "factors": {
+            "temperature": "1.0",
+            "tile_size": "384 px",
+            "n_passes": "10",
+            "n_tiles": "240",
+            "model": "gemini-3-flash",
+            "thinking_level": "minimal"
+          },
+          "hypotheses": [
+            "H11"
+          ],
+          "study_families": null,
+          "quote": "Directory renamed to `single-pass-384-UNINTENDED-T1.0`\nwith explanatory README. Not used in any published analysis."
+        },
+        {
+          "scope": "condition",
+          "description": "Licenses the corrected rerun at T=0.0 with scope expanded from 240 to 487 tiles for consistency with the consensus analyses.",
+          "factors": {
+            "temperature": "0.0",
+            "tile_size": "384 px",
+            "n_passes": "10",
+            "n_tiles": "487",
+            "model": "gemini-3-flash",
+            "thinking_level": "minimal",
+            "execution_mode": "batch"
+          },
+          "hypotheses": [
+            "H11"
+          ],
+          "study_families": [
+            "retest-h11-single-pass-384-t0"
+          ],
+          "quote": "**Corrected rerun**: `outputs/retest/h11-single-pass-384-t0/` (10 runs,\n487 tiles — expanded to full evaluation area for consistency with consensus\nanalyses, T=0.0, Flash MINIMAL, Batch API)."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E45",
+      "title": "Unregistered inference method — tile-swap permutation testing (corrected 2026-07-28; originally \"test statistic changed from macro-average to micro-average\")",
+      "lines": [
+        1156,
+        1236
+      ],
+      "date": "2026-03-26 (original); **corrected 2026-07-28** — see Correction",
+      "type": "Deviation (unregistered inference method adopted)",
+      "commit": null,
+      "impact": "**High.** Permutation-based inference underlies every leaderboard, tiering, and pairwise-significance claim in the project; it is an unregistered substitution for the registered method, not an amendment to a registered one",
+      "licences": [
+        {
+          "scope": "correction",
+          "description": "CORRECTION BLOCK PRESENT (dated Correction, 2026-07-28): the entry's original premise — that a preregistered permutation test existed — is withdrawn. Both the old sign-flip test and its replacement are unregistered post-registration methods.",
+          "factors": null,
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "**There was never a preregistered\npermutation test to deviate from.**"
+        },
+        {
+          "scope": "analysis",
+          "description": "Licenses adopting tile-swap permutation with micro-average F1 as the project's pairwise-significance test statistic, replacing the earlier macro-average sign-flip implementation.",
+          "factors": {
+            "test_statistic": "micro-average F1 difference",
+            "permutation_scheme": "tile-swap"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "The generalised replacement script (`pairwise_permutation_test.py`) uses a\n**tile-swap permutation** with **micro-average** F1 as the test statistic."
+        },
+        {
+          "scope": "analysis",
+          "description": "Imposes a reporting obligation: registered bootstrap CIs plus BH-FDR must accompany permutation results wherever confirmatory claims are made.",
+          "factors": {
+            "inference_method": "bootstrap CIs + BH-FDR (registered), permutation (unregistered)"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "The registered analysis for confirmatory\nhypotheses is bootstrap CIs + BH-FDR, and must be reported alongside\npermutation results wherever confirmatory claims are made."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E46",
+      "title": "Primary spatial matching buffer changed from 20 m to 30 m",
+      "lines": [
+        1238,
+        1309
+      ],
+      "date": "2026-03-27",
+      "type": "Deviation",
+      "commit": null,
+      "impact": "Absolute F1/P/R values increase slightly; condition rankings unchanged",
+      "licences": [
+        {
+          "scope": "analysis",
+          "description": "Licenses reporting 30 m as the primary spatial matching tolerance with the registered 20 m demoted to a secondary strict-localisation analysis. SUPERSEDED by E47, which reverts the primary tolerance to 20 m.",
+          "factors": {
+            "buffer_m": "30 (primary), 20 (secondary)"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "The preregistered evaluation buffer of 20 m is replaced\nby 30 m as the primary spatial matching tolerance. 20 m results are\nretained as a secondary strict-localisation analysis."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E47",
+      "title": "Primary spatial matching buffer reverted to preregistered 20 m",
+      "lines": [
+        1311,
+        1364
+      ],
+      "date": "2026-03-29",
+      "type": "Reversion (restores preregistered value)",
+      "commit": null,
+      "impact": "Absolute F1/P/R values decrease slightly; greater discrimination between conditions; condition rankings unchanged",
+      "licences": [
+        {
+          "scope": "analysis",
+          "description": "Reverts the primary matching tolerance to the registered 20 m (superseding E46), with 30 m retained as a reported secondary tolerance and recommended for production deployment; script and config defaults updated to 20 m.",
+          "factors": {
+            "buffer_m": "20 (primary, registered), 30 (secondary)"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "The primary spatial matching tolerance is reverted from\n30 m (E46) to the preregistered 20 m."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E48",
+      "title": "Section 8.4.1 HN target M=3 inconsistent with Scale-8 definition",
+      "lines": [
+        1366,
+        1386
+      ],
+      "date": "2026-04-15",
+      "type": "Correction",
+      "commit": null,
+      "impact": "None (internal inconsistency in preregistration text)",
+      "licences": [
+        {
+          "scope": "documentation",
+          "description": "Resolves an internal inconsistency in the registered text: the stale M=3 hard-negative target in §8.4.1 is treated as a drafting error and HN=4 (per the Scale-8 composition table and 1:1 HP:HN ratio) governs.",
+          "factors": {
+            "hn_count": "4",
+            "hp_count": "4"
+          },
+          "hypotheses": [
+            "H8"
+          ],
+          "study_families": null,
+          "quote": "Use HN=4 (consistent with Scale-8 and the composition table).\nThe M=3 value in §8.4.1 is treated as a drafting error."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E49",
+      "title": "H10 calibration uses cold-start production config instead of preregistered image-only baseline",
+      "lines": [
+        1388,
+        1416
+      ],
+      "date": "2026-04-15",
+      "type": "Deviation",
+      "commit": null,
+      "impact": "Changes which examples are identified as \"hard\"",
+      "licences": [
+        {
+          "scope": "factor-level",
+          "description": "Licenses running H10 hard-case calibration under a cold-start production config — T=0.7, HIGH thinking, text+image instruction file, 9-example legend-plus-nulls library, 150 px crops — instead of the registered image-only T=1.0 K=5 baseline.",
+          "factors": {
+            "temperature": "0.7",
+            "thinking_level": "high",
+            "instruction_file": "detect_brief-text-image",
+            "library": "cold-start: legend + nulls only (9)",
+            "crop_size": "150 px"
+          },
+          "hypotheses": [
+            "H10"
+          ],
+          "study_families": [
+            "h10"
+          ],
+          "quote": "The preregistration specifies calibration runs using an\nimage-only baseline at T=1.0 with K=5 passes. The H10 v2 implementation\ninstead uses a cold-start production config with the following changes:"
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E50",
+      "title": "H10 holdout expanded from 60 to 327 tiles",
+      "lines": [
+        1418,
+        1439
+      ],
+      "date": "2026-04-15",
+      "type": "Deviation",
+      "commit": null,
+      "impact": "Increased statistical power",
+      "licences": [
+        {
+          "scope": "procedure",
+          "description": "Licenses evaluating H10 on a 327-tile holdout (487 total minus 160 calibration tiles at 384 px) instead of the registered 60-tile holdout; calibration pool sizes remain as registered.",
+          "factors": {
+            "n_tiles": "327",
+            "tile_size": "384 px",
+            "calibration_pool_sizes": "20, 40, 80, 160"
+          },
+          "hypotheses": [
+            "H10"
+          ],
+          "study_families": [
+            "h10"
+          ],
+          "quote": "The preregistration specifies a 60-tile holdout for H10\nevaluation. The actual holdout is 327 tiles — the remainder after removing\n160 calibration tiles from 487 total."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E51",
+      "title": "H8 library composition re-run under production carry-forward (384 px / v2 pipeline)",
+      "lines": [
+        1441,
+        1541
+      ],
+      "date": "2026-04-15",
+      "type": "Deviation",
+      "commit": null,
+      "impact": "Changes the evaluation pipeline on which H8 results are reported; re-enables Scale-16/Scale-32",
+      "licences": [
+        {
+          "scope": "factor-level",
+          "description": "Licenses re-running H8 under production carry-forward parameters — 384 px tiles / 336 px stride, T=0.7, HIGH thinking, K=5, 150 px hard-example crops, flex tier with context caching, 327-tile h10-384 test manifest — instead of the original 512 px, T=0.0, minimal-thinking, K=10 Phase 2c settings.",
+          "factors": {
+            "tile_size": "384 px",
+            "stride": "336 px",
+            "temperature": "0.7",
+            "thinking_level": "high",
+            "n_passes": "5",
+            "crop_size": "150 px",
+            "service_tier": "flex",
+            "n_tiles": "327"
+          },
+          "hypotheses": [
+            "H8"
+          ],
+          "study_families": [
+            "h8-v2"
+          ],
+          "quote": "The K=5 reduction from the preregistered K=10 matches production n=5 consensus\nvoting (validated in the 55-maps study) and halves the API spend without\nsacrificing the ability to detect library-composition effects larger than\nprior-phase noise."
+        },
+        {
+          "scope": "condition",
+          "description": "Licenses re-enabling the previously deferred Scale-16 and Scale-32 library conditions (E11 deferral resolved by the v2 hard-case register yielding 108 HP / 57 HN).",
+          "factors": {
+            "library": "Scale-16 (pool_160_hp8hn8), Scale-32 (pool_160_hp16hn16)"
+          },
+          "hypotheses": [
+            "H8"
+          ],
+          "study_families": [
+            "h8-v2"
+          ],
+          "quote": "Scale-16 and Scale-32 were\n   preregistered and can now be executed as originally intended."
+        },
+        {
+          "scope": "procedure",
+          "description": "Licenses reusing the existing H10 v2 pool_160_hp4hn4 runs as the H8 v2 Scale-8 condition instead of re-launching them, justified by verified byte-identical prefix nestedness and matched parameters.",
+          "factors": {
+            "library": "Scale-8 (pool_160_hp4hn4)",
+            "n_passes": "5"
+          },
+          "hypotheses": [
+            "H8"
+          ],
+          "study_families": [
+            "h8-v2",
+            "h10"
+          ],
+          "quote": "the existing `outputs/h10/evaluation-v2/pool_160_hp4hn4/`\nrun_1..run_5 directories are referenced directly in H8-v2 analysis rather than\nre-launched."
+        },
+        {
+          "scope": "procedure",
+          "description": "Records the --workers 250 runtime parallelism and the raised thread-pool ceiling as an operational parameter with no effect on payload content or experimental validity.",
+          "factors": {
+            "workers": "250"
+          },
+          "hypotheses": [
+            "H8"
+          ],
+          "study_families": [
+            "h8-v2"
+          ],
+          "quote": "Parallelism is an operational parameter\nand does not affect the content of the API payload; it does not impact the\nexperimental validity of the results."
+        },
+        {
+          "scope": "correction",
+          "description": "Edge-of-raster exclusion fix: an --exclude-edge-crops filter (default on) was added and the hp8hn8 / hp16hn16 pools re-mined to remove clipped crops that would have created a Scale-32-specific dimensional-uniformity confound; pre-filter pools archived.",
+          "factors": {
+            "library": "pool_160_hp8hn8, pool_160_hp16hn16",
+            "crop_size": "150 px"
+          },
+          "hypotheses": [
+            "H8"
+          ],
+          "study_families": [
+            "h8-v2"
+          ],
+          "quote": "Resolution: `scripts/build_example_pool.py`\nwas extended with an `--exclude-edge-crops` flag (default on) that pre-filters\ncandidates whose `crop_size` window would extend beyond the source raster's\npixel grid."
+        }
+      ],
+      "waives_execution": true
+    },
+    {
+      "erratum_id": "E52",
+      "title": "H12 HP:HN ratio re-run under production carry-forward (384 px / v2 pipeline)",
+      "lines": [
+        1543,
+        1654
+      ],
+      "date": "2026-04-15",
+      "type": "Deviation + deferral resolution",
+      "commit": null,
+      "impact": "Runs H12 at production carry-forward settings with R2 reused from H8 v2 Scale-8; resolves the Decision 11 deferral; relaxes the \"H8 shows library size matters\" trigger",
+      "licences": [
+        {
+          "scope": "condition",
+          "description": "Resolves the Decision 11 deferral of H12: the v2 hard-case register (108 HP / 57 HN) makes the full registered R1/R2/R3 ratio matrix executable.",
+          "factors": {
+            "ratio_conditions": "R1 HP=2/HN=6, R2 HP=4/HN=4, R3 HP=6/HN=2"
+          },
+          "hypotheses": [
+            "H12"
+          ],
+          "study_families": [
+            "h12-v2"
+          ],
+          "quote": "The full preregistered H12 condition matrix is therefore\nexecutable:"
+        },
+        {
+          "scope": "procedure",
+          "description": "Licenses running H12 even though its registered trigger (\"run if H8 shows library size matters\") was not met — H8 v2 returned a null across all seven contrasts after BH-FDR.",
+          "factors": null,
+          "hypotheses": [
+            "H12",
+            "H8"
+          ],
+          "study_families": [
+            "h12-v2",
+            "h8-v2"
+          ],
+          "quote": "Strictly read, the trigger is\nnot met.\n\nH12 is being run anyway for two reasons:"
+        },
+        {
+          "scope": "factor-level",
+          "description": "Licenses H12 parameter deviations matching H8 v2 / H10 v2: 384 px / 336 px stride, T=0.7, HIGH thinking, K=5, 150 px crops, flex tier with context caching, 327-tile h10-384 test manifest.",
+          "factors": {
+            "tile_size": "384 px",
+            "stride": "336 px",
+            "temperature": "0.7",
+            "thinking_level": "high",
+            "n_passes": "5",
+            "crop_size": "150 px",
+            "service_tier": "flex",
+            "n_tiles": "327"
+          },
+          "hypotheses": [
+            "H12"
+          ],
+          "study_families": [
+            "h12-v2"
+          ],
+          "quote": "**Parameter deviations** (applied to match H8 v2 and H10 v2, per E49/E50/E51):"
+        },
+        {
+          "scope": "procedure",
+          "description": "Licenses NOT re-launching the R2 (balanced) condition — analysis references the existing H10 v2 pool_160_hp4hn4 runs directly — and building no new example pools for R1/R3, relying on deterministic prefix-nested greedy selection at seed=42.",
+          "factors": {
+            "library": "pool_160_hp4hn4 (R2), pool_160_hp8hn8 (R1/R3 crops)",
+            "seed": "42"
+          },
+          "hypotheses": [
+            "H12"
+          ],
+          "study_families": [
+            "h12-v2",
+            "h8-v2",
+            "h10"
+          ],
+          "quote": "Model, temperature, thinking, instruction, K, manifest, and tile\nsize are identical between H10 v2 `pool_160_hp4hn4`, H8 v2 `scale-8`, and\nH12 v2 `r2-balanced`, so R2 is NOT re-launched."
+        },
+        {
+          "scope": "analysis",
+          "description": "Fixes H12's aggregation: greedy consensus at t=4 is the primary/headline method with WBF variant C reported alongside as secondary; BH-FDR-corrected pairwise contrasts at q=0.05 computed on the greedy primary metric.",
+          "factors": {
+            "vote_threshold": "4",
+            "aggregation": "greedy (primary), WBF variant C (secondary)"
+          },
+          "hypotheses": [
+            "H12"
+          ],
+          "study_families": [
+            "h12-v2"
+          ],
+          "quote": "Greedy consensus at t = 4 is the primary / headline\naggregation method for H12 (user preference, 2026-04-15); WBF variant C\n(Obs 228–230 parameters) is reported alongside as the secondary method"
+        }
+      ],
+      "waives_execution": true
+    },
+    {
+      "erratum_id": "E53",
+      "title": "Phase 3a-HIGH image track moved from 512 px (Era 1) to 384 px (Era 2)",
+      "lines": [
+        1656,
+        1749
+      ],
+      "date": "2026-04-16",
+      "type": "Deviation",
+      "commit": null,
+      "impact": "H3 image-track consensus analysis reported on Era 2 scope (487 tiles, 384 px) rather than Era 1 (340 tiles, 512 px)",
+      "licences": [
+        {
+          "scope": "procedure",
+          "description": "Licenses omitting the Era-1 512 px Phase 3a-HIGH image-track experiment entirely (manifest generated and run directories created, but detection runs never launched) and replacing it with a 384 px matrix.",
+          "factors": {
+            "tile_size": "512 px",
+            "n_tiles": "340",
+            "thinking_level": "high",
+            "n_passes": "30"
+          },
+          "hypotheses": [
+            "H3"
+          ],
+          "study_families": [
+            "retest-phase3a-high"
+          ],
+          "quote": "**Resolution**: The 512-px experiment is omitted. Instead, a complete\n2 × 4 thinking × temperature matrix is run at 384 px (487 tiles) using\nthe existing H11 infrastructure:"
+        },
+        {
+          "scope": "condition",
+          "description": "Licenses the replacement design: a 2 (HIGH, MINIMAL thinking) × 4 (T=0.0, 0.3, 0.7, 1.0) matrix at 384 px on 487 tiles with K=10 (K=3 at T=0.0; K=30 only if needed), reusing existing H11 cells where they already exist.",
+          "factors": {
+            "tile_size": "384 px",
+            "n_tiles": "487",
+            "thinking_level": "high, minimal",
+            "temperature": "0.0, 0.3, 0.7, 1.0",
+            "n_passes": "10 (3 at T=0.0)",
+            "execution_mode": "realtime flex + context caching",
+            "workers": "250"
+          },
+          "hypotheses": [
+            "H3"
+          ],
+          "study_families": [
+            "pv-diag-384",
+            "retest-phase3a-high"
+          ],
+          "quote": "The study\nmanifest was generated (2026-03-18) and run directories created, but the\ndetection runs were never launched."
+        }
+      ],
+      "waives_execution": true
+    },
+    {
+      "erratum_id": "E54",
+      "title": "Bootstrap iteration count — preregistered 1 000 for primary F1, post-hoc 10 000 for narrow-effect analyses",
+      "lines": [
+        1751,
+        1787
+      ],
+      "date": "2026-04-21",
+      "type": "Clarification",
+      "commit": "TBD",
+      "impact": "None (preregistered methodology unchanged)",
+      "licences": [
+        {
+          "scope": "correction",
+          "description": "CORRECTION PRESENT (attribution corrected 2026-07-28, D17 audit U1): the 1 000-iteration count, percentile method and tile-level resampling unit are pre-specified in Decision 10, not registered in §3.5 as previously claimed.",
+          "factors": {
+            "bootstrap_iterations": "1000",
+            "ci_method": "percentile 2.5th / 97.5th",
+            "resampling_unit": "tile"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "the registered text specifies 95% bootstrapped CIs (Section 3.5); the **1 000-iteration** count, percentile method (2.5th / 97.5th), and tile-level resampling unit were fixed pre-lodgement in **Decision 10** (`decisions-log.md:337`) and do not appear in the lodged registration."
+        },
+        {
+          "scope": "analysis",
+          "description": "Licenses a split bootstrap-iteration convention: 1 000 iterations for all scripts evaluating preregistered conditions, 10 000 for named post-hoc narrow-effect analyses, with resampling unit and percentile method unchanged.",
+          "factors": {
+            "bootstrap_iterations": "1000 (preregistered conditions), 10000 (post-hoc narrow-effect analyses)"
+          },
+          "hypotheses": null,
+          "study_families": null,
+          "quote": "Several **post-hoc** analyses (not specified in the preregistration) use **10 000 iterations** instead."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E55",
+      "title": "Verifier-t-pilot T0.5/T1.0 metadata under-recorded the swept temperature",
+      "lines": [
+        1789,
+        1818
+      ],
+      "date": "2026-05-30",
+      "type": "Metadata correction (non-destructive)",
+      "commit": "TBD",
+      "impact": "Low — exploratory pilot (H2); corrected at source and in the manifest",
+      "licences": [
+        {
+          "scope": "correction",
+          "description": "Non-destructive metadata correction: the swept verifier temperature (0.5 / 1.0) applied via CLI override was not written into run.meta.json; an additive temperature_effective field and _correction block record the execution truth while the original serialised value is left untouched.",
+          "factors": {
+            "temperature": "0.5, 1.0 (verifier)"
+          },
+          "hypotheses": [
+            "H2"
+          ],
+          "study_families": [
+            "verifier-t-pilot"
+          ],
+          "quote": "An additive `configuration.temperature_effective` (0.5 / 1.0) and a `configuration._correction` block (true value, `run.log` source, this erratum, date) were added to each meta, so a direct reader of the raw file sees the execution truth."
+        },
+        {
+          "scope": "procedure",
+          "description": "Establishes a general provenance-extraction rule (GAP-10): a logged CLI override outranks the meta configuration field when recording run parameters.",
+          "factors": null,
+          "hypotheses": null,
+          "study_families": [
+            "verifier-t-pilot"
+          ],
+          "quote": "The extractor gains a general rule: prefer a logged CLI override over the meta `configuration` field (GAP-10)."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E56",
+      "title": "Verifier probability-threshold operating points are in-sample (test-set-selected), not calibrated",
+      "lines": [
+        1824,
+        1858
+      ],
+      "date": "2026-06-02",
+      "type": "Methodological clarification (threshold provenance)",
+      "commit": "TBD",
+      "impact": "Medium — governs how diagnostic operating points are reported; the headline pipeline is unaffected (binary verdict)",
+      "licences": [
+        {
+          "scope": "analysis",
+          "description": "Discloses that every verifier prob_t operating point in the diagnostics was selected on the 487-tile test set with no held-out verifier data, and licenses their use only as in-sample, explicitly-labelled numbers.",
+          "factors": {
+            "prob_threshold": "swept, F1-optimum at 20 m (in-sample)",
+            "buffer_m": "20",
+            "n_tiles": "487"
+          },
+          "hypotheses": [
+            "H2"
+          ],
+          "study_families": [
+            "pv-diag-384"
+          ],
+          "quote": "So any single `prob_t`-thresholded F1 quoted for these diagnostics is an **in-sample, test-set-optimised** number, not a calibrated one."
+        },
+        {
+          "scope": "procedure",
+          "description": "Fixes the headline reporting rule: the proposer-verifier headline result is reported at the binary verdict with prob_threshold null and no tuning, while probability diagnostics are presented as threshold-sensitivity curves rather than single F1 maxima.",
+          "factors": {
+            "prob_threshold": "null (headline binary verdict)"
+          },
+          "hypotheses": [
+            "H2"
+          ],
+          "study_families": [
+            "gold-standard-v2",
+            "pv-diag-384"
+          ],
+          "quote": "Report the headline proposer-verifier result at the **binary verdict** (`prob_t = null`), per gs-v2 and the preregistered design."
+        },
+        {
+          "scope": "correction",
+          "description": "Attribution correction (2026-07-28, D17 audit): the registered >=3/5 threshold governs hard-example mining, not consensus vote-threshold calibration; the calibrate-then-test split for the vote threshold is an execution-time practice, not a registered one.",
+          "factors": {
+            "vote_threshold": "3/5 (registered, for hard-example mining)"
+          },
+          "hypotheses": [
+            "H2",
+            "H3"
+          ],
+          "study_families": null,
+          "quote": "the registered ≥3/5 threshold, `osf/preregistration.md:1450-1451`, governs hard-example mining in §8.4.1 Step 2 — which FNs/FPs qualify as HP/HN candidates — not consensus vote-threshold calibration; the calibrate-then-test split for the vote threshold is an execution-time practice, not a registered one."
+        },
+        {
+          "scope": "analysis",
+          "description": "UPDATE BLOCK PRESENT (2026-06-06 scope clarification): explicitly limits this erratum to verifier probability thresholds and licenses H3's swept best-(N, threshold) consensus characterisation as the preregistered method, not an in-sample hedge; keeps three operating-point provenances distinct.",
+          "factors": {
+            "vote_threshold": "swept, best (N, threshold) against test tiles"
+          },
+          "hypotheses": [
+            "H3"
+          ],
+          "study_families": [
+            "pv-diag-384",
+            "retest-phase3a"
+          ],
+          "quote": "No preregistration amendment is required: H3's swept-optimal reporting was preregistered"
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E57",
+      "title": "H11 384px Pro/baseline detection metadata — model template default and output_dir overrides",
+      "lines": [
+        1860,
+        1931
+      ],
+      "date": "2026-06-02 (original); **revised 2026-06-03** — see Update below",
+      "type": "Metadata correction (non-destructive) + **billing reconciliation (finding-affecting)**",
+      "commit": "`e1f20da4` (model-of-record + re-run), `59727c8a` (re-tier), `c06aceee` (finding rewrite)",
+      "impact": "**Revised to Medium–High.** The original assessment (\"Low — provenance only\") was wrong: the 2026-06-03 billing reconciliation found four of the \"Pro\" pools were dispatched as **Flash**, which CHANGED the N=1 leaderboard finding (tie_set and the H6 narrative). See the Update.",
+      "licences": [
+        {
+          "scope": "correction",
+          "description": "UPDATE BLOCK PRESENT (2026-06-03 billing reconciliation, finding-affecting): fixes the authoritative model-of-record field and corrects run-conditions.json — four n1-outstanding-384 \"Pro\" cells were actually dispatched and billed as Flash; the four pv-diag-384 Pro cells are genuinely Pro.",
+          "factors": {
+            "model": "gemini-3-flash-preview (n1-outstanding-384 pro-* cells), gemini-3.1-pro-preview (pv-diag-384 pro-* cells)"
+          },
+          "hypotheses": [
+            "H6"
+          ],
+          "study_families": [
+            "n1-outstanding-384",
+            "pv-diag-384"
+          ],
+          "quote": "**The authoritative field for *what ran* is `per_item_metadata.model_version` / `pricing_used.model` — NEVER `config.model`** (a Flash template-default on BOTH groups) **and never the directory slug or the study YAML** (which record *intent*, not dispatch)."
+        },
+        {
+          "scope": "condition",
+          "description": "Licenses the genuine-Pro re-run of the four mis-dispatched corners as a new run family, replacing the Flash cells on the N=1 leaderboard while preserving the Flash cells as genuine Flash data at otherwise-untested corners.",
+          "factors": {
+            "model": "gemini-3.1-pro-preview",
+            "thinking_level": "high (T=0.0 corners), medium (T=0.7 corners)",
+            "temperature": "0.0, 0.7",
+            "tile_size": "384 px",
+            "execution_mode": "realtime flex"
+          },
+          "hypotheses": [
+            "H6",
+            "H7"
+          ],
+          "study_families": [
+            "n1-pro-rerun-384",
+            "n1-outstanding-384"
+          ],
+          "quote": "To complete the genuine Pro 2×2 × modality, the four mis-dispatched corners were re-dispatched as genuine Pro (run `n1-pro-rerun-384`, realtime+flex, byte-audited configs; `outputs/h11/n1-pro-rerun-384/`, committed `1cdf9438`)."
+        },
+        {
+          "scope": "procedure",
+          "description": "Non-destructive resolution for the two metadata artefacts: raw .meta.json and study YAMLs left untouched; the eval _metadata.input_files path plus study_manifest.json are the ground truth for run/model identity, not config.model or the YAML output_dir.",
+          "factors": null,
+          "hypotheses": null,
+          "study_families": [
+            "pv-diag-384",
+            "n1-outstanding-384",
+            "retest-h11-single-pass-384-t0"
+          ],
+          "quote": "Treat the eval `_metadata.input_files.detections` path + the `study_manifest.json` description as ground truth for run/model identity — NOT `config.model` or the YAML `output_dir`."
+        },
+        {
+          "scope": "correction",
+          "description": "Completeness addendum: all four medium-thinking Pro cells brought to n=3, and two pv-diag medium-T=0.0 cells recovered from ~5 % unretried tile failures via resume-merge, changing their scores and the tie_set reading.",
+          "factors": {
+            "n_passes": "3",
+            "thinking_level": "medium",
+            "temperature": "0.0"
+          },
+          "hypotheses": [
+            "H6",
+            "H7"
+          ],
+          "study_families": [
+            "pv-diag-384",
+            "n1-pro-rerun-384"
+          ],
+          "quote": "Finalising the board, all four medium-thinking Pro cells were brought to n=3."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E58",
+      "title": "Registered H2 proposer prompt (`propose_brief`) never used — `detect_brief-text` substituted in all PV experiments",
+      "lines": [
+        1933,
+        1976
+      ],
+      "date": "2026-04-08 (deviation identified and analysed); **registered here 2026-07-28**",
+      "type": "Deviation",
+      "commit": "`5e7601d7` (prompt refinement, never invoked); analysis in `docs/notes/working-notes.md:6556-6790`",
+      "impact": "Medium — every PV experiment used a non-registered proposer prompt; measured comparison shows the substitution was conservative under N=1 but superior under production consensus",
+      "licences": [
+        {
+          "scope": "procedure",
+          "description": "Discloses that the registered H2 proposer prompt propose_brief was never invoked in any experiment — detect_brief-text outputs were substituted as proposer input in every PV experiment from Phase 3d through H11 production.",
+          "factors": {
+            "proposer_prompt": "detect_brief-text (substituted for registered propose_brief)"
+          },
+          "hypotheses": [
+            "H2"
+          ],
+          "study_families": [
+            "gold-standard-v2",
+            "proposer-verifier-384",
+            "proposer-verifier-512",
+            "pv-diag-384",
+            "e47-propose-brief"
+          ],
+          "quote": "The `propose_brief.md` prompt was written 2026-01-20 and refined 2026-02-03\n— and **never invoked in any experiment**."
+        },
+        {
+          "scope": "documentation",
+          "description": "Imposes a reporting constraint: PV results implement registered H2 Condition B with a non-registered proposer prompt, and the paper must not describe the production proposer as the registered one.",
+          "factors": {
+            "proposer_prompt": "detect_brief-text (non-registered)"
+          },
+          "hypotheses": [
+            "H2"
+          ],
+          "study_families": [
+            "gold-standard-v2"
+          ],
+          "quote": "PV results implement registered H2 Condition B (see\ncorrected E37) with a non-registered proposer prompt. The paper must not\ndescribe the production proposer as the registered one."
+        },
+        {
+          "scope": "correction",
+          "description": "Register-integrity note: the 2026-04-08 working-notes analysis was headed \"Erratum E47\", colliding with the canonical E47 (20 m buffer reversion); it is promoted to E58 in the canonical register.",
+          "factors": null,
+          "hypotheses": [
+            "H2"
+          ],
+          "study_families": [
+            "e47-propose-brief"
+          ],
+          "quote": "It is promoted to **E58**\n(2026-07-28, D17 audit); the working-notes analysis remains the reference\nartefact."
+        }
+      ],
+      "waives_execution": true
+    },
+    {
+      "erratum_id": "E59",
+      "title": "H2 Condition C (fine-to-coarse) — registered confirmatory condition never executed, never formally dropped",
+      "lines": [
+        1978,
+        2015
+      ],
+      "date": "2026-07-28 (omission spans 2026-02 → present)",
+      "type": "Deviation",
+      "commit": null,
+      "impact": "Medium-high — one of three registered H2 conditions has no result and no decision trail",
+      "licences": [
+        {
+          "scope": "condition",
+          "description": "Records — but does NOT license — the non-execution of registered H2 Condition C (fine-to-coarse: 512 px detection with 5-pass voting, 2/5–3/5 candidates re-queried at ~1024 px with the registered verification prompt). No decision trail exists and the 2026-03-15 deprioritisation rationale is held invalid under the registered design.",
+          "factors": {
+            "tile_size": "512 px (Stage 1), ~1024 px (Stage 2 re-query)",
+            "n_passes": "5",
+            "vote_threshold": "2/5–3/5 (candidate band)"
+          },
+          "hypotheses": [
+            "H2"
+          ],
+          "study_families": [
+            "retest-phase3a"
+          ],
+          "quote": "the registration specifies H2 Condition C — standard\ndetection on 512 px tiles with 5-pass voting; candidates at 2/5–3/5\nagreement re-queried at ~1024 px with a verification prompt\n(`osf/preregistration.md:478-482`). It was never executed."
+        },
+        {
+          "scope": "documentation",
+          "description": "Leaves the disposition open: whether to run Condition C now (~1–1.5 days, Stage 1 already exists) or disclose it as unexecuted is an unresolved PI decision, with two open sub-decisions (corpus and crop size, the spec giving both 1024 px and 896 px).",
+          "factors": {
+            "crop_size": "1024 px (osf:482) vs 896 px (appendix :1144) — unresolved"
+          },
+          "hypotheses": [
+            "H2"
+          ],
+          "study_families": null,
+          "quote": "Whether to run\nit or disclose it as unexecuted is an open PI decision\n(`planning/audit-and-completion-plan.md` § 8)."
+        }
+      ],
+      "waives_execution": false
+    },
+    {
+      "erratum_id": "E60",
+      "title": "H7 escalation trigger — fired as written on the expanded corpus; escalation judged uninformative and not run",
+      "lines": [
+        2017,
+        2066
+      ],
+      "date": "2026-07-28 (decision 2026-07-28; trigger events 2026-02 / 2026-03)",
+      "type": "Deviation (registered conditional evaluated; escalation not conducted)",
+      "commit": null,
+      "impact": "Low-medium — two registered exploratory cells (T=1.6, T=2.0) not run; the scientific question they target is already answered",
+      "licences": [
+        {
+          "scope": "procedure",
+          "description": "Formally licenses NOT running the registered T=1.6 / T=2.0 exploratory escalation, recording the PI decision and the reasoning (triggering difference is noise, direction reverses on the image track, full curve monotone declining).",
+          "factors": {
+            "temperature": "1.6, 2.0 (not run)"
+          },
+          "hypotheses": [
+            "H7"
+          ],
+          "study_families": [
+            "retest-phase2b"
+          ],
+          "quote": "**Resolution**: T=1.6 / T=2.0 escalation is **not run** (decision recorded\nat `planning/audit-and-completion-plan.md` § 6.1, 2026-07-28)."
+        },
+        {
+          "scope": "analysis",
+          "description": "Discloses that the registered trigger never fired on the registered 60-tile corpus and fired only on the E36-expanded 340-tile retest, and only on the text track — i.e. the firing occurred on an unregistered corpus.",
+          "factors": {
+            "temperature": "1.0 vs 1.3",
+            "n_tiles": "60 (registered), 340 (retest)"
+          },
+          "hypotheses": [
+            "H7"
+          ],
+          "study_families": [
+            "retest-phase2b"
+          ],
+          "quote": "**On the corpus the registration specified** (60-tile K=10 holdout), the\ntrigger **never fired**"
+        },
+        {
+          "scope": "documentation",
+          "description": "Fixes the disclosure obligation: no reported number changes, but the paper's deviations table gains one disclosure row.",
+          "factors": null,
+          "hypotheses": [
+            "H7"
+          ],
+          "study_families": null,
+          "quote": "**Blast radius**: none on reported results (no existing number changes);\nthe deviations table in the paper gains one disclosure row."
+        }
+      ],
+      "waives_execution": true
+    },
+    {
+      "erratum_id": "E61",
+      "title": "H4b trigger wording clarified — \"main effect\" designates the registered directional contrast; H4b to run as unregistered exploratory on the full GS corpus",
+      "lines": [
+        2068,
+        2117
+      ],
+      "date": "2026-07-28 (PI decision, Session 119)",
+      "type": "Clarification",
+      "commit": null,
+      "impact": "Settles whether H4b is an owed registered experiment (it is not), and fixes H4's primary test ahead of the family-level BH-FDR analysis",
+      "licences": [
+        {
+          "scope": "analysis",
+          "description": "PI decision fixing H4's primary test: the ambiguous registered \"main effect\" trigger designates the registered directional contrast (canonical-last > canonical-first), not an omnibus any-ordering-effect test; recorded before the family-level BH-FDR analysis runs.",
+          "factors": {
+            "ordering": "canonical-first vs canonical-last (directional contrast)"
+          },
+          "hypotheses": [
+            "H4",
+            "H4b"
+          ],
+          "study_families": [
+            "retest-phase2e"
+          ],
+          "quote": "**PI decision (2026-07-28)**: **reading (1) is adopted.**"
+        },
+        {
+          "scope": "procedure",
+          "description": "Under the adopted reading, licenses NOT executing H4b as a registered experiment: Phase 2e's directional contrast is null (0/6 comparisons FDR-significant) so the H4b trigger never fired.",
+          "factors": {
+            "ordering": "canonical-last 0.609 vs canonical-first 0.579"
+          },
+          "hypotheses": [
+            "H4",
+            "H4b"
+          ],
+          "study_families": [
+            "retest-phase2e"
+          ],
+          "quote": "**the H4b trigger never fired and H4b is not an owed\nregistered experiment**"
+        },
+        {
+          "scope": "condition",
+          "description": "Licenses running H4b's two cells (HP-first vs HN-first within the hard block) anyway as unregistered exploratory, over the full gold-standard corpus rather than the registered 60-tile holdout; instrument (Era-1 512 px/340-tile vs Era-2 384 px/487-tile) settled at run-authoring time.",
+          "factors": {
+            "hard_block_order": "HP-first, HN-first",
+            "n_tiles": "full gold-standard corpus (not the registered 60-tile holdout)",
+            "tile_size": "512 px (Era 1) or 384 px (Era 2) — TBD at authoring"
+          },
+          "hypotheses": [
+            "H4b"
+          ],
+          "study_families": null,
+          "quote": "H4b's two cells (HP-first vs\nHN-first within the hard block) will nevertheless be run as **unregistered\nexploratory**, buying off the interpretive ambiguity entirely at small cost\n— and over the **full gold-standard corpus rather than the registered\n60-tile holdout**, because the 60-tile set lacks the power to separate\nconditions (the E36 lesson)."
+        },
+        {
+          "scope": "procedure",
+          "description": "Imposes a pre-registration-of-record obligation on the exploratory H4b run: registry entry, conditions and predicted_outcome must be committed with status: planned before execution.",
+          "factors": {
+            "registry_status": "planned (committed before execution)"
+          },
+          "hypotheses": [
+            "H4b"
+          ],
+          "study_families": null,
+          "quote": "per\n§ 6.4 of `planning/audit-and-completion-plan.md`, the registry entry,\nconditions, and `predicted_outcome` must be authored and committed with\n`status: planned` **before** the run executes."
+        }
+      ],
+      "waives_execution": true
+    }
+  ]
+}
