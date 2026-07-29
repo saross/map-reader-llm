@@ -93,9 +93,20 @@ Spot-audited by the orchestrator at source (all confirmed) unless noted.
    with the already-queued HIGH-thinking erratum; separately 41 of 84
    configs set `thinking_level: high` against the blanket minimal
    commitment.
-10. **CMT-0109 — practice contradicts the registered role of text
-    conditions** (academic baselines) — the headline and deployment
-    pipelines run `detect_brief-text`.
+10. **CMT-0109 — the registered role of text conditions was never
+    formally retired.** The lodged framing (four sites: text-only =
+    "academic baselines", image = "the primary optimisation target")
+    is a role disclosure, not a procedural rule. The execution-level
+    reversal IS licensed: E27 confronts Phase 2a's text-wins result
+    (brief-text F1 0.5425 vs 0.4617) and licenses the dual-track
+    design; E28 carries it forward. The residue: E27 promised deferred
+    text results "reported as exploratory", while the deployment
+    headline (`55maps-*` on `detect_brief-text`) draws operational
+    conclusions from the text condition — a reporting-layer gap, not
+    an execution breach. GATE 1 options: waive under E27/E28 with a
+    mandatory paper narration; file a short rider erratum retiring the
+    designation (recommended); or hold open until the paper narrates
+    the reversal.
 11. **H11 at 384 px**: overlap is 48 px, not the registered 64 px
     (confirms register E-07 from tile geometry); the 384 px few-shot
     library was never regenerated (configs point at 512-era crops).
@@ -162,6 +173,15 @@ deferred per charter. Notes-file C5 families → Phase 4.
    triage of discrepancies only; US$0).
 
 ## Changelog
+
+### 2026-07-29 — Finding 10 precision (PI query)
+
+The PI asked whether the "academic baselines" framing was binding and
+whether errata addressed the text-wins reversal. Finding 10 now records
+both: E27/E28 license the execution-level reversal (dual-track); no
+erratum retires the role designation itself, and the deployment
+headline exceeds E27's "reported as exploratory" promise. Ruling
+options added. Status unchanged (open) pending the GATE 1 ruling.
 
 ### 2026-07-29 — Finding 3 timeline precision (PI query)
 
