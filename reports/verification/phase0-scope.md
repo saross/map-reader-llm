@@ -1,7 +1,8 @@
 # Phase 0 — verification programme scoping report
 
-> **Last revised**: 2026-07-29 (original publication). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-07-29 (GATE 0 partial ruling; Sol rates
+> verified against official OpenAI pricing; worst-case budget added).
+> See [§ Changelog](#changelog) for revision history.
 
 **Controller**: `planning/audit-charter.md` (§ 7 Phase 0). **Executor**:
 Claude Fable 5 interactive session, 2026-07-29. **Status**: complete;
@@ -150,14 +151,18 @@ commitments): 1 session. C6 tracing and all adjudication: foreground,
 
 ### 4.3 GPT-5.6 Sol (OpenAI credit) — raw Batch API, stacked discounts
 
-Rates gathered this session from third-party aggregators (OpenRouter,
-pricepertoken.com, aipricing.guru): standard **$5.00 / $0.50 / $6.25 /
-$30.00 per million tokens** (input / cached read / cache write /
-output); **Batch API halves everything**; batch and cache-read
-discounts stack (settled, charter § 8). Effective stacked rates:
-**$2.50 fresh input, $0.25 cached read, $15.00 output per million**.
-**Must be re-verified against the official OpenAI pricing page at the
-Phase 4 pilot gate** — third-party figures are not a citable anchor.
+Rates **verified 2026-07-29 against the official OpenAI pricing page**
+(`https://developers.openai.com/api/docs/pricing`, supplied by the PI at
+GATE 0; matches the third-party figures used in the original
+publication): standard **$5.00 / $0.50 / $6.25 / $30.00 per million
+tokens** (input / cached read / cache write / output); **Batch API is
+50 % off across all four token types**, and the Batch table itself
+prices cached input — confirming, from the official source, that the
+batch and cache discounts stack (charter § 8). Effective stacked rates:
+**$2.50 fresh input, $0.25 cached read, $3.125 cache write, $15.00
+output per million**. Long-context columns ($10 / $1 / $12.50 / $45)
+never trigger at our call sizes. Anchor recorded in charter § 8;
+re-verify at each API review gate.
 
 Per-call model (structure per charter § 8: static preamble ~1.5 k
 tokens with `cache_control` breakpoint + variable payload last):
@@ -169,17 +174,25 @@ tokens with `cache_control` breakpoint + variable payload last):
 | Output incl. reasoning (medium effort) | ~1,000 | $15.00 /M | $0.0150 |
 | **Total, medium effort** | | | **≈ $0.02** |
 | **Total, high effort** (~2.5–3 k output) | | | **≈ $0.04–0.05** |
+| **Worst case** (high effort + ~10 k-token source excerpt + ~5 k reasoning/output) | ~11,500 in / ~5,000 out | | **≈ $0.10** |
 
 Cache writes (~$0.005 per 30-minute window) are negligible. Aggregate
-(per the global compute-aggregate rule):
+(per the global compute-aggregate rule), with the worst-case column
+assuming *every* call hits ~$0.10 — deliberately pessimistic so the
+budget cannot be caught short:
 
-| Stage | Calls | Cost range |
-|---|---:|---:|
-| Pilot (~30 items, two effort levels) | ~60 | ~$1.50 |
-| **Stage A — S119 corrections** | ~150 | **$3–8** |
-| Stage B — full C5 sweep | ~560 | $11–28 |
-| Stage B — full C6 sweep | ~426 | $9–21 |
-| **Programme ceiling (all stages + retries)** | ~1,200 | **≤ $60** |
+| Stage | Calls | Expected | Worst case |
+|---|---:|---:|---:|
+| Pilot (~30 items, two effort levels) | ~60 | ~$2 | $6 |
+| **Stage A — S119 corrections** | ~150 | **$3–8** | **$15** |
+| Stage B — full C5 sweep | ~560 | $11–28 | $56 |
+| Stage B — full C6 sweep | ~426 | $9–21 | $43 |
+| **Programme total (all stages + retries)** | ~1,200 | **$25–60** | **~$120** |
+
+Worst-case containment: the pilot fixes measured per-call cost and the
+right reasoning-effort level *before* Stage B's go/no-go at GATE 3, and
+Stage B submits in waves so a surprise in wave 1 caps exposure at that
+wave.
 
 Gemini 3.1 Pro tiebreak on two-way disagreements (5–15 % of Sol-checked
 items ≈ 60–170 calls): estimated < $10; rate pinned at the pilot gate.
@@ -187,9 +200,10 @@ Every Sol/Gemini run passes the standing API-review gate (model, batch
 vs real-time, call count, cost) before launch; approval for one batch
 never carries to the next.
 
-**Recommendation**: approve the pilot + Stage A now (≤ $10 all-in);
-defer the Stage B go/no-go to GATE 3, decided on pilot-calibrated
-per-call cost and observed disagreement rate.
+**Recommendation**: approve the pilot + Stage A now (expected $5–10
+all-in, bounded at **≤ $21 absolute worst case**); defer the Stage B
+go/no-go to GATE 3, decided on pilot-calibrated per-call cost and
+observed disagreement rate.
 
 ### 4.4 Per-phase summary
 
@@ -247,7 +261,18 @@ charter bug to fix once GATE 0 clears:
 Positive check: the charter's C5 anchor `osf/README.md:3,9-11` resolved
 exactly; the Phase 2 row counts (1,132 / 322) reconfirmed at source.
 
+**Status**: all six fixes approved at GATE 0 (decision 6, with the
+instruction to generalise/cascade for durability) and landed in the
+charter as commit `a1bd74f49` — explicit § 2 scope lists, § 4 path fix,
+new § 5 rule 12 (charter self-sufficiency verified), § 8 pricing anchor
+and foreground/background definitions, § 10 ruling record.
+
 ## 7. GATE 0 decision list
+
+**Ruling status (PI, 2026-07-29)**: decisions 1–4 approved as proposed;
+decision 6 approved with the generalise/cascade instruction (landed,
+§ 6); decision 5 pending PI confirmation of the § 4.3
+officially-verified figures and worst-case bounds before any Sol spend.
 
 1. **Scope**: approve § 1.4 rulings (methodology-subset reading;
    exclusions; six tracking/errata docs in the mine).
@@ -262,6 +287,26 @@ exactly; the Phase 2 row counts (1,132 / 322) reconfirmed at source.
 6. **Charter fixes**: approve landing § 6's six text fixes as commits.
 
 ## Changelog
+
+### 2026-07-29 — GATE 0 partial ruling; official pricing verification
+
+**Trigger**: PI GATE 0 review — decisions 1–4 and 6 approved; for
+decision 5 the PI supplied the official OpenAI pricing page and asked
+for the estimate to be re-checked so the budget cannot be caught short.
+
+Numerical claims that moved:
+
+| Claim | Before | After |
+|---|---|---|
+| Rate source | Third-party aggregators, unverified | Official page, verified 2026-07-29 (figures unchanged) |
+| Batch+cache stacking | Settled by PI ruling only | Confirmed at source (Batch table prices cached input) |
+| Pilot + Stage A ask | ≤ $10 | Expected $5–10, worst case ≤ $21 |
+| Programme ceiling | ≤ $60 | Expected $25–60, absolute worst case ~$120 |
+
+Not changed: corpus enumeration, strata, all claim counts, executor
+assignment, foreground/background split. Charter fixes (decision 6)
+landed as commit `a1bd74f49`. This revision's own commit is referenced
+from the git history of this file.
 
 ### 2026-07-29 — Original publication
 
