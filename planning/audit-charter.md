@@ -1,7 +1,8 @@
 # End-to-end verification charter — preregistration → experiments → results → mine documents
 
-> **Status**: DRAFT for PI review (written overnight 2026-07-28/29, Session
-> 119; Shawn to review before any execution). **This document is the
+> **Status**: REVISED per PI review 2026-07-29 (all § 10 questions answered;
+> design approved; gates and folder structure to be refined after a first
+> run). Execution begins with Phase 0. **This document is the
 > controller for the whole verification programme**: it is self-sufficient —
 > any executor (a Claude session, a background agent, a script, or a
 > non-Anthropic model) resumes from this file and the ledgers alone, with no
@@ -41,8 +42,26 @@ artefact 2026-07-28, blob `fa221b30…`).
 
 **Out of scope**: all paper-bound prose (`docs/paper/**` — will be
 regenerated from the mine; PI decision 2026-07-28); `archive/**` (frozen
-history); `docs/notes/**` reflections (historical record — corrections land
-as appended notes or new Obs, never edits; not mine material).
+history); `docs/notes/**` reflections (historical record).
+
+**Working notes have a dual role (PI, 2026-07-29)** — they are both:
+(a) an **attestation source** for interpretive claims — real-time
+observations made during the experiments, months closer to the source than
+anything written now, and explicitly planned as material for the Discussion;
+and (b) a **correction target** where they contain *factual* errors about
+empirical results. Factual corrections never edit an Obs: one new Obs rider
+per error family, with a pointer appended at the original Obs (appending a
+pointer is permitted; editing is not).
+
+**The stratum rule (PI, 2026-07-29)**: artefacts up to and including
+`results/**` are **facts only** — the kind of content that belongs in a
+paper's Results section. Interpretation belongs in `reports/**` (Discussion
+or occasionally Methodology material) and must be anchored either to results
+artefacts (its factual basis) or to attested contemporaneous interpretation
+(working notes / transcripts). A **stratum-purity check** — verifying that
+`results/**` documents contain no unflagged interpretation — is queued as a
+deferred item in § 7; it need not run in the first sweep but the rule
+governs all new writing immediately.
 
 ## 3. The chain and its six claim classes
 
@@ -60,6 +79,13 @@ as appended notes or new Obs, never edits; not mine material).
 - **ATTESTED** — a contemporaneous dated source states it; quote + locator
   required. (Template: the H6 deferral — the invented "budget prioritised"
   was replaced by the *stronger* attested reason, a dated PI turn.)
+  **Interpretive claims** in reports are ATTESTED when traceable to a
+  contemporaneous working-notes or transcript record of the observation or
+  decision. **Attestation establishes provenance of the thinking, not its
+  truth** (PI, 2026-07-29): an attested interpretation may still be
+  empirically wrong — later evidence may invalidate it — and its current
+  empirical validity is a separate check against the results artefacts.
+  Both facts go in the ledger row when they diverge.
 - **RECONSTRUCTED** — consistent with evidence, no direct attestation; the
   document must label it as inference, never state it as fact.
 - **UNSUPPORTED** — no evidence; searches enumerated (auditable negative);
@@ -123,6 +149,12 @@ DEFERRED (blocked, reason stated)**.
 10. **Pre-execution registration for any new run**: registry entry,
     conditions, `predicted_outcome` committed with `status: planned` BEFORE
     the API call (`audit-and-completion-plan.md` § 6.4).
+11. **Change the question, not just the questioner** (paper-B; PI,
+    2026-07-29). Where feasible, verification asks an *orthogonal* question
+    of the source — "reconstruct what the source says about X" rather than
+    "is claim Y true?" — because a fabrication survives same-question
+    re-checking far more easily than orthogonal interrogation. Not always
+    possible; use whenever it is.
 
 ## 6. Ledgers
 
@@ -154,10 +186,14 @@ Coverage matrix (`reports/verification/coverage.md`) is **generated** from
 the ledgers by script — never hand-maintained.
 
 **Monitoring layer** (Phase 5, the part that makes it stick): a
-`revalidate_ledgers.py` script re-resolves every anchor and re-diffs every
-recomputable value; wired beside `drift_check` so any regeneration or edit
-that breaks a verified claim fails loudly. New rationale claims in
-regenerated prose are quotable only from ATTESTED ledger rows.
+`revalidate_ledgers.py` script re-resolves every anchor, re-diffs every
+recomputable value, and **mechanically verifies every `claim_text` and
+`evidence` span appears verbatim at its cited locator** (verbatim spans are
+load-bearing — a paraphrase logged as a quote is itself a fabrication class,
+so the spans themselves are verified, not trusted; PI, 2026-07-29). Wired
+beside `drift_check` so any regeneration or edit that breaks a verified
+claim fails loudly. New rationale claims in regenerated prose are quotable
+only from ATTESTED ledger rows.
 
 ## 7. Work queue and gates
 
@@ -180,8 +216,9 @@ corrections, moves on. **GATE** = PI review before proceeding.
   **GATE 1.**
 - [ ] **Phase 2 — provenance (C3).** Field-level re-derivation of
   `passes-manifest.json` and `conditions-manifest.json` rows from raw
-  metas/evals. Full enumeration (1,132 passes / 322 conditions — script job
-  on sapphire, LLM only for discrepancy triage). **GATE 2.**
+  metas/evals. **Full enumeration** (settled, PI 2026-07-29; 1,132 passes /
+  322 conditions — script job on sapphire, LLM only for discrepancy
+  triage). **GATE 2.**
 - [ ] **Phase 3 — quantitative sweep (C4).** LLM extracts claims to ledger;
   deterministic script recomputes from cited artefacts and diffs; LLM
   triages mismatches. The biggest unswept surface. Background-batchable.
@@ -192,10 +229,14 @@ corrections, moves on. **GATE** = PI review before proceeding.
   trace every C6 rationale/event claim in the mine through the § 4
   hierarchy; reconstruct-and-diff the load-bearing interpretive paragraphs.
   **GATE 4.**
-- [ ] **Phase 5 — monitoring.** `revalidate_ledgers.py`, coverage
-  generation, drift-check integration, and the final coverage report
-  stating verified classes and named residual (unswept or unverifiable)
-  surfaces. **GATE 5**: PI signs the end-state.
+- [ ] **Phase 5 — monitoring.** `revalidate_ledgers.py` (incl. verbatim-span
+  verification), coverage generation, drift-check integration, and the final
+  coverage report stating verified classes and named residual (unswept or
+  unverifiable) surfaces. **GATE 5**: PI signs the end-state.
+- [ ] **Deferred — stratum-purity check.** Verify `results/**` documents are
+  facts-only per the § 2 stratum rule; migrate or flag any interpretation
+  found there. Not required for the first sweep (PI, 2026-07-29); the rule
+  binds all new writing immediately.
 
 Sequencing constraint: Phases 1–2 precede 3 (documents cite manifests;
 manifests must be verified before they serve as anchors).
@@ -209,7 +250,10 @@ Any executor follows §§ 5–7. Assignment guidance (PI economics,
   coverage generation. Cheapest and most trustworthy; prefer whenever the
   check can be made mechanical.
 - **Claude (Max plan)** — charter maintenance, orchestration, C6 tracing,
-  reconstruct-and-diff, disagreement adjudication.
+  reconstruct-and-diff, disagreement adjudication. **Model policy (PI,
+  2026-07-29): agents default to Opus 5**; escalate to Fable only where
+  Fable-class judgement is genuinely required (orchestrator's call);
+  consider Sonnet 5 only for huge-but-straightforward passes.
 - **GPT-5.6 Sol (OpenAI credit)** — per
   `~/personal-assistant/wiki/planning/cross-model-verification-plan-2026-07-27.md`:
   **Path C, raw Batch API only** (model `gpt-5.6-sol`, ~50 % off; ~US$10–45
@@ -235,16 +279,21 @@ Any executor follows §§ 5–7. Assignment guidance (PI economics,
    item; push.
 5. Stop at any GATE whose review is pending — gates belong to the PI.
 
-## 10. Open items for PI review of this draft
+## 10. PI review decisions (2026-07-29)
 
-1. Placement of gates — add/remove/merge as you see fit.
-2. Phase 4 notes-file handling: appended correction notes vs one new Obs
-   rider per family (obs-writer convention says new Obs).
-3. Whether Phase 2 runs full-enumeration (recommended, script-led, cheap)
-   or stratified.
-4. Sol first-target confirmation (the Session-119 corrections) and the
-   third-family choice for tiebreaks (Gemini is the obvious candidate but
-   is also the *object* of study in this project — consider whether that
-   matters for verification of cost/billing claims specifically).
-5. Whether `reports/verification/` is the right home (alternative:
-   `results/verification/`; charter assumes reports/).
+1. **Gates**: approved as drafted; review and refine after a first run.
+2. **Notes handling**: one new Obs rider per error family, with a pointer
+   appended at the original Obs (append-only; no edits to originals).
+3. **Phase 2**: full enumeration.
+4. **Verifier order**: Sol first (Session-119 corrections as first target),
+   then Opus 5 (Fable where Fable-class judgement is needed — orchestrator's
+   call), then **Gemini 3.1 Pro as tiebreaker**. Caveat carried from the
+   draft: Gemini is the object of study — weigh that when the disputed item
+   concerns Gemini cost/billing claims specifically.
+5. **Ledger home**: `reports/verification/` stands; folder structure
+   reassessed after a first run.
+
+Also settled in the same review: the stratum rule and working-notes dual
+role (§ 2), the interpretive-ATTESTED extension (§ 3), orthogonal
+interrogation as execution rule 11 (§ 5), verbatim-span verification in the
+monitor (§ 6), and the Claude model policy (§ 8).
