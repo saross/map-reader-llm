@@ -225,10 +225,16 @@ the ledgers by script — never hand-maintained.
 recomputable value, and **mechanically verifies every `claim_text` and
 `evidence` span appears verbatim at its cited locator** (verbatim spans are
 load-bearing — a paraphrase logged as a quote is itself a fabrication class,
-so the spans themselves are verified, not trusted; PI, 2026-07-29). Wired
-beside `drift_check` so any regeneration or edit that breaks a verified
-claim fails loudly. New rationale claims in regenerated prose are quotable
-only from ATTESTED ledger rows.
+so the spans themselves are verified, not trusted; PI, 2026-07-29). It also
+**enforces rule 13 mechanically** (GATE 1 ruling, 2026-07-29): every
+breach-class row (CONTRADICTED / FLAGGED / unlicensed-deviation) must carry
+a non-empty defence-search record, or the build fails — prosecution without
+a recorded defence search cannot persist in the ledgers. Wired beside
+`drift_check` so any regeneration or edit that breaks a verified claim
+fails loudly. New rationale claims in regenerated prose are quotable only
+from ATTESTED ledger rows. The defence-pass protocol itself (blind
+counsel-for-the-defence agents with calibration probes) is part of the
+reusable apparatus for future repo reviews (§ 1 reusability).
 
 ## 7. Work queue and gates
 
@@ -249,8 +255,8 @@ corrections, moves on. **GATE** = PI review before proceeding.
   complete — ledger v1.2 (702 commitments, 402 discharged / 89 waived /
   211 open), c1+c2 ledgers (1,617 rows), licence census (13
   UNLICENSED), guard wired; package at
-  `reports/verification/phase1-gate-package.md`; **GATE 1 pending PI
-  review**.)* Build
+  `reports/verification/phase1-gate-package.md`; **GATE 1 PASSED
+  2026-07-29** with directives — § 10 item 7.)* Build
   `results/commitments.json` from the lodged text (subsumes publishing the
   trigger census; five-element trigger rule: statistic, comparison scope,
   uncertainty criterion, evaluation moment, **evaluation corpus**). Run the
@@ -258,11 +264,15 @@ corrections, moves on. **GATE** = PI review before proceeding.
   `run-conditions.json` needs an erratum). Wire the open-commitment warning
   into `drift_check` (closes C3 of the guard via the append-only ledger).
   **GATE 1.**
-- [ ] **Phase 2 — provenance (C3).** Field-level re-derivation of
-  `passes-manifest.json` and `conditions-manifest.json` rows from raw
-  metas/evals. **Full enumeration** (settled, PI 2026-07-29; 1,132 passes /
-  322 conditions — script job on sapphire, LLM only for discrepancy
-  triage). **GATE 2.**
+- [ ] **Phase 2 — provenance (C3).** *(Claimed 2026-07-29, Claude Fable 5
+  interactive session; start approved at GATE 1.)* Field-level
+  re-derivation of `passes-manifest.json` and `conditions-manifest.json`
+  rows from raw metas/evals. **Full enumeration** (settled, PI 2026-07-29;
+  1,132 passes / 322 conditions — script job on sapphire, LLM only for
+  discrepancy triage). Known wall, discovered at GATE 1: the retest-era
+  pipeline left `usage_stats` unpopulated (all 225 phase3c metas and
+  phase3a siblings) — token-level fields are unverifiable for that era;
+  record per-era field verifiability explicitly. **GATE 2.**
 - [ ] **Phase 3 — quantitative sweep (C4).** LLM extracts claims to ledger;
   deterministic script recomputes from cited artefacts and diffs; LLM
   triages mismatches. The biggest unswept surface. Background-batchable.
@@ -273,10 +283,22 @@ corrections, moves on. **GATE** = PI review before proceeding.
   trace every C6 rationale/event claim in the mine through the § 4
   hierarchy; reconstruct-and-diff the load-bearing interpretive paragraphs.
   **GATE 4.**
+- [ ] **Phase 4b — open-set discharge campaign** (GATE 1 directive,
+  2026-07-29). After Phase 4: drive the open commitment set (211 at
+  GATE 1) as low as it can honestly go, under the **run-it-now policy**
+  (§ 10 item 7): a promised metric or analysis that was omitted but can
+  be run now is run, not merely erratum'd — barring *excessive* API
+  expense (PI budget: a few hundred US dollars; per-batch API review
+  gates still apply). Includes the registered eight-hypothesis BH-FDR
+  family, the promised-vs-chosen side-by-side metric comparisons, and
+  categorisation of the remainder (waive by erratum / owed to Stage 2
+  registration / discharge in paper drafting). Produces a campaign plan
+  for PI approval before any spend. **GATE 4b.**
 - [ ] **Phase 5 — monitoring.** `revalidate_ledgers.py` (incl. verbatim-span
-  verification), coverage generation, drift-check integration, and the final
-  coverage report stating verified classes and named residual (unswept or
-  unverifiable) surfaces. **GATE 5**: PI signs the end-state.
+  verification and the rule-13 defence-search check), coverage generation,
+  drift-check integration, and the final coverage report stating verified
+  classes and named residual (unswept or unverifiable) surfaces.
+  **GATE 5**: PI signs the end-state.
 - [ ] **Deferred — stratum-purity check.** Verify `results/**` documents are
   facts-only per the § 2 stratum rule; migrate or flag any interpretation
   found there. Not required for the first sweep (PI, 2026-07-29); the rule
@@ -380,6 +402,41 @@ runs, asynchronous batch jobs). Assignment guidance (PI economics,
    with headroom — cross-model (Sol + tiebreak) spend capped at US$150
    programme-wide. GATE 0 PASSED; Phase 1 unlocked.** Per-batch API
    review gates still apply before each launch.
+7. **GATE 1 (2026-07-29) — PASSED with directives.** Preceded by a PI
+   memory-review that qualified 2 of 12 headline findings, answered by
+   the calibrated blind defence pass (rule 13 born; all 12 findings
+   qualified; apparatus record
+   `reports/verification/apparatus/defence-pass-adjudication-2026-07-29.md`).
+   Rulings:
+   (a) **Defence check institutionalised** — in the Phase 5 monitor
+   (§ 6, mechanical rule-13 enforcement) and as reusable apparatus for
+   future repo reviews.
+   (b) **Registration-contradiction errata policy**: file errata
+   recognising each internal contradiction in the lodged text; adopt
+   the reading that fits the spirit of the campaign; explain the
+   reasoning; acknowledge openly that the choice is post facto, made
+   with results in hand.
+   (c) **Run-it-now policy**: an omitted-but-runnable promised metric
+   or analysis is run, not merely erratum'd, barring *excessive* API
+   expense (PI dedicates a few hundred US dollars; emphasis on
+   excessive; per-batch review gates apply). Promised metrics are
+   displayed alongside the eventually-chosen ones — side-by-side
+   comparisons demonstrating why the change was made.
+   (d) **Eight-hypothesis BH-FDR family**: run it now (zero API cost),
+   plus a Methods/Discussion disclosure of why practice deviated.
+   (e) **Erratum queue approved** with amendments: the three unlicensed
+   families erratum frames them as *additional, unregistered extensions
+   of the proposer-verifier programme* (verified: all three carry PV
+   architectures; E37 frames the PV programme as the registered
+   contingency exercised) — serendipitous additions, not deviations
+   from registered studies. HIGH-thinking erratum approved with a
+   verification caveat: configured HIGH in all 225 phase3c metas and
+   pre-committed YAML declarations, but token-level corroboration is
+   unavailable (retest-era usage_stats unpopulated) — worded honestly,
+   per the PI's mis-recording warning. Errata 3–6 approved as queued.
+   (f) **Open-set discharge campaign** authorised as Phase 4b (plan
+   before spend).
+   (g) **Phase 2 start approved.**
 
 Also settled in the same review: the stratum rule and working-notes dual
 role (§ 2), the interpretive-ATTESTED extension (§ 3), orthogonal

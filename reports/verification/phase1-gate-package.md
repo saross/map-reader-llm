@@ -1,7 +1,7 @@
 # Phase 1 — GATE 1 package (commitments and execution)
 
-> **Last revised**: 2026-07-29 (defence-pass integration: all twelve
-> findings qualified; erratum queue revised). See
+> **Last revised**: 2026-07-29 (GATE 1 PASSED with directives;
+> phase3c thinking-level verification recorded). See
 > [§ Changelog](#changelog) for revision history.
 
 **Controller**: `planning/audit-charter.md` § 7 Phase 1. **Executor**:
@@ -120,7 +120,15 @@ about preregistration authoring, not misconduct.
    disclosed on the study YAMLs and constant across compared
    conditions. Aggravator (defence, against interest): HIGH thinking
    is itself an unregistered diversity mechanism (Obs 140) that may
-   bias the H9 null's direction, not just its level.
+   bias the H9 null's direction, not just its level. **Post-ruling
+   verification (PI mis-recording warning)**: all 225 phase3c metas
+   record `thinking_level: high` in configuration, but the retest-era
+   pipeline left `usage_stats` wholesale unpopulated (phase3a siblings
+   too), so token-level corroboration is unavailable — known-HIGH runs
+   elsewhere show millions of thoughts tokens, known-minimal show zero,
+   and phase3c shows *nothing*, not zero-thinking. The erratum wording
+   rests on configuration plus the pre-committed YAML declarations, and
+   says so.
 10. **Text-condition role (CMT-0109) — as previously revised, plus
     defence context.** The designation (three sites) is a role
     disclosure; § 8.4.7's operative OFAT clause carries no modality
@@ -197,6 +205,23 @@ deferred per charter. Notes-file C5 families → Phase 4.
 
 ## 6. GATE 1 decision list
 
+**GATE 1 PASSED (PI, 2026-07-29) with directives** — recorded in
+charter § 10 item 7. In brief: (1) promised metrics will be run and
+displayed alongside the eventually-chosen ones (side-by-side, showing
+why the change was made); (2) erratum queue approved, with the three
+unlicensed families framed as additional unregistered PV-programme
+extensions and the HIGH-thinking erratum carrying the
+token-corroboration caveat; (3) the eight-hypothesis BH-FDR family
+will simply be **run now**, plus a Methods/Discussion deviation
+disclosure; (4) an open-set discharge campaign is authorised as
+Phase 4b under the new run-it-now policy (a few hundred US dollars
+available; excessive spend is the bar); (5) Phase 2 start approved.
+Standing policies born at this gate: run-it-now,
+registration-contradiction errata (spirit-of-campaign reading, reasoning
+stated, post-facto acknowledged), and charter rule 13 enforcement in
+the Phase 5 monitor. Original decision list retained below for the
+record.
+
 1. **Adjudicate CMT-0697** (unvoted decision statistic vs
    greedy-primary practice) — shapes paper claim language.
 2. **Approve the erratum queue** (§ 3) — I can draft all blocks for
@@ -211,6 +236,21 @@ deferred per charter. Notes-file C5 families → Phase 4.
    triage of discrepancies only; US$0).
 
 ## Changelog
+
+### 2026-07-29 — GATE 1 passed with directives
+
+PI rulings recorded (charter § 10 item 7): run-it-now policy (a few
+hundred US dollars available, excessive spend the bar);
+registration-contradiction errata policy; promised-vs-chosen
+side-by-side metrics; eight-hypothesis BH-FDR family to be run;
+families erratum reframed as additional PV-programme extensions
+(architectures verified from run-conditions); HIGH-thinking erratum
+caveated after post-ruling verification — phase3c configuration says
+HIGH in all 225 metas but retest-era usage_stats are wholesale
+unpopulated, so token-level corroboration is unavailable (finding 9
+updated); Phase 4b (open-set discharge campaign) added to the charter
+queue; Phase 2 claimed. Defence check institutionalised in the
+Phase 5 monitor spec and as reusable apparatus.
 
 ### 2026-07-29 — Defence-pass integration
 
