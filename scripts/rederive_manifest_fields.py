@@ -137,7 +137,11 @@ def rederive_pass(row: dict) -> dict:
         dig(meta, "configuration.thinking_level", "thinking_level")))
     fields.append(verdict_row(
         "temperature", row.get("temperature"),
-        dig(meta, "configuration.temperature", "temperature")))
+        # temperature_effective carries the E55-corrected value where a
+        # serialisation bug left configuration.temperature stale (triage
+        # ruling T1, 2026-07-30); prefer it when present.
+        dig(meta, "configuration.temperature_effective",
+            "configuration.temperature", "temperature")))
     fields.append(verdict_row(
         "instruction_hash", row.get("instruction_hash"),
         dig(meta, "configuration.system_instruction_hash",
