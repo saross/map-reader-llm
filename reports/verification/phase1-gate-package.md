@@ -1,7 +1,7 @@
 # Phase 1 — GATE 1 package (commitments and execution)
 
-> **Last revised**: 2026-07-29 (original publication). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-07-29 (finding 3 timeline precision, on PI
+> query). See [§ Changelog](#changelog) for revision history.
 
 **Controller**: `planning/audit-charter.md` § 7 Phase 1. **Executor**:
 Claude Fable 5 session of 2026-07-29 (orchestration, adjudication,
@@ -55,10 +55,20 @@ Spot-audited by the orchestrator at source (all confirmed) unless noted.
    the permutation machinery carrying the significance claims is
    unregistered on both sides of E45. All 18 manifest analyses carry
    `preregistered: "exploratory"`.
-3. **Both § 3.7 blinding commitments are contradicted.** The three
-   analysis scripts were first committed 2026-03-28; holdout evaluation
-   began by 2026-02-06 (Phase 2a report). E56 and `manually_verified_at`
-   fields contradict the no-manual-intervention clause.
+3. **Both § 3.7 blinding commitments are contradicted — at the late
+   end of the timeline, not the early end.** Sequence, verified at
+   source: lodgement 2026-01-31 12:54:09 UTC; holdout (60-tile)
+   evaluation began by 2026-02-06 — *after* lodgement — and the
+   original Phase 2a generator (`analyse_phase2_results.py`) was
+   committed 2026-01-21, *before* lodgement, so the earliest stage
+   complied. The contradiction: the three scripts carrying the current
+   headline statistics (`apply_fdr_correction.py`,
+   `evaluate_tile_mcc.py`, `pairwise_permutation_test.py`) were first
+   committed 2026-03-28, seven weeks after holdout evaluation began —
+   the analysis machinery was rebuilt mid-evaluation (E45's
+   ANOVA→permutation switch is part of the same history). E56 and
+   `manually_verified_at` fields contradict the no-manual-intervention
+   clause.
 4. **None of the 13 lodged prompt texts matches the file used.**
    Three change classes are licensed (E9/E16/E28); a fourth is not:
    new exclusion categories ("Cyrillic Map Text", "Other Round Shapes
@@ -152,6 +162,17 @@ deferred per charter. Notes-file C5 families → Phase 4.
    triage of discrepancies only; US$0).
 
 ## Changelog
+
+### 2026-07-29 — Finding 3 timeline precision (PI query)
+
+The PI queried whether "holdout evaluation began 2026-02-06" implied
+evaluation before registration. It did not — lodgement was 2026-01-31
+12:54:09 UTC — but the wording invited the misreading and omitted an
+exculpatory fact. Finding 3 now states the verified sequence: original
+Phase 2a generator committed 2026-01-21 (before lodgement, compliant);
+holdout evaluation from 2026-02-06 (after lodgement); current
+statistical machinery first committed 2026-03-28 (the contradiction).
+No verdict changed.
 
 ### 2026-07-29 — Original publication
 
