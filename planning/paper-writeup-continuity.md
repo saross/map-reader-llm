@@ -8,7 +8,43 @@ project state.
 
 ---
 
-## 🎯 NEXT SESSION (119) — ADVERSARIAL REVIEW OF THE SESSION-118 AUDIT, THEN THE CORRECTION PASS [Session 118 CLOSED 2026-07-28; next session runs in **Fable** by Shawn's choice, for a second opinion from a different model]
+## 🎯 NEXT SESSION (120) — LAUNCH THE VERIFICATION PROGRAMME: PHASE 0 [Session 119 CLOSED 2026-07-29; runs in **Fable**, Claude driving]
+
+> **The controller is `planning/audit-charter.md` — read it and follow its
+> § 9 resumption protocol.** It is self-sufficient by design; this beacon
+> only adds what the charter cannot know.
+
+**What Session 119 did**: Fable adversarial review of the S118 audit
+(`reports/d17-inventory/fable-adversarial-review-2026-07-28.md`; OSF chain
+CLOSED byte-identical; lodgement 12:54:09 UTC; P2's 80% unreproducible; C5
+census unpublished) → the full correction pass (six waves, `2c354ca2e`→
+`df16d855a`: E37/E45 corrected, **E58–E61 filed**, ~150 sites fixed,
+manifests regenerated, tier-1 1,178 green) → the verification charter,
+PI-reviewed and execution-ready (`0ab73da5c`).
+
+**Session 120's task**: execute **Phase 0** (scoping) per the charter §7 —
+corpus enumeration, per-class claim counts, real cost figures →
+`reports/verification/phase0-scope.md` → **GATE 0** (Shawn approves scope,
+budget, executor split). This is also the first cold-reader test of the
+charter's self-sufficiency: log every stumble; stumbles are charter bugs.
+
+**Executor authorisations (Shawn, 2026-07-29)**: Fable drives; spawn
+**Opus 5** agents by default (Fable-level only where judgement demands —
+driver's call); **Sol** via raw OpenAI Batch API (key in
+`~/personal-assistant/.env` — never read it into context; Path C per the
+charter §8); **Gemini 3.1 Pro** tiebreak (key in the same .env). First Sol
+target: the ~150 Session-119 corrections.
+
+**Carry-forwards**: H2-C instrument + crop-size decisions still open
+(plan §8); gated user-obs candidates (S118 + S119) and working-notes
+candidates await verdicts — silence holds them over; two queued errata
+(HIGH-thinking; stale v4.6 header) in plan §5; nine zero-cost analyses
+(sapphire) incl. family-level BH-FDR (E45/E61 make it urgent-ish);
+H4b run when authored must follow §6.4 planned-run discipline.
+
+### [CLOSED 2026-07-29] Historical: the Session 119 brief follows
+
+## NEXT SESSION (119) — ADVERSARIAL REVIEW OF THE SESSION-118 AUDIT, THEN THE CORRECTION PASS [Session 118 CLOSED 2026-07-28; ran in Fable]
 
 > **This block is the self-sufficient sole starting point.** Read it, then
 > `planning/fable-review-brief-2026-07-28.md` — that brief is written to be

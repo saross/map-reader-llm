@@ -175,3 +175,19 @@ or should I have found it before presenting the option?
 paper verification itself," and later asked whether we should close the session.
 I read both as a signal I had over-invested in the manifest machinery while the
 22 false attributions sat untouched. Was that the intent, or am I over-reading?
+
+
+## Session 119 — 2026-07-29 (candidates — pending Shawn's review)
+
+- **Candidate A**: "You've done excellent work" — said after the review +
+  correction pass, immediately followed by the decision to escalate me from
+  reviewer to orchestrator of the end-to-end verification programme. The
+  observation: the review's willingness to break the prior session's
+  conclusions (P2, C5, the timestamp) is what earned the bigger mandate —
+  adversarial honesty about a sibling instance's work read as
+  trustworthiness, not disloyalty.
+- **Candidate B**: Shawn accepted the "pin the interpretation, buy off the
+  evidence" H4b hybrid over his own first instinct (the generous reading),
+  saying my solution was "more elegant" — evidence that presenting a
+  third option that dissolves a binary is more useful to him than
+  arguing either side.
