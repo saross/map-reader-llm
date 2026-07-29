@@ -33,12 +33,26 @@ the rest lifts out cleanly.
 
 ## 2. Scope
 
-**In scope (the mine)**: `results/**.md`, `reports/**.md` (excluding
-`reports/d17-inventory/` which is audit apparatus), the six manifests
-(`results/*-manifest.json` + sources), `docs/methodology/**` (errata,
-tracking, methodology docs), `docs/methods-outline.md`, the lodged
-registration (as the fixed root — verified byte-identical to the OSF-posted
-artefact 2026-07-28, blob `fa221b30…`).
+**In scope (the mine)**: `results/**.md`; `reports/**.md` (excluding
+`reports/d17-inventory/` which is audit apparatus); the six manifests —
+`results/passes-manifest.json`, `results/conditions-manifest.json`,
+`results/runs-manifest.json`, `results/analyses-manifest.json`,
+`results/run-registry.json`, and `results/run-conditions.json` (their
+generated `.md` renderings are verified by regeneration, never read);
+the `docs/methodology/` mine subset — the top-level methodology docs,
+`methodology/reports/`, `methodology/transparency/`, and, inside
+`preregistration/`: `protocol-errata.md` plus the five tracking docs
+(`decisions-log.md`, `hypothesis-tracking.md`, `execution-plan.md`,
+`execution-checklist.md`, `analysis-summary.md`); `docs/methods-outline.md`;
+and the lodged registration (as the fixed root — verified byte-identical
+to the OSF-posted artefact 2026-07-28, blob `fa221b30…`; anchor only,
+never a correction target).
+
+**Excluded from the mine but usable as attestation sources** (GATE 0
+ruling, 2026-07-29): `docs/methodology/references/` (third-party
+literature), `docs/methodology/research/` (commissioned external
+reports), `preregistration/simulations/`, `preregistration/tasks/`, and
+non-lodged preregistration drafts.
 
 **Out of scope**: all paper-bound prose (`docs/paper/**` — will be
 regenerated from the mine; PI decision 2026-07-28); `archive/**` (frozen
@@ -104,7 +118,8 @@ DEFERRED (blocked, reason stated)**.
    (three documents; frozen; **never edit, never lint**). Bright line =
    lodgement 2026-01-31 **12:54:09 UTC** (OSF API `date_registered`).
 3. Manifests (generated; verified by Phase 2 before use as authority).
-4. Errata register `protocol-errata.md` (the amendment record — but it has
+4. Errata register `docs/methodology/preregistration/protocol-errata.md`
+   (the amendment record — but it has
    itself carried false content: E10/E37/E45/E54 pre-correction. Errata are
    authority for *what was decided*, never for *what the registration says*
    — that is always checked at source 2).
@@ -126,8 +141,9 @@ DEFERRED (blocked, reason stated)**.
    prose is weakest.
 2. **Fresh-context adversarial verification.** The author of a claim, a
    correction, or a fix never verifies it in their own context. This applies
-   to the ~150 Session-119 corrections (author: Claude Fable) — they are
-   themselves Phase-4 verification targets, ideally cross-family (§ 8).
+   to the ~150 Session-119 corrections (author: Claude Fable; six waves,
+   commits `2c354ca2e`→`df16d855a`) — they are themselves Phase-4
+   verification targets, ideally cross-family (§ 8).
 3. **No sampling at this error density** — full enumeration per class.
    Any bounded coverage (top-N, stratification) must be logged as dropped
    scope, never silent.
@@ -155,6 +171,14 @@ DEFERRED (blocked, reason stated)**.
     "is claim Y true?" — because a fabrication survives same-question
     re-checking far more easily than orthogonal interrogation. Not always
     possible; use whenever it is.
+12. **Charter self-sufficiency is itself verified** (GATE 0 ruling,
+    2026-07-29, generalising the Phase 0 stumble log). Every artefact this
+    charter names carries a repo-relative path; every glob is checked
+    against the tree when written or revised; every external figure
+    (price, quota, rate limit) carries a dated source anchor and is
+    re-verified at the gate that spends against it. Executors log every
+    place they must guess or look outside the charter and ledgers; those
+    stumbles are charter bugs, fixed by commit at the next gate.
 
 ## 6. Ledgers
 
@@ -206,8 +230,10 @@ corrections, moves on. **GATE** = PI review before proceeding.
   proposed foreground/background split. Produces
   `reports/verification/phase0-scope.md`. **GATE 0**: PI approves scope,
   budget, and executor assignment. *(Claimed and executed 2026-07-29,
-  Claude Fable 5 interactive session; report produced; **GATE 0 pending
-  PI review**.)*
+  Claude Fable 5 interactive session; report produced. GATE 0 partially
+  ruled 2026-07-29 — decisions 1–4 and 6 approved; decision 5 (Sol
+  budget) awaiting PI confirmation of the officially verified cost
+  figures, § 10 item 6.)*
 - [ ] **Phase 1 — commitments and execution (C1, C2).** Build
   `results/commitments.json` from the lodged text (subsumes publishing the
   trigger census; five-element trigger rule: statistic, comparison scope,
@@ -245,7 +271,10 @@ manifests must be verified before they serve as anchors).
 
 ## 8. Executors and the cross-model layer
 
-Any executor follows §§ 5–7. Assignment guidance (PI economics,
+Any executor follows §§ 5–7. **Foreground** = interactive, PI-steerable
+session work (orchestration, adjudication, gate packages, commits);
+**background** = detached executors (background agents, sapphire script
+runs, asynchronous batch jobs). Assignment guidance (PI economics,
 2026-07-28):
 
 - **Deterministic scripts (sapphire)** — all recomputation, revalidation,
@@ -288,6 +317,13 @@ Any executor follows §§ 5–7. Assignment guidance (PI economics,
   calls only where latency matters (disagreement triage). Phase 0's cost
   model prices the preamble at stacked rates; the only residual check at
   implementation time is the marker syntax against current docs.
+  **Pricing anchor** (rule 12): official page
+  `https://developers.openai.com/api/docs/pricing`, verified 2026-07-29 —
+  `gpt-5.6-sol` Batch rates US$2.50 input / $0.25 cached read / $3.125
+  cache write / $15.00 output per million tokens (the Batch table itself
+  prices cached input, confirming the stacking); long-context columns do
+  not apply at verification call sizes. Re-verify at every API review
+  gate before spend.
 
 ## 9. Resumption protocol
 
@@ -311,6 +347,19 @@ Any executor follows §§ 5–7. Assignment guidance (PI economics,
    concerns Gemini cost/billing claims specifically.
 5. **Ledger home**: `reports/verification/` stands; folder structure
    reassessed after a first run.
+6. **GATE 0 (2026-07-29, partial)**: of `phase0-scope.md` § 7 — decisions
+   1–4 approved (scope rulings incl. methodology-subset reading and
+   exclusions; re-derive-and-diff for the generated stratum with a
+   committed generated-file registry; C3 extension to all six manifests,
+   28,682 field checks; executor assignment and foreground/background
+   split). Decision 6 approved with the instruction to generalise/cascade
+   the stumble-log fixes for durability — landed as the § 2 explicit scope
+   lists, § 4 path fix, § 5 rule 12, § 8 pricing anchor and
+   foreground/background definitions, and this record. Decision 5 (Sol
+   budget): PI supplied the official pricing page; rates verified
+   (matching the third-party figures); revised worst-case-honest budget
+   (Stage A ≤ US$15 worst case, expected $3–8; programme expected $25–60,
+   absolute worst ~$120) awaiting PI confirmation before any Sol spend.
 
 Also settled in the same review: the stratum rule and working-notes dual
 role (§ 2), the interpretive-ATTESTED extension (§ 3), orthogonal
