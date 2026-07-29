@@ -5745,3 +5745,52 @@ methodological finding, not a local repair.
 **What this is not.** Not a claim that behaviour above T=1.3 was characterised. It was not
 measured; the decline is inferred from five levels across two corpora plus a mechanism
 (precision falls faster than recall as sampling entropy rises). The paper must say so.
+
+## Session 119 — 2026-07-29 — an 11-hour provenance margin dissolved into twenty minutes, and the audit's own record was the confabulator
+
+**Session:** 06551bdf-ce37-4281-919d-9d7667b29250
+**Instance:** primary
+
+### Surprising fact
+
+The review brief stated the repo copy of the registration was
+byte-identical "from a commit 11h20m before the registration timestamp".
+Fetching the OSF API returned `date_registered: 2026-01-31T12:54:09Z` —
+eleven hours *earlier* than the 23:54 UTC recorded in
+`execution-checklist.md:61` and repeated in the audit's own register
+headers.
+
+### Probe
+
+23:54 AEDT equals 12:54 UTC: the checklist had recorded Sydney local time
+mislabelled as UTC. The "11h20m margin" came from comparing the final
+commit's true UTC time against the mislabelled local time — a
+timezone-crossed subtraction. Checked the window the correction opened:
+the only commit between the true and recorded lodgement times was an
+archive chore 8 minutes post-lodgement, which also explained a one-line
+README diff between the posted and repo copies. Byte-identity of the
+posted `updated/` set then made the margin question moot.
+
+### Belief revision
+
+From "the provenance chain has a comfortable half-day margin" to "the
+chain holds by twenty minutes, and the margin claim itself was an
+artefact of the very error class the audit was hunting — an unverified
+recorded value trusted across three documents." The deeper revision: the
+audit apparatus is not exempt from its own findings. The same session
+found the brief's C5 evidence pointer dangling and its P2 percentage
+unreproducible. Verification reports are prose too.
+
+### What would change this belief
+
+If OSF's API were shown to return local rather than UTC datetimes, the
+original record would stand. (Checked: the `embargo_end_date` field
+carries an explicit Z suffix; OSF stores UTC.)
+
+### Implications for practice
+
+Recorded timestamps are claims, not facts — anchor them to the external
+authority (here the OSF API), and treat any margin computed from two
+differently-sourced timestamps as suspect until both sources' timezones
+are verified. Now encoded in the charter's rule set by way of the
+least-writable-artefact rule.

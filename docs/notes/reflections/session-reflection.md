@@ -9175,3 +9175,45 @@ The same applies to the C3 decision — mitigate now, close later — which look
 deferral unless you know the closure is an artefact repair (1) is building anyway, and that
 the alternative (checking git history) buys nothing extra at the cost of coupling a JSON
 generator to git state.
+
+## Session 119 — 2026-07-28/29 — the second opinion that became the correction pass, and the audit that became infrastructure
+
+Project: map-reader-llm. Written by the primary instance (Fable 5 — the
+first Fable session deliberately convened as a cross-model second opinion
+on an Opus audit).
+
+**What question emerged that wasn't pursued?** Whether the convergence
+argument I made — error classes narrowing across successive audits — can
+be *quantified* rather than narrated. I claimed the data layer keeps
+coming back clean while prose layers fail; the charter's ledgers will
+eventually make that a measurable per-class error rate, but nobody has yet
+defined what "converged" would look like numerically. That definition
+would also be the natural stopping rule for the verification programme
+itself — without it, "keep auditing" has no terminus.
+
+**What context will be hardest to reconstruct in six months?** Why the
+correction pass edited some documents in place and routed others through
+new errata or riders. The rule was never written down before this session:
+mine documents get corrected in place with changelogs; the errata register
+gets dated withdrawal blocks, never silent rewrites; observations and
+reflections are append-only with pointer riders. The charter now encodes
+this, but the *reason* — three different documents classes carry three
+different kinds of authority, and each correction method preserves exactly
+the authority that class needs — lives mostly in this session's
+conversation. Also easily lost: the brief's "11h20m before lodgement"
+margin was a timezone artefact, and the true margin was twenty minutes —
+harmless here, but the pattern (local time mislabelled as UTC surviving
+into three downstream documents) is the kind of thing that will recur.
+
+**Where did we disagree, and who was right?** Mildly, on generosity of
+interpretation: Shawn's first instinct on the H4b trigger was the most
+generous reading (most likely to show an effect); mine was the most
+*correct* reading (the directional contrast). He then chose the correct
+reading plus running the cells anyway as unregistered exploratory — which
+was better than either opening position, because it separated the
+interpretive question (what did the registration mean?) from the empirical
+one (is there an effect?) instead of letting one answer both. The pattern
+recurred at scale when he reframed the whole audit: I had framed
+verification as a project task; he reframed it as reusable infrastructure
+for a research programme. Both corrections moved in the same direction —
+from resolving the instance to building the class.

@@ -182,3 +182,46 @@ prioritisation, not about the work being wrong.
 out loud which one carries the risk, and re-state it at each handover point. If I find
 myself on the third iteration of something with a green test suite while a manual
 correction backlog is untouched, that is the signal — not a reason to do a fourth.
+
+## claude-obs 7 — 2026-07-29: he split the interpretive question from the empirical one, and both answers got better
+
+**Pattern.** On the H4b trigger I offered two readings plus a hybrid
+option; Shawn's instinct was the generous reading, but he chose the
+correct-reading-plus-run-it-anyway hybrid — settling what the registration
+*meant* on textual grounds while buying the empirical answer separately
+for a few dollars. He repeated the move at programme scale: the audit
+became a charter, the instance became a class ("this will become routine
+in future papers").
+
+**Lesson.** When Shawn faces an interpretation-versus-evidence fork, the
+resolution he consistently prefers is to refuse the fork: pin the
+interpretation on principled grounds, then spend a small amount to make
+the evidence question moot. Offering that shape proactively — rather than
+presenting the fork as binary — matches how he actually decides.
+
+**How to apply.** When a decision looks like "which reading of X do we
+adopt?", check whether a cheap experiment or check makes the stakes of the
+reading collapse; if so, present the pin-plus-buy-off option first, with
+the cost attached.
+
+## claude-obs 8 — 2026-07-29: the stratum rule came from him, not the taxonomy
+
+**Pattern.** My charter draft had six claim classes but no account of
+*where interpretation is allowed to live*. Shawn supplied it in one
+paragraph: results artefacts are facts-only Results-section material;
+interpretation belongs in reports, anchored either to results or to
+attested real-time thinking in working notes. The taxonomy classified
+claims; his rule organised the *corpus* — and it came from thinking about
+the paper's structure (Results vs Discussion sections), a frame I had not
+imported into the verification design.
+
+**Lesson.** Shawn's domain instincts about scholarly genre (what belongs
+in which section of a paper) translate directly into information
+architecture, and they arrive as structural rules I would not derive from
+the engineering side. The charter is better because the review surfaced
+one; there are probably more.
+
+**How to apply.** When designing document systems for research projects,
+explicitly ask what the paper-genre mapping is (Results/Discussion/
+Methods) before fixing the artefact taxonomy — and treat his genre
+corrections as architecture, not style feedback.

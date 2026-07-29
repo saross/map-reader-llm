@@ -7475,3 +7475,50 @@ prose had missed both. The T=1.6 decision rests on the 60-tile result, which onl
 light *after* Shawn had already said "let's just run it"; he was not overruled, the evidence
 changed. Compute ran on sapphire per the standing rule; a parallel `personal-assistant`
 session was active throughout, so all commits there used explicit pathspecs.
+
+## Session 119 — 2026-07-28/29 — Fable adversarial review; correction pass executed; E58–E61; verification charter
+
+First Fable session, convened for a cross-model second opinion on the
+Session-118 audit. $0 API.
+
+- **OSF verification CLOSED**: registration archive `updated/` folder
+  byte-identical to all three repo lodged documents (blob `fa221b30…`
+  exact). Lodgement corrected to 12:54:09 UTC (23:54 was AEDT mislabelled;
+  the brief's "11h20m margin" was a timezone artefact — true margin
+  ~20 min). Registration narrative independently confirms bootstrap+FDR.
+- **Review** (`reports/d17-inventory/fable-adversarial-review-2026-07-28.md`,
+  `fdc711145`): C1–C6 survive; C5's census unpublished (dangling pointer);
+  P2's "~80% four substitutions" does not reproduce (~⅓ of ~138 sites; six
+  families ≈ ¾); P4 needs a fifth trigger element (evaluation corpus — H7
+  never fired on the registered 60-tile corpus, verified in archive); three
+  unrun probes named. H2-C "asked twice, never answered" re-derived from
+  the full raw session archive (4,201 records).
+- **Correction pass** (six waves, `2c354ca2e`→`df16d855a`): five isolated
+  corrections; substitution-source root fixes + not-lodged banners across
+  `preregistration/`; carry-forward chain FALSE-3/4/5/6 (two fabricated
+  quotes replaced with actual YAML rules); E37/E45 corrected with explicit
+  withdrawals; **E58/E59/E60 filed**; E10 reclassified with cascade;
+  E22/E26/E35/E49/E53/E54/E56 attribution fixes; Decision 26 corrected
+  (greedy IS registered, §8.5); D-S family de-"preregistered"; first-N
+  boilerplate fixed (39 summaries + 3 scripts); manifests regenerated
+  clean; results-draft diversity passage corrected. Tier-1 1,178 passed.
+- **PI decisions**: embargo (set for double-blind, lapsed 2026-06-30, now
+  public — may constrain journal choice); GS provinces unknown (GIS check
+  on request); paper-bound prose to be REGENERATED (tasks dropped); H4b
+  trigger = directional contrast (**E61**), H4b runs anyway as unregistered
+  exploratory on the full GS corpus.
+- **Verification charter** (`planning/audit-charter.md`, `bdecba16d` →
+  revised `0ab73da5c`): six claim classes incl. rationale/event (C6,
+  ATTESTED/RECONSTRUCTED/UNSUPPORTED/CONTRADICTED); stratum rule
+  (results = facts; reports = interpretation); 11 execution rules;
+  JSONL ledgers with verified verbatim spans; five gated phases +
+  monitoring; executors: scripts/sapphire, Claude (Opus 5 default),
+  Sol via Batch API, Gemini 3.1 Pro tiebreak. Phase 0 launches next
+  session (fresh, per charter §9).
+
+**Contextual assumptions**: transcript archives consolidated to
+`~/cc-archives/` this same day by a parallel Opus session (hole plugged,
+41 sessions verified; metadata verification ongoing; postgres layer
+mid-repair — grep raw files). Token economics shaped executor design
+(Max quota low; OpenAI credit available; keys in
+`~/personal-assistant/.env`, never read into context).
