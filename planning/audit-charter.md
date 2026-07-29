@@ -274,13 +274,18 @@ Any executor follows §§ 5–7. Assignment guidance (PI economics,
   life). Structure every request as [static preamble: schema + method +
   verdict vocabulary — byte-identical, front-loaded] + [variable per-item
   payload last]: costs nothing, versions the verification instrument, and
-  earns the read discount wherever it applies. **Phase 0 must verify
-  against current docs whether explicit caching applies inside the Batch
-  API and stacks with Batch's 50 %.** If it does not stack:
-  payload-dominated bulk passes stay on Batch (50 % off everything beats
-  90 % off the preamble alone); preamble-dominated or interactive calls
-  (disagreement triage, which fits inside the 30-min window) go
-  synchronous with cache.
+  earns the read discount wherever it applies. **Stacking SETTLED (PI,
+  2026-07-29): the Batch 50 % and cache-read discounts stack
+  independently for Sol** — a batch job with a shared static system
+  prompt gets both the batch discount and the ~90 % cache-read reduction
+  on the shared prefix. Implementation: stable content at the top of the
+  prompt with **explicit cache breakpoint markers**
+  (`cache_control: {"type": "ephemeral"}`) so the prefix is cached and
+  reused across batch requests. Routing therefore simplifies: bulk passes
+  stay on Batch *and* collect cache reads on the preamble; synchronous
+  calls only where latency matters (disagreement triage). Phase 0's cost
+  model prices the preamble at stacked rates; the only residual check at
+  implementation time is the marker syntax against current docs.
 
 ## 9. Resumption protocol
 
