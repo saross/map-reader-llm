@@ -201,11 +201,13 @@ Granularity: per-document (C4) or per-claim-family (others). An executor
 claims an item by ticking it with its identity, appends ledger rows, commits
 corrections, moves on. **GATE** = PI review before proceeding.
 
-- [ ] **Phase 0 — scoping.** Enumerate the corpus: document list, estimated
+- [x] **Phase 0 — scoping.** Enumerate the corpus: document list, estimated
   claim counts per class, cost per class (tokens + $ for Sol batch), and the
   proposed foreground/background split. Produces
   `reports/verification/phase0-scope.md`. **GATE 0**: PI approves scope,
-  budget, and executor assignment.
+  budget, and executor assignment. *(Claimed and executed 2026-07-29,
+  Claude Fable 5 interactive session; report produced; **GATE 0 pending
+  PI review**.)*
 - [ ] **Phase 1 — commitments and execution (C1, C2).** Build
   `results/commitments.json` from the lodged text (subsumes publishing the
   trigger census; five-element trigger rule: statistic, comparison scope,
