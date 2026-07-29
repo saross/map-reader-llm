@@ -1,8 +1,17 @@
 # C1/C2 discharge-mapping instructions
 
-**Version**: 1.0 (2026-07-29). **Controller**: `planning/audit-charter.md`
-§ 7 Phase 1. **Task**: propose a status for each assigned commitment in
-`results/commitments.json` — the execution side of the commitment spine.
+**Version**: 1.1 (2026-07-29; v1.0 same day). **Controller**:
+`planning/audit-charter.md` § 7 Phase 1. **Task**: propose a status for
+each assigned commitment in `results/commitments.json` — the execution
+side of the commitment spine.
+
+**v1.1 (charter rule 13)**: every breach-class verdict (open-as-deviation,
+contradicted, unlicensed) must carry a **defence-search record**: which
+licensing and exculpatory sources were searched (all 61 errata by topic,
+`decisions-log.md`, the execution-checklist deviation table, registered
+qualifiers and internal alternatives in the lodged text, commit
+timeline) and the nearest miss. Prosecution without a recorded defence
+search is an incomplete verdict.
 
 ## Verdicts
 

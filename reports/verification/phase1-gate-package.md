@@ -1,7 +1,8 @@
 # Phase 1 — GATE 1 package (commitments and execution)
 
-> **Last revised**: 2026-07-29 (finding 3 timeline precision, on PI
-> query). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-07-29 (defence-pass integration: all twelve
+> findings qualified; erratum queue revised). See
+> [§ Changelog](#changelog) for revision history.
 
 **Controller**: `planning/audit-charter.md` § 7 Phase 1. **Executor**:
 Claude Fable 5 session of 2026-07-29 (orchestration, adjudication,
@@ -39,103 +40,140 @@ Principal Investigator (PI) review. API spend this phase: US$0.
 
 ## 2. Headline findings for PI attention
 
-Spot-audited by the orchestrator at source (all confirmed) unless noted.
+All twelve findings passed through a **blind adversarial defence pass**
+(twelve fresh-context Opus 5 agents; method, calibration result, and
+per-finding rulings in `apparatus/defence-pass-adjudication-2026-07-29.md`).
+Verdict: 12/12 needs-qualification, none overturned; every factual core
+survived citation checks. **Meta-finding**: the most recurrent root
+cause is internal inconsistency within the lodged registration itself —
+the same parameter specified two or three ways, execution following one
+of them (findings 1, 2, 6, 7, 8, 11). A Discussion-worthy observation
+about preregistration authoring, not misconduct.
 
-1. **CMT-0697 — the § 3.8 non-circularity constraint.** The
-   registration requires the decision statistic for every hypothesis
-   except H3 to be the **unvoted** run distribution. The project's
-   standing practice (and E52) makes greedy consensus the primary
-   H-series aggregation. This is the package's top adjudication item:
-   it bears on how headline claims may be stated in the paper.
-2. **The § 3.1 inference plan never executed as registered.** BH-FDR
-   was applied over thematic pairwise families, never the registered
-   eight-hypothesis family (register A-01); every test in the project
-   is two-sided (`pairwise_permutation_test.py:452-453,665-666`)
-   against the registered one-tailed rule for directional predictions;
-   the permutation machinery carrying the significance claims is
-   unregistered on both sides of E45. All 18 manifest analyses carry
-   `preregistered: "exploratory"`.
-3. **Both § 3.7 blinding commitments are contradicted — at the late
-   end of the timeline, not the early end.** Sequence, verified at
-   source: lodgement 2026-01-31 12:54:09 UTC; holdout (60-tile)
-   evaluation began by 2026-02-06 — *after* lodgement — and the
-   original Phase 2a generator (`analyse_phase2_results.py`) was
-   committed 2026-01-21, *before* lodgement, so the earliest stage
-   complied. The contradiction: the three scripts carrying the current
-   headline statistics (`apply_fdr_correction.py`,
-   `evaluate_tile_mcc.py`, `pairwise_permutation_test.py`) were first
-   committed 2026-03-28, seven weeks after holdout evaluation began —
-   the analysis machinery was rebuilt mid-evaluation (E45's
-   ANOVA→permutation switch is part of the same history). E56 and
-   `manually_verified_at` fields contradict the no-manual-intervention
-   clause.
-4. **None of the 13 lodged prompt texts matches the file used.**
-   Three change classes are licensed (E9/E16/E28); a fourth is not:
-   new exclusion categories ("Cyrillic Map Text", "Other Round Shapes
-   in Mound-Like Colours"), a two-phase decision-procedure
-   restructure, and a "Symbols Amid Dense Features" section. E14's
-   "no new substantive content" and E16's "features preserved" claims
-   are **false against the live files**.
-5. **The errata register misreports an artefact.** E36 says "1 of 10"
-   Phase 2a comparisons survived FDR; `phase2a-analysis-report.json`
-   records `n_fdr_significant: 0`.
-6. **CMT-0256 — unwaived K=5 mining.** Hard examples were mined from
-   5 passes with ≥3/5 majority against the registered "K=10 … missed
-   in any run" rule; E15's licence covers the appendix strings only.
-7. **Corpus arithmetic.** Every artefact yields 360 physical tiles
-   against the registered 361 (reserve 280, not 281); no erratum. The
-   Stage-2 reserve was silently consumed inside E36's expansion.
-8. **Implementation divergences**: registered voting step 4's "and
-   matching label" clause has no code counterpart (clustering is
-   purely spatial); `run_study.py` (named in the lodged § 8.7.3) was
-   replaced by `run_phase1.py`/`run_phase2.py` with no erratum.
-9. **Unlicensed HIGH thinking** on `retest-phase3c` (H9) — converging
-   with the already-queued HIGH-thinking erratum; separately 41 of 84
-   configs set `thinking_level: high` against the blanket minimal
-   commitment.
-10. **CMT-0109 — the registered role of text conditions was never
-    formally retired.** The lodged framing (four sites: text-only =
-    "academic baselines", image = "the primary optimisation target")
-    is a role disclosure, not a procedural rule. The execution-level
-    reversal IS licensed: E27 confronts Phase 2a's text-wins result
-    (brief-text F1 0.5425 vs 0.4617) and licenses the dual-track
-    design; E28 carries it forward. The residue: E27 promised deferred
-    text results "reported as exploratory", while the deployment
-    headline (`55maps-*` on `detect_brief-text`) draws operational
-    conclusions from the text condition — a reporting-layer gap, not
-    an execution breach. GATE 1 options: waive under E27/E28 with a
-    mandatory paper narration; file a short rider erratum retiring the
-    designation (recommended); or hold open until the paper narrates
-    the reversal.
-11. **H11 at 384 px**: overlap is 48 px, not the registered 64 px
-    (confirms register E-07 from tile geometry); the 384 px few-shot
-    library was never regenerated (configs point at 512-era crops).
-12. **Open obligations with no waiver**: the Stage 1→2 advancement
-    ladder (triggers fired, no advancement register), the
-    caveat-wording obligations (no required caveat appears in the
-    draft paper prose), 7 of 9 registered interaction tests, the H14
-    secondary-model configuration block, and the H2-C fine-to-coarse
-    family (E59 records but does not license — 9 rows).
-
-Findings 2, 3, and 12 substantially overlap the D17 unexecuted
-register — Phase 1's contribution is making them **standing,
-machine-checked state** rather than audit discoveries.
+1. **Non-circularity (CMT-0697) — downgraded.** The rowed span is a
+   *Rationale* block; § 3.8's operative sentence scopes the K=10
+   unvoted design to the main factorial, and the registration itself
+   specifies voted statistics for H2/H9/H11/H15. The K=10 design was
+   waived by E36. Greedy-primary's authority is Decision 26 + Obs 242
+   (not E52). Residue for GATE 1: does Decision 26 suffice as licence
+   for the post-E36 aggregation convention, or file an erratum?
+2. **§ 3.1 inference plan — stands, scoped.** The registered
+   eight-hypothesis BH-FDR family was never constituted (a single
+   project-wide 26-row confirmatory family WAS corrected jointly —
+   defence re-derived it); deferral was declared prospectively and the
+   family definition settled by PI decision 2026-07-28 — **not
+   executed, still owed**, not abandoned. The one-tailed rule bites
+   H2/H3/H4 + one H1 contrast only, and the executed two-sided test is
+   strictly conservative; no tailedness licence exists anywhere. The
+   permutation machinery remains unregistered (E45 disclosed, high
+   impact).
+3. **§ 3.7 blinding — stands, narrowed.** Timeline verified: lodgement
+   2026-01-31; holdout evaluation from 2026-02-06; the registered
+   bootstrap/FDR machinery WAS pre-committed (2025-12-18 /
+   2026-01-21) and served that evaluation. The contradiction is
+   confined to the current statistical machinery (first committed
+   2026-03-28, serving the post-E36 corpora) with no waiver anywhere.
+   The E56 limb is narrowed (automated grid sweep; blast radius
+   excludes headline results); the `manually_verified_at` limb is
+   **withdrawn** (the field records narrative authorship).
+4. **Prompt texts — substantially downgraded.** The lodged appendix
+   was byte-accurate at lodgement; all divergence is post-lodgement,
+   five commits (2026-02-02–11), four erratum'd within 24 hours; the
+   restructure is licensed by E14 (the package previously misquoted
+   E14 by truncation — retracted). Residue: E16's
+   "unchanged/preserved" wording is a genuine register inaccuracy
+   (correction owed), and one verifier-edit commit (`5e7601d77`) has
+   no contemporaneous erratum.
+5. **E36 misreports an artefact — stands.** "1 of 10" vs the
+   artefact's 0; no committed version ever recorded 1; defence re-ran
+   the BH routine (reproduces 0). Severity context: self-adverse
+   (0 strengthens E36's own rationale), inherited from an Obs-155
+   mis-citation — with the aggravator that Obs 155 contains no FDR
+   result at all — and propagated to four documents. Correction owed.
+6. **K=5 mining — substantially downgraded.** HP mining follows the
+   registered any-run rule (register arithmetic confirms); HN
+   majority-filtering is itself registered (line 1451); the lodged
+   text is internally inconsistent (line 815's K=10 vs lines
+   1443/1450–1's five-pass spec, both lodged); E15/E49/E51 license the
+   K=5 substance. Residue: no erratum names line 815.
+7. **Corpus arithmetic — reframed as documentation-integrity.** The
+   registration states the corpus three ways (361 § 2.1 / ~360 § 8.6 /
+   a 321 reserve in coverage § 9); artefacts match § 8.6; the 361st
+   tile never existed (no deletion in repo history). E36's numbers
+   disclose the reserve's absorption; the sharpest residue is E20's
+   "reserve remains untouched", falsified by E36 six weeks later with
+   no amendment.
+8. **Voting label clause and runner substitution — stands, with
+   licence context.** The label-gated clustering the registration's
+   step 4 describes would make its own registered majority-vote label
+   rule vacuous and break its own voting↔evaluation alignment clause —
+   another internal inconsistency; the spatial-only implementation is
+   the coherent reading (materiality bounded: ~21 % non-mound
+   subtypes). The runner substitution is documented in Decision 15 and
+   the execution-checklist deviation table; only `run_phase2.py` is
+   post-lodgement, and the batch engine named in the same lodged rows
+   is unchanged. Neither divergence is erratum'd.
+9. **HIGH thinking — stands, count corrected.** The 22 executed
+   phase3c (H9) configs are unlicensed — the queued HIGH-thinking
+   erratum's job — but 17 of the 41 flagged configs were already
+   licensed by name (E49/E51/E52/E53/Decision 20); the setting is
+   disclosed on the study YAMLs and constant across compared
+   conditions. Aggravator (defence, against interest): HIGH thinking
+   is itself an unregistered diversity mechanism (Obs 140) that may
+   bias the H9 null's direction, not just its level.
+10. **Text-condition role (CMT-0109) — as previously revised, plus
+    defence context.** The designation (three sites) is a role
+    disclosure; § 8.4.7's operative OFAT clause carries no modality
+    restriction, so brief-text's selection followed the registration's
+    own rule; the designation was falsified by the registered H1-P3
+    test (p = 0.004); the image track completed and leads on the
+    registered secondary outcome (MCC 0.710); "text conditions" drops
+    example images only — the deployment remains a vision pipeline.
+    Residue unchanged: E27's exploratory-reporting promise vs the
+    deployment headline; `docs/pipelines.md:54` stale. Ruling options
+    as before (rider erratum recommended).
+11. **H11 at 384 px — stands, relocated.** The registered 64 px
+    overlap contradicts the registration's own ~1.8× cost arithmetic
+    (which implies the executed stride); disclosed in E51/E52 and
+    Obs 211. The library claim narrows to "never back-applied to H11"
+    (E8 decouples example crops; a 384 px null set exists and serves
+    the v2 configs). Residue: prereg :968 never addressed on its own
+    terms.
+12. **Open obligations — reframed.** H14's hypothesis-level deferral
+    is registered (its configuration-spec rows are the genuinely open
+    part); the Stage-1→2 ladder discharges into a future, separately
+    preregistered Stage 2 (§ 10.2) — **owed, not breached**; the
+    caveat obligations attach to a draft-stage manuscript ("not yet
+    evidenced"); five of seven open interaction rows instantiate
+    registered if-resources/deferred qualifiers. Counter-fact
+    retained: the execution plan ranks H14 first for future work, in
+    tension with the registered deferral.
 
 ## 3. Erratum queue (GATE 1 decision required)
 
-Per the census rule, each needs an erratum or a PI ruling:
+Revised after the defence pass:
 
-1. Three unlicensed study families + four verifier-parameter levels
-   (§ 1.4) — likely one erratum per family, or one covering
-   post-registration verifier diagnostics.
-2. K=5 hard-example mining (finding 6).
-3. 360-vs-361 corpus count (finding 7).
-4. Unlicensed prompt-content additions (finding 4) — plus dated
-   **correction blocks** for E14 and E16's false preservation claims.
-5. Dated correction block for E36's "1 of 10" (finding 5).
-6. The two carried-forward queued errata: HIGH-thinking (finding 9
-   independently reconfirms) and the stale v4.6 header (verifier 6
-   independently rediscovered it at prereg line 2388).
+1. Three unlicensed study families (`flash35-pv-2x2`, `pv-diag-256`,
+   `verifier-robustness`) + the four verifier-parameter levels — one
+   erratum per family or one covering post-registration verifier
+   diagnostics.
+2. HIGH-thinking erratum (carried forward; finding 9 fixes its scope:
+   the 22 phase3c configs + the Obs-140 diversity-mechanism note).
+3. Registration-internal-inconsistency reconciliation erratum (or
+   erratum family): line 815 vs 1443/1450–1 (K), § 2.1 vs § 8.6 vs
+   coverage § 9 (corpus/reserve), step-4 label clause vs majority-vote
+   rule, :968 overlap vs cost arithmetic, one-tailed rule vs
+   registered two-tailed instances. One reconciliation entry naming
+   each pair and the operative reading is likely cleaner than five.
+4. Dated correction blocks: E36 ("1 of 10" → 0, with the Obs-155
+   inheritance note), E16 ("unchanged/preserved" → enumerate the
+   additions per commit `2d46311`), E20 (reserve statement falsified
+   by E36).
+5. Small errata: commit `5e7601d77` verifier text edit; `run_study.py`
+   → `run_phase2.py` substitution (formalising Decision 15); stale
+   v4.6 header (carried forward).
+6. CMT-0109 rider retiring the academic-baseline designation
+   (recommended, finding 10).
 
 ## 4. Apparatus incidents (process transparency)
 
@@ -173,6 +211,27 @@ deferred per charter. Notes-file C5 families → Phase 4.
    triage of discrepancies only; US$0).
 
 ## Changelog
+
+### 2026-07-29 — Defence-pass integration
+
+**Trigger**: the PI, working from memory, qualified 2 of 12 findings
+and asked how the other 10 could be trusted. A blind adversarial
+defence pass ran over all twelve original findings, with the PI's two
+catches as calibration probes — **both probes passed** (the pass
+recovered the PI's context and more). Result: 12/12
+needs-qualification, 0 overturned, 3 sub-claims retracted (the
+"thematic families" characterisation, the E14 truncation misquote, the
+`manually_verified_at` blinding limb). § 2 rewritten in qualified
+form; § 3 erratum queue restructured around the new meta-finding
+(registration-internal inconsistency as recurrent root cause); ledger
+rows CMT-0697/0256/0109 rescoped; charter rule 13 (mandatory defence
+search) added; full record in
+`apparatus/defence-pass-adjudication-2026-07-29.md`. Verdict-level
+before→after: finding 1 downgraded from top-item tension to
+licence-formality question; findings 4 and 6 substantially downgraded;
+findings 2, 3, 5, 7–12 stand with scoping. The GATE 1 decision list is
+unchanged in structure; decisions 1–3 now carry materially different
+content.
 
 ### 2026-07-29 — Finding 10 precision (PI query)
 

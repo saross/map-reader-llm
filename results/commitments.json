@@ -3098,7 +3098,7 @@
       "status": "open",
       "discharged_by": null,
       "waiver": null,
-      "notes": "[chunk-3.json] Interpretive caveat that down-weights the text-only cells without excluding them; constrains how H1 results may be reported. [discharge-mapping 2026-07-29, discharge-3] Later practice contradicts the disclosure: the study's headline and deployment pipelines are built on the text-only detect_brief-text prompt (include_example_images false) in the 55maps-*-generalisation runs, so operational conclusions rest on a condition the registration designated an academic baseline."
+      "notes": "[chunk-3.json] Interpretive caveat that down-weights the text-only cells without excluding them; constrains how H1 results may be reported. [discharge-mapping 2026-07-29, discharge-3] Later practice contradicts the disclosure: the study's headline and deployment pipelines are built on the text-only detect_brief-text prompt (include_example_images false) in the 55maps-*-generalisation runs, so operational conclusions rest on a condition the registration designated an academic baseline. [defence-pass adjudication 2026-07-29] § 8.4.7's operative OFAT clause has no modality restriction (selection followed the registration's own rule); designation falsified by registered H1-P3 test (p=0.004); image track completed, leads registered secondary outcome (MCC 0.710); deployment drops example images only — still a vision pipeline. docs/pipelines.md:54 stale."
     },
     {
       "commitment_id": "CMT-0110",
@@ -7457,7 +7457,7 @@
       "status": "open",
       "discharged_by": null,
       "waiver": null,
-      "notes": "[chunk-4.json] Operational mining rule with an any-run (rather than majority) failure criterion, which maximises the candidate pool. Selection among candidates when more than the required number exist is not specified. [discharge-mapping 2026-07-29, discharge-4] Hard-example mining used five baseline passes with a >=3/5 majority criterion (studies/phase1-library.yaml passes: 5; preregistration.md:1450-1451; outputs/h10/hard-cases-v2/pool_160/hard_cases_register.json k_passes: 5), not the K=10 any-run rule this commitment registers; E15 records K=5 as the operative appendix value but does not waive the H8 section's K=10 wording."
+      "notes": "[chunk-4.json] Operational mining rule with an any-run (rather than majority) failure criterion, which maximises the candidate pool. Selection among candidates when more than the required number exist is not specified. [discharge-mapping 2026-07-29, discharge-4] Hard-example mining used five baseline passes with a >=3/5 majority criterion (studies/phase1-library.yaml passes: 5; preregistration.md:1450-1451; outputs/h10/hard-cases-v2/pool_160/hard_cases_register.json k_passes: 5), not the K=10 any-run rule this commitment registers; E15 records K=5 as the operative appendix value but does not waive the H8 section's K=10 wording. [defence-pass adjudication 2026-07-29] HP mining follows the registered any-run rule (82+26=108 confirms); only HN filtering is majority-based, registered at :1451; lodged text internally inconsistent (:815 K=10 vs :1443/:1450-1 five-pass); E15/E49/E51 license the K=5 substance. Residue: no erratum names line 815."
     },
     {
       "commitment_id": "CMT-0257",
@@ -19480,7 +19480,7 @@
       },
       "kind": "analysis",
       "statement": "**Rationale**: Independent runs provide unbiased estimates of each factor's effect without assuming voting (which is itself under test in H3). This design:\n\n- Avoids circular application of voting when testing other hypotheses\n- Enables proper variance-based statistical comparisons\n- Allows post-hoc computation of voted results for comparison",
-      "normalised_obligation": "For every hypothesis except H3, the decision statistic is computed over the unvoted independent-run distribution; voted results may be computed post hoc for comparison only.",
+      "normalised_obligation": "The § 3.8 rationale block records the non-circularity principle behind the K=10 unvoted main-factorial design: voting is not applied when testing non-voting hypotheses within that design; voted results are computed post hoc for comparison. Operative scope is the main factorial (line 315), not every non-H3 hypothesis — the registration elsewhere specifies voted statistics for H2, H9, H11, and H15.",
       "hypothesis": null,
       "decision_statistic": "unvoted per-run F1 distribution (all hypotheses except H3)",
       "uncertainty_treatment": "variance-based comparisons across K independent runs",
@@ -19488,7 +19488,7 @@
       "status": "open",
       "discharged_by": null,
       "waiver": null,
-      "notes": "[adjudication 2026-07-29] verifier-2 miss: the non-circularity constraint CMT-0069/0070/0071 depend on. GATE 1 FLAG: in tension with the project's greedy-consensus primary aggregation practice (cf. E52) — needs PI adjudication. [discharge-mapping 2026-07-29, discharge-1] Left open by instruction under the GATE 1 flag: the registered non-circularity constraint — decision statistics for every hypothesis except H3 computed over the unvoted independent-run distribution, with voted results post hoc only — is in tension with the project's greedy-consensus primary aggregation practice (cf. E52), and resolving that tension is a PI adjudication matter rather than an evidence question."
+      "notes": "[adjudication 2026-07-29] verifier-2 miss: the non-circularity constraint CMT-0069/0070/0071 depend on. GATE 1 FLAG: in tension with the project's greedy-consensus primary aggregation practice (cf. E52) — needs PI adjudication. [discharge-mapping 2026-07-29, discharge-1] Left open by instruction under the GATE 1 flag: the registered non-circularity constraint — decision statistics for every hypothesis except H3 computed over the unvoted independent-run distribution, with voted results post hoc only — is in tension with the project's greedy-consensus primary aggregation practice (cf. E52), and resolving that tension is a PI adjudication matter rather than an evidence question. [defence-pass adjudication 2026-07-29] Downgraded from the GATE 1 top-item reading: the span is Rationale, not an operative directive; K=10 design waived by E36; the greedy-primary convention's authority is Decision 26 (2026-04-13) + Obs 242, not E52 (which records WBF-primary for two v2 analyses). Residual PI question: does Decision 26 suffice as licence, or file an erratum?"
     },
     {
       "commitment_id": "CMT-0698",

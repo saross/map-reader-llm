@@ -179,6 +179,17 @@ DEFERRED (blocked, reason stated)**.
     re-verified at the gate that spends against it. Executors log every
     place they must guess or look outside the charter and ledgers; those
     stumbles are charter bugs, fixed by commit at the next gate.
+13. **Every breach-class verdict requires a defence search** (Phase 1
+    lesson, 2026-07-29: the PI caught one-sided evidence assembly in 2 of
+    12 headline findings; a blind defence pass then qualified all 12).
+    A CONTRADICTED/FLAGGED/unlicensed-deviation verdict must record which
+    licensing and exculpatory sources were searched (errata, decisions
+    log, execution-checklist deviation table, registered qualifiers,
+    commit timeline) and the nearest miss — the rule-4
+    auditable-negative discipline applied to context. Prosecution
+    without a recorded defence search is an incomplete verdict. Where
+    stakes warrant, run the defence as a separate fresh-context pass
+    (rule 2 applied to the finding itself).
 
 ## 6. Ledgers
 
