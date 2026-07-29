@@ -233,8 +233,13 @@ corrections, moves on. **GATE** = PI review before proceeding.
   Claude Fable 5 interactive session; report produced. **GATE 0 PASSED
   2026-07-29** — all six decisions approved; cross-model spend capped at
   US$150, § 10 item 6.)*
-- [ ] **Phase 1 — commitments and execution (C1, C2).** *(Claimed
-  2026-07-29, Claude Fable 5 interactive session.)* Build
+- [x] **Phase 1 — commitments and execution (C1, C2).** *(Claimed and
+  executed 2026-07-29, Claude Fable 5 interactive session; deliverables
+  complete — ledger v1.2 (702 commitments, 402 discharged / 89 waived /
+  211 open), c1+c2 ledgers (1,617 rows), licence census (13
+  UNLICENSED), guard wired; package at
+  `reports/verification/phase1-gate-package.md`; **GATE 1 pending PI
+  review**.)* Build
   `results/commitments.json` from the lodged text (subsumes publishing the
   trigger census; five-element trigger rule: statistic, comparison scope,
   uncertainty criterion, evaluation moment, **evaluation corpus**). Run the
