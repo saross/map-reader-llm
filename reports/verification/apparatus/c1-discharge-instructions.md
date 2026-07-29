@@ -49,4 +49,4 @@ JSON array to your assigned file:
 "evidence": "..."} or null, "waiver": "E.." or null,
 "note": "<one sentence of reasoning; UK English>"}]`
 One entry per assigned commitment — full enumeration. Final message: one
-line: "discharge-<N>: <n> mapped (<d> discharged, <w> waived, <o> open)".
+line: `discharge-N: n mapped (d discharged, w waived, o open)`.
