@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-07-30T03:21:13Z",
+  "generated_at": "2026-07-30T03:31:35Z",
   "generator_version": "0.6.0",
   "analyses": [
     {
@@ -954,16 +954,17 @@
       "predicted_outcome": "Registered contrast CMT-0106 executed for the first time under the run-it-now policy, reconstruction rule fixed at family-fdr-registration.md S 5.1.1 BEFORE computation. Directional expectation only: pooled text-only minus image-using positive, modest (~+0.03); significance genuinely unknown \u2014 the only outcome-blind primary in the family.",
       "predicted_outcome_amended": null,
       "tie_set": [],
-      "outcome": null,
+      "outcome": "NULL \u2014 the registered pooled modality effect does not reach significance. First execution of CMT-0106 (2026-07-30, sapphire, gates A/B passed): text-only group mean F1 0.5267 vs image-using 0.5029; delta +0.0238, CI95 [-0.0104, +0.0585], two-sided bootstrap p = 0.1774 (B=10,000, seed 42). Direction matches the falsified-designation finding (text >= image; E68) but pooling dilutes the significant extreme pairs (brief-text vs image-only p=0.004; image-only vs brief+image p=0.006): verbose-text weakens the text pool and the two +image conditions strengthen the image pool. Consequence: H1 does NOT survive the family BH correction \u2014 the outcome-blind selection resolved the outcome-material fork to the conservative branch. Artefact: results/family-fdr/h1_cmt0106_pooled_modality.json.",
       "paper_section": "Results",
       "output_path": "results/family-fdr/h1_cmt0106_pooled_modality.json",
       "working_notes_obs": [],
       "manually_verified_at": null,
       "provenance": {
         "source_files": [
-          "results/run-analyses.json"
+          "results/run-analyses.json",
+          "results/family-fdr/h1_cmt0106_pooled_modality.json"
         ],
-        "last_extracted_at": "2026-07-30T03:21:13Z",
+        "last_extracted_at": "2026-07-30T03:31:35Z",
         "extractor_version": "0.6.0"
       }
     },
@@ -1011,16 +1012,17 @@
       "predicted_outcome": "See reports/verification/family-fdr-registration.md S 9. Family selection fixed before computation; six of seven p-values visible in-repo, H1's outcome-blind. Rejection set is {H2, H3, H7} or {H1, H2, H3, H7}, decided by the H1 computation; H4, H5, H8 not rejected.",
       "predicted_outcome_amended": null,
       "tie_set": [],
-      "outcome": null,
+      "outcome": "Rejection set {H2, H3, H7} at q=0.05 over m=7 \u2014 the smaller of the two pre-registered possibilities. Ranked: H2 (<1e-4, adj 0.00035), H3 (<1e-4, adj 0.00035), H7 (<=0.001, adj 0.00233) REJECTED; H4 (0.124, adj 0.217), H1 (0.1774, adj 0.248), H5 (0.756, adj 0.834), H8 (Simes 0.8344, adj 0.834) not rejected. H6 excluded (never run). H2 is a FALSIFIED directional prediction (two-stage improves F1 +0.076, clearing the registered >=0.05 stopping threshold in the direction the registration predicted against). Sensitivity: the all-contrasts 26-row correction (20/26 significant) reported alongside; complementary coverage, not nested. Artefact: results/family-fdr/family_fdr.json; registration committed before compute.",
       "paper_section": "Results",
       "output_path": "results/family-fdr/family_fdr.json",
       "working_notes_obs": [],
       "manually_verified_at": null,
       "provenance": {
         "source_files": [
-          "results/run-analyses.json"
+          "results/run-analyses.json",
+          "results/family-fdr/family_fdr.json"
         ],
-        "last_extracted_at": "2026-07-30T03:21:13Z",
+        "last_extracted_at": "2026-07-30T03:31:35Z",
         "extractor_version": "0.6.0"
       }
     }

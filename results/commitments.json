@@ -1354,10 +1354,10 @@
    "decision_statistic": "Benjamini-Hochberg FDR-corrected p-value",
    "uncertainty_treatment": "BH-FDR q = 0.05, family = the confirmatory hypotheses",
    "trigger": null,
-   "status": "open",
-   "discharged_by": null,
+   "status": "discharged",
+   "discharged_by": "family-bh-fdr-confirmatory",
    "waiver": null,
-   "notes": "[chunk-2.json] The family membership ('confirmatory hypotheses') is quantified at line 274 as 8 hypotheses; the exploratory/confirmatory split itself is fixed in § 2 (outside this range). [discharge-mapping 2026-07-29, discharge-2] Register row A-01 records this family as unexecuted (deferred, never resolved): Benjamini-Hochberg at q = 0.05 was applied, but over thematic families of pairwise comparisons (26 rows tagged \"confirmatory\" in results/pairwise/20m/fdr/pairwise_results_fdr.json, 325 rows in results/pairwise/leaderboard-20m/fdr/pairwise_results_fdr.json), never over the registered family of eight confirmatory hypotheses."
+   "notes": "[chunk-2.json] The family membership ('confirmatory hypotheses') is quantified at line 274 as 8 hypotheses; the exploratory/confirmatory split itself is fixed in § 2 (outside this range). [discharge-mapping 2026-07-29, discharge-2] Register row A-01 records this family as unexecuted (deferred, never resolved): Benjamini-Hochberg at q = 0.05 was applied, but over thematic families of pairwise comparisons (26 rows tagged \"confirmatory\" in results/pairwise/20m/fdr/pairwise_results_fdr.json, 325 rows in results/pairwise/leaderboard-20m/fdr/pairwise_results_fdr.json), never over the registered family of eight confirmatory hypotheses. [Session 121, 2026-07-30] Discharged by the registered family-level correction (analysis family-bh-fdr-confirmatory; registration reports/verification/family-fdr-registration.md committed before compute; results/family-fdr/family_fdr.json). Deferred since the retest era; running it now discharges the obligation without making it prospective (registration S 9)."
   },
   {
    "commitment_id": "CMT-0048",
@@ -3029,10 +3029,10 @@
    "decision_statistic": "ABSENT — contrast named without a metric; the text also does not state how the two groups of conditions are pooled or aggregated.",
    "uncertainty_treatment": "95% CIs, FDR-corrected (line 436); two-tailed as a modality comparison (line 442)",
    "trigger": null,
-   "status": "open",
-   "discharged_by": null,
+   "status": "discharged",
+   "discharged_by": "h1-cmt0106-pooled-modality",
    "waiver": null,
-   "notes": "[chunk-3.json] Planned contrast 4 of 4 under 'Planned contrasts:' (line 437); full committed block: lines 437–441. This is the contrast that tests prediction 3 (line 408). [discharge-mapping 2026-07-29, discharge-3] Register item A-10 (partially-executed, no erratum): no pooled text-only versus image-using contrast appears in any artefact — only the ten level-by-level pairwise cells, so the obligation is only partly met (see also A-01, the family-level BH-FDR that was deferred and never run)."
+   "notes": "[chunk-3.json] Planned contrast 4 of 4 under 'Planned contrasts:' (line 437); full committed block: lines 437–441. This is the contrast that tests prediction 3 (line 408). [discharge-mapping 2026-07-29, discharge-3] Register item A-10 (partially-executed, no erratum): no pooled text-only versus image-using contrast appears in any artefact — only the ten level-by-level pairwise cells, so the obligation is only partly met (see also A-01, the family-level BH-FDR that was deferred and never run). [Session 121, 2026-07-30] Discharged by first execution under the run-it-now policy (analysis h1-cmt0106-pooled-modality; reconstruction rule registered at family-fdr-registration.md S 5.1.1 before compute): delta +0.0238 text-over-image, CI95 [-0.0104, +0.0585], p=0.1774 — the pooled modality effect is positive but not significant."
   },
   {
    "commitment_id": "CMT-0107",
