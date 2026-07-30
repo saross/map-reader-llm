@@ -3399,6 +3399,9 @@ survived. The original plan was to run only the top configurations on
 the full corpus, but insufficient statistical power means we need to
 retest *all* conditions to produce publishable results.
 
+> [2026-07-30] Correction rider: the figure above is wrong — 0 of 10
+> survived, not 1. See Obs 372.
+
 **Design summary**:
 
 - **Corpus**: 340 tiles (539 mound symbols, 204 populated / 136 empty
@@ -17338,6 +17341,9 @@ Search terms: Obs 338, genuine-Pro re-run n1-pro-rerun-384, E57 resolved, tie_se
 
 1. **A coverage hole surfaced.** A completeness audit of all 18 board cells found that the two **pv-diag medium-t-0-0** `run_1` batch passes had ~5% unretried tile failures (text 462/487, 25 failed; image 464/487, 23 failed) — *isolated* to those two cells (every other board pass had ≤1 failure). Those incomplete `run_1` values WERE the board's scores (0.763 text / 0.606 image): the ~25 missing tiles had been scored as artificial false-negatives. The failures were transient (no retries recorded originally); a single resume-merge round each cleared them to 487/487 (genuine Pro, verified).
 
+   > [2026-07-30] Correction rider: the "every other board pass had <=1
+   > failure" generalisation has a counterexample (483/487). See Obs 373.
+
 2. **The tie reopened.** With coverage fixed and n=3, `pro-text-medium-t-0-0` rises 0.763 → **0.792** and ties the leader `pro-text-high-t-0-0` (0.804). Re-tiering: 129/153 pairs significant → 7 tiers; **Tier 1 (tie_set) = two genuine-Pro text cells at T=0.0** (high + medium thinking), Tier 2 = the two Pro-text T=0.7 cells (0.755/0.745).
 
 | board state (all 2026-06-03) | tie_set | basis |
@@ -21711,3 +21717,175 @@ against a dataset the study later supersedes quietly expires. Two inverse errors
 were also found (obligations *missed*, not over-created), including H4b, whose
 "not triggered" determination was made on 60-tile data and never revisited after
 the 340-tile retest made the contrast BH-significant.
+
+## Observation 372: Correction rider — zero, not one, of the 10 Phase 2a comparisons survived FDR correction; the citation to Obs 155 was never made by Obs 155 (Session 121, 2026-07-30)
+
+*Source anchors: `results/phase2a-analysis-report.json` (`analysis_timestamp`
+2026-02-06T06:45:59Z; first tracked at commit `115aa484c` 2026-02-06,
+"Regenerate Phase 2a analysis with corrected CIs (E26)", present unchanged
+at `57ec68c25` 2026-02-08: `n_comparisons: 10`, `n_initially_significant: 3`,
+`n_fdr_significant: 0`, `recommendation`: "Optimal condition: brief-text
+(mean F1 = 0.5416)\nNo pairwise differences significant after FDR correction
+(q=0.05)."); `docs/methodology/preregistration/protocol-errata.md` E36
+correction block (landed 2026-07-30, commit `2159d25b4`);
+`reports/verification/phase1-gate-package.md` § 2 finding 5;
+`reports/verification/apparatus/defence-pass-adjudication-2026-07-29.md` F5;
+`reports/verification/phase2-rulings-2026-07-30.md` § 1(d); Obs 155
+(`docs/notes/working-notes.md:2754`, full-text re-checked: zero occurrences
+of "FDR", "bootstrap", "holdout", or "pairwise").*
+
+### The correction
+
+The "Transition to Production Runs (Session 52)" block above
+(`working-notes.md:3395–3397`) reads: "The 60-tile holdout produced wide
+confidence intervals (F1 CI width ~0.22) that left most pairwise comparisons
+statistically non-significant after FDR correction. Only 1 of 10 Phase 2a
+comparisons survived." **The correct figure is zero, not one.**
+`results/phase2a-analysis-report.json` records `n_comparisons: 10`,
+`n_initially_significant: 3` (three pairs cleared the uncorrected 0.05
+threshold before FDR: image-only vs brief-text, brief-text vs verbose-text,
+brief-text vs verbose-text-image), and `n_fdr_significant: 0` — all three are
+knocked out by Benjamini–Hochberg at q = 0.05. The `recommendation` field
+says so in words: "No pairwise differences significant after FDR correction
+(q=0.05)." Every committed version of the artefact records 0; no version has
+ever recorded 1. The Phase 1 defence pass independently re-ran the BH
+routine and reproduced 0.
+
+### Why this matters
+
+1. **The error is self-adverse.** Zero surviving comparisons is a *stronger*
+   justification for the 340-tile corpus expansion this block records than
+   one surviving comparison — the mistake understated the power case it
+   exists to make. Nothing about the corpus-expansion decision, the 340-tile
+   scope, or any downstream result changes; only the quoted FDR figure.
+2. **The citation trail is broken, not just the number.** The claim is
+   elsewhere attributed to Obs 155, but Obs 155 (`working-notes.md:2754`,
+   "Extended reasoning as liberaliser — more thinking, worse precision") is
+   a 44-candidate HIGH-vs-minimal thinking-level analysis and contains no
+   FDR, bootstrap, holdout, or pairwise-comparison content — a full-text
+   check returns zero matches for any of those terms. The citation does not
+   merely mis-report Obs 155's number; it points at an Observation that
+   never made the claim.
+3. **Propagation.** The same "1 of 10" figure appears in four places: this
+   working-notes block; `reports/experimental-progression.md:83`;
+   `reports/gs-tile-pool-mapping-2026-05-28.md:45`; and erratum E36's own
+   (now-corrected) Description. The two reports are corrected in place with
+   changelogs per the project's document revision policy; this working-notes
+   site takes the append-only rider instead, per the append-only rule for
+   Obs entries.
+4. **It survived one integrity sweep.** The error escaped the 2026-07-28
+   preregistration-integrity sweep and was caught only by the following
+   day's Phase 1 execution census — a plausible-sounding, self-adverse wrong
+   number is a category content-focused sweeps do not reliably catch; a
+   numeric cross-check against the underlying JSON is a distinct, necessary
+   pass.
+
+**PI ruling** (2026-07-30, `reports/verification/phase2-rulings-2026-07-30.md`
+§ 1(d)): "Approve (Recommended)" — in-place edit + changelog for the two
+reports; append-only Obs rider (never an edit) for `working-notes.md:3397`.
+
+Cross-references:
+
+- **[[Obs 155]]** (`working-notes.md:2754`) — the observation this error was
+  wrongly attributed to; Obs 155 itself is unaffected and unedited, the
+  mis-citation is the second half of this error family.
+- **[[Obs 373]]** (below) — the sibling correction rider born from the same
+  Session 121 Phase 2 (C3) provenance triage and PI rulings pass.
+- `docs/methodology/preregistration/protocol-errata.md` E36 — the erratum
+  whose Description carried the same error and received the 2026-07-30
+  correction block this rider mirrors.
+- `reports/verification/phase1-gate-package.md` § 2 finding 5 and
+  `reports/verification/apparatus/defence-pass-adjudication-2026-07-29.md`
+  F5 — the Phase 1 findings that surfaced and adjudicated the discrepancy.
+
+## Observation 373: Correction rider — the "isolated to those two cells" coverage claim has a counterexample: `pv-diag-384::baseline-flash-image-minimal-t-0-0` at 483/487 (Session 121, 2026-07-30)
+
+*Source anchors: `reports/verification/c3-rederivation/c3-triage-tiles.json`
+(Phase 2 (C3) provenance triage defence-search text, shared across 15
+`GENUINE_DISCREPANCY` rows: "...`pv-diag-384::image-baseline-image-t0.0::run1`
+IS a current board cell (`pv-diag-384::baseline-flash-image-minimal-t-0-0`)
+and is 483/487 (4 failed) — manifest and source agree on 483 so it raises no
+C3 mismatch, but it contradicts the working-notes '<=1 failure' claim.");
+`results/analyses-manifest.json` (`n1-baseline-matrix-384.conditions_compared`
+lists `pv-diag-384::baseline-flash-image-minimal-t-0-0` as one of the 18
+board cells); `results/conditions-manifest.json:29393` (condition_id
+`pv-diag-384::baseline-flash-image-minimal-t-0-0`, proposer_pool
+`image-baseline/image-t0.0`); `docs/methodology/preregistration/protocol-errata.md`
+E71 (landed 2026-07-30, commit `2159d25b4`); `reports/verification/phase2-rulings-2026-07-30.md`
+§ 2.4.*
+
+### The correction
+
+Obs 339 (`working-notes.md:17339`) reads: the two pv-diag medium-t-0-0
+`run_1` batch passes had unretried tile failures "*isolated* to those two
+cells (every other board pass had ≤1 failure)". That statement is true of
+the 18-cell `n1-baseline-matrix-384` board it describes, as understood at
+the time (post-E57, pre-E71). It does **not** generalise to "every other
+board pass": the Phase 2 (C3) provenance triage found a direct
+counterexample among the same 18 board cells — `pv-diag-384::baseline-flash-image-minimal-t-0-0`
+(proposer pool `image-baseline/image-t0.0`, pass
+`pv-diag-384::image-baseline-image-t0.0::run1`) is **483/487, 4 failed
+tiles**. Manifest and re-derived source agree on 483, so the row raised no
+manifest/source mismatch (C3's headline check) — it surfaced only because
+the defence search read the pass for corroboration and flagged the
+contradiction against the working-notes generalisation.
+
+### Scope precision
+
+This is a scope correction, not a reversal. Obs 339's claim holds for the
+specific E57-era pv-diag medium-t-0-0 pair it was written about, and for the
+`n1-baseline-matrix-384` Pro cells after E57's rerun (all 12 rerun passes
+487/487, 0 failures). It fails as a claim about "every other board pass" on
+the wider board, which erratum E71 now documents in full: **15 passes carry
+genuine coverage shortfalls** — six `n1-outstanding-384` `pro-*-high-t0`
+passes short 15–29 tiles each (not on the current board; E57 replaced those
+cells with `n1-pro-rerun-384`), five `pv-diag-384` flash-high-t0.0 passes
+short 16–34 tiles each, and four single-tile shortfalls elsewhere. Of these,
+**two live evaluated conditions** —
+`pv-diag-384::flash-high-image-n5-image-t0.0-consensus-1of3` and
+`pv-diag-384::flash-high-text-n5-text-t0.0-consensus-3of3` — score the
+missing tiles (19–34 each) as artificial zero-detection tiles, deflating
+recall and F1 for those two cells.
+
+### Why this matters
+
+1. **The mechanism is a manifest-column ambiguity, not a new outage.** E71
+   traces the root cause to `scripts/generate_post_run_report.py`:
+   `n_tiles_processed` reports tiles *dispatched* (`:368`, when
+   `per_item_metadata` is present) in some rows and tiles *completed*
+   (`:398`, `execution_stats.items_processed`) in others — the same column
+   carries two different quantities depending on meta era, so coverage
+   cannot be read off the manifest without knowing which branch produced a
+   given row.
+2. **Two live cells need re-scoring.** Unlike the six quarantined
+   `n1-outstanding-384` passes (off-board since E57), the two `pv-diag-384`
+   consensus conditions above are on the live board and currently
+   under-report recall/F1 by scoring real ground-truth-bearing tiles as
+   false negatives. A recovery rerun is registered under standing execution
+   rule 10 (`status: planned` before any API call), gated by dry-run,
+   `/audit-config`, and per-batch PI cost approval.
+3. **The C3 triage is doing its job beyond its stated remit.** The 483/487
+   finding did not fail C3's manifest-vs-source check (both agree) — it was
+   caught only because the defence search reads triage rows for
+   corroboration, not just contradiction. Single-source checks (manifest
+   self-consistency) miss claims that require checking prose elsewhere in
+   the corpus against the same data; the defence-search discipline is what
+   caught this one.
+
+**PI ruling** (2026-07-30, `reports/verification/phase2-rulings-2026-07-30.md`
+§ 2.4, "standing-policy items ... presented; no objection"): Obs rider for
+`working-notes.md:17339`, citing the 483/487 counterexample.
+
+Cross-references:
+
+- **[[Obs 338]]** / **[[Obs 339]]** (the board-history entries this rider
+  narrows; no existing text edited).
+- **[[Obs 337]]** (the E57 billing-reconciliation Obs that established the
+  18-cell board this claim was scoped to).
+- **[[Obs 372]]** (above — the sibling correction rider born from the same
+  Session 121 Phase 2 (C3) provenance triage and PI rulings pass).
+- `docs/methodology/preregistration/protocol-errata.md` E70 (`--patch-tiles`
+  recovery campaign disclosure) and E71 (the manifest-semantics defect and
+  the 15-row shortfall list this rider draws on).
+- `reports/verification/c3-rederivation/c3-triage-tiles.json` and
+  `rederivation-report.json` — the triage artefacts.
