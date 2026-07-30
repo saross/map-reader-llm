@@ -85,7 +85,6 @@ PHASE3C_TRACKS = {
     "track2-text": ["h9-A", "h9-B", "h9-D", "h9-E"],
 }
 PHASE3C_BASE = REPO_ROOT / "outputs/retest/phase3c"
-PHASE3C_SUB_VARIANTS = ["p1", "p2", "p3", "p4", "p5"]
 PHASE3C_REPLICATIONS = [1, 2, 3, 4, 5]
 
 # Era 2: the headline proposer pool.
@@ -204,7 +203,17 @@ def analyse_phase3c() -> list[dict]:
     for track, conditions in PHASE3C_TRACKS.items():
         study_dir = PHASE3C_BASE / track
         for cond in conditions:
-            sub_conditions = [f"{cond}-{v}" for v in PHASE3C_SUB_VARIANTS]
+            # Sub-variant suffixes are condition-specific (A: p1-p5,
+            # B: v1-v5, C: img1-img5, D: t1-t5, E: p1-p5) — discover
+            # them from disk rather than assuming a naming scheme.
+            sub_conditions = sorted(
+                d.name for d in study_dir.glob(f"{cond}-*") if d.is_dir()
+            )
+            if len(sub_conditions) != 5:
+                logger.warning(
+                    "Expected 5 sub-conditions for %s/%s, found %d: %s",
+                    track, cond, len(sub_conditions), sub_conditions,
+                )
             for k in PHASE3C_REPLICATIONS:
                 pass_detections = load_replication_passes(study_dir, sub_conditions, k)
                 if not any(pass_detections.values()):
