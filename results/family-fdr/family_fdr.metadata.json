@@ -1,0 +1,15 @@
+{
+ "generated_at": "2026-07-30T03:29:14.223365+00:00",
+ "script": "scripts/compute_family_fdr.py",
+ "registration": "reports/verification/family-fdr-registration.md",
+ "inputs": [
+  "outputs/retest/phase2a/ (5 conditions x 3 runs)",
+  "inputs/vectors/references/mounds-reference.geojson",
+  "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+  "results/retest/pairwise-bootstrap-comparisons.json",
+  "results/pairwise/20m/group_1_architecture/",
+  "results/diversity-dividend-384/tiering-champions/tiering_20m.json",
+  "results/h8-v2/permutation-t4/fdr_summary.json"
+ ],
+ "api_cost_usd": 0.0
+}

@@ -1,0 +1,89 @@
+{
+ "_README": "The registered family-level Benjamini-Hochberg FDR correction (preregistration.md S 3.1) over the seven executable confirmatory hypotheses, per the pre-execution registration at reports/verification/family-fdr-registration.md (committed before this computation; PI rulings reports/verification/phase2-rulings-2026-07-30.md S 3).",
+ "generated_at": "2026-07-30T03:29:14.223365+00:00",
+ "registration": "reports/verification/family-fdr-registration.md",
+ "q": 0.05,
+ "family_size": 7,
+ "h6": "EXCLUDED - never run (registration S 5.6)",
+ "inputs_ranked": [
+  {
+   "hypothesis": "H2",
+   "numeric_p": 9.999000099990002e-05,
+   "report_as": "p < 1e-4 (permutation floor)",
+   "source": "registered artefact (re-read and asserted)",
+   "rank": 1,
+   "bh_critical": 0.007142857142857143,
+   "adjusted_p": 0.00034996500349965005,
+   "rejected": true
+  },
+  {
+   "hypothesis": "H3",
+   "numeric_p": 9.999000099990002e-05,
+   "report_as": "p < 1e-4 (permutation floor)",
+   "source": "registered artefact (re-read and asserted)",
+   "rank": 2,
+   "bh_critical": 0.014285714285714285,
+   "adjusted_p": 0.00034996500349965005,
+   "rejected": true
+  },
+  {
+   "hypothesis": "H7",
+   "numeric_p": 0.001,
+   "report_as": "p <= 0.001 (bootstrap floor, B=1000)",
+   "source": "registered artefact (re-read and asserted)",
+   "rank": 3,
+   "bh_critical": 0.02142857142857143,
+   "adjusted_p": 0.0023333333333333335,
+   "rejected": true
+  },
+  {
+   "hypothesis": "H4",
+   "numeric_p": 0.124,
+   "report_as": "p = 0.124",
+   "source": "registered artefact (re-read and asserted)",
+   "rank": 4,
+   "bh_critical": 0.02857142857142857,
+   "adjusted_p": 0.217,
+   "rejected": false
+  },
+  {
+   "hypothesis": "H1",
+   "numeric_p": 0.1774,
+   "report_as": "p = 0.1774",
+   "source": "computed this run (h1_cmt0106_pooled_modality.json)",
+   "rank": 5,
+   "bh_critical": 0.03571428571428572,
+   "adjusted_p": 0.24836,
+   "rejected": false
+  },
+  {
+   "hypothesis": "H5",
+   "numeric_p": 0.756,
+   "report_as": "p = 0.756",
+   "source": "registered artefact (re-read and asserted)",
+   "rank": 6,
+   "bh_critical": 0.04285714285714286,
+   "adjusted_p": 0.8343999999999999,
+   "rejected": false
+  },
+  {
+   "hypothesis": "H8",
+   "numeric_p": 0.8344,
+   "report_as": "Simes p = 0.8344 (within-H8 BH minimum)",
+   "source": "registered artefact (re-read and asserted)",
+   "rank": 7,
+   "bh_critical": 0.05,
+   "adjusted_p": 0.8343999999999999,
+   "rejected": false
+  }
+ ],
+ "rejected_at_q": [
+  "H2",
+  "H3",
+  "H7"
+ ],
+ "sensitivity": {
+  "artefact": "results/pairwise/20m/fdr/pairwise_results_fdr.json",
+  "note": "all-contrasts correction reported alongside per the PI decision; 26 confirmatory rows, 20 significant; complementary coverage, not nested (registration S 8.4)"
+ }
+}

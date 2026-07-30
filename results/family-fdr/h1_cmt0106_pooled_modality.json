@@ -1,0 +1,47 @@
+{
+ "_README": "First execution of registered contrast CMT-0106 (H1 pooled modality effect: text-only conditions vs image-using conditions), under the reconstruction rule registered BEFORE computation at reports/verification/family-fdr-registration.md S 5.1.1 (run-it-now policy, PI ruling 2026-07-30).",
+ "generated_at": "2026-07-30T03:29:14.223365+00:00",
+ "registration": "reports/verification/family-fdr-registration.md",
+ "conditions": {
+  "text_only": [
+   "brief-text",
+   "verbose-text"
+  ],
+  "image_using": [
+   "image-only",
+   "brief-text-image",
+   "verbose-text-image"
+  ]
+ },
+ "corpus": {
+  "tiles": 340,
+  "bounds": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+  "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+  "buffer_metres": 20
+ },
+ "method": "paired tile bootstrap; per condition mean F1 across 3 runs; unweighted group means; two-sided p = 2*min tail, floor 1/B",
+ "n_iterations": 10000,
+ "seed": 42,
+ "point_estimate": {
+  "group_f1": {
+   "text_only": 0.5267078653406156,
+   "image_using": 0.5028653862671169
+  },
+  "delta_text_minus_image": 0.02384247907349879
+ },
+ "bootstrap": {
+  "delta_mean": 0.02408367011089905,
+  "ci95": {
+   "lower": -0.01035902138814961,
+   "upper": 0.05853936810199798
+  },
+  "prop_le_zero": 0.0887,
+  "prop_gt_zero": 0.9113
+ },
+ "p_value": 0.1774,
+ "p_at_floor": false,
+ "validation_gates": {
+  "gate_a": "per-condition mean F1 == results/retest/phase2a-evaluation.json (1e-6)",
+  "gate_b": "vectorised scoring == lib aggregate_tile_metrics on 50 probes (1e-9)"
+ }
+}
