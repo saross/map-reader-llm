@@ -332,15 +332,55 @@ The main preregistration (§8.4.2) does not specify a pass count, deferring to t
 
 ---
 
-### E16: Prompt text shifted from cartographic naming to visual descriptions
+### E16: Prompt text shifted from cartographic naming to visual descriptions (corrected 2026-07-30)
 
 | Field | Value |
 |-------|-------|
-| Date | 2026-02-03 |
+| Date | 2026-02-03 (original); **corrected 2026-07-30** — see Correction |
 | Type | Clarification |
 | Commit | `2d46311` |
 | Files | All 10 `prompts/system-instructions/detect_*.md` files |
 | Impact | Changes wording of preregistered prompt text without altering prompt structure or factor design |
+
+**Correction (2026-07-30)**: this erratum's "Scope of changes" states that "The prompt
+structure (preamble, decision procedure, exclusion categories), factor design (H5
+levels, M/E levels), and example library are unchanged", and its Protocol impact states
+that "the set of features being described and the diagnostic logic (ray
+presence/absence, direction of marks) are preserved". **The "unchanged" and "preserved"
+claims are inaccurate as they stand.** Commit `2d46311`, which this erratum records, did
+not only reword existing material: it **added three new exclusion sections**, enumerated
+in the commit's own message:
+
+| Commit-message change | New section added |
+|-----------------------|-------------------|
+| "Change 2B — Cyrillic text: New exclusion items (terse bullet + verbose subsection) flagging Cyrillic characters as a confound." | `### Cyrillic Map Text` |
+| "Change 3 — Round shapes: New catch-all exclusion for round/ovoid shapes in mound-like colours without outward-radiating rays." | `### Other Round Shapes in Mound-Like Colours` |
+| "Change 4B — Dense features: New "Symbols Amid Dense Features" subsection in verbose files." | `### Symbols Amid Dense Features` |
+
+All three headings are verifiable as additions in `git show 2d46311 --
+prompts/system-instructions`. The same commit also inserted a new diagnostic principle
+("Opus P3b — Insert visual-diagnostic-principle in Core Diagnostic: 'Base all detections
+on the visual sunburst diagnostic only.'").
+
+**The correct characterisation** is therefore: the *exclusion categories were extended*,
+not held constant, and *the set of features being described was enlarged* — Cyrillic map
+text, round/ovoid shapes without rays, and dense-feature contexts were not described in
+the lodged appendix text at all. What genuinely is unchanged is the **factor design**
+(H5 levels, M/E levels) and the **example library**; and the core diagnostic logic (ray
+presence/absence, outward versus inward direction) is genuinely preserved — the
+additions sharpen and extend it rather than replacing it. The change remains conservative
+in effect, and the changes were still applied uniformly across all H5 conditions, so no
+condition contrast is confounded.
+
+**Why this matters**: E16 is the register entry a reader consults to learn how far the
+executed prompts diverge from the lodged appendix. An "unchanged" claim in that entry
+understates the divergence. Identified by the Phase 1 verification campaign
+(`reports/verification/phase1-gate-package.md` § 2 finding 4;
+`reports/verification/apparatus/defence-pass-adjudication-2026-07-29.md` F4), whose
+broader ruling was a **major downgrade** of the prompt-divergence concern: the lodged
+appendix was byte-accurate at lodgement, all drift is post-lodgement across five commits
+(2026-02-02 to 2026-02-11), four of them erratum'd within 24 hours, and the restructure
+is licensed by E14. This correction and the `5e7601d77` entry (E65) are the residue.
 
 **Description**: The preregistered prompt text (appendix v2.17) describes non-mound map features using cartographic identity names: "Contour Line Artefacts", "Infrastructure Markers", "Quarry and Pit Symbols", "Roads (black/red lines), contour lines (brown), grid lines (blue)". During hard example review (Session 11), these were systematically revised to use visual appearance descriptions: "Closed Curved Line Patterns", "Dots on Linear Features", "Inward-Pointing Marks", "Lines in various colours (black, red, brown, blue)". Interpretive glosses such as "(inward = excavation, outward = elevation)" were removed.
 
@@ -417,14 +457,36 @@ This is a naming simplification: the unsuffixed config IS the H5=Minimal variant
 
 ---
 
-### E20: Standardised "holdout" → "validation" naming across codebase
+### E20: Standardised "holdout" → "validation" naming across codebase (corrected 2026-07-30)
 
 | Field | Value |
 |-------|-------|
-| Date | 2026-02-05 |
+| Date | 2026-02-05 (original); **corrected 2026-07-30** — see Correction |
 | Type | Clarification |
 | Files | `inputs/tiles/tile_selection_metadata.json`, `scripts/generate_tile_bounds.py`, `scripts/select_tiles_phase4.py`, `scripts/analyse_phase2_results.py`, tests |
 | Impact | None (internal naming only) |
+
+**Correction (2026-07-30)**: this erratum's Rationale closes with "The 281-tile reserve
+remains unnamed/untouched." **That statement was falsified 40 days later and was never
+amended.** E20 is dated 2026-02-05; E36 is dated 2026-03-17 and records the expansion of
+the evaluation corpus to 340 tiles — which is the full 360-tile physical corpus minus the
+20 calibration tiles, and therefore absorbs the *entire* reserve. From 2026-03-17 the
+reserve was neither unnamed (it is enumerated in
+`inputs/tiles/full_evaluation_manifest.json`, 340 entries) nor untouched (every Phase 2a–3a
+condition was re-run across it). E36's own numbers disclose the absorption; what was
+missing was an amendment here, at the entry that asserts the opposite.
+
+**Secondary correction**: the reserve's size. E20 says "281-tile"; the physical corpus is
+**360** tiles (`find inputs/tiles -name "*.png"` → 360), of which 20 are calibration and
+60 validation, leaving a reserve of **280**. The 281 figure inherits the off-by-one in
+§ 2.1's "**Total**: 361 tiles" — see E64 sub-item (ii), which adopts § 8.6's "~360" as
+the operative corpus count.
+
+**What does not change**: the naming standardisation itself, which is what E20 exists to
+record, and its "Protocol impact: None" assessment for that naming change. Identified by
+the Phase 1 verification campaign
+(`reports/verification/apparatus/defence-pass-adjudication-2026-07-29.md` F7, where the
+defence raised it against its own interest).
 
 **Description**: The codebase used inconsistent naming for the 60-tile evaluation set:
 
@@ -877,15 +939,56 @@ consistent choice.
 
 ---
 
-### E36: 340-tile production retest replaces 60-tile holdout evaluation
+### E36: 340-tile production retest replaces 60-tile holdout evaluation (corrected 2026-07-30)
 
 | Field | Value |
 |-------|-------|
-| Date | 2026-03-17 |
+| Date | 2026-03-17 (original); **corrected 2026-07-30** — see Correction |
 | Type | Deviation |
 | Commit | `f06afb7` |
 | Files | `studies/retest/*.yaml`, `inputs/vectors/bounds/full_evaluation_bounds.geojson` |
 | Impact | All Phase 2–3 results re-evaluated on larger corpus; statistical power substantially increased |
+
+**Correction (2026-07-30)**: this erratum's Description states that on the 60-tile
+holdout "only 1 of 10 Phase 2a pairwise comparisons survived FDR correction (Obs 155)".
+**The correct figure is zero.** `results/phase2a-analysis-report.json` — the artefact
+this claim summarises, generated 2026-02-06 and committed 2026-02-08 (`57ec68c25`) —
+records `n_comparisons: 10`, `n_initially_significant: 3`, and **`n_fdr_significant: 0`**,
+with a `recommendation` field that says so in words: "No pairwise differences
+significant after FDR correction (q=0.05)." Every committed version of that artefact
+records 0; no version has ever recorded 1. The defence pass independently re-ran the
+Benjamini–Hochberg routine and reproduced 0.
+
+**Severity context, stated because it cuts against the reflex to minimise**:
+
+1. **The error is self-adverse.** Zero surviving comparisons is a *stronger* rationale
+   for the corpus expansion this erratum records than one surviving comparison. The
+   mistake understated the case for the decision it justifies.
+2. **It was inherited, and the source is worse than a mis-transcription.** The claim is
+   attributed to Obs 155. **Obs 155 contains no FDR result at all.** Observation 155
+   (`docs/notes/working-notes.md:2754`) is "Extended reasoning as liberaliser — more
+   thinking, worse precision (2026-03-10)", an analysis of 44 verifier candidates under
+   HIGH versus minimal thinking; a full-text scan of the entry returns zero occurrences
+   of "FDR", "bootstrap", "holdout", or "pairwise". The citation does not merely
+   mis-report a number in Obs 155; it points at an observation that never made the claim.
+3. **It propagated to four documents.** This entry;
+   `reports/experimental-progression.md:83` ("only 1 of 10 Phase 2a pairwise
+   comparisons survived FDR correction"); `reports/gs-tile-pool-mapping-2026-05-28.md:45`
+   (quoting "only 1 of 10 / Phase 2a comparisons" surviving FDR correction);
+   `docs/notes/working-notes.md:3397`, in the "Transition to Production Runs (Session 52)"
+   block ("Only 1 of 10 Phase 2a comparisons / survived"). All four require the same
+   correction to 0; the two reports are corrected in place with changelogs, and the
+   working-notes site receives an append-only Obs rider (never an edit).
+4. **It escaped the 2026-07-28 preregistration-integrity sweep** and was caught only by
+   the Phase 1 execution census the following day.
+
+**What does not change**: the corpus expansion decision, the 340-tile scope, the power
+rationale, and every downstream result. The corrected figure strengthens the rationale
+rather than undermining it. Identified by the Phase 1 verification campaign
+(`reports/verification/phase1-gate-package.md` § 2 finding 5;
+`reports/verification/apparatus/defence-pass-adjudication-2026-07-29.md` F5); handling
+ruled by the PI 2026-07-30
+(`reports/verification/phase2-rulings-2026-07-30.md` § 1d).
 
 **Description**: The preregistered Phase 3 evaluation used a 60-tile holdout set. Bootstrap CIs on this set were wide (~0.20) and only 1 of 10 Phase 2a pairwise comparisons survived FDR correction (Obs 155). The evaluation corpus was expanded to 340 tiles (569 ground truth mounds across 4 map sheets) to achieve adequate statistical power. All Phase 2a–3a conditions were re-run from scratch on the full corpus. K was reduced from 10 to 1–3 for single-pass conditions (340 tiles provide sufficient power) and retained at K=30 for consensus voting.
 
@@ -1000,15 +1103,33 @@ E56, E58 (the registered proposer prompt was never used).
 
 ---
 
-### E40: Gemini 3.1 Pro requires MEDIUM thinking — deviation from §8.2/§8.9
+### E40: Gemini 3.1 Pro requires MEDIUM thinking — deviation from §8.2/§8.9 (clarified 2026-07-30)
 
 | Field | Value |
 |-------|-------|
-| Date | 2026-03-24 |
+| Date | 2026-03-24 (original); **clarified 2026-07-30** — see Clarification |
 | Type | Deviation |
 | Commit | pending |
 | Files | `studies/h11-384-pro-pilot-*.yaml`, `scripts/run_phase2.py`, `scripts/run_pv.py` |
 | Impact | Pro results use MEDIUM or HIGH thinking instead of preregistered MINIMAL |
+
+**Clarification (2026-07-30)**: this entry's licence extends to Gemini 3.1 Pro used
+**as a verifier**, not only as a detector. The Phase 1 execution census
+(`reports/verification/c2-census/licence-census.json`,
+`verifier_thinking_level=medium`) found seven proposer-verifier conditions in
+`pv-diag-384` whose verifier is `gemini-3.1-pro-preview` at MEDIUM thinking
+(`verified-adv-pro-text-pro-vf-3of5`, `verified-adv-text-pro-vf-4of5`,
+`verified-adv-image-baseline-pro-vf`, `verified-adv-text-baseline-pro-vf`,
+`verified-adv-pro-image-pro-vf-3of5`, `verified-adv-pro-text-baseline-pro-vf`,
+`verified-adv-pro-image-baseline-pro-vf`) and flagged them as a near-miss: this
+entry's text names single-pass and consensus Pro *experiments*, not the verifier
+role. The Principal Investigator ruled on 2026-07-30 that the endpoint constraint
+this entry records — the Pro endpoint cannot run MINIMAL; MEDIUM is its floor —
+applies identically wherever the Pro model is invoked, so those seven sites are
+licensed by this entry ("For Pro we had no choice, that's an existing erratum" —
+`reports/verification/phase2-rulings-2026-07-30.md` § 1a). The deliberate
+Flash-verifier thinking exploration the same census surfaced is a separate matter
+and is disclosed in **E69**, not here.
 
 **Description**: The preregistration (§8.2) specifies `thinking_level=minimal` for both Gemini 3 Flash and Gemini 3 Pro. Gemini 3.1 Pro (the current Pro model, API name `gemini-3.1-pro-preview`) does not support MINIMAL thinking — the lowest available level is MEDIUM. Attempts to use MINIMAL result in silent batch failures where all tiles return empty detections with no error message (only a `partial_failure_N_tiles` checkpoint status reveals the problem). Single-pass Pro experiments use MEDIUM thinking; consensus Pro experiments use HIGH thinking (motivated by the post-registration finding that HIGH thinking benefits consensus voting at strict thresholds, Obs 183).
 
@@ -1786,14 +1907,30 @@ Several **post-hoc** analyses (not specified in the preregistration) use **10 00
 
 ---
 
-### E55: Verifier-t-pilot T0.5/T1.0 metadata under-recorded the swept temperature
+### E55: Verifier-t-pilot T0.5/T1.0 metadata under-recorded the swept temperature (corrected 2026-07-30)
 
 | Field | Value |
 |-------|-------|
-| Date | 2026-05-30 |
+| Date | 2026-05-30 (original); **corrected 2026-07-30** — see Correction |
 | Type | Metadata correction (non-destructive) |
 | Commit | TBD |
 | Impact | Low — exploratory pilot (H2); corrected at source and in the manifest |
+
+**Correction (2026-07-30)**: remediation item 3 below promises that "The manifest
+generator records the true temperature for these verifier passes, with
+`provenance.source_files` listing both `run.meta.json` and `run.log`". **The
+provenance half of that promise was never implemented.** Verified 2026-07-30: no row
+in `results/runs-manifest.json` lists `run.log` among its `provenance.source_files`,
+and `scripts/generate_post_run_report.py` mentions `run.log` only in a code comment
+describing it as "the deeper source if neither is present — not" implemented. The
+temperature values themselves ARE correct in the manifest — they flow through the
+additive `configuration.temperature_effective` field written by remediation item 2 —
+so the manifest's *content* honours this erratum; only the promised provenance
+listing is missing. The Principal Investigator ruled 2026-07-30 ("Correction block +
+fix" — `reports/verification/phase2-rulings-2026-07-30.md` § 2.3): this block records
+the unfulfilled promise, and the generator is amended in the same landing wave to
+list `run.log` in `provenance.source_files` for the two affected verifier passes.
+Caught by the Phase 2 (C3) provenance re-derivation campaign.
 
 **Description**: The verifier-temperature pilot `outputs/verifier-t-pilot/` swept the verifier temperature via a CLI `--temperature` override. For the two new executions (`T0.5`, `T1.0`), the override was applied to the API call and logged in `run.log` (`Temperature override: 0.50` / `1.00`), but it was **not written back into the serialised `run.meta.json`**, whose `configuration.temperature` (and `configuration.full_config_snapshot.temperature`) retained the base-config default of `0.0`. Reading the temperature from the meta alone would therefore mis-record the very parameter the pilot varies.
 
@@ -2115,3 +2252,962 @@ conditions, and `predicted_outcome` must be authored and committed with
 
 **Reference artefacts**: `planning/audit-and-completion-plan.md` § 6.3;
 `reports/d17-inventory/fable-adversarial-review-2026-07-28.md`.
+
+---
+
+### E62: Three unregistered proposer-verifier extension studies (`flash35-pv-2x2`, `pv-diag-256`, `verifier-robustness`) and four unregistered verifier-parameter levels — additional exploratory extensions of the registered PV contingency
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-07-30 (disclosure; executions 2026-04 to 2026-06) |
+| Type | Deviation (unregistered exploratory extensions; no registered study altered) |
+| Commit | — |
+| Files | `results/runs-manifest.json`; `results/run-conditions.json`; `reports/verification/c2-census/licence-census.json`; `outputs/flash35-pv-2x2/`, `outputs/h11/pv-diag-256/`, `outputs/verifier-robustness/` |
+| Impact | Low. No registered hypothesis test is conditioned on these runs; no reported registered result changes. Together with E69 and E40's 2026-07-30 clarification, the disclosure closes the last thirteen unlicensed factor=level pairs in the execution→errata inverse census |
+
+**Framing (PI, 2026-07-29)**: E37 establishes that the proposer-verifier (PV)
+architecture is *registered* — H2 Condition B — and that the production PV programme
+is "that registered contingency, exercised" (E37), the contingency being the coverage
+document's "exhaustive optimisation only if this threshold is met"
+(`osf/preregistration-coverage.md:187`) fired by the registered stopping rule at
+`osf/preregistration.md:491`. The three families recorded here are **additional,
+unregistered, serendipitous extensions of that same programme** — exploratory
+additions built on top of a registered architecture. They are **not** deviations from
+any registered study: none replaces, alters, or re-specifies a registered condition,
+and no registered analysis draws on them. This erratum discloses them for
+completeness, not because a registered commitment was departed from.
+
+**How they surfaced**: the Phase 1 verification campaign's execution→errata inverse
+census triaged all 213 observed factor=level pairs against the 702-obligation
+commitment ledger and all 61 existing errata. 200 pairs were licensed (43 by the
+registration, 14 by an erratum, 143 by both); 13 were UNLICENSED
+(`reports/verification/c2-census/licence-census.json`, `summary`). Those 13 reduce to
+three study families, five verifier-parameter levels, and five derivative
+`proposer_pool` slugs that are licensed at run level and carry no independent content.
+Disposition of the five levels (PI ruling 2026-07-30,
+`reports/verification/phase2-rulings-2026-07-30.md` § 1a): four are disclosed in this
+entry; the fifth (`verifier_thinking_level=medium`, 13 sites) splits — its seven
+Pro-verifier sites are licensed by E40's endpoint-constraint rationale (dated
+clarification block at E40), and its six Flash-verifier sites, plus the one
+`pv-diag-384` Flash HIGH-verifier site, are the deliberate exploration disclosed in
+**E69**.
+
+**The three families**:
+
+| Family | Purpose (source) | Architectures executed | Scope |
+|--------|------------------|------------------------|-------|
+| `flash35-pv-2x2` | `runs-manifest.json`: "Model-role 2x2x2: is Flash 3.5 a better bare proposer, PV proposer, or verifier than Flash 3 at the minimal operating point? (The S110 parking note: bare proposer was the only angle a stronger model might win.)" | 1 × `consensus`, 3 × `proposer-verifier` (4 citable conditions) | era-2-487 (487 tiles, 384 px, 4-map gold standard, curator ground truth) |
+| `pv-diag-256` | `runs-manifest.json` `purpose` was **`null`** at census time; populated in this landing wave per the PI ruling of 2026-07-30 (§ 1b). `run-conditions.json` `_note`: "256px H11 tile-size diagnostic (px256-1032 scope, 1032 tiles, curator GT) … 256px is the small-tile anchor for the tile-size comparison: F1@20m orders 256 < 512 < 384 (0.46 / 0.69 / 0.79)." | 1 × `single-pass`, 1 × `consensus`, 1 × `proposer-verifier` (3 citable conditions) | px256-1032 (1 032 tiles, 256 px, 4-map gold standard, curator ground truth) |
+| `verifier-robustness` | `runs-manifest.json`: "Verifier-robustness programme: determinism (n=1 vindicated), proposer-input band, temperature/thinking matrix, model roles, compute allocation, operational maximum, pass-budget Pareto. Meta-rule: on a within-noise tie, take the cheaper config." | 8 × `proposer-verifier` (8 citable conditions) | era-2-487, with one condition scope-overridden to px256-1032 |
+
+Architectures are as recorded in `results/run-conditions.json`, `decomposition.<family>.
+conditions[].architecture`. Every condition in all three families is either a PV
+condition or a proposer-side baseline built to be compared against one — which is the
+factual basis for the "extension of the PV programme" framing rather than "new
+unregistered studies".
+
+**Why each is an extension rather than a registered study**:
+
+1. **`flash35-pv-2x2`** asks a model-role question the registration does not pose. The
+   lodged model set is closed at four values — "| Model | gemini-3-flash, gemini-3-pro,
+   claude-4.5-sonnet, gpt-5.2-thinking | H6, H14 | Overrides config file value |"
+   (CMT-0591) and "**Primary**: Gemini 3 Flash, Gemini 3 Pro" (CMT-0377) — and admits no
+   3.5-generation model. E3's model-name resolution licence
+   (`gemini-3-flash` → `gemini-3-flash-preview`) resolves a registered name to an API
+   endpoint; it does not admit a later model generation. Executed 2026-06-10.
+   The result is against the extension's own interest and is reported as such: Flash 3.5
+   wins in no role (`runs-manifest.json` `headline_rationale`, verbatim: "Deliberately
+   none — a model comparison, not a champion search: Flash 3.5 wins in NO role
+   (bare-proposer numerical tie 0.6196 vs 0.6204; PV proposer -0.0355, p=0.035 targeted
+   tile-swap — the one resolved role gap; verifier -0.012..-0.015, within-noise ties, at
+   3x the price). The all-Flash-3 production stack stands").
+2. **`pv-diag-256`** runs the registered H11 tile-size question at a third level.
+   Registered H11 has exactly two conditions — "| A | 512×512 | 1× (baseline) | 1× |
+   Lower |" (CMT-0310) and "| B | 384×384 | 0.56× | ~1.8× | Higher |" (CMT-0311). The
+   registration discusses 256 px only as *prior pilot context*, not as a condition:
+   "Pilot testing at 256px confirmed high recall (0.90) but very low precision (0.10) at
+   2/5 consensus voting threshold, suggesting smaller tiles may over-detect"
+   (`osf/preregistration.md:963`). The 256 px diagnostic re-runs that pilot question on
+   the production corpus and anchors the low end of the tile-size curve. Its proposer
+   passes were **not** materialised as `run_*` directories (only consensus outputs and
+   crops survive), so no per-pass metadata exists; the six consensus GeoJSONs were first
+   committed 2026-04-15 (`3d22184d6`), and the PV verification condition was executed
+   2026-06-08 (`outputs/era1-pv-stage-d/256-consensus-text-5of5/`).
+3. **`verifier-robustness`** sweeps verifier parameters the registration fixes at a
+   single value. The lodged two-stage configs are templates pinned to one downstream
+   optimum — "**Template status**: These configs are templates that will be finalised
+   after earlier phases complete. Temperature will use the H7-optimal value from Phase
+   2b. Library composition will use the H8-optimal from Phase 2c." (CMT-0583) — and the
+   lodged verifier config fixes thinking at minimal: "| `thinking_level` | `minimal` |
+   Calibrated via pilot; minimal achieves equivalent F1 to high at 1/3 latency (see
+   §8.9) |" (CMT-0605). Executed 2026-06-09/10. Again the headline is deliberately
+   negative (`runs-manifest.json`, verbatim): "Deliberately none — NO new champion. The
+   carry-forward headline pv-diag-384::verified-adv-text-consensus-16of30 (0.890) stands:
+   the operational maximum here (verified-384-16of30-t0-3-n5-opmax, 0.8951) is NOT
+   significant over it (paired tile-swap permutation p=0.363, …), so per the cost
+   meta-rule (Obs 357) it is a numerical high only."
+
+**The four verifier-parameter levels disclosed here**:
+
+| Level | Observed sites | Carrying family/families | Nearest licence, and why it does not reach |
+|-------|----------------|--------------------------|--------------------------------------------|
+| `verifier_model=gemini-3.5-flash` | 2 | `flash35-pv-2x2` | E3 resolves a registered model *name* to its API endpoint; it does not admit a new model generation |
+| `verifier_temperature=0.3` | 4 | `verifier-robustness` | CMT-0590 registers 0.3 as a runtime temperature level, but hooked to **H7 detection** temperature; no commitment extends the H7 sweep to the verifier stage |
+| `verifier_temperature=0.7` | 2 | `verifier-robustness` | as above; E55 licenses a verifier-temperature sweep only at 0.5/1.0, in `verifier-t-pilot` |
+| `verifier_thinking_level=high` | 3 (2 disclosed here, in `verifier-robustness`; the 1 `pv-diag-384` site is disclosed in E69) | `verifier-robustness` | E40 licenses HIGH only for `gemini-3.1-pro-preview` consensus runs; these sites run `gemini-3-flash-preview` |
+
+The five derivative `proposer_pool` slugs (`f3-min-text-1of10`,
+`flash35-min-text-1of10`, `text`, `text-1of5`, `text-consensus-5of5`) are per-study
+pool identifiers with no independent experimental content; they are licensed at run
+level and are disclosed here only so the census's thirteen are fully accounted for.
+
+**Post-facto acknowledgement**: this disclosure is written with results in hand, in
+July 2026, for runs executed between April and June 2026. It was produced by a
+systematic census rather than at execution time, and the fact that these families were
+not erratum'd contemporaneously is itself part of what the census found.
+
+**Protocol impact**: none on registered results. All three families are exploratory
+extensions of the registered H2 Condition-B architecture; none is cited as evidence for
+a registered hypothesis; two of the three report deliberately null headlines, and the
+third (`pv-diag-256`) contributes only the low anchor of a tile-size curve whose two
+registered levels (512 px, 384 px) are unaffected. Reporting requirement: the paper's
+deviations table gains one row, and any use of these families in the text must be
+labelled unregistered exploratory. Cross-references: E37 (PV as registered contingency
+exercised), E39 (verifier strategy not load-bearing), E40 (Pro thinking levels, incl.
+the 2026-07-30 Pro-as-verifier clarification), E41 (384 px / 487-tile evaluation
+scope), E55 (verifier-temperature pilot), E56 (in-sample verifier operating points),
+E58 (registered proposer prompt never used), E69 (the Flash-verifier thinking
+exploration split from this entry).
+
+---
+
+### E63: `retest-phase3c` (H9 diversity) executed at HIGH thinking level — unregistered departure from the §8.9 `minimal` decision, configuration-verified but not token-corroborated
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-07-30 (disclosure; execution 2026-03-18 to 2026-03-25) |
+| Type | Deviation (unregistered thinking level on an exploratory hypothesis) |
+| Commit | — |
+| Files | `studies/phase3c-h9-diversity-track1.yaml`, `studies/phase3c-h9-diversity-track2.yaml`; `prompts/configs/phase3c-t{1,2}-*.json` (22 configs); `outputs/retest/phase3c/**/*.meta.json` (225 files) |
+| Impact | Medium-low on level, potentially higher on direction. The setting is constant across every compared H9 condition, so within-H9 contrasts are not confounded by it; but Obs 140 identifies HIGH thinking as itself a diversity mechanism, and H9 is a test *of* diversity mechanisms, so the setting may bias the H9 null's direction and not merely its level |
+
+**The registered commitment**: §8.9 calibrates thinking level on a 20-tile, K=10 pilot
+and concludes, verbatim, "**Decision:** Use `thinking_level=minimal` for main
+experiment." (`osf/preregistration.md:2135`), with the appendix runtime table fixing
+"| `thinking_level` | `minimal` | Calibrated via pilot; minimal achieves equivalent F1
+to high at 1/3 latency (see §8.9) |" (CMT-0605). No erratum names `phase3c`.
+
+**What was executed**: all 22 `phase3c` prompt configs and both study YAMLs set HIGH
+thinking. Both YAMLs state, verbatim and identically, "All conditions use HIGH thinking
+level. Temperature is fixed at T=0.7" (`studies/phase3c-h9-diversity-track1.yaml:40`;
+`studies/phase3c-h9-diversity-track2.yaml:37`), and both carry
+`optimal_thinking: "high"` in their `carried_forward` block (`:50` and `:47`
+respectively). Configs and YAMLs were committed together on **2026-03-07**
+(`ec00c2ae0`, "feat(phase3c): scaffold H9 diversity testing for both tracks"); the first
+`phase3c` API execution timestamp is **2026-03-18** — the declaration therefore
+pre-dates execution by 11 days and cannot be a post-hoc reconstruction. Execution ran
+2026-03-18 to 2026-03-25 across 225 passes.
+
+**Verification caveat (recorded at the PI's explicit mis-recording warning)**: all 225
+`phase3c` meta files record `configuration.thinking_level: "high"` — a mechanical count,
+225/225, zero exceptions. **But the retest-era pipeline left `usage_stats` wholesale
+unpopulated**, so token-level corroboration is unavailable. Every one of the 225 metas
+carries `usage_stats` with `total_tokens: 0`, `total_thoughts_tokens: 0`, and every
+other counter at zero; the sibling `retest/phase3a` (180 metas, all `minimal`) and
+`retest/phase3a-high` (90 metas, all `high`) directories are identically empty. The
+distinction that matters: elsewhere in the project, **known-HIGH runs show millions of
+thoughts tokens** (e.g. `outputs/55maps-text-high-generalisation/` passes record
+45.7–46.4 M `total_thoughts_tokens`; `outputs/gs/` passes record 1.3–2.7 M) and
+**known-minimal runs show zero thoughts tokens against a non-zero total** (e.g.
+`outputs/gs/**/run.meta.json`: `total_thoughts_tokens: 0`, `total_tokens: 21633`).
+`phase3c` shows **nothing** — not zero-thinking. The absence is an absence of accounting,
+not evidence of minimal thinking. The wording of this erratum therefore rests on
+configuration plus the pre-committed YAML declarations, and says so.
+
+**What can be established structurally** (defence search, charter rule 13). Three
+independent facts narrow the gap without closing it:
+
+1. **No CLI override was in play.** `thinking_level` is set in the 22 config JSONs
+   themselves (22/22 `"high"`), not passed as a runtime flag. E42's failure mode — meta
+   recording the config default while a `--model`-style override changed the actual API
+   call — structurally cannot arise where no override exists.
+2. **The request builder and the metadata writer read the same key.**
+   `scripts/lib_llm_metadata.py:531` writes `"thinking_level": self.config.get(
+   "thinking_level")`, and the batch request builder at `scripts/lib_batch_api.py:509-513`
+   constructs `generation_config["thinking_config"]` from the same
+   `config.get("thinking_level")`. Within a single execution the two cannot diverge.
+3. **The propagation bug was already fixed.** E34's fix — `"thinking_level":
+   condition.get("thinking_level")` added to `generate_execution_units()` in
+   `run_phase2.py` — landed 2026-03-15 (`5d7260335`), three days before `phase3c`
+   execution began; and Decision 20 (2026-03-15) had just established the mitigation
+   pattern `phase3c` uses, namely "separate config files … that differ only in the
+   `thinking_level` field".
+
+None of these is a runtime observation of thinking tokens. The honest statement is:
+the configuration is verified, the declaration is pre-committed, the propagation path
+is repaired and structurally coupled — and the response-side accounting that would close
+the loop was not written to disk in this era.
+
+**Aggravator, recorded against interest (Obs 140)**: HIGH thinking is not a neutral
+efficiency setting in this project. Obs 140 (`docs/notes/working-notes.md:2239`)
+established that HIGH thinking is itself an **unregistered diversity mechanism**:
+"HIGH thinking consensus outperforms MINIMAL thinking consensus by +6.8 percentage
+points on F1", by a mechanism Obs 140 names explicitly — "At N=30, HIGH thinking
+produces 3–4× more detection clusters than MINIMAL" — and concludes "Thinking level
+interacts with temperature and pool size in ways that make it an experimental factor
+for consensus voting workflows, not merely an efficiency setting." H9 is the hypothesis
+that tests whether *added* diversity across consensus passes improves detection. Running
+every H9 condition — including the H9-A identical-passes baseline — at a thinking level
+that is itself a diversity mechanism means the baseline already carries substantial
+pass-to-pass diversity. If that raises the floor, the H9 contrasts have less headroom to
+show a diversity effect, and the H9 null may be biased toward acceptance. **This
+concerns the null's direction, not only its level**, and it should be stated in the
+paper wherever the H9 result is reported.
+
+**Mitigating scope**: the setting is **constant across every compared condition** within
+H9 — both tracks, all five track-1 conditions (h9-A through h9-E) and all four track-2
+conditions (h9-A, h9-B, h9-D, h9-E; h9-C image diversity is degenerate for the text-only
+track), across all 225 passes. No H9 contrast is between a HIGH condition and a minimal
+one. Separately, the
+verification campaign's finding 9 records that of the 41 configs originally flagged for
+unlicensed HIGH thinking, **17 were already licensed by name** (E49, E51, E52, E53,
+Decision 20); the residue this erratum addresses is the **22 `phase3c` configs**.
+
+**Post-facto acknowledgement**: this disclosure is written in July 2026 about a March
+2026 execution, with the H9 result in hand. The thinking level was disclosed on the
+study YAMLs at the time and was visible to anyone reading them; what was missing was an
+erratum recognising that it departed from §8.9's registered `minimal` decision.
+
+**Protocol impact**: H9 is exploratory (Tier A), so no confirmatory claim is affected.
+The H9 result must be reported with two riders: (a) the runs were executed at HIGH
+thinking, not the registered `minimal`; (b) HIGH thinking is itself a diversity
+mechanism (Obs 140), so the H9 baseline is not a low-diversity baseline and the null
+should be read accordingly. Cross-references: E34 (thinking-level propagation),
+E42 (metadata field reliability; "Never trust a single metadata field for audit
+purposes"), E53 (Phase 3a-HIGH track), Decision 20 (controlled thinking-level
+replication), Obs 140 and Obs 141.
+
+---
+
+### E64: Five internal contradictions in the lodged registration — operative readings adopted, reasoning stated, post-facto status acknowledged
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-07-30 (PI policy decision, GATE 1) |
+| Type | Clarification (five reconciliations; no registered procedure altered) |
+| Commit | — |
+| Files | `osf/preregistration.md` (`:78`, `:269`, `:300`, `:442`, `:815`, `:936-938`, `:968`, `:1443`, `:1450-1451`, `:1882`, `:1892`, `:1898-1901`, `:1921`); `osf/preregistration-coverage.md:237` |
+| Impact | None on executed procedure — in every case the execution followed one of the lodged readings. Impact is on interpretation and on the paper's Methods: five parameters are specified two or three ways in the lodged text, and this entry fixes which reading governs |
+
+**Why one entry**: the Phase 1 verification campaign's meta-finding is that the single
+most recurrent root cause across its twelve headline findings is **internal
+inconsistency within the lodged registration itself** — the same parameter specified two
+or three ways, with execution following one of them (findings 1, 2, 6, 7, 8, 11;
+`reports/verification/apparatus/defence-pass-adjudication-2026-07-29.md` § "Meta-finding").
+Filing five separate errata would obscure the pattern. This is a finding about
+preregistration authoring, not misconduct, and it belongs in the paper's Discussion.
+
+**Standing acknowledgement, applying to all five**: each operative reading below was
+adopted in **July 2026, with the results in hand**. In every case the execution had
+already committed to one reading long before the contradiction was catalogued; what is
+post facto is the *recognition and justification*, not the choice of procedure. Where an
+operative reading happens to be the conservative one, that is noted; where it is not,
+that is noted too.
+
+**Summary**:
+
+| # | Parameter | Lodged reading A | Lodged reading B | Operative reading adopted |
+|---|-----------|------------------|------------------|---------------------------|
+| i | Hard-example mining K and filter | `:815` — K=10 baseline runs, any-run candidacy | `:1443` — 5 passes; `:1450-1451` — ≥3/5 filter | **The executed procedure**: K=5 passes, any-run HP candidacy (reading A's rule), ≥3-of-5 HN filter (reading B's rule) |
+| ii | Corpus size and reserve | § 2.1 `:78` — 361 total, `:76` — 281 reserve | § 8.6 `:1921` — "~360 total"; coverage § 9 `:237` — "321 available" | **The 360 physical tiles** (§ 8.6) |
+| iii | Voting cluster membership | § 8.5 step 4 `:1882` — cluster on distance **and matching label** | § 8.5 `:1892` — label is a post-hoc majority vote; § 4.1.2 — evaluation is label-blind | **Spatial clustering, then post-hoc majority label** |
+| iv | Tile overlap at 384 px | H11 `:968` — "64px overlap" | H11 `:959` — "~1.8×" API-call multiplier | **Constant overlap fraction** — 48 px overlap, stride 336 at 384 px |
+| v | Test tailedness | § 3.1 `:269` — one-tailed for directional predictions | H1 `:442` — two-tailed for modality; § 3.6 `:300` — power computed two-tailed | **Two-sided throughout** |
+
+---
+
+#### (i) Hard-example mining: K and the candidacy filter
+
+**Reading A** (`osf/preregistration.md:815`, § H8 "Availability constraint"), verbatim:
+
+> "The training set contains 36 mounds across 20 tiles. Hard examples are drawn from
+> failures across K=10 baseline runs (a mound missed in any run is a candidate HP; any
+> false detection is a candidate HN)."
+
+**Reading B** (`osf/preregistration.md:1443`, § 8.4.1 Step 1), verbatim:
+
+> "- Passes: 5 × 20 training tiles = 100 API calls"
+
+and (`osf/preregistration.md:1450-1451`, § 8.4.1 Step 2), verbatim:
+
+> "- **False Negatives (FNs)**: Ground truth mounds missed in ≥3/5 passes"
+>
+> "- **False Positives (FPs)**: Detections in ≥3/5 passes with no matching ground truth"
+
+The two passages contradict each other twice over: K=10 versus five passes, and
+*any-run* candidacy versus a *≥3-of-5* majority filter. Both are lodged.
+
+**Operative reading**: the executed procedure — **K=5 passes; hard positives by the
+any-run rule of reading A; hard negatives by the ≥3-of-5 filter of reading B.** This is
+verifiable in the artefact: `outputs/h10/hard-cases-v2/pool_160/hard_cases_register.json`
+records `k_passes: 5`, and its summary block reconciles exactly —
+`borderline_tp: 82` (missed in at least one of five passes) + `consistent_fn: 26`
+(missed in all five) = `hp_candidates: 108`, the any-run count; while
+`consistent_fp: 57` = `hn_candidates: 57`, the majority-filtered count, out of
+`total_fp_clusters: 720`.
+
+**Reasoning**: the hybrid is not opportunistic. The pass count is settled by § 8.4.1,
+which is the *operative procedure section* — the registration's own step-by-step
+construction protocol — against a parenthetical inside an availability-constraint
+paragraph in the H8 hypothesis section. The HP rule follows reading A because the
+campaign's binding constraint was hard-positive scarcity, documented at the same line
+815 ("If fewer than 16 distinct HPs or HNs are available, Scale-32 (and possibly
+Scale-16) will be capped at the maximum available") and exercised in E11 and Decision 11;
+a ≥3-of-5 filter on FNs would have deepened an exhaustion the registration already
+anticipated. The HN rule follows reading B because false-positive clusters were
+abundant (720 candidates), so the stricter filter costs nothing and buys quality. The
+spirit of the campaign — build the strongest available hard-example library under a
+1:1 ratio constraint — selects each rule on the side where it binds.
+
+**Prior treatment and residue**: E15 already corrects the *appendix's* stale "≥3/10"
+references to ≥3/5 and records "Phase 1 was executed with K=5 passes as specified by the
+operative procedure". **No erratum has ever named line 815.** This sub-item is that
+naming. E15, E49, and E51 license the K=5 substance downstream.
+
+**Post facto**: adopted July 2026. The library built under this hybrid has been in
+production since Phase 1; the reconciliation is a justification of a settled fact.
+
+---
+
+#### (ii) Corpus size and the reserve set
+
+**Reading A** (`osf/preregistration.md:76,78`, § 2.1 Map Tile Corpus), verbatim:
+
+> "| Reserve set | 281 | Confirmatory testing | **Untouched** |"
+
+and, two lines later:
+
+> "**Total**: 361 tiles from 4 annotated Soviet topographic map sheets. Maps were
+> hand-annotated by students with comprehensive expert review."
+
+**Reading B** (`osf/preregistration.md:1921`, § 8.6 Tile Selection Methodology),
+verbatim:
+
+> "- **Tiles**: 512×512 pixel tiles at native resolution (~90 tiles per map, ~360 total)"
+
+**Reading C** (`osf/preregistration-coverage.md:237`, § 9 Stage 2 Design Principles),
+verbatim:
+
+> "2. Use **80-160 reserve tiles** (from 321 available)"
+
+Three figures for one corpus: 361 total with a 281-tile reserve; ~360 total; and a
+321-tile reserve.
+
+**Operative reading**: **the 360 physical tiles.** `find inputs/tiles -name "*.png"`
+returns **360**; `inputs/tiles/full_evaluation_manifest.json` contains **340** entries
+(= 360 − 20 calibration tiles); `inputs/tiles/calibration_manifest.json` contains 20 and
+`inputs/tiles/validation_manifest.json` contains 60. The reserve is therefore
+360 − 20 − 60 = **280**, not 281 and not 321. § 8.6's "~360" is the accurate statement;
+§ 2.1's 361 is off by one and its 281 inherits that off-by-one; coverage § 9's 321 is
+reconcilable with neither and appears to be a residue of an earlier tile-selection draft.
+
+**Reasoning**: § 8.6 is the methodology section that generated the tiles, and it is the
+only one of the three that matches the artefacts on disk. The 361st tile never existed —
+repository history contains no deletion of a tile file. Adopting the physical count is
+not a choice between defensible alternatives; it is the correction of an arithmetic
+slip in the lodged text, and it is adopted because every downstream artefact already
+embodies it.
+
+**Consequence, disclosed**: the reserve's status. § 2.1 marks the reserve
+"**Untouched**"; E36 (2026-03-17) expanded the evaluation corpus to 340 tiles, which
+absorbs the entire reserve. E36's own numbers disclose this; a dated correction block
+attached to **E20** (2026-07-30) records that E20's "The 281-tile reserve remains
+unnamed/untouched" was falsified by that expansion.
+
+**Post facto**: adopted July 2026. The 340-tile corpus has been the production
+evaluation set since March 2026.
+
+---
+
+#### (iii) The voting step-4 label clause
+
+**Reading A** (`osf/preregistration.md:1882`, § 8.5 Spatial Clustering Algorithm,
+step 4), verbatim:
+
+> "   - Greedy clustering: for each unclustered detection, find all others within 20m
+> and matching label; group as cluster"
+
+**Reading B** (`osf/preregistration.md:1892`, § 8.5 Consensus Detection Output),
+verbatim:
+
+> "- **Label**: Majority vote among constituent detection subtypes"
+
+together with § 8.5's own alignment clause (`osf/preregistration.md:1898-1901`),
+verbatim:
+
+> "The 20m clustering threshold deliberately matches the spatial tolerance used in F1
+> calculation (Section 4.1.1). This ensures that:
+>
+> - Detections considered "the same" during voting are also treated as matching the same
+> reference during evaluation
+> - No artificial precision loss from threshold misalignment"
+
+and § 4.1.2's matching algorithm, which is purely spatial — steps 1–7 at
+`osf/preregistration.md:362-368` compute pairwise centroid distances, threshold them at
+20 m, and run the Hungarian assignment, with **no reference to labels or subtypes
+anywhere**.
+
+**Operative reading**: **spatial clustering, then a post-hoc majority label** — that is,
+reading A's label gate is not applied.
+
+**Reasoning**: reading A is self-defeating on the registration's own terms. If cluster
+membership already requires matching labels, then every cluster is label-homogeneous by
+construction and reading B's "Majority vote among constituent detection subtypes" is
+vacuous — the registration would be specifying a majority vote over a set that can only
+ever hold one value. Reading A also breaks the registration's own alignment clause:
+evaluation (§ 4.1.2) matches on distance alone, so a label-gated voting step would split
+into two clusters what evaluation will treat as one location, which is exactly the
+"artificial precision loss from threshold misalignment" that § 8.5 says the design
+exists to prevent. Only the spatial-only reading leaves both of § 8.5's other provisions
+with work to do. This is a case where the registered text contains a clause that cannot
+be executed without nullifying two neighbouring clauses in the same section.
+
+**Materiality, computed (PI ruling 2026-07-30, "Compute true figure now")**: the two
+readings diverge only where detections within 20 m carry different subtypes, so the
+governing quantity is cluster-level label heterogeneity, not the overall subtype mix.
+Computed on sapphire from committed detection pools, replicating the executed
+clustering exactly (`scripts/analyse_cluster_label_heterogeneity.py`;
+`reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.md` + `.json`):
+**2.21 % of 153,102 spatial clusters are label-heterogeneous** (47 pools — all 45
+Era-1 phase3c H9 pools plus the Era-2 flash-high-text pool at N=30 and N=5; Era 1
+2.17 %, Era 2 2.61 %). The label gate's bite is threshold-dependent: at the operative
+vote thresholds it would remove **1.6–2.4 %** of spatially-passing clusters (t=3 of 5
+across both eras; t=16 of 30 at the headline operating point), rising to ~10 % at
+unanimous 5-of-5 and at 26-of-30, and ~17 % at 30-of-30 — a heterogeneous cluster can
+pass a strict threshold on combined votes while no single label reaches it. Earlier
+subtype-share proxies are superseded as materiality bounds: the re-verified 17.2 %
+(phase3c track-1 H9-A run-1 pool, 4 954 detections: 82.8 % `burial_mound`, 10.1 %
+`benchmark_mound`, 6.4 % `triangulation_mound`, 0.7 % `settlement_mound`) stands as a
+descriptive subtype mix only, and the defence pass's "~21 %" carried no recorded pool
+or denominator and could not be re-verified.
+
+**Post facto**: adopted July 2026. The spatial-only implementation has been in the
+voting code since the pipeline was built.
+
+---
+
+#### (iv) Tile overlap at 384 px
+
+**Reading A** (`osf/preregistration.md:968`, § H11 Implementation), verbatim:
+
+> "- Tiles generated from source maps with 64px overlap"
+
+**Reading B** (`osf/preregistration.md:959`, § H11 condition table), verbatim:
+
+> "| B | 384×384 | 0.56× | ~1.8× | Higher |"
+
+**Operative reading**: **constant overlap fraction — 48 px overlap, stride 336, at
+384 px.**
+
+**Reasoning**: the registration's own cost arithmetic requires it. At the 512 px
+baseline (§ 8.6 `:1921`), a 64 px overlap gives stride 448. Preserving that overlap
+*fraction* (64/512 = 12.5 %) at 384 px gives overlap 48 and stride 336, and the tile
+count scales as (448/336)² = **1.78× — the "~1.8×" the registration states**. Carrying
+the 64 px overlap across *literally* gives stride 320 and (448/320)² = **1.96×**, which
+the registration does not state. Reading A and reading B cannot both hold; reading B is
+the one the registration used to justify the condition's cost, and it is the one that
+matches the 0.56× area multiplier in the same row. Execution followed reading B: stride
+336 is disclosed in E51's parameter table ("| Stride | 448 px | 336 px |") and carried
+into E52 ("| Stride | 448 px | 336 px (E51) |"), and it is hard-coded in the analysis
+pipeline (`scripts/evaluate_detections.py:1330`, "stride=336 overlaps neighbours by
+48 px"; `scripts/build_example_pool.py:243`). (The gate package's citation of Obs 211
+for the stride disclosure was found incorrect at drafting — Obs 211 contains only a
+passing mention of the 48 px overlap zone — and is not carried here.)
+
+**Residue, stated plainly**: E51 and E52 disclose the executed stride as a parameter of
+their re-runs. **Neither addresses `osf/preregistration.md:968` on its own terms** — that
+is, neither says "the registered 64 px overlap clause was not followed, and here is
+why". This sub-item is that statement.
+
+**Post facto**: adopted July 2026. The 384 px corpus was generated at stride 336 in
+early 2026 and every 384 px result in the project rests on it.
+
+---
+
+#### (v) Test tailedness
+
+**Reading A** (`osf/preregistration.md:269`, § 3.1 Significance Testing), verbatim:
+
+> "- **Direction**: One-tailed for directional predictions; two-tailed for equivalence
+> tests (H1)"
+
+**Reading B**, two lodged instances that contradict reading A. § H1 Analysis
+(`osf/preregistration.md:442-443`), verbatim:
+
+> "- Two-tailed tests for modality comparisons"
+>
+> "- One-tailed for elaboration: H0: verbose ≤ brief; H1: verbose > brief"
+
+— i.e. H1 is *not* uniformly an equivalence test as § 3.1 asserts; it is split, with
+directional elaboration contrasts run one-tailed and modality contrasts two-tailed. And
+§ 3.6 Power Considerations (`osf/preregistration.md:300`), verbatim:
+
+> "With 60 holdout tiles containing 79 mound symbols, statistical power is adequate for
+> detecting moderate effects. Approximate detectable effect sizes (80% power, α = 0.05,
+> two-tailed):"
+
+— i.e. the registration's own power calculation, which underwrites the whole design, was
+computed **two-tailed**, including for the directional hypotheses § 3.1 would run
+one-tailed.
+
+**Operative reading**: **two-sided tests throughout.**
+
+**Reasoning**: two-sided is **strictly conservative** for a directional prediction — it
+demands a larger effect to reach the same α, so no claim is strengthened by the choice
+and any surviving claim would also have survived the one-tailed rule. It is also the
+reading consistent with the registration's own power arithmetic (§ 3.6), so the design's
+stated detectable effect sizes remain valid rather than being optimistic by construction.
+The scope of the contradiction is narrow: the one-tailed rule bites H2, H3, H4, and one
+H1 elaboration contrast only. It should be stated plainly that **no tailedness licence
+exists anywhere in the errata**: the executed two-sided practice was never erratum'd
+before now.
+
+**Post facto**: adopted July 2026, with results in hand. Mitigating the post-facto
+concern: because two-sided is the conservative direction, adopting it after seeing
+results cannot have manufactured a significant finding — it can only have suppressed
+one. Any hypothesis that would have been significant one-tailed but is not two-sided
+should nonetheless be reported as such in the paper, so the reader can apply the
+registered rule if they prefer it.
+
+---
+
+**Protocol impact (E64 as a whole)**: none on executed procedure. In all five cases
+execution followed one of the lodged readings; nothing is being changed, only
+adjudicated. Reporting requirements: (a) the paper's Methods states the operative
+reading for each of the five parameters; (b) the Discussion carries the meta-finding —
+that a registration can be internally inconsistent in five distinct places without any
+single inconsistency being visible at authoring time, and that this is a hazard of long,
+multiply-revised preregistrations rather than of this project in particular; (c) each
+operative reading is flagged as adopted post facto. Cross-references: E11 and Decision 11
+(HP pool exhaustion), E15 (appendix pass-count corrections), E20 and E36 (corpus and
+reserve), E45 (unregistered inference method — the tailedness question compounds it),
+E49/E51/E52 (K=5 substance and stride disclosure), E53.
+
+---
+
+### E65: Registered verifier prompt `verify_brief.md` edited post-lodgement (commit `5e7601d77`) — the one prompt-divergence commit with no contemporaneous erratum
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-07-30 (disclosure; commit 2026-02-03) |
+| Type | Deviation (lodged prompt text altered post-lodgement; lodged appendix never amended) |
+| Commit | `5e7601d77` |
+| Files | `prompts/system-instructions/verify_brief.md`, `prompts/system-instructions/propose_brief.md`; lodged text at `osf/preregistration-appendix-prompts.md:1088-1128` |
+| Impact | Low-medium. Affects the `verify_brief` verifier strategy arm only; E39 establishes verifier strategy is not load-bearing, and the production pipeline uses `verify_adversarial.md` |
+
+**Description**: the Phase 1 verification campaign established that the lodged prompt
+appendix was byte-accurate at lodgement and that all subsequent divergence occurred in
+five post-lodgement commits between 2026-02-02 and 2026-02-11, **four of which were
+erratum'd within 24 hours**. Commit `5e7601d77` (2026-02-03, "feat(prompts): Update
+two-stage prompts per Opus review") is the fifth, and carries no contemporaneous
+erratum. This entry supplies it.
+
+**What changed in `verify_brief.md`** — the registered H2 Stage-2 verifier prompt, lodged
+verbatim at `osf/preregistration-appendix-prompts.md:1088-1128` (§ 1.6.2, "**Used by**:
+H2 (Stage 2)"). The commit:
+
+1. **Rewrote key test 2.** Lodged: "2. Do rays point OUTWARD (mound) or INWARD
+   (quarry/pit)? Inward → not a mound." Executed: "2. Do rays point OUTWARD (mound) or
+   are there marks pointing INWARD (not a mound)? Inward marks may appear in orange-brown,
+   the same colour family as mound symbols."
+2. **Added key test 5** (not present in the lodged text): "5. Is the shape round or ovoid
+   in mound-like colours but without outward-radiating rays? Dark marks within the shape
+   rather than extending outward → not a mound."
+3. **Added key test 6** (not present in the lodged text): "6. Does nearby Cyrillic text
+   (e.g., "могила", "кург.") appear to confirm the candidate? Text does not confirm or
+   deny — the ray pattern is the sole criterion."
+4. **Extended the reference-example sentence.** Lodged: "If reference examples are
+   provided, compare the candidate against them." Executed: the same sentence plus "Each
+   reference image is centred on the feature being labelled."
+
+The same commit made two smaller edits to `propose_brief.md` (occlusion language,
+centre-pointing sentence); E58 already records that `propose_brief` was **never used** in
+any PV experiment, and cites this commit as "prompt refinement, never invoked" (E58).
+The `verify_brief.md` half is different: `verify_brief.md`
+**was** executed, as the "brief" arm of the verifier-strategy comparison
+(`prompts/configs/verify_brief.json`, `verify_brief-text.json`;
+`studies/phase3d-h2-twostage.yaml:68`; outputs under
+`outputs/h11/proposer-verifier-384/verified-brief-*`).
+
+**Rationale for the edits** (from the commit message): they apply the same hard-example
+review outcomes recorded in E16 — Change 2A (marks/rays distinction), Change 3 (round
+shapes), Change 2B (Cyrillic text) — to the two-stage prompts, "which were still in their
+pre-hard-example state". The intent was consistency across the prompt suite, not a
+change to the verifier's decision rule; the diagnostic criterion (outward-radiating rays)
+is unchanged and the added tests operationalise exclusions already present elsewhere.
+
+**Protocol impact**: the `verify_brief` verifier arm was executed against a prompt that
+differs from the lodged appendix text in the four respects above; the lodged appendix was
+never amended. Blast radius is bounded by E39, which found all three verifier strategies
+statistically indistinguishable at 340-tile scale (adversarial 0.770, checklist 0.769,
+brief 0.752, all CIs overlapping), and by the fact that the production pipeline uses
+`verify_adversarial.md`, not `verify_brief.md`. Cross-references: E14, E16 (and its
+2026-07-30 correction block), E39, E58.
+
+---
+
+### E66: `run_study.py` → `run_phase1.py` / `run_phase2.py` orchestration substitution — formalising Decision 15
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-07-30 (disclosure; substitution 2026-02-05) |
+| Type | Clarification (orchestration layer substituted; batch engine unchanged) |
+| Commit | `c64a7dceb` (adds `run_phase2.py`, archives `run_study.py`) |
+| Files | `scripts/run_phase1.py`, `scripts/run_phase2.py`, `archive/deprecated-scripts/run_study.py`, `scripts/4_detect_mounds_batch.py`; lodged mapping at `osf/preregistration.md:2027-2032` |
+| Impact | None on results. The script that issues API calls and records metadata is the one the registration names and is unchanged |
+
+**Description**: § 8.7.3 of the registration maps hypotheses to scripts, naming
+`run_study.py` in five of six rows — for example "| H1, H4, H5, H7 | `run_study.py`,
+`4_detect_mounds_batch.py` | `lib_advanced_metrics.py` |"
+(`osf/preregistration.md:2027`) and "| H9 | `run_study.py` (extended for diversity) |
+`lib_advanced_metrics.py` |" (`:2032`). Execution did not use `run_study.py`. Phase 1
+used `run_phase1.py`; Phases 2a–2e and the retest phases used `run_phase2.py`;
+`run_study.py` was archived to `archive/deprecated-scripts/`.
+
+**Decision and documentation**: the substitution is Decision 15 in
+`docs/methodology/preregistration/decisions-log.md:671` ("Replace run_study.py with
+run_phase2.py for Phase 2 Execution", dated 2026-02-05), which records four structural
+incompatibilities between `run_study.py` and the one-factor-at-a-time (OFAT) YAML
+structure: hard-coded factorial factor names, a `defaults` versus `fixed` schema
+mismatch, no runs loop, and no `{condition}/run_{K}/` output hierarchy. It is also logged
+in the execution-checklist deviation table
+(`docs/methodology/preregistration/execution-checklist.md:92`: "| 2026-02-05 | D15:
+run_phase2.py replaces run_study.py | New OFAT runner for Phase 2; run_study.py archived
+to archive/deprecated-scripts/ |"). What was missing was an erratum. This entry supplies
+it, formalising Decision 15 as a protocol deviation record.
+
+**Precision on what is and is not post-lodgement**:
+
+- `scripts/run_phase1.py` was **first committed 2026-01-21** (`fa5d53ede`) — ten days
+  **before** lodgement (2026-01-31). It is not a post-lodgement substitution; the
+  registration simply did not name it. E2 already refers to it by name.
+- `scripts/run_phase2.py` was first committed **2026-02-05** (`c64a7dceb`), the same
+  commit that archived `run_study.py`. This is the genuinely post-lodgement limb.
+- `scripts/4_detect_mounds_batch.py` — the **batch engine named in the same lodged
+  rows** — was first committed 2025-12-18 (`88545c84a`) and was not replaced. It remains
+  the component that constructs prompts, issues API calls, and writes detection
+  metadata.
+
+**Protocol impact**: none on results. The substitution replaced an orchestration wrapper
+— condition enumeration, run looping, checkpointing, output-directory layout — while
+leaving the execution engine the registration names in place. No prompt, model,
+temperature, thinking level, library, or evaluation parameter changed as a consequence.
+The disclosure is owed because the registration names a specific script and that script
+was not the one used. Cross-references: E2 (`run_phase1.py` config self-containment),
+E34 (`run_phase2.py` thinking-level propagation), Decision 15.
+
+---
+
+### E67: Stale version header in the lodged preregistration — "Document version: 4.6" against a v4.7 changelog
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-07-30 |
+| Type | Correction (documentation metadata; no protocol content affected) |
+| Commit | — |
+| Files | `osf/preregistration.md:2388` |
+| Impact | None on protocol. Cosmetic, but it is the version string a reader of the lodged document sees |
+
+**Description**: the lodged preregistration's footer reads, verbatim
+(`osf/preregistration.md:2388-2390`):
+
+> *Document version: 4.6*
+> *Created: 2025-12-22*
+> *Updated: 2026-01-31*
+
+while the changelog immediately below it opens with a **v4.7** entry
+(`osf/preregistration.md:2394`): "- v4.7: Statistical methodology reconciliation — All
+per-hypothesis ANOVA references updated to bootstrap CI + FDR, aligning Sections 5–6
+with the statistical analysis plan (Section 3) and Decision 10 … no change to
+hypotheses, predictions, or experimental design". The v4.7 revision was applied to the
+document body — §§ 5–6 do specify pairwise bootstrap comparisons — but the version
+string in the footer was not incremented with it. The `Updated:` date (2026-01-31) is
+correct and matches the lodgement date.
+
+**Corroboration that v4.7 is the operative version**: the errata document's own header
+states "**Associated preregistration**: `preregistration.md` v4.7 (2026-01-31)"
+(`protocol-errata.md:5`), and E61 relies on the v4.7 reconciliation as the explanation
+for a surviving drafting residue ("'Main effect' is analysis-of-variance vocabulary
+surviving from the pre-v4.7 draft; the v4.7 statistical reconciliation replaced
+per-hypothesis ANOVA with pairwise bootstrap comparisons").
+
+**Protocol impact**: none. The document content is v4.7; only the footer string is stale.
+Because the repository copy has been verified byte-identical to the OSF-posted artefact
+(verification recorded in E37's 2026-07-28 withdrawal block), **the stale string is
+present in the lodged artefact and cannot be silently repaired** — it is disclosed here
+rather than edited. Any paper text or companion document citing the preregistration
+should cite **v4.7 (2026-01-31)**. Cross-references: E1 (the same class of
+version/date drift in the OSF companion README), E61.
+
+---
+
+### E68: "Academic baseline" designation for text-only conditions retired — falsified by the registration's own H1 test; the deployment pipeline is text-prompted
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-07-30 (rider; designation lodged 2026-01-31) |
+| Type | Clarification (registered interpretive designation superseded by registered results) |
+| Commit | — |
+| Files | `osf/preregistration.md:52`, `:445`, `:1350`, `:1432`; `results/retest/pairwise-bootstrap-comparisons.json`; `docs/pipelines.md:54` |
+| Impact | Reporting only. No procedure or result changes; the paper may not describe text-only conditions as "academic baselines", and the deployment headline's reliance on a text-prompted condition must be disclosed against the registered designation |
+
+**The registered designation**: the lodged registration designates the text-only
+conditions as academic baselines at four sites. The H1 site (CMT-0109,
+`osf/preregistration.md:445`), verbatim:
+
+> "**Text-only note**: Text-only conditions serve primarily as academic baselines to
+> characterise VLM capability without visual examples. The operationally-relevant
+> comparisons are among image-using conditions."
+
+with parallel statements at `:52` ("The primary optimisation target is image-based
+discovery, as an optimal deployment will almost certainly include visual examples"),
+`:1350`, and `:1432`. (The gate package's finding 10 counted "three sites"; a fresh
+sweep at drafting finds four — the count is corrected here, artefact over summary.)
+
+**What the registered results showed**: the registration's own H1 prediction 3
+(`osf/preregistration.md:407`), verbatim — "Image-based conditions will outperform
+text-only conditions" — was **falsified by the registered test**: brief-text beats
+image-only by ΔF1 +0.088 (p = 0.004, two-sided, Era-1 340-tile bootstrap,
+`results/retest/pairwise-bootstrap-comparisons.json` `comparisons[1]`), and adding
+example images to the text prompt does not measurably help (brief-text vs
+brief-text-image, ΔF1 +0.022 in favour of text-only, p = 0.38, `comparisons[0]`).
+On the registered secondary outcome the completed image track leads (tile-MCC 0.7104,
+sole Tier 1 on the 55-map canonical MCC board,
+`results/metric-leaderboards/55map-mcc-tiering.md`) — the designation's *substance*
+(images matter operationally) survives in MCC terms even as its *role assignment*
+(text = academic-only) fails.
+
+**Why the selection of a text condition was nonetheless rule-following**: § 8.4.7's
+operative one-factor-at-a-time carry-forward clause contains no modality restriction —
+selecting `brief-text` as the production carry-forward followed the registration's own
+selection rule applied to the registered results. The deployment headline and the
+55-map generalisation runs are built on the text-prompted `detect_brief-text`
+configuration (`include_example_images: false`). Two nuances must be carried into the
+paper: (a) "text-only" refers to the *example* modality — the deployment remains a
+vision pipeline reading map tiles; text conditions drop example *images*, not images;
+(b) E27's promise that exploratory extensions are reported as exploratory still
+applies to any post-carry-forward text-condition claims.
+
+**Retirement**: the designation is retired as a description of the executed study.
+Residue fixed in the same landing wave: `docs/pipelines.md:54` ("Purpose: Academic
+baseline to measure image contribution") updated to describe the condition's actual
+role. Approved by the PI 2026-07-30
+(`reports/verification/phase2-rulings-2026-07-30.md` § 1e), implementing the GATE 1
+package § 3 item 6 recommendation (finding 10). Cross-references: E27, CMT-0109,
+`reports/verification/phase1-gate-package.md` § 2 finding 10.
+
+---
+
+### E69: Unregistered Flash-verifier thinking levels in `pv-diag-384` (MEDIUM on six conditions, HIGH on one) — a deliberate exploratory verifier-variant matrix
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-07-30 (disclosure; executions 2026-03-23 to 2026-05-06) |
+| Type | Deviation (unregistered parameter levels inside an otherwise-licensed family) |
+| Commit | — |
+| Files | `outputs/h11/pv-diag-384/verified/*medium*`, `.../verified/flash-high-text-1of5-flash-high-verifier`; `results/run-conditions.json` (`decomposition.pv-diag-384`); `reports/verification/c2-census/licence-census.json` |
+| Impact | Low. All seven conditions are exploratory diagnostics; the production carry-forward verifier is `gemini-3-flash` at MINIMAL thinking, vindicated independently by the verifier-robustness programme. No registered result draws on these cells |
+
+**The sites**: seven `pv-diag-384` proposer-verifier conditions run a
+`gemini-3-flash-preview` verifier at a thinking level the registration does not
+license — MEDIUM on `verified-adv-text-medium-vf-4of5`,
+`verified-adv-image-baseline-medium-vf`, `verified-adv-text-baseline-medium-vf`,
+`verified-adv-pro-text-medium-vf-3of5`, `verified-adv-pro-text-baseline-medium-vf`,
+and `verified-adv-pro-image-baseline-medium-vf`; HIGH on
+`verified-adv-text-high-vf-4of5` (verifier configurations as recorded in
+`results/run-conditions.json`). The seven sibling conditions whose verifier is
+`gemini-3.1-pro-preview` at MEDIUM are licensed by E40's endpoint-constraint rationale
+(E40's 2026-07-30 clarification block); this entry covers only the Flash sites, where
+nothing forced the level — Flash supports MINIMAL.
+
+**The registered commitment**: the lodged registration fixes verifier thinking at
+minimal (CMT-0605; §8.9's "**Decision:** Use `thinking_level=minimal` for main
+experiment.", `osf/preregistration.md:2135`). Notably, §8.9's own description of the
+parameter enumerates its values as "(`minimal`, `low`, `high`)"
+(`osf/preregistration.md:2110`) — **`medium` is absent from the registration's
+vocabulary for this parameter**; the §8.9 pilot compared minimal, low, and high, and
+never tested medium.
+
+**Provenance — configuration, API accounting, and behaviour all corroborate**:
+
+1. `run.meta.json` `configuration.thinking_level` records `medium`/`high` at every
+   site (e.g. `outputs/h11/pv-diag-384/verified/
+   flash-high-text-1of5-flash-medium-verifier/run.meta.json`).
+2. The API's own token accounting confirms non-minimal thinking: the medium-verifier
+   metas record **non-zero `total_thoughts_tokens`** (1,933 on the Flash-medium union
+   segment), where known-minimal runs record zero thoughts tokens against a non-zero
+   total. (Caveat: the union run's meta is segment-scoped — 1 item recorded against
+   3,736 candidates in `probabilities.json` — so token corroboration is per-segment;
+   see E71 for the segment-bookkeeping defect.)
+3. The behavioural record is decisive: Obs 187 ("Verifier Thinking Level — Flash
+   Medium Helps", `docs/notes/working-notes.md:4204`, Session 57, 2026-03-25) reports
+   a statistically significant matched comparison between the minimal and medium
+   verifier variants — ΔF1 = +0.010, p = 0.001 on text; image ΔF1 = +0.009, p = 0.166 —
+   which could not arise from a mislabelled configuration.
+
+**Intent — deliberate, contemporaneously documented, never erratum'd**: the variants
+were built as a verifier thinking-level matrix during the Session 57 (2026-03-25)
+proposer × verifier diagnostics, partly to compare Flash and Pro verifiers at a
+matched thinking level (Pro's floor being MEDIUM, per E40). The finding was recorded
+as Obs 187 the same day, and `flash-high-text 4-of-5 + medium-vf` (F1 = 0.885) was
+briefly the project's working headline before the minimal-verifier replication
+superseded it. The HIGH site is the on-disk verifier prior scored at zero cost during
+the verifier-robustness programme's thinking axis (S110). The exploration was visible
+in the working notes throughout; what was missing was an erratum recognising that it
+departed from the registered `minimal` decision. PI ruling 2026-07-30, verbatim: "For
+Flash it was an unlicensed exploratory run that needs a new erratum"
+(`reports/verification/phase2-rulings-2026-07-30.md` § 1a).
+
+**Post-facto acknowledgement**: this disclosure is written in July 2026 for executions
+of March–May 2026, with the results in hand and after a systematic census surfaced the
+licence gap.
+
+**Protocol impact**: none on registered results. All seven conditions are exploratory
+verifier diagnostics; the production carry-forward verifier (`gemini-3-flash`, T=0.0,
+MINIMAL, n=1) was selected independently and vindicated by the verifier-robustness
+programme (E62's third family). Any paper use of these cells must be labelled
+unregistered exploratory, and Obs 187's medium-helps finding must be reported with
+this licence status. Cross-references: E40 (and its 2026-07-30 clarification), E62,
+Obs 185, Obs 187.
+
+---
+
+### E70: March 2026 out-of-band tile-recovery campaign (`--patch-tiles`) — 127 passes / 350 tiles recovered; sidecars updated, per-item meta lists left stale
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-07-30 (disclosure; campaign ~2026-03-17 onwards) |
+| Type | Clarification (recovery mechanism disclosed; no experimental parameter changed) |
+| Commit | — |
+| Files | `scripts/lib_batch_api.py` (`patch_failed_tiles()`, `:2016`); `outputs/retest/**/*.tiles.json`, `outputs/retest/**/*.meta.json`; `reports/verification/c3-rederivation/c3-triage-tiles.json` |
+| Impact | None on results — recovered detections are genuine API outputs and the manifests' tile counts are correct. The stale per-item lists produced 127 apparent mismatches in the Phase 2 (C3) provenance re-derivation, all vindicated |
+
+**The mechanism**: batch-API tiles that exhausted the 10-retry ladder (output
+truncation being the sole failure mode of the era) were re-run out of band by
+`patch_failed_tiles()` (`scripts/lib_batch_api.py:2016`) at a reduced
+`max_output_tokens` safe mode. The patcher of that era updated the `.tiles.json`
+sidecar (`completed`/`failed`/`patched`/`patch_timestamp`) and the meta's **scalar**
+counters (`execution_stats.items_processed` / `items_failed`), but left the meta's
+`completed_items[]` / `failed_items[]` **lists** at their pre-patch state — these metas
+predate the `merge_meta` recovery path now wired at `scripts/lib_batch_api.py:2343`
+and carry no `recovery_history` key.
+
+**Contemporaneous attestation**: working notes, Session 53 ("Tile failure
+characterisation", `docs/notes/working-notes.md:3466-3470`), verbatim: "Output
+truncation is the sole failure mode. … The 10-retry loop resolves 99%+ of failures;
+`--patch-tiles` handles the remainder via reduced `max_output_tokens`." The campaign
+was visible in the notes and in every `.tiles.json` it touched; it was never recorded
+in the decisions log, the execution-checklist deviation table, or this register. This
+entry supplies the missing disclosure (PI ruling 2026-07-30,
+`reports/verification/phase2-rulings-2026-07-30.md` § 2.1).
+
+**Scale, from the committed triage artefact**: 127 passes across the retest-era pools,
+350 tiles recovered (sum of manifest-minus-derived over the 127 vindicated rows in
+`reports/verification/c3-rederivation/c3-triage-tiles.json`; the Session-120 beacon's
+"126 passes / 349 tiles" undercounted by the one pass whose second failed tile stayed
+permanently unrecovered — `retest-phase3c::track2-text-h9-e-p1::run3`, 339/340
+coverage, `.tiles.json`: completed 339, failed 1, patched 1).
+
+**How it surfaced**: the Phase 2 (C3) provenance re-derivation preferred
+`len(union(completed_items))` over `execution_stats.items_processed`
+(`scripts/rederive_manifest_fields.py:188`) and therefore under-counted every patched
+pass by exactly its patched-tile count. All 127 mismatches were triaged
+MANIFEST_CORRECT: the manifest generator's era-1 branch reads the post-patch scalar,
+which the independent `.tiles.json` and detection GeoJSONs confirm. The decisive
+counter-check: the manifest tracks the *recovered* count, not a nominal corpus size —
+the one partially-recovered pass reads 339, not 340.
+
+**Protocol impact**: none. Recovered tiles are genuine model outputs under the same
+configuration as their parent pass (reduced output budget only); no detection content
+was altered. The disclosure is owed because a recovery campaign that touched 127
+passes is part of the execution record, and because the stale per-item lists remain
+on disk (append-only outputs policy) and will trip any future list-based re-derivation
+— as they tripped C3. Cross-references: E57 (a later recovery, resume-merge era), E71
+(the dispatched-vs-completed semantics defect the same triage exposed), Obs in
+`docs/notes/working-notes.md:3466`.
+
+---
+
+### E71: `n_tiles_processed` manifest column carries two semantics (dispatched vs completed) plus a verifier-row placeholder (GAP-8) — 15 passes with genuine coverage shortfalls, two live conditions carrying dead tiles as artificial false negatives
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-07-30 (disclosure) |
+| Type | Correction (manifest bookkeeping defect + coverage shortfall disclosure) |
+| Commit | — |
+| Files | `scripts/generate_post_run_report.py` (`:368`, `:398`, `:487-504`); `results/passes-manifest.json`; `reports/verification/c3-rederivation/c3-triage-tiles.json` |
+| Impact | Medium-low. Two evaluated `pv-diag-384` conditions score 19–34 dead tiles as zero-detection tiles (artificial false negatives, deflating their F1); six quarantined `n1-outstanding-384` Pro passes carry 15–29-tile shortfalls (not on the current board, E57); the manifest column is not comparable across rows until regenerated |
+
+**Defect 1 — two semantics in one column**: the manifest generator has two branches
+for `n_tiles_processed`. When `per_item_metadata` is present it reports
+`len(per_item_metadata)` (`scripts/generate_post_run_report.py:368`) — tiles
+**dispatched**; when absent it reports `execution_stats.items_processed` (`:398`) —
+tiles **completed**. The same column therefore carries different quantities depending
+on the meta era, and rows are not comparable. The two diverge exactly where tiles
+genuinely produced no output (per-item `finish_reason = max_tokens` after 15 attempts;
+`failed_items[].reason = "Retries Exhausted / Invalid Finish Reason"`).
+
+**Defect 2 — GAP-8 verifier placeholder**: for verifier passes the generator reports
+`usage_stats.by_provider.google_gemini.request_count` (`:504`), self-flagged in the
+code comment at `:487` as a carry-forward — request counts are per-candidate-crop and
+retry-inflated, not tile counts (surfaced by the
+`55maps-text-min-n10-uplift::verified-3of10` row: 16,484 requests vs 16,482 crops
+verified, `retries_total: 2`). The defect silently shapes every verifier row,
+including the ones that happen to match.
+
+**Defect 3 — segment-scoped metas**: the resume-merge path leaves `per_item_metadata`
+(and the overwritten `.tiles.json`) holding only the **final recovery segment's**
+items. Two `n1-pro-rerun-384` passes report 26 dispatched for full-corpus (487-tile)
+coverage — there the re-derivation, not the manifest, is right; and one pass
+(`pv-diag-384::flash-high-image-n5-image-t0.0::run1`) has **both** values wrong: the
+segment meta (33 attempted / 17 recovered) overwrote the original, while the pass's
+actual coverage is 471 tiles, recorded only in the cumulative GeoJSON's
+`processed_tiles`.
+
+**The genuine coverage shortfalls** (Phase 2 C3 triage, 15 rows): six
+`n1-outstanding-384` `pro-*-high-t0` passes short 15–29 tiles each — **not** on the
+current `n1-baseline-matrix-384` board (E57 replaced those cells with
+`n1-pro-rerun-384`, all 487/487; the preserved rows in `results/conditions-manifest.json`
+do score the dead tiles); five `pv-diag-384` flash-high t0.0 passes — image pool
+run_2/run_3 short 34 each (run_1's true coverage 471, 16 short), text pool
+run_1/run_2/run_3 short 19/20/20; and four single-tile shortfalls
+(`e47-propose-brief::propose_brief-text::run4`, `h12-v2::r3-hp-heavy::run3` and
+`::run5`, `flash35-pv-2x2::flash35-min-text-1of10::run3`).
+
+**Live impact**: two evaluated conditions consume the shortfall pools —
+`pv-diag-384::flash-high-image-n5-image-t0.0-consensus-1of3` and
+`pv-diag-384::flash-high-text-n5-text-t0.0-consensus-3of3` — and their evaluations
+score the full 487-tile bounds (`evaluation.json` `coverage.n_tiles = 487`), so the
+dead tiles enter as **artificial zero-detection tiles**: any ground-truth mound on
+them is an artificial false negative, deflating recall and F1 for those two cells.
+The working-notes claim that unretried tile failures were "isolated to those two
+cells" (`docs/notes/working-notes.md:17339`, about the E57 pv-diag medium-t-0-0
+cells) also gains a counterexample from the same triage: current board cell
+`pv-diag-384::baseline-flash-image-minimal-t-0-0` is 483/487 — recorded as an
+append-only Obs rider, never an edit.
+
+**Remediation (PI ruling 2026-07-30, verbatim: "Erratum + fixes + rerun to sweep up
+failed tiles (through usual API-gate process including dry-run, approval, etc.)" —
+`reports/verification/phase2-rulings-2026-07-30.md` § 2.2)**:
+
+1. this disclosure;
+2. the generator is fixed in the same landing wave to a single completed-tiles
+   semantics (with dispatched counts preserved under a distinct field where
+   available), the GAP-8 placeholder resolved, and E55's promised `run.log`
+   provenance implemented; manifests regenerated;
+3. a recovery rerun to sweep up the dead tiles is registered under execution rule 10
+   (`status: planned` before any API call) and gated by dry-run, configuration audit,
+   and per-batch PI cost approval before any spend.
+
+Cross-references: E55 (and its 2026-07-30 correction block), E57, E70, GAP-8
+(`scripts/generate_post_run_report.py:487`).

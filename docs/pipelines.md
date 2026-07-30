@@ -50,8 +50,8 @@ Prompts follow the pattern: `{workflow}_{M/E-level}[_{H5-level}].json`
 
 - **Config**: `prompts/configs/detect_brief-text.json`
 - **Instructions**: `prompts/system-instructions/detect_brief-text.md`
-- **Description**: Text-only baseline with concise symbol descriptions. No visual examples.
-- **Purpose**: Academic baseline to measure image contribution.
+- **Description**: Concise text descriptions of the target symbols; no example images (the map tile itself is still supplied — this is the *example* modality, not the input modality).
+- **Purpose**: The production carry-forward condition — it beat image-only on the registered H1 test (ΔF1 +0.088, p = 0.004) and was selected under §8.4.7's own carry-forward rule. The registration's original "academic baseline" designation was retired 2026-07-30 (see `docs/methodology/preregistration/protocol-errata.md` E68).
 - **Usage**:
 
   ```bash
