@@ -55,11 +55,22 @@ scoping, now E71, generator fixed), and 3 sided with the source.
    resolved the outcome-material fork to the conservative branch: under
    the draft's default (the p = 0.006 level pair) H1 would have
    survived. H2 carries the falsified-directional rider everywhere.
-6. **The E71 recovery rerun — registered, gated, NOT executed**
-   (`reports/verification/recovery-rerun-registration.md` + worklists):
-   288 dead tiles / 15 passes (flash35 run_3 dropped — its second
-   segment already covers the tile), ~US$10–25 estimated, blocked on
-   the § 6 gate (PI approval + dry-run + `/audit-config`).
+6. **The E71 recovery rerun — EXECUTED** (same day; PI-approved with a
+   standing all-flex instruction; dry-run + `/audit-config` READY
+   first): **255/288 tiles recovered**, 33 permanently failed
+   (deterministic truncation residue), 0 unit errors, all
+   `gemini-3-flash-preview` at flex — the PI's pre-gate
+   model-consistency check caught that the six "pro-*" shortfall
+   passes are the E57 mis-dispatched FLASH corners, collapsing the
+   estimate to ~US$2–4. Post-recovery pipeline complete: consensus
+   re-materialised, both live cells re-evaluated
+   (`results/recovery-reeval-2026-07-30/`, 2026-06-05 evals preserved),
+   manifests regenerated (15 pass rows updated, 3 now fully `ok`),
+   ledger rows c2-discharge-0003/0004. **Prediction partially missed
+   and recorded**: recall rose in both cells as predicted, but the
+   text 3-of-3 cell's F1 declined 0.005 (precision-driven —
+   truncation-death tiles are feature-dense and FP-rich; registration
+   changelog has the full pre/post table).
 
 ## 3. The 20-row correction queue — dispositions
 

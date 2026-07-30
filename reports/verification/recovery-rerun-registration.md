@@ -1,13 +1,12 @@
 # Pre-execution registration — E71 dead-tile recovery rerun
 
-> **Last revised**: 2026-07-30 (model column corrected: the rerun is
-> ALL-FLASH — no Pro pass is affected; PI model-consistency check). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-07-30 (EXECUTED — 255/288 recovered; outcome
+> vs prediction recorded, including the text-cell F1 prediction miss).
+> See [§ Changelog](#changelog) for revision history.
 
-**Status**: `planned` — **registered before any API call** (charter
-execution rule 10). Execution is gated: dry-run, `/audit-config`, and
-per-batch PI cost approval must all pass before spend. **No API call is
-made under this registration until the PI approves the gate.**
+**Status**: `executed` (2026-07-30, same day as registration — commit
+order verifiable in git: registration → PI approval → audit/dry-run →
+launch). All § 6 gates passed before spend.
 
 **Authority**: PI ruling 2026-07-30, verbatim "Erratum + fixes + rerun to
 sweep up failed tiles (through usual API-gate process including dry-run,
@@ -106,14 +105,54 @@ exists in the patch campaign) and the condition's coverage note says so.
 envelope by two orders of magnitude; per-batch approval still required
 before launch.
 
-## 6. Gate checklist (all outstanding)
+## 6. Gate checklist (all complete — see Changelog for the outcome)
 
-- [ ] PI approves scope and spend (model, mode, call count, cost above)
-- [ ] Dry-run over the worklists (no API)
-- [ ] `/audit-config` READY verdict
-- [ ] Launch; per-group progress reported; post-recovery pipeline § 3
+- [x] PI approves scope and spend (2026-07-30, "you have my approval,
+  proceed to config audit, dry run, etc."; standing flex instruction)
+- [x] Dry-run over the worklists (2026-07-30 — all 15 worklist-equality
+  gates green, all 288 tiles resolve)
+- [x] `/audit-config` READY verdict (2026-07-30 — 12/12 requirements,
+  no blockers)
+- [x] Launch + post-recovery pipeline § 3 (2026-07-30 — see Changelog)
 
 ## Changelog
+
+### 2026-07-30 — EXECUTED: 255/288 recovered; prediction partially missed
+
+All § 6 gates passed in order (PI approval with the standing flex
+instruction; dry-run 15/15 green; `/audit-config` READY 12/12). Run:
+6-way unit parallelism, `gemini-3-flash-preview`, flex tier throughout.
+**255/288 tiles recovered** (245 at original parameters + 10 safe-mode);
+**33 permanently failed** after both tiers (deterministic truncation
+residue, recorded per § 4 — the E70 precedent generalises); 0 unit
+errors. Pre-recovery artefacts preserved; the E71 segment-scoped meta
+(image-t0.0 run_1) rebuilt from its GeoJSON via an additive
+`execution_stats._correction` block.
+
+**Post-recovery pipeline (§ 3) complete**: consensus re-materialised
+(image 1of3: 802 → 885 clusters; text 3of3: 745 → 781); both live cells
+re-evaluated at the exact original protocol into
+`results/recovery-reeval-2026-07-30/` (the 2026-06-05 evaluations stand
+as the pre-recovery record); manifests regenerated (15 pass rows to
+post-recovery counts, three now fully `ok`; exactly the two live
+condition rows re-scored); ledger rows c2-discharge-0003/0004.
+
+**Outcome vs § 4 prediction — recorded honestly**:
+
+| cell (@20 m) | F1 | precision | recall | tile-MCC |
+| --- | --- | --- | --- | --- |
+| image 1of3 | 0.4883 → **0.4985** | 0.3766 → 0.3718 | 0.6943 → **0.7563** | 0.4848 → 0.4671 |
+| text 3of3 | 0.6051 → **0.6003** | 0.4792 → 0.4673 | 0.8207 → **0.8391** | 0.4500 → 0.4298 |
+
+Recall rose in both cells exactly as predicted. **The text cell's F1
+declined 0.005, against the "rise or hold" prediction** — a
+precision-driven miss: tiles that died of output truncation are
+feature-dense by construction, so their recovered detections skew
+FP-rich, and at 3-of-3 unanimity the added FPs outweighed the added
+TPs. MCC dipped in both cells by the same mechanism. Both cells are
+exploratory diagnostics; no registered claim moves. The deltas are
+within the cells' BCa confidence intervals, but the point-direction
+miss is recorded as such rather than smoothed over.
 
 ### 2026-07-30 — Model column corrected: the rerun is all-Flash
 
