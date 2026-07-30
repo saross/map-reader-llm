@@ -8,7 +8,77 @@ project state.
 
 ---
 
-## 🎯 NEXT SESSION (121) — PI MORNING RULINGS, THEN LAND + GATE 2 [Session 120 CLOSED 2026-07-30; ran in Fable]
+## 🎯 NEXT SESSION (122) — PHASE 3 (C4 QUANTITATIVE SWEEP) [Session 121 CLOSED 2026-07-30; ran in Fable]
+
+> **The controller is `planning/audit-charter.md` § 9** — unchanged.
+> **GATE 2 PASSED** (charter § 10 item 8); **Phase 3 is unlocked and is
+> the next queue item.**
+
+**What Session 121 did** (commits `b623bffa3`→`52783f196` + this
+continuity commit, ~30 commits, ~US$4–6 API total): **the full landing
+sequence, GATE 2 PASSED, and the E71 recovery campaign end-to-end.**
+(1) **All PI morning rulings collected and recorded**
+(`reports/verification/phase2-rulings-2026-07-30.md`) — highlights: the
+medium thinking-level limb SPLIT (E62 narrowed / new E69 / E40
+clarified for Pro-as-verifier); E64(iii)'s materiality figure COMPUTED
+(2.21 % cluster-level label heterogeneity, 153,102 clusters — an order
+below the subtype-share proxies; apparatus under
+`reports/verification/apparatus/`); H1's family-FDR primary = **option
+(iv), the never-executed registered CMT-0106 pooled contrast**, run
+under the run-it-now policy with its reconstruction rule committed
+BEFORE compute. (2) **Errata E62–E71 landed** + five dated correction
+blocks (E36/E16/E20/E40/E55); Obs 372/373 riders; both report
+corrections; census closed (all 13 UNLICENSED pairs resolved);
+commitment ledger 404/90/208. (3) **Generator v0.6.0**: completed-count
+semantics via the C3-validated union rule (first cut using the
+items_processed scalar regressed 60+ rows and was caught by the diff
+audit — the scalar is era-inconsistent), new `n_tiles_dispatched`
+field, GAP-8 resolved, E55 run.log provenance; 58 tier-1 tests. (4)
+**Family-FDR registered THEN computed** (sapphire): **H1's CMT-0106
+first-ever execution is NULL** (Δ +0.0238 text-over-image, p = 0.1774)
+→ **rejection set {H2, H3, H7}** — the outcome-blind selection resolved
+the outcome-material fork conservatively; H2 reported as a falsified
+directional prediction; artefacts `results/family-fdr/`; CMT-0047 +
+CMT-0106 discharged. (5) **E71 recovery campaign** (PI-approved;
+all-flex — now a STANDING instruction for realtime calls; the PI's
+pre-gate model check caught my registration mislabelling the six
+E57 mis-dispatched Flash corners as Pro → all-Flash run): first pass
+255/288, PI-directed deep sweeps (+10 at a 10+10 ladder, all original
+params; 5+5@1024 recovered zero) → **final 265/288 (92.0 %); residue =
+6 unique tile-intrinsic pathologies** (worst fails 9 passes; all
+residue in T=0.0 × HIGH pools; **Obs 374**, PI-flagged
+publication-relevant). Both live t0.0 cells re-materialised +
+re-evaluated (final F1 UP in both vs pre-recovery; the interim
+text-cell dip was a partial-recovery artefact); manifests regenerated;
+ledger rows c2-discharge-0001..0005. (6) **GATE 2 PASSED** (charter
+§ 10 item 8): dispositions accepted at table grain;
+ledger-supersession deferred to the Phase 5 monitor design; Phase 3
+approved.
+
+**Session 122's task**: **Phase 3 (C4)** per charter § 7 — the
+quantitative sweep, the biggest unswept surface. LLM extracts claims to
+the c4 ledger; deterministic scripts recompute from cited artefacts and
+diff; LLM triages mismatches. Background-batchable; manifests are now
+verified anchors. Inherit the per-era verifiability map
+(`reports/verification/phase2-gate-package.md` § 4): retest-era
+token-level claims are permanently unverifiable — flag, don't fight.
+
+**Carry-forwards**: pending user-obs candidates S118/S119/S120 + NEW
+S121 candidates A–C and working-notes candidate WN-1 (the outcome-blind
+fork; would be Obs 375) in `docs/notes/user-observations.md` — silence
+holds all; queued register re-anchoring (stale line ranges +
+E62–E71 decomposition) before any future census
+(`licence-census.json` `_resolution_note`); flash35 run_3 meta
+merge-repair residue (manifest 486 vs true 487, disclosed in the gate
+package § 3); H2-C instrument + crop-size (plan § 8) unchanged; Sol
+(Phase 4) untouched, $150 cross-model cap, keys in
+`~/personal-assistant/.env` — never read into context; the 6
+intransigent tiles are FINAL-recorded permanent (do not re-sweep
+without new mechanism).
+
+### [CLOSED 2026-07-30] Historical: the Session 121 brief follows
+
+## NEXT SESSION (121) — PI MORNING RULINGS, THEN LAND + GATE 2 [Session 120 CLOSED 2026-07-30; ran in Fable]
 
 > **The controller is `planning/audit-charter.md` § 9** — unchanged. The
 > ledgers and gate packages are self-sufficient; this beacon adds only the
