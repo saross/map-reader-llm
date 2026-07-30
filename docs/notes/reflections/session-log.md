@@ -7522,3 +7522,50 @@ Session-118 audit. $0 API.
 mid-repair — grep raw files). Token economics shaped executor design
 (Max quota low; OpenAI credit available; keys in
 `~/personal-assistant/.env`, never read into context).
+
+## Session 120 — 2026-07-29/30 — verification programme Phases 0–2: both gates passed; defence pass; C3 re-derivation
+
+**Done** (commits `e45478dc2`→`b68462bd8`, all pushed; US$0 API):
+
+- **Phase 0**: corpus enumerated (2,136 generated / 148 hand-written mine
+  docs; six manifests resolved; C3 denominators reconfirmed);
+  `reports/verification/phase0-scope.md`; Sol costs verified against the
+  official OpenAI pricing page (batch+cache stacking confirmed at
+  source). **GATE 0 PASSED** — $150 cross-model cap; six charter fixes
+  landed incl. rule 12 (charter self-sufficiency verified).
+- **Phase 1**: `results/commitments.json` v1.2 — 702 obligations, all
+  verbatim-verified; eight-verifier reconstruct-and-diff (5 misses, 16
+  disputes, adjudicated); discharge mapping 402/89/211; licence census
+  213 pairs (13 UNLICENSED → 3 PV-extension families + 5 verifier
+  levels); c1 (702 rows) + c2 (915 rows) ledgers; open-commitment guard
+  wired into the manifest build (4 tier-1 tests). **GATE 1 PASSED** with
+  directives: run-it-now policy, contradiction-errata policy, Phase 4b
+  discharge campaign, defence check institutionalised.
+- **Defence pass**: 12 blind counsel-for-the-defence agents over the
+  original headline findings; both PI-catch calibration probes passed;
+  12/12 needs-qualification, 3 sub-claims retracted; charter **rule 13**
+  (mandatory defence-search records; monitor enforces); meta-finding —
+  the lodged registration contradicts itself at ≥5 sites.
+- **Phase 2 core** (overnight): C3 field re-derivation on sapphire
+  (fresh extraction code); 297 pass-field mismatches triaged by two
+  agents → 276 manifest-vindicated (E55 serialisation, E3/E42 aliasing,
+  the undocumented `--patch-tiles` recovery), 21 genuine (15 real tile
+  shortfalls; 2 live t0.0 consensus conditions carry 19–34 dead tiles;
+  one row where both manifest and source are wrong, true coverage 471);
+  `c3-provenance.jsonl` **1,514 VERIFIED / 20 FLAGGED**; conditions
+  manifest 100% clean.
+- **Drafts awaiting PI** (preserved in `reports/verification/drafts/`):
+  E62–E67 + E36/E16/E20 correction blocks; the rule-10 family-FDR
+  registration (H1 selection outcome-material: p=0.004/0.006/0.38).
+- **Governance record**: verbatim PI gate rulings externalised into both
+  gate packages at the PI's request.
+
+**Contextual assumptions**: ran as one continuous Fable session spanning
+midnight 2026-07-29→30 (Session "120" covers both dates). Erratum drafts
+and family-FDR registration deliberately NOT landed/executed — blocked on
+PI morning rulings by design, not by omission. The retest-era usage_stats
+wall (all 225 phase3c + phase3a metas empty) constrains what Phase 2 can
+ever verify at token level for that era; recorded in the charter Phase 2
+entry. Two orchestrator commit messages carry wrong counts (526edfda9,
+2f5a9ae2d) — artefacts authoritative, recorded in the gate package and
+scratchpad.

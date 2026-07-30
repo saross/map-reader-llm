@@ -191,3 +191,25 @@ I read both as a signal I had over-invested in the manifest machinery while the
   saying my solution was "more elegant" — evidence that presenting a
   third option that dissolves a binary is more useful to him than
   arguing either side.
+
+## Pending review — 2026-07-30 (Session 120 handoff candidates)
+
+Candidates drafted at handoff; accept / edit / discard / replace.
+Silence holds them over (2026-07-05 rule).
+
+1. **The from-memory catch that upgraded the process.** Reviewing the 12
+   GATE 1 headline findings from memory alone, Shawn caught 2 needing
+   serious qualification — both one-sided evidence assembly that 25
+   agents and 6 orchestrator spot-audits had missed. His follow-up
+   question ("how do you suggest we ensure the other 10 are reliable?")
+   produced the calibrated blind defence pass and charter rule 13 — a
+   permanent process upgrade from a single question.
+2. **Calibrated scepticism about recorded settings.** His warning to
+   check that phase3c "really was high thinking and not just
+   mis-recorded" proved exactly right in shape: token-level
+   corroboration turned out to be unavailable across the whole retest
+   era, and the erratum now carries that caveat instead of a bare claim.
+3. **In-the-moment reaction (relayed).** "This is great" on the
+   defence-pass design — specifically the use of his own two catches as
+   blind calibration probes. The pattern he responded to: methods that
+   measure their own reliability before asking to be trusted.

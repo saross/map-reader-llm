@@ -9217,3 +9217,38 @@ recurred at scale when he reframed the whole audit: I had framed
 verification as a project task; he reframed it as reusable infrastructure
 for a research programme. Both corrections moved in the same direction —
 from resolving the instance to building the class.
+
+## Session 120 — 2026-07-29/30 — the programme launched at triple speed, and the PI's memory audited the auditors
+
+**What would I do differently if I replayed this session?** Run the
+defence search *inside* the finding-generation pipeline from the start,
+rather than discovering its necessity through Shawn's two catches. The
+information was available: the charter already had rule 11 (change the
+question), the D17 history already showed one-sided errors, and I had
+even applied fresh-context adversarialism to the extraction — but only in
+the breach-hunting direction. The deeper replay lesson is about my
+spot-audits: all six confirmed facts, none asked "what context is
+missing?", and I reported "all confirmed" as though that meant "all
+sound". I would also not write a single number into a commit message
+without computing it in the same turn — twice burned.
+
+**The single most important thing a future reader should know**: the
+gates moved this session because the PI's rulings kept converting
+verification problems into research assets. The 211-item open set became
+a discharge campaign; the prompt-divergence finding became a
+rapid-errata-discipline story; the registration's five self-contradictions
+became a reconciliation erratum and a Discussion point about
+preregistration authoring. None of that was in the charter — the charter
+provided the floor, and the rulings raised the ceiling. Phase 0, Phase 1,
+and Phase 2's core all landed inside one session because nothing waited:
+agents ran while gates were reviewed, and the overnight window was spent
+on sapphire re-derivation rather than idle.
+
+**What will be hardest to reconstruct in six months**: the *texture* of
+the defence-pass calibration moment — that the method earned trust not by
+argument but by blind-recovering the PI's own two catches plus context
+neither of us had (the withdrawn `manually_verified_at` limb, the § 8.4.7
+operative clause). The artefacts record the verdicts; what they can't
+record is that this was the session where "verified" stopped meaning
+"facts checked" and started meaning "prosecution and defence both
+searched, and the search recorded".

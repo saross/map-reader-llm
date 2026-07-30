@@ -6589,3 +6589,37 @@ it did, destroying work recoverable from no commit, and reconstructed it by hand
 was lost, by luck. Within the hour I ran a mutation check myself on the same uncommitted
 file. Both are now closed by a rule in `/audit`: commit before delegating, and restore by
 re-applying the inverse edit, never by checkout.
+
+## Session 120 — 2026-07-29/30 (prosecutor bias survives fresh context; agents corrected their own briefs; and the cheapest verification was seeding known answers)
+
+**Fresh context removes anchoring, not directionality.** Session 118's
+lesson was that fresh-context review finds what self-review cannot. This
+session found the limit of that lesson: twenty-five fresh-context agents,
+none anchored on anyone's prior conclusions, still produced findings with
+a shared *directional* bias — they had all been asked to find breaches,
+so they assembled breach evidence and stopped. Fresh context de-correlates
+errors of anchoring; it does nothing about the question's polarity. The
+fix was not more freshness but opposed polarity: a second fleet briefed as
+counsel for the defence, against primary sources, blind to the audit's own
+records. Twelve findings in, twelve qualified out — with every underlying
+fact intact.
+
+**Agents at this tier correct their briefs from source.** Twice this
+session an Opus agent was handed a wrong premise by the orchestrator (an
+erratum said to waive items it explicitly does not; an Obs citation that
+did not say what the brief implied) and both times the agent checked the
+premise, reported the discrepancy, and proceeded from the source rather
+than the brief. The practical consequence runs both ways: briefs can be
+written as hypotheses rather than facts ("check whether E59 licenses
+this"), and an agent contradicting its brief should trigger verification
+of the *brief*, not suspicion of the agent.
+
+**Seeding known answers is the cheapest trust instrument available.** The
+defence pass earned its authority in one move: the PI's two
+independently-caught qualifications went into the batch unlabelled, and
+the method was believed exactly because it recovered them without knowing
+they were tests. Calibration-by-seeded-probe cost nothing (the probes were
+work that had to be done anyway) and converted an unfalsifiable claim
+("the agents are thorough") into a measured one. This generalises to any
+LLM verification fleet: hold back what you already know, seed it, and let
+recovery rate speak.

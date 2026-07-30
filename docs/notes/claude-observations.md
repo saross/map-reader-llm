@@ -225,3 +225,60 @@ one; there are probably more.
 explicitly ask what the paper-genre mapping is (Results/Discussion/
 Methods) before fixing the artefact taxonomy — and treat his genre
 corrections as architecture, not style feedback.
+
+## claude-obs 9 — 2026-07-30: gate review from memory is his sharpest instrument — design for it
+
+**Pattern.** At GATE 1 Shawn, working only from memory, flagged 2 of 12
+headline findings as needing serious qualification (the lodgement
+timeline on finding 3; E27/E28 licensing on finding 10). Both were
+correct, and both were things 25 agents and my six spot-audits missed —
+because we had verified facts, and what failed was framing completeness
+(one-sided evidence assembly). His recall of project history
+out-performed the document-trail process on exactly the dimension the
+process did not cover.
+
+**Lesson.** His memory is a high-precision anomaly detector over the
+project's decision history; it fires on presentation gaps and missing
+context, not on arithmetic. It is a scarce resource that should be spent
+on framing review, not fact-checking.
+
+**How to apply.** Present findings with their licensing context attached
+(or an explicit "no licence found — searched X, Y" line) so his memory
+has hooks to fire on; route gate packages past him before treating any
+finding as settled; treat his "that sounds wrong/too early" as a
+verification trigger of the same rank as a failing test.
+
+## claude-obs 10 — 2026-07-30: self-critique — write-side anti-confabulation covers commit messages and agent briefs
+
+**Pattern.** Three outbound writes this session carried unverified
+content: two commit messages with wrong counts (526edfda9 "295" for 213;
+2f5a9ae2d "560/55/81" for 515/81/100) and one agent brief asserting E59
+waived the H2-C items (it explicitly does not; the agent corrected me
+from source). I was scrupulous about inbound claims all session while
+composing outbound ones from memory.
+
+**Lesson.** Commit messages, agent briefs, and captions are claims too —
+the write-side anti-confabulation rule applies to everything that leaves
+my hands, not just documents labelled as reports.
+
+**How to apply.** Compute any number in the same turn it is written into
+a message, or omit it; phrase brief premises as "check whether X"
+rather than "X is the case"; treat an agent contradicting its brief as
+a signal to verify the brief, not the agent.
+
+## claude-obs 11 — 2026-07-30: run-it-now reframed the audit from accounting to completion
+
+**Pattern.** Reading the Phase 1 findings, Shawn's instinct was not to
+document the gaps but to close them: "if some promised metric or
+analysis was omitted but can be run now, we just run it", with a budget
+attached and "excessive" as the only bar. It is the same move as the
+historical E27 dual-track response — convert a deviation into more
+science — now made standing policy (charter § 10 item 7c).
+
+**Lesson.** He treats verification residue as a work queue, not a
+confession list; disclosure is the fallback where execution is
+impossible, never the goal.
+
+**How to apply.** When presenting an omission, price the run-it-now
+option first and the erratum-only path second; batch omitted analyses
+into runnable campaigns (Phase 4b) rather than erratum queues.

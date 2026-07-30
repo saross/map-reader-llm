@@ -5794,3 +5794,84 @@ authority (here the OSF API), and treat any margin computed from two
 differently-sourced timestamps as suspect until both sources' timezones
 are verified. Now encoded in the charter's rule set by way of the
 least-writable-artefact rule.
+
+## Session 120 — 2026-07-29/30 — fact-checking passed twelve findings the defence then qualified; and an absence of tokens that was not an absence of thinking
+
+**Session:** 9d8336fb-b05b-498a-a708-22a6077e289e
+**Instance:** primary
+
+### Surprising fact
+
+The PI, reviewing the GATE 1 package from memory alone, found 2 of 12
+headline findings needing serious qualification — after 25 fresh-context
+agents had produced and cross-verified them, and after I had spot-audited
+six of the twelve at source and found every checked fact accurate. The
+surprise was not that errors existed but *where*: both failures were in
+findings whose every cited fact was true.
+
+### Probe
+
+A blind defence pass: twelve fresh-context agents, one per original
+finding, briefed as counsel for the defence against primary sources only
+— with the PI's two catches seeded as calibration probes the agents could
+not recognise as such. If the pass independently recovered the known
+qualifications, its verdicts on the other ten would carry measured
+weight.
+
+### Belief revision
+
+Both probes passed (each recovering the PI's context plus more), and the
+pass returned 12/12 needs-qualification with three sub-claims retracted.
+Revision: **fact-accuracy and finding-soundness are separable properties,
+and verifying the first says nothing about the second.** A breach-hunting
+pipeline optimises evidence assembly in one direction; its findings can
+be simultaneously fully cited and materially misleading. "Spot-audit
+confirmed" had been functioning in my reasoning as "finding confirmed" —
+that inference is invalid, and the fix is structural (charter rule 13:
+no breach verdict without a recorded defence search), not attentional.
+
+### What would change this belief
+
+A defence pass over a comparable finding set returning mostly "stands,
+no qualification" would show the GATE 1 result reflected this pipeline's
+immaturity rather than a general property of breach-hunting. So would the
+calibration probes having failed (which would instead have impeached the
+defence method itself).
+
+### Implications for practice
+
+Prosecution and defence are cheap to run as separate blind passes and
+expensive to merge into one agent's brief; the calibration-probe trick
+(seed known-qualified items unlabelled) converts "trust me" into a
+measured property. Exported to the wiki as a reusable protocol.
+
+### Surprising fact (second episode)
+
+All 225 phase3c metas record `thinking_level: high`, yet every usage
+counter in every one of them is zero — while known-HIGH runs elsewhere
+record 1.2–46 M thoughts tokens and known-minimal runs record zero
+thoughts against non-zero totals. The configured setting had no runtime
+corroboration anywhere.
+
+### Probe
+
+Era sweep: all 225 phase3c metas, then the phase3a siblings (also empty),
+then known-HIGH and known-minimal metas from other eras (populated,
+discriminating), then per-tile files and durations (absent).
+
+### Belief revision
+
+The zeros are an absence of *accounting*, not evidence of minimal
+thinking: the whole retest-era pipeline never populated usage_stats. Two
+revisions: (a) the PI's mis-recording warning was correctly shaped but
+the failure mode was recorder-gap, not mis-recording — the erratum must
+say "configured, declared pre-execution, token-corroboration unavailable"
+rather than either stronger claim; (b) verifiability itself is
+era-structured — Phase 2 needs a per-era map of which fields *can* be
+verified, or silence will be misread as verification.
+
+### Implications for practice
+
+Distinguish three states everywhere in C3: value-confirmed,
+value-contradicted, and source-silent. Collapsing source-silent into
+either of the others fabricates certainty in opposite directions.
