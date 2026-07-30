@@ -1,15 +1,20 @@
 # Pre-execution registration — registered-family Benjamini–Hochberg correction
 
-> **Last revised**: 2026-07-30 (original publication; DRAFT awaiting PI
-> confirmation). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-07-30 (REGISTERED — all six § 11 PI rulings
+> collected and incorporated; committed before computation). See
+> [§ Changelog](#changelog) for revision history.
 
-**Status**: `planned` — **not yet executed**. This document is the rule-10
-pre-execution registration for the family-level Benjamini–Hochberg false
-discovery rate (BH-FDR) correction across the confirmatory hypotheses. It
-fixes the **family membership and the primary test per hypothesis** before
-the correction is computed. It must be committed, and the ambiguities in
-§ 5 ruled on by the Principal Investigator (PI), before the correction is
-run.
+**Status**: `registered` — **committed before computation**. This document
+is the rule-10 pre-execution registration for the family-level
+Benjamini–Hochberg false discovery rate (BH-FDR) correction across the
+confirmatory hypotheses. It fixes the **family membership and the primary
+test per hypothesis** before the correction is computed. All six § 11
+ambiguities were ruled on by the Principal Investigator (PI) on 2026-07-30
+(`reports/verification/phase2-rulings-2026-07-30.md` § 3); the rulings are
+incorporated at their sites below. The H1 primary (§ 5.1) is the
+**never-executed registered pooled modality contrast CMT-0106**, run now
+under the GATE 1 run-it-now policy with its reconstruction rule fixed in
+§ 5.1.1 — the one primary whose p-value is unknown at registration.
 
 **Repository anchor**: `562d185a44b33d4c3f3c504d1e5981767c896df8` (working
 tree clean at drafting).
@@ -36,10 +41,12 @@ executed test represents each hypothesis; which artefact and which JSON
 field supplies each p-value; the correction procedure; and the sensitivity
 analysis reported alongside it.
 
-**It does not fix outcome blindness.** Every p-value named below is already
-committed to this repository and is quoted verbatim in § 5. See § 9
-(`predicted_outcome`) for the honest statement of what this registration
-can and cannot claim.
+**It does not fix outcome blindness for six of the seven primaries** —
+their p-values are already committed to this repository and quoted
+verbatim in § 5. The exception, after the PI's H1 ruling, is H1 itself:
+its primary (§ 5.1.1) has never been computed, so the one selection that
+was outcome-material is now outcome-blind. See § 9 (`predicted_outcome`)
+for the honest statement of what this registration can and cannot claim.
 
 ---
 
@@ -149,29 +156,72 @@ the E64 draft (see § 7.1 for the divergence and its status).
 correction deferred until all data available"). Field carrying the
 p-value: `comparisons[i].f1_p_value`.
 
-**VERDICT: AMBIGUOUS.** The registration names four planned contrasts and
-designates none as headline; no omnibus/main-effect test across the five
-M/E levels was executed. Selection is outcome-material here (candidate
-p-values span 0.004 to 0.94).
+**VERDICT: RESOLVED (PI, 2026-07-30) — option (iv): execute registered
+contrast 4 (`CMT-0106`) now.** The registration names four planned
+contrasts and designates none as headline; no omnibus/main-effect test
+across the five M/E levels was executed. Selection was outcome-material
+across the three *executed* candidates (p-values spanning 0.004 to 0.94):
 
 | option | contrast | artefact index | `f1_delta` | `f1_p_value` |
 | --- | --- | --- | --- | --- |
-| **(i)** first-listed registered contrast `CMT-0103`: Image-only vs Brief+image | `brief-text-image` vs `image-only` | `comparisons[4]` | +0.06536107577746958 | **0.006** |
+| (i) first-listed registered contrast `CMT-0103`: Image-only vs Brief+image | `brief-text-image` vs `image-only` | `comparisons[4]` | +0.06536107577746958 | **0.006** |
 | (ii) registered contrast `CMT-0105`: Brief-text vs Brief+image ("do images help?") | `brief-text` vs `brief-text-image` | `comparisons[0]` | +0.022473818822873966 | **0.38** |
 | (iii) "significant differences detected between levels" reading — minimum-p over the ten executed level pairs | `brief-text` vs `image-only` | `comparisons[1]` | +0.08783489460034355 | **0.004** |
+| **(iv) SELECTED — registered contrast 4 (`CMT-0106`): Text-only pool vs Image-using pool** | pooled, per § 5.1.1 | to be computed | unknown | **unknown at registration** |
 
-**Recommended default**: option (i). It is the registration's own
-first-listed planned contrast; it is two-tailed by the registered rule
-(a modality comparison); and it is a genuine contrast rather than a
-minimum-p statistic, which would be anti-conservative inside a BH
-step-up.
-
-**Not available**: registered contrast 4 (`CMT-0106`, "Text-only
-conditions vs Image-using conditions") was **never executed as a pooled
-contrast** — the artefact carries only the ten level-versus-level pairs.
-`CMT-0106`'s own `decision_statistic` records the underlying defect:
+**Why (iv)**: registered contrast 4 was **never executed as a pooled
+contrast** — the artefact carries only the ten level-versus-level pairs,
+and `CMT-0106`'s own `decision_statistic` records the underlying defect:
 "ABSENT — contrast named without a metric; the text also does not state
-how the two groups of conditions are pooled or aggregated."
+how the two groups of conditions are pooled or aggregated." It is,
+however, the contrast that matches H1's name (the *modality effect*), it
+is the contrast the PI independently recalled as the study's early
+headline question, and the GATE 1 run-it-now policy (charter § 10 item
+7(c)) directs that an omitted-but-runnable registered analysis is run,
+not merely erratum'd. Executing it under a reconstruction rule fixed
+below — before the p-value is known — makes H1 the **only outcome-blind
+selection in the family**, precisely where selection would otherwise have
+been outcome-material. Zero API cost (recomputation over committed
+detections, on sapphire).
+
+#### 5.1.1 The registered reconstruction rule for CMT-0106 (fixed before computation)
+
+- **Conditions**: the five Era-1 retest Phase 2a M/E conditions
+  (`outputs/retest/phase2a/`): `image-only`, `brief-text`, `verbose-text`,
+  `brief-text-image`, `verbose-text-image`, each with its committed
+  per-run detection GeoJSONs.
+- **Groups**: text-only = {`brief-text`, `verbose-text`}; image-using =
+  {`image-only`, `brief-text-image`, `verbose-text-image`} — the split
+  the registration's own scope text defines (`preregistration.md:622-624`
+  names Image-only, Brief-text+image, Verbose-text+image as "all
+  image-based conditions"; Brief-text and Verbose-text as text-only).
+- **Statistic**: per bootstrap iteration, resample the 340 evaluation
+  tiles with replacement (paired — the same tile indices for all five
+  conditions); score each condition as its mean F1 across runs on the
+  resampled tiles (the executed artefact's `bootstrap_multi_run` method:
+  per-run evaluation per E22, per-tile TP/FP/FN precompute per E26,
+  20 m buffer); score each group as the **unweighted mean of its
+  conditions' scores**; the contrast is text-only minus image-using.
+- **Point estimate**: the same computed on the full 340-tile set.
+- **Inference**: two-sided bootstrap p (proportion of resamples where the
+  contrast crosses zero, doubled — the executed artefact's convention),
+  **B = 10 000** (E54's narrow-effects licence), seed 42. Floor handling
+  per § 8.3: at floor, recorded as an inequality.
+- **Ground truth and bounds**: identical to the executed Phase 2a retest
+  artefact (Era-1 340-tile corpus, reviewed GT, 20 m buffer).
+- **Unweighted-mean rationale, stated before the result is known**: the
+  groups are unbalanced (2 vs 3 conditions); pooling raw detections would
+  weight conditions by their detection counts, and tile-pooling would
+  weight by run counts. The unweighted mean of condition scores is the
+  only aggregation in which each *registered condition* contributes
+  equally — the natural reading of "Text-only conditions vs Image-using
+  conditions" — and it is the reconstruction fixed here, before
+  computation, as this registration's answer to `CMT-0106`'s missing
+  pooling specification. Metric: F1, per the § 4 selection-rule metric
+  for H1.
+- **Deliverable**: `results/family-fdr/h1_cmt0106_pooled_modality.json`
+  (+ prose in the family-FDR report), with a `provenance` block naming
+  this registration.
 
 **One-tailed limb**: the registered one-tailed elaboration test
 (`CMT-0108`, verbose > brief) is available at `comparisons[6]`
@@ -444,10 +494,10 @@ track**.
 - Text-track counterpart, **not selected** (excluded by
   `preregistration.md:624`): `comparisons[54]`, `precision_p` = 0.862.
 
-**PI check requested**: confirm that the image-track terse-vs-verbose
-precision contrast is an acceptable stand-in for a hypothesis whose
-registered headline never ran, or rule that H5 be reported as
-**unresolvable** and the family reduced to six.
+**PI ruling (2026-07-30)**: the constrained substitute is **accepted**
+("Accept substitute" — `phase2-rulings-2026-07-30.md` § 3.2). H5 stays in
+the family (m = 7), reported with the divergence note that the registered
+headline contrast never executed at the current era.
 
 ---
 
@@ -541,10 +591,11 @@ bootstrap resolution floor of p = 0.001 (B = 1 000 iterations).
 | (ii) image track, best alternative vs vendor default | `T0.0` vs `T1.0` | `comparisons[12]` | +0.06390203981488053 | **0.001** |
 | (iii) text track, T = 0.0 vs vendor default | `T0.0` vs `T1.0` | `comparisons[22]` | +0.0930388572836824 | **0.001** |
 
-**Recommended default**: option (i) — the largest registered
-T = 1.0-versus-alternative effect, on the track carrying the study's
-optimum (`results/phase2b-carry-forward-parameters.md`: Track 2 optimum
-T = 0.3, F1 = 0.606).
+**PI ruling (2026-07-30)**: option (i) **confirmed** (bundled
+confirmation 1, `phase2-rulings-2026-07-30.md` § 3.4) — the largest
+registered T = 1.0-versus-alternative effect, on the track carrying the
+study's optimum (`results/phase2b-carry-forward-parameters.md`: Track 2
+optimum T = 0.3, F1 = 0.606).
 
 **Note on the p-value floor**: 0.001 is the smallest value the bootstrap
 can report at B = 1 000. It must be recorded as **p ≤ 0.001**, not as an
@@ -596,7 +647,8 @@ permutations, seed 42; `method` = "Benjamini-Hochberg FDR at q=0.05 over 7
 H8 preregistered contrasts", `any_significant` = false). Fields:
 `contrasts[i].p` (raw) and `contrasts[i].bh_adjusted_p` (within-H8).
 
-**VERDICT: AMBIGUOUS.** All seven registered contrasts were executed, but
+**VERDICT: RESOLVED (PI, 2026-07-30) — option (iii), the within-H8
+BH-adjusted minimum.** All seven registered contrasts were executed, but
 the registration names no single headline among them and no omnibus
 "main effect" test exists — the advance rule at line 828 asks for a
 "main effect" the analysis section never operationalises.
@@ -610,12 +662,16 @@ p from 0.1636 to 0.932.
 | (ii) the registration's own named component question — H5 background at `preregistration.md:582` states "The question of *whether* negatives help is now answered by H8 (contrast C3: +HP → Scale-8)" | C3 (`plus-hp` vs `scale-8`) | `contrasts[2]` | −0.004956 | **0.8538** | 0.932 |
 | (iii) hypothesis-level summary — the smallest within-H8 BH-adjusted p, treating the existing seven-contrast correction as the H8 test | B1 | `contrasts[3]` | −0.027578 | — | **0.8344** |
 
-**Recommended default**: option (i), with the explicit caveat that a
-minimum-p statistic is anti-conservative inside a second BH step-up.
-Option (iii) is the conservative alternative and is defensible precisely
-because the within-H8 correction is already registered
-(`preregistration.md:821` requires the seven-condition comparison to be
-FDR-corrected).
+**PI ruling (2026-07-30)**: option **(iii)** selected
+(`phase2-rulings-2026-07-30.md` § 3.3), on the grounds argued at the
+ruling: the minimum BH-adjusted p-value is the **Simes test** p-value for
+the global null "no H8 contrast has any effect" — a valid combination
+test of exactly the hypothesis-level question — and it honours the
+within-H8 FDR the registration itself mandates (`preregistration.md:821`),
+where option (i)'s raw minimum is formally not a p-value and carries a
+permanent selection caveat. The outcome is identical under all three
+options (H8 is not rejected); the asymmetry with the family's other six
+(raw) primaries is disclosed in § 8.3.
 
 **Divergences**: permutation not bootstrap (E45); Era 3 (327 tiles at
 384 px) under the production carry-forward, not the registered 60-tile
@@ -637,18 +693,18 @@ effect". The Era-3 re-run supersedes it.
 
 | H | primary contrast | artefact | field | p (two-sided) | status |
 | --- | --- | --- | --- | ---: | --- |
-| H1 | Image-only vs Brief-text+image (F1) | `results/retest/pairwise-bootstrap-comparisons.json` | `comparisons[4].f1_p_value` | 0.006 | **AMBIGUOUS** (default) |
+| H1 | **CMT-0106 pooled modality contrast** (text-only pool vs image-using pool, F1, § 5.1.1) | `results/family-fdr/h1_cmt0106_pooled_modality.json` (to be produced) | `p_value` | **unknown at registration** | SELECTED (PI, option iv) |
 | H2 | Flash HIGH text 16-of-30 + PV vs Flash HIGH text 26-of-30 (F1) | `results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json` | `permutation_test.p_value` | 0.0 (< 1e-4) | SELECTED |
 | H3 | consensus-flash-high-text-26of30 vs matched single-pass (F1) | `results/diversity-dividend-384/tiering-champions/tiering_20m.json` | `headline_contrasts[2].p_value` | 0.0 (< 1e-4) | SELECTED |
 | H4 | canonical-first vs canonical-last (F1) | `results/retest/pairwise-bootstrap-comparisons.json` | `comparisons[55].f1_p_value` | 0.124 | SELECTED |
-| H5 | terse vs verbose, image track (**precision**) | `results/retest/pairwise-bootstrap-comparisons.json` | `comparisons[53].precision_p` | 0.756 | SELECTED (by constraint) |
+| H5 | terse vs verbose, image track (**precision**) | `results/retest/pairwise-bootstrap-comparisons.json` | `comparisons[53].precision_p` | 0.756 | SELECTED (by constraint; PI-ratified) |
 | H6 | — | — | — | — | **EXCLUDED — never run** |
-| H7 | T = 0.3 vs T = 1.0, text track (F1) | `results/retest/pairwise-bootstrap-comparisons.json` | `comparisons[25].f1_p_value` | ≤ 0.001 | **AMBIGUOUS** (default) |
-| H8 | B1: plus-hp vs scale-4 (F1) | `results/h8-v2/permutation-t4/fdr_summary.json` | `contrasts[3].p` | 0.1636 | **AMBIGUOUS** (default) |
+| H7 | T = 0.3 vs T = 1.0, text track (F1) | `results/retest/pairwise-bootstrap-comparisons.json` | `comparisons[25].f1_p_value` | ≤ 0.001 | SELECTED (PI-confirmed default) |
+| H8 | Simes global null over the seven registered contrasts (within-H8 BH minimum, at B1) | `results/h8-v2/permutation-t4/fdr_summary.json` | `contrasts[3].bh_adjusted_p` | 0.8344 | SELECTED (PI, option iii) |
 
-**Three AMBIGUOUS flags (H1, H7, H8).** Of these, only H1 is
-outcome-material; H7's candidates are all at the bootstrap floor and H8's
-are all null.
+**All selections are now fixed** (PI rulings 2026-07-30). Six of the
+seven p-values are visible in-repo; H1's — the one selection that was
+outcome-material — is genuinely unknown until § 5.1.1 is computed.
 
 ---
 
@@ -670,17 +726,14 @@ verbatim:
 > executed two-sided test is strictly conservative; no tailedness licence
 > exists anywhere.
 
-**Anchor caveat, stated plainly**: E64 itself is **not yet on disk**. The
-errata register `docs/methodology/preregistration/protocol-errata.md`
-currently ends at **E61**; E62–E67 exist only as a drafting pass recorded
-at `reports/verification/phase1-gate-package.md:316` ("The E62–E67
-drafting pass re-verified every specific and caught two package errors").
-The reconciliation erratum they belong to is item 3 of the GATE 1 erratum
-queue (`phase1-gate-package.md:176-181`), which names "one-tailed rule vs
-registered two-tailed instances" among the registration-internal
-contradictions to be reconciled. **This registration should not be
-finalised until E64 is filed**, or should record explicitly that it
-anticipates E64's operative reading.
+**Anchor status (updated 2026-07-30)**: **E64 is now on disk** — the
+reconciliation erratum landed in
+`docs/methodology/preregistration/protocol-errata.md` (commit
+`2159d25b4`, Session 121) with sub-item (v) adopting the two-sided
+operative reading this registration uses. The PI confirmed the
+E64-before-compute ordering as bundled confirmation 2
+(`phase2-rulings-2026-07-30.md` § 3.4). The draft-stage caveat that stood
+here is preserved in this document's git history.
 
 Consequence for H4, the only case where tail choice changes the numeral:
 two-sided p = 0.124 versus one-tailed p ≈ 0.062. Both are null at
@@ -790,7 +843,8 @@ Two primaries sit at instrument resolution floors and must be recorded as
 inequalities, not point values:
 
 - **Bootstrap floor**: H7 at `f1_p_value` = 0.001 with B = 1 000 is
-  **p ≤ 0.001**.
+  **p ≤ 0.001**. H1's § 5.1.1 computation runs at B = 10 000, so its
+  floor, if reached, is **p ≤ 0.0002** (two-sided doubling of 1/10 000).
 - **Permutation floor**: H2 and H3 at `p_value` = 0.0 with 10 000
   permutations are **p < 1 × 10⁻⁴**. The literature-standard reporting is
   (b + 1)/(B + 1) = 1/10 001 ≈ 9.999 × 10⁻⁵; this registration adopts
@@ -798,9 +852,16 @@ inequalities, not point values:
 
 **Tie rule**: where two p-values are equal at the floor, they are assigned
 consecutive ranks in the order H2, H3, H7 (fixed here, before execution,
-so that rank assignment cannot be chosen on results). BH adjusted p-values
-are identical for tied inputs under the monotone step-up, so this rule is
-presentational only.
+so that rank assignment cannot be chosen on results; H1, if it reaches its
+own floor, ranks after H7). BH adjusted p-values are identical for tied
+inputs under the monotone step-up, so this rule is presentational only.
+
+**H8 asymmetry, disclosed**: H8's input is the within-H8 BH-adjusted
+minimum — the Simes global-null p-value over its seven registered
+contrasts — where the other six primaries are raw contrast p-values. The
+double correction is mildly conservative for H8; it is the PI-selected
+reading (§ 5.8) because the within-H8 correction is itself registered.
+The Methods table must label H8's entry "Simes (within-H8 BH minimum)".
 
 ### 8.4 The sensitivity analysis
 
@@ -857,11 +918,15 @@ views, not nested ones.
 
 ## 9. `predicted_outcome`
 
-**This registration does not, and cannot, claim outcome blindness.** Every
-one of the seven p-values is already committed to this repository, was
-read during the drafting of this document, and is quoted verbatim in § 5.
-Anyone can compute the BH result from § 6 in under a minute. Saying
-otherwise would be false.
+**This registration does not, and cannot, claim outcome blindness for six
+of the seven primaries.** Their p-values are already committed to this
+repository, were read during drafting, and are quoted verbatim in § 5.
+**The exception is H1**: under the PI's option-(iv) ruling its primary is
+the never-computed § 5.1.1 pooled contrast, so the family's rejection set
+cannot be fully derived from § 6 until that computation runs — and this
+document is committed before it does. Saying more than that would be
+false; saying less would undersell the one degree of genuine blindness
+the ruling restored.
 
 **What the registration does fix is the family selection**: which
 hypotheses are in, which single contrast represents each, which artefact
@@ -874,23 +939,32 @@ because it looks better. The commit timestamp on this file makes those
 moves auditable. That is a real but **strictly weaker** guarantee than
 preregistration, and the paper must describe it in exactly those terms.
 
-**Prediction (stated for the record, given visible inputs)**:
+**Prediction (stated for the record, given visible inputs; updated at
+registration after the PI rulings)**:
 
 1. H2, H3 and H7 will be rejected at q = 0.05 (all at or near their
    instrument floors).
-2. H1 will be rejected under the recommended default (p = 0.006) and under
-   option (iii) (p = 0.004); it is **the single selection whose resolution
-   changes the rejection set**, since option (ii) at p = 0.38 would not
-   survive.
-3. H4 (p = 0.124), H5 (p = 0.756) and H8 (p = 0.1636 at best) will not be
-   rejected under any of the candidate selections.
+2. **H1 is genuinely open.** Its primary — the § 5.1.1 pooled modality
+   contrast — has never been computed. Directional expectation, stated
+   honestly from the visible level pairs: the text-only pool's members
+   sit at or above every image-using member except that `image-only`
+   drags its group down (brief-text beats image-only by +0.088), while
+   the two `+image` conditions sit within ~0.02 of `brief-text`; the
+   pooled delta should therefore be positive (text-only higher) but of
+   modest size (~+0.03 on the crude full-set arithmetic), and whether it
+   clears the family's BH threshold is **not predictable from the pair
+   p-values**. This is the registration's falsifiable core: H1's
+   rejection status is decided by a computation that postdates this
+   commit.
+3. H4 (p = 0.124), H5 (p = 0.756) and H8 (Simes 0.8344) will not be
+   rejected.
 4. The family-level and all-contrasts corrections will agree on direction
    for every hypothesis they share, and will differ chiefly in coverage —
    the 26-row family says nothing about H4, H5, H7 or H8.
 
-**Falsifiable commitments in that prediction**: item 2 is the one that
-matters. If the PI selects H1 option (ii), the rejection set shrinks by
-one. Recording this before the ruling is the point of the exercise.
+**Rejection-set consequence, fixed before computation**: the family
+rejects either {H2, H3, H7} or {H1, H2, H3, H7}, and nothing else; which
+of the two it is turns entirely on the outcome-blind H1 computation.
 
 **What this registration cannot rescue**: the registered family-level
 correction was **deferred and never resolved**
@@ -905,45 +979,81 @@ disclosure must say so.
 
 ## 10. Companion metadata (to commit with this document)
 
-Per `planning/audit-and-completion-plan.md` § 6.4, an entry in
-`results/run-analyses.json` with `status: planned`:
+Per `planning/audit-and-completion-plan.md` § 6.4, two entries committed
+to `results/run-analyses.json` with this document (outcomes null until
+computed):
+
+```json
+{
+  "analysis_id": "h1-cmt0106-pooled-modality",
+  "type": "comparison",
+  "hypothesis_refs": ["H1"],
+  "preregistered": "preregistered",
+  "deviations": ["E36", "E45", "E54", "E64"],
+  "predicted_outcome": "Registered contrast CMT-0106 executed for the first time under the run-it-now policy, reconstruction rule fixed at family-fdr-registration.md S 5.1.1 BEFORE computation. Directional expectation only: pooled text-only minus image-using positive, modest (~+0.03); significance genuinely unknown — the only outcome-blind primary in the family.",
+  "outcome": null,
+  "output_path": "results/family-fdr/h1_cmt0106_pooled_modality.json",
+  "paper_section": "Results"
+}
+```
 
 ```json
 {
   "analysis_id": "family-bh-fdr-confirmatory",
+  "type": "comparison",
   "hypothesis_refs": ["H1", "H2", "H3", "H4", "H5", "H7", "H8"],
   "preregistered": "preregistered",
-  "deviations": ["E28", "E30", "E36", "E41", "E45", "E51", "E53", "E54", "E58", "E59", "E60"],
-  "predicted_outcome": "See reports/verification/family-fdr-registration.md § 9. Family selection fixed before computation; p-values already visible in-repo — this is not outcome blindness. Predicted rejections at q=0.05: H2, H3, H7, and H1 under the recommended default; H4, H5, H8 not rejected.",
+  "deviations": ["E28", "E30", "E36", "E41", "E45", "E51", "E53", "E54", "E58", "E59", "E60", "E64"],
+  "predicted_outcome": "See reports/verification/family-fdr-registration.md S 9. Family selection fixed before computation; six of seven p-values visible in-repo, H1's outcome-blind. Rejection set is {H2, H3, H7} or {H1, H2, H3, H7}, decided by the H1 computation; H4, H5, H8 not rejected.",
   "outcome": null,
-  "paper_section": "Methods — statistical analysis; Results — confirmatory family"
+  "output_path": "results/family-fdr/family_fdr.json",
+  "paper_section": "Results"
 }
 ```
 
 ---
 
-## 11. Open questions requiring a PI ruling before execution
+## 11. PI rulings (collected 2026-07-30 — all six resolved)
 
-1. **H1 (outcome-material)**: which of the three candidate primaries in
-   § 5.1? The default is option (i), p = 0.006.
-2. **H7 (immaterial)**: which track? Default option (i), text track,
-   p ≤ 0.001.
-3. **H8 (immaterial)**: minimum-p contrast (option i), the registration's
-   named C3 (option ii), or the within-H8 BH-adjusted minimum (option iii)?
-4. **H5**: accept the constrained substitute (terse vs verbose on
-   precision, image track) or declare H5 unresolvable and reduce the
-   family to six?
-5. **E64**: file the reconciliation erratum before executing the
-   correction, or execute now and record the anticipated operative
-   reading? § 7.1 recommends the former.
-6. **Reporting of H2**: confirm that the falsified directional prediction
-   is reported as such — a two-stage architecture that *significantly
-   improves* F1 by +0.076, clearing the registered ≥ 0.05 stopping-rule
-   threshold in the direction the registration predicted it would not.
+Verbatim record: `reports/verification/phase2-rulings-2026-07-30.md` § 3.
+
+1. **H1**: **option (iv)** — run the never-executed registered CMT-0106
+   pooled modality contrast now, under the § 5.1.1 reconstruction rule
+   fixed before computation ("(iv) Run CMT-0106 now").
+2. **H7**: default option (i) confirmed — text track, p ≤ 0.001.
+3. **H8**: **option (iii)** — the within-H8 BH-adjusted minimum, on the
+   Simes framing.
+4. **H5**: constrained substitute **accepted**; family stays at m = 7.
+5. **E64**: filed **before** this registration was finalised (commit
+   `2159d25b4`); ordering confirmed.
+6. **Reporting of H2**: confirmed — reported as a falsified directional
+   prediction (two-stage significantly improves F1 by +0.076, clearing
+   the registered ≥ 0.05 stopping-rule threshold in the direction the
+   registration predicted it would not).
 
 ---
 
 ## Changelog
+
+### 2026-07-30 — REGISTERED (same day; PI rulings incorporated)
+
+All six § 11 questions ruled by the PI (Session 121 morning rulings,
+`reports/verification/phase2-rulings-2026-07-30.md` § 3) and incorporated:
+H1 = option (iv), the never-executed registered CMT-0106 pooled modality
+contrast, with its reconstruction rule fixed at the new § 5.1.1 before
+computation (the family's one outcome-blind primary — H1 was the one
+outcome-material selection); H5 substitute accepted (m = 7); H7 text-track
+default confirmed; H8 = option (iii), the within-H8 BH-adjusted minimum on
+the Simes framing (§ 8.3 gains the asymmetry disclosure); E64 landed
+before finalisation (commit `2159d25b4`, § 7.1 updated); H2
+falsified-directional reporting confirmed. § 9's prediction rewritten for
+the registered state: the rejection set is {H2, H3, H7} or
+{H1, H2, H3, H7}, decided by the outcome-blind H1 computation. § 10 now
+carries two planned analysis entries (committed to
+`results/run-analyses.json` with this revision). File moved from
+`reports/verification/drafts/family-fdr-registration-draft.md` to its
+final path. Committed BEFORE the § 5.1.1 computation and the family
+correction run.
 
 ### 2026-07-30 — Original publication
 

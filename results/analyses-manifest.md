@@ -2,9 +2,9 @@
 
 # Analyses manifest
 
-> Generated 2026-07-30T03:10:58Z · 18 row(s) · schema v1.0.
+> Generated 2026-07-30T03:21:13Z · 20 row(s) · schema v1.0.
 >
-> **Coverage**: 18 analysis(es) over conditions (sub-step 3c; hybrid human-authored).
+> **Coverage**: 20 analysis(es) over conditions (sub-step 3c; hybrid human-authored).
 
 | analysis_id | type | #conditions | preregistered | paper_section | outcome |
 |---|---|---|---|---|---|
@@ -26,3 +26,5 @@
 | unswept-pools-completeness | sweep | 18 | exploratory | Results | The headline SURVIVES the global-optimum check: the full 30-pass union's best PV operating point IS the registered 16of30 headline (0.8902 at k=16/pt0.2 over all 11,771 candidates) — restricting the S108 Stage-D verification to the 729-crop 16of30 subset lost nothing. One discovery: the PRO verifier over the Flash-HIGH 5-pass union scores 0.8792 (4of5/pt0.25) — +0.015 over the Flash verifier on the same pool (raw p=0.019, POST-HOC, not multiplicity-controlled), ns vs the headline (p=0.41) and vs min11 (p=0.76): refines Obs 359's 'verifier model barely matters' (measured on the low-headroom Pro pool) to high-recall pools where verification is the binding stage — while min11 dominates it on cost. The image rows populate the transfer table (image PV 0.7778 @ 20 m / 0.8771 @ 50 m). |
 | 55map-canonical-leaderboard-50m | leaderboard | 8 | exploratory | Results | 5 tiers, 24/28 pairs significant after BH-FDR. Board (F1@50, tier): T03-k3 (oracle) 0.8476 (T1); TH7-k3 0.8425 (T1); T03-k4 0.8359 (T2); TM-n10-k5 (uplift) 0.8290 (T2); TH7-k4 (carry-forward) 0.8152 (T3); TM-k3 0.8127 (T3); IM-k3 0.7987 (T4); TM-k4 0.7831 (T5). The uplift (TM-n10-k5) confirms Obs 364 on the full board: pass count closes about half the deployment thinking gap — significantly above TM-k3, significantly below TH7-k3 — making minimal-thinking deployment a priced cost/quality trade rather than a tie. |
 | 55map-canonical-leaderboard-mcc-50m | leaderboard | 8 | exploratory | Results | 5 tiers, 20/28 pairs significant after BH-FDR. Board (tile-MCC@50, tier): IM-k3 0.7104 (T1, SOLE leader); T03-k3 (oracle) 0.6903 (T2); TH7-k3 0.6796 (T2); TM-n10-k5 (uplift) 0.6725 (T3); T03-k4 0.6711 (T3); TH7-k4 (carry-forward) 0.6666 (T3); TM-k3 0.6580 (T4); TM-k4 0.6411 (T5). IM-k3 is the SOLE Tier-1 cell — all seven of its pairwise comparisons are significant, including against the F1 oracle T03-k3 (ΔMCC +0.0201, BH p=0.0056). The tier order INVERTS the F1 board at the top (the F1 Tier-4 cell is the MCC sole leader; the F1 oracle drops to MCC T2; only bottom-ranked TM-k4 is invariant), while within the text family MCC still respects the F1 ordering (every k3-above-k4 difference significant) — so the inversion is a MODALITY effect, not noise: the cheap two-call image+verifier stack is the resolved best tile-level discriminator while sitting outside the coordinate-F1 frontier (Obs 369/370). Gate: rebuilt per-tile confusion reproduces the committed Track-2 evaluations exactly, 8/8. 95% CIs are the Track-2 engine's BCa bootstrap MCC CIs. |
+| h1-cmt0106-pooled-modality | comparison | 5 | preregistered | Results | — |
+| family-bh-fdr-confirmatory | comparison | 12 | preregistered | Results | — |

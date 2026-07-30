@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-07-30T03:10:58Z",
+  "generated_at": "2026-07-30T03:21:13Z",
   "generator_version": "0.6.0",
   "analyses": [
     {
@@ -928,6 +928,99 @@
           "results/metric-leaderboards"
         ],
         "last_extracted_at": "2026-07-30T03:10:58Z",
+        "extractor_version": "0.6.0"
+      }
+    },
+    {
+      "analysis_id": "h1-cmt0106-pooled-modality",
+      "type": "comparison",
+      "conditions_compared": [
+        "retest-phase2a::image-only",
+        "retest-phase2a::brief-text",
+        "retest-phase2a::verbose-text",
+        "retest-phase2a::brief-text-image",
+        "retest-phase2a::verbose-text-image"
+      ],
+      "hypothesis_refs": [
+        "H1"
+      ],
+      "preregistered": "preregistered",
+      "deviations": [
+        "E36",
+        "E45",
+        "E54",
+        "E64"
+      ],
+      "predicted_outcome": "Registered contrast CMT-0106 executed for the first time under the run-it-now policy, reconstruction rule fixed at family-fdr-registration.md S 5.1.1 BEFORE computation. Directional expectation only: pooled text-only minus image-using positive, modest (~+0.03); significance genuinely unknown \u2014 the only outcome-blind primary in the family.",
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": null,
+      "paper_section": "Results",
+      "output_path": "results/family-fdr/h1_cmt0106_pooled_modality.json",
+      "working_notes_obs": [],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json"
+        ],
+        "last_extracted_at": "2026-07-30T03:21:13Z",
+        "extractor_version": "0.6.0"
+      }
+    },
+    {
+      "analysis_id": "family-bh-fdr-confirmatory",
+      "type": "comparison",
+      "conditions_compared": [
+        "retest-phase2a::brief-text",
+        "retest-phase2a::image-only",
+        "pv-diag-384::verified-adv-text-consensus-16of30",
+        "pv-diag-384::flash-high-text-n5-text-t0.7-consensus-26of30",
+        "retest-phase2e::canonical-first",
+        "retest-phase2e::canonical-last",
+        "retest-phase2d::image-terse",
+        "retest-phase2d::image-verbose",
+        "retest-phase2b::text-t0.3",
+        "retest-phase2b::text-t1.0",
+        "h8-v2::greedy-plus-hp",
+        "h8-v2::greedy-scale-4"
+      ],
+      "hypothesis_refs": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "H7",
+        "H8"
+      ],
+      "preregistered": "preregistered",
+      "deviations": [
+        "E28",
+        "E30",
+        "E36",
+        "E41",
+        "E45",
+        "E51",
+        "E53",
+        "E54",
+        "E58",
+        "E59",
+        "E60",
+        "E64"
+      ],
+      "predicted_outcome": "See reports/verification/family-fdr-registration.md S 9. Family selection fixed before computation; six of seven p-values visible in-repo, H1's outcome-blind. Rejection set is {H2, H3, H7} or {H1, H2, H3, H7}, decided by the H1 computation; H4, H5, H8 not rejected.",
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": null,
+      "paper_section": "Results",
+      "output_path": "results/family-fdr/family_fdr.json",
+      "working_notes_obs": [],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json"
+        ],
+        "last_extracted_at": "2026-07-30T03:21:13Z",
         "extractor_version": "0.6.0"
       }
     }
