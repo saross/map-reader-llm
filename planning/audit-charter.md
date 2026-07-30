@@ -445,10 +445,11 @@ runs, asynchronous batch jobs). Assignment guidance (PI economics,
    before spend).
    (g) **Phase 2 start approved.**
 
-Also settled in the same review: the stratum rule and working-notes dual
-role (§ 2), the interpretive-ATTESTED extension (§ 3), orthogonal
-interrogation as execution rule 11 (§ 5), verbatim-span verification in the
-monitor (§ 6), and the Claude model policy (§ 8).
+   Also settled in the same review: the stratum rule and working-notes
+   dual role (§ 2), the interpretive-ATTESTED extension (§ 3),
+   orthogonal interrogation as execution rule 11 (§ 5), verbatim-span
+   verification in the monitor (§ 6), and the Claude model policy
+   (§ 8).
 
 8. **GATE 2 (2026-07-30) — PASSED.** Package:
    `reports/verification/phase2-gate-package.md`; the day's PI rulings
