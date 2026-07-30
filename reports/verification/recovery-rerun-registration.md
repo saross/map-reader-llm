@@ -17,8 +17,8 @@ approval, etc.)" (`reports/verification/phase2-rulings-2026-07-30.md`
 
 Derived at `reports/verification/recovery-rerun-worklists.json`
 (`scripts/derive_recovery_worklists.py`): dead tiles = corpus membership
-minus the detection GeoJSON's `processed_tiles` (charter § 4 authority
-#1), sidecars as corpus definition and cross-check.
+minus the detection GeoJSON's `processed_tiles` (charter § 4
+authority 1), sidecars as corpus definition and cross-check.
 
 | group | passes | dead tiles | model |
 | --- | --- | --- | --- |
