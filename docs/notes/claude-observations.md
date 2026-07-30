@@ -282,3 +282,77 @@ impossible, never the goal.
 **How to apply.** When presenting an omission, price the run-it-now
 option first and the erratum-only path second; batch omitted analyses
 into runnable campaigns (Phase 4b) rather than erratum queues.
+
+## claude-obs 12 — 2026-07-30 (Session 121): his operational memory audits the pipeline, not just the record
+
+**Pattern.** Twice in one session, Shawn's recall of *how the pipeline
+normally operates* caught errors the document trail could not. "Check
+which pro model we ran" exposed my registration mislabel (the six
+"pro-*" shortfall passes are E57's mis-dispatched Flash corners — a
+fact I had quoted from the census earlier the same session and then
+overrode by pattern-matching on directory names). "Normally we try
+something like 10x" exposed that the patcher's 3+3 ladder was far
+shallower than house practice — the deeper sweep recovered 10 more
+tiles, all at original parameters. claude-obs 9 said his memory audits
+decision history; this session extends it: his memory also audits
+*operational norms* (models, retry depths, service tiers), which no
+gate checklist encoded.
+
+**Lesson.** Before any spend gate, his operational priors are a
+verification instrument of the same rank as the config audit. The
+instrument fires on "does this match how we normally run?" — a question
+agents cannot answer from artefacts alone when the norm lives in
+practice rather than in a config default.
+
+**How to apply.** Present every spend gate with the operational
+parameters stated in his terms (model lineage, retry depth, service
+tier, worker count) even when they seem settled; treat a "that doesn't
+match my recollection" as a blocking check, not a clarification.
+
+## claude-obs 13 — 2026-07-30 (Session 121): self-critique — pattern-matching beat my own context twice
+
+**Pattern.** I labelled the n1-outstanding passes `gemini-3.1-pro-preview`
+in a registered document despite having quoted "E57 replaced the four
+mis-dispatched Flash corners" verbatim earlier in the SAME session. The
+correcting fact was already in my context; the directory name (`pro-*`)
+won anyway. Same shape at smaller scale: two shell traps (piped
+markdownlint masking a lint failure via `tail`'s exit code; argparse
+eating `-deep` as a flag) each cost a cycle because I trusted the
+pattern ("this invocation shape works") over checking the exit path.
+
+**Lesson.** Having verified a fact earlier in a session does not
+inoculate later writing against its negation — under length, naming
+conventions outcompete context. The write-side anti-confabulation rule
+(re-read at source before writing a specific) applies with full force
+to specifics I *believe I already know*, which are precisely the ones I
+skip re-checking.
+
+**How to apply.** When a registered/committed document names a model,
+corpus, or config, re-derive it from the artefact in the same turn as
+writing it — never from a directory name, label, or my own earlier
+prose. For shell: check exit codes on the command, not through a pipe.
+
+## claude-obs 14 — 2026-07-30 (Session 121): the outcome-blind fork paid for itself the same day
+
+**Pattern.** Shawn chose option (iv) for H1 — running the never-executed
+registered CMT-0106 contrast rather than picking among three visible
+p-values (0.004/0.006/0.38) — after asking for a fuller explanation
+rather than accepting my recommended default. The computation came back
+null (p = 0.1774), shrinking the rejection set to {H2, H3, H7}: the
+one genuinely outcome-blind selection in the family resolved the one
+outcome-material fork, against the direction the visible defaults
+suggested. His instinct ("our main contrast was image vs text-only")
+had pointed at the never-run registered contrast before he knew any of
+this.
+
+**Lesson.** When he asks "I *think* X was the main contrast — is that
+what you're asking?", the confusion is often signal: his memory of the
+study's conceptual structure is reaching for something the executed
+artefacts do not contain. Surfacing the never-executed registered item
+as a first-class option — not just adjudicating among executed ones —
+is what let the run-it-now policy do real epistemic work.
+
+**How to apply.** In any selection among executed alternatives, always
+enumerate the registered-but-never-executed alternative explicitly with
+its cost; his instincts about study structure deserve an option in the
+choice set, not just a footnote about unavailability.
