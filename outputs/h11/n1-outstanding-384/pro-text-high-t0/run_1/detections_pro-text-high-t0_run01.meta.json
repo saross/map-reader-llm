@@ -2,7 +2,7 @@
   "run_id": "b4500166-1565-4457-8faa-f0038ed3ef8d",
   "timestamp": {
     "start": "2026-03-27T05:47:12.538556+00:00",
-    "end": "2026-07-30T05:24:13.452148+00:00",
+    "end": "2026-07-30T08:07:54.047893+00:00",
     "duration_seconds": 974.269826
   },
   "environment": {
@@ -125,8 +125,8 @@
     }
   },
   "execution_stats": {
-    "items_processed": 483,
-    "items_failed": 4,
+    "items_processed": 485,
+    "items_failed": 2,
     "items_skipped": 0,
     "retries_total": 663,
     "retries_rate_limit": 0,
@@ -623,13 +623,13 @@
       "K-35-078-1_Lesovo_x3024_y0.png",
       "K-35-078-1_Lesovo_x3696_y2352.png",
       "K-35-078-1_Lesovo_x2688_y672.png",
-      "K-35-078-1_Lesovo_x0_y336.png"
+      "K-35-078-1_Lesovo_x0_y336.png",
+      "K-35-053-3_Elenovo_x1680_y3360.png",
+      "K-35-078-1_Lesovo_x672_y2688.png"
     ],
     "failed_items": [
-      "K-35-053-3_Elenovo_x1680_y3360.png",
       "K-35-053-3_Elenovo_x672_y2352.png",
-      "K-35-078-1_Lesovo_x2016_y672.png",
-      "K-35-078-1_Lesovo_x672_y2688.png"
+      "K-35-078-1_Lesovo_x2016_y672.png"
     ],
     "retry_details": [
       {
@@ -5293,7 +5293,7 @@
     }
   },
   "results_summary": {
-    "total_detections": 1076,
+    "total_detections": 1090,
     "class_counts": {
       "burial_mound": 793,
       "triangulation_mound": 120,
@@ -32156,6 +32156,23 @@
         "K-35-078-1_Lesovo_x3696_y2016.png",
         "K-35-078-1_Lesovo_x3696_y2352.png",
         "K-35-078-1_Lesovo_x3696_y2688.png"
+      ],
+      "recovery_cost_usd": 0.0,
+      "recovery_duration_seconds": 0.0,
+      "recovery_run_id": null
+    },
+    {
+      "timestamp": "2026-07-30T08:07:54.048126+00:00",
+      "initial_failed": 4,
+      "recovered": 2,
+      "still_failing": 2,
+      "still_failing_ids": [
+        "K-35-053-3_Elenovo_x672_y2352.png",
+        "K-35-078-1_Lesovo_x2016_y672.png"
+      ],
+      "recovered_ids": [
+        "K-35-053-3_Elenovo_x1680_y3360.png",
+        "K-35-078-1_Lesovo_x672_y2688.png"
       ],
       "recovery_cost_usd": 0.0,
       "recovery_duration_seconds": 0.0,

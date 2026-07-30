@@ -1,0 +1,153 @@
+{
+ "_README": "Results of the registered E71 dead-tile recovery rerun (recovery-rerun-registration.md; PI approval 2026-07-30, flex tier). Pre-recovery artefacts preserved under archive/pre-recovery-2026-07-30/.",
+ "generated_at": "2026-07-30T08:09:27.125542+00:00",
+ "service_tier": "flex",
+ "mode": "residue",
+ "max_attempts_override": 10,
+ "safe_tokens_override": null,
+ "registered_total": 33,
+ "results": [
+  {
+   "pass_id": "n1-outstanding-384::pro-image-high-t0::run1",
+   "n_registered": 15,
+   "recovered": [],
+   "recovered_safe_mode": [],
+   "still_failed": [
+    "K-35-053-3_Elenovo_x672_y2352.png"
+   ]
+  },
+  {
+   "pass_id": "n1-outstanding-384::pro-image-high-t0::run2",
+   "n_registered": 19,
+   "recovered": [],
+   "recovered_safe_mode": [],
+   "still_failed": [
+    "K-35-053-3_Elenovo_x672_y2352.png"
+   ]
+  },
+  {
+   "pass_id": "n1-outstanding-384::pro-image-high-t0::run3",
+   "n_registered": 17,
+   "recovered": [
+    "K-35-052-4_32635_x336_y336.png"
+   ],
+   "recovered_safe_mode": [],
+   "still_failed": [
+    "K-35-052-4_32635_x0_y2352.png",
+    "K-35-053-3_Elenovo_x672_y2352.png"
+   ]
+  },
+  {
+   "pass_id": "n1-outstanding-384::pro-text-high-t0::run1",
+   "n_registered": 29,
+   "recovered": [
+    "K-35-053-3_Elenovo_x1680_y3360.png",
+    "K-35-078-1_Lesovo_x672_y2688.png"
+   ],
+   "recovered_safe_mode": [],
+   "still_failed": [
+    "K-35-053-3_Elenovo_x672_y2352.png",
+    "K-35-078-1_Lesovo_x2016_y672.png"
+   ]
+  },
+  {
+   "pass_id": "n1-outstanding-384::pro-text-high-t0::run2",
+   "n_registered": 29,
+   "recovered": [
+    "K-35-078-1_Lesovo_x1680_y3360.png"
+   ],
+   "recovered_safe_mode": [],
+   "still_failed": [
+    "K-35-053-3_Elenovo_x672_y2352.png",
+    "K-35-078-1_Lesovo_x2016_y672.png"
+   ]
+  },
+  {
+   "pass_id": "n1-outstanding-384::pro-text-high-t0::run3",
+   "n_registered": 27,
+   "recovered": [],
+   "recovered_safe_mode": [],
+   "still_failed": [
+    "K-35-053-3_Elenovo_x672_y2352.png",
+    "K-35-078-1_Lesovo_x2016_y672.png"
+   ]
+  },
+  {
+   "pass_id": "pv-diag-384::flash-high-image-n5-image-t0.0::run1",
+   "n_registered": 16,
+   "recovered": [],
+   "recovered_safe_mode": [],
+   "still_failed": [
+    "K-35-052-4_32635_x0_y2352.png",
+    "K-35-053-3_Elenovo_x672_y2352.png",
+    "K-35-062-2_Rakovski_x1008_y336.png"
+   ]
+  },
+  {
+   "pass_id": "pv-diag-384::flash-high-image-n5-image-t0.0::run2",
+   "n_registered": 34,
+   "recovered": [
+    "K-35-062-2_Rakovski_x336_y1344.png",
+    "K-35-062-2_Rakovski_x0_y1344.png"
+   ],
+   "recovered_safe_mode": [],
+   "still_failed": [
+    "K-35-052-4_32635_x0_y2352.png",
+    "K-35-053-3_Elenovo_x1680_y1008.png",
+    "K-35-053-3_Elenovo_x672_y2352.png",
+    "K-35-062-2_Rakovski_x1008_y336.png"
+   ]
+  },
+  {
+   "pass_id": "pv-diag-384::flash-high-image-n5-image-t0.0::run3",
+   "n_registered": 34,
+   "recovered": [
+    "K-35-053-3_Elenovo_x1680_y1008.png"
+   ],
+   "recovered_safe_mode": [],
+   "still_failed": [
+    "K-35-052-4_32635_x0_y2352.png",
+    "K-35-053-3_Elenovo_x672_y2352.png"
+   ]
+  },
+  {
+   "pass_id": "pv-diag-384::flash-high-text-n5-text-t0.0::run1",
+   "n_registered": 19,
+   "recovered": [
+    "K-35-053-3_Elenovo_x1680_y3360.png"
+   ],
+   "recovered_safe_mode": [],
+   "still_failed": [
+    "K-35-052-4_32635_x3696_y336.png",
+    "K-35-078-1_Lesovo_x2016_y672.png"
+   ]
+  },
+  {
+   "pass_id": "pv-diag-384::flash-high-text-n5-text-t0.0::run2",
+   "n_registered": 20,
+   "recovered": [],
+   "recovered_safe_mode": [],
+   "still_failed": [
+    "K-35-052-4_32635_x3696_y336.png"
+   ]
+  },
+  {
+   "pass_id": "pv-diag-384::flash-high-text-n5-text-t0.0::run3",
+   "n_registered": 20,
+   "recovered": [
+    "K-35-078-1_Lesovo_x2352_y672.png",
+    "K-35-053-3_Elenovo_x0_y1680.png"
+   ],
+   "recovered_safe_mode": [],
+   "still_failed": [
+    "K-35-052-4_32635_x3696_y336.png"
+   ]
+  }
+ ],
+ "totals": {
+  "recovered": 10,
+  "recovered_safe_mode": 0,
+  "still_failed": 23,
+  "unit_errors": 0
+ }
+}

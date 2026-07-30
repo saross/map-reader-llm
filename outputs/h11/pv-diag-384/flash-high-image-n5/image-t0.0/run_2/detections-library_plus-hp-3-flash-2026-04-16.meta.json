@@ -2,7 +2,7 @@
   "run_id": "a3469fdc-5bf1-420f-830c-3e46fad44597",
   "timestamp": {
     "start": "2026-04-16T09:36:00.150412+00:00",
-    "end": "2026-07-30T05:07:21.441056+00:00",
+    "end": "2026-07-30T08:09:27.094877+00:00",
     "duration_seconds": 873.296011
   },
   "environment": {
@@ -113,8 +113,8 @@
     }
   },
   "execution_stats": {
-    "items_processed": 481,
-    "items_failed": 6,
+    "items_processed": 483,
+    "items_failed": 4,
     "items_skipped": 0,
     "retries_total": 510,
     "retries_rate_limit": 0,
@@ -609,15 +609,15 @@
       "K-35-078-1_Lesovo_x0_y2688.png",
       "K-35-078-1_Lesovo_x3360_y1680.png",
       "K-35-078-1_Lesovo_x1008_y2352.png",
-      "K-35-062-2_Rakovski_x0_y2352.png"
+      "K-35-062-2_Rakovski_x0_y2352.png",
+      "K-35-062-2_Rakovski_x336_y1344.png",
+      "K-35-062-2_Rakovski_x0_y1344.png"
     ],
     "failed_items": [
       "K-35-052-4_32635_x0_y2352.png",
-      "K-35-062-2_Rakovski_x1008_y336.png",
-      "K-35-062-2_Rakovski_x0_y1344.png",
-      "K-35-062-2_Rakovski_x336_y1344.png",
+      "K-35-053-3_Elenovo_x1680_y1008.png",
       "K-35-053-3_Elenovo_x672_y2352.png",
-      "K-35-053-3_Elenovo_x1680_y1008.png"
+      "K-35-062-2_Rakovski_x1008_y336.png"
     ],
     "retry_details": [
       {
@@ -4210,7 +4210,7 @@
     }
   },
   "results_summary": {
-    "total_detections": 879,
+    "total_detections": 892,
     "class_counts": {
       "burial_mound": 593,
       "benchmark_mound": 104,
@@ -35948,6 +35948,25 @@
         "K-35-078-1_Lesovo_x336_y0.png",
         "K-35-078-1_Lesovo_x336_y336.png",
         "K-35-078-1_Lesovo_x3696_y2352.png"
+      ],
+      "recovery_cost_usd": 0.0,
+      "recovery_duration_seconds": 0.0,
+      "recovery_run_id": null
+    },
+    {
+      "timestamp": "2026-07-30T08:09:27.095107+00:00",
+      "initial_failed": 6,
+      "recovered": 2,
+      "still_failing": 4,
+      "still_failing_ids": [
+        "K-35-052-4_32635_x0_y2352.png",
+        "K-35-053-3_Elenovo_x1680_y1008.png",
+        "K-35-053-3_Elenovo_x672_y2352.png",
+        "K-35-062-2_Rakovski_x1008_y336.png"
+      ],
+      "recovered_ids": [
+        "K-35-062-2_Rakovski_x0_y1344.png",
+        "K-35-062-2_Rakovski_x336_y1344.png"
       ],
       "recovery_cost_usd": 0.0,
       "recovery_duration_seconds": 0.0,

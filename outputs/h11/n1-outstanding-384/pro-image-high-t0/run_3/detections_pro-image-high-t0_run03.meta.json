@@ -2,7 +2,7 @@
   "run_id": "82be1261-290b-42f4-b076-f087cd130709",
   "timestamp": {
     "start": "2026-03-27T07:31:15.894965+00:00",
-    "end": "2026-07-30T05:11:40.505671+00:00",
+    "end": "2026-07-30T08:06:39.008228+00:00",
     "duration_seconds": 1589.505654
   },
   "environment": {
@@ -113,8 +113,8 @@
     }
   },
   "execution_stats": {
-    "items_processed": 484,
-    "items_failed": 3,
+    "items_processed": 485,
+    "items_failed": 2,
     "items_skipped": 0,
     "retries_total": 287,
     "retries_rate_limit": 0,
@@ -612,12 +612,12 @@
       "K-35-078-1_Lesovo_x3696_y672.png",
       "K-35-078-1_Lesovo_x672_y1680.png",
       "K-35-062-2_Rakovski_x0_y2688.png",
-      "K-35-062-2_Rakovski_x336_y1344.png"
+      "K-35-062-2_Rakovski_x336_y1344.png",
+      "K-35-052-4_32635_x336_y336.png"
     ],
     "failed_items": [
       "K-35-052-4_32635_x0_y2352.png",
-      "K-35-053-3_Elenovo_x672_y2352.png",
-      "K-35-052-4_32635_x336_y336.png"
+      "K-35-053-3_Elenovo_x672_y2352.png"
     ],
     "retry_details": [
       {
@@ -2649,7 +2649,7 @@
     }
   },
   "results_summary": {
-    "total_detections": 737,
+    "total_detections": 741,
     "class_counts": {
       "burial_mound": 527,
       "triangulation_mound": 52,
@@ -34370,6 +34370,22 @@
         "K-35-078-1_Lesovo_x3696_y672.png",
         "K-35-078-1_Lesovo_x4032_y672.png",
         "K-35-078-1_Lesovo_x672_y1680.png"
+      ],
+      "recovery_cost_usd": 0.0,
+      "recovery_duration_seconds": 0.0,
+      "recovery_run_id": null
+    },
+    {
+      "timestamp": "2026-07-30T08:06:39.008451+00:00",
+      "initial_failed": 3,
+      "recovered": 1,
+      "still_failing": 2,
+      "still_failing_ids": [
+        "K-35-052-4_32635_x0_y2352.png",
+        "K-35-053-3_Elenovo_x672_y2352.png"
+      ],
+      "recovered_ids": [
+        "K-35-052-4_32635_x336_y336.png"
       ],
       "recovery_cost_usd": 0.0,
       "recovery_duration_seconds": 0.0,
