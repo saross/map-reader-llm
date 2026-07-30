@@ -176,7 +176,6 @@ paper verification itself," and later asked whether we should close the session.
 I read both as a signal I had over-invested in the manifest machinery while the
 22 false attributions sat untouched. Was that the intent, or am I over-reading?
 
-
 ## Session 119 — 2026-07-29 (candidates — pending Shawn's review)
 
 - **Candidate A**: "You've done excellent work" — said after the review +

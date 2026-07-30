@@ -8610,7 +8610,6 @@ verifier prob_t in-sample) is the durable artefact; the reasoning behind it is t
 discuss how we frame things" instead — a reframe invited, not imposed. The numbers were done an hour
 before the framing was right.*
 
-
 ## Session 104 — 2026-06-06/07 — the domain expert's instincts beat my defaults, repeatedly
 
 ### Prompt: Where did you and the human disagree, and who was right?
