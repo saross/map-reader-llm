@@ -117,6 +117,23 @@ before launch.
 
 ## Changelog
 
+### 2026-07-30 — Scope extension registered: deeper sweep of the 33-tile residue (PI-approved)
+
+PI ruling (verbatim): "yes, I'd like a deeper sweep before we give up."
+Context: the patcher's ladder is 3 tier-1 + 3 tier-2 attempts
+(`MAX_SYNC_RETRIES = 3`) — shallower than the 10–15-attempt run-time
+ladder the residue tiles survived originally — and yesterday's 10
+safe-mode-only recoveries show tier 2 has real yield. Extension, fixed
+before launch: **sweep A** re-runs the 33 residue tiles at
+`max_attempts = 10` (10 × original parameters, then 10 × safe mode
+2048); any survivors get **sweep B** at `max_attempts = 5` with the
+safe-mode budget halved to **1024 tokens**. Same models (each pass's
+own), same flex tier, same per-pass scope gates in residue mode
+(current sidecar failures must be a subset of the registered dead set).
+Worst case ≈ US$2. Post-sweep: if any tile recovers, the § 3 pipeline
+re-runs for the affected live cells; survivors after both sweeps are
+final-recorded as permanent.
+
 ### 2026-07-30 — EXECUTED: 255/288 recovered; prediction partially missed
 
 All § 6 gates passed in order (PI approval with the standing flex

@@ -74,15 +74,34 @@ def unit_files(run_dir: Path) -> dict[str, list[Path]]:
     }
 
 
-def check_worklist_equality(spec: dict) -> tuple[bool, str]:
-    """The unit's sidecar failed set must equal the registered dead set."""
+def sidecar_failed(spec: dict) -> set[str]:
+    """Union of the unit's current sidecar ``failed`` lists."""
     run_dir = REPO_ROOT / spec["run_dir"]
-    files = unit_files(run_dir)
     union_failed: set[str] = set()
-    for t in files["tiles"]:
+    for t in unit_files(run_dir)["tiles"]:
         with open(t) as f:
             union_failed |= set(json.load(f).get("failed", []))
+    return union_failed
+
+
+def check_worklist_equality(spec: dict, residue: bool = False) -> tuple[bool, str]:
+    """Scope gate against the registered dead set.
+
+    Fresh mode: the sidecar failed set must EQUAL the registered set.
+    Residue mode (after a prior sweep recovered part of the set): the
+    current sidecar failures must be a SUBSET of the registered set —
+    recovered tiles are legitimately absent, but nothing outside the
+    registration may appear.
+    """
+    union_failed = sidecar_failed(spec)
     registered = set(spec["dead_tiles"])
+    if residue:
+        outside = union_failed - registered
+        if outside:
+            return False, (
+                f"{len(outside)} sidecar failure(s) OUTSIDE the registered set: "
+                f"{sorted(outside)[:3]}")
+        return True, f"{len(union_failed)} residue of {len(registered)} registered"
     if union_failed != registered:
         return False, (
             f"sidecar failed set ({len(union_failed)}) != registered dead set "
@@ -114,16 +133,27 @@ def preserve_unit(spec: dict) -> Path:
     return dest
 
 
-def patch_unit(spec: dict, client) -> dict:
+def patch_unit(
+    spec: dict,
+    client,
+    max_attempts: int | None = None,
+    safe_tokens: int | None = None,
+) -> dict:
     """Run the two-tier patcher on one unit at flex tier."""
     from scripts.lib_batch_api import patch_failed_tiles
 
     run_dir = REPO_ROOT / spec["run_dir"]
+    kwargs: dict = {}
+    if max_attempts is not None:
+        kwargs["max_attempts"] = max_attempts
+    if safe_tokens is not None:
+        kwargs["max_output_tokens"] = safe_tokens
     result = patch_failed_tiles(
         unit_dir=run_dir,
         client=client,
         tiles_dir=TILES_384,
         service_tier=SERVICE_TIER,
+        **kwargs,
     )
     return {
         "pass_id": spec["pass_id"],
@@ -143,19 +173,39 @@ def main() -> None:
     parser.add_argument("--workers", type=int, default=6,
                         help="Concurrent units (default 6; tiles within a unit "
                              "run sequentially)")
+    parser.add_argument("--residue", action="store_true",
+                        help="Residue mode (registered 2026-07-30 scope "
+                             "extension): target the CURRENT sidecar failures, "
+                             "gated as a subset of the registered dead set; "
+                             "passes with no remaining failures are skipped")
+    parser.add_argument("--max-attempts", type=int, default=None,
+                        help="Override the patcher's per-tier attempt count "
+                             "(default: lib_batch_api.MAX_SYNC_RETRIES = 3)")
+    parser.add_argument("--safe-tokens", type=int, default=None,
+                        help="Override the tier-2 safe-mode max_output_tokens "
+                             "(default: 2048)")
+    parser.add_argument("--results-suffix", type=str, default="",
+                        help="Suffix for the results filename (e.g. '-deep')")
     args = parser.parse_args()
 
     with open(WORKLISTS) as f:
         worklists = json.load(f)
     passes = [p for p in worklists["passes"] if p["n_dead"] > 0]
-    total = sum(p["n_dead"] for p in passes)
-    logger.info("Registered scope: %d tiles across %d passes (flex tier)",
-                total, len(passes))
+    if args.residue:
+        passes = [p for p in passes if sidecar_failed(p)]
+        total = sum(len(sidecar_failed(p)) for p in passes)
+        logger.info("Residue scope: %d tiles across %d passes (flex tier; "
+                    "max_attempts=%s, safe_tokens=%s)",
+                    total, len(passes), args.max_attempts, args.safe_tokens)
+    else:
+        total = sum(p["n_dead"] for p in passes)
+        logger.info("Registered scope: %d tiles across %d passes (flex tier)",
+                    total, len(passes))
 
     # ── Gate checks (always run, dry or live) ─────────────────
     failures = []
     for spec in passes:
-        ok, msg = check_worklist_equality(spec)
+        ok, msg = check_worklist_equality(spec, residue=args.residue)
         status = "ok" if ok else "MISMATCH"
         logger.info("  worklist %s: %s (%s)", status, spec["pass_id"], msg)
         if not ok:
@@ -188,7 +238,11 @@ def main() -> None:
 
     results = []
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
-        futures = {pool.submit(patch_unit, spec, client): spec for spec in passes}
+        futures = {
+            pool.submit(patch_unit, spec, client,
+                        args.max_attempts, args.safe_tokens): spec
+            for spec in passes
+        }
         for fut in as_completed(futures):
             spec = futures[fut]
             try:
@@ -210,6 +264,9 @@ def main() -> None:
             "Pre-recovery artefacts preserved under archive/pre-recovery-2026-07-30/."),
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "service_tier": SERVICE_TIER,
+        "mode": "residue" if args.residue else "fresh",
+        "max_attempts_override": args.max_attempts,
+        "safe_tokens_override": args.safe_tokens,
         "registered_total": total,
         "results": sorted(results, key=lambda r: r["pass_id"]),
         "totals": {
@@ -220,14 +277,16 @@ def main() -> None:
             "unit_errors": sum(1 for r in results if "error" in r),
         },
     }
-    with open(RESULTS, "w") as f:
+    results_path = (RESULTS.with_name(RESULTS.stem + args.results_suffix + ".json")
+                    if args.results_suffix else RESULTS)
+    with open(results_path, "w") as f:
         json.dump(summary, f, indent=1)
     t = summary["totals"]
     print("\n=== Recovery rerun complete ===")
     print(f"  recovered:  {t['recovered']} (original params) + "
           f"{t['recovered_safe_mode']} (safe mode)")
     print(f"  still failed: {t['still_failed']}  |  unit errors: {t['unit_errors']}")
-    print(f"  results: {RESULTS.relative_to(REPO_ROOT)}")
+    print(f"  results: {results_path.relative_to(REPO_ROOT)}")
 
 
 if __name__ == "__main__":
