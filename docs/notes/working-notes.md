@@ -21889,3 +21889,221 @@ Cross-references:
   the 15-row shortfall list this rider draws on).
 - `reports/verification/c3-rederivation/c3-triage-tiles.json` and
   `rederivation-report.json` — the triage artefacts.
+
+## Observation 374: Intransigent tiles — coverage failures are tile-intrinsic, non-random, and concentrated at T=0.0 × HIGH thinking (Session 121, 2026-07-30)
+
+*Source anchors: `reports/verification/recovery-rerun-results-deep-b.json`
+(generated 2026-07-30T08:26:09Z, sweep B, `safe_tokens_override: 1024`,
+`registered_total: 23`; per-tile `still_failed` counts re-tallied
+directly from the file); `reports/verification/recovery-rerun-results.json`
+(the first-pass rerun; e47/h12-v2 rows show empty `still_failed`) and
+`recovery-rerun-results-deep.json` (sweep A, `max_attempts_override: 10`,
+`recovered: 10`, `recovered_safe_mode: 0`); `reports/verification/recovery-rerun-registration.md`
+Changelog, all three 2026-07-30 entries; `docs/methodology/preregistration/protocol-errata.md`
+E70 and E71; `reports/verification/phase2-rulings-2026-07-30.md` § 2.2
+(PI ruling verbatim); `reports/verification/phase2-gate-package.md` § 2
+item 6 (ledger rows `c2-discharge-0003/0004/0005`); `scripts/lib_batch_api.py:100`
+(`MAX_SYNC_RETRIES = 3`) and `:107` (`SAFE_MODE_MAX_OUTPUT_TOKENS = 2048`);
+per-pass metas under `archive/pre-recovery-2026-07-30/` (temperature and
+`thinking_level` fields read directly, 2026-07-30); working-notes Session 53
+"Tile failure characterisation" (`working-notes.md:3467–3473`); the two live
+cells' `evaluation.json` under `results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/`
+and their pre-recovery counterparts under `results/rescore-2026-06-05/pv-diag-384/consensus-sweep/`
+(F1/precision/recall/tile-MCC at the 20 m buffer re-read directly from
+both sets of files, 2026-07-30). All values re-verified this session.*
+
+### The finding
+
+After the E71 dead-tile recovery campaign (Session 121, 2026-07-30)
+recovered **265 of 288 dead tiles (92.0 %)** across 15 passes, the
+permanent residue — **23 pass-level failures** — collapses to just
+**six unique tiles**:
+
+| tile | passes failed |
+|---|--:|
+| `K-35-053-3_Elenovo_x672_y2352.png` | 9 |
+| `K-35-052-4_32635_x0_y2352.png` | 4 |
+| `K-35-078-1_Lesovo_x2016_y672.png` | 4 |
+| `K-35-052-4_32635_x3696_y336.png` | 3 |
+| `K-35-062-2_Rakovski_x1008_y336.png` | 2 |
+| `K-35-053-3_Elenovo_x1680_y1008.png` | 1 |
+
+**Cross-context replication.** The worst tile, `Elenovo_x672_y2352`,
+fails in **9 independent passes** spanning both prompt modalities and
+two study pools: `n1-outstanding-384::pro-image-high-t0` (all 3 runs),
+`n1-outstanding-384::pro-text-high-t0` (all 3 runs), and
+`pv-diag-384::flash-high-image-n5-image-t0.0` (all 3 runs) — under two
+genuinely different example libraries (`library_plus-hp`, hash
+`3f7f028c…`, for the image configs; `detect_brief-text`, hash
+`8580ecb2…`, for the text config). Other residue tiles are
+**modality-specific**: `32635_x3696_y336` fails only in the three
+`pv-diag-384` text-t0.0 passes; `32635_x0_y2352` fails only in image
+passes (one `n1-outstanding` run plus all three `pv-diag` image runs).
+So both a modality-general and modality-specific failure pathology
+coexist within the same six-tile residue.
+
+### The test — attempt depth
+
+Each residual tile has now survived **~33–48 cumulative attempts
+across four campaigns** (source's own aggregate, `recovery-rerun-registration.md`
+Changelog): the original run-time retry ladder (Session 53: "the
+10-retry loop resolves 99 %+ of failures"; E71 separately records
+per-item `finish_reason = max_tokens` "after 15 attempts" for the same
+failure class — the two contemporaneous sources differ on the exact
+retry count, 10 vs 15, and neither is re-derivable from raw logs at
+this remove); the first recovery pass (3 tier-1 attempts at original
+parameters + 3 tier-2 attempts at safe-mode `max_output_tokens = 2048`,
+`MAX_SYNC_RETRIES = 3`); deep sweep A (10 × original parameters + 10 ×
+safe mode at 2048); and deep sweep B (5 × original parameters + 5 ×
+safe mode halved to 1024). **Output-budget reduction unlocked nothing
+in either direction**: sweep A recovered 10 tiles, all `recovered`
+(original parameters) and none `recovered_safe_mode` (2048 added
+zero); sweep B's `recovered`/`recovered_safe_mode` totals are both 0
+(1024 added zero on top of that).
+
+### The temperature mechanism
+
+**All 23 residual pass-level failures sit in T = 0.0 × HIGH-thinking
+pools** — verified per-pass, directly in the metas: `temperature: 0.0`,
+`thinking_level: "high"` in every one of `n1-outstanding-384::pro-image-high-t0`,
+`::pro-text-high-t0`, `pv-diag-384::flash-high-image-n5-image-t0.0`,
+and `::flash-high-text-n5-text-t0.0`. By contrast, the three other E71
+shortfall passes run at **T = 0.7** (also HIGH thinking, so the
+contrast isolates temperature and not thinking level) —
+`e47-propose-brief::propose_brief-text::run4` (7 dead tiles),
+`h12-v2::r3-hp-heavy::run3` (1) and `::run5` (1) — and **all three
+recovered completely in the very first pass**, at original parameters,
+inside the shallow 3-attempt tier-1 ladder (`recovery-rerun-results.json`:
+`recovered` non-empty, `recovered_safe_mode` and `still_failed` both
+empty for all three).
+
+**Proposed mechanism.** At T = 0.0 the model's response to a given
+tile's visual content is close to deterministic, so a tile whose
+feature density drives HIGH-thinking token consumption past the output
+budget fails the *same way* on nearly every attempt — the retry
+ladder's main lever (sampling diversity across attempts) is exactly
+what T = 0.0 removes. Residual API nondeterminism is not zero: sweep A
+recovered 10 of the (then) 33-tile residue at original parameters,
+after each had already survived roughly 16–21 prior attempts (the
+original ladder plus the first 3+3 recovery pass) — but the per-attempt
+recovery odds at T = 0.0 are far below what the T = 0.7 passes show
+(recovered on attempt 1 of 3, every time). Retry ladders trade on
+sampling diversity; temperature and retry-ladder power interact, and
+removing temperature blunts the ladder precisely where it is needed
+most.
+
+### Why this matters
+
+**1. Coverage failures are not missing-at-random.** Output truncation
+selects feature-dense tiles (Session 53: thinking tokens consume most
+of the 8192-token budget). Before recovery, dead tiles enter
+evaluations as artificial zero-detection tiles — false negatives
+concentrated on precisely the busiest tiles, not a random subsample.
+
+**2. After recovery, the same tiles skew false-positive-rich.**
+Verified directly from the two live cells' `evaluation.json` files at
+the 20 m buffer, pre-recovery (`results/rescore-2026-06-05/`) vs final
+(`results/recovery-reeval-2026-07-30/`):
+
+| cell (@20 m) | metric | pre-recovery | final | net |
+|---|---|--:|--:|--:|
+| image 1of3 | F1 | 0.4883 | 0.4970 | +0.0087 |
+| image 1of3 | recall | 0.6943 | 0.7563 | +0.0620 |
+| image 1of3 | tile-MCC | 0.4848 | 0.4671 | −0.0177 |
+| text 3of3 | F1 | 0.6051 | 0.6109 | +0.0058 |
+| text 3of3 | recall | 0.8207 | 0.8644 | +0.0437 |
+| text 3of3 | tile-MCC | 0.4500 | 0.4318 | −0.0182 |
+
+Recall rises strongly, F1 rises modestly, precision and tile-MCC dip
+slightly in both cells — recovered feature-dense tiles add real
+detections, some of them false. The interim, post-sweep-1 state even
+showed the text cell's F1 *decline* below its pre-recovery value
+(0.6051 → 0.6003) before recovering further to 0.6109 at final
+coverage: partial recovery looked worse than either endpoint, an
+artefact of incomplete coverage rather than a genuine regression.
+
+**3. The paper hook (PI-flagged, 2026-07-30).** The Methods/Limitations
+text should briefly note: (a) tile-level API failures are non-random
+with respect to content, so a bare "coverage %" understates their
+metric impact — the six intransigent tiles are outliers even within
+their own T=0.0-HIGH-thinking risk pool (92.0 % of the pool's dead
+tiles *did* recover); (b) the residual six tiles remain artificial
+zero-detection tiles in the two affected exploratory cells, now
+individually identified and quantified rather than an unspecified
+"some tiles failed" caveat; (c) practical guidance — at T = 0, retry
+ladders lose most of their power, so pipelines relying on T = 0
+determinism need a different stuck-tile strategy (e.g. output-budget
+headroom sized to worst-case feature density, or a high-temperature
+fallback pass reserved for tiles that survive their home ladder).
+
+### Caveats / methodological notes
+
+Six unique tiles is a very small sample; this is a case-count
+observation about a specific residue, not a population estimate of
+truncation risk. The feature-density explanation is inherited from
+Session 53's contemporaneous characterisation and from the deep
+sweeps' budget-invariance result — it has not been independently
+verified against the tiles' actual mound density or the model's raw
+(truncated) thinking traces. Every pass compared here runs
+`gemini-3-flash-preview`; the project never executed `gemini-3-pro`
+(3.0) at all, and its sole Pro pass family (`gemini-3.1-pro-preview`)
+carries no shortfall, so whether the T=0.0×HIGH-thinking pattern
+generalises to Pro-family models is untested. The original-ladder
+retry count is recorded inconsistently across contemporaneous sources
+(10 per Session 53, 15 per E71 defect 1) and is flagged rather than
+resolved here.
+
+### Findable later
+
+intransigent tiles; tile-intrinsic truncation pathology; dead-tile
+recovery campaign; E70 E71; deep sweep A deep sweep B; 265/288
+recovered 92.0 %; 23 pass-level failures; six unique tiles;
+K-35-053-3_Elenovo_x672_y2352; K-35-052-4_32635_x0_y2352;
+K-35-078-1_Lesovo_x2016_y672; K-35-052-4_32635_x3696_y336;
+K-35-062-2_Rakovski_x1008_y336; K-35-053-3_Elenovo_x1680_y1008;
+temperature 0.0 HIGH thinking; T=0.7 first-pass recovery;
+e47-propose-brief run4; h12-v2 r3-hp-heavy run3 run5; retry ladder
+loses power at T=0; sampling diversity; MAX_SYNC_RETRIES;
+SAFE_MODE_MAX_OUTPUT_TOKENS 2048 1024; output truncation; feature-dense
+tiles; artificial zero-detection tiles; missing-at-random violation;
+false negatives non-random; consensus 1of3 consensus 3of3; text-cell
+F1 interim decline 0.6051 0.6003 0.6109; recovery-rerun-registration.md;
+recovery-rerun-results-deep-b.json; phase2-gate-package.md;
+phase2-rulings-2026-07-30.md § 2.2; c2-discharge-0003 0004 0005;
+Session 121 2026-07-30.
+
+### Related observations and artefacts
+
+- **[[Obs 372]]** (sibling correction rider from the same Session 121
+  Phase 2 (C3) provenance triage and PI rulings pass — no numerical
+  overlap, shared provenance only).
+- **[[Obs 373]]** (the E71 15-passes coverage-shortfall disclosure this
+  Obs's six-tile residue is drawn from; that rider documents the live
+  evaluation impact before the recovery rerun this Obs reports on had
+  run).
+- **[[Obs 140]]** (HIGH thinking as a token-consumption/diversity
+  mechanism — the "more thinking tokens, richer detection pool"
+  finding this Obs's truncation account builds on: the same mechanism
+  that helps consensus voting is what drives dense tiles past the
+  output budget).
+- Session 53 "Tile failure characterisation" (`docs/notes/working-notes.md:3467–3473`)
+  — the original 2026-03 attestation that output truncation is the
+  sole failure mode of the era.
+- `docs/methodology/preregistration/protocol-errata.md` E70 (the
+  undisclosed `--patch-tiles` campaign) and E71 (the manifest-semantics
+  defect and the 15-row shortfall list underlying this Obs).
+- `reports/verification/phase2-rulings-2026-07-30.md` § 2.2 — the PI
+  ruling authorising the erratum, generator fix, and gated rerun.
+- `reports/verification/phase2-gate-package.md` § 2 item 6 — the
+  landed summary and ledger rows `c2-discharge-0003/0004/0005`.
+
+**Artefacts**: `reports/verification/recovery-rerun-registration.md`
+(registration + Changelog, all values re-verified 2026-07-30);
+`reports/verification/recovery-rerun-results.json`,
+`recovery-rerun-results-deep.json`, and `recovery-rerun-results-deep-b.json`
+(the three rerun result sets — first pass, sweep A, sweep B);
+`scripts/lib_batch_api.py:100,107` (`MAX_SYNC_RETRIES`,
+`SAFE_MODE_MAX_OUTPUT_TOKENS`); `results/recovery-reeval-2026-07-30/pv-diag-384/consensus-sweep/{flash-high-image-n5__image-t0.0__consensus__t1,flash-high-text-n5__text-t0.0__consensus__t3}/evaluation.json`
+and their pre-recovery counterparts under
+`results/rescore-2026-06-05/pv-diag-384/consensus-sweep/` (final vs
+pre-recovery F1/precision/recall/tile-MCC, 20 m buffer).
