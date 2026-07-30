@@ -8,7 +8,73 @@ project state.
 
 ---
 
-## 🎯 NEXT SESSION (120) — LAUNCH THE VERIFICATION PROGRAMME: PHASE 0 [Session 119 CLOSED 2026-07-29; runs in **Fable**, Claude driving]
+## 🎯 NEXT SESSION (121) — PI MORNING RULINGS, THEN LAND + GATE 2 [Session 120 CLOSED 2026-07-30; ran in Fable]
+
+> **The controller is `planning/audit-charter.md` § 9** — unchanged. The
+> ledgers and gate packages are self-sufficient; this beacon adds only the
+> pending-decision state and in-flight context.
+
+**What Session 120 did** (commits `e45478dc2`→`b68462bd8`, ~30 commits,
+US$0 API): **Phase 0 executed and GATE 0 PASSED** (scope doc, $150
+cross-model cap, six charter fixes incl. rule 12; verbatim PI rulings in
+`reports/verification/phase0-scope.md` § 8). **Phase 1 executed and
+GATE 1 PASSED** (702-commitment ledger v1.2 with 402/89/211 statuses;
+c1+c2 ledgers 1,617 rows; licence census 13 UNLICENSED; open-commitment
+guard live in the manifest build; verbatim rulings in
+`reports/verification/phase1-gate-package.md` § 7). **The defence pass**:
+PI caught 2/12 one-sided findings → 12 blind counsel-for-the-defence
+agents, both calibration probes passed, 12/12 findings qualified, charter
+**rule 13** born (defence search mandatory; monitor enforces). Meta-finding:
+the registration contradicts itself at ≥5 sites (E64 draft reconciles).
+**Phase 2 core complete overnight**: C3 re-derivation on sapphire + full
+triage → ledger `c3-provenance.jsonl` **1,514/1,534 VERIFIED, 20 FLAGGED**
+(conditions manifest 100% clean; 297 pass mismatches → 276 vindicated
+(mostly the undocumented `--patch-tiles` recovery), 21 genuine incl. 15
+real tile shortfalls — n1 board safe via E57, but TWO LIVE t0.0 consensus
+conditions carry 19–34 dead tiles as artificial FNs). New standing PI
+policies (charter § 10 item 7): **run-it-now** (omitted analyses get run,
+budget "a few hundred dollars", excessive is the bar), contradiction-errata
+(spirit-of-campaign reading, post-facto acknowledged), Phase 4b open-set
+discharge campaign queued.
+
+**BLOCKING — the PI morning decision list** (everything lands after these):
+
+1. **Erratum drafts** `reports/verification/drafts/errata-drafts-2026-07-29.md`
+   (E62–E67 + correction blocks for E36/E16/E20). Five decision points:
+   (a) keep `verifier_thinking_level=medium` inside E62 or split (recommend
+   keep); (b) populate `pv-diag-256`'s null manifest `purpose` (recommend
+   yes); (c) E64(iii) subtype figure 21% vs 17.2% (recommend both, pin in
+   Phase 3); (d) E36's misreport propagated to 3 more docs — in-place +
+   changelog for the two reports, **Obs rider (never edit) for
+   working-notes.md:3397**; (e) approve **E68** = the CMT-0109
+   academic-baseline rider.
+2. **Three NEW erratum candidates from C3 triage**: the `--patch-tiles`
+   recovery mechanism (349 tiles/126 passes, no erratum);
+   dispatched-vs-completed tile-count semantics + two generator bugs
+   (`generate_post_run_report.py:368` error-record counting; GAP-8
+   request-count placeholder); E55's unfulfilled run.log-provenance
+   promise. Plus an **Obs rider** for working-notes:17339 ("isolated to
+   two cells" — counterexample found: board cell 483/487).
+3. **Family-FDR H1 primary-test selection**
+   (`reports/verification/drafts/family-fdr-registration-draft.md`) —
+   OUTCOME-MATERIAL (candidates p=0.004/0.006/0.38); H7/H8 ambiguities
+   immaterial; E64 must land first (anchors the two-sided reading).
+
+**Landing sequence after rulings**: land errata (rule 9 blocks) → update
+ledger waivers/statuses + census FLAGGED rows → generator bug fixes +
+manifest regen → family-FDR registration commit THEN compute (sapphire)
+→ GATE 2 package (incl. the 20-row correction queue + per-era
+verifiability map). Then Phase 3 (C4) per charter.
+
+**Carry-forwards**: H2-C instrument + crop-size (plan § 8); gated
+user-obs candidates S118+S119 (+ S120's new ones, pending in
+`docs/notes/user-observations.md`) and working-notes candidates (3 new
+S120 candidates held over — see user-observations pending section);
+remaining zero-cost sapphire analyses now folded into Phase 4b.
+
+### [CLOSED 2026-07-30] Historical: the Session 120 brief follows
+
+## NEXT SESSION (120) — LAUNCH THE VERIFICATION PROGRAMME: PHASE 0 [Session 119 CLOSED 2026-07-29; runs in **Fable**, Claude driving]
 
 > **The controller is `planning/audit-charter.md` — read it and follow its
 > § 9 resumption protocol.** It is self-sufficient by design; this beacon
