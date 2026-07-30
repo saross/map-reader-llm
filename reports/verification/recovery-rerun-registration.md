@@ -1,6 +1,7 @@
 # Pre-execution registration — E71 dead-tile recovery rerun
 
-> **Last revised**: 2026-07-30 (original publication). See
+> **Last revised**: 2026-07-30 (model column corrected: the rerun is
+> ALL-FLASH — no Pro pass is affected; PI model-consistency check). See
 > [§ Changelog](#changelog) for revision history.
 
 **Status**: `planned` — **registered before any API call** (charter
@@ -20,14 +21,24 @@ Derived at `reports/verification/recovery-rerun-worklists.json`
 minus the detection GeoJSON's `processed_tiles` (charter § 4
 authority 1), sidecars as corpus definition and cross-check.
 
-| group | passes | dead tiles | model |
+| group | passes | dead tiles | model (verified per-pass at source, 2026-07-30) |
 | --- | --- | --- | --- |
 | **live-pv-diag-t0.0** (feeds two evaluated conditions) | 6 | **143** (16/34/34 image; 19/20/20 text) | `gemini-3-flash-preview`, HIGH thinking, T=0.0 |
-| n1-outstanding-pro (E57-quarantined corners, off-board) | 6 | **136** (15/19/17 image; 29/29/27 text) | `gemini-3.1-pro-preview`, HIGH thinking, T=0.0 |
+| n1-outstanding **Flash corners** (E57 mis-dispatched; quarantined, off-board) | 6 | **136** (15/19/17 image; 29/29/27 text) | `gemini-3-flash-preview`, HIGH thinking, T=0.0 — **NOT Pro**: all four meta identity fields (config, per-item used, per-item version, pricing) record Flash; E57 preserves these passes precisely as genuine Flash data at Pro-intended corners |
 | single-tile shortfalls | 3 | **9** (e47 ×7; h12-v2 ×1 ×1) | `gemini-3-flash-preview` |
 | ~~flash35-pv-2x2 run_3~~ | 0 | **0 — dropped** | — |
 
-**Total: 288 tiles across 15 passes.**
+**Total: 288 tiles across 15 passes — ALL `gemini-3-flash-preview`.**
+
+**Model-consistency rule (PI, 2026-07-30)**: each pass's recovered tiles
+run at **that pass's own recorded model string** — no mixed models within
+any pass. The check that produced this rule also established: the project
+has **never executed `gemini-3-pro` (3.0)** — the manifest model census
+over all 1,132 passes shows `gemini-3-flash` (774, the era-1 alias),
+`gemini-3-flash-preview` (305), `gemini-3.1-pro-preview` (40, the only
+Pro ever run — E40's "current Pro model"), and `gemini-3.5-flash` (12).
+Since no Pro pass has a shortfall, the Pro-model question is moot for
+this rerun.
 
 Notes recorded at derivation:
 
@@ -84,16 +95,16 @@ exists in the patch campaign) and the condition's coverage note says so.
 
 ## 5. Cost estimate (to be re-verified at the gate per rule 12)
 
-288 real-time calls: 152 Flash-preview (HIGH thinking) + 136
-Pro-3.1-preview (HIGH thinking).
+288 real-time calls, all `gemini-3-flash-preview` (the earlier draft's
+136 "Pro" calls were the mislabelled Flash corners — see § 1).
 
-- Flash HIGH ≈ US$0.005–0.01/tile (token-load-audit basis) → **~$1–2**.
-- Pro HIGH ≈ US$0.05–0.15/tile → **~$7–20**.
+- Flash HIGH ≈ US$0.005–0.01/tile (token-load-audit basis) →
+  **~$1.50–3**.
 - Retries/safe-mode re-attempts headroom ×1.3.
 
-**Estimate: ~US$10–25; worst case ~$30.** Within the run-it-now budget
-envelope ("a few hundred dollars" bar — charter § 10 item 7(c));
-per-batch approval still required before launch.
+**Estimate: ~US$2–4; worst case ~$5.** Within the run-it-now budget
+envelope by two orders of magnitude; per-batch approval still required
+before launch.
 
 ## 6. Gate checklist (all outstanding)
 
@@ -103,6 +114,28 @@ per-batch approval still required before launch.
 - [ ] Launch; per-group progress reported; post-recovery pipeline § 3
 
 ## Changelog
+
+### 2026-07-30 — Model column corrected: the rerun is all-Flash
+
+**Refresh trigger**: the PI's pre-gate model-consistency check ("check
+which pro model we ran earlier experiments against… we shouldn't use
+mixed models on a given run if we are sweeping failed tiles").
+Source verification of every affected pass's meta showed the six
+`n1-outstanding-384` "pro-\*" passes are the **E57 mis-dispatched Flash
+corners** — `gemini-3-flash-preview` in all four identity fields — not
+Pro; the original publication mislabelled them from the directory name.
+
+| before | after |
+| :--- | :--- |
+| n1-outstanding group model `gemini-3.1-pro-preview` | `gemini-3-flash-preview` (verified per-pass) |
+| cost estimate ~US$10–25 (worst ~$30) | **~US$2–4 (worst ~$5)** |
+
+Also recorded: the model-consistency rule (per-pass own model string, no
+mixing), and the census fact that `gemini-3-pro` (3.0) was never
+executed anywhere in the project — the only Pro ever run is
+`gemini-3.1-pro-preview` (40 passes). Worklists regenerated with
+corrected labels. What did NOT change: pass membership, dead-tile
+counts (288/15), mechanism, gates.
 
 ### 2026-07-30 — Original publication
 

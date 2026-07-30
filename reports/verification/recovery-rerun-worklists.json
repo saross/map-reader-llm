@@ -1,6 +1,6 @@
 {
  "_README": "Per-pass dead-tile worklists for the E71 recovery rerun (PI ruling 2026-07-30, phase2-rulings S 2.2: 'Erratum + fixes + rerun to sweep up failed tiles (through usual API-gate process...)'). Derived from the detection GeoJSONs' processed_tiles (charter S 4 authority #1), cross-checked against .tiles.json sidecars. Committed with the rule-10 registration BEFORE any API call.",
- "generated_at": "2026-07-30T03:36:24.460370+00:00",
+ "generated_at": "2026-07-30T04:31:15.775464+00:00",
  "passes": [
   {
    "pass_id": "pv-diag-384::flash-high-image-n5-image-t0.0::run1",
@@ -244,8 +244,8 @@
   {
    "pass_id": "n1-outstanding-384::pro-image-high-t0::run1",
    "run_dir": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_1",
-   "group": "n1-outstanding-pro",
-   "model": "gemini-3.1-pro-preview (HIGH, T=0.0, image)",
+   "group": "n1-outstanding-flash-corners",
+   "model": "gemini-3-flash-preview (HIGH, T=0.0, image; E57 mis-dispatched Flash corner)",
    "n_dead": 15,
    "dead_tiles": [
     "K-35-052-4_32635_x2016_y0.png",
@@ -275,8 +275,8 @@
   {
    "pass_id": "n1-outstanding-384::pro-image-high-t0::run2",
    "run_dir": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_2",
-   "group": "n1-outstanding-pro",
-   "model": "gemini-3.1-pro-preview (HIGH, T=0.0, image)",
+   "group": "n1-outstanding-flash-corners",
+   "model": "gemini-3-flash-preview (HIGH, T=0.0, image; E57 mis-dispatched Flash corner)",
    "n_dead": 19,
    "dead_tiles": [
     "K-35-052-4_32635_x3360_y3024.png",
@@ -310,8 +310,8 @@
   {
    "pass_id": "n1-outstanding-384::pro-image-high-t0::run3",
    "run_dir": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_3",
-   "group": "n1-outstanding-pro",
-   "model": "gemini-3.1-pro-preview (HIGH, T=0.0, image)",
+   "group": "n1-outstanding-flash-corners",
+   "model": "gemini-3-flash-preview (HIGH, T=0.0, image; E57 mis-dispatched Flash corner)",
    "n_dead": 17,
    "dead_tiles": [
     "K-35-052-4_32635_x0_y2352.png",
@@ -343,8 +343,8 @@
   {
    "pass_id": "n1-outstanding-384::pro-text-high-t0::run1",
    "run_dir": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_1",
-   "group": "n1-outstanding-pro",
-   "model": "gemini-3.1-pro-preview (HIGH, T=0.0, text)",
+   "group": "n1-outstanding-flash-corners",
+   "model": "gemini-3-flash-preview (HIGH, T=0.0, text; E57 mis-dispatched Flash corner)",
    "n_dead": 29,
    "dead_tiles": [
     "K-35-052-4_32635_x0_y3360.png",
@@ -388,8 +388,8 @@
   {
    "pass_id": "n1-outstanding-384::pro-text-high-t0::run2",
    "run_dir": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_2",
-   "group": "n1-outstanding-pro",
-   "model": "gemini-3.1-pro-preview (HIGH, T=0.0, text)",
+   "group": "n1-outstanding-flash-corners",
+   "model": "gemini-3-flash-preview (HIGH, T=0.0, text; E57 mis-dispatched Flash corner)",
    "n_dead": 29,
    "dead_tiles": [
     "K-35-052-4_32635_x0_y2352.png",
@@ -433,8 +433,8 @@
   {
    "pass_id": "n1-outstanding-384::pro-text-high-t0::run3",
    "run_dir": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_3",
-   "group": "n1-outstanding-pro",
-   "model": "gemini-3.1-pro-preview (HIGH, T=0.0, text)",
+   "group": "n1-outstanding-flash-corners",
+   "model": "gemini-3-flash-preview (HIGH, T=0.0, text; E57 mis-dispatched Flash corner)",
    "n_dead": 27,
    "dead_tiles": [
     "K-35-052-4_32635_x0_y2352.png",
