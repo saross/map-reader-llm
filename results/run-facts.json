@@ -1,772 +1,772 @@
 {
-  "_README": "Per-run human-authored facts (the generator's INPUT, B1). Underscore fields (_scope_confidence/_scope_source/_flags) are human provenance retained for anti-confabulation (the generator ignores them). gt_reference: 4-map=curator, 55-map=student (evaluation-scopes.md \u00a711). Scope vocab: evaluation-scopes.md + px256-1032 (bespoke 256px diagnostic). Named programmes: manifest-schema-design.md \u00a72.6.",
-  "facts": {
-    "55maps-generalisation": {
-      "primary_hypothesis": null,
-      "also_informs": [],
-      "purpose": "55-map generalisation: text, paired verifier",
-      "tile_size_px": 384,
-      "corpus": "55-map",
-      "gt_reference": "student",
-      "scope": {
-        "test_set_id": "55maps-8541",
-        "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
-        "n_test_tiles": 8541,
-        "calibration_set_id": null,
-        "n_calibration_tiles": null
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "55-map generalisation"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "empirical(own evals)",
-      "_flags": []
-    },
-    "55maps-image-generalisation": {
-      "primary_hypothesis": null,
-      "also_informs": [],
-      "purpose": "55-map generalisation: image modality",
-      "tile_size_px": 384,
-      "corpus": "55-map",
-      "gt_reference": "student",
-      "scope": {
-        "test_set_id": "55maps-8541",
-        "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
-        "n_test_tiles": 8541,
-        "calibration_set_id": null,
-        "n_calibration_tiles": null
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "55-map generalisation"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "empirical",
-      "_flags": []
-    },
-    "55maps-text-high-generalisation": {
-      "primary_hypothesis": null,
-      "also_informs": [],
-      "purpose": "55-map generalisation: text HIGH",
-      "tile_size_px": 384,
-      "corpus": "55-map",
-      "gt_reference": "student",
-      "scope": {
-        "test_set_id": "55maps-8541",
-        "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
-        "n_test_tiles": 8541,
-        "calibration_set_id": null,
-        "n_calibration_tiles": null
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "55-map generalisation"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "empirical",
-      "_flags": []
-    },
-    "55maps-text-high-t0-3-generalisation": {
-      "primary_hypothesis": null,
-      "also_informs": [],
-      "purpose": "55-map generalisation: text HIGH, T=0.3",
-      "tile_size_px": 384,
-      "corpus": "55-map",
-      "gt_reference": "student",
-      "scope": {
-        "test_set_id": "55maps-8541",
-        "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
-        "n_test_tiles": 8541,
-        "calibration_set_id": null,
-        "n_calibration_tiles": null
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "55-map generalisation"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "empirical",
-      "_flags": []
-    },
-    "55maps-text-min-generalisation": {
-      "primary_hypothesis": null,
-      "also_informs": [],
-      "purpose": "55-map generalisation: text minimal",
-      "tile_size_px": 384,
-      "corpus": "55-map",
-      "gt_reference": "student",
-      "scope": {
-        "test_set_id": "55maps-8541",
-        "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
-        "n_test_tiles": 8541,
-        "calibration_set_id": null,
-        "n_calibration_tiles": null
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "55-map generalisation"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "empirical",
-      "_flags": []
-    },
-    "gold-standard-v2": {
-      "primary_hypothesis": null,
-      "also_informs": [],
-      "purpose": "Canonical 4-map gold-standard pipeline (detect_brief-text, HIGH, T=0.7, K=5); paper headline GS result.",
-      "tile_size_px": 384,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-2-487",
-        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
-        "n_test_tiles": 487,
-        "calibration_set_id": "cal-20-384",
-        "n_calibration_tiles": 20
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "Era 2",
-        "the v2 GS run"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "empirical (user-confirmed)",
-      "_flags": []
-    },
-    "h10": {
-      "primary_hypothesis": "H10",
-      "also_informs": [
-        "library-design"
-      ],
-      "purpose": null,
-      "tile_size_px": 384,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-3-327",
-        "bounds_path": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
-        "n_test_tiles": 327,
-        "calibration_set_id": "pool_160",
-        "n_calibration_tiles": 160
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "Era 3"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "canonical(\u00a76)+leakage: few-shot crops mined from pool_160 -> 327 excludes them",
-      "_flags": [
-        "487 evals = comparability siblings -> condition scope_override"
-      ]
-    },
-    "consensus-384-t1-0": {
-      "primary_hypothesis": "H11",
-      "also_informs": [
-        "H7"
-      ],
-      "purpose": null,
-      "tile_size_px": 384,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-2-487",
-        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
-        "n_test_tiles": 487,
-        "calibration_set_id": "cal-20-384",
-        "n_calibration_tiles": 20
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "Era 2",
-        "consensus-384-UNINTENDED-T1.0"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "canonical(\u00a76)+empirical: results/paper-eval/flash-min-text-t10-*/ (E43 temperature analysis), bounds 487",
-      "_flags": [
-        "E43 T=1.0 deviation; feeds T=0.7-vs-1.0 temperature analysis (also_informs H7)"
-      ]
-    },
-    "e47-propose-brief": {
-      "primary_hypothesis": "H11",
-      "also_informs": [],
-      "purpose": null,
-      "tile_size_px": 384,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-2-487",
-        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
-        "n_test_tiles": 487,
-        "calibration_set_id": "cal-20-384",
-        "n_calibration_tiles": 20
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "Era 2"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "canonical(\u00a76)+empirical: Era 2 leaderboard (results/leaderboard/per-architecture/era2/consensus/), bounds 487",
-      "_flags": []
-    },
-    "n1-outstanding-384": {
-      "primary_hypothesis": "H11",
-      "also_informs": [],
-      "purpose": null,
-      "tile_size_px": 384,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-2-487",
-        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
-        "n_test_tiles": 487,
-        "calibration_set_id": "cal-20-384",
-        "n_calibration_tiles": 20
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "Era 2"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "empirical",
-      "_flags": []
-    },
-    "n1-pro-rerun-384": {
-      "primary_hypothesis": "H11",
-      "also_informs": [
-        "H6"
-      ],
-      "purpose": "Genuine-Pro re-run (E57): re-dispatch of the four anti-diagonal Pro corners as genuine gemini-3.1-pro-preview after the n1-outstanding originals were found to have billed as Flash. Supplies the four Pro anti-diagonal cells of the n1-baseline-matrix-384 leaderboard.",
-      "tile_size_px": 384,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-2-487",
-        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
-        "n_test_tiles": 487,
-        "calibration_set_id": "cal-20-384",
-        "n_calibration_tiles": 20
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "empirical",
-      "_flags": []
-    },
-    "proposer-verifier-384": {
-      "primary_hypothesis": "H11",
-      "also_informs": [
-        "pv-strategy"
-      ],
-      "purpose": null,
-      "tile_size_px": 384,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-2-487",
-        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
-        "n_test_tiles": 487,
-        "calibration_set_id": "cal-20-384",
-        "n_calibration_tiles": 20
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "Era 2"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "canonical(\u00a76)+empirical: Era 2 single-pass+PV leaderboard, bounds 487",
-      "_flags": []
-    },
-    "proposer-verifier-512": {
-      "primary_hypothesis": "H11",
-      "also_informs": [
-        "pv-strategy"
-      ],
-      "purpose": null,
-      "tile_size_px": 512,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-1-340",
-        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
-        "n_test_tiles": 340,
-        "calibration_set_id": "cal-20-512",
-        "n_calibration_tiles": 20
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "Era 1"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "canonical+empirical(512px): candidate_manifest tiles_dir=inputs/tiles (512x512 measured); no eval artefact exists -> scope inferred from tile grid (agent-confirmed)",
-      "_flags": [
-        "512px arm of H11 tile-size study; no eval artefact in repo -> scope is the only inference (agent-confirmed via candidate_manifest)"
-      ]
-    },
-    "pv-diag-256": {
-      "primary_hypothesis": "H11",
-      "also_informs": [],
-      "purpose": null,
-      "tile_size_px": 256,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "px256-1032",
-        "bounds_path": "inputs/vectors/bounds/256/full_evaluation_bounds.geojson",
-        "n_test_tiles": 1032,
-        "calibration_set_id": null,
-        "n_calibration_tiles": null
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "agent-investigated: 256px H11 diagnostic; bespoke 256 scope",
-      "_flags": [
-        "eval JSONs in archive/results-non-production-tile-sizes/h11-256-pv-diagnostic/ (commit 276e4ca8); 256px F1=0.844 vs 384px 0.883, non-sig p=0.816 (Obs 181); 431 ref mounds; no MCC; bespoke scope not in evaluation-scopes.md"
-      ]
-    },
-    "pv-diag-384": {
-      "primary_hypothesis": "H11",
-      "also_informs": [
-        "H3",
-        "H8",
-        "pv-strategy",
-        "consensus-n-sweep",
-        "flash-vs-pro"
-      ],
-      "purpose": null,
-      "tile_size_px": 384,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-2-487",
-        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
-        "n_test_tiles": 487,
-        "calibration_set_id": "cal-20-384",
-        "n_calibration_tiles": 20
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "Era 2"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "empirical",
-      "_flags": [
-        "feeds 4 study threads (\u00a71A)"
-      ]
-    },
-    "h12-v2": {
-      "primary_hypothesis": "H12",
-      "also_informs": [
-        "library-design"
-      ],
-      "purpose": null,
-      "tile_size_px": 384,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-3-327",
-        "bounds_path": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
-        "n_test_tiles": 327,
-        "calibration_set_id": "pool_160",
-        "n_calibration_tiles": 160
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "Era 3"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "canonical(\u00a76)+leakage: hard cases mined from pool_160 (studies/h12-v2-ratio.yaml:104; E52)",
-      "_flags": [
-        "nominal 327 (leakage); 487 evals = comparability siblings -> condition scope_override; r2-balanced reuses h10 pool"
-      ]
-    },
-    "h8-v2": {
-      "primary_hypothesis": "H8",
-      "also_informs": [
-        "library-design"
-      ],
-      "purpose": null,
-      "tile_size_px": 384,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-3-327",
-        "bounds_path": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
-        "n_test_tiles": 327,
-        "calibration_set_id": "pool_160",
-        "n_calibration_tiles": 160
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "Era 3"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "canonical(\u00a76)+leakage: hard cases mined from pool_160 (studies/h8-v2-library.yaml:93; E51)",
-      "_flags": [
-        "nominal 327 (leakage); 487 evals = comparability siblings -> condition scope_override"
-      ]
-    },
-    "retest-phase2a": {
-      "primary_hypothesis": "H1",
-      "also_informs": [],
-      "purpose": null,
-      "tile_size_px": 512,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-1-340",
-        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
-        "n_test_tiles": 340,
-        "calibration_set_id": "cal-20-512",
-        "n_calibration_tiles": 20
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "Era 1"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "empirical",
-      "_flags": []
-    },
-    "retest-phase2b": {
-      "primary_hypothesis": "H7",
-      "also_informs": [],
-      "purpose": null,
-      "tile_size_px": 512,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-1-340",
-        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
-        "n_test_tiles": 340,
-        "calibration_set_id": "cal-20-512",
-        "n_calibration_tiles": 20
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "Era 1"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "empirical (\u00a78.1: H7 retest K=3 x 340)",
-      "_flags": [
-        "5 cross-scope evals on 487 -> condition scope_override"
-      ]
-    },
-    "retest-phase2c": {
-      "primary_hypothesis": "H8",
-      "also_informs": [],
-      "purpose": null,
-      "tile_size_px": 512,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-1-340",
-        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
-        "n_test_tiles": 340,
-        "calibration_set_id": "cal-20-512",
-        "n_calibration_tiles": 20
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "Era 1"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "empirical",
-      "_flags": []
-    },
-    "retest-phase2d": {
-      "primary_hypothesis": "H5",
-      "also_informs": [],
-      "purpose": null,
-      "tile_size_px": 512,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-1-340",
-        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
-        "n_test_tiles": 340,
-        "calibration_set_id": "cal-20-512",
-        "n_calibration_tiles": 20
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "Era 1"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "empirical",
-      "_flags": []
-    },
-    "retest-phase2e": {
-      "primary_hypothesis": "H4",
-      "also_informs": [],
-      "purpose": null,
-      "tile_size_px": 512,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-1-340",
-        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
-        "n_test_tiles": 340,
-        "calibration_set_id": "cal-20-512",
-        "n_calibration_tiles": 20
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "Era 1"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "empirical",
-      "_flags": []
-    },
-    "retest-phase3a": {
-      "primary_hypothesis": "H3",
-      "also_informs": [],
-      "purpose": null,
-      "tile_size_px": 512,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-1-340",
-        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
-        "n_test_tiles": 340,
-        "calibration_set_id": "cal-20-512",
-        "n_calibration_tiles": 20
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "Era 1"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "canonical(\u00a76)+empirical: results/retest/phase3a-consensus/, bounds 340",
-      "_flags": []
-    },
-    "retest-phase3a-high": {
-      "primary_hypothesis": "H3",
-      "also_informs": [],
-      "purpose": null,
-      "tile_size_px": 512,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-1-340",
-        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
-        "n_test_tiles": 340,
-        "calibration_set_id": "cal-20-512",
-        "n_calibration_tiles": 20
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "Era 1"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "canonical(\u00a76)+empirical: Era 1 leaderboard rows, bounds 340",
-      "_flags": [
-        "HIGH thinking variant"
-      ]
-    },
-    "retest-phase3a-replication": {
-      "primary_hypothesis": "H3",
-      "also_informs": [],
-      "purpose": null,
-      "tile_size_px": 512,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-1-340",
-        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
-        "n_test_tiles": 340,
-        "calibration_set_id": "cal-20-512",
-        "n_calibration_tiles": 20
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "Era 1"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "canonical(\u00a76)+empirical: results/retest/phase3a-consensus/replication/, bounds 340",
-      "_flags": [
-        "replication variant"
-      ]
-    },
-    "retest-phase3c": {
-      "primary_hypothesis": "H9",
-      "also_informs": [],
-      "purpose": null,
-      "tile_size_px": 512,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-1-340",
-        "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
-        "n_test_tiles": 340,
-        "calibration_set_id": "cal-20-512",
-        "n_calibration_tiles": 20
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "Era 1"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "canonical(\u00a76)+empirical: results/phase3c-diversity/, bounds 340",
-      "_flags": []
-    },
-    "retest-h11-single-pass-384-t0": {
-      "primary_hypothesis": "H11",
-      "also_informs": [],
-      "purpose": "H11 single-pass 384px baseline (T=0).",
-      "tile_size_px": 384,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-2-487",
-        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
-        "n_test_tiles": 487,
-        "calibration_set_id": "cal-20-384",
-        "n_calibration_tiles": 20
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "Era 2"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "empirical",
-      "_flags": []
-    },
-    "verifier-t-pilot": {
-      "primary_hypothesis": "H2",
-      "also_informs": [],
-      "purpose": "Verifier sampling-temperature pilot (T0.0/0.5/1.0); recommended T=0.5 as production verifier default.",
-      "tile_size_px": 384,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-2-487",
-        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
-        "n_test_tiles": 487,
-        "calibration_set_id": "cal-20-384",
-        "n_calibration_tiles": 20
-      },
-      "headline_condition_id": null,
-      "headline_rationale": null,
-      "historical_aliases": [
-        "Era 2"
-      ],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "agent-investigated: verifies 4-map GS 4-of-5 consensus (n=607); scope Era 2",
-      "_flags": [
-        "exploratory (revisits Phase 3d); Obs 286/287; GT partly built from T=0.0 verified output (self-eval-bias caveat); E55 swept-temp metadata; T0.0 baseline lives at outputs/gs/gold-standard-v2/verified-v1/"
-      ]
-    },
-    "verifier-robustness": {
-      "primary_hypothesis": "H2",
-      "also_informs": [
-        "H3"
-      ],
-      "purpose": "Verifier-robustness programme: determinism (n=1 vindicated), proposer-input band, temperature/thinking matrix, model roles, compute allocation, operational maximum, pass-budget Pareto. Meta-rule: on a within-noise tie, take the cheaper config.",
-      "tile_size_px": 384,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-2-487",
-        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
-        "n_test_tiles": 487,
-        "calibration_set_id": null,
-        "n_calibration_tiles": null
-      },
-      "headline_condition_id": null,
-      "headline_rationale": "Deliberately none \u2014 NO new champion. The carry-forward headline pv-diag-384::verified-adv-text-consensus-16of30 (0.890) stands: the operational maximum here (verified-384-16of30-t0-3-n5-opmax, 0.8951) is NOT significant over it (paired tile-swap permutation p=0.363, results/verifier-robustness/opmax_vs_headline_permutation.json), so per the cost meta-rule (Obs 357) it is a numerical high only.",
-      "historical_aliases": [],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "scripts in repo: 384 cells score against bounds/384/full_evaluation_bounds.geojson (era-2-487); the two 256 cells carry scope_override px256-1032",
-      "_flags": [
-        "mixed tile-size run: 6 conditions at 384/487 tiles, 2 at 256/1032 (scope_override)",
-        "verifier-only API run \u2014 all proposer pools cross-run (source_run per condition)",
-        "S110 opmax run initially clobbered robustness_{grid,summary}_T0.3.json; repaired + re-homed to -16of30 names, --out-suffix guard added (commit 7d85b00ef)"
-      ]
-    },
-    "flash35-pv-2x2": {
-      "primary_hypothesis": null,
-      "also_informs": [
-        "flash-vs-flash35",
-        "pv-strategy"
-      ],
-      "purpose": "Model-role 2x2x2: is Flash 3.5 a better bare proposer, PV proposer, or verifier than Flash 3 at the minimal operating point? (The S110 parking note: bare proposer was the only angle a stronger model might win.)",
-      "tile_size_px": 384,
-      "corpus": "4-map-gs",
-      "gt_reference": "curator",
-      "scope": {
-        "test_set_id": "era-2-487",
-        "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
-        "n_test_tiles": 487,
-        "calibration_set_id": null,
-        "n_calibration_tiles": null
-      },
-      "headline_condition_id": null,
-      "headline_rationale": "Deliberately none \u2014 a model comparison, not a champion search: Flash 3.5 wins in NO role (bare-proposer numerical tie 0.6196 vs 0.6204; PV proposer -0.0355, p=0.035 targeted tile-swap \u2014 the one resolved role gap; verifier -0.012..-0.015, within-noise ties, at 3x the price). The all-Flash-3 production stack stands (findings SS 14; results/flash35-2x2/flash35_permutations.json).",
-      "historical_aliases": [],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "scripts in repo: all evals score against bounds/384/full_evaluation_bounds.geojson (era-2-487)",
-      "_flags": [
-        "verify-once-at-n10: the n=5 cells are method-matched first-5 derivations (results/verifier-robustness/first5of10-validation/) \u2014 analysis-internal, not registered (systematically +0.005..+0.011 high vs a true 5-pass merge)",
-        "pass 1 lost tiles to transient JSON-parse failures; resume x4 policy enforced a 485/487 floor per pass (outputs/flash35-pv-2x2/tranche-full.log)",
-        "the f3prop pool is cross-run (pv-diag-384 text-n10 minimal lineage), re-cropped in-run under min-f3-crops/ (source_run per condition)"
-      ]
-    },
-    "55maps-text-min-n10-uplift": {
-      "primary_hypothesis": null,
-      "also_informs": [
-        "deployment-uplift",
-        "pass-budget"
-      ],
-      "purpose": "Run B: does PASS COUNT close the -0.030 deployment thinking gap (Obs 362)? 10 minimal passes + band verifier vs TM-k3 and TH7-k3 at the canonical 50 m buffer.",
-      "tile_size_px": 384,
-      "corpus": "55-map",
-      "gt_reference": "combined",
-      "scope": {
-        "test_set_id": "55maps-8541",
-        "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
-        "n_test_tiles": 8541,
-        "calibration_set_id": null,
-        "n_calibration_tiles": null
-      },
-      "headline_condition_id": null,
-      "headline_rationale": "Single-condition run; the citable cell is verified-5of10-canonical-gt (0.8290 @ 50 m, 5of10/pt0.15): significantly above TM-k3 (+0.0163, p<1e-4) and significantly below TH7-k3 (-0.0134, p=0.0026) \u2014 a priced cost/quality trade, not a tie (Obs 364).",
-      "historical_aliases": [],
-      "_scope_confidence": "HIGH",
-      "_scope_source": "empirical: proposer ran the 55-map corpus; scored against bounds/384/55maps_evaluation_bounds.geojson (8,541 tiles)",
-      "_flags": [
-        "gt_reference is the CANONICAL EXTENDED GT (Track-2, S105: reviewed student GT + 773 per-buffer-gated phantoms) \u2014 this run has NO Track-1 reviewed-student-GT scoring",
-        "only the >=3-of-10 band was cropped/verified (16,482 candidates); sub-3-vote operating points are not reachable from the verified band",
-        "outputs/55maps-text-min-n10-uplift/proposer-all/ is an untracked symlink farm (regenerable merge scaffolding) \u2014 deliberate"
-      ]
-    }
+ "_README": "Per-run human-authored facts (the generator's INPUT, B1). Underscore fields (_scope_confidence/_scope_source/_flags) are human provenance retained for anti-confabulation (the generator ignores them). gt_reference: 4-map=curator, 55-map=student (evaluation-scopes.md §11). Scope vocab: evaluation-scopes.md + px256-1032 (bespoke 256px diagnostic). Named programmes: manifest-schema-design.md §2.6.",
+ "facts": {
+  "55maps-generalisation": {
+   "primary_hypothesis": null,
+   "also_informs": [],
+   "purpose": "55-map generalisation: text, paired verifier",
+   "tile_size_px": 384,
+   "corpus": "55-map",
+   "gt_reference": "student",
+   "scope": {
+    "test_set_id": "55maps-8541",
+    "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "n_test_tiles": 8541,
+    "calibration_set_id": null,
+    "n_calibration_tiles": null
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "55-map generalisation"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical(own evals)",
+   "_flags": []
+  },
+  "55maps-image-generalisation": {
+   "primary_hypothesis": null,
+   "also_informs": [],
+   "purpose": "55-map generalisation: image modality",
+   "tile_size_px": 384,
+   "corpus": "55-map",
+   "gt_reference": "student",
+   "scope": {
+    "test_set_id": "55maps-8541",
+    "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "n_test_tiles": 8541,
+    "calibration_set_id": null,
+    "n_calibration_tiles": null
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "55-map generalisation"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": []
+  },
+  "55maps-text-high-generalisation": {
+   "primary_hypothesis": null,
+   "also_informs": [],
+   "purpose": "55-map generalisation: text HIGH",
+   "tile_size_px": 384,
+   "corpus": "55-map",
+   "gt_reference": "student",
+   "scope": {
+    "test_set_id": "55maps-8541",
+    "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "n_test_tiles": 8541,
+    "calibration_set_id": null,
+    "n_calibration_tiles": null
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "55-map generalisation"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": []
+  },
+  "55maps-text-high-t0-3-generalisation": {
+   "primary_hypothesis": null,
+   "also_informs": [],
+   "purpose": "55-map generalisation: text HIGH, T=0.3",
+   "tile_size_px": 384,
+   "corpus": "55-map",
+   "gt_reference": "student",
+   "scope": {
+    "test_set_id": "55maps-8541",
+    "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "n_test_tiles": 8541,
+    "calibration_set_id": null,
+    "n_calibration_tiles": null
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "55-map generalisation"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": []
+  },
+  "55maps-text-min-generalisation": {
+   "primary_hypothesis": null,
+   "also_informs": [],
+   "purpose": "55-map generalisation: text minimal",
+   "tile_size_px": 384,
+   "corpus": "55-map",
+   "gt_reference": "student",
+   "scope": {
+    "test_set_id": "55maps-8541",
+    "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "n_test_tiles": 8541,
+    "calibration_set_id": null,
+    "n_calibration_tiles": null
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "55-map generalisation"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": []
+  },
+  "gold-standard-v2": {
+   "primary_hypothesis": null,
+   "also_informs": [],
+   "purpose": "Canonical 4-map gold-standard pipeline (detect_brief-text, HIGH, T=0.7, K=5); paper headline GS result.",
+   "tile_size_px": 384,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-2-487",
+    "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "n_test_tiles": 487,
+    "calibration_set_id": "cal-20-384",
+    "n_calibration_tiles": 20
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "Era 2",
+    "the v2 GS run"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical (user-confirmed)",
+   "_flags": []
+  },
+  "h10": {
+   "primary_hypothesis": "H10",
+   "also_informs": [
+    "library-design"
+   ],
+   "purpose": null,
+   "tile_size_px": 384,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-3-327",
+    "bounds_path": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+    "n_test_tiles": 327,
+    "calibration_set_id": "pool_160",
+    "n_calibration_tiles": 160
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "Era 3"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "canonical(§6)+leakage: few-shot crops mined from pool_160 -> 327 excludes them",
+   "_flags": [
+    "487 evals = comparability siblings -> condition scope_override"
+   ]
+  },
+  "consensus-384-t1-0": {
+   "primary_hypothesis": "H11",
+   "also_informs": [
+    "H7"
+   ],
+   "purpose": null,
+   "tile_size_px": 384,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-2-487",
+    "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "n_test_tiles": 487,
+    "calibration_set_id": "cal-20-384",
+    "n_calibration_tiles": 20
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "Era 2",
+    "consensus-384-UNINTENDED-T1.0"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "canonical(§6)+empirical: results/paper-eval/flash-min-text-t10-*/ (E43 temperature analysis), bounds 487",
+   "_flags": [
+    "E43 T=1.0 deviation; feeds T=0.7-vs-1.0 temperature analysis (also_informs H7)"
+   ]
+  },
+  "e47-propose-brief": {
+   "primary_hypothesis": "H11",
+   "also_informs": [],
+   "purpose": null,
+   "tile_size_px": 384,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-2-487",
+    "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "n_test_tiles": 487,
+    "calibration_set_id": "cal-20-384",
+    "n_calibration_tiles": 20
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "Era 2"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "canonical(§6)+empirical: Era 2 leaderboard (results/leaderboard/per-architecture/era2/consensus/), bounds 487",
+   "_flags": []
+  },
+  "n1-outstanding-384": {
+   "primary_hypothesis": "H11",
+   "also_informs": [],
+   "purpose": null,
+   "tile_size_px": 384,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-2-487",
+    "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "n_test_tiles": 487,
+    "calibration_set_id": "cal-20-384",
+    "n_calibration_tiles": 20
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "Era 2"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": []
+  },
+  "n1-pro-rerun-384": {
+   "primary_hypothesis": "H11",
+   "also_informs": [
+    "H6"
+   ],
+   "purpose": "Genuine-Pro re-run (E57): re-dispatch of the four anti-diagonal Pro corners as genuine gemini-3.1-pro-preview after the n1-outstanding originals were found to have billed as Flash. Supplies the four Pro anti-diagonal cells of the n1-baseline-matrix-384 leaderboard.",
+   "tile_size_px": 384,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-2-487",
+    "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "n_test_tiles": 487,
+    "calibration_set_id": "cal-20-384",
+    "n_calibration_tiles": 20
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": []
+  },
+  "proposer-verifier-384": {
+   "primary_hypothesis": "H11",
+   "also_informs": [
+    "pv-strategy"
+   ],
+   "purpose": null,
+   "tile_size_px": 384,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-2-487",
+    "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "n_test_tiles": 487,
+    "calibration_set_id": "cal-20-384",
+    "n_calibration_tiles": 20
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "Era 2"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "canonical(§6)+empirical: Era 2 single-pass+PV leaderboard, bounds 487",
+   "_flags": []
+  },
+  "proposer-verifier-512": {
+   "primary_hypothesis": "H11",
+   "also_informs": [
+    "pv-strategy"
+   ],
+   "purpose": null,
+   "tile_size_px": 512,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-1-340",
+    "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+    "n_test_tiles": 340,
+    "calibration_set_id": "cal-20-512",
+    "n_calibration_tiles": 20
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "Era 1"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "canonical+empirical(512px): candidate_manifest tiles_dir=inputs/tiles (512x512 measured); no eval artefact exists -> scope inferred from tile grid (agent-confirmed)",
+   "_flags": [
+    "512px arm of H11 tile-size study; no eval artefact in repo -> scope is the only inference (agent-confirmed via candidate_manifest)"
+   ]
+  },
+  "pv-diag-256": {
+   "primary_hypothesis": "H11",
+   "also_informs": [],
+   "purpose": "256px H11 tile-size diagnostic (px256-1032 scope, 1032 tiles, curator GT): the small-tile anchor for the tile-size comparison, where F1@20m orders 256 < 512 < 384 (0.46 / 0.69 / 0.79). Unregistered exploratory extension of the registered H11 two-level design (E62); populated 2026-07-30 per the PI ruling at reports/verification/phase2-rulings-2026-07-30.md S 1b.",
+   "tile_size_px": 256,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "px256-1032",
+    "bounds_path": "inputs/vectors/bounds/256/full_evaluation_bounds.geojson",
+    "n_test_tiles": 1032,
+    "calibration_set_id": null,
+    "n_calibration_tiles": null
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "agent-investigated: 256px H11 diagnostic; bespoke 256 scope",
+   "_flags": [
+    "eval JSONs in archive/results-non-production-tile-sizes/h11-256-pv-diagnostic/ (commit 276e4ca8); 256px F1=0.844 vs 384px 0.883, non-sig p=0.816 (Obs 181); 431 ref mounds; no MCC; bespoke scope not in evaluation-scopes.md"
+   ]
+  },
+  "pv-diag-384": {
+   "primary_hypothesis": "H11",
+   "also_informs": [
+    "H3",
+    "H8",
+    "pv-strategy",
+    "consensus-n-sweep",
+    "flash-vs-pro"
+   ],
+   "purpose": null,
+   "tile_size_px": 384,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-2-487",
+    "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "n_test_tiles": 487,
+    "calibration_set_id": "cal-20-384",
+    "n_calibration_tiles": 20
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "Era 2"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": [
+    "feeds 4 study threads (§1A)"
+   ]
+  },
+  "h12-v2": {
+   "primary_hypothesis": "H12",
+   "also_informs": [
+    "library-design"
+   ],
+   "purpose": null,
+   "tile_size_px": 384,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-3-327",
+    "bounds_path": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+    "n_test_tiles": 327,
+    "calibration_set_id": "pool_160",
+    "n_calibration_tiles": 160
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "Era 3"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "canonical(§6)+leakage: hard cases mined from pool_160 (studies/h12-v2-ratio.yaml:104; E52)",
+   "_flags": [
+    "nominal 327 (leakage); 487 evals = comparability siblings -> condition scope_override; r2-balanced reuses h10 pool"
+   ]
+  },
+  "h8-v2": {
+   "primary_hypothesis": "H8",
+   "also_informs": [
+    "library-design"
+   ],
+   "purpose": null,
+   "tile_size_px": 384,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-3-327",
+    "bounds_path": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+    "n_test_tiles": 327,
+    "calibration_set_id": "pool_160",
+    "n_calibration_tiles": 160
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "Era 3"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "canonical(§6)+leakage: hard cases mined from pool_160 (studies/h8-v2-library.yaml:93; E51)",
+   "_flags": [
+    "nominal 327 (leakage); 487 evals = comparability siblings -> condition scope_override"
+   ]
+  },
+  "retest-phase2a": {
+   "primary_hypothesis": "H1",
+   "also_informs": [],
+   "purpose": null,
+   "tile_size_px": 512,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-1-340",
+    "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+    "n_test_tiles": 340,
+    "calibration_set_id": "cal-20-512",
+    "n_calibration_tiles": 20
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "Era 1"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": []
+  },
+  "retest-phase2b": {
+   "primary_hypothesis": "H7",
+   "also_informs": [],
+   "purpose": null,
+   "tile_size_px": 512,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-1-340",
+    "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+    "n_test_tiles": 340,
+    "calibration_set_id": "cal-20-512",
+    "n_calibration_tiles": 20
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "Era 1"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical (§8.1: H7 retest K=3 x 340)",
+   "_flags": [
+    "5 cross-scope evals on 487 -> condition scope_override"
+   ]
+  },
+  "retest-phase2c": {
+   "primary_hypothesis": "H8",
+   "also_informs": [],
+   "purpose": null,
+   "tile_size_px": 512,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-1-340",
+    "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+    "n_test_tiles": 340,
+    "calibration_set_id": "cal-20-512",
+    "n_calibration_tiles": 20
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "Era 1"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": []
+  },
+  "retest-phase2d": {
+   "primary_hypothesis": "H5",
+   "also_informs": [],
+   "purpose": null,
+   "tile_size_px": 512,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-1-340",
+    "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+    "n_test_tiles": 340,
+    "calibration_set_id": "cal-20-512",
+    "n_calibration_tiles": 20
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "Era 1"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": []
+  },
+  "retest-phase2e": {
+   "primary_hypothesis": "H4",
+   "also_informs": [],
+   "purpose": null,
+   "tile_size_px": 512,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-1-340",
+    "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+    "n_test_tiles": 340,
+    "calibration_set_id": "cal-20-512",
+    "n_calibration_tiles": 20
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "Era 1"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": []
+  },
+  "retest-phase3a": {
+   "primary_hypothesis": "H3",
+   "also_informs": [],
+   "purpose": null,
+   "tile_size_px": 512,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-1-340",
+    "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+    "n_test_tiles": 340,
+    "calibration_set_id": "cal-20-512",
+    "n_calibration_tiles": 20
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "Era 1"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "canonical(§6)+empirical: results/retest/phase3a-consensus/, bounds 340",
+   "_flags": []
+  },
+  "retest-phase3a-high": {
+   "primary_hypothesis": "H3",
+   "also_informs": [],
+   "purpose": null,
+   "tile_size_px": 512,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-1-340",
+    "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+    "n_test_tiles": 340,
+    "calibration_set_id": "cal-20-512",
+    "n_calibration_tiles": 20
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "Era 1"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "canonical(§6)+empirical: Era 1 leaderboard rows, bounds 340",
+   "_flags": [
+    "HIGH thinking variant"
+   ]
+  },
+  "retest-phase3a-replication": {
+   "primary_hypothesis": "H3",
+   "also_informs": [],
+   "purpose": null,
+   "tile_size_px": 512,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-1-340",
+    "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+    "n_test_tiles": 340,
+    "calibration_set_id": "cal-20-512",
+    "n_calibration_tiles": 20
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "Era 1"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "canonical(§6)+empirical: results/retest/phase3a-consensus/replication/, bounds 340",
+   "_flags": [
+    "replication variant"
+   ]
+  },
+  "retest-phase3c": {
+   "primary_hypothesis": "H9",
+   "also_informs": [],
+   "purpose": null,
+   "tile_size_px": 512,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-1-340",
+    "bounds_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+    "n_test_tiles": 340,
+    "calibration_set_id": "cal-20-512",
+    "n_calibration_tiles": 20
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "Era 1"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "canonical(§6)+empirical: results/phase3c-diversity/, bounds 340",
+   "_flags": []
+  },
+  "retest-h11-single-pass-384-t0": {
+   "primary_hypothesis": "H11",
+   "also_informs": [],
+   "purpose": "H11 single-pass 384px baseline (T=0).",
+   "tile_size_px": 384,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-2-487",
+    "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "n_test_tiles": 487,
+    "calibration_set_id": "cal-20-384",
+    "n_calibration_tiles": 20
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "Era 2"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical",
+   "_flags": []
+  },
+  "verifier-t-pilot": {
+   "primary_hypothesis": "H2",
+   "also_informs": [],
+   "purpose": "Verifier sampling-temperature pilot (T0.0/0.5/1.0); recommended T=0.5 as production verifier default.",
+   "tile_size_px": 384,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-2-487",
+    "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "n_test_tiles": 487,
+    "calibration_set_id": "cal-20-384",
+    "n_calibration_tiles": 20
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "Era 2"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "agent-investigated: verifies 4-map GS 4-of-5 consensus (n=607); scope Era 2",
+   "_flags": [
+    "exploratory (revisits Phase 3d); Obs 286/287; GT partly built from T=0.0 verified output (self-eval-bias caveat); E55 swept-temp metadata; T0.0 baseline lives at outputs/gs/gold-standard-v2/verified-v1/"
+   ]
+  },
+  "verifier-robustness": {
+   "primary_hypothesis": "H2",
+   "also_informs": [
+    "H3"
+   ],
+   "purpose": "Verifier-robustness programme: determinism (n=1 vindicated), proposer-input band, temperature/thinking matrix, model roles, compute allocation, operational maximum, pass-budget Pareto. Meta-rule: on a within-noise tie, take the cheaper config.",
+   "tile_size_px": 384,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-2-487",
+    "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "n_test_tiles": 487,
+    "calibration_set_id": null,
+    "n_calibration_tiles": null
+   },
+   "headline_condition_id": null,
+   "headline_rationale": "Deliberately none — NO new champion. The carry-forward headline pv-diag-384::verified-adv-text-consensus-16of30 (0.890) stands: the operational maximum here (verified-384-16of30-t0-3-n5-opmax, 0.8951) is NOT significant over it (paired tile-swap permutation p=0.363, results/verifier-robustness/opmax_vs_headline_permutation.json), so per the cost meta-rule (Obs 357) it is a numerical high only.",
+   "historical_aliases": [],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "scripts in repo: 384 cells score against bounds/384/full_evaluation_bounds.geojson (era-2-487); the two 256 cells carry scope_override px256-1032",
+   "_flags": [
+    "mixed tile-size run: 6 conditions at 384/487 tiles, 2 at 256/1032 (scope_override)",
+    "verifier-only API run — all proposer pools cross-run (source_run per condition)",
+    "S110 opmax run initially clobbered robustness_{grid,summary}_T0.3.json; repaired + re-homed to -16of30 names, --out-suffix guard added (commit 7d85b00ef)"
+   ]
+  },
+  "flash35-pv-2x2": {
+   "primary_hypothesis": null,
+   "also_informs": [
+    "flash-vs-flash35",
+    "pv-strategy"
+   ],
+   "purpose": "Model-role 2x2x2: is Flash 3.5 a better bare proposer, PV proposer, or verifier than Flash 3 at the minimal operating point? (The S110 parking note: bare proposer was the only angle a stronger model might win.)",
+   "tile_size_px": 384,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "era-2-487",
+    "bounds_path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "n_test_tiles": 487,
+    "calibration_set_id": null,
+    "n_calibration_tiles": null
+   },
+   "headline_condition_id": null,
+   "headline_rationale": "Deliberately none — a model comparison, not a champion search: Flash 3.5 wins in NO role (bare-proposer numerical tie 0.6196 vs 0.6204; PV proposer -0.0355, p=0.035 targeted tile-swap — the one resolved role gap; verifier -0.012..-0.015, within-noise ties, at 3x the price). The all-Flash-3 production stack stands (findings SS 14; results/flash35-2x2/flash35_permutations.json).",
+   "historical_aliases": [],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "scripts in repo: all evals score against bounds/384/full_evaluation_bounds.geojson (era-2-487)",
+   "_flags": [
+    "verify-once-at-n10: the n=5 cells are method-matched first-5 derivations (results/verifier-robustness/first5of10-validation/) — analysis-internal, not registered (systematically +0.005..+0.011 high vs a true 5-pass merge)",
+    "pass 1 lost tiles to transient JSON-parse failures; resume x4 policy enforced a 485/487 floor per pass (outputs/flash35-pv-2x2/tranche-full.log)",
+    "the f3prop pool is cross-run (pv-diag-384 text-n10 minimal lineage), re-cropped in-run under min-f3-crops/ (source_run per condition)"
+   ]
+  },
+  "55maps-text-min-n10-uplift": {
+   "primary_hypothesis": null,
+   "also_informs": [
+    "deployment-uplift",
+    "pass-budget"
+   ],
+   "purpose": "Run B: does PASS COUNT close the -0.030 deployment thinking gap (Obs 362)? 10 minimal passes + band verifier vs TM-k3 and TH7-k3 at the canonical 50 m buffer.",
+   "tile_size_px": 384,
+   "corpus": "55-map",
+   "gt_reference": "combined",
+   "scope": {
+    "test_set_id": "55maps-8541",
+    "bounds_path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "n_test_tiles": 8541,
+    "calibration_set_id": null,
+    "n_calibration_tiles": null
+   },
+   "headline_condition_id": null,
+   "headline_rationale": "Single-condition run; the citable cell is verified-5of10-canonical-gt (0.8290 @ 50 m, 5of10/pt0.15): significantly above TM-k3 (+0.0163, p<1e-4) and significantly below TH7-k3 (-0.0134, p=0.0026) — a priced cost/quality trade, not a tie (Obs 364).",
+   "historical_aliases": [],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical: proposer ran the 55-map corpus; scored against bounds/384/55maps_evaluation_bounds.geojson (8,541 tiles)",
+   "_flags": [
+    "gt_reference is the CANONICAL EXTENDED GT (Track-2, S105: reviewed student GT + 773 per-buffer-gated phantoms) — this run has NO Track-1 reviewed-student-GT scoring",
+    "only the >=3-of-10 band was cropped/verified (16,482 candidates); sub-3-vote operating points are not reachable from the verified band",
+    "outputs/55maps-text-min-n10-uplift/proposer-all/ is an untracked symlink farm (regenerable merge scaffolding) — deliberate"
+   ]
   }
+ }
 }

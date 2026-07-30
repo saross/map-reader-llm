@@ -1171,3 +1171,83 @@ def test_open_commitment_check_truncates_long_obligations():
     (line,) = open_commitment_check(ledger=ledger)
     assert line.endswith("...")
     assert len(line) < 130
+
+
+@pytest.mark.tier1
+def test_pass_counts_completed_not_dispatched(registry):
+    """E71: n_tiles_processed carries COMPLETED tiles uniformly.
+
+    The n1-outstanding-384 pro-image-high-t0 run_1 meta dispatched 487 tiles
+    (per_item_metadata) but completed 472 (execution_stats.items_processed,
+    15 exhausted the retry ladder). Before E71 the pim branch reported 487 —
+    tiles-dispatched — silently switching the column's meaning relative to
+    metas without per-item records. The dispatched count must survive in the
+    new n_tiles_dispatched field, and the shortfall must read as `partial`.
+    """
+    ctx = {
+        "run_id": "n1-outstanding-384",
+        "directory_path": "outputs/h11/n1-outstanding-384",
+        "scope": {},
+        "proposer_pools": {
+            "pro-image-high-t0": {"modality": "image", "path": "pro-image-high-t0"},
+        },
+        "verifier_passes": {},
+        "conditions": [],
+    }
+    passes = extract_passes(ctx)
+    assert len(passes) == 3  # run_1..run_3
+    by_n = {p["pass_n"]: p for p in passes}
+    p1 = by_n[1]
+    assert validate_row("passes", p1, registry) == []
+    assert p1["n_tiles_processed"] == 472  # completed, not len(pim)
+    assert p1["n_tiles_dispatched"] == 487  # dispatched preserved
+    assert p1["status"] == "partial"  # 15 failed items
+
+
+@pytest.mark.tier1
+def test_verifier_pass_counts_items_processed_not_request_count(registry):
+    """E71 (GAP-8 resolution): verifier rows count crops verified, not requests.
+
+    The 55maps uplift verifier meta records request_count 16,484 (retry-
+    inflated: retries_total 2) against items_processed 16,482. The manifest
+    must carry the completed count.
+    """
+    ctx = {
+        "run_id": "55maps-text-min-n10-uplift",
+        "directory_path": "outputs/55maps-text-min-n10-uplift",
+        "scope": {},
+        "proposer_pools": {},
+        "verifier_passes": {"verified-3of10": {"modality": "text"}},
+        "conditions": [],
+    }
+    passes = extract_passes(ctx)
+    assert len(passes) == 1
+    assert validate_row("passes", passes[0], registry) == []
+    assert passes[0]["n_tiles_processed"] == 16482  # items_processed
+    assert passes[0]["retries"] == 2  # the inflation E71 documents
+
+
+@pytest.mark.tier1
+def test_e55_corrected_verifier_pass_lists_runlog_in_provenance(registry):
+    """E55's promise: temperature-corrected verifier passes cite run.log.
+
+    The verifier-t-pilot T0.5/T1.0 metas carry temperature_effective (the
+    CLI override recovered from run.log per E55); the manifest row's
+    provenance.source_files must therefore list the run.log alongside the
+    meta — the promise E55's 2026-07-30 correction block records as
+    previously unfulfilled.
+    """
+    ctx = {
+        "run_id": "verifier-t-pilot",
+        "directory_path": "outputs/verifier-t-pilot",
+        "scope": {},
+        "proposer_pools": {},
+        "verifier_passes": {"t0-5": {"modality": "image", "path": "T0.5"}},
+        "conditions": [],
+    }
+    passes = extract_passes(ctx)
+    assert len(passes) == 1
+    assert validate_row("passes", passes[0], registry) == []
+    files = passes[0]["provenance"]["source_files"]
+    assert "outputs/verifier-t-pilot/T0.5/run.log" in files
+    assert any(f.endswith("run.meta.json") for f in files)

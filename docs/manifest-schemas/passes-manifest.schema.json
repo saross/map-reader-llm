@@ -73,7 +73,16 @@
           "type": "string",
           "enum": ["ok", "partial", "failed"]
         },
-        "n_tiles_processed": { "type": "integer", "minimum": 0 },
+        "n_tiles_processed": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Items COMPLETED (E71, 2026-07-30): tiles for proposer passes, candidate crops for verifier passes. Uniform completed-count semantics; before E71 this column carried tiles-dispatched where per_item_metadata existed."
+        },
+        "n_tiles_dispatched": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "description": "Items dispatched per per_item_metadata, where available (E71). Null for meta eras without per-item records. dispatched minus processed = items that produced no output."
+        },
         "tokens": {
           "type": ["object", "null"],
           "description": "Token accounting from the meta.json.",

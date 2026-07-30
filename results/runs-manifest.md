@@ -1,8 +1,8 @@
-<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/runs-manifest.json by scripts/generate_post_run_report.py v0.5.0. Edit the source-of-truth files and regenerate. -->
+<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/runs-manifest.json by scripts/generate_post_run_report.py v0.6.0. Edit the source-of-truth files and regenerate. -->
 
 # Runs manifest
 
-> Generated 2026-07-28T04:56:05Z · 31 row(s) · schema v1.0.
+> Generated 2026-07-30T03:10:58Z · 31 row(s) · schema v1.0.
 >
 > **Coverage**: all 31 runs (run-level facts; conditions/passes added as 3b batches land).
 

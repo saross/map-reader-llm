@@ -76,7 +76,13 @@ SCHEMA_DIR: Path = REPO_ROOT / "docs" / "manifest-schemas"
 #: per-pool ``model_of_record`` override (E57) for pools whose recorded meta carries a
 #: model template-default. Landed alongside the N=1 baseline-matrix + batch-pass
 #: publishing.
-GENERATOR_VERSION: str = "0.5.0"
+#: 0.6.0 (Session 121, 2026-07-30) is the E71/E55 extraction-logic wave:
+#: ``n_tiles_processed`` now uniformly counts COMPLETED items (was tiles-dispatched
+#: where per_item_metadata existed, tiles-completed otherwise); a new nullable
+#: ``n_tiles_dispatched`` preserves the per_item_metadata count; verifier rows drop
+#: the GAP-8 retry-inflated ``request_count`` for ``items_processed``; and
+#: E55-corrected verifier passes list ``run.log`` in provenance as promised.
+GENERATOR_VERSION: str = "0.6.0"
 
 #: Manifest format version embedded at the top of each emitted manifest. Must
 #: match the ``schema_version`` const in the schema files.
@@ -364,8 +370,27 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             cfg = meta.get("configuration", {})
             es = meta.get("execution_stats", {})
             if pim:
-                # Newer shape: authoritative per-item model identity + tile count.
-                n_proc = len(pim)
+                # Newer shape: authoritative per-item model identity. COUNTS (E71,
+                # 2026-07-30): per_item_metadata records tiles DISPATCHED; the
+                # n_tiles_processed column carries tiles COMPLETED uniformly — before
+                # E71 this branch reported len(pim), silently switching the column's
+                # meaning across meta eras. COMPLETED comes from the union of
+                # execution_stats.completed_items (the C3 re-derivation's validated
+                # rule): the items_processed SCALAR is itself era-inconsistent —
+                # attempts-inclusive in the 55maps/gs-v2 eras (~2x the tile count)
+                # and round-summed (not unioned) in resume-merged metas. The
+                # dispatched count is preserved in n_tiles_dispatched. (Residual
+                # known defect, disclosed in E71: metas overwritten by segment-scoped
+                # resume rounds carry segment-scoped lists; those passes are queued
+                # for recovery/meta repair.)
+                n_dispatched = len(pim)
+                completed = es.get("completed_items")
+                if completed:
+                    n_proc = len(set(completed))
+                elif es.get("items_processed"):
+                    n_proc = es["items_processed"]
+                else:
+                    n_proc = n_dispatched
                 model_used = next((it.get("model_used") for it in pim if it.get("model_used")), "")
                 model_requested = next(
                     (it.get("model_requested") for it in pim if it.get("model_requested")), None)
@@ -396,6 +421,7 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                 # model-of-record string is a separate decision from fixing a
                 # mislabelled model family.
                 n_proc = es.get("items_processed") or 0
+                n_dispatched = None
                 cfg_model = cfg.get("model", "")
                 priced_model = (
                     (meta.get("cost_estimate") or {}).get("pricing_used") or {}
@@ -438,6 +464,7 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                 "library_hash": cfg.get("library_hash"),
                 "status": status,
                 "n_tiles_processed": n_proc,
+                "n_tiles_dispatched": n_dispatched,
                 "tokens": _tokens_from_usage(meta.get("usage_stats", {})),
                 "cost_usd": (meta.get("cost_estimate") or {}).get("total_cost_usd"),
                 "wall_clock_s": (meta.get("timestamp") or {}).get("duration_seconds"),
@@ -484,9 +511,30 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             or cfg.get("model")
         )
         model_version = next((it.get("model_version") for it in pim if it.get("model_version")), None)
-        # GAP-8 carry-forward: request_count is per-candidate-crop, not tiles — kept
-        # and documented until the true tile count is derived or this field is nulled.
-        req_count = (usage.get("by_provider", {}).get("google_gemini", {}) or {}).get("request_count", 0)
+        # GAP-8 resolved (E71, 2026-07-30): request_count is retry-inflated (it counts
+        # API requests, not completions). Prefer the union of completed_items, then
+        # the items_processed scalar, matching the proposer rows' COMPLETED
+        # semantics; request_count remains the fallback for verifier eras that left
+        # execution_stats unpopulated (there it equals completions when nothing was
+        # retried). Verifier passes operate on crops, not tiles — the count remains
+        # crop-scale, documented as such in E71.
+        v_es = meta.get("execution_stats", {}) or {}
+        v_completed = v_es.get("completed_items")
+        if v_completed:
+            n_items = len(set(v_completed))
+        elif v_es.get("items_processed"):
+            n_items = v_es["items_processed"]
+        else:
+            n_items = (usage.get("by_provider", {}).get("google_gemini", {}) or {}).get(
+                "request_count", 0)
+        # E55 correction (2026-07-30): where the meta's temperature was corrected from
+        # the run.log CLI override (configuration.temperature_effective), the log is
+        # part of the value's provenance and is listed as E55 promised.
+        v_prov_sources = [_repo_rel(meta_path)]
+        if cfg.get("temperature_effective") is not None:
+            log_path = meta_path.parent / "run.log"
+            if log_path.exists():
+                v_prov_sources.append(_repo_rel(log_path))
         rows.append({
             "pass_id": f"{run_id}::{vdir}::run1",
             "run_id": run_id,
@@ -501,13 +549,14 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             "instruction_hash": cfg.get("system_instruction_hash"),
             "library_hash": cfg.get("library_hash"),
             "status": "ok",
-            "n_tiles_processed": req_count,
+            "n_tiles_processed": n_items,
+            "n_tiles_dispatched": len(pim) if pim else None,
             "tokens": _tokens_from_usage(usage),
             "cost_usd": (meta.get("cost_estimate") or {}).get("total_cost_usd"),
             "wall_clock_s": (meta.get("timestamp") or {}).get("duration_seconds"),
             "timestamps": _timestamps(meta),
-            "retries": (meta.get("execution_stats", {}) or {}).get("retries_total", 0),
-            "provenance": build_provenance([_repo_rel(meta_path)], at),
+            "retries": v_es.get("retries_total", 0),
+            "provenance": build_provenance(v_prov_sources, at),
         })
 
     return rows
