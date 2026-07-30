@@ -5875,3 +5875,106 @@ verified, or silence will be misread as verification.
 Distinguish three states everywhere in C3: value-confirmed,
 value-contradicted, and source-silent. Collapsing source-silent into
 either of the others fabricates certainty in opposite directions.
+
+## Session 121 — 2026-07-30 — the pooled contrast that refused to confirm its parts, and the six tiles no ladder could reach
+
+**Session:** a72a9a25-b006-4b21-a7af-90e9907245b8
+**Instance:** primary
+
+Two qualifying episodes.
+
+### Surprising fact
+
+The registered H1 pooled modality contrast (CMT-0106, executed for the
+first time ever under a pre-committed reconstruction rule) returned
+**null** — Δ = +0.0238, p = 0.1774 — although two of the three visible
+level-pair candidates for the H1 primary were individually significant
+(brief-text vs image-only p = 0.004; image-only vs brief+image
+p = 0.006) and the crude full-set arithmetic pointed at roughly +0.03
+in the pooled direction. The family rejection set consequently shrank
+to {H2, H3, H7}.
+
+### Probe
+
+The computation itself was the probe (B = 10 000 paired tile bootstrap,
+seed 42, both validation gates passed against committed artefacts), and
+its decomposition explains the reversal without residue: the text pool
+is dragged by `verbose-text` (−0.037 below brief-text) while the image
+pool is propped by the two `+image` conditions sitting within ~0.02 of
+brief-text; only `image-only` is far behind. The significant pairs are
+extreme-versus-extreme comparisons; the registered contrast averages
+across group members and the extremes dilute.
+
+### Belief revision
+
+"Text beats image" — the finding that retired the academic-baseline
+designation (E68) — is a claim about *specific levels*, not about
+modality *as a pooled factor*. H1's confirmatory answer is null, and
+the level-pair significances survive as exactly what the registration's
+planned contrasts always were: targeted comparisons, not the modality
+effect. Secondary revision, about practice: outcome-blindness is
+partially *restorable* post hoc — a never-executed registered analysis
+is a reservoir of genuine blindness, and selecting it (rather than
+adjudicating among visible p-values) is what let the outcome-material
+fork resolve on evidence rather than selection.
+
+### What would change this belief
+
+A pooled contrast under the alternative defensible reconstruction
+(pooling per-tile detections rather than averaging condition scores)
+crossing α; or the global-matcher estimator disagreeing with the
+per-tile machinery at the pooled grain. Neither is expected — the
+delta's CI is wide and centred low — but either would reopen the
+aggregation-choice question E64-style.
+
+---
+
+### Surprising fact (second episode)
+
+After the recovery campaign reached 92 % (265/288), the 23 residual
+pass-level failures collapsed to **six unique tiles** — one failing in
+nine independent passes across two pools and both prompt modalities —
+and every residual failure sat in a T=0.0 × HIGH-thinking pool, while
+every T=0.7 shortfall had recovered at the first shallow ladder.
+Meanwhile the deep sweep's ten recoveries all came at *original*
+parameters, and both safe-mode budget reductions (2048, then 1024
+tokens) recovered nothing at the deep stage.
+
+### Probe (second episode)
+
+Two PI-directed sweeps (10+10, then 5+5 at the halved budget) with
+per-pass scope gates; then a cross-pass identity analysis of the
+still-failed lists. The tile-name join across passes was the
+discriminating step — pass-level counts alone read as scattered noise;
+the join revealed the same few tiles everywhere.
+
+### Belief revision (second episode)
+
+Tile failures are not a stochastic API nuisance uniformly distributed
+over the corpus; they are **tile-intrinsic and temperature-gated**. At
+T=0 the model's response to a given tile is near-deterministic, so a
+tile whose content drives thinking-token consumption past the output
+budget fails the same way almost every attempt — the retry ladder loses
+its stochastic-recovery power exactly where sampling diversity is
+removed. Coverage gaps are therefore missing-not-at-random in *content*
+(feature-dense tiles) and in *configuration* (deterministic, HIGH-
+thinking cells), which biases metrics in opposite directions before and
+after recovery (Obs 374). The prior belief — "retries exhausted" means
+the tile is unrecoverable — also fell: a third of what four campaigns
+had recorded as exhausted recovered the moment the ladder deepened.
+
+### What would change this belief (second episode)
+
+Visual inspection of the six tiles finding them *not* feature-dense
+(the mechanism's central prediction, cheap and untested); or a T>0
+fallback pass failing to recover them (the determinism mechanism
+predicts it should); or the same tiles succeeding trivially under an
+identical config on a different API day (which would relocate the
+pathology from tile content to serving-side state).
+
+### Implications for practice
+
+Pipelines that rely on T=0 for reproducibility need a failure-recovery
+strategy that does not rely on resampling — budget headroom, a
+high-temperature fallback pass for stuck tiles, or acceptance with the
+residue individually identified, as done here.

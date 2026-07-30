@@ -6623,3 +6623,50 @@ work that had to be done anyway) and converted an unfalsifiable claim
 ("the agents are thorough") into a measured one. This generalises to any
 LLM verification fleet: hold back what you already know, seed it, and let
 recovery rate speak.
+
+## Session 121 — 2026-07-30 (naming conventions outcompete context; the structured-rulings morning; "never-executed" as a first-class option)
+
+**The most instructive AI failure of the session was losing to a
+directory name.** I wrote `gemini-3.1-pro-preview` into a registered
+document for passes whose Flash identity I had quoted verbatim from the
+census earlier in the same session. The correcting fact was *in my
+context*; the path segment `pro-image-high-t0` won anyway. This is a
+sharper variant of the familiar confabulation pattern: it is not that
+the model lacked the information, or invented a plausible filler — it
+is that under long-context conditions a strong surface cue (a naming
+convention) outcompeted a verified proposition the model itself had
+processed hours earlier. The practical consequence for AI-as-tool use:
+"I established this earlier in the session" is not a provenance level.
+The write-side anti-confabulation rule (re-derive from the artefact in
+the same turn as writing) has to apply *most* strongly to the specifics
+the model is most confident it already knows, because confidence is
+exactly what suppresses the re-check. The catch came from the human's
+operational memory, not from any automated layer — none of the
+checklists encoded "does the model column match how we actually ran?"
+
+**The structured-rulings format scaled to a ~15-decision morning.**
+Batched option sets with recommendations, verbatim-quoted evidence, and
+explicit outcome-materiality labels let the PI rule on everything from
+erratum scope splits to the family-FDR primary in one sitting. Two
+behaviours made it work as *collaboration* rather than rubber-stamping:
+the PI twice declined to answer and instead asked for more (the
+medium-thinking provenance walk-through; the H8 pros-and-cons), and in
+both cases the elaboration changed the outcome — once by revealing a
+7/6 site split my draft had missed, once by reversing my own
+recommendation as I argued it. A decision format is working when
+"explain further" is cheaper than picking an option.
+
+**Enumerating the never-executed registered option changed the study's
+headline.** When selection among executed alternatives is
+outcome-material, the AI's natural move is to adjudicate among what
+exists; the registered-but-never-run alternative sits outside the
+retrieval set because no artefact anchors it. Here the PI's structural
+memory of the study ("image vs text-only was our main contrast")
+pointed at exactly that absent item, and once it entered the choice set
+as option (iv) — with a pre-committed reconstruction rule — it restored
+genuine outcome-blindness to the one selection where blindness
+mattered, and returned the conservative answer. The generalisable
+pattern for AI-assisted confirmatory work: the option space for any
+registered-analysis decision is the *registration's* space, not the
+artefact tree's, and the AI should enumerate the unexecuted members
+explicitly with costs, every time.

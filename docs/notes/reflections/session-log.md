@@ -7569,3 +7569,61 @@ ever verify at token level for that era; recorded in the charter Phase 2
 entry. Two orchestrator commit messages carry wrong counts (526edfda9,
 2f5a9ae2d) — artefacts authoritative, recorded in the gate package and
 scratchpad.
+
+## Session 121 — 2026-07-30 — landing sequence executed; GATE 2 passed; family-FDR computed; E71 recovery campaign complete
+
+**Commits** `b623bffa3`→`12485dd8c` (~32 incl. handoff), all pushed;
+sapphire used for all heavy compute; API spend ≈ US$4–6 (recovery
+campaign + sweeps, all flex).
+
+- **PI morning rulings** collected and recorded
+  (`reports/verification/phase2-rulings-2026-07-30.md`): erratum points
+  (a)–(e) incl. the medium thinking-level SPLIT; three triage-born
+  errata approved (one with a rerun addition); family-FDR selections
+  (H1 = run CMT-0106; H5 substitute; H7 text; H8 Simes; E64-first; H2
+  falsified-directional).
+- **E64(iii) materiality computed** on sapphire: 2.21 % cluster-level
+  label heterogeneity (153,102 clusters, 47 pools); apparatus doc +
+  JSON under `reports/verification/apparatus/`.
+- **Errata E62–E71 landed** + dated correction blocks on
+  E36/E16/E20/E40/E55 (commit `2159d25b4`); Obs 372/373 riders with
+  pointer lines; `experimental-progression.md` and
+  `gs-tile-pool-mapping-2026-05-28.md` corrected ("1 of 10" → 0);
+  census resolutions (13 pairs); CMT-0109 waived (E68).
+- **Generator v0.6.0**: uniform completed-count semantics (union of
+  `completed_items` — the C3-validated rule; the first cut using the
+  `items_processed` scalar regressed 60+ rows and was reverted after
+  the diff audit), `n_tiles_dispatched` field, GAP-8 resolved, E55
+  `run.log` provenance; 58 tier-1 tests green; regen diff exactly 19
+  intended rows.
+- **Family-FDR registered then computed**
+  (`reports/verification/family-fdr-registration.md`;
+  `results/family-fdr/`): H1's CMT-0106 first execution **null**
+  (Δ +0.0238, p = 0.1774, gates A/B passed) → **rejection set
+  {H2, H3, H7}**; CMT-0047 + CMT-0106 discharged (ledger 404/90/208);
+  analyses registry 18 → 20.
+- **E71 recovery campaign**: registered (rule 10) → PI gate (incl. the
+  model-consistency catch: the six "pro-*" shortfall passes are E57
+  Flash corners → all-Flash) → `/audit-config` READY → first pass
+  255/288 → PI-directed deep sweeps (+10 at 10+10; 0 at 5+5@1024) →
+  **final 265/288 (92.0 %)**; residue = 6 unique tiles (Obs 374,
+  PI-flagged publication-relevant); flex wired through the patch path
+  as a standing default; both live t0.0 cells re-materialised +
+  re-evaluated (final F1 up in both vs pre-recovery; interim text dip
+  was a partial-recovery artefact); manifests regenerated; ledger rows
+  c2-discharge-0001..0005.
+- **GATE 2 PASSED** (charter § 10 item 8): dispositions accepted at
+  table grain; ledger-supersession deferred to Phase 5 design;
+  **Phase 3 (C4) unlocked**.
+- **Handoff + reflect** run by this instance: Session 122 beacon;
+  user-obs candidates A–C + WN-1 pending; claude-obs 12–14;
+  wiki-inbox flags.
+
+**Contextual assumptions.** The always-flex instruction became standing
+mid-session (recorded in the project scratchpad) — earlier sessions'
+realtime calls predate it. The recovery campaign's cost estimates were
+made before the PI's model check; the executed run was all-Flash and a
+fifth of the registered worst case. The 10-vs-15 original-ladder
+discrepancy (Session 53 vs E71 evidence) was flagged unresolved in
+Obs 374 rather than harmonised. Sapphire was the compute host
+throughout; amd-tower ran only the API-bound recovery driver.

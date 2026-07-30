@@ -9250,3 +9250,74 @@ operative clause). The artefacts record the verdicts; what they can't
 record is that this was the session where "verified" stopped meaning
 "facts checked" and started meaning "prosecution and defence both
 searched, and the search recorded".
+
+## Session 121 — 2026-07-30 — the morning the rulings landed, and the operational memory that outranked the checklists
+
+**Project**: map-reader-llm. **Instance**: primary (no compaction at
+time of writing; one very long continuous session). Session
+`a72a9a25-b006-4b21-a7af-90e9907245b8`.
+
+This was the session the verification programme's design paid out: all
+~15 PI rulings collected in one sitting, the entire landing sequence
+executed (E62–E71, generator v0.6.0, family-FDR registered then
+computed, the E71 recovery campaign end to end), GATE 2 passed, and the
+study's confirmatory headline changed by a computation whose blindness
+we had deliberately restored. US$4–6 of API against a day that touched
+1,132 passes, 322 conditions, and 71 errata.
+
+### Prompt: Where did you and the human disagree, and who was right?
+
+Three times, and Shawn was right all three. On H8 I recommended the
+min-p contrast for family symmetry; he asked for the pros and cons, and
+articulating them out loud reversed my own recommendation before he
+ruled — the Simes reading was simply better, and I had anchored on
+table aesthetics. On the recovery rerun, my registration said the six
+"pro-*" passes ran Pro; his "check which pro model we ran" was
+phrased as a question but was functionally a disagreement with my
+document, and the metas sided with him — they were E57's mis-dispatched
+Flash corners, a fact I had quoted verbatim hours earlier and then
+overrode with a directory name. On retry depth, my close-out framed 33
+permanent failures as "deterministic residue"; his "normally we try
+something like 10x" disputed the implicit claim that the ladder had
+been exhausted, and ten tiles promptly recovered at original
+parameters. The pattern across all three: my errors were errors of
+*framing settled what wasn't*, and his corrections came from memory of
+practice, not from re-reading anything. The gate formats we design
+should keep inviting exactly that kind of dispute — the
+structured-choice format worked *because* he treated "explain further"
+and "that doesn't match my recollection" as first-class moves rather
+than accepting recommended defaults.
+
+### Prompt: What question emerged that wasn't pursued?
+
+Nobody has looked at the six intransigent tiles. The whole mechanism
+story — feature density driving HIGH-thinking token consumption past
+any budget, deterministically at T=0 — is inferred from failure
+patterns and token accounting, and it generates an obvious, cheap,
+untouched test: open `K-35-053-3_Elenovo_x672_y2352.png` and its five
+siblings in QGIS and *look*. Are they actually feature-dense? Do they
+share a content signature (dense contour work, settlement fill,
+marginalia)? A ten-minute visual inspection would either confirm the
+mechanism or force a better one, and would also tell us whether the
+mounds we cannot score on those tiles are real losses or empty ground.
+Related and also unpursued: whether a T>0 fallback pass would recover
+them (the determinism mechanism predicts yes), and the unresolved
+10-vs-15 discrepancy between Session 53's "10-retry loop" and E71's
+"after 15 attempts" — two contemporaneous sources disagreeing about our
+own pipeline's ladder depth, flagged in Obs 374's caveats but not run
+to ground.
+
+### Prompt: What context will be hardest to reconstruct in six months?
+
+Why the family-FDR rejection set is {H2, H3, H7} and not {H1, H2, H3,
+H7} — the artefacts record it, but the *contingency* of it will read as
+inevitable. H1 survived or fell entirely on a selection made in a
+ten-minute conversation where Shawn's half-remembered "image vs
+text-only was our main contrast" turned out to name the one registered
+contrast nobody had ever computed. Had he accepted my recommended
+default (the p = 0.006 first-listed pair), the paper would report four
+rejections and nobody would have known a fork existed. The registration
+document preserves the mechanics; what it cannot preserve is how close
+the default came to being accepted, and that the blindness-restoring
+option entered the choice set only because his instinct reached for a
+contrast the executed artefacts did not contain.
