@@ -264,15 +264,22 @@ corrections, moves on. **GATE** = PI review before proceeding.
   `run-conditions.json` needs an erratum). Wire the open-commitment warning
   into `drift_check` (closes C3 of the guard via the append-only ledger).
   **GATE 1.**
-- [ ] **Phase 2 — provenance (C3).** *(Claimed 2026-07-29, Claude Fable 5
-  interactive session; start approved at GATE 1.)* Field-level
-  re-derivation of `passes-manifest.json` and `conditions-manifest.json`
-  rows from raw metas/evals. **Full enumeration** (settled, PI 2026-07-29;
-  1,132 passes / 322 conditions — script job on sapphire, LLM only for
-  discrepancy triage). Known wall, discovered at GATE 1: the retest-era
-  pipeline left `usage_stats` unpopulated (all 225 phase3c metas and
-  phase3a siblings) — token-level fields are unverifiable for that era;
-  record per-era field verifiability explicitly. **GATE 2.**
+- [x] **Phase 2 — provenance (C3).** *(Claimed 2026-07-29; executed
+  Sessions 120–121, Claude Fable 5. **GATE 2 PASSED 2026-07-30** —
+  § 10 item 8. 1,514/1,534 ledger rows VERIFIED, 20 FLAGGED with
+  landed dispositions; conditions manifest 100 % clean; E62–E71 +
+  five correction blocks; generator v0.6.0; family-FDR registered
+  then computed (rejection set {H2, H3, H7}); E71 recovery campaign
+  265/288 with a 6-tile permanent residue (Obs 374); per-era
+  verifiability map in the package.)* Field-level re-derivation of
+  `passes-manifest.json` and `conditions-manifest.json` rows from raw
+  metas/evals. **Full enumeration** (settled, PI 2026-07-29; 1,132
+  passes / 322 conditions — script job on sapphire, LLM only for
+  discrepancy triage). Known wall, discovered at GATE 1: the
+  retest-era pipeline left `usage_stats` unpopulated (all 225 phase3c
+  metas and phase3a siblings) — token-level fields are unverifiable
+  for that era; record per-era field verifiability explicitly.
+  **GATE 2.**
 - [ ] **Phase 3 — quantitative sweep (C4).** LLM extracts claims to ledger;
   deterministic script recomputes from cited artefacts and diffs; LLM
   triages mismatches. The biggest unswept surface. Background-batchable.
@@ -442,3 +449,27 @@ Also settled in the same review: the stratum rule and working-notes dual
 role (§ 2), the interpretive-ATTESTED extension (§ 3), orthogonal
 interrogation as execution rule 11 (§ 5), verbatim-span verification in the
 monitor (§ 6), and the Claude model policy (§ 8).
+
+8. **GATE 2 (2026-07-30) — PASSED.** Package:
+   `reports/verification/phase2-gate-package.md`; the day's PI rulings
+   verbatim at `reports/verification/phase2-rulings-2026-07-30.md`.
+   Rulings at the gate (PI, verbatim): "1. I'm happy to acept your
+   dispositions. 2. Ratified, thanks. 3. I approve progressoin to
+   phase 3."
+   (a) **Correction-queue dispositions accepted** at the table grain
+   (package § 3) — every row's resolution is a landed, anchored fact;
+   row-by-row manual review judged unnecessary (mechanical; Phase 5
+   re-verifies each anchor).
+   (b) **Ledger-supersession convention ratified**: superseding rows
+   for resolved FLAGGED claims land with the Phase 5
+   `revalidate_ledgers.py` design, which owns row lifecycle; nothing
+   appended before that design exists.
+   (c) **Phase 3 (C4 quantitative sweep) unlocked** — the § 7
+   sequencing constraint is satisfied (manifests Phase-2-verified and
+   usable as anchors). Phase 3 inherits the per-era verifiability map
+   (package § 4): retest-era token-level claims are permanently
+   unverifiable and must be flagged, not fought.
+   Also standing from the same day (phase2-rulings + session record):
+   the **always-flex instruction** for realtime API calls, the
+   per-pass own-model rule for recoveries, and the E71 recovery
+   campaign's outcome (265/288; 6 permanent tiles; Obs 374).

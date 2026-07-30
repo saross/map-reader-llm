@@ -3,10 +3,12 @@
 > **Last revised**: 2026-07-30 (original publication). See
 > [§ Changelog](#changelog) for revision history.
 
-**Status**: awaiting GATE 2 review (gates belong to the Principal
-Investigator — charter § 7). Phase 2 executed Sessions 120–121 (C3
-re-derivation overnight on sapphire; triage, rulings, and the landing
-sequence in Session 121). PI morning rulings, verbatim:
+**Status**: **GATE 2 PASSED 2026-07-30** (PI rulings recorded at
+`planning/audit-charter.md` § 10 item 8: dispositions accepted at the
+table grain; ledger-supersession convention deferred to the Phase 5
+monitor design; Phase 3 unlocked). Phase 2 executed Sessions 120–121
+(C3 re-derivation overnight on sapphire; triage, rulings, and the
+landing sequence in Session 121). PI morning rulings, verbatim:
 `reports/verification/phase2-rulings-2026-07-30.md`.
 
 ## 1. Headline
