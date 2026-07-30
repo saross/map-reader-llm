@@ -1,8 +1,7 @@
 # Experimental Progression: From Preregistered Design to Production Pipeline
 
-> **Last revised**: 2026-07-28 (preregistration-attribution corrections
-> from the D17 audit sweep). See [§ Changelog](#changelog) for revision
-> history.
+> **Last revised**: 2026-07-30 ("1 of 10 survived FDR" corrected to 0 of
+> 10). See [§ Changelog](#changelog) for revision history.
 
 **Purpose**: Reference document for the paper's methods section,
 characterising the three-phase experimental progression, what was tested
@@ -80,7 +79,10 @@ of the preregistered 3).
 The 60-tile OFAT produced directional results for each factor but
 **insufficient statistical power for formal significance testing**.
 At 60 tiles, bootstrap confidence intervals spanned ~0.20 F1, and
-only 1 of 10 Phase 2a pairwise comparisons survived FDR correction.
+**no** Phase 2a pairwise comparison survived FDR correction (0 of 10;
+`results/phase2a-analysis-report.json`, `n_fdr_significant: 0` — the
+long-standing "1 of 10" figure was a misreport, corrected 2026-07-30;
+see the E36 correction block and Obs 372).
 The results were informative for parameter selection (carrying optimal
 values forward through the OFAT sequence) but could not support
 definitive claims about individual factor effects.
@@ -344,6 +346,23 @@ evolution.*
 ---
 
 ## Changelog
+
+### 2026-07-30 — Phase 2a FDR-survivor figure corrected (Session 121)
+
+**Refresh trigger**: the Phase 1 verification campaign's execution
+census caught the "only 1 of 10 Phase 2a pairwise comparisons survived
+FDR correction" claim as a misreport; PI-approved handling at
+`reports/verification/phase2-rulings-2026-07-30.md` § 1d.
+
+| before | after |
+| :--- | :--- |
+| "only 1 of 10 Phase 2a pairwise comparisons survived FDR correction" | 0 of 10 (`results/phase2a-analysis-report.json`, `n_fdr_significant: 0`) |
+
+What did NOT change: the insufficient-power conclusion (which the
+corrected figure strengthens), the directional findings, and the
+corpus-expansion rationale. Companion corrections: the E36 correction
+block in `protocol-errata.md`, Obs 372, and
+`reports/gs-tile-pool-mapping-2026-05-28.md`.
 
 ### 2026-07-28 — Preregistration-attribution corrections (D17 audit)
 

@@ -1,6 +1,6 @@
 # Empirical GS sub-phase mapping
 
-> **Last revised**: 2026-05-28 (initial publication). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-07-30 (quoted "1 of 10" FDR-survivor figure flagged as a source misreport; correct figure 0 of 10). See [§ Changelog](#changelog) for revision history.
 
 Empirical mapping of `results/gold-standard-*` and `results/gs-*` / `*-gs4`
 sub-directories to their evaluation tile pools, with anchored evidence
@@ -43,7 +43,10 @@ pool** — pre-dating Era 1 — used in the exploratory Phase 2 work
 52)"), which records the explicit shift from the "60-tile validation
 holdout" to the **340-tile** corpus (= Era 1) on 2026-03-15, citing
 "wide confidence intervals (F1 CI width ~0.22)" and "only 1 of 10
-Phase 2a comparisons" surviving FDR correction. Prior obs entries in
+Phase 2a comparisons" surviving FDR correction (the quoted survivor
+figure is a misreport in the source block — the correct figure is 0 of
+10, `results/phase2a-analysis-report.json`; corrected 2026-07-30, see
+Obs 372 and the E36 correction block). Prior obs entries in
 `working-notes.md:1732, 1740, 1756, 2176, 2306` corroborate the
 60-tile pool's identity: it was `validation_bounds.geojson` (legacy,
 not the present-day 384/full_evaluation_bounds), 20-tile calibration
@@ -196,6 +199,23 @@ subdirectories share.
 - Project memory: `~/personal-assistant/memories/memories.jsonl` lines 10446, 10455, 11038, 11072, 11075, 11791, 11792, 11793
 
 ## Changelog
+
+### 2026-07-30 — Quoted FDR-survivor figure flagged as source misreport (Session 121)
+
+**Refresh trigger**: the Phase 1 verification campaign established that
+the working-notes block this report quotes (§ 2's anchor,
+`working-notes.md:3383–3406`) misreports the Phase 2a FDR outcome; PI
+handling at `reports/verification/phase2-rulings-2026-07-30.md` § 1d.
+
+| before | after |
+| :--- | :--- |
+| quoted "only 1 of 10 Phase 2a comparisons" surviving, unqualified | quotation retained, flagged as a source misreport; correct figure 0 of 10 (`results/phase2a-analysis-report.json`) |
+
+What did NOT change: the tile-pool mapping itself, all nine subdir
+assignments, and the Era taxonomy — the quoted figure was anchoring
+evidence for the *timing* of the 60→340 shift, which stands. Companion
+corrections: the E36 correction block, Obs 372, and
+`reports/experimental-progression.md`.
 
 ### 2026-05-28 — Original publication
 
