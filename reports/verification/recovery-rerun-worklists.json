@@ -1,0 +1,551 @@
+{
+ "_README": "Per-pass dead-tile worklists for the E71 recovery rerun (PI ruling 2026-07-30, phase2-rulings S 2.2: 'Erratum + fixes + rerun to sweep up failed tiles (through usual API-gate process...)'). Derived from the detection GeoJSONs' processed_tiles (charter S 4 authority #1), cross-checked against .tiles.json sidecars. Committed with the rule-10 registration BEFORE any API call.",
+ "generated_at": "2026-07-30T03:36:24.460370+00:00",
+ "passes": [
+  {
+   "pass_id": "pv-diag-384::flash-high-image-n5-image-t0.0::run1",
+   "run_dir": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/run_1",
+   "group": "live-pv-diag-t0.0",
+   "model": "gemini-3-flash-preview (HIGH, T=0.0, image)",
+   "n_dead": 16,
+   "dead_tiles": [
+    "K-35-052-4_32635_x0_y2352.png",
+    "K-35-052-4_32635_x2016_y0.png",
+    "K-35-052-4_32635_x336_y2352.png",
+    "K-35-052-4_32635_x3696_y0.png",
+    "K-35-053-3_Elenovo_x336_y1344.png",
+    "K-35-053-3_Elenovo_x672_y2352.png",
+    "K-35-062-2_Rakovski_x0_y1344.png",
+    "K-35-062-2_Rakovski_x0_y2352.png",
+    "K-35-062-2_Rakovski_x1008_y336.png",
+    "K-35-062-2_Rakovski_x2016_y672.png",
+    "K-35-062-2_Rakovski_x3696_y1008.png",
+    "K-35-062-2_Rakovski_x4032_y336.png",
+    "K-35-078-1_Lesovo_x0_y2688.png",
+    "K-35-078-1_Lesovo_x0_y672.png",
+    "K-35-078-1_Lesovo_x336_y336.png",
+    "K-35-078-1_Lesovo_x3696_y2352.png"
+   ],
+   "diagnostics": {
+    "n_processed": 471,
+    "geojsons": [
+     "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/run_1/detections-library_plus-hp-3-flash-2026-04-16.geojson"
+    ],
+    "derivation": "corpus = pool-union of sibling records (487) minus GeoJSON processed_tiles (authority #1)"
+   }
+  },
+  {
+   "pass_id": "pv-diag-384::flash-high-image-n5-image-t0.0::run2",
+   "run_dir": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/run_2",
+   "group": "live-pv-diag-t0.0",
+   "model": "gemini-3-flash-preview (HIGH, T=0.0, image)",
+   "n_dead": 34,
+   "dead_tiles": [
+    "K-35-052-4_32635_x0_y2352.png",
+    "K-35-052-4_32635_x1008_y3024.png",
+    "K-35-052-4_32635_x2016_y0.png",
+    "K-35-052-4_32635_x336_y2016.png",
+    "K-35-052-4_32635_x336_y2352.png",
+    "K-35-052-4_32635_x3696_y0.png",
+    "K-35-053-3_Elenovo_x1344_y3360.png",
+    "K-35-053-3_Elenovo_x1680_y1008.png",
+    "K-35-053-3_Elenovo_x1680_y3360.png",
+    "K-35-053-3_Elenovo_x3024_y1680.png",
+    "K-35-053-3_Elenovo_x3360_y1680.png",
+    "K-35-053-3_Elenovo_x336_y1344.png",
+    "K-35-053-3_Elenovo_x3696_y2688.png",
+    "K-35-053-3_Elenovo_x4032_y3024.png",
+    "K-35-053-3_Elenovo_x672_y2352.png",
+    "K-35-062-2_Rakovski_x0_y1344.png",
+    "K-35-062-2_Rakovski_x0_y2352.png",
+    "K-35-062-2_Rakovski_x1008_y1008.png",
+    "K-35-062-2_Rakovski_x1008_y336.png",
+    "K-35-062-2_Rakovski_x1344_y336.png",
+    "K-35-062-2_Rakovski_x2016_y672.png",
+    "K-35-062-2_Rakovski_x3360_y2688.png",
+    "K-35-062-2_Rakovski_x336_y1344.png",
+    "K-35-062-2_Rakovski_x3696_y1008.png",
+    "K-35-062-2_Rakovski_x4032_y336.png",
+    "K-35-078-1_Lesovo_x0_y2688.png",
+    "K-35-078-1_Lesovo_x0_y672.png",
+    "K-35-078-1_Lesovo_x1008_y2352.png",
+    "K-35-078-1_Lesovo_x1680_y2016.png",
+    "K-35-078-1_Lesovo_x1680_y2688.png",
+    "K-35-078-1_Lesovo_x3360_y1680.png",
+    "K-35-078-1_Lesovo_x336_y0.png",
+    "K-35-078-1_Lesovo_x336_y336.png",
+    "K-35-078-1_Lesovo_x3696_y2352.png"
+   ],
+   "diagnostics": {
+    "n_processed": 453,
+    "geojsons": [
+     "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/run_2/detections-library_plus-hp-3-flash-2026-04-16.geojson"
+    ],
+    "derivation": "corpus = sidecar completed\u222afailed (487) minus GeoJSON processed_tiles (authority #1)"
+   }
+  },
+  {
+   "pass_id": "pv-diag-384::flash-high-image-n5-image-t0.0::run3",
+   "run_dir": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/run_3",
+   "group": "live-pv-diag-t0.0",
+   "model": "gemini-3-flash-preview (HIGH, T=0.0, image)",
+   "n_dead": 34,
+   "dead_tiles": [
+    "K-35-052-4_32635_x0_y2352.png",
+    "K-35-052-4_32635_x1008_y3024.png",
+    "K-35-052-4_32635_x2016_y0.png",
+    "K-35-052-4_32635_x336_y2016.png",
+    "K-35-052-4_32635_x336_y2352.png",
+    "K-35-052-4_32635_x3696_y0.png",
+    "K-35-053-3_Elenovo_x1344_y3360.png",
+    "K-35-053-3_Elenovo_x1680_y1008.png",
+    "K-35-053-3_Elenovo_x1680_y3360.png",
+    "K-35-053-3_Elenovo_x3024_y1680.png",
+    "K-35-053-3_Elenovo_x3360_y1680.png",
+    "K-35-053-3_Elenovo_x336_y1344.png",
+    "K-35-053-3_Elenovo_x3696_y2688.png",
+    "K-35-053-3_Elenovo_x4032_y3024.png",
+    "K-35-053-3_Elenovo_x672_y2352.png",
+    "K-35-062-2_Rakovski_x0_y1344.png",
+    "K-35-062-2_Rakovski_x0_y2352.png",
+    "K-35-062-2_Rakovski_x1008_y1008.png",
+    "K-35-062-2_Rakovski_x1008_y336.png",
+    "K-35-062-2_Rakovski_x1344_y336.png",
+    "K-35-062-2_Rakovski_x2016_y672.png",
+    "K-35-062-2_Rakovski_x3360_y2688.png",
+    "K-35-062-2_Rakovski_x336_y1344.png",
+    "K-35-062-2_Rakovski_x3696_y1008.png",
+    "K-35-062-2_Rakovski_x4032_y336.png",
+    "K-35-078-1_Lesovo_x0_y2688.png",
+    "K-35-078-1_Lesovo_x0_y672.png",
+    "K-35-078-1_Lesovo_x1008_y2352.png",
+    "K-35-078-1_Lesovo_x1680_y2016.png",
+    "K-35-078-1_Lesovo_x1680_y2688.png",
+    "K-35-078-1_Lesovo_x3360_y1680.png",
+    "K-35-078-1_Lesovo_x336_y0.png",
+    "K-35-078-1_Lesovo_x336_y336.png",
+    "K-35-078-1_Lesovo_x3696_y2352.png"
+   ],
+   "diagnostics": {
+    "n_processed": 453,
+    "geojsons": [
+     "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/run_3/detections-library_plus-hp-3-flash-2026-04-16.geojson"
+    ],
+    "derivation": "corpus = sidecar completed\u222afailed (487) minus GeoJSON processed_tiles (authority #1)"
+   }
+  },
+  {
+   "pass_id": "pv-diag-384::flash-high-text-n5-text-t0.0::run1",
+   "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/run_1",
+   "group": "live-pv-diag-t0.0",
+   "model": "gemini-3-flash-preview (HIGH, T=0.0, text)",
+   "n_dead": 19,
+   "dead_tiles": [
+    "K-35-052-4_32635_x3696_y336.png",
+    "K-35-053-3_Elenovo_x0_y1680.png",
+    "K-35-053-3_Elenovo_x1680_y3360.png",
+    "K-35-053-3_Elenovo_x3024_y1008.png",
+    "K-35-053-3_Elenovo_x4032_y3024.png",
+    "K-35-062-2_Rakovski_x1680_y2688.png",
+    "K-35-062-2_Rakovski_x336_y1344.png",
+    "K-35-062-2_Rakovski_x4032_y2016.png",
+    "K-35-078-1_Lesovo_x1344_y2688.png",
+    "K-35-078-1_Lesovo_x2016_y2688.png",
+    "K-35-078-1_Lesovo_x2016_y3024.png",
+    "K-35-078-1_Lesovo_x2016_y336.png",
+    "K-35-078-1_Lesovo_x2016_y672.png",
+    "K-35-078-1_Lesovo_x2352_y672.png",
+    "K-35-078-1_Lesovo_x2688_y0.png",
+    "K-35-078-1_Lesovo_x3024_y0.png",
+    "K-35-078-1_Lesovo_x3696_y1344.png",
+    "K-35-078-1_Lesovo_x672_y1680.png",
+    "K-35-078-1_Lesovo_x672_y2688.png"
+   ],
+   "diagnostics": {
+    "n_processed": 468,
+    "geojsons": [
+     "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/run_1/detections-detect_brief-text-3-flash-2026-04-17.geojson"
+    ],
+    "derivation": "corpus = sidecar completed\u222afailed (487) minus GeoJSON processed_tiles (authority #1)"
+   }
+  },
+  {
+   "pass_id": "pv-diag-384::flash-high-text-n5-text-t0.0::run2",
+   "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/run_2",
+   "group": "live-pv-diag-t0.0",
+   "model": "gemini-3-flash-preview (HIGH, T=0.0, text)",
+   "n_dead": 20,
+   "dead_tiles": [
+    "K-35-052-4_32635_x3696_y336.png",
+    "K-35-053-3_Elenovo_x0_y1680.png",
+    "K-35-053-3_Elenovo_x1680_y3360.png",
+    "K-35-053-3_Elenovo_x3024_y1008.png",
+    "K-35-053-3_Elenovo_x4032_y3024.png",
+    "K-35-062-2_Rakovski_x336_y1344.png",
+    "K-35-062-2_Rakovski_x4032_y2016.png",
+    "K-35-062-2_Rakovski_x672_y0.png",
+    "K-35-078-1_Lesovo_x1344_y2352.png",
+    "K-35-078-1_Lesovo_x1344_y2688.png",
+    "K-35-078-1_Lesovo_x2016_y2688.png",
+    "K-35-078-1_Lesovo_x2016_y3024.png",
+    "K-35-078-1_Lesovo_x2016_y336.png",
+    "K-35-078-1_Lesovo_x2352_y1008.png",
+    "K-35-078-1_Lesovo_x2352_y672.png",
+    "K-35-078-1_Lesovo_x2688_y0.png",
+    "K-35-078-1_Lesovo_x3024_y0.png",
+    "K-35-078-1_Lesovo_x3696_y1344.png",
+    "K-35-078-1_Lesovo_x672_y1680.png",
+    "K-35-078-1_Lesovo_x672_y2688.png"
+   ],
+   "diagnostics": {
+    "n_processed": 467,
+    "geojsons": [
+     "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/run_2/detections-detect_brief-text-3-flash-2026-04-17.geojson"
+    ],
+    "derivation": "corpus = sidecar completed\u222afailed (487) minus GeoJSON processed_tiles (authority #1)"
+   }
+  },
+  {
+   "pass_id": "pv-diag-384::flash-high-text-n5-text-t0.0::run3",
+   "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/run_3",
+   "group": "live-pv-diag-t0.0",
+   "model": "gemini-3-flash-preview (HIGH, T=0.0, text)",
+   "n_dead": 20,
+   "dead_tiles": [
+    "K-35-052-4_32635_x3696_y336.png",
+    "K-35-053-3_Elenovo_x0_y1680.png",
+    "K-35-053-3_Elenovo_x1680_y3360.png",
+    "K-35-053-3_Elenovo_x3024_y1008.png",
+    "K-35-053-3_Elenovo_x4032_y3024.png",
+    "K-35-062-2_Rakovski_x1680_y2688.png",
+    "K-35-062-2_Rakovski_x3360_y1008.png",
+    "K-35-062-2_Rakovski_x336_y1344.png",
+    "K-35-062-2_Rakovski_x4032_y2016.png",
+    "K-35-062-2_Rakovski_x672_y0.png",
+    "K-35-078-1_Lesovo_x1344_y2688.png",
+    "K-35-078-1_Lesovo_x2016_y2688.png",
+    "K-35-078-1_Lesovo_x2016_y3024.png",
+    "K-35-078-1_Lesovo_x2016_y336.png",
+    "K-35-078-1_Lesovo_x2352_y672.png",
+    "K-35-078-1_Lesovo_x2688_y0.png",
+    "K-35-078-1_Lesovo_x3024_y0.png",
+    "K-35-078-1_Lesovo_x3696_y1344.png",
+    "K-35-078-1_Lesovo_x672_y1680.png",
+    "K-35-078-1_Lesovo_x672_y2688.png"
+   ],
+   "diagnostics": {
+    "n_processed": 467,
+    "geojsons": [
+     "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/run_3/detections-detect_brief-text-3-flash-2026-04-17.geojson"
+    ],
+    "derivation": "corpus = sidecar completed\u222afailed (487) minus GeoJSON processed_tiles (authority #1)"
+   }
+  },
+  {
+   "pass_id": "n1-outstanding-384::pro-image-high-t0::run1",
+   "run_dir": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_1",
+   "group": "n1-outstanding-pro",
+   "model": "gemini-3.1-pro-preview (HIGH, T=0.0, image)",
+   "n_dead": 15,
+   "dead_tiles": [
+    "K-35-052-4_32635_x2016_y0.png",
+    "K-35-052-4_32635_x3360_y3024.png",
+    "K-35-052-4_32635_x336_y2352.png",
+    "K-35-053-3_Elenovo_x3024_y1680.png",
+    "K-35-053-3_Elenovo_x3696_y2688.png",
+    "K-35-053-3_Elenovo_x672_y2352.png",
+    "K-35-062-2_Rakovski_x0_y2352.png",
+    "K-35-062-2_Rakovski_x0_y2688.png",
+    "K-35-062-2_Rakovski_x2016_y0.png",
+    "K-35-062-2_Rakovski_x3024_y0.png",
+    "K-35-062-2_Rakovski_x3024_y2688.png",
+    "K-35-062-2_Rakovski_x336_y1344.png",
+    "K-35-062-2_Rakovski_x3696_y2352.png",
+    "K-35-078-1_Lesovo_x4032_y672.png",
+    "K-35-078-1_Lesovo_x672_y1680.png"
+   ],
+   "diagnostics": {
+    "n_processed": 472,
+    "geojsons": [
+     "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_1/detections_pro-image-high-t0_run01.geojson"
+    ],
+    "derivation": "corpus = sidecar completed\u222afailed (487) minus GeoJSON processed_tiles (authority #1)"
+   }
+  },
+  {
+   "pass_id": "n1-outstanding-384::pro-image-high-t0::run2",
+   "run_dir": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_2",
+   "group": "n1-outstanding-pro",
+   "model": "gemini-3.1-pro-preview (HIGH, T=0.0, image)",
+   "n_dead": 19,
+   "dead_tiles": [
+    "K-35-052-4_32635_x3360_y3024.png",
+    "K-35-052-4_32635_x336_y2352.png",
+    "K-35-052-4_32635_x336_y336.png",
+    "K-35-053-3_Elenovo_x3024_y1680.png",
+    "K-35-053-3_Elenovo_x3696_y2688.png",
+    "K-35-053-3_Elenovo_x672_y2352.png",
+    "K-35-062-2_Rakovski_x0_y2352.png",
+    "K-35-062-2_Rakovski_x0_y2688.png",
+    "K-35-062-2_Rakovski_x1680_y3024.png",
+    "K-35-062-2_Rakovski_x2016_y0.png",
+    "K-35-062-2_Rakovski_x2688_y1344.png",
+    "K-35-062-2_Rakovski_x3024_y0.png",
+    "K-35-062-2_Rakovski_x3024_y2688.png",
+    "K-35-062-2_Rakovski_x336_y1344.png",
+    "K-35-062-2_Rakovski_x3696_y2352.png",
+    "K-35-078-1_Lesovo_x1680_y3360.png",
+    "K-35-078-1_Lesovo_x3696_y672.png",
+    "K-35-078-1_Lesovo_x4032_y672.png",
+    "K-35-078-1_Lesovo_x672_y1680.png"
+   ],
+   "diagnostics": {
+    "n_processed": 468,
+    "geojsons": [
+     "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_2/detections_pro-image-high-t0_run02.geojson"
+    ],
+    "derivation": "corpus = sidecar completed\u222afailed (487) minus GeoJSON processed_tiles (authority #1)"
+   }
+  },
+  {
+   "pass_id": "n1-outstanding-384::pro-image-high-t0::run3",
+   "run_dir": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_3",
+   "group": "n1-outstanding-pro",
+   "model": "gemini-3.1-pro-preview (HIGH, T=0.0, image)",
+   "n_dead": 17,
+   "dead_tiles": [
+    "K-35-052-4_32635_x0_y2352.png",
+    "K-35-052-4_32635_x2016_y0.png",
+    "K-35-052-4_32635_x336_y2352.png",
+    "K-35-052-4_32635_x336_y336.png",
+    "K-35-053-3_Elenovo_x3696_y2688.png",
+    "K-35-053-3_Elenovo_x672_y2352.png",
+    "K-35-062-2_Rakovski_x0_y2352.png",
+    "K-35-062-2_Rakovski_x0_y2688.png",
+    "K-35-062-2_Rakovski_x2016_y0.png",
+    "K-35-062-2_Rakovski_x2688_y1344.png",
+    "K-35-062-2_Rakovski_x3024_y0.png",
+    "K-35-062-2_Rakovski_x336_y1344.png",
+    "K-35-062-2_Rakovski_x3696_y2352.png",
+    "K-35-078-1_Lesovo_x1680_y3360.png",
+    "K-35-078-1_Lesovo_x3696_y672.png",
+    "K-35-078-1_Lesovo_x4032_y672.png",
+    "K-35-078-1_Lesovo_x672_y1680.png"
+   ],
+   "diagnostics": {
+    "n_processed": 470,
+    "geojsons": [
+     "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_3/detections_pro-image-high-t0_run03.geojson"
+    ],
+    "derivation": "corpus = sidecar completed\u222afailed (487) minus GeoJSON processed_tiles (authority #1)"
+   }
+  },
+  {
+   "pass_id": "n1-outstanding-384::pro-text-high-t0::run1",
+   "run_dir": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_1",
+   "group": "n1-outstanding-pro",
+   "model": "gemini-3.1-pro-preview (HIGH, T=0.0, text)",
+   "n_dead": 29,
+   "dead_tiles": [
+    "K-35-052-4_32635_x0_y3360.png",
+    "K-35-052-4_32635_x1680_y3360.png",
+    "K-35-052-4_32635_x336_y672.png",
+    "K-35-052-4_32635_x3696_y0.png",
+    "K-35-052-4_32635_x4032_y2016.png",
+    "K-35-052-4_32635_x672_y2352.png",
+    "K-35-053-3_Elenovo_x1680_y3360.png",
+    "K-35-053-3_Elenovo_x672_y2352.png",
+    "K-35-062-2_Rakovski_x2352_y3360.png",
+    "K-35-062-2_Rakovski_x672_y0.png",
+    "K-35-078-1_Lesovo_x0_y336.png",
+    "K-35-078-1_Lesovo_x0_y672.png",
+    "K-35-078-1_Lesovo_x1344_y1680.png",
+    "K-35-078-1_Lesovo_x1344_y2688.png",
+    "K-35-078-1_Lesovo_x1680_y3360.png",
+    "K-35-078-1_Lesovo_x2016_y2688.png",
+    "K-35-078-1_Lesovo_x2016_y336.png",
+    "K-35-078-1_Lesovo_x2016_y672.png",
+    "K-35-078-1_Lesovo_x2688_y1344.png",
+    "K-35-078-1_Lesovo_x2688_y3024.png",
+    "K-35-078-1_Lesovo_x2688_y672.png",
+    "K-35-078-1_Lesovo_x3024_y0.png",
+    "K-35-078-1_Lesovo_x336_y1680.png",
+    "K-35-078-1_Lesovo_x336_y336.png",
+    "K-35-078-1_Lesovo_x3696_y1680.png",
+    "K-35-078-1_Lesovo_x3696_y2016.png",
+    "K-35-078-1_Lesovo_x3696_y2352.png",
+    "K-35-078-1_Lesovo_x3696_y2688.png",
+    "K-35-078-1_Lesovo_x672_y2688.png"
+   ],
+   "diagnostics": {
+    "n_processed": 458,
+    "geojsons": [
+     "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_1/detections_pro-text-high-t0_run01.geojson"
+    ],
+    "derivation": "corpus = sidecar completed\u222afailed (487) minus GeoJSON processed_tiles (authority #1)"
+   }
+  },
+  {
+   "pass_id": "n1-outstanding-384::pro-text-high-t0::run2",
+   "run_dir": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_2",
+   "group": "n1-outstanding-pro",
+   "model": "gemini-3.1-pro-preview (HIGH, T=0.0, text)",
+   "n_dead": 29,
+   "dead_tiles": [
+    "K-35-052-4_32635_x0_y2352.png",
+    "K-35-052-4_32635_x0_y3360.png",
+    "K-35-052-4_32635_x336_y672.png",
+    "K-35-052-4_32635_x672_y2352.png",
+    "K-35-053-3_Elenovo_x1680_y3360.png",
+    "K-35-053-3_Elenovo_x3696_y3024.png",
+    "K-35-053-3_Elenovo_x672_y2352.png",
+    "K-35-062-2_Rakovski_x1344_y1008.png",
+    "K-35-062-2_Rakovski_x1680_y672.png",
+    "K-35-062-2_Rakovski_x2352_y3360.png",
+    "K-35-078-1_Lesovo_x1344_y1680.png",
+    "K-35-078-1_Lesovo_x1344_y2688.png",
+    "K-35-078-1_Lesovo_x1680_y3024.png",
+    "K-35-078-1_Lesovo_x1680_y3360.png",
+    "K-35-078-1_Lesovo_x2016_y1008.png",
+    "K-35-078-1_Lesovo_x2016_y2352.png",
+    "K-35-078-1_Lesovo_x2016_y336.png",
+    "K-35-078-1_Lesovo_x2016_y672.png",
+    "K-35-078-1_Lesovo_x2352_y672.png",
+    "K-35-078-1_Lesovo_x2688_y2352.png",
+    "K-35-078-1_Lesovo_x2688_y3024.png",
+    "K-35-078-1_Lesovo_x2688_y672.png",
+    "K-35-078-1_Lesovo_x3024_y0.png",
+    "K-35-078-1_Lesovo_x3360_y1008.png",
+    "K-35-078-1_Lesovo_x336_y336.png",
+    "K-35-078-1_Lesovo_x3696_y1680.png",
+    "K-35-078-1_Lesovo_x3696_y2352.png",
+    "K-35-078-1_Lesovo_x3696_y2688.png",
+    "K-35-078-1_Lesovo_x672_y2688.png"
+   ],
+   "diagnostics": {
+    "n_processed": 458,
+    "geojsons": [
+     "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_2/detections_pro-text-high-t0_run02.geojson"
+    ],
+    "derivation": "corpus = sidecar completed\u222afailed (487) minus GeoJSON processed_tiles (authority #1)"
+   }
+  },
+  {
+   "pass_id": "n1-outstanding-384::pro-text-high-t0::run3",
+   "run_dir": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_3",
+   "group": "n1-outstanding-pro",
+   "model": "gemini-3.1-pro-preview (HIGH, T=0.0, text)",
+   "n_dead": 27,
+   "dead_tiles": [
+    "K-35-052-4_32635_x0_y2352.png",
+    "K-35-052-4_32635_x1344_y0.png",
+    "K-35-052-4_32635_x672_y2352.png",
+    "K-35-053-3_Elenovo_x1680_y3360.png",
+    "K-35-053-3_Elenovo_x672_y2352.png",
+    "K-35-062-2_Rakovski_x1344_y1008.png",
+    "K-35-062-2_Rakovski_x2016_y0.png",
+    "K-35-062-2_Rakovski_x2352_y2016.png",
+    "K-35-062-2_Rakovski_x672_y0.png",
+    "K-35-078-1_Lesovo_x0_y2352.png",
+    "K-35-078-1_Lesovo_x0_y336.png",
+    "K-35-078-1_Lesovo_x1344_y1680.png",
+    "K-35-078-1_Lesovo_x1344_y2688.png",
+    "K-35-078-1_Lesovo_x1680_y1680.png",
+    "K-35-078-1_Lesovo_x2016_y1008.png",
+    "K-35-078-1_Lesovo_x2016_y336.png",
+    "K-35-078-1_Lesovo_x2016_y672.png",
+    "K-35-078-1_Lesovo_x2352_y672.png",
+    "K-35-078-1_Lesovo_x2688_y1344.png",
+    "K-35-078-1_Lesovo_x2688_y2352.png",
+    "K-35-078-1_Lesovo_x2688_y672.png",
+    "K-35-078-1_Lesovo_x3360_y2016.png",
+    "K-35-078-1_Lesovo_x3696_y1680.png",
+    "K-35-078-1_Lesovo_x3696_y2352.png",
+    "K-35-078-1_Lesovo_x3696_y2688.png",
+    "K-35-078-1_Lesovo_x3696_y672.png",
+    "K-35-078-1_Lesovo_x672_y2688.png"
+   ],
+   "diagnostics": {
+    "n_processed": 460,
+    "geojsons": [
+     "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_3/detections_pro-text-high-t0_run03.geojson"
+    ],
+    "derivation": "corpus = sidecar completed\u222afailed (487) minus GeoJSON processed_tiles (authority #1)"
+   }
+  },
+  {
+   "pass_id": "e47-propose-brief::propose_brief-text::run4",
+   "run_dir": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_4",
+   "group": "single-tile",
+   "model": "gemini-3-flash-preview (propose_brief-text)",
+   "n_dead": 7,
+   "dead_tiles": [
+    "K-35-053-3_Elenovo_x1680_y3360.png",
+    "K-35-053-3_Elenovo_x3024_y3696.png",
+    "K-35-053-3_Elenovo_x3360_y0.png",
+    "K-35-053-3_Elenovo_x3696_y0.png",
+    "K-35-062-2_Rakovski_x1680_y0.png",
+    "K-35-062-2_Rakovski_x3024_y3696.png",
+    "K-35-078-1_Lesovo_x1344_y2688.png"
+   ],
+   "diagnostics": {
+    "n_processed": 480,
+    "geojsons": [
+     "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_4/detections-propose_brief-text-3-flash-2026-04-09.geojson"
+    ],
+    "derivation": "corpus = sidecar completed\u222afailed (487) minus GeoJSON processed_tiles (authority #1)"
+   }
+  },
+  {
+   "pass_id": "h12-v2::r3-hp-heavy::run3",
+   "run_dir": "outputs/h12-v2/r3-hp-heavy/run_3",
+   "group": "single-tile",
+   "model": "gemini-3-flash-preview (era-3)",
+   "n_dead": 1,
+   "dead_tiles": [
+    "K-35-053-3_Elenovo_x672_y3360.png"
+   ],
+   "diagnostics": {
+    "n_processed": 326,
+    "geojsons": [
+     "outputs/h12-v2/r3-hp-heavy/run_3/detections-detect_h12_r3-hp-heavy_v2-3-flash-2026-04-15.geojson"
+    ],
+    "derivation": "corpus = sidecar completed\u222afailed (327) minus GeoJSON processed_tiles (authority #1)"
+   }
+  },
+  {
+   "pass_id": "h12-v2::r3-hp-heavy::run5",
+   "run_dir": "outputs/h12-v2/r3-hp-heavy/run_5",
+   "group": "single-tile",
+   "model": "gemini-3-flash-preview (era-3)",
+   "n_dead": 1,
+   "dead_tiles": [
+    "K-35-062-2_Rakovski_x4032_y336.png"
+   ],
+   "diagnostics": {
+    "n_processed": 326,
+    "geojsons": [
+     "outputs/h12-v2/r3-hp-heavy/run_5/detections-detect_h12_r3-hp-heavy_v2-3-flash-2026-04-15.geojson"
+    ],
+    "derivation": "corpus = sidecar completed\u222afailed (327) minus GeoJSON processed_tiles (authority #1)"
+   }
+  },
+  {
+   "pass_id": "flash35-pv-2x2::flash35-min-text-1of10::run3",
+   "run_dir": "outputs/flash35-pv-2x2/proposer/run_3",
+   "group": "single-tile",
+   "model": "gemini-3.5-flash (minimal, text)",
+   "n_dead": 0,
+   "dead_tiles": [],
+   "diagnostics": {
+    "n_processed": 487,
+    "geojsons": [
+     "outputs/flash35-pv-2x2/proposer/run_3/detections-detect_brief-text-3.5-flash-2026-06-10.geojson",
+     "outputs/flash35-pv-2x2/proposer/run_3/detections-detect_brief-text-3.5-flash-2026-06-11.geojson"
+    ],
+    "derivation": "corpus = pool-union of sibling records (487) minus GeoJSON processed_tiles (authority #1)"
+   }
+  }
+ ],
+ "total_dead_tiles": 288
+}
