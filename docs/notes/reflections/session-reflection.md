@@ -7652,8 +7652,7 @@ correction; the user framed it as an analytical-scope decision
 that pre-dated the preference change. The user's framing was
 better and more accurate.
 
-### Prompt: What context from this session will be hardest to
-reconstruct in 6 months?
+### Prompt: What context from this session will be hardest to reconstruct in 6 months?
 
 The chain of evidence for why `verified_detections.geojson` has
 exactly 250 features — and why that number IS and IS NOT a bug
