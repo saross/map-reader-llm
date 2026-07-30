@@ -1143,6 +1143,7 @@ def _retry_tile_sync(
     prompt_config: dict,
     examples: list[dict],
     max_output_tokens_override: int | None = None,
+    service_tier: str | None = None,
 ) -> dict | None:
     """
     Retry a single parse-failed tile via synchronous API call.
@@ -1163,6 +1164,8 @@ def _retry_tile_sync(
             ``max_output_tokens`` from prompt_config. Used by
             safe-mode retries to constrain thinking budget and
             prevent output truncation.
+        service_tier: Optional service tier for the call (``"flex"``
+            for the 50 % off-peak tier). ``None`` uses standard.
 
     Returns:
         A result dict matching the batch response format, or ``None``
@@ -1237,6 +1240,10 @@ def _retry_tile_sync(
             gen_config_kwargs["thinking_config"] = types.ThinkingConfig(
                 thinking_level=thinking_level.upper(),
             )
+        # Flex processing (50% discount, off-peak capacity) — standing PI
+        # instruction 2026-07-30: always run in flex mode.
+        if service_tier is not None:
+            gen_config_kwargs["service_tier"] = service_tier
         gen_config = types.GenerateContentConfig(**gen_config_kwargs)
 
         response = client.models.generate_content(
@@ -2020,6 +2027,7 @@ def patch_failed_tiles(
     max_attempts: int = MAX_SYNC_RETRIES,
     dry_run: bool = False,
     tiles_dir: Path | None = None,
+    service_tier: str | None = "flex",
 ) -> dict:
     """
     Patch failed tiles in a completed execution unit.
@@ -2049,6 +2057,9 @@ def patch_failed_tiles(
         tiles_dir: Directory containing tile subdirectories. Defaults
             to ``TILES_DIR`` from config when not specified. Override
             for studies using non-default tile sizes (e.g. 384px).
+        service_tier: Service tier for the sync retries. Defaults to
+            ``"flex"`` (50 % discount, off-peak capacity — standing PI
+            instruction 2026-07-30); pass ``None`` for standard tier.
 
     Returns:
         Dictionary with ``recovered``, ``recovered_safe_mode``,
@@ -2186,6 +2197,7 @@ def patch_failed_tiles(
                         system_instruction=system_instruction,
                         prompt_config=prompt_config,
                         examples=examples,
+                        service_tier=service_tier,
                     )
                     if result is not None:
                         retry_matched = {tile_name: result}
@@ -2233,6 +2245,7 @@ def patch_failed_tiles(
                         prompt_config=prompt_config,
                         examples=examples,
                         max_output_tokens_override=max_output_tokens,
+                        service_tier=service_tier,
                     )
                     if result is not None:
                         retry_matched = {tile_name: result}
