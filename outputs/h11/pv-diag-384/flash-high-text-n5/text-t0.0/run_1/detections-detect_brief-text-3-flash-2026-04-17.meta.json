@@ -2,7 +2,7 @@
   "run_id": "226ad4bd-81f0-4a6c-a195-330d5d5ab295",
   "timestamp": {
     "start": "2026-04-17T06:15:09.967224+00:00",
-    "end": "2026-04-17T06:31:02.790757+00:00",
+    "end": "2026-07-30T04:56:46.435537+00:00",
     "duration_seconds": 952.823533
   },
   "environment": {
@@ -125,8 +125,8 @@
     }
   },
   "execution_stats": {
-    "items_processed": 468,
-    "items_failed": 19,
+    "items_processed": 484,
+    "items_failed": 3,
     "items_skipped": 0,
     "retries_total": 488,
     "retries_rate_limit": 0,
@@ -609,104 +609,28 @@
       "K-35-078-1_Lesovo_x1680_y1680.png",
       "K-35-078-1_Lesovo_x0_y3024.png",
       "K-35-053-3_Elenovo_x4032_y2352.png",
-      "K-35-078-1_Lesovo_x2352_y1008.png"
+      "K-35-078-1_Lesovo_x2352_y1008.png",
+      "K-35-062-2_Rakovski_x4032_y2016.png",
+      "K-35-062-2_Rakovski_x336_y1344.png",
+      "K-35-053-3_Elenovo_x3024_y1008.png",
+      "K-35-078-1_Lesovo_x672_y1680.png",
+      "K-35-062-2_Rakovski_x1680_y2688.png",
+      "K-35-078-1_Lesovo_x1344_y2688.png",
+      "K-35-078-1_Lesovo_x2016_y2688.png",
+      "K-35-053-3_Elenovo_x4032_y3024.png",
+      "K-35-078-1_Lesovo_x3696_y1344.png",
+      "K-35-078-1_Lesovo_x2688_y0.png",
+      "K-35-078-1_Lesovo_x3024_y0.png",
+      "K-35-078-1_Lesovo_x672_y2688.png",
+      "K-35-053-3_Elenovo_x0_y1680.png",
+      "K-35-078-1_Lesovo_x2352_y672.png",
+      "K-35-078-1_Lesovo_x2016_y336.png",
+      "K-35-078-1_Lesovo_x2016_y3024.png"
     ],
     "failed_items": [
-      {
-        "item_id": "K-35-053-3_Elenovo_x0_y1680.png",
-        "reason": "Retries Exhausted / Invalid Finish Reason",
-        "timestamp": "2026-04-17T06:27:56.586272+00:00"
-      },
-      {
-        "item_id": "K-35-052-4_32635_x3696_y336.png",
-        "reason": "Retries Exhausted / Invalid Finish Reason",
-        "timestamp": "2026-04-17T06:28:06.042563+00:00"
-      },
-      {
-        "item_id": "K-35-062-2_Rakovski_x4032_y2016.png",
-        "reason": "Retries Exhausted / Invalid Finish Reason",
-        "timestamp": "2026-04-17T06:28:40.672401+00:00"
-      },
-      {
-        "item_id": "K-35-053-3_Elenovo_x1680_y3360.png",
-        "reason": "Retries Exhausted / Invalid Finish Reason",
-        "timestamp": "2026-04-17T06:28:47.958684+00:00"
-      },
-      {
-        "item_id": "K-35-078-1_Lesovo_x2352_y672.png",
-        "reason": "Retries Exhausted / Invalid Finish Reason",
-        "timestamp": "2026-04-17T06:28:49.983745+00:00"
-      },
-      {
-        "item_id": "K-35-062-2_Rakovski_x336_y1344.png",
-        "reason": "Retries Exhausted / Invalid Finish Reason",
-        "timestamp": "2026-04-17T06:28:52.450217+00:00"
-      },
-      {
-        "item_id": "K-35-053-3_Elenovo_x3024_y1008.png",
-        "reason": "Retries Exhausted / Invalid Finish Reason",
-        "timestamp": "2026-04-17T06:28:54.610139+00:00"
-      },
-      {
-        "item_id": "K-35-078-1_Lesovo_x2016_y672.png",
-        "reason": "Retries Exhausted / Invalid Finish Reason",
-        "timestamp": "2026-04-17T06:28:58.062071+00:00"
-      },
-      {
-        "item_id": "K-35-078-1_Lesovo_x672_y1680.png",
-        "reason": "Retries Exhausted / Invalid Finish Reason",
-        "timestamp": "2026-04-17T06:29:01.667135+00:00"
-      },
-      {
-        "item_id": "K-35-062-2_Rakovski_x1680_y2688.png",
-        "reason": "Retries Exhausted / Invalid Finish Reason",
-        "timestamp": "2026-04-17T06:29:17.088697+00:00"
-      },
-      {
-        "item_id": "K-35-078-1_Lesovo_x2016_y336.png",
-        "reason": "Retries Exhausted / Invalid Finish Reason",
-        "timestamp": "2026-04-17T06:29:35.768951+00:00"
-      },
-      {
-        "item_id": "K-35-078-1_Lesovo_x2016_y3024.png",
-        "reason": "Retries Exhausted / Invalid Finish Reason",
-        "timestamp": "2026-04-17T06:29:47.908273+00:00"
-      },
-      {
-        "item_id": "K-35-078-1_Lesovo_x1344_y2688.png",
-        "reason": "Retries Exhausted / Invalid Finish Reason",
-        "timestamp": "2026-04-17T06:29:53.020303+00:00"
-      },
-      {
-        "item_id": "K-35-078-1_Lesovo_x2016_y2688.png",
-        "reason": "Retries Exhausted / Invalid Finish Reason",
-        "timestamp": "2026-04-17T06:30:06.677497+00:00"
-      },
-      {
-        "item_id": "K-35-053-3_Elenovo_x4032_y3024.png",
-        "reason": "Retries Exhausted / Invalid Finish Reason",
-        "timestamp": "2026-04-17T06:30:13.248803+00:00"
-      },
-      {
-        "item_id": "K-35-078-1_Lesovo_x3696_y1344.png",
-        "reason": "Retries Exhausted / Invalid Finish Reason",
-        "timestamp": "2026-04-17T06:30:17.559183+00:00"
-      },
-      {
-        "item_id": "K-35-078-1_Lesovo_x2688_y0.png",
-        "reason": "Retries Exhausted / Invalid Finish Reason",
-        "timestamp": "2026-04-17T06:30:18.011367+00:00"
-      },
-      {
-        "item_id": "K-35-078-1_Lesovo_x3024_y0.png",
-        "reason": "Retries Exhausted / Invalid Finish Reason",
-        "timestamp": "2026-04-17T06:30:35.098220+00:00"
-      },
-      {
-        "item_id": "K-35-078-1_Lesovo_x672_y2688.png",
-        "reason": "Retries Exhausted / Invalid Finish Reason",
-        "timestamp": "2026-04-17T06:31:02.747588+00:00"
-      }
+      "K-35-052-4_32635_x3696_y336.png",
+      "K-35-053-3_Elenovo_x1680_y3360.png",
+      "K-35-078-1_Lesovo_x2016_y672.png"
     ],
     "retry_details": [
       {
@@ -4145,7 +4069,7 @@
     }
   },
   "results_summary": {
-    "total_detections": 1092,
+    "total_detections": 1133,
     "class_counts": {
       "burial_mound": 833,
       "triangulation_mound": 125,
@@ -30958,5 +30882,39 @@
     "avg_latency_seconds": 52.93,
     "peak_wait_seconds": 0.0,
     "elapsed_seconds": 952.6
-  }
+  },
+  "recovery_history": [
+    {
+      "timestamp": "2026-07-30T04:56:46.435756+00:00",
+      "initial_failed": 19,
+      "recovered": 16,
+      "still_failing": 3,
+      "still_failing_ids": [
+        "K-35-052-4_32635_x3696_y336.png",
+        "K-35-053-3_Elenovo_x1680_y3360.png",
+        "K-35-078-1_Lesovo_x2016_y672.png"
+      ],
+      "recovered_ids": [
+        "K-35-053-3_Elenovo_x0_y1680.png",
+        "K-35-053-3_Elenovo_x3024_y1008.png",
+        "K-35-053-3_Elenovo_x4032_y3024.png",
+        "K-35-062-2_Rakovski_x1680_y2688.png",
+        "K-35-062-2_Rakovski_x336_y1344.png",
+        "K-35-062-2_Rakovski_x4032_y2016.png",
+        "K-35-078-1_Lesovo_x1344_y2688.png",
+        "K-35-078-1_Lesovo_x2016_y2688.png",
+        "K-35-078-1_Lesovo_x2016_y3024.png",
+        "K-35-078-1_Lesovo_x2016_y336.png",
+        "K-35-078-1_Lesovo_x2352_y672.png",
+        "K-35-078-1_Lesovo_x2688_y0.png",
+        "K-35-078-1_Lesovo_x3024_y0.png",
+        "K-35-078-1_Lesovo_x3696_y1344.png",
+        "K-35-078-1_Lesovo_x672_y1680.png",
+        "K-35-078-1_Lesovo_x672_y2688.png"
+      ],
+      "recovery_cost_usd": 0.0,
+      "recovery_duration_seconds": 0.0,
+      "recovery_run_id": null
+    }
+  ]
 }

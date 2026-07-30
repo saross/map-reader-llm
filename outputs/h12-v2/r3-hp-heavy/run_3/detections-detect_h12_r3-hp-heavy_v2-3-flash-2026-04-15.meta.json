@@ -2,7 +2,7 @@
   "run_id": "cc37a65e-329f-4df6-9356-adc51271b80d",
   "timestamp": {
     "start": "2026-04-15T13:54:07.743482+00:00",
-    "end": "2026-04-15T13:56:49.789532+00:00",
+    "end": "2026-07-30T05:07:39.135028+00:00",
     "duration_seconds": 162.04605
   },
   "environment": {
@@ -126,8 +126,8 @@
     }
   },
   "execution_stats": {
-    "items_processed": 326,
-    "items_failed": 1,
+    "items_processed": 327,
+    "items_failed": 0,
     "items_skipped": 0,
     "retries_total": 3,
     "retries_rate_limit": 0,
@@ -466,15 +466,10 @@
       "K-35-053-3_Elenovo_x336_y1344.png",
       "K-35-078-1_Lesovo_x1344_y2352.png",
       "K-35-078-1_Lesovo_x672_y672.png",
-      "K-35-078-1_Lesovo_x672_y2352.png"
+      "K-35-078-1_Lesovo_x672_y2352.png",
+      "K-35-053-3_Elenovo_x672_y3360.png"
     ],
-    "failed_items": [
-      {
-        "item_id": "K-35-053-3_Elenovo_x672_y3360.png",
-        "reason": "JSON Parse Error: Expecting ',' delimiter: line 8 column 12 (char 94)",
-        "timestamp": "2026-04-15T13:54:57.982851+00:00"
-      }
-    ],
+    "failed_items": [],
     "retry_details": [
       {
         "item_id": "K-35-052-4_32635_x2352_y1680.png",
@@ -21811,5 +21806,20 @@
     "avg_latency_seconds": 38.07,
     "peak_wait_seconds": 0.0,
     "elapsed_seconds": 156.8
-  }
+  },
+  "recovery_history": [
+    {
+      "timestamp": "2026-07-30T05:07:39.135262+00:00",
+      "initial_failed": 1,
+      "recovered": 1,
+      "still_failing": 0,
+      "still_failing_ids": [],
+      "recovered_ids": [
+        "K-35-053-3_Elenovo_x672_y3360.png"
+      ],
+      "recovery_cost_usd": 0.0,
+      "recovery_duration_seconds": 0.0,
+      "recovery_run_id": null
+    }
+  ]
 }
