@@ -117,6 +117,46 @@ before launch.
 
 ## Changelog
 
+### 2026-07-30 — Deep sweeps EXECUTED: +10 recovered; residue final at 6 unique tiles; the F1 prediction miss RESOLVED at full coverage
+
+**Sweep A** (10 + 10 ladder, flex): **+10 tiles recovered, all at
+original parameters** — the deeper tier-1 roll paid off; safe mode
+added nothing. **Sweep B** (5 + 5, safe mode halved to 1024): **zero**
+further recoveries. Final recovery: **265/288 (92.0 %)**; spend for
+both sweeps well under US$1.
+
+**The permanent residue collapses to 6 unique tiles** (23 pass-level
+failures): `K-35-053-3_Elenovo_x672_y2352` fails in **9 independent
+passes** across two pools and both prompt modalities;
+`K-35-052-4_32635_x0_y2352` in 4; `K-35-078-1_Lesovo_x2016_y672` in 4;
+`K-35-052-4_32635_x3696_y336` in 3; `K-35-062-2_Rakovski_x1008_y336`
+in 2; `K-35-053-3_Elenovo_x1680_y1008` in 1. Each has now survived
+~33–48 cumulative attempts across four campaigns (the original run
+ladder, the 3+3 first rerun, 10+10, and 5+5@1024), immune to output
+budget in both directions — **tile-intrinsic truncation pathology**,
+consistent with extreme feature density.
+
+**Final pipeline state** (consensus re-materialised, both live cells
+re-evaluated; manifests regenerated — exactly the 7 sweep-A-touched
+pass rows updated):
+
+| cell (@20 m) | pre-recovery | post-sweep-1 | **final** | net |
+| --- | --- | --- | --- | --- |
+| image 1of3 F1 | 0.4883 | 0.4985 | **0.4970** | **+0.0087** |
+| image 1of3 recall | 0.6943 | 0.7563 | **0.7563** | +0.0620 |
+| image 1of3 MCC | 0.4848 | 0.4671 | **0.4671** | −0.0177 |
+| text 3of3 F1 | 0.6051 | 0.6003 | **0.6109** | **+0.0058** |
+| text 3of3 recall | 0.8207 | 0.8391 | **0.8644** | +0.0437 |
+| text 3of3 MCC | 0.4500 | 0.4298 | **0.4318** | −0.0182 |
+
+**The § 4 prediction-miss is resolved**: at final coverage F1 rose in
+BOTH cells, so the rise-or-hold prediction holds — the text cell's
+interim dip was an artefact of incomplete recovery, not a stable
+property. What persists: precision slightly down and tile-MCC modestly
+down in both cells (recovered tiles add detections on previously-empty
+tiles, some false), consistent with the feature-density selection
+effect on which tiles fail.
+
 ### 2026-07-30 — Scope extension registered: deeper sweep of the 33-tile residue (PI-approved)
 
 PI ruling (verbatim): "yes, I'd like a deeper sweep before we give up."

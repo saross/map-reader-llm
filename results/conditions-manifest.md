@@ -2,7 +2,7 @@
 
 # Conditions manifest
 
-> Generated 2026-07-30T05:29:45Z · 322 row(s) · schema v1.0.
+> Generated 2026-07-30T08:29:16Z · 322 row(s) · schema v1.0.
 >
 > **Coverage**: 322 condition(s) across the decomposed runs (sub-step 3b in progress).
 
@@ -140,14 +140,14 @@
 | pv-diag-384::baseline-pro-image-medium-t-0-0 | single-pass | none | — | 1 | 0.6555 | 0.8677 | — |
 | pv-diag-384::baseline-pro-text-high-t-0-7 | single-pass | none | — | 1 | 0.745 | 0.7465 | — |
 | pv-diag-384::baseline-pro-text-medium-t-0-0 | single-pass | none | — | 1 | 0.7921 | 0.7903 | — |
-| pv-diag-384::flash-high-image-n5-image-t0.0-consensus-1of3 | consensus | consensus | 1 | 3 | 0.4985 | 0.4671 | 885 |
+| pv-diag-384::flash-high-image-n5-image-t0.0-consensus-1of3 | consensus | consensus | 1 | 3 | 0.497 | 0.4671 | 889 |
 | pv-diag-384::flash-high-image-n5-image-t0.3-consensus-9of10 | consensus | consensus | 9 | 10 | 0.7312 | 0.6834 | 361 |
 | pv-diag-384::flash-high-image-n5-image-t0.3-consensus-n5-5of5 | consensus | consensus | 5 | 5 | 0.7119 | 0.6803 | 346 |
 | pv-diag-384::flash-high-image-n5-image-t0.7-consensus-7of10 | consensus | consensus | 7 | 10 | 0.75 | 0.6784 | 405 |
 | pv-diag-384::flash-high-image-n5-image-t0.7-consensus-n5-3of5 | consensus | consensus | 3 | 5 | 0.7269 | 0.6648 | 506 |
 | pv-diag-384::flash-high-image-n5-image-t1.0-consensus-6of10 | consensus | consensus | 6 | 10 | 0.735 | 0.6456 | 433 |
 | pv-diag-384::flash-high-image-n5-image-t1.0-consensus-n5-4of5 | consensus | consensus | 4 | 5 | 0.697 | 0.6559 | 357 |
-| pv-diag-384::flash-high-text-n5-text-t0.0-consensus-3of3 | consensus | consensus | 3 | 3 | 0.6003 | 0.4298 | 781 |
+| pv-diag-384::flash-high-text-n5-text-t0.0-consensus-3of3 | consensus | consensus | 3 | 3 | 0.6109 | 0.4318 | 796 |
 | pv-diag-384::flash-high-text-n5-text-t0.3-consensus-10of10 | consensus | consensus | 10 | 10 | 0.7891 | 0.5874 | 409 |
 | pv-diag-384::flash-high-text-n5-text-t0.3-consensus-n5-5of5 | consensus | consensus | 5 | 5 | 0.7696 | 0.5571 | 498 |
 | pv-diag-384::flash-high-text-n5-text-t0.7-consensus-26of30 | consensus | consensus | 26 | 30 | 0.8141 | 0.6204 | 415 |

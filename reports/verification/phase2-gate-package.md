@@ -55,22 +55,25 @@ scoping, now E71, generator fixed), and 3 sided with the source.
    resolved the outcome-material fork to the conservative branch: under
    the draft's default (the p = 0.006 level pair) H1 would have
    survived. H2 carries the falsified-directional rider everywhere.
-6. **The E71 recovery rerun — EXECUTED** (same day; PI-approved with a
-   standing all-flex instruction; dry-run + `/audit-config` READY
-   first): **255/288 tiles recovered**, 33 permanently failed
-   (deterministic truncation residue), 0 unit errors, all
-   `gemini-3-flash-preview` at flex — the PI's pre-gate
+6. **The E71 recovery rerun — EXECUTED, including PI-directed deep
+   sweeps** (dry-run + `/audit-config` READY first; all flex per the
+   standing instruction): first pass 255/288, then sweep A (10+10
+   ladder) **+10 more — final 265/288 (92.0 %)**; sweep B (safe mode
+   halved to 1024) recovered nothing. The PI's pre-gate
    model-consistency check caught that the six "pro-*" shortfall
-   passes are the E57 mis-dispatched FLASH corners, collapsing the
-   estimate to ~US$2–4. Post-recovery pipeline complete: consensus
-   re-materialised, both live cells re-evaluated
-   (`results/recovery-reeval-2026-07-30/`, 2026-06-05 evals preserved),
-   manifests regenerated (15 pass rows updated, 3 now fully `ok`),
-   ledger rows c2-discharge-0003/0004. **Prediction partially missed
-   and recorded**: recall rose in both cells as predicted, but the
-   text 3-of-3 cell's F1 declined 0.005 (precision-driven —
-   truncation-death tiles are feature-dense and FP-rich; registration
-   changelog has the full pre/post table).
+   passes are the E57 mis-dispatched FLASH corners (all-Flash run,
+   ~US$3–5 total incl. sweeps). **The permanent residue is 6 unique
+   tiles** (23 pass-level failures; the worst fails in 9 independent
+   passes across pools and modalities) — tile-intrinsic truncation
+   pathology after ~33–48 cumulative attempts each. Post-recovery
+   pipeline complete at final coverage: consensus re-materialised,
+   both live cells re-evaluated, manifests regenerated, ledger rows
+   c2-discharge-0003/0004/0005. **At final coverage F1 rose in BOTH
+   live cells** (image +0.0087, text +0.0058 @20 m) — the interim
+   text-cell F1 dip recorded after the first pass was an artefact of
+   incomplete recovery; precision and tile-MCC remain modestly down
+   (feature-dense recovered tiles add some false detections;
+   registration changelog has the full three-state table).
 
 ## 3. The 20-row correction queue — dispositions
 
