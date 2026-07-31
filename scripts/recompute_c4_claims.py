@@ -36,7 +36,12 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from lib_c4_compare import match_at_quoted_precision, parse_value, resolve_path  # noqa: E402
+from lib_c4_compare import (  # noqa: E402
+    match_at_quoted_precision,
+    normalise_path,
+    parse_value,
+    resolve_path,
+)
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_DIR = REPO_ROOT / "reports" / "verification" / "c4-extraction"
@@ -67,21 +72,53 @@ def load_json(relpath: str):
 
 
 def resolve_anchor_value(file: str, path: str):
-    """Resolve a value from an anchor file, honouring the ``len:`` prefix.
+    """Resolve a value from an anchor file.
+
+    Handles, beyond a plain JSONPath: the cross-file ``<file>#<path>``
+    locator form (the named file overrides ``file``); the ``len:``
+    prefix and its corpus spellings (``len($.x)``, ``$.x.length``,
+    ``(array length)`` / ``(distinct count)`` annotations — via
+    :func:`normalise_path`); and ``[*]`` wildcard results, which
+    collapse to a scalar only when every element agrees (a constant
+    asserted across a collection), else fail loudly.
 
     Raises:
         KeyError: On any resolution failure (message says why).
     """
-    take_len = path.startswith("len:")
-    if take_len:
-        path = path[4:]
+    path = path.strip()
+    if "#" in path and not path.startswith(("$", "len:")):
+        override, _, subpath = path.partition("#")
+        if not subpath:
+            raise KeyError(f"file#path locator missing path part: {path!r}")
+        file, path = override.strip(), subpath.strip()
     obj = load_json(file)
-    value = resolve_path(obj, path)
-    if take_len:
+    # Plain resolution first so a genuine key named ``length`` wins;
+    # the length/count spellings are retried only when it fails.
+    collection_op = None
+    try:
+        value = resolve_path(obj, path)
+    except KeyError:
+        stripped, collection_op = normalise_path(path)
+        if collection_op is None:
+            raise
+        value = resolve_path(obj, stripped)
+    if collection_op == "len":
         try:
             return len(value)
         except TypeError as exc:
             raise KeyError(f"len: target not sized ({exc})") from exc
+    if collection_op == "distinct":
+        try:
+            return len(set(value))
+        except TypeError as exc:
+            raise KeyError(f"distinct-count target not hashable ({exc})") from exc
+    if isinstance(value, list):
+        unique = {repr(element) for element in value}
+        if len(unique) == 1:
+            return value[0]
+        raise KeyError(
+            f"[*] resolved {len(value)} elements with {len(unique)} distinct "
+            f"values (a scalar quote needs a constant collection): {path!r}")
     return value
 
 
@@ -106,8 +143,16 @@ def safe_eval(expression: str, names: dict[str, float]) -> float:
     return float(eval(compile(tree, "<expr>", "eval"), {"__builtins__": {}}, names))
 
 
-def compare(quoted_verbatim: str, actual) -> dict:
-    """Compare a source value against a verbatim quote at quoted precision."""
+def compare(quoted_verbatim: str, actual, unit: str | None = None) -> dict:
+    """Compare a source value against a verbatim quote at quoted precision.
+
+    Args:
+        quoted_verbatim: The value span exactly as quoted.
+        actual: The recomputed/read source value.
+        unit: The extraction's ``unit`` field — consulted for the
+            percentage bridge when the verbatim itself lost the sign
+            (a shared ``%`` across a quoted range).
+    """
     quoted = parse_value(quoted_verbatim)
     if quoted is None:
         return {"status": "UNRESOLVED", "reason": f"unparseable quote {quoted_verbatim!r}"}
@@ -117,7 +162,8 @@ def compare(quoted_verbatim: str, actual) -> dict:
         return {"status": "UNRESOLVED", "reason": f"non-numeric source value {actual!r}"}
     result = match_at_quoted_precision(quoted, actual_f)
     # Percentage scale bridge: quoted "92.0 %" vs source fraction 0.9203.
-    if not result["match"] and quoted.is_percentage and abs(actual_f) <= 1.0 < abs(quoted.value):
+    percentish = quoted.is_percentage or (unit or "").strip() == "%"
+    if not result["match"] and percentish and abs(actual_f) <= 1.0 < abs(quoted.value):
         rescaled = match_at_quoted_precision(quoted, actual_f * 100.0)
         if rescaled["match"]:
             return {"status": "MATCH", "mode": "percent-rescaled",
@@ -152,13 +198,16 @@ def process_claim(batch: str, index: int, claim: dict) -> list[dict]:
                     row.update(status="UNRESOLVED", reason="read claim without anchor path")
                 else:
                     actual = resolve_anchor_value(anchor["file"], path)
-                    row.update(compare(value["value_verbatim"], actual))
-            else:  # arithmetic
-                operands = (anchor.get("operands") if anchor else None) or []
-                expr = (anchor.get("expression") if anchor else None) or ""
+                    row.update(compare(value["value_verbatim"], actual,
+                                       unit=value.get("unit")))
+            else:  # arithmetic — value-level expression (schema 1.1) wins
+                source = value if value.get("expression") else (anchor or {})
+                operands = source.get("operands") or []
+                expr = source.get("expression") or ""
                 names = {op["name"]: float(resolve_anchor_value(op["file"], op["path"]))
                          for op in operands}
-                row.update(compare(value["value_verbatim"], safe_eval(expr, names)))
+                row.update(compare(value["value_verbatim"], safe_eval(expr, names),
+                                   unit=value.get("unit")))
         except (KeyError, ValueError, OSError, json.JSONDecodeError) as exc:
             row.update(status="UNRESOLVED", reason=str(exc))
         rows.append(row)

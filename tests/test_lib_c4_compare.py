@@ -9,7 +9,12 @@ from __future__ import annotations
 
 import pytest
 
-from scripts.lib_c4_compare import match_at_quoted_precision, parse_value, resolve_path
+from scripts.lib_c4_compare import (
+    match_at_quoted_precision,
+    normalise_path,
+    parse_value,
+    resolve_path,
+)
 
 
 @pytest.mark.tier1
@@ -101,3 +106,93 @@ def test_resolve_path_failures_name_the_step(path):
     doc = {"results": {"20m": {"f1": 1.0}}, "tiers": []}
     with pytest.raises(KeyError):
         resolve_path(doc, path)
+
+
+# --- Session-123 extensions (mismatch-triage-2026-07-31 repairs) ---
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(
+    "verbatim,value,dp",
+    [
+        ("30m", 30.0, 0),        # unit suffix (metres)
+        ("6 px", 6.0, 0),
+        ("1.7×", 1.7, 1),        # multiplication sign suffix
+        ("2.5x", 2.5, 1),
+        ("N=5", 5.0, 0),         # label prefixes
+        ("T=0.3", 0.3, 1),
+        ("K=30", 30.0, 0),
+        ("eight", 8.0, 0),       # spelled-out counts
+        ("Zero", 0.0, 0),
+    ],
+)
+def test_parse_value_units_prefixes_words(verbatim, value, dp):
+    parsed = parse_value(verbatim)
+    assert parsed is not None, verbatim
+    assert parsed.value == pytest.approx(value)
+    assert parsed.decimal_places == dp
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("bad", ["10k", "1.2 K", "3M", "6–10", "thirteen"])
+def test_parse_value_rejects_multipliers_and_ranges(bad):
+    # Magnitude suffixes are multipliers, not units — a mantissa-only
+    # parse would manufacture false MISMATCHes; ranges are not scalars.
+    assert parse_value(bad) is None
+
+
+@pytest.mark.tier1
+def test_match_decimal_midpoint_half_up():
+    # Triage row 050#10[0]: artefact 0.9195 legitimately quoted 0.920
+    # (float round() resolves the binary repr down to 0.919).
+    result = match_at_quoted_precision(parse_value("0.920"), 0.9195)
+    assert result["match"] is True
+    assert result["mode"] == "round-half-up"
+    # A genuine mismatch stays a mismatch under the new mode.
+    assert match_at_quoted_precision(parse_value("0.92"), 0.9149)["match"] is False
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(
+    "path,clean,op",
+    [
+        ("len:$.features", "$.features", "len"),
+        ("len($.results)", "$.results", "len"),
+        ("count($.pairwise)", "$.pairwise", "len"),
+        ("$.candidates.length()", "$.candidates", "len"),
+        ("$.features.length", "$.features", "len"),
+        ("$.cells (array length)", "$.cells", "len"),
+        ("$.features[*].properties.map_name (distinct count)",
+         "$.features[*].properties.map_name", "distinct"),
+        ("$.summary.f1", "$.summary.f1", None),
+    ],
+)
+def test_normalise_path_length_spellings(path, clean, op):
+    assert normalise_path(path) == (clean, op)
+
+
+@pytest.mark.tier1
+def test_resolve_path_filters_and_wildcard():
+    doc = {
+        "cells": [
+            {"name": "TH7-k3", "f1_50": 0.8425, "tier": 1},
+            {"name": "TM-k3", "f1_50": 0.8127, "tier": 3},
+        ],
+        "buffers": [{"n_tiles": 487}, {"n_tiles": 487}],
+        "mixed": [{"v": 1}, {"v": 2}],
+    }
+    assert resolve_path(doc, "$.cells[?(@.name=='TH7-k3')].f1_50") == 0.8425
+    assert resolve_path(doc, "$.cells[?(@.tier==1)].name") == "TH7-k3"
+    assert resolve_path(doc, "$.buffers[*].n_tiles") == [487, 487]
+    assert resolve_path(doc, "$.mixed[*].v") == [1, 2]
+    with pytest.raises(KeyError):  # 0 filter hits
+        resolve_path(doc, "$.cells[?(@.name=='absent')].f1_50")
+    with pytest.raises(KeyError):  # ambiguous: two elements match
+        resolve_path(doc, "$.buffers[?(@.n_tiles==487)]")
+
+
+@pytest.mark.tier1
+def test_resolve_path_filter_boolean_literal():
+    doc = {"pairwise": [{"significant": True, "pair": "a-b"},
+                        {"significant": False, "pair": "c-d"}]}
+    assert resolve_path(doc, "$.pairwise[?(@.significant == true)].pair") == "a-b"

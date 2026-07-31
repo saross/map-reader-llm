@@ -117,20 +117,27 @@ def validate_file(path: Path, validator: jsonschema.Draft202012Validator) -> lis
             continue
         if not (REPO_ROOT / anchor["file"]).exists():
             errors.append(f"{tag}: anchor file missing: {anchor['file']}")
-        if "arithmetic" in effective:
-            expr = anchor.get("expression")
-            operands = anchor.get("operands") or []
+        # Each effective-arithmetic value needs an expression: its own
+        # (schema 1.1 per-value form) or the claim anchor's (legal for
+        # exactly one derived value per claim).
+        for j, value in enumerate(claim["values"]):
+            if (value.get("method") or method) != "arithmetic":
+                continue
+            source = value if value.get("expression") else anchor
+            expr = source.get("expression")
+            operands = source.get("operands") or []
             if not expr or not operands:
-                errors.append(f"{tag}: arithmetic requires expression + operands")
-            else:
-                names = {op["name"] for op in operands}
-                used = set(_VAR_RE.findall(expr))
-                if not used <= names:
-                    errors.append(f"{tag}: expression vars {sorted(used - names)} "
-                                  "missing from operands")
-                for op in operands:
-                    if not (REPO_ROOT / op["file"]).exists():
-                        errors.append(f"{tag}: operand file missing: {op['file']}")
+                errors.append(f"{tag}: arithmetic requires expression + operands"
+                              f" (values[{j}])")
+                continue
+            names = {op["name"] for op in operands}
+            used = set(_VAR_RE.findall(expr))
+            if not used <= names:
+                errors.append(f"{tag}: expression vars {sorted(used - names)} "
+                              f"missing from operands (values[{j}])")
+            for op in operands:
+                if not (REPO_ROOT / op["file"]).exists():
+                    errors.append(f"{tag}: operand file missing: {op['file']}")
     return errors
 
 

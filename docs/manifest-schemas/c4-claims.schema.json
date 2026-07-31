@@ -5,7 +5,7 @@
   "description": "One file per hand-written mine document, produced by the Phase 3 extraction fleet (planning/audit-charter.md § 7 Phase 3; instrument: reports/verification/apparatus/c4-extraction-instructions.md). Each claim is a verbatim contiguous span containing one or more numeric values, with a proposed anchor to the least-writable artefact that can verify it (charter § 5 rule 1). Claim ids are assigned at assembly, not extraction. The recompute harness consumes these files and emits the diff report that generate_c4_ledger.py turns into ledger rows.",
   "type": "object",
   "properties": {
-    "schema_version": { "const": "1.0" },
+    "schema_version": { "enum": ["1.0", "1.1"] },
     "extracted_at": { "$ref": "common-defs.schema.json#/$defs/isoDateTime" },
     "source_document": {
       "type": "object",
@@ -87,6 +87,24 @@
                 "type": ["string", "null"],
                 "enum": ["read", "arithmetic", "recompute-script", "regen-diff", "historical", "unverifiable-era", "external", "anchor-unknown", null],
                 "description": "Per-value method override for mixed spans (e.g. a delta beside a permutation p). Null = use the claim-level method."
+              },
+              "expression": {
+                "type": ["string", "null"],
+                "description": "Schema 1.1: per-value arithmetic expression, for spans carrying more than one derived value (each needs its own derivation — the claim-level anchor.expression can cover only one). Same grammar as anchor.expression."
+              },
+              "operands": {
+                "type": ["array", "null"],
+                "description": "Schema 1.1: named operands for this value's expression; same shape as anchor.operands.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string", "pattern": "^[a-z]$" },
+                    "file": { "type": "string" },
+                    "path": { "type": "string" }
+                  },
+                  "required": ["name", "file", "path"],
+                  "additionalProperties": false
+                }
               }
             },
             "required": ["quantity", "value_verbatim", "value_parsed", "unit", "kind", "path", "method"],

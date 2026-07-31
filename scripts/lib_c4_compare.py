@@ -16,6 +16,7 @@ harness script owns file loading and report writing.
 
 from __future__ import annotations
 
+import decimal
 import math
 import re
 from dataclasses import dataclass
@@ -28,8 +29,26 @@ _VALUE_RE = re.compile(
     r"(?P<currency>(?:US)?\$|€|£)?\s*"
     r"(?P<digits>\d{1,3}(?:,\d{3})+|\d+)"
     r"(?P<frac>\.\d+)?"
-    r"\s*(?P<pct>%)?\s*$"
+    r"\s*(?P<pct>%)?"
+    r"(?P<unit>\s*[A-Za-z×]{1,12})?\s*$"
 )
+
+# Label prefixes the corpus quotes verbatim ("N=5", "T=0.3", "K=30"):
+# the label carries no numeric content — strip before parsing.
+_LABEL_PREFIX_RE = re.compile(r"^\s*[A-Za-z]{1,4}\s*=\s*")
+
+# Spelled-out counts appear in prose claims ("eight cells"); the map is
+# closed and unambiguous, so parsing them stays mechanical.
+_NUMBER_WORDS = {
+    "zero": 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
+    "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10,
+    "eleven": 11, "twelve": 12,
+}
+
+# Bare magnitude suffixes ("10k", "1.2 K", "3M") are multipliers, not
+# units — comparing the mantissa alone would produce a false MISMATCH,
+# so these spans are rejected (stay UNRESOLVED for triage).
+_MULTIPLIER_SUFFIXES = {"k", "K", "M", "B"}
 
 
 @dataclass(frozen=True)
@@ -63,8 +82,15 @@ def parse_value(verbatim: str) -> ParsedValue | None:
     Returns:
         ParsedValue, or None when the span is not a single numeric value.
     """
-    match = _VALUE_RE.match(verbatim)
+    word = _NUMBER_WORDS.get(verbatim.strip().lower())
+    if word is not None:
+        return ParsedValue(value=float(word), decimal_places=0, approx=False,
+                           is_percentage=False, currency=None)
+    match = _VALUE_RE.match(_LABEL_PREFIX_RE.sub("", verbatim))
     if not match:
+        return None
+    unit = (match.group("unit") or "").strip()
+    if unit in _MULTIPLIER_SUFFIXES:
         return None
     digits = match.group("digits").replace(",", "")
     frac = match.group("frac") or ""
@@ -113,6 +139,15 @@ def match_at_quoted_precision(quoted: ParsedValue, actual: float) -> dict:
     truncated = math.trunc(actual * 10**dp) / 10**dp
     if f"{truncated:.{dp}f}" == f"{quoted.value:.{dp}f}":
         return {"match": True, "mode": "truncate", "actual": actual, "abs_error": abs_error}
+    # Decimal-midpoint half-up ("0.9195" quoted as "0.920"): float
+    # round() resolves the binary representation downward, but half-up
+    # on the shortest decimal repr is a legitimate corpus convention.
+    half_up = decimal.Decimal(repr(actual)).quantize(
+        decimal.Decimal(1).scaleb(-dp), rounding=decimal.ROUND_HALF_UP
+    )
+    if f"{half_up:.{dp}f}" == f"{quoted.value:.{dp}f}":
+        return {"match": True, "mode": "round-half-up", "actual": actual,
+                "abs_error": abs_error}
     if quoted.approx:
         return {"match": False, "mode": "approx", "actual": actual, "abs_error": abs_error}
     return {"match": False, "mode": "mismatch", "actual": actual, "abs_error": abs_error}
@@ -122,22 +157,84 @@ _PATH_TOKEN = re.compile(
     r"\.(?P<name>[A-Za-z_][\w-]*)"      # .name
     r"|\[(?P<index>-?\d+)\]"            # [3] / [-1]
     r"|\[(?P<q>['\"])(?P<key>.*?)(?P=q)\]"  # ['key'] / [\"key\"]
+    r"|\[\?\(@\.(?P<fkey>[\w-]+)\s*==\s*"   # [?(@.key == literal)]
+    r"(?P<fq>['\"])?(?P<fval>(?(fq)[^'\"]*|[^)\]]+))(?(fq)(?P=fq))\)\]"
+    r"|\[(?P<star>\*)\]"                # [*]
 )
+
+# Extraction agents spell "count this collection" four ways beyond the
+# harness's native ``len:`` prefix; normalise rather than re-extract.
+_LEN_WRAPPER_RE = re.compile(r"^\s*(?:len|count)\(\s*(?P<inner>\$.*?)\s*\)\s*$")
+_LEN_SUFFIX_RE = re.compile(r"^(?P<stem>\$.*?)\.length(?:\(\))?\s*$")
+_ANNOTATION_RE = re.compile(
+    r"^(?P<stem>\$.*?)\s+\((?P<op>array length|distinct count)\)\s*$"
+)
+
+
+def normalise_path(path: str) -> tuple[str, str | None]:
+    """Rewrite corpus length/count spellings onto a canonical form.
+
+    Recognised, in order: a ``len:`` prefix (native), ``len($.x)`` /
+    ``count($.x)`` wrappers, an ``$.x.length`` / ``$.x.length()``
+    suffix, and trailing ``(array length)`` / ``(distinct count)``
+    annotations.
+
+    Args:
+        path: A raw locator as extracted.
+
+    Returns:
+        ``(clean_path, collection_op)`` where ``collection_op`` is
+        ``None``, ``"len"``, or ``"distinct"``.
+    """
+    if path.startswith("len:"):
+        return path[4:], "len"
+    match = _LEN_WRAPPER_RE.match(path)
+    if match:
+        return match.group("inner"), "len"
+    match = _ANNOTATION_RE.match(path)
+    if match:
+        op = "distinct" if match.group("op") == "distinct count" else "len"
+        return match.group("stem"), op
+    match = _LEN_SUFFIX_RE.match(path)
+    if match:
+        return match.group("stem"), "len"
+    return path, None
+
+
+_FILTER_LITERALS = {"true": True, "false": False, "null": None}
+
+
+def _parse_filter_literal(raw: str, quoted: bool):
+    """Parse the right-hand side of a ``[?(@.key == …)]`` filter."""
+    if quoted:
+        return raw
+    token = raw.strip()
+    if token in _FILTER_LITERALS:
+        return _FILTER_LITERALS[token]
+    try:
+        return int(token)
+    except ValueError:
+        try:
+            return float(token)
+        except ValueError:
+            return token
 
 
 def resolve_path(obj, path: str):
     """Resolve a minimal JSONPath-ish locator against loaded JSON.
 
-    Supports ``$`` root, dotted names, integer indices, and quoted
-    string keys — the forms the extraction instrument allows (e.g.
-    ``$.results['20m'].f1``, ``$.tiers[0].conditions[2].f1_at_20m``).
+    Supports ``$`` root, dotted names, integer indices, quoted string
+    keys, single-key equality filters (``$.cells[?(@.name=='TH7-k3')]``,
+    exactly one element must match), and the ``[*]`` wildcard (the rest
+    of the path maps over every element and a plain ``list`` of results
+    is returned — the caller owns any collapse rule).
 
     Args:
         obj: Parsed JSON object.
         path: Locator beginning with ``$``.
 
     Returns:
-        The resolved value.
+        The resolved value (a list when the path contains ``[*]``).
 
     Raises:
         KeyError: When the path does not start with ``$``, has trailing
@@ -152,6 +249,27 @@ def resolve_path(obj, path: str):
         if not match:
             raise KeyError(f"unparseable path segment at {path[pos:]!r} in {path!r}")
         pos = match.end()
+        if match.group("star") is not None:
+            if not isinstance(current, list):
+                raise KeyError(f"[*] applied to non-list in {path!r}")
+            rest = path[pos:]
+            if not rest:
+                return list(current)
+            return [resolve_path(element, "$" + rest) for element in current]
+        if match.group("fkey") is not None:
+            if not isinstance(current, list):
+                raise KeyError(f"filter applied to non-list in {path!r}")
+            fkey = match.group("fkey")
+            fval = _parse_filter_literal(match.group("fval"),
+                                         match.group("fq") is not None)
+            hits = [element for element in current
+                    if isinstance(element, dict) and element.get(fkey) == fval]
+            if len(hits) != 1:
+                raise KeyError(
+                    f"filter @.{fkey}=={fval!r} matched {len(hits)} elements "
+                    f"(need exactly 1) in {path!r}")
+            current = hits[0]
+            continue
         if match.group("name") is not None:
             key = match.group("name")
         elif match.group("index") is not None:
