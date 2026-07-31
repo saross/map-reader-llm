@@ -96,26 +96,31 @@ def enumerate_mine(root: Path) -> list[Path]:
     return sorted(p.relative_to(root) for p in files)
 
 
-def scan_marker(path: Path) -> str | None:
-    """Return the first generation-marker line in the file head, if any.
+def scan_head(path: Path) -> tuple[str | None, str]:
+    """Scan a file head for a generation marker and capture its H1 line.
 
     Args:
         path: Absolute path to a markdown file.
 
     Returns:
-        The matching line (stripped) as evidence, or None.
+        Tuple of (marker line stripped, or None; first line stripped —
+        the H1 signature used by disambiguating rules).
     """
+    marker: str | None = None
+    first_line = ""
     try:
         with path.open(encoding="utf-8", errors="replace") as fh:
-            for _ in range(HEAD_LINES):
+            for i in range(HEAD_LINES):
                 line = fh.readline()
                 if not line:
                     break
-                if MARKER_RE.search(line):
-                    return line.strip()
+                if i == 0:
+                    first_line = line.strip()
+                if marker is None and MARKER_RE.search(line):
+                    marker = line.strip()
     except OSError:
-        return None
-    return None
+        return None, ""
+    return marker, first_line
 
 
 def load_generator_map(map_path: Path) -> list[dict]:
@@ -142,20 +147,27 @@ def load_generator_map(map_path: Path) -> list[dict]:
         if rule["rule_id"] in seen:
             raise ValueError(f"duplicate rule_id {rule['rule_id']}")
         seen.add(rule["rule_id"])
+        if rule.get("stratum", "generated") not in ("generated", "hand-written"):
+            raise ValueError(f"rule {rule['rule_id']}: bad stratum {rule['stratum']!r}")
         try:
             rule["_regex"] = re.compile(rule["match"])
+            rule["_h1_regex"] = re.compile(rule["h1"]) if rule.get("h1") else None
         except re.error as exc:
             raise ValueError(f"rule {rule['rule_id']}: bad regex ({exc})") from exc
     return rules
 
 
-def match_rule(relpath: str, has_marker: bool, rules: list[dict]) -> dict | None:
+def match_rule(relpath: str, has_marker: bool, rules: list[dict],
+               h1: str = "") -> dict | None:
     """Return the first map rule matching a repo-relative path.
 
     Args:
         relpath: Repo-relative POSIX path of the file.
         has_marker: Whether the file head carries a generation marker.
         rules: Rules from :func:`load_generator_map`.
+        h1: The file's first line, for rules carrying an ``h1``
+            signature regex (basename collisions — three scripts write
+            ``tiering_20m.md``; the H1 heading disambiguates).
 
     Returns:
         The matching rule, or None.
@@ -165,8 +177,11 @@ def match_rule(relpath: str, has_marker: bool, rules: list[dict]) -> dict | None
             continue
         if not relpath.startswith(rule["scope"]):
             continue
-        if rule["_regex"].search(relpath):
-            return rule
+        if not rule["_regex"].search(relpath):
+            continue
+        if rule["_h1_regex"] is not None and not rule["_h1_regex"].search(h1):
+            continue
+        return rule
     return None
 
 
@@ -222,17 +237,20 @@ def build_registry(root: Path, map_path: Path) -> dict:
     unattributed: list[str] = []
     for rel in enumerate_mine(root):
         relstr = rel.as_posix()
-        marker = scan_marker(root / rel)
-        rule = match_rule(relstr, marker is not None, rules)
+        marker, h1 = scan_head(root / rel)
+        rule = match_rule(relstr, marker is not None, rules, h1)
         if rule is not None:
+            stratum = rule.get("stratum", "generated")
             entry = {
                 "path": relstr,
-                "stratum": "generated",
+                "stratum": stratum,
                 "rule_id": rule["rule_id"],
-                "generator": rule["generator"],
-                "source_rule": rule["source_rule"],
-                "sources": resolve_sources(root, relstr, rule["source_rule"]),
+                "generator": rule["generator"] if stratum == "generated" else None,
+                "source_rule": rule["source_rule"] if stratum == "generated" else None,
+                "sources": (resolve_sources(root, relstr, rule["source_rule"])
+                            if stratum == "generated" else []),
                 "marker": marker,
+                "hand_edited": bool(rule.get("hand_edited")),
             }
         elif marker is not None:
             unattributed.append(relstr)
@@ -244,6 +262,7 @@ def build_registry(root: Path, map_path: Path) -> dict:
                 "source_rule": None,
                 "sources": [],
                 "marker": marker,
+                "hand_edited": False,
             }
         else:
             entry = {
@@ -254,6 +273,7 @@ def build_registry(root: Path, map_path: Path) -> dict:
                 "source_rule": None,
                 "sources": [],
                 "marker": None,
+                "hand_edited": False,
             }
         entries.append(entry)
 

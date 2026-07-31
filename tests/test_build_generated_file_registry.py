@@ -20,7 +20,7 @@ from scripts.build_generated_file_registry import (
     match_rule,
     registry_body,
     resolve_sources,
-    scan_marker,
+    scan_head,
 )
 
 
@@ -31,19 +31,24 @@ def _write(path: Path, text: str) -> Path:
 
 
 @pytest.mark.tier1
-def test_scan_marker_detects_head_markers(tmp_path):
-    marked = _write(tmp_path / "a.md", "# T\n\n**Generated**: 2026-04-30T06:52:29+00:00\n")
+def test_scan_head_detects_markers_and_h1(tmp_path):
+    marked = _write(tmp_path / "a.md", "# Title\n\n**Generated**: 2026-04-30T06:52:29+00:00\n")
     unmarked = _write(tmp_path / "b.md", "# T\n\nHand-written prose with **Generated**\n")
-    assert scan_marker(marked) == "**Generated**: 2026-04-30T06:52:29+00:00"
+    marker, h1 = scan_head(marked)
+    assert marker == "**Generated**: 2026-04-30T06:52:29+00:00"
+    assert h1 == "# Title"
     # The bare bold word without a colon is not a marker.
-    assert scan_marker(unmarked) is None
+    marker, h1 = scan_head(unmarked)
+    assert marker is None
+    assert h1 == "# T"
 
 
 @pytest.mark.tier1
-def test_scan_marker_ignores_deep_matches(tmp_path):
+def test_scan_head_ignores_deep_matches(tmp_path):
     # A marker beyond the head window must not classify the file.
     body = "# T\n" + "\n" * 20 + "**Generated**: late\n"
-    assert scan_marker(_write(tmp_path / "c.md", body)) is None
+    marker, _ = scan_head(_write(tmp_path / "c.md", body))
+    assert marker is None
 
 
 @pytest.mark.tier1
@@ -67,6 +72,42 @@ def test_match_rule_ordering_scope_and_marker_gate():
     # requires_marker gates the shared-basename rule.
     assert match_rule("results/x/report.md", False, rules) is None
     assert match_rule("results/x/report.md", True, rules)["rule_id"] == "marked-report"
+
+
+@pytest.mark.tier1
+def test_match_rule_h1_signature_disambiguates():
+    # Three scripts write tiering_20m.md; the H1 heading disambiguates
+    # (agent-attributed write sites, Session 122).
+    rules = load_rules([
+        {"rule_id": "tiering-era1", "match": r"(^|/)tiering_20m\.md$",
+         "scope": "results/", "generator": "scripts/era1_leaderboard_tiering.py",
+         "source_rule": "sibling-stem:.json", "h1": r"^# Era-1 leaderboard"},
+        {"rule_id": "tiering-n1", "match": r"(^|/)tiering_20m\.md$",
+         "scope": "results/", "generator": "scripts/n1_baseline_leaderboard_tiering.py",
+         "source_rule": "sibling-stem:.json", "h1": r"^# N=1 baseline leaderboard"},
+    ])
+    era1 = match_rule("results/era1-leaderboard/tiering_20m.md", False, rules,
+                      h1="# Era-1 leaderboard — statistical tiering (20 m)")
+    assert era1["rule_id"] == "tiering-era1"
+    n1 = match_rule("results/paper-eval/n1/tiering/tiering_20m.md", False, rules,
+                    h1="# N=1 baseline leaderboard — statistical tiering (20 m)")
+    assert n1["rule_id"] == "tiering-n1"
+    # No H1 match → no rule (falls through to unattributed/hand-written).
+    assert match_rule("results/x/tiering_20m.md", False, rules, h1="# Other") is None
+
+
+@pytest.mark.tier1
+def test_hand_written_override_rule_beats_marker():
+    # A hand-written file carrying a **Generated** line (e.g.
+    # results/leaderboard/combined/README.md) is forced hand-written by a
+    # stratum-override rule.
+    rules = load_rules([
+        {"rule_id": "combined-readme-hand", "match": r"^results/leaderboard/combined/README\.md$",
+         "scope": "results/leaderboard/combined/", "generator": None,
+         "source_rule": "none", "stratum": "hand-written"},
+    ])
+    rule = match_rule("results/leaderboard/combined/README.md", True, rules, h1="# X")
+    assert rule["stratum"] == "hand-written"
 
 
 def load_rules(rules: list[dict]):
