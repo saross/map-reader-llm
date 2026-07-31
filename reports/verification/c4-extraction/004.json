@@ -1,0 +1,4322 @@
+{
+ "schema_version": "1.1",
+ "extracted_at": "2026-07-31T00:00:00Z",
+ "source_document": {
+  "file": "docs/methodology/n1-baseline-matrix.md",
+  "git_blob": "107ce7c07ff7d5beddb7175d89c7f4105afd85a0",
+  "stratum": "hand-written"
+ },
+ "extractor": {
+  "model": "claude-opus-5[1m]",
+  "instrument_version": "1.2"
+ },
+ "claims": [
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     4,
+     4
+    ],
+    "section": "Revision banner (Last revised)"
+   },
+   "claim_text": "the four anti-diagonal \"Pro\" cells were Flash",
+   "values": [
+    {
+     "quantity": "count of anti-diagonal 'Pro' matrix cells found to have dispatched Flash (errata E57)",
+     "value_verbatim": "four",
+     "value_parsed": 4,
+     "unit": "cells",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/run-conditions.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Count of n1-outstanding-384 baseline conditions whose model_of_record was corrected to gemini-3-flash-preview; requires filtering decomposition['n1-outstanding-384'].conditions, so no single JSONPath resolves it."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     5,
+     5
+    ],
+    "section": "Revision banner (Last revised)"
+   },
+   "claim_text": "all four medium-thinking Pro cells brought to n=3",
+   "values": [
+    {
+     "quantity": "count of medium-thinking Pro cells topped up for n=3 completeness",
+     "value_verbatim": "four",
+     "value_parsed": 4,
+     "unit": "cells",
+     "kind": "count",
+     "path": null,
+     "method": "recompute-script"
+    },
+    {
+     "quantity": "replicate passes per medium-thinking Pro cell after the top-up (exemplar: pro-text-medium-t-0-0)",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": "passes",
+     "kind": "count",
+     "path": "$.summary.n_runs",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+    "path": "$.summary.n_runs"
+   },
+   "method": "read",
+   "notes": "The four medium-thinking Pro cells are pro-text-medium-t-0-0, pro-image-medium-t-0-0 (pv-diag-384) and pro-rerun/pro-text-medium-t-0-7, pro-rerun/pro-image-medium-t-0-7 (n1-pro-rerun-384); the anchor value is the first of these. The count of four cannot be read from a single path."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     6,
+     6
+    ],
+    "section": "Revision banner (Last revised)"
+   },
+   "claim_text": "recovering ~5% unretried tile failures in the pv-diag medium-t-0-0 run_1",
+   "values": [
+    {
+     "quantity": "share of tiles in the pv-diag medium-t-0-0 run_1 passes whose failures were unretried before the recovery top-up",
+     "value_verbatim": "~5%",
+     "value_parsed": 5.0,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Approximate figure; the underlying failure/retry counts are not exposed in any artefact I could locate under results/ (outputs/h11/pv-diag-384 run metas are largely untracked). Restated at line 298. Referred to Obs 338/339 by the document; triage should chase the recovery report."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     7,
+     7
+    ],
+    "section": "Revision banner (Last revised)"
+   },
+   "claim_text": "**7 tiers**; `tie_set` (Tier 1) = **two genuine-Pro text cells at T=0.0**",
+   "values": [
+    {
+     "quantity": "number of statistically distinguishable tiers in the N=1 baseline leaderboard at F1@20 m",
+     "value_verbatim": "7",
+     "value_parsed": 7,
+     "unit": "tiers",
+     "kind": "count",
+     "path": "len:$.tiers",
+     "method": "read"
+    },
+    {
+     "quantity": "number of cells in the Tier-1 tie_set",
+     "value_verbatim": "two",
+     "value_parsed": 2,
+     "unit": "cells",
+     "kind": "count",
+     "path": "len:$.tie_set",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Tiering artefact for the 20 m leaderboard. The tier ordinal 'Tier 1' is an identifier, not extracted."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     8,
+     8
+    ],
+    "section": "Revision banner (Last revised)"
+   },
+   "claim_text": "`pro-text-high-t-0-0` (0.804) + `pro-text-medium-t-0-0` (0.792)",
+   "values": [
+    {
+     "quantity": "F1@20 m, cell pro-text-high-t-0-0 (n1-pro-rerun-384, genuine Pro)",
+     "value_verbatim": "0.804",
+     "value_parsed": 0.804,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@20 m, cell pro-text-medium-t-0-0 (pv-diag-384)",
+     "value_verbatim": "0.792",
+     "value_parsed": 0.792,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-high-t-0-0/evaluation.json",
+    "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
+   },
+   "method": "read",
+   "notes": "The genuine-Pro pro-text-high-t-0-0 eval lives under the pro-rerun/ subdirectory; the same-named top-level slug is the off-board Flash dispatch."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     12,
+     12
+    ],
+    "section": "Purpose"
+   },
+   "claim_text": "cross-architecture single-pass leaderboard at 384 px on the 4-map gold-standard",
+   "values": [
+    {
+     "quantity": "crop/tile size of the baseline matrix evaluation",
+     "value_verbatim": "384",
+     "value_parsed": 384,
+     "unit": "px",
+     "kind": "parameter",
+     "path": "$.metadata.tile_size",
+     "method": "read"
+    },
+    {
+     "quantity": "number of maps in the gold-standard evaluation corpus",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": "maps",
+     "kind": "count",
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson#$.features[*].properties.map_name (distinct count)",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/batch_summary.json",
+    "path": "$.metadata.tile_size"
+   },
+   "method": "read",
+   "notes": "'384 px' is asserted here as the evaluation crop size (a fact), not merely as part of a run name."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     13,
+     13
+    ],
+    "section": "Purpose"
+   },
+   "claim_text": "understands what each of its 18 cells is",
+   "values": [
+    {
+     "quantity": "number of cells in the N=1 baseline matrix",
+     "value_verbatim": "18",
+     "value_parsed": 18,
+     "unit": "cells",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/batch_summary.json",
+    "path": "$.n_conditions"
+   },
+   "method": "read",
+   "notes": "Restated at lines 30, 34, 223, 321."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     28,
+     28
+    ],
+    "section": "1. What the matrix is"
+   },
+   "claim_text": "- **temperature** — 0.0, 0.3, 0.7",
+   "values": [
+    {
+     "quantity": "temperature grid point 1 spanned by the matrix",
+     "value_verbatim": "0.0",
+     "value_parsed": 0.0,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "temperature grid point 2 spanned by the matrix",
+     "value_verbatim": "0.3",
+     "value_parsed": 0.3,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "temperature grid point 3 spanned by the matrix",
+     "value_verbatim": "0.7",
+     "value_parsed": 0.7,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/passes-manifest.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Distinct temperature values across the passes backing the 18 baseline cells; needs a filtered sweep of $.passes[*].temperature restricted to the four source runs, so no single JSONPath resolves it."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     30,
+     30
+    ],
+    "section": "1. What the matrix is"
+   },
+   "claim_text": "the matrix is the **18 cells that exist on disk**",
+   "values": [
+    {
+     "quantity": "number of cells in the N=1 baseline matrix",
+     "value_verbatim": "18",
+     "value_parsed": 18,
+     "unit": "cells",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/batch_summary.json",
+    "path": "$.n_conditions"
+   },
+   "method": "read",
+   "notes": "Duplicate assertion of the 18-cell count."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     34,
+     35
+    ],
+    "section": "1. What the matrix is"
+   },
+   "claim_text": "The 18 cells are **not** a single experimental run. They were collected across\nfour real source runs",
+   "values": [
+    {
+     "quantity": "number of cells in the N=1 baseline matrix",
+     "value_verbatim": "18",
+     "value_parsed": 18,
+     "unit": "cells",
+     "kind": "count",
+     "path": "$.n_conditions",
+     "method": "read"
+    },
+    {
+     "quantity": "number of real source runs the 18 cells were collected across",
+     "value_verbatim": "four",
+     "value_parsed": 4,
+     "unit": "runs",
+     "kind": "count",
+     "path": null,
+     "method": "recompute-script"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/batch_summary.json",
+    "path": "$.n_conditions"
+   },
+   "method": "read",
+   "notes": "The source-run count needs the distinct run keys carrying baseline-* conditions in results/run-conditions.json; no single path resolves it."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     41,
+     41
+    ],
+    "section": "1. What the matrix is"
+   },
+   "claim_text": "| `pv-diag-384` | 10 | the proposer-verifier diagnostic run carries the bulk of the matrix as its single-pass baselines |",
+   "values": [
+    {
+     "quantity": "number of baseline-matrix cells sourced from run pv-diag-384",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": "cells",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/run-conditions.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Count of decomposition['pv-diag-384'].conditions whose label starts with 'baseline-' (the run also carries many non-baseline conditions)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     42,
+     42
+    ],
+    "section": "1. What the matrix is"
+   },
+   "claim_text": "| `n1-outstanding-384` | 3 | the \"outstanding cells\" run — its Flash T=0.3 cells + the 487-tile Flash image baseline |",
+   "values": [
+    {
+     "quantity": "number of baseline-matrix cells sourced from run n1-outstanding-384",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": "cells",
+     "kind": "count",
+     "path": null,
+     "method": "recompute-script"
+    },
+    {
+     "quantity": "tile count of the full 384 px evaluation corpus (Flash image baseline)",
+     "value_verbatim": "487",
+     "value_parsed": 487,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson#len:$.features",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/run-conditions.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "The cell count needs a label-prefix filter over decomposition['n1-outstanding-384'].conditions (which also holds the four off-board Flash cells). '487-tile' is an asserted corpus count, not a name."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     43,
+     43
+    ],
+    "section": "1. What the matrix is"
+   },
+   "claim_text": "| `n1-pro-rerun-384` | 4 | the **genuine-Pro re-run** of the four anti-diagonal corners (E57): text/image × {HIGH-T=0.0, MEDIUM-T=0.7} |",
+   "values": [
+    {
+     "quantity": "number of baseline-matrix cells sourced from run n1-pro-rerun-384",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": "cells",
+     "kind": "count",
+     "path": "len:$.decomposition['n1-pro-rerun-384'].conditions",
+     "method": "read"
+    },
+    {
+     "quantity": "number of anti-diagonal corners re-run as genuine Pro",
+     "value_verbatim": "four",
+     "value_parsed": 4,
+     "unit": "cells",
+     "kind": "count",
+     "path": "len:$.decomposition['n1-pro-rerun-384'].conditions",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/run-conditions.json",
+    "path": "len:$.decomposition['n1-pro-rerun-384'].conditions"
+   },
+   "method": "read",
+   "notes": "n1-pro-rerun-384 carries only the four baseline conditions, so a plain length resolves both values."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     44,
+     44
+    ],
+    "section": "1. What the matrix is"
+   },
+   "claim_text": "| `retest-h11-single-pass-384-t0` | 1 | the Flash text MINIMAL T=0.0 repeated-single-pass run |",
+   "values": [
+    {
+     "quantity": "number of baseline-matrix cells sourced from run retest-h11-single-pass-384-t0",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "cells",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/run-conditions.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Count of decomposition['retest-h11-single-pass-384-t0'].conditions with a 'baseline-' label prefix (the run also carries per-pass conditions)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     46,
+     46
+    ],
+    "section": "1. What the matrix is"
+   },
+   "claim_text": "The four corners `n1-outstanding-384` was *meant* to supply as Pro",
+   "values": [
+    {
+     "quantity": "number of anti-diagonal corners n1-outstanding-384 was intended to supply as Pro",
+     "value_verbatim": "four",
+     "value_parsed": 4,
+     "unit": "cells",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/run-conditions.json",
+    "path": "len:$.decomposition['n1-pro-rerun-384'].conditions"
+   },
+   "method": "read",
+   "notes": "Same four corners later re-dispatched as n1-pro-rerun-384."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     50,
+     50
+    ],
+    "section": "1. What the matrix is"
+   },
+   "claim_text": "the leaderboard's four Pro anti-diagonal cells now come from the",
+   "values": [
+    {
+     "quantity": "number of Pro anti-diagonal cells now taken from the genuine-Pro re-run",
+     "value_verbatim": "four",
+     "value_parsed": 4,
+     "unit": "cells",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/run-conditions.json",
+    "path": "len:$.decomposition['n1-pro-rerun-384'].conditions"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     58,
+     59
+    ],
+    "section": "2. How a cell is scored (the eval protocol)"
+   },
+   "claim_text": "against the 487-tile full evaluation\nbounds (`inputs/vectors/bounds/384/full_evaluation_bounds.geojson`)",
+   "values": [
+    {
+     "quantity": "tile count of the full 384 px evaluation bounds",
+     "value_verbatim": "487",
+     "value_parsed": 487,
+     "unit": "tiles",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "path": "len:$.features"
+   },
+   "method": "read",
+   "notes": "The document names its own source (the bounds GeoJSON), so the anchor is that file."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     67,
+     67
+    ],
+    "section": "2.1 The point estimate is a MEAN over replicate single passes"
+   },
+   "claim_text": "passes (1, 3, 5, 10, or 30 of them",
+   "values": [
+    {
+     "quantity": "replicate-count level 1 present among the matrix cells",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "replicate-count level 2 present among the matrix cells",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "replicate-count level 3 present among the matrix cells",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "replicate-count level 4 present among the matrix cells",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "replicate-count level 5 present among the matrix cells",
+     "value_verbatim": "30",
+     "value_parsed": 30,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/batch_summary.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "The distinct set of n_runs values across $.rows[*].n_runs in the batch summary (single-run cells omit n_runs entirely), so no single path resolves the set."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     72,
+     72
+    ],
+    "section": "2.1 The point estimate is a MEAN over replicate single passes"
+   },
+   "claim_text": "averages 30 replicates",
+   "values": [
+    {
+     "quantity": "largest replicate count among the matrix cells (exemplar: flash-text-high-t-0-7)",
+     "value_verbatim": "30",
+     "value_parsed": 30,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-text-high-t-0-7/evaluation.json",
+    "path": "$.summary.n_runs"
+   },
+   "method": "read",
+   "notes": "Two pv-diag-384 cells carry 30 replicates (flash-text-high-t-0-7 and flash-text-minimal-t-0-7); the anchor is the first."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     88,
+     89
+    ],
+    "section": "2.2 F1 is per-buffer; MCC is buffer-agnostic (one value per cell)"
+   },
+   "claim_text": "The 14 uniform buffers are\n  `5 10 15 20 25 30 35 40 45 50 75 100 125 150` m.",
+   "values": [
+    {
+     "quantity": "number of uniform evaluation buffers in the project standard",
+     "value_verbatim": "14",
+     "value_parsed": 14,
+     "unit": "buffers",
+     "kind": "count",
+     "path": "len:$.summary.buffers",
+     "method": "read"
+    },
+    {
+     "quantity": "uniform evaluation buffer 1 of 14",
+     "value_verbatim": "5",
+     "value_parsed": 5.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[0].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "uniform evaluation buffer 2 of 14",
+     "value_verbatim": "10",
+     "value_parsed": 10.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[1].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "uniform evaluation buffer 3 of 14",
+     "value_verbatim": "15",
+     "value_parsed": 15.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[2].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "uniform evaluation buffer 4 of 14",
+     "value_verbatim": "20",
+     "value_parsed": 20.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[3].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "uniform evaluation buffer 5 of 14",
+     "value_verbatim": "25",
+     "value_parsed": 25.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[4].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "uniform evaluation buffer 6 of 14",
+     "value_verbatim": "30",
+     "value_parsed": 30.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[5].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "uniform evaluation buffer 7 of 14",
+     "value_verbatim": "35",
+     "value_parsed": 35.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[6].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "uniform evaluation buffer 8 of 14",
+     "value_verbatim": "40",
+     "value_parsed": 40.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[7].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "uniform evaluation buffer 9 of 14",
+     "value_verbatim": "45",
+     "value_parsed": 45.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[8].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "uniform evaluation buffer 10 of 14",
+     "value_verbatim": "50",
+     "value_parsed": 50.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[9].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "uniform evaluation buffer 11 of 14",
+     "value_verbatim": "75",
+     "value_parsed": 75.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[10].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "uniform evaluation buffer 12 of 14",
+     "value_verbatim": "100",
+     "value_parsed": 100.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[11].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "uniform evaluation buffer 13 of 14",
+     "value_verbatim": "125",
+     "value_parsed": 125.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[12].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "uniform evaluation buffer 14 of 14",
+     "value_verbatim": "150",
+     "value_parsed": 150.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[13].buffer_metres",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Buffer list matches scripts/rescore_conditions.py BUFFERS_STANDARD (line 69); the evaluation.json buffers array is the mechanically resolvable anchor. Note value_verbatim '5' and '10' etc. are substring-matched inside the backticked list. Adjectival repeats of '14-buffer' at lines 118, 152, 193, 231 and 265 are the same claim and are not re-extracted."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     89,
+     90
+    ],
+    "section": "2.2 F1 is per-buffer; MCC is buffer-agnostic (one value per cell)"
+   },
+   "claim_text": "The **headline buffer is the\n  preregistered 20 m**",
+   "values": [
+    {
+     "quantity": "preregistered headline spatial-matching buffer",
+     "value_verbatim": "20",
+     "value_parsed": 20.0,
+     "unit": "m",
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "docs/methodology/preregistration/osf/preregistration.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Instrument v1.1 registration rule: a claim about what the registration specifies anchors to the lodged preregistration (§4.1.1 'Primary matching threshold: 20 metres'), not to the executed eval config. Non-JSON anchor."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     90,
+     91
+    ],
+    "section": "2.2 F1 is per-buffer; MCC is buffer-agnostic (one value per cell)"
+   },
+   "claim_text": "50 m is the lenient comparison; 75–150 m are the\n  saturation tail",
+   "values": [
+    {
+     "quantity": "lenient comparison buffer",
+     "value_verbatim": "50",
+     "value_parsed": 50.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[9].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "lower bound of the saturation-tail buffer range",
+     "value_verbatim": "75",
+     "value_parsed": 75.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[10].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "upper bound of the saturation-tail buffer range",
+     "value_verbatim": "150",
+     "value_parsed": 150.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[13].buffer_metres",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "v1.2 rule 6: the 'm' unit is shared across the range and set on each value."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     91,
+     91
+    ],
+    "section": "2.2 F1 is per-buffer; MCC is buffer-agnostic (one value per cell)"
+   },
+   "claim_text": "detections become noisy past ~100 m",
+   "values": [
+    {
+     "quantity": "buffer beyond which detections are described as noisy (saturation onset)",
+     "value_verbatim": "~100",
+     "value_parsed": 100.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Qualitative threshold; approximate marker retained per v1.2 rule 5. 100 m is a member of BUFFERS_STANDARD but the 'noisy past' judgement has no artefact I could locate."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     98,
+     99
+    ],
+    "section": "2.2 F1 is per-buffer; MCC is buffer-agnostic (one value per cell)"
+   },
+   "claim_text": "So there is exactly **one MCC per cell**, identical at\n  every buffer.",
+   "values": [
+    {
+     "quantity": "number of MCC values per matrix cell (buffer-agnostic)",
+     "value_verbatim": "one",
+     "value_parsed": 1,
+     "unit": "values",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Structural claim: each evaluation.json carries a single $.summary.tile_classification.mcc block regardless of the 14 buffers; confirming it means checking that no per-buffer MCC exists, not reading a scalar."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     99,
+     99
+    ],
+    "section": "2.2 F1 is per-buffer; MCC is buffer-agnostic (one value per cell)"
+   },
+   "claim_text": "The 30 m label on the old MCC eval was irrelevant to the MCC",
+   "values": [
+    {
+     "quantity": "buffer label on the superseded MCC-only evaluation (results/paper-eval/mcc/384px)",
+     "value_verbatim": "30",
+     "value_parsed": 30.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/mcc/384px/flash-image-high-t-0-7/evaluation.json",
+    "path": "$.summary.buffers[0].buffer_metres"
+   },
+   "method": "read",
+   "notes": "'the old MCC eval' is the mcc/384px sibling named at line 190; it is scored at a single buffer."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     104,
+     104
+    ],
+    "section": "2.2 F1 is per-buffer; MCC is buffer-agnostic (one value per cell)"
+   },
+   "claim_text": "accuracy at the preregistered tolerance (\"did we pin the mound to within 20 m?\")",
+   "values": [
+    {
+     "quantity": "preregistered spatial-matching tolerance",
+     "value_verbatim": "20",
+     "value_parsed": 20.0,
+     "unit": "m",
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "docs/methodology/preregistration/osf/preregistration.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Instrument v1.1 registration rule — anchors to the lodged preregistration (§4.1.1, 'Primary matching threshold: 20 metres'). Restates the line-90 claim."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     114,
+     114
+    ],
+    "section": "2.2 F1 is per-buffer; MCC is buffer-agnostic (one value per cell)"
+   },
+   "claim_text": "it is one tile-set's worth, summing to 487",
+   "values": [
+    {
+     "quantity": "sum of the confusion block tp+tn+fp+fn for a matrix cell",
+     "value_verbatim": "487",
+     "value_parsed": 487,
+     "unit": "tiles",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+    "path": null,
+    "expression": "a + b + c + d",
+    "operands": [
+     {
+      "name": "a",
+      "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+      "path": "$.summary.tile_classification.confusion.tp"
+     },
+     {
+      "name": "b",
+      "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+      "path": "$.summary.tile_classification.confusion.tn"
+     },
+     {
+      "name": "c",
+      "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+      "path": "$.summary.tile_classification.confusion.fp"
+     },
+     {
+      "name": "d",
+      "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+      "path": "$.summary.tile_classification.confusion.fn"
+     }
+    ]
+   },
+   "method": "arithmetic",
+   "notes": "Exemplar cell; the claim holds for every cell. Restated at line 270."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     121,
+     121
+    ],
+    "section": "2.3 Why this re-score exists (the 14-buffer + MCC standard)"
+   },
+   "claim_text": "was scored at only **4 buffers (20/30/40/50 m) with MCC switched off**",
+   "values": [
+    {
+     "quantity": "number of buffers in the superseded 384px-all-buffers eval",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": "buffers",
+     "kind": "count",
+     "path": "len:$.summary.buffers",
+     "method": "read"
+    },
+    {
+     "quantity": "buffer 1 of 4 in the superseded eval",
+     "value_verbatim": "20",
+     "value_parsed": 20.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[0].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "buffer 2 of 4 in the superseded eval",
+     "value_verbatim": "30",
+     "value_parsed": 30.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[1].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "buffer 3 of 4 in the superseded eval",
+     "value_verbatim": "40",
+     "value_parsed": 40.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[2].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "buffer 4 of 4 in the superseded eval",
+     "value_verbatim": "50",
+     "value_parsed": 50.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[3].buffer_metres",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-all-buffers/flash-image-high-t-0-7/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Describes the superseded (still on disk, not archived out of results/) 384px-all-buffers eval; exemplar slug used as anchor."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     122,
+     122
+    ],
+    "section": "2.3 Why this re-score exists (the 14-buffer + MCC standard)"
+   },
+   "claim_text": "predates two project standards adopted",
+   "values": [
+    {
+     "quantity": "number of project eval standards the original matrix predates",
+     "value_verbatim": "two",
+     "value_parsed": 2,
+     "unit": "standards",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Self-referential count of the two numbered items immediately below (14 uniform buffers; MCC-always). Included per the instrument's over-inclusion preference; flagged as doubtful — it may not be a checkable study fact."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     124,
+     124
+    ],
+    "section": "2.3 Why this re-score exists (the 14-buffer + MCC standard)"
+   },
+   "claim_text": "1. the **14 uniform buffers** for all runs",
+   "values": [
+    {
+     "quantity": "number of uniform buffers in the adopted project standard",
+     "value_verbatim": "14",
+     "value_parsed": 14,
+     "unit": "buffers",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "scripts/rescore_conditions.py",
+    "path": "BUFFERS_STANDARD (len:) — line 69"
+   },
+   "method": "read",
+   "notes": "The document names its own source (scripts/rescore_conditions.py BUFFERS_STANDARD). Non-JSON anchor, expected per instrument v1.1."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     141,
+     141
+    ],
+    "section": "3. How the cells are modelled in the manifest"
+   },
+   "claim_text": "- `architecture: single-pass`, `aggregation: none`, `n_passes: 1`",
+   "values": [
+    {
+     "quantity": "n_passes recorded on each baseline-matrix condition",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "passes",
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/run-conditions.json",
+    "path": "$.decomposition['pv-diag-384'].conditions[?(@.label=='baseline-flash-image-high-t-0-7')].n_passes"
+   },
+   "method": "read",
+   "notes": "Exemplar condition; the claim is asserted of every baseline cell."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     152,
+     153
+    ],
+    "section": "3.1 Headline aggregate vs per-pass granular conditions"
+   },
+   "claim_text": "So those two runs now\nhold **two** single-pass representations of the same passes",
+   "values": [
+    {
+     "quantity": "number of source runs carrying both per-pass and baseline-matrix single-pass conditions",
+     "value_verbatim": "two",
+     "value_parsed": 2,
+     "unit": "runs",
+     "kind": "count",
+     "path": null,
+     "method": "recompute-script"
+    },
+    {
+     "quantity": "number of single-pass representations those runs hold per pass set",
+     "value_verbatim": "two",
+     "value_parsed": 2,
+     "unit": "representations",
+     "kind": "count",
+     "path": null,
+     "method": "recompute-script"
+    }
+   ],
+   "anchor": {
+    "file": "results/run-conditions.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Self-referential enumeration of n1-outstanding-384 and retest-h11-single-pass-384-t0; checkable only by counting the two condition families in run-conditions.json. Flagged as doubtful."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     157,
+     157
+    ],
+    "section": "3.1 Headline aggregate vs per-pass granular conditions"
+   },
+   "claim_text": "spread?\" (each scores one geojson, `n=1`)",
+   "values": [
+    {
+     "quantity": "number of detection geojsons scored by each per-pass single-pass condition",
+     "value_verbatim": "one",
+     "value_parsed": 1,
+     "unit": "geojson",
+     "kind": "count",
+     "path": null,
+     "method": "recompute-script"
+    },
+    {
+     "quantity": "n (replicates) per per-pass single-pass condition",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "passes",
+     "kind": "count",
+     "path": "$.decomposition['n1-outstanding-384'].conditions[*].n_passes",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/run-conditions.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Doubtful inclusion: 'one geojson' is a structural description rather than a recorded scalar; the n=1 side reads n_passes on the per-pass conditions."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     165,
+     165
+    ],
+    "section": "3.2 `pv-diag-384` is aggregate-only for now"
+   },
+   "claim_text": "its 10 baseline cells are its",
+   "values": [
+    {
+     "quantity": "number of baseline cells contributed by pv-diag-384",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": "cells",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/run-conditions.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Count of decomposition['pv-diag-384'].conditions with a 'baseline-' label prefix."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     168,
+     168
+    ],
+    "section": "3.2 `pv-diag-384` is aggregate-only for now"
+   },
+   "claim_text": "The 10 baseline conditions therefore",
+   "values": [
+    {
+     "quantity": "number of baseline conditions on pv-diag-384 referencing pools by relative pool-dir path",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": "conditions",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/run-conditions.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Same count as line 165, restated."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     181,
+     181
+    ],
+    "section": "3.3 Expected audit-verifier WARNs"
+   },
+   "claim_text": "- `geojson-missing` (one per baseline cell)",
+   "values": [
+    {
+     "quantity": "number of geojson-missing WARNs emitted per baseline cell",
+     "value_verbatim": "one",
+     "value_parsed": 1,
+     "unit": "WARNs",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "scripts/verify_run_conditions.py",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Requires running the audit verifier and counting geojson-missing WARNs against the baseline cells; no artefact records the WARN tally."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     201,
+     201
+    ],
+    "section": "3.4 Model-of-record (errata E57 — billing reconciliation, RESOLVED)"
+   },
+   "claim_text": "splits the eight \"Pro\" cells",
+   "values": [
+    {
+     "quantity": "number of matrix cells originally labelled 'Pro' before the E57 split",
+     "value_verbatim": "eight",
+     "value_parsed": 8,
+     "unit": "cells",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/run-conditions.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Four genuine pv-diag-384 Pro cells plus the four n1-outstanding-384 anti-diagonal cells; needs a filtered count across two run keys."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     203,
+     203
+    ],
+    "section": "3.4 Model-of-record (errata E57 — billing reconciliation, RESOLVED)"
+   },
+   "claim_text": "- **`pv-diag-384`'s four Pro cells are genuinely Pro**",
+   "values": [
+    {
+     "quantity": "number of pv-diag-384 cells confirmed as genuine Pro",
+     "value_verbatim": "four",
+     "value_parsed": 4,
+     "unit": "cells",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/run-conditions.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Count of pv-diag-384 baseline conditions whose slug begins 'pro-'; needs a label filter."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     204,
+     204
+    ],
+    "section": "3.4 Model-of-record (errata E57 — billing reconciliation, RESOLVED)"
+   },
+   "claim_text": "gemini-3.1-pro-preview` at $2/$12 rates",
+   "values": [
+    {
+     "quantity": "input price per million tokens, gemini-3.1-pro-preview",
+     "value_verbatim": "$2",
+     "value_parsed": 2.0,
+     "unit": "USD per 1M tokens",
+     "kind": "cost",
+     "path": "PRICING['google_gemini']['gemini-3.1-pro-preview']['input'] — line 1018",
+     "method": "read"
+    },
+    {
+     "quantity": "output price per million tokens, gemini-3.1-pro-preview",
+     "value_verbatim": "$12",
+     "value_parsed": 12.0,
+     "unit": "USD per 1M tokens",
+     "kind": "cost",
+     "path": "PRICING['google_gemini']['gemini-3.1-pro-preview']['output'] — line 1018",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "scripts/lib_llm_metadata.py",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The rates the repo applied (PRICING table, verified against Vertex pricing 2026-03-27) rather than a billing-console figure, so anchored in-repo rather than 'external'. Non-JSON anchor, expected per instrument v1.1."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     205,
+     205
+    ],
+    "section": "3.4 Model-of-record (errata E57 — billing reconciliation, RESOLVED)"
+   },
+   "claim_text": "- **`n1-outstanding-384`'s four anti-diagonal \"Pro\" cells were dispatched as Flash**",
+   "values": [
+    {
+     "quantity": "number of n1-outstanding-384 anti-diagonal cells dispatched as Flash",
+     "value_verbatim": "four",
+     "value_parsed": 4,
+     "unit": "cells",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/run-conditions.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Count of n1-outstanding-384 baseline conditions with a corrected Flash model_of_record; needs a label/field filter."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     211,
+     212
+    ],
+    "section": "3.4 Model-of-record (errata E57 — billing reconciliation, RESOLVED)"
+   },
+   "claim_text": "of those four corners —\n  `model_version = gemini-3.1-pro-preview` verified on all 8 passes",
+   "values": [
+    {
+     "quantity": "number of anti-diagonal corners re-dispatched as genuine Pro",
+     "value_verbatim": "four",
+     "value_parsed": 4,
+     "unit": "cells",
+     "kind": "count",
+     "path": "len:$.decomposition['n1-pro-rerun-384'].conditions",
+     "method": "read"
+    },
+    {
+     "quantity": "number of n1-pro-rerun-384 passes verified as gemini-3.1-pro-preview",
+     "value_verbatim": "8",
+     "value_parsed": 8,
+     "unit": "passes",
+     "kind": "count",
+     "path": "results/passes-manifest.json#len:$.passes[?(@.run_id=='n1-pro-rerun-384')]",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/run-conditions.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Pass count anchored cross-file to the passes manifest (v1.2 rule 2)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     213,
+     213
+    ],
+    "section": "3.4 Model-of-record (errata E57 — billing reconciliation, RESOLVED)"
+   },
+   "claim_text": "These are the four Pro anti-diagonal",
+   "values": [
+    {
+     "quantity": "number of Pro anti-diagonal cells the board now uses",
+     "value_verbatim": "four",
+     "value_parsed": 4,
+     "unit": "cells",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/run-conditions.json",
+    "path": "len:$.decomposition['n1-pro-rerun-384'].conditions"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     217,
+     218
+    ],
+    "section": "3.4 Model-of-record (errata E57 — billing reconciliation, RESOLVED)"
+   },
+   "claim_text": "passes-manifest now shows the 8 `n1-outstanding-384` pro-* passes as\n`gemini-3-flash-preview` and the 8 `n1-pro-rerun-384` passes as `gemini-3.1-pro-preview`.",
+   "values": [
+    {
+     "quantity": "number of n1-outstanding-384 pro-* passes now recorded as gemini-3-flash-preview",
+     "value_verbatim": "8",
+     "value_parsed": 8,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": "recompute-script"
+    },
+    {
+     "quantity": "number of n1-pro-rerun-384 passes recorded as gemini-3.1-pro-preview",
+     "value_verbatim": "8",
+     "value_parsed": 8,
+     "unit": "passes",
+     "kind": "count",
+     "path": "len:$.passes[?(@.run_id=='n1-pro-rerun-384')]",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/passes-manifest.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The first value needs the pro-* subset of n1-outstanding-384's passes (the run carries non-pro passes too), so it is recompute-script rather than a filter path."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     223,
+     223
+    ],
+    "section": "4. The 18 cells — provenance map"
+   },
+   "claim_text": "## 4. The 18 cells — provenance map",
+   "values": [
+    {
+     "quantity": "number of cells in the N=1 baseline matrix",
+     "value_verbatim": "18",
+     "value_parsed": 18,
+     "unit": "cells",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/batch_summary.json",
+    "path": "$.n_conditions"
+   },
+   "method": "read",
+   "notes": "Section heading restating the 18-cell count."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     235,
+     235
+    ],
+    "section": "4. The 18 cells — provenance map"
+   },
+   "claim_text": "| pv-diag-384 | flash-image-high-t-0-7 | 10 | flash-high-image-n5/image-t0.7 | baseline-flash-image-high-t-0-7 |",
+   "values": [
+    {
+     "quantity": "replicate single passes averaged, cell flash-image-high-t-0-7",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-image-high-t-0-7/evaluation.json",
+    "path": "$.summary.n_runs"
+   },
+   "method": "read",
+   "notes": "Provenance-table row; only the `replicates` cell is a numeric claim (slugs, pool ids and condition labels are names)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     236,
+     236
+    ],
+    "section": "4. The 18 cells — provenance map"
+   },
+   "claim_text": "| pv-diag-384 | flash-image-minimal-t-0-0 | 1 | image-baseline/image-t0.0 | baseline-flash-image-minimal-t-0-0 |",
+   "values": [
+    {
+     "quantity": "replicate single passes averaged, cell flash-image-minimal-t-0-0",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-image-minimal-t-0-0/evaluation.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Provenance-table row. This cell's evaluation.json is a single-run eval and carries no $.summary.n_runs or $.per_run block — the replicate count of 1 is encoded by their absence, so it must be recomputed from the detections directory rather than read (v1.2 rule 3)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     237,
+     237
+    ],
+    "section": "4. The 18 cells — provenance map"
+   },
+   "claim_text": "| pv-diag-384 | flash-image-minimal-t-0-7 | 10 | image-n5/image-t0.7 | baseline-flash-image-minimal-t-0-7 |",
+   "values": [
+    {
+     "quantity": "replicate single passes averaged, cell flash-image-minimal-t-0-7",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-image-minimal-t-0-7/evaluation.json",
+    "path": "$.summary.n_runs"
+   },
+   "method": "read",
+   "notes": "Provenance-table row; only the `replicates` cell is a numeric claim (slugs, pool ids and condition labels are names)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     238,
+     238
+    ],
+    "section": "4. The 18 cells — provenance map"
+   },
+   "claim_text": "| pv-diag-384 | flash-text-high-t-0-7 | 30 | flash-high-text-n5/text-t0.7 | baseline-flash-text-high-t-0-7 |",
+   "values": [
+    {
+     "quantity": "replicate single passes averaged, cell flash-text-high-t-0-7",
+     "value_verbatim": "30",
+     "value_parsed": 30,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-text-high-t-0-7/evaluation.json",
+    "path": "$.summary.n_runs"
+   },
+   "method": "read",
+   "notes": "Provenance-table row; only the `replicates` cell is a numeric claim (slugs, pool ids and condition labels are names)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     239,
+     239
+    ],
+    "section": "4. The 18 cells — provenance map"
+   },
+   "claim_text": "| pv-diag-384 | flash-text-minimal-t-0-0-pv-baseline | 1 | text-baseline/text-t0.0 | baseline-flash-text-minimal-t-0-0-pv-baseline |",
+   "values": [
+    {
+     "quantity": "replicate single passes averaged, cell flash-text-minimal-t-0-0-pv-baseline",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-text-minimal-t-0-0-pv-baseline/evaluation.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Provenance-table row. This cell's evaluation.json is a single-run eval and carries no $.summary.n_runs or $.per_run block — the replicate count of 1 is encoded by their absence, so it must be recomputed from the detections directory rather than read (v1.2 rule 3)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     240,
+     240
+    ],
+    "section": "4. The 18 cells — provenance map"
+   },
+   "claim_text": "| pv-diag-384 | flash-text-minimal-t-0-7 | 30 | flash-minimal-text-n30-t07/text-t0.7 | baseline-flash-text-minimal-t-0-7 |",
+   "values": [
+    {
+     "quantity": "replicate single passes averaged, cell flash-text-minimal-t-0-7",
+     "value_verbatim": "30",
+     "value_parsed": 30,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-text-minimal-t-0-7/evaluation.json",
+    "path": "$.summary.n_runs"
+   },
+   "method": "read",
+   "notes": "Provenance-table row; only the `replicates` cell is a numeric claim (slugs, pool ids and condition labels are names)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     241,
+     241
+    ],
+    "section": "4. The 18 cells — provenance map"
+   },
+   "claim_text": "| pv-diag-384 | pro-image-high-t-0-7 | 5 | pro-high-image-n5/image-t0.7 | baseline-pro-image-high-t-0-7 |",
+   "values": [
+    {
+     "quantity": "replicate single passes averaged, cell pro-image-high-t-0-7",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-image-high-t-0-7/evaluation.json",
+    "path": "$.summary.n_runs"
+   },
+   "method": "read",
+   "notes": "Provenance-table row; only the `replicates` cell is a numeric claim (slugs, pool ids and condition labels are names)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     242,
+     242
+    ],
+    "section": "4. The 18 cells — provenance map"
+   },
+   "claim_text": "| pv-diag-384 | pro-image-medium-t-0-0 | 1 | pro-medium-image-baseline/image-t0.0 | baseline-pro-image-medium-t-0-0 |",
+   "values": [
+    {
+     "quantity": "replicate single passes averaged, cell pro-image-medium-t-0-0",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-image-medium-t-0-0/evaluation.json",
+    "path": "$.summary.n_runs"
+   },
+   "method": "read",
+   "notes": "Provenance-table row; only the `replicates` cell is a numeric claim (slugs, pool ids and condition labels are names)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     243,
+     243
+    ],
+    "section": "4. The 18 cells — provenance map"
+   },
+   "claim_text": "| pv-diag-384 | pro-text-high-t-0-7 | 10 | pro-high-text-n5/text-t0.7 | baseline-pro-text-high-t-0-7 |",
+   "values": [
+    {
+     "quantity": "replicate single passes averaged, cell pro-text-high-t-0-7",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-high-t-0-7/evaluation.json",
+    "path": "$.summary.n_runs"
+   },
+   "method": "read",
+   "notes": "Provenance-table row; only the `replicates` cell is a numeric claim (slugs, pool ids and condition labels are names)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     244,
+     244
+    ],
+    "section": "4. The 18 cells — provenance map"
+   },
+   "claim_text": "| pv-diag-384 | pro-text-medium-t-0-0 | 1 | pro-medium-text-baseline/text-t0.0 | baseline-pro-text-medium-t-0-0 |",
+   "values": [
+    {
+     "quantity": "replicate single passes averaged, cell pro-text-medium-t-0-0",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+    "path": "$.summary.n_runs"
+   },
+   "method": "read",
+   "notes": "Provenance-table row; only the `replicates` cell is a numeric claim (slugs, pool ids and condition labels are names)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     245,
+     245
+    ],
+    "section": "4. The 18 cells — provenance map"
+   },
+   "claim_text": "| n1-outstanding-384 | flash-image-minimal-t-0-0-487-tiles | 3 | image-t0 | baseline-flash-image-minimal-t-0-0-487-tiles |",
+   "values": [
+    {
+     "quantity": "replicate single passes averaged, cell flash-image-minimal-t-0-0-487-tiles",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-image-minimal-t-0-0-487-tiles/evaluation.json",
+    "path": "$.summary.n_runs"
+   },
+   "method": "read",
+   "notes": "Provenance-table row; only the `replicates` cell is a numeric claim (slugs, pool ids and condition labels are names)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     246,
+     246
+    ],
+    "section": "4. The 18 cells — provenance map"
+   },
+   "claim_text": "| n1-outstanding-384 | flash-image-minimal-t-0-3 | 3 | image-t03 | baseline-flash-image-minimal-t-0-3 |",
+   "values": [
+    {
+     "quantity": "replicate single passes averaged, cell flash-image-minimal-t-0-3",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-image-minimal-t-0-3/evaluation.json",
+    "path": "$.summary.n_runs"
+   },
+   "method": "read",
+   "notes": "Provenance-table row; only the `replicates` cell is a numeric claim (slugs, pool ids and condition labels are names)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     247,
+     247
+    ],
+    "section": "4. The 18 cells — provenance map"
+   },
+   "claim_text": "| n1-outstanding-384 | flash-text-minimal-t-0-3 | 3 | brief-text-t03 | baseline-flash-text-minimal-t-0-3 |",
+   "values": [
+    {
+     "quantity": "replicate single passes averaged, cell flash-text-minimal-t-0-3",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-text-minimal-t-0-3/evaluation.json",
+    "path": "$.summary.n_runs"
+   },
+   "method": "read",
+   "notes": "Provenance-table row; only the `replicates` cell is a numeric claim (slugs, pool ids and condition labels are names)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     248,
+     248
+    ],
+    "section": "4. The 18 cells — provenance map"
+   },
+   "claim_text": "| n1-pro-rerun-384 | pro-rerun/pro-image-high-t-0-0 | 3 | pro-image-high-t0 | baseline-pro-image-high-t-0-0 |",
+   "values": [
+    {
+     "quantity": "replicate single passes averaged, cell pro-rerun/pro-image-high-t-0-0",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-high-t-0-0/evaluation.json",
+    "path": "$.summary.n_runs"
+   },
+   "method": "read",
+   "notes": "Provenance-table row; only the `replicates` cell is a numeric claim (slugs, pool ids and condition labels are names)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     249,
+     249
+    ],
+    "section": "4. The 18 cells — provenance map"
+   },
+   "claim_text": "| n1-pro-rerun-384 | pro-rerun/pro-image-medium-t-0-7 | 1 | pro-image-medium-t07 | baseline-pro-image-medium-t-0-7 |",
+   "values": [
+    {
+     "quantity": "replicate single passes averaged, cell pro-rerun/pro-image-medium-t-0-7",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-medium-t-0-7/evaluation.json",
+    "path": "$.summary.n_runs"
+   },
+   "method": "read",
+   "notes": "Provenance-table row; only the `replicates` cell is a numeric claim (slugs, pool ids and condition labels are names)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     250,
+     250
+    ],
+    "section": "4. The 18 cells — provenance map"
+   },
+   "claim_text": "| n1-pro-rerun-384 | pro-rerun/pro-text-high-t-0-0 | 3 | pro-text-high-t0 | baseline-pro-text-high-t-0-0 |",
+   "values": [
+    {
+     "quantity": "replicate single passes averaged, cell pro-rerun/pro-text-high-t-0-0",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-high-t-0-0/evaluation.json",
+    "path": "$.summary.n_runs"
+   },
+   "method": "read",
+   "notes": "Provenance-table row; only the `replicates` cell is a numeric claim (slugs, pool ids and condition labels are names)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     251,
+     251
+    ],
+    "section": "4. The 18 cells — provenance map"
+   },
+   "claim_text": "| n1-pro-rerun-384 | pro-rerun/pro-text-medium-t-0-7 | 1 | pro-text-medium-t07 | baseline-pro-text-medium-t-0-7 |",
+   "values": [
+    {
+     "quantity": "replicate single passes averaged, cell pro-rerun/pro-text-medium-t-0-7",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-medium-t-0-7/evaluation.json",
+    "path": "$.summary.n_runs"
+   },
+   "method": "read",
+   "notes": "Provenance-table row; only the `replicates` cell is a numeric claim (slugs, pool ids and condition labels are names)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     252,
+     252
+    ],
+    "section": "4. The 18 cells — provenance map"
+   },
+   "claim_text": "| retest-h11-single-pass-384-t0 | flash-text-minimal-t-0-0 | 10 | brief-text-t0 | baseline-flash-text-minimal-t-0-0 |",
+   "values": [
+    {
+     "quantity": "replicate single passes averaged, cell flash-text-minimal-t-0-0",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-text-minimal-t-0-0/evaluation.json",
+    "path": "$.summary.n_runs"
+   },
+   "method": "read",
+   "notes": "Provenance-table row; only the `replicates` cell is a numeric claim (slugs, pool ids and condition labels are names)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     254,
+     254
+    ],
+    "section": "4. The 18 cells — provenance map"
+   },
+   "claim_text": "The four `n1-pro-rerun-384` cells' evals live under the `pro-rerun/` subdirectory of",
+   "values": [
+    {
+     "quantity": "number of n1-pro-rerun-384 cells whose evals live under pro-rerun/",
+     "value_verbatim": "four",
+     "value_parsed": 4,
+     "unit": "cells",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/run-conditions.json",
+    "path": "len:$.decomposition['n1-pro-rerun-384'].conditions"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     268,
+     268
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "(bootstrap 10 000, seed 42, BCa, tile-level resampling)",
+   "values": [
+    {
+     "quantity": "bootstrap iterations used for the confidence intervals",
+     "value_verbatim": "10 000",
+     "value_parsed": 10000,
+     "unit": "iterations",
+     "kind": "parameter",
+     "path": "$._metadata.bootstrap.n_iterations",
+     "method": "read"
+    },
+    {
+     "quantity": "bootstrap random seed",
+     "value_verbatim": "42",
+     "value_parsed": 42,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$._metadata.bootstrap.seed",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Exemplar cell; the eval config is shared across all 18. Note the same file records $._metadata.cli_args.bootstrap separately — the bootstrap block is the as-run record."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     268,
+     269
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "F1 is the per-pass mean at\nthe headline 20 m and lenient 50 m buffers",
+   "values": [
+    {
+     "quantity": "headline reporting buffer for F1",
+     "value_verbatim": "20",
+     "value_parsed": 20.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[3].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "lenient reporting buffer for F1",
+     "value_verbatim": "50",
+     "value_parsed": 50.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[9].buffer_metres",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     270,
+     270
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "the confusion block is one tile-set's worth (sums to 487)",
+   "values": [
+    {
+     "quantity": "sum of the confusion block tp+tn+fp+fn for a matrix cell",
+     "value_verbatim": "487",
+     "value_parsed": 487,
+     "unit": "tiles",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+    "path": null,
+    "expression": "a + b + c + d",
+    "operands": [
+     {
+      "name": "a",
+      "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+      "path": "$.summary.tile_classification.confusion.tp"
+     },
+     {
+      "name": "b",
+      "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+      "path": "$.summary.tile_classification.confusion.tn"
+     },
+     {
+      "name": "c",
+      "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+      "path": "$.summary.tile_classification.confusion.fp"
+     },
+     {
+      "name": "d",
+      "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+      "path": "$.summary.tile_classification.confusion.fn"
+     }
+    ]
+   },
+   "method": "arithmetic",
+   "notes": "Exemplar cell; restates the line-114 claim."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     274,
+     274
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "| pv-diag-384 | flash-image-high-t-0-7 | 0.499 | 0.622 | +0.602 | 225/153/105/4 |",
+   "values": [
+    {
+     "quantity": "F1@20 m, cell flash-image-high-t-0-7",
+     "value_verbatim": "0.499",
+     "value_parsed": 0.499,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@50 m, cell flash-image-high-t-0-7",
+     "value_verbatim": "0.622",
+     "value_parsed": 0.622,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC (per-pass mean, buffer-agnostic), cell flash-image-high-t-0-7",
+     "value_verbatim": "+0.602",
+     "value_parsed": 0.602,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true positives, cell flash-image-high-t-0-7",
+     "value_verbatim": "225",
+     "value_parsed": 225,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true negatives, cell flash-image-high-t-0-7",
+     "value_verbatim": "153",
+     "value_parsed": 153,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tn",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false positives, cell flash-image-high-t-0-7",
+     "value_verbatim": "105",
+     "value_parsed": 105,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false negatives, cell flash-image-high-t-0-7",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fn",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-image-high-t-0-7/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Results-table row."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     275,
+     275
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "| pv-diag-384 | flash-image-minimal-t-0-0 | 0.600 | 0.681 | +0.312 | 228/51/207/1 |",
+   "values": [
+    {
+     "quantity": "F1@20 m, cell flash-image-minimal-t-0-0",
+     "value_verbatim": "0.600",
+     "value_parsed": 0.6,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@50 m, cell flash-image-minimal-t-0-0",
+     "value_verbatim": "0.681",
+     "value_parsed": 0.681,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC (per-pass mean, buffer-agnostic), cell flash-image-minimal-t-0-0",
+     "value_verbatim": "+0.312",
+     "value_parsed": 0.312,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true positives, cell flash-image-minimal-t-0-0",
+     "value_verbatim": "228",
+     "value_parsed": 228,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true negatives, cell flash-image-minimal-t-0-0",
+     "value_verbatim": "51",
+     "value_parsed": 51,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tn",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false positives, cell flash-image-minimal-t-0-0",
+     "value_verbatim": "207",
+     "value_parsed": 207,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false negatives, cell flash-image-minimal-t-0-0",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fn",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-image-minimal-t-0-0/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Results-table row."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     276,
+     276
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "| pv-diag-384 | flash-image-minimal-t-0-7 | 0.553 | 0.666 | +0.330 | 228/54/204/1 |",
+   "values": [
+    {
+     "quantity": "F1@20 m, cell flash-image-minimal-t-0-7",
+     "value_verbatim": "0.553",
+     "value_parsed": 0.553,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@50 m, cell flash-image-minimal-t-0-7",
+     "value_verbatim": "0.666",
+     "value_parsed": 0.666,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC (per-pass mean, buffer-agnostic), cell flash-image-minimal-t-0-7",
+     "value_verbatim": "+0.330",
+     "value_parsed": 0.33,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true positives, cell flash-image-minimal-t-0-7",
+     "value_verbatim": "228",
+     "value_parsed": 228,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true negatives, cell flash-image-minimal-t-0-7",
+     "value_verbatim": "54",
+     "value_parsed": 54,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tn",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false positives, cell flash-image-minimal-t-0-7",
+     "value_verbatim": "204",
+     "value_parsed": 204,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false negatives, cell flash-image-minimal-t-0-7",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fn",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-image-minimal-t-0-7/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Results-table row."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     277,
+     277
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "| pv-diag-384 | flash-text-high-t-0-7 | 0.387 | 0.416 | +0.331 | 227/62/196/2 |",
+   "values": [
+    {
+     "quantity": "F1@20 m, cell flash-text-high-t-0-7",
+     "value_verbatim": "0.387",
+     "value_parsed": 0.387,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@50 m, cell flash-text-high-t-0-7",
+     "value_verbatim": "0.416",
+     "value_parsed": 0.416,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC (per-pass mean, buffer-agnostic), cell flash-text-high-t-0-7",
+     "value_verbatim": "+0.331",
+     "value_parsed": 0.331,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true positives, cell flash-text-high-t-0-7",
+     "value_verbatim": "227",
+     "value_parsed": 227,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true negatives, cell flash-text-high-t-0-7",
+     "value_verbatim": "62",
+     "value_parsed": 62,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tn",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false positives, cell flash-text-high-t-0-7",
+     "value_verbatim": "196",
+     "value_parsed": 196,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false negatives, cell flash-text-high-t-0-7",
+     "value_verbatim": "2",
+     "value_parsed": 2,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fn",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-text-high-t-0-7/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Results-table row."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     278,
+     278
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "| pv-diag-384 | flash-text-minimal-t-0-0-pv-baseline | 0.520 | 0.536 | -0.003 | 228/1/257/1 |",
+   "values": [
+    {
+     "quantity": "F1@20 m, cell flash-text-minimal-t-0-0-pv-baseline",
+     "value_verbatim": "0.520",
+     "value_parsed": 0.52,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@50 m, cell flash-text-minimal-t-0-0-pv-baseline",
+     "value_verbatim": "0.536",
+     "value_parsed": 0.536,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC (per-pass mean, buffer-agnostic), cell flash-text-minimal-t-0-0-pv-baseline",
+     "value_verbatim": "-0.003",
+     "value_parsed": -0.003,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true positives, cell flash-text-minimal-t-0-0-pv-baseline",
+     "value_verbatim": "228",
+     "value_parsed": 228,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true negatives, cell flash-text-minimal-t-0-0-pv-baseline",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tn",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false positives, cell flash-text-minimal-t-0-0-pv-baseline",
+     "value_verbatim": "257",
+     "value_parsed": 257,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false negatives, cell flash-text-minimal-t-0-0-pv-baseline",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fn",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-text-minimal-t-0-0-pv-baseline/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Results-table row."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     279,
+     279
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "| pv-diag-384 | flash-text-minimal-t-0-7 | 0.488 | 0.513 | +0.078 | 229/3/255/0 |",
+   "values": [
+    {
+     "quantity": "F1@20 m, cell flash-text-minimal-t-0-7",
+     "value_verbatim": "0.488",
+     "value_parsed": 0.488,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@50 m, cell flash-text-minimal-t-0-7",
+     "value_verbatim": "0.513",
+     "value_parsed": 0.513,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC (per-pass mean, buffer-agnostic), cell flash-text-minimal-t-0-7",
+     "value_verbatim": "+0.078",
+     "value_parsed": 0.078,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true positives, cell flash-text-minimal-t-0-7",
+     "value_verbatim": "229",
+     "value_parsed": 229,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true negatives, cell flash-text-minimal-t-0-7",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tn",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false positives, cell flash-text-minimal-t-0-7",
+     "value_verbatim": "255",
+     "value_parsed": 255,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false negatives, cell flash-text-minimal-t-0-7",
+     "value_verbatim": "0",
+     "value_parsed": 0,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fn",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-text-minimal-t-0-7/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Results-table row."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     280,
+     280
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "| pv-diag-384 | pro-image-high-t-0-7 | 0.591 | 0.809 | +0.852 | 221/228/30/8 |",
+   "values": [
+    {
+     "quantity": "F1@20 m, cell pro-image-high-t-0-7",
+     "value_verbatim": "0.591",
+     "value_parsed": 0.591,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@50 m, cell pro-image-high-t-0-7",
+     "value_verbatim": "0.809",
+     "value_parsed": 0.809,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC (per-pass mean, buffer-agnostic), cell pro-image-high-t-0-7",
+     "value_verbatim": "+0.852",
+     "value_parsed": 0.852,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true positives, cell pro-image-high-t-0-7",
+     "value_verbatim": "221",
+     "value_parsed": 221,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true negatives, cell pro-image-high-t-0-7",
+     "value_verbatim": "228",
+     "value_parsed": 228,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tn",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false positives, cell pro-image-high-t-0-7",
+     "value_verbatim": "30",
+     "value_parsed": 30,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false negatives, cell pro-image-high-t-0-7",
+     "value_verbatim": "8",
+     "value_parsed": 8,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fn",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-image-high-t-0-7/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Results-table row."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     281,
+     281
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "| pv-diag-384 | pro-image-medium-t-0-0 | 0.655 | 0.827 | +0.868 | 220/220/38/9 |",
+   "values": [
+    {
+     "quantity": "F1@20 m, cell pro-image-medium-t-0-0",
+     "value_verbatim": "0.655",
+     "value_parsed": 0.655,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@50 m, cell pro-image-medium-t-0-0",
+     "value_verbatim": "0.827",
+     "value_parsed": 0.827,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC (per-pass mean, buffer-agnostic), cell pro-image-medium-t-0-0",
+     "value_verbatim": "+0.868",
+     "value_parsed": 0.868,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true positives, cell pro-image-medium-t-0-0",
+     "value_verbatim": "220",
+     "value_parsed": 220,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true negatives, cell pro-image-medium-t-0-0",
+     "value_verbatim": "220",
+     "value_parsed": 220,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tn",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false positives, cell pro-image-medium-t-0-0",
+     "value_verbatim": "38",
+     "value_parsed": 38,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false negatives, cell pro-image-medium-t-0-0",
+     "value_verbatim": "9",
+     "value_parsed": 9,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fn",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-image-medium-t-0-0/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Results-table row."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     282,
+     282
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "| pv-diag-384 | pro-text-high-t-0-7 | 0.745 | 0.799 | +0.747 | 175/247/11/54 |",
+   "values": [
+    {
+     "quantity": "F1@20 m, cell pro-text-high-t-0-7",
+     "value_verbatim": "0.745",
+     "value_parsed": 0.745,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@50 m, cell pro-text-high-t-0-7",
+     "value_verbatim": "0.799",
+     "value_parsed": 0.799,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC (per-pass mean, buffer-agnostic), cell pro-text-high-t-0-7",
+     "value_verbatim": "+0.747",
+     "value_parsed": 0.747,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true positives, cell pro-text-high-t-0-7",
+     "value_verbatim": "175",
+     "value_parsed": 175,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true negatives, cell pro-text-high-t-0-7",
+     "value_verbatim": "247",
+     "value_parsed": 247,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tn",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false positives, cell pro-text-high-t-0-7",
+     "value_verbatim": "11",
+     "value_parsed": 11,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false negatives, cell pro-text-high-t-0-7",
+     "value_verbatim": "54",
+     "value_parsed": 54,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fn",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-high-t-0-7/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Results-table row."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     283,
+     283
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "| pv-diag-384 | pro-text-medium-t-0-0 | 0.792 | 0.825 | +0.790 | 186/246/12/43 |",
+   "values": [
+    {
+     "quantity": "F1@20 m, cell pro-text-medium-t-0-0",
+     "value_verbatim": "0.792",
+     "value_parsed": 0.792,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@50 m, cell pro-text-medium-t-0-0",
+     "value_verbatim": "0.825",
+     "value_parsed": 0.825,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC (per-pass mean, buffer-agnostic), cell pro-text-medium-t-0-0",
+     "value_verbatim": "+0.790",
+     "value_parsed": 0.79,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true positives, cell pro-text-medium-t-0-0",
+     "value_verbatim": "186",
+     "value_parsed": 186,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true negatives, cell pro-text-medium-t-0-0",
+     "value_verbatim": "246",
+     "value_parsed": 246,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tn",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false positives, cell pro-text-medium-t-0-0",
+     "value_verbatim": "12",
+     "value_parsed": 12,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false negatives, cell pro-text-medium-t-0-0",
+     "value_verbatim": "43",
+     "value_parsed": 43,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fn",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Results-table row."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     284,
+     284
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "| n1-outstanding-384 | flash-image-minimal-t-0-0-487-tiles | 0.598 | 0.680 | +0.314 | 228/51/207/1 |",
+   "values": [
+    {
+     "quantity": "F1@20 m, cell flash-image-minimal-t-0-0-487-tiles",
+     "value_verbatim": "0.598",
+     "value_parsed": 0.598,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@50 m, cell flash-image-minimal-t-0-0-487-tiles",
+     "value_verbatim": "0.680",
+     "value_parsed": 0.68,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC (per-pass mean, buffer-agnostic), cell flash-image-minimal-t-0-0-487-tiles",
+     "value_verbatim": "+0.314",
+     "value_parsed": 0.314,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true positives, cell flash-image-minimal-t-0-0-487-tiles",
+     "value_verbatim": "228",
+     "value_parsed": 228,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true negatives, cell flash-image-minimal-t-0-0-487-tiles",
+     "value_verbatim": "51",
+     "value_parsed": 51,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tn",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false positives, cell flash-image-minimal-t-0-0-487-tiles",
+     "value_verbatim": "207",
+     "value_parsed": 207,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false negatives, cell flash-image-minimal-t-0-0-487-tiles",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fn",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-image-minimal-t-0-0-487-tiles/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Results-table row."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     285,
+     285
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "| n1-outstanding-384 | flash-image-minimal-t-0-3 | 0.593 | 0.677 | +0.305 | 227/52/206/2 |",
+   "values": [
+    {
+     "quantity": "F1@20 m, cell flash-image-minimal-t-0-3",
+     "value_verbatim": "0.593",
+     "value_parsed": 0.593,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@50 m, cell flash-image-minimal-t-0-3",
+     "value_verbatim": "0.677",
+     "value_parsed": 0.677,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC (per-pass mean, buffer-agnostic), cell flash-image-minimal-t-0-3",
+     "value_verbatim": "+0.305",
+     "value_parsed": 0.305,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true positives, cell flash-image-minimal-t-0-3",
+     "value_verbatim": "227",
+     "value_parsed": 227,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true negatives, cell flash-image-minimal-t-0-3",
+     "value_verbatim": "52",
+     "value_parsed": 52,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tn",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false positives, cell flash-image-minimal-t-0-3",
+     "value_verbatim": "206",
+     "value_parsed": 206,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false negatives, cell flash-image-minimal-t-0-3",
+     "value_verbatim": "2",
+     "value_parsed": 2,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fn",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-image-minimal-t-0-3/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Results-table row."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     286,
+     286
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "| n1-outstanding-384 | flash-text-minimal-t-0-3 | 0.499 | 0.523 | +0.039 | 229/1/257/0 |",
+   "values": [
+    {
+     "quantity": "F1@20 m, cell flash-text-minimal-t-0-3",
+     "value_verbatim": "0.499",
+     "value_parsed": 0.499,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@50 m, cell flash-text-minimal-t-0-3",
+     "value_verbatim": "0.523",
+     "value_parsed": 0.523,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC (per-pass mean, buffer-agnostic), cell flash-text-minimal-t-0-3",
+     "value_verbatim": "+0.039",
+     "value_parsed": 0.039,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true positives, cell flash-text-minimal-t-0-3",
+     "value_verbatim": "229",
+     "value_parsed": 229,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true negatives, cell flash-text-minimal-t-0-3",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tn",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false positives, cell flash-text-minimal-t-0-3",
+     "value_verbatim": "257",
+     "value_parsed": 257,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false negatives, cell flash-text-minimal-t-0-3",
+     "value_verbatim": "0",
+     "value_parsed": 0,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fn",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-text-minimal-t-0-3/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Results-table row."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     287,
+     287
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "| n1-pro-rerun-384 | pro-image-high-t-0-0 | 0.666 | 0.834 | +0.868 | 218/237/21/11 |",
+   "values": [
+    {
+     "quantity": "F1@20 m, cell pro-rerun/pro-image-high-t-0-0",
+     "value_verbatim": "0.666",
+     "value_parsed": 0.666,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@50 m, cell pro-rerun/pro-image-high-t-0-0",
+     "value_verbatim": "0.834",
+     "value_parsed": 0.834,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC (per-pass mean, buffer-agnostic), cell pro-rerun/pro-image-high-t-0-0",
+     "value_verbatim": "+0.868",
+     "value_parsed": 0.868,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true positives, cell pro-rerun/pro-image-high-t-0-0",
+     "value_verbatim": "218",
+     "value_parsed": 218,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true negatives, cell pro-rerun/pro-image-high-t-0-0",
+     "value_verbatim": "237",
+     "value_parsed": 237,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tn",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false positives, cell pro-rerun/pro-image-high-t-0-0",
+     "value_verbatim": "21",
+     "value_parsed": 21,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false negatives, cell pro-rerun/pro-image-high-t-0-0",
+     "value_verbatim": "11",
+     "value_parsed": 11,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fn",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-high-t-0-0/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Results-table row. The four n1-pro-rerun-384 rows anchor under the pro-rerun/ subdirectory (line 293-294); identically named top-level slugs are the off-board Flash dispatches."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     288,
+     288
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "| n1-pro-rerun-384 | pro-image-medium-t-0-7 | 0.595 | 0.843 | +0.911 | 216/250/8/13 |",
+   "values": [
+    {
+     "quantity": "F1@20 m, cell pro-rerun/pro-image-medium-t-0-7",
+     "value_verbatim": "0.595",
+     "value_parsed": 0.595,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@50 m, cell pro-rerun/pro-image-medium-t-0-7",
+     "value_verbatim": "0.843",
+     "value_parsed": 0.843,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC (per-pass mean, buffer-agnostic), cell pro-rerun/pro-image-medium-t-0-7",
+     "value_verbatim": "+0.911",
+     "value_parsed": 0.911,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true positives, cell pro-rerun/pro-image-medium-t-0-7",
+     "value_verbatim": "216",
+     "value_parsed": 216,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true negatives, cell pro-rerun/pro-image-medium-t-0-7",
+     "value_verbatim": "250",
+     "value_parsed": 250,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tn",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false positives, cell pro-rerun/pro-image-medium-t-0-7",
+     "value_verbatim": "8",
+     "value_parsed": 8,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false negatives, cell pro-rerun/pro-image-medium-t-0-7",
+     "value_verbatim": "13",
+     "value_parsed": 13,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fn",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-medium-t-0-7/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Results-table row. The four n1-pro-rerun-384 rows anchor under the pro-rerun/ subdirectory (line 293-294); identically named top-level slugs are the off-board Flash dispatches."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     289,
+     289
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "| n1-pro-rerun-384 | pro-text-high-t-0-0 | 0.804 | 0.828 | +0.790 | 188/247/11/41 |",
+   "values": [
+    {
+     "quantity": "F1@20 m, cell pro-rerun/pro-text-high-t-0-0",
+     "value_verbatim": "0.804",
+     "value_parsed": 0.804,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@50 m, cell pro-rerun/pro-text-high-t-0-0",
+     "value_verbatim": "0.828",
+     "value_parsed": 0.828,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC (per-pass mean, buffer-agnostic), cell pro-rerun/pro-text-high-t-0-0",
+     "value_verbatim": "+0.790",
+     "value_parsed": 0.79,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true positives, cell pro-rerun/pro-text-high-t-0-0",
+     "value_verbatim": "188",
+     "value_parsed": 188,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true negatives, cell pro-rerun/pro-text-high-t-0-0",
+     "value_verbatim": "247",
+     "value_parsed": 247,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tn",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false positives, cell pro-rerun/pro-text-high-t-0-0",
+     "value_verbatim": "11",
+     "value_parsed": 11,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false negatives, cell pro-rerun/pro-text-high-t-0-0",
+     "value_verbatim": "41",
+     "value_parsed": 41,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fn",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-high-t-0-0/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Results-table row. The four n1-pro-rerun-384 rows anchor under the pro-rerun/ subdirectory (line 293-294); identically named top-level slugs are the off-board Flash dispatches."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     290,
+     290
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "| n1-pro-rerun-384 | pro-text-medium-t-0-7 | 0.755 | 0.823 | +0.768 | 181/252/6/48 |",
+   "values": [
+    {
+     "quantity": "F1@20 m, cell pro-rerun/pro-text-medium-t-0-7",
+     "value_verbatim": "0.755",
+     "value_parsed": 0.755,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@50 m, cell pro-rerun/pro-text-medium-t-0-7",
+     "value_verbatim": "0.823",
+     "value_parsed": 0.823,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC (per-pass mean, buffer-agnostic), cell pro-rerun/pro-text-medium-t-0-7",
+     "value_verbatim": "+0.768",
+     "value_parsed": 0.768,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true positives, cell pro-rerun/pro-text-medium-t-0-7",
+     "value_verbatim": "181",
+     "value_parsed": 181,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true negatives, cell pro-rerun/pro-text-medium-t-0-7",
+     "value_verbatim": "252",
+     "value_parsed": 252,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tn",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false positives, cell pro-rerun/pro-text-medium-t-0-7",
+     "value_verbatim": "6",
+     "value_parsed": 6,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false negatives, cell pro-rerun/pro-text-medium-t-0-7",
+     "value_verbatim": "48",
+     "value_parsed": 48,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fn",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-medium-t-0-7/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Results-table row. The four n1-pro-rerun-384 rows anchor under the pro-rerun/ subdirectory (line 293-294); identically named top-level slugs are the off-board Flash dispatches."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     291,
+     291
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "| retest-h11-single-pass-384-t0 | flash-text-minimal-t-0-0 | 0.503 | 0.520 | +0.046 | 229/1/257/0 |",
+   "values": [
+    {
+     "quantity": "F1@20 m, cell flash-text-minimal-t-0-0",
+     "value_verbatim": "0.503",
+     "value_parsed": 0.503,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@50 m, cell flash-text-minimal-t-0-0",
+     "value_verbatim": "0.520",
+     "value_parsed": 0.52,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==50)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC (per-pass mean, buffer-agnostic), cell flash-text-minimal-t-0-0",
+     "value_verbatim": "+0.046",
+     "value_parsed": 0.046,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true positives, cell flash-text-minimal-t-0-0",
+     "value_verbatim": "229",
+     "value_parsed": 229,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true negatives, cell flash-text-minimal-t-0-0",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tn",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false positives, cell flash-text-minimal-t-0-0",
+     "value_verbatim": "257",
+     "value_parsed": 257,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false negatives, cell flash-text-minimal-t-0-0",
+     "value_verbatim": "0",
+     "value_parsed": 0,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fn",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-text-minimal-t-0-0/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Results-table row."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     293,
+     293
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "The four `n1-pro-rerun-384` rows are the **genuine-Pro** anti-diagonal",
+   "values": [
+    {
+     "quantity": "number of genuine-Pro anti-diagonal rows in the results table",
+     "value_verbatim": "four",
+     "value_parsed": 4,
+     "unit": "rows",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/run-conditions.json",
+    "path": "len:$.decomposition['n1-pro-rerun-384'].conditions"
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     295,
+     295
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "scored far lower — F1@20 m 0.528 / 0.452 / 0.494 / 0.416",
+   "values": [
+    {
+     "quantity": "F1@20 m, off-board Flash dispatch of pro-image-high-t-0-0 (n1-outstanding-384)",
+     "value_verbatim": "0.528",
+     "value_parsed": 0.528,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@20 m, off-board Flash dispatch of pro-image-medium-t-0-7 (n1-outstanding-384)",
+     "value_verbatim": "0.452",
+     "value_parsed": 0.452,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/paper-eval/n1/384px-14buf-mcc/pro-image-medium-t-0-7/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@20 m, off-board Flash dispatch of pro-text-high-t-0-0 (n1-outstanding-384)",
+     "value_verbatim": "0.494",
+     "value_parsed": 0.494,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/paper-eval/n1/384px-14buf-mcc/pro-text-high-t-0-0/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@20 m, off-board Flash dispatch of pro-text-medium-t-0-7 (n1-outstanding-384)",
+     "value_verbatim": "0.416",
+     "value_parsed": 0.416,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-7/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-image-high-t-0-0/evaluation.json",
+    "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
+   },
+   "method": "read",
+   "notes": "The four off-board Flash evals are the top-level (non-pro-rerun/) slugs. The document does not name the order explicitly; assumed to follow the §5 table order (image-high-t-0-0, image-medium-t-0-7, text-high-t-0-0, text-medium-t-0-7)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     295,
+     296
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "so genuine Pro adds\n**+0.14 to +0.35 F1** at these corners",
+   "values": [
+    {
+     "quantity": "smallest F1@20 m gain from genuine Pro over the off-board Flash dispatch at the anti-diagonal corners",
+     "value_verbatim": "+0.14",
+     "value_parsed": 0.14,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a - b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-high-t-0-0/evaluation.json",
+       "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
+      },
+      {
+       "name": "b",
+       "file": "results/paper-eval/n1/384px-14buf-mcc/pro-image-high-t-0-0/evaluation.json",
+       "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
+      }
+     ]
+    },
+    {
+     "quantity": "largest F1@20 m gain from genuine Pro over the off-board Flash dispatch at the anti-diagonal corners",
+     "value_verbatim": "+0.35",
+     "value_parsed": 0.35,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a - b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-medium-t-0-7/evaluation.json",
+       "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
+      },
+      {
+       "name": "b",
+       "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-7/evaluation.json",
+       "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-medium-t-0-7/evaluation.json",
+    "path": null
+   },
+   "method": "arithmetic",
+   "notes": "Range endpoints over four genuine-Pro vs off-board-Flash pairs. Each endpoint carries its own expression (v1.2 rule 1); the assumed pairing is the smallest gain at pro-image-high-t-0-0 and the largest at pro-text-medium-t-0-7. Triage should note the endpoints are quoted to 2 dp."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     296,
+     297
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "All\nfour medium-thinking Pro cells are **n=3** (the four HIGH-thinking cells already were)",
+   "values": [
+    {
+     "quantity": "number of medium-thinking Pro cells now at n=3",
+     "value_verbatim": "four",
+     "value_parsed": 4,
+     "unit": "cells",
+     "kind": "count",
+     "path": null,
+     "method": "recompute-script"
+    },
+    {
+     "quantity": "replicate passes per medium-thinking Pro cell (exemplar: pro-text-medium-t-0-0)",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": "passes",
+     "kind": "count",
+     "path": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json#$.summary.n_runs",
+     "method": "read"
+    },
+    {
+     "quantity": "number of HIGH-thinking Pro cells already at n=3",
+     "value_verbatim": "four",
+     "value_parsed": 4,
+     "unit": "cells",
+     "kind": "count",
+     "path": null,
+     "method": "recompute-script"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Both cell counts need label filters across two runs. Note the §4 provenance table records `replicates` = 1 for three of these cells — an internal tension for triage, not adjudicated here."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     298,
+     298
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "the two pv-diag medium-t-0-0 cells were topped up after recovering ~5% unretried tile",
+   "values": [
+    {
+     "quantity": "number of pv-diag-384 medium-t-0-0 cells topped up",
+     "value_verbatim": "two",
+     "value_parsed": 2,
+     "unit": "cells",
+     "kind": "count",
+     "path": null,
+     "method": "recompute-script"
+    },
+    {
+     "quantity": "share of tiles whose failures were unretried in the pv-diag medium-t-0-0 run_1 passes",
+     "value_verbatim": "~5%",
+     "value_parsed": 5.0,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "results/run-conditions.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Restates the banner claim at line 6. The ~5% figure has no artefact I could locate; the document refers it to Obs 338/339."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     299,
+     300
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "(`pro-text-medium-t-0-0` 0.763→0.792,\n`pro-image-medium-t-0-0` 0.606→0.655",
+   "values": [
+    {
+     "quantity": "F1@20 m, cell pro-text-medium-t-0-0, before the failure-recovery top-up",
+     "value_verbatim": "0.763",
+     "value_parsed": 0.763,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "historical"
+    },
+    {
+     "quantity": "F1@20 m, cell pro-text-medium-t-0-0, after the failure-recovery top-up",
+     "value_verbatim": "0.792",
+     "value_parsed": 0.792,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@20 m, cell pro-image-medium-t-0-0, before the failure-recovery top-up",
+     "value_verbatim": "0.606",
+     "value_parsed": 0.606,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "historical"
+    },
+    {
+     "quantity": "F1@20 m, cell pro-image-medium-t-0-0, after the failure-recovery top-up",
+     "value_verbatim": "0.655",
+     "value_parsed": 0.655,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/paper-eval/n1/384px-14buf-mcc/pro-image-medium-t-0-0/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Before→after pair: the pre-top-up values are historical (superseded), the post-top-up values are live and match the §5 table rows."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     304,
+     306
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "- **F1@20 m leaders** are genuine Pro text at T=0.0: `pro-text-high-t-0-0` (0.804) and\n  `pro-text-medium-t-0-0` (0.792) — a two-member Tier-1 tie (§ 6) — ahead of the two\n  Pro-text T=0.7 cells (`pro-text-medium-t-0-7` 0.755, `pro-text-high-t-0-7` 0.745).",
+   "values": [
+    {
+     "quantity": "F1@20 m, cell pro-text-high-t-0-0 (genuine Pro, rank 1)",
+     "value_verbatim": "0.804",
+     "value_parsed": 0.804,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@20 m, cell pro-text-medium-t-0-0 (rank 2)",
+     "value_verbatim": "0.792",
+     "value_parsed": 0.792,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "number of members in the Tier-1 tie",
+     "value_verbatim": "two",
+     "value_parsed": 2,
+     "unit": "cells",
+     "kind": "count",
+     "path": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json#len:$.tie_set",
+     "method": "read"
+    },
+    {
+     "quantity": "number of Pro-text T=0.7 cells ranked below the Tier-1 tie",
+     "value_verbatim": "two",
+     "value_parsed": 2,
+     "unit": "cells",
+     "kind": "count",
+     "path": null,
+     "method": "recompute-script"
+    },
+    {
+     "quantity": "F1@20 m, cell pro-text-medium-t-0-7",
+     "value_verbatim": "0.755",
+     "value_parsed": 0.755,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-medium-t-0-7/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@20 m, cell pro-text-high-t-0-7",
+     "value_verbatim": "0.745",
+     "value_parsed": 0.745,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/paper-eval/n1/384px-14buf-mcc/pro-text-high-t-0-7/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-high-t-0-0/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "'a two-member Tier-1 tie' reads len($.tie_set) in the tiering artefact; the second 'two' (Pro-text T=0.7 cells) needs a filtered count over the ranking."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     307,
+     309
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "**MCC leader** is genuine Pro **image**: `pro-image-medium-t-0-7` (+0.911, confusion\n  216/250/8/13), with `pro-image-high-t-0-0` (+0.868) second — both above the former\n  MCC leader `pro-image-high-t-0-7` (+0.852).",
+   "values": [
+    {
+     "quantity": "MCC, cell pro-image-medium-t-0-7 (genuine Pro, MCC leader)",
+     "value_verbatim": "+0.911",
+     "value_parsed": 0.911,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true positives, cell pro-image-medium-t-0-7",
+     "value_verbatim": "216",
+     "value_parsed": 216,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true negatives, cell pro-image-medium-t-0-7",
+     "value_verbatim": "250",
+     "value_parsed": 250,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tn",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false positives, cell pro-image-medium-t-0-7",
+     "value_verbatim": "8",
+     "value_parsed": 8,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification false negatives, cell pro-image-medium-t-0-7",
+     "value_verbatim": "13",
+     "value_parsed": 13,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fn",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC, cell pro-image-high-t-0-0 (second)",
+     "value_verbatim": "+0.868",
+     "value_parsed": 0.868,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-high-t-0-0/evaluation.json#$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC, cell pro-image-high-t-0-7 (former MCC leader)",
+     "value_verbatim": "+0.852",
+     "value_parsed": 0.852,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/paper-eval/n1/384px-14buf-mcc/pro-image-high-t-0-7/evaluation.json#$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-medium-t-0-7/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "'former MCC leader' describes a ranking change, not a superseded value: +0.852 is still the live MCC of pv-diag-384's pro-image-high-t-0-7."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     311,
+     312
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "(`fp`≈257, `tn`≈1), so its MCC collapses to ≈0 (even slightly negative for the\n  T=0.0 PV baseline). F1 stays moderate (~0.50)",
+   "values": [
+    {
+     "quantity": "tile-classification false positives, Flash text MINIMAL cells (approximate)",
+     "value_verbatim": "≈257",
+     "value_parsed": 257,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.fp",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-classification true negatives, Flash text MINIMAL cells (approximate)",
+     "value_verbatim": "≈1",
+     "value_parsed": 1,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.tile_classification.confusion.tn",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC, Flash text MINIMAL cells (approximate)",
+     "value_verbatim": "≈0",
+     "value_parsed": 0.0,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@20 m, Flash text MINIMAL cells (approximate)",
+     "value_verbatim": "~0.50",
+     "value_parsed": 0.5,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-text-minimal-t-0-7/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Approximate markers retained verbatim per v1.2 rule 5. The claim generalises over the three Flash text MINIMAL cells (flash-text-minimal-t-0-7, flash-text-minimal-t-0-0-pv-baseline, flash-text-minimal-t-0-3 and the retest flash-text-minimal-t-0-0); the anchor is one exemplar."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     316,
+     317
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "appears in both pv-diag-384 (1 pass, MCC +0.312) and n1-outstanding-384 (3 passes,\n  MCC +0.314, near-identical confusion) — reassuringly stable across the two source",
+   "values": [
+    {
+     "quantity": "replicate passes, cell flash-image-minimal-t-0-0 (pv-diag-384)",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": "recompute-script"
+    },
+    {
+     "quantity": "MCC, cell flash-image-minimal-t-0-0 (pv-diag-384)",
+     "value_verbatim": "+0.312",
+     "value_parsed": 0.312,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "replicate passes, cell flash-image-minimal-t-0-0-487-tiles (n1-outstanding-384)",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": "passes",
+     "kind": "count",
+     "path": "results/paper-eval/n1/384px-14buf-mcc/flash-image-minimal-t-0-0-487-tiles/evaluation.json#$.summary.n_runs",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC, cell flash-image-minimal-t-0-0-487-tiles (n1-outstanding-384)",
+     "value_verbatim": "+0.314",
+     "value_parsed": 0.314,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/paper-eval/n1/384px-14buf-mcc/flash-image-minimal-t-0-0-487-tiles/evaluation.json#$.summary.tile_classification.mcc.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "number of source runs carrying the Flash Image MINIMAL T=0.0 configuration",
+     "value_verbatim": "two",
+     "value_parsed": 2,
+     "unit": "runs",
+     "kind": "count",
+     "path": null,
+     "method": "recompute-script"
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/flash-image-minimal-t-0-0/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The pv-diag-384 cell's eval is a single-run eval carrying no $.summary.n_runs or $.per_run block, so its '1 pass' is recompute-script (v1.2 rule 3)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     321,
+     321
+    ],
+    "section": "5. Results (14-buffer + MCC re-score)"
+   },
+   "claim_text": "The statistical ranking and tiering of these 18 cells",
+   "values": [
+    {
+     "quantity": "number of cells ranked and tiered in the leaderboard finding",
+     "value_verbatim": "18",
+     "value_parsed": 18,
+     "unit": "cells",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+    "path": "len:$.ranking"
+   },
+   "method": "read",
+   "notes": "Anchored to the tiering artefact's ranking array rather than the batch summary, because the claim is about what the leaderboard analysis ranks."
+  }
+ ]
+}
