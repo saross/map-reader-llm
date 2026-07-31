@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://faims.edu.au/vlm-burial-mound-detection/manifest-schemas/c4-claims.schema.json",
+  "title": "C4 quantitative-claim extraction file (per mine document)",
+  "description": "One file per hand-written mine document, produced by the Phase 3 extraction fleet (planning/audit-charter.md § 7 Phase 3; instrument: reports/verification/apparatus/c4-extraction-instructions.md). Each claim is a verbatim contiguous span containing one or more numeric values, with a proposed anchor to the least-writable artefact that can verify it (charter § 5 rule 1). Claim ids are assigned at assembly, not extraction. The recompute harness consumes these files and emits the diff report that generate_c4_ledger.py turns into ledger rows.",
+  "type": "object",
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "extracted_at": { "$ref": "common-defs.schema.json#/$defs/isoDateTime" },
+    "source_document": {
+      "type": "object",
+      "description": "The mine document swept, pinned by git blob so line-anchor drift is detectable.",
+      "properties": {
+        "file": { "type": "string" },
+        "git_blob": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" },
+        "stratum": { "const": "hand-written" }
+      },
+      "required": ["file", "git_blob", "stratum"],
+      "additionalProperties": false
+    },
+    "extractor": {
+      "type": "object",
+      "properties": {
+        "model": { "type": "string" },
+        "instrument_version": { "type": "string" }
+      },
+      "required": ["model", "instrument_version"],
+      "additionalProperties": false
+    },
+    "claims": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/claim" }
+    }
+  },
+  "required": ["schema_version", "extracted_at", "source_document", "extractor", "claims"],
+  "additionalProperties": false,
+  "$defs": {
+    "claim": {
+      "type": "object",
+      "properties": {
+        "claim_id": {
+          "type": ["string", "null"],
+          "description": "Assigned at assembly (c4-NNNN); null at extraction."
+        },
+        "source": {
+          "type": "object",
+          "description": "Locator into the mine document. Lines are 1-indexed and inclusive; the verbatim claim_text must appear within them.",
+          "properties": {
+            "lines": {
+              "type": "array",
+              "items": { "type": "integer", "minimum": 1 },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "section": { "type": "string" }
+          },
+          "required": ["lines", "section"],
+          "additionalProperties": false
+        },
+        "claim_text": {
+          "type": "string",
+          "description": "VERBATIM contiguous span from the source document — never paraphrase, never stitch. The minimal span (sentence, list item, or table row) that carries the numeric claim(s) and enough context to identify what they measure."
+        },
+        "values": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Every checkable numeric value inside the span, in order of appearance.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "quantity": {
+                "type": "string",
+                "description": "What the number measures, normalised (e.g. 'F1@20m, condition verified-adv-text-high', 'tile count, Era 2', 'cost USD, min6 55-map production')."
+              },
+              "value_verbatim": { "type": "string" },
+              "value_parsed": { "type": ["number", "null"] },
+              "unit": { "type": ["string", "null"] },
+              "kind": {
+                "type": "string",
+                "enum": ["metric", "statistic", "count", "cost", "tokens", "parameter", "physical", "percentage", "ratio", "other"]
+              }
+            },
+            "required": ["quantity", "value_verbatim", "value_parsed", "unit", "kind"],
+            "additionalProperties": false
+          }
+        },
+        "anchor": {
+          "type": ["object", "null"],
+          "description": "Proposed verification anchor: the least-writable committed artefact whose contents decide the claim. Null only with method 'anchor-unknown', 'historical', 'unverifiable-era', or 'external'.",
+          "properties": {
+            "file": { "type": "string" },
+            "path": {
+              "type": ["string", "null"],
+              "description": "JSONPath-ish locator into the anchor for 'read' claims (e.g. $.results['20m'].f1); null when the anchor is a whole artefact (GeoJSON feature count) or the method is not 'read'."
+            },
+            "expression": {
+              "type": ["string", "null"],
+              "description": "For method 'arithmetic': the expression over anchored values that reproduces the claim (e.g. 'a - b' with operand paths named in notes)."
+            }
+          },
+          "required": ["file"],
+          "additionalProperties": false
+        },
+        "method": {
+          "type": "string",
+          "enum": ["read", "arithmetic", "recompute-script", "regen-diff", "historical", "unverifiable-era", "external", "anchor-unknown"],
+          "description": "read = value sits in a committed artefact at anchor.path; arithmetic = derivable from committed values via anchor.expression; recompute-script = needs scripted recomputation (bootstrap/permutation — record, do not run at extraction); regen-diff = covered by generated-stratum re-derivation; historical = quoted historical value (changelog 'was X' side) — not a live claim; unverifiable-era = retest-era token claim per the per-era verifiability map (flag, don't fight); external = vendor/billing figure outside the repo (attestation only); anchor-unknown = extractor could not locate an anchor — harness/triage resolves."
+        },
+        "notes": { "type": ["string", "null"] }
+      },
+      "required": ["claim_id", "source", "claim_text", "values", "anchor", "method", "notes"],
+      "additionalProperties": false
+    }
+  }
+}
