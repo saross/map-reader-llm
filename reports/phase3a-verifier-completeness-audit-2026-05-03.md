@@ -1,5 +1,18 @@
 # Phase 3a Verifier Completeness Audit (2026-05-03)
 
+> **Superseded figures (2026-07-31)**: this document records the
+> audited 2026-05-03 state and its body is preserved unedited (it is a
+> historical record and a C6 attestation source). The May–July 2026
+> recovery and completion campaigns closed the audited completeness
+> gaps (35 gap figures below no longer reproduce; current gap 0), and
+> several consensus pools were later rebuilt with recovered passes
+> without re-running their verified-v1 diagnostic outputs, so five
+> pv-diag-384 `flash-high-text-n5` cells that audited complete now
+> show a pool↔verifier count difference on disk. Era-current values
+> and per-row adjudications:
+> `reports/verification/c4-triage/mismatch-triage-2026-07-31.json`
+> (round-2/3 addendum) and the C4 ledger.
+
 ## Executive summary
 
 - **Cells audited:** 210 verifier cells across `outputs/` and `results/leaderboard/`
