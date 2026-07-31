@@ -8,7 +8,18 @@ project state.
 
 ---
 
-## 🎯 NEXT SESSION (123) — PHASE 3 CONTINUATION: FLEET + TRIAGE [Session 122 IN PROGRESS 2026-07-31; ran in Fable]
+## 🎯 NEXT SESSION (123) — PHASE 3 CONTINUATION: FLEET + TRIAGE [Session 122 CLOSED 2026-07-31; ran in Fable]
+
+> **Close-out addendum** (post-rulings): **Obs 376** landed (MCC
+> bootstrap-means; commit `78f9e442b`) and its writer's re-derivation
+> corrected three specifics in the author's own probe record →
+> **regen-0002b** (append-only) + dated correction block in
+> `phase3-rulings-2026-07-31.md` § 3 — treat "439" as
+> files-with-any-problem; rule-explicit counts 387/623; max
+> |mean−point| 0.0151 (no one-ulp triage tolerance). Reflections +
+> session log written (`docs/notes/reflections/`); claude-obs 15–17;
+> **S122 user-obs candidates A–C pending** in `user-observations.md`
+> (silence holds; S118–120 candidates also still pending).
 
 > **The controller is `planning/audit-charter.md` § 9** — unchanged.
 > **Phase 3 claimed (S122)**; deliverable 1 complete; fleet mid-flight.
