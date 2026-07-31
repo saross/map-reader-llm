@@ -1,8 +1,8 @@
 {
  "_meta": {
-  "purpose": "C4 extraction fleet batch plan (Phase 3). One batch = one background agent assignment; ~300 raw numeric spans per batch (span counts are the broad survey regex \u2014 genuine claims run lower).",
+  "purpose": "C4 extraction fleet batch plan (Phase 3). One batch = one background agent assignment; ~300 raw numeric spans per batch (span counts are the broad survey regex — genuine claims run lower).",
   "built": "2026-07-31 Session 122, from generated-file-registry.json v1.0 hand-written stratum (142 files)",
-  "instrument": "reports/verification/apparatus/c4-extraction-instructions.md v1.0",
+  "instrument": "reports/verification/apparatus/c4-extraction-instructions.md v1.2 (fleet from 2026-07-31 S123 onward; batches 028-052 + calib-a/b ran v1.0-1.1 and were repaired to v1.2 conformance in S123 triage)",
   "status_key": "pending | extracted | validated",
   "calibration": "calib-a (verifier-robustness-findings 1-260) + calib-b (protocol-errata 1-248) precede the fleet; their files supersede the overlapping planned batches"
  },
@@ -2855,7 +2855,7 @@
     }
    ],
    "output": "reports/verification/c4-extraction/174.json",
-   "status": "extracted (calib-a; covers 1-260 \u2014 re-check residual lines at assembly)"
+   "status": "extracted (calib-a; covers 1-260 — re-check residual lines at assembly)"
   },
   {
    "batch_id": "b175",

@@ -1,6 +1,7 @@
 # C4 extraction instructions — quantitative claims in hand-written mine documents
 
-**Version**: 1.1 (2026-07-31; v1.0 same day). **Controller**:
+**Version**: 1.2 (2026-07-31, S123 triage lessons; v1.1/v1.0 same
+day). **Controller**:
 `planning/audit-charter.md`
 § 7 Phase 3. **Schema**: `docs/manifest-schemas/c4-claims.schema.json`.
 **Consumers**: extraction agents (one per document or document batch); the
@@ -104,6 +105,49 @@ mismatch. Claims about what was RUN anchor to configs/metas as before.
 Non-JSON anchors (`config.py` constants, test counts in `tests/*.py`,
 crop-size PNGs) are legitimate and expected — the harness routes them
 to triage rather than resolving mechanically.
+
+**v1.2 amendments** (Session-123 triage of the first recompute —
+every item below is a defect class that reached the harness):
+
+1. **One derivation per expression.** The harness compares EVERY
+   effective-`arithmetic` value against an expression result. A span
+   carrying several derived values gives each its own value-level
+   `expression` + `operands` (schema 1.1); `anchor.expression` covers
+   at most one. NEVER let the operand values themselves (the numbers a
+   derivation consumes) inherit an `arithmetic` claim method — give
+   each `method: "read"` with its own path, or they are compared
+   against their own difference (the 487−160=327 trap: 487 and 160
+   both "mismatched" 327).
+2. **Cross-file locators.** A value `path` may name another file:
+   `<repo-relative-file>#<jsonpath>` (e.g. a range minimum living in a
+   sibling run's meta). Operands name their file in their own `file`
+   field as before.
+3. **No pathless values in multi-value claims.** A value with
+   `path: null` falls back to `anchor.path`; when the value's quantity
+   is not what `anchor.path` locates, the fallback silently compares
+   the wrong quantity (the pass-count-vs-temperature trap: "5 passes"
+   compared against `$.configuration.temperature` = 0.7). In any claim
+   with more than one value, every `read` value carries its own
+   `path`; a value with no locatable path takes an explicit
+   non-read method (`recompute-script` / `anchor-unknown`) instead.
+4. **Counts.** Canonical spelling is the `len:` prefix
+   (`len:$.features`, `len:$.results`). The harness also accepts
+   `len(...)`/`count(...)`, a `.length` suffix, and
+   `(array length)`/`(distinct count)` annotations, but emit `len:`.
+   Derived-probabilities files (keys `derived_from`/`source`/
+   `vote_threshold`) carry no `total_results` scalar — count them via
+   `len:$.results`.
+5. **Approx markers are verbatim.** `~`/`≈` on a quoted value belongs
+   in `value_verbatim`; dropping it promotes an approximate quote to a
+   hard comparison (the ≈$1.11 flex-pricing row surfaced as MISMATCH
+   instead of APPROX).
+6. **Shared units and signs in ranges.** In spans like "2.4–2.7 %"
+   only one value carries the sign/unit; set the other values' `unit`
+   field (`%`, `m`, …) so the harness can bridge scales.
+7. **Filters are legal paths.** `$.cells[?(@.name=='TH7-k3')].f1_50`
+   (single-match equality) and `[*]` (constant-collapse across a
+   collection) resolve mechanically; prefer them over pathless
+   approximations like `len($.cells)` for a factor-level count.
 
 ## Known traps (from Phases 1–2)
 
