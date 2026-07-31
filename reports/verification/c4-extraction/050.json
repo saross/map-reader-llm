@@ -2015,7 +2015,7 @@
      "unit": "levels",
      "kind": "count",
      "path": "len($.cells)",
-     "method": null
+     "method": "recompute-script"
     },
     {
      "quantity": "levels of the verifier-model factor",
@@ -2024,7 +2024,7 @@
      "unit": "levels",
      "kind": "count",
      "path": "len($.cells)",
-     "method": null
+     "method": "recompute-script"
     },
     {
      "quantity": "levels of the verifier-iteration factor",
@@ -2033,7 +2033,7 @@
      "unit": "levels",
      "kind": "count",
      "path": "len($.cells)",
-     "method": null
+     "method": "recompute-script"
     },
     {
      "quantity": "verifier iterations for the method-matched comparison",
@@ -2058,7 +2058,7 @@
     "file": "results/flash35-2x2/analysis-full.json"
    },
    "method": "read",
-   "notes": "Table-header claim. $.cells holds four proposer×verifier cells plus two bare-consensus cells, each with n10 and n5_derived branches. The 20 m buffer is asserted only in the sibling method string (results/flash35-2x2/flash35_permutations.json $.method: \"Hungarian per map at 20 m\")."
+   "notes": "Table-header claim. $.cells holds four proposer×verifier cells plus two bare-consensus cells, each with n10 and n5_derived branches. The 20 m buffer is asserted only in the sibling method string (results/flash35-2x2/flash35_permutations.json $.method: \"Hungarian per map at 20 m\"). S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): the three factor-level 2s pointed at len($.cells)=6 (an approximation the original notes concede: cells mixes 4 proposer-x-verifier with 2 bare-consensus entries); the design's level counts need scripted derivation from the cell keys, so they move to script scope."
   },
   {
    "claim_id": null,
@@ -3000,7 +3000,7 @@
      "unit": "levels",
      "kind": "count",
      "path": "len($.cells)",
-     "method": null
+     "method": "recompute-script"
     },
     {
      "quantity": "levels of the verifier-model factor",
@@ -3009,7 +3009,7 @@
      "unit": "levels",
      "kind": "count",
      "path": "len($.cells)",
-     "method": null
+     "method": "recompute-script"
     },
     {
      "quantity": "levels of the verifier-iteration factor",
@@ -3018,7 +3018,7 @@
      "unit": "levels",
      "kind": "count",
      "path": "len($.cells)",
-     "method": null
+     "method": "recompute-script"
     }
    ],
    "anchor": {
@@ -3026,7 +3026,7 @@
     "path": "len($.cells)"
    },
    "method": "read",
-   "notes": "Changelog restatement of the 2×2×2 design; realised cells are enumerated at $.cells (four proposer×verifier cells plus two bare-consensus cells)."
+   "notes": "Changelog restatement of the 2×2×2 design; realised cells are enumerated at $.cells (four proposer×verifier cells plus two bare-consensus cells). S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): the three factor-level 2s pointed at len($.cells)=6 (an approximation the original notes concede: cells mixes 4 proposer-x-verifier with 2 bare-consensus entries); the design's level counts need scripted derivation from the cell keys, so they move to script scope."
   }
  ]
 }
