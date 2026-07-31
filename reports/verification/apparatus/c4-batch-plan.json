@@ -1,0 +1,2923 @@
+{
+ "_meta": {
+  "purpose": "C4 extraction fleet batch plan (Phase 3). One batch = one background agent assignment; ~300 raw numeric spans per batch (span counts are the broad survey regex \u2014 genuine claims run lower).",
+  "built": "2026-07-31 Session 122, from generated-file-registry.json v1.0 hand-written stratum (142 files)",
+  "instrument": "reports/verification/apparatus/c4-extraction-instructions.md v1.0",
+  "status_key": "pending | extracted | validated",
+  "calibration": "calib-a (verifier-robustness-findings 1-260) + calib-b (protocol-errata 1-248) precede the fleet; their files supersede the overlapping planned batches"
+ },
+ "batches": [
+  {
+   "batch_id": "b001",
+   "spans": 345,
+   "units": [
+    {
+     "file": "docs/methodology/55maps-generalisation-runs.md",
+     "start": 1,
+     "end": 165,
+     "spans": 219
+    },
+    {
+     "file": "docs/methodology/configuration-audit.md",
+     "start": 1,
+     "end": 216,
+     "spans": 126
+    }
+   ],
+   "output": "reports/verification/c4-extraction/001.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b002",
+   "spans": 346,
+   "units": [
+    {
+     "file": "docs/methodology/data-reproduction-2026-04-25.md",
+     "start": 1,
+     "end": 146,
+     "spans": 318
+    },
+    {
+     "file": "docs/methodology/data-reproduction-2026-04-25.md",
+     "start": 147,
+     "end": 191,
+     "spans": 28
+    }
+   ],
+   "output": "reports/verification/c4-extraction/002.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b003",
+   "spans": 230,
+   "units": [
+    {
+     "file": "docs/methodology/documentation-index.md",
+     "start": 1,
+     "end": 129,
+     "spans": 172
+    },
+    {
+     "file": "docs/methodology/documentation-protocol.md",
+     "start": 1,
+     "end": 165,
+     "spans": 18
+    },
+    {
+     "file": "docs/methodology/mcc-permutation-validation-2026-04-25.md",
+     "start": 1,
+     "end": 56,
+     "spans": 40
+    }
+   ],
+   "output": "reports/verification/c4-extraction/003.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b004",
+   "spans": 494,
+   "units": [
+    {
+     "file": "docs/methodology/n1-baseline-matrix.md",
+     "start": 1,
+     "end": 325,
+     "spans": 494
+    }
+   ],
+   "output": "reports/verification/c4-extraction/004.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b005",
+   "spans": 379,
+   "units": [
+    {
+     "file": "docs/methodology/n1-baseline-matrix.md",
+     "start": 326,
+     "end": 525,
+     "spans": 325
+    },
+    {
+     "file": "docs/methodology/n1-baseline-matrix.md",
+     "start": 526,
+     "end": 565,
+     "spans": 54
+    }
+   ],
+   "output": "reports/verification/c4-extraction/005.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b006",
+   "spans": 230,
+   "units": [
+    {
+     "file": "docs/methodology/output-directory-standard.md",
+     "start": 1,
+     "end": 456,
+     "spans": 169
+    },
+    {
+     "file": "docs/methodology/preregistration/analysis-summary.md",
+     "start": 1,
+     "end": 178,
+     "spans": 61
+    }
+   ],
+   "output": "reports/verification/c4-extraction/006.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b007",
+   "spans": 310,
+   "units": [
+    {
+     "file": "docs/methodology/preregistration/decisions-log.md",
+     "start": 1,
+     "end": 308,
+     "spans": 310
+    }
+   ],
+   "output": "reports/verification/c4-extraction/007.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b008",
+   "spans": 305,
+   "units": [
+    {
+     "file": "docs/methodology/preregistration/decisions-log.md",
+     "start": 309,
+     "end": 788,
+     "spans": 305
+    }
+   ],
+   "output": "reports/verification/c4-extraction/008.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b009",
+   "spans": 338,
+   "units": [
+    {
+     "file": "docs/methodology/preregistration/decisions-log.md",
+     "start": 789,
+     "end": 1165,
+     "spans": 338
+    }
+   ],
+   "output": "reports/verification/c4-extraction/009.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b010",
+   "spans": 325,
+   "units": [
+    {
+     "file": "docs/methodology/preregistration/decisions-log.md",
+     "start": 1166,
+     "end": 1225,
+     "spans": 100
+    },
+    {
+     "file": "docs/methodology/preregistration/execution-checklist.md",
+     "start": 1,
+     "end": 123,
+     "spans": 225
+    }
+   ],
+   "output": "reports/verification/c4-extraction/010.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b011",
+   "spans": 301,
+   "units": [
+    {
+     "file": "docs/methodology/preregistration/execution-plan.md",
+     "start": 1,
+     "end": 481,
+     "spans": 301
+    }
+   ],
+   "output": "reports/verification/c4-extraction/011.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b012",
+   "spans": 305,
+   "units": [
+    {
+     "file": "docs/methodology/preregistration/execution-plan.md",
+     "start": 482,
+     "end": 769,
+     "spans": 305
+    }
+   ],
+   "output": "reports/verification/c4-extraction/012.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b013",
+   "spans": 128,
+   "units": [
+    {
+     "file": "docs/methodology/preregistration/execution-plan.md",
+     "start": 770,
+     "end": 830,
+     "spans": 128
+    }
+   ],
+   "output": "reports/verification/c4-extraction/013.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b014",
+   "spans": 310,
+   "units": [
+    {
+     "file": "docs/methodology/preregistration/hypothesis-tracking.md",
+     "start": 1,
+     "end": 315,
+     "spans": 310
+    },
+    {
+     "file": "docs/methodology/preregistration/hypothesis-tracking.md",
+     "start": 316,
+     "end": 333,
+     "spans": 0
+    }
+   ],
+   "output": "reports/verification/c4-extraction/014.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b015",
+   "spans": 328,
+   "units": [
+    {
+     "file": "docs/methodology/preregistration/protocol-errata.md",
+     "start": 1,
+     "end": 393,
+     "spans": 328
+    }
+   ],
+   "output": "reports/verification/c4-extraction/015.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b016",
+   "spans": 323,
+   "units": [
+    {
+     "file": "docs/methodology/preregistration/protocol-errata.md",
+     "start": 394,
+     "end": 786,
+     "spans": 323
+    }
+   ],
+   "output": "reports/verification/c4-extraction/016.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b017",
+   "spans": 333,
+   "units": [
+    {
+     "file": "docs/methodology/preregistration/protocol-errata.md",
+     "start": 787,
+     "end": 1138,
+     "spans": 333
+    }
+   ],
+   "output": "reports/verification/c4-extraction/017.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b018",
+   "spans": 308,
+   "units": [
+    {
+     "file": "docs/methodology/preregistration/protocol-errata.md",
+     "start": 1139,
+     "end": 1537,
+     "spans": 308
+    }
+   ],
+   "output": "reports/verification/c4-extraction/018.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b019",
+   "spans": 387,
+   "units": [
+    {
+     "file": "docs/methodology/preregistration/protocol-errata.md",
+     "start": 1538,
+     "end": 1870,
+     "spans": 387
+    }
+   ],
+   "output": "reports/verification/c4-extraction/019.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b020",
+   "spans": 386,
+   "units": [
+    {
+     "file": "docs/methodology/preregistration/protocol-errata.md",
+     "start": 1871,
+     "end": 2068,
+     "spans": 386
+    }
+   ],
+   "output": "reports/verification/c4-extraction/020.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b021",
+   "spans": 372,
+   "units": [
+    {
+     "file": "docs/methodology/preregistration/protocol-errata.md",
+     "start": 2069,
+     "end": 2382,
+     "spans": 372
+    }
+   ],
+   "output": "reports/verification/c4-extraction/021.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b022",
+   "spans": 402,
+   "units": [
+    {
+     "file": "docs/methodology/preregistration/protocol-errata.md",
+     "start": 2383,
+     "end": 2796,
+     "spans": 402
+    }
+   ],
+   "output": "reports/verification/c4-extraction/022.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b023",
+   "spans": 387,
+   "units": [
+    {
+     "file": "docs/methodology/preregistration/protocol-errata.md",
+     "start": 2797,
+     "end": 3139,
+     "spans": 302
+    },
+    {
+     "file": "docs/methodology/preregistration/protocol-errata.md",
+     "start": 3140,
+     "end": 3213,
+     "spans": 85
+    }
+   ],
+   "output": "reports/verification/c4-extraction/023.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b024",
+   "spans": 376,
+   "units": [
+    {
+     "file": "docs/methodology/reports/cost-performance-tradeoffs.md",
+     "start": 1,
+     "end": 109,
+     "spans": 72
+    },
+    {
+     "file": "docs/methodology/reports/data_split_strategy.md",
+     "start": 1,
+     "end": 58,
+     "spans": 43
+    },
+    {
+     "file": "docs/methodology/reports/lessons-learned-llm-reproducibility.md",
+     "start": 1,
+     "end": 42,
+     "spans": 9
+    },
+    {
+     "file": "docs/methodology/reports/metrics_strategy.md",
+     "start": 1,
+     "end": 42,
+     "spans": 44
+    },
+    {
+     "file": "docs/methodology/reports/tile-selection-methodology.md",
+     "start": 1,
+     "end": 202,
+     "spans": 94
+    },
+    {
+     "file": "docs/methodology/reports/tile-selection-observations.md",
+     "start": 1,
+     "end": 179,
+     "spans": 114
+    }
+   ],
+   "output": "reports/verification/c4-extraction/024.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b025",
+   "spans": 315,
+   "units": [
+    {
+     "file": "docs/methodology/spatial-reference.md",
+     "start": 1,
+     "end": 170,
+     "spans": 133
+    },
+    {
+     "file": "docs/methodology/transparency/cc-session-archiving-addendum.md",
+     "start": 1,
+     "end": 466,
+     "spans": 182
+    }
+   ],
+   "output": "reports/verification/c4-extraction/025.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b026",
+   "spans": 340,
+   "units": [
+    {
+     "file": "docs/methodology/transparency/cc-session-archiving-specification.md",
+     "start": 1,
+     "end": 1105,
+     "spans": 302
+    },
+    {
+     "file": "docs/methodology/transparency/cc-session-archiving-specification.md",
+     "start": 1106,
+     "end": 1140,
+     "spans": 13
+    },
+    {
+     "file": "docs/methodology/v2-verifier-contamination-policy.md",
+     "start": 1,
+     "end": 65,
+     "spans": 25
+    }
+   ],
+   "output": "reports/verification/c4-extraction/026.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b027",
+   "spans": 295,
+   "units": [
+    {
+     "file": "docs/methods-outline.md",
+     "start": 1,
+     "end": 379,
+     "spans": 295
+    }
+   ],
+   "output": "reports/verification/c4-extraction/027.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b028",
+   "spans": 308,
+   "units": [
+    {
+     "file": "reports/adversarial-audit-report.md",
+     "start": 1,
+     "end": 166,
+     "spans": 308
+    }
+   ],
+   "output": "reports/verification/c4-extraction/028.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b029",
+   "spans": 262,
+   "units": [
+    {
+     "file": "reports/adversarial-audit-report.md",
+     "start": 167,
+     "end": 288,
+     "spans": 262
+    }
+   ],
+   "output": "reports/verification/c4-extraction/029.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b030",
+   "spans": 383,
+   "units": [
+    {
+     "file": "reports/configuration-audit-2026-03-25-v2.md",
+     "start": 1,
+     "end": 210,
+     "spans": 383
+    }
+   ],
+   "output": "reports/verification/c4-extraction/030.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b031",
+   "spans": 115,
+   "units": [
+    {
+     "file": "reports/configuration-audit-2026-03-25-v2.md",
+     "start": 211,
+     "end": 413,
+     "spans": 115
+    }
+   ],
+   "output": "reports/verification/c4-extraction/031.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b032",
+   "spans": 336,
+   "units": [
+    {
+     "file": "reports/configuration-audit-2026-03-25.md",
+     "start": 1,
+     "end": 112,
+     "spans": 336
+    }
+   ],
+   "output": "reports/verification/c4-extraction/032.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b033",
+   "spans": 357,
+   "units": [
+    {
+     "file": "reports/configuration-audit-2026-03-25.md",
+     "start": 113,
+     "end": 313,
+     "spans": 302
+    },
+    {
+     "file": "reports/configuration-audit-2026-03-25.md",
+     "start": 314,
+     "end": 390,
+     "spans": 55
+    }
+   ],
+   "output": "reports/verification/c4-extraction/033.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b034",
+   "spans": 360,
+   "units": [
+    {
+     "file": "reports/configuration-audit-2026-04-15-h8-v2.md",
+     "start": 1,
+     "end": 239,
+     "spans": 190
+    },
+    {
+     "file": "reports/diversity-crs-mislabel-investigation-2026-06-08.md",
+     "start": 1,
+     "end": 280,
+     "spans": 170
+    }
+   ],
+   "output": "reports/verification/c4-extraction/034.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b035",
+   "spans": 300,
+   "units": [
+    {
+     "file": "reports/experimental-progression.md",
+     "start": 1,
+     "end": 268,
+     "spans": 300
+    }
+   ],
+   "output": "reports/verification/c4-extraction/035.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b036",
+   "spans": 133,
+   "units": [
+    {
+     "file": "reports/experimental-progression.md",
+     "start": 269,
+     "end": 402,
+     "spans": 133
+    }
+   ],
+   "output": "reports/verification/c4-extraction/036.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b037",
+   "spans": 309,
+   "units": [
+    {
+     "file": "reports/gs-tile-pool-mapping-2026-05-28.md",
+     "start": 1,
+     "end": 142,
+     "spans": 309
+    }
+   ],
+   "output": "reports/verification/c4-extraction/037.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b038",
+   "spans": 320,
+   "units": [
+    {
+     "file": "reports/gs-tile-pool-mapping-2026-05-28.md",
+     "start": 143,
+     "end": 233,
+     "spans": 120
+    },
+    {
+     "file": "reports/h11-reorganisation-cost-estimate-2026-05-28.md",
+     "start": 1,
+     "end": 184,
+     "spans": 200
+    }
+   ],
+   "output": "reports/verification/c4-extraction/038.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b039",
+   "spans": 170,
+   "units": [
+    {
+     "file": "reports/key-findings-summary-2026-06-23.md",
+     "start": 1,
+     "end": 174,
+     "spans": 170
+    }
+   ],
+   "output": "reports/verification/c4-extraction/039.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b040",
+   "spans": 335,
+   "units": [
+    {
+     "file": "reports/phase2c-adversarial-review.md",
+     "start": 1,
+     "end": 237,
+     "spans": 335
+    }
+   ],
+   "output": "reports/verification/c4-extraction/040.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b041",
+   "spans": 372,
+   "units": [
+    {
+     "file": "reports/phase2c-adversarial-review.md",
+     "start": 238,
+     "end": 359,
+     "spans": 56
+    },
+    {
+     "file": "reports/phase2c-pn-ratio-analysis.md",
+     "start": 1,
+     "end": 290,
+     "spans": 305
+    },
+    {
+     "file": "reports/phase2c-pn-ratio-analysis.md",
+     "start": 291,
+     "end": 304,
+     "spans": 11
+    }
+   ],
+   "output": "reports/verification/c4-extraction/041.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b042",
+   "spans": 146,
+   "units": [
+    {
+     "file": "reports/phase3-decomposition-investigation-2026-06-05.md",
+     "start": 1,
+     "end": 66,
+     "spans": 146
+    }
+   ],
+   "output": "reports/verification/c4-extraction/042.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b043",
+   "spans": 602,
+   "units": [
+    {
+     "file": "reports/phase3a-verifier-completeness-audit-2026-05-03.md",
+     "start": 1,
+     "end": 211,
+     "spans": 602
+    }
+   ],
+   "output": "reports/verification/c4-extraction/043.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b044",
+   "spans": 436,
+   "units": [
+    {
+     "file": "reports/phase3a-verifier-completeness-audit-2026-05-03.md",
+     "start": 212,
+     "end": 301,
+     "spans": 436
+    }
+   ],
+   "output": "reports/verification/c4-extraction/044.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b045",
+   "spans": 313,
+   "units": [
+    {
+     "file": "reports/phase3a-verifier-completeness-audit-2026-05-03.md",
+     "start": 302,
+     "end": 502,
+     "spans": 313
+    }
+   ],
+   "output": "reports/verification/c4-extraction/045.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b046",
+   "spans": 201,
+   "units": [
+    {
+     "file": "reports/phase3a-verifier-completeness-audit-2026-05-03.md",
+     "start": 503,
+     "end": 668,
+     "spans": 201
+    }
+   ],
+   "output": "reports/verification/c4-extraction/046.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b047",
+   "spans": 353,
+   "units": [
+    {
+     "file": "reports/results-summary-session-58.md",
+     "start": 1,
+     "end": 151,
+     "spans": 353
+    }
+   ],
+   "output": "reports/verification/c4-extraction/047.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b048",
+   "spans": 395,
+   "units": [
+    {
+     "file": "reports/results-summary-session-58.md",
+     "start": 152,
+     "end": 295,
+     "spans": 395
+    }
+   ],
+   "output": "reports/verification/c4-extraction/048.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b049",
+   "spans": 106,
+   "units": [
+    {
+     "file": "reports/results-summary-session-58.md",
+     "start": 296,
+     "end": 380,
+     "spans": 106
+    }
+   ],
+   "output": "reports/verification/c4-extraction/049.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b050",
+   "spans": 302,
+   "units": [
+    {
+     "file": "reports/session-111-discoveries.md",
+     "start": 1,
+     "end": 209,
+     "spans": 302
+    }
+   ],
+   "output": "reports/verification/c4-extraction/050.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b051",
+   "spans": 136,
+   "units": [
+    {
+     "file": "reports/session-113-signoff-package.md",
+     "start": 1,
+     "end": 118,
+     "spans": 136
+    }
+   ],
+   "output": "reports/verification/c4-extraction/051.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b052",
+   "spans": 301,
+   "units": [
+    {
+     "file": "reports/token-load-audit-2026-06-12.md",
+     "start": 1,
+     "end": 150,
+     "spans": 301
+    }
+   ],
+   "output": "reports/verification/c4-extraction/052.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b053",
+   "spans": 359,
+   "units": [
+    {
+     "file": "reports/token-load-audit-2026-06-12.md",
+     "start": 151,
+     "end": 305,
+     "spans": 244
+    },
+    {
+     "file": "reports/verification/apparatus/c1-adjudication-2026-07-29.md",
+     "start": 1,
+     "end": 72,
+     "spans": 73
+    },
+    {
+     "file": "reports/verification/apparatus/c1-discharge-instructions.md",
+     "start": 1,
+     "end": 61,
+     "spans": 16
+    },
+    {
+     "file": "reports/verification/apparatus/c1-extraction-instructions.md",
+     "start": 1,
+     "end": 71,
+     "spans": 26
+    }
+   ],
+   "output": "reports/verification/c4-extraction/053.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b054",
+   "spans": 302,
+   "units": [
+    {
+     "file": "reports/verification/apparatus/c4-extraction-instructions.md",
+     "start": 1,
+     "end": 108,
+     "spans": 40
+    },
+    {
+     "file": "reports/verification/apparatus/cluster-label-heterogeneity-2026-07-30.md",
+     "start": 1,
+     "end": 100,
+     "spans": 153
+    },
+    {
+     "file": "reports/verification/apparatus/defence-pass-adjudication-2026-07-29.md",
+     "start": 1,
+     "end": 143,
+     "spans": 109
+    }
+   ],
+   "output": "reports/verification/c4-extraction/054.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b055",
+   "spans": 302,
+   "units": [
+    {
+     "file": "reports/verification/drafts/errata-drafts-2026-07-29.md",
+     "start": 1,
+     "end": 273,
+     "spans": 302
+    }
+   ],
+   "output": "reports/verification/c4-extraction/055.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b056",
+   "spans": 370,
+   "units": [
+    {
+     "file": "reports/verification/drafts/errata-drafts-2026-07-29.md",
+     "start": 274,
+     "end": 647,
+     "spans": 370
+    }
+   ],
+   "output": "reports/verification/c4-extraction/056.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b057",
+   "spans": 237,
+   "units": [
+    {
+     "file": "reports/verification/drafts/errata-drafts-2026-07-29.md",
+     "start": 648,
+     "end": 926,
+     "spans": 237
+    }
+   ],
+   "output": "reports/verification/c4-extraction/057.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b058",
+   "spans": 334,
+   "units": [
+    {
+     "file": "reports/verification/family-fdr-registration.md",
+     "start": 1,
+     "end": 502,
+     "spans": 334
+    }
+   ],
+   "output": "reports/verification/c4-extraction/058.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b059",
+   "spans": 304,
+   "units": [
+    {
+     "file": "reports/verification/family-fdr-registration.md",
+     "start": 503,
+     "end": 831,
+     "spans": 304
+    }
+   ],
+   "output": "reports/verification/c4-extraction/059.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b060",
+   "spans": 162,
+   "units": [
+    {
+     "file": "reports/verification/family-fdr-registration.md",
+     "start": 832,
+     "end": 1088,
+     "spans": 162
+    }
+   ],
+   "output": "reports/verification/c4-extraction/060.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b061",
+   "spans": 321,
+   "units": [
+    {
+     "file": "reports/verification/phase0-scope.md",
+     "start": 1,
+     "end": 267,
+     "spans": 321
+    }
+   ],
+   "output": "reports/verification/c4-extraction/061.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b062",
+   "spans": 94,
+   "units": [
+    {
+     "file": "reports/verification/phase0-scope.md",
+     "start": 268,
+     "end": 357,
+     "spans": 94
+    }
+   ],
+   "output": "reports/verification/c4-extraction/062.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b063",
+   "spans": 383,
+   "units": [
+    {
+     "file": "reports/verification/phase1-gate-package.md",
+     "start": 1,
+     "end": 332,
+     "spans": 305
+    },
+    {
+     "file": "reports/verification/phase1-gate-package.md",
+     "start": 333,
+     "end": 395,
+     "spans": 78
+    }
+   ],
+   "output": "reports/verification/c4-extraction/063.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b064",
+   "spans": 306,
+   "units": [
+    {
+     "file": "reports/verification/phase2-gate-package.md",
+     "start": 1,
+     "end": 149,
+     "spans": 190
+    },
+    {
+     "file": "reports/verification/phase2-rulings-2026-07-30.md",
+     "start": 1,
+     "end": 183,
+     "spans": 116
+    }
+   ],
+   "output": "reports/verification/c4-extraction/064.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b065",
+   "spans": 309,
+   "units": [
+    {
+     "file": "reports/verification/recovery-rerun-registration.md",
+     "start": 1,
+     "end": 234,
+     "spans": 303
+    },
+    {
+     "file": "reports/verification/recovery-rerun-registration.md",
+     "start": 235,
+     "end": 239,
+     "spans": 6
+    }
+   ],
+   "output": "reports/verification/c4-extraction/065.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b066",
+   "spans": 252,
+   "units": [
+    {
+     "file": "reports/verifier-silent-drop-root-cause-2026-05-03.md",
+     "start": 1,
+     "end": 336,
+     "spans": 215
+    },
+    {
+     "file": "results/55map-leaderboard/gs-vs-55map-transfer.md",
+     "start": 1,
+     "end": 10,
+     "spans": 37
+    }
+   ],
+   "output": "reports/verification/c4-extraction/066.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b067",
+   "spans": 308,
+   "units": [
+    {
+     "file": "results/55maps-attractor-pull-v2/report.md",
+     "start": 1,
+     "end": 116,
+     "spans": 308
+    }
+   ],
+   "output": "reports/verification/c4-extraction/067.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b068",
+   "spans": 128,
+   "units": [
+    {
+     "file": "results/55maps-attractor-pull-v2/report.md",
+     "start": 117,
+     "end": 161,
+     "spans": 128
+    }
+   ],
+   "output": "reports/verification/c4-extraction/068.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b069",
+   "spans": 321,
+   "units": [
+    {
+     "file": "results/55maps-cross-track-comparison/report.md",
+     "start": 1,
+     "end": 103,
+     "spans": 321
+    }
+   ],
+   "output": "reports/verification/c4-extraction/069.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b070",
+   "spans": 302,
+   "units": [
+    {
+     "file": "results/55maps-cross-track-comparison/report.md",
+     "start": 104,
+     "end": 185,
+     "spans": 302
+    }
+   ],
+   "output": "reports/verification/c4-extraction/070.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b071",
+   "spans": 311,
+   "units": [
+    {
+     "file": "results/55maps-cross-track-comparison/report.md",
+     "start": 186,
+     "end": 267,
+     "spans": 311
+    }
+   ],
+   "output": "reports/verification/c4-extraction/071.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b072",
+   "spans": 272,
+   "units": [
+    {
+     "file": "results/55maps-cross-track-comparison/report.md",
+     "start": 268,
+     "end": 410,
+     "spans": 272
+    }
+   ],
+   "output": "reports/verification/c4-extraction/072.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b073",
+   "spans": 348,
+   "units": [
+    {
+     "file": "results/55maps-ds-summary-v2/report.md",
+     "start": 1,
+     "end": 223,
+     "spans": 348
+    }
+   ],
+   "output": "reports/verification/c4-extraction/073.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b074",
+   "spans": 271,
+   "units": [
+    {
+     "file": "results/55maps-ds-summary-v2/report.md",
+     "start": 224,
+     "end": 508,
+     "spans": 271
+    }
+   ],
+   "output": "reports/verification/c4-extraction/074.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b075",
+   "spans": 216,
+   "units": [
+    {
+     "file": "results/55maps-image-generalisation/buffer-100m-diagnostics/report.md",
+     "start": 1,
+     "end": 225,
+     "spans": 216
+    }
+   ],
+   "output": "reports/verification/c4-extraction/075.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b076",
+   "spans": 382,
+   "units": [
+    {
+     "file": "results/55maps-image-generalisation/buffer-band-lift/report.md",
+     "start": 1,
+     "end": 92,
+     "spans": 382
+    }
+   ],
+   "output": "reports/verification/c4-extraction/076.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b077",
+   "spans": 132,
+   "units": [
+    {
+     "file": "results/55maps-image-generalisation/buffer-band-lift/report.md",
+     "start": 93,
+     "end": 160,
+     "spans": 132
+    }
+   ],
+   "output": "reports/verification/c4-extraction/077.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b078",
+   "spans": 300,
+   "units": [
+    {
+     "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/report.md",
+     "start": 1,
+     "end": 84,
+     "spans": 300
+    }
+   ],
+   "output": "reports/verification/c4-extraction/078.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b079",
+   "spans": 362,
+   "units": [
+    {
+     "file": "results/55maps-image-generalisation/corrected-f1-multi-buffer/report.md",
+     "start": 85,
+     "end": 161,
+     "spans": 170
+    },
+    {
+     "file": "results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/report.md",
+     "start": 1,
+     "end": 150,
+     "spans": 192
+    }
+   ],
+   "output": "reports/verification/c4-extraction/079.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b080",
+   "spans": 145,
+   "units": [
+    {
+     "file": "results/55maps-image-generalisation/k35-075-3-diagnostic.md",
+     "start": 1,
+     "end": 133,
+     "spans": 145
+    }
+   ],
+   "output": "reports/verification/c4-extraction/080.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b081",
+   "spans": 301,
+   "units": [
+    {
+     "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.md",
+     "start": 1,
+     "end": 127,
+     "spans": 301
+    }
+   ],
+   "output": "reports/verification/c4-extraction/081.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b082",
+   "spans": 94,
+   "units": [
+    {
+     "file": "results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.md",
+     "start": 128,
+     "end": 186,
+     "spans": 94
+    }
+   ],
+   "output": "reports/verification/c4-extraction/082.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b083",
+   "spans": 343,
+   "units": [
+    {
+     "file": "results/55maps-mcc-v2-summary/report.md",
+     "start": 1,
+     "end": 99,
+     "spans": 309
+    },
+    {
+     "file": "results/55maps-mcc-v2-summary/report.md",
+     "start": 100,
+     "end": 119,
+     "spans": 34
+    }
+   ],
+   "output": "reports/verification/c4-extraction/083.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b084",
+   "spans": 337,
+   "units": [
+    {
+     "file": "results/55maps-per-map-shell-variance/high-pull-feature-characterisation.md",
+     "start": 1,
+     "end": 131,
+     "spans": 337
+    }
+   ],
+   "output": "reports/verification/c4-extraction/084.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b085",
+   "spans": 248,
+   "units": [
+    {
+     "file": "results/55maps-per-map-shell-variance/high-pull-feature-characterisation.md",
+     "start": 132,
+     "end": 247,
+     "spans": 153
+    },
+    {
+     "file": "results/README.md",
+     "start": 1,
+     "end": 300,
+     "spans": 95
+    }
+   ],
+   "output": "reports/verification/c4-extraction/085.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b086",
+   "spans": 600,
+   "units": [
+    {
+     "file": "results/ci-metadata-registry.md",
+     "start": 1,
+     "end": 172,
+     "spans": 600
+    }
+   ],
+   "output": "reports/verification/c4-extraction/086.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b087",
+   "spans": 399,
+   "units": [
+    {
+     "file": "results/ci-metadata-registry.md",
+     "start": 173,
+     "end": 214,
+     "spans": 399
+    }
+   ],
+   "output": "reports/verification/c4-extraction/087.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b088",
+   "spans": 353,
+   "units": [
+    {
+     "file": "results/ci-metadata-registry.md",
+     "start": 215,
+     "end": 343,
+     "spans": 52
+    },
+    {
+     "file": "results/deployment-oracle-2026-06-06/deployment-oracle-findings.md",
+     "start": 1,
+     "end": 156,
+     "spans": 301
+    }
+   ],
+   "output": "reports/verification/c4-extraction/088.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b089",
+   "spans": 348,
+   "units": [
+    {
+     "file": "results/deployment-oracle-2026-06-06/deployment-oracle-findings.md",
+     "start": 157,
+     "end": 274,
+     "spans": 178
+    },
+    {
+     "file": "results/diversity-dividend-384/diversity-dividend-analysis.md",
+     "start": 1,
+     "end": 164,
+     "spans": 170
+    }
+   ],
+   "output": "reports/verification/c4-extraction/089.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b090",
+   "spans": 351,
+   "units": [
+    {
+     "file": "results/documentation-audit/README.md",
+     "start": 1,
+     "end": 126,
+     "spans": 98
+    },
+    {
+     "file": "results/documentation-audit/audit-summary.md",
+     "start": 1,
+     "end": 243,
+     "spans": 253
+    }
+   ],
+   "output": "reports/verification/c4-extraction/090.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b091",
+   "spans": 122,
+   "units": [
+    {
+     "file": "results/documentation-audit/priority-backfill.md",
+     "start": 1,
+     "end": 214,
+     "spans": 122
+    }
+   ],
+   "output": "reports/verification/c4-extraction/091.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b092",
+   "spans": 369,
+   "units": [
+    {
+     "file": "results/documentation-audit/results-audit-2026-04-21.md",
+     "start": 1,
+     "end": 359,
+     "spans": 369
+    }
+   ],
+   "output": "reports/verification/c4-extraction/092.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b093",
+   "spans": 180,
+   "units": [
+    {
+     "file": "results/documentation-audit/results-audit-2026-04-21.md",
+     "start": 360,
+     "end": 637,
+     "spans": 180
+    }
+   ],
+   "output": "reports/verification/c4-extraction/093.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b094",
+   "spans": 605,
+   "units": [
+    {
+     "file": "results/documentation-audit/verification-2026-04-21.md",
+     "start": 1,
+     "end": 117,
+     "spans": 605
+    }
+   ],
+   "output": "reports/verification/c4-extraction/094.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b095",
+   "spans": 265,
+   "units": [
+    {
+     "file": "results/documentation-audit/verification-2026-04-21.md",
+     "start": 118,
+     "end": 233,
+     "spans": 265
+    }
+   ],
+   "output": "reports/verification/c4-extraction/095.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b096",
+   "spans": 274,
+   "units": [
+    {
+     "file": "results/era1-pv-stage-d/384-leg-recon.md",
+     "start": 1,
+     "end": 224,
+     "spans": 274
+    }
+   ],
+   "output": "reports/verification/c4-extraction/096.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b097",
+   "spans": 225,
+   "units": [
+    {
+     "file": "results/era1-pv-stage-d/stage-d-findings.md",
+     "start": 1,
+     "end": 159,
+     "spans": 225
+    }
+   ],
+   "output": "reports/verification/c4-extraction/097.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b098",
+   "spans": 336,
+   "units": [
+    {
+     "file": "results/evaluation-scopes.md",
+     "start": 1,
+     "end": 135,
+     "spans": 336
+    }
+   ],
+   "output": "reports/verification/c4-extraction/098.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b099",
+   "spans": 141,
+   "units": [
+    {
+     "file": "results/evaluation-scopes.md",
+     "start": 136,
+     "end": 196,
+     "spans": 141
+    }
+   ],
+   "output": "reports/verification/c4-extraction/099.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b100",
+   "spans": 383,
+   "units": [
+    {
+     "file": "results/factor-analysis/factor_analysis_results.md",
+     "start": 1,
+     "end": 161,
+     "spans": 383
+    }
+   ],
+   "output": "reports/verification/c4-extraction/100.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b101",
+   "spans": 363,
+   "units": [
+    {
+     "file": "results/factor-analysis/factor_analysis_results.md",
+     "start": 162,
+     "end": 273,
+     "spans": 301
+    },
+    {
+     "file": "results/factor-analysis/factor_analysis_results.md",
+     "start": 274,
+     "end": 352,
+     "spans": 62
+    }
+   ],
+   "output": "reports/verification/c4-extraction/101.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b102",
+   "spans": 384,
+   "units": [
+    {
+     "file": "results/family-fdr/family_fdr.md",
+     "start": 1,
+     "end": 102,
+     "spans": 79
+    },
+    {
+     "file": "results/fp-failure-mode-closure/report.md",
+     "start": 1,
+     "end": 382,
+     "spans": 305
+    }
+   ],
+   "output": "reports/verification/c4-extraction/102.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b103",
+   "spans": 177,
+   "units": [
+    {
+     "file": "results/fp-failure-mode-closure/report.md",
+     "start": 383,
+     "end": 595,
+     "spans": 177
+    }
+   ],
+   "output": "reports/verification/c4-extraction/103.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b104",
+   "spans": 330,
+   "units": [
+    {
+     "file": "results/gold-standard-extended-buffer-sweep/extended-buffer-report.md",
+     "start": 1,
+     "end": 84,
+     "spans": 330
+    }
+   ],
+   "output": "reports/verification/c4-extraction/104.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b105",
+   "spans": 346,
+   "units": [
+    {
+     "file": "results/gold-standard-extended-buffer-sweep/extended-buffer-report.md",
+     "start": 85,
+     "end": 168,
+     "spans": 346
+    }
+   ],
+   "output": "reports/verification/c4-extraction/105.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b106",
+   "spans": 356,
+   "units": [
+    {
+     "file": "results/gold-standard-extended-buffer-sweep/extended-buffer-report.md",
+     "start": 169,
+     "end": 245,
+     "spans": 50
+    },
+    {
+     "file": "results/gold-standard-subtype-classification/report.md",
+     "start": 1,
+     "end": 136,
+     "spans": 306
+    }
+   ],
+   "output": "reports/verification/c4-extraction/106.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b107",
+   "spans": 390,
+   "units": [
+    {
+     "file": "results/gold-standard-subtype-classification/report.md",
+     "start": 137,
+     "end": 291,
+     "spans": 304
+    },
+    {
+     "file": "results/gold-standard-subtype-classification/report.md",
+     "start": 292,
+     "end": 357,
+     "spans": 86
+    }
+   ],
+   "output": "reports/verification/c4-extraction/107.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b108",
+   "spans": 189,
+   "units": [
+    {
+     "file": "results/gs-125m-fp-side-6-crop-review/README.md",
+     "start": 1,
+     "end": 87,
+     "spans": 82
+    },
+    {
+     "file": "results/gtfree-selection/gtfree-selection-findings.md",
+     "start": 1,
+     "end": 137,
+     "spans": 107
+    }
+   ],
+   "output": "reports/verification/c4-extraction/108.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b109",
+   "spans": 306,
+   "units": [
+    {
+     "file": "results/h10/analysis_summary.md",
+     "start": 1,
+     "end": 260,
+     "spans": 306
+    }
+   ],
+   "output": "reports/verification/c4-extraction/109.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b110",
+   "spans": 120,
+   "units": [
+    {
+     "file": "results/h10/analysis_summary.md",
+     "start": 261,
+     "end": 371,
+     "spans": 120
+    }
+   ],
+   "output": "reports/verification/c4-extraction/110.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b111",
+   "spans": 345,
+   "units": [
+    {
+     "file": "results/h11-tile-size-results.md",
+     "start": 1,
+     "end": 191,
+     "spans": 345
+    }
+   ],
+   "output": "reports/verification/c4-extraction/111.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b112",
+   "spans": 312,
+   "units": [
+    {
+     "file": "results/h11-tile-size-results.md",
+     "start": 192,
+     "end": 398,
+     "spans": 312
+    }
+   ],
+   "output": "reports/verification/c4-extraction/112.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b113",
+   "spans": 308,
+   "units": [
+    {
+     "file": "results/h11-tile-size-results.md",
+     "start": 399,
+     "end": 581,
+     "spans": 308
+    }
+   ],
+   "output": "reports/verification/c4-extraction/113.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b114",
+   "spans": 100,
+   "units": [
+    {
+     "file": "results/h11-tile-size-results.md",
+     "start": 582,
+     "end": 646,
+     "spans": 100
+    }
+   ],
+   "output": "reports/verification/c4-extraction/114.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b115",
+   "spans": 388,
+   "units": [
+    {
+     "file": "results/h11/analysis_summary.md",
+     "start": 1,
+     "end": 210,
+     "spans": 309
+    },
+    {
+     "file": "results/h11/analysis_summary.md",
+     "start": 211,
+     "end": 306,
+     "spans": 79
+    }
+   ],
+   "output": "reports/verification/c4-extraction/115.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b116",
+   "spans": 318,
+   "units": [
+    {
+     "file": "results/h12-v2/analysis_summary.md",
+     "start": 1,
+     "end": 194,
+     "spans": 306
+    },
+    {
+     "file": "results/h12-v2/analysis_summary.md",
+     "start": 195,
+     "end": 205,
+     "spans": 12
+    }
+   ],
+   "output": "reports/verification/c4-extraction/116.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b117",
+   "spans": 328,
+   "units": [
+    {
+     "file": "results/h8-v2/analysis_summary.md",
+     "start": 1,
+     "end": 145,
+     "spans": 328
+    }
+   ],
+   "output": "reports/verification/c4-extraction/117.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b118",
+   "spans": 316,
+   "units": [
+    {
+     "file": "results/h8-v2/analysis_summary.md",
+     "start": 146,
+     "end": 392,
+     "spans": 305
+    },
+    {
+     "file": "results/h8-v2/analysis_summary.md",
+     "start": 393,
+     "end": 410,
+     "spans": 11
+    }
+   ],
+   "output": "reports/verification/c4-extraction/118.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b119",
+   "spans": 390,
+   "units": [
+    {
+     "file": "results/inter-pass-agreement/report.md",
+     "start": 1,
+     "end": 134,
+     "spans": 249
+    },
+    {
+     "file": "results/k-consensus-heterogeneity-footnote.md",
+     "start": 1,
+     "end": 41,
+     "spans": 38
+    },
+    {
+     "file": "results/leaderboard/combined/README.md",
+     "start": 1,
+     "end": 98,
+     "spans": 63
+    },
+    {
+     "file": "results/leaderboard/combined/era1/README.md",
+     "start": 1,
+     "end": 47,
+     "spans": 40
+    }
+   ],
+   "output": "reports/verification/c4-extraction/119.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b120",
+   "spans": 187,
+   "units": [
+    {
+     "file": "results/leaderboard/combined/era2/README.md",
+     "start": 1,
+     "end": 54,
+     "spans": 53
+    },
+    {
+     "file": "results/leaderboard/combined/era3/README.md",
+     "start": 1,
+     "end": 41,
+     "spans": 22
+    },
+    {
+     "file": "results/leaderboard/era1/README.md",
+     "start": 1,
+     "end": 50,
+     "spans": 36
+    },
+    {
+     "file": "results/leaderboard/era2/README.md",
+     "start": 1,
+     "end": 52,
+     "spans": 40
+    },
+    {
+     "file": "results/leaderboard/era3/README.md",
+     "start": 1,
+     "end": 51,
+     "spans": 36
+    }
+   ],
+   "output": "reports/verification/c4-extraction/120.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b121",
+   "spans": 314,
+   "units": [
+    {
+     "file": "results/limitations-consolidation/report.md",
+     "start": 1,
+     "end": 160,
+     "spans": 314
+    }
+   ],
+   "output": "reports/verification/c4-extraction/121.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b122",
+   "spans": 309,
+   "units": [
+    {
+     "file": "results/limitations-consolidation/report.md",
+     "start": 161,
+     "end": 288,
+     "spans": 309
+    }
+   ],
+   "output": "reports/verification/c4-extraction/122.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b123",
+   "spans": 98,
+   "units": [
+    {
+     "file": "results/limitations-consolidation/report.md",
+     "start": 289,
+     "end": 374,
+     "spans": 98
+    }
+   ],
+   "output": "reports/verification/c4-extraction/123.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b124",
+   "spans": 315,
+   "units": [
+    {
+     "file": "results/meta-findings-summary.md",
+     "start": 1,
+     "end": 158,
+     "spans": 315
+    }
+   ],
+   "output": "reports/verification/c4-extraction/124.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b125",
+   "spans": 321,
+   "units": [
+    {
+     "file": "results/meta-findings-summary.md",
+     "start": 159,
+     "end": 511,
+     "spans": 321
+    }
+   ],
+   "output": "reports/verification/c4-extraction/125.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b126",
+   "spans": 318,
+   "units": [
+    {
+     "file": "results/meta-findings-summary.md",
+     "start": 512,
+     "end": 827,
+     "spans": 318
+    }
+   ],
+   "output": "reports/verification/c4-extraction/126.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b127",
+   "spans": 378,
+   "units": [
+    {
+     "file": "results/meta-findings-summary.md",
+     "start": 828,
+     "end": 1198,
+     "spans": 317
+    },
+    {
+     "file": "results/meta-findings-summary.md",
+     "start": 1199,
+     "end": 1284,
+     "spans": 61
+    }
+   ],
+   "output": "reports/verification/c4-extraction/127.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b128",
+   "spans": 87,
+   "units": [
+    {
+     "file": "results/methods-approach-b-vs-corrected-f1-nuance.md",
+     "start": 1,
+     "end": 38,
+     "spans": 21
+    },
+    {
+     "file": "results/methods-curator-gt-incompleteness-limitation.md",
+     "start": 1,
+     "end": 60,
+     "spans": 66
+    }
+   ],
+   "output": "reports/verification/c4-extraction/128.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b129",
+   "spans": 307,
+   "units": [
+    {
+     "file": "results/paper-eval/mcc/report.md",
+     "start": 1,
+     "end": 121,
+     "spans": 307
+    }
+   ],
+   "output": "reports/verification/c4-extraction/129.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b130",
+   "spans": 367,
+   "units": [
+    {
+     "file": "results/paper-eval/mcc/report.md",
+     "start": 122,
+     "end": 238,
+     "spans": 110
+    },
+    {
+     "file": "results/paper-eval/n1/384px-all-buffers/SUPERSEDED.md",
+     "start": 1,
+     "end": 29,
+     "spans": 24
+    },
+    {
+     "file": "results/paper-tables/gold-standard-spatial-tolerance.md",
+     "start": 1,
+     "end": 126,
+     "spans": 233
+    }
+   ],
+   "output": "reports/verification/c4-extraction/130.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b131",
+   "spans": 330,
+   "units": [
+    {
+     "file": "results/paper-tables/leaderboard-20m-annotated.md",
+     "start": 1,
+     "end": 175,
+     "spans": 330
+    }
+   ],
+   "output": "reports/verification/c4-extraction/131.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b132",
+   "spans": 327,
+   "units": [
+    {
+     "file": "results/paper-tables/leaderboard-20m-annotated.md",
+     "start": 176,
+     "end": 366,
+     "spans": 307
+    },
+    {
+     "file": "results/paper-tables/leaderboard-20m-annotated.md",
+     "start": 367,
+     "end": 379,
+     "spans": 20
+    }
+   ],
+   "output": "reports/verification/c4-extraction/132.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b133",
+   "spans": 96,
+   "units": [
+    {
+     "file": "results/paper-tables/leaderboard_tiers.md",
+     "start": 1,
+     "end": 87,
+     "spans": 96
+    }
+   ],
+   "output": "reports/verification/c4-extraction/133.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b134",
+   "spans": 323,
+   "units": [
+    {
+     "file": "results/paper-tables/leaderboard_tiers_20m.md",
+     "start": 1,
+     "end": 95,
+     "spans": 318
+    },
+    {
+     "file": "results/paper-tables/leaderboard_tiers_20m.md",
+     "start": 96,
+     "end": 103,
+     "spans": 5
+    }
+   ],
+   "output": "reports/verification/c4-extraction/134.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b135",
+   "spans": 289,
+   "units": [
+    {
+     "file": "results/paper-tables/pairwise_hypothesis_table.md",
+     "start": 1,
+     "end": 83,
+     "spans": 255
+    },
+    {
+     "file": "results/paper-tables/pro_2x2_matrix.md",
+     "start": 1,
+     "end": 22,
+     "spans": 34
+    }
+   ],
+   "output": "reports/verification/c4-extraction/135.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b136",
+   "spans": 237,
+   "units": [
+    {
+     "file": "results/paper-tables/subtype-classification.md",
+     "start": 1,
+     "end": 119,
+     "spans": 171
+    },
+    {
+     "file": "results/phase2a-carry-forward-parameters.md",
+     "start": 1,
+     "end": 82,
+     "spans": 66
+    }
+   ],
+   "output": "reports/verification/c4-extraction/136.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b137",
+   "spans": 388,
+   "units": [
+    {
+     "file": "results/phase2b-carry-forward-parameters.md",
+     "start": 1,
+     "end": 156,
+     "spans": 254
+    },
+    {
+     "file": "results/phase2c-carry-forward-parameters.md",
+     "start": 1,
+     "end": 134,
+     "spans": 134
+    }
+   ],
+   "output": "reports/verification/c4-extraction/137.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b138",
+   "spans": 215,
+   "units": [
+    {
+     "file": "results/phase2d-carry-forward-parameters.md",
+     "start": 1,
+     "end": 143,
+     "spans": 121
+    },
+    {
+     "file": "results/phase2e-carry-forward-parameters.md",
+     "start": 1,
+     "end": 109,
+     "spans": 94
+    }
+   ],
+   "output": "reports/verification/c4-extraction/138.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b139",
+   "spans": 313,
+   "units": [
+    {
+     "file": "results/phase3a-image-matrix/consensus-analysis-summary.md",
+     "start": 1,
+     "end": 78,
+     "spans": 313
+    }
+   ],
+   "output": "reports/verification/c4-extraction/139.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b140",
+   "spans": 309,
+   "units": [
+    {
+     "file": "results/phase3a-image-matrix/consensus-analysis-summary.md",
+     "start": 79,
+     "end": 161,
+     "spans": 309
+    }
+   ],
+   "output": "reports/verification/c4-extraction/140.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b141",
+   "spans": 374,
+   "units": [
+    {
+     "file": "results/phase3a-image-matrix/consensus-analysis-summary.md",
+     "start": 162,
+     "end": 257,
+     "spans": 374
+    }
+   ],
+   "output": "reports/verification/c4-extraction/141.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b142",
+   "spans": 146,
+   "units": [
+    {
+     "file": "results/phase3a-image-matrix/consensus-analysis-summary.md",
+     "start": 258,
+     "end": 310,
+     "spans": 117
+    },
+    {
+     "file": "results/phase3a-image-matrix/with-mcc/README.md",
+     "start": 1,
+     "end": 33,
+     "spans": 29
+    }
+   ],
+   "output": "reports/verification/c4-extraction/142.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b143",
+   "spans": 323,
+   "units": [
+    {
+     "file": "results/phase3a-text-matrix/secondary_effects.md",
+     "start": 1,
+     "end": 77,
+     "spans": 323
+    }
+   ],
+   "output": "reports/verification/c4-extraction/143.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b144",
+   "spans": 309,
+   "units": [
+    {
+     "file": "results/phase3a-text-matrix/secondary_effects.md",
+     "start": 78,
+     "end": 171,
+     "spans": 309
+    }
+   ],
+   "output": "reports/verification/c4-extraction/144.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b145",
+   "spans": 387,
+   "units": [
+    {
+     "file": "results/phase3a-text-matrix/secondary_effects.md",
+     "start": 172,
+     "end": 270,
+     "spans": 301
+    },
+    {
+     "file": "results/phase3a-text-matrix/secondary_effects.md",
+     "start": 271,
+     "end": 309,
+     "spans": 56
+    },
+    {
+     "file": "results/phase3a-text-matrix/with-mcc/README.md",
+     "start": 1,
+     "end": 32,
+     "spans": 30
+    }
+   ],
+   "output": "reports/verification/c4-extraction/145.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b146",
+   "spans": 117,
+   "units": [
+    {
+     "file": "results/phase3c-diversity/cross-track-comparison.md",
+     "start": 1,
+     "end": 172,
+     "spans": 117
+    }
+   ],
+   "output": "reports/verification/c4-extraction/146.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b147",
+   "spans": 301,
+   "units": [
+    {
+     "file": "results/phase3c-diversity/phase3c-comprehensive-results-report.md",
+     "start": 1,
+     "end": 220,
+     "spans": 301
+    }
+   ],
+   "output": "reports/verification/c4-extraction/147.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b148",
+   "spans": 186,
+   "units": [
+    {
+     "file": "results/phase3c-diversity/phase3c-comprehensive-results-report.md",
+     "start": 221,
+     "end": 484,
+     "spans": 186
+    }
+   ],
+   "output": "reports/verification/c4-extraction/148.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b149",
+   "spans": 212,
+   "units": [
+    {
+     "file": "results/phase3d-experiment-e-results.md",
+     "start": 1,
+     "end": 225,
+     "spans": 212
+    }
+   ],
+   "output": "reports/verification/c4-extraction/149.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b150",
+   "spans": 237,
+   "units": [
+    {
+     "file": "results/phase3d-high-thinking-results.md",
+     "start": 1,
+     "end": 170,
+     "spans": 237
+    }
+   ],
+   "output": "reports/verification/c4-extraction/150.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b151",
+   "spans": 232,
+   "units": [
+    {
+     "file": "results/phase3d-pilot-results.md",
+     "start": 1,
+     "end": 174,
+     "spans": 232
+    }
+   ],
+   "output": "reports/verification/c4-extraction/151.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b152",
+   "spans": 556,
+   "units": [
+    {
+     "file": "results/phase3d-verifier-experiments-abc.md",
+     "start": 1,
+     "end": 285,
+     "spans": 556
+    }
+   ],
+   "output": "reports/verification/c4-extraction/152.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b153",
+   "spans": 218,
+   "units": [
+    {
+     "file": "results/phase3d-verifier-experiments-abc.md",
+     "start": 286,
+     "end": 387,
+     "spans": 49
+    },
+    {
+     "file": "results/pv/phase1/pv-phase1-analysis.md",
+     "start": 1,
+     "end": 77,
+     "spans": 169
+    }
+   ],
+   "output": "reports/verification/c4-extraction/153.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b154",
+   "spans": 310,
+   "units": [
+    {
+     "file": "results/pv/phase2/pv-phase2-analysis.md",
+     "start": 1,
+     "end": 55,
+     "spans": 310
+    }
+   ],
+   "output": "reports/verification/c4-extraction/154.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b155",
+   "spans": 348,
+   "units": [
+    {
+     "file": "results/pv/phase2/pv-phase2-analysis.md",
+     "start": 56,
+     "end": 139,
+     "spans": 311
+    },
+    {
+     "file": "results/pv/phase2/pv-phase2-analysis.md",
+     "start": 140,
+     "end": 170,
+     "spans": 37
+    }
+   ],
+   "output": "reports/verification/c4-extraction/155.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b156",
+   "spans": 313,
+   "units": [
+    {
+     "file": "results/retest/phase2b/analysis_summary.md",
+     "start": 1,
+     "end": 166,
+     "spans": 313
+    }
+   ],
+   "output": "reports/verification/c4-extraction/156.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b157",
+   "spans": 261,
+   "units": [
+    {
+     "file": "results/retest/phase2b/analysis_summary.md",
+     "start": 167,
+     "end": 363,
+     "spans": 261
+    }
+   ],
+   "output": "reports/verification/c4-extraction/157.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b158",
+   "spans": 326,
+   "units": [
+    {
+     "file": "results/retest/retest-production-summary.md",
+     "start": 1,
+     "end": 92,
+     "spans": 326
+    }
+   ],
+   "output": "reports/verification/c4-extraction/158.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b159",
+   "spans": 324,
+   "units": [
+    {
+     "file": "results/retest/retest-production-summary.md",
+     "start": 93,
+     "end": 228,
+     "spans": 324
+    }
+   ],
+   "output": "reports/verification/c4-extraction/159.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b160",
+   "spans": 353,
+   "units": [
+    {
+     "file": "results/retest/retest-production-summary.md",
+     "start": 229,
+     "end": 337,
+     "spans": 353
+    }
+   ],
+   "output": "reports/verification/c4-extraction/160.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b161",
+   "spans": 129,
+   "units": [
+    {
+     "file": "results/retest/retest-production-summary.md",
+     "start": 338,
+     "end": 427,
+     "spans": 129
+    }
+   ],
+   "output": "reports/verification/c4-extraction/161.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b162",
+   "spans": 387,
+   "units": [
+    {
+     "file": "results/secondary-effects/secondary_effects.md",
+     "start": 1,
+     "end": 86,
+     "spans": 387
+    }
+   ],
+   "output": "reports/verification/c4-extraction/162.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b163",
+   "spans": 303,
+   "units": [
+    {
+     "file": "results/secondary-effects/secondary_effects.md",
+     "start": 87,
+     "end": 163,
+     "spans": 303
+    }
+   ],
+   "output": "reports/verification/c4-extraction/163.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b164",
+   "spans": 300,
+   "units": [
+    {
+     "file": "results/secondary-effects/secondary_effects.md",
+     "start": 164,
+     "end": 267,
+     "spans": 300
+    }
+   ],
+   "output": "reports/verification/c4-extraction/164.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b165",
+   "spans": 128,
+   "units": [
+    {
+     "file": "results/secondary-effects/secondary_effects.md",
+     "start": 268,
+     "end": 332,
+     "spans": 128
+    }
+   ],
+   "output": "reports/verification/c4-extraction/165.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b166",
+   "spans": 303,
+   "units": [
+    {
+     "file": "results/temperature-failure-recovery-analysis/report.md",
+     "start": 1,
+     "end": 223,
+     "spans": 303
+    }
+   ],
+   "output": "reports/verification/c4-extraction/166.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b167",
+   "spans": 300,
+   "units": [
+    {
+     "file": "results/temperature-failure-recovery-analysis/report.md",
+     "start": 224,
+     "end": 451,
+     "spans": 300
+    }
+   ],
+   "output": "reports/verification/c4-extraction/167.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b168",
+   "spans": 340,
+   "units": [
+    {
+     "file": "results/temperature-failure-recovery-analysis/report.md",
+     "start": 452,
+     "end": 561,
+     "spans": 340
+    }
+   ],
+   "output": "reports/verification/c4-extraction/168.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b169",
+   "spans": 346,
+   "units": [
+    {
+     "file": "results/temperature-failure-recovery-analysis/report.md",
+     "start": 562,
+     "end": 785,
+     "spans": 346
+    }
+   ],
+   "output": "reports/verification/c4-extraction/169.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b170",
+   "spans": 320,
+   "units": [
+    {
+     "file": "results/temperature-failure-recovery-analysis/report.md",
+     "start": 786,
+     "end": 979,
+     "spans": 303
+    },
+    {
+     "file": "results/temperature-failure-recovery-analysis/report.md",
+     "start": 980,
+     "end": 1016,
+     "spans": 17
+    }
+   ],
+   "output": "reports/verification/c4-extraction/170.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b171",
+   "spans": 239,
+   "units": [
+    {
+     "file": "results/verifier-calibration-matrix-pairwise/README.md",
+     "start": 1,
+     "end": 321,
+     "spans": 239
+    }
+   ],
+   "output": "reports/verification/c4-extraction/171.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b172",
+   "spans": 267,
+   "units": [
+    {
+     "file": "results/verifier-calibration-matrix-pairwise/canonical-shared-crops-vs-old-comparison.md",
+     "start": 1,
+     "end": 223,
+     "spans": 267
+    }
+   ],
+   "output": "reports/verification/c4-extraction/172.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b173",
+   "spans": 388,
+   "units": [
+    {
+     "file": "results/verifier-calibration-matrix/README.md",
+     "start": 1,
+     "end": 166,
+     "spans": 148
+    },
+    {
+     "file": "results/verifier-calibration-matrix/buffer-elasticity-5m.md",
+     "start": 1,
+     "end": 74,
+     "spans": 240
+    }
+   ],
+   "output": "reports/verification/c4-extraction/173.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b174",
+   "spans": 382,
+   "units": [
+    {
+     "file": "results/verifier-robustness/verifier-robustness-findings.md",
+     "start": 1,
+     "end": 256,
+     "spans": 382
+    }
+   ],
+   "output": "reports/verification/c4-extraction/174.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b175",
+   "spans": 356,
+   "units": [
+    {
+     "file": "results/verifier-robustness/verifier-robustness-findings.md",
+     "start": 257,
+     "end": 451,
+     "spans": 356
+    }
+   ],
+   "output": "reports/verification/c4-extraction/175.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b176",
+   "spans": 314,
+   "units": [
+    {
+     "file": "results/verifier-robustness/verifier-robustness-findings.md",
+     "start": 452,
+     "end": 648,
+     "spans": 314
+    }
+   ],
+   "output": "reports/verification/c4-extraction/176.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b177",
+   "spans": 166,
+   "units": [
+    {
+     "file": "results/verifier-t-pilot/stage-a-report.md",
+     "start": 1,
+     "end": 181,
+     "spans": 166
+    }
+   ],
+   "output": "reports/verification/c4-extraction/177.json",
+   "status": "pending"
+  },
+  {
+   "batch_id": "b178",
+   "spans": 386,
+   "units": [
+    {
+     "file": "results/verifier-t-pilot/stage-b-report.md",
+     "start": 1,
+     "end": 170,
+     "spans": 307
+    },
+    {
+     "file": "results/verifier-t-pilot/stage-b-report.md",
+     "start": 171,
+     "end": 265,
+     "spans": 79
+    }
+   ],
+   "output": "reports/verification/c4-extraction/178.json",
+   "status": "pending"
+  }
+ ]
+}
