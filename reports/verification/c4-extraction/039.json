@@ -1,0 +1,2148 @@
+{
+  "schema_version": "1.0",
+  "extracted_at": "2026-07-31T00:00:00Z",
+  "source_document": {
+    "file": "reports/key-findings-summary-2026-06-23.md",
+    "git_blob": "26d796e0df42",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.1"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          16,
+          16
+        ],
+        "section": "1. The approach, in brief"
+      },
+      "claim_text": "**four Soviet 1:50,000 topographic sheets of the Thracian Plain, Bulgaria**",
+      "values": [
+        {
+          "quantity": "count of Soviet topographic sheets in the gold-standard study corpus",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "map sheets",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "map-series scale denominator of the gold-standard sheets (1:50,000)",
+          "value_verbatim": "1:50,000",
+          "value_parsed": 50000,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registered corpus specification, anchored to the lodged preregistration per instrument v1.1 (the registration states '**Maps**: 4 Soviet 1:50,000 topographic maps (Bulgaria)'). The sheet count is independently checkable as the feature count of `inputs/vectors/bounds/gs-4maps-sheet-bounds.geojson` (one polygon per sheet); no repo data artefact records the 1:50,000 series scale. 'Thracian Plain, Bulgaria' is not a quantitative claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          17,
+          17
+        ],
+        "section": "1. The approach, in brief"
+      },
+      "claim_text": "(~5 m/pixel;",
+      "values": [
+        {
+          "quantity": "ground sample distance of the source map rasters",
+          "value_verbatim": "5",
+          "value_parsed": 5.0,
+          "unit": "m/pixel",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "config.py",
+        "path": "$.PIXEL_RESOLUTION"
+      },
+      "method": "read",
+      "notes": "`config.py` sets `PIXEL_RESOLUTION = 5.02  # Meters per pixel` (and comments the source GeoTIFFs as ~5.02 m/pixel); the summary rounds to ~5. Non-JSON anchor (a module constant) — legitimate and expected under instrument v1.1; the harness routes it to triage rather than resolving mechanically."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          17,
+          17
+        ],
+        "section": "1. The approach, in brief"
+      },
+      "claim_text": "569 expert-verified mound symbols, originally digitised by students in FAIMS)",
+      "values": [
+        {
+          "quantity": "count of curator-verified ground-truth mound symbols across the four gold-standard sheets",
+          "value_verbatim": "569",
+          "value_parsed": 569,
+          "unit": "mound symbols",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Whole-artefact feature count of the curator ground-truth reference. `results/evaluation-scopes.md` describes this file as the 'Ground-truth mound reference (569 total mounds across all maps)', and the lodged preregistration records '**Ground Truth**: 569 annotated mound symbols across all maps'. 'expert-verified' and the FAIMS provenance are not quantitative claims."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          20,
+          20
+        ],
+        "section": "1. The approach, in brief"
+      },
+      "claim_text": "runs on **two deliberately different instruments**",
+      "values": [
+        {
+          "quantity": "count of evaluation instruments the study runs on",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "instruments",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Structural count of the two evaluation instruments enumerated immediately below (the ~487-tile gold-standard set at line 23 and the 8,541-tile 55-map deployment set at lines 25-26). No committed artefact enumerates 'instruments'; recorded per instrument § Task ('when in doubt, include and flag the doubt')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          23,
+          23
+        ],
+        "section": "1. The approach, in brief"
+      },
+      "claim_text": "- a **gold-standard (GS) set** — the four curator-checked maps (≈ 487 image tiles) — which *characterises*",
+      "values": [
+        {
+          "quantity": "count of curator-checked maps in the gold-standard set",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "maps",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile count of the gold-standard (Era 2, 384 px) evaluation scope",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles_384/full_evaluation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The manifest is a flat JSON array of tile filenames; its length is the 487-tile Era 2 scope and its entries are prefixed by the four sheet ids (K-35-052-4, K-35-053-3, K-35-062-2, K-35-078-1), which carries the 'four maps' count. `results/verifier-robustness/pareto/pareto_v2.json` `$.cost_model.production_scale.tiles_gs` carries 487 as a scalar if the harness prefers a numeric locator."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          25,
+          25
+        ],
+        "section": "1. The approach, in brief"
+      },
+      "claim_text": "**55-map deployment set**",
+      "values": [
+        {
+          "quantity": "count of maps in the deployment corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": "maps",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-per-map-shell-variance/per_map_shell_rates.json",
+        "path": "$.map_universe_size"
+      },
+      "method": "read",
+      "notes": "Primary assertion of the deployment corpus size. SCOPE DECISION: later occurrences of '55-map' used purely as the set's name (lines 87, 101) are not given their own claim rows; where '55' falls inside a span extracted for other reasons (lines 87, 150) it is carried in that span's values[]."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          25,
+          25
+        ],
+        "section": "1. The approach, in brief"
+      },
+      "claim_text": "8,541 tiles",
+      "values": [
+        {
+          "quantity": "evaluable tile count of the 55-map deployment corpus",
+          "value_verbatim": "8,541",
+          "value_parsed": 8541,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+        "path": "$.pairwise[0].n_tiles"
+      },
+      "method": "read",
+      "notes": "Every pairwise permutation entry on the deployment board records `n_tiles` = the deployment tile denominator; `results/metric-leaderboards/55map-mcc-tiering.json` `$.n_tiles` and `results/verifier-robustness/pareto/pareto_v2.json` `$.cost_model.production_scale.tiles_55map` are equivalent locators."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          25,
+          26
+        ],
+        "section": "1. The approach, in brief"
+      },
+      "claim_text": "an extended ground truth of 4,746 reviewed student\n  digitisations",
+      "values": [
+        {
+          "quantity": "count of reviewed student-digitised mounds in the 55-map extended ground truth",
+          "value_verbatim": "4,746",
+          "value_parsed": 4746,
+          "unit": "mounds",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Whole-artefact feature count of the reviewed student ground truth. The scoring summaries record the same quantity as a scalar, e.g. `results/55maps-extended-gt-2026-06-07/T03-k3/summary.json` `$.results[0].n_ref_student_only`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          26,
+          26
+        ],
+        "section": "1. The approach, in brief"
+      },
+      "claim_text": "plus 773 adjudicated additional mounds",
+      "values": [
+        {
+          "quantity": "count of adjudicated phantom mounds added to the canonical 55-map extended ground truth",
+          "value_verbatim": "773",
+          "value_parsed": 773,
+          "unit": "mounds",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "`scripts/score_55maps_extended_gt_canonical.py` names this file as 'the 773-mound canonical, deduplicated, adjudicated phantom set (``canonical-review.csv``)', so the claim is the CSV's row count. Composition is recorded in `results/deployment-oracle-2026-06-06/deployment-oracle-findings.md` as 740 auto-resolved + 23 of 24 adjudicated conflicts + 10 of 213 vote=2 enrichment; `results/deployment-oracle-2026-06-06/canonical-gt/summary.json` carries only `$.n_auto_canonical_mounds` = 740, not the total."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          27,
+          27
+        ],
+        "section": "1. The approach, in brief"
+      },
+      "claim_text": "on the four maps actually *delivers*",
+      "values": [
+        {
+          "quantity": "count of gold-standard maps a deployment configuration is calibrated on",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "maps",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/gs-4maps-sheet-bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restatement of the four-sheet gold-standard corpus (lines 16 and 23); whole-artefact feature count of the sheet-bounds polygons."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          29,
+          29
+        ],
+        "section": "1. The approach, in brief"
+      },
+      "claim_text": "the balance of precision and recall — 1.0 is perfect, 0 is",
+      "values": [
+        {
+          "quantity": "upper bound of the F1 score (definitional)",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "lower bound of the F1 score (definitional)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "DOUBT FLAGGED: this is a lay gloss of the F1 metric's definitional range, not an assertion about this study's data, so it is arguably outside the C4 definition of a quantitative claim ('a fact about the study'). Recorded rather than dropped per instrument § Task; recommend triage prunes it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          50,
+          50
+        ],
+        "section": "2. What influences performance — and what doesn't"
+      },
+      "claim_text": "all land inside one broad 20-configuration tie (F1 ≈ 0.58–0.63; §R2)",
+      "values": [
+        {
+          "quantity": "count of single-pass configurations in the Tier-1 statistical tie, Era 1 single-pass baseline board",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "configurations",
+          "kind": "count",
+          "path": "$.tie_set",
+          "method": null
+        },
+        {
+          "quantity": "lowest F1@20 m in the Tier-1 single-pass tie",
+          "value_verbatim": "0.58",
+          "value_parsed": 0.58,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[*].eval_f1",
+          "method": null
+        },
+        {
+          "quantity": "highest F1@20 m in the Tier-1 single-pass tie",
+          "value_verbatim": "0.63",
+          "value_parsed": 0.63,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[0].eval_f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/512px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Analysis `era1-single-pass-baseline-matrix` (Era 1 gold-standard, 340 tiles at 512 px, 20 m headline buffer, BH-FDR q=0.05). `$.tie_set` is the Tier-1 tie; the quoted range is its min/max `eval_f1` — the analyses manifest outcome text records a 'BROAD 20-of-36-cell statistical tie spanning F1 0.583-0.631'. Quoted at 2 dp; the harness owns rounding tolerance. '§R2' is a section reference, out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          51,
+          51
+        ],
+        "section": "2. What influences performance — and what doesn't"
+      },
+      "claim_text": "detection tops out around **F1 0.63** no matter how the prompt is tuned.",
+      "values": [
+        {
+          "quantity": "best single-pass F1@20 m on the gold-standard tiles",
+          "value_verbatim": "0.63",
+          "value_parsed": 0.63,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/512px-14buf-mcc/tiering/tiering_20m.json",
+        "path": "$.ranking[0].eval_f1"
+      },
+      "method": "read",
+      "notes": "Top-ranked single-pass cell (`canonical-last`) on the Era 1 single-pass baseline board; the anchor holds 4 dp against the summary's 2 dp."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          59,
+          59
+        ],
+        "section": "2. What influences performance — and what doesn't"
+      },
+      "claim_text": "Consensus voting lifts the text pipeline from ~0.63 to ~0.69–0.77",
+      "values": [
+        {
+          "quantity": "best single-pass F1@20 m before consensus, Era 1 leaderboard",
+          "value_verbatim": "0.63",
+          "value_parsed": 0.63,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.kind=='single-pass')].eval_f1",
+          "method": null
+        },
+        {
+          "quantity": "lower end of the consensus F1@20 m band, Era 1 leaderboard",
+          "value_verbatim": "0.69",
+          "value_parsed": 0.69,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.kind=='consensus')].eval_f1",
+          "method": null
+        },
+        {
+          "quantity": "upper end of the consensus F1@20 m band, Era 1 leaderboard",
+          "value_verbatim": "0.77",
+          "value_parsed": 0.77,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.kind=='consensus')].eval_f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-leaderboard/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Analysis `era1-leaderboard` (340 tiles, 20 m). The board holds 36 single-pass cells and 42 consensus cells alongside 4 verified-PV cells; the summary's ~0.69–0.77 is a band over the consensus text cells rather than an exact pair of board entries — triage should confirm which subset is meant."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          63,
+          63
+        ],
+        "section": "2. What influences performance — and what doesn't"
+      },
+      "claim_text": "their accuracy plateaus at a ~30 m tolerance vs ~75 m for image prompts",
+      "values": [
+        {
+          "quantity": "localisation plateau-onset buffer, text prompts (median across GS conditions)",
+          "value_verbatim": "30",
+          "value_parsed": 30.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.by_modality[?(@.group=='text')].onset_median",
+          "method": null
+        },
+        {
+          "quantity": "localisation plateau-onset buffer, image prompts (median across GS conditions)",
+          "value_verbatim": "75",
+          "value_parsed": 75.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.by_modality[?(@.group=='image')].onset_median",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/working-precision/gs-plateau-characterisation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Plateau-onset characterisation on the gold-standard instrument (criterion: smallest buffer whose later step gains are all ≤ 0.005 F1), grouped by modality. `docs/paper/results-draft.md` § R1 cites the same artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          66,
+          66
+        ],
+        "section": "2. What influences performance — and what doesn't"
+      },
+      "claim_text": "low temperature (T = 0) beats high (T = 0.7) on a single",
+      "values": [
+        {
+          "quantity": "temperature of the better-performing single-pass condition",
+          "value_verbatim": "0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature of the worse-performing single-pass condition",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "DOUBT FLAGGED: borderline under instrument rule 5 — T = 0 and T = 0.7 name the single-pass temperature conditions compared in §R2 rather than asserting a measured quantity (the rule cites `t0.3` as a name). If triage keeps them, the executed temperatures are recorded in the n1 baseline board cell labels (`results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json`, `pro-text-*-t-0-0` vs `-t-0-7`) and in the per-run configs under `prompts/configs/`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          83,
+          84
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "**all seven rungs are one statistical tier** on the GS maps (the\n487-tile instrument cannot resolve differences below ~0.03 F1)",
+      "values": [
+        {
+          "quantity": "count of cost/performance rungs on the GS pass-budget board",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": "configurations",
+          "kind": "count",
+          "path": "$.rungs",
+          "method": null
+        },
+        {
+          "quantity": "count of statistical tiers spanned by the seven rungs",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": "tiers",
+          "kind": "count",
+          "path": "$.tiers",
+          "method": null
+        },
+        {
+          "quantity": "tile count of the gold-standard instrument",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.cost_model.production_scale.tiles_gs",
+          "method": null
+        },
+        {
+          "quantity": "smallest F1 difference the 487-tile instrument can resolve",
+          "value_verbatim": "0.03",
+          "value_parsed": 0.03,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pareto/pareto_v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Analysis `pass-budget-pareto-v2`. `$.rungs` has seven entries and `$.tiers` is a single tie-list (manifest outcome: '0/21 pairs significant after BH-FDR'). The ~0.03 resolution floor is a derived statement about the permutation null (the pairwise entries carry `null_std` ≈ 0.013 at n_tiles = 487) and needs scripted recomputation, not a read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          87,
+          87
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "| Configuration | F1@20 m (GS) | GS run cost | 55-map production cost | Frontier |",
+      "values": [
+        {
+          "quantity": "matching buffer for the GS F1 column of the Pareto table",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "map count of the production-cost column corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": "maps",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Table header, extracted because it asserts the buffer and corpus that the columns below are measured at. `results/verifier-robustness/pareto/pareto_v2.json` stores `$.rungs[].f1` unlabelled by buffer, so the 20 m attribution rests on the analysis definition (`results/analyses-manifest.json`, analysis `pass-budget-pareto-v2`, hypothesis refs H2/H3) and the per-condition 20 m evaluations; the 55-map production column is derived through `$.cost_model.production_scale` (tiles_gs 487 → tiles_55map 8541, factor 17.54)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          89,
+          89
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "| min6 — 5 minimal passes + verifier | 0.8784 | **$2.43** | ~$43 | efficient (cheapest) |",
+      "values": [
+        {
+          "quantity": "count of minimal-thinking proposer passes in the min6 rung",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "$.rungs[?(@.rung=='min6')].proposer",
+          "method": null
+        },
+        {
+          "quantity": "F1@20 m on the GS maps, min6 rung",
+          "value_verbatim": "0.8784",
+          "value_parsed": 0.8784,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.rungs[?(@.rung=='min6')].f1",
+          "method": null
+        },
+        {
+          "quantity": "GS run cost (audited flex-batch basis), min6 rung",
+          "value_verbatim": "2.43",
+          "value_parsed": 2.43,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='min6')].est_cost_usd",
+          "method": null
+        },
+        {
+          "quantity": "55-map production cost (audited flex-batch basis), min6 rung",
+          "value_verbatim": "43",
+          "value_parsed": 43,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='min6')].est_cost_55map_usd",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pareto/pareto_v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Pareto-table row (analysis `pass-budget-pareto-v2`). The rung name itself (min6, high31, …) is a condition name, out of scope under rule 5; the prose gloss of its composition ('5 minimal passes + verifier') IS extracted, with the pass counts anchored to the rung's `proposer`/`verifier` description strings ('5xMIN', 'n=1 over 1586 crops'). The 55-map production figures are quoted rounded (`est_cost_55map_usd` is stored to 2 dp). The Frontier column ('efficient'/'dominated') is checkable against `$.pareto_efficient` but is not numeric."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          90,
+          90
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "| min11 — 10 minimal passes + verifier | 0.8835 | $4.00 | ~$70 | efficient |",
+      "values": [
+        {
+          "quantity": "count of minimal-thinking proposer passes in the min11 rung",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "$.rungs[?(@.rung=='min11')].proposer",
+          "method": null
+        },
+        {
+          "quantity": "F1@20 m on the GS maps, min11 rung",
+          "value_verbatim": "0.8835",
+          "value_parsed": 0.8835,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.rungs[?(@.rung=='min11')].f1",
+          "method": null
+        },
+        {
+          "quantity": "GS run cost (audited flex-batch basis), min11 rung",
+          "value_verbatim": "4.00",
+          "value_parsed": 4.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='min11')].est_cost_usd",
+          "method": null
+        },
+        {
+          "quantity": "55-map production cost (audited flex-batch basis), min11 rung",
+          "value_verbatim": "70",
+          "value_parsed": 70,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='min11')].est_cost_55map_usd",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pareto/pareto_v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Pareto-table row (analysis `pass-budget-pareto-v2`). The rung name itself (min6, high31, …) is a condition name, out of scope under rule 5; the prose gloss of its composition ('5 minimal passes + verifier') IS extracted, with the pass counts anchored to the rung's `proposer`/`verifier` description strings ('5xMIN', 'n=1 over 1586 crops'). The 55-map production figures are quoted rounded (`est_cost_55map_usd` is stored to 2 dp). The Frontier column ('efficient'/'dominated') is checkable against `$.pareto_efficient` but is not numeric."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          91,
+          91
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "| high6 — 5 high-thinking + verifier | 0.8641 | $14.04 | ~$246 | dominated |",
+      "values": [
+        {
+          "quantity": "count of high-thinking proposer passes in the high6 rung",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "$.rungs[?(@.rung=='high6')].proposer",
+          "method": null
+        },
+        {
+          "quantity": "F1@20 m on the GS maps, high6 rung",
+          "value_verbatim": "0.8641",
+          "value_parsed": 0.8641,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.rungs[?(@.rung=='high6')].f1",
+          "method": null
+        },
+        {
+          "quantity": "GS run cost (audited flex-batch basis), high6 rung",
+          "value_verbatim": "14.04",
+          "value_parsed": 14.04,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='high6')].est_cost_usd",
+          "method": null
+        },
+        {
+          "quantity": "55-map production cost (audited flex-batch basis), high6 rung",
+          "value_verbatim": "246",
+          "value_parsed": 246,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='high6')].est_cost_55map_usd",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pareto/pareto_v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Pareto-table row (analysis `pass-budget-pareto-v2`). The rung name itself (min6, high31, …) is a condition name, out of scope under rule 5; the prose gloss of its composition ('5 minimal passes + verifier') IS extracted, with the pass counts anchored to the rung's `proposer`/`verifier` description strings ('5xMIN', 'n=1 over 1586 crops'). The 55-map production figures are quoted rounded (`est_cost_55map_usd` is stored to 2 dp). The Frontier column ('efficient'/'dominated') is checkable against `$.pareto_efficient` but is not numeric."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          92,
+          92
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "| high5+5vf — 5 high-thinking + 5-pass verifier | 0.8739 | $14.41 | ~$253 | dominated |",
+      "values": [
+        {
+          "quantity": "count of high-thinking proposer passes in the high5+5vf rung",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "$.rungs[?(@.rung=='high5+5vf')].proposer",
+          "method": null
+        },
+        {
+          "quantity": "count of verifier passes in the high5+5vf rung",
+          "value_verbatim": "5-pass",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "$.rungs[?(@.rung=='high5+5vf')].verifier",
+          "method": null
+        },
+        {
+          "quantity": "F1@20 m on the GS maps, high5+5vf rung",
+          "value_verbatim": "0.8739",
+          "value_parsed": 0.8739,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.rungs[?(@.rung=='high5+5vf')].f1",
+          "method": null
+        },
+        {
+          "quantity": "GS run cost (audited flex-batch basis), high5+5vf rung",
+          "value_verbatim": "14.41",
+          "value_parsed": 14.41,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='high5+5vf')].est_cost_usd",
+          "method": null
+        },
+        {
+          "quantity": "55-map production cost (audited flex-batch basis), high5+5vf rung",
+          "value_verbatim": "253",
+          "value_parsed": 253,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='high5+5vf')].est_cost_55map_usd",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pareto/pareto_v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Pareto-table row (analysis `pass-budget-pareto-v2`). The rung name itself (min6, high31, …) is a condition name, out of scope under rule 5; the prose gloss of its composition ('5 minimal passes + verifier') IS extracted, with the pass counts anchored to the rung's `proposer`/`verifier` description strings ('5xMIN', 'n=1 over 1586 crops'). The 55-map production figures are quoted rounded (`est_cost_55map_usd` is stored to 2 dp). The Frontier column ('efficient'/'dominated') is checkable against `$.pareto_efficient` but is not numeric."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          93,
+          93
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "| high11 — 10 high-thinking + verifier | 0.8769 | $26.97 | ~$473 | dominated |",
+      "values": [
+        {
+          "quantity": "count of high-thinking proposer passes in the high11 rung",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "$.rungs[?(@.rung=='high11')].proposer",
+          "method": null
+        },
+        {
+          "quantity": "F1@20 m on the GS maps, high11 rung",
+          "value_verbatim": "0.8769",
+          "value_parsed": 0.8769,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.rungs[?(@.rung=='high11')].f1",
+          "method": null
+        },
+        {
+          "quantity": "GS run cost (audited flex-batch basis), high11 rung",
+          "value_verbatim": "26.97",
+          "value_parsed": 26.97,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='high11')].est_cost_usd",
+          "method": null
+        },
+        {
+          "quantity": "55-map production cost (audited flex-batch basis), high11 rung",
+          "value_verbatim": "473",
+          "value_parsed": 473,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='high11')].est_cost_55map_usd",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pareto/pareto_v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Pareto-table row (analysis `pass-budget-pareto-v2`). The rung name itself (min6, high31, …) is a condition name, out of scope under rule 5; the prose gloss of its composition ('5 minimal passes + verifier') IS extracted, with the pass counts anchored to the rung's `proposer`/`verifier` description strings ('5xMIN', 'n=1 over 1586 crops'). The 55-map production figures are quoted rounded (`est_cost_55map_usd` is stored to 2 dp). The Frontier column ('efficient'/'dominated') is checkable against `$.pareto_efficient` but is not numeric."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          94,
+          94
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "| high31 — **headline** (30 high-thinking, vote ≥ 16, + verifier) | **0.8902** | $69.21 | ~$1,214 | efficient |",
+      "values": [
+        {
+          "quantity": "count of high-thinking proposer passes in the high31 headline rung",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "$.rungs[?(@.rung=='high31')].proposer",
+          "method": null
+        },
+        {
+          "quantity": "consensus vote threshold of the high31 headline rung",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": "votes",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "F1@20 m on the GS maps, high31 headline rung",
+          "value_verbatim": "0.8902",
+          "value_parsed": 0.8902,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.rungs[?(@.rung=='high31')].f1",
+          "method": null
+        },
+        {
+          "quantity": "GS run cost (audited flex-batch basis), high31 rung",
+          "value_verbatim": "69.21",
+          "value_parsed": 69.21,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='high31')].est_cost_usd",
+          "method": null
+        },
+        {
+          "quantity": "55-map production cost (audited flex-batch basis), high31 rung",
+          "value_verbatim": "1,214",
+          "value_parsed": 1214,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='high31')].est_cost_55map_usd",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pareto/pareto_v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Pareto-table row (analysis `pass-budget-pareto-v2`). The rung name itself (min6, high31, …) is a condition name, out of scope under rule 5; the prose gloss of its composition ('5 minimal passes + verifier') IS extracted, with the pass counts anchored to the rung's `proposer`/`verifier` description strings ('5xMIN', 'n=1 over 1586 crops'). The 55-map production figures are quoted rounded (`est_cost_55map_usd` is stored to 2 dp). The Frontier column ('efficient'/'dominated') is checkable against `$.pareto_efficient` but is not numeric. The 'vote ≥ 16' threshold is not stored as a scalar: it is carried in the condition/pool label `flash-high-text-consensus-16of30` (`results/conditions-manifest.json`, condition `pv-diag-384::verified-adv-text-consensus-16of30`, whose `vote_threshold` is null because the cell is probability-thresholded at 0.2) — hence path null for that value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          95,
+          95
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "| high35 — high31 + 5-pass verifier | 0.8951 | $71.23 | ~$1,249 | efficient |",
+      "values": [
+        {
+          "quantity": "count of verifier passes in the high35 rung",
+          "value_verbatim": "5-pass",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "$.rungs[?(@.rung=='high35')].verifier",
+          "method": null
+        },
+        {
+          "quantity": "F1@20 m on the GS maps, high35 rung",
+          "value_verbatim": "0.8951",
+          "value_parsed": 0.8951,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.rungs[?(@.rung=='high35')].f1",
+          "method": null
+        },
+        {
+          "quantity": "GS run cost (audited flex-batch basis), high35 rung",
+          "value_verbatim": "71.23",
+          "value_parsed": 71.23,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='high35')].est_cost_usd",
+          "method": null
+        },
+        {
+          "quantity": "55-map production cost (audited flex-batch basis), high35 rung",
+          "value_verbatim": "1,249",
+          "value_parsed": 1249,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.rungs[?(@.rung=='high35')].est_cost_55map_usd",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pareto/pareto_v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Pareto-table row (analysis `pass-budget-pareto-v2`). The rung name itself (min6, high31, …) is a condition name, out of scope under rule 5; the prose gloss of its composition ('5 minimal passes + verifier') IS extracted, with the pass counts anchored to the rung's `proposer`/`verifier` description strings ('5xMIN', 'n=1 over 1586 crops'). The 55-map production figures are quoted rounded (`est_cost_55map_usd` is stored to 2 dp). The Frontier column ('efficient'/'dominated') is checkable against `$.pareto_efficient` but is not numeric."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          97,
+          97
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "The **headline result is F1 0.890 / MCC 0.790** on the GS maps.",
+      "values": [
+        {
+          "quantity": "headline F1@20 m on the gold-standard maps (high31 configuration)",
+          "value_verbatim": "0.890",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-consensus-16of30')].metrics.per_buffer['20'].f1",
+          "method": null
+        },
+        {
+          "quantity": "headline tile-level MCC on the gold-standard maps (high31 configuration)",
+          "value_verbatim": "0.790",
+          "value_parsed": 0.79,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-consensus-16of30')].metrics.tile_classification.mcc",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The headline cell is the high31 rung priced at line 94, i.e. condition `pv-diag-384::verified-adv-text-consensus-16of30` (provenance: `results/era1-pv-stage-d/384-consensus-text-high/evaluation.json`). The manifest carries 4 dp; the summary quotes 3 dp — the harness owns rounding tolerance at the quoted precision."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          101,
+          101
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "The 8,541-tile instrument *can* resolve ~0.03 F1",
+      "values": [
+        {
+          "quantity": "evaluable tile count of the 55-map deployment instrument",
+          "value_verbatim": "8,541",
+          "value_parsed": 8541,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.pairwise[0].n_tiles",
+          "method": null
+        },
+        {
+          "quantity": "smallest F1 difference the 8,541-tile instrument can resolve",
+          "value_verbatim": "0.03",
+          "value_parsed": 0.03,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Deployment board `55map-canonical-leaderboard-50m`. The resolution floor is a derived statement about the permutation null (pairwise `null_std` ≈ 0.003–0.004 at n_tiles = 8541) and needs scripted recomputation rather than a read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          103,
+          104
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "The deployment board (canonical ground\ntruth, 50 m tolerance, eight configurations → five tiers; analysis `55map-canonical-leaderboard-50m`)",
+      "values": [
+        {
+          "quantity": "matching tolerance of the deployment board",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.buffer_m",
+          "method": null
+        },
+        {
+          "quantity": "count of configurations on the deployment board",
+          "value_verbatim": "eight",
+          "value_parsed": 8,
+          "unit": "configurations",
+          "kind": "count",
+          "path": "$.cells",
+          "method": null
+        },
+        {
+          "quantity": "count of statistical tiers on the deployment board",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "tiers",
+          "kind": "count",
+          "path": "$.tiers",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Analysis `55map-canonical-leaderboard-50m` (24/28 pairs significant after BH-FDR → 5 tiers). The analysis id is an identifier, out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          106,
+          106
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "| Rank | Configuration | F1@50 m | Tier | Tile-MCC |",
+      "values": [
+        {
+          "quantity": "matching buffer of the deployment board's F1 column",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+        "path": "$.buffer_m"
+      },
+      "method": "read",
+      "notes": "Deployment-table header; asserts the 50 m buffer the F1 column below is measured at."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          108,
+          108
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "| 1 | text, high-thinking T0.3, vote 3-of-5 (*best achievable*) | 0.8476 | 1 | 0.690 |",
+      "values": [
+        {
+          "quantity": "deployment-board rank of T03-k3 (oracle) by F1@50 m",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "$.cells",
+          "method": null
+        },
+        {
+          "quantity": "F1@50 m against the canonical 55-map ground truth, T03-k3 (oracle)",
+          "value_verbatim": "0.8476",
+          "value_parsed": 0.8476,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='T03-k3 (oracle)')].f1_50",
+          "method": null
+        },
+        {
+          "quantity": "statistical tier of T03-k3 (oracle) on the deployment F1 board",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "$.tiers[0]",
+          "method": null
+        },
+        {
+          "quantity": "tile-level MCC of T03-k3 (oracle) on the 55-map deployment corpus",
+          "value_verbatim": "0.690",
+          "value_parsed": 0.69,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='T03-k3 (oracle)')].mcc",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Deployment-board table row. SCOPE DECISION: the Configuration-column descriptors (T0.3/T0.7, 'vote k-of-n', '10 passes') are treated as condition names under instrument rule 5 and are NOT extracted as values; if triage disagrees, `results/conditions-manifest.json` carries `n_passes` and `vote_threshold` explicitly for each `…::verified-k*-canonical-gt` condition. Rank is the position of the cell within `$.cells` (ordered by f1_50 descending); tier is the index of the `$.tiers` sub-list containing the cell name. MCC quoted at 3 dp against full-precision values in the anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          109,
+          109
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "| 2 | text, high-thinking T0.7, vote 3-of-5 | 0.8425 | 1 | 0.680 |",
+      "values": [
+        {
+          "quantity": "deployment-board rank of TH7-k3 by F1@50 m",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.cells",
+          "method": null
+        },
+        {
+          "quantity": "F1@50 m against the canonical 55-map ground truth, TH7-k3",
+          "value_verbatim": "0.8425",
+          "value_parsed": 0.8425,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='TH7-k3')].f1_50",
+          "method": null
+        },
+        {
+          "quantity": "statistical tier of TH7-k3 on the deployment F1 board",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "$.tiers[0]",
+          "method": null
+        },
+        {
+          "quantity": "tile-level MCC of TH7-k3 on the 55-map deployment corpus",
+          "value_verbatim": "0.680",
+          "value_parsed": 0.68,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='TH7-k3')].mcc",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Deployment-board table row. SCOPE DECISION: the Configuration-column descriptors (T0.3/T0.7, 'vote k-of-n', '10 passes') are treated as condition names under instrument rule 5 and are NOT extracted as values; if triage disagrees, `results/conditions-manifest.json` carries `n_passes` and `vote_threshold` explicitly for each `…::verified-k*-canonical-gt` condition. Rank is the position of the cell within `$.cells` (ordered by f1_50 descending); tier is the index of the `$.tiers` sub-list containing the cell name. MCC quoted at 3 dp against full-precision values in the anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          110,
+          110
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "| 3 | text, high-thinking T0.3, vote 4-of-5 | 0.8359 | 2 | 0.671 |",
+      "values": [
+        {
+          "quantity": "deployment-board rank of T03-k4 by F1@50 m",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.cells",
+          "method": null
+        },
+        {
+          "quantity": "F1@50 m against the canonical 55-map ground truth, T03-k4",
+          "value_verbatim": "0.8359",
+          "value_parsed": 0.8359,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='T03-k4')].f1_50",
+          "method": null
+        },
+        {
+          "quantity": "statistical tier of T03-k4 on the deployment F1 board",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.tiers[1]",
+          "method": null
+        },
+        {
+          "quantity": "tile-level MCC of T03-k4 on the 55-map deployment corpus",
+          "value_verbatim": "0.671",
+          "value_parsed": 0.671,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='T03-k4')].mcc",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Deployment-board table row. SCOPE DECISION: the Configuration-column descriptors (T0.3/T0.7, 'vote k-of-n', '10 passes') are treated as condition names under instrument rule 5 and are NOT extracted as values; if triage disagrees, `results/conditions-manifest.json` carries `n_passes` and `vote_threshold` explicitly for each `…::verified-k*-canonical-gt` condition. Rank is the position of the cell within `$.cells` (ordered by f1_50 descending); tier is the index of the `$.tiers` sub-list containing the cell name. MCC quoted at 3 dp against full-precision values in the anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          111,
+          111
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "| 4 | text, minimal, 10 passes, vote 5-of-10 (\"buy-back\") | 0.8290 | 2 | 0.672 |",
+      "values": [
+        {
+          "quantity": "deployment-board rank of TM-n10-k5 (uplift) by F1@50 m",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.cells",
+          "method": null
+        },
+        {
+          "quantity": "F1@50 m against the canonical 55-map ground truth, TM-n10-k5 (uplift)",
+          "value_verbatim": "0.8290",
+          "value_parsed": 0.829,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='TM-n10-k5 (uplift)')].f1_50",
+          "method": null
+        },
+        {
+          "quantity": "statistical tier of TM-n10-k5 (uplift) on the deployment F1 board",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.tiers[1]",
+          "method": null
+        },
+        {
+          "quantity": "tile-level MCC of TM-n10-k5 (uplift) on the 55-map deployment corpus",
+          "value_verbatim": "0.672",
+          "value_parsed": 0.672,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='TM-n10-k5 (uplift)')].mcc",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Deployment-board table row. SCOPE DECISION: the Configuration-column descriptors (T0.3/T0.7, 'vote k-of-n', '10 passes') are treated as condition names under instrument rule 5 and are NOT extracted as values; if triage disagrees, `results/conditions-manifest.json` carries `n_passes` and `vote_threshold` explicitly for each `…::verified-k*-canonical-gt` condition. Rank is the position of the cell within `$.cells` (ordered by f1_50 descending); tier is the index of the `$.tiers` sub-list containing the cell name. MCC quoted at 3 dp against full-precision values in the anchor. Row 4's '10 passes' is the most prose-like of the descriptors and is the likeliest candidate for triage to re-admit; the underlying condition is `55maps-text-min-n10-uplift::verified-5of10-canonical-gt` (n_passes 10, vote_threshold 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          112,
+          112
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "| 5 | text, high-thinking T0.7, vote 4-of-5 (*as deployed*) | 0.8152 | 3 | 0.667 |",
+      "values": [
+        {
+          "quantity": "deployment-board rank of TH7-k4 (carry-forward) by F1@50 m",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "$.cells",
+          "method": null
+        },
+        {
+          "quantity": "F1@50 m against the canonical 55-map ground truth, TH7-k4 (carry-forward)",
+          "value_verbatim": "0.8152",
+          "value_parsed": 0.8152,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='TH7-k4 (carry-forward)')].f1_50",
+          "method": null
+        },
+        {
+          "quantity": "statistical tier of TH7-k4 (carry-forward) on the deployment F1 board",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.tiers[2]",
+          "method": null
+        },
+        {
+          "quantity": "tile-level MCC of TH7-k4 (carry-forward) on the 55-map deployment corpus",
+          "value_verbatim": "0.667",
+          "value_parsed": 0.667,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='TH7-k4 (carry-forward)')].mcc",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Deployment-board table row. SCOPE DECISION: the Configuration-column descriptors (T0.3/T0.7, 'vote k-of-n', '10 passes') are treated as condition names under instrument rule 5 and are NOT extracted as values; if triage disagrees, `results/conditions-manifest.json` carries `n_passes` and `vote_threshold` explicitly for each `…::verified-k*-canonical-gt` condition. Rank is the position of the cell within `$.cells` (ordered by f1_50 descending); tier is the index of the `$.tiers` sub-list containing the cell name. MCC quoted at 3 dp against full-precision values in the anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          113,
+          113
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "| 6 | text, minimal, vote 3-of-5 (the GS Pareto winner) | 0.8127 | 3 | 0.658 |",
+      "values": [
+        {
+          "quantity": "deployment-board rank of TM-k3 by F1@50 m",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "$.cells",
+          "method": null
+        },
+        {
+          "quantity": "F1@50 m against the canonical 55-map ground truth, TM-k3",
+          "value_verbatim": "0.8127",
+          "value_parsed": 0.8127,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='TM-k3')].f1_50",
+          "method": null
+        },
+        {
+          "quantity": "statistical tier of TM-k3 on the deployment F1 board",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.tiers[2]",
+          "method": null
+        },
+        {
+          "quantity": "tile-level MCC of TM-k3 on the 55-map deployment corpus",
+          "value_verbatim": "0.658",
+          "value_parsed": 0.658,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='TM-k3')].mcc",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Deployment-board table row. SCOPE DECISION: the Configuration-column descriptors (T0.3/T0.7, 'vote k-of-n', '10 passes') are treated as condition names under instrument rule 5 and are NOT extracted as values; if triage disagrees, `results/conditions-manifest.json` carries `n_passes` and `vote_threshold` explicitly for each `…::verified-k*-canonical-gt` condition. Rank is the position of the cell within `$.cells` (ordered by f1_50 descending); tier is the index of the `$.tiers` sub-list containing the cell name. MCC quoted at 3 dp against full-precision values in the anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          114,
+          114
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "| 7 | **image**, vote 3-of-5 | 0.7987 | 4 | **0.710** |",
+      "values": [
+        {
+          "quantity": "deployment-board rank of IM-k3 by F1@50 m",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.cells",
+          "method": null
+        },
+        {
+          "quantity": "F1@50 m against the canonical 55-map ground truth, IM-k3",
+          "value_verbatim": "0.7987",
+          "value_parsed": 0.7987,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='IM-k3')].f1_50",
+          "method": null
+        },
+        {
+          "quantity": "statistical tier of IM-k3 on the deployment F1 board",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.tiers[3]",
+          "method": null
+        },
+        {
+          "quantity": "tile-level MCC of IM-k3 on the 55-map deployment corpus",
+          "value_verbatim": "0.710",
+          "value_parsed": 0.71,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='IM-k3')].mcc",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Deployment-board table row. SCOPE DECISION: the Configuration-column descriptors (T0.3/T0.7, 'vote k-of-n', '10 passes') are treated as condition names under instrument rule 5 and are NOT extracted as values; if triage disagrees, `results/conditions-manifest.json` carries `n_passes` and `vote_threshold` explicitly for each `…::verified-k*-canonical-gt` condition. Rank is the position of the cell within `$.cells` (ordered by f1_50 descending); tier is the index of the `$.tiers` sub-list containing the cell name. MCC quoted at 3 dp against full-precision values in the anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          115,
+          115
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "| 8 | text, minimal, vote 4-of-5 | 0.7831 | 5 | 0.641 |",
+      "values": [
+        {
+          "quantity": "deployment-board rank of TM-k4 by F1@50 m",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "$.cells",
+          "method": null
+        },
+        {
+          "quantity": "F1@50 m against the canonical 55-map ground truth, TM-k4",
+          "value_verbatim": "0.7831",
+          "value_parsed": 0.7831,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='TM-k4')].f1_50",
+          "method": null
+        },
+        {
+          "quantity": "statistical tier of TM-k4 on the deployment F1 board",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "$.tiers[4]",
+          "method": null
+        },
+        {
+          "quantity": "tile-level MCC of TM-k4 on the 55-map deployment corpus",
+          "value_verbatim": "0.641",
+          "value_parsed": 0.641,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='TM-k4')].mcc",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Deployment-board table row. SCOPE DECISION: the Configuration-column descriptors (T0.3/T0.7, 'vote k-of-n', '10 passes') are treated as condition names under instrument rule 5 and are NOT extracted as values; if triage disagrees, `results/conditions-manifest.json` carries `n_passes` and `vote_threshold` explicitly for each `…::verified-k*-canonical-gt` condition. Rank is the position of the cell within `$.cells` (ordered by f1_50 descending); tier is the index of the `$.tiers` sub-list containing the cell name. MCC quoted at 3 dp against full-precision values in the anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          119,
+          120
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "- **The cheap minimal configuration that is Pareto-optimal on the GS maps drops to Tier 3 at deployment**,\n  two tiers below the high-thinking equivalent (0.8127 vs 0.8425).",
+      "values": [
+        {
+          "quantity": "deployment tier of the GS Pareto-winning minimal configuration (TM-k3)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.tiers[2]",
+          "method": null
+        },
+        {
+          "quantity": "tier gap between TM-k3 and its high-thinking equivalent TH7-k3",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "tiers",
+          "kind": "count",
+          "path": "$.tiers",
+          "method": null
+        },
+        {
+          "quantity": "F1@50 m, TM-k3 (minimal, vote 3-of-5)",
+          "value_verbatim": "0.8127",
+          "value_parsed": 0.8127,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='TM-k3')].f1_50",
+          "method": null
+        },
+        {
+          "quantity": "F1@50 m, TH7-k3 (high-thinking T0.7, vote 3-of-5)",
+          "value_verbatim": "0.8425",
+          "value_parsed": 0.8425,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='TH7-k3')].f1_50",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "TM-k3 sits in the third `$.tiers` sub-list, TH7-k3 in the first — the 'two tiers below' value is that index difference. 'Pareto-optimal on the GS maps' refers back to `results/verifier-robustness/pareto/pareto_v2.json` `$.pareto_efficient`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          124,
+          124
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "doubling the minimal pass count (the \"buy-back\" row)",
+      "values": [
+        {
+          "quantity": "multiplier on the minimal-thinking proposer pass count for the buy-back configuration",
+          "value_verbatim": "doubling",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Asserts 10 = 2 × 5: `55maps-text-min-generalisation::verified-k3-canonical-gt` has `n_passes` 5 and `55maps-text-min-n10-uplift::verified-5of10-canonical-gt` has `n_passes` 10. Recorded as a ratio because the numeral is written as a word."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          125,
+          125
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "recovers about half of it (0.8290)",
+      "values": [
+        {
+          "quantity": "fraction of the TM-k3→TH7-k3 deployment F1 gap recovered by the buy-back configuration",
+          "value_verbatim": "half",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "F1@50 m, TM-n10-k5 buy-back configuration",
+          "value_verbatim": "0.8290",
+          "value_parsed": 0.829,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='TM-n10-k5 (uplift)')].f1_50",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+        "path": null,
+        "expression": "(a - b) / (c - b)",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+            "path": "$.cells[?(@.name=='TM-n10-k5 (uplift)')].f1_50"
+          },
+          {
+            "name": "b",
+            "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+            "path": "$.cells[?(@.name=='TM-k3')].f1_50"
+          },
+          {
+            "name": "c",
+            "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+            "path": "$.cells[?(@.name=='TH7-k3')].f1_50"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "'About half' is the recovered fraction of the deployment gap between the minimal configuration (TM-k3) and its high-thinking equivalent (TH7-k3); the expression evaluates that fraction from the three committed F1@50 m values. The parenthetical 0.8290 is a direct read of the buy-back cell."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          126,
+          126
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "**$58 for 0.829 vs $207 for 0.843** at deployment scale",
+      "values": [
+        {
+          "quantity": "55-map production cost of the minimal buy-back configuration (audited basis)",
+          "value_verbatim": "58",
+          "value_parsed": 58,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1@50 m, TM-n10-k5 buy-back configuration",
+          "value_verbatim": "0.829",
+          "value_parsed": 0.829,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='TM-n10-k5 (uplift)')].f1_50",
+          "method": null
+        },
+        {
+          "quantity": "55-map production cost of the high-thinking configuration (audited basis)",
+          "value_verbatim": "207",
+          "value_parsed": 207,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1@50 m, TH7-k3 high-thinking configuration",
+          "value_verbatim": "0.843",
+          "value_parsed": 0.843,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='TH7-k3')].f1_50",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed span. The two F1 values are direct reads of the deployment board. The two dollar figures have no committed JSON source: they appear only in hand-written documents (`reports/token-load-audit-2026-06-12.md` § comparing campaign totals, and `results/verifier-robustness/verifier-robustness-findings.md` § 16(c), which also records the superseded '~$105 vs ~$150' pair). `results/verifier-robustness/pareto/pareto_v2.json` `$.cost_model` prices the GS rungs, not these two 55-map cells, so per instrument rule 2 (never anchor prose to prose) both costs are marked anchor-unknown for triage to chase."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          127,
+          128
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "- **The image pipeline is the best tile-level detector** (MCC 0.710, statistically the sole Tier-1 cell on\n  that metric; analysis `55map-canonical-leaderboard-mcc-50m`) despite ranking 7th on F1.",
+      "values": [
+        {
+          "quantity": "tile-level MCC of the image pipeline (IM-k3) on the 55-map corpus",
+          "value_verbatim": "0.710",
+          "value_parsed": 0.71,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[?(@.name=='IM-k3')].mcc",
+          "method": null
+        },
+        {
+          "quantity": "count of cells in Tier 1 of the tile-MCC board (sole leader)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "cells",
+          "kind": "count",
+          "path": "$.cells[?(@.tier==1)]",
+          "method": null
+        },
+        {
+          "quantity": "rank of the image pipeline on the deployment F1 board",
+          "value_verbatim": "7th",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/metric-leaderboards/55map-mcc-tiering.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "MCC board `55map-canonical-leaderboard-mcc-50m` (20/28 pairs significant after BH-FDR → 5 tiers; IM-k3 is the only `tier == 1` cell). The '7th on F1' value belongs to a DIFFERENT artefact — `results/55map-leaderboard/55map_leaderboard_50m.json`, where IM-k3 is the seventh entry of `$.cells` ordered by f1_50 descending — hence path null on that value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          129,
+          129
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "a two-call image+verifier stack is the right",
+      "values": [
+        {
+          "quantity": "count of model calls per tile in the recommended image tile-screening stack",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "calls",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "AMBIGUITY FLAGGED. The MCC leader actually scored at line 114 is IM-k3, a 5-pass image consensus plus verifier (`results/conditions-manifest.json`, `55maps-image-generalisation::verified-k3-canonical-gt`, n_passes 5, vote_threshold 3), so 'two-call' cannot describe that cell's call count; it most likely means two *stages* (proposer + verifier) or a hypothetical 1-pass image + 1 verifier stack. The same phrase appears in the outcome text of analysis `55map-canonical-leaderboard-mcc-50m` in `results/analyses-manifest.json`. Triage to decide whether the claim is false-as-written or a stage count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          134,
+          135
+        ],
+        "section": "3. The cost–performance frontier — and the deployment twist"
+      },
+      "claim_text": "It recovers the true ranking at a rank-correlation of\n**ρ = +0.88** without any ground truth",
+      "values": [
+        {
+          "quantity": "Spearman rank correlation between the ground-truth-free selector's ranking and the canonical-GT ranking, all eight cells",
+          "value_verbatim": "0.88",
+          "value_parsed": 0.88,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/gtfree-selection/gtfree_selection.json",
+        "path": "$.vote2.spearman_all8"
+      },
+      "method": "read",
+      "notes": "Analysis `gtfree-selection`, vote≥2 pseudo-ground-truth variant across all eight cells (`$.vote2.spearman_all8` = 0.881); the text-only seven-cell variant is `$.vote2.spearman_text7` = 0.8571 and a vote≥3 variant also exists, so triage should confirm the summary means the vote2/all-8 figure."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          142
+        ],
+        "section": "4. Headline takeaways"
+      },
+      "claim_text": "reaches F1 ≈ 0.89 on curated maps",
+      "values": [
+        {
+          "quantity": "headline F1@20 m on the curated gold-standard maps",
+          "value_verbatim": "0.89",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-consensus-16of30')].metrics.per_buffer['20'].f1"
+      },
+      "method": "read",
+      "notes": "Restatement of the line 97 headline (high31, `pv-diag-384::verified-adv-text-consensus-16of30`, F1@20 m = 0.8902) rounded to 2 dp."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          143
+        ],
+        "section": "4. Headline takeaways"
+      },
+      "claim_text": "≈ 0.85 on a large\n   unseen corpus",
+      "values": [
+        {
+          "quantity": "best F1@50 m on the 55-map deployment corpus",
+          "value_verbatim": "0.85",
+          "value_parsed": 0.85,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+        "path": "$.cells[?(@.name=='T03-k3 (oracle)')].f1_50"
+      },
+      "method": "read",
+      "notes": "Best deployment cell T03-k3 (oracle), F1@50 m = 0.8476, rounded to ≈ 0.85."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          149,
+          150
+        ],
+        "section": "4. Headline takeaways"
+      },
+      "claim_text": "Pareto-efficient on the four GS maps",
+      "values": [
+        {
+          "quantity": "count of gold-standard maps the Pareto frontier is computed on",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "maps",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/gs-4maps-sheet-bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Whole-artefact feature count of the four gold-standard sheet-bounds polygons; the Pareto claim itself resolves against `results/verifier-robustness/pareto/pareto_v2.json` `$.pareto_efficient`."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          150,
+          150
+        ],
+        "section": "4. Headline takeaways"
+      },
+      "claim_text": "two tiers down on the 55-map set",
+      "values": [
+        {
+          "quantity": "tier gap between the minimal configuration and its high-thinking equivalent at deployment",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "tiers",
+          "kind": "count",
+          "path": "$.tiers",
+          "method": null
+        },
+        {
+          "quantity": "count of maps in the deployment corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": "maps",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The tier gap is the `$.tiers` index difference between TM-k3 (third sub-list) and TH7-k3 (first). The 55-map count is carried in a DIFFERENT artefact — `results/55maps-per-map-shell-variance/per_map_shell_rates.json` `$.map_universe_size` — hence path null on that value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          159,
+          160
+        ],
+        "section": "5. What we can and cannot claim — honest caveats"
+      },
+      "claim_text": "With only ~487 tiles, configurations differing by less\n  than ~0.03 F1 are statistically tied there; the deployment set's 8,541 tiles are what expose the real",
+      "values": [
+        {
+          "quantity": "tile count of the gold-standard instrument",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.cost_model.production_scale.tiles_gs",
+          "method": null
+        },
+        {
+          "quantity": "smallest F1 difference the gold-standard instrument can resolve",
+          "value_verbatim": "0.03",
+          "value_parsed": 0.03,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "evaluable tile count of the 55-map deployment instrument",
+          "value_verbatim": "8,541",
+          "value_parsed": 8541,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.cost_model.production_scale.tiles_55map",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pareto/pareto_v2.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both tile denominators sit in the pareto cost model's `production_scale` block (487 → 8541, factor 17.54), which is why it is the claim-level anchor. The ~0.03 resolution floor needs scripted recomputation of the permutation null, as at lines 83-84 and 101."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          163,
+          163
+        ],
+        "section": "5. What we can and cannot claim — honest caveats"
+      },
+      "claim_text": "we carry a +3–5 % sensitivity band",
+      "values": [
+        {
+          "quantity": "lower bound of the recall sensitivity band applied to deployment recall",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "upper bound of the recall sensitivity band applied to deployment recall",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/working-precision/gs-miss-correlation.json",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "Analyst-chosen band, deliberately wider than the measured quantity: `gs-miss-correlation.json` records `implied_55map_recall_inflation_factor` 1.0242 at 20 m and 1.0271 at 30 m and 50 m — the ~2.4–2.7 % that `docs/paper/results-draft.md` § R8 widens to +3 %/+5 % 'because the correlation estimate rests on four events'. No committed artefact carries 3 or 5 directly, so the anchor is offered as a lead rather than a locator."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          167,
+          168
+        ],
+        "section": "5. What we can and cannot claim — honest caveats"
+      },
+      "claim_text": "a retrodiction on one\n  corpus and eight configurations",
+      "values": [
+        {
+          "quantity": "count of corpora the ground-truth-free selector was validated on",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": "corpora",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of configurations the ground-truth-free selector was validated over",
+          "value_verbatim": "eight",
+          "value_parsed": 8,
+          "unit": "configurations",
+          "kind": "count",
+          "path": "$.vote2.cells",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/gtfree-selection/gtfree_selection.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Analysis `gtfree-selection`: `$.vote2.cells` holds the eight scored cells, all from the single 55-map deployment corpus (the design string names the leave-one-family-out construction over families T03/TH7/TM/IM). The 'one corpus' value has no scalar locator — it is the whole artefact's scope — hence path null."
+    }
+  ]
+}
