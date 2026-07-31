@@ -280,7 +280,10 @@ corrections, moves on. **GATE** = PI review before proceeding.
   metas and phase3a siblings) — token-level fields are unverifiable
   for that era; record per-era field verifiability explicitly.
   **GATE 2.**
-- [ ] **Phase 3 — quantitative sweep (C4).** LLM extracts claims to ledger;
+- [ ] **Phase 3 — quantitative sweep (C4).** *(Claimed 2026-07-31, Claude
+  Fable 5 interactive session, Session 122; in progress. First
+  deliverable per GATE 0 decision 2: the committed generated-file
+  registry.)* LLM extracts claims to ledger;
   deterministic script recomputes from cited artefacts and diffs; LLM
   triages mismatches. The biggest unswept surface. Background-batchable.
   **GATE 3.**
