@@ -1,0 +1,1058 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-07-31T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/configuration-audit.md",
+    "git_blob": "a038705de631ede7cfd33793d2048aa90135cda5",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5[1m]",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          5,
+          5
+        ],
+        "section": "Report header (Scope / Method)"
+      },
+      "claim_text": "**Method**: Three parallel audit agents, each covering a phase group,",
+      "values": [
+        {
+          "quantity": "count of parallel audit agents used to produce this report",
+          "value_verbatim": "Three",
+          "value_parsed": 3,
+          "unit": "agents",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "A process fact about how the 2026-03-15 audit was executed; no committed artefact records the agent count. Scope decision for the header block (rule 5): the phase identifiers on lines 3-4 ('Phases 1, 2a-2e, 3a, 3c, 3d, H11') are names, not counts, and the report date on line 1 is out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          18,
+          19
+        ],
+        "section": "C1: H11 verifier config drift — RESOLVED"
+      },
+      "claim_text": "**Description**: Verifier configs had silently diverged from the Phase 3d\nbaseline in three ways",
+      "values": [
+        {
+          "quantity": "count of ways the H11 verifier configs diverged from the Phase 3d baseline",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "divergences",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential enumeration of the three divergences listed immediately after (lines 19-22); no artefact asserts the count. The '384 and 512' on line 16 are tile-size names, out of C4 scope (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          19,
+          19
+        ],
+        "section": "C1: H11 verifier config drift — RESOLVED"
+      },
+      "claim_text": "text-only configs missing all 6 example labels,",
+      "values": [
+        {
+          "quantity": "count of text-only verifier example labels in the Phase 3d baseline",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "labels",
+          "kind": "count",
+          "path": "len:$.text_only_labels",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/verify_adversarial-text_v2.json",
+        "path": "len:$.text_only_labels"
+      },
+      "method": "read",
+      "notes": "The '6' is the Phase 3d baseline label count that the pre-fix text-only configs lacked; the corrected v2 config carries it. The same six labels are the Phase 3d VERIFIER_EXAMPLES list in scripts/run_h2_pilot.py (a non-JSON alternative anchor). The pre-fix state itself (zero labels) is not quoted as a number, so nothing here is historical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          20,
+          21
+        ],
+        "section": "C1: H11 verifier config drift — RESOLVED"
+      },
+      "claim_text": "image configs with 9 examples instead of 6 (modified labels + 3 extra\nnull examples)",
+      "values": [
+        {
+          "quantity": "verifier example count in the pre-fix H11 image configs (superseded pre-fix value)",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": "examples",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "verifier example count in the Phase 3d baseline image config",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "examples",
+          "kind": "count",
+          "path": "len:$.examples",
+          "method": null
+        },
+        {
+          "quantity": "count of extra null examples added in the pre-fix H11 image configs (superseded pre-fix value)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "examples",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/verify_adversarial.json",
+        "path": "len:$.examples"
+      },
+      "method": "read",
+      "notes": "Before→after pair inside one span: 9 and 3 describe the pre-fix (now corrected) image configs and are historical; 6 is the live Phase 3d baseline count carried by prompts/configs/verify_adversarial.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          26,
+          27
+        ],
+        "section": "C1: H11 verifier config drift — RESOLVED"
+      },
+      "claim_text": "v2\nresults (512 F1=0.732, 384 F1=0.682) are the authoritative figures.",
+      "values": [
+        {
+          "quantity": "F1 @ 20 m, H11 proposer-verifier 512 px, v2 (E33-corrected) configs",
+          "value_verbatim": "0.732",
+          "value_parsed": 0.732,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "F1 @ 20 m, H11 proposer-verifier 384 px, v2 (adversarial text, t=0.2) configs",
+          "value_verbatim": "0.682",
+          "value_parsed": 0.682,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "These are era-1 (pre-2026-05-31-rescore) H11 figures. The only visible source in the repo is the prose table in results/h11-tile-size-results.md (lines 167, 169 and 312), and instrument rule 2 forbids anchoring prose to prose. I scanned every JSON under results/ and outputs/h11/ for an (f1, precision, recall) triple matching (0.732, 0.779, 0.691) or (0.682, 0.624, 0.753) and found none; the rescore-era evaluations for these conditions (results/rescore-2026-05-31/proposer-verifier-{512,384}/verified-adversarial-text-v2-accepted/evaluation.json) use a later ground truth and scope. The v2 verified GeoJSONs (outputs/h11/proposer-verifier-{512,384}/verified-adversarial-text-v2-accepted.geojson) do exist, so triage could re-derive. '512' and '384' are tile-size names (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          57,
+          57
+        ],
+        "section": "L1: detect_brief-text.json has temperature 1.0 (legacy)"
+      },
+      "claim_text": "### L1: detect_brief-text.json has temperature 1.0 (legacy)",
+      "values": [
+        {
+          "quantity": "temperature recorded in prompts/configs/detect_brief-text.json",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.temperature",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/detect_brief-text.json",
+        "path": "$.temperature"
+      },
+      "method": "read",
+      "notes": "Heading claim about a config file value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          61,
+          63
+        ],
+        "section": "L1: detect_brief-text.json has temperature 1.0 (legacy)"
+      },
+      "claim_text": "**Description**: `detect_brief-text.json` specifies `temperature: 1.0`\n(from its Phase 2a origin) but Phase 2d and later use T=0.0 via CLI\noverride or symlinks to Phase 2b results.",
+      "values": [
+        {
+          "quantity": "temperature recorded in prompts/configs/detect_brief-text.json",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.temperature",
+          "method": null
+        },
+        {
+          "quantity": "temperature fixed for Phase 2d and later (runtime override)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/phase2d-h5-negtext.yaml#$.fixed.temperature",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/detect_brief-text.json",
+        "path": "$.temperature"
+      },
+      "method": "read",
+      "notes": "Claim about what the config file contains (1.0) alongside a claim about what was run from Phase 2d onwards (0.0), which anchors to the study definition's fixed section rather than the config file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          67,
+          69
+        ],
+        "section": "L1: detect_brief-text.json has temperature 1.0 (legacy)"
+      },
+      "claim_text": "The config's temperature (1.0) is correct\nfor its original purpose (Phase 2a H1 baseline). Subsequent phases\ncorrectly override via `--temperature 0.0`.",
+      "values": [
+        {
+          "quantity": "temperature fixed for the Phase 2a H1 baseline",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/phase2a-h1-modality.yaml#$.fixed.temperature",
+          "method": null
+        },
+        {
+          "quantity": "temperature applied by CLI override in phases after Phase 2a",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/phase2d-h5-negtext.yaml#$.fixed.temperature",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2a-h1-modality.yaml",
+        "path": "$.fixed.temperature"
+      },
+      "method": "read",
+      "notes": "Here the 1.0 is asserted as the Phase 2a study's fixed temperature (what was run), so it anchors to the study YAML rather than the config file; the 0.0 is the later override, represented by the Phase 2d study's fixed temperature."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          108,
+          108
+        ],
+        "section": "Cross-experiment issues — Carry-forward chain verified"
+      },
+      "claim_text": "| Phase 2b → 2c | Optimal T=0.0 | Yes |",
+      "values": [
+        {
+          "quantity": "optimal temperature carried forward from Phase 2b into Phase 2c",
+          "value_verbatim": "T=0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.temperature",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": "$.temperature"
+      },
+      "method": "read",
+      "notes": "Carry-forward table row. The Phase 2c study YAML's fixed section records only the ordering, so the carried T=0.0 is anchored to the temperature written into the Phase 2c library configs (all five prompts/configs/library_*.json used by studies/phase2c-h8-library.yaml carry temperature 0.0). Other rows of this table name phases and configs without asserting numbers, so they carry no claims (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          137,
+          137
+        ],
+        "section": "Verified correct — Phase 1"
+      },
+      "claim_text": "- System instruction hash consistent across 5 passes",
+      "values": [
+        {
+          "quantity": "number of proposer passes in the Phase 1 library run",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "$.execution.passes",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase1-library.yaml",
+        "path": "$.execution.passes"
+      },
+      "method": "read",
+      "notes": "Phase 1 pass count as defined in the study YAML."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          139,
+          139
+        ],
+        "section": "Verified correct — Phase 2a (H1 modality, 5 conditions)"
+      },
+      "claim_text": "### Phase 2a (H1 modality, 5 conditions)",
+      "values": [
+        {
+          "quantity": "count of Phase 2a conditions (modality/elaboration levels)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "conditions",
+          "kind": "count",
+          "path": "len:$.factors.modality_elaboration.levels",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2a-h1-modality.yaml",
+        "path": "len:$.factors.modality_elaboration.levels"
+      },
+      "method": "read",
+      "notes": "Heading count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          142
+        ],
+        "section": "Verified correct — Phase 2a (H1 modality, 5 conditions)"
+      },
+      "claim_text": "- All 5 conditions use 17 examples (Scale-8)",
+      "values": [
+        {
+          "quantity": "count of Phase 2a conditions",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "conditions",
+          "kind": "count",
+          "path": "studies/phase2a-h1-modality.yaml#len:$.factors.modality_elaboration.levels",
+          "method": null
+        },
+        {
+          "quantity": "example-library size used by every Phase 2a condition (Scale-8)",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": "examples",
+          "kind": "count",
+          "path": "len:$.examples",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/detect_brief-text.json",
+        "path": "len:$.examples"
+      },
+      "method": "read",
+      "notes": "The 17-example Scale-8 library is carried by each Phase 2a modality config; prompts/configs/detect_brief-text.json is the representative anchor (its ordering_note also states 'Total: 17 examples (Scale-8)'), and prompts/configs/library_scale-8.json $.total_examples is the equivalent library-side anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          145,
+          145
+        ],
+        "section": "Verified correct — Phase 2b (H7 temperature, 10 conditions across 2 tracks)"
+      },
+      "claim_text": "### Phase 2b (H7 temperature, 10 conditions across 2 tracks)",
+      "values": [
+        {
+          "quantity": "count of Phase 2b conditions across both tracks",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "studies/phase2b-h7-temperature.yaml",
+              "path": "len:$.factors.temperature.levels"
+            },
+            {
+              "name": "b",
+              "file": "studies/phase2b-h7-temperature-text-only.yaml",
+              "path": "len:$.factors.temperature.levels"
+            }
+          ]
+        },
+        {
+          "quantity": "count of Phase 2b tracks",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "tracks",
+          "kind": "count",
+          "path": "count of `phase2b-h7-temperature*.yaml` study definitions",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/",
+        "path": "count of `phase2b-h7-temperature*.yaml` study definitions"
+      },
+      "method": "read",
+      "notes": "Ten conditions = five temperature levels in each of the two track study YAMLs; the derived total carries its own expression so the two operand counts are not compared against the sum (v1.2 amendment 1). The track count takes a non-JSON directory anchor (the two study files studies/phase2b-h7-temperature.yaml and studies/phase2b-h7-temperature-text-only.yaml)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          151,
+          151
+        ],
+        "section": "Verified correct — Phase 2c (H8 library, 5 conditions)"
+      },
+      "claim_text": "### Phase 2c (H8 library, 5 conditions)",
+      "values": [
+        {
+          "quantity": "count of Phase 2c conditions (library-composition levels, per track)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "conditions",
+          "kind": "count",
+          "path": "len:$.factors.library_composition.levels",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2c-h8-library.yaml",
+        "path": "len:$.factors.library_composition.levels"
+      },
+      "method": "read",
+      "notes": "Heading count. The text-only track (studies/phase2c-h8-library-text-only.yaml) defines the same five levels."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          153,
+          153
+        ],
+        "section": "Verified correct — Phase 2c (H8 library, 5 conditions)"
+      },
+      "claim_text": "- Only library composition varies (7, 9, 13, 13, 17 examples)",
+      "values": [
+        {
+          "quantity": "example count, Phase 2c library level 1 (pure-positive-canon)",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": "examples",
+          "kind": "count",
+          "path": "$.factors.library_composition.levels[0].composition.total",
+          "method": null
+        },
+        {
+          "quantity": "example count, Phase 2c library level 2 (canonical)",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": "examples",
+          "kind": "count",
+          "path": "$.factors.library_composition.levels[1].composition.total",
+          "method": null
+        },
+        {
+          "quantity": "example count, Phase 2c library level 3 (plus-hp)",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": "examples",
+          "kind": "count",
+          "path": "$.factors.library_composition.levels[2].composition.total",
+          "method": null
+        },
+        {
+          "quantity": "example count, Phase 2c library level 4 (scale-4)",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": "examples",
+          "kind": "count",
+          "path": "$.factors.library_composition.levels[3].composition.total",
+          "method": null
+        },
+        {
+          "quantity": "example count, Phase 2c library level 5 (scale-8)",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": "examples",
+          "kind": "count",
+          "path": "$.factors.library_composition.levels[4].composition.total",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2c-h8-library.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Five library sizes in level order; every value carries its own path (v1.2 amendment 3). The two '13' values are distinct levels (plus-hp and scale-4) with the same size, so the harness must key on position within the span. Equivalent config-side anchors are $.total_examples in prompts/configs/library_{pure-positive-canon,canonical,plus-hp,scale-4,scale-8}.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          154,
+          154
+        ],
+        "section": "Verified correct — Phase 2c (H8 library, 5 conditions)"
+      },
+      "claim_text": "- T=0.0 constant across all conditions",
+      "values": [
+        {
+          "quantity": "temperature held constant across all Phase 2c conditions",
+          "value_verbatim": "T=0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.temperature",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": "$.temperature"
+      },
+      "method": "read",
+      "notes": "Constant-collapse claim across the five Phase 2c library configs; prompts/configs/library_scale-8.json is the representative anchor, and the equivalent collapse is $.temperature across prompts/configs/library_{pure-positive-canon,canonical,plus-hp,scale-4,scale-8}.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          157,
+          157
+        ],
+        "section": "Verified correct — Phase 2d (H5 negative text, 6 conditions across 2 tracks)"
+      },
+      "claim_text": "### Phase 2d (H5 negative text, 6 conditions across 2 tracks)",
+      "values": [
+        {
+          "quantity": "count of Phase 2d conditions across both tracks",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "studies/phase2d-h5-negtext.yaml",
+              "path": "len:$.factors.negative_text_treatment.levels"
+            },
+            {
+              "name": "b",
+              "file": "studies/phase2d-h5-negtext-text-only.yaml",
+              "path": "len:$.factors.negative_text_treatment.levels"
+            }
+          ]
+        },
+        {
+          "quantity": "count of Phase 2d tracks",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "tracks",
+          "kind": "count",
+          "path": "count of `phase2d-h5-negtext*.yaml` study definitions",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/",
+        "path": "count of `phase2d-h5-negtext*.yaml` study definitions"
+      },
+      "method": "read",
+      "notes": "Six conditions = three exclusion-guidance levels (minimal, terse, verbose) in each of the two track study YAMLs. Note for triage: both YAMLs mark the 'minimal' level run_in_phase2d: false (it is symlinked from Phase 2c), and studies/phase2d-h5-negtext.yaml sets execution.cells_to_run: 2, so the six counts levels rather than newly executed cells."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          160,
+          160
+        ],
+        "section": "Verified correct — Phase 2d (H5 negative text, 6 conditions across 2 tracks)"
+      },
+      "claim_text": "- T=0.0, library, and M/E constant per track",
+      "values": [
+        {
+          "quantity": "temperature held constant across Phase 2d conditions",
+          "value_verbatim": "T=0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.fixed.temperature",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2d-h5-negtext.yaml",
+        "path": "$.fixed.temperature"
+      },
+      "method": "read",
+      "notes": "The text-only track's fixed section (studies/phase2d-h5-negtext-text-only.yaml $.fixed.temperature) records the same value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          163,
+          163
+        ],
+        "section": "Verified correct — Phase 2e (H4 ordering, 4 conditions)"
+      },
+      "claim_text": "### Phase 2e (H4 ordering, 4 conditions)",
+      "values": [
+        {
+          "quantity": "count of Phase 2e conditions (example-ordering levels)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "conditions",
+          "kind": "count",
+          "path": "len:$.factors.ordering.levels",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2e-h4-ordering.yaml",
+        "path": "len:$.factors.ordering.levels"
+      },
+      "method": "read",
+      "notes": "Heading count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          167,
+          167
+        ],
+        "section": "Verified correct — Phase 2e (H4 ordering, 4 conditions)"
+      },
+      "claim_text": "- Random seeds correctly incremented (42-51 across runs 1-10)",
+      "values": [
+        {
+          "quantity": "base random seed for the Phase 2e ordering runs",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.execution.random_seed_base",
+          "method": null
+        },
+        {
+          "quantity": "highest random seed across the Phase 2e ordering runs",
+          "value_verbatim": "51",
+          "value_parsed": 51,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b - 1",
+          "operands": [
+            {
+              "name": "a",
+              "file": "studies/phase2e-h4-ordering.yaml",
+              "path": "$.execution.random_seed_base"
+            },
+            {
+              "name": "b",
+              "file": "studies/phase2e-h4-ordering.yaml",
+              "path": "$.execution.runs"
+            }
+          ]
+        },
+        {
+          "quantity": "number of runs per Phase 2e condition",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "runs",
+          "kind": "parameter",
+          "path": "$.execution.runs",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2e-h4-ordering.yaml",
+        "path": "$.execution.random_seed_base"
+      },
+      "method": "read",
+      "notes": "Scope decision: the '1' in 'runs 1-10' is an ordinal run index (run_1), of the same class as the identifiers rule 5 excludes, so it is not extracted as a separate value; the run count 10 and the seed range endpoints are. The top of the range is derived (42 + 10 - 1), so it carries its own expression per v1.2 amendment 1."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          170,
+          170
+        ],
+        "section": "Verified correct — Phase 3a (H3 consensus, 4 tracks × 3 temperatures)"
+      },
+      "claim_text": "### Phase 3a (H3 consensus, 4 tracks × 3 temperatures)",
+      "values": [
+        {
+          "quantity": "count of Phase 3a tracks",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "tracks",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of temperature levels per Phase 3a track",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "temperatures",
+          "kind": "count",
+          "path": "len:$.factors.temperature.levels",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase3a-h3-voting-track1.yaml",
+        "path": "len:$.factors.temperature.levels"
+      },
+      "method": "read",
+      "notes": "Only two Phase 3a study YAMLs exist (studies/phase3a-h3-voting-track1.yaml, track2), each with three temperature levels; the document's '4 tracks' presumably counts the minimal and HIGH thinking variants of each track (§ M1 names the `track2-text-high/` output directory, and the Phase 2 output trees are not in the working copy), so the track count takes anchor-unknown rather than a fallback path that would compare the wrong quantity (v1.2 amendment 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          194,
+          194
+        ],
+        "section": "Verified correct — Phase 3a replication"
+      },
+      "claim_text": "- Temperature 0.7 applied from YAML `fixed` section",
+      "values": [
+        {
+          "quantity": "temperature applied in the Phase 3a replication, from the study YAML fixed section",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.fixed.temperature",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase3a-replication.yaml",
+        "path": "$.fixed.temperature"
+      },
+      "method": "read",
+      "notes": "The document names the YAML `fixed` section, so the anchor is the study definition. Scope decision for the surrounding 'Verified correct' bullets: '512 scope' (line 186), '384 and 512 manifest files' (line 187) and the model string 'gemini-3.1-flash-lite-preview' (line 198) are names/version strings, out of C4 scope (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          193,
+          193
+        ],
+        "section": "Verified correct — Phase 3a replication"
+      },
+      "claim_text": "- Only thinking_level differs between the two configs",
+      "values": [
+        {
+          "quantity": "count of proposer configs compared in the Phase 3a replication",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "configs",
+          "kind": "count",
+          "path": "count of the two named configs: detect_brief-text.json and detect_brief-text-high.json",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/",
+        "path": "count of the two named configs: detect_brief-text.json and detect_brief-text-high.json"
+      },
+      "method": "read",
+      "notes": "Non-JSON directory anchor; the two configs are named on lines 191-192. Flagged as a doubtful inclusion — 'two' here is arguably prose rather than a measured count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          208,
+          208
+        ],
+        "section": "Audit statistics"
+      },
+      "claim_text": "| Phases audited | 12 |",
+      "values": [
+        {
+          "quantity": "count of phases audited in this report",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": "phases",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential count of the scope line (Phases 1, 2a, 2b, 2c, 2d, 2e, 3a, 3c, 3d, H11, Phase 3a replication, Flash-Lite pilot); no artefact decides it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          209,
+          209
+        ],
+        "section": "Audit statistics"
+      },
+      "claim_text": "| Conditions checked | ~45 |",
+      "values": [
+        {
+          "quantity": "count of conditions checked by the audit (approximate)",
+          "value_verbatim": "~45",
+          "value_parsed": 45,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Approximate audit-process figure; the ~ marker is retained verbatim (v1.2 amendment 5). No committed artefact records the audit's own coverage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          210,
+          210
+        ],
+        "section": "Audit statistics"
+      },
+      "claim_text": "| Metadata files sampled | ~80 |",
+      "values": [
+        {
+          "quantity": "count of metadata files sampled by the audit (approximate)",
+          "value_verbatim": "~80",
+          "value_parsed": 80,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Approximate audit-process figure; ~ retained verbatim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          211,
+          211
+        ],
+        "section": "Audit statistics"
+      },
+      "claim_text": "| Parameters verified per condition | 6-8 |",
+      "values": [
+        {
+          "quantity": "parameters verified per condition — range minimum",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "parameters",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "parameters verified per condition — range maximum",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": "parameters",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "A range; both endpoints share the implied unit (parameters per condition) per v1.2 amendment 6. Audit-process figure with no committed artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          212,
+          212
+        ],
+        "section": "Audit statistics"
+      },
+      "claim_text": "| Total parameter checks | ~350 |",
+      "values": [
+        {
+          "quantity": "total parameter checks performed by the audit (approximate)",
+          "value_verbatim": "~350",
+          "value_parsed": 350,
+          "unit": "checks",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Approximate audit-process figure; ~ retained verbatim. Roughly the product of the ~45 conditions and 6-8 parameters, but the document does not present it as derived."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          213,
+          213
+        ],
+        "section": "Audit statistics"
+      },
+      "claim_text": "| Critical findings | 1 (resolved) |",
+      "values": [
+        {
+          "quantity": "count of critical findings in this report",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "findings",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential count of this document's own Critical section (C1); no external artefact decides it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          214,
+          214
+        ],
+        "section": "Audit statistics"
+      },
+      "claim_text": "| Medium findings | 1 (known, mitigated) |",
+      "values": [
+        {
+          "quantity": "count of medium findings in this report",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "findings",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential count of this document's own Medium section (M1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          215,
+          215
+        ],
+        "section": "Audit statistics"
+      },
+      "claim_text": "| Low findings | 3 |",
+      "values": [
+        {
+          "quantity": "count of low findings in this report",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "findings",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential count of this document's own Low section (L1, L2, L3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          216,
+          216
+        ],
+        "section": "Audit statistics"
+      },
+      "claim_text": "| False positives | 0 |",
+      "values": [
+        {
+          "quantity": "count of false-positive findings raised by the audit",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "findings",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential audit-process figure."
+    }
+  ]
+}

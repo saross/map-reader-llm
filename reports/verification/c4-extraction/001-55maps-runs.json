@@ -1,0 +1,1964 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-07-31T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/55maps-generalisation-runs.md",
+    "git_blob": "8a000b8c9cf62272b60005f2de4284d1d534aff0",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5[1m]",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          6,
+          7
+        ],
+        "section": "Preamble (Purpose)"
+      },
+      "claim_text": "a single legible map of the five `55maps-*-generalisation` run\ndirectories",
+      "values": [
+        {
+          "quantity": "count of 55maps-*-generalisation run directories under outputs/",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "directories",
+          "kind": "count",
+          "path": "count of directories matching `55maps-*-generalisation`",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/",
+        "path": "count of directories matching `55maps-*-generalisation`"
+      },
+      "method": "read",
+      "notes": "Non-JSON directory anchor (a directory count), legitimate per instrument v1.1; the harness routes it to triage. The same count is restated as the heading at line 14 (extracted separately). Dates, session numbers, and the '55-map' corpus label elsewhere in this preamble are out of C4 scope (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          10,
+          10
+        ],
+        "section": "Preamble (Purpose)"
+      },
+      "claim_text": "**out-of-sample generalisation test**: 55 student-digitised maps, evaluated against",
+      "values": [
+        {
+          "quantity": "count of student-digitised maps in the 55-map generalisation corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": "maps",
+          "kind": "count",
+          "path": "$.features[*].properties.source_map (distinct count)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+        "path": "$.features[*].properties.source_map (distinct count)"
+      },
+      "method": "read",
+      "notes": "'55' is used here as an asserted map count, not only as a corpus name, so it is a claim (instrument rule 5, second sentence). Distinct-count annotation per v1.2 amendment 4/7."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          14,
+          14
+        ],
+        "section": "The five directories"
+      },
+      "claim_text": "## The five directories",
+      "values": [
+        {
+          "quantity": "count of 55maps-*-generalisation run directories under outputs/",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "directories",
+          "kind": "count",
+          "path": "count of directories matching `55maps-*-generalisation`",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/",
+        "path": "count of directories matching `55maps-*-generalisation`"
+      },
+      "method": "read",
+      "notes": "Heading restatement of the line 6-7 count; kept as a separate claim because the heading independently asserts it. Non-JSON directory anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          18,
+          18
+        ],
+        "section": "The five directories"
+      },
+      "claim_text": "| `55maps-generalisation` | the **original** text (HIGH-thinking, T=0.7) generalisation run — `55maps-text-generalisation`, executed **2026-04-10** via bash scripts (`55maps-overnight.sh`) *before* the publishable `run_generalisation.py` launcher. Documented retrospectively (`outputs/55maps-generalisation/post_run_report_retrospective.md`). 4,068 verified. | **No — superseded** (see below) |",
+      "values": [
+        {
+          "quantity": "proposer temperature as run, 55maps-generalisation (base text run)",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "configs/run-configs/55maps_text_generalisation_retrospective.yaml#$.proposer.temperature",
+          "method": null
+        },
+        {
+          "quantity": "verified detection count, 55maps-generalisation (base text run)",
+          "value_verbatim": "4,068",
+          "value_parsed": 4068,
+          "unit": "detections",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-generalisation/verified/verified_detections_paired.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Table row. The document names the retrospective run config for this run at line 28, so the temperature anchors there (cross-file locator, v1.2 amendment 2); the verified count anchors to the run's verified GeoJSON. The date 2026-04-10 and the run/script names are out of C4 scope (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          19,
+          19
+        ],
+        "section": "The five directories"
+      },
+      "claim_text": "| `55maps-text-high-generalisation` | the **publishable** text-HIGH (T=0.7) run — the recovered/refreshed successor of the original (160 failed proposer passes recovered 2026-05-02; 4,068 → **4,164** verified). Same reconstruction config. | **Yes** (the T=0.7 text experiment) |",
+      "values": [
+        {
+          "quantity": "proposer temperature as run, 55maps-text-high-generalisation",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "configs/run-configs/55maps_text_high_generalisation.yaml#$.proposer.temperature",
+          "method": null
+        },
+        {
+          "quantity": "count of failed proposer passes recovered on 2026-05-02",
+          "value_verbatim": "160",
+          "value_parsed": 160,
+          "unit": "passes",
+          "kind": "count",
+          "path": "outputs/55maps-text-high-generalisation/recovery-logs/stage2-20260502T154407.log#sum of the `recovered=` fields across the five per-pass recovery lines",
+          "method": null
+        },
+        {
+          "quantity": "verified detection count before recovery (superseded pre-recovery figure)",
+          "value_verbatim": "4,068",
+          "value_parsed": 4068,
+          "unit": "detections",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "verified detection count after recovery, 55maps-text-high-generalisation",
+          "value_verbatim": "4,164",
+          "value_parsed": 4164,
+          "unit": "detections",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Table row with a before→after pair: 4,068 is the pre-recovery figure (historical, and still live as the base run's own count at line 18), 4,164 the live post-recovery count. The recovery-log anchor is non-JSON (log lines read 'recovery: initial=N, recovered=N, still_failing=0'), legitimate per v1.1 — triage resolves. Dates out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          20,
+          20
+        ],
+        "section": "The five directories"
+      },
+      "claim_text": "| `55maps-image-generalisation` | the image-track generalisation run. 4,680 verified. | **Yes** |",
+      "values": [
+        {
+          "quantity": "verified detection count, 55maps-image-generalisation",
+          "value_verbatim": "4,680",
+          "value_parsed": 4680,
+          "unit": "detections",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Table row."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          21,
+          21
+        ],
+        "section": "The five directories"
+      },
+      "claim_text": "| `55maps-text-min-generalisation` | text, MINIMAL thinking. 3,865 verified. | **Yes** |",
+      "values": [
+        {
+          "quantity": "verified detection count, 55maps-text-min-generalisation",
+          "value_verbatim": "3,865",
+          "value_parsed": 3865,
+          "unit": "detections",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Table row. 'MINIMAL thinking' is a categorical parameter, not a number, so it carries no value here; the run config records thinking_level: minimal."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          22,
+          22
+        ],
+        "section": "The five directories"
+      },
+      "claim_text": "| `55maps-text-high-t0.3-generalisation` | text, HIGH thinking, **T=0.3** (vs the T=0.7 of `text-high`). 4,350 verified. | **Yes** |",
+      "values": [
+        {
+          "quantity": "proposer temperature as run, 55maps-text-high-t0.3-generalisation",
+          "value_verbatim": "T=0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "configs/run-configs/55maps_text_high_t03_generalisation.yaml#$.proposer.temperature",
+          "method": null
+        },
+        {
+          "quantity": "proposer temperature as run, 55maps-text-high-generalisation (comparator)",
+          "value_verbatim": "T=0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "configs/run-configs/55maps_text_high_generalisation.yaml#$.proposer.temperature",
+          "method": null
+        },
+        {
+          "quantity": "verified detection count, 55maps-text-high-t0.3-generalisation",
+          "value_verbatim": "4,350",
+          "value_parsed": 4350,
+          "unit": "detections",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Table row. The '0.3' inside the directory name `55maps-text-high-t0.3-generalisation` is a name, not a claim (rule 5); the '**T=0.3**' and 'T=0.7' assertions about what was run are claims, so both value_verbatim strings include the 'T=' prefix to disambiguate them from the name."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          26,
+          28
+        ],
+        "section": "The superseded-original relationship (the one that trips people up)"
+      },
+      "claim_text": "experiment** (text, HIGH thinking, T=0.7): both reconstruct from the *same* config\n(`configs/run-configs/55maps_text_generalisation_retrospective.yaml`)",
+      "values": [
+        {
+          "quantity": "proposer temperature as run, shared by 55maps-generalisation and 55maps-text-high-generalisation",
+          "value_verbatim": "T=0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.proposer.temperature",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "configs/run-configs/55maps_text_generalisation_retrospective.yaml",
+        "path": "$.proposer.temperature"
+      },
+      "method": "read",
+      "notes": "The document names this config on the following line, so the anchor is that file (rule 2). Scope decision for the assessment-coverage table at lines 48-52 and the sentence at line 54: 'text-high (T=0.7)', 'T=0.3' and 'text-min' are used there as condition labels rather than as assertions about what was run, so they are not extracted again (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          28,
+          29
+        ],
+        "section": "The superseded-original relationship (the one that trips people up)"
+      },
+      "claim_text": "overlap 79 %\nby tile, and report near-identical headline F1 (~0.790 @ 50 m)",
+      "values": [
+        {
+          "quantity": "tile-level overlap between the base run and its recovered successor, %",
+          "value_verbatim": "79",
+          "value_parsed": 79.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "headline F1 @ 50 m, base run 55maps-generalisation (approximate quote)",
+          "value_verbatim": "~0.790",
+          "value_parsed": 0.79,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.condition_b.f1",
+          "method": null
+        },
+        {
+          "quantity": "match buffer for the headline F1, metres",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.metadata.buffer_metres",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-high-generalisation/paired-vs-high-2026-04-10-50m/pairwise_permutation_result.json",
+        "path": "$.condition_b.f1"
+      },
+      "method": "read",
+      "notes": "The 79 % by-tile overlap has no committed artefact I could locate (searched results/55maps-*, the paired-permutation result's per_tile array, and repo-wide for '79 %'/'overlap 79'); it needs a script that intersects the two verified GeoJSONs by tile, hence recompute-script. The ~ marker is kept in value_verbatim per v1.2 amendment 5 — the claim is approximate and covers both runs (condition_a.f1 is the successor's figure at the same anchor)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          31
+        ],
+        "section": "The superseded-original relationship (the one that trips people up)"
+      },
+      "claim_text": "is its **recovered, publishable successor** (+160 recovered passes, +96 verified).",
+      "values": [
+        {
+          "quantity": "count of failed proposer passes recovered on 2026-05-02",
+          "value_verbatim": "160",
+          "value_parsed": 160,
+          "unit": "passes",
+          "kind": "count",
+          "path": "outputs/55maps-text-high-generalisation/recovery-logs/stage2-20260502T154407.log#sum of the `recovered=` fields across the five per-pass recovery lines",
+          "method": null
+        },
+        {
+          "quantity": "increase in verified detections from the base run to its recovered successor",
+          "value_verbatim": "96",
+          "value_parsed": 96,
+          "unit": "detections",
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
+              "path": "len:$.features"
+            },
+            {
+              "name": "b",
+              "file": "outputs/55maps-generalisation/verified/verified_detections_paired.geojson",
+              "path": "len:$.features"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "The +96 delta gets its own per-value expression (v1.2 amendment 1) so the operand counts are not themselves compared against the difference; +160 is an independent read against the recovery log (non-JSON anchor)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          40,
+          40
+        ],
+        "section": "The four distinct experiments and their assessment coverage"
+      },
+      "claim_text": "## The four distinct experiments and their assessment coverage",
+      "values": [
+        {
+          "quantity": "count of distinct 55-map generalisation experiments (five directories less the superseded original)",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "experiments",
+          "kind": "count",
+          "path": "count of directories matching `55maps-*-generalisation`, less the superseded `55maps-generalisation` original",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/",
+        "path": "count of directories matching `55maps-*-generalisation`, less the superseded `55maps-generalisation` original"
+      },
+      "method": "read",
+      "notes": "Heading count; non-JSON directory anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          42,
+          43
+        ],
+        "section": "The four distinct experiments and their assessment coverage"
+      },
+      "claim_text": "The four distinct generalisation experiments are **image, text-high (T=0.7),\ntext-min, and T=0.3**.",
+      "values": [
+        {
+          "quantity": "count of distinct 55-map generalisation experiments",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "experiments",
+          "kind": "count",
+          "path": "count of directories matching `55maps-*-generalisation`, less the superseded `55maps-generalisation` original",
+          "method": null
+        },
+        {
+          "quantity": "proposer temperature as run, text-high experiment",
+          "value_verbatim": "T=0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "configs/run-configs/55maps_text_high_generalisation.yaml#$.proposer.temperature",
+          "method": null
+        },
+        {
+          "quantity": "proposer temperature as run, T=0.3 experiment",
+          "value_verbatim": "T=0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "configs/run-configs/55maps_text_high_t03_generalisation.yaml#$.proposer.temperature",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/",
+        "path": "count of directories matching `55maps-*-generalisation`, less the superseded `55maps-generalisation` original"
+      },
+      "method": "read",
+      "notes": "The second 'four' in 'All four carry the full assessment stack' (line 43) restates the same count and is not extracted separately."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          46,
+          46
+        ],
+        "section": "The four distinct experiments and their assessment coverage"
+      },
+      "claim_text": "| run | manual review | verifier-vs-human 2×2 | DS-vs-human | corrected-F1 | Dawid-Skene | std re-score (14-buffer + MCC) |",
+      "values": [
+        {
+          "quantity": "number of uniform buffers in the standardised re-score sweep",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": "buffers",
+          "kind": "count",
+          "path": "len:$.summary.buffers",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/rescore-2026-05-31/55maps-text-high-generalisation/verified/evaluation.json",
+        "path": "len:$.summary.buffers"
+      },
+      "method": "read",
+      "notes": "Table header row asserting the sweep width. The '2×2' in the same header is the verifier-vs-human contingency-table shape, extracted once at line 69 rather than repeatedly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          56,
+          56
+        ],
+        "section": "The four distinct experiments and their assessment coverage"
+      },
+      "claim_text": "already-complete human-review CSVs (585 / 692 rows), **no new manual review",
+      "values": [
+        {
+          "quantity": "human-review rows, 55maps-text-min-generalisation",
+          "value_verbatim": "585",
+          "value_parsed": 585,
+          "unit": "rows",
+          "kind": "count",
+          "path": "$.n_total",
+          "method": null
+        },
+        {
+          "quantity": "human-review rows, 55maps-text-high-t0.3-generalisation",
+          "value_verbatim": "692",
+          "value_parsed": 692,
+          "unit": "rows",
+          "kind": "count",
+          "path": "results/55maps-text-high-t0.3-generalisation/verifier-calibration-crosstab/calibration.json#$.n_total",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": "$.n_total"
+      },
+      "method": "read",
+      "notes": "The two row counts are the crosstab input sizes; each carries its own path (v1.2 amendment 3). The underlying CSVs are results/55maps-{text-min,text-high-t0.3}-generalisation/human-review-multi-buffer.csv (row count excluding header) if triage prefers the least-writable form."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          57,
+          58
+        ],
+        "section": "The four distinct experiments and their assessment coverage"
+      },
+      "claim_text": "Text-track verifier ECE: text-min 0.096, T=0.3 0.090 (well-calibrated,\ncf. the image track at 0.18–0.27",
+      "values": [
+        {
+          "quantity": "expected calibration error (ECE), text-min verifier",
+          "value_verbatim": "0.096",
+          "value_parsed": 0.096,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ece",
+          "method": null
+        },
+        {
+          "quantity": "expected calibration error (ECE), T=0.3 verifier",
+          "value_verbatim": "0.090",
+          "value_parsed": 0.09,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/55maps-text-high-t0.3-generalisation/verifier-calibration-crosstab/calibration.json#$.ece",
+          "method": null
+        },
+        {
+          "quantity": "expected calibration error (ECE), image track — range minimum",
+          "value_verbatim": "0.18",
+          "value_parsed": 0.18,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/verifier-calibration-matrix/image-adversarial-text/calibration.json#$.ece.point",
+          "method": null
+        },
+        {
+          "quantity": "expected calibration error (ECE), image track — range maximum",
+          "value_verbatim": "0.27",
+          "value_parsed": 0.27,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/verifier-calibration-matrix/image-brief/calibration.json#$.ece.point",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-text-min-generalisation/verifier-calibration-crosstab/calibration.json",
+        "path": "$.ece"
+      },
+      "method": "read",
+      "notes": "The image-track 0.18–0.27 range is cited to Obs 269/277 (prose); the visible artefact-level candidates are the seven image cells of results/verifier-calibration-matrix/*/calibration.json ($.ece.point), whose extremes are proposed here. An alternative reading anchors the upper end to the 55-map image run's own crosstab (results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json $.ece) — triage should pick. 'T=0.3' here is a condition label (rule 5), not a temperature claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          62,
+          62
+        ],
+        "section": "How the 55-map runs are assessed (the approach, in one place)"
+      },
+      "claim_text": "1. **Standardised re-score** at 14 uniform buffers + MCC against the reviewed",
+      "values": [
+        {
+          "quantity": "number of uniform buffers in the standardised re-score sweep",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": "buffers",
+          "kind": "count",
+          "path": "len:$.summary.buffers",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/rescore-2026-05-31/55maps-text-high-generalisation/verified/evaluation.json",
+        "path": "len:$.summary.buffers"
+      },
+      "method": "read",
+      "notes": "Restatement of the line 46 header count in prose form."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          64,
+          64
+        ],
+        "section": "How the 55-map runs are assessed (the approach, in one place)"
+      },
+      "claim_text": "2. **Manual review** of VLM-only candidates at five tolerance rings",
+      "values": [
+        {
+          "quantity": "number of concentric tolerance rings offered in multi-buffer manual review",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "rings",
+          "kind": "count",
+          "path": "`_BUFFER_BANDS_DEFAULT` tuple length (50, 75, 100, 125, 150)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/review_candidates.py",
+        "path": "`_BUFFER_BANDS_DEFAULT` tuple length (50, 75, 100, 125, 150)"
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (a module constant), legitimate per instrument v1.1; the document names this script on the next line."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          66,
+          66
+        ],
+        "section": "How the 55-map runs are assessed (the approach, in one place)"
+      },
+      "claim_text": "the student GT missed or mis-placed (the student GT has ~25 m jitter and",
+      "values": [
+        {
+          "quantity": "student ground-truth positional jitter (approximate)",
+          "value_verbatim": "~25",
+          "value_parsed": 25.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The only visible source is Obs 260 in docs/notes/working-notes.md (prose), which the document cites on the next line; instrument rule 2 forbids anchoring prose to prose. Searched for a jitter/spacing artefact under results/ and found none carrying this estimate directly. The ~ marker is retained per v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          68,
+          68
+        ],
+        "section": "How the 55-map runs are assessed (the approach, in one place)"
+      },
+      "claim_text": "3. **Dawid-Skene** 2-annotator model (student + VLM) as a model-based corrected F1.",
+      "values": [
+        {
+          "quantity": "number of annotators in the Dawid-Skene model applied to the 55-map runs",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "annotators",
+          "kind": "count",
+          "path": "`dawid_skene_em` docstring/implementation — two-annotator binary EM",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/analyse_dawid_skene.py",
+        "path": "`dawid_skene_em` docstring/implementation — two-annotator binary EM"
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (a script constant/structure); the Dawid-Skene result files under results/55maps-*/dawid-skene/dawid-skene-results.json record no explicit annotator count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          69,
+          69
+        ],
+        "section": "How the 55-map runs are assessed (the approach, in one place)"
+      },
+      "claim_text": "4. **Verifier-vs-human 2×2 crosstab** (`crosstab_verifier_vs_human.py`):",
+      "values": [
+        {
+          "quantity": "rows of the verifier-vs-human contingency table (binary verifier label)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "levels",
+          "kind": "count",
+          "path": "contingency-table shape: verifier label (2 levels) × human label",
+          "method": null
+        },
+        {
+          "quantity": "columns of the verifier-vs-human contingency table (binary human label)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "levels",
+          "kind": "count",
+          "path": "contingency-table shape: verifier label × human label (2 levels)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/crosstab_verifier_vs_human.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Structural claim about the crosstab's shape. Both value_verbatim strings are the same character '2' inside '2×2', so the harness must key on position within the span. Flagged as a doubtful inclusion (instrument: include and flag the doubt) — this may be a descriptor rather than a measurement."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          74,
+          75
+        ],
+        "section": "Two evaluation references — Track 1 (historical) and Track 2 (canonical)"
+      },
+      "claim_text": "The 55-map deployment is reported against **two\nground-truth references, side by side**",
+      "values": [
+        {
+          "quantity": "count of ground-truth references the 55-map deployment is reported against",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "references",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential structural count of this document's own Track 1 / Track 2 framing (the reviewed student GT and the canonical adjudicated extended GT). No single artefact asserts the count; the two references themselves are inputs/vectors/references/student-mounds-55maps-reviewed.geojson and the canonical GT built by scripts/build_canonical_gt.py."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          78,
+          78
+        ],
+        "section": "Two evaluation references — Track 1 (historical) and Track 2 (canonical)"
+      },
+      "claim_text": "  (`student-mounds-55maps-reviewed.geojson`, 4,746 features).",
+      "values": [
+        {
+          "quantity": "feature count, reviewed student ground truth (Track 1 reference)",
+          "value_verbatim": "4,746",
+          "value_parsed": 4746,
+          "unit": "features",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "The document names the file, so the anchor is that file (rule 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          80,
+          80
+        ],
+        "section": "Two evaluation references — Track 1 (historical) and Track 2 (canonical)"
+      },
+      "claim_text": "  Already spec-complete: each carried condition at the full 14-buffer sweep +",
+      "values": [
+        {
+          "quantity": "number of uniform buffers in the Track-1 sweep",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": "buffers",
+          "kind": "count",
+          "path": "len:$.summary.buffers",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/rescore-2026-05-31/55maps-text-high-generalisation/verified/evaluation.json",
+        "path": "len:$.summary.buffers"
+      },
+      "method": "read",
+      "notes": "The document names results/rescore-2026-05-31/<run>/verified*/evaluation.json on the next line; the text-high instance is used as the representative anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          83,
+          83
+        ],
+        "section": "Two evaluation references — Track 1 (historical) and Track 2 (canonical)"
+      },
+      "claim_text": "  **canonical adjudicated extended GT** = reviewed student GT **+** the 773-mound",
+      "values": [
+        {
+          "quantity": "count of adjudicated phantom mounds in the canonical extended-GT phantom set",
+          "value_verbatim": "773",
+          "value_parsed": 773,
+          "unit": "mounds",
+          "kind": "count",
+          "path": "row count excluding the header",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+        "path": "row count excluding the header"
+      },
+      "method": "read",
+      "notes": "The document names build_canonical_gt.py and this CSV on the next two lines. Non-JSON anchor (a CSV row count) — triage resolves."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          88,
+          89
+        ],
+        "section": "Two evaluation references — Track 1 (historical) and Track 2 (canonical)"
+      },
+      "claim_text": "  (a phantom enters the GT at radius R only if its min-ring `buffer_metres ≤ R`;\n  the 200 m \">150 m\" sentinel shell is excluded everywhere)",
+      "values": [
+        {
+          "quantity": "sentinel buffer value marking 'mound visible beyond the outermost ring'",
+          "value_verbatim": "200",
+          "value_parsed": 200,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.exclusions.sentinel_buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "outermost concentric tolerance ring used in manual review",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "scripts/review_candidates.py#outermost element of `_BUFFER_BANDS_DEFAULT`",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-extended-gt-2026-06-07/TH7-k4/summary.json",
+        "path": "$.exclusions.sentinel_buffer_metres"
+      },
+      "method": "read",
+      "notes": "The 200 m sentinel is recorded in every Track-2 cell summary's exclusions block; the TH7-k4 cell is used as the representative anchor. The 150 m figure is the outermost review ring (non-JSON module-constant path)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          96,
+          97
+        ],
+        "section": "Two evaluation references — Track 1 (historical) and Track 2 (canonical)"
+      },
+      "claim_text": "Below 50 m the two tracks coincide exactly (no phantom has\na ring < 50 m",
+      "values": [
+        {
+          "quantity": "buffer radius below which the Track-1 and Track-2 references coincide",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "minimum of the `buffer_metres` column",
+          "method": null
+        },
+        {
+          "quantity": "minimum phantom ring radius in the canonical phantom set",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "minimum of the `buffer_metres` column",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+        "path": "minimum of the `buffer_metres` column"
+      },
+      "method": "read",
+      "notes": "Both values are the same quantity stated twice (the coincidence threshold IS the minimum phantom ring). Non-JSON CSV-column anchor. 'two tracks' is the Track 1 / Track 2 count already extracted at lines 74-75."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          97,
+          98
+        ],
+        "section": "Two evaluation references — Track 1 (historical) and Track 2 (canonical)"
+      },
+      "claim_text": "TH7-k4\nF1@20m = 0.6260 and MCC@20m = 0.6480 reproduce the Track-1 manifest to 4 d.p.",
+      "values": [
+        {
+          "quantity": "F1 @ 20 m, cell TH7-k4, Track-2 canonical extended-GT sweep",
+          "value_verbatim": "0.6260",
+          "value_parsed": 0.626,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[3].F1",
+          "method": null
+        },
+        {
+          "quantity": "tile-level MCC @ 20 m, cell TH7-k4, Track-2 canonical extended-GT sweep",
+          "value_verbatim": "0.6480",
+          "value_parsed": 0.648,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[3].tile_classification.mcc",
+          "method": null
+        },
+        {
+          "quantity": "agreement precision with the Track-1 manifest, decimal places",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "decimal places",
+          "kind": "other",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-extended-gt-2026-06-07/TH7-k4/summary.json",
+        "path": "$.results[3].F1"
+      },
+      "method": "read",
+      "notes": "The Track-1 counterparts the claim says these reproduce are results/conditions-manifest.json $.conditions[?(@.condition_id=='55maps-text-high-generalisation::verified')].metrics.per_buffer['20'].f1 and .metrics.tile_classification.mcc. The '20' in 'F1@20m'/'MCC@20m' is a buffer label locating the metric, not extracted separately; '4 d.p.' is an agreement-precision assertion that needs a scripted comparison."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          99,
+          100
+        ],
+        "section": "Two evaluation references — Track 1 (historical) and Track 2 (canonical)"
+      },
+      "claim_text": "The Track-2 sweep reproduces findings §4b corrected-F1 @ 50 m to ~7 d.p. (the\nvalidation gate, all 5 anchored cells).",
+      "values": [
+        {
+          "quantity": "buffer radius of the validation-gate comparison",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/55maps-extended-gt-2026-06-07/TH7-k4/summary.json#$.results[9].R_m",
+          "method": null
+        },
+        {
+          "quantity": "agreement precision of the validation gate, decimal places (approximate)",
+          "value_verbatim": "~7",
+          "value_parsed": 7,
+          "unit": "decimal places",
+          "kind": "other",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of anchored (GATE) cells in the validation gate",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "cells",
+          "kind": "count",
+          "path": "len:$.rows[?(@.kind=='GATE')]",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-extended-gt-2026-06-07/validation-gate.json",
+        "path": "len:$.rows[?(@.kind=='GATE')]"
+      },
+      "method": "read",
+      "notes": "Equality-filter path per v1.2 amendment 7; the gate file also carries two 'sanity (per-run §1)' rows that are not anchored cells. The ~ marker on '~7' is retained verbatim (v1.2 amendment 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          110,
+          110
+        ],
+        "section": "Track-2 results (canonical extended GT, corrected-F1 @ 50 m + tile-MCC)"
+      },
+      "claim_text": "| TH7-k4 | text-high T0.7 | 4 | carry-forward | 0.8152 | 0.6666 |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold k as run, cell TH7-k4",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "votes",
+          "kind": "parameter",
+          "path": "results/conditions-manifest.json#$.conditions[?(@.condition_id=='55maps-text-high-generalisation::verified-k4-canonical-gt')].vote_threshold",
+          "method": null
+        },
+        {
+          "quantity": "corrected-F1 @ 50 m against the canonical extended GT, cell TH7-k4",
+          "value_verbatim": "0.8152",
+          "value_parsed": 0.8152,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[9].F1",
+          "method": null
+        },
+        {
+          "quantity": "tile-level MCC @ 50 m against the canonical extended GT, cell TH7-k4",
+          "value_verbatim": "0.6666",
+          "value_parsed": 0.6666,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[9].tile_classification.mcc",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-extended-gt-2026-06-07/TH7-k4/summary.json",
+        "path": "$.results[9].F1"
+      },
+      "method": "read",
+      "notes": "Track-2 results table row; the document names results/55maps-extended-gt-2026-06-07/ per-cell summary.json as the provenance (lines 104-106), so metrics anchor there and the k column takes a cross-file locator into the conditions manifest (v1.2 amendments 2 and 7). The config column ('text-high T0.7', 'text-high T0.3') is a condition name, not a temperature claim (rule 5); the same figures also appear in results/55maps-extended-gt-2026-06-07/consolidated-track2.csv."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          111,
+          111
+        ],
+        "section": "Track-2 results (canonical extended GT, corrected-F1 @ 50 m + tile-MCC)"
+      },
+      "claim_text": "| TH7-k3 | text-high T0.7 | 3 | threshold | 0.8425 | 0.6796 |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold k as run, cell TH7-k3",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "votes",
+          "kind": "parameter",
+          "path": "results/conditions-manifest.json#$.conditions[?(@.condition_id=='55maps-text-high-generalisation::verified-k3-canonical-gt')].vote_threshold",
+          "method": null
+        },
+        {
+          "quantity": "corrected-F1 @ 50 m against the canonical extended GT, cell TH7-k3",
+          "value_verbatim": "0.8425",
+          "value_parsed": 0.8425,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[9].F1",
+          "method": null
+        },
+        {
+          "quantity": "tile-level MCC @ 50 m against the canonical extended GT, cell TH7-k3",
+          "value_verbatim": "0.6796",
+          "value_parsed": 0.6796,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[9].tile_classification.mcc",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-extended-gt-2026-06-07/TH7-k3/summary.json",
+        "path": "$.results[9].F1"
+      },
+      "method": "read",
+      "notes": "Track-2 results table row; the document names results/55maps-extended-gt-2026-06-07/ per-cell summary.json as the provenance (lines 104-106), so metrics anchor there and the k column takes a cross-file locator into the conditions manifest (v1.2 amendments 2 and 7). The config column ('text-high T0.7', 'text-high T0.3') is a condition name, not a temperature claim (rule 5); the same figures also appear in results/55maps-extended-gt-2026-06-07/consolidated-track2.csv."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          112,
+          112
+        ],
+        "section": "Track-2 results (canonical extended GT, corrected-F1 @ 50 m + tile-MCC)"
+      },
+      "claim_text": "| T03-k4 | text-high T0.3 | 4 | config | 0.8359 | 0.6711 |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold k as run, cell T03-k4",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "votes",
+          "kind": "parameter",
+          "path": "results/conditions-manifest.json#$.conditions[?(@.condition_id=='55maps-text-high-t0-3-generalisation::verified-k4-canonical-gt')].vote_threshold",
+          "method": null
+        },
+        {
+          "quantity": "corrected-F1 @ 50 m against the canonical extended GT, cell T03-k4",
+          "value_verbatim": "0.8359",
+          "value_parsed": 0.8359,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[9].F1",
+          "method": null
+        },
+        {
+          "quantity": "tile-level MCC @ 50 m against the canonical extended GT, cell T03-k4",
+          "value_verbatim": "0.6711",
+          "value_parsed": 0.6711,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[9].tile_classification.mcc",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-extended-gt-2026-06-07/T03-k4/summary.json",
+        "path": "$.results[9].F1"
+      },
+      "method": "read",
+      "notes": "Track-2 results table row; the document names results/55maps-extended-gt-2026-06-07/ per-cell summary.json as the provenance (lines 104-106), so metrics anchor there and the k column takes a cross-file locator into the conditions manifest (v1.2 amendments 2 and 7). The config column ('text-high T0.7', 'text-high T0.3') is a condition name, not a temperature claim (rule 5); the same figures also appear in results/55maps-extended-gt-2026-06-07/consolidated-track2.csv."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          113,
+          113
+        ],
+        "section": "Track-2 results (canonical extended GT, corrected-F1 @ 50 m + tile-MCC)"
+      },
+      "claim_text": "| **T03-k3** | text-high T0.3 | 3 | **oracle** | **0.8476** | **0.6903** |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold k as run, cell T03-k3",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "votes",
+          "kind": "parameter",
+          "path": "results/conditions-manifest.json#$.conditions[?(@.condition_id=='55maps-text-high-t0-3-generalisation::verified-k3-canonical-gt')].vote_threshold",
+          "method": null
+        },
+        {
+          "quantity": "corrected-F1 @ 50 m against the canonical extended GT, cell T03-k3",
+          "value_verbatim": "0.8476",
+          "value_parsed": 0.8476,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[9].F1",
+          "method": null
+        },
+        {
+          "quantity": "tile-level MCC @ 50 m against the canonical extended GT, cell T03-k3",
+          "value_verbatim": "0.6903",
+          "value_parsed": 0.6903,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[9].tile_classification.mcc",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-extended-gt-2026-06-07/T03-k3/summary.json",
+        "path": "$.results[9].F1"
+      },
+      "method": "read",
+      "notes": "Track-2 results table row; the document names results/55maps-extended-gt-2026-06-07/ per-cell summary.json as the provenance (lines 104-106), so metrics anchor there and the k column takes a cross-file locator into the conditions manifest (v1.2 amendments 2 and 7). The config column ('text-high T0.7', 'text-high T0.3') is a condition name, not a temperature claim (rule 5); the same figures also appear in results/55maps-extended-gt-2026-06-07/consolidated-track2.csv."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          114,
+          114
+        ],
+        "section": "Track-2 results (canonical extended GT, corrected-F1 @ 50 m + tile-MCC)"
+      },
+      "claim_text": "| TM-k4 | text-min | 4 | config | 0.7831 | 0.6411 |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold k as run, cell TM-k4",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "votes",
+          "kind": "parameter",
+          "path": "results/conditions-manifest.json#$.conditions[?(@.condition_id=='55maps-text-min-generalisation::verified-k4-canonical-gt')].vote_threshold",
+          "method": null
+        },
+        {
+          "quantity": "corrected-F1 @ 50 m against the canonical extended GT, cell TM-k4",
+          "value_verbatim": "0.7831",
+          "value_parsed": 0.7831,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[9].F1",
+          "method": null
+        },
+        {
+          "quantity": "tile-level MCC @ 50 m against the canonical extended GT, cell TM-k4",
+          "value_verbatim": "0.6411",
+          "value_parsed": 0.6411,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[9].tile_classification.mcc",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-extended-gt-2026-06-07/TM-k4/summary.json",
+        "path": "$.results[9].F1"
+      },
+      "method": "read",
+      "notes": "Track-2 results table row; the document names results/55maps-extended-gt-2026-06-07/ per-cell summary.json as the provenance (lines 104-106), so metrics anchor there and the k column takes a cross-file locator into the conditions manifest (v1.2 amendments 2 and 7). The config column ('text-high T0.7', 'text-high T0.3') is a condition name, not a temperature claim (rule 5); the same figures also appear in results/55maps-extended-gt-2026-06-07/consolidated-track2.csv."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          115,
+          115
+        ],
+        "section": "Track-2 results (canonical extended GT, corrected-F1 @ 50 m + tile-MCC)"
+      },
+      "claim_text": "| TM-k3 | text-min | 3 | threshold | 0.8127 | 0.6580 |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold k as run, cell TM-k3",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "votes",
+          "kind": "parameter",
+          "path": "results/conditions-manifest.json#$.conditions[?(@.condition_id=='55maps-text-min-generalisation::verified-k3-canonical-gt')].vote_threshold",
+          "method": null
+        },
+        {
+          "quantity": "corrected-F1 @ 50 m against the canonical extended GT, cell TM-k3",
+          "value_verbatim": "0.8127",
+          "value_parsed": 0.8127,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[9].F1",
+          "method": null
+        },
+        {
+          "quantity": "tile-level MCC @ 50 m against the canonical extended GT, cell TM-k3",
+          "value_verbatim": "0.6580",
+          "value_parsed": 0.658,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[9].tile_classification.mcc",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-extended-gt-2026-06-07/TM-k3/summary.json",
+        "path": "$.results[9].F1"
+      },
+      "method": "read",
+      "notes": "Track-2 results table row; the document names results/55maps-extended-gt-2026-06-07/ per-cell summary.json as the provenance (lines 104-106), so metrics anchor there and the k column takes a cross-file locator into the conditions manifest (v1.2 amendments 2 and 7). The config column ('text-high T0.7', 'text-high T0.3') is a condition name, not a temperature claim (rule 5); the same figures also appear in results/55maps-extended-gt-2026-06-07/consolidated-track2.csv."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          116,
+          116
+        ],
+        "section": "Track-2 results (canonical extended GT, corrected-F1 @ 50 m + tile-MCC)"
+      },
+      "claim_text": "| IM-k3 | image | 3 | config | 0.7987 | **0.7104** |",
+      "values": [
+        {
+          "quantity": "consensus vote threshold k as run, cell IM-k3",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "votes",
+          "kind": "parameter",
+          "path": "results/conditions-manifest.json#$.conditions[?(@.condition_id=='55maps-image-generalisation::verified-k3-canonical-gt')].vote_threshold",
+          "method": null
+        },
+        {
+          "quantity": "corrected-F1 @ 50 m against the canonical extended GT, cell IM-k3",
+          "value_verbatim": "0.7987",
+          "value_parsed": 0.7987,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[9].F1",
+          "method": null
+        },
+        {
+          "quantity": "tile-level MCC @ 50 m against the canonical extended GT, cell IM-k3",
+          "value_verbatim": "0.7104",
+          "value_parsed": 0.7104,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[9].tile_classification.mcc",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-extended-gt-2026-06-07/IM-k3/summary.json",
+        "path": "$.results[9].F1"
+      },
+      "method": "read",
+      "notes": "Track-2 results table row; the document names results/55maps-extended-gt-2026-06-07/ per-cell summary.json as the provenance (lines 104-106), so metrics anchor there and the k column takes a cross-file locator into the conditions manifest (v1.2 amendments 2 and 7). The config column ('text-high T0.7', 'text-high T0.3') is a condition name, not a temperature claim (rule 5); the same figures also appear in results/55maps-extended-gt-2026-06-07/consolidated-track2.csv."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          118,
+          118
+        ],
+        "section": "Track-2 results (canonical extended GT, corrected-F1 @ 50 m + tile-MCC)"
+      },
+      "claim_text": "**Three findings against the canonical GT:**",
+      "values": [
+        {
+          "quantity": "count of findings the document reports against the canonical GT",
+          "value_verbatim": "Three",
+          "value_parsed": 3,
+          "unit": "findings",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential count of this document's own numbered list (items 1-3 at lines 120-134); no external artefact decides it. Flagged as a doubtful inclusion."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          120,
+          120
+        ],
+        "section": "Track-2 results (canonical extended GT, corrected-F1 @ 50 m + tile-MCC)"
+      },
+      "claim_text": "1. **Threshold axis (3-of-5 > carried 4-of-5)** holds for all three text configs",
+      "values": [
+        {
+          "quantity": "re-thresholded consensus vote threshold k (k3 cells)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "votes",
+          "kind": "parameter",
+          "path": "$.conditions[?(@.condition_id=='55maps-text-high-generalisation::verified-k3-canonical-gt')].vote_threshold",
+          "method": null
+        },
+        {
+          "quantity": "number of proposer passes per condition (k3 cells)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "$.conditions[?(@.condition_id=='55maps-text-high-generalisation::verified-k3-canonical-gt')].n_passes",
+          "method": null
+        },
+        {
+          "quantity": "carried-forward consensus vote threshold k (k4 cells)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "votes",
+          "kind": "parameter",
+          "path": "$.conditions[?(@.condition_id=='55maps-text-high-generalisation::verified-k4-canonical-gt')].vote_threshold",
+          "method": null
+        },
+        {
+          "quantity": "number of proposer passes per condition (k4 cells)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "$.conditions[?(@.condition_id=='55maps-text-high-generalisation::verified-k4-canonical-gt')].n_passes",
+          "method": null
+        },
+        {
+          "quantity": "count of text-track config families carrying the threshold result (TH7, T03, TM)",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "configs",
+          "kind": "count",
+          "path": "distinct run_id among $.conditions[*] whose condition_id matches '55maps-text*::verified-k[34]-canonical-gt'",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'3-of-5' and '4-of-5' assert the consensus parameters actually run, so both the threshold and the pass count are extracted; equality-filter paths per v1.2 amendment 7. The 'three text configs' count uses a pattern-match path that the harness may not resolve mechanically — triage should confirm (the three are TH7, T03 and TM; the image cell IM-k3 is excluded)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          122,
+          122
+        ],
+        "section": "Track-2 results (canonical extended GT, corrected-F1 @ 50 m + tile-MCC)"
+      },
+      "claim_text": "   → `threshold-permutations/`), corrected-F1 @ 50 m, **all p<0.001**:",
+      "values": [
+        {
+          "quantity": "buffer radius of the paired tile-swap permutation tests",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "permutation p-value upper bound, all three threshold contrasts",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-extended-gt-2026-06-07/threshold-permutations/TH7_k4_vs_k3/permutation-R50m.json",
+        "path": "$.buffer_metres"
+      },
+      "method": "read",
+      "notes": "'p<0.001' is an inequality, not an equality — the harness must treat it as a bound against $.permutation_test.p_value in each of the three R50m permutation JSONs (TH7_k4_vs_k3, T03_k4_vs_k3, TM_k4_vs_k3), which is why the value takes recompute-script rather than read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          123,
+          123
+        ],
+        "section": "Track-2 results (canonical extended GT, corrected-F1 @ 50 m + tile-MCC)"
+      },
+      "claim_text": "TH7 ΔF1 +0.027 [+0.022, +0.033]",
+      "values": [
+        {
+          "quantity": "ΔF1 (k3 − k4), corrected-F1 @ 50 m, TH7 contrast",
+          "value_verbatim": "+0.027",
+          "value_parsed": 0.027,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "-a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-extended-gt-2026-06-07/threshold-permutations/TH7_k4_vs_k3/permutation-R50m.json",
+              "path": "$.permutation_test.observed_f1_diff"
+            }
+          ]
+        },
+        {
+          "quantity": "ΔF1 bootstrap CI lower bound (k3 − k4), TH7 contrast",
+          "value_verbatim": "+0.022",
+          "value_parsed": 0.022,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "-a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-extended-gt-2026-06-07/threshold-permutations/TH7_k4_vs_k3/permutation-R50m.json",
+              "path": "$.delta_f1_ci.upper"
+            }
+          ]
+        },
+        {
+          "quantity": "ΔF1 bootstrap CI upper bound (k3 − k4), TH7 contrast",
+          "value_verbatim": "+0.033",
+          "value_parsed": 0.033,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "-a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-extended-gt-2026-06-07/threshold-permutations/TH7_k4_vs_k3/permutation-R50m.json",
+              "path": "$.delta_f1_ci.lower"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-extended-gt-2026-06-07/threshold-permutations/TH7_k4_vs_k3/permutation-R50m.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "The document reports the delta in the k3 − k4 direction (positive); the permutation JSON records condition_a = k4 and condition_b = k3, so its observed_f1_diff and delta_f1_ci are the negated quantities — hence the sign-flip expressions, and the CI bounds swap ends. Each derived value carries its own expression and operands per v1.2 amendment 1."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          123,
+          123
+        ],
+        "section": "Track-2 results (canonical extended GT, corrected-F1 @ 50 m + tile-MCC)"
+      },
+      "claim_text": "T03 +0.012 [+0.007, +0.017]",
+      "values": [
+        {
+          "quantity": "ΔF1 (k3 − k4), corrected-F1 @ 50 m, T03 contrast",
+          "value_verbatim": "+0.012",
+          "value_parsed": 0.012,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "-a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-extended-gt-2026-06-07/threshold-permutations/T03_k4_vs_k3/permutation-R50m.json",
+              "path": "$.permutation_test.observed_f1_diff"
+            }
+          ]
+        },
+        {
+          "quantity": "ΔF1 bootstrap CI lower bound (k3 − k4), T03 contrast",
+          "value_verbatim": "+0.007",
+          "value_parsed": 0.007,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "-a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-extended-gt-2026-06-07/threshold-permutations/T03_k4_vs_k3/permutation-R50m.json",
+              "path": "$.delta_f1_ci.upper"
+            }
+          ]
+        },
+        {
+          "quantity": "ΔF1 bootstrap CI upper bound (k3 − k4), T03 contrast",
+          "value_verbatim": "+0.017",
+          "value_parsed": 0.017,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "-a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-extended-gt-2026-06-07/threshold-permutations/T03_k4_vs_k3/permutation-R50m.json",
+              "path": "$.delta_f1_ci.lower"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-extended-gt-2026-06-07/threshold-permutations/T03_k4_vs_k3/permutation-R50m.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "The document reports the delta in the k3 − k4 direction (positive); the permutation JSON records condition_a = k4 and condition_b = k3, so its observed_f1_diff and delta_f1_ci are the negated quantities — hence the sign-flip expressions, and the CI bounds swap ends. Each derived value carries its own expression and operands per v1.2 amendment 1."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          123,
+          124
+        ],
+        "section": "Track-2 results (canonical extended GT, corrected-F1 @ 50 m + tile-MCC)"
+      },
+      "claim_text": "TM +0.030\n   [+0.025, +0.035]",
+      "values": [
+        {
+          "quantity": "ΔF1 (k3 − k4), corrected-F1 @ 50 m, TM contrast",
+          "value_verbatim": "+0.030",
+          "value_parsed": 0.03,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "-a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-extended-gt-2026-06-07/threshold-permutations/TM_k4_vs_k3/permutation-R50m.json",
+              "path": "$.permutation_test.observed_f1_diff"
+            }
+          ]
+        },
+        {
+          "quantity": "ΔF1 bootstrap CI lower bound (k3 − k4), TM contrast",
+          "value_verbatim": "+0.025",
+          "value_parsed": 0.025,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "-a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-extended-gt-2026-06-07/threshold-permutations/TM_k4_vs_k3/permutation-R50m.json",
+              "path": "$.delta_f1_ci.upper"
+            }
+          ]
+        },
+        {
+          "quantity": "ΔF1 bootstrap CI upper bound (k3 − k4), TM contrast",
+          "value_verbatim": "+0.035",
+          "value_parsed": 0.035,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "-a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-extended-gt-2026-06-07/threshold-permutations/TM_k4_vs_k3/permutation-R50m.json",
+              "path": "$.delta_f1_ci.lower"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-extended-gt-2026-06-07/threshold-permutations/TM_k4_vs_k3/permutation-R50m.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "The document reports the delta in the k3 − k4 direction (positive); the permutation JSON records condition_a = k4 and condition_b = k3, so its observed_f1_diff and delta_f1_ci are the negated quantities — hence the sign-flip expressions, and the CI bounds swap ends. Each derived value carries its own expression and operands per v1.2 amendment 1."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          126,
+          126
+        ],
+        "section": "Track-2 results (canonical extended GT, corrected-F1 @ 50 m + tile-MCC)"
+      },
+      "claim_text": "2. **Carry-forward → oracle decomposition** (@ 50 m, from TH7-k4 = 0.8152):",
+      "values": [
+        {
+          "quantity": "buffer radius of the decomposition",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.results[9].R_m",
+          "method": null
+        },
+        {
+          "quantity": "corrected-F1 @ 50 m, carry-forward cell TH7-k4",
+          "value_verbatim": "0.8152",
+          "value_parsed": 0.8152,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[9].F1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-extended-gt-2026-06-07/TH7-k4/summary.json",
+        "path": "$.results[9].F1"
+      },
+      "method": "read",
+      "notes": "Baseline for the three decomposition deltas on lines 127-130."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          127,
+          128
+        ],
+        "section": "Track-2 results (canonical extended GT, corrected-F1 @ 50 m + tile-MCC)"
+      },
+      "claim_text": "   threshold alone (→ TH7-k3) **+0.027**; temperature alone (→ T03-k4) **+0.021**;\n   both (→ oracle T03-k3) **+0.032**",
+      "values": [
+        {
+          "quantity": "corrected-F1 @ 50 m gain from the threshold axis alone (TH7-k3 − TH7-k4)",
+          "value_verbatim": "+0.027",
+          "value_parsed": 0.027,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-extended-gt-2026-06-07/TH7-k3/summary.json",
+              "path": "$.results[9].F1"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-extended-gt-2026-06-07/TH7-k4/summary.json",
+              "path": "$.results[9].F1"
+            }
+          ]
+        },
+        {
+          "quantity": "corrected-F1 @ 50 m gain from the temperature axis alone (T03-k4 − TH7-k4)",
+          "value_verbatim": "+0.021",
+          "value_parsed": 0.021,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-extended-gt-2026-06-07/T03-k4/summary.json",
+              "path": "$.results[9].F1"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-extended-gt-2026-06-07/TH7-k4/summary.json",
+              "path": "$.results[9].F1"
+            }
+          ]
+        },
+        {
+          "quantity": "corrected-F1 @ 50 m gain from both axes (oracle T03-k3 − TH7-k4)",
+          "value_verbatim": "+0.032",
+          "value_parsed": 0.032,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-extended-gt-2026-06-07/T03-k3/summary.json",
+              "path": "$.results[9].F1"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-extended-gt-2026-06-07/TH7-k4/summary.json",
+              "path": "$.results[9].F1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-extended-gt-2026-06-07/TH7-k4/summary.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "Three separate derivations in one span; each value carries its own expression and operands (v1.2 amendment 1) so the cell F1 values are never compared against a difference."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          129,
+          130
+        ],
+        "section": "Track-2 results (canonical extended GT, corrected-F1 @ 50 m + tile-MCC)"
+      },
+      "claim_text": "The carry-forward left **+0.032 corrected-F1** on the\n   table (findings §4b, p<0.001).",
+      "values": [
+        {
+          "quantity": "corrected-F1 @ 50 m left on the table by the carry-forward (oracle T03-k3 − TH7-k4)",
+          "value_verbatim": "+0.032",
+          "value_parsed": 0.032,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/55maps-extended-gt-2026-06-07/T03-k3/summary.json",
+              "path": "$.results[9].F1"
+            },
+            {
+              "name": "b",
+              "file": "results/55maps-extended-gt-2026-06-07/TH7-k4/summary.json",
+              "path": "$.results[9].F1"
+            }
+          ]
+        },
+        {
+          "quantity": "permutation p-value upper bound for the carry-forward → oracle contrast",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-extended-gt-2026-06-07/TH7-k4/summary.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "Restates the +0.032 of line 128 with an added significance claim. 'p<0.001' is an inequality; the relevant paired test is the config-axis permutation under results/deployment-oracle-2026-06-06/config-axis-permutation/ (the threshold-axis permutations cover only k4-vs-k3), so it needs a scripted check rather than a read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          131,
+          131
+        ],
+        "section": "Track-2 results (canonical extended GT, corrected-F1 @ 50 m + tile-MCC)"
+      },
+      "claim_text": "3. **F1-vs-MCC divergence**: **image tops MCC (0.710)** despite mid-pack F1 — its",
+      "values": [
+        {
+          "quantity": "tile-level MCC @ 50 m, cell IM-k3 (image track)",
+          "value_verbatim": "0.710",
+          "value_parsed": 0.71,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.results[9].tile_classification.mcc",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-extended-gt-2026-06-07/IM-k3/summary.json",
+        "path": "$.results[9].tile_classification.mcc"
+      },
+      "method": "read",
+      "notes": "Quoted to 3 d.p. here and 4 d.p. (0.7104) in the table at line 116; the harness owns rounding tolerance at the quoted precision."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          138,
+          139
+        ],
+        "section": "Track-2 results (canonical extended GT, corrected-F1 @ 50 m + tile-MCC)"
+      },
+      "claim_text": "The seven cells are **registered in the conditions\nmanifest**",
+      "values": [
+        {
+          "quantity": "count of canonical-GT cells registered in the conditions manifest",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": "conditions",
+          "kind": "count",
+          "path": "len:$.conditions[?(condition_id ends with 'verified-k3-canonical-gt' or 'verified-k4-canonical-gt')]",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": "len:$.conditions[?(condition_id ends with 'verified-k3-canonical-gt' or 'verified-k4-canonical-gt')]"
+      },
+      "method": "read",
+      "notes": "The `{k4,k3}` in the condition-name pattern on the same line is part of a name, not a claim (rule 5). Note for triage: the manifest also carries 55maps-text-min-n10-uplift::verified-5of10-canonical-gt, which does not match the {k4,k3} pattern and so is correctly outside the seven."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          147,
+          148
+        ],
+        "section": "Bookkeeping notes / open items"
+      },
+      "claim_text": "  the **reviewed** GT (`student-mounds-55maps-reviewed.geojson`, 4,746 feats) to\n  match the other four runs (it had used the non-reviewed 4,770-feat GT).",
+      "values": [
+        {
+          "quantity": "feature count, reviewed student ground truth",
+          "value_verbatim": "4,746",
+          "value_parsed": 4746,
+          "unit": "features",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        },
+        {
+          "quantity": "count of other 55-map generalisation runs already scored against the reviewed GT",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "feature count, non-reviewed student ground truth (superseded reference)",
+          "value_verbatim": "4,770",
+          "value_parsed": 4770,
+          "unit": "features",
+          "kind": "count",
+          "path": "inputs/vectors/references/student-mounds-55maps.geojson#len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "The 4,770-feat GT is the superseded reference this run was moved off; it is still a live, checkable count of that committed file, so it takes read rather than historical. 'the other four runs' has no single artefact locator (it is the five run directories less this one), so it takes anchor-unknown per v1.2 amendment 3 rather than a misleading fallback path."
+    }
+  ]
+}
