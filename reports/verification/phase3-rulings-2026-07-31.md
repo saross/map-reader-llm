@@ -42,6 +42,18 @@ of 1,635 files differ from the JSON point value in the third decimal.
 Any document quoting MCC from an `evaluation.md` table quotes a mean.
 Obs appended via the obs-writer agent (same session).
 
+> **Correction (2026-07-31, same session)** — the Obs 376 writer's
+> independent re-derivation corrected three specifics above (details:
+> Obs 376; `c4-regen/regen-results.jsonl` row regen-0002b): the
+> markdown renderer is at `evaluate_detections.py:912,914,915`
+> (`:834,837` is the CSV writer with the same behaviour); "439"
+> counted files with ≥ 1 problem of any kind under the point-only
+> comparer run — rule-explicit counts are 387 (mean-matches, point
+> does not) or 623 (plain 3 d.p.); and the divergence spread reaches
+> |mean − point| = 0.0151, so triage must compare mean-vs-point per
+> cell rather than apply a one-ulp tolerance. The finding itself is
+> unchanged.
+
 ## 4. Fleet model policy for the mechanical tail
 
 **Ruling: Sonnet permitted for straightforward documents.** The
