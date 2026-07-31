@@ -261,3 +261,38 @@ verification charter was designed for — docs believed ready (pre-S118)
 confidence *rebuilt on checking rather than assumed*. The
 generalisation he calls a bonus is charter § 1's designed-in
 reusability (next targets: inscriptions, llm-reproducibility).
+
+## Session 122 — 2026-07-31 (candidates — pending Shawn's review)
+
+Phase 3 (C4) claimed and executed at fleet scale: registry, machinery,
+calibration, 18 subagents, generated stratum ~80 % verified, US$0.00
+API. Candidates drafted at handoff; accept / edit / discard — silence
+holds them over.
+
+**Candidate A — the pre-staged decision queue made PI time
+high-leverage.** When Shawn surfaced mid-fleet and asked "what do I
+need to do to advance us?", Claude led with four accumulated,
+recommendation-tagged decisions (one with trade-off analysis, three
+with brief options per the S121 calibration rule). All four cleared in
+one interaction and were executed within the hour — rulings doc,
+clobber guards, Obs dispatch, fleet-model policy. The S121 rule
+generalises: batching decision points during autonomous stretches and
+framing them before the PI asks converts PI presence from a serial
+bottleneck into a minutes-long high-leverage event.
+
+**Candidate B — validator-gated autonomy earned post-hoc trust.** The
+extraction fleet ran an entire phase-stage (18 agents, ~1,070 claims)
+without mid-flight PI attention, and the thing that made that safe was
+not agent quality but the committed validator each agent had to
+satisfy before handing back (16/16 files structurally clean at first
+hand-back). Shawn could trust the batch commits without reading them
+because acceptance criteria were externalised and machine-checkable —
+a pattern worth naming for future fleet designs.
+
+**Candidate C — the apparatus catching its operator was surfaced, not
+buried.** When the obs-writer's re-derivation showed Claude's own
+probe record had glossed "439" wrongly, the correction was landed
+append-only within the hour and reported prominently in the close-out
+(rather than quietly fixed). If this transparency-on-self-error is
+the behaviour Shawn wants locked in, accepting this candidate makes
+it a standing expectation rather than a one-off.
