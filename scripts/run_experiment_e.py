@@ -541,8 +541,11 @@ def stage_evaluate(
         json.dump(results, f, indent=2)
     print(f"\n  Results JSON: {results_json_path}")
 
-    # Save Markdown report
-    md_path = REPO_ROOT / "results" / "phase3d-experiment-e-results.md"
+    # Save Markdown report. Session-75 guardrail 6 (PI ruling
+    # 2026-07-31, Phase 3): the committed
+    # phase3d-experiment-e-results.md is a hand-authored narrative —
+    # never overwrite it; auto output goes to the _autogen sibling.
+    md_path = REPO_ROOT / "results" / "phase3d-experiment-e-results_autogen.md"
     _write_markdown_report(results, md_path, table)
     print(f"  Markdown report: {md_path}")
 

@@ -1388,7 +1388,11 @@ def main(argv: list[str] | None = None) -> None:
         calibrated_prior=calibrated_prior,
         calibrated_metrics=v2_calibrated_metrics,
     )
-    (args.output_dir / "report.md").write_text(
+    # Session-75 guardrail 6 (PI ruling 2026-07-31, Phase 3): the
+    # hand-levelled report.md is the paper-citation source — this
+    # script must never overwrite it. Auto output goes to the
+    # _autogen sibling.
+    (args.output_dir / "report_autogen.md").write_text(
         report_md, encoding="utf-8",
     )
 

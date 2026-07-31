@@ -106,13 +106,18 @@ def validate_file(path: Path, validator: jsonschema.Draft202012Validator) -> lis
 
         method = claim["method"]
         anchor = claim["anchor"]
+        # Effective methods include per-value overrides (v1.2: the
+        # first recompute run surfaced 12 effective-arithmetic values
+        # with no expression — the claim-level-only check missed them).
+        effective = {value.get("method") or method for value in claim["values"]}
         if anchor is None:
-            if method not in NULL_ANCHOR_METHODS:
-                errors.append(f"{tag}: null anchor illegal for method {method}")
+            if not effective <= NULL_ANCHOR_METHODS:
+                errors.append(f"{tag}: null anchor illegal for effective methods "
+                              f"{sorted(effective - NULL_ANCHOR_METHODS)}")
             continue
         if not (REPO_ROOT / anchor["file"]).exists():
             errors.append(f"{tag}: anchor file missing: {anchor['file']}")
-        if method == "arithmetic":
+        if "arithmetic" in effective:
             expr = anchor.get("expression")
             operands = anchor.get("operands") or []
             if not expr or not operands:
