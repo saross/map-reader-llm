@@ -53,14 +53,28 @@ UNRESOLVED 1,091 (376 file#path syntax the resolver must learn, 349
 re-anchor, 204 file-level, 89 non-JSON, 12 empty expressions =
 validator v1.2 gap).
 
-**Session 123's queue**: (a) triage the 30 MISMATCH rows (incl.
-calib-b's 2 registered-value re-anchors; b036's live 47-vs-57 errata
-count; b038's h11 internal ranges); (b) extend the resolver
-(file#path form) + validator v1.2 (per-value arithmetic check), rerun
-recompute; (c) continue the fleet (163 batches: methodology docs +
-results/ hand-written); (d) exact comparers for remaining generated
-families (calibration_autogen, tier_stability, per-arch tiers…); (e)
-then generate_c4_ledger.py + GATE 3 package.
+**PI rulings collected in-session 2026-07-31**
+(`reports/verification/phase3-rulings-2026-07-31.md`): (1)
+**dated-snapshot policy** — session-dated reports are historical
+records: ledger records divergence, dated superseded-figures banner
+only where material, bodies never edited; living docs (findings,
+leaderboards, methodology) still corrected in place; (2) clobber
+guards LANDED (analyse_dawid_skene_v2 + run_experiment_e → _autogen,
+tests pin targets); (3) MCC bootstrap-means Obs approved (obs-writer
+dispatched); (4) **Sonnet permitted for the fleet's mechanical tail**
+(tracking docs/checklists/low-density files; Opus for dense results
+prose; extractor.model records which). Validator v1.2 landed
+(per-value arithmetic check) — 8 committed claims in 029/052 now
+non-conforming, repair during triage.
+
+**Session 123's queue**: (a) triage the 30 MISMATCH rows under ruling
+1 (incl. calib-b's 2 registered-value re-anchors; b036's live
+47-vs-57 errata count; b038's h11 internal ranges) + repair the 8
+v1.2-non-conforming claims; (b) extend the resolver (file#path form),
+rerun recompute; (c) continue the fleet (163 batches; Sonnet tail per
+ruling 4); (d) exact comparers for remaining generated families
+(calibration_autogen, tier_stability, per-arch tiers…); (e) then
+generate_c4_ledger.py + GATE 3 package.
 
 ### [CLOSED 2026-07-30] Historical: the Session 122 brief follows
 
