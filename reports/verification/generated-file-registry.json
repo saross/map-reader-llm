@@ -1,12 +1,12 @@
 {
  "_meta": {
-  "generated_at": "2026-07-31T00:50:32.335205+00:00",
+  "generated_at": "2026-07-31T00:57:34.723047+00:00",
   "generator": "scripts/build_generated_file_registry.py",
   "generator_map": "reports/verification/apparatus/generator-map.json",
-  "git_head": "6c46ef1fc",
+  "git_head": "76c2b0b1b",
   "counts": {
-   "total": 2300,
-   "generated": 2158,
+   "total": 2334,
+   "generated": 2192,
    "generated_unattributed": 0,
    "hand_written": 142
   }
@@ -2969,6 +2969,186 @@
    "hand_edited": false
   },
   {
+   "path": "results/h11-384-pv-diagnostic/flash-high-text-high-vf-1of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/flash-high-text-high-vf-1of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/flash-high-text-high-vf-2of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/flash-high-text-high-vf-2of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/flash-high-text-high-vf-3of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/flash-high-text-high-vf-3of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/flash-high-text-high-vf-4of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/flash-high-text-high-vf-4of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/flash-high-text-high-vf-5of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/flash-high-text-high-vf-5of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/flash-high-text-medium-vf-1of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/flash-high-text-medium-vf-1of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/flash-high-text-medium-vf-2of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/flash-high-text-medium-vf-2of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/flash-high-text-medium-vf-3of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/flash-high-text-medium-vf-3of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/flash-high-text-medium-vf-4of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/flash-high-text-medium-vf-4of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/flash-high-text-medium-vf-5of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/flash-high-text-medium-vf-5of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/flash-high-text-pro-vf-1of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/flash-high-text-pro-vf-1of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/flash-high-text-pro-vf-2of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/flash-high-text-pro-vf-2of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/flash-high-text-pro-vf-3of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/flash-high-text-pro-vf-3of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/flash-high-text-pro-vf-4of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/flash-high-text-pro-vf-4of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/flash-high-text-pro-vf-5of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/flash-high-text-pro-vf-5of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
    "path": "results/h11-384-pv-diagnostic/flash-minimal-image-medium-verifier/threshold_sweep_summary.md",
    "stratum": "generated",
    "rule_id": "gen-threshold-sweep",
@@ -3173,6 +3353,78 @@
    "hand_edited": false
   },
   {
+   "path": "results/h11-384-pv-diagnostic/image-baseline-pro-verifier/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/image-baseline-pro-verifier/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/pro-high-image-pro-vf-1of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/pro-high-image-pro-vf-1of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/pro-high-image-pro-vf-2of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/pro-high-image-pro-vf-2of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/pro-high-image-pro-vf-3of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/pro-high-image-pro-vf-3of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/pro-high-image-pro-vf-4of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/pro-high-image-pro-vf-4of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/pro-high-image-pro-vf-5of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/pro-high-image-pro-vf-5of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
    "path": "results/h11-384-pv-diagnostic/pro-high-text-1of5/threshold_sweep_summary.md",
    "stratum": "generated",
    "rule_id": "gen-threshold-sweep",
@@ -3233,6 +3485,126 @@
    "hand_edited": false
   },
   {
+   "path": "results/h11-384-pv-diagnostic/pro-high-text-flash-min-vf-1of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/pro-high-text-flash-min-vf-1of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/pro-high-text-flash-min-vf-2of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/pro-high-text-flash-min-vf-2of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/pro-high-text-flash-min-vf-3of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/pro-high-text-flash-min-vf-3of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/pro-high-text-flash-min-vf-4of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/pro-high-text-flash-min-vf-4of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/pro-high-text-flash-min-vf-5of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/pro-high-text-flash-min-vf-5of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/pro-high-text-pro-vf-1of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/pro-high-text-pro-vf-1of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/pro-high-text-pro-vf-2of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/pro-high-text-pro-vf-2of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/pro-high-text-pro-vf-3of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/pro-high-text-pro-vf-3of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/pro-high-text-pro-vf-4of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/pro-high-text-pro-vf-4of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/pro-high-text-pro-vf-5of5/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/pro-high-text-pro-vf-5of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
    "path": "results/h11-384-pv-diagnostic/pro-image-medium-verifier/threshold_sweep_summary.md",
    "stratum": "generated",
    "rule_id": "gen-threshold-sweep",
@@ -3252,6 +3624,30 @@
    "source_rule": "sibling:threshold_sweep.json",
    "sources": [
     "results/h11-384-pv-diagnostic/pro-image-minimal-verifier/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/pro-medium-image-baseline-pro-verifier/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/pro-medium-image-baseline-pro-verifier/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/pro-medium-text-baseline-pro-verifier/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/pro-medium-text-baseline-pro-verifier/threshold_sweep.json"
    ],
    "marker": null,
    "hand_edited": false
@@ -3336,6 +3732,18 @@
    "source_rule": "sibling:threshold_sweep.json",
    "sources": [
     "results/h11-384-pv-diagnostic/text-5of5/threshold_sweep.json"
+   ],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "results/h11-384-pv-diagnostic/text-baseline-pro-verifier/threshold_sweep_summary.md",
+   "stratum": "generated",
+   "rule_id": "gen-threshold-sweep",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "sources": [
+    "results/h11-384-pv-diagnostic/text-baseline-pro-verifier/threshold_sweep.json"
    ],
    "marker": null,
    "hand_edited": false
