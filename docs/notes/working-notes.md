@@ -22107,3 +22107,216 @@ Session 121 2026-07-30.
 and their pre-recovery counterparts under
 `results/rescore-2026-06-05/pv-diag-384/consensus-sweep/` (final vs
 pre-recovery F1/precision/recall/tile-MCC, 20 m buffer).
+
+## Observation 375: The outcome-blind fork — registering a never-executed contrast restored genuine blindness exactly where selection was outcome-material (2026-07-31)
+
+*Source anchors: `reports/verification/family-fdr-registration.md` § 5.1
+(the three executed-candidate verdict table), § 5.1.1 (the reconstruction
+rule for `CMT-0106`, committed before computation), and § 9
+(`predicted_outcome`, the two pre-stated rejection sets); `reports/verification/phase2-rulings-2026-07-30.md`
+§ 3.1 (PI ruling, verbatim); `results/retest/pairwise-bootstrap-comparisons.json`
+(`comparisons[0]`, `[1]`, `[2]`, `[3]`, `[4]` — `f1_delta`/`f1_p_value` fields
+re-read directly); `results/family-fdr/h1_cmt0106_pooled_modality.json`
+(point estimate, bootstrap, and `validation_gates` fields re-read directly);
+`results/family-fdr/family_fdr.json` (final `rejected_at_q` and H1's
+`adjusted_p`); `docs/methodology/preregistration/osf/preregistration.md:441`
+(`CMT-0106` verbatim) and `:445` (the "academic baseline" text-only note,
+for the Obs/E68 disambiguation below); `docs/methodology/preregistration/protocol-errata.md`
+E64(v) and E68; `planning/audit-charter.md` § 10 item 7(c) (run-it-now
+policy, verbatim); `reports/verification/ledgers/c2-execution.jsonl`
+row `c2-discharge-0002`; `docs/notes/user-observations.md` (Session 121
+entry, "promoted to Obs 375") and `planning/paper-writeup-continuity.md`
+(WN-1 carry-forward note). The analytical episode occurred in Session 121
+(2026-07-30, sapphire); this Obs was gated as working-notes candidate
+WN-1 at that session's handoff and accepted by the PI at the 2026-07-31
+gate review before being written up here — the PI's acceptance note is
+not quoted verbatim as no committed source records its exact wording.
+All values re-verified 2026-07-31.*
+
+### The finding
+
+**The fork.** The registered family-level BH-FDR correction (`preregistration.md`
+§ 3.1) needed one primary test per hypothesis. For H1 (modality and
+elaboration), the registration names four planned contrasts
+(`preregistration.md:438–441`) and designates none as headline. Three
+of the four had already been executed as level-versus-level pairs in
+`results/retest/pairwise-bootstrap-comparisons.json`, with visible
+committed `f1_p_value`s that made the primary-test selection
+**outcome-material** — it alone decided whether the family's rejection
+set was {H1, H2, H3, H7} or {H2, H3, H7}:
+
+| option | contrast | artefact index | `f1_delta` | `f1_p_value` |
+| --- | --- | --- | --: | --: |
+| (i) `CMT-0103`: image-only vs brief+image | `brief-text-image` vs `image-only` | `comparisons[4]` | +0.0654 | **0.006** |
+| (ii) `CMT-0105`: brief-text vs brief+image | `brief-text` vs `brief-text-image` | `comparisons[0]` | +0.0225 | **0.38** |
+| (iii) minimum-p reading | `brief-text` vs `image-only` | `comparisons[1]` | +0.0878 | **0.004** |
+
+**The move.** Rather than choose among these visible p-values, the PI
+selected option (iv): execute the registration's own fourth planned
+contrast — `CMT-0106`, "Text-only conditions vs Image-using conditions
+(modality effect)" (`preregistration.md:441`) — which had **never been
+computed**. `CMT-0106`'s own `decision_statistic` records the defect:
+"contrast named without a metric ... does not state how the two groups
+are pooled." The GATE 1 run-it-now policy (`audit-charter.md` § 10 item
+7(c): "an omitted-but-runnable promised metric or analysis is run, not
+merely erratum'd") licensed the execution; the reconstruction rule —
+unweighted mean of condition F1s per group, paired tile bootstrap
+B = 10,000, seed 42, two-sided, Era-1 340-tile corpus, 20 m buffer — was
+fixed at `family-fdr-registration.md` § 5.1.1 and **committed before
+computation**, with both possible rejection sets pre-stated in § 9.
+Notably, the PI's own instinct pointed there before any number existed:
+he recalled "image vs text-only" as the study's main contrast, which
+turned out to be precisely the registered contrast the executed
+artefacts did not contain (`phase2-rulings-2026-07-30.md` § 3.1). PI
+ruling, verbatim: *"(iv) Run CMT-0106 now" — pooling rule registered
+before computing; sapphire, US$0.*
+
+**The result.** First-ever execution of `CMT-0106` (2026-07-30,
+sapphire; validation gates A and B passed):
+
+| group | conditions | mean F1 |
+| --- | --- | --: |
+| text-only | brief-text, verbose-text | 0.5267 |
+| image-using | image-only, brief-text-image, verbose-text-image | 0.5029 |
+
+Delta (text − image) = **+0.0238**, CI95 **[−0.0104, +0.0585]**,
+two-sided bootstrap **p = 0.1774** — **null**. Within the final
+family-FDR table (`family_fdr.json`), H1 ranks 5th of 7 by p (adjusted
+p = 0.2484) and is **not rejected**. The rejection set is **{H2, H3,
+H7}**: the outcome-blind selection resolved the outcome-material fork
+to the conservative branch, against the direction the visible defaults
+would have suggested — the most-favoured visible candidate, option
+(iii)/(i) at p = 0.004–0.006, would have added H1 to the rejection set
+had it been chosen instead.
+
+### The mechanism of the null
+
+Pooling dilutes the significant extremes. Read against `brief-text` as
+common reference (`pairwise-bootstrap-comparisons.json`):
+
+| comparison (vs `brief-text`) | `f1_delta` | `f1_p_value` |
+| --- | --: | --: |
+| `brief-text-image` (`comparisons[0]`) | +0.0225 | 0.38 |
+| `verbose-text-image` (`comparisons[3]`) | +0.0246 | 0.428 |
+| `verbose-text` (`comparisons[2]`) | +0.0369 | 0.106 |
+| `image-only` (`comparisons[1]`) | +0.0878 | **0.004** |
+
+The two `+image` conditions sit within ~0.02–0.025 F1 of `brief-text`;
+`verbose-text` drags the text pool down by ~0.037; only `image-only` is
+far behind, at 0.088. The one level pair that clears FDR on its own
+(`brief-text` vs `image-only`, p = 0.004) is an outlier within its own
+group, not representative of the image-using pool as a whole — pooling
+it with the two `+image` conditions (which sit close to `brief-text`)
+washes the extreme out.
+
+### The principle
+
+A never-executed registered analysis is a reservoir of genuine
+outcome-blindness that survives even after all executed results are
+visible. When a registered-analysis selection is outcome-material and
+the registration itself under-specifies, check whether the registration
+names an alternative that was never run — executing it under a
+pre-committed reconstruction rule converts an unavoidably post-hoc
+choice into a genuinely blind one. **Corollary for AI-assisted
+analysis**: the option space for a registered-analysis decision is the
+**registration's** space, not the artefact tree's — never-executed
+members must be enumerated as first-class options with costs, not
+silently dropped because no artefact yet represents them.
+
+### Why this matters
+
+1. **Methods disclosure.** The paper's statistical-analysis section
+   should describe this as the mechanism by which H1's primary was
+   selected: a post-hoc family-FDR registration in which six of seven
+   primaries had visible p-values, and the seventh (H1) was rescued
+   into blindness by executing an omitted planned contrast under a
+   rule fixed before the result was known. `family-fdr-registration.md`
+   § 9 states this precisely: *"this registration does not, and cannot,
+   claim outcome blindness for six of the seven primaries ... the
+   exception is H1."*
+2. **Discussion — preregistration practice.** The general pattern (an
+   under-specified registered contrast, never executed, later run under
+   a pre-committed rule to preserve blindness at the one point that
+   needed it) is worth a brief methodological aside — the PI has
+   flagged the general topic as worth at least a mention.
+3. **A demonstrated, not merely argued, discipline.** This is not a
+   hypothetical about what outcome-blind selection *would* look like;
+   `CMT-0106`'s p-value was genuinely unknown when the reconstruction
+   rule was committed (`family-fdr-registration.md` § 5.1.1, § 9), and
+   the result it produced argues *against* the direction the visible
+   defaults favoured — a real test the discipline could have failed and
+   did not.
+
+### Caveats / methodological notes
+
+- **Scope: H1 only.** Blindness was restored for H1's primary alone.
+  The other six primaries' p-values were already visible when the
+  family was fixed, and the registration says so without qualification
+  (`family-fdr-registration.md` § 9: no blindness claim for six of
+  seven). This Obs's "genuinely blind" framing applies to one
+  hypothesis in a seven-hypothesis family, not the family as a whole.
+- **The reconstruction rule is itself a post-hoc choice.** Unweighted
+  condition means is one defensible aggregation among others (e.g.
+  weighting by detection counts, or tile-level pooling across runs);
+  it was fixed before the *result* was known but after the ten
+  level-pair p-values were visible, so it is not blind to those.
+  `family-fdr-registration.md` § 5.1.1 records the rationale (equal
+  weight per registered condition) as the reading that matches
+  `CMT-0106`'s own wording most literally.
+- **Do not conflate with Obs 374's sibling finding, E68.** E68 retires
+  the "academic baseline" designation for text-only conditions because
+  a *specific level pair* — `brief-text` beats `image-only` by
+  ΔF1 +0.088, p = 0.004 — falsifies the registration's own H1
+  prediction 3. That is a level-pair, direction-specific finding. This
+  Obs's null is about the **pooled group-level factor** (all text-only
+  vs all image-using) and says nothing that contradicts E68: a specific
+  text level can beat a specific image level while the two *pooled*
+  groups remain statistically indistinguishable, precisely because
+  `image-only` is an outlier within its own pool. The two findings sit
+  at different levels of aggregation and both stand.
+- Paper-relevant sections: Methods (statistical analysis, family-FDR
+  disclosure) and Discussion (preregistration practice).
+
+### Findable later
+
+outcome-blind fork; never-executed registered contrast; `CMT-0106`;
+pooled modality contrast; text-only vs image-using; text-only pool
+0.5267; image-using pool 0.5029; delta +0.0238; CI95 -0.0104 0.0585;
+p 0.1774; family-level BH-FDR; rejection set H2 H3 H7; H1 not rejected
+adjusted p 0.2484; run-it-now policy; charter § 10 item 7(c); GATE 1
+directive; reconstruction rule fixed before computation; unweighted
+condition means; genuine outcome blindness; outcome-material selection;
+registration option space vs artefact tree; brief-text vs image-only
+0.004; brief-text vs brief-text-image 0.38; brief-text-image vs
+image-only 0.006; validation gates A B; WN-1; working-notes candidate
+WN-1; Session 121 2026-07-30; family-fdr-registration.md § 5.1.1 § 9;
+phase2-rulings-2026-07-30.md § 3.1; c2-discharge-0002; E64(v) two-sided;
+E68 academic baseline falsified.
+
+### Related observations and artefacts
+
+- **[[Obs 374]]** (sibling finding from the same Session 121: intransigent
+  tile recovery — no numerical overlap, shared session provenance only).
+- `docs/methodology/preregistration/protocol-errata.md` **E64(v)** — the
+  "two-sided throughout" operative reading that this Obs's bootstrap
+  test (and the whole family-FDR family) uses.
+- `docs/methodology/preregistration/protocol-errata.md` **E68** — the
+  falsified academic-baseline designation for text-only conditions; a
+  related but **distinct** level-pair finding this Obs's pooled-group
+  null must not be conflated with (see Caveats).
+- `planning/audit-charter.md` § 10 item 7(c) — the run-it-now policy
+  that licensed executing `CMT-0106` rather than erratum'ing its
+  omission.
+- `reports/verification/phase2-rulings-2026-07-30.md` § 3.1 — the PI
+  ruling that selected option (iv).
+- `reports/verification/ledgers/c2-execution.jsonl` row
+  `c2-discharge-0002` — the ledger discharge of `CMT-0106`.
+
+**Artefacts**: `reports/verification/family-fdr-registration.md` (§§ 5.1,
+5.1.1, 9); `reports/verification/phase2-rulings-2026-07-30.md` § 3.1;
+`results/retest/pairwise-bootstrap-comparisons.json`;
+`results/family-fdr/h1_cmt0106_pooled_modality.json`;
+`results/family-fdr/family_fdr.json`;
+`docs/methodology/preregistration/osf/preregistration.md:441,445`;
+`docs/methodology/preregistration/protocol-errata.md` E64, E68;
+`reports/verification/ledgers/c2-execution.jsonl` (`c2-discharge-0002`).
