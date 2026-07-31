@@ -22320,3 +22320,182 @@ E68 academic baseline falsified.
 `docs/methodology/preregistration/osf/preregistration.md:441,445`;
 `docs/methodology/preregistration/protocol-errata.md` E64, E68;
 `reports/verification/ledgers/c2-execution.jsonl` (`c2-discharge-0002`).
+
+## Observation 376: Every `evaluation.md` table's MCC / Sens / Spec columns are BOOTSTRAP MEANS, not point estimates — third-decimal divergence from the JSON headline is expected, not a defect (Session 122, 2026-07-31)
+
+*Source anchors: `scripts/evaluate_detections.py:869–871` (the markdown
+renderer fetching the `mcc` / `sensitivity` / `specificity` blocks) and
+`:912,914,915` (the three cells filled from `.mean`); the same defect in
+the CSV writer at `:834,837,838`; `:900,902,904` (the F1 / P / R cells,
+filled from `buf['f1']` / `['precision']` / `['recall']`);
+`:415–416` (`"f1_point"` declared "Same as `f1` — alias for clarity") and
+`:556–559` (the aggregate-path rollup rule) for the F1-is-unaffected
+claim; `:494–517` (the `tile_classification` block carrying BOTH `point`
+and `mean` per metric, `mean` sourced from `tile_ci[...]["mean"]`);
+`scripts/verify_evaluation_md_family.py:66–82` (`check_cell_either`,
+mean-first then point-fallback) and `:148–155` (its call site);
+`reports/verification/c4-regen/evaluation-md-report.json`
+(`_meta.counts`, 1,635 `results` rows);
+`reports/verification/c4-regen/regen-results.jsonl` probe `regen-0002`
+(`semantics_note`, `result`); `reports/verification/phase3-rulings-2026-07-31.md`
+§ 3 (the PI ruling authorising this Obs); `planning/audit-charter.md:283–289`
+(§ 7 Phase 3, "Claimed 2026-07-31, Claude Fable 5 interactive session,
+Session 122"). Re-derivation run on sapphire 2026-07-31 against repo
+state `de8041913`. All values re-verified 2026-07-31.*
+
+### The finding
+
+**The semantics gap.** `evaluate_detections.py` writes each cell's
+tile-classification metrics as a block carrying two distinct values
+(`:494–499` for MCC, `:501–510` sensitivity, `:512–517` specificity):
+
+| key | provenance | consumer |
+| --- | --- | --- |
+| `point` | direct computation from the confusion matrix (`tile_class.get("mcc")`) | `evaluation.json` headline; manifests; downstream tooling |
+| `mean` | the BCa **bootstrap resample mean** (`tile_ci["mcc"]["mean"]`) | **the `evaluation.md` table** and `evaluation.csv` |
+
+The markdown renderer fills the MCC, Sens, and Spec columns from
+`.mean` — `:912` (`mcc.get('mean', 0):.3f`), `:914` (sens), `:915`
+(spec) — while the sibling `evaluation.json` headline for the same
+metric is `.point`. The two are computed from the same data but are not
+the same estimator, so they disagree in the low-order decimals by
+Monte Carlo noise.
+
+**F1 / P / R are NOT affected.** Those columns render `buf['f1']`,
+`buf['precision']`, `buf['recall']` (`:900,902,904`), which are point
+estimates by construction: `:415–416` writes `"f1": round(f1, 4)` and
+`"f1_point": round(f1, 4)` with the comment *"Same as `f1` — alias for
+clarity"*, and the aggregate path's rollup rule (`:556–559`) states the
+`*_point` alias "equals `f1` / `precision` / `recall` since those are
+themselves averaged from per-run points". The asymmetry is specific to
+the `tile_classification` block, which is the only place a bootstrap
+`mean` is stored beside a `point`.
+
+**The sweep.** The Phase 3 comparer `verify_evaluation_md_family.py`
+was run over the family on sapphire (2026-07-31). Once the comparer was
+taught mean-first matching with point as fallback (`check_cell_either`,
+`:66–82`), the family verified **1,634 of 1,635**
+(`evaluation-md-report.json` `_meta.counts`: `VERIFIED = 1634`,
+`MISMATCH = 1`). The single residual is benign and degenerate:
+`results/rescore-2026-05-31/proposer-verifier-384/verified-checklist-image-v2-accepted/evaluation.md`,
+a zero-detection cell that renders `[0.000, 0.000]` CIs while the
+same-run JSON stores an empty `ci` dict under an older nested-CI schema
+variant — a zero-information cell, no correction warranted.
+
+**Scale of the divergence (re-derived, see Caveats).** Of the 1,635
+files, 155 carry no MCC columns, leaving **1,480** with the affected
+columns. Re-running the comparison on sapphire against repo state
+`de8041913`:
+
+| predicate | files |
+| --- | --: |
+| rendered cell matches `mean` but NOT `point`, at quoted precision (the comparer's own `match_at_quoted_precision`) | **387** |
+| `f"{mean:.3f}" != f"{point:.3f}"` for any of the three metrics | **623** |
+| same, MCC column only | 347 |
+| matches `mean` but not `point`, MCC column only | 193 |
+| `mean != point` at the stored 4 dp, any metric | 1,392 |
+
+Divergence runs in **both directions** (4,746 cells `mean > point`,
+931 `mean < point`) and the largest observed gap is
+**|mean − point| = 0.0151** — roughly fifteen units in the third
+decimal, not one.
+
+### Why this matters
+
+1. **Any document quoting MCC / Sens / Spec from an `evaluation.md`
+   table quotes a bootstrap mean.** Third-decimal divergence between
+   such a quote and the manifest or `evaluation.json` point value is
+   **expected behaviour, not a transcription error**. Paper text that
+   cites a tile-MCC figure should be checked for which artefact it was
+   read from before the figure is treated as the point estimate.
+2. **C4 triage rule.** A one-unit third-decimal MCC discrepancy against
+   these tables must be attributed to this known semantics difference
+   **before** a data defect is suspected. Without this pin, the sweep
+   would have generated hundreds of spurious mismatch tickets; the
+   ruling records exactly this as the reason for pinning it
+   (`phase3-rulings-2026-07-31.md` § 3).
+3. **The verification harness now encodes the rule.** `check_cell_either`
+   accepts `mean` first and `point` as fallback, so future regenerations
+   of this family will not re-raise the issue — but the acceptance is
+   deliberately two-sided, which means the comparer cannot by itself
+   detect a genuine `point`-vs-`mean` regression in the renderer.
+
+### Caveats / methodological notes
+
+- **The "439" figure could not be reproduced, and is not adopted here.**
+  Probe `regen-0002`'s `semantics_note` and
+  `phase3-rulings-2026-07-31.md` § 3 both state "439 files differ from
+  `tile_classification` point values in the 3rd decimal". Re-derivation
+  on sapphire under eight plausible readings of that predicate returned
+  193, 344, 347, 387, 622, 623, 1,231, and 1,392 — **439 is not among
+  them**. The two closest candidates are 387 (the comparer's own
+  quoted-precision rule) and 623 (a plain `.3f` string comparison).
+  The qualitative finding is unaffected; only the tally is in question.
+  This Obs therefore reports rule-explicit re-derived counts and leaves
+  439 as an **unresolved provenance question** against the probe note.
+  The probe and ruling documents are **not** edited by this Obs.
+- **"One ulp" understates the spread.** The probe note says the JSON
+  point "can differ at one ulp"; the observed maximum gap is 0.0151.
+  Most divergences are indeed a single third-decimal unit, but the tail
+  is wider, so "one ulp" should not be used as a triage tolerance.
+- **The published line citation points at the CSV writer.** Both the
+  ruling (§ 3) and the probe note cite
+  `scripts/evaluate_detections.py:834,837`. Those lines are real and
+  exhibit the same `.mean` behaviour, but they sit in the **CSV**
+  writer (`writer.writerow`, `:822–850`); the **markdown** renderer —
+  the artefact the finding is about — is at `:912,914,915`. Both paths
+  share the defect, so the finding stands; only the pointer is
+  imprecise.
+- **Mechanism, not bug.** The gap is Monte Carlo noise in the bootstrap
+  resample mean, which is controlled by B rather than by sample size
+  (see Obs 303). Nothing here implies either value is wrong; they are
+  different estimators, and the renderer's choice is undocumented
+  rather than incorrect.
+- Paper-relevant sections: Methods (metric reporting and provenance)
+  and any table quoting tile-level MCC.
+
+### Findable later
+
+evaluation.md bootstrap means; MCC column is a mean not a point;
+tile_classification point vs mean; `.mean` vs `.point`;
+evaluate_detections.py:912 914 915; evaluate_detections.py:834 837 838;
+CSV writer shares the defect; verify_evaluation_md_family.py;
+check_cell_either; mean-first point-fallback; match_at_quoted_precision;
+1,634 of 1,635 verified; 1,635 evaluation.md files; 1,480 with MCC
+columns; 155 without MCC columns; 387 mean-not-point; 623 third-decimal;
+439 unreproduced; 439 not reproducible; max gap 0.0151; not one ulp;
+zero-detection degenerate cell; verified-checklist-image-v2-accepted;
+F1 P R unaffected; f1_point alias; third-decimal divergence expected;
+C4 triage tolerance; Phase 3 C4 sweep; probe regen-0002;
+phase3-rulings-2026-07-31.md § 3; audit-charter § 7 Phase 3;
+Session 122 2026-07-31; sapphire de8041913.
+
+### Related observations and artefacts
+
+- **[[Obs 303]]** (bootstrap-N controls Monte Carlo noise in CI
+  estimation, not CI width) — the mechanism behind the mean-vs-point
+  gap: the resample mean is a noisy estimator whose noise is governed
+  by B, which is why the divergence is small, two-directional, and
+  irreducible by anything the renderer could do.
+- **[[Obs 309]]** (percentile-bootstrap CI bug; fixed globally via BCa
+  + Mitigation 3 sparse-coverage flag) — the migration that introduced
+  the BCa machinery and the `*_point` aliases this Obs distinguishes;
+  the sparse-coverage suppression it added is also what produces the
+  `N/A *` cells the comparer must special-case.
+- **[[Obs 369]]** and **[[Obs 370]]** (the tile-MCC counter-board and
+  its statistical resolution) — the principal downstream consumers of
+  tile-MCC figures, and therefore the analyses most exposed to a
+  mean-for-point substitution if a figure was read from a table rather
+  than from JSON.
+- `reports/verification/phase3-rulings-2026-07-31.md` § 3 — the PI
+  ruling ("record as a working-notes Obs") authorising this entry.
+- `planning/audit-charter.md` § 7 Phase 3 (`:283–289`) — the phase
+  claim under which the sweep ran.
+
+**Artefacts**: `scripts/evaluate_detections.py` (`:415–416`, `:494–517`,
+`:556–559`, `:822–850`, `:869–871`, `:900–915`);
+`scripts/verify_evaluation_md_family.py` (`:66–82`, `:148–155`);
+`reports/verification/c4-regen/evaluation-md-report.json`;
+`reports/verification/c4-regen/regen-results.jsonl` (`regen-0002`);
+`reports/verification/phase3-rulings-2026-07-31.md` § 3;
+`planning/audit-charter.md` § 7.
