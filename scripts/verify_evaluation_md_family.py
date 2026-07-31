@@ -50,7 +50,12 @@ def check_cell(quoted: str, actual, cell: str, problems: list[str]) -> None:
     """Compare one quoted markdown cell against a source value."""
     parsed = parse_value(quoted)
     if parsed is None:
+        if quoted.startswith("N/A"):
+            return  # point-value N/A markers mirror absent source values
         problems.append(f"{cell}: unparseable quote {quoted!r}")
+        return
+    if actual is None:
+        problems.append(f"{cell}: quoted {quoted} but source value absent")
         return
     result = match_at_quoted_precision(parsed, float(actual))
     if not result["match"]:
