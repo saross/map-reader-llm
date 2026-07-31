@@ -51,8 +51,10 @@ a one-line count summary as your final message, not the JSON.
    the chain to an artefact.
 3. **Method assignment**:
    - `read` — the value should sit at `anchor.path` in the anchor file.
-   - `arithmetic` — derivable from committed values (`anchor.expression`,
-     operands named in `notes`): deltas, ratios, sums, percentages.
+   - `arithmetic` — derivable from committed values: deltas, ratios,
+     sums, percentages. Fill `anchor.expression` (e.g. `a - b`) AND
+     `anchor.operands[]` — one `{name, file, path}` per operand, so the
+     harness can evaluate mechanically. Single-letter operand names.
    - `recompute-script` — needs scripted recomputation (bootstrap CIs,
      permutation p-values, tiering). Record the claim; do NOT attempt the
      computation yourself.

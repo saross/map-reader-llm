@@ -95,7 +95,21 @@
             },
             "expression": {
               "type": ["string", "null"],
-              "description": "For method 'arithmetic': the expression over anchored values that reproduces the claim (e.g. 'a - b' with operand paths named in notes)."
+              "description": "For method 'arithmetic': the expression over named operands that reproduces the claim (e.g. 'a - b', '100 * a / b'). Operand names must all appear in operands[]."
+            },
+            "operands": {
+              "type": ["array", "null"],
+              "description": "For method 'arithmetic': the named operands the expression consumes, each anchored mechanically.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string", "pattern": "^[a-z]$" },
+                  "file": { "type": "string" },
+                  "path": { "type": "string" }
+                },
+                "required": ["name", "file", "path"],
+                "additionalProperties": false
+              }
             }
           },
           "required": ["file"],
