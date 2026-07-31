@@ -81,9 +81,12 @@ a one-line count summary as your final message, not the JSON.
    claims). A number used BOTH as a name and as an asserted fact ("the
    487-tile Era 2 corpus") IS a claim (count, Era 2 tile corpus).
 6. **Tables**: one claim row per table row; `values[]` covers the
-   numeric cells; `quantity` carries the row+column meaning. Wholly
-   generated tables pasted into hand-written documents are still claims
-   made by the document — extract them.
+   numeric cells; `quantity` carries the row+column meaning. Use
+   per-value `path` when one anchor file holds the row's cells at
+   different locators, and per-value `method` for mixed spans (a delta
+   beside a permutation p-value). Wholly generated tables pasted into
+   hand-written documents are still claims made by the document —
+   extract them.
 7. Attribute nothing from outside your assigned document; if it
    references another section or file, note the reference, do not chase
    it beyond anchor identification (rule 2 above).

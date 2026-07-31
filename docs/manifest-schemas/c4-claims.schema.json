@@ -78,9 +78,18 @@
               "kind": {
                 "type": "string",
                 "enum": ["metric", "statistic", "count", "cost", "tokens", "parameter", "physical", "percentage", "ratio", "other"]
+              },
+              "path": {
+                "type": ["string", "null"],
+                "description": "Per-value JSONPath into anchor.file, for multi-value spans (table rows) where the claim-level anchor.path cannot cover every value. Null = use anchor.path."
+              },
+              "method": {
+                "type": ["string", "null"],
+                "enum": ["read", "arithmetic", "recompute-script", "regen-diff", "historical", "unverifiable-era", "external", "anchor-unknown", null],
+                "description": "Per-value method override for mixed spans (e.g. a delta beside a permutation p). Null = use the claim-level method."
               }
             },
-            "required": ["quantity", "value_verbatim", "value_parsed", "unit", "kind"],
+            "required": ["quantity", "value_verbatim", "value_parsed", "unit", "kind", "path", "method"],
             "additionalProperties": false
           }
         },
