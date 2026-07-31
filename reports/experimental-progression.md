@@ -1,7 +1,8 @@
 # Experimental Progression: From Preregistered Design to Production Pipeline
 
-> **Last revised**: 2026-07-30 ("1 of 10 survived FDR" corrected to 0 of
-> 10). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-07-31 (C4 sweep: missed "1/10 FDR" instance
+> fixed; 20 m CI updated to the era-current provenance artefact). See
+> [§ Changelog](#changelog) for revision history.
 
 **Purpose**: Reference document for the paper's methods section,
 characterising the three-phase experimental progression, what was tested
@@ -123,7 +124,7 @@ was driven by:
 
 1. **Wide confidence intervals**: ~0.20 F1 span at 60 tiles made
    meaningful comparison impossible
-2. **FDR attrition**: Only 1/10 Phase 2a comparisons survived
+2. **FDR attrition**: 0/10 Phase 2a comparisons survived
    multiple-comparison correction
 3. **Documented deviation**: the expansion is recorded as a
    Deviation-class erratum (E36, `protocol-errata.md:878`). The
@@ -240,7 +241,7 @@ architectural variables:
 
 The 384px production evaluation produced the study's headline results:
 
-- **Best F1 = 0.890** [0.863, 0.915] at 20m tolerance (Flash HIGH text
+- **Best F1 = 0.890** [0.874, 0.910] at 20m tolerance (Flash HIGH text
   16-of-30 consensus + Flash MINIMAL verifier)
 - **Pipeline lift = +0.503 F1** from N=1 (0.387) to best pipeline
   (0.890)
@@ -346,6 +347,22 @@ evolution.*
 ---
 
 ## Changelog
+
+### 2026-07-31 — C4 quantitative-sweep corrections (Session 123)
+
+**Refresh trigger**: the Phase 3 (C4) recompute harness flagged two
+divergences in this document
+(`reports/verification/c4-triage/mismatch-triage-2026-07-31.json`,
+rows 035#29 and 035#59).
+
+| before | after |
+| :--- | :--- |
+| "Only 1/10 Phase 2a comparisons survived" (line 126) | 0/10 — a surviving instance the 2026-07-30 correction missed |
+| Best-F1 20 m CI "[0.863, 0.915]" | [0.874, 0.910] (`results/era1-pv-stage-d/384-consensus-text-high/evaluation.json`, `$.summary.buffers[3]` — the provenance source for condition `pv-diag-384::verified-adv-text-consensus-16of30`; the old bounds were the March-era `threshold_sweep.json` bootstrap, superseded by the 14-buf+MCC re-score) |
+
+What did NOT change: the F1 point estimate (0.890), all tier claims,
+and every other figure in the document (the C4 sweep verified 607
+values MATCH across the extracted corpus at this date).
 
 ### 2026-07-30 — Phase 2a FDR-survivor figure corrected (Session 121)
 

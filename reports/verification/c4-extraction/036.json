@@ -1,1345 +1,1345 @@
 {
-  "schema_version": "1.0",
-  "extracted_at": "2026-07-31T01:20:00Z",
-  "source_document": {
-    "file": "reports/experimental-progression.md",
-    "git_blob": "1198a51fea89",
-    "stratum": "hand-written"
-  },
-  "extractor": {
-    "model": "claude-opus-5",
-    "instrument_version": "1.1"
-  },
-  "claims": [
+ "schema_version": "1.0",
+ "extracted_at": "2026-07-31T01:20:00Z",
+ "source_document": {
+  "file": "reports/experimental-progression.md",
+  "git_blob": "4b2d508216e35a2da63bee528c6327b23f78050b",
+  "stratum": "hand-written"
+ },
+ "extractor": {
+  "model": "claude-opus-5",
+  "instrument_version": "1.1"
+ },
+ "claims": [
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     282,
+     282
+    ],
+    "section": "What the paper should argue"
+   },
+   "claim_text": "the registered stopping rule (≥0.05 F1, `osf:491`) fired",
+   "values": [
     {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          281,
-          281
-        ],
-        "section": "What the paper should argue"
-      },
-      "claim_text": "the registered stopping rule (≥0.05 F1, `osf:491`) fired",
-      "values": [
-        {
-          "quantity": "registered stopping-rule threshold: minimum F1 improvement licensing pursuit of a two-stage architecture",
-          "value_verbatim": "≥0.05",
-          "value_parsed": 0.05,
-          "unit": "F1",
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "docs/methodology/preregistration/osf/preregistration.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Instrument v1.1 registered-value rule: a claim about what the REGISTRATION specifies anchors to the lodged preregistration, never to the executing config. The `osf:491` line-number citation is out of C4 scope."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          286,
-          286
-        ],
-        "section": "What the paper should argue"
-      },
-      "claim_text": "The three-phase structure maps to a natural scientific progression:",
-      "values": [
-        {
-          "quantity": "count of experimental phases in the study's narrative structure",
-          "value_verbatim": "three",
-          "value_parsed": 3,
-          "unit": "phases",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Doubtful inclusion, flagged per instrument § Task: a narrative structural descriptor rather than a measurement, and no committed artefact enumerates 'phases' at this granularity (the execution record uses 2a-2e / 3a-3d sub-phases). The same descriptor recurs at lines 342 and 398, and the cognate 'two-stage architecture' at line 280; extracted once to avoid flooding triage with the same rhetorical count."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          288,
-          288
-        ],
-        "section": "What the paper should argue"
-      },
-      "claim_text": "1. **Exploration** (60 tiles): What might matter?",
-      "values": [
-        {
-          "quantity": "tile count, Phase 1 exploration evaluation set",
-          "value_verbatim": "60",
-          "value_parsed": 60,
-          "unit": "tiles",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "inputs/vectors/bounds/validation_bounds.geojson",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Whole-artefact anchor: feature count of the 60-tile 512 px holdout bounds (scope manifest named in results/evaluation-scopes.md)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          290,
-          290
-        ],
-        "section": "What the paper should argue"
-      },
-      "claim_text": "2. **Validation** (340 tiles): Confirm with adequate power",
-      "values": [
-        {
-          "quantity": "tile count, Phase 2 validation evaluation set (Era 1)",
-          "value_verbatim": "340",
-          "value_parsed": 340,
-          "unit": "tiles",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Whole-artefact anchor: feature count of the Era 1 512 px evaluation bounds. Corroborating scalar: results/era1-leaderboard/tiering_20m.json `n_tiles`."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          292,
-          292
-        ],
-        "section": "What the paper should argue"
-      },
-      "claim_text": "3. **Optimisation** (487 tiles): Given what works, how well can we do?",
-      "values": [
-        {
-          "quantity": "tile count, Phase 3 optimisation evaluation set (Era 2)",
-          "value_verbatim": "487",
-          "value_parsed": 487,
-          "unit": "tiles",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Whole-artefact anchor: feature count of the Era 2 384 px evaluation bounds; inputs/tiles_384/full_evaluation_manifest.json is the parallel tile manifest."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          293,
-          293
-        ],
-        "section": "What the paper should argue"
-      },
-      "claim_text": "→ F1=0.890, pipeline dominates, optimal parameters depend on",
-      "values": [
-        {
-          "quantity": "F1@20m, best Phase 3 condition (headline result)",
-          "value_verbatim": "0.890",
-          "value_parsed": 0.89,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/conditions-manifest.json",
-        "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-consensus-16of30')].metrics.per_buffer['20'].f1"
-      },
-      "method": "read",
-      "notes": "The document's own Phase 3 findings section identifies the headline F1=0.890 as Flash HIGH text 16-of-30 consensus + Flash MINIMAL verifier at 20 m tolerance; the manifest cell carries it at four decimal places (quoted here at three) — the harness owns rounding tolerance."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          296,
-          298
-        ],
-        "section": "What the paper should argue"
-      },
-      "claim_text": "The protocol\nerrata (47 entries) provide full transparency about how and why the\ndesign evolved.",
-      "values": [
-        {
-          "quantity": "count of protocol-errata entries",
-          "value_verbatim": "47",
-          "value_parsed": 47,
-          "unit": "entries",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "docs/methodology/preregistration/protocol-errata.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Live claim as written. Flagged, not adjudicated: this document's own changelog row at line 379 records the '47 entries, E1–E47' figure as corrected to 57 entries (E1–E57), so this sentence may be an uncorrected survivor of that sweep. Anchor is the errata document's entry count (non-JSON anchor, routed to triage per instrument v1.1)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          306,
-          306
-        ],
-        "section": "Evaluation scope mapping"
-      },
-      "claim_text": "| Factor | 60 tiles (512px) | 340 tiles (512px) | 487 tiles (384px) |",
-      "values": [
-        {
-          "quantity": "tile count, Phase 1 evaluation set",
-          "value_verbatim": "60",
-          "value_parsed": 60,
-          "unit": "tiles",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tile size, Phase 1 evaluation set",
-          "value_verbatim": "512px",
-          "value_parsed": 512,
-          "unit": "px",
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tile count, Phase 2 evaluation set (Era 1)",
-          "value_verbatim": "340",
-          "value_parsed": 340,
-          "unit": "tiles",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tile size, Phase 2 evaluation set",
-          "value_verbatim": "512px",
-          "value_parsed": 512,
-          "unit": "px",
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tile count, Phase 3 evaluation set (Era 2)",
-          "value_verbatim": "487",
-          "value_parsed": 487,
-          "unit": "tiles",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tile size, Phase 3 evaluation set",
-          "value_verbatim": "384px",
-          "value_parsed": 384,
-          "unit": "px",
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "inputs/vectors/bounds/",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Table header row asserting three evaluation scopes; the values live in different files, so the anchor is the bounds directory: 60 = validation_bounds.geojson feature count, 340 = full_evaluation_bounds.geojson, 487 = 384/full_evaluation_bounds.geojson. The 512 px / 384 px tile sizes are recorded in the tile manifests (inputs/tiles_384/full_evaluation_manifest.json for 384 px) and config.py TILE_SIZE for the 512 px grid."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          308,
-          308
-        ],
-        "section": "Evaluation scope mapping"
-      },
-      "claim_text": "| Library composition (5×2) | ✓ (10 runs) | ✓ (1 run) | — |",
-      "values": [
-        {
-          "quantity": "count of library configurations tested (H8 factor levels)",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": "configurations",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "count of modality tracks the library factor was crossed with",
-          "value_verbatim": "2",
-          "value_parsed": 2,
-          "unit": "tracks",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "runs per condition, library composition at 60 tiles",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": "runs",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "runs per condition, library composition at 340 tiles",
-          "value_verbatim": "1",
-          "value_parsed": 1,
-          "unit": "run",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/passes-manifest.json",
-        "path": null
-      },
-      "method": "recompute-script",
-      "notes": "Run counts require grouping results/passes-manifest.json passes by run_id and condition, which is an aggregation rather than a lookup. The 5×2 design counts are properties of the Phase 2c configuration set (prompts/configs/ library_* configs); triage may prefer those as the anchor for the design cells."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          309,
-          309
-        ],
-        "section": "Evaluation scope mapping"
-      },
-      "claim_text": "| Text treatment (2×2) | ✓ (10 runs) | ✓ (1 run) | — |",
-      "values": [
-        {
-          "quantity": "count of text-treatment levels (terse vs verbose)",
-          "value_verbatim": "2",
-          "value_parsed": 2,
-          "unit": "levels",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "count of modality tracks the text-treatment factor was crossed with",
-          "value_verbatim": "2",
-          "value_parsed": 2,
-          "unit": "tracks",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "runs per condition, text treatment at 60 tiles",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": "runs",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "runs per condition, text treatment at 340 tiles",
-          "value_verbatim": "1",
-          "value_parsed": 1,
-          "unit": "run",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/passes-manifest.json",
-        "path": null
-      },
-      "method": "recompute-script",
-      "notes": "As for the library row: run counts aggregate over the passes manifest; the 2×2 design counts belong to the Phase 2d configuration set under prompts/configs/."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          310,
-          310
-        ],
-        "section": "Evaluation scope mapping"
-      },
-      "claim_text": "| Example ordering (4) | ✓ (10 runs) | ✓ (1 run) | — |",
-      "values": [
-        {
-          "quantity": "count of example-ordering conditions tested (H4)",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": "conditions",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "runs per condition, example ordering at 60 tiles",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": "runs",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "runs per condition, example ordering at 340 tiles",
-          "value_verbatim": "1",
-          "value_parsed": 1,
-          "unit": "run",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/passes-manifest.json",
-        "path": null
-      },
-      "method": "recompute-script",
-      "notes": "Run counts aggregate over the passes manifest; the four ordering conditions are the Phase 2e configuration set (prompts/configs/), noted in the document's earlier text as four rather than the preregistered three."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          311,
-          311
-        ],
-        "section": "Evaluation scope mapping"
-      },
-      "claim_text": "| Temperature (5 levels) | ✓ (10 runs) | ✓ (3 runs) | T=0.0/0.3/0.7 only |",
-      "values": [
-        {
-          "quantity": "count of temperature levels tested at 60 tiles",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": "levels",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "runs per condition, temperature at 60 tiles",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": "runs",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "runs per condition, temperature at 340 tiles",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": "runs",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "temperature levels run at 384 px (Phase 3)",
-          "value_verbatim": "0.0",
-          "value_parsed": 0.0,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "temperature levels run at 384 px (Phase 3)",
-          "value_verbatim": "0.3",
-          "value_parsed": 0.3,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "temperature levels run at 384 px (Phase 3)",
-          "value_verbatim": "0.7",
-          "value_parsed": 0.7,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/passes-manifest.json",
-        "path": null
-      },
-      "method": "recompute-script",
-      "notes": "Per-pass temperature is recorded at $.passes[*].temperature in the passes manifest, so both the level counts and the 384 px restriction to T=0.0/0.3/0.7 are recoverable by aggregation over run_id."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          312,
-          312
-        ],
-        "section": "Evaluation scope mapping"
-      },
-      "claim_text": "| Modality (text/image) | ✓ (10 runs) | ✓ (3 runs) | ✓ (5–30 runs) |",
-      "values": [
-        {
-          "quantity": "runs per condition, modality at 60 tiles",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": "runs",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "runs per condition, modality at 340 tiles",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": "runs",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "runs per condition range, modality at 487 tiles",
-          "value_verbatim": "5–30",
-          "value_parsed": null,
-          "unit": "runs",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/passes-manifest.json",
-        "path": null
-      },
-      "method": "recompute-script",
-      "notes": "Range cell: value_parsed left null because '5–30' is an interval; the endpoints are recoverable as min/max pass counts per 384 px modality condition from the passes manifest."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          313,
-          313
-        ],
-        "section": "Evaluation scope mapping"
-      },
-      "claim_text": "| Thinking (HIGH/MIN) | — | ✓ (30 runs) | ✓ (5–30 runs) |",
-      "values": [
-        {
-          "quantity": "runs per condition, thinking level at 340 tiles",
-          "value_verbatim": "30",
-          "value_parsed": 30,
-          "unit": "runs",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "runs per condition range, thinking level at 487 tiles",
-          "value_verbatim": "5–30",
-          "value_parsed": null,
-          "unit": "runs",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/passes-manifest.json",
-        "path": null
-      },
-      "method": "recompute-script",
-      "notes": "Per-pass thinking_level is recorded in the passes manifest; counts aggregate by run_id. Interval cell parsed as null."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          314,
-          314
-        ],
-        "section": "Evaluation scope mapping"
-      },
-      "claim_text": "| Consensus voting | ✓ (30 runs) | ✓ (30 runs) | ✓ (5/10/30 runs) |",
-      "values": [
-        {
-          "quantity": "runs per condition, consensus voting at 60 tiles",
-          "value_verbatim": "30",
-          "value_parsed": 30,
-          "unit": "runs",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "runs per condition, consensus voting at 340 tiles",
-          "value_verbatim": "30",
-          "value_parsed": 30,
-          "unit": "runs",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "pool sizes run for consensus voting at 487 tiles",
-          "value_verbatim": "5/10/30",
-          "value_parsed": null,
-          "unit": "runs",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/passes-manifest.json",
-        "path": null
-      },
-      "method": "recompute-script",
-      "notes": "The 487 px cell lists three discrete pool sizes (5, 10, 30) rather than a range; value_parsed null. Pool size per condition is also carried as $.conditions[*].n_passes in results/conditions-manifest.json."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          316,
-          316
-        ],
-        "section": "Evaluation scope mapping"
-      },
-      "claim_text": "| Model (Flash/Pro) | — | — | ✓ (5–10 runs) |",
-      "values": [
-        {
-          "quantity": "runs per condition range, model comparison at 487 tiles",
-          "value_verbatim": "5–10",
-          "value_parsed": null,
-          "unit": "runs",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/passes-manifest.json",
-        "path": null
-      },
-      "method": "recompute-script",
-      "notes": "Interval cell; per-pass model_used in the passes manifest identifies the Flash and Pro conditions to aggregate."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          317,
-          317
-        ],
-        "section": "Evaluation scope mapping"
-      },
-      "claim_text": "| Pool-size plateau | — | — | ✓ (N=5 vs N=10) |",
-      "values": [
-        {
-          "quantity": "consensus pool size, lower arm of the pool-size plateau comparison",
-          "value_verbatim": "N=5",
-          "value_parsed": 5,
-          "unit": "passes",
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "consensus pool size, upper arm of the pool-size plateau comparison",
-          "value_verbatim": "N=10",
-          "value_parsed": 10,
-          "unit": "passes",
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/conditions-manifest.json",
-        "path": null
-      },
-      "method": "recompute-script",
-      "notes": "Pool size per condition is $.conditions[*].n_passes; identifying the pool-size plateau pair (N=5 vs N=10 at 384 px) requires selecting those conditions, hence recompute rather than a single lookup."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          319,
-          320
-        ],
-        "section": "Evaluation scope mapping"
-      },
-      "claim_text": "Factors not re-run at 384px (library, treatment, ordering) were\nconfirmed non-significant at 340 tiles with adequate power",
-      "values": [
-        {
-          "quantity": "tile size, Phase 3 production runs",
-          "value_verbatim": "384px",
-          "value_parsed": 384,
-          "unit": "px",
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tile count, Phase 2 evaluation set at which the null results were confirmed",
-          "value_verbatim": "340",
-          "value_parsed": 340,
-          "unit": "tiles",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "inputs/vectors/bounds/",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Mixed-file span: 340 = feature count of inputs/vectors/bounds/full_evaluation_bounds.geojson; the 384 px tile size is recorded in inputs/tiles_384/full_evaluation_manifest.json. The non-significance assertion itself is carried by the Phase 2c/2d/2e analysis reports under results/ (0/20, 0/2 and 1/6 raw comparisons per the document's earlier sections)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          330,
-          330
-        ],
-        "section": "Statistical methodology across phases"
-      },
-      "claim_text": "| 60 tiles | 60 |",
-      "values": [
-        {
-          "quantity": "tile count, Phase 1 evaluation set (row label)",
-          "value_verbatim": "60",
-          "value_parsed": 60,
-          "unit": "tiles",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tile count, Phase 1 evaluation set (tile-count column)",
-          "value_verbatim": "60",
-          "value_parsed": 60,
-          "unit": "tiles",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "inputs/vectors/bounds/validation_bounds.geojson",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Sub-span of the 60-tile row of the statistical-methodology table, split from the row's statistical cells because the two halves anchor to different artefacts (instrument rule 6 assumes a single anchor file per row)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          330,
-          330
-        ],
-        "section": "Statistical methodology across phases"
-      },
-      "claim_text": "Bootstrap CIs (1,000 iterations) | Insufficient — CIs ~0.20 wide |",
-      "values": [
-        {
-          "quantity": "bootstrap iterations, 60-tile confidence intervals",
-          "value_verbatim": "1,000",
-          "value_parsed": 1000,
-          "unit": "iterations",
-          "kind": "parameter",
-          "path": "$._metadata.n_bootstrap",
-          "method": null
-        },
-        {
-          "quantity": "bootstrap confidence-interval width at 60 tiles (F1)",
-          "value_verbatim": "~0.20",
-          "value_parsed": 0.2,
-          "unit": "F1",
-          "kind": "statistic",
-          "path": null,
-          "method": "recompute-script"
-        }
-      ],
-      "anchor": {
-        "file": "results/all-bootstrap-cis.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Second sub-span of the 60-tile row. Iteration count sits at $._metadata.n_bootstrap (corroborated by results/phase2a-analysis-report.json `n_bootstrap`); the ~0.20 CI width is a summary over the 60-tile bootstrap intervals (ci_upper − ci_lower) and needs recomputation, hence the per-value method override."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          331,
-          331
-        ],
-        "section": "Statistical methodology across phases"
-      },
-      "claim_text": "| 340 tiles | 340 |",
-      "values": [
-        {
-          "quantity": "tile count, Phase 2 evaluation set (row label)",
-          "value_verbatim": "340",
-          "value_parsed": 340,
-          "unit": "tiles",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tile count, Phase 2 evaluation set (tile-count column)",
-          "value_verbatim": "340",
-          "value_parsed": 340,
-          "unit": "tiles",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Sub-span split from the row's statistical cells (different anchor artefact). Corroborating scalar: results/era1-leaderboard/tiering_20m.json `n_tiles`."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          331,
-          331
-        ],
-        "section": "Statistical methodology across phases"
-      },
-      "claim_text": "Permutation tests (10,000 iterations) + FDR | Adequate for most comparisons |",
-      "values": [
-        {
-          "quantity": "permutation iterations, 340-tile (Era 1) significance testing",
-          "value_verbatim": "10,000",
-          "value_parsed": 10000,
-          "unit": "iterations",
-          "kind": "parameter",
-          "path": "$.n_permutations",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/era1-leaderboard/tiering_20m.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Era 1 (340-tile) permutation analyses; tiering_20m.json records n_permutations, seed and fdr_q alongside n_tiles=340. Triage may prefer the per-phase pairwise manifests under results/pairwise/ if a phase-specific figure is wanted."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          332,
-          332
-        ],
-        "section": "Statistical methodology across phases"
-      },
-      "claim_text": "| 487 tiles | 487 |",
-      "values": [
-        {
-          "quantity": "tile count, Phase 3 evaluation set (row label)",
-          "value_verbatim": "487",
-          "value_parsed": 487,
-          "unit": "tiles",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tile count, Phase 3 evaluation set (tile-count column)",
-          "value_verbatim": "487",
-          "value_parsed": 487,
-          "unit": "tiles",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Sub-span split from the row's statistical cells (different anchor artefact)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          332,
-          332
-        ],
-        "section": "Statistical methodology across phases"
-      },
-      "claim_text": "Permutation tests (10,000 iterations) + FDR + leaderboard round-robin",
-      "values": [
-        {
-          "quantity": "permutation iterations, 487-tile (Era 2) significance testing",
-          "value_verbatim": "10,000",
-          "value_parsed": 10000,
-          "unit": "iterations",
-          "kind": "parameter",
-          "path": "$.metadata.n_permutations",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/pairwise/20m/run_manifest.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Era 2 (487-tile, 384 px) pairwise campaign manifest: metadata carries n_permutations=10000, seed and n_comparisons for the 20 m buffer."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          335,
-          336
-        ],
-        "section": "Statistical methodology across phases"
-      },
-      "claim_text": "with Benjamini-Hochberg FDR correction\n(q=0.05) applied within factor families",
-      "values": [
-        {
-          "quantity": "false-discovery-rate level q applied within factor families",
-          "value_verbatim": "0.05",
-          "value_parsed": 0.05,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.fdr_q",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/phase2a-analysis-report.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "q recorded as fdr_q in the Phase 2a analysis report; corroborating artefacts results/era1-leaderboard/tiering_20m.json `fdr_q` and results/family-fdr/family_fdr.json `q` carry the same level."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          336,
-          337
-        ],
-        "section": "Statistical methodology across phases"
-      },
-      "claim_text": "Bootstrap CIs use tile-level\nstratified resampling (1,000 iterations, seed 42).",
-      "values": [
-        {
-          "quantity": "bootstrap iterations, tile-level stratified resampling",
-          "value_verbatim": "1,000",
-          "value_parsed": 1000,
-          "unit": "iterations",
-          "kind": "parameter",
-          "path": "$._metadata.n_bootstrap",
-          "method": null
-        },
-        {
-          "quantity": "random seed for bootstrap resampling",
-          "value_verbatim": "42",
-          "value_parsed": 42,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$._metadata.random_seed",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/all-bootstrap-cis.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The consolidated bootstrap artefact records n_bootstrap=1000 and random_seed=42 in its _metadata block. Flagged for triage, not adjudicated: later BCa intervals recorded in results/conditions-manifest.json carry n_iter=10000 with the same seed, so the harness should check which era this methodology sentence describes."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          353,
-          354
-        ],
-        "section": "Changelog — 2026-07-30 — Phase 2a FDR-survivor figure corrected"
-      },
-      "claim_text": "census caught the \"only 1 of 10 Phase 2a pairwise comparisons survived\nFDR correction\" claim as a misreport",
-      "values": [
-        {
-          "quantity": "count of Phase 2a pairwise comparisons surviving FDR correction, as previously misreported",
-          "value_verbatim": "1",
-          "value_parsed": 1,
-          "unit": "comparisons",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "count of Phase 2a pairwise comparisons (denominator, as quoted in the superseded claim)",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": "comparisons",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "historical",
-      "notes": "Quoted-old-value side of a correction block: the '1 of 10' figure is the misreport being retired. The denominator 10 is separately live and verifiable at results/phase2a-analysis-report.json `n_comparisons`; it is re-asserted in the after-column of the before/after row at line 359, extracted there as a live claim."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          359,
-          359
-        ],
-        "section": "Changelog — 2026-07-30 — Phase 2a FDR-survivor figure corrected"
-      },
-      "claim_text": "| \"only 1 of 10 Phase 2a pairwise comparisons survived FDR correction\" | 0 of 10 (`results/phase2a-analysis-report.json`, `n_fdr_significant: 0`) |",
-      "values": [
-        {
-          "quantity": "count of Phase 2a pairwise comparisons surviving FDR correction (superseded figure)",
-          "value_verbatim": "1",
-          "value_parsed": 1,
-          "unit": "comparisons",
-          "kind": "count",
-          "path": null,
-          "method": "historical"
-        },
-        {
-          "quantity": "count of Phase 2a pairwise comparisons (denominator, superseded side)",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": "comparisons",
-          "kind": "count",
-          "path": null,
-          "method": "historical"
-        },
-        {
-          "quantity": "count of Phase 2a pairwise comparisons surviving FDR correction (corrected figure)",
-          "value_verbatim": "0",
-          "value_parsed": 0,
-          "unit": "comparisons",
-          "kind": "count",
-          "path": "$.n_fdr_significant",
-          "method": null
-        },
-        {
-          "quantity": "count of Phase 2a pairwise comparisons (denominator, corrected side)",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": "comparisons",
-          "kind": "count",
-          "path": "$.n_comparisons",
-          "method": null
-        },
-        {
-          "quantity": "n_fdr_significant as quoted from the analysis report",
-          "value_verbatim": "0",
-          "value_parsed": 0,
-          "unit": "comparisons",
-          "kind": "count",
-          "path": "$.n_fdr_significant",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/phase2a-analysis-report.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Changelog before→after row: the before-column values are historical (per-value overrides), the after-column values are live and anchored to the named analysis report."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          375,
-          375
-        ],
-        "section": "Changelog — 2026-07-28 — Preregistration-attribution corrections (D17 audit)"
-      },
-      "claim_text": "| corpus \"1:25,000 … Kazanlak Valley\" | 1:50,000, Thracian Plain and surrounding areas, four named sheets |",
-      "values": [
-        {
-          "quantity": "map scale of the study corpus as previously (incorrectly) stated",
-          "value_verbatim": "1:25,000",
-          "value_parsed": null,
-          "unit": "map scale",
-          "kind": "ratio",
-          "path": null,
-          "method": "historical"
-        },
-        {
-          "quantity": "map scale of the study corpus (corrected)",
-          "value_verbatim": "1:50,000",
-          "value_parsed": null,
-          "unit": "map scale",
-          "kind": "ratio",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "count of map sheets in the gold-standard study corpus",
-          "value_verbatim": "four",
-          "value_parsed": 4,
-          "unit": "sheets",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "inputs/vectors/bounds/gs-4maps-sheet-bounds.geojson",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Sheet count = feature count of the four-map sheet-bounds GeoJSON. The corrected 1:50,000 scale has no machine-readable home in the repo: it is asserted in prose (docs/methods-outline.md, docs/methodology/reports/tile-selection-methodology.md) and is derivable from the sheet graticule extents, so it is marked anchor-unknown per instrument rule 2 (never anchor prose to prose). The 1:25,000 side is the retired figure."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          376,
-          376
-        ],
-        "section": "Changelog — 2026-07-28 — Preregistration-attribution corrections (D17 audit)"
-      },
-      "claim_text": "| tile-size pilot \"at N=1 (single-pass)\" (×2) | K=5 passes, 2-of-5 voting (per `pilot_decision.md` and prereg §12.2) |",
-      "values": [
-        {
-          "quantity": "pass count attributed to the tile-size pilot before correction",
-          "value_verbatim": "N=1",
-          "value_parsed": 1,
-          "unit": "passes",
-          "kind": "count",
-          "path": null,
-          "method": "historical"
-        },
-        {
-          "quantity": "count of places in this document where the N=1 misattribution was corrected",
-          "value_verbatim": "×2",
-          "value_parsed": 2,
-          "unit": "occurrences",
-          "kind": "count",
-          "path": null,
-          "method": "historical"
-        },
-        {
-          "quantity": "pass count actually run in the tile-size calibration pilot",
-          "value_verbatim": "K=5",
-          "value_parsed": 5,
-          "unit": "passes",
-          "kind": "parameter",
-          "path": "$.parameters.num_passes",
-          "method": null
-        },
-        {
-          "quantity": "vote threshold used in the tile-size pilot (numerator)",
-          "value_verbatim": "2",
-          "value_parsed": 2,
-          "unit": "votes",
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "consensus pool size used in the tile-size pilot (denominator)",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": "passes",
-          "kind": "parameter",
-          "path": "$.parameters.num_passes",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "archive/pilot-tile-size/pilot_results.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Pilot artefact records parameters.num_passes=5; the 2-of-5 voting threshold corresponds to the '2' key of the per-size `thresholds` block that archive/pilot-tile-size/outputs/pilot_decision.md selects (prose, so the least-writable anchor is the results JSON). Both before-column values are historical."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          379,
-          379
-        ],
-        "section": "Changelog — 2026-07-28 — Preregistration-attribution corrections (D17 audit)"
-      },
-      "claim_text": "| \"errata (47 entries, E1–E47)\" | 57 entries, E1–E57 |",
-      "values": [
-        {
-          "quantity": "count of protocol-errata entries as previously stated",
-          "value_verbatim": "47",
-          "value_parsed": 47,
-          "unit": "entries",
-          "kind": "count",
-          "path": null,
-          "method": "historical"
-        },
-        {
-          "quantity": "count of protocol-errata entries (corrected)",
-          "value_verbatim": "57",
-          "value_parsed": 57,
-          "unit": "entries",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "docs/methodology/preregistration/protocol-errata.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Changelog before→after row; erratum identifiers (E1–E47, E1–E57) are out of C4 scope, the entry counts are not. Non-JSON anchor: the count of E-entries in the errata document, routed to triage per instrument v1.1."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          380,
-          380
-        ],
-        "section": "Changelog — 2026-07-28 — Preregistration-attribution corrections (D17 audit)"
-      },
-      "claim_text": "| HIGH-thinking deviation attributed to E32 (×2) | E32 concerns temperature; deviation currently has no erratum |",
-      "values": [
-        {
-          "quantity": "count of places in this document where the HIGH-thinking deviation was misattributed to E32 before correction",
-          "value_verbatim": "×2",
-          "value_parsed": 2,
-          "unit": "occurrences",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "historical",
-      "notes": "Count of pre-correction occurrences within this document — a property of the superseded revision, not of a committed artefact. Erratum identifier E32 is out of C4 scope."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          388,
-          389
-        ],
-        "section": "Changelog — 2026-06-13 — Cost-basis note added (currency sweep)"
-      },
-      "claim_text": "The Obs 205 cost comparison (\"Flash + PV at ~$3 …\nPro consensus at ~$54\") predates the 2026-06-12 token-load audit",
-      "values": [
-        {
-          "quantity": "cost USD, Flash + proposer-verifier condition (recorded pre-audit estimate, quoted from Obs 205)",
-          "value_verbatim": "~$3",
-          "value_parsed": 3.0,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "cost USD, Pro consensus condition (recorded pre-audit estimate, quoted from Obs 205)",
-          "value_verbatim": "~$54",
-          "value_parsed": 54.0,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/passes-manifest.json",
-        "path": null
-      },
-      "method": "recompute-script",
-      "notes": "Recorded-basis (pre-audit) cost estimates, not audited or billed figures: the passes manifest carries per-pass cost_usd, so each figure is the sum over the relevant run's passes — triage must resolve which run_ids the Flash+PV and Pro consensus conditions correspond to. The document itself flags these as superseded by reports/token-load-audit-2026-06-12.md (thinking tokens unbilled in the recorded figures), so the harness should expect the recorded and audited bases to differ."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          399,
-          399
-        ],
-        "section": "Changelog — 2026-03-30 — Original publication"
-      },
-      "claim_text": "where, and why the design evolved. Written before the 55-map",
-      "values": [
-        {
-          "quantity": "count of map sheets in the generalisation corpus",
-          "value_verbatim": "55",
-          "value_parsed": 55,
-          "unit": "maps",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
-        "path": "$.features[*].properties.map_name (distinct count)"
-      },
-      "method": "read",
-      "notes": "Count-as-fact, not a run name (instrument rule 5): the generalisation corpus is asserted to hold 55 maps. Anchor is the distinct map_name count over the 55-map evaluation bounds."
+     "quantity": "registered stopping-rule threshold: minimum F1 improvement licensing pursuit of a two-stage architecture",
+     "value_verbatim": "≥0.05",
+     "value_parsed": 0.05,
+     "unit": "F1",
+     "kind": "parameter",
+     "path": null,
+     "method": null
     }
-  ]
+   ],
+   "anchor": {
+    "file": "docs/methodology/preregistration/osf/preregistration.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Instrument v1.1 registered-value rule: a claim about what the REGISTRATION specifies anchors to the lodged preregistration, never to the executing config. The `osf:491` line-number citation is out of C4 scope."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     287,
+     287
+    ],
+    "section": "What the paper should argue"
+   },
+   "claim_text": "The three-phase structure maps to a natural scientific progression:",
+   "values": [
+    {
+     "quantity": "count of experimental phases in the study's narrative structure",
+     "value_verbatim": "three",
+     "value_parsed": 3,
+     "unit": "phases",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Doubtful inclusion, flagged per instrument § Task: a narrative structural descriptor rather than a measurement, and no committed artefact enumerates 'phases' at this granularity (the execution record uses 2a-2e / 3a-3d sub-phases). The same descriptor recurs at lines 342 and 398, and the cognate 'two-stage architecture' at line 280; extracted once to avoid flooding triage with the same rhetorical count."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     289,
+     289
+    ],
+    "section": "What the paper should argue"
+   },
+   "claim_text": "1. **Exploration** (60 tiles): What might matter?",
+   "values": [
+    {
+     "quantity": "tile count, Phase 1 exploration evaluation set",
+     "value_verbatim": "60",
+     "value_parsed": 60,
+     "unit": "tiles",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "inputs/vectors/bounds/validation_bounds.geojson",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Whole-artefact anchor: feature count of the 60-tile 512 px holdout bounds (scope manifest named in results/evaluation-scopes.md)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     291,
+     291
+    ],
+    "section": "What the paper should argue"
+   },
+   "claim_text": "2. **Validation** (340 tiles): Confirm with adequate power",
+   "values": [
+    {
+     "quantity": "tile count, Phase 2 validation evaluation set (Era 1)",
+     "value_verbatim": "340",
+     "value_parsed": 340,
+     "unit": "tiles",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Whole-artefact anchor: feature count of the Era 1 512 px evaluation bounds. Corroborating scalar: results/era1-leaderboard/tiering_20m.json `n_tiles`."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     293,
+     293
+    ],
+    "section": "What the paper should argue"
+   },
+   "claim_text": "3. **Optimisation** (487 tiles): Given what works, how well can we do?",
+   "values": [
+    {
+     "quantity": "tile count, Phase 3 optimisation evaluation set (Era 2)",
+     "value_verbatim": "487",
+     "value_parsed": 487,
+     "unit": "tiles",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Whole-artefact anchor: feature count of the Era 2 384 px evaluation bounds; inputs/tiles_384/full_evaluation_manifest.json is the parallel tile manifest."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     294,
+     294
+    ],
+    "section": "What the paper should argue"
+   },
+   "claim_text": "→ F1=0.890, pipeline dominates, optimal parameters depend on",
+   "values": [
+    {
+     "quantity": "F1@20m, best Phase 3 condition (headline result)",
+     "value_verbatim": "0.890",
+     "value_parsed": 0.89,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/conditions-manifest.json",
+    "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-consensus-16of30')].metrics.per_buffer['20'].f1"
+   },
+   "method": "read",
+   "notes": "The document's own Phase 3 findings section identifies the headline F1=0.890 as Flash HIGH text 16-of-30 consensus + Flash MINIMAL verifier at 20 m tolerance; the manifest cell carries it at four decimal places (quoted here at three) — the harness owns rounding tolerance."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     297,
+     299
+    ],
+    "section": "What the paper should argue"
+   },
+   "claim_text": "The protocol\nerrata (47 entries) provide full transparency about how and why the\ndesign evolved.",
+   "values": [
+    {
+     "quantity": "count of protocol-errata entries",
+     "value_verbatim": "47",
+     "value_parsed": 47,
+     "unit": "entries",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "docs/methodology/preregistration/protocol-errata.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Live claim as written. Flagged, not adjudicated: this document's own changelog row at line 379 records the '47 entries, E1–E47' figure as corrected to 57 entries (E1–E57), so this sentence may be an uncorrected survivor of that sweep. Anchor is the errata document's entry count (non-JSON anchor, routed to triage per instrument v1.1)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     307,
+     307
+    ],
+    "section": "Evaluation scope mapping"
+   },
+   "claim_text": "| Factor | 60 tiles (512px) | 340 tiles (512px) | 487 tiles (384px) |",
+   "values": [
+    {
+     "quantity": "tile count, Phase 1 evaluation set",
+     "value_verbatim": "60",
+     "value_parsed": 60,
+     "unit": "tiles",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tile size, Phase 1 evaluation set",
+     "value_verbatim": "512px",
+     "value_parsed": 512,
+     "unit": "px",
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tile count, Phase 2 evaluation set (Era 1)",
+     "value_verbatim": "340",
+     "value_parsed": 340,
+     "unit": "tiles",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tile size, Phase 2 evaluation set",
+     "value_verbatim": "512px",
+     "value_parsed": 512,
+     "unit": "px",
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tile count, Phase 3 evaluation set (Era 2)",
+     "value_verbatim": "487",
+     "value_parsed": 487,
+     "unit": "tiles",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tile size, Phase 3 evaluation set",
+     "value_verbatim": "384px",
+     "value_parsed": 384,
+     "unit": "px",
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "inputs/vectors/bounds/",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Table header row asserting three evaluation scopes; the values live in different files, so the anchor is the bounds directory: 60 = validation_bounds.geojson feature count, 340 = full_evaluation_bounds.geojson, 487 = 384/full_evaluation_bounds.geojson. The 512 px / 384 px tile sizes are recorded in the tile manifests (inputs/tiles_384/full_evaluation_manifest.json for 384 px) and config.py TILE_SIZE for the 512 px grid."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     309,
+     309
+    ],
+    "section": "Evaluation scope mapping"
+   },
+   "claim_text": "| Library composition (5×2) | ✓ (10 runs) | ✓ (1 run) | — |",
+   "values": [
+    {
+     "quantity": "count of library configurations tested (H8 factor levels)",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": "configurations",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "count of modality tracks the library factor was crossed with",
+     "value_verbatim": "2",
+     "value_parsed": 2,
+     "unit": "tracks",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "runs per condition, library composition at 60 tiles",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": "runs",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "runs per condition, library composition at 340 tiles",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "run",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/passes-manifest.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Run counts require grouping results/passes-manifest.json passes by run_id and condition, which is an aggregation rather than a lookup. The 5×2 design counts are properties of the Phase 2c configuration set (prompts/configs/ library_* configs); triage may prefer those as the anchor for the design cells."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     310,
+     310
+    ],
+    "section": "Evaluation scope mapping"
+   },
+   "claim_text": "| Text treatment (2×2) | ✓ (10 runs) | ✓ (1 run) | — |",
+   "values": [
+    {
+     "quantity": "count of text-treatment levels (terse vs verbose)",
+     "value_verbatim": "2",
+     "value_parsed": 2,
+     "unit": "levels",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "count of modality tracks the text-treatment factor was crossed with",
+     "value_verbatim": "2",
+     "value_parsed": 2,
+     "unit": "tracks",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "runs per condition, text treatment at 60 tiles",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": "runs",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "runs per condition, text treatment at 340 tiles",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "run",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/passes-manifest.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "As for the library row: run counts aggregate over the passes manifest; the 2×2 design counts belong to the Phase 2d configuration set under prompts/configs/."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     311,
+     311
+    ],
+    "section": "Evaluation scope mapping"
+   },
+   "claim_text": "| Example ordering (4) | ✓ (10 runs) | ✓ (1 run) | — |",
+   "values": [
+    {
+     "quantity": "count of example-ordering conditions tested (H4)",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": "conditions",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "runs per condition, example ordering at 60 tiles",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": "runs",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "runs per condition, example ordering at 340 tiles",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "run",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/passes-manifest.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Run counts aggregate over the passes manifest; the four ordering conditions are the Phase 2e configuration set (prompts/configs/), noted in the document's earlier text as four rather than the preregistered three."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     312,
+     312
+    ],
+    "section": "Evaluation scope mapping"
+   },
+   "claim_text": "| Temperature (5 levels) | ✓ (10 runs) | ✓ (3 runs) | T=0.0/0.3/0.7 only |",
+   "values": [
+    {
+     "quantity": "count of temperature levels tested at 60 tiles",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": "levels",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "runs per condition, temperature at 60 tiles",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": "runs",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "runs per condition, temperature at 340 tiles",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": "runs",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "temperature levels run at 384 px (Phase 3)",
+     "value_verbatim": "0.0",
+     "value_parsed": 0.0,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "temperature levels run at 384 px (Phase 3)",
+     "value_verbatim": "0.3",
+     "value_parsed": 0.3,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "temperature levels run at 384 px (Phase 3)",
+     "value_verbatim": "0.7",
+     "value_parsed": 0.7,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/passes-manifest.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Per-pass temperature is recorded at $.passes[*].temperature in the passes manifest, so both the level counts and the 384 px restriction to T=0.0/0.3/0.7 are recoverable by aggregation over run_id."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     313,
+     313
+    ],
+    "section": "Evaluation scope mapping"
+   },
+   "claim_text": "| Modality (text/image) | ✓ (10 runs) | ✓ (3 runs) | ✓ (5–30 runs) |",
+   "values": [
+    {
+     "quantity": "runs per condition, modality at 60 tiles",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": "runs",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "runs per condition, modality at 340 tiles",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": "runs",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "runs per condition range, modality at 487 tiles",
+     "value_verbatim": "5–30",
+     "value_parsed": null,
+     "unit": "runs",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/passes-manifest.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Range cell: value_parsed left null because '5–30' is an interval; the endpoints are recoverable as min/max pass counts per 384 px modality condition from the passes manifest."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     314,
+     314
+    ],
+    "section": "Evaluation scope mapping"
+   },
+   "claim_text": "| Thinking (HIGH/MIN) | — | ✓ (30 runs) | ✓ (5–30 runs) |",
+   "values": [
+    {
+     "quantity": "runs per condition, thinking level at 340 tiles",
+     "value_verbatim": "30",
+     "value_parsed": 30,
+     "unit": "runs",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "runs per condition range, thinking level at 487 tiles",
+     "value_verbatim": "5–30",
+     "value_parsed": null,
+     "unit": "runs",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/passes-manifest.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Per-pass thinking_level is recorded in the passes manifest; counts aggregate by run_id. Interval cell parsed as null."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     315,
+     315
+    ],
+    "section": "Evaluation scope mapping"
+   },
+   "claim_text": "| Consensus voting | ✓ (30 runs) | ✓ (30 runs) | ✓ (5/10/30 runs) |",
+   "values": [
+    {
+     "quantity": "runs per condition, consensus voting at 60 tiles",
+     "value_verbatim": "30",
+     "value_parsed": 30,
+     "unit": "runs",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "runs per condition, consensus voting at 340 tiles",
+     "value_verbatim": "30",
+     "value_parsed": 30,
+     "unit": "runs",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "pool sizes run for consensus voting at 487 tiles",
+     "value_verbatim": "5/10/30",
+     "value_parsed": null,
+     "unit": "runs",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/passes-manifest.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "The 487 px cell lists three discrete pool sizes (5, 10, 30) rather than a range; value_parsed null. Pool size per condition is also carried as $.conditions[*].n_passes in results/conditions-manifest.json."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     317,
+     317
+    ],
+    "section": "Evaluation scope mapping"
+   },
+   "claim_text": "| Model (Flash/Pro) | — | — | ✓ (5–10 runs) |",
+   "values": [
+    {
+     "quantity": "runs per condition range, model comparison at 487 tiles",
+     "value_verbatim": "5–10",
+     "value_parsed": null,
+     "unit": "runs",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/passes-manifest.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Interval cell; per-pass model_used in the passes manifest identifies the Flash and Pro conditions to aggregate."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     318,
+     318
+    ],
+    "section": "Evaluation scope mapping"
+   },
+   "claim_text": "| Pool-size plateau | — | — | ✓ (N=5 vs N=10) |",
+   "values": [
+    {
+     "quantity": "consensus pool size, lower arm of the pool-size plateau comparison",
+     "value_verbatim": "N=5",
+     "value_parsed": 5,
+     "unit": "passes",
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "consensus pool size, upper arm of the pool-size plateau comparison",
+     "value_verbatim": "N=10",
+     "value_parsed": 10,
+     "unit": "passes",
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/conditions-manifest.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Pool size per condition is $.conditions[*].n_passes; identifying the pool-size plateau pair (N=5 vs N=10 at 384 px) requires selecting those conditions, hence recompute rather than a single lookup."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     320,
+     321
+    ],
+    "section": "Evaluation scope mapping"
+   },
+   "claim_text": "Factors not re-run at 384px (library, treatment, ordering) were\nconfirmed non-significant at 340 tiles with adequate power",
+   "values": [
+    {
+     "quantity": "tile size, Phase 3 production runs",
+     "value_verbatim": "384px",
+     "value_parsed": 384,
+     "unit": "px",
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tile count, Phase 2 evaluation set at which the null results were confirmed",
+     "value_verbatim": "340",
+     "value_parsed": 340,
+     "unit": "tiles",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "inputs/vectors/bounds/",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Mixed-file span: 340 = feature count of inputs/vectors/bounds/full_evaluation_bounds.geojson; the 384 px tile size is recorded in inputs/tiles_384/full_evaluation_manifest.json. The non-significance assertion itself is carried by the Phase 2c/2d/2e analysis reports under results/ (0/20, 0/2 and 1/6 raw comparisons per the document's earlier sections)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     331,
+     331
+    ],
+    "section": "Statistical methodology across phases"
+   },
+   "claim_text": "| 60 tiles | 60 |",
+   "values": [
+    {
+     "quantity": "tile count, Phase 1 evaluation set (row label)",
+     "value_verbatim": "60",
+     "value_parsed": 60,
+     "unit": "tiles",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tile count, Phase 1 evaluation set (tile-count column)",
+     "value_verbatim": "60",
+     "value_parsed": 60,
+     "unit": "tiles",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "inputs/vectors/bounds/validation_bounds.geojson",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Sub-span of the 60-tile row of the statistical-methodology table, split from the row's statistical cells because the two halves anchor to different artefacts (instrument rule 6 assumes a single anchor file per row)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     331,
+     331
+    ],
+    "section": "Statistical methodology across phases"
+   },
+   "claim_text": "Bootstrap CIs (1,000 iterations) | Insufficient — CIs ~0.20 wide |",
+   "values": [
+    {
+     "quantity": "bootstrap iterations, 60-tile confidence intervals",
+     "value_verbatim": "1,000",
+     "value_parsed": 1000,
+     "unit": "iterations",
+     "kind": "parameter",
+     "path": "$._metadata.n_bootstrap",
+     "method": null
+    },
+    {
+     "quantity": "bootstrap confidence-interval width at 60 tiles (F1)",
+     "value_verbatim": "~0.20",
+     "value_parsed": 0.2,
+     "unit": "F1",
+     "kind": "statistic",
+     "path": null,
+     "method": "recompute-script"
+    }
+   ],
+   "anchor": {
+    "file": "results/all-bootstrap-cis.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Second sub-span of the 60-tile row. Iteration count sits at $._metadata.n_bootstrap (corroborated by results/phase2a-analysis-report.json `n_bootstrap`); the ~0.20 CI width is a summary over the 60-tile bootstrap intervals (ci_upper − ci_lower) and needs recomputation, hence the per-value method override."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     332,
+     332
+    ],
+    "section": "Statistical methodology across phases"
+   },
+   "claim_text": "| 340 tiles | 340 |",
+   "values": [
+    {
+     "quantity": "tile count, Phase 2 evaluation set (row label)",
+     "value_verbatim": "340",
+     "value_parsed": 340,
+     "unit": "tiles",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tile count, Phase 2 evaluation set (tile-count column)",
+     "value_verbatim": "340",
+     "value_parsed": 340,
+     "unit": "tiles",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Sub-span split from the row's statistical cells (different anchor artefact). Corroborating scalar: results/era1-leaderboard/tiering_20m.json `n_tiles`."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     332,
+     332
+    ],
+    "section": "Statistical methodology across phases"
+   },
+   "claim_text": "Permutation tests (10,000 iterations) + FDR | Adequate for most comparisons |",
+   "values": [
+    {
+     "quantity": "permutation iterations, 340-tile (Era 1) significance testing",
+     "value_verbatim": "10,000",
+     "value_parsed": 10000,
+     "unit": "iterations",
+     "kind": "parameter",
+     "path": "$.n_permutations",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/era1-leaderboard/tiering_20m.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Era 1 (340-tile) permutation analyses; tiering_20m.json records n_permutations, seed and fdr_q alongside n_tiles=340. Triage may prefer the per-phase pairwise manifests under results/pairwise/ if a phase-specific figure is wanted."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     333,
+     333
+    ],
+    "section": "Statistical methodology across phases"
+   },
+   "claim_text": "| 487 tiles | 487 |",
+   "values": [
+    {
+     "quantity": "tile count, Phase 3 evaluation set (row label)",
+     "value_verbatim": "487",
+     "value_parsed": 487,
+     "unit": "tiles",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tile count, Phase 3 evaluation set (tile-count column)",
+     "value_verbatim": "487",
+     "value_parsed": 487,
+     "unit": "tiles",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Sub-span split from the row's statistical cells (different anchor artefact)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     333,
+     333
+    ],
+    "section": "Statistical methodology across phases"
+   },
+   "claim_text": "Permutation tests (10,000 iterations) + FDR + leaderboard round-robin",
+   "values": [
+    {
+     "quantity": "permutation iterations, 487-tile (Era 2) significance testing",
+     "value_verbatim": "10,000",
+     "value_parsed": 10000,
+     "unit": "iterations",
+     "kind": "parameter",
+     "path": "$.metadata.n_permutations",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/pairwise/20m/run_manifest.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Era 2 (487-tile, 384 px) pairwise campaign manifest: metadata carries n_permutations=10000, seed and n_comparisons for the 20 m buffer."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     336,
+     337
+    ],
+    "section": "Statistical methodology across phases"
+   },
+   "claim_text": "with Benjamini-Hochberg FDR correction\n(q=0.05) applied within factor families",
+   "values": [
+    {
+     "quantity": "false-discovery-rate level q applied within factor families",
+     "value_verbatim": "0.05",
+     "value_parsed": 0.05,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.fdr_q",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/phase2a-analysis-report.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "q recorded as fdr_q in the Phase 2a analysis report; corroborating artefacts results/era1-leaderboard/tiering_20m.json `fdr_q` and results/family-fdr/family_fdr.json `q` carry the same level."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     337,
+     338
+    ],
+    "section": "Statistical methodology across phases"
+   },
+   "claim_text": "Bootstrap CIs use tile-level\nstratified resampling (1,000 iterations, seed 42).",
+   "values": [
+    {
+     "quantity": "bootstrap iterations, tile-level stratified resampling",
+     "value_verbatim": "1,000",
+     "value_parsed": 1000,
+     "unit": "iterations",
+     "kind": "parameter",
+     "path": "$._metadata.n_bootstrap",
+     "method": null
+    },
+    {
+     "quantity": "random seed for bootstrap resampling",
+     "value_verbatim": "42",
+     "value_parsed": 42,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$._metadata.random_seed",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/all-bootstrap-cis.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The consolidated bootstrap artefact records n_bootstrap=1000 and random_seed=42 in its _metadata block. Flagged for triage, not adjudicated: later BCa intervals recorded in results/conditions-manifest.json carry n_iter=10000 with the same seed, so the harness should check which era this methodology sentence describes."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     370,
+     371
+    ],
+    "section": "Changelog — 2026-07-30 — Phase 2a FDR-survivor figure corrected"
+   },
+   "claim_text": "census caught the \"only 1 of 10 Phase 2a pairwise comparisons survived\nFDR correction\" claim as a misreport",
+   "values": [
+    {
+     "quantity": "count of Phase 2a pairwise comparisons surviving FDR correction, as previously misreported",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "comparisons",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "count of Phase 2a pairwise comparisons (denominator, as quoted in the superseded claim)",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": "comparisons",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "historical",
+   "notes": "Quoted-old-value side of a correction block: the '1 of 10' figure is the misreport being retired. The denominator 10 is separately live and verifiable at results/phase2a-analysis-report.json `n_comparisons`; it is re-asserted in the after-column of the before/after row at line 359, extracted there as a live claim."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     376,
+     376
+    ],
+    "section": "Changelog — 2026-07-30 — Phase 2a FDR-survivor figure corrected"
+   },
+   "claim_text": "| \"only 1 of 10 Phase 2a pairwise comparisons survived FDR correction\" | 0 of 10 (`results/phase2a-analysis-report.json`, `n_fdr_significant: 0`) |",
+   "values": [
+    {
+     "quantity": "count of Phase 2a pairwise comparisons surviving FDR correction (superseded figure)",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "comparisons",
+     "kind": "count",
+     "path": null,
+     "method": "historical"
+    },
+    {
+     "quantity": "count of Phase 2a pairwise comparisons (denominator, superseded side)",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": "comparisons",
+     "kind": "count",
+     "path": null,
+     "method": "historical"
+    },
+    {
+     "quantity": "count of Phase 2a pairwise comparisons surviving FDR correction (corrected figure)",
+     "value_verbatim": "0",
+     "value_parsed": 0,
+     "unit": "comparisons",
+     "kind": "count",
+     "path": "$.n_fdr_significant",
+     "method": null
+    },
+    {
+     "quantity": "count of Phase 2a pairwise comparisons (denominator, corrected side)",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": "comparisons",
+     "kind": "count",
+     "path": "$.n_comparisons",
+     "method": null
+    },
+    {
+     "quantity": "n_fdr_significant as quoted from the analysis report",
+     "value_verbatim": "0",
+     "value_parsed": 0,
+     "unit": "comparisons",
+     "kind": "count",
+     "path": "$.n_fdr_significant",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/phase2a-analysis-report.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Changelog before→after row: the before-column values are historical (per-value overrides), the after-column values are live and anchored to the named analysis report."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     392,
+     392
+    ],
+    "section": "Changelog — 2026-07-28 — Preregistration-attribution corrections (D17 audit)"
+   },
+   "claim_text": "| corpus \"1:25,000 … Kazanlak Valley\" | 1:50,000, Thracian Plain and surrounding areas, four named sheets |",
+   "values": [
+    {
+     "quantity": "map scale of the study corpus as previously (incorrectly) stated",
+     "value_verbatim": "1:25,000",
+     "value_parsed": null,
+     "unit": "map scale",
+     "kind": "ratio",
+     "path": null,
+     "method": "historical"
+    },
+    {
+     "quantity": "map scale of the study corpus (corrected)",
+     "value_verbatim": "1:50,000",
+     "value_parsed": null,
+     "unit": "map scale",
+     "kind": "ratio",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "count of map sheets in the gold-standard study corpus",
+     "value_verbatim": "four",
+     "value_parsed": 4,
+     "unit": "sheets",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "inputs/vectors/bounds/gs-4maps-sheet-bounds.geojson",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Sheet count = feature count of the four-map sheet-bounds GeoJSON. The corrected 1:50,000 scale has no machine-readable home in the repo: it is asserted in prose (docs/methods-outline.md, docs/methodology/reports/tile-selection-methodology.md) and is derivable from the sheet graticule extents, so it is marked anchor-unknown per instrument rule 2 (never anchor prose to prose). The 1:25,000 side is the retired figure."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     393,
+     393
+    ],
+    "section": "Changelog — 2026-07-28 — Preregistration-attribution corrections (D17 audit)"
+   },
+   "claim_text": "| tile-size pilot \"at N=1 (single-pass)\" (×2) | K=5 passes, 2-of-5 voting (per `pilot_decision.md` and prereg §12.2) |",
+   "values": [
+    {
+     "quantity": "pass count attributed to the tile-size pilot before correction",
+     "value_verbatim": "N=1",
+     "value_parsed": 1,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": "historical"
+    },
+    {
+     "quantity": "count of places in this document where the N=1 misattribution was corrected",
+     "value_verbatim": "×2",
+     "value_parsed": 2,
+     "unit": "occurrences",
+     "kind": "count",
+     "path": null,
+     "method": "historical"
+    },
+    {
+     "quantity": "pass count actually run in the tile-size calibration pilot",
+     "value_verbatim": "K=5",
+     "value_parsed": 5,
+     "unit": "passes",
+     "kind": "parameter",
+     "path": "$.parameters.num_passes",
+     "method": null
+    },
+    {
+     "quantity": "vote threshold used in the tile-size pilot (numerator)",
+     "value_verbatim": "2",
+     "value_parsed": 2,
+     "unit": "votes",
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "consensus pool size used in the tile-size pilot (denominator)",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": "passes",
+     "kind": "parameter",
+     "path": "$.parameters.num_passes",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "archive/pilot-tile-size/pilot_results.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Pilot artefact records parameters.num_passes=5; the 2-of-5 voting threshold corresponds to the '2' key of the per-size `thresholds` block that archive/pilot-tile-size/outputs/pilot_decision.md selects (prose, so the least-writable anchor is the results JSON). Both before-column values are historical."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     396,
+     396
+    ],
+    "section": "Changelog — 2026-07-28 — Preregistration-attribution corrections (D17 audit)"
+   },
+   "claim_text": "| \"errata (47 entries, E1–E47)\" | 57 entries, E1–E57 |",
+   "values": [
+    {
+     "quantity": "count of protocol-errata entries as previously stated",
+     "value_verbatim": "47",
+     "value_parsed": 47,
+     "unit": "entries",
+     "kind": "count",
+     "path": null,
+     "method": "historical"
+    },
+    {
+     "quantity": "count of protocol-errata entries (corrected)",
+     "value_verbatim": "57",
+     "value_parsed": 57,
+     "unit": "entries",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "docs/methodology/preregistration/protocol-errata.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Changelog before→after row; erratum identifiers (E1–E47, E1–E57) are out of C4 scope, the entry counts are not. Non-JSON anchor: the count of E-entries in the errata document, routed to triage per instrument v1.1."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     397,
+     397
+    ],
+    "section": "Changelog — 2026-07-28 — Preregistration-attribution corrections (D17 audit)"
+   },
+   "claim_text": "| HIGH-thinking deviation attributed to E32 (×2) | E32 concerns temperature; deviation currently has no erratum |",
+   "values": [
+    {
+     "quantity": "count of places in this document where the HIGH-thinking deviation was misattributed to E32 before correction",
+     "value_verbatim": "×2",
+     "value_parsed": 2,
+     "unit": "occurrences",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "historical",
+   "notes": "Count of pre-correction occurrences within this document — a property of the superseded revision, not of a committed artefact. Erratum identifier E32 is out of C4 scope."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     405,
+     406
+    ],
+    "section": "Changelog — 2026-06-13 — Cost-basis note added (currency sweep)"
+   },
+   "claim_text": "The Obs 205 cost comparison (\"Flash + PV at ~$3 …\nPro consensus at ~$54\") predates the 2026-06-12 token-load audit",
+   "values": [
+    {
+     "quantity": "cost USD, Flash + proposer-verifier condition (recorded pre-audit estimate, quoted from Obs 205)",
+     "value_verbatim": "~$3",
+     "value_parsed": 3.0,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "cost USD, Pro consensus condition (recorded pre-audit estimate, quoted from Obs 205)",
+     "value_verbatim": "~$54",
+     "value_parsed": 54.0,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/passes-manifest.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Recorded-basis (pre-audit) cost estimates, not audited or billed figures: the passes manifest carries per-pass cost_usd, so each figure is the sum over the relevant run's passes — triage must resolve which run_ids the Flash+PV and Pro consensus conditions correspond to. The document itself flags these as superseded by reports/token-load-audit-2026-06-12.md (thinking tokens unbilled in the recorded figures), so the harness should expect the recorded and audited bases to differ."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     416,
+     416
+    ],
+    "section": "Changelog — 2026-03-30 — Original publication"
+   },
+   "claim_text": "where, and why the design evolved. Written before the 55-map",
+   "values": [
+    {
+     "quantity": "count of map sheets in the generalisation corpus",
+     "value_verbatim": "55",
+     "value_parsed": 55,
+     "unit": "maps",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "path": "$.features[*].properties.map_name (distinct count)"
+   },
+   "method": "read",
+   "notes": "Count-as-fact, not a run name (instrument rule 5): the generalisation corpus is asserted to hold 55 maps. Anchor is the distinct map_name count over the 55-map evaluation bounds."
+  }
+ ]
 }

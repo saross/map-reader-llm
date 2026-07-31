@@ -1,2575 +1,2575 @@
 {
-  "schema_version": "1.0",
-  "extracted_at": "2026-07-31T00:00:00Z",
-  "source_document": {
-    "file": "results/verifier-robustness/verifier-robustness-findings.md",
-    "git_blob": "ebbe34de20df",
-    "stratum": "hand-written"
-  },
-  "extractor": {
-    "model": "claude-opus-5",
-    "instrument_version": "1.0"
-  },
-  "claims": [
+ "schema_version": "1.0",
+ "extracted_at": "2026-07-31T00:00:00Z",
+ "source_document": {
+  "file": "results/verifier-robustness/verifier-robustness-findings.md",
+  "git_blob": "ebbe34de20df",
+  "stratum": "hand-written"
+ },
+ "extractor": {
+  "model": "claude-opus-5",
+  "instrument_version": "1.0"
+ },
+ "claims": [
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     4,
+     5
+    ],
+    "section": "Revision banner"
+   },
+   "claim_text": "> pre-audit dollar — Run B's \"~$60\" launch estimate in § 16(c) —\n> corrected to the audited as-run ~$34.5). Prior: 2026-06-12",
+   "values": [
     {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          4,
-          5
-        ],
-        "section": "Revision banner"
-      },
-      "claim_text": "> pre-audit dollar — Run B's \"~$60\" launch estimate in § 16(c) —\n> corrected to the audited as-run ~$34.5). Prior: 2026-06-12",
-      "values": [
-        {
-          "quantity": "cost USD, Run B launch estimate (superseded pre-audit figure)",
-          "value_verbatim": "~$60",
-          "value_parsed": 60.0,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "historical"
-        },
-        {
-          "quantity": "cost USD, Run B audited as-run (live corrected figure)",
-          "value_verbatim": "~$34.5",
-          "value_parsed": 34.5,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Both dollars concern S 16(c), outside this assigned range (lines 1-260). The audited ~$34.5 traces to the prose report reports/token-load-audit-2026-06-12.md (line 190 table row 'uplift (no manifest)'); prose-to-prose anchoring is barred by instrument rule 2, so triage must chase that report to a cost artefact."
+     "quantity": "cost USD, Run B launch estimate (superseded pre-audit figure)",
+     "value_verbatim": "~$60",
+     "value_parsed": 60.0,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "historical"
     },
     {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          6,
-          7
-        ],
-        "section": "Revision banner"
-      },
-      "claim_text": "> (token-load audit: the cost model was rebuilt from per-item metadata —\n> the prior calibration sat on a 2× double-counted manifest and unbilled",
-      "values": [
-        {
-          "quantity": "double-counting factor in the superseded cost manifest",
-          "value_verbatim": "2×",
-          "value_parsed": 2.0,
-          "unit": null,
-          "kind": "ratio",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "historical",
-      "notes": "Describes the magnitude of an error in a superseded cost calibration; narrated in reports/token-load-audit-2026-06-12.md. Quoted-historical side, not a live claim."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          18,
-          19
-        ],
-        "section": "Headline"
-      },
-      "claim_text": "**Headline**: the production carry-forward verifier — **gemini-3-flash, T=0.0,\nminimal thinking, n=1** — is **vindicated on every axis tested**. Run-to-run",
-      "values": [
-        {
-          "quantity": "verifier temperature, production carry-forward config",
-          "value_verbatim": "T=0.0",
-          "value_parsed": 0.0,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-consensus-16of30')].verifier_config.temperature",
-          "method": null
-        },
-        {
-          "quantity": "verifier pass count, production carry-forward config",
-          "value_verbatim": "n=1",
-          "value_parsed": 1.0,
-          "unit": "passes",
-          "kind": "parameter",
-          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-consensus-16of30')].n_passes",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/conditions-manifest.json",
-        "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-consensus-16of30')].verifier_config.temperature",
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "The carry-forward verifier is the registered headline condition pv-diag-384::verified-adv-text-consensus-16of30; its verifier_config block records model, thinking_level, and temperature."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          25,
-          26
-        ],
-        "section": "Headline"
-      },
-      "claim_text": "passes are better spent on the proposer than the verifier (§ 10); and the\n0.8951 operational maximum is **not** significantly above the 0.890 headline",
-      "values": [
-        {
-          "quantity": "F1@20 m, operational maximum (opmax35 rung)",
-          "value_verbatim": "0.8951",
-          "value_parsed": 0.8951,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.ladder[4].f1",
-          "method": null
-        },
-        {
-          "quantity": "F1@20 m, registered headline condition (quoted to 3 dp)",
-          "value_verbatim": "0.890",
-          "value_parsed": 0.89,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.ladder[3].f1",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/pareto/pareto_leaderboard.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "The 'not significantly above' assertion is a permutation result reported in S 11 (outside this range); its p-value lives in results/verifier-robustness/opmax_vs_headline_permutation.json. Headline 0.890 is also readable at conditions-manifest $.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-consensus-16of30')].metrics.per_buffer['20'].f1 (0.8902)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          27,
-          28
-        ],
-        "section": "Headline"
-      },
-      "claim_text": "(§ 11). The whole 6→35-pass budget ladder sits in **one statistical tier**\n(§ 12).",
-      "values": [
-        {
-          "quantity": "total pass count, cheapest rung of the budget ladder",
-          "value_verbatim": "6",
-          "value_parsed": 6.0,
-          "unit": "passes",
-          "kind": "count",
-          "path": "$.ladder[0].passes",
-          "method": null
-        },
-        {
-          "quantity": "total pass count, dearest rung of the budget ladder",
-          "value_verbatim": "35",
-          "value_parsed": 35.0,
-          "unit": "passes",
-          "kind": "count",
-          "path": "$.ladder[4].passes",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/pareto/pareto_leaderboard.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "The 'one statistical tier' assertion is a tiering result (S 12): every $.ladder[*].tier is recorded in the same artefact and would need the round-robin permutation harness to re-derive."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          34,
-          35
-        ],
-        "section": "Headline"
-      },
-      "claim_text": "tie is only as strong as the instrument that measured it — the GS\nminimal-vs-high tie *reversed* at 55-map deployment (−0.030,",
-      "values": [
-        {
-          "quantity": "map count, deployment corpus",
-          "value_verbatim": "55",
-          "value_parsed": 55.0,
-          "unit": "maps",
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "delta F1@50 m, minimal-thinking (TM-k3) minus high-thinking (TH7-k3) at 55-map deployment",
-          "value_verbatim": "−0.030",
-          "value_parsed": -0.03,
-          "unit": null,
-          "kind": "statistic",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
-        "path": null,
-        "expression": "a - b",
-        "operands": [
-          {
-            "name": "a",
-            "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
-            "path": "$.cells[5].f1_50"
-          },
-          {
-            "name": "b",
-            "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
-            "path": "$.cells[1].f1_50"
-          }
-        ]
-      },
-      "method": "arithmetic",
-      "notes": "cells[5] is 'TM-k3' and cells[1] is 'TH7-k3' in results/55map-leaderboard/55map_leaderboard_50m.json; 'tier-separated' refers to $.tiers (TH7-k3 tier 1, TM-k3 tier 3). No repo artefact seen that asserts the 55-map corpus size directly, hence anchor-unknown for that count."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          37,
-          38
-        ],
-        "section": "Headline"
-      },
-      "claim_text": "characterisation tie, and GS ties at ±0.03 resolution do not licence\nproduction extrapolation.",
-      "values": [
-        {
-          "quantity": "F1 resolution floor of the Gold-Standard instrument, asserted",
-          "value_verbatim": "±0.03",
-          "value_parsed": 0.03,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "A resolving-power assertion about the GS instrument (cf. Obs 347). No artefact seen that states this figure; it is presumably read off the tiering/permutation null widths. Flagged for triage."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          40,
-          42
-        ],
-        "section": "Stage design bullets"
-      },
-      "claim_text": "- **Stage 1** (T=0.0): verify the **1-of-5 proposer union** of the two\n  Gold-Standard consensus+PV cells (the leading 384 `flash-high-text` and the\n  256 rescue cell) at **N=5**, deriving every proposer-vote input level",
-      "values": [
-        {
-          "quantity": "verifier temperature, Stage 1",
-          "value_verbatim": "T=0.0",
-          "value_parsed": 0.0,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.temperature",
-          "method": null
-        },
-        {
-          "quantity": "cell count, Stage 1",
-          "value_verbatim": "two",
-          "value_parsed": 2.0,
-          "unit": "cells",
-          "kind": "count",
-          "path": "$.cells (array length)",
-          "method": null
-        },
-        {
-          "quantity": "verifier iterations, Stage 1",
-          "value_verbatim": "N=5",
-          "value_parsed": 5.0,
-          "unit": "iterations",
-          "kind": "parameter",
-          "path": "$.iterations",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_grid_T0.0.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          44,
-          45
-        ],
-        "section": "Stage design bullets"
-      },
-      "claim_text": "- **Stage 2** (temperature): a per-cell greedy snowball climbing the verifier\n  temperature 0.3 → 0.7 → 1.0 on the **≥3-of-5 band** — § 7.",
-      "values": [
-        {
-          "quantity": "first temperature rung, Stage 2 snowball ladder",
-          "value_verbatim": "0.3",
-          "value_parsed": 0.3,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.ladder[0]",
-          "method": null
-        },
-        {
-          "quantity": "second temperature rung, Stage 2 snowball ladder",
-          "value_verbatim": "0.7",
-          "value_parsed": 0.7,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.ladder[1]",
-          "method": null
-        },
-        {
-          "quantity": "third temperature rung, Stage 2 snowball ladder",
-          "value_verbatim": "1.0",
-          "value_parsed": 1.0,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.ladder[2]",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/snowball_summary.json",
-        "path": "$.ladder",
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Rungs 0.7 and 1.0 were planned but never ran (see S 7); the ladder itself is recorded in the artefact."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          53,
-          53
-        ],
-        "section": "1. The run"
-      },
-      "claim_text": "| thinking / temperature | minimal / **0.0** |",
-      "values": [
-        {
-          "quantity": "verifier temperature, Stage-1 run as executed",
-          "value_verbatim": "0.0",
-          "value_parsed": 0.0,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.configuration.temperature",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "outputs/verifier-robustness/384-flash-high-text-1of5-union/T0.0/verified/run.meta.json",
-        "path": "$.configuration.temperature",
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Thinking level 'minimal' is the non-numeric half of this row ($.configuration.thinking_level in the same file)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          54,
-          54
-        ],
-        "section": "1. The run"
-      },
-      "claim_text": "| iterations (N) | 5 |",
-      "values": [
-        {
-          "quantity": "verifier iterations (N), Stage 1",
-          "value_verbatim": "5",
-          "value_parsed": 5.0,
-          "unit": "iterations",
-          "kind": "parameter",
-          "path": "$.iterations",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_grid_T0.0.json",
-        "path": "$.iterations",
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          56,
-          56
-        ],
-        "section": "1. The run"
-      },
-      "claim_text": "| cells | `384-flash-high-text-1of5-union` (3,736 cands), `256-text-1of5-union` (2,558) |",
-      "values": [
-        {
-          "quantity": "candidate count, 384 1-of-5 union cell",
-          "value_verbatim": "3,736",
-          "value_parsed": 3736.0,
-          "unit": "candidates",
-          "kind": "count",
-          "path": "$.cells[0].n_candidates",
-          "method": null
-        },
-        {
-          "quantity": "candidate count, 256 1-of-5 union cell",
-          "value_verbatim": "2,558",
-          "value_parsed": 2558.0,
-          "unit": "candidates",
-          "kind": "count",
-          "path": "$.cells[1].n_candidates",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_grid_T0.0.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          57,
-          57
-        ],
-        "section": "1. The run"
-      },
-      "claim_text": "| calls / cost | 31,470 (0 failures) / **$21.93 flex** |",
-      "values": [
-        {
-          "quantity": "API call count, Stage 1 (both cells)",
-          "value_verbatim": "31,470",
-          "value_parsed": 31470.0,
-          "unit": "calls",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "failed call count, Stage 1",
-          "value_verbatim": "0",
-          "value_parsed": 0.0,
-          "unit": "calls",
-          "kind": "count",
-          "path": "$.execution_stats.items_failed",
-          "method": "read"
-        },
-        {
-          "quantity": "cost USD, Stage 1 at flex pricing",
-          "value_verbatim": "21.93",
-          "value_parsed": 21.93,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/verifier-robustness/384-flash-high-text-1of5-union/T0.0/verified/run.meta.json",
-        "path": null,
-        "expression": "a + b",
-        "operands": [
-          {
-            "name": "a",
-            "file": "outputs/verifier-robustness/384-flash-high-text-1of5-union/T0.0/verified/run.meta.json",
-            "path": "$.execution_stats.items_processed"
-          },
-          {
-            "name": "b",
-            "file": "outputs/verifier-robustness/256-text-1of5-union/T0.0/verified/run.meta.json",
-            "path": "$.execution_stats.items_processed"
-          }
-        ]
-      },
-      "method": "arithmetic",
-      "notes": "The two run.meta files record items_processed (calls) and items_failed per cell; the failures value should be 0 in BOTH (only the 384 file is reachable via anchor.file). The dollar figure is at flex pricing, which no artefact records: $.cost_estimate.total_cost_usd in each run.meta is at standard pricing, so the flex figure cannot be read or derived from committed artefacts without the flex discount rate."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          58,
-          58
-        ],
-        "section": "1. The run"
-      },
-      "claim_text": "| scoring | point F1@20 m + tile-MCC, EPSG:32635, `lib_advanced_metrics.score_detection_set` |",
-      "values": [
-        {
-          "quantity": "point-matching buffer radius used for F1 scoring",
-          "value_verbatim": "20 m",
-          "value_parsed": 20.0,
-          "unit": "m",
-          "kind": "physical",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Doubtful inclusion: '20 m' functions largely as part of the metric name F1@20 m (the artefacts key it as `f1_20m`). Recorded once here, where the document asserts the scoring setup, and not re-extracted at every later mention. The buffer is set in scripts/analyse_verifier_robustness.py / lib_advanced_metrics.score_detection_set, not in a JSON artefact."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          68,
-          71
-        ],
-        "section": "2. Determinism — n=1 is vindicated"
-      },
-      "claim_text": "**The headline robustness result.** T=0.0 is not bit-deterministic — at the\ncandidate level **~3 % of candidates flip** accept/reject across the 5 iterations\n(256 cell: 81 / 2,558 split at prob_t 0.2; cf. the free e47 `v1`/`v2` prior of\n2.96 %). But that flicker **washes out at the aggregate (tile) level**: the F1",
-      "values": [
-        {
-          "quantity": "percentage of candidates flipping accept/reject across iterations",
-          "value_verbatim": "3 %",
-          "value_parsed": 3.0,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "verifier iterations compared",
-          "value_verbatim": "5",
-          "value_parsed": 5.0,
-          "unit": "iterations",
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "flipped candidate count, 256 cell at prob_t 0.2",
-          "value_verbatim": "81",
-          "value_parsed": 81.0,
-          "unit": "candidates",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "candidate count, 256 cell",
-          "value_verbatim": "2,558",
-          "value_parsed": 2558.0,
-          "unit": "candidates",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "probability threshold at which the split was measured",
-          "value_verbatim": "0.2",
-          "value_parsed": 0.2,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "candidate flip rate, free e47 v1/v2 prior",
-          "value_verbatim": "2.96 %",
-          "value_parsed": 2.96,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/verifier-robustness/256-text-1of5-union/T0.0/verified/probabilities.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "recompute-script",
-      "notes": "Recipe: count candidates whose accept/reject decision at prob_t 0.2 is not identical across the five per-iteration probability vectors in outputs/verifier-robustness/256-text-1of5-union/T0.0/verified/probabilities.json, divide by the candidate count (also readable at results/verifier-robustness/robustness_grid_T0.0.json $.cells[1].n_candidates). The e47 v1/v2 prior of 2.96 % comes from a different experiment not named in this document — anchor unknown."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          76,
-          76
-        ],
-        "section": "2. Determinism — n=1 is vindicated"
-      },
-      "claim_text": "| 384 | 4of5 | 0.8601 | **0.0072** | 0.8498–0.8689 |",
-      "values": [
-        {
-          "quantity": "single-run F1@20 m mean over 5 runs, 384 cell, proposer 4-of-5",
-          "value_verbatim": "0.8601",
-          "value_parsed": 0.8601,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summaries[0].determinism_by_proposer_k[3].single_run_f1_mean",
-          "method": null
-        },
-        {
-          "quantity": "single-run F1@20 m population SD over 5 runs, 384 cell, proposer 4-of-5",
-          "value_verbatim": "0.0072",
-          "value_parsed": 0.0072,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.summaries[0].determinism_by_proposer_k[3].single_run_f1_sd",
-          "method": null
-        },
-        {
-          "quantity": "single-run F1@20 m minimum over 5 runs, 384 cell, proposer 4-of-5",
-          "value_verbatim": "0.8498",
-          "value_parsed": 0.8498,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summaries[0].determinism_by_proposer_k[3].single_run_f1_min",
-          "method": null
-        },
-        {
-          "quantity": "single-run F1@20 m maximum over 5 runs, 384 cell, proposer 4-of-5",
-          "value_verbatim": "0.8689",
-          "value_parsed": 0.8689,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summaries[0].determinism_by_proposer_k[3].single_run_f1_max",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_summary_T0.0.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Table row. Tile sizes 384/256 in the first column and the proposer vote level in the second are treated as cell names (instrument rule 5); the row's proposer_k is 4 at $.summaries[0].determinism_by_proposer_k[3].proposer_k."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          77,
-          77
-        ],
-        "section": "2. Determinism — n=1 is vindicated"
-      },
-      "claim_text": "| 384 | 3of5 | 0.8472 | 0.0032 | 0.8426–0.8525 |",
-      "values": [
-        {
-          "quantity": "single-run F1@20 m mean over 5 runs, 384 cell, proposer 3-of-5",
-          "value_verbatim": "0.8472",
-          "value_parsed": 0.8472,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summaries[0].determinism_by_proposer_k[2].single_run_f1_mean",
-          "method": null
-        },
-        {
-          "quantity": "single-run F1@20 m population SD over 5 runs, 384 cell, proposer 3-of-5",
-          "value_verbatim": "0.0032",
-          "value_parsed": 0.0032,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.summaries[0].determinism_by_proposer_k[2].single_run_f1_sd",
-          "method": null
-        },
-        {
-          "quantity": "single-run F1@20 m minimum over 5 runs, 384 cell, proposer 3-of-5",
-          "value_verbatim": "0.8426",
-          "value_parsed": 0.8426,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summaries[0].determinism_by_proposer_k[2].single_run_f1_min",
-          "method": null
-        },
-        {
-          "quantity": "single-run F1@20 m maximum over 5 runs, 384 cell, proposer 3-of-5",
-          "value_verbatim": "0.8525",
-          "value_parsed": 0.8525,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summaries[0].determinism_by_proposer_k[2].single_run_f1_max",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_summary_T0.0.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Table row. Tile sizes 384/256 in the first column and the proposer vote level in the second are treated as cell names (instrument rule 5); the row's proposer_k is 3 at $.summaries[0].determinism_by_proposer_k[2].proposer_k."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          78,
-          78
-        ],
-        "section": "2. Determinism — n=1 is vindicated"
-      },
-      "claim_text": "| 256 | 5of5 | 0.8555 | 0.0025 | 0.8519–0.8585 |",
-      "values": [
-        {
-          "quantity": "single-run F1@20 m mean over 5 runs, 256 cell, proposer 5-of-5",
-          "value_verbatim": "0.8555",
-          "value_parsed": 0.8555,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summaries[1].determinism_by_proposer_k[4].single_run_f1_mean",
-          "method": null
-        },
-        {
-          "quantity": "single-run F1@20 m population SD over 5 runs, 256 cell, proposer 5-of-5",
-          "value_verbatim": "0.0025",
-          "value_parsed": 0.0025,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.summaries[1].determinism_by_proposer_k[4].single_run_f1_sd",
-          "method": null
-        },
-        {
-          "quantity": "single-run F1@20 m minimum over 5 runs, 256 cell, proposer 5-of-5",
-          "value_verbatim": "0.8519",
-          "value_parsed": 0.8519,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summaries[1].determinism_by_proposer_k[4].single_run_f1_min",
-          "method": null
-        },
-        {
-          "quantity": "single-run F1@20 m maximum over 5 runs, 256 cell, proposer 5-of-5",
-          "value_verbatim": "0.8585",
-          "value_parsed": 0.8585,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summaries[1].determinism_by_proposer_k[4].single_run_f1_max",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_summary_T0.0.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Table row. Tile sizes 384/256 in the first column and the proposer vote level in the second are treated as cell names (instrument rule 5); the row's proposer_k is 5 at $.summaries[1].determinism_by_proposer_k[4].proposer_k."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          79,
-          79
-        ],
-        "section": "2. Determinism — n=1 is vindicated"
-      },
-      "claim_text": "| 256 | 3of5 | 0.8526 | 0.0039 | 0.8467–0.8578 |",
-      "values": [
-        {
-          "quantity": "single-run F1@20 m mean over 5 runs, 256 cell, proposer 3-of-5",
-          "value_verbatim": "0.8526",
-          "value_parsed": 0.8526,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summaries[1].determinism_by_proposer_k[2].single_run_f1_mean",
-          "method": null
-        },
-        {
-          "quantity": "single-run F1@20 m population SD over 5 runs, 256 cell, proposer 3-of-5",
-          "value_verbatim": "0.0039",
-          "value_parsed": 0.0039,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.summaries[1].determinism_by_proposer_k[2].single_run_f1_sd",
-          "method": null
-        },
-        {
-          "quantity": "single-run F1@20 m minimum over 5 runs, 256 cell, proposer 3-of-5",
-          "value_verbatim": "0.8467",
-          "value_parsed": 0.8467,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summaries[1].determinism_by_proposer_k[2].single_run_f1_min",
-          "method": null
-        },
-        {
-          "quantity": "single-run F1@20 m maximum over 5 runs, 256 cell, proposer 3-of-5",
-          "value_verbatim": "0.8578",
-          "value_parsed": 0.8578,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summaries[1].determinism_by_proposer_k[2].single_run_f1_max",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_summary_T0.0.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Table row. Tile sizes 384/256 in the first column and the proposer vote level in the second are treated as cell names (instrument rule 5); the row's proposer_k is 3 at $.summaries[1].determinism_by_proposer_k[2].proposer_k."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          81,
-          82
-        ],
-        "section": "2. Determinism — n=1 is vindicated"
-      },
-      "claim_text": "Across **all** proposer levels the single-run F1 SD is **0.0025–0.0072** (worst\nspread ~0.019). Two corollaries:",
-      "values": [
-        {
-          "quantity": "minimum single-run F1 SD across all proposer levels, both cells",
-          "value_verbatim": "0.0025",
-          "value_parsed": 0.0025,
-          "unit": null,
-          "kind": "statistic",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "maximum single-run F1 SD across all proposer levels, both cells",
-          "value_verbatim": "0.0072",
-          "value_parsed": 0.0072,
-          "unit": null,
-          "kind": "statistic",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "worst min-max F1 spread across all proposer levels",
-          "value_verbatim": "0.019",
-          "value_parsed": 0.019,
-          "unit": null,
-          "kind": "statistic",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_summary_T0.0.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "recompute-script",
-      "notes": "Recipe: over all ten $.summaries[*].determinism_by_proposer_k[*] entries take min/max of single_run_f1_sd, and max of (single_run_f1_max - single_run_f1_min)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          84,
-          86
-        ],
-        "section": "2. Determinism — n=1 is vindicated"
-      },
-      "claim_text": "- **5-run consensus ≈ single-run mean.** At every level the majority-vote\n  consensus F1 lands within ~0.001–0.01 of the single-run mean (e.g. 384/3of5:\n  consensus 0.8488 vs mean 0.8472). There is **no consensus benefit at T=0.0** —",
-      "values": [
-        {
-          "quantity": "lower bound, |consensus F1 - single-run mean F1| across levels",
-          "value_verbatim": "0.001",
-          "value_parsed": 0.001,
-          "unit": null,
-          "kind": "statistic",
-          "path": null,
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "upper bound, |consensus F1 - single-run mean F1| across levels",
-          "value_verbatim": "0.01",
-          "value_parsed": 0.01,
-          "unit": null,
-          "kind": "statistic",
-          "path": null,
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "majority-vote consensus F1@20 m, 384 cell 3-of-5",
-          "value_verbatim": "0.8488",
-          "value_parsed": 0.8488,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summaries[0].determinism_by_proposer_k[2].consensus_majority_f1",
-          "method": null
-        },
-        {
-          "quantity": "single-run F1@20 m mean, 384 cell 3-of-5",
-          "value_verbatim": "0.8472",
-          "value_parsed": 0.8472,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summaries[0].determinism_by_proposer_k[2].single_run_f1_mean",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_summary_T0.0.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "The ~0.001-0.01 range is a min/max over all ten $.summaries[*].determinism_by_proposer_k[*] pairs of (consensus_majority_f1, single_run_f1_mean), hence recompute-script for those two values."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          88,
-          90
-        ],
-        "section": "2. Determinism — n=1 is vindicated"
-      },
-      "claim_text": "  *Stage-3 refinement (§ 8): this reading applies to the **majority** vote; a\n  permissive aggregation (vt1 union at T=0.0, mean-probability at T=0.3) does\n  beat the expected single pass by ~+0.012.*",
-      "values": [
-        {
-          "quantity": "F1@20 m uplift of permissive consensus over the expected single pass",
-          "value_verbatim": "+0.012",
-          "value_parsed": 0.012,
-          "unit": null,
-          "kind": "statistic",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_summary_T0.0.json",
-        "path": null,
-        "expression": "a - b",
-        "operands": [
-          {
-            "name": "a",
-            "file": "results/verifier-robustness/robustness_summary_T0.0.json",
-            "path": "$.summaries[0].best_operating_point.f1_20m"
-          },
-          {
-            "name": "b",
-            "file": "results/verifier-robustness/robustness_summary_T0.0.json",
-            "path": "$.summaries[0].determinism_by_proposer_k[3].single_run_f1_mean"
-          }
-        ]
-      },
-      "method": "arithmetic",
-      "notes": "Same figure as the S 8 aggregation-refinement bullet (lines 250-253): the T=0.0 vt1 union best operating point (0.8722) minus the 4-of-5 single-run mean (0.8601). Scope call: configuration labels embedded in a result sentence (T=0.0, N=5, 4of5, 16of30, tile sizes 384/256) are treated as condition names per instrument rule 5, not re-extracted as parameters; they are extracted where the document asserts them as run setup (S 1 table, stage bullets, S 8 matrix description)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          91,
-          93
-        ],
-        "section": "2. Determinism — n=1 is vindicated"
-      },
-      "claim_text": "- **The verifier-vote threshold barely moves F1.** At the 384 optimum (4of5,\n  prob_t 0.15) the vt1→vt5 sweep spans only 0.8522–0.8722; at the 256 optimum\n  (5of5, prob_t 0.15), 0.8396–0.8620.",
-      "values": [
-        {
-          "quantity": "probability threshold at the 384 optimum",
-          "value_verbatim": "0.15",
-          "value_parsed": 0.15,
-          "unit": null,
-          "kind": "parameter",
-          "path": "results/verifier-robustness/robustness_summary_T0.0.json#$.summaries[0].best_operating_point.prob_t",
-          "method": "read"
-        },
-        {
-          "quantity": "minimum F1@20 m over the vt1-vt5 sweep, 384 optimum",
-          "value_verbatim": "0.8522",
-          "value_parsed": 0.8522,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "maximum F1@20 m over the vt1-vt5 sweep, 384 optimum",
-          "value_verbatim": "0.8722",
-          "value_parsed": 0.8722,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "probability threshold at the 256 optimum",
-          "value_verbatim": "0.15",
-          "value_parsed": 0.15,
-          "unit": null,
-          "kind": "parameter",
-          "path": "results/verifier-robustness/robustness_summary_T0.0.json#$.summaries[1].best_operating_point.prob_t",
-          "method": "read"
-        },
-        {
-          "quantity": "minimum F1@20 m over the vt1-vt5 sweep, 256 optimum",
-          "value_verbatim": "0.8396",
-          "value_parsed": 0.8396,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "maximum F1@20 m over the vt1-vt5 sweep, 256 optimum",
-          "value_verbatim": "0.8620",
-          "value_parsed": 0.862,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_grid_T0.0.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "recompute-script",
-      "notes": "Recipe: within $.cells[i].grid filter rule in {consensus_vt1..vt5} at the stated proposer_k and prob_t, then take min/max of f1_20m. The 0.8722 maximum coincides with $.summaries[0].best_operating_point.f1_20m in the summary file. Cross-file locator convention: a value `path` of the form '<file>#<jsonpath>' names an anchor in a file other than anchor.file (the span mixes sources)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          95,
-          96
-        ],
-        "section": "2. Determinism — n=1 is vindicated"
-      },
-      "claim_text": "**Consequence for the paper**: every n=1 verified cell carries only **~±0.005 F1**\nof hidden run-to-run noise (worst-case single-draw deviation ~0.01), far below",
-      "values": [
-        {
-          "quantity": "hidden run-to-run F1 noise of an n=1 verified cell (SD scale)",
-          "value_verbatim": "±0.005",
-          "value_parsed": 0.005,
-          "unit": null,
-          "kind": "statistic",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "worst-case single-draw F1 deviation from the mean",
-          "value_verbatim": "0.01",
-          "value_parsed": 0.01,
-          "unit": null,
-          "kind": "statistic",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_summary_T0.0.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "recompute-script",
-      "notes": "Summary figures generalised from the ten $.summaries[*].determinism_by_proposer_k[*] SD and min-max entries; needs the same scan as the 0.0025-0.0072 claim."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          108,
-          108
-        ],
-        "section": "3. Proposer input — feed the verifier a filtered pool"
-      },
-      "claim_text": "| 1of5 (union) | 0.734 (0.778) | 0.827 (0.762) |",
-      "values": [
-        {
-          "quantity": "best F1@20 m, 384 cell, proposer input 1of5 (union)",
-          "value_verbatim": "0.734",
-          "value_parsed": 0.734,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tile-MCC at the best-F1 operating point, 384 cell, input 1of5 (union)",
-          "value_verbatim": "0.778",
-          "value_parsed": 0.778,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "best F1@20 m, 256 cell, proposer input 1of5 (union)",
-          "value_verbatim": "0.827",
-          "value_parsed": 0.827,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tile-MCC at the best-F1 operating point, 256 cell, input 1of5 (union)",
-          "value_verbatim": "0.762",
-          "value_parsed": 0.762,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_grid_T0.0.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "recompute-script",
-      "notes": "Table row. Recipe (from the section lede): within $.cells[i].grid filter to proposer_k = this input level and rule in the reproducible set {consensus_vt1..vt5, mean}, take the max f1_20m over the prob_t sweep, and report its paired mcc. Values are quoted to 3 dp. The 4of5/384 pair and the 5of5/256 F1 coincide with the cells' $.summaries[i].best_operating_point in results/verifier-robustness/robustness_summary_T0.0.json."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          109,
-          109
-        ],
-        "section": "3. Proposer input — feed the verifier a filtered pool"
-      },
-      "claim_text": "| 2of5 | 0.834 (0.786) | 0.846 (0.766) |",
-      "values": [
-        {
-          "quantity": "best F1@20 m, 384 cell, proposer input 2of5",
-          "value_verbatim": "0.834",
-          "value_parsed": 0.834,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tile-MCC at the best-F1 operating point, 384 cell, input 2of5",
-          "value_verbatim": "0.786",
-          "value_parsed": 0.786,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "best F1@20 m, 256 cell, proposer input 2of5",
-          "value_verbatim": "0.846",
-          "value_parsed": 0.846,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tile-MCC at the best-F1 operating point, 256 cell, input 2of5",
-          "value_verbatim": "0.766",
-          "value_parsed": 0.766,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_grid_T0.0.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "recompute-script",
-      "notes": "Table row. Recipe (from the section lede): within $.cells[i].grid filter to proposer_k = this input level and rule in the reproducible set {consensus_vt1..vt5, mean}, take the max f1_20m over the prob_t sweep, and report its paired mcc. Values are quoted to 3 dp. The 4of5/384 pair and the 5of5/256 F1 coincide with the cells' $.summaries[i].best_operating_point in results/verifier-robustness/robustness_summary_T0.0.json."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          110,
-          110
-        ],
-        "section": "3. Proposer input — feed the verifier a filtered pool"
-      },
-      "claim_text": "| 3of5 | 0.859 (0.783) | 0.861 (0.757) |",
-      "values": [
-        {
-          "quantity": "best F1@20 m, 384 cell, proposer input 3of5",
-          "value_verbatim": "0.859",
-          "value_parsed": 0.859,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tile-MCC at the best-F1 operating point, 384 cell, input 3of5",
-          "value_verbatim": "0.783",
-          "value_parsed": 0.783,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "best F1@20 m, 256 cell, proposer input 3of5",
-          "value_verbatim": "0.861",
-          "value_parsed": 0.861,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tile-MCC at the best-F1 operating point, 256 cell, input 3of5",
-          "value_verbatim": "0.757",
-          "value_parsed": 0.757,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_grid_T0.0.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "recompute-script",
-      "notes": "Table row. Recipe (from the section lede): within $.cells[i].grid filter to proposer_k = this input level and rule in the reproducible set {consensus_vt1..vt5, mean}, take the max f1_20m over the prob_t sweep, and report its paired mcc. Values are quoted to 3 dp. The 4of5/384 pair and the 5of5/256 F1 coincide with the cells' $.summaries[i].best_operating_point in results/verifier-robustness/robustness_summary_T0.0.json."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          111,
-          111
-        ],
-        "section": "3. Proposer input — feed the verifier a filtered pool"
-      },
-      "claim_text": "| **4of5** | **0.872** (0.762) | 0.860 (0.750) |",
-      "values": [
-        {
-          "quantity": "best F1@20 m, 384 cell, proposer input 4of5",
-          "value_verbatim": "0.872",
-          "value_parsed": 0.872,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tile-MCC at the best-F1 operating point, 384 cell, input 4of5",
-          "value_verbatim": "0.762",
-          "value_parsed": 0.762,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "best F1@20 m, 256 cell, proposer input 4of5",
-          "value_verbatim": "0.860",
-          "value_parsed": 0.86,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tile-MCC at the best-F1 operating point, 256 cell, input 4of5",
-          "value_verbatim": "0.750",
-          "value_parsed": 0.75,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_grid_T0.0.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "recompute-script",
-      "notes": "Table row. Recipe (from the section lede): within $.cells[i].grid filter to proposer_k = this input level and rule in the reproducible set {consensus_vt1..vt5, mean}, take the max f1_20m over the prob_t sweep, and report its paired mcc. Values are quoted to 3 dp. The 4of5/384 pair and the 5of5/256 F1 coincide with the cells' $.summaries[i].best_operating_point in results/verifier-robustness/robustness_summary_T0.0.json."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          112,
-          112
-        ],
-        "section": "3. Proposer input — feed the verifier a filtered pool"
-      },
-      "claim_text": "| 5of5 | 0.844 (0.732) | **0.864** (0.750) |",
-      "values": [
-        {
-          "quantity": "best F1@20 m, 384 cell, proposer input 5of5",
-          "value_verbatim": "0.844",
-          "value_parsed": 0.844,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tile-MCC at the best-F1 operating point, 384 cell, input 5of5",
-          "value_verbatim": "0.732",
-          "value_parsed": 0.732,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "best F1@20 m, 256 cell, proposer input 5of5",
-          "value_verbatim": "0.864",
-          "value_parsed": 0.864,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tile-MCC at the best-F1 operating point, 256 cell, input 5of5",
-          "value_verbatim": "0.750",
-          "value_parsed": 0.75,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_grid_T0.0.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "recompute-script",
-      "notes": "Table row. Recipe (from the section lede): within $.cells[i].grid filter to proposer_k = this input level and rule in the reproducible set {consensus_vt1..vt5, mean}, take the max f1_20m over the prob_t sweep, and report its paired mcc. Values are quoted to 3 dp. The 4of5/384 pair and the 5of5/256 F1 coincide with the cells' $.summaries[i].best_operating_point in results/verifier-robustness/robustness_summary_T0.0.json."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          117,
-          117
-        ],
-        "section": "3. Proposer input — feed the verifier a filtered pool"
-      },
-      "claim_text": "- **384 is an inverted-U with a clear peak at 4-of-5 (0.872).** Too strict",
-      "values": [
-        {
-          "quantity": "best F1@20 m, 384 cell, peak at proposer 4-of-5 (quoted to 3 dp)",
-          "value_verbatim": "0.872",
-          "value_parsed": 0.872,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summaries[0].best_operating_point.f1_20m",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_summary_T0.0.json",
-        "path": "$.summaries[0].best_operating_point.f1_20m",
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          119,
-          119
-        ],
-        "section": "3. Proposer input — feed the verifier a filtered pool"
-      },
-      "claim_text": "- **256 is a plateau from 3-of-5 up (~0.86).** Smaller tiles tolerate a looser",
-      "values": [
-        {
-          "quantity": "approximate best F1@20 m plateau, 256 cell, inputs 3-of-5 and above",
-          "value_verbatim": "0.86",
-          "value_parsed": 0.86,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_grid_T0.0.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "recompute-script",
-      "notes": "An approximate ('~0.86') summary of the 256 column of the S 3 table (0.861 / 0.860 / 0.864 at 3of5 / 4of5 / 5of5); same grid recipe."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          121,
-          121
-        ],
-        "section": "3. Proposer input — feed the verifier a filtered pool"
-      },
-      "claim_text": "- **MCC is comparatively flat** (0.73–0.79) even where F1 swings 0.13 — the",
-      "values": [
-        {
-          "quantity": "minimum tile-MCC across proposer input levels, both cells",
-          "value_verbatim": "0.73",
-          "value_parsed": 0.73,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "maximum tile-MCC across proposer input levels, both cells",
-          "value_verbatim": "0.79",
-          "value_parsed": 0.79,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "F1@20 m swing across proposer input levels",
-          "value_verbatim": "0.13",
-          "value_parsed": 0.13,
-          "unit": null,
-          "kind": "statistic",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_grid_T0.0.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "recompute-script",
-      "notes": "Range/swing summary of the S 3 table (MCC column 0.732-0.786; F1 swing 0.734 to 0.872 at 384). Same grid recipe as the table rows."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          134,
-          135
-        ],
-        "section": "4. Implications"
-      },
-      "claim_text": "   **do not pay for the full 1-of-5 image union.** Verify the **≥3-of-5 band**\n   (506 cands, ~$1.76 flex) rather than the union (2,017 cands, ~$7.03) — the",
-      "values": [
-        {
-          "quantity": "candidate count, image proposer >=3-of-5 band (pencilled tranche)",
-          "value_verbatim": "506",
-          "value_parsed": 506.0,
-          "unit": "candidates",
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "estimated cost USD at flex, verifying the image >=3-of-5 band",
-          "value_verbatim": "~$1.76",
-          "value_parsed": 1.76,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "candidate count, image proposer 1-of-5 union",
-          "value_verbatim": "2,017",
-          "value_parsed": 2017.0,
-          "unit": "candidates",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "estimated cost USD at flex, verifying the image 1-of-5 union",
-          "value_verbatim": "~$7.03",
-          "value_parsed": 7.03,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/pv-diag-384/consensus/flash-high-image-1of5.geojson",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "2,017 is the feature count of the whole-artefact anchor (outputs/h11/pv-diag-384/consensus/flash-high-image-1of5.geojson). No flash-high-image >=3-of-5 pool was seen on disk (outputs/h11/pv-diag-384/consensus/ holds flash-high-image-1of5.geojson and image-3of5.geojson, a different pool), so 506 is anchor-unknown. Both dollars are forward estimates of the form candidates x 5 iterations x flex_per_call_usd_minimal (0.000697, planning/verifier-robustness-stage3-384-cells.json $.flex_per_call_usd_minimal), not billed figures."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          146,
-          148
-        ],
-        "section": "5. Caveats"
-      },
-      "claim_text": "  the input axis is in fifths). The Stage-D headline 384 cell used a 30-pass\n  consensus (16of30); the 5-pass 384 optimum here (0.872 at 4of5) sits just\n  below the 30-pass Stage-D figure (0.890), consistent with fewer proposer",
-      "values": [
-        {
-          "quantity": "best F1@20 m, 5-pass proposer 384 optimum (quoted to 3 dp)",
-          "value_verbatim": "0.872",
-          "value_parsed": 0.872,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summaries[0].best_operating_point.f1_20m",
-          "method": null
-        },
-        {
-          "quantity": "F1@20 m, 30-pass Stage-D headline 384 cell (quoted to 3 dp)",
-          "value_verbatim": "0.890",
-          "value_parsed": 0.89,
-          "unit": null,
-          "kind": "metric",
-          "path": "results/conditions-manifest.json#$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-consensus-16of30')].metrics.per_buffer['20'].f1",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_summary_T0.0.json",
-        "path": "$.summaries[0].best_operating_point.f1_20m",
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "'30-pass', '16of30', '5-pass' are pool names (instrument rule 5). Cross-file locator convention: a value `path` of the form '<file>#<jsonpath>' names an anchor in a file other than anchor.file (the span mixes sources)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          154,
-          155
-        ],
-        "section": "5. Caveats"
-      },
-      "claim_text": "- **Population SD** (`pstdev`, ÷N) is reported for the 5 runs treated as the\n  stochastic population at T=0.0; a sample SD (÷N−1) would be ~1.12× larger.",
-      "values": [
-        {
-          "quantity": "number of runs treated as the stochastic population",
-          "value_verbatim": "5",
-          "value_parsed": 5.0,
-          "unit": "runs",
-          "kind": "parameter",
-          "path": "$.iterations",
-          "method": "read"
-        },
-        {
-          "quantity": "ratio of sample SD to population SD at N=5",
-          "value_verbatim": "1.12",
-          "value_parsed": 1.12,
-          "unit": null,
-          "kind": "ratio",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_grid_T0.0.json",
-        "path": null,
-        "expression": "(a / (a - 1)) ** 0.5",
-        "operands": [
-          {
-            "name": "a",
-            "file": "results/verifier-robustness/robustness_grid_T0.0.json",
-            "path": "$.iterations"
-          }
-        ]
-      },
-      "method": "arithmetic",
-      "notes": "sqrt(N / (N - 1)) with N = 5 iterations gives the sample-vs-population SD inflation factor."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          193,
-          195
-        ],
-        "section": "7. Stage 2 — a higher-temperature consensus verifier does not help"
-      },
-      "claim_text": "productive band from § 3) at N=5, climbing T=0.3 → 0.7 → 1.0, advancing a cell\nto the next temperature only if its best-consensus F1@20 m beats its *own*\nprevious temperature by > 0.005 (the § 2 noise floor). Each tile size climbs",
-      "values": [
-        {
-          "quantity": "verifier iterations per rung, Stage 2",
-          "value_verbatim": "N=5",
-          "value_parsed": 5.0,
-          "unit": "iterations",
-          "kind": "parameter",
-          "path": "$.iterations",
-          "method": null
-        },
-        {
-          "quantity": "first temperature rung, Stage 2 ladder",
-          "value_verbatim": "T=0.3",
-          "value_parsed": 0.3,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.ladder[0]",
-          "method": null
-        },
-        {
-          "quantity": "second temperature rung, Stage 2 ladder",
-          "value_verbatim": "0.7",
-          "value_parsed": 0.7,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.ladder[1]",
-          "method": null
-        },
-        {
-          "quantity": "third temperature rung, Stage 2 ladder",
-          "value_verbatim": "1.0",
-          "value_parsed": 1.0,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.ladder[2]",
-          "method": null
-        },
-        {
-          "quantity": "advancement margin in F1@20 m required to climb a rung",
-          "value_verbatim": "0.005",
-          "value_parsed": 0.005,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.margin",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/snowball_summary.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": null
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          198,
-          199
-        ],
-        "section": "7. Stage 2 — a higher-temperature consensus verifier does not help"
-      },
-      "claim_text": "**Result: both cells stalled at the first rung (T=0.3); T=0.7 and T=1.0 never\nran.**",
-      "values": [
-        {
-          "quantity": "temperature rung at which both cells stalled",
-          "value_verbatim": "T=0.3",
-          "value_parsed": 0.3,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.stalled_at",
-          "method": null
-        },
-        {
-          "quantity": "temperature rung planned but never run (second)",
-          "value_verbatim": "T=0.7",
-          "value_parsed": 0.7,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.trajectory (absent)",
-          "method": null
-        },
-        {
-          "quantity": "temperature rung planned but never run (third)",
-          "value_verbatim": "T=1.0",
-          "value_parsed": 1.0,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.trajectory (absent)",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/snowball_summary.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "$.stalled_at records 0.3 for both cells; the never-ran rungs are verifiable as the absence of trajectory entries above T=0.3 (the trajectory holds only T=0.0 and T=0.3)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          203,
-          203
-        ],
-        "section": "7. Stage 2 — a higher-temperature consensus verifier does not help"
-      },
-      "claim_text": "| 384-flash-high-text ≥3of5 | 0.8722 | 0.8739 | **+0.0017** | stall (within noise) |",
-      "values": [
-        {
-          "quantity": "best-consensus F1@20 m at T=0.0, 384 >=3-of-5 band",
-          "value_verbatim": "0.8722",
-          "value_parsed": 0.8722,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.baseline_T0.0['384-flash-high-text-ge3of5']",
-          "method": null
-        },
-        {
-          "quantity": "best-consensus F1@20 m at T=0.3, 384 >=3-of-5 band",
-          "value_verbatim": "0.8739",
-          "value_parsed": 0.8739,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.trajectory[1].best_consensus_f1['384-flash-high-text-ge3of5']",
-          "method": null
-        },
-        {
-          "quantity": "delta F1@20 m, T=0.3 minus T=0.0, 384 >=3-of-5 band",
-          "value_verbatim": "+0.0017",
-          "value_parsed": 0.0017,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.trajectory[1].delta_vs_prev['384-flash-high-text-ge3of5']",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/snowball_summary.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Table row; 'stall (within noise)' is the verdict column, encoded as $.trajectory[1].advanced[...] = false and $.stalled_at[...] = 0.3."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          204,
-          204
-        ],
-        "section": "7. Stage 2 — a higher-temperature consensus verifier does not help"
-      },
-      "claim_text": "| 256-text ≥3of5 | 0.8637 | 0.8582 | **−0.0055** | stall (worse) |",
-      "values": [
-        {
-          "quantity": "best-consensus F1@20 m at T=0.0, 256 >=3-of-5 band",
-          "value_verbatim": "0.8637",
-          "value_parsed": 0.8637,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.baseline_T0.0['256-text-ge3of5']",
-          "method": null
-        },
-        {
-          "quantity": "best-consensus F1@20 m at T=0.3, 256 >=3-of-5 band",
-          "value_verbatim": "0.8582",
-          "value_parsed": 0.8582,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.trajectory[1].best_consensus_f1['256-text-ge3of5']",
-          "method": null
-        },
-        {
-          "quantity": "delta F1@20 m, T=0.3 minus T=0.0, 256 >=3-of-5 band",
-          "value_verbatim": "−0.0055",
-          "value_parsed": -0.0055,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.trajectory[1].delta_vs_prev['256-text-ge3of5']",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/snowball_summary.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Table row; verdict column as in the preceding row."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          207,
-          208
-        ],
-        "section": "7. Stage 2 — a higher-temperature consensus verifier does not help"
-      },
-      "claim_text": "temperature produces more *noise* diversity (the 256 inter-iteration split rose\n3.2 % → 5.7 % at T=0.3) but no *signal* diversity: the consensus of noisier",
-      "values": [
-        {
-          "quantity": "inter-iteration candidate split rate, 256 cell at T=0.0",
-          "value_verbatim": "3.2 %",
-          "value_parsed": 3.2,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "inter-iteration candidate split rate, 256 cell at T=0.3",
-          "value_verbatim": "5.7 %",
-          "value_parsed": 5.7,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "outputs/verifier-robustness/256-text-ge3of5/T0.3/verified/probabilities.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "recompute-script",
-      "notes": "Same flip-counting recipe as the S 2 ~3 % claim, applied to the 256 >=3-of-5 band. The T=0.0 side sits in outputs/verifier-robustness/256-text-1of5-union/T0.0/verified/probabilities.json (1-of-5 union, of which the >=3-of-5 band is a subset); the T=0.3 side in the anchor file. Triage should confirm which pool the 3.2 % baseline was measured on."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          212,
-          213
-        ],
-        "section": "7. Stage 2 — a higher-temperature consensus verifier does not help"
-      },
-      "claim_text": "carry-forward verifier stands as optimal.** Cost: one rung, ~$8.71 flex (the\nsnowball's early stop saved the T=0.7/1.0 spend).",
-      "values": [
-        {
-          "quantity": "cost USD at flex, Stage 2 T=0.3 rung (both cells)",
-          "value_verbatim": "~$8.71",
-          "value_parsed": 8.71,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Flex-priced figure; no artefact records flex pricing. The two T=0.3 run.meta files (outputs/verifier-robustness/384-flash-high-text-ge3of5/T0.3/verified/ and outputs/verifier-robustness/256-text-ge3of5/T0.3/verified/) carry $.cost_estimate.total_cost_usd at standard pricing."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          222,
-          224
-        ],
-        "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
-      },
-      "claim_text": "Stage 3 completed the verifier configuration space: a **thinking (minimal/high)\n× temperature (0.0/0.3/0.7) matrix** on the 384 ≥3-of-5 band (855 candidates,\nN=5; three new cells × 4,275 calls, est **$20.86 flex** —",
-      "values": [
-        {
-          "quantity": "first temperature level of the Stage-3 matrix",
-          "value_verbatim": "0.0",
-          "value_parsed": 0.0,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.matrix_runs_EXISTING_free[0].temperature",
-          "method": null
-        },
-        {
-          "quantity": "second temperature level of the Stage-3 matrix",
-          "value_verbatim": "0.3",
-          "value_parsed": 0.3,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.matrix_runs_NEW[2].temperature",
-          "method": null
-        },
-        {
-          "quantity": "third temperature level of the Stage-3 matrix",
-          "value_verbatim": "0.7",
-          "value_parsed": 0.7,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.matrix_runs_NEW[0].temperature",
-          "method": null
-        },
-        {
-          "quantity": "candidate count, 384 >=3-of-5 band",
-          "value_verbatim": "855",
-          "value_parsed": 855.0,
-          "unit": "candidates",
-          "kind": "count",
-          "path": "$.cells[0].n_union",
-          "method": null
-        },
-        {
-          "quantity": "verifier iterations per matrix cell",
-          "value_verbatim": "N=5",
-          "value_parsed": 5.0,
-          "unit": "iterations",
-          "kind": "parameter",
-          "path": "$.iterations",
-          "method": null
-        },
-        {
-          "quantity": "number of newly run matrix cells",
-          "value_verbatim": "three",
-          "value_parsed": 3.0,
-          "unit": "cells",
-          "kind": "count",
-          "path": "$.matrix_runs_NEW (array length)",
-          "method": null
-        },
-        {
-          "quantity": "API calls per new matrix cell",
-          "value_verbatim": "4,275",
-          "value_parsed": 4275.0,
-          "unit": "calls",
-          "kind": "count",
-          "path": "$.matrix_runs_NEW[0].calls",
-          "method": null
-        },
-        {
-          "quantity": "estimated cost USD at flex, three new Stage-3 cells",
-          "value_verbatim": "20.86",
-          "value_parsed": 20.86,
-          "unit": "USD",
-          "kind": "cost",
-          "path": "$.total_new_spend_est_flex_usd",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "planning/verifier-robustness-stage3-384-cells.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "The $20.86 is a pre-run estimate (the planning file's own figure), not an audited or billed cost. 855 is also readable as $.cells[0].n_candidates in results/verifier-robustness/robustness_grid_T0.3-high.json."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          226,
-          227
-        ],
-        "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
-      },
-      "claim_text": "project-canonical round-robin (`scripts/tier_verifier_matrix.py`: 15 pairs,\n10k tile-swap, seed 42, BH-FDR q=0.05, greedy-clique —",
-      "values": [
-        {
-          "quantity": "number of round-robin pairwise comparisons",
-          "value_verbatim": "15",
-          "value_parsed": 15.0,
-          "unit": "pairs",
-          "kind": "count",
-          "path": "$.pairwise (array length)",
-          "method": null
-        },
-        {
-          "quantity": "permutation iterations per pairwise test",
-          "value_verbatim": "10k",
-          "value_parsed": 10000.0,
-          "unit": "permutations",
-          "kind": "parameter",
-          "path": "$.pairwise[0].n_permutations",
-          "method": null
-        },
-        {
-          "quantity": "random seed for the permutation harness",
-          "value_verbatim": "42",
-          "value_parsed": 42.0,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "Benjamini-Hochberg false-discovery-rate level",
-          "value_verbatim": "0.05",
-          "value_parsed": 0.05,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/matrix_tiering.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "matrix_tiering.json records tiers/ranked/pairwise only; it does not store the seed or the FDR level, so those two are anchor-unknown — they are set in scripts/tier_verifier_matrix.py (code, not an artefact). The $.pairwise[*].significant flags are the FDR decision the q level produced."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          232,
-          232
-        ],
-        "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
-      },
-      "claim_text": "| 1 | high T0.3 (N=5) | 0.8764 | 1 | 4of5 / consensus_vt5 / pt0.3 |",
-      "values": [
-        {
-          "quantity": "best F1@20 m, verifier config high thinking, T=0.3, N=5",
-          "value_verbatim": "0.8764",
-          "value_parsed": 0.8764,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.ranked[0].f1",
-          "method": null
-        },
-        {
-          "quantity": "statistical tier, verifier config high thinking, T=0.3, N=5",
-          "value_verbatim": "1",
-          "value_parsed": 1.0,
-          "unit": null,
-          "kind": "other",
-          "path": "$.ranked[0].tier",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/matrix_tiering.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Table row. The rank column is an ordering over $.ranked, not extracted separately; the 'best operating point' column is the compound name string at $.ranked[0].op ('kof5 / rule / ptX') and is treated as a condition name per instrument rule 5."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          233,
-          233
-        ],
-        "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
-      },
-      "claim_text": "| 2 | min T0.3 (N=5) | 0.8739 | 1 | 4of5 / mean / pt0.15 |",
-      "values": [
-        {
-          "quantity": "best F1@20 m, verifier config minimal thinking, T=0.3, N=5",
-          "value_verbatim": "0.8739",
-          "value_parsed": 0.8739,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.ranked[1].f1",
-          "method": null
-        },
-        {
-          "quantity": "statistical tier, verifier config minimal thinking, T=0.3, N=5",
-          "value_verbatim": "1",
-          "value_parsed": 1.0,
-          "unit": null,
-          "kind": "other",
-          "path": "$.ranked[1].tier",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/matrix_tiering.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Table row. The rank column is an ordering over $.ranked, not extracted separately; the 'best operating point' column is the compound name string at $.ranked[1].op ('kof5 / rule / ptX') and is treated as a condition name per instrument rule 5."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          234,
-          234
-        ],
-        "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
-      },
-      "claim_text": "| 3 | high T0.7 (N=5) | 0.8739 | 1 | 4of5 / consensus_vt5 / pt0.4 |",
-      "values": [
-        {
-          "quantity": "best F1@20 m, verifier config high thinking, T=0.7, N=5",
-          "value_verbatim": "0.8739",
-          "value_parsed": 0.8739,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.ranked[2].f1",
-          "method": null
-        },
-        {
-          "quantity": "statistical tier, verifier config high thinking, T=0.7, N=5",
-          "value_verbatim": "1",
-          "value_parsed": 1.0,
-          "unit": null,
-          "kind": "other",
-          "path": "$.ranked[2].tier",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/matrix_tiering.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Table row. The rank column is an ordering over $.ranked, not extracted separately; the 'best operating point' column is the compound name string at $.ranked[2].op ('kof5 / rule / ptX') and is treated as a condition name per instrument rule 5."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          235,
-          235
-        ],
-        "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
-      },
-      "claim_text": "| 4 | min T0.0 (N=5) | 0.8722 | 1 | 4of5 / consensus_vt1 / pt0.15 |",
-      "values": [
-        {
-          "quantity": "best F1@20 m, verifier config minimal thinking, T=0.0, N=5",
-          "value_verbatim": "0.8722",
-          "value_parsed": 0.8722,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.ranked[3].f1",
-          "method": null
-        },
-        {
-          "quantity": "statistical tier, verifier config minimal thinking, T=0.0, N=5",
-          "value_verbatim": "1",
-          "value_parsed": 1.0,
-          "unit": null,
-          "kind": "other",
-          "path": "$.ranked[3].tier",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/matrix_tiering.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Table row. The rank column is an ordering over $.ranked, not extracted separately; the 'best operating point' column is the compound name string at $.ranked[3].op ('kof5 / rule / ptX') and is treated as a condition name per instrument rule 5."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          236,
-          236
-        ],
-        "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
-      },
-      "claim_text": "| 5 | min T0.7 (N=5) | 0.8709 | 1 | 4of5 / consensus_vt2 / pt0.2 |",
-      "values": [
-        {
-          "quantity": "best F1@20 m, verifier config minimal thinking, T=0.7, N=5",
-          "value_verbatim": "0.8709",
-          "value_parsed": 0.8709,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.ranked[4].f1",
-          "method": null
-        },
-        {
-          "quantity": "statistical tier, verifier config minimal thinking, T=0.7, N=5",
-          "value_verbatim": "1",
-          "value_parsed": 1.0,
-          "unit": null,
-          "kind": "other",
-          "path": "$.ranked[4].tier",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/matrix_tiering.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Table row. The rank column is an ordering over $.ranked, not extracted separately; the 'best operating point' column is the compound name string at $.ranked[4].op ('kof5 / rule / ptX') and is treated as a condition name per instrument rule 5."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          237,
-          237
-        ],
-        "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
-      },
-      "claim_text": "| 6 | **high T0.0 (n=1)** | **0.8519** | **2** | 4of5 / mean / pt0.5 |",
-      "values": [
-        {
-          "quantity": "best F1@20 m, verifier config high thinking, T=0.0, n=1 on-disk prior",
-          "value_verbatim": "0.8519",
-          "value_parsed": 0.8519,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.ranked[5].f1",
-          "method": null
-        },
-        {
-          "quantity": "statistical tier, verifier config high thinking, T=0.0, n=1 on-disk prior",
-          "value_verbatim": "2",
-          "value_parsed": 2.0,
-          "unit": null,
-          "kind": "other",
-          "path": "$.ranked[5].tier",
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/matrix_tiering.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "Table row. The rank column is an ordering over $.ranked, not extracted separately; the 'best operating point' column is the compound name string at $.ranked[5].op ('kof5 / rule / ptX') and is treated as a condition name per instrument rule 5."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          239,
-          242
-        ],
-        "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
-      },
-      "claim_text": "- **All five N=5 configurations are ONE tier** (0/10 pairs among them\n  significant): neither temperature nor thinking level moves F1 once the\n  verifier runs at N=5. The only Tier-2 cell is the *single-pass* high-thinking\n  prior — all 5 significant pairs are it-vs-others.",
-      "values": [
-        {
-          "quantity": "number of N=5 configurations sharing one tier",
-          "value_verbatim": "five",
-          "value_parsed": 5.0,
-          "unit": "configurations",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "significant pairs among the five N=5 configurations",
-          "value_verbatim": "0",
-          "value_parsed": 0.0,
-          "unit": "pairs",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "pairwise comparisons among the five N=5 configurations",
-          "value_verbatim": "10",
-          "value_parsed": 10.0,
-          "unit": "pairs",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "significant pairs involving the single-pass high-thinking prior",
-          "value_verbatim": "5",
-          "value_parsed": 5.0,
-          "unit": "pairs",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/matrix_tiering.json",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "recompute-script",
-      "notes": "Recipe: count $.pairwise entries with significant == true, split by whether either ref is 'high-T0.0'; the 15 pairs decompose as 10 among the N=5 cells and 5 involving high-T0.0. Tier membership is at $.tiers."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          243,
-          245
-        ],
-        "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
-      },
-      "claim_text": "- **High thinking HURTS a single verifier pass.** At the 4-of-5 input:\n  minimal n=1 0.8659 > medium 0.8545 > high 0.8519\n  (`high_thinking_prior.log`, $0 on-disk re-scores). The adversarial prompt",
-      "values": [
-        {
-          "quantity": "best F1@20 m, minimal-thinking n=1 verifier at proposer 4-of-5",
-          "value_verbatim": "0.8659",
-          "value_parsed": 0.8659,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "best F1@20 m, medium-thinking n=1 verifier at proposer 4-of-5",
-          "value_verbatim": "0.8545",
-          "value_parsed": 0.8545,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "best F1@20 m, high-thinking n=1 verifier at proposer 4-of-5",
-          "value_verbatim": "0.8519",
-          "value_parsed": 0.8519,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "cost USD of the on-disk re-scores",
-          "value_verbatim": "$0",
-          "value_parsed": 0.0,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/high_thinking_prior.log",
-        "path": null,
-        "expression": null,
-        "operands": null
-      },
-      "method": "read",
-      "notes": "The anchor is a plain-text log, not JSON: the '4of5' row of its 'THINKING axis at T=0.0' table carries the three figures in column order minimal_n1 / medium_n1 / high_n1. The '$0' asserts no new API spend (no run.meta exists for these re-scores) — flagged as a doubtful inclusion."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          248,
-          249
-        ],
-        "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
-      },
-      "claim_text": "- **What high thinking buys at N=5 is MCC, not F1**: high T0.3 MCC 0.789 vs\n  minimal T0.3 0.771 (+0.018) at ~3× the verifier cost.",
-      "values": [
-        {
-          "quantity": "tile-MCC at the best operating point, high thinking T=0.3 N=5",
-          "value_verbatim": "0.789",
-          "value_parsed": 0.789,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summaries[0].best_operating_point.mcc",
-          "method": null
-        },
-        {
-          "quantity": "tile-MCC at the best operating point, minimal thinking T=0.3 N=5",
-          "value_verbatim": "0.771",
-          "value_parsed": 0.771,
-          "unit": null,
-          "kind": "metric",
-          "path": "results/verifier-robustness/robustness_summary_T0.3.json#$.summaries[0].best_operating_point.mcc",
-          "method": "read"
-        },
-        {
-          "quantity": "MCC gain of high over minimal thinking at T=0.3, N=5",
-          "value_verbatim": "+0.018",
-          "value_parsed": 0.018,
-          "unit": null,
-          "kind": "statistic",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "verifier cost multiplier of high over minimal thinking",
-          "value_verbatim": "3",
-          "value_parsed": 3.0,
-          "unit": null,
-          "kind": "ratio",
-          "path": "planning/verifier-robustness-stage3-384-cells.json#$.high_thinking_cost_multiplier",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_summary_T0.3-high.json",
-        "path": null,
-        "expression": "a - b",
-        "operands": [
-          {
-            "name": "a",
-            "file": "results/verifier-robustness/robustness_summary_T0.3-high.json",
-            "path": "$.summaries[0].best_operating_point.mcc"
-          },
-          {
-            "name": "b",
-            "file": "results/verifier-robustness/robustness_summary_T0.3.json",
-            "path": "$.summaries[0].best_operating_point.mcc"
-          }
-        ]
-      },
-      "method": "arithmetic",
-      "notes": "MCC values are quoted to 3 dp. Cross-file locator convention: a value `path` of the form '<file>#<jsonpath>' names an anchor in a file other than anchor.file (the span mixes sources)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          250,
-          253
-        ],
-        "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
-      },
-      "claim_text": "- **Aggregation refinement** (corrects the § 2 majority-vote reading): a\n  PERMISSIVE consensus beats the *expected* single pass by ~+0.012 — at T=0.0\n  the vt1 union (0.8722 vs single-run mean 0.8601), at T=0.3 the\n  mean-probability rule (0.8739). Strict/unanimous voting hurts. Note",
-      "values": [
-        {
-          "quantity": "F1@20 m uplift of permissive consensus over the expected single pass",
-          "value_verbatim": "+0.012",
-          "value_parsed": 0.012,
-          "unit": null,
-          "kind": "statistic",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "best F1@20 m, T=0.0 vt1 union operating point, 384 cell",
-          "value_verbatim": "0.8722",
-          "value_parsed": 0.8722,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summaries[0].best_operating_point.f1_20m",
-          "method": "read"
-        },
-        {
-          "quantity": "single-run F1@20 m mean, 384 cell 4-of-5",
-          "value_verbatim": "0.8601",
-          "value_parsed": 0.8601,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summaries[0].determinism_by_proposer_k[3].single_run_f1_mean",
-          "method": "read"
-        },
-        {
-          "quantity": "best F1@20 m, T=0.3 mean-probability rule, 384 >=3-of-5 band",
-          "value_verbatim": "0.8739",
-          "value_parsed": 0.8739,
-          "unit": null,
-          "kind": "metric",
-          "path": "results/verifier-robustness/robustness_summary_T0.3.json#$.summaries[0].best_operating_point.f1_20m",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/robustness_summary_T0.0.json",
-        "path": null,
-        "expression": "a - b",
-        "operands": [
-          {
-            "name": "a",
-            "file": "results/verifier-robustness/robustness_summary_T0.0.json",
-            "path": "$.summaries[0].best_operating_point.f1_20m"
-          },
-          {
-            "name": "b",
-            "file": "results/verifier-robustness/robustness_summary_T0.0.json",
-            "path": "$.summaries[0].determinism_by_proposer_k[3].single_run_f1_mean"
-          }
-        ]
-      },
-      "method": "arithmetic",
-      "notes": "Restates the S 2 refinement (lines 88-90) with its components. Cross-file locator convention: a value `path` of the form '<file>#<jsonpath>' names an anchor in a file other than anchor.file (the span mixes sources)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          260,
-          260
-        ],
-        "section": "9. Model roles — Pro is a better proposer, an equal (so dearer) verifier"
-      },
-      "claim_text": "`gemini-3.1-pro-preview` artefacts already on disk allowed a $0 re-score",
-      "values": [
-        {
-          "quantity": "cost USD of the Pro proposer-verifier re-score",
-          "value_verbatim": "$0",
-          "value_parsed": 0.0,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Span truncated at the assigned extraction boundary (line 260); the sentence continues beyond it and the rest of S 9 belongs to another extractor. Asserts no new API spend for the Pro re-score (the gemini-3.1-pro-preview artefacts were already on disk); no artefact seen that records a zero cost. Doubtful inclusion."
+     "quantity": "cost USD, Run B audited as-run (live corrected figure)",
+     "value_verbatim": "~$34.5",
+     "value_parsed": 34.5,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "anchor-unknown"
     }
-  ]
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Both dollars concern S 16(c), outside this assigned range (lines 1-260). The audited ~$34.5 traces to the prose report reports/token-load-audit-2026-06-12.md (line 190 table row 'uplift (no manifest)'); prose-to-prose anchoring is barred by instrument rule 2, so triage must chase that report to a cost artefact."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     6,
+     7
+    ],
+    "section": "Revision banner"
+   },
+   "claim_text": "> (token-load audit: the cost model was rebuilt from per-item metadata —\n> the prior calibration sat on a 2× double-counted manifest and unbilled",
+   "values": [
+    {
+     "quantity": "double-counting factor in the superseded cost manifest",
+     "value_verbatim": "2×",
+     "value_parsed": 2.0,
+     "unit": null,
+     "kind": "ratio",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "historical",
+   "notes": "Describes the magnitude of an error in a superseded cost calibration; narrated in reports/token-load-audit-2026-06-12.md. Quoted-historical side, not a live claim."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     18,
+     19
+    ],
+    "section": "Headline"
+   },
+   "claim_text": "**Headline**: the production carry-forward verifier — **gemini-3-flash, T=0.0,\nminimal thinking, n=1** — is **vindicated on every axis tested**. Run-to-run",
+   "values": [
+    {
+     "quantity": "verifier temperature, production carry-forward config",
+     "value_verbatim": "T=0.0",
+     "value_parsed": 0.0,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-consensus-16of30')].verifier_config.temperature",
+     "method": null
+    },
+    {
+     "quantity": "verifier pass count, production carry-forward config",
+     "value_verbatim": "n=1",
+     "value_parsed": 1.0,
+     "unit": "passes",
+     "kind": "parameter",
+     "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-consensus-16of30')].n_passes",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/conditions-manifest.json",
+    "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-consensus-16of30')].verifier_config.temperature",
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "The carry-forward verifier is the registered headline condition pv-diag-384::verified-adv-text-consensus-16of30; its verifier_config block records model, thinking_level, and temperature."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     25,
+     26
+    ],
+    "section": "Headline"
+   },
+   "claim_text": "passes are better spent on the proposer than the verifier (§ 10); and the\n0.8951 operational maximum is **not** significantly above the 0.890 headline",
+   "values": [
+    {
+     "quantity": "F1@20 m, operational maximum (opmax35 rung)",
+     "value_verbatim": "0.8951",
+     "value_parsed": 0.8951,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.ladder[4].f1",
+     "method": null
+    },
+    {
+     "quantity": "F1@20 m, registered headline condition (quoted to 3 dp)",
+     "value_verbatim": "0.890",
+     "value_parsed": 0.89,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.ladder[3].f1",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/pareto/pareto_leaderboard.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "The 'not significantly above' assertion is a permutation result reported in S 11 (outside this range); its p-value lives in results/verifier-robustness/opmax_vs_headline_permutation.json. Headline 0.890 is also readable at conditions-manifest $.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-consensus-16of30')].metrics.per_buffer['20'].f1 (0.8902)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     27,
+     28
+    ],
+    "section": "Headline"
+   },
+   "claim_text": "(§ 11). The whole 6→35-pass budget ladder sits in **one statistical tier**\n(§ 12).",
+   "values": [
+    {
+     "quantity": "total pass count, cheapest rung of the budget ladder",
+     "value_verbatim": "6",
+     "value_parsed": 6.0,
+     "unit": "passes",
+     "kind": "count",
+     "path": "$.ladder[0].passes",
+     "method": null
+    },
+    {
+     "quantity": "total pass count, dearest rung of the budget ladder",
+     "value_verbatim": "35",
+     "value_parsed": 35.0,
+     "unit": "passes",
+     "kind": "count",
+     "path": "$.ladder[4].passes",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/pareto/pareto_leaderboard.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "The 'one statistical tier' assertion is a tiering result (S 12): every $.ladder[*].tier is recorded in the same artefact and would need the round-robin permutation harness to re-derive."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     34,
+     35
+    ],
+    "section": "Headline"
+   },
+   "claim_text": "tie is only as strong as the instrument that measured it — the GS\nminimal-vs-high tie *reversed* at 55-map deployment (−0.030,",
+   "values": [
+    {
+     "quantity": "map count, deployment corpus",
+     "value_verbatim": "55",
+     "value_parsed": 55.0,
+     "unit": "maps",
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "delta F1@50 m, minimal-thinking (TM-k3) minus high-thinking (TH7-k3) at 55-map deployment",
+     "value_verbatim": "−0.030",
+     "value_parsed": -0.03,
+     "unit": null,
+     "kind": "statistic",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+    "path": null,
+    "expression": "a - b",
+    "operands": [
+     {
+      "name": "a",
+      "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+      "path": "$.cells[5].f1_50"
+     },
+     {
+      "name": "b",
+      "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+      "path": "$.cells[1].f1_50"
+     }
+    ]
+   },
+   "method": "arithmetic",
+   "notes": "cells[5] is 'TM-k3' and cells[1] is 'TH7-k3' in results/55map-leaderboard/55map_leaderboard_50m.json; 'tier-separated' refers to $.tiers (TH7-k3 tier 1, TM-k3 tier 3). No repo artefact seen that asserts the 55-map corpus size directly, hence anchor-unknown for that count."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     37,
+     38
+    ],
+    "section": "Headline"
+   },
+   "claim_text": "characterisation tie, and GS ties at ±0.03 resolution do not licence\nproduction extrapolation.",
+   "values": [
+    {
+     "quantity": "F1 resolution floor of the Gold-Standard instrument, asserted",
+     "value_verbatim": "±0.03",
+     "value_parsed": 0.03,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "A resolving-power assertion about the GS instrument (cf. Obs 347). No artefact seen that states this figure; it is presumably read off the tiering/permutation null widths. Flagged for triage."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     40,
+     42
+    ],
+    "section": "Stage design bullets"
+   },
+   "claim_text": "- **Stage 1** (T=0.0): verify the **1-of-5 proposer union** of the two\n  Gold-Standard consensus+PV cells (the leading 384 `flash-high-text` and the\n  256 rescue cell) at **N=5**, deriving every proposer-vote input level",
+   "values": [
+    {
+     "quantity": "verifier temperature, Stage 1",
+     "value_verbatim": "T=0.0",
+     "value_parsed": 0.0,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.temperature",
+     "method": null
+    },
+    {
+     "quantity": "cell count, Stage 1",
+     "value_verbatim": "two",
+     "value_parsed": 2.0,
+     "unit": "cells",
+     "kind": "count",
+     "path": "$.cells (array length)",
+     "method": null
+    },
+    {
+     "quantity": "verifier iterations, Stage 1",
+     "value_verbatim": "N=5",
+     "value_parsed": 5.0,
+     "unit": "iterations",
+     "kind": "parameter",
+     "path": "$.iterations",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_grid_T0.0.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     44,
+     45
+    ],
+    "section": "Stage design bullets"
+   },
+   "claim_text": "- **Stage 2** (temperature): a per-cell greedy snowball climbing the verifier\n  temperature 0.3 → 0.7 → 1.0 on the **≥3-of-5 band** — § 7.",
+   "values": [
+    {
+     "quantity": "first temperature rung, Stage 2 snowball ladder",
+     "value_verbatim": "0.3",
+     "value_parsed": 0.3,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.ladder[0]",
+     "method": null
+    },
+    {
+     "quantity": "second temperature rung, Stage 2 snowball ladder",
+     "value_verbatim": "0.7",
+     "value_parsed": 0.7,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.ladder[1]",
+     "method": null
+    },
+    {
+     "quantity": "third temperature rung, Stage 2 snowball ladder",
+     "value_verbatim": "1.0",
+     "value_parsed": 1.0,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.ladder[2]",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/snowball_summary.json",
+    "path": "$.ladder",
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Rungs 0.7 and 1.0 were planned but never ran (see S 7); the ladder itself is recorded in the artefact."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     53,
+     53
+    ],
+    "section": "1. The run"
+   },
+   "claim_text": "| thinking / temperature | minimal / **0.0** |",
+   "values": [
+    {
+     "quantity": "verifier temperature, Stage-1 run as executed",
+     "value_verbatim": "0.0",
+     "value_parsed": 0.0,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.configuration.temperature",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "outputs/verifier-robustness/384-flash-high-text-1of5-union/T0.0/verified/run.meta.json",
+    "path": "$.configuration.temperature",
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Thinking level 'minimal' is the non-numeric half of this row ($.configuration.thinking_level in the same file)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     54,
+     54
+    ],
+    "section": "1. The run"
+   },
+   "claim_text": "| iterations (N) | 5 |",
+   "values": [
+    {
+     "quantity": "verifier iterations (N), Stage 1",
+     "value_verbatim": "5",
+     "value_parsed": 5.0,
+     "unit": "iterations",
+     "kind": "parameter",
+     "path": "$.iterations",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_grid_T0.0.json",
+    "path": "$.iterations",
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     56,
+     56
+    ],
+    "section": "1. The run"
+   },
+   "claim_text": "| cells | `384-flash-high-text-1of5-union` (3,736 cands), `256-text-1of5-union` (2,558) |",
+   "values": [
+    {
+     "quantity": "candidate count, 384 1-of-5 union cell",
+     "value_verbatim": "3,736",
+     "value_parsed": 3736.0,
+     "unit": "candidates",
+     "kind": "count",
+     "path": "$.cells[0].n_candidates",
+     "method": null
+    },
+    {
+     "quantity": "candidate count, 256 1-of-5 union cell",
+     "value_verbatim": "2,558",
+     "value_parsed": 2558.0,
+     "unit": "candidates",
+     "kind": "count",
+     "path": "$.cells[1].n_candidates",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_grid_T0.0.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     57,
+     57
+    ],
+    "section": "1. The run"
+   },
+   "claim_text": "| calls / cost | 31,470 (0 failures) / **$21.93 flex** |",
+   "values": [
+    {
+     "quantity": "API call count, Stage 1 (both cells)",
+     "value_verbatim": "31,470",
+     "value_parsed": 31470.0,
+     "unit": "calls",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "failed call count, Stage 1",
+     "value_verbatim": "0",
+     "value_parsed": 0.0,
+     "unit": "calls",
+     "kind": "count",
+     "path": "$.execution_stats.items_failed",
+     "method": "read"
+    },
+    {
+     "quantity": "cost USD, Stage 1 at flex pricing",
+     "value_verbatim": "21.93",
+     "value_parsed": 21.93,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/verifier-robustness/384-flash-high-text-1of5-union/T0.0/verified/run.meta.json",
+    "path": null,
+    "expression": "a + b",
+    "operands": [
+     {
+      "name": "a",
+      "file": "outputs/verifier-robustness/384-flash-high-text-1of5-union/T0.0/verified/run.meta.json",
+      "path": "$.execution_stats.items_processed"
+     },
+     {
+      "name": "b",
+      "file": "outputs/verifier-robustness/256-text-1of5-union/T0.0/verified/run.meta.json",
+      "path": "$.execution_stats.items_processed"
+     }
+    ]
+   },
+   "method": "arithmetic",
+   "notes": "The two run.meta files record items_processed (calls) and items_failed per cell; the failures value should be 0 in BOTH (only the 384 file is reachable via anchor.file). The dollar figure is at flex pricing, which no artefact records: $.cost_estimate.total_cost_usd in each run.meta is at standard pricing, so the flex figure cannot be read or derived from committed artefacts without the flex discount rate."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     58,
+     58
+    ],
+    "section": "1. The run"
+   },
+   "claim_text": "| scoring | point F1@20 m + tile-MCC, EPSG:32635, `lib_advanced_metrics.score_detection_set` |",
+   "values": [
+    {
+     "quantity": "point-matching buffer radius used for F1 scoring",
+     "value_verbatim": "20 m",
+     "value_parsed": 20.0,
+     "unit": "m",
+     "kind": "physical",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Doubtful inclusion: '20 m' functions largely as part of the metric name F1@20 m (the artefacts key it as `f1_20m`). Recorded once here, where the document asserts the scoring setup, and not re-extracted at every later mention. The buffer is set in scripts/analyse_verifier_robustness.py / lib_advanced_metrics.score_detection_set, not in a JSON artefact."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     68,
+     71
+    ],
+    "section": "2. Determinism — n=1 is vindicated"
+   },
+   "claim_text": "**The headline robustness result.** T=0.0 is not bit-deterministic — at the\ncandidate level **~3 % of candidates flip** accept/reject across the 5 iterations\n(256 cell: 81 / 2,558 split at prob_t 0.2; cf. the free e47 `v1`/`v2` prior of\n2.96 %). But that flicker **washes out at the aggregate (tile) level**: the F1",
+   "values": [
+    {
+     "quantity": "percentage of candidates flipping accept/reject across iterations",
+     "value_verbatim": "3 %",
+     "value_parsed": 3.0,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "verifier iterations compared",
+     "value_verbatim": "5",
+     "value_parsed": 5.0,
+     "unit": "iterations",
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "flipped candidate count, 256 cell at prob_t 0.2",
+     "value_verbatim": "81",
+     "value_parsed": 81.0,
+     "unit": "candidates",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "candidate count, 256 cell",
+     "value_verbatim": "2,558",
+     "value_parsed": 2558.0,
+     "unit": "candidates",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "probability threshold at which the split was measured",
+     "value_verbatim": "0.2",
+     "value_parsed": 0.2,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "candidate flip rate, free e47 v1/v2 prior",
+     "value_verbatim": "2.96 %",
+     "value_parsed": 2.96,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/verifier-robustness/256-text-1of5-union/T0.0/verified/probabilities.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "recompute-script",
+   "notes": "Recipe: count candidates whose accept/reject decision at prob_t 0.2 is not identical across the five per-iteration probability vectors in outputs/verifier-robustness/256-text-1of5-union/T0.0/verified/probabilities.json, divide by the candidate count (also readable at results/verifier-robustness/robustness_grid_T0.0.json $.cells[1].n_candidates). The e47 v1/v2 prior of 2.96 % comes from a different experiment not named in this document — anchor unknown."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     76,
+     76
+    ],
+    "section": "2. Determinism — n=1 is vindicated"
+   },
+   "claim_text": "| 384 | 4of5 | 0.8601 | **0.0072** | 0.8498–0.8689 |",
+   "values": [
+    {
+     "quantity": "single-run F1@20 m mean over 5 runs, 384 cell, proposer 4-of-5",
+     "value_verbatim": "0.8601",
+     "value_parsed": 0.8601,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summaries[0].determinism_by_proposer_k[3].single_run_f1_mean",
+     "method": null
+    },
+    {
+     "quantity": "single-run F1@20 m population SD over 5 runs, 384 cell, proposer 4-of-5",
+     "value_verbatim": "0.0072",
+     "value_parsed": 0.0072,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.summaries[0].determinism_by_proposer_k[3].single_run_f1_sd",
+     "method": null
+    },
+    {
+     "quantity": "single-run F1@20 m minimum over 5 runs, 384 cell, proposer 4-of-5",
+     "value_verbatim": "0.8498",
+     "value_parsed": 0.8498,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summaries[0].determinism_by_proposer_k[3].single_run_f1_min",
+     "method": null
+    },
+    {
+     "quantity": "single-run F1@20 m maximum over 5 runs, 384 cell, proposer 4-of-5",
+     "value_verbatim": "0.8689",
+     "value_parsed": 0.8689,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summaries[0].determinism_by_proposer_k[3].single_run_f1_max",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_summary_T0.0.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Table row. Tile sizes 384/256 in the first column and the proposer vote level in the second are treated as cell names (instrument rule 5); the row's proposer_k is 4 at $.summaries[0].determinism_by_proposer_k[3].proposer_k."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     77,
+     77
+    ],
+    "section": "2. Determinism — n=1 is vindicated"
+   },
+   "claim_text": "| 384 | 3of5 | 0.8472 | 0.0032 | 0.8426–0.8525 |",
+   "values": [
+    {
+     "quantity": "single-run F1@20 m mean over 5 runs, 384 cell, proposer 3-of-5",
+     "value_verbatim": "0.8472",
+     "value_parsed": 0.8472,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summaries[0].determinism_by_proposer_k[2].single_run_f1_mean",
+     "method": null
+    },
+    {
+     "quantity": "single-run F1@20 m population SD over 5 runs, 384 cell, proposer 3-of-5",
+     "value_verbatim": "0.0032",
+     "value_parsed": 0.0032,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.summaries[0].determinism_by_proposer_k[2].single_run_f1_sd",
+     "method": null
+    },
+    {
+     "quantity": "single-run F1@20 m minimum over 5 runs, 384 cell, proposer 3-of-5",
+     "value_verbatim": "0.8426",
+     "value_parsed": 0.8426,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summaries[0].determinism_by_proposer_k[2].single_run_f1_min",
+     "method": null
+    },
+    {
+     "quantity": "single-run F1@20 m maximum over 5 runs, 384 cell, proposer 3-of-5",
+     "value_verbatim": "0.8525",
+     "value_parsed": 0.8525,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summaries[0].determinism_by_proposer_k[2].single_run_f1_max",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_summary_T0.0.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Table row. Tile sizes 384/256 in the first column and the proposer vote level in the second are treated as cell names (instrument rule 5); the row's proposer_k is 3 at $.summaries[0].determinism_by_proposer_k[2].proposer_k."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     78,
+     78
+    ],
+    "section": "2. Determinism — n=1 is vindicated"
+   },
+   "claim_text": "| 256 | 5of5 | 0.8555 | 0.0025 | 0.8519–0.8585 |",
+   "values": [
+    {
+     "quantity": "single-run F1@20 m mean over 5 runs, 256 cell, proposer 5-of-5",
+     "value_verbatim": "0.8555",
+     "value_parsed": 0.8555,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summaries[1].determinism_by_proposer_k[4].single_run_f1_mean",
+     "method": null
+    },
+    {
+     "quantity": "single-run F1@20 m population SD over 5 runs, 256 cell, proposer 5-of-5",
+     "value_verbatim": "0.0025",
+     "value_parsed": 0.0025,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.summaries[1].determinism_by_proposer_k[4].single_run_f1_sd",
+     "method": null
+    },
+    {
+     "quantity": "single-run F1@20 m minimum over 5 runs, 256 cell, proposer 5-of-5",
+     "value_verbatim": "0.8519",
+     "value_parsed": 0.8519,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summaries[1].determinism_by_proposer_k[4].single_run_f1_min",
+     "method": null
+    },
+    {
+     "quantity": "single-run F1@20 m maximum over 5 runs, 256 cell, proposer 5-of-5",
+     "value_verbatim": "0.8585",
+     "value_parsed": 0.8585,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summaries[1].determinism_by_proposer_k[4].single_run_f1_max",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_summary_T0.0.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Table row. Tile sizes 384/256 in the first column and the proposer vote level in the second are treated as cell names (instrument rule 5); the row's proposer_k is 5 at $.summaries[1].determinism_by_proposer_k[4].proposer_k."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     79,
+     79
+    ],
+    "section": "2. Determinism — n=1 is vindicated"
+   },
+   "claim_text": "| 256 | 3of5 | 0.8526 | 0.0039 | 0.8467–0.8578 |",
+   "values": [
+    {
+     "quantity": "single-run F1@20 m mean over 5 runs, 256 cell, proposer 3-of-5",
+     "value_verbatim": "0.8526",
+     "value_parsed": 0.8526,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summaries[1].determinism_by_proposer_k[2].single_run_f1_mean",
+     "method": null
+    },
+    {
+     "quantity": "single-run F1@20 m population SD over 5 runs, 256 cell, proposer 3-of-5",
+     "value_verbatim": "0.0039",
+     "value_parsed": 0.0039,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.summaries[1].determinism_by_proposer_k[2].single_run_f1_sd",
+     "method": null
+    },
+    {
+     "quantity": "single-run F1@20 m minimum over 5 runs, 256 cell, proposer 3-of-5",
+     "value_verbatim": "0.8467",
+     "value_parsed": 0.8467,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summaries[1].determinism_by_proposer_k[2].single_run_f1_min",
+     "method": null
+    },
+    {
+     "quantity": "single-run F1@20 m maximum over 5 runs, 256 cell, proposer 3-of-5",
+     "value_verbatim": "0.8578",
+     "value_parsed": 0.8578,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summaries[1].determinism_by_proposer_k[2].single_run_f1_max",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_summary_T0.0.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Table row. Tile sizes 384/256 in the first column and the proposer vote level in the second are treated as cell names (instrument rule 5); the row's proposer_k is 3 at $.summaries[1].determinism_by_proposer_k[2].proposer_k."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     81,
+     82
+    ],
+    "section": "2. Determinism — n=1 is vindicated"
+   },
+   "claim_text": "Across **all** proposer levels the single-run F1 SD is **0.0025–0.0072** (worst\nspread ~0.019). Two corollaries:",
+   "values": [
+    {
+     "quantity": "minimum single-run F1 SD across all proposer levels, both cells",
+     "value_verbatim": "0.0025",
+     "value_parsed": 0.0025,
+     "unit": null,
+     "kind": "statistic",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "maximum single-run F1 SD across all proposer levels, both cells",
+     "value_verbatim": "0.0072",
+     "value_parsed": 0.0072,
+     "unit": null,
+     "kind": "statistic",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "worst min-max F1 spread across all proposer levels",
+     "value_verbatim": "0.019",
+     "value_parsed": 0.019,
+     "unit": null,
+     "kind": "statistic",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_summary_T0.0.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "recompute-script",
+   "notes": "Recipe: over all ten $.summaries[*].determinism_by_proposer_k[*] entries take min/max of single_run_f1_sd, and max of (single_run_f1_max - single_run_f1_min)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     84,
+     86
+    ],
+    "section": "2. Determinism — n=1 is vindicated"
+   },
+   "claim_text": "- **5-run consensus ≈ single-run mean.** At every level the majority-vote\n  consensus F1 lands within ~0.001–0.01 of the single-run mean (e.g. 384/3of5:\n  consensus 0.8488 vs mean 0.8472). There is **no consensus benefit at T=0.0** —",
+   "values": [
+    {
+     "quantity": "lower bound, |consensus F1 - single-run mean F1| across levels",
+     "value_verbatim": "0.001",
+     "value_parsed": 0.001,
+     "unit": null,
+     "kind": "statistic",
+     "path": null,
+     "method": "recompute-script"
+    },
+    {
+     "quantity": "upper bound, |consensus F1 - single-run mean F1| across levels",
+     "value_verbatim": "0.01",
+     "value_parsed": 0.01,
+     "unit": null,
+     "kind": "statistic",
+     "path": null,
+     "method": "recompute-script"
+    },
+    {
+     "quantity": "majority-vote consensus F1@20 m, 384 cell 3-of-5",
+     "value_verbatim": "0.8488",
+     "value_parsed": 0.8488,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summaries[0].determinism_by_proposer_k[2].consensus_majority_f1",
+     "method": null
+    },
+    {
+     "quantity": "single-run F1@20 m mean, 384 cell 3-of-5",
+     "value_verbatim": "0.8472",
+     "value_parsed": 0.8472,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summaries[0].determinism_by_proposer_k[2].single_run_f1_mean",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_summary_T0.0.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "The ~0.001-0.01 range is a min/max over all ten $.summaries[*].determinism_by_proposer_k[*] pairs of (consensus_majority_f1, single_run_f1_mean), hence recompute-script for those two values."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     88,
+     90
+    ],
+    "section": "2. Determinism — n=1 is vindicated"
+   },
+   "claim_text": "  *Stage-3 refinement (§ 8): this reading applies to the **majority** vote; a\n  permissive aggregation (vt1 union at T=0.0, mean-probability at T=0.3) does\n  beat the expected single pass by ~+0.012.*",
+   "values": [
+    {
+     "quantity": "F1@20 m uplift of permissive consensus over the expected single pass",
+     "value_verbatim": "+0.012",
+     "value_parsed": 0.012,
+     "unit": null,
+     "kind": "statistic",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_summary_T0.0.json",
+    "path": null,
+    "expression": "a - b",
+    "operands": [
+     {
+      "name": "a",
+      "file": "results/verifier-robustness/robustness_summary_T0.0.json",
+      "path": "$.summaries[0].best_operating_point.f1_20m"
+     },
+     {
+      "name": "b",
+      "file": "results/verifier-robustness/robustness_summary_T0.0.json",
+      "path": "$.summaries[0].determinism_by_proposer_k[3].single_run_f1_mean"
+     }
+    ]
+   },
+   "method": "arithmetic",
+   "notes": "Same figure as the S 8 aggregation-refinement bullet (lines 250-253): the T=0.0 vt1 union best operating point (0.8722) minus the 4-of-5 single-run mean (0.8601). Scope call: configuration labels embedded in a result sentence (T=0.0, N=5, 4of5, 16of30, tile sizes 384/256) are treated as condition names per instrument rule 5, not re-extracted as parameters; they are extracted where the document asserts them as run setup (S 1 table, stage bullets, S 8 matrix description)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     91,
+     93
+    ],
+    "section": "2. Determinism — n=1 is vindicated"
+   },
+   "claim_text": "- **The verifier-vote threshold barely moves F1.** At the 384 optimum (4of5,\n  prob_t 0.15) the vt1→vt5 sweep spans only 0.8522–0.8722; at the 256 optimum\n  (5of5, prob_t 0.15), 0.8396–0.8620.",
+   "values": [
+    {
+     "quantity": "probability threshold at the 384 optimum",
+     "value_verbatim": "0.15",
+     "value_parsed": 0.15,
+     "unit": null,
+     "kind": "parameter",
+     "path": "results/verifier-robustness/robustness_summary_T0.0.json#$.summaries[0].best_operating_point.prob_t",
+     "method": "read"
+    },
+    {
+     "quantity": "minimum F1@20 m over the vt1-vt5 sweep, 384 optimum",
+     "value_verbatim": "0.8522",
+     "value_parsed": 0.8522,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "maximum F1@20 m over the vt1-vt5 sweep, 384 optimum",
+     "value_verbatim": "0.8722",
+     "value_parsed": 0.8722,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "probability threshold at the 256 optimum",
+     "value_verbatim": "0.15",
+     "value_parsed": 0.15,
+     "unit": null,
+     "kind": "parameter",
+     "path": "results/verifier-robustness/robustness_summary_T0.0.json#$.summaries[1].best_operating_point.prob_t",
+     "method": "read"
+    },
+    {
+     "quantity": "minimum F1@20 m over the vt1-vt5 sweep, 256 optimum",
+     "value_verbatim": "0.8396",
+     "value_parsed": 0.8396,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "maximum F1@20 m over the vt1-vt5 sweep, 256 optimum",
+     "value_verbatim": "0.8620",
+     "value_parsed": 0.862,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_grid_T0.0.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "recompute-script",
+   "notes": "Recipe: within $.cells[i].grid filter rule in {consensus_vt1..vt5} at the stated proposer_k and prob_t, then take min/max of f1_20m. The 0.8722 maximum coincides with $.summaries[0].best_operating_point.f1_20m in the summary file. Cross-file locator convention: a value `path` of the form '<file>#<jsonpath>' names an anchor in a file other than anchor.file (the span mixes sources)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     95,
+     96
+    ],
+    "section": "2. Determinism — n=1 is vindicated"
+   },
+   "claim_text": "**Consequence for the paper**: every n=1 verified cell carries only **~±0.005 F1**\nof hidden run-to-run noise (worst-case single-draw deviation ~0.01), far below",
+   "values": [
+    {
+     "quantity": "hidden run-to-run F1 noise of an n=1 verified cell (SD scale)",
+     "value_verbatim": "±0.005",
+     "value_parsed": 0.005,
+     "unit": null,
+     "kind": "statistic",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "worst-case single-draw F1 deviation from the mean",
+     "value_verbatim": "0.01",
+     "value_parsed": 0.01,
+     "unit": null,
+     "kind": "statistic",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_summary_T0.0.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "recompute-script",
+   "notes": "Summary figures generalised from the ten $.summaries[*].determinism_by_proposer_k[*] SD and min-max entries; needs the same scan as the 0.0025-0.0072 claim."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     108,
+     108
+    ],
+    "section": "3. Proposer input — feed the verifier a filtered pool"
+   },
+   "claim_text": "| 1of5 (union) | 0.734 (0.778) | 0.827 (0.762) |",
+   "values": [
+    {
+     "quantity": "best F1@20 m, 384 cell, proposer input 1of5 (union)",
+     "value_verbatim": "0.734",
+     "value_parsed": 0.734,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tile-MCC at the best-F1 operating point, 384 cell, input 1of5 (union)",
+     "value_verbatim": "0.778",
+     "value_parsed": 0.778,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "best F1@20 m, 256 cell, proposer input 1of5 (union)",
+     "value_verbatim": "0.827",
+     "value_parsed": 0.827,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tile-MCC at the best-F1 operating point, 256 cell, input 1of5 (union)",
+     "value_verbatim": "0.762",
+     "value_parsed": 0.762,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_grid_T0.0.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "recompute-script",
+   "notes": "Table row. Recipe (from the section lede): within $.cells[i].grid filter to proposer_k = this input level and rule in the reproducible set {consensus_vt1..vt5, mean}, take the max f1_20m over the prob_t sweep, and report its paired mcc. Values are quoted to 3 dp. The 4of5/384 pair and the 5of5/256 F1 coincide with the cells' $.summaries[i].best_operating_point in results/verifier-robustness/robustness_summary_T0.0.json."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     109,
+     109
+    ],
+    "section": "3. Proposer input — feed the verifier a filtered pool"
+   },
+   "claim_text": "| 2of5 | 0.834 (0.786) | 0.846 (0.766) |",
+   "values": [
+    {
+     "quantity": "best F1@20 m, 384 cell, proposer input 2of5",
+     "value_verbatim": "0.834",
+     "value_parsed": 0.834,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tile-MCC at the best-F1 operating point, 384 cell, input 2of5",
+     "value_verbatim": "0.786",
+     "value_parsed": 0.786,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "best F1@20 m, 256 cell, proposer input 2of5",
+     "value_verbatim": "0.846",
+     "value_parsed": 0.846,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tile-MCC at the best-F1 operating point, 256 cell, input 2of5",
+     "value_verbatim": "0.766",
+     "value_parsed": 0.766,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_grid_T0.0.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "recompute-script",
+   "notes": "Table row. Recipe (from the section lede): within $.cells[i].grid filter to proposer_k = this input level and rule in the reproducible set {consensus_vt1..vt5, mean}, take the max f1_20m over the prob_t sweep, and report its paired mcc. Values are quoted to 3 dp. The 4of5/384 pair and the 5of5/256 F1 coincide with the cells' $.summaries[i].best_operating_point in results/verifier-robustness/robustness_summary_T0.0.json."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     110,
+     110
+    ],
+    "section": "3. Proposer input — feed the verifier a filtered pool"
+   },
+   "claim_text": "| 3of5 | 0.859 (0.783) | 0.861 (0.757) |",
+   "values": [
+    {
+     "quantity": "best F1@20 m, 384 cell, proposer input 3of5",
+     "value_verbatim": "0.859",
+     "value_parsed": 0.859,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tile-MCC at the best-F1 operating point, 384 cell, input 3of5",
+     "value_verbatim": "0.783",
+     "value_parsed": 0.783,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "best F1@20 m, 256 cell, proposer input 3of5",
+     "value_verbatim": "0.861",
+     "value_parsed": 0.861,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tile-MCC at the best-F1 operating point, 256 cell, input 3of5",
+     "value_verbatim": "0.757",
+     "value_parsed": 0.757,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_grid_T0.0.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "recompute-script",
+   "notes": "Table row. Recipe (from the section lede): within $.cells[i].grid filter to proposer_k = this input level and rule in the reproducible set {consensus_vt1..vt5, mean}, take the max f1_20m over the prob_t sweep, and report its paired mcc. Values are quoted to 3 dp. The 4of5/384 pair and the 5of5/256 F1 coincide with the cells' $.summaries[i].best_operating_point in results/verifier-robustness/robustness_summary_T0.0.json."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     111,
+     111
+    ],
+    "section": "3. Proposer input — feed the verifier a filtered pool"
+   },
+   "claim_text": "| **4of5** | **0.872** (0.762) | 0.860 (0.750) |",
+   "values": [
+    {
+     "quantity": "best F1@20 m, 384 cell, proposer input 4of5",
+     "value_verbatim": "0.872",
+     "value_parsed": 0.872,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tile-MCC at the best-F1 operating point, 384 cell, input 4of5",
+     "value_verbatim": "0.762",
+     "value_parsed": 0.762,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "best F1@20 m, 256 cell, proposer input 4of5",
+     "value_verbatim": "0.860",
+     "value_parsed": 0.86,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tile-MCC at the best-F1 operating point, 256 cell, input 4of5",
+     "value_verbatim": "0.750",
+     "value_parsed": 0.75,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_grid_T0.0.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "recompute-script",
+   "notes": "Table row. Recipe (from the section lede): within $.cells[i].grid filter to proposer_k = this input level and rule in the reproducible set {consensus_vt1..vt5, mean}, take the max f1_20m over the prob_t sweep, and report its paired mcc. Values are quoted to 3 dp. The 4of5/384 pair and the 5of5/256 F1 coincide with the cells' $.summaries[i].best_operating_point in results/verifier-robustness/robustness_summary_T0.0.json."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     112,
+     112
+    ],
+    "section": "3. Proposer input — feed the verifier a filtered pool"
+   },
+   "claim_text": "| 5of5 | 0.844 (0.732) | **0.864** (0.750) |",
+   "values": [
+    {
+     "quantity": "best F1@20 m, 384 cell, proposer input 5of5",
+     "value_verbatim": "0.844",
+     "value_parsed": 0.844,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tile-MCC at the best-F1 operating point, 384 cell, input 5of5",
+     "value_verbatim": "0.732",
+     "value_parsed": 0.732,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "best F1@20 m, 256 cell, proposer input 5of5",
+     "value_verbatim": "0.864",
+     "value_parsed": 0.864,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tile-MCC at the best-F1 operating point, 256 cell, input 5of5",
+     "value_verbatim": "0.750",
+     "value_parsed": 0.75,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_grid_T0.0.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "recompute-script",
+   "notes": "Table row. Recipe (from the section lede): within $.cells[i].grid filter to proposer_k = this input level and rule in the reproducible set {consensus_vt1..vt5, mean}, take the max f1_20m over the prob_t sweep, and report its paired mcc. Values are quoted to 3 dp. The 4of5/384 pair and the 5of5/256 F1 coincide with the cells' $.summaries[i].best_operating_point in results/verifier-robustness/robustness_summary_T0.0.json."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     117,
+     117
+    ],
+    "section": "3. Proposer input — feed the verifier a filtered pool"
+   },
+   "claim_text": "- **384 is an inverted-U with a clear peak at 4-of-5 (0.872).** Too strict",
+   "values": [
+    {
+     "quantity": "best F1@20 m, 384 cell, peak at proposer 4-of-5 (quoted to 3 dp)",
+     "value_verbatim": "0.872",
+     "value_parsed": 0.872,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summaries[0].best_operating_point.f1_20m",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_summary_T0.0.json",
+    "path": "$.summaries[0].best_operating_point.f1_20m",
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     119,
+     119
+    ],
+    "section": "3. Proposer input — feed the verifier a filtered pool"
+   },
+   "claim_text": "- **256 is a plateau from 3-of-5 up (~0.86).** Smaller tiles tolerate a looser",
+   "values": [
+    {
+     "quantity": "approximate best F1@20 m plateau, 256 cell, inputs 3-of-5 and above",
+     "value_verbatim": "0.86",
+     "value_parsed": 0.86,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_grid_T0.0.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "recompute-script",
+   "notes": "An approximate ('~0.86') summary of the 256 column of the S 3 table (0.861 / 0.860 / 0.864 at 3of5 / 4of5 / 5of5); same grid recipe."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     121,
+     121
+    ],
+    "section": "3. Proposer input — feed the verifier a filtered pool"
+   },
+   "claim_text": "- **MCC is comparatively flat** (0.73–0.79) even where F1 swings 0.13 — the",
+   "values": [
+    {
+     "quantity": "minimum tile-MCC across proposer input levels, both cells",
+     "value_verbatim": "0.73",
+     "value_parsed": 0.73,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "maximum tile-MCC across proposer input levels, both cells",
+     "value_verbatim": "0.79",
+     "value_parsed": 0.79,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "F1@20 m swing across proposer input levels",
+     "value_verbatim": "0.13",
+     "value_parsed": 0.13,
+     "unit": null,
+     "kind": "statistic",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_grid_T0.0.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "recompute-script",
+   "notes": "Range/swing summary of the S 3 table (MCC column 0.732-0.786; F1 swing 0.734 to 0.872 at 384). Same grid recipe as the table rows."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     134,
+     135
+    ],
+    "section": "4. Implications"
+   },
+   "claim_text": "   **do not pay for the full 1-of-5 image union.** Verify the **≥3-of-5 band**\n   (506 cands, ~$1.76 flex) rather than the union (2,017 cands, ~$7.03) — the",
+   "values": [
+    {
+     "quantity": "candidate count, image proposer >=3-of-5 band (pencilled tranche)",
+     "value_verbatim": "506",
+     "value_parsed": 506.0,
+     "unit": "candidates",
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "estimated cost USD at flex, verifying the image >=3-of-5 band",
+     "value_verbatim": "~$1.76",
+     "value_parsed": 1.76,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "candidate count, image proposer 1-of-5 union",
+     "value_verbatim": "2,017",
+     "value_parsed": 2017.0,
+     "unit": "candidates",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "estimated cost USD at flex, verifying the image 1-of-5 union",
+     "value_verbatim": "~$7.03",
+     "value_parsed": 7.03,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/h11/pv-diag-384/consensus/flash-high-image-1of5.geojson",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "2,017 is the feature count of the whole-artefact anchor (outputs/h11/pv-diag-384/consensus/flash-high-image-1of5.geojson). No flash-high-image >=3-of-5 pool was seen on disk (outputs/h11/pv-diag-384/consensus/ holds flash-high-image-1of5.geojson and image-3of5.geojson, a different pool), so 506 is anchor-unknown. Both dollars are forward estimates of the form candidates x 5 iterations x flex_per_call_usd_minimal (0.000697, planning/verifier-robustness-stage3-384-cells.json $.flex_per_call_usd_minimal), not billed figures."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     146,
+     148
+    ],
+    "section": "5. Caveats"
+   },
+   "claim_text": "  the input axis is in fifths). The Stage-D headline 384 cell used a 30-pass\n  consensus (16of30); the 5-pass 384 optimum here (0.872 at 4of5) sits just\n  below the 30-pass Stage-D figure (0.890), consistent with fewer proposer",
+   "values": [
+    {
+     "quantity": "best F1@20 m, 5-pass proposer 384 optimum (quoted to 3 dp)",
+     "value_verbatim": "0.872",
+     "value_parsed": 0.872,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summaries[0].best_operating_point.f1_20m",
+     "method": null
+    },
+    {
+     "quantity": "F1@20 m, 30-pass Stage-D headline 384 cell (quoted to 3 dp)",
+     "value_verbatim": "0.890",
+     "value_parsed": 0.89,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/conditions-manifest.json#$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-consensus-16of30')].metrics.per_buffer['20'].f1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_summary_T0.0.json",
+    "path": "$.summaries[0].best_operating_point.f1_20m",
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "'30-pass', '16of30', '5-pass' are pool names (instrument rule 5). Cross-file locator convention: a value `path` of the form '<file>#<jsonpath>' names an anchor in a file other than anchor.file (the span mixes sources)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     154,
+     155
+    ],
+    "section": "5. Caveats"
+   },
+   "claim_text": "- **Population SD** (`pstdev`, ÷N) is reported for the 5 runs treated as the\n  stochastic population at T=0.0; a sample SD (÷N−1) would be ~1.12× larger.",
+   "values": [
+    {
+     "quantity": "number of runs treated as the stochastic population",
+     "value_verbatim": "5",
+     "value_parsed": 5.0,
+     "unit": "runs",
+     "kind": "parameter",
+     "path": "$.iterations",
+     "method": "read"
+    },
+    {
+     "quantity": "ratio of sample SD to population SD at N=5",
+     "value_verbatim": "1.12",
+     "value_parsed": 1.12,
+     "unit": null,
+     "kind": "ratio",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_grid_T0.0.json",
+    "path": null,
+    "expression": "(a / (a - 1)) ** 0.5",
+    "operands": [
+     {
+      "name": "a",
+      "file": "results/verifier-robustness/robustness_grid_T0.0.json",
+      "path": "$.iterations"
+     }
+    ]
+   },
+   "method": "arithmetic",
+   "notes": "sqrt(N / (N - 1)) with N = 5 iterations gives the sample-vs-population SD inflation factor."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     193,
+     195
+    ],
+    "section": "7. Stage 2 — a higher-temperature consensus verifier does not help"
+   },
+   "claim_text": "productive band from § 3) at N=5, climbing T=0.3 → 0.7 → 1.0, advancing a cell\nto the next temperature only if its best-consensus F1@20 m beats its *own*\nprevious temperature by > 0.005 (the § 2 noise floor). Each tile size climbs",
+   "values": [
+    {
+     "quantity": "verifier iterations per rung, Stage 2",
+     "value_verbatim": "N=5",
+     "value_parsed": 5.0,
+     "unit": "iterations",
+     "kind": "parameter",
+     "path": "$.iterations",
+     "method": null
+    },
+    {
+     "quantity": "first temperature rung, Stage 2 ladder",
+     "value_verbatim": "T=0.3",
+     "value_parsed": 0.3,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.ladder[0]",
+     "method": null
+    },
+    {
+     "quantity": "second temperature rung, Stage 2 ladder",
+     "value_verbatim": "0.7",
+     "value_parsed": 0.7,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.ladder[1]",
+     "method": null
+    },
+    {
+     "quantity": "third temperature rung, Stage 2 ladder",
+     "value_verbatim": "1.0",
+     "value_parsed": 1.0,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.ladder[2]",
+     "method": null
+    },
+    {
+     "quantity": "advancement margin in F1@20 m required to climb a rung",
+     "value_verbatim": "0.005",
+     "value_parsed": 0.005,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.margin",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/snowball_summary.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": null
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     198,
+     199
+    ],
+    "section": "7. Stage 2 — a higher-temperature consensus verifier does not help"
+   },
+   "claim_text": "**Result: both cells stalled at the first rung (T=0.3); T=0.7 and T=1.0 never\nran.**",
+   "values": [
+    {
+     "quantity": "temperature rung at which both cells stalled",
+     "value_verbatim": "T=0.3",
+     "value_parsed": 0.3,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.stalled_at",
+     "method": null
+    },
+    {
+     "quantity": "temperature rung planned but never run (second)",
+     "value_verbatim": "T=0.7",
+     "value_parsed": 0.7,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.trajectory (absent)",
+     "method": null
+    },
+    {
+     "quantity": "temperature rung planned but never run (third)",
+     "value_verbatim": "T=1.0",
+     "value_parsed": 1.0,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.trajectory (absent)",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/snowball_summary.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "$.stalled_at records 0.3 for both cells; the never-ran rungs are verifiable as the absence of trajectory entries above T=0.3 (the trajectory holds only T=0.0 and T=0.3)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     203,
+     203
+    ],
+    "section": "7. Stage 2 — a higher-temperature consensus verifier does not help"
+   },
+   "claim_text": "| 384-flash-high-text ≥3of5 | 0.8722 | 0.8739 | **+0.0017** | stall (within noise) |",
+   "values": [
+    {
+     "quantity": "best-consensus F1@20 m at T=0.0, 384 >=3-of-5 band",
+     "value_verbatim": "0.8722",
+     "value_parsed": 0.8722,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.baseline_T0.0['384-flash-high-text-ge3of5']",
+     "method": null
+    },
+    {
+     "quantity": "best-consensus F1@20 m at T=0.3, 384 >=3-of-5 band",
+     "value_verbatim": "0.8739",
+     "value_parsed": 0.8739,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.trajectory[1].best_consensus_f1['384-flash-high-text-ge3of5']",
+     "method": null
+    },
+    {
+     "quantity": "delta F1@20 m, T=0.3 minus T=0.0, 384 >=3-of-5 band",
+     "value_verbatim": "+0.0017",
+     "value_parsed": 0.0017,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.trajectory[1].delta_vs_prev['384-flash-high-text-ge3of5']",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/snowball_summary.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Table row; 'stall (within noise)' is the verdict column, encoded as $.trajectory[1].advanced[...] = false and $.stalled_at[...] = 0.3."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     204,
+     204
+    ],
+    "section": "7. Stage 2 — a higher-temperature consensus verifier does not help"
+   },
+   "claim_text": "| 256-text ≥3of5 | 0.8637 | 0.8582 | **−0.0055** | stall (worse) |",
+   "values": [
+    {
+     "quantity": "best-consensus F1@20 m at T=0.0, 256 >=3-of-5 band",
+     "value_verbatim": "0.8637",
+     "value_parsed": 0.8637,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.baseline_T0.0['256-text-ge3of5']",
+     "method": null
+    },
+    {
+     "quantity": "best-consensus F1@20 m at T=0.3, 256 >=3-of-5 band",
+     "value_verbatim": "0.8582",
+     "value_parsed": 0.8582,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.trajectory[1].best_consensus_f1['256-text-ge3of5']",
+     "method": null
+    },
+    {
+     "quantity": "delta F1@20 m, T=0.3 minus T=0.0, 256 >=3-of-5 band",
+     "value_verbatim": "−0.0055",
+     "value_parsed": -0.0055,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.trajectory[1].delta_vs_prev['256-text-ge3of5']",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/snowball_summary.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Table row; verdict column as in the preceding row."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     207,
+     208
+    ],
+    "section": "7. Stage 2 — a higher-temperature consensus verifier does not help"
+   },
+   "claim_text": "temperature produces more *noise* diversity (the 256 inter-iteration split rose\n3.2 % → 5.7 % at T=0.3) but no *signal* diversity: the consensus of noisier",
+   "values": [
+    {
+     "quantity": "inter-iteration candidate split rate, 256 cell at T=0.0",
+     "value_verbatim": "3.2 %",
+     "value_parsed": 3.2,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "inter-iteration candidate split rate, 256 cell at T=0.3",
+     "value_verbatim": "5.7 %",
+     "value_parsed": 5.7,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "outputs/verifier-robustness/256-text-ge3of5/T0.3/verified/probabilities.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "recompute-script",
+   "notes": "Same flip-counting recipe as the S 2 ~3 % claim, applied to the 256 >=3-of-5 band. The T=0.0 side sits in outputs/verifier-robustness/256-text-1of5-union/T0.0/verified/probabilities.json (1-of-5 union, of which the >=3-of-5 band is a subset); the T=0.3 side in the anchor file. Triage should confirm which pool the 3.2 % baseline was measured on."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     212,
+     213
+    ],
+    "section": "7. Stage 2 — a higher-temperature consensus verifier does not help"
+   },
+   "claim_text": "carry-forward verifier stands as optimal.** Cost: one rung, ~$8.71 flex (the\nsnowball's early stop saved the T=0.7/1.0 spend).",
+   "values": [
+    {
+     "quantity": "cost USD at flex, Stage 2 T=0.3 rung (both cells)",
+     "value_verbatim": "~$8.71",
+     "value_parsed": 8.71,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Flex-priced figure; no artefact records flex pricing. The two T=0.3 run.meta files (outputs/verifier-robustness/384-flash-high-text-ge3of5/T0.3/verified/ and outputs/verifier-robustness/256-text-ge3of5/T0.3/verified/) carry $.cost_estimate.total_cost_usd at standard pricing."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     222,
+     224
+    ],
+    "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
+   },
+   "claim_text": "Stage 3 completed the verifier configuration space: a **thinking (minimal/high)\n× temperature (0.0/0.3/0.7) matrix** on the 384 ≥3-of-5 band (855 candidates,\nN=5; three new cells × 4,275 calls, est **$20.86 flex** —",
+   "values": [
+    {
+     "quantity": "first temperature level of the Stage-3 matrix",
+     "value_verbatim": "0.0",
+     "value_parsed": 0.0,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.matrix_runs_EXISTING_free[0].temperature",
+     "method": null
+    },
+    {
+     "quantity": "second temperature level of the Stage-3 matrix",
+     "value_verbatim": "0.3",
+     "value_parsed": 0.3,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.matrix_runs_NEW[2].temperature",
+     "method": null
+    },
+    {
+     "quantity": "third temperature level of the Stage-3 matrix",
+     "value_verbatim": "0.7",
+     "value_parsed": 0.7,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.matrix_runs_NEW[0].temperature",
+     "method": null
+    },
+    {
+     "quantity": "candidate count, 384 >=3-of-5 band",
+     "value_verbatim": "855",
+     "value_parsed": 855.0,
+     "unit": "candidates",
+     "kind": "count",
+     "path": "$.cells[0].n_union",
+     "method": null
+    },
+    {
+     "quantity": "verifier iterations per matrix cell",
+     "value_verbatim": "N=5",
+     "value_parsed": 5.0,
+     "unit": "iterations",
+     "kind": "parameter",
+     "path": "$.iterations",
+     "method": null
+    },
+    {
+     "quantity": "number of newly run matrix cells",
+     "value_verbatim": "three",
+     "value_parsed": 3.0,
+     "unit": "cells",
+     "kind": "count",
+     "path": "$.matrix_runs_NEW (array length)",
+     "method": null
+    },
+    {
+     "quantity": "API calls per new matrix cell",
+     "value_verbatim": "4,275",
+     "value_parsed": 4275.0,
+     "unit": "calls",
+     "kind": "count",
+     "path": "$.matrix_runs_NEW[0].calls",
+     "method": null
+    },
+    {
+     "quantity": "estimated cost USD at flex, three new Stage-3 cells",
+     "value_verbatim": "20.86",
+     "value_parsed": 20.86,
+     "unit": "USD",
+     "kind": "cost",
+     "path": "$.total_new_spend_est_flex_usd",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "planning/verifier-robustness-stage3-384-cells.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "The $20.86 is a pre-run estimate (the planning file's own figure), not an audited or billed cost. 855 is also readable as $.cells[0].n_candidates in results/verifier-robustness/robustness_grid_T0.3-high.json."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     226,
+     227
+    ],
+    "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
+   },
+   "claim_text": "project-canonical round-robin (`scripts/tier_verifier_matrix.py`: 15 pairs,\n10k tile-swap, seed 42, BH-FDR q=0.05, greedy-clique —",
+   "values": [
+    {
+     "quantity": "number of round-robin pairwise comparisons",
+     "value_verbatim": "15",
+     "value_parsed": 15.0,
+     "unit": "pairs",
+     "kind": "count",
+     "path": "$.pairwise (array length)",
+     "method": null
+    },
+    {
+     "quantity": "permutation iterations per pairwise test",
+     "value_verbatim": "10k",
+     "value_parsed": 10000.0,
+     "unit": "permutations",
+     "kind": "parameter",
+     "path": "$.pairwise[0].n_permutations",
+     "method": null
+    },
+    {
+     "quantity": "random seed for the permutation harness",
+     "value_verbatim": "42",
+     "value_parsed": 42.0,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "Benjamini-Hochberg false-discovery-rate level",
+     "value_verbatim": "0.05",
+     "value_parsed": 0.05,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/matrix_tiering.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "matrix_tiering.json records tiers/ranked/pairwise only; it does not store the seed or the FDR level, so those two are anchor-unknown — they are set in scripts/tier_verifier_matrix.py (code, not an artefact). The $.pairwise[*].significant flags are the FDR decision the q level produced."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     232,
+     232
+    ],
+    "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
+   },
+   "claim_text": "| 1 | high T0.3 (N=5) | 0.8764 | 1 | 4of5 / consensus_vt5 / pt0.3 |",
+   "values": [
+    {
+     "quantity": "best F1@20 m, verifier config high thinking, T=0.3, N=5",
+     "value_verbatim": "0.8764",
+     "value_parsed": 0.8764,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.ranked[0].f1",
+     "method": null
+    },
+    {
+     "quantity": "statistical tier, verifier config high thinking, T=0.3, N=5",
+     "value_verbatim": "1",
+     "value_parsed": 1.0,
+     "unit": null,
+     "kind": "other",
+     "path": "$.ranked[0].tier",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/matrix_tiering.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Table row. The rank column is an ordering over $.ranked, not extracted separately; the 'best operating point' column is the compound name string at $.ranked[0].op ('kof5 / rule / ptX') and is treated as a condition name per instrument rule 5."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     233,
+     233
+    ],
+    "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
+   },
+   "claim_text": "| 2 | min T0.3 (N=5) | 0.8739 | 1 | 4of5 / mean / pt0.15 |",
+   "values": [
+    {
+     "quantity": "best F1@20 m, verifier config minimal thinking, T=0.3, N=5",
+     "value_verbatim": "0.8739",
+     "value_parsed": 0.8739,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.ranked[1].f1",
+     "method": null
+    },
+    {
+     "quantity": "statistical tier, verifier config minimal thinking, T=0.3, N=5",
+     "value_verbatim": "1",
+     "value_parsed": 1.0,
+     "unit": null,
+     "kind": "other",
+     "path": "$.ranked[1].tier",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/matrix_tiering.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Table row. The rank column is an ordering over $.ranked, not extracted separately; the 'best operating point' column is the compound name string at $.ranked[1].op ('kof5 / rule / ptX') and is treated as a condition name per instrument rule 5."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     234,
+     234
+    ],
+    "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
+   },
+   "claim_text": "| 3 | high T0.7 (N=5) | 0.8739 | 1 | 4of5 / consensus_vt5 / pt0.4 |",
+   "values": [
+    {
+     "quantity": "best F1@20 m, verifier config high thinking, T=0.7, N=5",
+     "value_verbatim": "0.8739",
+     "value_parsed": 0.8739,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.ranked[2].f1",
+     "method": null
+    },
+    {
+     "quantity": "statistical tier, verifier config high thinking, T=0.7, N=5",
+     "value_verbatim": "1",
+     "value_parsed": 1.0,
+     "unit": null,
+     "kind": "other",
+     "path": "$.ranked[2].tier",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/matrix_tiering.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Table row. The rank column is an ordering over $.ranked, not extracted separately; the 'best operating point' column is the compound name string at $.ranked[2].op ('kof5 / rule / ptX') and is treated as a condition name per instrument rule 5."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     235,
+     235
+    ],
+    "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
+   },
+   "claim_text": "| 4 | min T0.0 (N=5) | 0.8722 | 1 | 4of5 / consensus_vt1 / pt0.15 |",
+   "values": [
+    {
+     "quantity": "best F1@20 m, verifier config minimal thinking, T=0.0, N=5",
+     "value_verbatim": "0.8722",
+     "value_parsed": 0.8722,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.ranked[3].f1",
+     "method": null
+    },
+    {
+     "quantity": "statistical tier, verifier config minimal thinking, T=0.0, N=5",
+     "value_verbatim": "1",
+     "value_parsed": 1.0,
+     "unit": null,
+     "kind": "other",
+     "path": "$.ranked[3].tier",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/matrix_tiering.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Table row. The rank column is an ordering over $.ranked, not extracted separately; the 'best operating point' column is the compound name string at $.ranked[3].op ('kof5 / rule / ptX') and is treated as a condition name per instrument rule 5."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     236,
+     236
+    ],
+    "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
+   },
+   "claim_text": "| 5 | min T0.7 (N=5) | 0.8709 | 1 | 4of5 / consensus_vt2 / pt0.2 |",
+   "values": [
+    {
+     "quantity": "best F1@20 m, verifier config minimal thinking, T=0.7, N=5",
+     "value_verbatim": "0.8709",
+     "value_parsed": 0.8709,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.ranked[4].f1",
+     "method": null
+    },
+    {
+     "quantity": "statistical tier, verifier config minimal thinking, T=0.7, N=5",
+     "value_verbatim": "1",
+     "value_parsed": 1.0,
+     "unit": null,
+     "kind": "other",
+     "path": "$.ranked[4].tier",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/matrix_tiering.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Table row. The rank column is an ordering over $.ranked, not extracted separately; the 'best operating point' column is the compound name string at $.ranked[4].op ('kof5 / rule / ptX') and is treated as a condition name per instrument rule 5."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     237,
+     237
+    ],
+    "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
+   },
+   "claim_text": "| 6 | **high T0.0 (n=1)** | **0.8519** | **2** | 4of5 / mean / pt0.5 |",
+   "values": [
+    {
+     "quantity": "best F1@20 m, verifier config high thinking, T=0.0, n=1 on-disk prior",
+     "value_verbatim": "0.8519",
+     "value_parsed": 0.8519,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.ranked[5].f1",
+     "method": null
+    },
+    {
+     "quantity": "statistical tier, verifier config high thinking, T=0.0, n=1 on-disk prior",
+     "value_verbatim": "2",
+     "value_parsed": 2.0,
+     "unit": null,
+     "kind": "other",
+     "path": "$.ranked[5].tier",
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/matrix_tiering.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "Table row. The rank column is an ordering over $.ranked, not extracted separately; the 'best operating point' column is the compound name string at $.ranked[5].op ('kof5 / rule / ptX') and is treated as a condition name per instrument rule 5."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     239,
+     242
+    ],
+    "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
+   },
+   "claim_text": "- **All five N=5 configurations are ONE tier** (0/10 pairs among them\n  significant): neither temperature nor thinking level moves F1 once the\n  verifier runs at N=5. The only Tier-2 cell is the *single-pass* high-thinking\n  prior — all 5 significant pairs are it-vs-others.",
+   "values": [
+    {
+     "quantity": "number of N=5 configurations sharing one tier",
+     "value_verbatim": "five",
+     "value_parsed": 5.0,
+     "unit": "configurations",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "significant pairs among the five N=5 configurations",
+     "value_verbatim": "0",
+     "value_parsed": 0.0,
+     "unit": "pairs",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "pairwise comparisons among the five N=5 configurations",
+     "value_verbatim": "10",
+     "value_parsed": 10.0,
+     "unit": "pairs",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "significant pairs involving the single-pass high-thinking prior",
+     "value_verbatim": "5",
+     "value_parsed": 5.0,
+     "unit": "pairs",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/matrix_tiering.json",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "recompute-script",
+   "notes": "Recipe: count $.pairwise entries with significant == true, split by whether either ref is 'high-T0.0'; the 15 pairs decompose as 10 among the N=5 cells and 5 involving high-T0.0. Tier membership is at $.tiers."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     243,
+     245
+    ],
+    "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
+   },
+   "claim_text": "- **High thinking HURTS a single verifier pass.** At the 4-of-5 input:\n  minimal n=1 0.8659 > medium 0.8545 > high 0.8519\n  (`high_thinking_prior.log`, $0 on-disk re-scores). The adversarial prompt",
+   "values": [
+    {
+     "quantity": "best F1@20 m, minimal-thinking n=1 verifier at proposer 4-of-5",
+     "value_verbatim": "0.8659",
+     "value_parsed": 0.8659,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "best F1@20 m, medium-thinking n=1 verifier at proposer 4-of-5",
+     "value_verbatim": "0.8545",
+     "value_parsed": 0.8545,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "best F1@20 m, high-thinking n=1 verifier at proposer 4-of-5",
+     "value_verbatim": "0.8519",
+     "value_parsed": 0.8519,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "cost USD of the on-disk re-scores",
+     "value_verbatim": "$0",
+     "value_parsed": 0.0,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/high_thinking_prior.log",
+    "path": null,
+    "expression": null,
+    "operands": null
+   },
+   "method": "read",
+   "notes": "The anchor is a plain-text log, not JSON: the '4of5' row of its 'THINKING axis at T=0.0' table carries the three figures in column order minimal_n1 / medium_n1 / high_n1. The '$0' asserts no new API spend (no run.meta exists for these re-scores) — flagged as a doubtful inclusion."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     248,
+     249
+    ],
+    "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
+   },
+   "claim_text": "- **What high thinking buys at N=5 is MCC, not F1**: high T0.3 MCC 0.789 vs\n  minimal T0.3 0.771 (+0.018) at ~3× the verifier cost.",
+   "values": [
+    {
+     "quantity": "tile-MCC at the best operating point, high thinking T=0.3 N=5",
+     "value_verbatim": "0.789",
+     "value_parsed": 0.789,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summaries[0].best_operating_point.mcc",
+     "method": "read"
+    },
+    {
+     "quantity": "tile-MCC at the best operating point, minimal thinking T=0.3 N=5",
+     "value_verbatim": "0.771",
+     "value_parsed": 0.771,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/verifier-robustness/robustness_summary_T0.3.json#$.summaries[0].best_operating_point.mcc",
+     "method": "read"
+    },
+    {
+     "quantity": "MCC gain of high over minimal thinking at T=0.3, N=5",
+     "value_verbatim": "+0.018",
+     "value_parsed": 0.018,
+     "unit": null,
+     "kind": "statistic",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "verifier cost multiplier of high over minimal thinking",
+     "value_verbatim": "3",
+     "value_parsed": 3.0,
+     "unit": null,
+     "kind": "ratio",
+     "path": "planning/verifier-robustness-stage3-384-cells.json#$.high_thinking_cost_multiplier",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_summary_T0.3-high.json",
+    "path": null,
+    "expression": "a - b",
+    "operands": [
+     {
+      "name": "a",
+      "file": "results/verifier-robustness/robustness_summary_T0.3-high.json",
+      "path": "$.summaries[0].best_operating_point.mcc"
+     },
+     {
+      "name": "b",
+      "file": "results/verifier-robustness/robustness_summary_T0.3.json",
+      "path": "$.summaries[0].best_operating_point.mcc"
+     }
+    ]
+   },
+   "method": "arithmetic",
+   "notes": "MCC values are quoted to 3 dp. Cross-file locator convention: a value `path` of the form '<file>#<jsonpath>' names an anchor in a file other than anchor.file (the span mixes sources). S123 triage repair (c4-triage/mismatch-triage-2026-07-31.json): value[0] has its own read path but was inheriting the claim-level arithmetic method and being compared against the delta."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     250,
+     253
+    ],
+    "section": "8. Stage 3 — the thinking x temperature matrix is one statistical tier at N=5"
+   },
+   "claim_text": "- **Aggregation refinement** (corrects the § 2 majority-vote reading): a\n  PERMISSIVE consensus beats the *expected* single pass by ~+0.012 — at T=0.0\n  the vt1 union (0.8722 vs single-run mean 0.8601), at T=0.3 the\n  mean-probability rule (0.8739). Strict/unanimous voting hurts. Note",
+   "values": [
+    {
+     "quantity": "F1@20 m uplift of permissive consensus over the expected single pass",
+     "value_verbatim": "+0.012",
+     "value_parsed": 0.012,
+     "unit": null,
+     "kind": "statistic",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "best F1@20 m, T=0.0 vt1 union operating point, 384 cell",
+     "value_verbatim": "0.8722",
+     "value_parsed": 0.8722,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summaries[0].best_operating_point.f1_20m",
+     "method": "read"
+    },
+    {
+     "quantity": "single-run F1@20 m mean, 384 cell 4-of-5",
+     "value_verbatim": "0.8601",
+     "value_parsed": 0.8601,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summaries[0].determinism_by_proposer_k[3].single_run_f1_mean",
+     "method": "read"
+    },
+    {
+     "quantity": "best F1@20 m, T=0.3 mean-probability rule, 384 >=3-of-5 band",
+     "value_verbatim": "0.8739",
+     "value_parsed": 0.8739,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/verifier-robustness/robustness_summary_T0.3.json#$.summaries[0].best_operating_point.f1_20m",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/robustness_summary_T0.0.json",
+    "path": null,
+    "expression": "a - b",
+    "operands": [
+     {
+      "name": "a",
+      "file": "results/verifier-robustness/robustness_summary_T0.0.json",
+      "path": "$.summaries[0].best_operating_point.f1_20m"
+     },
+     {
+      "name": "b",
+      "file": "results/verifier-robustness/robustness_summary_T0.0.json",
+      "path": "$.summaries[0].determinism_by_proposer_k[3].single_run_f1_mean"
+     }
+    ]
+   },
+   "method": "arithmetic",
+   "notes": "Restates the S 2 refinement (lines 88-90) with its components. Cross-file locator convention: a value `path` of the form '<file>#<jsonpath>' names an anchor in a file other than anchor.file (the span mixes sources)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     260,
+     260
+    ],
+    "section": "9. Model roles — Pro is a better proposer, an equal (so dearer) verifier"
+   },
+   "claim_text": "`gemini-3.1-pro-preview` artefacts already on disk allowed a $0 re-score",
+   "values": [
+    {
+     "quantity": "cost USD of the Pro proposer-verifier re-score",
+     "value_verbatim": "$0",
+     "value_parsed": 0.0,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Span truncated at the assigned extraction boundary (line 260); the sentence continues beyond it and the rest of S 9 belongs to another extractor. Asserts no new API spend for the Pro re-score (the gemini-3.1-pro-preview artefacts were already on disk); no artefact seen that records a zero cost. Doubtful inclusion."
+  }
+ ]
 }

@@ -1,2123 +1,2149 @@
 {
-  "schema_version": "1.0",
-  "extracted_at": "2026-07-31T00:00:00Z",
-  "source_document": {
-    "file": "reports/adversarial-audit-report.md",
-    "git_blob": "09ace3d3cef8",
-    "stratum": "hand-written"
-  },
-  "extractor": {
-    "model": "claude-opus-5",
-    "instrument_version": "1.1"
-  },
-  "claims": [
+ "schema_version": "1.0",
+ "extracted_at": "2026-07-31T00:00:00Z",
+ "source_document": {
+  "file": "reports/adversarial-audit-report.md",
+  "git_blob": "09ace3d3cef8",
+  "stratum": "hand-written"
+ },
+ "extractor": {
+  "model": "claude-opus-5",
+  "instrument_version": "1.1"
+ },
+ "claims": [
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     170,
+     170
+    ],
+    "section": "Layer 6: Configuration and Pipeline Integrity"
+   },
+   "claim_text": "**Claims inventoried:** 5",
+   "values": [
     {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          170,
-          170
-        ],
-        "section": "Layer 6: Configuration and Pipeline Integrity"
-      },
-      "claim_text": "**Claims inventoried:** 5",
-      "values": [
-        {
-          "quantity": "count of claims inventoried for Layer 6",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": "claims",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Self-referential count: the Layer 6 block of the Phase 1 claims inventory in this same document (claims 27-31) and the five rows of the table below. The only visible source is prose in this document, so no artefact anchor exists (instrument rule 2)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          174,
-          174
-        ],
-        "section": "Layer 6: Configuration and Pipeline Integrity"
-      },
-      "claim_text": "| 27 | Full parameters documented | Proposer: gemini-3-flash, HIGH thinking, T=0.7, text-only (`detect_brief-text.json`), 384px, N=30, 17 text-only examples. Verifier: gemini-3-flash, MINIMAL thinking, T=0.0 (`verify_adversarial-text.json`), 6 text labels, no examples. PV threshold: 0.2. Consensus: 16-of-30. Buffer: 30m. All confirmed in meta.json files. | PASS | None |",
-      "values": [
-        {
-          "quantity": "proposer temperature, pv-diag-384 flash-high-text 30-pass run",
-          "value_verbatim": "0.7",
-          "value_parsed": 0.7,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.configuration.temperature",
-          "method": "read"
-        },
-        {
-          "quantity": "proposer tile size",
-          "value_verbatim": "384px",
-          "value_parsed": 384,
-          "unit": "px",
-          "kind": "physical",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "proposer pass count (N)",
-          "value_verbatim": "30",
-          "value_parsed": 30,
-          "unit": "passes",
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "count of text-only few-shot examples in the proposer prompt",
-          "value_verbatim": "17",
-          "value_parsed": 17,
-          "unit": "examples",
-          "kind": "count",
-          "path": "$.configuration.example_count",
-          "method": "read"
-        },
-        {
-          "quantity": "verifier temperature",
-          "value_verbatim": "0.0",
-          "value_parsed": 0.0,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "count of text labels sent to the verifier",
-          "value_verbatim": "6",
-          "value_parsed": 6,
-          "unit": "labels",
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "probability-verifier acceptance threshold",
-          "value_verbatim": "0.2",
-          "value_parsed": 0.2,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "consensus vote threshold over the proposer pool",
-          "value_verbatim": "16-of-30",
-          "value_parsed": null,
-          "unit": "passes",
-          "kind": "parameter",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "spatial evaluation buffer",
-          "value_verbatim": "30m",
-          "value_parsed": 30,
-          "unit": "m",
-          "kind": "physical",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.meta.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Table row (claim 27). Claim-level anchor is the pass-1 proposer meta.json, which carries temperature, thinking level, and example count. Values living in other artefacts are marked anchor-unknown with their candidate anchors here: '384px' -> tile geometry, e.g. inputs/tiles_384/K-35-052-4_32635/K-35-052-4_32635_x0_y0.png (crop-size PNG, a legitimate non-JSON anchor under instrument v1.1); 'N=30' -> outputs/h11/pv-diag-384/flash-high-text-n5/study_manifest.json $.runs_per_condition and .../text-t0.7/consensus/voting_summary.json $.total_passes; verifier 'T=0.0' -> prompts/configs/verify_adversarial-text.json $.temperature; '6 text labels' -> same file $.text_only_labels (list length); 'PV threshold: 0.2' -> results/h11-384-pv-diagnostic/flash-high-text-16of30/threshold_sweep.json $.optimal.threshold; '16-of-30' -> voting_summary.json $.thresholds['16'] with $.total_passes; 'Buffer: 30m' -> outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json $.summary.buffers[5].buffer_metres. Model version strings and the config filenames are names, not quantitative claims."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          175,
-          175
-        ],
-        "section": "Layer 6: Configuration and Pipeline Integrity"
-      },
-      "claim_text": "| 28 | No GT in prompts | `detect_brief-text.md`: clean detection instructions. `verify_adversarial.md`: clean adversarial instructions. Both config JSONs: no base64, no coordinate data, no GT file paths. Regex search for `base64`, `data:image`, coordinate patterns: zero matches. | PASS | None |",
-      "values": [
-        {
-          "quantity": "count of regex matches for base64/data:image/coordinate patterns in the prompt configs and system instructions",
-          "value_verbatim": "zero",
-          "value_parsed": 0,
-          "unit": "matches",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "prompts/configs/detect_brief-text.json",
-        "path": null
-      },
-      "method": "recompute-script",
-      "notes": "Table row (claim 28). The assertion is a negative grep across prompts/configs/detect_brief-text.json, prompts/configs/verify_adversarial-text.json, prompts/system-instructions/detect_brief-text.md and prompts/system-instructions/verify_adversarial.md; anchored at the proposer config as the representative file. Requires a scripted re-grep to decide."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          177,
-          177
-        ],
-        "section": "Layer 6: Configuration and Pipeline Integrity"
-      },
-      "claim_text": "| 30 | Timestamps consistent | Proposer: 24 Mar 2026 03:47–19:20 UTC (30 batch runs). Verifier: 25 Mar 18:20 UTC. Derived 16of30: 25 Mar 21:37. Evaluation: 26 Mar 12:49 UTC. Sequential, no gaps or reversals. | PASS | None |",
-      "values": [
-        {
-          "quantity": "count of proposer batch runs in the pv-diag-384 text-t0.7 study",
-          "value_verbatim": "30",
-          "value_parsed": 30,
-          "unit": "runs",
-          "kind": "count",
-          "path": "$.runs_per_condition",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/study_manifest.json",
-        "path": "$.runs_per_condition"
-      },
-      "method": "read",
-      "notes": "Table row (claim 30). Dates and timestamps in this row are out of C4 scope (instrument rule 5); only the run count is extracted."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          178,
-          178
-        ],
-        "section": "Layer 6: Configuration and Pipeline Integrity"
-      },
-      "claim_text": "| 31 | Only intended params differ | Proposer vs verifier: system instruction (detect vs adversarial), temperature (0.7 vs 0.0), thinking (HIGH vs MINIMAL). All intentional. Model, max_output_tokens, text-only mode: same. | PASS | None |",
-      "values": [
-        {
-          "quantity": "proposer temperature",
-          "value_verbatim": "0.7",
-          "value_parsed": 0.7,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.configuration.temperature",
-          "method": "read"
-        },
-        {
-          "quantity": "verifier temperature",
-          "value_verbatim": "0.0",
-          "value_parsed": 0.0,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.meta.json",
-        "path": "$.configuration.temperature"
-      },
-      "method": "read",
-      "notes": "Table row (claim 31). Verifier temperature candidate anchor: prompts/configs/verify_adversarial-text.json $.temperature. Thinking levels (HIGH/MINIMAL) are not numeric."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          187,
-          187
-        ],
-        "section": "Layer 7: Cross-Configuration Consistency"
-      },
-      "claim_text": "**Claims inventoried:** 5",
-      "values": [
-        {
-          "quantity": "count of claims inventoried for Layer 7",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": "claims",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Self-referential count of the Layer 7 claims (32-36) inventoried in this same document; prose-only source, so no artefact anchor (instrument rule 2)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          191,
-          191
-        ],
-        "section": "Layer 7: Cross-Configuration Consistency"
-      },
-      "claim_text": "| 32 | Monotonic pipeline progression | Single-pass best: F1=0.563. Consensus best: F1=0.826. PV best: F1=0.904. Each stage adds ~0.13–0.26 over the previous. | PASS | None |",
-      "values": [
-        {
-          "quantity": "best single-pass F1, 384 px family",
-          "value_verbatim": "0.563",
-          "value_parsed": 0.563,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "best consensus F1, 384 px family",
-          "value_verbatim": "0.826",
-          "value_parsed": 0.826,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "best proposer-verifier F1, 384 px family",
-          "value_verbatim": "0.904",
-          "value_parsed": 0.904,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "lower bound of the per-stage F1 gain range",
-          "value_verbatim": "0.13",
-          "value_parsed": 0.13,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "upper bound of the per-stage F1 gain range",
-          "value_verbatim": "0.26",
-          "value_parsed": 0.26,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/conditions-manifest.json",
-        "path": null
-      },
-      "method": "recompute-script",
-      "notes": "Table row (claim 32). Best-of-category assertions require a maximum over the 384 px condition family, so they cannot be read at a single path. Candidate identifications in results/conditions-manifest.json: PV best 0.904 = pv-diag-384::verified-adv-text-consensus-16of30 (metrics.per_buffer['30'].f1); consensus best 0.826 = pv-diag-384::flash-high-text-n5-text-t0.7-consensus-26of30; the single-pass best 0.563 was not located by inspection and is left for triage. The 0.13-0.26 range is a derived per-stage delta."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          192,
-          192
-        ],
-        "section": "Layer 7: Cross-Configuration Consistency"
-      },
-      "claim_text": "| 33 | Text > image consistent | Consensus: text F1=0.826 vs image F1=0.821 (small gap). PV: text F1=0.904 vs image F1=0.851 (larger gap). Pairwise permutation test: diff=0.110, CI [0.073, 0.148], p=0.001. Gap widens through pipeline. | PASS | None |",
-      "values": [
-        {
-          "quantity": "consensus F1, text modality",
-          "value_verbatim": "0.826",
-          "value_parsed": 0.826,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "consensus F1, image modality",
-          "value_verbatim": "0.821",
-          "value_parsed": 0.821,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "proposer-verifier F1, text modality",
-          "value_verbatim": "0.904",
-          "value_parsed": 0.904,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "proposer-verifier F1, image modality",
-          "value_verbatim": "0.851",
-          "value_parsed": 0.851,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "text-vs-image paired F1 difference, 384 px moderate consensus",
-          "value_verbatim": "0.110",
-          "value_parsed": 0.11,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$['J:J1'].result.f1_difference.mean",
-          "method": "read"
-        },
-        {
-          "quantity": "lower bound of the bootstrap CI on the text-vs-image F1 difference",
-          "value_verbatim": "0.073",
-          "value_parsed": 0.073,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$['J:J1'].result.f1_difference.ci_lower",
-          "method": "read"
-        },
-        {
-          "quantity": "upper bound of the bootstrap CI on the text-vs-image F1 difference",
-          "value_verbatim": "0.148",
-          "value_parsed": 0.148,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$['J:J1'].result.f1_difference.ci_upper",
-          "method": "read"
-        },
-        {
-          "quantity": "p-value of the text-vs-image paired test",
-          "value_verbatim": "0.001",
-          "value_parsed": 0.001,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$['J:J1'].result.f1_difference.p_value",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/h11-384-pv-diagnostic/pairwise/pairwise-384px.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Table row (claim 33). The paired-test triple anchors to comparison J1 ('Text vs image moderate consensus') in the 384 px pairwise file. The four F1 point estimates belong to other artefacts and are flagged anchor-unknown; candidate anchors in results/conditions-manifest.json: 0.826 = pv-diag-384::flash-high-text-n5-text-t0.7-consensus-26of30 (metrics.per_buffer['30'].f1), 0.904 = pv-diag-384::verified-adv-text-consensus-16of30, 0.851 = pv-diag-384::verified-adv-image-3of5; the image-consensus 0.821 was not located by inspection. Note for triage: the audit's F1 pair and its permutation statistic come from different comparisons."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          193,
-          193
-        ],
-        "section": "Layer 7: Cross-Configuration Consistency"
-      },
-      "claim_text": "| 34 | 384px > 512px significant | Three pairwise comparisons: loose consensus +0.070 (p=0.004), goldilocks +0.061 (p=0.002), best-vs-best +0.063 (p=0.002). 384px wins all three. | PASS | None |",
-      "values": [
-        {
-          "quantity": "count of pairwise 384 px vs 512 px comparisons reported",
-          "value_verbatim": "Three",
-          "value_parsed": 3,
-          "unit": "comparisons",
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "F1 difference, loose-consensus 384 px vs 512 px",
-          "value_verbatim": "0.070",
-          "value_parsed": 0.07,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$['I1:loose_consensus'].result.f1_difference.mean",
-          "method": "read"
-        },
-        {
-          "quantity": "p-value, loose-consensus 384 px vs 512 px",
-          "value_verbatim": "0.004",
-          "value_parsed": 0.004,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$['I1:loose_consensus'].result.f1_difference.p_value",
-          "method": "read"
-        },
-        {
-          "quantity": "F1 difference, goldilocks 384 px vs 512 px",
-          "value_verbatim": "0.061",
-          "value_parsed": 0.061,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$['I2:goldilocks'].result.f1_difference.mean",
-          "method": "read"
-        },
-        {
-          "quantity": "p-value, goldilocks 384 px vs 512 px",
-          "value_verbatim": "0.002",
-          "value_parsed": 0.002,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$['I2:goldilocks'].result.f1_difference.p_value",
-          "method": "read"
-        },
-        {
-          "quantity": "F1 difference, best-vs-best 384 px vs 512 px",
-          "value_verbatim": "0.063",
-          "value_parsed": 0.063,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$['I3:best_vs_best'].result.f1_difference.mean",
-          "method": "read"
-        },
-        {
-          "quantity": "p-value, best-vs-best 384 px vs 512 px",
-          "value_verbatim": "0.002",
-          "value_parsed": 0.002,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$['I3:best_vs_best'].result.f1_difference.p_value",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/h11-384-pv-diagnostic/pairwise/fair-384-vs-512.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Table row (claim 34). The three named comparisons map to keys I1, I2 and I3 of the fair 384-vs-512 pairwise file, which also holds further comparisons (I5, I6, ...); the count 'Three' is therefore a statement about how many the audit reports, not a count of file entries, and is flagged anchor-unknown. Doubt logged per the when-in-doubt-include rule."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          194,
-          194
-        ],
-        "section": "Layer 7: Cross-Configuration Consistency"
-      },
-      "claim_text": "| 35 | Verifier improves over consensus | Same proposer lineage: Flash-high-text consensus F1=0.826 → PV F1=0.904 (+0.078). Verifier improves precision (+0.084) and recall (+0.074). The precision gain is slightly larger, consistent with adversarial verification design. | PASS | None |",
-      "values": [
-        {
-          "quantity": "consensus F1, flash-high-text 26-of-30",
-          "value_verbatim": "0.826",
-          "value_parsed": 0.826,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.condition_b.f1",
-          "method": "read"
-        },
-        {
-          "quantity": "proposer-verifier F1, flash-high-text 16-of-30",
-          "value_verbatim": "0.904",
-          "value_parsed": 0.904,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.condition_a.f1",
-          "method": "read"
-        },
-        {
-          "quantity": "F1 gain from adding the verifier",
-          "value_verbatim": "0.078",
-          "value_parsed": 0.078,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.observed_f1_diff",
-          "method": "read"
-        },
-        {
-          "quantity": "precision gain from adding the verifier",
-          "value_verbatim": "0.084",
-          "value_parsed": 0.084,
-          "unit": null,
-          "kind": "statistic",
-          "path": null,
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "recall gain from adding the verifier",
-          "value_verbatim": "0.074",
-          "value_parsed": 0.074,
-          "unit": null,
-          "kind": "statistic",
-          "path": null,
-          "method": "recompute-script"
-        }
-      ],
-      "anchor": {
-        "file": "results/pairwise/30m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Table row (claim 35). Derivations for the two gains, both inside the anchor file: +0.084 = $.condition_a.precision - $.condition_b.precision; +0.074 = $.condition_a.recall - $.condition_b.recall."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          195,
-          195
-        ],
-        "section": "Layer 7: Cross-Configuration Consistency"
-      },
-      "claim_text": "| 36 | No anomalous ordering | Single-pass < consensus < PV. MINIMAL < HIGH thinking. Larger pools ≥ smaller pools. T=0.7 > T=1.0. No condition performs worse than a strictly inferior configuration. | PASS | None |",
-      "values": [
-        {
-          "quantity": "proposer temperature of the better-performing condition",
-          "value_verbatim": "0.7",
-          "value_parsed": 0.7,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "proposer temperature of the worse-performing condition",
-          "value_verbatim": "1.0",
-          "value_parsed": 1.0,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/conditions-manifest.json",
-        "path": null
-      },
-      "method": "recompute-script",
-      "notes": "Table row (claim 36). Doubt logged: the temperatures here may be condition labels rather than asserted run parameters (instrument rule 5), but the row asserts an ordering between the T=0.7 and T=1.0 condition families, which is checkable by comparing their F1 entries in the conditions manifest."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          204,
-          204
-        ],
-        "section": "Layer 8: Statistical Validity"
-      },
-      "claim_text": "**Claims inventoried:** 5",
-      "values": [
-        {
-          "quantity": "count of claims inventoried for Layer 8",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": "claims",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Self-referential count of the Layer 8 claims (37-41) inventoried in this same document; prose-only source, so no artefact anchor (instrument rule 2)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          208,
-          208
-        ],
-        "section": "Layer 8: Statistical Validity"
-      },
-      "claim_text": "| 37 | 30 runs are independent | Each run has unique UUID, distinct timestamps spanning ~16 hours (batch API). Log confirms \"Runs per condition: 30\", execution mode: \"BATCH\". T=0.7 provides stochastic variation. | PASS | None |",
-      "values": [
-        {
-          "quantity": "wall-clock span of the 30 proposer batch runs",
-          "value_verbatim": "16",
-          "value_parsed": 16,
-          "unit": "hours",
-          "kind": "other",
-          "path": null,
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "runs per condition in the pv-diag-384 text-t0.7 study",
-          "value_verbatim": "30",
-          "value_parsed": 30,
-          "unit": "runs",
-          "kind": "count",
-          "path": "$.runs_per_condition",
-          "method": "read"
-        },
-        {
-          "quantity": "proposer temperature",
-          "value_verbatim": "0.7",
-          "value_parsed": 0.7,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/study_manifest.json",
-        "path": "$.runs_per_condition"
-      },
-      "method": "read",
-      "notes": "Table row (claim 37). The ~16 h span is derived from the timestamp fields of the 30 run meta.json files under outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7 (timestamps themselves are out of C4 scope; the span is a quantity, so it is recorded with a recompute method). Temperature candidate anchor: outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.meta.json $.configuration.temperature."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          209,
-          209
-        ],
-        "section": "Layer 8: Statistical Validity"
-      },
-      "claim_text": "| 38 | Bootstrap CI correct | Tile-level resampling, 1,000 iterations, seed=42, percentile method. Pre-computed per-tile counts (E26 fix). CI = [0.878, 0.928]. **Lower bound does not exceed 0.9.** | CONCERN | The claim \"F1 > 0.9\" is a point estimate, not a statistical guarantee |",
-      "values": [
-        {
-          "quantity": "bootstrap iterations",
-          "value_verbatim": "1,000",
-          "value_parsed": 1000,
-          "unit": "iterations",
-          "kind": "parameter",
-          "path": "$._metadata.bootstrap.n_iterations",
-          "method": "read"
-        },
-        {
-          "quantity": "bootstrap random seed",
-          "value_verbatim": "42",
-          "value_parsed": 42,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$._metadata.bootstrap.seed",
-          "method": "read"
-        },
-        {
-          "quantity": "F1 bootstrap CI lower bound at 30 m, pv-diag-384 16-of-30 + PV",
-          "value_verbatim": "0.878",
-          "value_parsed": 0.878,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summary.buffers[5].f1_ci_lower",
-          "method": "read"
-        },
-        {
-          "quantity": "F1 bootstrap CI upper bound at 30 m, pv-diag-384 16-of-30 + PV",
-          "value_verbatim": "0.928",
-          "value_parsed": 0.928,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summary.buffers[5].f1_ci_upper",
-          "method": "read"
-        },
-        {
-          "quantity": "F1 level the CI lower bound is compared against",
-          "value_verbatim": "0.9",
-          "value_parsed": 0.9,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Table row (claim 38). buffers[5] is buffer_metres = 30. The 0.9 is the headline claim's comparison constant rather than an artefact value. The anchor file records the bootstrap iterations, seed and method; the audit's 'percentile method' description is left for the harness to compare, not adjudicated here. 'E26' is an erratum identifier and out of C4 scope."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          210,
-          210
-        ],
-        "section": "Layer 8: Statistical Validity"
-      },
-      "claim_text": "| 39 | FDR correction applied | `analyse_phase2_results.py` (lines 199–210) uses pseudo-p-values derived from CI bounds via ad hoc formula: `pseudo_p = max(0.001, 0.05 - ci_lower)`. This is **not a valid statistical procedure** — it does not preserve the properties required by Benjamini-Hochberg. The separate `pairwise_permutation_test.py` computes real p-values correctly but was not applied to the paper-eval conditions. | CONCERN | Pseudo-p-value FDR is methodologically flawed; real permutation tests not applied at paper-eval level |",
-      "values": [
-        {
-          "quantity": "floor of the ad hoc pseudo-p formula in analyse_phase2_results.py",
-          "value_verbatim": "0.001",
-          "value_parsed": 0.001,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "alpha constant of the ad hoc pseudo-p formula",
-          "value_verbatim": "0.05",
-          "value_parsed": 0.05,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "scripts/analyse_phase2_results.py",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Table row (claim 39). Non-JSON anchor (a Python source constant) — legitimate under instrument v1.1; the harness routes it to triage. Line-number citations in the row are out of C4 scope."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          211,
-          211
-        ],
-        "section": "Layer 8: Statistical Validity"
-      },
-      "claim_text": "| 40 | F1 > 0.9 survives FDR | No pairwise test exists between the target (F1=0.904) and runner-up (F1=0.891). Gap is 0.014. CIs overlap: target [0.878, 0.928] vs runner-up [0.863, 0.916]. Analogous gaps in 512px data (~0.009–0.012) were non-significant. | CONCERN | No formal significance test between top-2 conditions; claim that this specific condition is best is not established |",
-      "values": [
-        {
-          "quantity": "F1 of the target condition (16-of-30 + PV) at 30 m",
-          "value_verbatim": "0.904",
-          "value_parsed": 0.904,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.condition_a.f1",
-          "method": "read"
-        },
-        {
-          "quantity": "F1 of the runner-up condition (4-of-5 + PV) at 30 m",
-          "value_verbatim": "0.891",
-          "value_parsed": 0.891,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.condition_b.f1",
-          "method": "read"
-        },
-        {
-          "quantity": "F1 gap between target and runner-up",
-          "value_verbatim": "0.014",
-          "value_parsed": 0.014,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.observed_f1_diff",
-          "method": "read"
-        },
-        {
-          "quantity": "target F1 CI lower bound",
-          "value_verbatim": "0.878",
-          "value_parsed": 0.878,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "target F1 CI upper bound",
-          "value_verbatim": "0.928",
-          "value_parsed": 0.928,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "runner-up F1 CI lower bound",
-          "value_verbatim": "0.863",
-          "value_parsed": 0.863,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "runner-up F1 CI upper bound",
-          "value_verbatim": "0.916",
-          "value_parsed": 0.916,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "lower bound of the analogous 512 px F1 gap range",
-          "value_verbatim": "0.009",
-          "value_parsed": 0.009,
-          "unit": null,
-          "kind": "statistic",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "upper bound of the analogous 512 px F1 gap range",
-          "value_verbatim": "0.012",
-          "value_parsed": 0.012,
-          "unit": null,
-          "kind": "statistic",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "results/pairwise/30m/group_6_topn/best-vs-runner-up-1-flash-high-text-16-of-30-pv-vs-flash-high-text-4-of-5-pv.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Table row (claim 40). Candidate anchors for the flagged values: target CI -> outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json $.summary.buffers[5].f1_ci_lower/f1_ci_upper; runner-up CI -> results/conditions-manifest.json entry pv-diag-384::verified-adv-text-4of5 metrics.per_buffer['30'].ci (or results/h11-384-pv-diagnostic/flash-high-text-4of5/threshold_sweep.json for the 20 m sweep); the 512 px gap range was not located and is left for triage."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          212,
-          212
-        ],
-        "section": "Layer 8: Statistical Validity"
-      },
-      "claim_text": "| 41 | Permutation tests correct | `pairwise_permutation_test.py`: paired, two-sided, 10,000 permutations, micro-average F1, seed=42. Implementation is sound. | PASS | None |",
-      "values": [
-        {
-          "quantity": "permutation iterations in pairwise_permutation_test.py",
-          "value_verbatim": "10,000",
-          "value_parsed": 10000,
-          "unit": "permutations",
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "permutation random seed",
-          "value_verbatim": "42",
-          "value_parsed": 42,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "scripts/pairwise_permutation_test.py",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Table row (claim 41). Non-JSON anchor (Python default arguments), legitimate under instrument v1.1; 'paired', 'two-sided' and 'micro-average F1' are non-numeric."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          215,
-          215
-        ],
-        "section": "Layer 8: Statistical Validity"
-      },
-      "claim_text": "the 95% CI lower bound is 0.878, not 0.9",
-      "values": [
-        {
-          "quantity": "nominal confidence level of the bootstrap interval",
-          "value_verbatim": "95",
-          "value_parsed": 95,
-          "unit": "%",
-          "kind": "parameter",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "F1 bootstrap CI lower bound at 30 m",
-          "value_verbatim": "0.878",
-          "value_parsed": 0.878,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summary.buffers[5].f1_ci_lower",
-          "method": "read"
-        },
-        {
-          "quantity": "F1 level the lower bound is compared against",
-          "value_verbatim": "0.9",
-          "value_parsed": 0.9,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json",
-        "path": "$.summary.buffers[5].f1_ci_lower"
-      },
-      "method": "read",
-      "notes": "Layer verdict reasoning. The eval artefact records the bootstrap method, iterations and seed but not the nominal 95% level, so that value is flagged; 0.9 is the headline claim's comparison constant."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          224,
-          224
-        ],
-        "section": "Specific Failure Hypotheses"
-      },
-      "claim_text": "| 2 | Tolerance inflation | F1 > 0.9 holds at 30m but not at preregistered 20m (F1=0.890) | 30m = ~6 pixels (~1 symbol width), physically reasonable. Plateau at 30m (no further gain at 40–50m). 20m→30m gain is only +0.014. | REJECTED |",
-      "values": [
-        {
-          "quantity": "F1 level the headline claim asserts",
-          "value_verbatim": "0.9",
-          "value_parsed": 0.9,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "spatial tolerance at which F1 > 0.9 holds",
-          "value_verbatim": "30m",
-          "value_parsed": 30,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[5].buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "preregistered spatial tolerance",
-          "value_verbatim": "20m",
-          "value_parsed": 20,
-          "unit": "m",
-          "kind": "physical",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "F1 at 20 m, pv-diag-384 16-of-30 + PV",
-          "value_verbatim": "0.890",
-          "value_parsed": 0.89,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summary.buffers[3].f1",
-          "method": "read"
-        },
-        {
-          "quantity": "30 m tolerance expressed in tile pixels",
-          "value_verbatim": "6",
-          "value_parsed": 6,
-          "unit": "px",
-          "kind": "physical",
-          "path": null,
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "30 m tolerance expressed in mound-symbol widths",
-          "value_verbatim": "1",
-          "value_parsed": 1,
-          "unit": "symbol width",
-          "kind": "physical",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "upper tolerance of the claimed plateau",
-          "value_verbatim": "40",
-          "value_parsed": 40,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[7].f1",
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "outer tolerance of the claimed plateau",
-          "value_verbatim": "50",
-          "value_parsed": 50,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[9].f1",
-          "method": "recompute-script"
-        },
-        {
-          "quantity": "F1 gain from moving the tolerance from 20 m to 30 m",
-          "value_verbatim": "0.014",
-          "value_parsed": 0.014,
-          "unit": null,
-          "kind": "statistic",
-          "path": null,
-          "method": "arithmetic"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Table row (failure hypothesis 2). buffers[3] = 20 m, buffers[5] = 30 m, buffers[7] = 40 m, buffers[9] = 50 m. Scope decision: the repeated mentions of 30m and 20m within this row are recorded once each rather than per occurrence. Per-value derivations: +0.014 = $.summary.buffers[5].f1 - $.summary.buffers[3].f1; the plateau assertion needs the F1 values at 40 m and 50 m compared with 30 m. Instrument v1.1: 'preregistered 20m' is a claim about what the registration specifies and anchors to the lodged document (docs/methodology/preregistration/osf/), not to this evaluation artefact — flagged anchor-unknown because the claim-level anchor is the eval JSON. The ~6 px conversion needs the raster pixel size (inputs/rasters/K-35-052-4_32635.tif); the ~1 symbol width has no repo artefact."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          226,
-          226
-        ],
-        "section": "Specific Failure Hypotheses"
-      },
-      "claim_text": "| 4 | Selective tile exclusion | None found | 487/487 tiles processed with 0 failures across all 30 runs (29/30 runs; 1 run has 486). No correlation between difficulty and exclusion. | REJECTED |",
-      "values": [
-        {
-          "quantity": "tiles processed per proposer run",
-          "value_verbatim": "487",
-          "value_parsed": 487,
-          "unit": "tiles",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tiles in the 384 px evaluation set",
-          "value_verbatim": "487",
-          "value_parsed": 487,
-          "unit": "tiles",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "failed tiles per run",
-          "value_verbatim": "0",
-          "value_parsed": 0,
-          "unit": "tiles",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "proposer runs in the pool",
-          "value_verbatim": "30",
-          "value_parsed": 30,
-          "unit": "runs",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "runs processing all 487 tiles",
-          "value_verbatim": "29",
-          "value_parsed": 29,
-          "unit": "runs",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "pool size the run count is out of",
-          "value_verbatim": "30",
-          "value_parsed": 30,
-          "unit": "runs",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "runs processing fewer than 487 tiles",
-          "value_verbatim": "1",
-          "value_parsed": 1,
-          "unit": "runs",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tiles processed by the short run",
-          "value_verbatim": "486",
-          "value_parsed": 486,
-          "unit": "tiles",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7",
-        "path": null
-      },
-      "method": "recompute-script",
-      "notes": "Table row (failure hypothesis 4). Deciding it requires sweeping $.execution_stats.items_processed and $.execution_stats.items_failed across the 30 run meta.json files in the anchored directory (run_1 carries 487 and 0). The 487 evaluation-tile denominator is independently held by inputs/tiles_384/full_evaluation_manifest.json (list length)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          227,
-          227
-        ],
-        "section": "Specific Failure Hypotheses"
-      },
-      "claim_text": "| 5 | PV contamination | Verifier knows it is evaluating a \"candidate\" (framing, not leakage) | Verifier receives only crop image + 6 text labels. No coordinates, confidence, or vote count. Adversarial framing: \"find reasons it is NOT a burial mound.\" 44% rejection rate. | REJECTED |",
-      "values": [
-        {
-          "quantity": "count of text labels sent to the verifier",
-          "value_verbatim": "6",
-          "value_parsed": 6,
-          "unit": "labels",
-          "kind": "count",
-          "path": "$.text_only_labels",
-          "method": "read"
-        },
-        {
-          "quantity": "verifier rejection rate of proposer candidates",
-          "value_verbatim": "44%",
-          "value_parsed": 44,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "recompute-script"
-        }
-      ],
-      "anchor": {
-        "file": "prompts/configs/verify_adversarial-text.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Table row (failure hypothesis 5). $.text_only_labels is a list whose length carries the claim. The rejection rate is derivable from results/h11-384-pv-diagnostic/flash-high-text-16of30/threshold_sweep.json as 100 * ($.total_candidates - $.thresholds[4].n_accepted) / $.total_candidates (candidates accepted at threshold 0.2); flagged recompute-script because the operands sit outside the claim anchor file."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          228,
-          228
-        ],
-        "section": "Specific Failure Hypotheses"
-      },
-      "claim_text": "| 6 | Empty tile inflation | None found | Micro-averaged F1: empty tiles contribute (0,0,0). F1 returns 0.0 when P+R=0, not 1.0. 279 empty tiles have zero effect on numerator or denominator. | REJECTED |",
-      "values": [
-        {
-          "quantity": "F1 returned when precision + recall is zero",
-          "value_verbatim": "0.0",
-          "value_parsed": 0.0,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "F1 value explicitly not returned when precision + recall is zero",
-          "value_verbatim": "1.0",
-          "value_parsed": 1.0,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "count of evaluation tiles with zero TP/FP/FN at 30 m",
-          "value_verbatim": "279",
-          "value_parsed": 279,
-          "unit": "tiles",
-          "kind": "count",
-          "path": "$.summary.buffers[5].coverage.n_zero_count_tiles",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Table row (failure hypothesis 6). Scope decision: the '(0,0,0)' contribution triple and 'P+R=0' restate the same code behaviour and are not recorded as separate values. The 0.0/1.0 return-value behaviour anchors to scripts/evaluate_detections.py (calculate_f1_internal), outside the claim anchor file."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          229,
-          229
-        ],
-        "section": "Specific Failure Hypotheses"
-      },
-      "claim_text": "| 7 | Training tile inclusion | None found | 384px calibration manifest is empty. Calibration was on 512px tiles. 124 tiles excluded from 384px for geographic overlap with 512px calibration area. Zero overlap between excluded and evaluation sets. | REJECTED |",
-      "values": [
-        {
-          "quantity": "tiles excluded from the 384 px evaluation set for overlap with the 512 px calibration area",
-          "value_verbatim": "124",
-          "value_parsed": 124,
-          "unit": "tiles",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "overlap between the excluded tiles and the evaluation set",
-          "value_verbatim": "Zero",
-          "value_parsed": 0,
-          "unit": "tiles",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "inputs/tiles_384/calibration_manifest.json",
-        "path": null
-      },
-      "method": "recompute-script",
-      "notes": "Table row (failure hypothesis 7). The anchored 384 px calibration manifest is the artefact the row calls empty; the exclusion count is the difference between the generated 384 px tile set and inputs/tiles_384/full_evaluation_manifest.json (487 entries), and the zero-overlap assertion is a set comparison — both need a script. The word 'empty' is not numeric and is not recorded as a value."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          230,
-          230
-        ],
-        "section": "Specific Failure Hypotheses"
-      },
-      "claim_text": "| 8 | Stale results | None found | Sequential timestamps: proposer (24 Mar) → verifier (25 Mar) → evaluation (26 Mar). 16of30 is verified subset of 1of30 (729/11,771 with identical probability values). | REJECTED |",
-      "values": [
-        {
-          "quantity": "candidates surviving the 16-of-30 consensus threshold",
-          "value_verbatim": "729",
-          "value_parsed": 729,
-          "unit": "candidates",
-          "kind": "count",
-          "path": "$.thresholds['16']",
-          "method": "read"
-        },
-        {
-          "quantity": "candidates in the 1-of-30 union",
-          "value_verbatim": "11,771",
-          "value_parsed": 11771,
-          "unit": "candidates",
-          "kind": "count",
-          "path": "$.thresholds['1']",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/voting_summary.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Table row (failure hypothesis 8). Timestamps in this row are out of C4 scope; the 'identical probability values' assertion is a set comparison against outputs/h11/pv-diag-384/verified/flash-high-text-16of30/probabilities.json."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          231,
-          231
-        ],
-        "section": "Specific Failure Hypotheses"
-      },
-      "claim_text": "| 9 | Configuration mismatch | None found | All meta.json files match study YAML overrides. Proposer: Flash HIGH T=0.7 text-only. Verifier: Flash MINIMAL T=0.0 adversarial-text. Labels accurate. | REJECTED |",
-      "values": [
-        {
-          "quantity": "proposer temperature",
-          "value_verbatim": "0.7",
-          "value_parsed": 0.7,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.configuration.temperature",
-          "method": "read"
-        },
-        {
-          "quantity": "verifier temperature",
-          "value_verbatim": "0.0",
-          "value_parsed": 0.0,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.meta.json",
-        "path": "$.configuration.temperature"
-      },
-      "method": "read",
-      "notes": "Table row (failure hypothesis 9). Verifier temperature candidate anchor: prompts/configs/verify_adversarial-text.json $.temperature."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          241,
-          241
-        ],
-        "section": "Completeness Check"
-      },
-      "claim_text": "2. **Every failure hypothesis received a verdict:** All 9 REJECTED.",
-      "values": [
-        {
-          "quantity": "count of specific failure hypotheses adjudicated",
-          "value_verbatim": "9",
-          "value_parsed": 9,
-          "unit": "hypotheses",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Self-referential count of the nine rows of the Specific Failure Hypotheses table earlier in this same document (lines 223-231); prose-only source (instrument rule 2)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          245,
-          245
-        ],
-        "section": "Completeness Check"
-      },
-      "claim_text": "all 5 checks verified with multiple meta.json files and config diffs",
-      "values": [
-        {
-          "quantity": "count of Layer 6 checks verified",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": "checks",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Self-referential count of the five Layer 6 claims (27-31) in this same document; prose-only source (instrument rule 2)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          248,
-          248
-        ],
-        "section": "Completeness Check"
-      },
-      "claim_text": "the 20m clustering threshold is the same as the evaluation distance in some analyses",
-      "values": [
-        {
-          "quantity": "consensus clustering distance threshold in lib_consensus.py",
-          "value_verbatim": "20m",
-          "value_parsed": 20,
-          "unit": "m",
-          "kind": "physical",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "scripts/lib_consensus.py",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Non-JSON anchor: the module-level constant DISTANCE_THRESHOLD_METRES in scripts/lib_consensus.py, legitimate under instrument v1.1."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          248,
-          248
-        ],
-        "section": "Completeness Check"
-      },
-      "claim_text": "the paper-eval condition uses a 30m evaluation buffer (larger than the 20m clustering radius)",
-      "values": [
-        {
-          "quantity": "evaluation buffer of the paper-eval condition",
-          "value_verbatim": "30m",
-          "value_parsed": 30,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[5].buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "consensus clustering radius",
-          "value_verbatim": "20m",
-          "value_parsed": 20,
-          "unit": "m",
-          "kind": "physical",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Clustering radius candidate anchor: scripts/lib_consensus.py (DISTANCE_THRESHOLD_METRES), outside the claim anchor file."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          254,
-          254
-        ],
-        "section": "Overall Assessment"
-      },
-      "claim_text": "### Confidence level: 85% that F1 > 0.9 is genuine at 30m tolerance",
-      "values": [
-        {
-          "quantity": "stated confidence that F1 > 0.9 is genuine",
-          "value_verbatim": "85%",
-          "value_parsed": 85,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "F1 level asserted",
-          "value_verbatim": "0.9",
-          "value_parsed": 0.9,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "spatial tolerance",
-          "value_verbatim": "30m",
-          "value_parsed": 30,
-          "unit": "m",
-          "kind": "physical",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Subjective confidence judgement by the audit author; no repo artefact decides the 85%. The 0.9 and 30 m restate the headline claim (F1 point estimate at 30 m is carried by outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json $.summary.buffers[5].f1)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          256,
-          256
-        ],
-        "section": "Overall Assessment"
-      },
-      "claim_text": "The pipeline is well-engineered and correctly implemented across all 8 layers. All 9 inflation hypotheses are rejected.",
-      "values": [
-        {
-          "quantity": "count of audit layers",
-          "value_verbatim": "8",
-          "value_parsed": 8,
-          "unit": "layers",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "count of inflation hypotheses rejected",
-          "value_verbatim": "9",
-          "value_parsed": 9,
-          "unit": "hypotheses",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Self-referential counts of this document's own structure (eight layer sections, nine failure-hypothesis rows); prose-only source (instrument rule 2)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          256,
-          256
-        ],
-        "section": "Overall Assessment"
-      },
-      "claim_text": "The F1 = 0.9044 at 30m buffer is arithmetically correct, computed from verified TP=383, FP=29, FN=52 against a properly scoped ground truth of 435 mounds.",
-      "values": [
-        {
-          "quantity": "F1 at 30 m, pv-diag-384 16-of-30 + PV",
-          "value_verbatim": "0.9044",
-          "value_parsed": 0.9044,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.condition_a.f1",
-          "method": "read"
-        },
-        {
-          "quantity": "spatial evaluation buffer",
-          "value_verbatim": "30m",
-          "value_parsed": 30,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.metadata.buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "true positives at 30 m",
-          "value_verbatim": "383",
-          "value_parsed": 383,
-          "unit": "detections",
-          "kind": "count",
-          "path": "$.condition_a.tp",
-          "method": "read"
-        },
-        {
-          "quantity": "false positives at 30 m",
-          "value_verbatim": "29",
-          "value_parsed": 29,
-          "unit": "detections",
-          "kind": "count",
-          "path": "$.condition_a.fp",
-          "method": "read"
-        },
-        {
-          "quantity": "false negatives at 30 m",
-          "value_verbatim": "52",
-          "value_parsed": 52,
-          "unit": "mounds",
-          "kind": "count",
-          "path": "$.condition_a.fn",
-          "method": "read"
-        },
-        {
-          "quantity": "scoped ground-truth mound count for the 384 px evaluation footprint",
-          "value_verbatim": "435",
-          "value_parsed": 435,
-          "unit": "mounds",
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic"
-        }
-      ],
-      "anchor": {
-        "file": "results/pairwise/30m/group_6_topn/best-vs-runner-up-1-flash-high-text-16-of-30-pv-vs-flash-high-text-4-of-5-pv.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The scoped ground-truth count is derived inside the anchor file as $.condition_a.tp + $.condition_a.fn."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          258,
-          258
-        ],
-        "section": "Overall Assessment"
-      },
-      "claim_text": "The 15% residual uncertainty comes from:",
-      "values": [
-        {
-          "quantity": "stated residual uncertainty",
-          "value_verbatim": "15%",
-          "value_parsed": 15,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Complement of the audit author's 85% subjective confidence; no repo artefact decides it."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          260,
-          260
-        ],
-        "section": "Overall Assessment"
-      },
-      "claim_text": "F1 > 0.9 holds at 30m but not at the preregistered 20m tolerance, where F1 = 0.890 [0.863, 0.915].",
-      "values": [
-        {
-          "quantity": "F1 level asserted",
-          "value_verbatim": "0.9",
-          "value_parsed": 0.9,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "spatial tolerance at which the claim holds",
-          "value_verbatim": "30m",
-          "value_parsed": 30,
-          "unit": "m",
-          "kind": "physical",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "preregistered spatial tolerance",
-          "value_verbatim": "20m",
-          "value_parsed": 20,
-          "unit": "m",
-          "kind": "physical",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "F1 at 20 m, pv-diag-384 16-of-30 + PV",
-          "value_verbatim": "0.890",
-          "value_parsed": 0.89,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.thresholds[4].f1",
-          "method": "read"
-        },
-        {
-          "quantity": "F1 CI lower bound at 20 m",
-          "value_verbatim": "0.863",
-          "value_parsed": 0.863,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.thresholds[4].ci.f1.lower",
-          "method": "read"
-        },
-        {
-          "quantity": "F1 CI upper bound at 20 m",
-          "value_verbatim": "0.915",
-          "value_parsed": 0.915,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.thresholds[4].ci.f1.upper",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/h11-384-pv-diagnostic/flash-high-text-16of30/threshold_sweep.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "thresholds[4] is the probability-threshold 0.2 row of the 20 m threshold sweep for flash-high-text-16of30 (equivalently $.optimal). Instrument v1.1: the 'preregistered 20m' tolerance is a claim about the lodged registration (docs/methodology/preregistration/osf/), not about this artefact, hence flagged; the 30 m figure belongs to outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json $.summary.buffers[5]."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          260,
-          260
-        ],
-        "section": "Overall Assessment"
-      },
-      "claim_text": "The choice of 30m over 20m adds 8 additional TPs.",
-      "values": [
-        {
-          "quantity": "spatial tolerance chosen",
-          "value_verbatim": "30m",
-          "value_parsed": 30,
-          "unit": "m",
-          "kind": "physical",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "preregistered spatial tolerance",
-          "value_verbatim": "20m",
-          "value_parsed": 20,
-          "unit": "m",
-          "kind": "physical",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "additional true positives gained by moving from 20 m to 30 m",
-          "value_verbatim": "8",
-          "value_parsed": 8,
-          "unit": "detections",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json",
-        "path": null
-      },
-      "method": "recompute-script",
-      "notes": "Requires TP counts at both tolerances for this condition; the eval JSON carries precision/recall per buffer but not per-buffer TP/FP/FN, so the difference must be recomputed (or read from a matched pairwise artefact, which reports tp = 383 at 30 m only)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          260,
-          260
-        ],
-        "section": "Overall Assessment"
-      },
-      "claim_text": "While 30m is a physically defensible tolerance (~6 pixels, ~1 symbol diameter)",
-      "values": [
-        {
-          "quantity": "spatial tolerance",
-          "value_verbatim": "30m",
-          "value_parsed": 30,
-          "unit": "m",
-          "kind": "physical",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tolerance expressed in tile pixels",
-          "value_verbatim": "6",
-          "value_parsed": 6,
-          "unit": "px",
-          "kind": "physical",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "tolerance expressed in mound-symbol diameters",
-          "value_verbatim": "1",
-          "value_parsed": 1,
-          "unit": "symbol diameter",
-          "kind": "physical",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "inputs/rasters/K-35-052-4_32635.tif",
-        "path": null
-      },
-      "method": "recompute-script",
-      "notes": "The pixel conversion needs the raster ground sample distance from the GeoTIFF header (charter § 4: physical measurements outrank prose); the symbol-diameter equivalence has no repo artefact and is left for triage."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          262,
-          262
-        ],
-        "section": "Overall Assessment"
-      },
-      "claim_text": "The 95% CI lower bound at 30m is 0.878, which does not exclude values below 0.9. The point estimate exceeds 0.9 but this is not statistically guaranteed.",
-      "values": [
-        {
-          "quantity": "nominal confidence level of the bootstrap interval",
-          "value_verbatim": "95",
-          "value_parsed": 95,
-          "unit": "%",
-          "kind": "parameter",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "spatial tolerance",
-          "value_verbatim": "30m",
-          "value_parsed": 30,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[5].buffer_metres",
-          "method": "read"
-        },
-        {
-          "quantity": "F1 bootstrap CI lower bound at 30 m",
-          "value_verbatim": "0.878",
-          "value_parsed": 0.878,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summary.buffers[5].f1_ci_lower",
-          "method": "read"
-        },
-        {
-          "quantity": "F1 level the lower bound does not exclude",
-          "value_verbatim": "0.9",
-          "value_parsed": 0.9,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The eval artefact records bootstrap method, iterations and seed but not the nominal 95% level; 0.9 is the headline claim's comparison constant."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          264,
-          264
-        ],
-        "section": "Overall Assessment"
-      },
-      "claim_text": "The greedy consensus clustering and the choice of 16-of-30 as the optimal threshold were selected from a sweep",
-      "values": [
-        {
-          "quantity": "consensus vote threshold selected as optimal",
-          "value_verbatim": "16-of-30",
-          "value_parsed": null,
-          "unit": "passes",
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/voting_summary.json",
-        "path": null
-      },
-      "method": "recompute-script",
-      "notes": "The optimality assertion is a selection over the consensus vote sweep recorded in the anchored voting summary ($.thresholds, $.total_passes = 30), scored downstream; deciding it requires re-running the sweep comparison."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          268,
-          268
-        ],
-        "section": "Overall Assessment"
-      },
-      "claim_text": "The F1 = 0.9044 appears to be a legitimate measurement.",
-      "values": [
-        {
-          "quantity": "F1 at 30 m, pv-diag-384 16-of-30 + PV",
-          "value_verbatim": "0.9044",
-          "value_parsed": 0.9044,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summary.buffers[5].f1",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json",
-        "path": "$.summary.buffers[5].f1"
-      },
-      "method": "read",
-      "notes": "buffers[5] is buffer_metres = 30."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          276,
-          276
-        ],
-        "section": "Overall Assessment"
-      },
-      "claim_text": "2. **No head-to-head significance test** exists between the best condition (F1=0.904) and the runner-up (F1=0.891) at 384px paper-eval level.",
-      "values": [
-        {
-          "quantity": "F1 of the best condition at 30 m",
-          "value_verbatim": "0.904",
-          "value_parsed": 0.904,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.condition_a.f1",
-          "method": "read"
-        },
-        {
-          "quantity": "F1 of the runner-up condition at 30 m",
-          "value_verbatim": "0.891",
-          "value_parsed": 0.891,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.condition_b.f1",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/pairwise/30m/group_6_topn/best-vs-runner-up-1-flash-high-text-16-of-30-pv-vs-flash-high-text-4-of-5-pv.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The audit asserts no such test exists; the anchored file is a pairwise permutation test between exactly these two conditions, which is for triage to weigh, not the extractor."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          280,
-          280
-        ],
-        "section": "Overall Assessment"
-      },
-      "claim_text": "\"F1 = 0.90 [0.88, 0.93] at 30m spatial tolerance\"",
-      "values": [
-        {
-          "quantity": "recommended rounded F1 at 30 m",
-          "value_verbatim": "0.90",
-          "value_parsed": 0.9,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summary.buffers[5].f1",
-          "method": "read"
-        },
-        {
-          "quantity": "recommended rounded CI lower bound at 30 m",
-          "value_verbatim": "0.88",
-          "value_parsed": 0.88,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summary.buffers[5].f1_ci_lower",
-          "method": "read"
-        },
-        {
-          "quantity": "recommended rounded CI upper bound at 30 m",
-          "value_verbatim": "0.93",
-          "value_parsed": 0.93,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.summary.buffers[5].f1_ci_upper",
-          "method": "read"
-        },
-        {
-          "quantity": "spatial tolerance",
-          "value_verbatim": "30m",
-          "value_parsed": 30,
-          "unit": "m",
-          "kind": "physical",
-          "path": "$.summary.buffers[5].buffer_metres",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Values are quoted to two decimal places; the harness owns rounding tolerance (match at quoted precision)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          280,
-          280
-        ],
-        "section": "Overall Assessment"
-      },
-      "claim_text": "Note that at the preregistered 20m tolerance, F1 = 0.89 [0.86, 0.92].",
-      "values": [
-        {
-          "quantity": "preregistered spatial tolerance",
-          "value_verbatim": "20m",
-          "value_parsed": 20,
-          "unit": "m",
-          "kind": "physical",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "rounded F1 at 20 m",
-          "value_verbatim": "0.89",
-          "value_parsed": 0.89,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.thresholds[4].f1",
-          "method": "read"
-        },
-        {
-          "quantity": "rounded CI lower bound at 20 m",
-          "value_verbatim": "0.86",
-          "value_parsed": 0.86,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.thresholds[4].ci.f1.lower",
-          "method": "read"
-        },
-        {
-          "quantity": "rounded CI upper bound at 20 m",
-          "value_verbatim": "0.92",
-          "value_parsed": 0.92,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.thresholds[4].ci.f1.upper",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/h11-384-pv-diagnostic/flash-high-text-16of30/threshold_sweep.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "thresholds[4] is the probability-threshold 0.2 row of the 20 m sweep. Instrument v1.1: the 'preregistered 20m' tolerance anchors to the lodged registration (docs/methodology/preregistration/osf/), not to an executed artefact."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          286,
-          286
-        ],
-        "section": "Overall Assessment"
-      },
-      "claim_text": "The two tile sizes evaluate different subsets of ground truth (435 vs 539 mounds). This does not inflate F1 but limits the interpretability of cross-tile-size comparisons.",
-      "values": [
-        {
-          "quantity": "scoped ground-truth mounds, 384 px footprint",
-          "value_verbatim": "435",
-          "value_parsed": 435,
-          "unit": "mounds",
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "scoped ground-truth mounds, 512 px footprint",
-          "value_verbatim": "539",
-          "value_parsed": 539,
-          "unit": "mounds",
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/pairwise/30m/group_6_topn/best-vs-runner-up-1-flash-high-text-16-of-30-pv-vs-flash-high-text-4-of-5-pv.json",
-        "path": null
-      },
-      "method": "recompute-script",
-      "notes": "435 = $.condition_a.tp + $.condition_a.fn in the anchored file; the 512 px footprint count was not located by inspection (candidates: the 512 px evaluations under results/pairwise/tile-size-30m/ or a 512 px conditions-manifest entry) and is left for triage. Scope decision: 'two tile sizes' is a descriptive count and is not recorded as a value."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          288,
-          288
-        ],
-        "section": "Overall Assessment"
-      },
-      "claim_text": "The JSON files report 569 (total) but the scoped evaluation count is 435. Either fix the metadata or add a `ground_truth_mounds_scoped` field to prevent misinterpretation.",
-      "values": [
-        {
-          "quantity": "ground_truth_mounds recorded in the threshold-sweep metadata",
-          "value_verbatim": "569",
-          "value_parsed": 569,
-          "unit": "mounds",
-          "kind": "count",
-          "path": "$.ground_truth_mounds",
-          "method": "read"
-        },
-        {
-          "quantity": "scoped ground-truth mound count for the 384 px evaluation footprint",
-          "value_verbatim": "435",
-          "value_parsed": 435,
-          "unit": "mounds",
-          "kind": "count",
-          "path": null,
-          "method": "recompute-script"
-        }
-      ],
-      "anchor": {
-        "file": "results/h11-384-pv-diagnostic/flash-high-text-16of30/threshold_sweep.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The 435 scoped count is not carried by the anchored sweep file; it is derivable as tp + fn from results/pairwise/30m/group_6_topn/best-vs-runner-up-1-flash-high-text-16-of-30-pv-vs-flash-high-text-4-of-5-pv.json ($.condition_a.tp + $.condition_a.fn)."
+     "quantity": "count of claims inventoried for Layer 6",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": "claims",
+     "kind": "count",
+     "path": null,
+     "method": null
     }
-  ]
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Self-referential count: the Layer 6 block of the Phase 1 claims inventory in this same document (claims 27-31) and the five rows of the table below. The only visible source is prose in this document, so no artefact anchor exists (instrument rule 2)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     174,
+     174
+    ],
+    "section": "Layer 6: Configuration and Pipeline Integrity"
+   },
+   "claim_text": "| 27 | Full parameters documented | Proposer: gemini-3-flash, HIGH thinking, T=0.7, text-only (`detect_brief-text.json`), 384px, N=30, 17 text-only examples. Verifier: gemini-3-flash, MINIMAL thinking, T=0.0 (`verify_adversarial-text.json`), 6 text labels, no examples. PV threshold: 0.2. Consensus: 16-of-30. Buffer: 30m. All confirmed in meta.json files. | PASS | None |",
+   "values": [
+    {
+     "quantity": "proposer temperature, pv-diag-384 flash-high-text 30-pass run",
+     "value_verbatim": "0.7",
+     "value_parsed": 0.7,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.configuration.temperature",
+     "method": "read"
+    },
+    {
+     "quantity": "proposer tile size",
+     "value_verbatim": "384px",
+     "value_parsed": 384,
+     "unit": "px",
+     "kind": "physical",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "proposer pass count (N)",
+     "value_verbatim": "30",
+     "value_parsed": 30,
+     "unit": "passes",
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "count of text-only few-shot examples in the proposer prompt",
+     "value_verbatim": "17",
+     "value_parsed": 17,
+     "unit": "examples",
+     "kind": "count",
+     "path": "$.configuration.example_count",
+     "method": "read"
+    },
+    {
+     "quantity": "verifier temperature",
+     "value_verbatim": "0.0",
+     "value_parsed": 0.0,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "count of text labels sent to the verifier",
+     "value_verbatim": "6",
+     "value_parsed": 6,
+     "unit": "labels",
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "probability-verifier acceptance threshold",
+     "value_verbatim": "0.2",
+     "value_parsed": 0.2,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "consensus vote threshold over the proposer pool",
+     "value_verbatim": "16-of-30",
+     "value_parsed": null,
+     "unit": "passes",
+     "kind": "parameter",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "spatial evaluation buffer",
+     "value_verbatim": "30m",
+     "value_parsed": 30,
+     "unit": "m",
+     "kind": "physical",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.meta.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Table row (claim 27). Claim-level anchor is the pass-1 proposer meta.json, which carries temperature, thinking level, and example count. Values living in other artefacts are marked anchor-unknown with their candidate anchors here: '384px' -> tile geometry, e.g. inputs/tiles_384/K-35-052-4_32635/K-35-052-4_32635_x0_y0.png (crop-size PNG, a legitimate non-JSON anchor under instrument v1.1); 'N=30' -> outputs/h11/pv-diag-384/flash-high-text-n5/study_manifest.json $.runs_per_condition and .../text-t0.7/consensus/voting_summary.json $.total_passes; verifier 'T=0.0' -> prompts/configs/verify_adversarial-text.json $.temperature; '6 text labels' -> same file $.text_only_labels (list length); 'PV threshold: 0.2' -> results/h11-384-pv-diagnostic/flash-high-text-16of30/threshold_sweep.json $.optimal.threshold; '16-of-30' -> voting_summary.json $.thresholds['16'] with $.total_passes; 'Buffer: 30m' -> outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json $.summary.buffers[5].buffer_metres. Model version strings and the config filenames are names, not quantitative claims."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     175,
+     175
+    ],
+    "section": "Layer 6: Configuration and Pipeline Integrity"
+   },
+   "claim_text": "| 28 | No GT in prompts | `detect_brief-text.md`: clean detection instructions. `verify_adversarial.md`: clean adversarial instructions. Both config JSONs: no base64, no coordinate data, no GT file paths. Regex search for `base64`, `data:image`, coordinate patterns: zero matches. | PASS | None |",
+   "values": [
+    {
+     "quantity": "count of regex matches for base64/data:image/coordinate patterns in the prompt configs and system instructions",
+     "value_verbatim": "zero",
+     "value_parsed": 0,
+     "unit": "matches",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "prompts/configs/detect_brief-text.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Table row (claim 28). The assertion is a negative grep across prompts/configs/detect_brief-text.json, prompts/configs/verify_adversarial-text.json, prompts/system-instructions/detect_brief-text.md and prompts/system-instructions/verify_adversarial.md; anchored at the proposer config as the representative file. Requires a scripted re-grep to decide."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     177,
+     177
+    ],
+    "section": "Layer 6: Configuration and Pipeline Integrity"
+   },
+   "claim_text": "| 30 | Timestamps consistent | Proposer: 24 Mar 2026 03:47–19:20 UTC (30 batch runs). Verifier: 25 Mar 18:20 UTC. Derived 16of30: 25 Mar 21:37. Evaluation: 26 Mar 12:49 UTC. Sequential, no gaps or reversals. | PASS | None |",
+   "values": [
+    {
+     "quantity": "count of proposer batch runs in the pv-diag-384 text-t0.7 study",
+     "value_verbatim": "30",
+     "value_parsed": 30,
+     "unit": "runs",
+     "kind": "count",
+     "path": "$.runs_per_condition",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/h11/pv-diag-384/flash-high-text-n5/study_manifest.json",
+    "path": "$.runs_per_condition"
+   },
+   "method": "read",
+   "notes": "Table row (claim 30). Dates and timestamps in this row are out of C4 scope (instrument rule 5); only the run count is extracted."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     178,
+     178
+    ],
+    "section": "Layer 6: Configuration and Pipeline Integrity"
+   },
+   "claim_text": "| 31 | Only intended params differ | Proposer vs verifier: system instruction (detect vs adversarial), temperature (0.7 vs 0.0), thinking (HIGH vs MINIMAL). All intentional. Model, max_output_tokens, text-only mode: same. | PASS | None |",
+   "values": [
+    {
+     "quantity": "proposer temperature",
+     "value_verbatim": "0.7",
+     "value_parsed": 0.7,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.configuration.temperature",
+     "method": "read"
+    },
+    {
+     "quantity": "verifier temperature",
+     "value_verbatim": "0.0",
+     "value_parsed": 0.0,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.meta.json",
+    "path": "$.configuration.temperature"
+   },
+   "method": "read",
+   "notes": "Table row (claim 31). Verifier temperature candidate anchor: prompts/configs/verify_adversarial-text.json $.temperature. Thinking levels (HIGH/MINIMAL) are not numeric."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     187,
+     187
+    ],
+    "section": "Layer 7: Cross-Configuration Consistency"
+   },
+   "claim_text": "**Claims inventoried:** 5",
+   "values": [
+    {
+     "quantity": "count of claims inventoried for Layer 7",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": "claims",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Self-referential count of the Layer 7 claims (32-36) inventoried in this same document; prose-only source, so no artefact anchor (instrument rule 2)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     191,
+     191
+    ],
+    "section": "Layer 7: Cross-Configuration Consistency"
+   },
+   "claim_text": "| 32 | Monotonic pipeline progression | Single-pass best: F1=0.563. Consensus best: F1=0.826. PV best: F1=0.904. Each stage adds ~0.13–0.26 over the previous. | PASS | None |",
+   "values": [
+    {
+     "quantity": "best single-pass F1, 384 px family",
+     "value_verbatim": "0.563",
+     "value_parsed": 0.563,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "best consensus F1, 384 px family",
+     "value_verbatim": "0.826",
+     "value_parsed": 0.826,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "best proposer-verifier F1, 384 px family",
+     "value_verbatim": "0.904",
+     "value_parsed": 0.904,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "lower bound of the per-stage F1 gain range",
+     "value_verbatim": "0.13",
+     "value_parsed": 0.13,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "upper bound of the per-stage F1 gain range",
+     "value_verbatim": "0.26",
+     "value_parsed": 0.26,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/conditions-manifest.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Table row (claim 32). Best-of-category assertions require a maximum over the 384 px condition family, so they cannot be read at a single path. Candidate identifications in results/conditions-manifest.json: PV best 0.904 = pv-diag-384::verified-adv-text-consensus-16of30 (metrics.per_buffer['30'].f1); consensus best 0.826 = pv-diag-384::flash-high-text-n5-text-t0.7-consensus-26of30; the single-pass best 0.563 was not located by inspection and is left for triage. The 0.13-0.26 range is a derived per-stage delta."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     192,
+     192
+    ],
+    "section": "Layer 7: Cross-Configuration Consistency"
+   },
+   "claim_text": "| 33 | Text > image consistent | Consensus: text F1=0.826 vs image F1=0.821 (small gap). PV: text F1=0.904 vs image F1=0.851 (larger gap). Pairwise permutation test: diff=0.110, CI [0.073, 0.148], p=0.001. Gap widens through pipeline. | PASS | None |",
+   "values": [
+    {
+     "quantity": "consensus F1, text modality",
+     "value_verbatim": "0.826",
+     "value_parsed": 0.826,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "consensus F1, image modality",
+     "value_verbatim": "0.821",
+     "value_parsed": 0.821,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "proposer-verifier F1, text modality",
+     "value_verbatim": "0.904",
+     "value_parsed": 0.904,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "proposer-verifier F1, image modality",
+     "value_verbatim": "0.851",
+     "value_parsed": 0.851,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "text-vs-image paired F1 difference, 384 px moderate consensus",
+     "value_verbatim": "0.110",
+     "value_parsed": 0.11,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$['J:J1'].result.f1_difference.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "lower bound of the bootstrap CI on the text-vs-image F1 difference",
+     "value_verbatim": "0.073",
+     "value_parsed": 0.073,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$['J:J1'].result.f1_difference.ci_lower",
+     "method": "read"
+    },
+    {
+     "quantity": "upper bound of the bootstrap CI on the text-vs-image F1 difference",
+     "value_verbatim": "0.148",
+     "value_parsed": 0.148,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$['J:J1'].result.f1_difference.ci_upper",
+     "method": "read"
+    },
+    {
+     "quantity": "p-value of the text-vs-image paired test",
+     "value_verbatim": "0.001",
+     "value_parsed": 0.001,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$['J:J1'].result.f1_difference.p_value",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/h11-384-pv-diagnostic/pairwise/pairwise-384px.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Table row (claim 33). The paired-test triple anchors to comparison J1 ('Text vs image moderate consensus') in the 384 px pairwise file. The four F1 point estimates belong to other artefacts and are flagged anchor-unknown; candidate anchors in results/conditions-manifest.json: 0.826 = pv-diag-384::flash-high-text-n5-text-t0.7-consensus-26of30 (metrics.per_buffer['30'].f1), 0.904 = pv-diag-384::verified-adv-text-consensus-16of30, 0.851 = pv-diag-384::verified-adv-image-3of5; the image-consensus 0.821 was not located by inspection. Note for triage: the audit's F1 pair and its permutation statistic come from different comparisons."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     193,
+     193
+    ],
+    "section": "Layer 7: Cross-Configuration Consistency"
+   },
+   "claim_text": "| 34 | 384px > 512px significant | Three pairwise comparisons: loose consensus +0.070 (p=0.004), goldilocks +0.061 (p=0.002), best-vs-best +0.063 (p=0.002). 384px wins all three. | PASS | None |",
+   "values": [
+    {
+     "quantity": "count of pairwise 384 px vs 512 px comparisons reported",
+     "value_verbatim": "Three",
+     "value_parsed": 3,
+     "unit": "comparisons",
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "F1 difference, loose-consensus 384 px vs 512 px",
+     "value_verbatim": "0.070",
+     "value_parsed": 0.07,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$['I1:loose_consensus'].result.f1_difference.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "p-value, loose-consensus 384 px vs 512 px",
+     "value_verbatim": "0.004",
+     "value_parsed": 0.004,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$['I1:loose_consensus'].result.f1_difference.p_value",
+     "method": "read"
+    },
+    {
+     "quantity": "F1 difference, goldilocks 384 px vs 512 px",
+     "value_verbatim": "0.061",
+     "value_parsed": 0.061,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$['I2:goldilocks'].result.f1_difference.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "p-value, goldilocks 384 px vs 512 px",
+     "value_verbatim": "0.002",
+     "value_parsed": 0.002,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$['I2:goldilocks'].result.f1_difference.p_value",
+     "method": "read"
+    },
+    {
+     "quantity": "F1 difference, best-vs-best 384 px vs 512 px",
+     "value_verbatim": "0.063",
+     "value_parsed": 0.063,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$['I3:best_vs_best'].result.f1_difference.mean",
+     "method": "read"
+    },
+    {
+     "quantity": "p-value, best-vs-best 384 px vs 512 px",
+     "value_verbatim": "0.002",
+     "value_parsed": 0.002,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$['I3:best_vs_best'].result.f1_difference.p_value",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/h11-384-pv-diagnostic/pairwise/fair-384-vs-512.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Table row (claim 34). The three named comparisons map to keys I1, I2 and I3 of the fair 384-vs-512 pairwise file, which also holds further comparisons (I5, I6, ...); the count 'Three' is therefore a statement about how many the audit reports, not a count of file entries, and is flagged anchor-unknown. Doubt logged per the when-in-doubt-include rule."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     194,
+     194
+    ],
+    "section": "Layer 7: Cross-Configuration Consistency"
+   },
+   "claim_text": "| 35 | Verifier improves over consensus | Same proposer lineage: Flash-high-text consensus F1=0.826 → PV F1=0.904 (+0.078). Verifier improves precision (+0.084) and recall (+0.074). The precision gain is slightly larger, consistent with adversarial verification design. | PASS | None |",
+   "values": [
+    {
+     "quantity": "consensus F1, flash-high-text 26-of-30",
+     "value_verbatim": "0.826",
+     "value_parsed": 0.826,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.condition_b.f1",
+     "method": "read"
+    },
+    {
+     "quantity": "proposer-verifier F1, flash-high-text 16-of-30",
+     "value_verbatim": "0.904",
+     "value_parsed": 0.904,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.condition_a.f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1 gain from adding the verifier",
+     "value_verbatim": "0.078",
+     "value_parsed": 0.078,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.observed_f1_diff",
+     "method": "read"
+    },
+    {
+     "quantity": "precision gain from adding the verifier",
+     "value_verbatim": "0.084",
+     "value_parsed": 0.084,
+     "unit": null,
+     "kind": "statistic",
+     "path": null,
+     "method": "recompute-script"
+    },
+    {
+     "quantity": "recall gain from adding the verifier",
+     "value_verbatim": "0.074",
+     "value_parsed": 0.074,
+     "unit": null,
+     "kind": "statistic",
+     "path": null,
+     "method": "recompute-script"
+    }
+   ],
+   "anchor": {
+    "file": "results/pairwise/30m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Table row (claim 35). Derivations for the two gains, both inside the anchor file: +0.084 = $.condition_a.precision - $.condition_b.precision; +0.074 = $.condition_a.recall - $.condition_b.recall."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     195,
+     195
+    ],
+    "section": "Layer 7: Cross-Configuration Consistency"
+   },
+   "claim_text": "| 36 | No anomalous ordering | Single-pass < consensus < PV. MINIMAL < HIGH thinking. Larger pools ≥ smaller pools. T=0.7 > T=1.0. No condition performs worse than a strictly inferior configuration. | PASS | None |",
+   "values": [
+    {
+     "quantity": "proposer temperature of the better-performing condition",
+     "value_verbatim": "0.7",
+     "value_parsed": 0.7,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "proposer temperature of the worse-performing condition",
+     "value_verbatim": "1.0",
+     "value_parsed": 1.0,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/conditions-manifest.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Table row (claim 36). Doubt logged: the temperatures here may be condition labels rather than asserted run parameters (instrument rule 5), but the row asserts an ordering between the T=0.7 and T=1.0 condition families, which is checkable by comparing their F1 entries in the conditions manifest."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     204,
+     204
+    ],
+    "section": "Layer 8: Statistical Validity"
+   },
+   "claim_text": "**Claims inventoried:** 5",
+   "values": [
+    {
+     "quantity": "count of claims inventoried for Layer 8",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": "claims",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Self-referential count of the Layer 8 claims (37-41) inventoried in this same document; prose-only source, so no artefact anchor (instrument rule 2)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     208,
+     208
+    ],
+    "section": "Layer 8: Statistical Validity"
+   },
+   "claim_text": "| 37 | 30 runs are independent | Each run has unique UUID, distinct timestamps spanning ~16 hours (batch API). Log confirms \"Runs per condition: 30\", execution mode: \"BATCH\". T=0.7 provides stochastic variation. | PASS | None |",
+   "values": [
+    {
+     "quantity": "wall-clock span of the 30 proposer batch runs",
+     "value_verbatim": "16",
+     "value_parsed": 16,
+     "unit": "hours",
+     "kind": "other",
+     "path": null,
+     "method": "recompute-script"
+    },
+    {
+     "quantity": "runs per condition in the pv-diag-384 text-t0.7 study",
+     "value_verbatim": "30",
+     "value_parsed": 30,
+     "unit": "runs",
+     "kind": "count",
+     "path": "$.runs_per_condition",
+     "method": "read"
+    },
+    {
+     "quantity": "proposer temperature",
+     "value_verbatim": "0.7",
+     "value_parsed": 0.7,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/h11/pv-diag-384/flash-high-text-n5/study_manifest.json",
+    "path": "$.runs_per_condition"
+   },
+   "method": "read",
+   "notes": "Table row (claim 37). The ~16 h span is derived from the timestamp fields of the 30 run meta.json files under outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7 (timestamps themselves are out of C4 scope; the span is a quantity, so it is recorded with a recompute method). Temperature candidate anchor: outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.meta.json $.configuration.temperature."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     209,
+     209
+    ],
+    "section": "Layer 8: Statistical Validity"
+   },
+   "claim_text": "| 38 | Bootstrap CI correct | Tile-level resampling, 1,000 iterations, seed=42, percentile method. Pre-computed per-tile counts (E26 fix). CI = [0.878, 0.928]. **Lower bound does not exceed 0.9.** | CONCERN | The claim \"F1 > 0.9\" is a point estimate, not a statistical guarantee |",
+   "values": [
+    {
+     "quantity": "bootstrap iterations",
+     "value_verbatim": "1,000",
+     "value_parsed": 1000,
+     "unit": "iterations",
+     "kind": "parameter",
+     "path": "$._metadata.bootstrap.n_iterations",
+     "method": "read"
+    },
+    {
+     "quantity": "bootstrap random seed",
+     "value_verbatim": "42",
+     "value_parsed": 42,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$._metadata.bootstrap.seed",
+     "method": "read"
+    },
+    {
+     "quantity": "F1 bootstrap CI lower bound at 30 m, pv-diag-384 16-of-30 + PV",
+     "value_verbatim": "0.878",
+     "value_parsed": 0.878,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[5].f1_ci_lower",
+     "method": "read"
+    },
+    {
+     "quantity": "F1 bootstrap CI upper bound at 30 m, pv-diag-384 16-of-30 + PV",
+     "value_verbatim": "0.928",
+     "value_parsed": 0.928,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[5].f1_ci_upper",
+     "method": "read"
+    },
+    {
+     "quantity": "F1 level the CI lower bound is compared against",
+     "value_verbatim": "0.9",
+     "value_parsed": 0.9,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Table row (claim 38). buffers[5] is buffer_metres = 30. The 0.9 is the headline claim's comparison constant rather than an artefact value. The anchor file records the bootstrap iterations, seed and method; the audit's 'percentile method' description is left for the harness to compare, not adjudicated here. 'E26' is an erratum identifier and out of C4 scope."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     210,
+     210
+    ],
+    "section": "Layer 8: Statistical Validity"
+   },
+   "claim_text": "| 39 | FDR correction applied | `analyse_phase2_results.py` (lines 199–210) uses pseudo-p-values derived from CI bounds via ad hoc formula: `pseudo_p = max(0.001, 0.05 - ci_lower)`. This is **not a valid statistical procedure** — it does not preserve the properties required by Benjamini-Hochberg. The separate `pairwise_permutation_test.py` computes real p-values correctly but was not applied to the paper-eval conditions. | CONCERN | Pseudo-p-value FDR is methodologically flawed; real permutation tests not applied at paper-eval level |",
+   "values": [
+    {
+     "quantity": "floor of the ad hoc pseudo-p formula in analyse_phase2_results.py",
+     "value_verbatim": "0.001",
+     "value_parsed": 0.001,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "alpha constant of the ad hoc pseudo-p formula",
+     "value_verbatim": "0.05",
+     "value_parsed": 0.05,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "scripts/analyse_phase2_results.py",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Table row (claim 39). Non-JSON anchor (a Python source constant) — legitimate under instrument v1.1; the harness routes it to triage. Line-number citations in the row are out of C4 scope."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     211,
+     211
+    ],
+    "section": "Layer 8: Statistical Validity"
+   },
+   "claim_text": "| 40 | F1 > 0.9 survives FDR | No pairwise test exists between the target (F1=0.904) and runner-up (F1=0.891). Gap is 0.014. CIs overlap: target [0.878, 0.928] vs runner-up [0.863, 0.916]. Analogous gaps in 512px data (~0.009–0.012) were non-significant. | CONCERN | No formal significance test between top-2 conditions; claim that this specific condition is best is not established |",
+   "values": [
+    {
+     "quantity": "F1 of the target condition (16-of-30 + PV) at 30 m",
+     "value_verbatim": "0.904",
+     "value_parsed": 0.904,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.condition_a.f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1 of the runner-up condition (4-of-5 + PV) at 30 m",
+     "value_verbatim": "0.891",
+     "value_parsed": 0.891,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.condition_b.f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1 gap between target and runner-up",
+     "value_verbatim": "0.014",
+     "value_parsed": 0.014,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.observed_f1_diff",
+     "method": "read"
+    },
+    {
+     "quantity": "target F1 CI lower bound",
+     "value_verbatim": "0.878",
+     "value_parsed": 0.878,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "target F1 CI upper bound",
+     "value_verbatim": "0.928",
+     "value_parsed": 0.928,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "runner-up F1 CI lower bound",
+     "value_verbatim": "0.863",
+     "value_parsed": 0.863,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "runner-up F1 CI upper bound",
+     "value_verbatim": "0.916",
+     "value_parsed": 0.916,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "lower bound of the analogous 512 px F1 gap range",
+     "value_verbatim": "0.009",
+     "value_parsed": 0.009,
+     "unit": null,
+     "kind": "statistic",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "upper bound of the analogous 512 px F1 gap range",
+     "value_verbatim": "0.012",
+     "value_parsed": 0.012,
+     "unit": null,
+     "kind": "statistic",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "results/pairwise/30m/group_6_topn/best-vs-runner-up-1-flash-high-text-16-of-30-pv-vs-flash-high-text-4-of-5-pv.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Table row (claim 40). Candidate anchors for the flagged values: target CI -> outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json $.summary.buffers[5].f1_ci_lower/f1_ci_upper; runner-up CI -> results/conditions-manifest.json entry pv-diag-384::verified-adv-text-4of5 metrics.per_buffer['30'].ci (or results/h11-384-pv-diagnostic/flash-high-text-4of5/threshold_sweep.json for the 20 m sweep); the 512 px gap range was not located and is left for triage."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     212,
+     212
+    ],
+    "section": "Layer 8: Statistical Validity"
+   },
+   "claim_text": "| 41 | Permutation tests correct | `pairwise_permutation_test.py`: paired, two-sided, 10,000 permutations, micro-average F1, seed=42. Implementation is sound. | PASS | None |",
+   "values": [
+    {
+     "quantity": "permutation iterations in pairwise_permutation_test.py",
+     "value_verbatim": "10,000",
+     "value_parsed": 10000,
+     "unit": "permutations",
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "permutation random seed",
+     "value_verbatim": "42",
+     "value_parsed": 42,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "scripts/pairwise_permutation_test.py",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Table row (claim 41). Non-JSON anchor (Python default arguments), legitimate under instrument v1.1; 'paired', 'two-sided' and 'micro-average F1' are non-numeric."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     215,
+     215
+    ],
+    "section": "Layer 8: Statistical Validity"
+   },
+   "claim_text": "the 95% CI lower bound is 0.878, not 0.9",
+   "values": [
+    {
+     "quantity": "nominal confidence level of the bootstrap interval",
+     "value_verbatim": "95",
+     "value_parsed": 95,
+     "unit": "%",
+     "kind": "parameter",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "F1 bootstrap CI lower bound at 30 m",
+     "value_verbatim": "0.878",
+     "value_parsed": 0.878,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[5].f1_ci_lower",
+     "method": "read"
+    },
+    {
+     "quantity": "F1 level the lower bound is compared against",
+     "value_verbatim": "0.9",
+     "value_parsed": 0.9,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json",
+    "path": "$.summary.buffers[5].f1_ci_lower"
+   },
+   "method": "read",
+   "notes": "Layer verdict reasoning. The eval artefact records the bootstrap method, iterations and seed but not the nominal 95% level, so that value is flagged; 0.9 is the headline claim's comparison constant."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     224,
+     224
+    ],
+    "section": "Specific Failure Hypotheses"
+   },
+   "claim_text": "| 2 | Tolerance inflation | F1 > 0.9 holds at 30m but not at preregistered 20m (F1=0.890) | 30m = ~6 pixels (~1 symbol width), physically reasonable. Plateau at 30m (no further gain at 40–50m). 20m→30m gain is only +0.014. | REJECTED |",
+   "values": [
+    {
+     "quantity": "F1 level the headline claim asserts",
+     "value_verbatim": "0.9",
+     "value_parsed": 0.9,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "spatial tolerance at which F1 > 0.9 holds",
+     "value_verbatim": "30m",
+     "value_parsed": 30,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[5].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "preregistered spatial tolerance",
+     "value_verbatim": "20m",
+     "value_parsed": 20,
+     "unit": "m",
+     "kind": "physical",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "F1 at 20 m, pv-diag-384 16-of-30 + PV",
+     "value_verbatim": "0.890",
+     "value_parsed": 0.89,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[3].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "30 m tolerance expressed in tile pixels",
+     "value_verbatim": "6",
+     "value_parsed": 6,
+     "unit": "px",
+     "kind": "physical",
+     "path": null,
+     "method": "recompute-script"
+    },
+    {
+     "quantity": "30 m tolerance expressed in mound-symbol widths",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "symbol width",
+     "kind": "physical",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "upper tolerance of the claimed plateau",
+     "value_verbatim": "40",
+     "value_parsed": 40,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[7].f1",
+     "method": "recompute-script"
+    },
+    {
+     "quantity": "outer tolerance of the claimed plateau",
+     "value_verbatim": "50",
+     "value_parsed": 50,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[9].f1",
+     "method": "recompute-script"
+    },
+    {
+     "quantity": "F1 gain from moving the tolerance from 20 m to 30 m",
+     "value_verbatim": "0.014",
+     "value_parsed": 0.014,
+     "unit": null,
+     "kind": "statistic",
+     "path": null,
+     "method": "arithmetic"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json",
+    "path": null,
+    "expression": "a - b",
+    "operands": [
+     {
+      "name": "a",
+      "file": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json",
+      "path": "$.summary.buffers[5].f1"
+     },
+     {
+      "name": "b",
+      "file": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json",
+      "path": "$.summary.buffers[3].f1"
+     }
+    ]
+   },
+   "method": "read",
+   "notes": "Table row (failure hypothesis 2). buffers[3] = 20 m, buffers[5] = 30 m, buffers[7] = 40 m, buffers[9] = 50 m. Scope decision: the repeated mentions of 30m and 20m within this row are recorded once each rather than per occurrence. Per-value derivations: +0.014 = $.summary.buffers[5].f1 - $.summary.buffers[3].f1; the plateau assertion needs the F1 values at 40 m and 50 m compared with 30 m. Instrument v1.1: 'preregistered 20m' is a claim about what the registration specifies and anchors to the lodged document (docs/methodology/preregistration/osf/), not to this evaluation artefact — flagged anchor-unknown because the claim-level anchor is the eval JSON. The ~6 px conversion needs the raster pixel size (inputs/rasters/K-35-052-4_32635.tif); the ~1 symbol width has no repo artefact. S123 triage repair (c4-triage/mismatch-triage-2026-07-31.json): v1.2 conformance — the +0.014 gain gets its derivation (buffers[5].f1 - buffers[3].f1) as claim-level expression."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     226,
+     226
+    ],
+    "section": "Specific Failure Hypotheses"
+   },
+   "claim_text": "| 4 | Selective tile exclusion | None found | 487/487 tiles processed with 0 failures across all 30 runs (29/30 runs; 1 run has 486). No correlation between difficulty and exclusion. | REJECTED |",
+   "values": [
+    {
+     "quantity": "tiles processed per proposer run",
+     "value_verbatim": "487",
+     "value_parsed": 487,
+     "unit": "tiles",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tiles in the 384 px evaluation set",
+     "value_verbatim": "487",
+     "value_parsed": 487,
+     "unit": "tiles",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "failed tiles per run",
+     "value_verbatim": "0",
+     "value_parsed": 0,
+     "unit": "tiles",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "proposer runs in the pool",
+     "value_verbatim": "30",
+     "value_parsed": 30,
+     "unit": "runs",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "runs processing all 487 tiles",
+     "value_verbatim": "29",
+     "value_parsed": 29,
+     "unit": "runs",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "pool size the run count is out of",
+     "value_verbatim": "30",
+     "value_parsed": 30,
+     "unit": "runs",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "runs processing fewer than 487 tiles",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "runs",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tiles processed by the short run",
+     "value_verbatim": "486",
+     "value_parsed": 486,
+     "unit": "tiles",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Table row (failure hypothesis 4). Deciding it requires sweeping $.execution_stats.items_processed and $.execution_stats.items_failed across the 30 run meta.json files in the anchored directory (run_1 carries 487 and 0). The 487 evaluation-tile denominator is independently held by inputs/tiles_384/full_evaluation_manifest.json (list length)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     227,
+     227
+    ],
+    "section": "Specific Failure Hypotheses"
+   },
+   "claim_text": "| 5 | PV contamination | Verifier knows it is evaluating a \"candidate\" (framing, not leakage) | Verifier receives only crop image + 6 text labels. No coordinates, confidence, or vote count. Adversarial framing: \"find reasons it is NOT a burial mound.\" 44% rejection rate. | REJECTED |",
+   "values": [
+    {
+     "quantity": "count of text labels sent to the verifier",
+     "value_verbatim": "6",
+     "value_parsed": 6,
+     "unit": "labels",
+     "kind": "count",
+     "path": "$.text_only_labels",
+     "method": "read"
+    },
+    {
+     "quantity": "verifier rejection rate of proposer candidates",
+     "value_verbatim": "44%",
+     "value_parsed": 44,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "recompute-script"
+    }
+   ],
+   "anchor": {
+    "file": "prompts/configs/verify_adversarial-text.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Table row (failure hypothesis 5). $.text_only_labels is a list whose length carries the claim. The rejection rate is derivable from results/h11-384-pv-diagnostic/flash-high-text-16of30/threshold_sweep.json as 100 * ($.total_candidates - $.thresholds[4].n_accepted) / $.total_candidates (candidates accepted at threshold 0.2); flagged recompute-script because the operands sit outside the claim anchor file."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     228,
+     228
+    ],
+    "section": "Specific Failure Hypotheses"
+   },
+   "claim_text": "| 6 | Empty tile inflation | None found | Micro-averaged F1: empty tiles contribute (0,0,0). F1 returns 0.0 when P+R=0, not 1.0. 279 empty tiles have zero effect on numerator or denominator. | REJECTED |",
+   "values": [
+    {
+     "quantity": "F1 returned when precision + recall is zero",
+     "value_verbatim": "0.0",
+     "value_parsed": 0.0,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "F1 value explicitly not returned when precision + recall is zero",
+     "value_verbatim": "1.0",
+     "value_parsed": 1.0,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "count of evaluation tiles with zero TP/FP/FN at 30 m",
+     "value_verbatim": "279",
+     "value_parsed": 279,
+     "unit": "tiles",
+     "kind": "count",
+     "path": "$.summary.buffers[5].coverage.n_zero_count_tiles",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Table row (failure hypothesis 6). Scope decision: the '(0,0,0)' contribution triple and 'P+R=0' restate the same code behaviour and are not recorded as separate values. The 0.0/1.0 return-value behaviour anchors to scripts/evaluate_detections.py (calculate_f1_internal), outside the claim anchor file."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     229,
+     229
+    ],
+    "section": "Specific Failure Hypotheses"
+   },
+   "claim_text": "| 7 | Training tile inclusion | None found | 384px calibration manifest is empty. Calibration was on 512px tiles. 124 tiles excluded from 384px for geographic overlap with 512px calibration area. Zero overlap between excluded and evaluation sets. | REJECTED |",
+   "values": [
+    {
+     "quantity": "tiles excluded from the 384 px evaluation set for overlap with the 512 px calibration area",
+     "value_verbatim": "124",
+     "value_parsed": 124,
+     "unit": "tiles",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "overlap between the excluded tiles and the evaluation set",
+     "value_verbatim": "Zero",
+     "value_parsed": 0,
+     "unit": "tiles",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "inputs/tiles_384/calibration_manifest.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Table row (failure hypothesis 7). The anchored 384 px calibration manifest is the artefact the row calls empty; the exclusion count is the difference between the generated 384 px tile set and inputs/tiles_384/full_evaluation_manifest.json (487 entries), and the zero-overlap assertion is a set comparison — both need a script. The word 'empty' is not numeric and is not recorded as a value."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     230,
+     230
+    ],
+    "section": "Specific Failure Hypotheses"
+   },
+   "claim_text": "| 8 | Stale results | None found | Sequential timestamps: proposer (24 Mar) → verifier (25 Mar) → evaluation (26 Mar). 16of30 is verified subset of 1of30 (729/11,771 with identical probability values). | REJECTED |",
+   "values": [
+    {
+     "quantity": "candidates surviving the 16-of-30 consensus threshold",
+     "value_verbatim": "729",
+     "value_parsed": 729,
+     "unit": "candidates",
+     "kind": "count",
+     "path": "$.thresholds['16']",
+     "method": "read"
+    },
+    {
+     "quantity": "candidates in the 1-of-30 union",
+     "value_verbatim": "11,771",
+     "value_parsed": 11771,
+     "unit": "candidates",
+     "kind": "count",
+     "path": "$.thresholds['1']",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/voting_summary.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Table row (failure hypothesis 8). Timestamps in this row are out of C4 scope; the 'identical probability values' assertion is a set comparison against outputs/h11/pv-diag-384/verified/flash-high-text-16of30/probabilities.json."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     231,
+     231
+    ],
+    "section": "Specific Failure Hypotheses"
+   },
+   "claim_text": "| 9 | Configuration mismatch | None found | All meta.json files match study YAML overrides. Proposer: Flash HIGH T=0.7 text-only. Verifier: Flash MINIMAL T=0.0 adversarial-text. Labels accurate. | REJECTED |",
+   "values": [
+    {
+     "quantity": "proposer temperature",
+     "value_verbatim": "0.7",
+     "value_parsed": 0.7,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.configuration.temperature",
+     "method": "read"
+    },
+    {
+     "quantity": "verifier temperature",
+     "value_verbatim": "0.0",
+     "value_parsed": 0.0,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.meta.json",
+    "path": "$.configuration.temperature"
+   },
+   "method": "read",
+   "notes": "Table row (failure hypothesis 9). Verifier temperature candidate anchor: prompts/configs/verify_adversarial-text.json $.temperature."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     241,
+     241
+    ],
+    "section": "Completeness Check"
+   },
+   "claim_text": "2. **Every failure hypothesis received a verdict:** All 9 REJECTED.",
+   "values": [
+    {
+     "quantity": "count of specific failure hypotheses adjudicated",
+     "value_verbatim": "9",
+     "value_parsed": 9,
+     "unit": "hypotheses",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Self-referential count of the nine rows of the Specific Failure Hypotheses table earlier in this same document (lines 223-231); prose-only source (instrument rule 2)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     245,
+     245
+    ],
+    "section": "Completeness Check"
+   },
+   "claim_text": "all 5 checks verified with multiple meta.json files and config diffs",
+   "values": [
+    {
+     "quantity": "count of Layer 6 checks verified",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": "checks",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Self-referential count of the five Layer 6 claims (27-31) in this same document; prose-only source (instrument rule 2)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     248,
+     248
+    ],
+    "section": "Completeness Check"
+   },
+   "claim_text": "the 20m clustering threshold is the same as the evaluation distance in some analyses",
+   "values": [
+    {
+     "quantity": "consensus clustering distance threshold in lib_consensus.py",
+     "value_verbatim": "20m",
+     "value_parsed": 20,
+     "unit": "m",
+     "kind": "physical",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "scripts/lib_consensus.py",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Non-JSON anchor: the module-level constant DISTANCE_THRESHOLD_METRES in scripts/lib_consensus.py, legitimate under instrument v1.1."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     248,
+     248
+    ],
+    "section": "Completeness Check"
+   },
+   "claim_text": "the paper-eval condition uses a 30m evaluation buffer (larger than the 20m clustering radius)",
+   "values": [
+    {
+     "quantity": "evaluation buffer of the paper-eval condition",
+     "value_verbatim": "30m",
+     "value_parsed": 30,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[5].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "consensus clustering radius",
+     "value_verbatim": "20m",
+     "value_parsed": 20,
+     "unit": "m",
+     "kind": "physical",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Clustering radius candidate anchor: scripts/lib_consensus.py (DISTANCE_THRESHOLD_METRES), outside the claim anchor file."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     254,
+     254
+    ],
+    "section": "Overall Assessment"
+   },
+   "claim_text": "### Confidence level: 85% that F1 > 0.9 is genuine at 30m tolerance",
+   "values": [
+    {
+     "quantity": "stated confidence that F1 > 0.9 is genuine",
+     "value_verbatim": "85%",
+     "value_parsed": 85,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "F1 level asserted",
+     "value_verbatim": "0.9",
+     "value_parsed": 0.9,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "spatial tolerance",
+     "value_verbatim": "30m",
+     "value_parsed": 30,
+     "unit": "m",
+     "kind": "physical",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Subjective confidence judgement by the audit author; no repo artefact decides the 85%. The 0.9 and 30 m restate the headline claim (F1 point estimate at 30 m is carried by outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json $.summary.buffers[5].f1)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     256,
+     256
+    ],
+    "section": "Overall Assessment"
+   },
+   "claim_text": "The pipeline is well-engineered and correctly implemented across all 8 layers. All 9 inflation hypotheses are rejected.",
+   "values": [
+    {
+     "quantity": "count of audit layers",
+     "value_verbatim": "8",
+     "value_parsed": 8,
+     "unit": "layers",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "count of inflation hypotheses rejected",
+     "value_verbatim": "9",
+     "value_parsed": 9,
+     "unit": "hypotheses",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Self-referential counts of this document's own structure (eight layer sections, nine failure-hypothesis rows); prose-only source (instrument rule 2)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     256,
+     256
+    ],
+    "section": "Overall Assessment"
+   },
+   "claim_text": "The F1 = 0.9044 at 30m buffer is arithmetically correct, computed from verified TP=383, FP=29, FN=52 against a properly scoped ground truth of 435 mounds.",
+   "values": [
+    {
+     "quantity": "F1 at 30 m, pv-diag-384 16-of-30 + PV",
+     "value_verbatim": "0.9044",
+     "value_parsed": 0.9044,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.condition_a.f1",
+     "method": "read"
+    },
+    {
+     "quantity": "spatial evaluation buffer",
+     "value_verbatim": "30m",
+     "value_parsed": 30,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.metadata.buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "true positives at 30 m",
+     "value_verbatim": "383",
+     "value_parsed": 383,
+     "unit": "detections",
+     "kind": "count",
+     "path": "$.condition_a.tp",
+     "method": "read"
+    },
+    {
+     "quantity": "false positives at 30 m",
+     "value_verbatim": "29",
+     "value_parsed": 29,
+     "unit": "detections",
+     "kind": "count",
+     "path": "$.condition_a.fp",
+     "method": "read"
+    },
+    {
+     "quantity": "false negatives at 30 m",
+     "value_verbatim": "52",
+     "value_parsed": 52,
+     "unit": "mounds",
+     "kind": "count",
+     "path": "$.condition_a.fn",
+     "method": "read"
+    },
+    {
+     "quantity": "scoped ground-truth mound count for the 384 px evaluation footprint",
+     "value_verbatim": "435",
+     "value_parsed": 435,
+     "unit": "mounds",
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic"
+    }
+   ],
+   "anchor": {
+    "file": "results/pairwise/30m/group_6_topn/best-vs-runner-up-1-flash-high-text-16-of-30-pv-vs-flash-high-text-4-of-5-pv.json",
+    "path": null,
+    "expression": "a + b",
+    "operands": [
+     {
+      "name": "a",
+      "file": "results/pairwise/30m/group_6_topn/best-vs-runner-up-1-flash-high-text-16-of-30-pv-vs-flash-high-text-4-of-5-pv.json",
+      "path": "$.condition_a.tp"
+     },
+     {
+      "name": "b",
+      "file": "results/pairwise/30m/group_6_topn/best-vs-runner-up-1-flash-high-text-16-of-30-pv-vs-flash-high-text-4-of-5-pv.json",
+      "path": "$.condition_a.fn"
+     }
+    ]
+   },
+   "method": "read",
+   "notes": "The scoped ground-truth count is derived inside the anchor file as $.condition_a.tp + $.condition_a.fn. S123 triage repair (c4-triage/mismatch-triage-2026-07-31.json): v1.2 conformance — scoped GT 435 = tp + fn per the original notes."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     258,
+     258
+    ],
+    "section": "Overall Assessment"
+   },
+   "claim_text": "The 15% residual uncertainty comes from:",
+   "values": [
+    {
+     "quantity": "stated residual uncertainty",
+     "value_verbatim": "15%",
+     "value_parsed": 15,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Complement of the audit author's 85% subjective confidence; no repo artefact decides it."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     260,
+     260
+    ],
+    "section": "Overall Assessment"
+   },
+   "claim_text": "F1 > 0.9 holds at 30m but not at the preregistered 20m tolerance, where F1 = 0.890 [0.863, 0.915].",
+   "values": [
+    {
+     "quantity": "F1 level asserted",
+     "value_verbatim": "0.9",
+     "value_parsed": 0.9,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "spatial tolerance at which the claim holds",
+     "value_verbatim": "30m",
+     "value_parsed": 30,
+     "unit": "m",
+     "kind": "physical",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "preregistered spatial tolerance",
+     "value_verbatim": "20m",
+     "value_parsed": 20,
+     "unit": "m",
+     "kind": "physical",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "F1 at 20 m, pv-diag-384 16-of-30 + PV",
+     "value_verbatim": "0.890",
+     "value_parsed": 0.89,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.thresholds[4].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1 CI lower bound at 20 m",
+     "value_verbatim": "0.863",
+     "value_parsed": 0.863,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.thresholds[4].ci.f1.lower",
+     "method": "read"
+    },
+    {
+     "quantity": "F1 CI upper bound at 20 m",
+     "value_verbatim": "0.915",
+     "value_parsed": 0.915,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.thresholds[4].ci.f1.upper",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/h11-384-pv-diagnostic/flash-high-text-16of30/threshold_sweep.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "thresholds[4] is the probability-threshold 0.2 row of the 20 m threshold sweep for flash-high-text-16of30 (equivalently $.optimal). Instrument v1.1: the 'preregistered 20m' tolerance is a claim about the lodged registration (docs/methodology/preregistration/osf/), not about this artefact, hence flagged; the 30 m figure belongs to outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json $.summary.buffers[5]."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     260,
+     260
+    ],
+    "section": "Overall Assessment"
+   },
+   "claim_text": "The choice of 30m over 20m adds 8 additional TPs.",
+   "values": [
+    {
+     "quantity": "spatial tolerance chosen",
+     "value_verbatim": "30m",
+     "value_parsed": 30,
+     "unit": "m",
+     "kind": "physical",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "preregistered spatial tolerance",
+     "value_verbatim": "20m",
+     "value_parsed": 20,
+     "unit": "m",
+     "kind": "physical",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "additional true positives gained by moving from 20 m to 30 m",
+     "value_verbatim": "8",
+     "value_parsed": 8,
+     "unit": "detections",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "Requires TP counts at both tolerances for this condition; the eval JSON carries precision/recall per buffer but not per-buffer TP/FP/FN, so the difference must be recomputed (or read from a matched pairwise artefact, which reports tp = 383 at 30 m only)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     260,
+     260
+    ],
+    "section": "Overall Assessment"
+   },
+   "claim_text": "While 30m is a physically defensible tolerance (~6 pixels, ~1 symbol diameter)",
+   "values": [
+    {
+     "quantity": "spatial tolerance",
+     "value_verbatim": "30m",
+     "value_parsed": 30,
+     "unit": "m",
+     "kind": "physical",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tolerance expressed in tile pixels",
+     "value_verbatim": "6",
+     "value_parsed": 6,
+     "unit": "px",
+     "kind": "physical",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "tolerance expressed in mound-symbol diameters",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": "symbol diameter",
+     "kind": "physical",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "inputs/rasters/K-35-052-4_32635.tif",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "The pixel conversion needs the raster ground sample distance from the GeoTIFF header (charter § 4: physical measurements outrank prose); the symbol-diameter equivalence has no repo artefact and is left for triage."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     262,
+     262
+    ],
+    "section": "Overall Assessment"
+   },
+   "claim_text": "The 95% CI lower bound at 30m is 0.878, which does not exclude values below 0.9. The point estimate exceeds 0.9 but this is not statistically guaranteed.",
+   "values": [
+    {
+     "quantity": "nominal confidence level of the bootstrap interval",
+     "value_verbatim": "95",
+     "value_parsed": 95,
+     "unit": "%",
+     "kind": "parameter",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "spatial tolerance",
+     "value_verbatim": "30m",
+     "value_parsed": 30,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[5].buffer_metres",
+     "method": "read"
+    },
+    {
+     "quantity": "F1 bootstrap CI lower bound at 30 m",
+     "value_verbatim": "0.878",
+     "value_parsed": 0.878,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[5].f1_ci_lower",
+     "method": "read"
+    },
+    {
+     "quantity": "F1 level the lower bound does not exclude",
+     "value_verbatim": "0.9",
+     "value_parsed": 0.9,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The eval artefact records bootstrap method, iterations and seed but not the nominal 95% level; 0.9 is the headline claim's comparison constant."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     264,
+     264
+    ],
+    "section": "Overall Assessment"
+   },
+   "claim_text": "The greedy consensus clustering and the choice of 16-of-30 as the optimal threshold were selected from a sweep",
+   "values": [
+    {
+     "quantity": "consensus vote threshold selected as optimal",
+     "value_verbatim": "16-of-30",
+     "value_parsed": null,
+     "unit": "passes",
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus/voting_summary.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "The optimality assertion is a selection over the consensus vote sweep recorded in the anchored voting summary ($.thresholds, $.total_passes = 30), scored downstream; deciding it requires re-running the sweep comparison."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     268,
+     268
+    ],
+    "section": "Overall Assessment"
+   },
+   "claim_text": "The F1 = 0.9044 appears to be a legitimate measurement.",
+   "values": [
+    {
+     "quantity": "F1 at 30 m, pv-diag-384 16-of-30 + PV",
+     "value_verbatim": "0.9044",
+     "value_parsed": 0.9044,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[5].f1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json",
+    "path": "$.summary.buffers[5].f1"
+   },
+   "method": "read",
+   "notes": "buffers[5] is buffer_metres = 30."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     276,
+     276
+    ],
+    "section": "Overall Assessment"
+   },
+   "claim_text": "2. **No head-to-head significance test** exists between the best condition (F1=0.904) and the runner-up (F1=0.891) at 384px paper-eval level.",
+   "values": [
+    {
+     "quantity": "F1 of the best condition at 30 m",
+     "value_verbatim": "0.904",
+     "value_parsed": 0.904,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.condition_a.f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1 of the runner-up condition at 30 m",
+     "value_verbatim": "0.891",
+     "value_parsed": 0.891,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.condition_b.f1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/pairwise/30m/group_6_topn/best-vs-runner-up-1-flash-high-text-16-of-30-pv-vs-flash-high-text-4-of-5-pv.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The audit asserts no such test exists; the anchored file is a pairwise permutation test between exactly these two conditions, which is for triage to weigh, not the extractor."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     280,
+     280
+    ],
+    "section": "Overall Assessment"
+   },
+   "claim_text": "\"F1 = 0.90 [0.88, 0.93] at 30m spatial tolerance\"",
+   "values": [
+    {
+     "quantity": "recommended rounded F1 at 30 m",
+     "value_verbatim": "0.90",
+     "value_parsed": 0.9,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[5].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "recommended rounded CI lower bound at 30 m",
+     "value_verbatim": "0.88",
+     "value_parsed": 0.88,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[5].f1_ci_lower",
+     "method": "read"
+    },
+    {
+     "quantity": "recommended rounded CI upper bound at 30 m",
+     "value_verbatim": "0.93",
+     "value_parsed": 0.93,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.summary.buffers[5].f1_ci_upper",
+     "method": "read"
+    },
+    {
+     "quantity": "spatial tolerance",
+     "value_verbatim": "30m",
+     "value_parsed": 30,
+     "unit": "m",
+     "kind": "physical",
+     "path": "$.summary.buffers[5].buffer_metres",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/era1-pv-stage-d/384-consensus-text-high/eval_t0.2/evaluation.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Values are quoted to two decimal places; the harness owns rounding tolerance (match at quoted precision)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     280,
+     280
+    ],
+    "section": "Overall Assessment"
+   },
+   "claim_text": "Note that at the preregistered 20m tolerance, F1 = 0.89 [0.86, 0.92].",
+   "values": [
+    {
+     "quantity": "preregistered spatial tolerance",
+     "value_verbatim": "20m",
+     "value_parsed": 20,
+     "unit": "m",
+     "kind": "physical",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "rounded F1 at 20 m",
+     "value_verbatim": "0.89",
+     "value_parsed": 0.89,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.thresholds[4].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "rounded CI lower bound at 20 m",
+     "value_verbatim": "0.86",
+     "value_parsed": 0.86,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.thresholds[4].ci.f1.lower",
+     "method": "read"
+    },
+    {
+     "quantity": "rounded CI upper bound at 20 m",
+     "value_verbatim": "0.92",
+     "value_parsed": 0.92,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.thresholds[4].ci.f1.upper",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/h11-384-pv-diagnostic/flash-high-text-16of30/threshold_sweep.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "thresholds[4] is the probability-threshold 0.2 row of the 20 m sweep. Instrument v1.1: the 'preregistered 20m' tolerance anchors to the lodged registration (docs/methodology/preregistration/osf/), not to an executed artefact."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     286,
+     286
+    ],
+    "section": "Overall Assessment"
+   },
+   "claim_text": "The two tile sizes evaluate different subsets of ground truth (435 vs 539 mounds). This does not inflate F1 but limits the interpretability of cross-tile-size comparisons.",
+   "values": [
+    {
+     "quantity": "scoped ground-truth mounds, 384 px footprint",
+     "value_verbatim": "435",
+     "value_parsed": 435,
+     "unit": "mounds",
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "scoped ground-truth mounds, 512 px footprint",
+     "value_verbatim": "539",
+     "value_parsed": 539,
+     "unit": "mounds",
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/pairwise/30m/group_6_topn/best-vs-runner-up-1-flash-high-text-16-of-30-pv-vs-flash-high-text-4-of-5-pv.json",
+    "path": null
+   },
+   "method": "recompute-script",
+   "notes": "435 = $.condition_a.tp + $.condition_a.fn in the anchored file; the 512 px footprint count was not located by inspection (candidates: the 512 px evaluations under results/pairwise/tile-size-30m/ or a 512 px conditions-manifest entry) and is left for triage. Scope decision: 'two tile sizes' is a descriptive count and is not recorded as a value."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     288,
+     288
+    ],
+    "section": "Overall Assessment"
+   },
+   "claim_text": "The JSON files report 569 (total) but the scoped evaluation count is 435. Either fix the metadata or add a `ground_truth_mounds_scoped` field to prevent misinterpretation.",
+   "values": [
+    {
+     "quantity": "ground_truth_mounds recorded in the threshold-sweep metadata",
+     "value_verbatim": "569",
+     "value_parsed": 569,
+     "unit": "mounds",
+     "kind": "count",
+     "path": "$.ground_truth_mounds",
+     "method": "read"
+    },
+    {
+     "quantity": "scoped ground-truth mound count for the 384 px evaluation footprint",
+     "value_verbatim": "435",
+     "value_parsed": 435,
+     "unit": "mounds",
+     "kind": "count",
+     "path": null,
+     "method": "recompute-script"
+    }
+   ],
+   "anchor": {
+    "file": "results/h11-384-pv-diagnostic/flash-high-text-16of30/threshold_sweep.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The 435 scoped count is not carried by the anchored sweep file; it is derivable as tp + fn from results/pairwise/30m/group_6_topn/best-vs-runner-up-1-flash-high-text-16-of-30-pv-vs-flash-high-text-4-of-5-pv.json ($.condition_a.tp + $.condition_a.fn)."
+  }
+ ]
 }
