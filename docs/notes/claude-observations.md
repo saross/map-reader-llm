@@ -356,3 +356,67 @@ is what let the run-it-now policy do real epistemic work.
 enumerate the registered-but-never-executed alternative explicitly with
 its cost; his instincts about study structure deserve an option in the
 choice set, not just a footnote about unavailability.
+
+## claude-obs 15 — 2026-07-31 (Session 122): four rulings in one tap — the pre-staged decision queue works
+
+**Pattern.** Shawn surfaced mid-fleet with "what do I need to do to
+advance us?" and cleared four queued decisions in a single structured
+interaction — taking every recommended option, with the one
+load-bearing choice (the dated-snapshot policy) given trade-off
+analysis and the three straightforward ones given brief options. This
+is the S121 calibration rule executing at speed: PI throughput was
+minutes because the decisions had been accumulated, framed, and
+recommendation-tagged *before* he asked, rather than surfaced one at a
+time as they arose.
+
+**Lesson.** The expensive part of a PI ruling is not the decision but
+the framing. When the executor batches decision points and does the
+framing work in advance, the human's presence becomes a high-leverage
+event instead of a serial bottleneck.
+
+**How to apply.** Maintain a running "pending PI rulings" list during
+autonomous stretches; when Shawn appears, lead with it — load-bearing
+items get trade-off analysis, routine items get options with a
+recommendation first. Record rulings immediately in a dated rulings
+doc so they bind future sessions without re-litigation.
+
+## claude-obs 16 — 2026-07-31 (Session 122): self-critique — I violated the write-side rule I enforce
+
+**Pattern.** My probe record regen-0002 glossed "439 files with ≥ 1
+problem of any kind" into "439 files differ in the 3rd decimal" —
+a welded-together specific of exactly the kind the global
+anti-confabulation rule warns about — thirty minutes after computing
+the number, inside the verification programme itself. The obs-writer's
+independent re-derivation caught it the same day.
+
+**Lesson.** Proximity to evidence does not protect a summary; being
+the author of the verification apparatus does not protect the
+apparatus's own records. Computed figures in prose decay at the moment
+of writing, not later.
+
+**How to apply.** Probe/record rows that carry a computed figure get
+either the verbatim command output pasted or a fresh-context
+re-derivation before commit — the same standard extraction files
+already meet. Treat my own apparatus records as first-class
+verification targets, not as the trusted substrate.
+
+## claude-obs 17 — 2026-07-31 (Session 122): his finish-vs-postpone question was itself a quality gate
+
+**Pattern.** I was set to keep launching extraction waves; Shawn's
+"what should be finished in this session, and what postponed?" forced
+an explicit cut. The resulting split — instrument fixes and guards
+now, triage deferred to a fresh session — was better than my default
+trajectory, and not incidentally: deferring triage to Session 123
+converts charter rule 2's fresh-context requirement from a cost into a
+free by-product of the session boundary.
+
+**Lesson.** Session boundaries are not just resource limits; used
+deliberately, they are verification infrastructure. The wind-down
+question "what belongs on this side of the boundary?" reliably
+surfaces work that *benefits* from crossing it.
+
+**How to apply.** At natural stopping points, propose the
+finish/postpone cut proactively rather than waiting for the question —
+and when sequencing verification work, prefer placing
+author-verifies-author-adjacent tasks on the far side of a session
+boundary.
