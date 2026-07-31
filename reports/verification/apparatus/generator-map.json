@@ -1,0 +1,748 @@
+{
+ "map_version": "1.0",
+ "assembled": "2026-07-31 (Session 122) from three read-only Opus attribution agents (write-site evidence in each rule)",
+ "rules": [
+  {
+   "rule_id": "hw-paper-tables",
+   "match": "^results/paper-tables/(leaderboard_tiers(_20m)?\\.md|leaderboard-20m-annotated\\.md|pairwise_hypothesis_table\\.md|pro_2x2_matrix\\.md|gold-standard-spatial-tolerance\\.md|subtype-classification\\.md)$",
+   "scope": "results/paper-tables/",
+   "generator": null,
+   "source_rule": "none",
+   "stratum": "hand-written",
+   "notes": "Agent A/C: hand-authored paper tables; pro_2x2 + pairwise_hypothesis are machine-shaped but their ephemeral writer was never retained — verify by extraction, not regeneration (commit 71d81cd5e); gold-standard-spatial-tolerance + subtype-classification are hand-consolidated (prose **Generated** lines, revision banners)"
+  },
+  {
+   "rule_id": "hw-combined-readme",
+   "match": "^results/leaderboard/combined/README\\.md$",
+   "scope": "results/leaderboard/combined/",
+   "generator": null,
+   "source_rule": "none",
+   "stratum": "hand-written",
+   "notes": "Marker false positive: hand-written explainer with a **Generated** line (commit 387894887)"
+  },
+  {
+   "rule_id": "hw-evaluation-scopes",
+   "match": "^results/evaluation-scopes\\.md$",
+   "scope": "results/",
+   "generator": null,
+   "source_rule": "none",
+   "stratum": "hand-written",
+   "notes": "Marker false positive: hand-typed date+commit, not ISO (Agent B auditable negative)"
+  },
+  {
+   "rule_id": "hw-report-md",
+   "match": "^results/(55maps-attractor-pull-v2|55maps-cross-track-comparison|55maps-ds-summary-v2|55maps-image-generalisation/buffer-100m-diagnostics|55maps-image-generalisation/buffer-band-lift|55maps-image-generalisation/corrected-f1-multi-buffer|55maps-mcc-v2-summary|fp-failure-mode-closure|gold-standard-subtype-classification|inter-pass-agreement|limitations-consolidation|paper-eval/mcc|temperature-failure-recovery-analysis)/report\\.md$",
+   "scope": "results/",
+   "generator": null,
+   "source_rule": "none",
+   "stratum": "hand-written",
+   "notes": "Session 75/76 guardrail-6 convention: hand-authored paper-citation report.md; the script writes report_autogen.md"
+  },
+  {
+   "rule_id": "hw-ds-v2-report",
+   "match": "^results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/report\\.md$",
+   "scope": "results/",
+   "generator": null,
+   "source_rule": "none",
+   "stratum": "hand-written",
+   "notes": "LIVE CLOBBER RISK (Agent B): hand-levelled (Session 76) at the exact path analyse_dawid_skene_v2.py:1391 still writes unconditionally"
+  },
+  {
+   "rule_id": "hw-levelups",
+   "match": "^results/(secondary-effects/secondary_effects\\.md|phase3a-text-matrix/secondary_effects\\.md|phase3a-image-matrix/consensus-analysis-summary\\.md|55maps-image-generalisation/verifier-calibration-crosstab/calibration\\.md|factor-analysis/factor_analysis_results\\.md)$",
+   "scope": "results/",
+   "generator": null,
+   "source_rule": "none",
+   "stratum": "hand-written",
+   "notes": "Hand-authored level-ups; scripts hardened to _autogen siblings (Session 75 G6 / Session 76)"
+  },
+  {
+   "rule_id": "hw-phase3d",
+   "match": "^results/(phase3d-experiment-e-results|phase3d-high-thinking-results|phase3d-verifier-experiments-abc|phase3d-pilot-results)\\.md$",
+   "scope": "results/",
+   "generator": null,
+   "source_rule": "none",
+   "stratum": "hand-written",
+   "notes": "Agent C: experiment-e is a hand-authored replacement STILL at run_experiment_e.py:545's target path (clobber hazard); high-thinking/verifier-abc self-declare Script lines that are hand-imitated"
+  },
+  {
+   "rule_id": "hw-pv-phase",
+   "match": "^results/pv/phase[12]/pv-phase[12]-analysis\\.md$",
+   "scope": "results/pv/",
+   "generator": null,
+   "source_rule": "none",
+   "stratum": "hand-written",
+   "notes": "Marker false positive: date-only **Generated** prose"
+  },
+  {
+   "rule_id": "hw-analysis-summary",
+   "match": "^results/(h8-v2|h10|h11|h12-v2|retest/phase2b)/analysis_summary\\.md$",
+   "scope": "results/",
+   "generator": null,
+   "source_rule": "none",
+   "stratum": "hand-written",
+   "notes": "Hypothesis report docs; same basename as analyse_phase2_results.py's default output but different stratum (Agent C)"
+  },
+  {
+   "rule_id": "hw-gs-55map-transfer",
+   "match": "^results/55map-leaderboard/gs-vs-55map-transfer\\.md$",
+   "scope": "results/55map-leaderboard/",
+   "generator": null,
+   "source_rule": "none",
+   "stratum": "hand-written"
+  },
+  {
+   "rule_id": "hw-crop-review-readme",
+   "match": "^results/gs-125m-fp-side-6-crop-review/README\\.md$",
+   "scope": "results/gs-125m-fp-side-6-crop-review/",
+   "generator": null,
+   "source_rule": "none",
+   "stratum": "hand-written",
+   "notes": "stage_gs_125m_fp_review.py:35 declares the README is written separately"
+  },
+  {
+   "rule_id": "hw-retest-production-summary",
+   "match": "^results/retest/retest-production-summary\\.md$",
+   "scope": "results/retest/",
+   "generator": null,
+   "source_rule": "none",
+   "stratum": "hand-written",
+   "notes": "Level-up convention (Session 76) + revision banner; **Generated** line is prose"
+  },
+  {
+   "rule_id": "hw-buffer-elasticity",
+   "match": "^results/verifier-calibration-matrix/buffer-elasticity-5m\\.md$",
+   "scope": "results/verifier-calibration-matrix/",
+   "generator": null,
+   "source_rule": "none",
+   "stratum": "hand-written",
+   "notes": "Machine-shaped but writer not retained (Session 80 Wave 3 in-session script; searched scripts/ + archive/ for 'elasticity'/'Buffer elasticity' — only unrelated hits). Verify by extraction"
+  },
+  {
+   "rule_id": "gen-era2-lb20-handedit",
+   "match": "^results/leaderboard/era2/leaderboard_tiers_20m\\.md$",
+   "scope": "results/leaderboard/era2/",
+   "generator": "scripts/build_tiered_leaderboard.py",
+   "source_rule": "sibling:leaderboard_tiers_20m.json",
+   "hand_edited": true,
+   "write_site": "4c3b70d7c:scripts/build_tiered_leaderboard.py:1363-1368",
+   "notes": "Hand-added Updated paragraph + gold-standard-v2 row (commit 7ab7d7fa1)"
+  },
+  {
+   "rule_id": "gen-ds-results-handedit",
+   "match": "^results/55maps-(image|text-min)-generalisation/dawid-skene/dawid-skene-results\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_dawid_skene.py",
+   "source_rule": "sibling:dawid-skene-results.json",
+   "hand_edited": true,
+   "write_site": "scripts/analyse_dawid_skene.py:1165",
+   "notes": "Hand-prepended post-recovery annotation blocks (2026-05-03)"
+  },
+  {
+   "rule_id": "gen-ds-crosstab-handedit",
+   "match": "^results/55maps-(image|text-min)-generalisation/ds-human-crosstab/report\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_ds_vs_human_review.py",
+   "source_rule": "sibling:summary.json",
+   "hand_edited": true,
+   "write_site": "scripts/analyse_ds_vs_human_review.py:1075",
+   "notes": "Hand-prepended post-recovery annotation blocks"
+  },
+  {
+   "rule_id": "gen-crop-review-index",
+   "match": "^results/gs-125m-fp-side-6-crop-review/index\\.md$",
+   "scope": "results/",
+   "generator": "scripts/stage_gs_125m_fp_review.py",
+   "source_rule": "none",
+   "hand_edited": true,
+   "write_site": "scripts/stage_gs_125m_fp_review.py:183",
+   "notes": "Fill-in-the-blanks review interface: generated scaffold + human verdicts by design"
+  },
+  {
+   "rule_id": "gen-phase3d-pilot-ext",
+   "match": "^results/phase3d-pilot-extensions\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_h2_pilot_extensions.py",
+   "source_rule": "none",
+   "hand_edited": true,
+   "write_site": "scripts/analyse_h2_pilot_extensions.py:1358",
+   "notes": "Timestamp hand-trimmed before commit (Agent C); byte-regeneration will not match"
+  },
+  {
+   "rule_id": "gen-report-fp55",
+   "match": "^results/55maps-fp-classification/report\\.md$",
+   "scope": "results/",
+   "generator": "scripts/55maps-fp-classify.py",
+   "source_rule": "dir-glob:*.json",
+   "write_site": "scripts/55maps-fp-classify.py:1865"
+  },
+  {
+   "rule_id": "gen-report-fpgs",
+   "match": "^results/gs-fp-classification/report\\.md$",
+   "scope": "results/",
+   "generator": "scripts/gs-fp-classify.py",
+   "source_rule": "dir-glob:*.json",
+   "write_site": "scripts/gs-fp-classify.py:2703"
+  },
+  {
+   "rule_id": "gen-report-shellvar",
+   "match": "^results/55maps-per-map-shell-variance/report\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_55maps_per_map_shell_variance.py",
+   "source_rule": "sibling:per_map_shell_rates.json",
+   "write_site": "scripts/analyse_55maps_per_map_shell_variance.py:788"
+  },
+  {
+   "rule_id": "gen-report-attractor-gs",
+   "match": "^results/gold-standard-attractor-pull/report\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_attractor_pull_gs.py",
+   "source_rule": "dir-glob:*.json",
+   "write_site": "scripts/analyse_attractor_pull_gs.py:672"
+  },
+  {
+   "rule_id": "gen-report-consensus-sd",
+   "match": "^results/secondary-effects-consensus-sd/report\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_consensus_sd_shrinkage.py",
+   "source_rule": "dir-glob:sd_shrinkage*.json",
+   "write_site": "scripts/analyse_consensus_sd_shrinkage.py:659",
+   "notes": "Two-stage write: v1 render then analyse_consensus_sd_shrinkage_v2.py:1193 in-place §3 amendment — both must run to reproduce"
+  },
+  {
+   "rule_id": "gen-report-token-eff",
+   "match": "^results/secondary-effects-token-efficiency/report\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_token_efficiency.py",
+   "source_rule": "dir-glob:*.json",
+   "write_site": "scripts/analyse_token_efficiency.py:720"
+  },
+  {
+   "rule_id": "gen-report-tp-local",
+   "match": "^results/55maps-vs-gs-tp-localisation/report\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_tp_localisation_55maps_vs_gs.py",
+   "source_rule": "dir-glob:*.json",
+   "write_site": "scripts/analyse_tp_localisation_55maps_vs_gs.py:625"
+  },
+  {
+   "rule_id": "gen-report-fn-rate",
+   "match": "^results/student-gt-fn-rate-analysis/report\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_student_gt_fn_rate.py",
+   "source_rule": "dir-glob:*.json",
+   "write_site": "scripts/analyse_student_gt_fn_rate.py:765"
+  },
+  {
+   "rule_id": "gen-report-fn-rate-gs4",
+   "match": "^results/student-gt-fn-rate-analysis-gs4/report\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_student_gt_fn_rate_gs4.py",
+   "source_rule": "dir-glob:*.json",
+   "write_site": "scripts/analyse_student_gt_fn_rate_gs4.py:676"
+  },
+  {
+   "rule_id": "gen-report-vote-frac",
+   "match": "^results/proposer-vote-fraction/report\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_proposer_vote_fraction.py",
+   "source_rule": "sibling:vote_fraction.json",
+   "write_site": "scripts/analyse_proposer_vote_fraction.py:1163"
+  },
+  {
+   "rule_id": "gen-report-ds-crosstab",
+   "match": "(^|/)ds-human-crosstab[^/]*/report\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_ds_vs_human_review.py",
+   "source_rule": "sibling:summary.json",
+   "write_site": "scripts/analyse_ds_vs_human_review.py:1075",
+   "notes": "Catches remaining live/backup/calibrated crosstab dirs after the hand-edited rule"
+  },
+  {
+   "rule_id": "gen-autogen-attractor-v2",
+   "match": "^results/55maps-attractor-pull-v2/report_autogen\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_attractor_pull_v2.py",
+   "source_rule": "sibling:attractor-pull-v2.json",
+   "write_site": "scripts/analyse_attractor_pull_v2.py:794"
+  },
+  {
+   "rule_id": "gen-autogen-band-lift",
+   "match": "^results/55maps-image-generalisation/buffer-band-lift/report_autogen\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_buffer_band_lift.py",
+   "source_rule": "sibling:summary.json",
+   "write_site": "scripts/analyse_buffer_band_lift.py:663"
+  },
+  {
+   "rule_id": "gen-autogen-interpass",
+   "match": "^results/inter-pass-agreement/report_autogen\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_inter_pass_agreement.py",
+   "source_rule": "sibling:agreement.json",
+   "write_site": "scripts/analyse_inter_pass_agreement.py:1224"
+  },
+  {
+   "rule_id": "gen-autogen-corrected-f1",
+   "match": "(^|/)report_autogen\\.md$",
+   "scope": "results/",
+   "generator": "scripts/compute_corrected_f1_multi_buffer.py",
+   "source_rule": "sibling:summary.json",
+   "h1": "^# Corrected F1 / P / R",
+   "write_site": "scripts/compute_corrected_f1_multi_buffer.py:888",
+   "notes": "18 files, 3 directory families; drivers differ (direct CLI / score_55maps_extended_gt_canonical.py / ad-hoc CLI)"
+  },
+  {
+   "rule_id": "gen-autogen-secondary-image",
+   "match": "^results/secondary-effects/secondary_effects_autogen\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_secondary_effects.py",
+   "source_rule": "sibling:secondary_effects.json",
+   "write_site": "scripts/analyse_secondary_effects.py:1123"
+  },
+  {
+   "rule_id": "gen-autogen-secondary-text",
+   "match": "^results/phase3a-text-matrix/secondary_effects_autogen\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_secondary_effects_text.py",
+   "source_rule": "sibling:secondary_effects.json",
+   "write_site": "scripts/analyse_secondary_effects_text.py:1125",
+   "notes": "PROVENANCE MISLABEL (Agent C): on-disk H1 says Image Track (frozen at 92cc9fa52); current script emits Text Track — re-run would change the H1"
+  },
+  {
+   "rule_id": "gen-autogen-consensus-image",
+   "match": "^results/phase3a-image-matrix/consensus-analysis-summary_autogen\\.md$",
+   "scope": "results/",
+   "generator": "scripts/summarise_phase3a_matrix.py",
+   "source_rule": "none",
+   "write_site": "scripts/summarise_phase3a_matrix.py:237"
+  },
+  {
+   "rule_id": "gen-autogen-calibration",
+   "match": "(^|/)calibration_autogen\\.md$",
+   "scope": "results/",
+   "generator": "scripts/crosstab_verifier_vs_human.py",
+   "source_rule": "sibling:calibration.json",
+   "write_site": "scripts/crosstab_verifier_vs_human.py:674",
+   "notes": "H1 hard-coded to '(55-map image generalisation)' in all four copies incl. text tracks"
+  },
+  {
+   "rule_id": "gen-autogen-factor",
+   "match": "^results/factor-analysis/factor_analysis_results_autogen\\.md$",
+   "scope": "results/",
+   "generator": "scripts/collect-factor-analysis.py",
+   "source_rule": "none",
+   "write_site": "scripts/collect-factor-analysis.py:454"
+  },
+  {
+   "rule_id": "gen-consensus-text-matrix",
+   "match": "^results/phase3a-text-matrix/consensus-analysis-summary\\.md$",
+   "scope": "results/",
+   "generator": "scripts/summarise_phase3a_text_matrix.py",
+   "source_rule": "none",
+   "write_site": "scripts/summarise_phase3a_text_matrix.py:243",
+   "notes": "NOT hardened to _autogen — re-run overwrites the citable file in place (Agent C)"
+  },
+  {
+   "rule_id": "gen-consensus-sweep",
+   "match": "(^|/)consensus-analysis-summary\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_consensus_sweep.py",
+   "source_rule": "none",
+   "write_site": "scripts/analyse_consensus_sweep.py:1005",
+   "notes": "36 files: paper-eval (32), retest/phase3a-consensus (3), h11-384-single-pass-t0-rerun (1)"
+  },
+  {
+   "rule_id": "gen-evaluation-md",
+   "match": "(^|/)evaluation\\.md$",
+   "scope": "results/",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "write_site": "scripts/evaluate_detections.py:854",
+   "notes": "1,635 files; no render-only mode exists — re-derivation needs a renderer over the sibling JSON (Agent B)"
+  },
+  {
+   "rule_id": "gen-batch-summary",
+   "match": "(^|/)batch_summary\\.md$",
+   "scope": "results/",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:batch_summary.json",
+   "write_site": "scripts/evaluate_detections.py:1104"
+  },
+  {
+   "rule_id": "gen-batch-mcc",
+   "match": "(^|/)batch_mcc_summary\\.md$",
+   "scope": "results/",
+   "generator": "scripts/evaluate_tile_mcc.py",
+   "source_rule": "sibling:batch_mcc_summary.json",
+   "write_site": "scripts/evaluate_tile_mcc.py:393"
+  },
+  {
+   "rule_id": "gen-threshold-sweep",
+   "match": "(^|/)threshold_sweep_summary\\.md$",
+   "scope": "results/",
+   "generator": "scripts/generate_pv_sweep_summaries.py",
+   "source_rule": "sibling:threshold_sweep.json",
+   "write_site": "scripts/generate_pv_sweep_summaries.py:122",
+   "notes": "81 files; pure render-only pass over the sibling JSON — cleanest regeneration case"
+  },
+  {
+   "rule_id": "gen-ds-results-v2",
+   "match": "(^|/)dawid-skene-results-v2\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_dawid_skene_v2.py",
+   "source_rule": "sibling:dawid-skene-results-v2.json",
+   "write_site": "scripts/analyse_dawid_skene_v2.py:1434"
+  },
+  {
+   "rule_id": "gen-ds-comparison",
+   "match": "^results/55maps-image-generalisation/dawid-skene-v2-data-driven-prior/comparison\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_dawid_skene_v2.py",
+   "source_rule": "none",
+   "write_site": "scripts/analyse_dawid_skene_v2.py:1376"
+  },
+  {
+   "rule_id": "gen-ds-results",
+   "match": "(^|/)dawid-skene-results\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_dawid_skene.py",
+   "source_rule": "sibling:dawid-skene-results.json",
+   "write_site": "scripts/analyse_dawid_skene.py:1165",
+   "notes": "Catches remaining live + backup-dir copies after the hand-edited rule"
+  },
+  {
+   "rule_id": "gen-old-era-tiers",
+   "match": "^results/leaderboard/era[123]/leaderboard_tiers_\\d+m\\.md$",
+   "scope": "results/leaderboard/",
+   "generator": "scripts/build_tiered_leaderboard.py",
+   "source_rule": "sibling:leaderboard_tiers_20m.json",
+   "write_site": "4c3b70d7c:scripts/build_tiered_leaderboard.py:1363-1368",
+   "notes": "Superseded build at an old script revision; the 20m JSON is the source for all four buffer MDs (no same-stem siblings)"
+  },
+  {
+   "rule_id": "gen-per-arch-enrich",
+   "match": "^results/leaderboard/per-architecture/.*/leaderboard_tiers_\\d+m\\.md$",
+   "scope": "results/leaderboard/per-architecture/",
+   "generator": "scripts/enrich_per_arch_markdown.py",
+   "source_rule": "sibling:leaderboard_tiers_20m.json",
+   "h1": "^# Leaderboard — Era",
+   "write_site": "scripts/enrich_per_arch_markdown.py:399",
+   "notes": "28 enriched (20m TIER COMPOSITION at other buffers — same-stem JSON deliberately disagrees) + 25 stubs (write_stub_markdown:364, no data source)"
+  },
+  {
+   "rule_id": "gen-tiered-leaderboard",
+   "match": "(^|/)leaderboard_tiers.*\\.md$",
+   "scope": "results/leaderboard/",
+   "generator": "scripts/build_tiered_leaderboard.py",
+   "source_rule": "sibling-stem:.json",
+   "h1": "^# Leaderboard \\(",
+   "write_site": "scripts/build_tiered_leaderboard.py:2036-2042",
+   "notes": "Per-architecture natives + combined era1/2 (shell renamer build_combined_leaderboard.sh:188/267) + combined era3 (manual verbatim copy, commit 255249b07); post-processors regenerate_per_arch_md_from_json.py, augment_per_arch_with_mcc.py (JSON-only)"
+  },
+  {
+   "rule_id": "gen-tier-stability",
+   "match": "(^|/)tier_stability(_mcc)?\\.md$",
+   "scope": "results/leaderboard/",
+   "generator": "scripts/build_tier_stability.py",
+   "source_rule": "sibling-stem:.json",
+   "write_site": "scripts/build_tier_stability.py:331-332",
+   "notes": "Combined-tree copies need build_combined_tier_stability.sh's symlink mapping to regenerate"
+  },
+  {
+   "rule_id": "gen-cross-arch-paired",
+   "match": "^results/leaderboard/per-architecture/cross-architecture-paired-era\\d_(f1|mcc)\\.md$",
+   "scope": "results/leaderboard/per-architecture/",
+   "generator": "scripts/build_cross_architecture_tables.py",
+   "source_rule": "sibling-stem:.json",
+   "write_site": "scripts/build_cross_architecture_tables.py:477-478"
+  },
+  {
+   "rule_id": "gen-cross-arch-flat",
+   "match": "^results/leaderboard/per-architecture/cross-architecture-era\\d_\\d+m_(f1|mcc)\\.md$",
+   "scope": "results/leaderboard/per-architecture/",
+   "generator": "scripts/build_cross_architecture_tables.py",
+   "source_rule": "per-stratum tier JSONs (MD-only render)",
+   "write_site": "scripts/build_cross_architecture_tables.py:198-200"
+  },
+  {
+   "rule_id": "gen-cross-arch-20m",
+   "match": "^results/leaderboard/per-architecture/cross-architecture-20m\\.md$",
+   "scope": "results/leaderboard/per-architecture/",
+   "generator": "scripts/build_cross_arch_comparison.py",
+   "source_rule": "sibling-stem:.json",
+   "write_site": "scripts/build_cross_arch_comparison.py:210"
+  },
+  {
+   "rule_id": "gen-mc-precision-flags",
+   "match": "^results/leaderboard/per-architecture/mc-precision-flags\\.md$",
+   "scope": "results/leaderboard/per-architecture/",
+   "generator": "scripts/build_cross_architecture_tables.py",
+   "source_rule": "none",
+   "write_site": "scripts/build_cross_architecture_tables.py:600-601"
+  },
+  {
+   "rule_id": "gen-headlines-perarch",
+   "match": "^results/leaderboard/per-architecture/headlines\\.md$",
+   "scope": "results/leaderboard/per-architecture/",
+   "generator": "scripts/build_per_arch_documentation.py",
+   "source_rule": "per-stratum leaderboard_tiers_20m.json + _mcc_20m.json",
+   "write_site": "scripts/build_per_arch_documentation.py:686-687",
+   "notes": "PATH COLLISION: summarise_per_arch_headlines.py:167-168 also writes this path (superseded) and owns the committed headlines.json sidecar"
+  },
+  {
+   "rule_id": "gen-headlines-buffer",
+   "match": "^results/leaderboard/per-architecture/headlines_\\d+m\\.md$",
+   "scope": "results/leaderboard/per-architecture/",
+   "generator": "scripts/summarise_per_arch_headlines_at_buffer.py",
+   "source_rule": "sibling-stem:.json",
+   "write_site": "scripts/summarise_per_arch_headlines_at_buffer.py:220"
+  },
+  {
+   "rule_id": "gen-headlines-combined",
+   "match": "^results/leaderboard/combined/headlines\\.md$",
+   "scope": "results/leaderboard/combined/",
+   "generator": "scripts/summarise_combined_headlines.py",
+   "source_rule": "sibling:headlines.json",
+   "write_site": "scripts/summarise_combined_headlines.py:234-235"
+  },
+  {
+   "rule_id": "gen-perarch-readme",
+   "match": "^results/leaderboard/per-architecture(/|/.+/)README\\.md$",
+   "scope": "results/leaderboard/per-architecture",
+   "generator": "scripts/build_per_arch_documentation.py",
+   "source_rule": "per-stratum tier JSONs + in-script template",
+   "requires_marker": true,
+   "write_site": "scripts/build_per_arch_documentation.py:318-319,379-380,629-630"
+  },
+  {
+   "rule_id": "gen-permutation-tiers",
+   "match": "(^|/)permutation_tiers_\\d+m\\.md$",
+   "scope": "results/verifier-calibration-matrix-pairwise/",
+   "generator": "results/verifier-calibration-matrix-pairwise/scripts/run_pairwise_matrix.py",
+   "source_rule": "sibling-stem:.json",
+   "write_site": "results/verifier-calibration-matrix-pairwise/scripts/run_pairwise_matrix.py:752",
+   "notes": "Generator vendored INSIDE results/ — scripts/-only sweeps miss it (Agent A)"
+  },
+  {
+   "rule_id": "gen-tiering-diversity",
+   "match": "(^|/)tiering_20m\\.md$",
+   "scope": "results/diversity-dividend-384/",
+   "generator": "scripts/consensus_vs_baseline_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "h1": "^# Diversity dividend",
+   "write_site": "scripts/consensus_vs_baseline_tiering.py:575",
+   "notes": "Record --kinds/--output-dir pair to regenerate"
+  },
+  {
+   "rule_id": "gen-tiering-era1",
+   "match": "(^|/)tiering_20m\\.md$",
+   "scope": "results/",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "h1": "^# Era-1 leaderboard",
+   "write_site": "scripts/era1_leaderboard_tiering.py:531"
+  },
+  {
+   "rule_id": "gen-tiering-n1",
+   "match": "(^|/)tiering_20m\\.md$",
+   "scope": "results/",
+   "generator": "scripts/n1_baseline_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "h1": "^# N=1 baseline leaderboard",
+   "write_site": "scripts/n1_baseline_leaderboard_tiering.py:543-544"
+  },
+  {
+   "rule_id": "gen-pairwise-fdr",
+   "match": "(^|/)pairwise_results_fdr\\.md$",
+   "scope": "results/pairwise/",
+   "generator": "scripts/apply_fdr_correction.py",
+   "source_rule": "sibling-stem:.json",
+   "write_site": "scripts/apply_fdr_correction.py:406-409"
+  },
+  {
+   "rule_id": "gen-55map-leaderboard",
+   "match": "^results/55map-leaderboard/55map-leaderboard-50m\\.md$",
+   "scope": "results/55map-leaderboard/",
+   "generator": "scripts/build_55map_leaderboard.py",
+   "source_rule": "sibling:55map_leaderboard_50m.json",
+   "write_site": "scripts/build_55map_leaderboard.py:233",
+   "notes": "Hyphen/underscore stem mismatch; --rebuild-md-only re-renders losslessly from the JSON"
+  },
+  {
+   "rule_id": "gen-metric-leaderboards",
+   "match": "^results/metric-leaderboards/.+\\.md$",
+   "scope": "results/metric-leaderboards/",
+   "generator": "scripts/build_metric_leaderboards.py",
+   "source_rule": "sibling-stem:.json",
+   "write_site": "scripts/build_metric_leaderboards.py:172-173"
+  },
+  {
+   "rule_id": "gen-manifest-companions",
+   "match": "^results/((passes|conditions|runs|analyses)-manifest|run-registry)\\.md$",
+   "scope": "results/",
+   "generator": "scripts/generate_post_run_report.py",
+   "source_rule": "sibling-stem:.json",
+   "write_site": "scripts/generate_post_run_report.py:1656,2101",
+   "notes": "run-registry.json is the hand-maintained INPUT; its .md is generated (asymmetry, Agent C)"
+  },
+  {
+   "rule_id": "gen-phase2-analysis",
+   "match": "^results/(phase2a-analysis-summary|phase2c-track1-image-analysis|phase2d-track1-image-analysis|phase2d-track2-text-analysis|phase2c-exploratory-pure-positive-hp)\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_phase2_results.py",
+   "source_rule": "none",
+   "write_site": "scripts/analyse_phase2_results.py:749",
+   "notes": "Operator-supplied --markdown paths; **Study Directory** line records the producing outputs/ dir"
+  },
+  {
+   "rule_id": "gen-phase3d-union",
+   "match": "^results/phase3d-union-results\\.md$",
+   "scope": "results/",
+   "generator": "scripts/run_union_experiment.py",
+   "source_rule": "none",
+   "write_site": "scripts/run_union_experiment.py:834"
+  },
+  {
+   "rule_id": "gen-spatial-tolerance",
+   "match": "^results/paper-tables/spatial_tolerance_comparison\\.md$",
+   "scope": "results/paper-tables/",
+   "generator": "scripts/consolidate_paper_metrics.py",
+   "source_rule": "sibling:metrics_master.json",
+   "write_site": "scripts/consolidate_paper_metrics.py:499"
+  },
+  {
+   "rule_id": "gen-track2-summary",
+   "match": "^results/55maps-extended-gt-2026-06-07/TRACK2-SUMMARY\\.md$",
+   "scope": "results/",
+   "generator": "scripts/score_55maps_extended_gt_canonical.py",
+   "source_rule": "none",
+   "write_site": "scripts/score_55maps_extended_gt_canonical.py:244"
+  },
+  {
+   "rule_id": "gen-per-map-summary",
+   "match": "^results/55maps-image-generalisation/per_map_summary\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_55maps_heterogeneity.py",
+   "source_rule": "none",
+   "write_site": "scripts/analyse_55maps_heterogeneity.py:612"
+  },
+  {
+   "rule_id": "gen-uncal-crosstab",
+   "match": "^results/55maps-image-generalisation/uncalibrated-vs-calibrated-crosstab/crosstab\\.md$",
+   "scope": "results/",
+   "generator": "scripts/crosstab_uncalibrated_vs_calibrated.py",
+   "source_rule": "none",
+   "write_site": "scripts/crosstab_uncalibrated_vs_calibrated.py:593"
+  },
+  {
+   "rule_id": "gen-diversity-summary",
+   "match": "(^|/)diversity-analysis-summary\\.md$",
+   "scope": "results/phase3c-diversity/",
+   "generator": "scripts/analyse_diversity.py",
+   "source_rule": "none",
+   "write_site": "scripts/analyse_diversity.py:1107"
+  },
+  {
+   "rule_id": "gen-gt-dup-diff",
+   "match": "(^|/)gt-duplicate-diff\\.md$",
+   "scope": "results/",
+   "generator": "scripts/review_gt_duplicates.py",
+   "source_rule": "sibling:gt-duplicate-decisions.csv",
+   "write_site": "scripts/review_gt_duplicates.py:968",
+   "notes": "Bare 'Generated:' line (not bold) — invisible to the marker heuristic"
+  },
+  {
+   "rule_id": "gen-spacing-gs",
+   "match": "^results/gt-spacing-analysis/gold-standard/spacing-report\\.md$",
+   "scope": "results/gt-spacing-analysis/",
+   "generator": "results/gt-spacing-analysis/gold-standard/compute_spacing.py",
+   "source_rule": "sibling:spacing-summary.json",
+   "write_site": "results/gt-spacing-analysis/gold-standard/compute_spacing.py:288-289"
+  },
+  {
+   "rule_id": "gen-spacing-55",
+   "match": "^results/gt-spacing-analysis/55maps-student/spacing-report\\.md$",
+   "scope": "results/gt-spacing-analysis/",
+   "generator": "results/gt-spacing-analysis/55maps-student/compute_spacing.py",
+   "source_rule": "sibling:spacing-summary.json",
+   "write_site": "results/gt-spacing-analysis/55maps-student/compute_spacing.py:311-312",
+   "notes": "Near-duplicate of the gold-standard script but NOT identical — two generators"
+  },
+  {
+   "rule_id": "gen-tile-size-comparison",
+   "match": "^results/pairwise/tile-size-mcnemar-30m/tile_size_comparison\\.md$",
+   "scope": "results/pairwise/",
+   "generator": "scripts/compare_tile_sizes.py",
+   "source_rule": "none",
+   "write_site": "scripts/compare_tile_sizes.py:1106"
+  },
+  {
+   "rule_id": "gen-tile-size-sweep",
+   "match": "^results/tile-size-sweep/tile_size_sweep\\.md$",
+   "scope": "results/tile-size-sweep/",
+   "generator": "scripts/tile_size_sweep.py",
+   "source_rule": "none",
+   "write_site": "scripts/tile_size_sweep.py:447"
+  },
+  {
+   "rule_id": "gen-tp-subband",
+   "match": "^results/tp-only-localisation-bias-sub-band/analysis\\.md$",
+   "scope": "results/",
+   "generator": "scripts/analyse_tp_only_subband_bias.py",
+   "source_rule": "none",
+   "write_site": "scripts/analyse_tp_only_subband_bias.py:805"
+  },
+  {
+   "rule_id": "gen-gs-plateau",
+   "match": "^results/working-precision/gs-plateau-characterisation\\.md$",
+   "scope": "results/working-precision/",
+   "generator": "scripts/characterise_gs_plateau.py",
+   "source_rule": "sibling:../conditions-manifest.json",
+   "write_site": "scripts/characterise_gs_plateau.py:177",
+   "notes": "Rendered from results/conditions-manifest.json (self-attributing banner)"
+  },
+  {
+   "rule_id": "gen-sapphire-cleanup",
+   "match": "^results/sapphire-zbook-cleanup-comparison\\.md$",
+   "scope": "results/",
+   "generator": "scripts/compare_sapphire_zbook_cleanup.py",
+   "source_rule": "none",
+   "write_site": "scripts/compare_sapphire_zbook_cleanup.py:329",
+   "notes": "Script emits the revision-policy banner + changelog itself — banner is NOT evidence of hand-authorship (Agent C)"
+  },
+  {
+   "rule_id": "gen-pairwise-v2-summary",
+   "match": "^results/55maps-pairwise-permutation-v2/summary\\.md$",
+   "scope": "results/",
+   "generator": "scripts/build_pairwise_perm_v2_summary.py",
+   "source_rule": "none",
+   "write_site": "scripts/build_pairwise_perm_v2_summary.py:197"
+  },
+  {
+   "rule_id": "gen-wbf-greedy",
+   "match": "^results/wbf-greedy-comparison/wbf_vs_greedy_.+\\.md$",
+   "scope": "results/wbf-greedy-comparison/",
+   "generator": "scripts/compare_wbf_greedy_all_conditions.py",
+   "source_rule": "none",
+   "write_site": "scripts/compare_wbf_greedy_all_conditions.py:781",
+   "notes": "Templated filename wbf_vs_greedy_<bounds>_<buffer>m.md"
+  },
+  {
+   "rule_id": "gen-verification-report",
+   "match": "^results/leaderboard/per-architecture/verification-report\\.md$",
+   "scope": "results/leaderboard/per-architecture/",
+   "generator": "scripts/verify_per_arch_leaderboard.py",
+   "source_rule": "per-stratum tier JSONs (spot-check report)",
+   "write_site": "scripts/verify_per_arch_leaderboard.py:230"
+  },
+  {
+   "rule_id": "gen-pv-buffer-sensitivity",
+   "match": "^results/paper-eval/pv/buffer_sensitivity_summary\\.md$",
+   "scope": "results/paper-eval/pv/",
+   "generator": "scripts/analyse_pv_buffer_sensitivity.py",
+   "source_rule": "sibling:buffer_sensitivity_summary.csv",
+   "write_site": "scripts/analyse_pv_buffer_sensitivity.py:40-41 (docstring; md written beside csv at :248)"
+  }
+ ]
+}
