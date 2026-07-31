@@ -1,0 +1,3743 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-07-31T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/data-reproduction-2026-04-25.md",
+    "git_blob": "b2405bea8a3f2611773c9660a82b9340167edfe6",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5[1m]",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          13,
+          13
+        ],
+        "section": "Event summary — item 1, cost of the deleted verifier output"
+      },
+      "claim_text": "on this advice and lost approximately $80 of API verifier output:",
+      "values": [
+        {
+          "quantity": "cost USD (approximate) of the Session-78 verifier output destroyed by the 2026-04-25 deletion",
+          "value_verbatim": "approximately $80",
+          "value_parsed": 80,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Approximate loss estimate. The destroyed run.meta.json files (which carried the original cost_estimate blocks) were themselves deleted, so no committed artefact records the lost spend; the surviving figures (sum of $.cost_estimate.total_cost_usd across the 14 re-run outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-*/run.meta.json and outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-*/run.meta.json files) describe the RE-RUN, not the loss. Triage should decide whether the re-run total is an acceptable proxy."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          15,
+          15
+        ],
+        "section": "Event summary — item 1, count of deleted PNG crops"
+      },
+      "claim_text": "   - All 5 753 PNG candidate crops",
+      "values": [
+        {
+          "quantity": "count of PNG candidate crops deleted (image pool + text pool)",
+          "value_verbatim": "5 753",
+          "value_parsed": 5753,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+              "path": "$.total_detections"
+            },
+            {
+              "name": "b",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+              "path": "$.total_detections"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "One crop per candidate in each shared-crops pool; the two regenerated manifests record the pool sizes. $.successful_extractions is an equivalent locator in both manifests."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          16,
+          16
+        ],
+        "section": "Event summary — item 1, count of deleted verified-*/probabilities.json files"
+      },
+      "claim_text": "   - All 14 `verified-<variant>/probabilities.json` files",
+      "values": [
+        {
+          "quantity": "count of verified-<variant>/probabilities.json files deleted (7 prompt variants x 2 candidate pools)",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.cells",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/era2/pv-materialised/session-78-matrix-registry.json",
+        "path": "len:$.cells"
+      },
+      "method": "read",
+      "notes": "The Session-78 matrix registry enumerates the 14 cells (7 variants x 2 pools), one per verified-<variant> directory; the same 14 directories each carry one probabilities.json and one run.meta.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          17,
+          17
+        ],
+        "section": "Event summary — item 1, count of deleted verified-*/run.meta.json files"
+      },
+      "claim_text": "   - All 14 `verified-<variant>/run.meta.json` files",
+      "values": [
+        {
+          "quantity": "count of verified-<variant>/run.meta.json files deleted (7 prompt variants x 2 candidate pools)",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.cells",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/era2/pv-materialised/session-78-matrix-registry.json",
+        "path": "len:$.cells"
+      },
+      "method": "read",
+      "notes": "The Session-78 matrix registry enumerates the 14 cells (7 variants x 2 pools), one per verified-<variant> directory; the same 14 directories each carry one probabilities.json and one run.meta.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          29,
+          29
+        ],
+        "section": "Recovery procedure — opening sentence, stage count"
+      },
+      "claim_text": "A six-stage protocol re-derived the lost data and refreshed all downstream",
+      "values": [
+        {
+          "quantity": "number of stages in the recovery protocol",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The only visible source is the stage table immediately below in this same document (rows numbered 0-6, i.e. seven rows), so this would be prose anchored to prose (hard rule 2). Flagged for triage: 'six-stage' against a 0-6 table is a possible off-by-one, but adjudication is the harness's job, not the extractor's."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          35,
+          35
+        ],
+        "section": "Recovery procedure — stage table, stage 0 (re-extract shared-crops manifests and crops) row"
+      },
+      "claim_text": "| 0 | Re-extract shared-crops manifests + crops | sapphire CPU | $0 |",
+      "values": [
+        {
+          "quantity": "API spend USD, stage 0 (re-extract shared-crops manifests and crops)",
+          "value_verbatim": "$0",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Asserts zero API spend for a CPU-only or manual stage. No committed artefact records per-stage spend; the assertion is that no API call was made, which is unfalsifiable from the repo. Included per the instrument's 'when in doubt, include' rule; triage may prune."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          36,
+          36
+        ],
+        "section": "Recovery procedure — stage table, stage 1 (Phase A re-run) row"
+      },
+      "claim_text": "| 1 | Re-run Phase A (14 verifier runs, gemini-3-flash-preview, flex tier, 35 workers) | API | $127.55 list / ~$63.77 flex |",
+      "values": [
+        {
+          "quantity": "count of verifier runs in the Phase A re-run",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.cells",
+          "method": "read"
+        },
+        {
+          "quantity": "worker count (concurrency) configured for the Phase A re-run",
+          "value_verbatim": "35",
+          "value_parsed": 35,
+          "unit": null,
+          "kind": "parameter",
+          "path": "scripts/session-78-matrix-rerun.sh#WORKERS=",
+          "method": "read"
+        },
+        {
+          "quantity": "Phase A re-run API cost USD at list price",
+          "value_verbatim": "$127.55",
+          "value_parsed": 127.55,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c + d + e + f + g + h + i + j + k + l + m + n",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "b",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "c",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "d",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "e",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "f",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "g",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-comparative/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "h",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "i",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "j",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "k",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "l",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "m",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "n",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-comparative/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            }
+          ]
+        },
+        {
+          "quantity": "Phase A re-run API cost USD at flex tier (50% of list)",
+          "value_verbatim": "~$63.77",
+          "value_parsed": 63.77,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "0.5 * (a + b + c + d + e + f + g + h + i + j + k + l + m + n)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "b",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "c",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "d",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "e",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "f",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "g",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-comparative/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "h",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "i",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "j",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "k",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "l",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "m",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "n",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-comparative/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/era2/pv-materialised/session-78-matrix-registry.json",
+        "path": "len:$.cells"
+      },
+      "method": "read",
+      "notes": "The 14-run count resolves against the registry's cell list; the worker count is the shell constant WORKERS=35 in scripts/session-78-matrix-rerun.sh (non-JSON anchor, expected per instrument v1.1). List price is the sum of the per-run cost_estimate.total_cost_usd across the 14 re-run metas; the flex figure is half of that, carrying its verbatim '~' approximation marker. Model name 'gemini-3-flash-preview' and 'flex tier' are non-numeric and not extracted here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          37,
+          37
+        ],
+        "section": "Recovery procedure — stage table, stage 2 (Phase B/C/D regeneration) row"
+      },
+      "claim_text": "| 2 | Phase B/C/D regeneration (sweeps + deep evals + calibration) | sapphire CPU | $0 |",
+      "values": [
+        {
+          "quantity": "API spend USD, stage 2 (Phase B/C/D regeneration)",
+          "value_verbatim": "$0",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Asserts zero API spend for a CPU-only or manual stage. No committed artefact records per-stage spend; the assertion is that no API call was made, which is unfalsifiable from the repo. Included per the instrument's 'when in doubt, include' rule; triage may prune."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          38,
+          38
+        ],
+        "section": "Recovery procedure — stage table, stage 3 (per-architecture leaderboard refresh) row"
+      },
+      "claim_text": "| 3 | Per-architecture leaderboard refresh (Era 2 PV stratum) | sapphire CPU | $0 |",
+      "values": [
+        {
+          "quantity": "API spend USD, stage 3 (per-architecture leaderboard refresh)",
+          "value_verbatim": "$0",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Asserts zero API spend for a CPU-only or manual stage. No committed artefact records per-stage spend; the assertion is that no API call was made, which is unfalsifiable from the repo. Included per the instrument's 'when in doubt, include' rule; triage may prune."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          39,
+          39
+        ],
+        "section": "Recovery procedure — stage table, stage 4 (pairwise permutation tier tables refresh) row"
+      },
+      "claim_text": "| 4 | Pairwise permutation tier tables refresh | sapphire CPU | $0 |",
+      "values": [
+        {
+          "quantity": "API spend USD, stage 4 (pairwise permutation tier tables refresh)",
+          "value_verbatim": "$0",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Asserts zero API spend for a CPU-only or manual stage. No committed artefact records per-stage spend; the assertion is that no API call was made, which is unfalsifiable from the repo. Included per the instrument's 'when in doubt, include' rule; triage may prune."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          40,
+          40
+        ],
+        "section": "Recovery procedure — stage table, stage 5 (citation updates) row"
+      },
+      "claim_text": "| 5 | Citation updates in working notes and per-arch README | manual | $0 |",
+      "values": [
+        {
+          "quantity": "API spend USD, stage 5 (citation updates)",
+          "value_verbatim": "$0",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Asserts zero API spend for a CPU-only or manual stage. No committed artefact records per-stage spend; the assertion is that no API call was made, which is unfalsifiable from the repo. Included per the instrument's 'when in doubt, include' rule; triage may prune."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          41,
+          41
+        ],
+        "section": "Recovery procedure — stage table, stage 6 (this provenance note) row"
+      },
+      "claim_text": "| 6 | This provenance note | manual | $0 |",
+      "values": [
+        {
+          "quantity": "API spend USD, stage 6 (this provenance note)",
+          "value_verbatim": "$0",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Asserts zero API spend for a CPU-only or manual stage. No committed artefact records per-stage spend; the assertion is that no API call was made, which is unfalsifiable from the repo. Included per the instrument's 'when in doubt, include' rule; triage may prune."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          43,
+          45
+        ],
+        "section": "Recovery procedure — API spend total paragraph"
+      },
+      "claim_text": "API spend total: 14 verifier runs × 35 workers, ~44 220 requests, 220.9\nmillion input tokens + 5.7 million output tokens. List price $127.55;\nestimated flex-tier price (50% discount) ~$63.77.",
+      "values": [
+        {
+          "quantity": "count of verifier runs in the Phase A re-run",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.cells",
+          "method": "read"
+        },
+        {
+          "quantity": "worker count (concurrency) configured for the Phase A re-run",
+          "value_verbatim": "35",
+          "value_parsed": 35,
+          "unit": null,
+          "kind": "parameter",
+          "path": "scripts/session-78-matrix-rerun.sh#WORKERS=",
+          "method": "read"
+        },
+        {
+          "quantity": "total API requests across the 14 Phase A re-run verifier runs (approximate)",
+          "value_verbatim": "~44 220",
+          "value_parsed": 44220,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c + d + e + f + g + h + i + j + k + l + m + n",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial/run.meta.json",
+              "path": "$.usage_stats.by_provider.google_gemini.request_count"
+            },
+            {
+              "name": "b",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json",
+              "path": "$.usage_stats.by_provider.google_gemini.request_count"
+            },
+            {
+              "name": "c",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief/run.meta.json",
+              "path": "$.usage_stats.by_provider.google_gemini.request_count"
+            },
+            {
+              "name": "d",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/run.meta.json",
+              "path": "$.usage_stats.by_provider.google_gemini.request_count"
+            },
+            {
+              "name": "e",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/run.meta.json",
+              "path": "$.usage_stats.by_provider.google_gemini.request_count"
+            },
+            {
+              "name": "f",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/run.meta.json",
+              "path": "$.usage_stats.by_provider.google_gemini.request_count"
+            },
+            {
+              "name": "g",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-comparative/run.meta.json",
+              "path": "$.usage_stats.by_provider.google_gemini.request_count"
+            },
+            {
+              "name": "h",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial/run.meta.json",
+              "path": "$.usage_stats.by_provider.google_gemini.request_count"
+            },
+            {
+              "name": "i",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json",
+              "path": "$.usage_stats.by_provider.google_gemini.request_count"
+            },
+            {
+              "name": "j",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief/run.meta.json",
+              "path": "$.usage_stats.by_provider.google_gemini.request_count"
+            },
+            {
+              "name": "k",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/run.meta.json",
+              "path": "$.usage_stats.by_provider.google_gemini.request_count"
+            },
+            {
+              "name": "l",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist/run.meta.json",
+              "path": "$.usage_stats.by_provider.google_gemini.request_count"
+            },
+            {
+              "name": "m",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/run.meta.json",
+              "path": "$.usage_stats.by_provider.google_gemini.request_count"
+            },
+            {
+              "name": "n",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-comparative/run.meta.json",
+              "path": "$.usage_stats.by_provider.google_gemini.request_count"
+            }
+          ]
+        },
+        {
+          "quantity": "total input tokens across the 14 Phase A re-run verifier runs, in millions",
+          "value_verbatim": "220.9",
+          "value_parsed": 220.9,
+          "unit": "million tokens",
+          "kind": "tokens",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b + c + d + e + f + g + h + i + j + k + l + m + n) / 1000000",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial/run.meta.json",
+              "path": "$.usage_stats.total_input_tokens"
+            },
+            {
+              "name": "b",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json",
+              "path": "$.usage_stats.total_input_tokens"
+            },
+            {
+              "name": "c",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief/run.meta.json",
+              "path": "$.usage_stats.total_input_tokens"
+            },
+            {
+              "name": "d",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/run.meta.json",
+              "path": "$.usage_stats.total_input_tokens"
+            },
+            {
+              "name": "e",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/run.meta.json",
+              "path": "$.usage_stats.total_input_tokens"
+            },
+            {
+              "name": "f",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/run.meta.json",
+              "path": "$.usage_stats.total_input_tokens"
+            },
+            {
+              "name": "g",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-comparative/run.meta.json",
+              "path": "$.usage_stats.total_input_tokens"
+            },
+            {
+              "name": "h",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial/run.meta.json",
+              "path": "$.usage_stats.total_input_tokens"
+            },
+            {
+              "name": "i",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json",
+              "path": "$.usage_stats.total_input_tokens"
+            },
+            {
+              "name": "j",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief/run.meta.json",
+              "path": "$.usage_stats.total_input_tokens"
+            },
+            {
+              "name": "k",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/run.meta.json",
+              "path": "$.usage_stats.total_input_tokens"
+            },
+            {
+              "name": "l",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist/run.meta.json",
+              "path": "$.usage_stats.total_input_tokens"
+            },
+            {
+              "name": "m",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/run.meta.json",
+              "path": "$.usage_stats.total_input_tokens"
+            },
+            {
+              "name": "n",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-comparative/run.meta.json",
+              "path": "$.usage_stats.total_input_tokens"
+            }
+          ]
+        },
+        {
+          "quantity": "total output tokens across the 14 Phase A re-run verifier runs, in millions",
+          "value_verbatim": "5.7",
+          "value_parsed": 5.7,
+          "unit": "million tokens",
+          "kind": "tokens",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "(a + b + c + d + e + f + g + h + i + j + k + l + m + n) / 1000000",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial/run.meta.json",
+              "path": "$.usage_stats.total_output_tokens"
+            },
+            {
+              "name": "b",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json",
+              "path": "$.usage_stats.total_output_tokens"
+            },
+            {
+              "name": "c",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief/run.meta.json",
+              "path": "$.usage_stats.total_output_tokens"
+            },
+            {
+              "name": "d",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/run.meta.json",
+              "path": "$.usage_stats.total_output_tokens"
+            },
+            {
+              "name": "e",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/run.meta.json",
+              "path": "$.usage_stats.total_output_tokens"
+            },
+            {
+              "name": "f",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/run.meta.json",
+              "path": "$.usage_stats.total_output_tokens"
+            },
+            {
+              "name": "g",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-comparative/run.meta.json",
+              "path": "$.usage_stats.total_output_tokens"
+            },
+            {
+              "name": "h",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial/run.meta.json",
+              "path": "$.usage_stats.total_output_tokens"
+            },
+            {
+              "name": "i",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json",
+              "path": "$.usage_stats.total_output_tokens"
+            },
+            {
+              "name": "j",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief/run.meta.json",
+              "path": "$.usage_stats.total_output_tokens"
+            },
+            {
+              "name": "k",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/run.meta.json",
+              "path": "$.usage_stats.total_output_tokens"
+            },
+            {
+              "name": "l",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist/run.meta.json",
+              "path": "$.usage_stats.total_output_tokens"
+            },
+            {
+              "name": "m",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/run.meta.json",
+              "path": "$.usage_stats.total_output_tokens"
+            },
+            {
+              "name": "n",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-comparative/run.meta.json",
+              "path": "$.usage_stats.total_output_tokens"
+            }
+          ]
+        },
+        {
+          "quantity": "Phase A re-run API cost USD at list price",
+          "value_verbatim": "$127.55",
+          "value_parsed": 127.55,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c + d + e + f + g + h + i + j + k + l + m + n",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "b",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "c",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "d",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "e",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "f",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "g",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-comparative/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "h",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "i",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "j",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "k",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "l",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "m",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "n",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-comparative/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            }
+          ]
+        },
+        {
+          "quantity": "flex-tier discount off list price",
+          "value_verbatim": "50%",
+          "value_parsed": 50,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "Phase A re-run API cost USD at flex tier (50% of list)",
+          "value_verbatim": "~$63.77",
+          "value_parsed": 63.77,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "0.5 * (a + b + c + d + e + f + g + h + i + j + k + l + m + n)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "b",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "c",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "d",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "e",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "f",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "g",
+              "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-comparative/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "h",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "i",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "j",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "k",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "l",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "m",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            },
+            {
+              "name": "n",
+              "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-comparative/run.meta.json",
+              "path": "$.cost_estimate.total_cost_usd"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/era2/pv-materialised/session-78-matrix-registry.json",
+        "path": "len:$.cells"
+      },
+      "method": "read",
+      "notes": "Token and request totals are sums over the 14 re-run run.meta.json usage_stats blocks. This is NOT the retest era (phase2a-3c): these h11 pv-diag-384 metas carry populated usage_stats, so the token claims are verifiable rather than unverifiable-era. The 50% flex discount is vendor pricing (external, attestation only)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          53,
+          53
+        ],
+        "section": "Key commits — stage 1 per-variant probabilities row"
+      },
+      "claim_text": "| `e71fb8e4` … `ac0b9f96` | 1 | Per-variant probabilities (14 commits) |",
+      "values": [
+        {
+          "quantity": "count of per-variant probabilities commits landed during the Phase A re-run",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "A commit count, decidable only from git history between e71fb8e4 and ac0b9f96; commit hashes are themselves out of C4 scope (rule 5) and no committed artefact records the count. The registry's 14 cells (len:$.cells in results/leaderboard/era2/pv-materialised/session-78-matrix-registry.json) is a plausible but not identical proxy (one commit per variant per pool)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          54,
+          54
+        ],
+        "section": "Key commits — stage 1 Phase A logs row"
+      },
+      "claim_text": "| `7d15507b` | 1 | Phase A logs (15 files, 12 megabytes) |",
+      "values": [
+        {
+          "quantity": "count of Phase A log files committed",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total size of the committed Phase A logs",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": "MB",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "File count and byte size of a single commit's contents; decidable only from git (`git show --stat 7d15507b`), not from any committed manifest. Looked for a logs manifest under outputs/h11/pv-diag-384/ and results/leaderboard/ and found none."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          56,
+          56
+        ],
+        "section": "Key commits — stage 2-B cell sweep tables row"
+      },
+      "claim_text": "| `57012592` | 2-B | 14 cell sweep tables regenerated |",
+      "values": [
+        {
+          "quantity": "count of cell sweep tables regenerated in Phase B",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.cells",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/era2/pv-materialised/session-78-matrix-registry.json",
+        "path": "len:$.cells"
+      },
+      "method": "read",
+      "notes": "The regenerated sweep tables are results/leaderboard/cells/session-78-<pool>-<variant>-487tile.json, one per registry cell; the registry's $.cells[*].source_cell field names each of them."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          57,
+          57
+        ],
+        "section": "Key commits — stage 2-C materialised geojsons and deep evaluations row"
+      },
+      "claim_text": "| `fc778415` | 2-C | 14 materialised geojsons + 10k-bootstrap deep evaluations |",
+      "values": [
+        {
+          "quantity": "count of materialised GeoJSONs produced in Phase C",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.cells",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iteration count used for the Phase C deep evaluations",
+          "value_verbatim": "10k",
+          "value_parsed": 10000,
+          "unit": "iterations",
+          "kind": "parameter",
+          "path": "scripts/session-78-matrix-rerun-phases-bcd.sh#--bootstrap",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/era2/pv-materialised/session-78-matrix-registry.json",
+        "path": "len:$.cells"
+      },
+      "method": "read",
+      "notes": "Each registry cell names its $.cells[*].output_geojson under results/leaderboard/era2/pv-materialised/. The bootstrap count is the `--bootstrap 10000` argument in scripts/session-78-matrix-rerun-phases-bcd.sh (non-JSON anchor, expected per instrument v1.1); $.bootstrap.n_iterations in results/verifier-calibration-matrix/*/calibration.json carries the same value for the Phase D calibration stage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          58,
+          58
+        ],
+        "section": "Key commits — stage 2-D calibration matrix row"
+      },
+      "claim_text": "| `c0eb61f9` | 2-D | Calibration matrix refreshed (canonical-path patch + 14 calibration files) |",
+      "values": [
+        {
+          "quantity": "count of calibration files refreshed in Phase D",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.cells",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/era2/pv-materialised/session-78-matrix-registry.json",
+        "path": "len:$.cells"
+      },
+      "method": "read",
+      "notes": "The refreshed files are results/verifier-calibration-matrix/<pool>-<variant>/calibration.json, one per registry cell."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          60,
+          60
+        ],
+        "section": "Key commits — stage 3 per-architecture refresh row"
+      },
+      "claim_text": "| `f8d75579` | 3 | Per-arch Era 2 PV stratum refreshed (568 files) |",
+      "values": [
+        {
+          "quantity": "count of files touched by the per-architecture Era 2 PV stratum refresh",
+          "value_verbatim": "568",
+          "value_parsed": 568,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "A commit file count (`git show --stat f8d75579`); no committed manifest records it. 'Era 2' is a stratum name, not a claim (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          71
+        ],
+        "section": "Methodological change — Before block, superseded canonical candidate pool"
+      },
+      "claim_text": "  `outputs/.../verified-v1-n5/probabilities.json` (separate K=5 1-of-5\n  candidate pool, **2 016 image / 3 736 text candidates**).",
+      "values": [
+        {
+          "quantity": "consensus pass count K of the superseded canonical candidate pool",
+          "value_verbatim": "K=5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus vote threshold of the superseded canonical candidate pool (1 of 5 passes)",
+          "value_verbatim": "1-of-5",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "image-pool candidate count in the superseded canonical verified-v1-n5 pool",
+          "value_verbatim": "2 016",
+          "value_parsed": 2016,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "text-pool candidate count in the superseded canonical verified-v1-n5 pool",
+          "value_verbatim": "3 736",
+          "value_parsed": 3736,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Explicitly under the '**Before** (as committed in `6d1cad27` and `88d6b55b`)' heading — the superseded-and-marked side of a before/after block (instrument rule 3, 'historical'). For triage: the files outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/probabilities.json and .../flash-high-text-n5/text-t0.7/verified-v1-n5/probabilities.json do still exist at HEAD and carry $.total_results, so the claim could be reclassified 'read' against those paths if triage judges the Before block to be asserting present-tense file contents."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          72,
+          72
+        ],
+        "section": "Methodological change — Before block, alternative-variant count"
+      },
+      "claim_text": "- Six alternative variants used a SHARED candidate pool at",
+      "values": [
+        {
+          "quantity": "count of alternative (non-canonical) prompt variants sharing the candidate pool",
+          "value_verbatim": "Six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / 2 - 1",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/leaderboard/era2/pv-materialised/session-78-matrix-registry.json",
+              "path": "len:$.cells"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/era2/pv-materialised/session-78-matrix-registry.json",
+        "path": "len:$.cells"
+      },
+      "method": "arithmetic",
+      "notes": "14 registry cells = 7 prompt variants x 2 pools; alternatives = 7 - 1 canonical = 6. The variant list is also enumerable as the VARIANTS array in scripts/session-78-matrix-rerun.sh (7 entries)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          76,
+          77
+        ],
+        "section": "Methodological change — Before block, candidate-set mismatch sentence"
+      },
+      "claim_text": "candidate sets — `verified-v1-n5` had 2 016 (image) / 3 736 (text) while\nshared-crops had 2 017 (image) / 3 736 (text). Same consensus input, but",
+      "values": [
+        {
+          "quantity": "image-pool candidate count in the superseded canonical verified-v1-n5 pool",
+          "value_verbatim": "2 016",
+          "value_parsed": 2016,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "text-pool candidate count in the superseded canonical verified-v1-n5 pool",
+          "value_verbatim": "3 736",
+          "value_parsed": 3736,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "image-pool candidate count in the shared-crops pool",
+          "value_verbatim": "2 017",
+          "value_parsed": 2017,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_detections",
+          "method": "read"
+        },
+        {
+          "quantity": "text-pool candidate count in the shared-crops pool",
+          "value_verbatim": "3 736",
+          "value_parsed": 3736,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/shared-crops/candidate_manifest.json#$.total_detections",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+        "path": "$.total_detections"
+      },
+      "method": "read",
+      "notes": "Mixed span: the verified-v1-n5 side is the superseded 'before' pool (historical); the shared-crops side describes the regenerated manifests that still stand at HEAD. The text-pool value uses a cross-file locator (instrument v1.2 amendment 2). NOTE for triage: the two '3 736' verbatims are distinct values (verified-v1-n5 text pool, then shared-crops text pool) that happen to coincide."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          82,
+          82
+        ],
+        "section": "Methodological change — After block, cell decomposition"
+      },
+      "claim_text": "- All 14 cells (canonical + 6 alternatives × 2 pools) read from",
+      "values": [
+        {
+          "quantity": "count of matrix cells after the re-run",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.cells",
+          "method": "read"
+        },
+        {
+          "quantity": "count of alternative (non-canonical) prompt variants",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / 2 - 1",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/leaderboard/era2/pv-materialised/session-78-matrix-registry.json",
+              "path": "len:$.cells"
+            }
+          ]
+        },
+        {
+          "quantity": "count of candidate pools (image, text)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / 7",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/leaderboard/era2/pv-materialised/session-78-matrix-registry.json",
+              "path": "len:$.cells"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/era2/pv-materialised/session-78-matrix-registry.json",
+        "path": "len:$.cells"
+      },
+      "method": "read",
+      "notes": "14 = (1 canonical + 6 alternatives) x 2 pools. The pool count is also the distinct-value count of $.cells[*].pool in the registry; expressed arithmetically here so it resolves mechanically."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          86
+        ],
+        "section": "Methodological change — After block, crop-set parity bullet"
+      },
+      "claim_text": "- **Crop-set parity**: all 7 prompt variants per pool see the SAME 2 017\n  (image) or 3 736 (text) candidates, modulo per-variant verifier-call\n  failures (1 991–2 017 image; 3 695–3 736 text).",
+      "values": [
+        {
+          "quantity": "count of prompt variants per candidate pool",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / 2",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/leaderboard/era2/pv-materialised/session-78-matrix-registry.json",
+              "path": "len:$.cells"
+            }
+          ]
+        },
+        {
+          "quantity": "image-pool candidate count in the shared-crops pool",
+          "value_verbatim": "2 017",
+          "value_parsed": 2017,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_detections",
+          "method": "read"
+        },
+        {
+          "quantity": "text-pool candidate count in the shared-crops pool",
+          "value_verbatim": "3 736",
+          "value_parsed": 3736,
+          "unit": null,
+          "kind": "count",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/shared-crops/candidate_manifest.json#$.total_detections",
+          "method": "read"
+        },
+        {
+          "quantity": "minimum per-variant scored-candidate count, image pool",
+          "value_verbatim": "1 991",
+          "value_parsed": 1991,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "maximum per-variant scored-candidate count, image pool",
+          "value_verbatim": "2 017",
+          "value_parsed": 2017,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "minimum per-variant scored-candidate count, text pool",
+          "value_verbatim": "3 695",
+          "value_parsed": 3695,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "maximum per-variant scored-candidate count, text pool",
+          "value_verbatim": "3 736",
+          "value_parsed": 3736,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/shared-crops/candidate_manifest.json",
+        "path": "$.total_detections"
+      },
+      "method": "read",
+      "notes": "The four range endpoints are the min and max of $.n_candidates_loaded across the seven image-track and seven text-track results/leaderboard/cells/session-78-<pool>-<variant>-487tile.json files (equivalently $.total_results in each verified-<variant>/probabilities.json). Recorded as recompute-script rather than pinned to a guessed extreme cell, so the harness derives the extremes itself rather than inheriting the extractor's guess. Per-value unit is a plain count in every case."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          97,
+          97
+        ],
+        "section": "Drift summary — introductory sentence"
+      },
+      "claim_text": "`88d6b55b` values across the 14 cells.",
+      "values": [
+        {
+          "quantity": "count of matrix cells covered by the drift tables",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.cells",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/era2/pv-materialised/session-78-matrix-registry.json",
+        "path": "len:$.cells"
+      },
+      "method": "read",
+      "notes": "Commit hashes 6d1cad27 / 88d6b55b are out of C4 scope (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          99,
+          99
+        ],
+        "section": "Drift summary — F1 table heading, buffer distance"
+      },
+      "claim_text": "### F1 at 20 m optimum",
+      "values": [
+        {
+          "quantity": "buffer distance at which the per-cell F1 optimum is reported",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.optima_per_buffer['20'].buffer_m",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/cells/session-78-image-adversarial-487tile.json",
+        "path": "$.optima_per_buffer['20'].buffer_m"
+      },
+      "method": "read",
+      "notes": "The 20 m buffer is a genuine physical parameter of the table below (the tolerance at which F1 is scored), not a condition name — the same distance appears as $.buffer_metres = 20.0 in results/verifier-calibration-matrix/*/calibration.json and as the first entry of $.parameters.buffers in every session-78 cell file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          103,
+          103
+        ],
+        "section": "Drift summary — F1 at 20 m optimum table, image-adversarial row"
+      },
+      "claim_text": "| image-adversarial | 0.7884 | 0.7866 | -0.0018 | 2 017 | 2 017 | 0 |",
+      "values": [
+        {
+          "quantity": "F1@20m, cell image-adversarial, original (pre-re-run) value",
+          "value_verbatim": "0.7884",
+          "value_parsed": 0.7884,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20m, cell image-adversarial, re-derived after the 2026-04-25 re-run",
+          "value_verbatim": "0.7866",
+          "value_parsed": 0.7866,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optima_per_buffer['20'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "change in F1@20m, cell image-adversarial (re-derived minus original)",
+          "value_verbatim": "-0.0018",
+          "value_parsed": -0.0018,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "candidate count, cell image-adversarial, original (pre-re-run) value",
+          "value_verbatim": "2 017",
+          "value_parsed": 2017.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "candidate count, cell image-adversarial, after the 2026-04-25 re-run",
+          "value_verbatim": "2 017",
+          "value_parsed": 2017.0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_candidates_loaded",
+          "method": "read"
+        },
+        {
+          "quantity": "change in candidate count, cell image-adversarial (re-run minus original)",
+          "value_verbatim": "0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/cells/session-78-image-adversarial-487tile.json",
+        "path": "$.optima_per_buffer['20'].f1"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. The 'Original F1' and 'Original n' cells are the superseded side (historical, preserved only in git history at 6d1cad27 / 88d6b55b). The two deltas are differences between a live value and a historical one, so no operand pair resolves at HEAD — recorded anchor-unknown rather than arithmetic so the harness does not compare the live operands against their own difference (instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          104,
+          104
+        ],
+        "section": "Drift summary — F1 at 20 m optimum table, image-adversarial-text row"
+      },
+      "claim_text": "| image-adversarial-text | 0.7868 | 0.7725 | -0.0143 | 2 016 | 1 991 | -25 |",
+      "values": [
+        {
+          "quantity": "F1@20m, cell image-adversarial-text, original (pre-re-run) value",
+          "value_verbatim": "0.7868",
+          "value_parsed": 0.7868,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20m, cell image-adversarial-text, re-derived after the 2026-04-25 re-run",
+          "value_verbatim": "0.7725",
+          "value_parsed": 0.7725,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optima_per_buffer['20'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "change in F1@20m, cell image-adversarial-text (re-derived minus original)",
+          "value_verbatim": "-0.0143",
+          "value_parsed": -0.0143,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "candidate count, cell image-adversarial-text, original (pre-re-run) value",
+          "value_verbatim": "2 016",
+          "value_parsed": 2016.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "candidate count, cell image-adversarial-text, after the 2026-04-25 re-run",
+          "value_verbatim": "1 991",
+          "value_parsed": 1991.0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_candidates_loaded",
+          "method": "read"
+        },
+        {
+          "quantity": "change in candidate count, cell image-adversarial-text (re-run minus original)",
+          "value_verbatim": "-25",
+          "value_parsed": -25.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/cells/session-78-image-adversarial-text-487tile.json",
+        "path": "$.optima_per_buffer['20'].f1"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. The 'Original F1' and 'Original n' cells are the superseded side (historical, preserved only in git history at 6d1cad27 / 88d6b55b). The two deltas are differences between a live value and a historical one, so no operand pair resolves at HEAD — recorded anchor-unknown rather than arithmetic so the harness does not compare the live operands against their own difference (instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          105,
+          105
+        ],
+        "section": "Drift summary — F1 at 20 m optimum table, image-brief row"
+      },
+      "claim_text": "| image-brief | 0.7826 | 0.7844 | +0.0018 | 2 017 | 2 017 | 0 |",
+      "values": [
+        {
+          "quantity": "F1@20m, cell image-brief, original (pre-re-run) value",
+          "value_verbatim": "0.7826",
+          "value_parsed": 0.7826,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20m, cell image-brief, re-derived after the 2026-04-25 re-run",
+          "value_verbatim": "0.7844",
+          "value_parsed": 0.7844,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optima_per_buffer['20'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "change in F1@20m, cell image-brief (re-derived minus original)",
+          "value_verbatim": "+0.0018",
+          "value_parsed": 0.0018,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "candidate count, cell image-brief, original (pre-re-run) value",
+          "value_verbatim": "2 017",
+          "value_parsed": 2017.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "candidate count, cell image-brief, after the 2026-04-25 re-run",
+          "value_verbatim": "2 017",
+          "value_parsed": 2017.0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_candidates_loaded",
+          "method": "read"
+        },
+        {
+          "quantity": "change in candidate count, cell image-brief (re-run minus original)",
+          "value_verbatim": "0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/cells/session-78-image-brief-487tile.json",
+        "path": "$.optima_per_buffer['20'].f1"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. The 'Original F1' and 'Original n' cells are the superseded side (historical, preserved only in git history at 6d1cad27 / 88d6b55b). The two deltas are differences between a live value and a historical one, so no operand pair resolves at HEAD — recorded anchor-unknown rather than arithmetic so the harness does not compare the live operands against their own difference (instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          106,
+          106
+        ],
+        "section": "Drift summary — F1 at 20 m optimum table, image-brief-text row"
+      },
+      "claim_text": "| image-brief-text | 0.7348 | 0.7679 | +0.0331 | 1 890 | 1 998 | +108 |",
+      "values": [
+        {
+          "quantity": "F1@20m, cell image-brief-text, original (pre-re-run) value",
+          "value_verbatim": "0.7348",
+          "value_parsed": 0.7348,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20m, cell image-brief-text, re-derived after the 2026-04-25 re-run",
+          "value_verbatim": "0.7679",
+          "value_parsed": 0.7679,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optima_per_buffer['20'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "change in F1@20m, cell image-brief-text (re-derived minus original)",
+          "value_verbatim": "+0.0331",
+          "value_parsed": 0.0331,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "candidate count, cell image-brief-text, original (pre-re-run) value",
+          "value_verbatim": "1 890",
+          "value_parsed": 1890.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "candidate count, cell image-brief-text, after the 2026-04-25 re-run",
+          "value_verbatim": "1 998",
+          "value_parsed": 1998.0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_candidates_loaded",
+          "method": "read"
+        },
+        {
+          "quantity": "change in candidate count, cell image-brief-text (re-run minus original)",
+          "value_verbatim": "+108",
+          "value_parsed": 108.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/cells/session-78-image-brief-text-487tile.json",
+        "path": "$.optima_per_buffer['20'].f1"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. The 'Original F1' and 'Original n' cells are the superseded side (historical, preserved only in git history at 6d1cad27 / 88d6b55b). The two deltas are differences between a live value and a historical one, so no operand pair resolves at HEAD — recorded anchor-unknown rather than arithmetic so the harness does not compare the live operands against their own difference (instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          107,
+          107
+        ],
+        "section": "Drift summary — F1 at 20 m optimum table, image-checklist row"
+      },
+      "claim_text": "| image-checklist | 0.7821 | 0.7830 | +0.0009 | 2 016 | 2 016 | 0 |",
+      "values": [
+        {
+          "quantity": "F1@20m, cell image-checklist, original (pre-re-run) value",
+          "value_verbatim": "0.7821",
+          "value_parsed": 0.7821,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20m, cell image-checklist, re-derived after the 2026-04-25 re-run",
+          "value_verbatim": "0.7830",
+          "value_parsed": 0.783,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optima_per_buffer['20'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "change in F1@20m, cell image-checklist (re-derived minus original)",
+          "value_verbatim": "+0.0009",
+          "value_parsed": 0.0009,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "candidate count, cell image-checklist, original (pre-re-run) value",
+          "value_verbatim": "2 016",
+          "value_parsed": 2016.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "candidate count, cell image-checklist, after the 2026-04-25 re-run",
+          "value_verbatim": "2 016",
+          "value_parsed": 2016.0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_candidates_loaded",
+          "method": "read"
+        },
+        {
+          "quantity": "change in candidate count, cell image-checklist (re-run minus original)",
+          "value_verbatim": "0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/cells/session-78-image-checklist-487tile.json",
+        "path": "$.optima_per_buffer['20'].f1"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. The 'Original F1' and 'Original n' cells are the superseded side (historical, preserved only in git history at 6d1cad27 / 88d6b55b). The two deltas are differences between a live value and a historical one, so no operand pair resolves at HEAD — recorded anchor-unknown rather than arithmetic so the harness does not compare the live operands against their own difference (instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          108,
+          108
+        ],
+        "section": "Drift summary — F1 at 20 m optimum table, image-checklist-text row"
+      },
+      "claim_text": "| image-checklist-text | 0.7581 | 0.7805 | +0.0224 | 1 850 | 1 998 | +148 |",
+      "values": [
+        {
+          "quantity": "F1@20m, cell image-checklist-text, original (pre-re-run) value",
+          "value_verbatim": "0.7581",
+          "value_parsed": 0.7581,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20m, cell image-checklist-text, re-derived after the 2026-04-25 re-run",
+          "value_verbatim": "0.7805",
+          "value_parsed": 0.7805,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optima_per_buffer['20'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "change in F1@20m, cell image-checklist-text (re-derived minus original)",
+          "value_verbatim": "+0.0224",
+          "value_parsed": 0.0224,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "candidate count, cell image-checklist-text, original (pre-re-run) value",
+          "value_verbatim": "1 850",
+          "value_parsed": 1850.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "candidate count, cell image-checklist-text, after the 2026-04-25 re-run",
+          "value_verbatim": "1 998",
+          "value_parsed": 1998.0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_candidates_loaded",
+          "method": "read"
+        },
+        {
+          "quantity": "change in candidate count, cell image-checklist-text (re-run minus original)",
+          "value_verbatim": "+148",
+          "value_parsed": 148.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/cells/session-78-image-checklist-text-487tile.json",
+        "path": "$.optima_per_buffer['20'].f1"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. The 'Original F1' and 'Original n' cells are the superseded side (historical, preserved only in git history at 6d1cad27 / 88d6b55b). The two deltas are differences between a live value and a historical one, so no operand pair resolves at HEAD — recorded anchor-unknown rather than arithmetic so the harness does not compare the live operands against their own difference (instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          109,
+          109
+        ],
+        "section": "Drift summary — F1 at 20 m optimum table, image-comparative row"
+      },
+      "claim_text": "| image-comparative | 0.7857 | 0.7857 | 0.0000 | 2 017 | 2 017 | 0 |",
+      "values": [
+        {
+          "quantity": "F1@20m, cell image-comparative, original (pre-re-run) value",
+          "value_verbatim": "0.7857",
+          "value_parsed": 0.7857,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20m, cell image-comparative, re-derived after the 2026-04-25 re-run",
+          "value_verbatim": "0.7857",
+          "value_parsed": 0.7857,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optima_per_buffer['20'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "change in F1@20m, cell image-comparative (re-derived minus original)",
+          "value_verbatim": "0.0000",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "candidate count, cell image-comparative, original (pre-re-run) value",
+          "value_verbatim": "2 017",
+          "value_parsed": 2017.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "candidate count, cell image-comparative, after the 2026-04-25 re-run",
+          "value_verbatim": "2 017",
+          "value_parsed": 2017.0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_candidates_loaded",
+          "method": "read"
+        },
+        {
+          "quantity": "change in candidate count, cell image-comparative (re-run minus original)",
+          "value_verbatim": "0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/cells/session-78-image-comparative-487tile.json",
+        "path": "$.optima_per_buffer['20'].f1"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. The 'Original F1' and 'Original n' cells are the superseded side (historical, preserved only in git history at 6d1cad27 / 88d6b55b). The two deltas are differences between a live value and a historical one, so no operand pair resolves at HEAD — recorded anchor-unknown rather than arithmetic so the harness does not compare the live operands against their own difference (instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          110,
+          110
+        ],
+        "section": "Drift summary — F1 at 20 m optimum table, text-adversarial row"
+      },
+      "claim_text": "| text-adversarial | 0.8822 | 0.8833 | +0.0011 | 3 736 | 3 736 | 0 |",
+      "values": [
+        {
+          "quantity": "F1@20m, cell text-adversarial, original (pre-re-run) value",
+          "value_verbatim": "0.8822",
+          "value_parsed": 0.8822,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20m, cell text-adversarial, re-derived after the 2026-04-25 re-run",
+          "value_verbatim": "0.8833",
+          "value_parsed": 0.8833,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optima_per_buffer['20'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "change in F1@20m, cell text-adversarial (re-derived minus original)",
+          "value_verbatim": "+0.0011",
+          "value_parsed": 0.0011,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "candidate count, cell text-adversarial, original (pre-re-run) value",
+          "value_verbatim": "3 736",
+          "value_parsed": 3736.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "candidate count, cell text-adversarial, after the 2026-04-25 re-run",
+          "value_verbatim": "3 736",
+          "value_parsed": 3736.0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_candidates_loaded",
+          "method": "read"
+        },
+        {
+          "quantity": "change in candidate count, cell text-adversarial (re-run minus original)",
+          "value_verbatim": "0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/cells/session-78-text-adversarial-487tile.json",
+        "path": "$.optima_per_buffer['20'].f1"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. The 'Original F1' and 'Original n' cells are the superseded side (historical, preserved only in git history at 6d1cad27 / 88d6b55b). The two deltas are differences between a live value and a historical one, so no operand pair resolves at HEAD — recorded anchor-unknown rather than arithmetic so the harness does not compare the live operands against their own difference (instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          111,
+          111
+        ],
+        "section": "Drift summary — F1 at 20 m optimum table, text-adversarial-text row"
+      },
+      "claim_text": "| text-adversarial-text | 0.8634 | 0.8575 | -0.0059 | 3 736 | 3 695 | -41 |",
+      "values": [
+        {
+          "quantity": "F1@20m, cell text-adversarial-text, original (pre-re-run) value",
+          "value_verbatim": "0.8634",
+          "value_parsed": 0.8634,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20m, cell text-adversarial-text, re-derived after the 2026-04-25 re-run",
+          "value_verbatim": "0.8575",
+          "value_parsed": 0.8575,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optima_per_buffer['20'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "change in F1@20m, cell text-adversarial-text (re-derived minus original)",
+          "value_verbatim": "-0.0059",
+          "value_parsed": -0.0059,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "candidate count, cell text-adversarial-text, original (pre-re-run) value",
+          "value_verbatim": "3 736",
+          "value_parsed": 3736.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "candidate count, cell text-adversarial-text, after the 2026-04-25 re-run",
+          "value_verbatim": "3 695",
+          "value_parsed": 3695.0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_candidates_loaded",
+          "method": "read"
+        },
+        {
+          "quantity": "change in candidate count, cell text-adversarial-text (re-run minus original)",
+          "value_verbatim": "-41",
+          "value_parsed": -41.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/cells/session-78-text-adversarial-text-487tile.json",
+        "path": "$.optima_per_buffer['20'].f1"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. The 'Original F1' and 'Original n' cells are the superseded side (historical, preserved only in git history at 6d1cad27 / 88d6b55b). The two deltas are differences between a live value and a historical one, so no operand pair resolves at HEAD — recorded anchor-unknown rather than arithmetic so the harness does not compare the live operands against their own difference (instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          112,
+          112
+        ],
+        "section": "Drift summary — F1 at 20 m optimum table, text-brief row"
+      },
+      "claim_text": "| text-brief | 0.8772 | 0.8762 | -0.0010 | 3 736 | 3 736 | 0 |",
+      "values": [
+        {
+          "quantity": "F1@20m, cell text-brief, original (pre-re-run) value",
+          "value_verbatim": "0.8772",
+          "value_parsed": 0.8772,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20m, cell text-brief, re-derived after the 2026-04-25 re-run",
+          "value_verbatim": "0.8762",
+          "value_parsed": 0.8762,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optima_per_buffer['20'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "change in F1@20m, cell text-brief (re-derived minus original)",
+          "value_verbatim": "-0.0010",
+          "value_parsed": -0.001,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "candidate count, cell text-brief, original (pre-re-run) value",
+          "value_verbatim": "3 736",
+          "value_parsed": 3736.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "candidate count, cell text-brief, after the 2026-04-25 re-run",
+          "value_verbatim": "3 736",
+          "value_parsed": 3736.0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_candidates_loaded",
+          "method": "read"
+        },
+        {
+          "quantity": "change in candidate count, cell text-brief (re-run minus original)",
+          "value_verbatim": "0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/cells/session-78-text-brief-487tile.json",
+        "path": "$.optima_per_buffer['20'].f1"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. The 'Original F1' and 'Original n' cells are the superseded side (historical, preserved only in git history at 6d1cad27 / 88d6b55b). The two deltas are differences between a live value and a historical one, so no operand pair resolves at HEAD — recorded anchor-unknown rather than arithmetic so the harness does not compare the live operands against their own difference (instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          113,
+          113
+        ],
+        "section": "Drift summary — F1 at 20 m optimum table, text-brief-text row"
+      },
+      "claim_text": "| text-brief-text | 0.8106 | 0.8456 | +0.0350 | 3 530 | 3 709 | +179 |",
+      "values": [
+        {
+          "quantity": "F1@20m, cell text-brief-text, original (pre-re-run) value",
+          "value_verbatim": "0.8106",
+          "value_parsed": 0.8106,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20m, cell text-brief-text, re-derived after the 2026-04-25 re-run",
+          "value_verbatim": "0.8456",
+          "value_parsed": 0.8456,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optima_per_buffer['20'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "change in F1@20m, cell text-brief-text (re-derived minus original)",
+          "value_verbatim": "+0.0350",
+          "value_parsed": 0.035,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "candidate count, cell text-brief-text, original (pre-re-run) value",
+          "value_verbatim": "3 530",
+          "value_parsed": 3530.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "candidate count, cell text-brief-text, after the 2026-04-25 re-run",
+          "value_verbatim": "3 709",
+          "value_parsed": 3709.0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_candidates_loaded",
+          "method": "read"
+        },
+        {
+          "quantity": "change in candidate count, cell text-brief-text (re-run minus original)",
+          "value_verbatim": "+179",
+          "value_parsed": 179.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/cells/session-78-text-brief-text-487tile.json",
+        "path": "$.optima_per_buffer['20'].f1"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. The 'Original F1' and 'Original n' cells are the superseded side (historical, preserved only in git history at 6d1cad27 / 88d6b55b). The two deltas are differences between a live value and a historical one, so no operand pair resolves at HEAD — recorded anchor-unknown rather than arithmetic so the harness does not compare the live operands against their own difference (instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          114,
+          114
+        ],
+        "section": "Drift summary — F1 at 20 m optimum table, text-checklist row"
+      },
+      "claim_text": "| text-checklist | 0.8793 | 0.8783 | -0.0010 | 3 736 | 3 736 | 0 |",
+      "values": [
+        {
+          "quantity": "F1@20m, cell text-checklist, original (pre-re-run) value",
+          "value_verbatim": "0.8793",
+          "value_parsed": 0.8793,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20m, cell text-checklist, re-derived after the 2026-04-25 re-run",
+          "value_verbatim": "0.8783",
+          "value_parsed": 0.8783,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optima_per_buffer['20'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "change in F1@20m, cell text-checklist (re-derived minus original)",
+          "value_verbatim": "-0.0010",
+          "value_parsed": -0.001,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "candidate count, cell text-checklist, original (pre-re-run) value",
+          "value_verbatim": "3 736",
+          "value_parsed": 3736.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "candidate count, cell text-checklist, after the 2026-04-25 re-run",
+          "value_verbatim": "3 736",
+          "value_parsed": 3736.0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_candidates_loaded",
+          "method": "read"
+        },
+        {
+          "quantity": "change in candidate count, cell text-checklist (re-run minus original)",
+          "value_verbatim": "0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/cells/session-78-text-checklist-487tile.json",
+        "path": "$.optima_per_buffer['20'].f1"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. The 'Original F1' and 'Original n' cells are the superseded side (historical, preserved only in git history at 6d1cad27 / 88d6b55b). The two deltas are differences between a live value and a historical one, so no operand pair resolves at HEAD — recorded anchor-unknown rather than arithmetic so the harness does not compare the live operands against their own difference (instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          115,
+          115
+        ],
+        "section": "Drift summary — F1 at 20 m optimum table, text-checklist-text row"
+      },
+      "claim_text": "| text-checklist-text | 0.8283 | 0.8599 | +0.0316 | 3 497 | 3 715 | +218 |",
+      "values": [
+        {
+          "quantity": "F1@20m, cell text-checklist-text, original (pre-re-run) value",
+          "value_verbatim": "0.8283",
+          "value_parsed": 0.8283,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20m, cell text-checklist-text, re-derived after the 2026-04-25 re-run",
+          "value_verbatim": "0.8599",
+          "value_parsed": 0.8599,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optima_per_buffer['20'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "change in F1@20m, cell text-checklist-text (re-derived minus original)",
+          "value_verbatim": "+0.0316",
+          "value_parsed": 0.0316,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "candidate count, cell text-checklist-text, original (pre-re-run) value",
+          "value_verbatim": "3 497",
+          "value_parsed": 3497.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "candidate count, cell text-checklist-text, after the 2026-04-25 re-run",
+          "value_verbatim": "3 715",
+          "value_parsed": 3715.0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_candidates_loaded",
+          "method": "read"
+        },
+        {
+          "quantity": "change in candidate count, cell text-checklist-text (re-run minus original)",
+          "value_verbatim": "+218",
+          "value_parsed": 218.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/cells/session-78-text-checklist-text-487tile.json",
+        "path": "$.optima_per_buffer['20'].f1"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. The 'Original F1' and 'Original n' cells are the superseded side (historical, preserved only in git history at 6d1cad27 / 88d6b55b). The two deltas are differences between a live value and a historical one, so no operand pair resolves at HEAD — recorded anchor-unknown rather than arithmetic so the harness does not compare the live operands against their own difference (instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          116,
+          116
+        ],
+        "section": "Drift summary — F1 at 20 m optimum table, text-comparative row"
+      },
+      "claim_text": "| text-comparative | 0.8846 | 0.8846 | 0.0000 | 3 736 | 3 736 | 0 |",
+      "values": [
+        {
+          "quantity": "F1@20m, cell text-comparative, original (pre-re-run) value",
+          "value_verbatim": "0.8846",
+          "value_parsed": 0.8846,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20m, cell text-comparative, re-derived after the 2026-04-25 re-run",
+          "value_verbatim": "0.8846",
+          "value_parsed": 0.8846,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optima_per_buffer['20'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "change in F1@20m, cell text-comparative (re-derived minus original)",
+          "value_verbatim": "0.0000",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "candidate count, cell text-comparative, original (pre-re-run) value",
+          "value_verbatim": "3 736",
+          "value_parsed": 3736.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "candidate count, cell text-comparative, after the 2026-04-25 re-run",
+          "value_verbatim": "3 736",
+          "value_parsed": 3736.0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_candidates_loaded",
+          "method": "read"
+        },
+        {
+          "quantity": "change in candidate count, cell text-comparative (re-run minus original)",
+          "value_verbatim": "0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/cells/session-78-text-comparative-487tile.json",
+        "path": "$.optima_per_buffer['20'].f1"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. The 'Original F1' and 'Original n' cells are the superseded side (historical, preserved only in git history at 6d1cad27 / 88d6b55b). The two deltas are differences between a live value and a historical one, so no operand pair resolves at HEAD — recorded anchor-unknown rather than arithmetic so the harness does not compare the live operands against their own difference (instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          118,
+          118
+        ],
+        "section": "Drift summary — maximum absolute F1 drift"
+      },
+      "claim_text": "**Max |ΔF1| = 0.0350** (text-brief-text).",
+      "values": [
+        {
+          "quantity": "maximum absolute change in F1@20m across the 14 cells",
+          "value_verbatim": "0.0350",
+          "value_parsed": 0.035,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Derived from the ΔF1 column, whose original-side operands live only in git history at 6d1cad27 / 88d6b55b; no HEAD artefact decides it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          124,
+          124
+        ],
+        "section": "Drift summary — AUC and ECE table, image-adversarial-text row"
+      },
+      "claim_text": "| image-adversarial-text | 0.8633 | 0.8574 | -0.0059 | 0.1878 | 0.1791 | -0.0086 |",
+      "values": [
+        {
+          "quantity": "AUC@20m, cell image-adversarial-text, original (pre-re-run) value",
+          "value_verbatim": "0.8633",
+          "value_parsed": 0.8633,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "AUC@20m, cell image-adversarial-text, after the 2026-04-25 re-run",
+          "value_verbatim": "0.8574",
+          "value_parsed": 0.8574,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in AUC@20m, cell image-adversarial-text (new minus old)",
+          "value_verbatim": "-0.0059",
+          "value_parsed": -0.0059,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell image-adversarial-text, original (pre-re-run) value",
+          "value_verbatim": "0.1878",
+          "value_parsed": 0.1878,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell image-adversarial-text, after the 2026-04-25 re-run",
+          "value_verbatim": "0.1791",
+          "value_parsed": 0.1791,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ece.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in ECE@20m, cell image-adversarial-text (new minus old)",
+          "value_verbatim": "-0.0086",
+          "value_parsed": -0.0086,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-calibration-matrix/image-adversarial-text/calibration.json",
+        "path": "$.auc.point"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. 'Old AUC' and 'Old ECE' are the superseded side (historical, in git history at 6d1cad27 / 88d6b55b); the deltas mix a live and a historical operand and so cannot resolve at HEAD (anchor-unknown, per instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          125,
+          125
+        ],
+        "section": "Drift summary — AUC and ECE table, image-adversarial row"
+      },
+      "claim_text": "| image-adversarial | 0.8559 | 0.8583 | +0.0024 | 0.2169 | 0.2172 | +0.0003 |",
+      "values": [
+        {
+          "quantity": "AUC@20m, cell image-adversarial, original (pre-re-run) value",
+          "value_verbatim": "0.8559",
+          "value_parsed": 0.8559,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "AUC@20m, cell image-adversarial, after the 2026-04-25 re-run",
+          "value_verbatim": "0.8583",
+          "value_parsed": 0.8583,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in AUC@20m, cell image-adversarial (new minus old)",
+          "value_verbatim": "+0.0024",
+          "value_parsed": 0.0024,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell image-adversarial, original (pre-re-run) value",
+          "value_verbatim": "0.2169",
+          "value_parsed": 0.2169,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell image-adversarial, after the 2026-04-25 re-run",
+          "value_verbatim": "0.2172",
+          "value_parsed": 0.2172,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ece.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in ECE@20m, cell image-adversarial (new minus old)",
+          "value_verbatim": "+0.0003",
+          "value_parsed": 0.0003,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-calibration-matrix/image-adversarial/calibration.json",
+        "path": "$.auc.point"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. 'Old AUC' and 'Old ECE' are the superseded side (historical, in git history at 6d1cad27 / 88d6b55b); the deltas mix a live and a historical operand and so cannot resolve at HEAD (anchor-unknown, per instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          126,
+          126
+        ],
+        "section": "Drift summary — AUC and ECE table, image-brief-text row"
+      },
+      "claim_text": "| image-brief-text | 0.8456 | 0.8366 | -0.0090 | 0.2229 | 0.2215 | -0.0014 |",
+      "values": [
+        {
+          "quantity": "AUC@20m, cell image-brief-text, original (pre-re-run) value",
+          "value_verbatim": "0.8456",
+          "value_parsed": 0.8456,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "AUC@20m, cell image-brief-text, after the 2026-04-25 re-run",
+          "value_verbatim": "0.8366",
+          "value_parsed": 0.8366,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in AUC@20m, cell image-brief-text (new minus old)",
+          "value_verbatim": "-0.0090",
+          "value_parsed": -0.009,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell image-brief-text, original (pre-re-run) value",
+          "value_verbatim": "0.2229",
+          "value_parsed": 0.2229,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell image-brief-text, after the 2026-04-25 re-run",
+          "value_verbatim": "0.2215",
+          "value_parsed": 0.2215,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ece.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in ECE@20m, cell image-brief-text (new minus old)",
+          "value_verbatim": "-0.0014",
+          "value_parsed": -0.0014,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-calibration-matrix/image-brief-text/calibration.json",
+        "path": "$.auc.point"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. 'Old AUC' and 'Old ECE' are the superseded side (historical, in git history at 6d1cad27 / 88d6b55b); the deltas mix a live and a historical operand and so cannot resolve at HEAD (anchor-unknown, per instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          127,
+          127
+        ],
+        "section": "Drift summary — AUC and ECE table, image-brief row"
+      },
+      "claim_text": "| image-brief | 0.8581 | 0.8584 | +0.0003 | 0.2664 | 0.2674 | +0.0011 |",
+      "values": [
+        {
+          "quantity": "AUC@20m, cell image-brief, original (pre-re-run) value",
+          "value_verbatim": "0.8581",
+          "value_parsed": 0.8581,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "AUC@20m, cell image-brief, after the 2026-04-25 re-run",
+          "value_verbatim": "0.8584",
+          "value_parsed": 0.8584,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in AUC@20m, cell image-brief (new minus old)",
+          "value_verbatim": "+0.0003",
+          "value_parsed": 0.0003,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell image-brief, original (pre-re-run) value",
+          "value_verbatim": "0.2664",
+          "value_parsed": 0.2664,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell image-brief, after the 2026-04-25 re-run",
+          "value_verbatim": "0.2674",
+          "value_parsed": 0.2674,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ece.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in ECE@20m, cell image-brief (new minus old)",
+          "value_verbatim": "+0.0011",
+          "value_parsed": 0.0011,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-calibration-matrix/image-brief/calibration.json",
+        "path": "$.auc.point"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. 'Old AUC' and 'Old ECE' are the superseded side (historical, in git history at 6d1cad27 / 88d6b55b); the deltas mix a live and a historical operand and so cannot resolve at HEAD (anchor-unknown, per instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          128,
+          128
+        ],
+        "section": "Drift summary — AUC and ECE table, image-checklist-text row"
+      },
+      "claim_text": "| image-checklist-text | 0.8531 | 0.8531 | 0.0000 | 0.2675 | 0.2663 | -0.0011 |",
+      "values": [
+        {
+          "quantity": "AUC@20m, cell image-checklist-text, original (pre-re-run) value",
+          "value_verbatim": "0.8531",
+          "value_parsed": 0.8531,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "AUC@20m, cell image-checklist-text, after the 2026-04-25 re-run",
+          "value_verbatim": "0.8531",
+          "value_parsed": 0.8531,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in AUC@20m, cell image-checklist-text (new minus old)",
+          "value_verbatim": "0.0000",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell image-checklist-text, original (pre-re-run) value",
+          "value_verbatim": "0.2675",
+          "value_parsed": 0.2675,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell image-checklist-text, after the 2026-04-25 re-run",
+          "value_verbatim": "0.2663",
+          "value_parsed": 0.2663,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ece.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in ECE@20m, cell image-checklist-text (new minus old)",
+          "value_verbatim": "-0.0011",
+          "value_parsed": -0.0011,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-calibration-matrix/image-checklist-text/calibration.json",
+        "path": "$.auc.point"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. 'Old AUC' and 'Old ECE' are the superseded side (historical, in git history at 6d1cad27 / 88d6b55b); the deltas mix a live and a historical operand and so cannot resolve at HEAD (anchor-unknown, per instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          129,
+          129
+        ],
+        "section": "Drift summary — AUC and ECE table, image-checklist row"
+      },
+      "claim_text": "| image-checklist | 0.8607 | 0.8597 | -0.0010 | 0.2634 | 0.2632 | -0.0002 |",
+      "values": [
+        {
+          "quantity": "AUC@20m, cell image-checklist, original (pre-re-run) value",
+          "value_verbatim": "0.8607",
+          "value_parsed": 0.8607,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "AUC@20m, cell image-checklist, after the 2026-04-25 re-run",
+          "value_verbatim": "0.8597",
+          "value_parsed": 0.8597,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in AUC@20m, cell image-checklist (new minus old)",
+          "value_verbatim": "-0.0010",
+          "value_parsed": -0.001,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell image-checklist, original (pre-re-run) value",
+          "value_verbatim": "0.2634",
+          "value_parsed": 0.2634,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell image-checklist, after the 2026-04-25 re-run",
+          "value_verbatim": "0.2632",
+          "value_parsed": 0.2632,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ece.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in ECE@20m, cell image-checklist (new minus old)",
+          "value_verbatim": "-0.0002",
+          "value_parsed": -0.0002,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-calibration-matrix/image-checklist/calibration.json",
+        "path": "$.auc.point"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. 'Old AUC' and 'Old ECE' are the superseded side (historical, in git history at 6d1cad27 / 88d6b55b); the deltas mix a live and a historical operand and so cannot resolve at HEAD (anchor-unknown, per instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          130,
+          130
+        ],
+        "section": "Drift summary — AUC and ECE table, image-comparative row"
+      },
+      "claim_text": "| image-comparative | 0.8554 | 0.8554 | 0.0000 | 0.2510 | 0.2506 | -0.0004 |",
+      "values": [
+        {
+          "quantity": "AUC@20m, cell image-comparative, original (pre-re-run) value",
+          "value_verbatim": "0.8554",
+          "value_parsed": 0.8554,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "AUC@20m, cell image-comparative, after the 2026-04-25 re-run",
+          "value_verbatim": "0.8554",
+          "value_parsed": 0.8554,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in AUC@20m, cell image-comparative (new minus old)",
+          "value_verbatim": "0.0000",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell image-comparative, original (pre-re-run) value",
+          "value_verbatim": "0.2510",
+          "value_parsed": 0.251,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell image-comparative, after the 2026-04-25 re-run",
+          "value_verbatim": "0.2506",
+          "value_parsed": 0.2506,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ece.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in ECE@20m, cell image-comparative (new minus old)",
+          "value_verbatim": "-0.0004",
+          "value_parsed": -0.0004,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-calibration-matrix/image-comparative/calibration.json",
+        "path": "$.auc.point"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. 'Old AUC' and 'Old ECE' are the superseded side (historical, in git history at 6d1cad27 / 88d6b55b); the deltas mix a live and a historical operand and so cannot resolve at HEAD (anchor-unknown, per instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          131,
+          131
+        ],
+        "section": "Drift summary — AUC and ECE table, text-adversarial-text row"
+      },
+      "claim_text": "| text-adversarial-text | 0.9592 | 0.9561 | -0.0031 | 0.0672 | 0.0711 | +0.0039 |",
+      "values": [
+        {
+          "quantity": "AUC@20m, cell text-adversarial-text, original (pre-re-run) value",
+          "value_verbatim": "0.9592",
+          "value_parsed": 0.9592,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "AUC@20m, cell text-adversarial-text, after the 2026-04-25 re-run",
+          "value_verbatim": "0.9561",
+          "value_parsed": 0.9561,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in AUC@20m, cell text-adversarial-text (new minus old)",
+          "value_verbatim": "-0.0031",
+          "value_parsed": -0.0031,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell text-adversarial-text, original (pre-re-run) value",
+          "value_verbatim": "0.0672",
+          "value_parsed": 0.0672,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell text-adversarial-text, after the 2026-04-25 re-run",
+          "value_verbatim": "0.0711",
+          "value_parsed": 0.0711,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ece.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in ECE@20m, cell text-adversarial-text (new minus old)",
+          "value_verbatim": "+0.0039",
+          "value_parsed": 0.0039,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-calibration-matrix/text-adversarial-text/calibration.json",
+        "path": "$.auc.point"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. 'Old AUC' and 'Old ECE' are the superseded side (historical, in git history at 6d1cad27 / 88d6b55b); the deltas mix a live and a historical operand and so cannot resolve at HEAD (anchor-unknown, per instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          132,
+          132
+        ],
+        "section": "Drift summary — AUC and ECE table, text-adversarial row"
+      },
+      "claim_text": "| text-adversarial | 0.9676 | 0.9673 | -0.0003 | 0.0798 | 0.0773 | -0.0024 |",
+      "values": [
+        {
+          "quantity": "AUC@20m, cell text-adversarial, original (pre-re-run) value",
+          "value_verbatim": "0.9676",
+          "value_parsed": 0.9676,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "AUC@20m, cell text-adversarial, after the 2026-04-25 re-run",
+          "value_verbatim": "0.9673",
+          "value_parsed": 0.9673,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in AUC@20m, cell text-adversarial (new minus old)",
+          "value_verbatim": "-0.0003",
+          "value_parsed": -0.0003,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell text-adversarial, original (pre-re-run) value",
+          "value_verbatim": "0.0798",
+          "value_parsed": 0.0798,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell text-adversarial, after the 2026-04-25 re-run",
+          "value_verbatim": "0.0773",
+          "value_parsed": 0.0773,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ece.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in ECE@20m, cell text-adversarial (new minus old)",
+          "value_verbatim": "-0.0024",
+          "value_parsed": -0.0024,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-calibration-matrix/text-adversarial/calibration.json",
+        "path": "$.auc.point"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. 'Old AUC' and 'Old ECE' are the superseded side (historical, in git history at 6d1cad27 / 88d6b55b); the deltas mix a live and a historical operand and so cannot resolve at HEAD (anchor-unknown, per instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          133,
+          133
+        ],
+        "section": "Drift summary — AUC and ECE table, text-brief-text row"
+      },
+      "claim_text": "| text-brief-text | 0.9389 | 0.9374 | -0.0015 | 0.0953 | 0.0916 | -0.0037 |",
+      "values": [
+        {
+          "quantity": "AUC@20m, cell text-brief-text, original (pre-re-run) value",
+          "value_verbatim": "0.9389",
+          "value_parsed": 0.9389,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "AUC@20m, cell text-brief-text, after the 2026-04-25 re-run",
+          "value_verbatim": "0.9374",
+          "value_parsed": 0.9374,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in AUC@20m, cell text-brief-text (new minus old)",
+          "value_verbatim": "-0.0015",
+          "value_parsed": -0.0015,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell text-brief-text, original (pre-re-run) value",
+          "value_verbatim": "0.0953",
+          "value_parsed": 0.0953,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell text-brief-text, after the 2026-04-25 re-run",
+          "value_verbatim": "0.0916",
+          "value_parsed": 0.0916,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ece.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in ECE@20m, cell text-brief-text (new minus old)",
+          "value_verbatim": "-0.0037",
+          "value_parsed": -0.0037,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-calibration-matrix/text-brief-text/calibration.json",
+        "path": "$.auc.point"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. 'Old AUC' and 'Old ECE' are the superseded side (historical, in git history at 6d1cad27 / 88d6b55b); the deltas mix a live and a historical operand and so cannot resolve at HEAD (anchor-unknown, per instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          134,
+          134
+        ],
+        "section": "Drift summary — AUC and ECE table, text-brief row"
+      },
+      "claim_text": "| text-brief | 0.9636 | 0.9641 | +0.0004 | 0.1113 | 0.1109 | -0.0004 |",
+      "values": [
+        {
+          "quantity": "AUC@20m, cell text-brief, original (pre-re-run) value",
+          "value_verbatim": "0.9636",
+          "value_parsed": 0.9636,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "AUC@20m, cell text-brief, after the 2026-04-25 re-run",
+          "value_verbatim": "0.9641",
+          "value_parsed": 0.9641,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in AUC@20m, cell text-brief (new minus old)",
+          "value_verbatim": "+0.0004",
+          "value_parsed": 0.0004,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell text-brief, original (pre-re-run) value",
+          "value_verbatim": "0.1113",
+          "value_parsed": 0.1113,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell text-brief, after the 2026-04-25 re-run",
+          "value_verbatim": "0.1109",
+          "value_parsed": 0.1109,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ece.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in ECE@20m, cell text-brief (new minus old)",
+          "value_verbatim": "-0.0004",
+          "value_parsed": -0.0004,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-calibration-matrix/text-brief/calibration.json",
+        "path": "$.auc.point"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. 'Old AUC' and 'Old ECE' are the superseded side (historical, in git history at 6d1cad27 / 88d6b55b); the deltas mix a live and a historical operand and so cannot resolve at HEAD (anchor-unknown, per instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          135,
+          135
+        ],
+        "section": "Drift summary — AUC and ECE table, text-checklist-text row"
+      },
+      "claim_text": "| text-checklist-text | 0.9483 | 0.9502 | +0.0019 | 0.1388 | 0.1388 | 0.0000 |",
+      "values": [
+        {
+          "quantity": "AUC@20m, cell text-checklist-text, original (pre-re-run) value",
+          "value_verbatim": "0.9483",
+          "value_parsed": 0.9483,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "AUC@20m, cell text-checklist-text, after the 2026-04-25 re-run",
+          "value_verbatim": "0.9502",
+          "value_parsed": 0.9502,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in AUC@20m, cell text-checklist-text (new minus old)",
+          "value_verbatim": "+0.0019",
+          "value_parsed": 0.0019,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell text-checklist-text, original (pre-re-run) value",
+          "value_verbatim": "0.1388",
+          "value_parsed": 0.1388,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell text-checklist-text, after the 2026-04-25 re-run",
+          "value_verbatim": "0.1388",
+          "value_parsed": 0.1388,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ece.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in ECE@20m, cell text-checklist-text (new minus old)",
+          "value_verbatim": "0.0000",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-calibration-matrix/text-checklist-text/calibration.json",
+        "path": "$.auc.point"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. 'Old AUC' and 'Old ECE' are the superseded side (historical, in git history at 6d1cad27 / 88d6b55b); the deltas mix a live and a historical operand and so cannot resolve at HEAD (anchor-unknown, per instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          136,
+          136
+        ],
+        "section": "Drift summary — AUC and ECE table, text-checklist row"
+      },
+      "claim_text": "| text-checklist | 0.9639 | 0.9637 | -0.0002 | 0.1223 | 0.1220 | -0.0003 |",
+      "values": [
+        {
+          "quantity": "AUC@20m, cell text-checklist, original (pre-re-run) value",
+          "value_verbatim": "0.9639",
+          "value_parsed": 0.9639,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "AUC@20m, cell text-checklist, after the 2026-04-25 re-run",
+          "value_verbatim": "0.9637",
+          "value_parsed": 0.9637,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in AUC@20m, cell text-checklist (new minus old)",
+          "value_verbatim": "-0.0002",
+          "value_parsed": -0.0002,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell text-checklist, original (pre-re-run) value",
+          "value_verbatim": "0.1223",
+          "value_parsed": 0.1223,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell text-checklist, after the 2026-04-25 re-run",
+          "value_verbatim": "0.1220",
+          "value_parsed": 0.122,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ece.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in ECE@20m, cell text-checklist (new minus old)",
+          "value_verbatim": "-0.0003",
+          "value_parsed": -0.0003,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-calibration-matrix/text-checklist/calibration.json",
+        "path": "$.auc.point"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. 'Old AUC' and 'Old ECE' are the superseded side (historical, in git history at 6d1cad27 / 88d6b55b); the deltas mix a live and a historical operand and so cannot resolve at HEAD (anchor-unknown, per instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          137,
+          137
+        ],
+        "section": "Drift summary — AUC and ECE table, text-comparative row"
+      },
+      "claim_text": "| text-comparative | 0.9637 | 0.9625 | -0.0011 | 0.1025 | 0.1027 | +0.0002 |",
+      "values": [
+        {
+          "quantity": "AUC@20m, cell text-comparative, original (pre-re-run) value",
+          "value_verbatim": "0.9637",
+          "value_parsed": 0.9637,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "AUC@20m, cell text-comparative, after the 2026-04-25 re-run",
+          "value_verbatim": "0.9625",
+          "value_parsed": 0.9625,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.auc.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in AUC@20m, cell text-comparative (new minus old)",
+          "value_verbatim": "-0.0011",
+          "value_parsed": -0.0011,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell text-comparative, original (pre-re-run) value",
+          "value_verbatim": "0.1025",
+          "value_parsed": 0.1025,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Expected Calibration Error (ECE)@20m, cell text-comparative, after the 2026-04-25 re-run",
+          "value_verbatim": "0.1027",
+          "value_parsed": 0.1027,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ece.point",
+          "method": "read"
+        },
+        {
+          "quantity": "change in ECE@20m, cell text-comparative (new minus old)",
+          "value_verbatim": "+0.0002",
+          "value_parsed": 0.0002,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-calibration-matrix/text-comparative/calibration.json",
+        "path": "$.auc.point"
+      },
+      "method": "read",
+      "notes": "Before/after drift row. 'Old AUC' and 'Old ECE' are the superseded side (historical, in git history at 6d1cad27 / 88d6b55b); the deltas mix a live and a historical operand and so cannot resolve at HEAD (anchor-unknown, per instrument v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          139,
+          139
+        ],
+        "section": "Drift summary — maximum absolute AUC drift"
+      },
+      "claim_text": "**Max |ΔAUC| = 0.0090** (image-brief-text).",
+      "values": [
+        {
+          "quantity": "maximum absolute change in AUC@20m across the 14 cells",
+          "value_verbatim": "0.0090",
+          "value_parsed": 0.009,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Derived from the ΔAUC column, whose old-side operands live only in git history at 6d1cad27 / 88d6b55b."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          140,
+          140
+        ],
+        "section": "Drift summary — maximum absolute ECE drift"
+      },
+      "claim_text": "**Max |ΔECE| = 0.0086** (image-adversarial-text).",
+      "values": [
+        {
+          "quantity": "maximum absolute change in ECE@20m across the 14 cells",
+          "value_verbatim": "0.0086",
+          "value_parsed": 0.0086,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Derived from the ΔECE column, whose old-side operands live only in git history at 6d1cad27 / 88d6b55b."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          143
+        ],
+        "section": "Drift summary — bootstrap confidence-interval containment claim"
+      },
+      "claim_text": "**All 14 cells fall within the original bootstrap 95% confidence\nintervals** for AUC and ECE.",
+      "values": [
+        {
+          "quantity": "count of matrix cells whose re-derived AUC and ECE fall inside the original bootstrap confidence intervals",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap confidence-interval level",
+          "value_verbatim": "95%",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "scripts/compute_session78_calibration_matrix.py#np.percentile(2.5, 97.5)",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/compute_session78_calibration_matrix.py",
+        "path": "np.percentile(2.5, 97.5)"
+      },
+      "method": "recompute-script",
+      "notes": "Containment is a comparison of the 14 re-derived AUC/ECE points against the ORIGINAL bootstrap intervals, which survive only in git history at 6d1cad27 / 88d6b55b — recompute-script rather than read, and triage must resolve the historical side. The 95% level is the 2.5/97.5 percentile pair in scripts/compute_session78_calibration_matrix.py (bootstrap_metrics); results/verifier-calibration-matrix/*/calibration.json stores ci_lower/ci_upper without recording the level. Observation 277 in the following sentence is an identifier, out of scope (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          148,
+          148
+        ],
+        "section": "Why some F1 values shifted — section heading, drift range"
+      },
+      "claim_text": "## Why some F1 values shifted by 0.022 to 0.035",
+      "values": [
+        {
+          "quantity": "lower bound of the F1@20m increase attributed to fuller candidate pools",
+          "value_verbatim": "0.022",
+          "value_parsed": 0.022,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "upper bound of the F1@20m increase attributed to fuller candidate pools",
+          "value_verbatim": "0.035",
+          "value_parsed": 0.035,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "A rounded range over the ΔF1 column; both endpoints depend on the original (pre-re-run) F1 values held only in git history at 6d1cad27 / 88d6b55b."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          150,
+          150
+        ],
+        "section": "Why some F1 values shifted — count of partially-scored variants"
+      },
+      "claim_text": "The original Phase A ran the four text-only verifier prompts (image-brief-text,",
+      "values": [
+        {
+          "quantity": "count of verifier prompt cells that ran on partial candidate pools in the original Phase A",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/era2/pv-materialised/session-78-matrix-registry.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Checkable as the number of cells whose scored-candidate count falls below its pool total (2 017 image / 3 736 text): count the results/leaderboard/cells/session-78-<pool>-<variant>-487tile.json files whose $.n_candidates_loaded is below the pool total. Flagged for triage because the sentence names four cells while the re-run drift table shows a different number of cells with reduced n — adjudication is the harness's job, not the extractor's."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          189,
+          189
+        ],
+        "section": "Author — count of verifier API runs"
+      },
+      "claim_text": "2026-04-25 under explicit user authorisation. All 14 verifier API runs",
+      "values": [
+        {
+          "quantity": "count of verifier API runs executed on sapphire during the re-run",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.cells",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/era2/pv-materialised/session-78-matrix-registry.json",
+        "path": "len:$.cells"
+      },
+      "method": "read",
+      "notes": "Model/version string 'Opus 4.7, 1M context' on the preceding line is a version string, out of C4 scope (rule 5); the 2026-04-25 date likewise (rule 5)."
+    }
+  ]
+}
