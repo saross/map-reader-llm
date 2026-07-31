@@ -900,7 +900,7 @@
      "value_parsed": 4301,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -926,12 +926,12 @@
      {
       "name": "b",
       "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -1018,7 +1018,7 @@
      "value_parsed": 1626,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/e47-propose-brief/verified/flash-high-text-2of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/e47-propose-brief/verified/flash-high-text-2of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -1044,12 +1044,12 @@
      {
       "name": "b",
       "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-2of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/e47-propose-brief/verified/flash-high-text-2of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/e47-propose-brief/verified/flash-high-text-2of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -1431,7 +1431,7 @@
      "value_parsed": 1053,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/e47-propose-brief/verified/flash-high-text-3of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/e47-propose-brief/verified/flash-high-text-3of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -1457,12 +1457,12 @@
      {
       "name": "b",
       "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-3of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/e47-propose-brief/verified/flash-high-text-3of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/e47-propose-brief/verified/flash-high-text-3of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -1549,7 +1549,7 @@
      "value_parsed": 739,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/e47-propose-brief/verified/flash-high-text-4of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/e47-propose-brief/verified/flash-high-text-4of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -1575,12 +1575,12 @@
      {
       "name": "b",
       "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-4of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/e47-propose-brief/verified/flash-high-text-4of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/e47-propose-brief/verified/flash-high-text-4of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -1726,7 +1726,7 @@
      "value_parsed": 478,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/e47-propose-brief/verified/flash-high-text-5of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/e47-propose-brief/verified/flash-high-text-5of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -1752,12 +1752,12 @@
      {
       "name": "b",
       "file": "outputs/h11/e47-propose-brief/verified/flash-high-text-5of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/e47-propose-brief/verified/flash-high-text-5of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/e47-propose-brief/verified/flash-high-text-5of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -1785,7 +1785,7 @@
      "value_parsed": 833,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-1of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-1of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -1811,12 +1811,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-1of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-1of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-1of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -1962,7 +1962,7 @@
      "value_parsed": 294,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-5of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-5of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -1988,12 +1988,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-5of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-5of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-5of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -2021,7 +2021,7 @@
      "value_parsed": 468,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-3of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-3of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -2047,12 +2047,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-3of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-3of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-3of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -2080,7 +2080,7 @@
      "value_parsed": 580,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-2of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-2of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -2106,12 +2106,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-2of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-2of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-2of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -2139,7 +2139,7 @@
      "value_parsed": 388,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-4of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-4of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -2165,12 +2165,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-4of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-4of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/pro-high-image-pro-vf-4of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -2198,7 +2198,7 @@
      "value_parsed": 3735,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-1of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-1of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -2224,12 +2224,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-1of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-1of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-1of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -4204,7 +4204,7 @@
      "value_parsed": 1713,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-6of30/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-6of30/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -4230,12 +4230,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-6of30/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-6of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-6of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -4381,7 +4381,7 @@
      "value_parsed": 3072,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-3of30/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-3of30/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -4407,12 +4407,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-3of30/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-3of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-3of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -4440,7 +4440,7 @@
      "value_parsed": 3736,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -4466,12 +4466,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-1of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-1of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-1of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -4499,7 +4499,7 @@
      "value_parsed": 282,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-image-5of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-image-5of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -4525,12 +4525,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-image-5of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-image-5of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-image-5of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -4558,7 +4558,7 @@
      "value_parsed": 584,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-4of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-4of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -4584,12 +4584,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-4of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-4of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-4of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -4617,7 +4617,7 @@
      "value_parsed": 504,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-1of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-1of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -4643,12 +4643,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-1of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-1of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-1of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -4676,7 +4676,7 @@
      "value_parsed": 4543,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-2of30/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-2of30/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -4702,12 +4702,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-2of30/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-2of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-2of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -4735,7 +4735,7 @@
      "value_parsed": 491,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-23of30/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-23of30/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -4761,12 +4761,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-23of30/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-23of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-23of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -4794,7 +4794,7 @@
      "value_parsed": 607,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-19of30/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-19of30/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -4820,12 +4820,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-19of30/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-19of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-19of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -4853,7 +4853,7 @@
      "value_parsed": 1070,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-11of30/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-11of30/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -4879,12 +4879,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-11of30/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-11of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-11of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -4912,7 +4912,7 @@
      "value_parsed": 590,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-7of10/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-7of10/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -4938,12 +4938,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-7of10/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-7of10/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-7of10/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -4971,7 +4971,7 @@
      "value_parsed": 879,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-5of10/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-5of10/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -4997,12 +4997,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-5of10/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-5of10/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-5of10/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -5030,7 +5030,7 @@
      "value_parsed": 682,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-17of30/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-17of30/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -5056,12 +5056,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-17of30/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-17of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-17of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -5089,7 +5089,7 @@
      "value_parsed": 337,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/pro-high-text-pro-vf-4of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/pro-high-text-pro-vf-4of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -5115,12 +5115,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/pro-high-text-pro-vf-4of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/pro-high-text-pro-vf-4of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/pro-high-text-pro-vf-4of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -5148,7 +5148,7 @@
      "value_parsed": 256,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-30of30/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-30of30/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -5174,12 +5174,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-30of30/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-30of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-30of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -5207,7 +5207,7 @@
      "value_parsed": 390,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-27of30/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-27of30/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -5233,12 +5233,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-27of30/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-27of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-27of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -5266,7 +5266,7 @@
      "value_parsed": 1376,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-pro-vf-2of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-pro-vf-2of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -5292,12 +5292,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-pro-vf-2of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-pro-vf-2of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-pro-vf-2of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -5325,7 +5325,7 @@
      "value_parsed": 729,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-16of30/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-16of30/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -5351,12 +5351,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-16of30/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-16of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-16of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -5384,7 +5384,7 @@
      "value_parsed": 2215,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-2of10/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-2of10/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -5410,12 +5410,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-2of10/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-2of10/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-2of10/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -5443,7 +5443,7 @@
      "value_parsed": 1991,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-5of30/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-5of30/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -5469,12 +5469,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-5of30/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-5of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-5of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -5502,7 +5502,7 @@
      "value_parsed": 337,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-4of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-4of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -5528,12 +5528,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-4of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-4of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-4of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -5561,7 +5561,7 @@
      "value_parsed": 361,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/image-10of10/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/image-10of10/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -5587,12 +5587,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/image-10of10/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/image-10of10/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/image-10of10/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -5620,7 +5620,7 @@
      "value_parsed": 504,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/pro-high-text-1of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/pro-high-text-1of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -5646,12 +5646,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/pro-high-text-1of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/pro-high-text-1of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/pro-high-text-1of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -5797,7 +5797,7 @@
      "value_parsed": 506,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-image-3of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-image-3of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -5823,12 +5823,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-image-3of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-image-3of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-image-3of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -5856,7 +5856,7 @@
      "value_parsed": 789,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-15of30/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-15of30/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -5882,12 +5882,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-15of30/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-15of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-15of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -5974,7 +5974,7 @@
      "value_parsed": 2017,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-image-1of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-image-1of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -6000,12 +6000,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-image-1of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-image-1of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-image-1of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -6092,7 +6092,7 @@
      "value_parsed": 415,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-high-vf-5of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-high-vf-5of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -6118,12 +6118,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-high-vf-5of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-high-vf-5of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-high-vf-5of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -6328,7 +6328,7 @@
      "value_parsed": 855,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-pro-vf-3of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-pro-vf-3of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -6354,12 +6354,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-pro-vf-3of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-pro-vf-3of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-pro-vf-3of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -6387,7 +6387,7 @@
      "value_parsed": 536,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-21of30/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-21of30/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -6413,12 +6413,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-21of30/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-21of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-21of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -6446,7 +6446,7 @@
      "value_parsed": 975,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-12of30/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-12of30/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -6472,12 +6472,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-12of30/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-12of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-12of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -6564,7 +6564,7 @@
      "value_parsed": 442,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/image-9of10/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/image-9of10/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -6590,12 +6590,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/image-9of10/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/image-9of10/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/image-9of10/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -6623,7 +6623,7 @@
      "value_parsed": 306,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/pro-high-text-pro-vf-5of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/pro-high-text-pro-vf-5of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -6649,12 +6649,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/pro-high-text-pro-vf-5of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/pro-high-text-pro-vf-5of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/pro-high-text-pro-vf-5of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -6682,7 +6682,7 @@
      "value_parsed": 741,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-image-2of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-image-2of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -6708,12 +6708,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-image-2of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-image-2of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-image-2of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -6859,7 +6859,7 @@
      "value_parsed": 807,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-minimal-text-t07-4of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-minimal-text-t07-4of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -6885,12 +6885,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-minimal-text-t07-4of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-minimal-text-t07-4of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-minimal-text-t07-4of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -6977,7 +6977,7 @@
      "value_parsed": 367,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-3of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-3of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -7003,12 +7003,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-3of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-3of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/pro-high-text-flash-min-vf-3of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -7036,7 +7036,7 @@
      "value_parsed": 5866,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-1of10/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-1of10/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -7062,12 +7062,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-1of10/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-1of10/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-1of10/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -7095,7 +7095,7 @@
      "value_parsed": 1376,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-high-vf-2of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-high-vf-2of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -7121,12 +7121,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-high-vf-2of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-high-vf-2of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-high-vf-2of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -7154,7 +7154,7 @@
      "value_parsed": 1376,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-2of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-2of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -7180,12 +7180,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-2of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-2of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-2of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -7272,7 +7272,7 @@
      "value_parsed": 1271,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-9of30/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-9of30/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -7298,12 +7298,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-9of30/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-9of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-9of30/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   },
   {
    "claim_id": null,
@@ -7331,7 +7331,7 @@
      "value_parsed": 855,
      "unit": "candidates",
      "kind": "count",
-     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-3of5/probabilities.json#$.total_results",
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-3of5/probabilities.json#len:$.results",
      "method": "read"
     },
     {
@@ -7357,12 +7357,12 @@
      {
       "name": "b",
       "file": "outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-3of5/probabilities.json",
-      "path": "$.total_results"
+      "path": "len:$.results"
      }
     ]
    },
    "method": "arithmetic",
-   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-3of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns."
+   "notes": "Full results table row. values map onto the anchor operands: n_consensus = a (candidate_manifest.json candidates array length at outputs/h11/pv-diag-384/verified/flash-high-text-medium-vf-3of5/candidate_manifest.json), n_probabilities = b ($.total_results in the cell's probabilities.json, which the report defines as len(results)), gap = a − b. The input_kind cell 'manifest-same-dir' records how the audit resolved the input-set file; numbers inside the cell path are names, not claims. Later run_pv.py cleanup passes may have changed the recorded results count since 2026-05-03 — triage, not the extractor, decides. S123 triage repair round 2 (mismatch-triage-2026-07-31.json addendum): expected/recorded were inheriting the gap's arithmetic and being compared against a-b; they now read their operand anchors directly. A residual mismatch on recorded/gap is era divergence: the audited gaps were closed by the post-audit recovery campaigns. S123 triage repair round 3: the derived-probabilities schema (derived_from/source/vote_threshold) has no total_results scalar; the equivalent count is len:$.results (a keyed mapping of results)."
   }
  ]
 }
