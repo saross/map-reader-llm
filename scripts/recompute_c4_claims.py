@@ -51,7 +51,14 @@ _json_cache: dict[str, object] = {}
 
 
 def load_json(relpath: str):
-    """Load (and cache) a committed JSON artefact by repo-relative path."""
+    """Load (and cache) a committed JSON artefact by repo-relative path.
+
+    Raises:
+        KeyError: For non-JSON anchors (``.py``, ``.md``, images…) — a
+            clean triage reason instead of a parser stack trace.
+    """
+    if not relpath.endswith((".json", ".geojson")):
+        raise KeyError(f"non-JSON anchor {relpath} (triage scope)")
     if relpath not in _json_cache:
         _json_cache[relpath] = json.loads(
             (REPO_ROOT / relpath).read_text(encoding="utf-8")

@@ -1,0 +1,1534 @@
+{
+  "schema_version": "1.0",
+  "extracted_at": "2026-07-31T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/preregistration/protocol-errata.md",
+    "git_blob": "b4fe2c5c45d8",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.0"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          30,
+          30
+        ],
+        "section": "E1: Stale version/date in OSF companion README"
+      },
+      "claim_text": "Updated to `2026-01-31` along with version alignment across all three OSF companion documents",
+      "values": [
+        {
+          "quantity": "count of OSF companion documents realigned to v4.7",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "documents",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Count of the OSF companion documents in docs/methodology/preregistration/osf/; the directory currently holds seven markdown files, of which the erratum says three carry the version/date. Dates and the commit hash in this sentence are out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          45,
+          45
+        ],
+        "section": "E2: Missing execution fields in Phase 1 config"
+      },
+      "claim_text": "was missing five execution fields required by the batch detection script",
+      "values": [
+        {
+          "quantity": "count of execution fields absent from the Phase 1 library config before the fix",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "fields",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Pre-fix state of prompts/configs/library_pure-positive-canon.json; superseded by the fix recorded at line 57, which is the live counterpart claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          50,
+          50
+        ],
+        "section": "E2: Missing execution fields in Phase 1 config"
+      },
+      "claim_text": "| `temperature` | `0.1` (wrong) | `1.0` |",
+      "values": [
+        {
+          "quantity": "temperature default in the batch detection script before the fix (pre-fix value)",
+          "value_verbatim": "0.1",
+          "value_parsed": 0.1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "preregistered temperature for the Phase 1 library run",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_pure-positive-canon.json",
+        "path": "$.temperature"
+      },
+      "method": "read",
+      "notes": "Errata table row. Column 'Missing default' is the superseded pre-fix script default (historical); column 'Preregistered value' is the live claim and should be carried by the config the fix edited."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          53,
+          53
+        ],
+        "section": "E2: Missing execution fields in Phase 1 config"
+      },
+      "claim_text": "| `max_output_tokens` | `8192` |",
+      "values": [
+        {
+          "quantity": "max_output_tokens default in the batch detection script before the fix (pre-fix value)",
+          "value_verbatim": "8192",
+          "value_parsed": 8192,
+          "unit": "tokens",
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "preregistered max_output_tokens for the Phase 1 library run",
+          "value_verbatim": "8192",
+          "value_parsed": 8192,
+          "unit": "tokens",
+          "kind": "parameter",
+          "path": "$.max_output_tokens",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_pure-positive-canon.json",
+        "path": "$.max_output_tokens"
+      },
+      "method": "read",
+      "notes": "Both cells read 8192; the first is the pre-fix script default (historical), the second the preregistered/config value. Verbatim strings are identical, so the harness must key on position within the row."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          57,
+          57
+        ],
+        "section": "E2: Missing execution fields in Phase 1 config"
+      },
+      "claim_text": "Added the five fields to `library_pure-positive-canon.json`, matching the values specified in the preregistration",
+      "values": [
+        {
+          "quantity": "count of execution fields added to the Phase 1 library config",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "fields",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_pure-positive-canon.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Live counterpart to the historical claim at line 45. The five fields named in the erratum table are model, temperature, instruction_file, thinking_level, and max_output_tokens; verify they are all present in the config. The '(Section 8.9)' reference is a section identifier, out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          59,
+          59
+        ],
+        "section": "E2: Missing execution fields in Phase 1 config"
+      },
+      "claim_text": "silently use wrong parameters (`temperature=0.1` instead of `1.0`)",
+      "values": [
+        {
+          "quantity": "temperature that would have been used without the fix (pre-fix value)",
+          "value_verbatim": "0.1",
+          "value_parsed": 0.1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "preregistered temperature for the Phase 1 library run",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_pure-positive-canon.json",
+        "path": "$.temperature"
+      },
+      "method": "read",
+      "notes": "Restates the line 50 table row in prose."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          70
+        ],
+        "section": "E3: SDK migration for Gemini ThinkingConfig support"
+      },
+      "claim_text": "| Impact | Would have prevented all detections (100% failure rate) |",
+      "values": [
+        {
+          "quantity": "counterfactual API failure rate had the deprecated SDK not been replaced",
+          "value_verbatim": "100%",
+          "value_parsed": 100.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Counterfactual: the rate that would have obtained had the migration not happened, not an observed rate. No committed artefact records it. SDK version strings (v0.8.6, v1.56.0) at line 72 are out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          89,
+          89
+        ],
+        "section": "E4: Tile bounds generation Y-axis inversion"
+      },
+      "claim_text": "This shifted all tile bounds one tile height south (~2565m)",
+      "values": [
+        {
+          "quantity": "southward offset introduced by the Y-axis inversion, i.e. one tile height in metres",
+          "value_verbatim": "~2565m",
+          "value_parsed": 2565.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "config.py",
+        "path": null,
+        "expression": "a * b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "config.py",
+            "path": "TILE_SIZE"
+          },
+          {
+            "name": "b",
+            "file": "config.py",
+            "path": "PIXEL_RESOLUTION"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "Tile height in metres = tile size in pixels x ground sample distance. config.py carries TILE_SIZE and PIXEL_RESOLUTION as the repo-level constants; the exact per-sheet pixel size lives in the source GeoTIFF metadata under inputs/rasters/, so the figure is approximate in the source ('~'). The metadata index `metadata[1]` is an index, out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          95,
+          95
+        ],
+        "section": "E4: Tile bounds generation Y-axis inversion"
+      },
+      "claim_text": "The preregistered evaluation methodology (20m spatial tolerance, Hungarian matching) is unchanged.",
+      "values": [
+        {
+          "quantity": "spatial matching tolerance for F1 evaluation",
+          "value_verbatim": "20m",
+          "value_parsed": 20.0,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_advanced_metrics.py",
+        "path": "calculate_f1_internal:buffer_metres default"
+      },
+      "method": "read",
+      "notes": "The 20 m tolerance is implemented as the buffer_metres default in scripts/lib_advanced_metrics.py:calculate_f1_internal(). The erratum attributes it to the preregistration; the registration text itself is C5 attribution scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          108,
+          108
+        ],
+        "section": "E5: Evaluation pipeline reference path and column name bugs"
+      },
+      "claim_text": "**Description**: Three bugs in the evaluation pipeline:",
+      "values": [
+        {
+          "quantity": "count of evaluation-pipeline bugs recorded by E5",
+          "value_verbatim": "Three",
+          "value_parsed": 3,
+          "unit": "bugs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-count of the enumerated list at lines 110-112 of this same document; no external artefact decides it. Rule 2 forbids anchoring prose to prose."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          127,
+          127
+        ],
+        "section": "E6: Pipeline contract validation (post-Phase 1 hardening)"
+      },
+      "claim_text": "Phase 1 execution exposed five cascading silent failures (E3-E5) where pipeline stages accepted bad input and produced valid-looking but incorrect output.",
+      "values": [
+        {
+          "quantity": "count of cascading silent failures exposed by Phase 1 execution",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "failures",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The cited range E3-E5 is three errata entries; the claim counts five distinct failures. Only this errata document records the enumeration, so no non-prose anchor exists (rule 2). Erratum identifiers are out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          127,
+          127
+        ],
+        "section": "E6: Pipeline contract validation (post-Phase 1 hardening)"
+      },
+      "claim_text": "To prevent recurrence in Phase 2 (~15,000 API calls per sub-phase, ~$286 total), three categories of contract validation were added:",
+      "values": [
+        {
+          "quantity": "planned API calls per Phase 2 sub-phase (planning estimate)",
+          "value_verbatim": "15,000",
+          "value_parsed": 15000.0,
+          "unit": "API calls",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "planned total Phase 2 API cost (planning estimate)",
+          "value_verbatim": "$286",
+          "value_parsed": 286.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of contract-validation categories added",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "categories",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Forward-looking planning estimates. Likely sources are the preregistration cost section and the execution plan under docs/methodology/preregistration/, both prose; triage should chase to an execution-plan table or a cost manifest. The 'three categories' is a self-count of the numbered list at lines 129-138."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          133,
+          133
+        ],
+        "section": "E6: Pipeline contract validation (post-Phase 1 hardening)"
+      },
+      "claim_text": "Seven new pytest tests exercising stage-boundary contracts:",
+      "values": [
+        {
+          "quantity": "count of pipeline-contract integration tests added by E6",
+          "value_verbatim": "Seven",
+          "value_parsed": 7,
+          "unit": "tests",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "tests/test_integration_pipeline_contracts.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Count of test functions in tests/test_integration_pipeline_contracts.py as added by E6. The bullet list beneath enumerates five items; the file has since grown under E7, which adds a further 7 (line 163) - do not adjudicate here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          140,
+          140
+        ],
+        "section": "E6: Pipeline contract validation (post-Phase 1 hardening)"
+      },
+      "claim_text": "The evaluation algorithms, spatial tolerance (20m), Hungarian matching, and statistical analysis are unchanged.",
+      "values": [
+        {
+          "quantity": "spatial matching tolerance for F1 evaluation",
+          "value_verbatim": "20m",
+          "value_parsed": 20.0,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_advanced_metrics.py",
+        "path": "calculate_f1_internal:buffer_metres default"
+      },
+      "method": "read",
+      "notes": "Restates the tolerance asserted at line 95."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          153,
+          153
+        ],
+        "section": "E7: Evaluation reference scoping hardened against boundary effects"
+      },
+      "claim_text": "so the Phase 1 calibration results (5 scattered tiles per sheet) are unaffected",
+      "values": [
+        {
+          "quantity": "tiles per map sheet in the Phase 1 calibration set",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/calibration_bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Per-sheet tile count in the Phase 1 calibration bounds; verify by grouping calibration_bounds.geojson features on map_name."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          153,
+          153
+        ],
+        "section": "E7: Evaluation reference scoping hardened against boundary effects"
+      },
+      "claim_text": "such as the 60-tile validation set in Phase 2, which may include adjacent or overlapping tiles",
+      "values": [
+        {
+          "quantity": "tile count of the Phase 2 validation set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/validation_bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Feature count of inputs/vectors/bounds/validation_bounds.geojson."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          155,
+          155
+        ],
+        "section": "E7: Evaluation reference scoping hardened against boundary effects"
+      },
+      "claim_text": "references were buffered by 20m *before* the scoping check, meaning a reference 15m outside a tile boundary would have its 20m-radius buffer circle overlap the tile polygon",
+      "values": [
+        {
+          "quantity": "reference buffer radius applied before the scoping check (pre-fix behaviour)",
+          "value_verbatim": "20m",
+          "value_parsed": 20.0,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "illustrative distance of a reference outside a tile boundary",
+          "value_verbatim": "15m",
+          "value_parsed": 15.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "buffer circle radius around a reference",
+          "value_verbatim": "20m-radius",
+          "value_parsed": 20.0,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/6_accuracy_report.py",
+        "path": "validate_file:buffer radius"
+      },
+      "method": "read",
+      "notes": "The 20 m buffer is the matching tolerance implemented in scripts/6_accuracy_report.py:validate_file(); the fix moved it after the scoping step but did not change its magnitude. The 15 m figure is a hypothetical worked illustration with no artefact behind it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          157,
+          157
+        ],
+        "section": "E7: Evaluation reference scoping hardened against boundary effects"
+      },
+      "claim_text": "Three locations were affected:",
+      "values": [
+        {
+          "quantity": "count of union_all() call sites replaced by the E7 fix",
+          "value_verbatim": "Three",
+          "value_parsed": 3,
+          "unit": "locations",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-count of the numbered list at lines 159-161; the underlying check would be a grep for union_all() in scripts/lib_advanced_metrics.py and scripts/6_accuracy_report.py, which triage can script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          163,
+          163
+        ],
+        "section": "E7: Evaluation reference scoping hardened against boundary effects"
+      },
+      "claim_text": "Added 7 new integration tests covering:",
+      "values": [
+        {
+          "quantity": "count of integration tests added by the E7 fix",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": "tests",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "tests/test_integration_pipeline_contracts.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Second tranche of tests in tests/test_integration_pipeline_contracts.py, on top of the seven added by E6 (line 133). The bullet list enumerates six scenarios."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          165,
+          165
+        ],
+        "section": "E7: Evaluation reference scoping hardened against boundary effects"
+      },
+      "claim_text": "the `spatial_tolerance_curve()` default buffer list was updated from `[10, 20, 30, 50]` to `[10, 20, 30, 40, 50]` to include the 40m tolerance level used in the two-dimensional failure ranking framework.",
+      "values": [
+        {
+          "quantity": "spatial_tolerance_curve() default buffer list before the fix (pre-fix value)",
+          "value_verbatim": "[10, 20, 30, 50]",
+          "value_parsed": null,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "spatial_tolerance_curve() default buffer list after the fix",
+          "value_verbatim": "[10, 20, 30, 40, 50]",
+          "value_parsed": null,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "spatial_tolerance_curve:buffers default",
+          "method": "read"
+        },
+        {
+          "quantity": "tolerance level added to the default buffer list",
+          "value_verbatim": "40m",
+          "value_parsed": 40.0,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "spatial_tolerance_curve:buffers default",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_advanced_metrics.py",
+        "path": "spatial_tolerance_curve:buffers default"
+      },
+      "method": "read",
+      "notes": "Explicit before/after pair: the first list is the superseded default (historical), the second is live and should be the documented default of spatial_tolerance_curve() in scripts/lib_advanced_metrics.py."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          167,
+          167
+        ],
+        "section": "E7: Evaluation reference scoping hardened against boundary effects"
+      },
+      "claim_text": "All 274 tests pass (267 existing + 7 new).",
+      "values": [
+        {
+          "quantity": "total pytest tests passing after the E7 fix",
+          "value_verbatim": "274",
+          "value_parsed": 274,
+          "unit": "tests",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "pre-existing pytest tests before the E7 additions",
+          "value_verbatim": "267",
+          "value_parsed": 267,
+          "unit": "tests",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "new tests added by the E7 fix",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": "tests",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "tests/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Point-in-time suite count (2026-02-01); the suite has grown since, so a present-day collection will not match and triage must decide whether to verify at the E7 commit. Internal arithmetic identity: 267 + 7 = 274."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          169,
+          169
+        ],
+        "section": "E7: Evaluation reference scoping hardened against boundary effects"
+      },
+      "claim_text": "The preregistered evaluation methodology (20m spatial tolerance, Hungarian matching) is unchanged.",
+      "values": [
+        {
+          "quantity": "spatial matching tolerance for F1 evaluation",
+          "value_verbatim": "20m",
+          "value_parsed": 20.0,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_advanced_metrics.py",
+        "path": "calculate_f1_internal:buffer_metres default"
+      },
+      "method": "read",
+      "notes": "Third restatement of the tolerance (see lines 95 and 140)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          182,
+          182
+        ],
+        "section": "E8: Hard example crops extracted from full map GeoTIFFs"
+      },
+      "claim_text": "were extracted as 128×128 pixel regions from the full map GeoTIFFs",
+      "values": [
+        {
+          "quantity": "hard example crop size in pixels",
+          "value_verbatim": "128×128",
+          "value_parsed": null,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/examples/hard-positive/example_05_rakovski.png",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Whole-artefact read: the pixel dimensions of the hard example PNGs under inputs/examples/hard-positive/ and inputs/examples/hard-negative/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          182,
+          182
+        ],
+        "section": "E8: Hard example crops extracted from full map GeoTIFFs"
+      },
+      "claim_text": "not from the 512×512 detection tiles.",
+      "values": [
+        {
+          "quantity": "detection tile size in pixels",
+          "value_verbatim": "512×512",
+          "value_parsed": null,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "config.py",
+        "path": "TILE_SIZE"
+      },
+      "method": "read",
+      "notes": "TILE_SIZE in config.py is the repo-level detection tile dimension."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          187,
+          187
+        ],
+        "section": "E8: Hard example crops extracted from full map GeoTIFFs"
+      },
+      "claim_text": "Three options were evaluated (during hard positive extraction; the same rationale applies to hard negatives):",
+      "values": [
+        {
+          "quantity": "count of crop-extraction options evaluated",
+          "value_verbatim": "Three",
+          "value_parsed": 3,
+          "unit": "options",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-count of the numbered list at lines 189-191; decision-record prose, no artefact anchor (rule 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          189,
+          189
+        ],
+        "section": "E8: Hard example crops extracted from full map GeoTIFFs"
+      },
+      "claim_text": "in 2 of 4 cases, the symbol was within 60 pixels of a tile corner, producing asymmetric crops",
+      "values": [
+        {
+          "quantity": "hard positive cases whose symbol fell near a tile corner",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "cases",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total hard positive cases examined",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "cases",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "distance from tile corner within which the symbol fell",
+          "value_verbatim": "60 pixels",
+          "value_parsed": 60.0,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The denominator 4 matches the four PNGs in inputs/examples/hard-positive/, but the 2-of-4 near-corner finding and the 60 px distance come from the E8 extraction analysis and have no committed artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          190,
+          190
+        ],
+        "section": "E8: Hard example crops extracted from full map GeoTIFFs"
+      },
+      "claim_text": "detection tiles already use black padding at map edges (`fill_value=0` in `preprocess_tiling.py`), so padding could be confused with genuine map features",
+      "values": [
+        {
+          "quantity": "raster fill value used for padding at map edges during tiling",
+          "value_verbatim": "fill_value=0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/preprocess_tiling.py",
+        "path": "tile_raster:src.read(..., fill_value)"
+      },
+      "method": "read",
+      "notes": "Asserted as what-was-run in scripts/preprocess_tiling.py."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          193,
+          193
+        ],
+        "section": "E8: Hard example crops extracted from full map GeoTIFFs"
+      },
+      "claim_text": "centring the target symbol disambiguates when multiple features appear in the same crop (observed in 2 of 4 hard positive examples)",
+      "values": [
+        {
+          "quantity": "hard positive examples with multiple features in the same crop",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "examples",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total hard positive examples",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "examples",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Same caveat as line 189: the denominator 4 is the hard-positive crop count (inputs/examples/hard-positive/), the numerator is an analysis finding with no artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          193,
+          193
+        ],
+        "section": "E8: Hard example crops extracted from full map GeoTIFFs"
+      },
+      "claim_text": "adjacent tiles (which overlap by 64 pixels)",
+      "values": [
+        {
+          "quantity": "tile overlap in pixels",
+          "value_verbatim": "64 pixels",
+          "value_parsed": 64.0,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "config.py",
+        "path": "OVERLAP"
+      },
+      "method": "read",
+      "notes": "OVERLAP in config.py."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          195,
+          195
+        ],
+        "section": "E8: Hard example crops extracted from full map GeoTIFFs"
+      },
+      "claim_text": "**Crop size** (128×128): Selected based on VLM few-shot reference sizing research.",
+      "values": [
+        {
+          "quantity": "hard example crop size in pixels",
+          "value_verbatim": "128×128",
+          "value_parsed": null,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/examples/hard-positive/example_05_rakovski.png",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the crop size asserted at line 182."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          195,
+          195
+        ],
+        "section": "E8: Hard example crops extracted from full map GeoTIFFs"
+      },
+      "claim_text": "At ~5m/px, a 15–20px mound symbol occupies ~1–2.5% of a 128×128 crop",
+      "values": [
+        {
+          "quantity": "ground sample distance of the source maps",
+          "value_verbatim": "~5m/px",
+          "value_parsed": 5.0,
+          "unit": "m/px",
+          "kind": "physical",
+          "path": "PIXEL_RESOLUTION",
+          "method": "read"
+        },
+        {
+          "quantity": "mound symbol size on the map",
+          "value_verbatim": "15–20px",
+          "value_parsed": null,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "fraction of the crop area occupied by a mound symbol",
+          "value_verbatim": "~1–2.5%",
+          "value_parsed": null,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "hard example crop size in pixels",
+          "value_verbatim": "128×128",
+          "value_parsed": null,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "config.py",
+        "path": "PIXEL_RESOLUTION"
+      },
+      "method": "read",
+      "notes": "Mixed span. ~5 m/px corresponds to PIXEL_RESOLUTION in config.py. The 15-20 px symbol size is an empirical observation with no committed artefact. The 1-2.5% area fraction is derivable as (symbol_px / 128)^2 x 100 but the operands are not both anchorable, so it is left for triage. The 128×128 crop size is verifiable from the hard example PNGs (see the line 182 claim)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          195,
+          195
+        ],
+        "section": "E8: Hard example crops extracted from full map GeoTIFFs"
+      },
+      "claim_text": "VLM minimum input size recommendations (typically ≥300px) apply to analysis targets, not reference exemplars which are internally upscaled.",
+      "values": [
+        {
+          "quantity": "recommended minimum VLM input image size (external literature/vendor guidance)",
+          "value_verbatim": "≥300px",
+          "value_parsed": 300.0,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Vendor/literature guidance, not a repo fact; attestation material only."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          195,
+          195
+        ],
+        "section": "E8: Hard example crops extracted from full map GeoTIFFs"
+      },
+      "claim_text": "The canonical positive legend crops are ~64px",
+      "values": [
+        {
+          "quantity": "canonical positive legend crop size in pixels",
+          "value_verbatim": "~64px",
+          "value_parsed": 64.0,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/examples/neutral-naming/example_01.png",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Whole-artefact read of the canonical positive exemplar PNG dimensions under inputs/examples/neutral-naming/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          195,
+          195
+        ],
+        "section": "E8: Hard example crops extracted from full map GeoTIFFs"
+      },
+      "claim_text": "Crop size is flagged as a future exploratory variable (64, 128, 256, 512px OFAT experiment).",
+      "values": [
+        {
+          "quantity": "proposed crop-size levels for a future OFAT experiment",
+          "value_verbatim": "64",
+          "value_parsed": 64,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "proposed crop-size levels for a future OFAT experiment",
+          "value_verbatim": "128",
+          "value_parsed": 128,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "proposed crop-size levels for a future OFAT experiment",
+          "value_verbatim": "256",
+          "value_parsed": 256,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "proposed crop-size levels for a future OFAT experiment",
+          "value_verbatim": "512px",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Doubtful inclusion, flagged per the instrument: these are proposed future factor levels, not parameters asserted as what-was-run, so they may fall outside C4 scope. Recorded so triage can prune deliberately rather than silently."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          207,
+          207
+        ],
+        "section": "E9: Centre-pointing language added to detection prompts"
+      },
+      "claim_text": "| Files | All 11 `prompts/system-instructions/detect_*.md` files |",
+      "values": [
+        {
+          "quantity": "count of detection system-instruction files carrying the centre-pointing sentence",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/system-instructions/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Count of files matching prompts/system-instructions/detect_*.md. Whole-artefact (directory) read; do not adjudicate against the present-day file list here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          214,
+          214
+        ],
+        "section": "E9: Centre-pointing language added to detection prompts"
+      },
+      "claim_text": "This addresses an ambiguity in 128×128 hard example crops",
+      "values": [
+        {
+          "quantity": "hard example crop size in pixels",
+          "value_verbatim": "128×128",
+          "value_parsed": null,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/examples/hard-negative/example_11_rakovski.png",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Hard negative crop dimensions; same quantity as the E8 claims at lines 182 and 195."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          222,
+          222
+        ],
+        "section": "E10: 50m recognition/localisation threshold — post-hoc narrowing of the registered HP definition (reclassified 2026-07-28)"
+      },
+      "claim_text": "50m recognition/localisation threshold",
+      "values": [
+        {
+          "quantity": "distance threshold separating recognition failures from localisation errors",
+          "value_verbatim": "50m",
+          "value_parsed": 50.0,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The threshold is asserted in the erratum heading. The document's own cited sources are outputs/phase1-library/fp-fn-register.md (moved to archive/outputs-pre-retest-60-tile/phase1-library/fp-fn-register.md) and Decision 11 in decisions-log.md, both prose - rule 2 forbids anchoring prose to prose. See the line 233 claim for the recomputable form."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          231,
+          231
+        ],
+        "section": "E10: 50m recognition/localisation threshold — post-hoc narrowing of the registered HP definition (reclassified 2026-07-28)"
+      },
+      "claim_text": "\"Ground truth mounds missed in ≥3/5 passes\"",
+      "values": [
+        {
+          "quantity": "pass threshold at which a ground truth mound counts as a false negative (quoted from the registration)",
+          "value_verbatim": "≥3/5",
+          "value_parsed": null,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Quoted from the lodged registration (cited by the erratum at osf/preregistration.md line 1450). Flagged as overlapping C5 attribution scope: the surrounding sentence makes an attribution claim about what the registration says, which is C5; only the numeric criterion is extracted here. Line-number citations are out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          233,
+          233
+        ],
+        "section": "E10: 50m recognition/localisation threshold — post-hoc narrowing of the registered HP definition (reclassified 2026-07-28)"
+      },
+      "claim_text": "Analysis of the Phase 1 FN distance distribution revealed a distributional cliff between 30m and 50m: below 30m, FNs cluster tightly (clear localisation errors); above 50m, FNs are sparse and widely dispersed (clear recognition failures). The 30–50m range is ambiguous.",
+      "values": [
+        {
+          "quantity": "lower bound of the distributional cliff in the FN distance distribution",
+          "value_verbatim": "30m",
+          "value_parsed": 30.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "upper bound of the distributional cliff in the FN distance distribution",
+          "value_verbatim": "50m",
+          "value_parsed": 50.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "distance below which FNs cluster tightly (localisation errors)",
+          "value_verbatim": "30m",
+          "value_parsed": 30.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "distance above which FNs are sparse and dispersed (recognition failures)",
+          "value_verbatim": "50m",
+          "value_parsed": 50.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "ambiguous band of the FN distance distribution",
+          "value_verbatim": "30–50m",
+          "value_parsed": null,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase1-library/merged_detections_fn.geojson",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Requires recomputing the Phase 1 false-negative nearest-detection distance distribution from the merged FN GeoJSON against inputs/vectors/references/. The erratum cites outputs/phase1-library/, which has moved to archive/outputs-pre-retest-60-tile/phase1-library/ under the archive-never-delete policy."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          233,
+          233
+        ],
+        "section": "E10: 50m recognition/localisation threshold — post-hoc narrowing of the registered HP definition (reclassified 2026-07-28)"
+      },
+      "claim_text": "A 50m threshold was selected as the boundary, yielding 9 recognition failures and 15 localisation failures from 24 total FNs.",
+      "values": [
+        {
+          "quantity": "selected recognition/localisation threshold",
+          "value_verbatim": "50m",
+          "value_parsed": 50.0,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "Phase 1 recognition failures at the 50 m threshold",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": "FNs",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "Phase 1 localisation failures at the 50 m threshold",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": "FNs",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "total Phase 1 false negatives",
+          "value_verbatim": "24",
+          "value_parsed": 24,
+          "unit": "FNs",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase1-library/merged_detections_fn.geojson",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The total (24) is a whole-artefact feature count of the merged FN GeoJSON; the 9/15 split requires recomputing per-FN distances against the 50 m threshold. Internal arithmetic identity: 9 + 15 = 24."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          235,
+          235
+        ],
+        "section": "E10: 50m recognition/localisation threshold — post-hoc narrowing of the registered HP definition (reclassified 2026-07-28)"
+      },
+      "claim_text": "restricting HP selection to recognition failures reduced the pool to 4",
+      "values": [
+        {
+          "quantity": "hard positive pool size after restricting to recognition failures",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "examples",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/examples/hard-positive/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Count of hard positive crops in inputs/examples/hard-positive/. The cascade targets (E11, E12, E13) and condition names (Scale-16/32, H9, H12) are identifiers, out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          235,
+          235
+        ],
+        "section": "E10: 50m recognition/localisation threshold — post-hoc narrowing of the registered HP definition (reclassified 2026-07-28)"
+      },
+      "claim_text": "E51 later re-mined 108 HP under a v2 definition",
+      "values": [
+        {
+          "quantity": "hard positives re-mined under the v2 definition",
+          "value_verbatim": "108",
+          "value_parsed": 108,
+          "unit": "examples",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Forward reference to E51, which lies beyond this agent's assigned range (lines 1-248); the erratum names no artefact here. Triage should chase to the E51 entry (line 1562) and thence to the v2 hard positive mining output."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          248,
+          248
+        ],
+        "section": "E11: Scale-16 and Scale-32 library conditions capped"
+      },
+      "claim_text": "The HP pool is structurally exhausted at 4 recognition failures (>50m threshold).",
+      "values": [
+        {
+          "quantity": "hard positive pool size at exhaustion",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "recognition failures",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "recognition/localisation distance threshold",
+          "value_verbatim": "50m",
+          "value_parsed": 50.0,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/examples/hard-positive/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The pool count is the hard positive crop count; the 50 m threshold restates the E10 claim and has no non-prose anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          248,
+          248
+        ],
+        "section": "E11: Scale-16 and Scale-32 library conditions capped"
+      },
+      "claim_text": "Of 9 total recognition failures, 4 are selected for Scale-8, 3 are out-of-scope boundary artefacts, 1 is a newly discovered out-of-scope candidate (fid 489, outside all calibration tiles), and 1 is edge-truncated (fid 161).",
+      "values": [
+        {
+          "quantity": "total Phase 1 recognition failures",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": "FNs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "recognition failures selected for the Scale-8 library condition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "FNs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "recognition failures that are out-of-scope boundary artefacts",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "FNs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "newly discovered out-of-scope recognition-failure candidates",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "FNs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "edge-truncated recognition failures",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "FNs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase1-library/merged_detections_fn.geojson",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Disposition breakdown of the 9 recognition failures identified at line 233; requires the same distance recomputation plus per-feature scoping against the calibration tile bounds. Internal arithmetic identity: 4 + 3 + 1 + 1 = 9. Feature ids (fid 489, fid 161) and the condition name Scale-8 are identifiers, out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          248,
+          248
+        ],
+        "section": "E11: Scale-16 and Scale-32 library conditions capped"
+      },
+      "claim_text": "Zero recognition failures remain for library expansion.",
+      "values": [
+        {
+          "quantity": "recognition failures remaining for library expansion",
+          "value_verbatim": "Zero",
+          "value_parsed": 0,
+          "unit": "FNs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Follows arithmetically from the line 248 breakdown (9 - 4 - 3 - 1 - 1 = 0) but the operands are all in prose in this document, so no mechanical anchor exists."
+    }
+  ]
+}

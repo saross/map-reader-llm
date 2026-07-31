@@ -1,6 +1,7 @@
 # C4 extraction instructions — quantitative claims in hand-written mine documents
 
-**Version**: 1.0 (2026-07-31). **Controller**: `planning/audit-charter.md`
+**Version**: 1.1 (2026-07-31; v1.0 same day). **Controller**:
+`planning/audit-charter.md`
 § 7 Phase 3. **Schema**: `docs/manifest-schemas/c4-claims.schema.json`.
 **Consumers**: extraction agents (one per document or document batch); the
 assembly step assigns `claim_id`s and validates against the schema; the
@@ -92,6 +93,17 @@ a one-line count summary as your final message, not the JSON.
    it beyond anchor identification (rule 2 above).
 8. UK English in free-text fields you author (`quantity`, `notes`);
    verbatim fields follow the source exactly.
+
+**v1.1 calibration rule** (calib-b lesson): a numeric claim about what
+the REGISTRATION specifies ("the preregistered temperature was 1.0",
+"registered as 10,000 permutations") anchors to the lodged document
+(`docs/methodology/preregistration/osf/…`, `path` null), NEVER to the
+config/script that executed — the executed artefact records the
+deviation, not the promise, and anchoring there manufactures a false
+mismatch. Claims about what was RUN anchor to configs/metas as before.
+Non-JSON anchors (`config.py` constants, test counts in `tests/*.py`,
+crop-size PNGs) are legitimate and expected — the harness routes them
+to triage rather than resolving mechanically.
 
 ## Known traps (from Phases 1–2)
 
