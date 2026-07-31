@@ -1,0 +1,3032 @@
+{
+  "schema_version": "1.0",
+  "extracted_at": "2026-07-31T00:00:00Z",
+  "source_document": {
+    "file": "reports/session-111-discoveries.md",
+    "git_blob": "9d300a9fe7b6",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.1"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          3,
+          5
+        ],
+        "section": "Revision banner (last revised)"
+      },
+      "claim_text": "> **Last revised**: 2026-06-12 (§ 3 cost ratios corrected from the\n> token-load audit: 1/8 → 1/17, HIGH ≈ 3× → 8.6× minimal). See\n> [§ Changelog](#changelog) for revision history.",
+      "values": [
+        {
+          "quantity": "cost ratio, min11 rung vs 31-pass headline rung — superseded pre-audit estimate",
+          "value_verbatim": "1/8",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "cost ratio, min11 rung vs 31-pass headline rung — audited value",
+          "value_verbatim": "1/17",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "token-cost multiplier, HIGH-thinking proposer pass vs minimal-thinking pass — superseded pre-audit estimate",
+          "value_verbatim": "3×",
+          "value_parsed": 3.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "token-cost multiplier, HIGH-thinking proposer pass vs minimal-thinking pass — audited value",
+          "value_verbatim": "8.6×",
+          "value_parsed": 8.6,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Before→after banner. The struck values (1/8, 3×) are the pre-audit estimates and are historical; 1/17 and 8.6× are the live claims. The only visible source for the audited ratios is the prose document reports/token-load-audit-2026-06-12.md (instrument rule 2 forbids anchoring prose to prose) — triage must chase the chain to the token-accounting artefact behind that audit. Dates are out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          14,
+          14
+        ],
+        "section": "§ 1 The opmax lift is noise"
+      },
+      "claim_text": "The opmax lift is noise — 0.890 stands",
+      "values": [
+        {
+          "quantity": "F1@20m, GS 384 px Era 2 (487 tiles), 16of30 proposer + n=1 carry-forward verifier (registered headline)",
+          "value_verbatim": "0.890",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cell_b.f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/opmax_vs_headline_permutation.json",
+        "path": "$.cell_b.f1"
+      },
+      "method": "read",
+      "notes": "Heading claim. Quoted at 3 dp; the artefact carries full precision (the harness owns rounding tolerance). Session number is out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          16,
+          17
+        ],
+        "section": "§ 1 The opmax lift is noise"
+      },
+      "claim_text": "16of30 + N=5 verifier (0.8951) vs 16of30 + n=1 verifier (0.8902): paired\ntile-swap permutation **p = 0.363** (diff +0.0049 ≈ the null SD).",
+      "values": [
+        {
+          "quantity": "F1@20m, opmax cell (16of30 proposer + N=5 minimal T0.3 verifier, consensus_vt3 / pt0.15)",
+          "value_verbatim": "0.8951",
+          "value_parsed": 0.8951,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cell_a.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, headline cell (16of30 proposer + n=1 carry-forward verifier, pt0.2)",
+          "value_verbatim": "0.8902",
+          "value_parsed": 0.8902,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cell_b.f1",
+          "method": null
+        },
+        {
+          "quantity": "p-value, paired tile-swap micro-F1 permutation, opmax vs headline",
+          "value_verbatim": "0.363",
+          "value_parsed": 0.363,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.test.p_value",
+          "method": null
+        },
+        {
+          "quantity": "observed F1 difference, opmax minus headline",
+          "value_verbatim": "+0.0049",
+          "value_parsed": 0.0049,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.test.observed_diff",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/opmax_vs_headline_permutation.json"
+      },
+      "method": "read",
+      "notes": "\"16of30\", \"N=5\" and \"n=1\" are operating-point/condition-label components (instrument rule 5 naming carve-out), not extracted as separate values; the artefact records them in $.cell_a.label / $.cell_b.label and $.cell_a.op / $.cell_b.op. The document's \"≈ the null SD\" refers to $.test.null_std."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          21,
+          21
+        ],
+        "section": "§ 2 Pass-budget Pareto ladder"
+      },
+      "claim_text": "The pass-budget Pareto ladder is ONE statistical tier (6 → 35 passes)",
+      "values": [
+        {
+          "quantity": "number of statistical tiers spanned by the five-rung Pareto ladder",
+          "value_verbatim": "ONE",
+          "value_parsed": 1,
+          "unit": "tiers",
+          "kind": "count",
+          "path": "len($.tiers)",
+          "method": null
+        },
+        {
+          "quantity": "pass count, cheapest ladder rung (cheap6)",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.ladder[0].passes",
+          "method": null
+        },
+        {
+          "quantity": "pass count, most expensive ladder rung (opmax35)",
+          "value_verbatim": "35",
+          "value_parsed": 35,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.ladder[4].passes",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pareto/pareto_leaderboard.json"
+      },
+      "method": "read",
+      "notes": "Heading claim. $.tiers is a list of greedy-clique tier groups; ONE tier means len($.tiers) == 1."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          23,
+          24
+        ],
+        "section": "§ 2 Pass-budget Pareto ladder"
+      },
+      "claim_text": "Round-robin over five rungs (cheap6 0.8641 / min10 0.8739 / nof10 0.8769 /\nheadline31 0.8902 / opmax35 0.8951): 0/10 pairs significant after BH-FDR.",
+      "values": [
+        {
+          "quantity": "number of ladder rungs compared round-robin",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "rungs",
+          "kind": "count",
+          "path": "len($.ladder)",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, cheap6 rung",
+          "value_verbatim": "0.8641",
+          "value_parsed": 0.8641,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ladder[0].f1",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, min10 rung",
+          "value_verbatim": "0.8739",
+          "value_parsed": 0.8739,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ladder[1].f1",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, nof10 rung",
+          "value_verbatim": "0.8769",
+          "value_parsed": 0.8769,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ladder[2].f1",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, headline31 rung",
+          "value_verbatim": "0.8902",
+          "value_parsed": 0.8902,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ladder[3].f1",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, opmax35 rung",
+          "value_verbatim": "0.8951",
+          "value_parsed": 0.8951,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ladder[4].f1",
+          "method": null
+        },
+        {
+          "quantity": "number of rung pairs significant after BH-FDR correction",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "pairs",
+          "kind": "count",
+          "path": "count($.pairwise[?(@.significant == true)])",
+          "method": null
+        },
+        {
+          "quantity": "number of rung pairs tested (C(5,2) round-robin)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "pairs",
+          "kind": "count",
+          "path": "len($.pairwise)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pareto/pareto_leaderboard.json"
+      },
+      "method": "read",
+      "notes": "Rung labels (cheap6, min10, nof10, headline31, opmax35) embed digits as names — out of C4 scope per instrument rule 5; the F1 values they carry are extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          25,
+          26
+        ],
+        "section": "§ 2 Pass-budget Pareto ladder"
+      },
+      "claim_text": "The largest span (raw p = 0.012, BH 0.096) is suggestive, unprovable on the\n487-tile instrument (Obs 347 plateau limit).",
+      "values": [
+        {
+          "quantity": "raw permutation p-value, largest ladder span (cheap6 vs opmax35)",
+          "value_verbatim": "0.012",
+          "value_parsed": 0.012,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.pairwise[3].p_value",
+          "method": null
+        },
+        {
+          "quantity": "BH-FDR adjusted p-value, largest ladder span (cheap6 vs opmax35)",
+          "value_verbatim": "0.096",
+          "value_parsed": 0.096,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.pairwise[3].bh_adjusted_p",
+          "method": null
+        },
+        {
+          "quantity": "tile count, GS Era 2 evaluation instrument",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.pairwise[3].n_tiles",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pareto/pareto_leaderboard.json"
+      },
+      "method": "read",
+      "notes": "\"Largest span\" is read as the cheap6-vs-opmax35 pair ($.pairwise[3]); triage should confirm the pair identity. The 487-tile count is also carried by the tile manifest inputs/tiles_384/full_evaluation_manifest.json (list length). Obs 347 is an identifier, out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          33
+        ],
+        "section": "§ 3 Diversity dividend does not survive the verifier"
+      },
+      "claim_text": "At equal pass count, MINIMAL-thinking proposers reach statistical parity\nwith HIGH (min6 0.8708 vs high6 0.8641, p = 0.66; min11 0.8835 vs high11\n0.8769, p = 0.59)",
+      "values": [
+        {
+          "quantity": "F1@20m, min6 (5 minimal-thinking proposer passes + n=1 verifier)",
+          "value_verbatim": "0.8708",
+          "value_parsed": 0.8708,
+          "unit": null,
+          "kind": "metric",
+          "path": "$[0].f1_a",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, high6 (5 HIGH-thinking proposer passes + n=1 verifier)",
+          "value_verbatim": "0.8641",
+          "value_parsed": 0.8641,
+          "unit": null,
+          "kind": "metric",
+          "path": "$[0].f1_b",
+          "method": null
+        },
+        {
+          "quantity": "p-value, tile-swap permutation, min6 vs high6",
+          "value_verbatim": "0.66",
+          "value_parsed": 0.66,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$[0].p_value",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, min11 (10 minimal-thinking proposer passes + n=1 verifier)",
+          "value_verbatim": "0.8835",
+          "value_parsed": 0.8835,
+          "unit": null,
+          "kind": "metric",
+          "path": "$[1].f1_a",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, high11 (10 HIGH-thinking proposer passes + n=1 verifier)",
+          "value_verbatim": "0.8769",
+          "value_parsed": 0.8769,
+          "unit": null,
+          "kind": "metric",
+          "path": "$[1].f1_b",
+          "method": null
+        },
+        {
+          "quantity": "p-value, tile-swap permutation, min11 vs high11",
+          "value_verbatim": "0.59",
+          "value_parsed": 0.59,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$[1].p_value",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/min_vs_high_permutations.json"
+      },
+      "method": "read",
+      "notes": "The document quotes p at 2 dp; the artefact records 0.656 and 0.591. Rung labels min6/high6/min11/high11 are names (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          33,
+          34
+        ],
+        "section": "§ 3 Diversity dividend does not survive the verifier"
+      },
+      "claim_text": "**min11 vs the 31-pass headline is p = 0.56** at\nroughly ~~1/8~~ **1/17 (audited)** the estimated cost.",
+      "values": [
+        {
+          "quantity": "p-value, tile-swap permutation, min11 vs headline31",
+          "value_verbatim": "0.56",
+          "value_parsed": 0.56,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$[2].p_value",
+          "method": null
+        },
+        {
+          "quantity": "cost ratio, min11 vs headline31 — superseded pre-audit estimate",
+          "value_verbatim": "1/8",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "cost ratio, min11 vs headline31 — audited value",
+          "value_verbatim": "1/17",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/min_vs_high_permutations.json"
+      },
+      "method": "read",
+      "notes": "\"31-pass headline\" restates the rung name headline31; the pass count itself is recorded at results/verifier-robustness/pareto/pareto_leaderboard.json $.ladder[3].passes and is extracted from the § 2 heading instead. The audited 1/17 ratio has no repo artefact visible from this document — its stated source is the prose reports/token-load-audit-2026-06-12.md."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          34,
+          35
+        ],
+        "section": "§ 3 Diversity dividend does not survive the verifier"
+      },
+      "claim_text": "min11 carries the\nbest MCC on the PV board (0.807).",
+      "values": [
+        {
+          "quantity": "tile-level MCC, min11 (6of10 / pt0.2)",
+          "value_verbatim": "0.807",
+          "value_parsed": 0.807,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/min_thinking_pv.log"
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (instrument v1.1 permits these). The log's summary line reads \"BEST text-min-t07-10pass: F1@20m=0.8835 MCC=0.807 at 6of10, pt0.2\". The same value appears at results/flash35-2x2/analysis-full.json $.cells['f3prop-f3vf'].n10.best.mcc (0.8068). The superlative (\"best on the PV board\") is a board-wide claim, not adjudicated here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          36,
+          38
+        ],
+        "section": "§ 3 Diversity dividend does not survive the verifier"
+      },
+      "claim_text": "Cost-recast\nfrontier: HIGH proposer passes ≈ ~~3×~~ **8.6× (token-load audit,\n2026-06-12 — thinking tokens bill at the output rate)** minimal",
+      "values": [
+        {
+          "quantity": "token-cost multiplier, HIGH-thinking proposer pass vs minimal — superseded pre-audit estimate",
+          "value_verbatim": "3×",
+          "value_parsed": 3.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "token-cost multiplier, HIGH-thinking proposer pass vs minimal — audited value",
+          "value_verbatim": "8.6×",
+          "value_parsed": 8.6,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Stated source is the prose reports/token-load-audit-2026-06-12.md; instrument rule 2 forbids anchoring prose to prose. Triage should chase the audit's own token-accounting inputs (run.meta usage_stats)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          47,
+          48
+        ],
+        "section": "§ 4 Verifier shifts the binding constraint to pool recall"
+      },
+      "claim_text": "Recall ceilings (union GT coverage): Flash-MIN-T0.7 saturates at **0.920 in\n5 passes** (the 10-pass lineage is also exactly 0.9195",
+      "values": [
+        {
+          "quantity": "recall ceiling at 20 m (union GT coverage), Flash minimal T0.7 5-pass pool",
+          "value_verbatim": "0.920",
+          "value_parsed": 0.92,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.pools[1].recall_ceiling_20m",
+          "method": null
+        },
+        {
+          "quantity": "pass count at which the Flash minimal T0.7 pool saturates",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "pass count, Flash minimal T0.7 long lineage",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "recall ceiling at 20 m, Flash minimal T0.7 10-pass pool",
+          "value_verbatim": "0.9195",
+          "value_parsed": 0.9195,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.pools[2].recall_ceiling_20m",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pool_recall_ceilings.json"
+      },
+      "method": "read",
+      "notes": "Pass counts are encoded only in the pool labels ($.pools[1].pool = 'flash-min-t07-5pass', $.pools[2].pool = 'flash-min-t07-10pass'); there is no scalar pass-count field, hence anchor-unknown for those two values. 0.920 is the document's 3-dp rounding of the same 0.9195 ceiling."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          48,
+          49
+        ],
+        "section": "§ 4 Verifier shifts the binding constraint to pool recall"
+      },
+      "claim_text": "passes 6–10 added\nzero new mounds, only vote evidence",
+      "values": [
+        {
+          "quantity": "change in recall ceiling at 20 m between the Flash minimal T0.7 5-pass and 10-pass pools",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pool_recall_ceilings.json",
+        "path": null,
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/verifier-robustness/pool_recall_ceilings.json",
+            "path": "$.pools[2].recall_ceiling_20m"
+          },
+          {
+            "name": "b",
+            "file": "results/verifier-robustness/pool_recall_ceilings.json",
+            "path": "$.pools[1].recall_ceiling_20m"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "\"Zero new mounds\" is the claim that the union GT coverage is unchanged between the 5-pass and 10-pass pools. Pass indices 6–10 are locators, not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          49,
+          50
+        ],
+        "section": "§ 4 Verifier shifts the binding constraint to pool recall"
+      },
+      "claim_text": "Flash-HIGH adds volume (union/pass\n2.46 vs 1.44) but only +0.023 ceiling",
+      "values": [
+        {
+          "quantity": "union candidates per pass, Flash HIGH T0.7 5-pass pool",
+          "value_verbatim": "2.46",
+          "value_parsed": 2.46,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.pools[3].union_per_pass",
+          "method": "read"
+        },
+        {
+          "quantity": "union candidates per pass, Flash minimal T0.7 5-pass pool",
+          "value_verbatim": "1.44",
+          "value_parsed": 1.44,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.pools[1].union_per_pass",
+          "method": "read"
+        },
+        {
+          "quantity": "recall-ceiling gain at 20 m, Flash HIGH 5-pass pool minus Flash minimal 5-pass pool",
+          "value_verbatim": "+0.023",
+          "value_parsed": 0.023,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pool_recall_ceilings.json",
+        "path": null,
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/verifier-robustness/pool_recall_ceilings.json",
+            "path": "$.pools[3].recall_ceiling_20m"
+          },
+          {
+            "name": "b",
+            "file": "results/verifier-robustness/pool_recall_ceilings.json",
+            "path": "$.pools[1].recall_ceiling_20m"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "Mixed span: the two union/pass figures are direct reads (per-value method override); the +0.023 ceiling gain is the claim-level arithmetic."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          50,
+          52
+        ],
+        "section": "§ 4 Verifier shifts the binding constraint to pool recall"
+      },
+      "claim_text": "**Pro 3.1 samples near-\ndeterministically at T=0.7 (union/pass 1.15)**, so its 0.832 ceiling caps\nits PV F1",
+      "values": [
+        {
+          "quantity": "proposer temperature, Pro 3.1 pool",
+          "value_verbatim": "T=0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "union candidates per pass, Pro HIGH T0.7 5-pass pool",
+          "value_verbatim": "1.15",
+          "value_parsed": 1.15,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.pools[0].union_per_pass",
+          "method": null
+        },
+        {
+          "quantity": "recall ceiling at 20 m, Pro HIGH T0.7 5-pass pool",
+          "value_verbatim": "0.832",
+          "value_parsed": 0.832,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.pools[0].recall_ceiling_20m",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/pool_recall_ceilings.json"
+      },
+      "method": "read",
+      "notes": "The temperature is encoded only in the pool label ($.pools[0].pool = 'pro-high-t07-5pass'); the executed value lives in the proposer run metas under outputs/, not in this artefact. \"Pro 3.1\" is a model version string, out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          54,
+          57
+        ],
+        "section": "§ 4 Verifier shifts the binding constraint to pool recall"
+      },
+      "claim_text": "Zero-diversity anchor\n(1 × minimal T=0.0 pass + n=1 verifier): **0.8142** (+0.057 from\ntemperature diversity; ~60 % of the gain is the ceiling lift) — with the\nboard's highest tile-MCC, 0.833.",
+      "values": [
+        {
+          "quantity": "proposer pass count, zero-diversity anchor cell",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.proposer.passes",
+          "method": null
+        },
+        {
+          "quantity": "proposer temperature, zero-diversity anchor cell",
+          "value_verbatim": "T=0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.proposer.temperature",
+          "method": null
+        },
+        {
+          "quantity": "verifier iterations, zero-diversity anchor cell",
+          "value_verbatim": "n=1",
+          "value_parsed": 1,
+          "unit": "iterations",
+          "kind": "parameter",
+          "path": "$.verifier.iterations",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, zero-diversity anchor cell (best operating point pt0.15)",
+          "value_verbatim": "0.8142",
+          "value_parsed": 0.8142,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.best.f1_20m",
+          "method": null
+        },
+        {
+          "quantity": "F1 gain from temperature diversity (min6 minus zero-diversity anchor)",
+          "value_verbatim": "+0.057",
+          "value_parsed": 0.057,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.comparison.diversity_dividend_min6_minus_anchor",
+          "method": null
+        },
+        {
+          "quantity": "share of the diversity gain attributable to the recall-ceiling lift",
+          "value_verbatim": "~60 %",
+          "value_parsed": 60.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tile-level MCC, zero-diversity anchor cell",
+          "value_verbatim": "0.833",
+          "value_parsed": 0.833,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.best.mcc",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/zero_diversity_anchor.json"
+      },
+      "method": "read",
+      "notes": "The ~60 % decomposition is not stored in the artefact; its inputs would be the pool ceilings ($.pool.recall_ceiling_20m = 0.8851 for the anchor vs $.comparison.min6_pool_ceiling = 0.9195), but the document does not state the formula, so the value is left anchor-unknown for triage. \"Board's highest tile-MCC\" is a superlative, not adjudicated here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          63,
+          65
+        ],
+        "section": "§ 5 verify-once-at-n=10 shortcut"
+      },
+      "claim_text": "Deriving n=5 post-hoc from a verified 10-pass union (contributing_passes,\nfirst-5 rule) reproduces a true 5-pass merge's geometry to 0.07 m but runs\n**systematically +0.005..+0.011 F1 high**",
+      "values": [
+        {
+          "quantity": "maximum nearest-neighbour geometry displacement between re-merged and committed unions",
+          "value_verbatim": "0.07",
+          "value_parsed": 0.07,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "smallest per-k F1 excess of the derived first-5-of-10 sweep over the true 5-pass sweep",
+          "value_verbatim": "+0.005",
+          "value_parsed": 0.005,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "largest per-k F1 excess of the derived first-5-of-10 sweep over the true 5-pass sweep",
+          "value_verbatim": "+0.011",
+          "value_parsed": 0.011,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/first5of10_validation.log"
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor. The log records \"max NN dist 0.069 m\" for both geometry gates and per-k deltas +0.0052 .. +0.0107; the sibling artefact results/verifier-robustness/first5of10-validation/validation.json holds $.worst_abs_delta = 0.0107 and $.tolerance = 0.0075. n=5 / 10-pass / 5-pass are method labels (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          70
+        ],
+        "section": "§ 6 GS working precision"
+      },
+      "claim_text": "GS working precision: text plateaus at 30 m, image at 75 m",
+      "values": [
+        {
+          "quantity": "median plateau-onset buffer, text-modality GS conditions",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.by_modality[0].onset_median",
+          "method": null
+        },
+        {
+          "quantity": "median plateau-onset buffer, image-modality GS conditions",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.by_modality[1].onset_median",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/working-precision/gs-plateau-characterisation.json"
+      },
+      "method": "read",
+      "notes": "Heading claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          72,
+          73
+        ],
+        "section": "§ 6 GS working precision"
+      },
+      "claim_text": "All 259 GS conditions with full buffer curves: plateau onset (every later\nstep ≤ 0.005) — PV 30 m < consensus 35 < single-pass 40",
+      "values": [
+        {
+          "quantity": "number of GS conditions analysed for plateau onset",
+          "value_verbatim": "259",
+          "value_parsed": 259,
+          "unit": "conditions",
+          "kind": "count",
+          "path": "$.n_analysed",
+          "method": null
+        },
+        {
+          "quantity": "step-noise criterion for plateau onset (max later step gain)",
+          "value_verbatim": "0.005",
+          "value_parsed": 0.005,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.criterion.step_noise",
+          "method": null
+        },
+        {
+          "quantity": "median plateau-onset buffer, proposer-verifier architecture",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.by_architecture[2].onset_median",
+          "method": null
+        },
+        {
+          "quantity": "median plateau-onset buffer, consensus architecture",
+          "value_verbatim": "35",
+          "value_parsed": 35,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.by_architecture[1].onset_median",
+          "method": null
+        },
+        {
+          "quantity": "median plateau-onset buffer, single-pass architecture",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.by_architecture[0].onset_median",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/working-precision/gs-plateau-characterisation.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          73,
+          75
+        ],
+        "section": "§ 6 GS working precision"
+      },
+      "claim_text": "**text 30 m vs\nimage 75 m** (image localisation ~2.5× looser — modality is the dominant\nfactor).",
+      "values": [
+        {
+          "quantity": "median plateau-onset buffer, text-modality GS conditions",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.by_modality[0].onset_median",
+          "method": "read"
+        },
+        {
+          "quantity": "median plateau-onset buffer, image-modality GS conditions",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.by_modality[1].onset_median",
+          "method": "read"
+        },
+        {
+          "quantity": "ratio of image to text plateau-onset buffer (localisation looseness)",
+          "value_verbatim": "2.5×",
+          "value_parsed": 2.5,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic"
+        }
+      ],
+      "anchor": {
+        "file": "results/working-precision/gs-plateau-characterisation.json",
+        "path": null,
+        "expression": "a / b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/working-precision/gs-plateau-characterisation.json",
+            "path": "$.summary.by_modality[1].onset_median"
+          },
+          {
+            "name": "b",
+            "file": "results/working-precision/gs-plateau-characterisation.json",
+            "path": "$.summary.by_modality[0].onset_median"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "Mixed span: the two onset medians are direct reads; the ~2.5× looseness ratio is the claim-level arithmetic."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          75,
+          76
+        ],
+        "section": "§ 6 GS working precision"
+      },
+      "claim_text": "For the production text-PV family, F1@30 = F1@50 exactly (flat\nplateau); e.g. opmax 0.916/P 0.929 at 30 m ≈ 6 px.",
+      "values": [
+        {
+          "quantity": "buffer for the first side of the plateau equality (F1@30)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[5].buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "buffer for the second side of the plateau equality (F1@50)",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[9].buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "F1@30m, opmax cell (verified-384-16of30-t0-3-n5-opmax)",
+          "value_verbatim": "0.916",
+          "value_parsed": 0.916,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[5].f1",
+          "method": null
+        },
+        {
+          "quantity": "precision@30m, opmax cell (verified-384-16of30-t0-3-n5-opmax)",
+          "value_verbatim": "0.929",
+          "value_parsed": 0.929,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[5].precision",
+          "method": null
+        },
+        {
+          "quantity": "buffer at which the quoted opmax F1/precision are read",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[5].buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "30 m buffer expressed in tile pixels at GS 384 px resolution",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/evals/verified-384-16of30-t0-3-n5-opmax/evaluation.json"
+      },
+      "method": "read",
+      "notes": "The plateau equality F1@30 = F1@50 is checkable against $.summary.buffers[5].f1 and $.summary.buffers[9].f1 in the same file. The 6 px conversion depends on the ~5 m/px ground resolution of 384 px GS tiles, which is asserted only in the prose docs/methodology/preregistration/protocol-errata.md; the tile manifest inputs/tiles_384/full_evaluation_manifest.json carries no resolution field, hence anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          80,
+          80
+        ],
+        "section": "§ 7 55-map working buffer"
+      },
+      "claim_text": "55-map working buffer: cap at 50 m",
+      "values": [
+        {
+          "quantity": "operational buffer adopted for the 55-map corpus",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffer_m",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+        "path": "$.buffer_m"
+      },
+      "method": "read",
+      "notes": "Heading claim. \"Three converging lines\" is a discourse count over the argument, not a study quantity — logged as an explicit scope decision, not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          82,
+          83
+        ],
+        "section": "§ 7 55-map working buffer"
+      },
+      "claim_text": "(1) The CSR chance-matching null is negligible at every canonical buffer\n(null F1 ≤ 0.015 at 150 m)",
+      "values": [
+        {
+          "quantity": "CSR chance-matching null F1 at the widest canonical buffer, T03-k3 oracle cell",
+          "value_verbatim": "0.015",
+          "value_parsed": 0.015,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells[0].curve[13].f1_null",
+          "method": null
+        },
+        {
+          "quantity": "widest canonical buffer",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.cells[0].curve[13].buffer_m",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/working-precision/55maps-csr-noise-floor.json"
+      },
+      "method": "read",
+      "notes": "Stated as an upper bound (≤) over both cells; $.cells[1].curve[13].f1_null carries the other cell's value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          85
+        ],
+        "section": "§ 7 55-map working buffer"
+      },
+      "claim_text": "(2) observed marginal gains die at 50 m (zero/negative beyond, while\nchance creep continues)",
+      "values": [
+        {
+          "quantity": "buffer beyond which observed marginal F1 gains cease",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.cells[0].curve[9].buffer_m",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/working-precision/55maps-csr-noise-floor.json"
+      },
+      "method": "read",
+      "notes": "The supporting evidence is $.cells[*].curve[*].obs_step_gain, which turns zero/negative for buffers beyond 50 m."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          85,
+          87
+        ],
+        "section": "§ 7 55-map working buffer"
+      },
+      "claim_text": "(3) the **attribution-ambiguity bound bites\nfirst**: GT nearest-neighbour p10 = 65 m, so 21 % of mounds are at\ncross-match risk at R = 50 and 42 % at 125.",
+      "values": [
+        {
+          "quantity": "10th-percentile ground-truth nearest-neighbour distance, 55-map GT",
+          "value_verbatim": "65",
+          "value_parsed": 65,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.gt_nn_percentiles_m['10']",
+          "method": null
+        },
+        {
+          "quantity": "fraction of GT mounds at cross-match risk at R = 50 m",
+          "value_verbatim": "21 %",
+          "value_parsed": 21.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.ambiguity_by_buffer['50']",
+          "method": null
+        },
+        {
+          "quantity": "buffer radius for the 21 % ambiguity figure",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "fraction of GT mounds at cross-match risk at R = 125 m",
+          "value_verbatim": "42 %",
+          "value_parsed": 42.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.ambiguity_by_buffer['125']",
+          "method": null
+        },
+        {
+          "quantity": "buffer radius for the 42 % ambiguity figure",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/working-precision/55maps-csr-noise-floor.json"
+      },
+      "method": "read",
+      "notes": "Percentages are stored as fractions (0.2133, 0.4195) and the p10 as 64.808 m; the harness owns rounding. The two buffer radii are the keys of $.ambiguity_by_buffer."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          87,
+          89
+        ],
+        "section": "§ 7 55-map working buffer"
+      },
+      "claim_text": "Caveat: 415/773 phantoms gate\nat exactly 50 m (the review SOP anchor), so the 45→50 F1 jump is partly GT\ncomposition.",
+      "values": [
+        {
+          "quantity": "phantom GT features whose review gate buffer is 50 m",
+          "value_verbatim": "415",
+          "value_parsed": 415,
+          "unit": "phantoms",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total phantom GT features in the 55-map corpus",
+          "value_verbatim": "773",
+          "value_parsed": 773,
+          "unit": "phantoms",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "gate buffer at which those phantoms enter GT",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/working-precision/55maps-csr-noise-floor.log"
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: line 2 of the log reads \"students 4746, phantoms 773 (gate buffers: {50.0: 415, 75.0: 179, 125.0: 44, 150.0: 34, 100.0: 91, 200.0: 10})\". The 45→50 buffers are locators for the F1 jump, not extracted separately."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          89,
+          89
+        ],
+        "section": "§ 7 55-map working buffer"
+      },
+      "claim_text": "50 m ≈ 2× student jitter; median mound spacing 375 m.",
+      "values": [
+        {
+          "quantity": "operational buffer for the 55-map corpus",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.cells[0].curve[9].buffer_m",
+          "method": null
+        },
+        {
+          "quantity": "ratio of the 50 m buffer to student digitisation jitter",
+          "value_verbatim": "2×",
+          "value_parsed": 2.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "median ground-truth nearest-neighbour distance (mound spacing), 55-map GT",
+          "value_verbatim": "375",
+          "value_parsed": 375,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.gt_nn_percentiles_m['50']",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/working-precision/55maps-csr-noise-floor.json"
+      },
+      "method": "read",
+      "notes": "The student-jitter magnitude behind the 2× ratio is not carried by this artefact (results/working-precision/gs-miss-correlation.json records $.student_radius_m = 50.0, a matching radius rather than a jitter estimate) — left anchor-unknown for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          90,
+          90
+        ],
+        "section": "§ 7 55-map working buffer"
+      },
+      "claim_text": "Tighter than, and consistent with, the 100–125 m preliminary.",
+      "values": [
+        {
+          "quantity": "lower bound of the superseded preliminary working-buffer recommendation",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "upper bound of the superseded preliminary working-buffer recommendation",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Quoted prior-value side: the 100–125 m preliminary recommendation that this section supersedes. The document does not name the source of the preliminary figure."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          93,
+          93
+        ],
+        "section": "§ 8 Flash 3.5 tranche"
+      },
+      "claim_text": "Flash 3.5 tranche (approved ~$34, in flight overnight)",
+      "values": [
+        {
+          "quantity": "approved cost estimate, Flash 3.5 tranche 1 (n=10-first design)",
+          "value_verbatim": "~$34",
+          "value_parsed": 34.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/run_flash35_tranche1.sh"
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: the runbook header records \"single ~US$34 n=10-first design\", the approval quotation \"ca. $34 single-tranche design\", and a stage breakdown (P ~$24.6, V1 ~$1.4, V2 ~$4.2, V3 ~$4.0) at June 2026 flex rates. This is the pre-run approval estimate, not an audited or billed figure."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          95,
+          97
+        ],
+        "section": "§ 8 Flash 3.5 tranche"
+      },
+      "claim_text": "`gemini-3.5-flash` is live as a **stable** model name; smoke passed\n(10 tiles, 0 failures, minimal thinking accepted, instruction-payload hash\nidentical to both comparator lineages, three-source model verification)",
+      "values": [
+        {
+          "quantity": "tiles processed, Flash 3.5 smoke run",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.execution_stats.items_processed",
+          "method": null
+        },
+        {
+          "quantity": "items failed, Flash 3.5 smoke run",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.execution_stats.items_failed",
+          "method": null
+        },
+        {
+          "quantity": "independent sources used to verify the model identity",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "sources",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/flash35-pv-2x2/_smoke/proposer-smoke/run_1/detections-detect_brief-text-3.5-flash-2026-06-10.meta.json"
+      },
+      "method": "read",
+      "notes": "The smoke meta also carries the instruction-payload hash ($.configuration.system_instruction_hash) and thinking level ($.configuration.thinking_level = 'minimal'). The \"three-source model verification\" is a process count with no committed artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          98,
+          98
+        ],
+        "section": "§ 8 Flash 3.5 tranche"
+      },
+      "claim_text": "`/audit-config` READY (0 blockers).",
+      "values": [
+        {
+          "quantity": "blockers raised by the pre-launch configuration audit",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "blockers",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No committed /audit-config or pre_launch_audit artefact for the Flash 3.5 tranche was found (searched outputs/flash35-pv-2x2/ and reports/); the verdict exists only as this prose assertion."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          98,
+          99
+        ],
+        "section": "§ 8 Flash 3.5 tranche"
+      },
+      "claim_text": "Per-call tokens (~1.2 K) run below\nestimate → expect under-budget.",
+      "values": [
+        {
+          "quantity": "mean tokens per API call, Flash 3.5 proposer",
+          "value_verbatim": "1.2 K",
+          "value_parsed": 1200,
+          "unit": "tokens",
+          "kind": "tokens",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/flash35-pv-2x2/_smoke/proposer-smoke/run_1/detections-detect_brief-text-3.5-flash-2026-06-10.meta.json",
+        "path": null,
+        "expression": "a / b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "outputs/flash35-pv-2x2/_smoke/proposer-smoke/run_1/detections-detect_brief-text-3.5-flash-2026-06-10.meta.json",
+            "path": "$.usage_stats.total_tokens"
+          },
+          {
+            "name": "b",
+            "file": "outputs/flash35-pv-2x2/_smoke/proposer-smoke/run_1/detections-detect_brief-text-3.5-flash-2026-06-10.meta.json",
+            "path": "$.usage_stats.by_provider.google_gemini.request_count"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "The document does not say whether the ~1.2 K figure is input-only or total tokens; the expression given divides total tokens by request count on the smoke meta. Full-run proposer metas under outputs/flash35-pv-2x2/proposer/run_*/ carry the same fields for the production passes. This is a June 2026 run, so usage_stats is populated (not the phase2a–3c unverifiable era)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          99,
+          101
+        ],
+        "section": "§ 8 Flash 3.5 tranche"
+      },
+      "claim_text": "Design upgraded to **2×2×2** (proposer\nmodel × verifier model × n ∈ {5,10}) by the verify-once shortcut.",
+      "values": [
+        {
+          "quantity": "levels of the proposer-model factor",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "levels",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "levels of the verifier-model factor",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "levels",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "levels of the verifier-iteration factor",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "levels",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "lower level of the verifier-iteration factor (n)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "iterations",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "upper level of the verifier-iteration factor (n)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "iterations",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/run_flash35_tranche1.sh"
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: the runbook's design comment block and stage definitions (Stage P proposer passes, stages V1/V2/V3 verifier legs) encode the 2×2×2 factorial and the n ∈ {5,10} derivation. The realised cells are enumerated at results/flash35-2x2/analysis-full.json $.cells."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          100,
+          103
+        ],
+        "section": "§ 8 Flash 3.5 tranche"
+      },
+      "claim_text": "Stage P\nruns an aggressive failed-tile policy (resume ×4 per pass, 485/487 floor)\nafter pass 1 lost one tile to a transient JSON-parse failure and `set -e`\nhalted the first launch.",
+      "values": [
+        {
+          "quantity": "additional resume invocations permitted per proposer pass",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "invocations",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "minimum tiles per pass tolerated before abort",
+          "value_verbatim": "485",
+          "value_parsed": 485,
+          "unit": "tiles",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tiles per pass in the Era 2 manifest",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tiles lost on proposer pass 1 to a transient JSON-parse failure",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/run_flash35_tranche1.sh"
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: the runbook comments record \"re-invoke up to FOUR more times\" and \"tolerated down to a 485/487 floor\", with the abort check at n_done >= 485. The single lost tile is recorded in outputs/flash35-pv-2x2/tranche-full.log (parse failure for K-35-062-2_Rakovski_x3360_y2016.png) rather than in a structured field."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          111,
+          112
+        ],
+        "section": "§ 9 Data-integrity catches"
+      },
+      "claim_text": "**`text-1of5` is a partial-coverage stale union** (974 cands, 230/471\n  tiles; built mid-study before pass resumes)",
+      "values": [
+        {
+          "quantity": "candidate count, stale text-1of5 union",
+          "value_verbatim": "974",
+          "value_parsed": 974,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "candidate-bearing tiles covered by the stale text-1of5 union",
+          "value_verbatim": "230",
+          "value_parsed": 230,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "candidate-bearing tiles in the full lineage",
+          "value_verbatim": "471",
+          "value_parsed": 471,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "archive/superseded-unions/text-1of5-partial-coverage/text-1of5.geojson"
+      },
+      "method": "read",
+      "notes": "Anchor is the archived union GeoJSON (whole-artefact feature count; the live path outputs/h11/pv-diag-384/consensus/text-1of5.geojson no longer exists — archived under the project's archive-never-delete policy). The 230/471 tile split is asserted in the prose plan planning/min6-makeup-run-plan-2026-06-10.md and is derivable from the GeoJSON's per-feature tile attribution, but is not a stored scalar."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          113,
+          114
+        ],
+        "section": "§ 9 Data-integrity catches"
+      },
+      "claim_text": "make-up plan awaiting approval\n  (`planning/min6-makeup-run-plan-2026-06-10.md`, ≈ $1.15 option B).",
+      "values": [
+        {
+          "quantity": "planned cost, make-up run option B (regenerate true first-5 union + one carry-forward verifier pass)",
+          "value_verbatim": "$1.15",
+          "value_parsed": 1.15,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Estimate, not an audited or billed figure. The only visible source is the prose plan planning/min6-makeup-run-plan-2026-06-10.md (\"≈ $1.15 flex\", ~1,600 calls) — instrument rule 2 forbids anchoring prose to prose."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          115,
+          115
+        ],
+        "section": "§ 9 Data-integrity catches"
+      },
+      "claim_text": "- **`evaluate_detections.py` DEFAULT_BUFFERS = [20]**",
+      "values": [
+        {
+          "quantity": "default evaluation buffer in evaluate_detections.py",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/evaluate_detections.py",
+        "path": "DEFAULT_BUFFERS"
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (module-level constant, instrument v1.1 permits these)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          115,
+          117
+        ],
+        "section": "§ 9 Data-integrity catches"
+      },
+      "claim_text": "the 14\n  registration evaluations initially carried one buffer; re-run at the\n  canonical 14 and manifests regenerated.",
+      "values": [
+        {
+          "quantity": "registration evaluations affected by the single-buffer default",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": "evaluations",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "buffers carried by those evaluations before the re-run",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": "buffers",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "canonical buffer count used for the re-run",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": "buffers",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The canonical buffer list is 14 long in committed evaluation artefacts (e.g. results/verifier-robustness/evals/verified-384-16of30-t0-3-n5-opmax/evaluation.json $.summary.buffers has 14 entries: 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100, 125, 150), but the count of \"registration evaluations\" affected is not carried by any single artefact. The one-buffer state is the superseded before-value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          123,
+          123
+        ],
+        "section": "§ 10 Manifest registration"
+      },
+      "claim_text": "Run #29 `verifier-robustness`: 8 conditions + 6 pv-diag-384 additions",
+      "values": [
+        {
+          "quantity": "conditions registered under the verifier-robustness run",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "pv-diag-384 conditions added in the same registration",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json"
+      },
+      "method": "read",
+      "notes": "\"Run #29\" is a run identifier, out of C4 scope. The manifest is a regenerated artefact; this claim is a snapshot as of Session 111 and the harness will be reading the current file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          123,
+          124
+        ],
+        "section": "§ 10 Manifest registration"
+      },
+      "claim_text": "+ 2\nanalyses (`verifier-robustness-matrix`, `pass-budget-pareto`)",
+      "values": [
+        {
+          "quantity": "analyses added in the verifier-robustness registration",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "analyses",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/analyses-manifest.json"
+      },
+      "method": "read",
+      "notes": "Split from the preceding claim because the analyses count anchors to the analyses manifest rather than the conditions manifest."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          125,
+          125
+        ],
+        "section": "§ 10 Manifest registration"
+      },
+      "claim_text": "29 runs",
+      "values": [
+        {
+          "quantity": "total runs in the manifest as of Session 111",
+          "value_verbatim": "29",
+          "value_parsed": 29,
+          "unit": "runs",
+          "kind": "count",
+          "path": "len($.runs)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/runs-manifest.json",
+        "path": "len($.runs)"
+      },
+      "method": "read",
+      "notes": "Snapshot claim against a regenerated manifest; split out from the composite manifest line because each count anchors to a different file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          125,
+          125
+        ],
+        "section": "§ 10 Manifest registration"
+      },
+      "claim_text": "295 conditions",
+      "values": [
+        {
+          "quantity": "total conditions in the manifest as of Session 111",
+          "value_verbatim": "295",
+          "value_parsed": 295,
+          "unit": "conditions",
+          "kind": "count",
+          "path": "len($.conditions)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": "len($.conditions)"
+      },
+      "method": "read",
+      "notes": "Snapshot claim against a regenerated manifest."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          125,
+          125
+        ],
+        "section": "§ 10 Manifest registration"
+      },
+      "claim_text": "1114 passes",
+      "values": [
+        {
+          "quantity": "total passes in the manifest as of Session 111",
+          "value_verbatim": "1114",
+          "value_parsed": 1114,
+          "unit": "passes",
+          "kind": "count",
+          "path": "len($.passes)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": "len($.passes)"
+      },
+      "method": "read",
+      "notes": "Snapshot claim against a regenerated manifest."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          125,
+          125
+        ],
+        "section": "§ 10 Manifest registration"
+      },
+      "claim_text": "12 analyses",
+      "values": [
+        {
+          "quantity": "total analyses in the manifest as of Session 111",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": "analyses",
+          "kind": "count",
+          "path": "len($.analyses)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/analyses-manifest.json",
+        "path": "len($.analyses)"
+      },
+      "method": "read",
+      "notes": "Snapshot claim against a regenerated manifest."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          126,
+          126
+        ],
+        "section": "§ 10 Manifest registration"
+      },
+      "claim_text": "drift-check 16 pass / 13 partial / 0 fail",
+      "values": [
+        {
+          "quantity": "runs passing the drift check",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs partially passing the drift check",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs failing the drift check",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/verify_run_conditions.py"
+      },
+      "method": "recompute-script",
+      "notes": "The pass/partial/fail triple is emitted by scripts/verify_run_conditions.py (\"{n} run(s): {n} pass, {n} partial, {n} fail\"), not stored in a committed artefact; re-running the script is required. Recorded, not computed at extraction."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          133,
+          134
+        ],
+        "section": "§ 11 Flash 3.5 verdict"
+      },
+      "claim_text": "The tranche completed overnight (≈ on budget; 10 clean passes, all three\nverifier legs, the single 503-dropped candidate patched via cleanup).",
+      "values": [
+        {
+          "quantity": "proposer passes completed cleanly, Flash 3.5 tranche",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "verifier legs run in the tranche (stages V1, V2, V3)",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "legs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "candidates dropped to a 503 error and patched via cleanup",
+          "value_verbatim": "single",
+          "value_parsed": 1,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/run_flash35_tranche1.sh"
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: the runbook defines PASSES=10 for Stage P and three verifier stages V1/V2/V3. The realised pass count is also evidenced by the per-pass metas under outputs/flash35-pv-2x2/proposer/run_*/ and by the per_k 1..10 keys at results/flash35-2x2/analysis-full.json. \"503\" is an HTTP status code, not a study quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          135,
+          135
+        ],
+        "section": "§ 11 Flash 3.5 verdict"
+      },
+      "claim_text": "2×2×2 at best (k, prob_t), n=5 method-matched (F1@20m / tile-MCC):",
+      "values": [
+        {
+          "quantity": "levels of the proposer-model factor",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "levels",
+          "kind": "count",
+          "path": "len($.cells)",
+          "method": null
+        },
+        {
+          "quantity": "levels of the verifier-model factor",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "levels",
+          "kind": "count",
+          "path": "len($.cells)",
+          "method": null
+        },
+        {
+          "quantity": "levels of the verifier-iteration factor",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "levels",
+          "kind": "count",
+          "path": "len($.cells)",
+          "method": null
+        },
+        {
+          "quantity": "verifier iterations for the method-matched comparison",
+          "value_verbatim": "n=5",
+          "value_parsed": 5,
+          "unit": "iterations",
+          "kind": "parameter",
+          "path": "$.cells['f3prop-f3vf'].n5_derived",
+          "method": null
+        },
+        {
+          "quantity": "evaluation buffer for the reported table metrics",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/flash35-2x2/analysis-full.json"
+      },
+      "method": "read",
+      "notes": "Table-header claim. $.cells holds four proposer×verifier cells plus two bare-consensus cells, each with n10 and n5_derived branches. The 20 m buffer is asserted only in the sibling method string (results/flash35-2x2/flash35_permutations.json $.method: \"Hungarian per map at 20 m\")."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          139,
+          139
+        ],
+        "section": "§ 11 Flash 3.5 verdict — 2×2×2 table"
+      },
+      "claim_text": "| **F3 proposer** (n10 / n5) | **0.8835** / 0.8681 | 0.8689 / 0.8547 |",
+      "values": [
+        {
+          "quantity": "F1@20m, F3 proposer × F3 verifier, n=10",
+          "value_verbatim": "0.8835",
+          "value_parsed": 0.8835,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells['f3prop-f3vf'].n10.best.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, F3 proposer × F3 verifier, n=5 derived",
+          "value_verbatim": "0.8681",
+          "value_parsed": 0.8681,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells['f3prop-f3vf'].n5_derived.best.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, F3 proposer × F3.5 verifier, n=10",
+          "value_verbatim": "0.8689",
+          "value_parsed": 0.8689,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells['f3prop-f35vf'].n10.best.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, F3 proposer × F3.5 verifier, n=5 derived",
+          "value_verbatim": "0.8547",
+          "value_parsed": 0.8547,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells['f3prop-f35vf'].n5_derived.best.f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/flash35-2x2/analysis-full.json"
+      },
+      "method": "read",
+      "notes": "Table row; values at the best (k, prob_t) operating point per cell. n10/n5 are branch names, not extracted separately."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          140,
+          140
+        ],
+        "section": "§ 11 Flash 3.5 verdict — 2×2×2 table"
+      },
+      "claim_text": "| **F3.5 proposer** (n10 / n5) | 0.8480 / 0.8462 | 0.8362 / 0.8345 |",
+      "values": [
+        {
+          "quantity": "F1@20m, F3.5 proposer × F3 verifier, n=10",
+          "value_verbatim": "0.8480",
+          "value_parsed": 0.848,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells['f35prop-f3vf'].n10.best.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, F3.5 proposer × F3 verifier, n=5 derived",
+          "value_verbatim": "0.8462",
+          "value_parsed": 0.8462,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells['f35prop-f3vf'].n5_derived.best.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, F3.5 proposer × F3.5 verifier, n=10",
+          "value_verbatim": "0.8362",
+          "value_parsed": 0.8362,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells['f35prop-f35vf'].n10.best.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, F3.5 proposer × F3.5 verifier, n=5 derived",
+          "value_verbatim": "0.8345",
+          "value_parsed": 0.8345,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells['f35prop-f35vf'].n5_derived.best.f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/flash35-2x2/analysis-full.json"
+      },
+      "method": "read",
+      "notes": "Table row; the artefact stores 0.848 for the first cell (document pads to 4 dp)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          141,
+          141
+        ],
+        "section": "§ 11 Flash 3.5 verdict — 2×2×2 table"
+      },
+      "claim_text": "| bare consensus (n10) | F3 0.6204 | F3.5 0.6196 |",
+      "values": [
+        {
+          "quantity": "F1@20m, F3 bare consensus, n=10 (no verifier)",
+          "value_verbatim": "0.6204",
+          "value_parsed": 0.6204,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells['f3prop-bare'].n10.best.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, F3.5 bare consensus, n=10 (no verifier)",
+          "value_verbatim": "0.6196",
+          "value_parsed": 0.6196,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells['f35prop-bare'].n10.best.f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/flash35-2x2/analysis-full.json"
+      },
+      "method": "read",
+      "notes": "Table row."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          143,
+          144
+        ],
+        "section": "§ 11 Flash 3.5 verdict"
+      },
+      "claim_text": "- **Harness self-validation**: the F3×F3 cell reproduces the committed\n  min11 exactly (0.8835 at 6of10/pt0.2).",
+      "values": [
+        {
+          "quantity": "F1@20m, F3 proposer × F3 verifier n=10 cell (reproducing committed min11)",
+          "value_verbatim": "0.8835",
+          "value_parsed": 0.8835,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells['f3prop-f3vf'].n10.best.f1",
+          "method": null
+        },
+        {
+          "quantity": "consensus vote threshold k at the best operating point",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "votes",
+          "kind": "parameter",
+          "path": "$.cells['f3prop-f3vf'].n10.best.k",
+          "method": null
+        },
+        {
+          "quantity": "proposer passes in the pool",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "$.cells['f3prop-f3vf'].n10",
+          "method": null
+        },
+        {
+          "quantity": "verifier probability threshold at the best operating point",
+          "value_verbatim": "0.2",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.cells['f3prop-f3vf'].n10.best.pt",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/flash35-2x2/analysis-full.json"
+      },
+      "method": "read",
+      "notes": "The committed min11 comparator is at results/verifier-robustness/min_thinking_pv.log (F1@20m=0.8835 at 6of10, pt0.2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          145,
+          145
+        ],
+        "section": "§ 11 Flash 3.5 verdict"
+      },
+      "claim_text": "- **As a bare proposer**: dead tie (0.620 vs 0.620)",
+      "values": [
+        {
+          "quantity": "F1@20m, F3 bare consensus n=10",
+          "value_verbatim": "0.620",
+          "value_parsed": 0.62,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells['f3prop-bare'].n10.best.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, F3.5 bare consensus n=10",
+          "value_verbatim": "0.620",
+          "value_parsed": 0.62,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.cells['f35prop-bare'].n10.best.f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/flash35-2x2/analysis-full.json"
+      },
+      "method": "read",
+      "notes": "Quoted at 3 dp; the artefact carries 0.6204 and 0.6196. Both values share the same verbatim string, so the harness must key on position."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          147,
+          147
+        ],
+        "section": "§ 11 Flash 3.5 verdict"
+      },
+      "claim_text": "- **As a PV proposer**: −0.036",
+      "values": [
+        {
+          "quantity": "F1@20m gap, F3.5 pool minus F3 pool under the same F3 verifier",
+          "value_verbatim": "−0.036",
+          "value_parsed": -0.036,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.pairs[0].observed_diff",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/flash35-2x2/flash35_permutations.json",
+        "path": "$.pairs[0].observed_diff"
+      },
+      "method": "read",
+      "notes": "Artefact records −0.035535; the document rounds to 3 dp here and quotes −0.0355 at line 154."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          148,
+          148
+        ],
+        "section": "§ 11 Flash 3.5 verdict"
+      },
+      "claim_text": "F3.5's union is 1,132 candidates vs F3's 1,939",
+      "values": [
+        {
+          "quantity": "union candidate count, Flash 3.5 10-pass proposer pool",
+          "value_verbatim": "1,132",
+          "value_parsed": 1132,
+          "unit": "candidates",
+          "kind": "count",
+          "path": "$.cells['f35prop-f3vf'].n_candidates",
+          "method": null
+        },
+        {
+          "quantity": "union candidate count, Flash 3 10-pass proposer pool",
+          "value_verbatim": "1,939",
+          "value_parsed": 1939,
+          "unit": "candidates",
+          "kind": "count",
+          "path": "$.cells['f3prop-f3vf'].n_candidates",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/flash35-2x2/analysis-full.json"
+      },
+      "method": "read",
+      "notes": "The F3 pool count is also carried at results/verifier-robustness/pool_recall_ceilings.json $.pools[2].n_union, and the F3.5 pool count at results/verifier-robustness/min6_true_makeup.json $.flash35_pool_diversity.union_n."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          148,
+          149
+        ],
+        "section": "§ 11 Flash 3.5 verdict"
+      },
+      "claim_text": "with **53 % at 10/10\n  votes** (union/pass 1.33",
+      "values": [
+        {
+          "quantity": "share of the Flash 3.5 union carrying the maximum vote count",
+          "value_verbatim": "53 %",
+          "value_parsed": 53.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.flash35_pool_diversity.frac_10of10",
+          "method": null
+        },
+        {
+          "quantity": "proposer passes in the Flash 3.5 pool",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.flash35_pool_diversity.n_passes",
+          "method": null
+        },
+        {
+          "quantity": "union candidates per pass, Flash 3.5 10-pass pool",
+          "value_verbatim": "1.33",
+          "value_parsed": 1.33,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.flash35_pool_diversity.union_per_pass",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/min6_true_makeup.json"
+      },
+      "method": "read",
+      "notes": "Artefact stores the fraction as 0.528 and union_per_pass as 1.32; the harness owns rounding tolerance. \"10/10 votes\" states the vote threshold equal to the pass count — one value extracted for the pass count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          151,
+          152
+        ],
+        "section": "§ 11 Flash 3.5 verdict"
+      },
+      "claim_text": "- **As a verifier**: −0.012..−0.015 on both pools — the carry-forward F3\n  verifier wins outright at a third of the price.",
+      "values": [
+        {
+          "quantity": "F1@20m gap, F3.5 verifier vs F3 verifier on the F3.5 pool",
+          "value_verbatim": "−0.012",
+          "value_parsed": -0.012,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.pairs[1].observed_diff",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m gap, F3.5 verifier vs F3 verifier on the F3 pool",
+          "value_verbatim": "−0.015",
+          "value_parsed": -0.015,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.pairs[2].observed_diff",
+          "method": null
+        },
+        {
+          "quantity": "price ratio, F3 verifier relative to F3.5 verifier",
+          "value_verbatim": "a third",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": {
+        "file": "results/flash35-2x2/flash35_permutations.json"
+      },
+      "method": "read",
+      "notes": "Artefact records −0.011732 and −0.014563. The price ratio is a vendor-pricing claim (the runbook comment records June 2026 rates F3.5 $0.75/$4.50 vs F3 $0.25/$1.50 per 1M tokens); no repo artefact decides vendor pricing — attestation material only."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          153,
+          153
+        ],
+        "section": "§ 11 Flash 3.5 verdict"
+      },
+      "claim_text": "- ~~Significance tests pending (morning, $0)~~",
+      "values": [
+        {
+          "quantity": "estimated cost of the pending significance tests — struck pre-run status line",
+          "value_verbatim": "$0",
+          "value_parsed": 0.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Struck-through (superseded) status line; the replacement live claim is the S113 results that follow it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          154,
+          158
+        ],
+        "section": "§ 11 Flash 3.5 verdict"
+      },
+      "claim_text": "the −0.0355\n  proposer gap is resolved (p = 0.035 raw, targeted tile-swap); both\n  verifier-role gaps are within-noise ties (p = 0.17 / p = 0.10) — the\n  verifier verdict rests on the cost meta-rule (3× price for no measured\n  gain).",
+      "values": [
+        {
+          "quantity": "F1@20m proposer-role gap, F3.5 pool minus F3 pool under the F3 verifier",
+          "value_verbatim": "−0.0355",
+          "value_parsed": -0.0355,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.pairs[0].observed_diff",
+          "method": null
+        },
+        {
+          "quantity": "raw permutation p-value, proposer-role gap",
+          "value_verbatim": "0.035",
+          "value_parsed": 0.035,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.pairs[0].p_value",
+          "method": null
+        },
+        {
+          "quantity": "raw permutation p-value, verifier-role gap on the F3.5 pool",
+          "value_verbatim": "0.17",
+          "value_parsed": 0.17,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.pairs[1].p_value",
+          "method": null
+        },
+        {
+          "quantity": "raw permutation p-value, verifier-role gap on the F3 pool",
+          "value_verbatim": "0.10",
+          "value_parsed": 0.1,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.pairs[2].p_value",
+          "method": null
+        },
+        {
+          "quantity": "price ratio, F3.5 verifier relative to F3 verifier",
+          "value_verbatim": "3×",
+          "value_parsed": 3.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": {
+        "file": "results/flash35-2x2/flash35_permutations.json"
+      },
+      "method": "read",
+      "notes": "Artefact records p = 0.0349, 0.1703 and 0.0998 over 10,000 permutations (seed 42, 487 tiles). The 3× price multiplier is vendor pricing (external)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          163,
+          163
+        ],
+        "section": "Decisions — 1. buffers"
+      },
+      "claim_text": "**RESOLVED — buffers**: 30 m = GS characterisation precision",
+      "values": [
+        {
+          "quantity": "GS characterisation buffer (text/PV plateau onset)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.by_modality[0].onset_median",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/working-precision/gs-plateau-characterisation.json"
+      },
+      "method": "read",
+      "notes": "The same 30 m is the proposer-verifier architecture onset median ($.summary.by_architecture[2].onset_median)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          163,
+          164
+        ],
+        "section": "Decisions — 1. buffers"
+      },
+      "claim_text": "50 m =\n   shared operational buffer (55-map canonical + any cross-track table)",
+      "values": [
+        {
+          "quantity": "shared operational buffer (55-map canonical and cross-track tables)",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffer_m",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+        "path": "$.buffer_m"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          165,
+          165
+        ],
+        "section": "Decisions — 1. buffers"
+      },
+      "claim_text": "difference explained via ~2× student jitter.",
+      "values": [
+        {
+          "quantity": "ratio of the 50 m operational buffer to student digitisation jitter",
+          "value_verbatim": "2×",
+          "value_parsed": 2.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No committed artefact carries a student-jitter magnitude; results/working-precision/gs-miss-correlation.json records $.student_radius_m = 50.0 (a matching radius, not a jitter estimate)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          165,
+          166
+        ],
+        "section": "Decisions — 1. buffers"
+      },
+      "claim_text": "55-map leaderboard built\n   at 50 m (`results/55map-leaderboard/`, 5 tiers).",
+      "values": [
+        {
+          "quantity": "buffer at which the 55-map leaderboard was built",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffer_m",
+          "method": null
+        },
+        {
+          "quantity": "statistical tiers on the 55-map leaderboard",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "tiers",
+          "kind": "count",
+          "path": "len($.tiers)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55map-leaderboard/55map_leaderboard_50m.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          167,
+          168
+        ],
+        "section": "Decisions — 2. make-up plan"
+      },
+      "claim_text": "**RESOLVED — make-up plan**: A (derived min6 0.8681) + B (true min6\n   0.8784,",
+      "values": [
+        {
+          "quantity": "F1@20m, derived first-5-of-10 min6 cell (option A)",
+          "value_verbatim": "0.8681",
+          "value_parsed": 0.8681,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.true_min6_makeup.family.derived_first5of10",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, true first-5 min6 cell (option B, best op 3of5/pt0.15)",
+          "value_verbatim": "0.8784",
+          "value_parsed": 0.8784,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.true_min6_makeup.best.f1_20m",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-robustness/min6_true_makeup.json"
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          168,
+          168
+        ],
+        "section": "Decisions — 2. make-up plan"
+      },
+      "claim_text": "1,586/1,586 verified, ≈$1.11)",
+      "values": [
+        {
+          "quantity": "candidates verified in the true min6 make-up run",
+          "value_verbatim": "1,586",
+          "value_parsed": 1586,
+          "unit": "candidates",
+          "kind": "count",
+          "path": "$.execution_stats.items_processed",
+          "method": null
+        },
+        {
+          "quantity": "candidates submitted to the true min6 make-up verifier run",
+          "value_verbatim": "1,586",
+          "value_parsed": 1586,
+          "unit": "candidates",
+          "kind": "count",
+          "path": "$.execution_stats.items_processed",
+          "method": null
+        },
+        {
+          "quantity": "cost of the true min6 make-up verifier run",
+          "value_verbatim": "$1.11",
+          "value_parsed": 1.11,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "$.cost_estimate.total_cost_usd",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/text-min-t07-true-1of5/run.meta.json"
+      },
+      "method": "read",
+      "notes": "The denominator is items_processed + items_failed ($.execution_stats.items_failed = 0), so both verbatim 1,586 values resolve through the same field; the harness must key on position. The document quotes ≈$1.11 while the meta's $.cost_estimate.total_cost_usd is computed at list rates — triage should establish whether the document's figure is a flex-tier (discounted) figure."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          170,
+          173
+        ],
+        "section": "Decisions — 3. GT epistemics presentation"
+      },
+      "claim_text": "3. **RESOLVED — GT epistemics presentation**: report the +3 %/+5 %\n   sensitivity band with the measured 2.4–2.7 % central estimate\n   (double-miss correlation 1.5–1.7×, Obs 361) — wide band preferred\n   because the ratio rests on 4 events.",
+      "values": [
+        {
+          "quantity": "lower edge of the reported GT-incompleteness sensitivity band",
+          "value_verbatim": "+3 %",
+          "value_parsed": 3.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper edge of the reported GT-incompleteness sensitivity band",
+          "value_verbatim": "+5 %",
+          "value_parsed": 5.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "lower edge of the measured central estimate (implied 55-map p_neither at 20 m system radius)",
+          "value_verbatim": "2.4",
+          "value_parsed": 2.4,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.by_system_radius[0].implied_55map_p_neither",
+          "method": null
+        },
+        {
+          "quantity": "upper edge of the measured central estimate (implied 55-map p_neither at 30/50 m system radius)",
+          "value_verbatim": "2.7 %",
+          "value_parsed": 2.7,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.by_system_radius[1].implied_55map_p_neither",
+          "method": null
+        },
+        {
+          "quantity": "double-miss correlation ratio at 20 m system radius",
+          "value_verbatim": "1.5",
+          "value_parsed": 1.5,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.by_system_radius[0].correlation_ratio",
+          "method": null
+        },
+        {
+          "quantity": "double-miss correlation ratio at 30/50 m system radius",
+          "value_verbatim": "1.7×",
+          "value_parsed": 1.7,
+          "unit": null,
+          "kind": "ratio",
+          "path": "$.by_system_radius[1].correlation_ratio",
+          "method": null
+        },
+        {
+          "quantity": "double-miss events underlying the correlation ratio",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "events",
+          "kind": "count",
+          "path": "$.by_system_radius[0].both_miss",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/working-precision/gs-miss-correlation.json"
+      },
+      "method": "read",
+      "notes": "Artefact stores fractions (0.0237, 0.0264) and ratios (1.5, 1.67). The +3 %/+5 % presentation band is a reporting choice with no artefact. Obs 361 is an identifier, out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          174,
+          175
+        ],
+        "section": "Decisions — 4. metric-board flags"
+      },
+      "claim_text": "4. **OPEN — metric-board flags**: P or R < 0.5 floor + min/max < 0.6\n   imbalance marker — confirm thresholds (Flash 3.5 cells now available).",
+      "values": [
+        {
+          "quantity": "proposed precision/recall floor for metric-board flagging",
+          "value_verbatim": "0.5",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "proposed min/max imbalance threshold for metric-board flagging",
+          "value_verbatim": "0.6",
+          "value_parsed": 0.6,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Proposed thresholds under an OPEN decision — not asserted as applied, so no executed artefact carries them. Included per the instrument's include-when-in-doubt rule; triage may prune."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          186,
+          188
+        ],
+        "section": "Changelog — 2026-06-12 cost-ratio correction"
+      },
+      "claim_text": "§ 3's \"1/8 the cost\" and\n\"HIGH ≈ 3× minimal\" were pre-audit estimates; audited rates make them\n1/17 and 8.6× — the minimal-rung conclusion strengthens.",
+      "values": [
+        {
+          "quantity": "cost ratio, min11 vs headline31 — superseded pre-audit estimate",
+          "value_verbatim": "1/8",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "token-cost multiplier, HIGH vs minimal proposer pass — superseded pre-audit estimate",
+          "value_verbatim": "3×",
+          "value_parsed": 3.0,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "cost ratio, min11 vs headline31 — audited value",
+          "value_verbatim": "1/17",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "token-cost multiplier, HIGH vs minimal proposer pass — audited value",
+          "value_verbatim": "8.6×",
+          "value_parsed": 8.6,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Changelog before→after pair: 1/8 and 3× are the historical (superseded) side; 1/17 and 8.6× are the live claims, whose only stated source is the prose reports/token-load-audit-2026-06-12.md."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          193,
+          194
+        ],
+        "section": "Changelog — 2026-06-11 (S113) significance tests"
+      },
+      "claim_text": "Session 113 ran the three pending role permutations\n($0, zbook).",
+      "values": [
+        {
+          "quantity": "role permutations run in Session 113",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "tests",
+          "kind": "count",
+          "path": "len($.pairs)",
+          "method": null
+        },
+        {
+          "quantity": "cost of the Session 113 permutation runs",
+          "value_verbatim": "$0",
+          "value_parsed": 0.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/flash35-2x2/flash35_permutations.json",
+        "path": "len($.pairs)"
+      },
+      "method": "read",
+      "notes": "The $0 cost reflects local compute (no API spend) and has no committed artefact. Session number is out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          195,
+          196
+        ],
+        "section": "Changelog — 2026-06-11 (S113) significance tests"
+      },
+      "claim_text": "proposer-role loss resolved (p = 0.035 raw);\nverifier-role losses are within-noise ties (p = 0.17 / p = 0.10)",
+      "values": [
+        {
+          "quantity": "raw permutation p-value, proposer-role gap",
+          "value_verbatim": "0.035",
+          "value_parsed": 0.035,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.pairs[0].p_value",
+          "method": null
+        },
+        {
+          "quantity": "raw permutation p-value, verifier-role gap on the F3.5 pool",
+          "value_verbatim": "0.17",
+          "value_parsed": 0.17,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.pairs[1].p_value",
+          "method": null
+        },
+        {
+          "quantity": "raw permutation p-value, verifier-role gap on the F3 pool",
+          "value_verbatim": "0.10",
+          "value_parsed": 0.1,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.pairs[2].p_value",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/flash35-2x2/flash35_permutations.json"
+      },
+      "method": "read",
+      "notes": "Changelog restatement of the live § 11 p-values (not historical)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          201,
+          202
+        ],
+        "section": "Changelog — 2026-06-11 Flash 3.5 verdict added"
+      },
+      "claim_text": "§ 11 records the\n2×2×2 outcome",
+      "values": [
+        {
+          "quantity": "levels of the proposer-model factor",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "levels",
+          "kind": "count",
+          "path": "len($.cells)",
+          "method": null
+        },
+        {
+          "quantity": "levels of the verifier-model factor",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "levels",
+          "kind": "count",
+          "path": "len($.cells)",
+          "method": null
+        },
+        {
+          "quantity": "levels of the verifier-iteration factor",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "levels",
+          "kind": "count",
+          "path": "len($.cells)",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/flash35-2x2/analysis-full.json",
+        "path": "len($.cells)"
+      },
+      "method": "read",
+      "notes": "Changelog restatement of the 2×2×2 design; realised cells are enumerated at $.cells (four proposer×verifier cells plus two bare-consensus cells)."
+    }
+  ]
+}
