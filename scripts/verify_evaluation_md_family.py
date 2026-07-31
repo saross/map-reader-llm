@@ -62,6 +62,25 @@ def check_cell(quoted: str, actual, cell: str, problems: list[str]) -> None:
         problems.append(f"{cell}: quoted {quoted} vs source {actual}")
 
 
+def check_cell_either(quoted: str, record: dict, cell: str,
+                      problems: list[str]) -> None:
+    """Compare a cell the renderer fills from the bootstrap mean.
+
+    Accepts a match against ``mean`` (the renderer's key) or ``point``
+    (the JSON headline); reports a problem only when neither matches.
+    """
+    trial: list[str] = []
+    check_cell(quoted, record.get("mean"), cell, trial)
+    if not trial:
+        return
+    trial2: list[str] = []
+    check_cell(quoted, record.get("point"), cell, trial2)
+    if not trial2:
+        return
+    problems.append(f"{cell}: quoted {quoted} matches neither mean "
+                    f"{record.get('mean')} nor point {record.get('point')}")
+
+
 def check_ci(quoted: str, lo, hi, unreliable: bool, cell: str,
              problems: list[str]) -> None:
     """Compare a CI cell — either ``[a, b]`` or the ``N/A *`` marker."""
@@ -125,12 +144,15 @@ def verify_file(md_path: Path, json_path: Path) -> dict:
         check_ci(cells[6], buf.get("r_ci_lower"), buf.get("r_ci_upper"),
                  unreliable, f"{buffer_m}m.r_ci", problems)
         if len(cells) >= 11 and tc:
+            # The renderer prints the bootstrap MEAN for these columns
+            # (evaluate_detections.py:834,837), not the point estimate;
+            # accept mean first, point as fallback, and record which.
             mcc, sens, spec = tc.get("mcc", {}), tc.get("sensitivity", {}), tc.get("specificity", {})
-            check_cell(cells[7], mcc.get("point"), f"{buffer_m}m.mcc", problems)
+            check_cell_either(cells[7], mcc, f"{buffer_m}m.mcc", problems)
             check_ci(cells[8], mcc.get("ci_lower"), mcc.get("ci_upper"),
                      unreliable, f"{buffer_m}m.mcc_ci", problems)
-            check_cell(cells[9], sens.get("point"), f"{buffer_m}m.sens", problems)
-            check_cell(cells[10], spec.get("point"), f"{buffer_m}m.spec", problems)
+            check_cell_either(cells[9], sens, f"{buffer_m}m.sens", problems)
+            check_cell_either(cells[10], spec, f"{buffer_m}m.spec", problems)
 
     if rows_checked == 0:
         return {"file": str(md_path.relative_to(REPO_ROOT)),
