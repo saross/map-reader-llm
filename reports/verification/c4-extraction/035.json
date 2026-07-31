@@ -1,0 +1,2956 @@
+{
+  "schema_version": "1.0",
+  "extracted_at": "2026-07-31T00:00:00Z",
+  "source_document": {
+    "file": "reports/experimental-progression.md",
+    "git_blob": "1198a51fea89",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.1"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          3,
+          4
+        ],
+        "section": "Revision banner"
+      },
+      "claim_text": "**Last revised**: 2026-07-30 (\"1 of 10 survived FDR\" corrected to 0 of\n> 10).",
+      "values": [
+        {
+          "quantity": "n Phase 2a pairwise comparisons surviving FDR — superseded pre-correction figure",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of Phase 2a pairwise comparisons",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": "$.n_comparisons",
+          "method": "read"
+        },
+        {
+          "quantity": "n Phase 2a pairwise comparisons surviving FDR (corrected figure)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": "$.n_fdr_significant",
+          "method": "read"
+        },
+        {
+          "quantity": "count of Phase 2a pairwise comparisons (restated)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": "$.n_comparisons",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": "$.n_fdr_significant"
+      },
+      "method": "read",
+      "notes": "Correction block: the '1 of 10' side is the superseded historical value, the '0 of 10' side the live claim. The date is out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          28,
+          29
+        ],
+        "section": "Overview"
+      },
+      "claim_text": "The experimental\nprogression has three phases:",
+      "values": [
+        {
+          "quantity": "count of experimental phases in the study's progression",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "phases",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential structural count of the document's own three phase sections (Phase 1 / Phase 2 / Phase 3 headings at lines 45, 115, 187). No external artefact decides it; included per the instrument's over-inclusion preference."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          32
+        ],
+        "section": "Overview"
+      },
+      "claim_text": "**Preregistered exploration** (February 2026): OFAT design on 60-tile\n   holdout at 512px, testing prompt engineering variables",
+      "values": [
+        {
+          "quantity": "tile count, Phase 1 holdout set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile size, Phase 1 holdout",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/validation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The holdout manifest is a JSON array of the 60 512-px validation tiles; inputs/vectors/bounds/validation_bounds.geojson carries the same 60 as features. The 512-px geometry is also recorded in the lodged preregistration's tiling table."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          33,
+          34
+        ],
+        "section": "Overview"
+      },
+      "claim_text": "**Scaled validation** (March 2026): Re-execution on 340 tiles at\n   512px with adequate statistical power",
+      "values": [
+        {
+          "quantity": "tile count, Era 1 evaluation corpus",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile size, Era 1 evaluation corpus",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Whole-artefact feature count of the Era 1 bounds GeoJSON (340 features). The 512-px grid is the inputs/tiles/ tile set."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          36,
+          37
+        ],
+        "section": "Overview"
+      },
+      "claim_text": "**Production optimisation** (late March 2026): Full evaluation on\n   487 tiles at 384px, focusing on factors identified as significant",
+      "values": [
+        {
+          "quantity": "tile count, Era 2 evaluation corpus",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile size, Era 2 evaluation corpus",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles_384/full_evaluation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Whole-artefact length of the Era 2 384-px tile manifest (487 entries)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          39,
+          41
+        ],
+        "section": "Overview"
+      },
+      "claim_text": "All deviations from the preregistration are documented in the protocol\nerrata (57 entries, E1–E57) maintained alongside the preregistration\ndocument.",
+      "values": [
+        {
+          "quantity": "count of protocol-errata entries",
+          "value_verbatim": "57",
+          "value_parsed": 57,
+          "unit": "entries",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/protocol-errata.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Count of `### E<n>` headings in the errata register. E1–E57 are identifiers and are out of C4 scope; only the count is extracted. Doubt flagged: the register is itself a hand-written document, but it is the artefact whose size the claim asserts rather than a prose restatement of someone else's count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          45,
+          45
+        ],
+        "section": "Phase 1: Preregistered OFAT exploration (60 tiles, 512px)"
+      },
+      "claim_text": "## Phase 1: Preregistered OFAT exploration (60 tiles, 512px)",
+      "values": [
+        {
+          "quantity": "tile count, Phase 1 holdout set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile size, Phase 1 holdout set",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/validation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Section heading restating the Phase 1 evaluation scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          49,
+          51
+        ],
+        "section": "Phase 1 — Design"
+      },
+      "claim_text": "The preregistration specified a sequential OFAT design testing five\nprompt engineering factors on a 60-tile holdout set drawn from four\nSoviet 1:50,000 topographic map sheets",
+      "values": [
+        {
+          "quantity": "count of prompt-engineering factors specified by the registration",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "factors",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile count of the registered holdout set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of source topographic map sheets",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "map sheets",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "source map scale denominator",
+          "value_verbatim": "1:50,000",
+          "value_parsed": 50000,
+          "unit": null,
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 registered-value rule: this sentence states what the REGISTRATION specified, so it anchors to the lodged preregistration (path null), not to executed configs. The four map-sheet names that follow are identifiers, out of C4 scope. As-run corroborant for the sheet count: inputs/tiles/tile_selection_metadata.json $.validation.by_map has four keys."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          54,
+          55
+        ],
+        "section": "Phase 1 — Design"
+      },
+      "claim_text": "The tile size (512×512 pixels, 448px stride with 64px\noverlap)",
+      "values": [
+        {
+          "quantity": "tile width, registered tiling geometry",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile height, registered tiling geometry",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tiling stride, registered tiling geometry",
+          "value_verbatim": "448",
+          "value_parsed": 448,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile overlap, registered tiling geometry",
+          "value_verbatim": "64",
+          "value_parsed": 64,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registered tiling geometry (the preregistration's parameter table gives '512×512 pixels (64px overlap, 448px stride)'); anchored to the lodged document per the v1.1 rule. As-run corroborant for the stride: inputs/tiles/tile_selection_metadata.json $.parameters.tile_size = 448."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          55,
+          57
+        ],
+        "section": "Phase 1 — Design"
+      },
+      "claim_text": "was selected during a calibration pilot (2026-01-07) comparing\n256px, 512px, and 1024px tiles at K=5 passes with a 2-of-5 voting\nthreshold",
+      "values": [
+        {
+          "quantity": "tile size, calibration pilot arm 1",
+          "value_verbatim": "256",
+          "value_parsed": 256,
+          "unit": "px",
+          "kind": "parameter",
+          "path": "$.sizes.256.tile_size",
+          "method": null
+        },
+        {
+          "quantity": "tile size, calibration pilot arm 2",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": "$.sizes.512.tile_size",
+          "method": null
+        },
+        {
+          "quantity": "tile size, calibration pilot arm 3",
+          "value_verbatim": "1024",
+          "value_parsed": 1024,
+          "unit": "px",
+          "kind": "parameter",
+          "path": "$.sizes.1024.tile_size",
+          "method": null
+        },
+        {
+          "quantity": "K, passes per condition in the calibration pilot",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "$.parameters.num_passes",
+          "method": null
+        },
+        {
+          "quantity": "voting threshold used in the calibration pilot",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "votes",
+          "kind": "parameter",
+          "path": "$.sizes.512.thresholds.2",
+          "method": null
+        },
+        {
+          "quantity": "consensus pool size in the calibration pilot voting threshold",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "$.parameters.num_passes",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/pilot-tile-size/pilot_results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document names archive/pilot-tile-size/outputs/pilot_decision.md, which is prose; anchored instead to the pilot's results artefact (least-writable), which carries the three tile-size arms as $.sizes keys, num_passes = 5, and per-threshold results keyed 1..5. The pilot date is out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          65,
+          65
+        ],
+        "section": "Phase 1 — Design (OFAT sequence table)"
+      },
+      "claim_text": "| 2a | H1 | Modality/elaboration | 5 | 10 |",
+      "values": [
+        {
+          "quantity": "count of Phase 2a modality/elaboration conditions",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs per condition, Phase 2a",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2a-h1-modality.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Study definition: factors.modality_elaboration.levels has five entries; execution.runs: 10. '2a' and 'H1' are identifiers, out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          66,
+          66
+        ],
+        "section": "Phase 1 — Design (OFAT sequence table)"
+      },
+      "claim_text": "| 2b | H7 | Temperature | 5 × 2 tracks | 10 |",
+      "values": [
+        {
+          "quantity": "count of temperature levels per track, Phase 2b",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of tracks, Phase 2b",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "tracks",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs per condition, Phase 2b",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2b-h7-temperature.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Image track study definition (five temperature levels T0.0/T0.3/T0.7/T1.0/T1.3; execution.runs: 10). The second track is studies/phase2b-h7-temperature-text-only.yaml."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          67,
+          67
+        ],
+        "section": "Phase 1 — Design (OFAT sequence table)"
+      },
+      "claim_text": "| 2c | H8 | Library composition | 5 × 2 tracks | 10 |",
+      "values": [
+        {
+          "quantity": "count of library configurations per track, Phase 2c",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of tracks, Phase 2c",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "tracks",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs per condition, Phase 2c",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2c-h8-library.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Image track study definition (five active library levels; execution.runs: 10). Second track: studies/phase2c-h8-library-text-only.yaml."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          68,
+          68
+        ],
+        "section": "Phase 1 — Design (OFAT sequence table)"
+      },
+      "claim_text": "| 2d | H5 | Negative text treatment | 2 × 2 tracks | 10 |",
+      "values": [
+        {
+          "quantity": "count of negative-text treatment conditions per track, Phase 2d",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of tracks, Phase 2d",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "tracks",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs per condition, Phase 2d",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2d-h5-negtext.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Image track study definition (execution.runs: 10). Second track: studies/phase2d-h5-negtext-text-only.yaml. Doubt flagged for triage: the study files define three treatment levels (minimal/terse/verbose) against the table's 2 — not adjudicated here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          69,
+          69
+        ],
+        "section": "Phase 1 — Design (OFAT sequence table)"
+      },
+      "claim_text": "| 2e | H4 | Example ordering | 4 | 10 |",
+      "values": [
+        {
+          "quantity": "count of example-ordering conditions, Phase 2e",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs per condition, Phase 2e",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2e-h4-ordering.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Study definition: factors.ordering.levels has four entries; execution.runs: 10."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          71,
+          71
+        ],
+        "section": "Phase 1 — Design"
+      },
+      "claim_text": "All five phases were executed on the 60-tile holdout set at 512px",
+      "values": [
+        {
+          "quantity": "count of OFAT sub-phases executed",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": "phases",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile count, Phase 1 holdout set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile size, Phase 1 holdout set",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/validation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 'five phases' count is corroborated by the five study definitions studies/phase2[a-e]-*.yaml. The execution date range on line 72 is out of C4 scope, as are the E25–E31 erratum identifiers on line 73."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          74,
+          74
+        ],
+        "section": "Phase 1 — Design"
+      },
+      "claim_text": "ordering had 4 conditions instead",
+      "values": [
+        {
+          "quantity": "count of example-ordering conditions as run, Phase 2e",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2e-h4-ordering.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "As-run count; the registered counterpart is the separate claim at line 75."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          75,
+          75
+        ],
+        "section": "Phase 1 — Design"
+      },
+      "claim_text": "of the preregistered 3",
+      "values": [
+        {
+          "quantity": "count of example-ordering conditions specified by the registration",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 registered-value rule: anchors to the lodged preregistration (path null), never to the executed study file, which records the deviation rather than the promise."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          79,
+          79
+        ],
+        "section": "Phase 1 — Findings"
+      },
+      "claim_text": "The 60-tile OFAT produced directional results for each factor but",
+      "values": [
+        {
+          "quantity": "tile count, Phase 1 holdout set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/validation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Repeated statement of the Phase 1 evaluation scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          81,
+          81
+        ],
+        "section": "Phase 1 — Findings"
+      },
+      "claim_text": "At 60 tiles, bootstrap confidence intervals spanned ~0.20 F1",
+      "values": [
+        {
+          "quantity": "tile count, Phase 1 holdout set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "bootstrap confidence-interval width, F1, 60-tile Phase 2a conditions (approximate)",
+          "value_verbatim": "0.20",
+          "value_parsed": 0.2,
+          "unit": "F1",
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "CI width = $.per_condition_metrics.<condition>.bootstrap_ci high − low across the five Phase 2a conditions ($.n_bootstrap = 1000, $.fdr_q = 0.05); a spread claim, so it needs scripted aggregation rather than a single read. The 60-tile count is not carried by this artefact — its anchor is inputs/tiles/validation_manifest.json (60 entries)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          82,
+          85
+        ],
+        "section": "Phase 1 — Findings"
+      },
+      "claim_text": "**no** Phase 2a pairwise comparison survived FDR correction (0 of 10;\n`results/phase2a-analysis-report.json`, `n_fdr_significant: 0` — the\nlong-standing \"1 of 10\" figure was a misreport, corrected 2026-07-30;\nsee the E36 correction block and Obs 372).",
+      "values": [
+        {
+          "quantity": "n Phase 2a pairwise comparisons surviving FDR",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": "$.n_fdr_significant",
+          "method": "read"
+        },
+        {
+          "quantity": "count of Phase 2a pairwise comparisons",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": "$.n_comparisons",
+          "method": "read"
+        },
+        {
+          "quantity": "n Phase 2a pairwise comparisons surviving FDR (restated as the artefact key)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": "$.n_fdr_significant",
+          "method": "read"
+        },
+        {
+          "quantity": "n Phase 2a pairwise comparisons surviving FDR — superseded pre-correction figure",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of Phase 2a pairwise comparisons (restated)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": "$.n_comparisons",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": "$.n_fdr_significant"
+      },
+      "method": "read",
+      "notes": "The document names its own source artefact. The quoted '1 of 10' is the superseded figure inside a correction block, hence historical. Date, erratum id, and Obs id are out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          90,
+          90
+        ],
+        "section": "Phase 1 — Findings"
+      },
+      "claim_text": "Key directional findings at 60 tiles:",
+      "values": [
+        {
+          "quantity": "tile count, Phase 1 holdout set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/validation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Repeated statement of the Phase 1 evaluation scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          95,
+          96
+        ],
+        "section": "Phase 1 — Findings"
+      },
+      "claim_text": "- **Temperature (H7)**: T=0.0–0.3 marginally outperformed T=0.7–1.0 at\n  N=1",
+      "values": [
+        {
+          "quantity": "temperature level, lower arm lower bound, Phase 2b",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature level, lower arm upper bound, Phase 2b",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature level, upper arm lower bound, Phase 2b",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature level, upper arm upper bound, Phase 2b",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2b-h7-temperature.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Temperature factor levels T0.0/T0.3/T0.7/T1.0/T1.3 in the Phase 2b study definitions (both tracks). Scope decision: the trailing bare 'N=1' is a single-pass condition label with no asserted magnitude and is not extracted here; the same rule is applied at lines 110, 158, and 200."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          98,
+          99
+        ],
+        "section": "Phase 1 — Findings"
+      },
+      "claim_text": "- **Library composition (H8)**: Negligible differences between 5\n  library configurations — no comparison approached significance",
+      "values": [
+        {
+          "quantity": "count of library configurations compared, Phase 2c",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "configurations",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2c-h8-library.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Five active library levels in the Phase 2c study definition (scale-16 and scale-32 are commented out)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          107,
+          108
+        ],
+        "section": "Phase 1 — Consensus voting pilot"
+      },
+      "claim_text": "Phase 3a (H3 consensus voting) was also initiated on the 60-tile set\n(2026-02-15), testing N=30 consensus pools at two temperatures on both",
+      "values": [
+        {
+          "quantity": "tile count, Phase 1 holdout set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus pool size, Phase 3a pilot",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of temperatures tested, Phase 3a pilot",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "temperatures",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase3a-h3-voting-track1.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Study definition: execution.runs: 30. Doubt flagged for triage: the study files define three temperature levels (T0.3/T0.7/T1.0) per track against the document's 'two temperatures' — not adjudicated here. The 60-tile count anchors to inputs/tiles/validation_manifest.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          115,
+          115
+        ],
+        "section": "Phase 2: Scaled validation (340 tiles, 512px)"
+      },
+      "claim_text": "## Phase 2: Scaled validation (340 tiles, 512px)",
+      "values": [
+        {
+          "quantity": "tile count, Era 1 evaluation corpus",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile size, Era 1 evaluation corpus",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Section heading restating the Phase 2 evaluation scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          119,
+          119
+        ],
+        "section": "Phase 2 — Motivation"
+      },
+      "claim_text": "The 60-tile results demonstrated that the evaluation set was",
+      "values": [
+        {
+          "quantity": "tile count, Phase 1 holdout set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/validation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Repeated statement of the Phase 1 evaluation scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          121,
+          121
+        ],
+        "section": "Phase 2 — Motivation"
+      },
+      "claim_text": "The decision to expand to the full 340-tile evaluation corpus at 512px",
+      "values": [
+        {
+          "quantity": "tile count, Era 1 evaluation corpus",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile size, Era 1 evaluation corpus",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Whole-artefact feature count (340 features)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          124,
+          125
+        ],
+        "section": "Phase 2 — Motivation"
+      },
+      "claim_text": "1. **Wide confidence intervals**: ~0.20 F1 span at 60 tiles made\n   meaningful comparison impossible",
+      "values": [
+        {
+          "quantity": "bootstrap confidence-interval width, F1, 60-tile Phase 2a conditions (approximate)",
+          "value_verbatim": "0.20",
+          "value_parsed": 0.2,
+          "unit": "F1",
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile count, Phase 1 holdout set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Restates the line 81 claim. CI width = bootstrap_ci high − low across $.per_condition_metrics.*; the 60-tile count anchors to inputs/tiles/validation_manifest.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          126,
+          127
+        ],
+        "section": "Phase 2 — Motivation"
+      },
+      "claim_text": "2. **FDR attrition**: Only 1/10 Phase 2a comparisons survived\n   multiple-comparison correction",
+      "values": [
+        {
+          "quantity": "n Phase 2a pairwise comparisons surviving FDR",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": "$.n_fdr_significant",
+          "method": null
+        },
+        {
+          "quantity": "count of Phase 2a pairwise comparisons",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": "$.n_comparisons",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": "$.n_fdr_significant"
+      },
+      "method": "read",
+      "notes": "Extracted as a LIVE claim, not `historical`: this is a body assertion outside any correction block, even though the banner (lines 3–4) and lines 82–85 correct the same figure to 0 of 10. An uncorrected surviving instance is exactly what the sweep should surface; no adjudication attempted here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          131,
+          131
+        ],
+        "section": "Phase 2 — Motivation"
+      },
+      "claim_text": "   reserved the 281-tile pool for Stage 2 (`osf/preregistration.md:76`);",
+      "values": [
+        {
+          "quantity": "tile count of the registered reserve/confirmatory pool",
+          "value_verbatim": "281",
+          "value_parsed": 281,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 registered-value rule: a claim about what the registration reserved, so it anchors to the lodged document (path null). The line-number citation is out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          136,
+          138
+        ],
+        "section": "Phase 2 — What was re-run"
+      },
+      "claim_text": "All Phase 2 conditions were re-executed on the 340-tile corpus\n(outputs in `outputs/retest/`). The re-runs used fewer replications\nper condition for factors already shown to be non-significant at 60",
+      "values": [
+        {
+          "quantity": "tile count, Era 1 evaluation corpus",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile count, Phase 1 holdout set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 60-tile count anchors to inputs/tiles/validation_manifest.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          143,
+          143
+        ],
+        "section": "Phase 2 — What was re-run (table)"
+      },
+      "claim_text": "| 2a | Modality | All 5 conditions | 3 | Significant factor; needs adequate power |",
+      "values": [
+        {
+          "quantity": "count of Phase 2a conditions re-run at 340 tiles",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "conditions",
+          "kind": "count",
+          "path": "$.conditions",
+          "method": null
+        },
+        {
+          "quantity": "runs per condition, Phase 2a retest",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "runs",
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase2a/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "$.conditions is an array whose length is the condition count; $.runs_per_condition carries the replication count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          144,
+          144
+        ],
+        "section": "Phase 2 — What was re-run (table)"
+      },
+      "claim_text": "| 2b | Temperature | All 10 conditions (2 tracks) | 3 | Significant factor |",
+      "values": [
+        {
+          "quantity": "count of Phase 2b conditions re-run at 340 tiles, both tracks",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of tracks, Phase 2b retest",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "tracks",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs per condition, Phase 2b retest",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "runs",
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase2b/track1-image/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Five conditions per track; the second track manifest is outputs/retest/phase2b/track2-text/study_manifest.json. The '10' is the sum across both track manifests' $.conditions arrays."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          145,
+          145
+        ],
+        "section": "Phase 2 — What was re-run (table)"
+      },
+      "claim_text": "| 2c | Library composition | All 10 conditions (2 tracks) | 1 | Non-significant at 60 tiles; 1 run sufficient for confirmation |",
+      "values": [
+        {
+          "quantity": "count of Phase 2c conditions re-run at 340 tiles, both tracks",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of tracks, Phase 2c retest",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "tracks",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs per condition, Phase 2c retest",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "runs",
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": null
+        },
+        {
+          "quantity": "tile count, Phase 1 holdout set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs per condition, Phase 2c retest (restated in rationale)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "runs",
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase2c/track1-image/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Five conditions per track; second track at outputs/retest/phase2c/track2-text/study_manifest.json. The 60-tile count anchors to inputs/tiles/validation_manifest.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          146,
+          146
+        ],
+        "section": "Phase 2 — What was re-run (table)"
+      },
+      "claim_text": "| 2d | Text treatment | All 4 conditions (2 tracks) | 1 | Non-significant at 60 tiles |",
+      "values": [
+        {
+          "quantity": "count of Phase 2d conditions re-run at 340 tiles, both tracks",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of tracks, Phase 2d retest",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "tracks",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs per condition, Phase 2d retest",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "runs",
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": null
+        },
+        {
+          "quantity": "tile count, Phase 1 holdout set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase2d/track1-image/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Two conditions per track; second track at outputs/retest/phase2d/track2-text/study_manifest.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          147,
+          147
+        ],
+        "section": "Phase 2 — What was re-run (table)"
+      },
+      "claim_text": "| 2e | Ordering | All 4 conditions | 1 | Non-significant at 60 tiles |",
+      "values": [
+        {
+          "quantity": "count of Phase 2e conditions re-run at 340 tiles",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "conditions",
+          "kind": "count",
+          "path": "$.conditions",
+          "method": null
+        },
+        {
+          "quantity": "runs per condition, Phase 2e retest",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "runs",
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": null
+        },
+        {
+          "quantity": "tile count, Phase 1 holdout set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase2e/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 60-tile count anchors to inputs/tiles/validation_manifest.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          148,
+          148
+        ],
+        "section": "Phase 2 — What was re-run (table)"
+      },
+      "claim_text": "| 3a | Consensus voting | N=30, both tracks + HIGH thinking | 30 | Core pipeline evaluation |",
+      "values": [
+        {
+          "quantity": "consensus pool size, Phase 3a retest",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs per condition, Phase 3a retest",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "runs",
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3a/track1-image/study_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Second track at outputs/retest/phase3a/track2-text/study_manifest.json; the HIGH thinking arm is outputs/retest/phase3a-high/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          152,
+          153
+        ],
+        "section": "Phase 2 — Pipeline development (post-registration)"
+      },
+      "claim_text": "During the 512px validation phase, two architectural innovations were\ndeveloped that were not in the original preregistration:",
+      "values": [
+        {
+          "quantity": "tile size, Era 1 validation phase",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of post-registration architectural innovations",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "innovations",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 512-px scope anchors to the Era 1 bounds artefact. The 'two innovations' count is self-referential to the document's own numbered list (items 1 and 2 at lines 155 and 161) and has no external artefact; marked anchor-unknown at value level."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          164,
+          165
+        ],
+        "section": "Phase 2 — Pipeline development (post-registration)"
+      },
+      "claim_text": "The PV stage added +0.05 to +0.09 F1 on top of consensus\n   for Flash models and became the dominant architectural feature.",
+      "values": [
+        {
+          "quantity": "proposer-verifier F1 lift over consensus, Flash models, lower bound of quoted range",
+          "value_verbatim": "+0.05",
+          "value_parsed": 0.05,
+          "unit": "F1",
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "proposer-verifier F1 lift over consensus, Flash models, upper bound of quoted range",
+          "value_verbatim": "+0.09",
+          "value_parsed": 0.09,
+          "unit": "F1",
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/fdr/pairwise_results_fdr.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Range over the group-1 'PV vs consensus' delta_f1 rows in the 20 m pairwise register (Flash arms); needs a min/max aggregation, not a single read. Doubt flagged: the document places this in the 340-tile Era 1 section, whereas this register is the 487-tile Era 2 20 m file — triage to confirm the era. Scope decisions for this subsection: 'two-stage pipeline' and 'a second VLM pass' (lines 162–163) are architectural description, not extracted; the bare 'N=1 performance' at line 158 is a condition label, not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          167,
+          167
+        ],
+        "section": "Phase 2 — Findings at 340 tiles"
+      },
+      "claim_text": "### Findings at 340 tiles",
+      "values": [
+        {
+          "quantity": "tile count, Era 1 evaluation corpus",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Section heading restating the Phase 2 evaluation scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          169,
+          169
+        ],
+        "section": "Phase 2 — Findings at 340 tiles"
+      },
+      "claim_text": "The scaled evaluation confirmed and extended the 60-tile findings with",
+      "values": [
+        {
+          "quantity": "tile count, Phase 1 holdout set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/validation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Repeated statement of the Phase 1 evaluation scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          172,
+          174
+        ],
+        "section": "Phase 2 — Findings at 340 tiles"
+      },
+      "claim_text": "- **Prompt engineering factors (library, treatment, ordering)**: Confirmed\n  non-significant. 0 of 28 comparisons significant after FDR (Obs 207).\n  The 60-tile directional findings were validated as noise.",
+      "values": [
+        {
+          "quantity": "n prompt-engineering comparisons significant after FDR, 340-tile retest",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of prompt-engineering pairwise comparisons, 340-tile retest",
+          "value_verbatim": "28",
+          "value_parsed": 28,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile count, Phase 1 holdout set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "28 = Phase 2c (10 image + 10 text) + Phase 2d (1 + 1) + Phase 2e (6) rows in $.comparisons, keyed by $.comparisons[*].phase. The artefact stores raw p-values with FDR explicitly deferred ($.metadata.note), so the 'significant after FDR' count requires a Benjamini–Hochberg recomputation. The 60-tile count anchors to inputs/tiles/validation_manifest.json. The Obs id is out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          175,
+          176
+        ],
+        "section": "Phase 2 — Findings at 340 tiles"
+      },
+      "claim_text": "- **Temperature**: T=0.7 vs T=1.0 confirmed significant (ΔF1=+0.17,\n  all p<0.001 at consensus). T=1.0 is the Gemini API default;",
+      "values": [
+        {
+          "quantity": "temperature, favoured arm of the comparison",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature, disfavoured arm of the comparison",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "ΔF1, T=0.7 vs T=1.0 at consensus",
+          "value_verbatim": "+0.17",
+          "value_parsed": 0.17,
+          "unit": "F1",
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "p-value ceiling asserted for the temperature comparisons",
+          "value_verbatim": "0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "Gemini API default temperature (vendor default)",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/fdr/pairwise_results_fdr.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Group-4 'T=0.7 vs T=1.0' rows (N=5/N=10/N=30) carry delta_f1 and p_value_adj at $.comparisons[?(@.question=='T=0.7 vs T=1.0 (N=5)')] and siblings. Doubt flagged: the document places this finding in the 340-tile section whilst the nearest register is the 487-tile 20 m pairwise file — triage to confirm the era. The final clause is a vendor API default, which no repo artefact decides, hence external at value level."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          179,
+          180
+        ],
+        "section": "Phase 2 — Findings at 340 tiles"
+      },
+      "claim_text": "- **Modality**: Text outperforms image confirmed significant at HIGH\n  thinking (+0.05 to +0.09 F1).",
+      "values": [
+        {
+          "quantity": "text-over-image F1 advantage at HIGH thinking, lower bound of quoted range",
+          "value_verbatim": "+0.05",
+          "value_parsed": 0.05,
+          "unit": "F1",
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "text-over-image F1 advantage at HIGH thinking, upper bound of quoted range",
+          "value_verbatim": "+0.09",
+          "value_parsed": 0.09,
+          "unit": "F1",
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/fdr/pairwise_results_fdr.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Range over the group-2 'Text vs image' delta_f1 rows in the 20 m pairwise register; min/max aggregation rather than a single read. Same era caveat as the line 164–165 claim: the document places it at 340 tiles, the register is 487-tile Era 2."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          187,
+          187
+        ],
+        "section": "Phase 3: Production optimisation (487 tiles, 384px)"
+      },
+      "claim_text": "## Phase 3: Production optimisation (487 tiles, 384px)",
+      "values": [
+        {
+          "quantity": "tile count, Era 2 evaluation corpus",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile size, Era 2 evaluation corpus",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles_384/full_evaluation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Section heading restating the Phase 3 evaluation scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          191,
+          193
+        ],
+        "section": "Phase 3 — Tile-size diagnostic"
+      },
+      "claim_text": "The preregistered tile-size calibration (Phase 0, 2026-01-07) selected\n512px on single-scale precision-recall balance, run at K=5 passes with\na 2-of-5 voting threshold",
+      "values": [
+        {
+          "quantity": "tile size selected by the calibration pilot",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": "$.sizes.512.tile_size",
+          "method": null
+        },
+        {
+          "quantity": "K, passes per condition in the calibration pilot",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "$.parameters.num_passes",
+          "method": null
+        },
+        {
+          "quantity": "voting threshold used in the calibration pilot",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "votes",
+          "kind": "parameter",
+          "path": "$.sizes.512.thresholds.2",
+          "method": null
+        },
+        {
+          "quantity": "consensus pool size in the calibration pilot voting threshold",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": "$.parameters.num_passes",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/pilot-tile-size/pilot_results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the line 55–57 claim. The document names pilot_decision.md (prose); anchored to the pilot results artefact instead. 'Phase 0' and the date are out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          194,
+          194
+        ],
+        "section": "Phase 3 — Tile-size diagnostic"
+      },
+      "claim_text": "H11, a preregistered conditional hypothesis (to be tested if F1 < 0.85),",
+      "values": [
+        {
+          "quantity": "registered F1 trigger threshold for the H11 conditional hypothesis",
+          "value_verbatim": "0.85",
+          "value_parsed": 0.85,
+          "unit": "F1",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 registered-value rule: the trigger condition is what the registration specifies, so it anchors to the lodged document (path null). 'H11' is an identifier, out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          195,
+          195
+        ],
+        "section": "Phase 3 — Tile-size diagnostic"
+      },
+      "claim_text": "triggered a diagnostic comparison of 256px, 384px, and 512px tiles",
+      "values": [
+        {
+          "quantity": "tile size, H11 diagnostic arm 1",
+          "value_verbatim": "256",
+          "value_parsed": 256,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile size, H11 diagnostic arm 2",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "parameter",
+          "path": "$.inputs.tile_size",
+          "method": null
+        },
+        {
+          "quantity": "tile size, H11 diagnostic arm 3",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/h11-384-single-pass.yaml",
+        "path": "$.inputs.tile_size"
+      },
+      "method": "read",
+      "notes": "The 384-px leg's study definition carries inputs.tile_size: 384. The 256-px leg is studies/h11-256-pv-diag-text-baseline.yaml (inputs.tile_size: 256); the 512-px leg reuses the Era 1 grid under inputs/tiles/. Non-JSON (YAML) anchors are expected per instrument v1.1. The diagnostic date range is out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          199,
+          199
+        ],
+        "section": "Phase 3 — Tile-size diagnostic"
+      },
+      "claim_text": "(Obs 203): 384px tiles outperform 512px in the consensus+PV pipeline",
+      "values": [
+        {
+          "quantity": "tile size, favoured arm of the tile-size × architecture interaction",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "parameter",
+          "path": "$.inputs.tile_size",
+          "method": null
+        },
+        {
+          "quantity": "tile size, disfavoured arm of the tile-size × architecture interaction",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/h11-384-single-pass.yaml",
+        "path": "$.inputs.tile_size"
+      },
+      "method": "read",
+      "notes": "Only the tile sizes are numerically checkable; the superiority assertion itself is qualitative. The 512-px comparator is the Era 1 grid (inputs/tiles/). Scope decisions: the bare 'N=1' on line 200 is a condition label and is not extracted, and the repeated '384px tiles' label later on line 200 restates the tile size already carried here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          214,
+          214
+        ],
+        "section": "Phase 3 — What was run at 384px"
+      },
+      "claim_text": "The 384px production runs (487 tiles across all four map sheets) focused",
+      "values": [
+        {
+          "quantity": "tile size, Era 2 production runs",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile count, Era 2 evaluation corpus",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of source topographic map sheets",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "map sheets",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles_384/full_evaluation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Whole-artefact length (487 entries) spanning the four map sheets. Scope decision: the bare '384px' labels in the headings and lead-ins at lines 212, 227, and 241 are not extracted separately — the tile size is carried by this claim and by lines 36–37, 187, 195, 199, 230, and 237."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          220,
+          220
+        ],
+        "section": "Phase 3 — What was run at 384px (table)"
+      },
+      "claim_text": "| **Architecture** | N=1, consensus (N=5, 10, 30), consensus+PV | Varied |",
+      "values": [
+        {
+          "quantity": "single-pass architecture pool size tested at 384 px",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus pool size tested at 384 px (smallest)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus pool size tested at 384 px (middle)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus pool size tested at 384 px (largest)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Distinct $.conditions[*].n_passes values among the 384-px run_ids (h11/pv-diag-384/consensus-384-*); needs an aggregation over the manifest rather than a single read. Scope note: pool sizes are extracted here because the row asserts what was tested, unlike the bare 'N=1' labels elsewhere in the document."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          221,
+          221
+        ],
+        "section": "Phase 3 — What was run at 384px (table)"
+      },
+      "claim_text": "| **Thinking level** | MINIMAL, HIGH (Flash); MEDIUM, HIGH (Pro) | 5–30 per condition |",
+      "values": [
+        {
+          "quantity": "runs per condition at 384 px, lower bound of quoted range",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs per condition at 384 px, upper bound of quoted range",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Passes per condition = count of $.passes[*] grouped by proposer_pool within the 384-px run_ids; the claim is a min/max over those group sizes."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          223,
+          223
+        ],
+        "section": "Phase 3 — What was run at 384px (table)"
+      },
+      "claim_text": "| **Temperature** | T=0.0, T=0.3, T=0.7 | Per condition |",
+      "values": [
+        {
+          "quantity": "temperature tested at 384 px, level 1",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature tested at 384 px, level 2",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature tested at 384 px, level 3",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Distinct $.passes[*].temperature values among the 384-px run_ids; an aggregation over the pass register rather than a single read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          229,
+          230
+        ],
+        "section": "Phase 3 — What was NOT re-run at 384px"
+      },
+      "claim_text": "- Library composition (Phase 2c): 0/20 significant at 512px; no reason\n  to expect different results at 384px",
+      "values": [
+        {
+          "quantity": "n Phase 2c comparisons significant at 512 px",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of Phase 2c pairwise comparisons at 512 px",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile size, Era 1 corpus on which Phase 2c was evaluated",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile size, Era 2 corpus to which the result was extrapolated",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "20 = the Phase 2c T1 (10) + T2 (10) rows in $.comparisons keyed by $.comparisons[*].phase; significance after FDR needs a Benjamini–Hochberg recomputation because the file stores raw p-values only."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          231,
+          231
+        ],
+        "section": "Phase 3 — What was NOT re-run at 384px"
+      },
+      "claim_text": "- Text treatment (Phase 2d): 0/2 significant; the model is indifferent",
+      "values": [
+        {
+          "quantity": "n Phase 2d comparisons significant at 512 px",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of Phase 2d pairwise comparisons at 512 px",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "2 = the Phase 2d T1 (1) + T2 (1) rows in $.comparisons keyed by $.comparisons[*].phase."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          233,
+          234
+        ],
+        "section": "Phase 3 — What was NOT re-run at 384px"
+      },
+      "claim_text": "- Example ordering (Phase 2e): 1/6 marginally significant at raw\n  p<0.05 but ns after FDR; not a productive optimisation axis",
+      "values": [
+        {
+          "quantity": "n Phase 2e comparisons significant at raw p<0.05",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of Phase 2e pairwise comparisons",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "raw significance threshold asserted",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "6 = the Phase 2e rows in $.comparisons; the raw-significance count is a tally of $.comparisons[*].significant_raw within that phase, and the 'ns after FDR' rider needs a Benjamini–Hochberg recomputation."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          235,
+          236
+        ],
+        "section": "Phase 3 — What was NOT re-run at 384px"
+      },
+      "claim_text": "- Full temperature sweep (T=1.0, T=1.3): T=1.0 confirmed poor in Phase\n  2b; T=1.3 worse still.",
+      "values": [
+        {
+          "quantity": "temperature level omitted from the 384 px sweep, level 1",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature level omitted from the 384 px sweep, level 2",
+          "value_verbatim": "1.3",
+          "value_parsed": 1.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature level confirmed poor in Phase 2b (restated)",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature level confirmed worse still in Phase 2b (restated)",
+          "value_verbatim": "1.3",
+          "value_parsed": 1.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2b-h7-temperature.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "T1.0 and T1.3 are the two highest Phase 2b temperature levels in the study definition's factors.temperature.levels."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          236,
+          237
+        ],
+        "section": "Phase 3 — What was NOT re-run at 384px"
+      },
+      "claim_text": "Only the sensible range (T=0.0–0.7) was\n  tested at 384px",
+      "values": [
+        {
+          "quantity": "temperature range tested at 384 px, lower bound",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature range tested at 384 px, upper bound",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile size, Era 2 production runs",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Min/max of $.passes[*].temperature among the 384-px run_ids."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          243,
+          244
+        ],
+        "section": "Phase 3 — Key findings"
+      },
+      "claim_text": "- **Best F1 = 0.890** [0.863, 0.915] at 20m tolerance (Flash HIGH text\n  16-of-30 consensus + Flash MINIMAL verifier)",
+      "values": [
+        {
+          "quantity": "F1 at 20 m, best 384 px pipeline (Flash HIGH text 16-of-30 consensus + Flash MINIMAL verifier)",
+          "value_verbatim": "0.890",
+          "value_parsed": 0.89,
+          "unit": "F1",
+          "kind": "metric",
+          "path": "$.summary.buffers[3].f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 bootstrap CI lower bound at 20 m, best 384 px pipeline",
+          "value_verbatim": "0.863",
+          "value_parsed": 0.863,
+          "unit": "F1",
+          "kind": "metric",
+          "path": "$.summary.buffers[3].f1_ci_lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 bootstrap CI upper bound at 20 m, best 384 px pipeline",
+          "value_verbatim": "0.915",
+          "value_parsed": 0.915,
+          "unit": "F1",
+          "kind": "metric",
+          "path": "$.summary.buffers[3].f1_ci_upper",
+          "method": null
+        },
+        {
+          "quantity": "spatial matching tolerance",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[3].buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "consensus vote threshold, best pipeline",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": "votes",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus pool size, best pipeline",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json",
+        "path": "$.summary.buffers[3]"
+      },
+      "method": "read",
+      "notes": "Buffer index 3 in $.summary.buffers is the 20 m entry. This evaluation is the provenance source recorded for condition pv-diag-384::verified-adv-text-consensus-16of30 in results/conditions-manifest.json. The 16-of-30 pair also appears there only as part of the proposer_pool label `flash-high-text-consensus-16of30`; retained as parameters per the over-inclusion preference, flagged as possibly name-only under rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          245,
+          246
+        ],
+        "section": "Phase 3 — Key findings"
+      },
+      "claim_text": "- **Pipeline lift = +0.503 F1** from N=1 (0.387) to best pipeline\n  (0.890)",
+      "values": [
+        {
+          "quantity": "F1 lift at 20 m from the N=1 Flash HIGH text baseline to the best pipeline",
+          "value_verbatim": "+0.503",
+          "value_parsed": 0.503,
+          "unit": "F1",
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "F1 at 20 m, N=1 Flash HIGH text baseline at 384 px",
+          "value_verbatim": "0.387",
+          "value_parsed": 0.387,
+          "unit": "F1",
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "F1 at 20 m, best 384 px pipeline",
+          "value_verbatim": "0.890",
+          "value_parsed": 0.89,
+          "unit": "F1",
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json",
+        "path": null,
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/era1-pv-stage-d/384-consensus-text-high/evaluation.json",
+            "path": "$.summary.buffers[3].f1"
+          },
+          {
+            "name": "b",
+            "file": "results/paper-eval/n1/384px-14buf-mcc/flash-text-high-t-0-7/evaluation.json",
+            "path": "$.summary.buffers[3].f1"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "a = best-pipeline F1 at 20 m; b = the matching N=1 Flash HIGH text single-pass baseline at 384 px (conditions-manifest condition pv-diag-384::baseline-flash-text-high-t-0-7, whose provenance source is the operand file). Buffer index 3 is the 20 m entry in both artefacts. The bare 'N=1' is a condition label and is not extracted as a value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          247,
+          248
+        ],
+        "section": "Phase 3 — Key findings"
+      },
+      "claim_text": "- **Thinking-level crossover** (Obs 208): HIGH thinking is worse at\n  N=1 (ΔF1=-0.101) but better at consensus (+0.139) due to the",
+      "values": [
+        {
+          "quantity": "ΔF1 (HIGH − MINIMAL), text, N=1, 384 px",
+          "value_verbatim": "-0.101",
+          "value_parsed": -0.101,
+          "unit": "F1",
+          "kind": "metric",
+          "path": "$.comparisons[?(@.question=='HIGH vs MINIMAL (N=1 text)')].delta_f1",
+          "method": null
+        },
+        {
+          "quantity": "ΔF1 (HIGH − MINIMAL), text, N=5 consensus, 384 px",
+          "value_verbatim": "+0.139",
+          "value_parsed": 0.139,
+          "unit": "F1",
+          "kind": "metric",
+          "path": "$.comparisons[?(@.question=='HIGH vs MINIMAL (text N=5)')].delta_f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/factor-analysis/factor_analysis_results.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The factor-analysis register carries both rows with the HIGH − MINIMAL sign convention. The 20 m pairwise register (results/pairwise/20m/fdr/pairwise_results_fdr.json) holds the consensus figure at group 3 as a cross-check. The Obs id and the bare 'N=1' label are not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          250,
+          251
+        ],
+        "section": "Phase 3 — Key findings"
+      },
+      "claim_text": "- **Pool-size plateau** (Obs 204): N=10 does not improve over N=5 for\n  either Flash or Pro",
+      "values": [
+        {
+          "quantity": "consensus pool size, larger arm of the plateau comparison",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus pool size, smaller arm of the plateau comparison",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/fdr/pairwise_results_fdr.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Group-7 rows 'N=10 vs N=5 (HIGH text)' and 'N=10 vs N=5 (MIN text)' in $.comparisons. The non-improvement assertion itself is a significance judgement over those rows' p_value_adj; only the pool sizes are numerically stated here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          252,
+          253
+        ],
+        "section": "Phase 3 — Key findings"
+      },
+      "claim_text": "- **Pro dominated by Flash + pipeline** (Obs 205): Flash + PV at ~$3\n  matches or exceeds Pro consensus at ~$54",
+      "values": [
+        {
+          "quantity": "cost USD, Flash + proposer-verifier pipeline at 384 px (pre-audit estimate)",
+          "value_verbatim": "$3",
+          "value_parsed": 3.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cost USD, Pro consensus at 384 px (pre-audit estimate)",
+          "value_verbatim": "$54",
+          "value_parsed": 54.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Cost kind: rough pre-audit ESTIMATES (tilde-prefixed), not audited or billed figures, so they anchor to the repo's per-pass cost manifest rather than to a billing console. Recompute as the sum of $.passes[*].cost_usd over the Flash PV and Pro consensus conditions at 384 px. The document's own cost-basis note (lines 12–18) declares every dollar figure here superseded by reports/token-load-audit-2026-06-12.md; not marked `historical` because the figures are asserted live in the body, outside a correction block."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          254,
+          255
+        ],
+        "section": "Phase 3 — Key findings"
+      },
+      "claim_text": "- **Prompt engineering inert**: 0/28 comparisons significant after FDR\n  (Obs 207)",
+      "values": [
+        {
+          "quantity": "n prompt-engineering comparisons significant after FDR",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of prompt-engineering pairwise comparisons",
+          "value_verbatim": "28",
+          "value_parsed": 28,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Restates the line 172–174 claim: 28 = Phase 2c (20) + Phase 2d (2) + Phase 2e (6) rows in $.comparisons; FDR significance needs a Benjamini–Hochberg recomputation."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          263,
+          263
+        ],
+        "section": "Design evolution summary"
+      },
+      "claim_text": "| Tile size | 512px | 512px → 384px (H11) | Crossover: 384px better for pipeline (Obs 203) |",
+      "values": [
+        {
+          "quantity": "registered tile size",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile size actually used, Era 1",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile size actually used, Era 2",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile size favoured for the pipeline (restated in justification)",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row anchored on its 'Preregistered' column per the v1.1 rule (lodged document, path null). The as-run 384-px values anchor to studies/h11-384-single-pass.yaml ($.inputs.tile_size) and inputs/tiles_384/full_evaluation_manifest.json; the as-run 512 px to inputs/tiles/. Rule 6 keeps the row as a single claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          264,
+          264
+        ],
+        "section": "Design evolution summary"
+      },
+      "claim_text": "| Evaluation set | 60 tiles | 60 → 340 → 487 tiles | Statistical power (E36) |",
+      "values": [
+        {
+          "quantity": "registered evaluation-set size",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "evaluation-set size, Phase 1 as run",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "evaluation-set size, Phase 2 as run (Era 1)",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "evaluation-set size, Phase 3 as run (Era 2)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/validation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Rule 6 keeps the row as a single claim. The 'Preregistered' 60 anchors to the lodged preregistration per v1.1; the as-run 60 to this manifest (60 entries); 340 to inputs/vectors/bounds/full_evaluation_bounds.geojson (340 features); 487 to inputs/tiles_384/full_evaluation_manifest.json (487 entries)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          267,
+          267
+        ],
+        "section": "Design evolution summary"
+      },
+      "claim_text": "| Spatial tolerance | 20m primary | 20m primary (E47, reverting E46) | Preregistration alignment |",
+      "values": [
+        {
+          "quantity": "registered primary spatial matching tolerance",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "primary spatial matching tolerance as used",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 registered-value rule; the registration states 20 m as the primary matching threshold. Erratum identifiers are out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          268,
+          268
+        ],
+        "section": "Design evolution summary"
+      },
+      "claim_text": "| Temperature | 5 levels tested | T=0.7 adopted for production | T=1.0 confirmed poor (Phase 2b) |",
+      "values": [
+        {
+          "quantity": "count of temperature levels tested",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "levels",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature adopted for production",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature confirmed poor in Phase 2b",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2b-h7-temperature.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Five temperature levels (T0.0/T0.3/T0.7/T1.0/T1.3) in the Phase 2b study definition's factors.temperature.levels."
+    }
+  ]
+}
