@@ -94,7 +94,10 @@ def safe_eval(expression: str, names: dict[str, float]) -> float:
     Raises:
         ValueError: On disallowed syntax or unknown names.
     """
-    tree = ast.parse(expression, mode="eval")
+    try:
+        tree = ast.parse(expression, mode="eval")
+    except SyntaxError as exc:
+        raise ValueError(f"unparseable expression {expression!r}: {exc}") from exc
     for node in ast.walk(tree):
         if not isinstance(node, _ALLOWED_NODES):
             raise ValueError(f"disallowed syntax {type(node).__name__} in {expression!r}")

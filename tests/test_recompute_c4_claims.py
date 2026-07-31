@@ -118,4 +118,6 @@ def test_safe_eval_rejects_hostile_expressions():
         safe_eval("__import__('os').system('x')", {})
     with pytest.raises(ValueError):
         safe_eval("a + b", {"a": 1.0})
+    with pytest.raises(ValueError):
+        safe_eval("", {})  # malformed expression -> ValueError, not SyntaxError
     assert safe_eval("100 * a / b", {"a": 1.0, "b": 8.0}) == pytest.approx(12.5)
