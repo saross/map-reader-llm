@@ -1,0 +1,2193 @@
+{
+  "schema_version": "1.0",
+  "extracted_at": "2026-07-31T00:00:00Z",
+  "source_document": {
+    "file": "reports/gs-tile-pool-mapping-2026-05-28.md",
+    "git_blob": "b73691d4a17b",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.1"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          3,
+          3
+        ],
+        "section": "Revision banner"
+      },
+      "claim_text": "quoted \"1 of 10\" FDR-survivor figure flagged as a source misreport; correct figure 0 of 10",
+      "values": [
+        {
+          "quantity": "Phase 2a pairwise comparisons surviving FDR correction, as misreported in the quoted working-notes source block",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Phase 2a pairwise comparisons in the FDR family",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": "$.n_comparisons",
+          "method": "read"
+        },
+        {
+          "quantity": "Phase 2a pairwise comparisons surviving FDR correction (corrected figure)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": "$.n_fdr_significant",
+          "method": "read"
+        },
+        {
+          "quantity": "Phase 2a pairwise comparisons in the FDR family (second mention in the span)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": "$.n_comparisons",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": "$.n_fdr_significant"
+      },
+      "method": "read",
+      "notes": "Correction banner. The quoted '1 of 10' is the superseded misreport (historical); '0 of 10' is the live claim and the document itself names results/phase2a-analysis-report.json as its source. The date is out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          8,
+          8
+        ],
+        "section": "Preamble"
+      },
+      "claim_text": "\"~60-tile\" recollection",
+      "values": [
+        {
+          "quantity": "tile count of the legacy pre-Era validation pool, as recollected by the user",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/validation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "First mention of the '~60-tile' recollection; the document itself identifies the pool as the legacy inputs/vectors/bounds/validation_bounds.geojson at lines 51-52. Approximate ('~'). Parallel anchor: inputs/tiles/tile_selection_metadata.json $.validation.total_tiles."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          14,
+          15
+        ],
+        "section": "1. Tile pool definitions (canonical)"
+      },
+      "claim_text": "It defines three nested,\nzero-tolerance-geographic test tile pools",
+      "values": [
+        {
+          "quantity": "count of canonical test tile pools (Eras) defined by results/evaluation-scopes.md",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "tile pools",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The only source visible for this count is results/evaluation-scopes.md, itself a markdown document, so prose-to-prose anchoring is disallowed. The three pools correspond to three committed bounds manifests (inputs/vectors/bounds/full_evaluation_bounds.geojson, inputs/vectors/bounds/384/full_evaluation_bounds.geojson, inputs/vectors/bounds/384/h10_test_bounds.geojson); triage may prefer to treat the existence of those three files as the anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          15,
+          16
+        ],
+        "section": "1. Tile pool definitions (canonical)"
+      },
+      "claim_text": "on the 4-map gold-standard\nsub-corpus",
+      "values": [
+        {
+          "quantity": "count of map sheets in the gold-standard sub-corpus",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "map sheets",
+          "kind": "count",
+          "path": "$.n_sheets",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/student-gt-fn-rate-analysis-gs4/bootstrap_summary.json",
+        "path": "$.n_sheets"
+      },
+      "method": "read",
+      "notes": "The four map-sheet identifiers listed on line 16 and the UTM zone / EPSG code on lines 16-17 are names, not claims (out of C4 scope). Parallel anchor: the four inputs/vectors/references/reference_*.geojson curator files."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          21,
+          21
+        ],
+        "section": "1. Tile pool definitions (canonical)"
+      },
+      "claim_text": "| **Era 1** (pre-H11, H1–H9 retest) | 512 px | **340** | 1,751 | 539 | `inputs/vectors/bounds/full_evaluation_bounds.geojson` |",
+      "values": [
+        {
+          "quantity": "tile size, Era 1",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "test tile count, Era 1",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "test area, Era 1",
+          "value_verbatim": "1,751",
+          "value_parsed": 1751,
+          "unit": "sq km",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "ground-truth mounds inside the Era 1 test pool",
+          "value_verbatim": "539",
+          "value_parsed": 539,
+          "unit": "mounds",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Table row. Tile pixel size is not carried by the bounds GeoJSON — the on-disk anchor is the tile PNG dimension under inputs/tiles/ — hence the per-value anchor-unknown. Area and ground-truth mound counts need a geometric/spatial recompute of the bounds file against inputs/vectors/references/mounds-reference.geojson. Parallel anchor for the tile count: inputs/tiles/full_evaluation_manifest.json (len:$). H1-H9 and H11 are hypothesis identifiers (out of C4 scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          22,
+          22
+        ],
+        "section": "1. Tile pool definitions (canonical)"
+      },
+      "claim_text": "| **Era 2** (H11, PV diagnostic, N-sweep) | 384 px | **487** | 1,416 | 435 | `inputs/vectors/bounds/384/full_evaluation_bounds.geojson` |",
+      "values": [
+        {
+          "quantity": "tile size, Era 2",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "test tile count, Era 2",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "test area, Era 2",
+          "value_verbatim": "1,416",
+          "value_parsed": 1416,
+          "unit": "sq km",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "ground-truth mounds inside the Era 2 test pool",
+          "value_verbatim": "435",
+          "value_parsed": 435,
+          "unit": "mounds",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Table row. Tile pixel size is the on-disk PNG dimension under inputs/tiles_384/, not a field of the bounds GeoJSON (per-value anchor-unknown). Area and mound counts need a spatial recompute against inputs/vectors/references/mounds-reference.geojson. Parallel anchor for the tile count: inputs/tiles_384/full_evaluation_manifest.json (len:$)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          23,
+          23
+        ],
+        "section": "1. Tile pool definitions (canonical)"
+      },
+      "claim_text": "| **Era 3** (post-H10 v2: H8/H10/H12 v2) | 384 px | **327** | 1,034 | 319 | `inputs/vectors/bounds/384/h10_test_bounds.geojson` |",
+      "values": [
+        {
+          "quantity": "tile size, Era 3",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "test tile count, Era 3",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "test area, Era 3",
+          "value_verbatim": "1,034",
+          "value_parsed": 1034,
+          "unit": "sq km",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "ground-truth mounds inside the Era 3 test pool",
+          "value_verbatim": "319",
+          "value_parsed": 319,
+          "unit": "mounds",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Table row. Same treatment as the Era 1 and Era 2 rows: pixel size is an on-disk PNG dimension (inputs/tiles_384/), area and mound counts need a spatial recompute. Parallel anchor for the tile count: inputs/calibration/h10-384/test_manifest.json (len:$). 'v2' and the H8/H10/H12 labels are identifiers (out of C4 scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          25,
+          25
+        ],
+        "section": "1. Tile pool definitions (canonical)"
+      },
+      "claim_text": "Strict nesting: Era 3 ⊂ Era 2 ⊂ Era 1 at 100.000% area containment",
+      "values": [
+        {
+          "quantity": "area of the Era 3 test pool contained within Era 2 and Era 1 (nesting check)",
+          "value_verbatim": "100.000",
+          "value_parsed": 100.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Geometric containment check: requires re-running the Era 3 vs Era 2 vs Era 1 polygon intersection over inputs/vectors/bounds/384/h10_test_bounds.geojson, inputs/vectors/bounds/384/full_evaluation_bounds.geojson and inputs/vectors/bounds/full_evaluation_bounds.geojson. The document cites results/evaluation-scopes.md (prose) as its source, which cannot itself be the anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          26,
+          27
+        ],
+        "section": "1. Tile pool definitions (canonical)"
+      },
+      "claim_text": "Coverage: Era 2 = 80.8 % of Era 1;\nEra 3 = 73.0 % of Era 2.",
+      "values": [
+        {
+          "quantity": "coverage fraction, Era 2 as a share of Era 1",
+          "value_verbatim": "80.8",
+          "value_parsed": 80.8,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "coverage fraction, Era 3 as a share of Era 2",
+          "value_verbatim": "73.0",
+          "value_parsed": 73.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Requires recomputing the nested area fractions from the three bounds GeoJSONs. Doubt flagged: the span does not say whether the coverage fraction is area-based or mound-based (results/evaluation-scopes.md tabulates both), so triage should confirm which quantity is being asserted before diffing."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          29,
+          30
+        ],
+        "section": "1. Tile pool definitions (canonical)"
+      },
+      "claim_text": "In **all three eras**, a calibration footprint is excluded from the\ntest pool.",
+      "values": [
+        {
+          "quantity": "count of eras that exclude a calibration footprint from the test pool",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "eras",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates the count of eras; the only visible source is results/evaluation-scopes.md (prose). Same anchoring problem as the claim at lines 14-15."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          30,
+          30
+        ],
+        "section": "1. Tile pool definitions (canonical)"
+      },
+      "claim_text": "Era 1 excludes the original 20-tile calibration seed",
+      "values": [
+        {
+          "quantity": "tile count of the original calibration seed excluded from the Era 1 test pool",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.calibration.total_tiles",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": "$.calibration.total_tiles"
+      },
+      "method": "read",
+      "notes": "Parallel anchors: inputs/vectors/bounds/calibration_bounds.geojson (len:$.features) and inputs/tiles/calibration_manifest.json (len:$)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          32
+        ],
+        "section": "1. Tile pool definitions (canonical)"
+      },
+      "claim_text": "Era 2 excludes the same geographic\nfootprint re-projected onto the 384-px grid",
+      "values": [
+        {
+          "quantity": "tile size of the grid onto which the Era 1 calibration footprint was re-projected for Era 2",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles_384/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: the pixel size is the on-disk dimension of the tile PNGs in inputs/tiles_384/ (and is encoded in the directory name). Instrument v1.1 admits crop-size PNG anchors and routes them to triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          33,
+          34
+        ],
+        "section": "1. Tile pool definitions (canonical)"
+      },
+      "claim_text": "Era 3 additionally excludes the\n160-tile `pool_160` hard-example-mining footprint",
+      "values": [
+        {
+          "quantity": "tile count of the pool_160 hard-example-mining footprint additionally excluded from the Era 3 test pool",
+          "value_verbatim": "160",
+          "value_parsed": 160,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/calibration/h10-384/calibration_manifest_160.json",
+        "path": "len:$"
+      },
+      "method": "read",
+      "notes": "The '160' inside the directory/pool name `pool_160` is a name (out of C4 scope); the asserted footprint size is the claim. Parallel anchor: inputs/calibration/h10-384/calibration_bounds_160.geojson (len:$.features)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          39,
+          39
+        ],
+        "section": "Reconciling the user's \"~60-tile\" recollection"
+      },
+      "claim_text": "The user's \"~60 tiles\"",
+      "values": [
+        {
+          "quantity": "tile count of the pre-Era exploratory evaluation pool, as recollected by the user",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/validation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Approximate recollection ('~'). The document identifies the pool as the legacy validation_bounds.geojson at lines 51-52. Session numbers and dates on lines 41-42 are out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          43,
+          44
+        ],
+        "section": "Reconciling the user's \"~60-tile\" recollection"
+      },
+      "claim_text": "the \"60-tile validation\nholdout\"",
+      "values": [
+        {
+          "quantity": "tile count of the validation holdout superseded on 2026-03-15",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/validation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Quoted from working-notes.md:3383-3406 (prose); anchored instead to the legacy bounds artefact the pool corresponds to. Parallel anchor: inputs/tiles/tile_selection_metadata.json $.validation.total_tiles."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          44,
+          44
+        ],
+        "section": "Reconciling the user's \"~60-tile\" recollection"
+      },
+      "claim_text": "to the **340-tile** corpus (= Era 1)",
+      "values": [
+        {
+          "quantity": "test tile count of the Era 1 corpus adopted at the 2026-03-15 transition",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Parallel anchor: inputs/tiles/full_evaluation_manifest.json (len:$)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          45,
+          45
+        ],
+        "section": "Reconciling the user's \"~60-tile\" recollection"
+      },
+      "claim_text": "\"wide confidence intervals (F1 CI width ~0.22)\"",
+      "values": [
+        {
+          "quantity": "bootstrap confidence-interval width on F1, Phase 2a work on the 60-tile pool",
+          "value_verbatim": "0.22",
+          "value_parsed": 0.22,
+          "unit": "F1",
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Quoted from working-notes.md:3383-3406 (prose), which cannot itself be the anchor. Looked for a per-condition CI in results/phase2a-analysis-report.json ($.per_condition_metrics.*), but the span does not say which condition (or which aggregate) the ~0.22 width belongs to, so no locator can be fixed mechanically."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          45,
+          46
+        ],
+        "section": "Reconciling the user's \"~60-tile\" recollection"
+      },
+      "claim_text": "\"only 1 of 10\nPhase 2a comparisons\" surviving FDR correction",
+      "values": [
+        {
+          "quantity": "Phase 2a pairwise comparisons surviving FDR correction, as quoted (misreported) from the working-notes source block",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Phase 2a pairwise comparisons in the FDR family",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": "$.n_comparisons",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": "$.n_comparisons"
+      },
+      "method": "read",
+      "notes": "The document flags the quoted '1' as a misreport in the very next clause, so it is the historical side of a correction; the family size of 10 is a live claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          47,
+          48
+        ],
+        "section": "Reconciling the user's \"~60-tile\" recollection"
+      },
+      "claim_text": "the correct figure is 0 of\n10, `results/phase2a-analysis-report.json`",
+      "values": [
+        {
+          "quantity": "Phase 2a pairwise comparisons surviving FDR correction (corrected figure)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": "$.n_fdr_significant",
+          "method": "read"
+        },
+        {
+          "quantity": "Phase 2a pairwise comparisons in the FDR family",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "comparisons",
+          "kind": "count",
+          "path": "$.n_comparisons",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": "$.n_fdr_significant"
+      },
+      "method": "read",
+      "notes": "The document names results/phase2a-analysis-report.json as the source, so the anchor is taken there directly. Obs and erratum identifiers on line 49 are out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          50,
+          52
+        ],
+        "section": "Reconciling the user's \"~60-tile\" recollection"
+      },
+      "claim_text": "corroborate the\n60-tile pool's identity: it was `validation_bounds.geojson` (legacy,\nnot the present-day 384/full_evaluation_bounds)",
+      "values": [
+        {
+          "quantity": "tile count of the legacy validation pool identified as validation_bounds.geojson",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/validation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "The '384' in the path fragment '384/full_evaluation_bounds' is part of a filename (out of C4 scope), as are the working-notes line-number citations."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          52,
+          53
+        ],
+        "section": "Reconciling the user's \"~60-tile\" recollection"
+      },
+      "claim_text": "20-tile calibration\nheld out separately",
+      "values": [
+        {
+          "quantity": "tile count of the calibration set held out separately from the 60-tile validation pool",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.calibration.total_tiles",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": "$.calibration.total_tiles"
+      },
+      "method": "read",
+      "notes": "Parallel anchors: inputs/vectors/bounds/calibration_bounds.geojson (len:$.features) and inputs/tiles/calibration_manifest.json (len:$)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          55,
+          55
+        ],
+        "section": "Reconciling the user's \"~60-tile\" recollection"
+      },
+      "claim_text": "**None of the GS subdirectories in scope use the 60-tile pool.**",
+      "values": [
+        {
+          "quantity": "tile count of the legacy validation pool none of the in-scope GS subdirectories uses",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/validation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Repeat assertion of the legacy pool size; the negative claim about which subdirectories use it is not itself numeric."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          55,
+          56
+        ],
+        "section": "Reconciling the user's \"~60-tile\" recollection"
+      },
+      "claim_text": "All\nnine post-date the 2026-03-15 transition.",
+      "values": [
+        {
+          "quantity": "count of GS subdirectories in scope for this mapping exercise",
+          "value_verbatim": "nine",
+          "value_parsed": 9,
+          "unit": "subdirectories",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The nine subdirectories are the rows of the § 2 table (lines 72-80): gold-standard-attractor-pull, gold-standard-extended-buffer-sweep, gold-standard-extended-buffer-sweep-era2, gold-standard-image-extended-buffer-sweep, gold-standard-subtype-classification, gs-125m-fp-side-6-crop-review, gs-fp-classification, gt-duplicate-review-gs4, student-gt-fn-rate-analysis-gs4. The anchor is the results/ directory listing (a non-JSON anchor); the date is out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          58,
+          59
+        ],
+        "section": "Reconciling the user's \"~60-tile\" recollection"
+      },
+      "claim_text": "**Era 3 (327-tile, bounds-filtered for v2 library-design\ncomparability)",
+      "values": [
+        {
+          "quantity": "test tile count, Era 3",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Tile count used as both label and asserted fact (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          59,
+          59
+        ],
+        "section": "Reconciling the user's \"~60-tile\" recollection"
+      },
+      "claim_text": "Era 2 (487-tile, full scope)",
+      "values": [
+        {
+          "quantity": "test tile count, Era 2",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Tile count used as both label and asserted fact (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          59,
+          60
+        ],
+        "section": "Reconciling the user's \"~60-tile\" recollection"
+      },
+      "claim_text": "not 60-tile vs\nlarger.",
+      "values": [
+        {
+          "quantity": "tile count of the legacy validation pool being contrasted",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/validation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Repeat assertion of the legacy pool size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          64,
+          65
+        ],
+        "section": "Reconciling the user's \"~60-tile\" recollection"
+      },
+      "claim_text": "the preference for the 487-tile\nEra 2 pool",
+      "values": [
+        {
+          "quantity": "test tile count, Era 2",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Restates the Era 2 pool size while paraphrasing the user-memory entry feedback_384px_scope_preference (a memory store outside the repository)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          65,
+          65
+        ],
+        "section": "Reconciling the user's \"~60-tile\" recollection"
+      },
+      "claim_text": "the 327-tile Era 3 pool",
+      "values": [
+        {
+          "quantity": "test tile count, Era 3",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Restates the Era 3 pool size. Split from the neighbouring '4-map GS corpus' claim so that each span anchors to a single artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          65,
+          65
+        ],
+        "section": "Reconciling the user's \"~60-tile\" recollection"
+      },
+      "claim_text": "on the 4-map GS corpus",
+      "values": [
+        {
+          "quantity": "count of map sheets in the gold-standard sub-corpus",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "map sheets",
+          "kind": "count",
+          "path": "$.n_sheets",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/student-gt-fn-rate-analysis-gs4/bootstrap_summary.json",
+        "path": "$.n_sheets"
+      },
+      "method": "read",
+      "notes": "The '160' in `pool_160` on line 66 is part of a name (out of C4 scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          72,
+          72
+        ],
+        "section": "2. Per-subdirectory mapping"
+      },
+      "claim_text": "| `gold-standard-attractor-pull/` | **Era 2 (487-tile)** | `attractor-pull-gs.json:17` — `\"scope\": \"Era 2, 487-tile gold-standard 4-map evaluation\"` | High |",
+      "values": [
+        {
+          "quantity": "test tile count of the pool assigned to results/gold-standard-attractor-pull/ (Era 2)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.scope",
+          "method": null
+        },
+        {
+          "quantity": "test tile count quoted from the run's own scope string",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.scope",
+          "method": null
+        },
+        {
+          "quantity": "count of map sheets quoted from the run's own scope string",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "map sheets",
+          "kind": "count",
+          "path": "$.scope",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/gold-standard-attractor-pull/attractor-pull-gs.json",
+        "path": "$.scope"
+      },
+      "method": "read",
+      "notes": "Table row; all three values are carried by the single scope string the row quotes. The ':17' is a line-number citation (out of C4 scope). Independent anchor for the 487-tile pool size: inputs/vectors/bounds/384/full_evaluation_bounds.geojson (len:$.features)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          73,
+          73
+        ],
+        "section": "2. Per-subdirectory mapping"
+      },
+      "claim_text": "| `gold-standard-extended-buffer-sweep/` | **Era 3 (327-tile)** | `evaluation.json:26` — `\"n_tiles\": 327` (all buffers)",
+      "values": [
+        {
+          "quantity": "test tile count of the pool assigned to results/gold-standard-extended-buffer-sweep/ (Era 3)",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.summary.buffers[0].coverage.n_tiles",
+          "method": null
+        },
+        {
+          "quantity": "n_tiles recorded in the sweep's evaluation.json",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.summary.buffers[0].coverage.n_tiles",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/gold-standard-extended-buffer-sweep/evaluation.json",
+        "path": "$.summary.buffers[0].coverage.n_tiles"
+      },
+      "method": "read",
+      "notes": "Evidence cell split by cited artefact so that each span anchors to a single file (instrument rule 6 assumes one anchor file per table row; this row cites three). '(all buffers)' asserts the same n_tiles at every entry of $.summary.buffers[*]. Line-number citations are out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          73,
+          73
+        ],
+        "section": "2. Per-subdirectory mapping"
+      },
+      "claim_text": "`extended-buffer-report.md:60` — `\"inputs/vectors/bounds/384/h10_test_bounds.geojson (327 evaluation tiles, 4 maps; Era 3 scope)\"`",
+      "values": [
+        {
+          "quantity": "test tile count, Era 3, as quoted from the sweep's report",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "count of map sheets, as quoted from the sweep's report",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "map sheets",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Quoted from results/gold-standard-extended-buffer-sweep/extended-buffer-report.md (prose), so anchored instead to the bounds GeoJSON the quotation names. The map-sheet count is not carried by that GeoJSON; it is anchored separately at results/student-gt-fn-rate-analysis-gs4/bootstrap_summary.json $.n_sheets (see the claim at lines 15-16) — marked anchor-unknown here only because per-value paths are bound to the claim's single anchor file. The '384' in the quoted path is a filename component (out of C4 scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          73,
+          73
+        ],
+        "section": "2. Per-subdirectory mapping"
+      },
+      "claim_text": "`with-mcc/evaluation.json` also reports `n_tiles: 327`",
+      "values": [
+        {
+          "quantity": "n_tiles recorded in the with-MCC re-evaluation of the sweep",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.summary.buffers[0].coverage.n_tiles",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/gold-standard-extended-buffer-sweep/with-mcc/evaluation.json",
+        "path": "$.summary.buffers[0].coverage.n_tiles"
+      },
+      "method": "read",
+      "notes": "Third artefact cited by the same table row, split out so the anchor is unambiguous."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          74,
+          74
+        ],
+        "section": "2. Per-subdirectory mapping"
+      },
+      "claim_text": "| `gold-standard-extended-buffer-sweep-era2/` | **Era 2 (487-tile)** | `evaluation.json:5,26` — `\"label\": \"gold-standard-text-high-era2\"`, `\"n_tiles\": 487`; commit `aa36b638` (2026-04-24) — \"GS text-HIGH Era 2 companion + 487-tile leaderboard cell\" | High |",
+      "values": [
+        {
+          "quantity": "test tile count of the pool assigned to results/gold-standard-extended-buffer-sweep-era2/ (Era 2)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.summary.buffers[0].coverage.n_tiles",
+          "method": null
+        },
+        {
+          "quantity": "n_tiles recorded in the era2 companion's evaluation.json",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.summary.buffers[0].coverage.n_tiles",
+          "method": null
+        },
+        {
+          "quantity": "test tile count quoted from the commit subject that created the companion",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.summary.buffers[0].coverage.n_tiles",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/gold-standard-extended-buffer-sweep-era2/evaluation.json",
+        "path": "$.summary.buffers[0].coverage.n_tiles"
+      },
+      "method": "read",
+      "notes": "Table row. Line-number citations, the commit hash, the date, and the run label 'gold-standard-text-high-era2' are out of C4 scope. Independent anchor for the pool size: inputs/vectors/bounds/384/full_evaluation_bounds.geojson (len:$.features)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          75,
+          75
+        ],
+        "section": "2. Per-subdirectory mapping"
+      },
+      "claim_text": "| `gold-standard-image-extended-buffer-sweep/` | **Era 2 (487-tile)** | `evaluation.json:5,26` — `\"label\": \"gold-standard-image-flash-high-t0.7-n10-t7-era2\"`, `\"n_tiles\": 487` | High |",
+      "values": [
+        {
+          "quantity": "test tile count of the pool assigned to results/gold-standard-image-extended-buffer-sweep/ (Era 2)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.summary.buffers[0].coverage.n_tiles",
+          "method": null
+        },
+        {
+          "quantity": "n_tiles recorded in the image sweep's evaluation.json",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.summary.buffers[0].coverage.n_tiles",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/gold-standard-image-extended-buffer-sweep/evaluation.json",
+        "path": "$.summary.buffers[0].coverage.n_tiles"
+      },
+      "method": "read",
+      "notes": "Table row. The numerals inside the run label 'gold-standard-image-flash-high-t0.7-n10-t7-era2' are condition-name components (out of C4 scope), as are the line-number citations."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          76,
+          76
+        ],
+        "section": "2. Per-subdirectory mapping"
+      },
+      "claim_text": "| `gold-standard-subtype-classification/` | **Era 2 (487-tile)** | `run_manifest.json:19` — `\"bounds\": \"inputs/vectors/bounds/384/full_evaluation_bounds.geojson\"`; `report.md:50,283` reiterates the same bounds path. Per `evaluation-scopes.md:33`, that bounds file defines Era 2 | High |",
+      "values": [
+        {
+          "quantity": "test tile count of the pool assigned to results/gold-standard-subtype-classification/ (Era 2)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Table row. The row's evidence chain runs through results/gold-standard-subtype-classification/run_manifest.json $.bounds, which names inputs/vectors/bounds/384/full_evaluation_bounds.geojson; the asserted tile count is therefore anchored on that bounds file. All other numerals in the row are line-number citations or filename components (out of C4 scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          77,
+          77
+        ],
+        "section": "2. Per-subdirectory mapping"
+      },
+      "claim_text": "| `gs-125m-fp-side-6-crop-review/` | **Era 2 (487-tile), derivative** |",
+      "values": [
+        {
+          "quantity": "test tile count of the upstream pool for results/gs-125m-fp-side-6-crop-review/ (Era 2, derivative)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Evidence cell split by artefact; the '125m' and '6' inside the directory name are name components (out of C4 scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          77,
+          77
+        ],
+        "section": "2. Per-subdirectory mapping"
+      },
+      "claim_text": "cohort is filtered from `results/gs-fp-classification/fp_classifications.json` (six > 125 m FPs)",
+      "values": [
+        {
+          "quantity": "count of false-positive-side candidates beyond 125 m retained for crop review",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "distance threshold defining the reviewed false-positive cohort",
+          "value_verbatim": "125",
+          "value_parsed": 125,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/gs-fp-classification/fp_classifications.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The cohort is the subset of fp_classifications.json records on the false-positive side with dist_to_nearest_curator_GT_m greater than 125, so the count needs a scripted filter rather than a direct read. Parallel anchor for the count: the crop files under results/gs-125m-fp-side-6-crop-review/crops/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          78,
+          78
+        ],
+        "section": "2. Per-subdirectory mapping"
+      },
+      "claim_text": "| `gs-fp-classification/` | **Era 2 (487-tile), full-scope** |",
+      "values": [
+        {
+          "quantity": "test tile count of the pool assigned to results/gs-fp-classification/ (Era 2, full scope)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Evidence cell split by artefact so each span anchors to one file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          78,
+          78
+        ],
+        "section": "2. Per-subdirectory mapping"
+      },
+      "claim_text": "classifier applied to all 371 detections in `outputs/h11/gold-standard-v2/verified-v1/verified_detections_full-scope.geojson`; `category_distribution.json:3` — `\"n_total_classified\": 371`",
+      "values": [
+        {
+          "quantity": "detections submitted to the false-positive classifier (pre-recovery Era 2 verifier output)",
+          "value_verbatim": "371",
+          "value_parsed": 371,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.n_total_classified",
+          "method": null
+        },
+        {
+          "quantity": "n_total_classified recorded in the classifier's category distribution",
+          "value_verbatim": "371",
+          "value_parsed": 371,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.n_total_classified",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/gs-fp-classification/category_distribution.json",
+        "path": "$.n_total_classified"
+      },
+      "method": "read",
+      "notes": "The detections GeoJSON the row names (outputs/h11/gold-standard-v2/verified-v1/verified_detections_full-scope.geojson) is absent from the working tree (outputs/ is gitignored), so the committed anchor is the classifier's own summary. Parallel anchor: len:$ of results/gs-fp-classification/fp_classifications.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          78,
+          78
+        ],
+        "section": "2. Per-subdirectory mapping"
+      },
+      "claim_text": "the 371-detection count is the pre-recovery Era 2 (487-tile) verifier output",
+      "values": [
+        {
+          "quantity": "pre-recovery Era 2 verifier detection count (superseded by the 2026-05-03 recovery)",
+          "value_verbatim": "371",
+          "value_parsed": 371,
+          "unit": "detections",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "test tile count, Era 2",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "The 371 is explicitly labelled pre-recovery here and superseded by the 380 in the same sentence, so it is the historical side; the 487-tile pool size is a live claim. Note that the row's own upstream claim (lines 78, 'all 371 detections') is the live count for the classifier input, which was run before the recovery."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          78,
+          78
+        ],
+        "section": "2. Per-subdirectory mapping"
+      },
+      "claim_text": "verifier output (post-recovery 380)",
+      "values": [
+        {
+          "quantity": "post-recovery Era 2 verifier detection count",
+          "value_verbatim": "380",
+          "value_parsed": 380,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.summary.n_detections",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/gold-standard-extended-buffer-sweep-era2/evaluation.json",
+        "path": "$.summary.n_detections"
+      },
+      "method": "read",
+      "notes": "Split from the neighbouring pre-recovery claim so the live post-recovery figure anchors to the refreshed Era 2 evaluation artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          78,
+          78
+        ],
+        "section": "2. Per-subdirectory mapping"
+      },
+      "claim_text": "the file suffix `_full-scope.geojson` matches the full Era 2 evaluation area, not the 327-tile h10 filter",
+      "values": [
+        {
+          "quantity": "test tile count of the Era 3 (h10) filter the full-scope file is contrasted with",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Tile count used as both label and asserted fact (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          79,
+          79
+        ],
+        "section": "2. Per-subdirectory mapping"
+      },
+      "claim_text": "operates on raw student GT points (560 → 556 after merges) across the 4 GS sheets",
+      "values": [
+        {
+          "quantity": "raw student ground-truth points on the 4 GS sheets before duplicate merges",
+          "value_verbatim": "560",
+          "value_parsed": 560,
+          "unit": "points",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "student ground-truth points remaining after duplicate merges",
+          "value_verbatim": "556",
+          "value_parsed": 556,
+          "unit": "points",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of GS map sheets the review covers",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "map sheets",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/student-mounds-gs-4maps.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Anchored on the pre-merge student GT file. The post-merge count is carried by a different file — inputs/vectors/references/student-mounds-gs-4maps-reviewed.geojson (len:$.features) — and the sheet count by results/student-gt-fn-rate-analysis-gs4/bootstrap_summary.json $.n_sheets; both are marked anchor-unknown only because per-value paths are bound to the claim's single anchor file. results/gt-duplicate-review-gs4/gt-duplicate-decisions.csv records the merge decisions that produce the 560 to 556 transition."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          79,
+          79
+        ],
+        "section": "2. Per-subdirectory mapping"
+      },
+      "claim_text": "Commit `a8b576d5` says \"560 Hairy-filtered student features in the 4 GS map sheets\".",
+      "values": [
+        {
+          "quantity": "Hairy-filtered student features on the 4 GS map sheets, quoted from the commit subject",
+          "value_verbatim": "560",
+          "value_parsed": 560,
+          "unit": "features",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "count of GS map sheets, quoted from the commit subject",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "map sheets",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/student-mounds-gs-4maps.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Quoted commit subject; the commit hash is out of C4 scope. Sheet count anchors at results/student-gt-fn-rate-analysis-gs4/bootstrap_summary.json $.n_sheets (single-file per-value path limitation, as above)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          80,
+          80
+        ],
+        "section": "2. Per-subdirectory mapping"
+      },
+      "claim_text": "| `student-gt-fn-rate-analysis-gs4/` | **4-map active-sheet area (trapezoidal graticule); not Era-tagged** |",
+      "values": [
+        {
+          "quantity": "count of map sheets defining the active-sheet area for results/student-gt-fn-rate-analysis-gs4/",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "map sheets",
+          "kind": "count",
+          "path": "$.n_sheets",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/student-gt-fn-rate-analysis-gs4/bootstrap_summary.json",
+        "path": "$.n_sheets"
+      },
+      "method": "read",
+      "notes": "Evidence cell split by artefact so each span anchors to one file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          80,
+          80
+        ],
+        "section": "2. Per-subdirectory mapping"
+      },
+      "claim_text": "this clips to the 4 sheets' cartographic neat-line, not a tile pool",
+      "values": [
+        {
+          "quantity": "count of map sheets whose cartographic neat-line defines the clip",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "map sheets",
+          "kind": "count",
+          "path": "$.n_sheets",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/student-gt-fn-rate-analysis-gs4/bootstrap_summary.json",
+        "path": "$.n_sheets"
+      },
+      "method": "read",
+      "notes": "The bounds file the row quotes, inputs/vectors/bounds/gs-4maps-active-area-bounds.geojson, is the geographic artefact; the sheet count itself is carried by the analysis summary."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          80,
+          80
+        ],
+        "section": "2. Per-subdirectory mapping"
+      },
+      "claim_text": "Curator 569 GT + cleaned student 556 GT, with 539 retained after clipping",
+      "values": [
+        {
+          "quantity": "curator ground-truth features on the 4 GS sheets",
+          "value_verbatim": "569",
+          "value_parsed": 569,
+          "unit": "features",
+          "kind": "count",
+          "path": "$.headline.curator_total",
+          "method": "read"
+        },
+        {
+          "quantity": "cleaned student ground-truth features before clipping",
+          "value_verbatim": "556",
+          "value_parsed": 556,
+          "unit": "features",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "student ground-truth features retained after clipping to the active-sheet area",
+          "value_verbatim": "539",
+          "value_parsed": 539,
+          "unit": "features",
+          "kind": "count",
+          "path": "$.headline.student_total",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/student-gt-fn-rate-analysis-gs4/bootstrap_summary.json",
+        "path": "$.headline.curator_total"
+      },
+      "method": "read",
+      "notes": "The 556 pre-clip count is carried by a different file — inputs/vectors/references/student-mounds-gs-4maps-reviewed.geojson (len:$.features) — hence the per-value anchor-unknown. Parallel anchor for 569: results/gold-standard-subtype-classification/run_manifest.json $.n_ground_truth_features."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          85,
+          86
+        ],
+        "section": "Note on the GT-comparator subdirectories"
+      },
+      "claim_text": "they are curator-vs-student\nGT comparisons on the 4 GS sheets",
+      "values": [
+        {
+          "quantity": "count of GS map sheets the curator-vs-student comparisons cover",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "map sheets",
+          "kind": "count",
+          "path": "$.n_sheets",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/student-gt-fn-rate-analysis-gs4/bootstrap_summary.json",
+        "path": "$.n_sheets"
+      },
+      "method": "read",
+      "notes": "The 'Era 1 / 2 / 3' tokens on lines 87-88 are taxonomy labels, not claims."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          88,
+          89
+        ],
+        "section": "Note on the GT-comparator subdirectories"
+      },
+      "claim_text": "They are correctly tagged \"4-map\ngold-standard sub-corpus\"",
+      "values": [
+        {
+          "quantity": "count of map sheets in the gold-standard sub-corpus tag",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "map sheets",
+          "kind": "count",
+          "path": "$.n_sheets",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/student-gt-fn-rate-analysis-gs4/bootstrap_summary.json",
+        "path": "$.n_sheets"
+      },
+      "method": "read",
+      "notes": "Borderline: '4-map gold-standard sub-corpus' is quoted as a tag, so the numeral is arguably a name (instrument rule 5). Included because the tag also asserts the sheet count; prune at triage if judged a pure name."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          98,
+          98
+        ],
+        "section": "3. Chronology"
+      },
+      "claim_text": "**Pre-2026-03-15 — 60-tile validation pool** (`validation_bounds.geojson`).",
+      "values": [
+        {
+          "quantity": "tile count of the pre-Era validation pool",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/validation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "The document names validation_bounds.geojson, so the anchor is taken there. Parallel anchor: inputs/tiles/tile_selection_metadata.json $.validation.total_tiles."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          100,
+          101
+        ],
+        "section": "3. Chronology"
+      },
+      "claim_text": "Expand holdout set from 20\n   to 60 tiles",
+      "values": [
+        {
+          "quantity": "holdout tile count before the expansion (superseded)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "holdout tile count after the expansion",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.validation.total_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": "$.validation.total_tiles"
+      },
+      "method": "read",
+      "notes": "Quoted commit subject with an explicit before-to-after pair: the 20 is the superseded side (historical), the 60 the live figure. Commit hashes are out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          104,
+          104
+        ],
+        "section": "3. Chronology"
+      },
+      "claim_text": "transition to Era 1 (340-tile, 512 px)",
+      "values": [
+        {
+          "quantity": "test tile count, Era 1",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "tile size, Era 1",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Tile pixel size is the on-disk PNG dimension under inputs/tiles/, a different artefact from the bounds GeoJSON that carries the tile count; marked anchor-unknown only because per-value paths are bound to the claim's single anchor file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          105,
+          105
+        ],
+        "section": "3. Chronology"
+      },
+      "claim_text": "the 60-tile pool's insufficient power",
+      "values": [
+        {
+          "quantity": "tile count of the pool judged insufficiently powered",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/validation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Repeat assertion of the legacy pool size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          108,
+          109
+        ],
+        "section": "3. Chronology"
+      },
+      "claim_text": "Era 2 (487-tile, 384 px)\n   established**",
+      "values": [
+        {
+          "quantity": "test tile count, Era 2",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "tile size, Era 2",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Tile pixel size is the on-disk PNG dimension under inputs/tiles_384/ (see the separately anchored claim at lines 31-32); marked anchor-unknown here only because per-value paths are bound to the claim's single anchor file."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          109,
+          109
+        ],
+        "section": "3. Chronology"
+      },
+      "claim_text": "H11 tile-size study moved evaluation to 384 px",
+      "values": [
+        {
+          "quantity": "tile size adopted for evaluation by the H11 tile-size study",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles_384/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: the on-disk PNG dimension of the tiles in inputs/tiles_384/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          110,
+          110
+        ],
+        "section": "3. Chronology"
+      },
+      "claim_text": "487-tile clean set is the post-calibration test pool",
+      "values": [
+        {
+          "quantity": "test tile count of the post-calibration Era 2 pool",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Parallel anchor: inputs/tiles_384/full_evaluation_manifest.json (len:$)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          113,
+          114
+        ],
+        "section": "3. Chronology"
+      },
+      "claim_text": "\"consensus results (20m) evaluated\n   on validation_bounds.geojson (240 tiles, 242 mounds)",
+      "values": [
+        {
+          "quantity": "match-buffer radius used for the quoted consensus evaluation",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tile count of the validation bounds used for the quoted consensus evaluation",
+          "value_verbatim": "240",
+          "value_parsed": 240,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "ground-truth mounds inside those validation bounds",
+          "value_verbatim": "242",
+          "value_parsed": 242,
+          "unit": "mounds",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/validation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Quoted from a memory entry in ~/personal-assistant/memories/memories.jsonl, outside the repository, so anchored to the artefact the quotation names. Ambiguity flagged: 'validation_bounds.geojson' is unqualified; the 384-px sibling (inputs/vectors/bounds/384/validation_bounds.geojson) is assumed because the surrounding chronology entry is about the 384-px transition, but inputs/vectors/bounds/validation_bounds.geojson is the alternative reading. The mound count needs a spatial recompute against inputs/vectors/references/mounds-reference.geojson; the 20 m buffer has no locator in this span. Parallel anchor for 240: inputs/tiles_384/tile_selection_metadata.json $.selected_tiles."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          114,
+          116
+        ],
+        "section": "3. Chronology"
+      },
+      "claim_text": "PV\n   results (20m) evaluated on full_evaluation_bounds.geojson (487 tiles,\n   435 mounds)",
+      "values": [
+        {
+          "quantity": "match-buffer radius used for the quoted PV evaluation",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "test tile count, Era 2 (full_evaluation_bounds)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "ground-truth mounds inside the Era 2 bounds",
+          "value_verbatim": "435",
+          "value_parsed": 435,
+          "unit": "mounds",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Quoted from the same out-of-repository memory entry; anchored to the bounds file the quotation names. The mound count needs a spatial recompute against inputs/vectors/references/mounds-reference.geojson; the 20 m buffer has no locator in this span."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          116,
+          116
+        ],
+        "section": "3. Chronology"
+      },
+      "claim_text": "re-evaluate all conditions on full 487-tile bounds",
+      "values": [
+        {
+          "quantity": "test tile count of the bounds all conditions were to be re-evaluated on",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Closing clause of the quoted memory entry."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          118,
+          118
+        ],
+        "section": "3. Chronology"
+      },
+      "claim_text": "three-Era taxonomy formalised",
+      "values": [
+        {
+          "quantity": "count of eras in the formalised taxonomy",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "eras",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The artefact introduced by the cited commit is results/evaluation-scopes.md, a markdown document, so prose-to-prose anchoring is disallowed; same situation as the claims at lines 14-15 and 29-30. Commit hash, Obs identifier, and working-notes line numbers are out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          123,
+          123
+        ],
+        "section": "3. Chronology"
+      },
+      "claim_text": "Era 3 (327-tile) bounds in active use",
+      "values": [
+        {
+          "quantity": "test tile count, Era 3",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Tile count used as both label and asserted fact (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          131,
+          133
+        ],
+        "section": "3. Chronology"
+      },
+      "claim_text": "lifts the Era 2 verifier count from 371 to\n   380 detections",
+      "values": [
+        {
+          "quantity": "Era 2 verifier detection count before the 2026-05-03 recovery (superseded)",
+          "value_verbatim": "371",
+          "value_parsed": 371,
+          "unit": "detections",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "Era 2 verifier detection count after the 2026-05-03 recovery",
+          "value_verbatim": "380",
+          "value_parsed": 380,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.summary.n_detections",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/gold-standard-extended-buffer-sweep-era2/evaluation.json",
+        "path": "$.summary.n_detections"
+      },
+      "method": "read",
+      "notes": "Explicit before-to-after pair: 371 is the superseded side (historical), 380 the live figure. Commit hashes and dates are out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          138,
+          138
+        ],
+        "section": "3. Chronology"
+      },
+      "claim_text": "**Era 3 (327 tiles)**",
+      "values": [
+        {
+          "quantity": "test tile count, Era 3",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/h10_test_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Concluding restatement of the Era 3 pool size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          140,
+          140
+        ],
+        "section": "3. Chronology"
+      },
+      "claim_text": "the later Era 2 (487 tiles) re-evaluations",
+      "values": [
+        {
+          "quantity": "test tile count, Era 2",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Concluding restatement of the Era 2 pool size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          140,
+          140
+        ],
+        "section": "3. Chronology"
+      },
+      "claim_text": "The user's \"~60 tiles\"",
+      "values": [
+        {
+          "quantity": "tile count of the pre-Era pool the user recollected",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "len:$.features",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/validation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Concluding restatement of the legacy pool size; approximate ('~')."
+    }
+  ]
+}
