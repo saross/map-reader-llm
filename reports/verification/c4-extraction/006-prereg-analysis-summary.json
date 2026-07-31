@@ -1,0 +1,915 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-07-31T08:41:33Z",
+  "source_document": {
+    "file": "docs/methodology/preregistration/analysis-summary.md",
+    "git_blob": "1a0414c60d1f11ea394668a9df21067b5be1b868",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          3,
+          4
+        ],
+        "section": "Banner"
+      },
+      "claim_text": "> **NOT PART OF THE OSF LODGEMENT.** The registration comprises exactly three\n> documents, all in `osf/` (`osf/README.md:3,9-11`); this file is not one of",
+      "values": [
+        {
+          "quantity": "count of documents comprising the OSF registration",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "documents",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/README.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The banner names its own source inline ('osf/README.md:3,9-11'); README.md line 3 reads 'This registration contains three documents...' and its Document Overview table (lines 7-11) lists exactly three rows (preregistration.md, preregistration-appendix-prompts.md, preregistration-coverage.md). Per hard rule 2, anchored where the document itself points."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          20,
+          20
+        ],
+        "section": "What We Test"
+      },
+      "claim_text": "This study evaluates whether Vision Language Models (VLMs) can detect burial mound symbols on Soviet topographic maps. We test **15 hypotheses** about factors that might affect detection performance:",
+      "values": [
+        {
+          "quantity": "count of hypotheses tested by the study",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": "hypotheses",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "This summary is 'NOT PART OF THE OSF LODGEMENT' (banner, lines 3-10) and 'must not be cited as the preregistration'; per the v1.1 calibration rule, a claim about what the registration specifies anchors to the lodged document, not this companion. The lodged preregistration.md has 16 '### H<N>:' headings (H1-H15 plus the triggered exploratory H4b); recompute-script needed to exclude H4b and confirm exactly 15 canonical hypotheses (matches §7.1 'Confirmatory Hypotheses (H1-H8)' + §7.2 'Exploratory Hypotheses (H9-H15)')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          44,
+          44
+        ],
+        "section": "Primary Outcome: F1 Score at 20m"
+      },
+      "claim_text": "A detection counts as correct if it falls within **20 metres** of a ground truth mound. This tolerance accounts for georeferencing imprecision and symbol size.",
+      "values": [
+        {
+          "quantity": "primary spatial matching tolerance for a correct detection",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "metres",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md line 341 ('Primary matching threshold: 20 metres') and line 294 ('All primary results reported at 20m'). v1.1 calibration rule: registration-specification claim, anchored to the lodged document, not a config. The section heading's 'F1 Score at 20m' (line 36) restates the same figure as a heading label and is not separately extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          58,
+          58
+        ],
+        "section": "What We Report"
+      },
+      "claim_text": "| **Mean F1** | Average performance across 10 independent runs |",
+      "values": [
+        {
+          "quantity": "independent runs per condition (K), used for the Mean F1 metric",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md line 315 ('Each condition in the main factorial is evaluated using K=10 independent single-pass runs') and line 628 ('K: 10 independent runs per condition'); registration-specification claim, anchored to the lodged document per the v1.1 calibration rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          59,
+          59
+        ],
+        "section": "What We Report"
+      },
+      "claim_text": "| **95% CI** | Confidence interval showing uncertainty |",
+      "values": [
+        {
+          "quantity": "standard confidence-interval level used throughout reporting",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Names the reporting convention ('95% CI'); matches the pervasive '95% CIs' usage throughout osf/preregistration.md (e.g. lines 436, 570, 632, 727, 821) and the explicit '95% bootstrapped CIs' at line 293."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          67,
+          67
+        ],
+        "section": "How We Handle Multiple Comparisons"
+      },
+      "claim_text": "With 8 confirmatory hypotheses, we use **False Discovery Rate (FDR) correction** at q = 0.05:",
+      "values": [
+        {
+          "quantity": "count of confirmatory hypotheses subject to FDR correction",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": "hypotheses",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "FDR correction threshold (q)",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md line 274 ('With 8 confirmatory hypotheses tested on 60 tiles (79 mound symbols)...') and line 270 ('Benjamini-Hochberg FDR at q = 0.05 across confirmatory hypotheses')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          71,
+          71
+        ],
+        "section": "How We Handle Multiple Comparisons — table"
+      },
+      "claim_text": "| FDR-corrected p < 0.05 | **Significant** — technique shows promise |",
+      "values": [
+        {
+          "quantity": "FDR-corrected significance threshold, 'Significant' interpretation row",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row; matches osf/preregistration.md § 3.3 line 282 ('Statistically significant (FDR-corrected p < 0.05)')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          72,
+          72
+        ],
+        "section": "How We Handle Multiple Comparisons — table"
+      },
+      "claim_text": "| Raw p < 0.05, FDR p ≥ 0.05 | **Suggestive** — consider for follow-up |",
+      "values": [
+        {
+          "quantity": "raw-p significance threshold, 'Suggestive' interpretation row",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "FDR-corrected threshold below which the 'Suggestive' band no longer applies",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row; matches § 3.3 line 283 ('Nominally significant (uncorrected p < 0.05, FDR-corrected p >= 0.05)')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          73,
+          73
+        ],
+        "section": "How We Handle Multiple Comparisons — table"
+      },
+      "claim_text": "| Raw p ≥ 0.05 | **No evidence** — null hypothesis retained |",
+      "values": [
+        {
+          "quantity": "raw-p threshold, 'No evidence' interpretation row",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row; matches § 3.3 line 284 ('Non-significant (uncorrected p >= 0.05)')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          83,
+          83
+        ],
+        "section": "H1: Modality/Elaboration Level"
+      },
+      "claim_text": "- **Design**: 5 conditions (image-only, brief-text, brief+image, verbose-text, verbose+image)",
+      "values": [
+        {
+          "quantity": "count of H1 design conditions",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md line 413 ('Compare detection performance across 5 modality/elaboration levels') and the 5-row table beneath it (lines 415-421)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          84
+        ],
+        "section": "H1: Modality/Elaboration Level"
+      },
+      "claim_text": "- **Analysis**: Pairwise bootstrap comparisons across 5 levels (95% CIs, FDR-corrected)",
+      "values": [
+        {
+          "quantity": "count of M/E levels compared in the H1 primary analysis",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "levels",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "bootstrap CI level, H1 primary analysis",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md line 436 ('Primary: Pairwise bootstrap comparisons across 5 M/E levels (95% CIs, FDR-corrected)')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          89,
+          89
+        ],
+        "section": "H2: Two-Stage Pipeline"
+      },
+      "claim_text": "- **Design**: 3 conditions (single-stage baseline, coarse-to-fine, fine-to-coarse)",
+      "values": [
+        {
+          "quantity": "count of H2 design conditions",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md § H2 (line 451 onward), which compares single-stage baseline, coarse-to-fine and fine-to-coarse (3 conditions). 'single-stage'/'two-stage'/'fine-to-coarse' are architecture names, not separately extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          95,
+          95
+        ],
+        "section": "H3: Consensus Voting"
+      },
+      "claim_text": "- **Design**: Multiple pool sizes (N=5, 10, 30) and thresholds",
+      "values": [
+        {
+          "quantity": "consensus pool size (smallest), H3 design",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "runs",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus pool size (mid), H3 design",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "runs",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus pool size (largest, extended voting), H3 design",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "runs",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md § H3 (lines 505-511, Pool Size table: N=5, N=10) and line 513 ('Extended voting (N=30)')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          101,
+          101
+        ],
+        "section": "H4: Example Ordering"
+      },
+      "claim_text": "- **Design**: 3 conditions (canonical-first, canonical-last, random)",
+      "values": [
+        {
+          "quantity": "count of H4 design conditions",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md § H4 line 553 ('Compare detection performance across three ordering conditions'), naming canonical-first/canonical-last/random."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          102,
+          102
+        ],
+        "section": "H4: Example Ordering"
+      },
+      "claim_text": "- **Analysis**: Pairwise bootstrap comparisons (95% CIs, FDR-corrected); planned contrast canonical-first vs canonical-last",
+      "values": [
+        {
+          "quantity": "bootstrap CI level, H4 primary analysis",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md line 570 ('Pairwise bootstrap comparisons across 3 ordering conditions (95% CIs, FDR-corrected)')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          107,
+          107
+        ],
+        "section": "H5: Negative Text Treatment"
+      },
+      "claim_text": "- **Design**: 3 levels (minimal, terse, verbose) × 3 M/E levels",
+      "values": [
+        {
+          "quantity": "count of H5 negative-text levels",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "levels",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of M/E levels crossed with H5 levels",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "levels",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md § H5 ('3-level design comparing text support for negatives', line 590 3-row table) crossed with M/E; the M/E x H5 interaction analysis (lines 638-645) confirms the 3x3 factorial framing."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          115,
+          115
+        ],
+        "section": "H6: Flash→Pro Transfer"
+      },
+      "claim_text": "- **Decision rule**: Adjust factor if Δ ≥ 0.03 F1",
+      "values": [
+        {
+          "quantity": "H6 decision-rule F1 delta threshold for adjusting a factor",
+          "value_verbatim": "0.03",
+          "value_parsed": 0.03,
+          "unit": "F1",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md line 677 ('If alternative outperforms Flash-optimal by >=0.03 F1, flag factor for adjustment') and the table at line 697 ('All factors within 0.03 of Flash-optimal')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          119,
+          119
+        ],
+        "section": "H7: Temperature"
+      },
+      "claim_text": "- **Design**: 5 levels (0.0, 0.3, 0.7, 1.0, 1.3)",
+      "values": [
+        {
+          "quantity": "count of H7 temperature levels",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "levels",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "H7 temperature level 1",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "H7 temperature level 2",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "H7 temperature level 3",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "H7 temperature level 4",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "H7 temperature level 5",
+          "value_verbatim": "1.3",
+          "value_parsed": 1.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md § H7 line 712 ('Compare detection performance across 5 temperature levels') and the Level table (lines 714-720: 0.0/0.3/0.7/1.0/1.3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          120,
+          120
+        ],
+        "section": "H7: Temperature"
+      },
+      "claim_text": "- **Analysis**: Pairwise bootstrap comparisons (95% CIs, FDR-corrected); planned contrasts T=1.0 vs each other level",
+      "values": [
+        {
+          "quantity": "bootstrap CI level, H7 primary analysis",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "reference temperature for H7 planned contrasts",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md line 727 ('Pairwise bootstrap comparisons across 5 temperature levels (95% CIs, FDR-corrected)') and line 728 ('Planned contrasts: T=1.0 vs each other level')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          121,
+          121
+        ],
+        "section": "H7: Temperature"
+      },
+      "claim_text": "- **Trigger**: Extend to T=1.6, 2.0 if T=1.3 outperforms T=1.0",
+      "values": [
+        {
+          "quantity": "H7 escalation-trigger temperature (lower of the two extension levels)",
+          "value_verbatim": "1.6",
+          "value_parsed": 1.6,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "H7 escalation-trigger temperature (upper extension level)",
+          "value_verbatim": "2.0",
+          "value_parsed": 2.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature level whose outperformance of T=1.0 triggers H7 escalation",
+          "value_verbatim": "1.3",
+          "value_parsed": 1.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "reference temperature the H7 escalation trigger compares against",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md § H7 'Temperature escalation trigger' (line 731): 'If T=1.3 yields higher F1 than T=1.0..., exploratory testing at T=1.6 and T=2.0 will be conducted...'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          125,
+          125
+        ],
+        "section": "H8: Library Composition"
+      },
+      "claim_text": "- **Design**: 7 library conditions (Pure Positive Canon → Scale-32)",
+      "values": [
+        {
+          "quantity": "count of H8 library conditions",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md line 767 ('Compare detection performance across 7 library conditions') and the 7-row library table (lines 771-778, IDs 1-7 Pure Positive Canon -> Scale-32). 'Scale-32' is a condition name (rule 5's 'min6' example), not extracted as a value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          126,
+          126
+        ],
+        "section": "H8: Library Composition"
+      },
+      "claim_text": "- **Analysis**: Pairwise bootstrap comparisons (95% CIs, FDR-corrected); sequential addition and scaling contrasts",
+      "values": [
+        {
+          "quantity": "bootstrap CI level, H8 primary analysis",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md line 821 ('Primary: Pairwise bootstrap comparisons across 7 library conditions (95% CIs, FDR-corrected)')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          139,
+          139
+        ],
+        "section": "Statistical Power"
+      },
+      "claim_text": "With 60 holdout tiles containing 79 mound symbols:",
+      "values": [
+        {
+          "quantity": "holdout tile count underlying the power calculation",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "mound symbol count underlying the power calculation",
+          "value_verbatim": "79",
+          "value_parsed": 79,
+          "unit": "symbols",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md line 234 ('Holdout set summary: 60 tiles, 79 mounds total') and line 300 ('With 60 holdout tiles containing 79 mound symbols...')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          143,
+          143
+        ],
+        "section": "Statistical Power — table"
+      },
+      "claim_text": "| Symbol-level F1 | ≈ 0.07–0.09 |",
+      "values": [
+        {
+          "quantity": "minimum detectable effect, symbol-level F1",
+          "value_verbatim": "≈ 0.07–0.09",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Approx marker kept verbatim per v1.2 amendment 5; matches osf/preregistration.md line 302 ('Symbol-level F1: Minimum detectable difference ~= 0.07-0.09') and the 'MDE ~= 0.07-0.09' summary at line 44."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          144,
+          144
+        ],
+        "section": "Statistical Power — table"
+      },
+      "claim_text": "| Tile-level MCC | ≈ 0.20 |",
+      "values": [
+        {
+          "quantity": "minimum detectable effect, tile-level MCC",
+          "value_verbatim": "≈ 0.20",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md line 303 ('Tile-level MCC: Minimum detectable difference ~= 0.20')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          155,
+          155
+        ],
+        "section": "Practical Significance"
+      },
+      "claim_text": "2. **Meaningful effect size**: More than trivial improvement (e.g., F1 > +0.03)",
+      "values": [
+        {
+          "quantity": "minimum F1 improvement treated as more than trivial, practical-significance criterion",
+          "value_verbatim": "0.03",
+          "value_parsed": 0.03,
+          "unit": "F1",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "'F1 > +0.03' is offered as an illustrative example of a meaningful effect size ('e.g.'), not a numerically identical restatement of the H6 0.03 threshold (line 115 of this document / osf/preregistration.md line 677, which is a distinct, H6-specific decision rule). osf/preregistration.md § 3.4 (Practical Significance Caveat, lines 286-288) discusses practical significance qualitatively but does not restate a general '+0.03' example — only the tiny-effect '+0.01' example (matched at the next claim). Flagged anchor-unknown rather than mis-anchoring to the H6-specific value; list marker '2.' not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          158,
+          158
+        ],
+        "section": "Practical Significance"
+      },
+      "claim_text": "A significant but tiny effect (F1 +0.01) will be reported but not treated as actionable.",
+      "values": [
+        {
+          "quantity": "example tiny/non-actionable F1 effect size",
+          "value_verbatim": "0.01",
+          "value_parsed": 0.01,
+          "unit": "F1",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md § 3.4 line 288 ('A statistically significant but trivially small improvement (e.g., F1 +0.01) will be reported but not treated as actionable') almost verbatim."
+    }
+  ]
+}

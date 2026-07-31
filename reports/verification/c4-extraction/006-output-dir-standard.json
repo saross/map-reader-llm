@@ -1,0 +1,1359 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-07-31T08:41:33Z",
+  "source_document": {
+    "file": "docs/methodology/output-directory-standard.md",
+    "git_blob": "8d6d73ae1404fb9bcbc828642749ee932cf5dffe",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          17,
+          18
+        ],
+        "section": "Status — Current state"
+      },
+      "claim_text": "- **Current state**: The directory structure reflects organic growth\n  across 10+ experimental phases. A documentation audit and remediation",
+      "values": [
+        {
+          "quantity": "experimental phases the outputs/ layout has grown across (lower-bound, approximate)",
+          "value_verbatim": "10+",
+          "value_parsed": 10,
+          "unit": "phases",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Approximate open-ended count ('10+') of experimental phases behind the organic growth of outputs/; no artefact enumerates 'experimental phases' as a discrete unit. Included per the include-when-in-doubt rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          40,
+          40
+        ],
+        "section": "Artefact Types"
+      },
+      "claim_text": "| Detections | `.geojson` | 300–600 KB | **Yes** | GeoJSON FeatureCollection of detected symbols |",
+      "values": [
+        {
+          "quantity": "typical file size (minimum), Detections .geojson",
+          "value_verbatim": "300",
+          "value_parsed": 300,
+          "unit": "KB",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "typical file size (maximum), Detections .geojson",
+          "value_verbatim": "600",
+          "value_parsed": 600,
+          "unit": "KB",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Typical-size norm for the Detections artefact type across many run directories, not a single measured file; no artefact carries this range as a scalar. A script could sample outputs/**/*.geojson sizes to check the range is typical, but the claim itself is descriptive prose about artefact-type conventions, not a specific run's result."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          41,
+          41
+        ],
+        "section": "Artefact Types"
+      },
+      "claim_text": "| Execution metadata | `.meta.json` | 450 KB–1 MB | **Yes** | Model, config, cost, usage stats, per-tile telemetry |",
+      "values": [
+        {
+          "quantity": "typical file size (minimum), Execution metadata .meta.json",
+          "value_verbatim": "450",
+          "value_parsed": 450,
+          "unit": "KB",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "typical file size (maximum), Execution metadata .meta.json",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "MB",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Typical-size norm, mixed units across the range (450 KB to 1 MB); each endpoint given its own unit per v1.2 amendment 6. Same anchor-unknown reasoning as the Detections row."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          42,
+          42
+        ],
+        "section": "Artefact Types"
+      },
+      "claim_text": "| Tile status | `.tiles.json` | 20 KB | **Yes** | Per-tile processing success/failure |",
+      "values": [
+        {
+          "quantity": "typical file size, Tile status .tiles.json",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "KB",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Typical-size norm; same reasoning as the Detections row."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          43,
+          43
+        ],
+        "section": "Artefact Types"
+      },
+      "claim_text": "| Candidate manifest | `candidate_manifest.json` | ~290 KB | **Yes** | Maps candidate IDs to precise coordinates |",
+      "values": [
+        {
+          "quantity": "typical file size (approx.), Candidate manifest candidate_manifest.json",
+          "value_verbatim": "~290 KB",
+          "value_parsed": 290,
+          "unit": "KB",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Typical-size norm with approx marker (v1.2 amendment 5: '~' kept in value_verbatim)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          44,
+          44
+        ],
+        "section": "Artefact Types"
+      },
+      "claim_text": "| Probabilities | `probabilities.json` | ~50 KB | **Yes** | Aggregated verification probabilities per candidate |",
+      "values": [
+        {
+          "quantity": "typical file size (approx.), Probabilities probabilities.json",
+          "value_verbatim": "~50 KB",
+          "value_parsed": 50,
+          "unit": "KB",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Typical-size norm with approx marker."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          45,
+          45
+        ],
+        "section": "Artefact Types"
+      },
+      "claim_text": "| Verified detections | `verified-*.geojson` | 500–600 KB | **Yes** | Detections enriched with verifier scores and reasoning |",
+      "values": [
+        {
+          "quantity": "typical file size (minimum), Verified detections verified-*.geojson",
+          "value_verbatim": "500",
+          "value_parsed": 500,
+          "unit": "KB",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "typical file size (maximum), Verified detections verified-*.geojson",
+          "value_verbatim": "600",
+          "value_parsed": 600,
+          "unit": "KB",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Typical-size norm; same reasoning as the Detections row."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          46,
+          46
+        ],
+        "section": "Artefact Types"
+      },
+      "claim_text": "| Threshold sweep | `threshold_sweep.json` | ~20 KB | **Yes** | Optimal threshold analysis with bootstrap CIs |",
+      "values": [
+        {
+          "quantity": "typical file size (approx.), Threshold sweep threshold_sweep.json",
+          "value_verbatim": "~20 KB",
+          "value_parsed": 20,
+          "unit": "KB",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Typical-size norm with approx marker."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          47,
+          47
+        ],
+        "section": "Artefact Types"
+      },
+      "claim_text": "| Crop images | `crops/*.png` | ~24 MB total | **No** | Raster crops around candidates — regenerable |",
+      "values": [
+        {
+          "quantity": "typical total directory size (approx.), Crop images crops/*.png",
+          "value_verbatim": "~24 MB total",
+          "value_parsed": 24,
+          "unit": "MB",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Typical-size norm with approx marker; gitignored/regenerable artefact type."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          48,
+          48
+        ],
+        "section": "Artefact Types"
+      },
+      "claim_text": "| Batch working files | `batch_working/*.jsonl` | 50–80 MB/run | **No** | Raw API request/response payloads — regenerable |",
+      "values": [
+        {
+          "quantity": "typical file size per run (minimum), Batch working files batch_working/*.jsonl",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "MB/run",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "typical file size per run (maximum), Batch working files batch_working/*.jsonl",
+          "value_verbatim": "80",
+          "value_parsed": 80,
+          "unit": "MB/run",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Typical-size norm; gitignored/regenerable artefact type."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          81,
+          81
+        ],
+        "section": "Proposed Directory Structure"
+      },
+      "claim_text": "Single-pass proposer (N=1)",
+      "values": [
+        {
+          "quantity": "proposer pass count, n1-outstanding-384 pipeline",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Directory-tree comment describing the n1-outstanding-384/ pipeline as single-pass (N=1). '384' in the directory name is the tile-size naming convention (rule 5), not extracted. This 'Proposed Directory Structure' tree is illustrative; n1-outstanding-384/ exists on this clone under outputs/h11/ but contains condition subdirectories rather than a single scalar N-value artefact, so no mechanical anchor is offered."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          84
+        ],
+        "section": "Proposed Directory Structure"
+      },
+      "claim_text": "30-pass consensus proposer",
+      "values": [
+        {
+          "quantity": "proposer pass count, consensus-384 pipeline",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Directory-tree comment. outputs/h11/consensus-384/ does not exist on this clone (the Immediate TODOs section, lines 360-364, notes it lives on sapphire with batch_working/ JSONL not yet extracted to GeoJSONs) — no anchor file is reachable here to confirm the 30-pass count mechanically."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          87,
+          87
+        ],
+        "section": "Proposed Directory Structure"
+      },
+      "claim_text": "PV pipeline (N=1 proposer)",
+      "values": [
+        {
+          "quantity": "proposer pass count, proposer-verifier-384 pipeline",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Directory-tree comment, distinct span from the n1-outstanding-384 N=1 claim at line 81 (different pipeline, same asserted pass count). outputs/h11/proposer-verifier-384/ exists on this clone (proposer/, candidates/, cascade*.geojson) but has no single scalar artefact naming N=1 directly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          101,
+          101
+        ],
+        "section": "Proposed Directory Structure"
+      },
+      "claim_text": "NEW: 55-map production run",
+      "values": [
+        {
+          "quantity": "map count, planned production directory",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": "maps",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Directory-tree comment for a then-planned outputs/production/ directory; that path does not exist on this clone (the project's 55-map runs now live under outputs/55maps-*-generalisation/ per the Post-Run Report Schema section instead). '55-map' recurs adjectivally elsewhere in this document (e.g. line 142, line 398); extracted at its first clear assertion and at the line-142 report-count sentence only, not at every incidental mention, per the documentation-index precedent."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          143
+        ],
+        "section": "Post-Run Report Schema"
+      },
+      "claim_text": "The schema is lifted from the four 55-map generalisation reports (Exemplar\nA: `outputs/55maps-image-generalisation/post_run_report.md`), which were",
+      "values": [
+        {
+          "quantity": "count of 55-map generalisation post-run reports the schema was lifted from",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "reports",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "map count of the 55-map generalisation corpus (adjectival, recurring)",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": "maps",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/",
+        "path": "count of 55maps-*-generalisation/post_run_report.md files"
+      },
+      "method": "read",
+      "notes": "'four' counts the exemplar reports (image, text-min, text-high, text-high-t0.3 generalisations); outputs/55maps-image-generalisation/post_run_report.md is named explicitly as Exemplar A two lines later. The corpus map count (55) is anchor-unknown per the line-101 claim's reasoning — no corpus manifest confirms it on this clone. Note the working outputs/ tree now also holds 55maps-generalisation/ and 55maps-text-min-n10-uplift/, i.e. more than four '55maps-*' directories exist today; not adjudicated here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          158,
+          160
+        ],
+        "section": "Post-Run Report Schema — Required sections"
+      },
+      "claim_text": "1. **Front-matter block** (REQUIRED) — run name; completed timestamp\n   (UTC); host; launcher commit (40-char SHA); launcher version; config\n   path; pre-launch audit path (if applicable).",
+      "values": [
+        {
+          "quantity": "required SHA length for the launcher-commit front-matter field",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "characters",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Schema/format requirement (a git full SHA-1 is always 40 hex characters); this is a documentation-formatting norm rather than a measured study result, included per the include-when-in-doubt rule (cf. the documentation-protocol cadence-norm precedent). List marker '1.' not extracted (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          161,
+          163
+        ],
+        "section": "Post-Run Report Schema — Required sections"
+      },
+      "claim_text": "F1 / P / R at the project's\n   standard buffer radii (20/30/40/50 m) with bootstrap 95% CIs (1,000\n   iterations, seed 42, tile-level resampling).",
+      "values": [
+        {
+          "quantity": "standard buffer radius (smallest), post-run-report top-line result",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "standard buffer radius, post-run-report top-line result",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "standard buffer radius, post-run-report top-line result",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "standard buffer radius (largest), post-run-report top-line result",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "bootstrap CI confidence level, post-run-report top-line result",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "bootstrap iteration count, post-run-report top-line result",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": "iterations",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "bootstrap random seed, post-run-report top-line result",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/55maps-image-generalisation/post_run_report.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Schema requirement for the Top-line result section. Verified against Exemplar A (outputs/55maps-image-generalisation/post_run_report.md), whose own Top-line result table uses buffers 20/30/40/50 m and states 'CIs are from 1,000-iteration tile-level bootstrap at seed 42' (per this document's own changelog, line 414: 'Bootstrap CI params verified against Exemplar A lines 19, 26 pre-commit'). Also matches project-wide constants in scripts/analyse_phase2_results.py (DEFAULT_N_BOOTSTRAP = 1000, seed 42) and scripts/analyse_pv_buffer_sensitivity.py (DEFAULT_BUFFERS = [20, 30, 40, 50])."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          172,
+          173
+        ],
+        "section": "Post-Run Report Schema — Required sections"
+      },
+      "claim_text": "5. **Per-map extrema** (REQUIRED if multi-map run) — top-5 / bottom-5 by\n   cost; mean cost-per-tile dispersion comment.",
+      "values": [
+        {
+          "quantity": "top-N by cost, per-map extrema section",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "bottom-N by cost, per-map extrema section",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Schema requirement (top-5 / bottom-5 by cost); norm not tied to a specific run's artefact. List marker '5.' not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          200,
+          200
+        ],
+        "section": "Post-Run Report Schema — Dual-location convention"
+      },
+      "claim_text": "Some runs have a post-run report at **two** paths:",
+      "values": [
+        {
+          "quantity": "number of paths a dual-located post-run report can occupy",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "paths",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Describes the dual-location pattern itself (outputs/<run-id>/post_run_report.md and configs/run-configs/<run-id>_post_run_report.md), not a specific count of affected runs (that is the separate line-225 claim)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          210,
+          213
+        ],
+        "section": "Post-Run Report Schema — Dual-location convention"
+      },
+      "claim_text": "- The **`outputs/<run-id>/post_run_report.md` copy is canonical**. All\n  edits land there.\n- The `configs/run-configs/<run-id>_post_run_report.md` copy, when\n  present, must be replaced with a **one-line stub**:",
+      "values": [
+        {
+          "quantity": "required length of the configs/-side stub replacing a duplicated report",
+          "value_verbatim": "one-line",
+          "value_parsed": 1,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Formatting requirement for the configs/run-configs/ stub file; checkable in principle against actual stub files (e.g. configs/run-configs/55maps_text_high_generalisation_post_run_report.md) but no single artefact asserts the norm as a scalar."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          225,
+          226
+        ],
+        "section": "Post-Run Report Schema — Dual-location convention"
+      },
+      "claim_text": "**Current state (2026-05-26)**: 2 of the 4 55-map runs are dual-located\n(`55maps-image-generalisation`, `55maps-text-min-generalisation`). The",
+      "values": [
+        {
+          "quantity": "count of dual-located 55-map runs as of 2026-05-26",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "total count of 55-map runs in the dual-location accounting",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/",
+        "path": "count of 55maps-*-generalisation runs with a report at both outputs/ and configs/run-configs/"
+      },
+      "method": "recompute-script",
+      "notes": "'2 of the 4 55-map runs are dual-located' — checkable by testing, for each of the four named runs (image, text-min, text-high, text-high-t0.3, generalisations), whether both outputs/<run-id>/post_run_report.md and configs/run-configs/<run-id>_post_run_report.md exist. configs/run-configs/ on this clone holds stub or report files for image, text-min, text-high, and a retrospective run, plus a pre_launch_audit.md for text-high-t0.3, consistent with the asymmetric picture described in the surrounding prose (not adjudicated here)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          322,
+          322
+        ],
+        "section": "Documents in Revision Policy Scope"
+      },
+      "claim_text": "| `results/**.md` (anchor docs only — see audit plan § 5.2) | Paper-citation working docs | ~35–50 | ~35–50 | Mostly non-compliant; back-fill on touch |",
+      "values": [
+        {
+          "quantity": "count of results/**.md anchor docs in Document Revision Policy scope (2026-05-26)",
+          "value_verbatim": "~35–50",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of results/**.md anchor docs, post-audit target",
+          "value_verbatim": "~35–50",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/",
+        "path": "count of results/**.md files classed as anchor docs per audit plan § 5.2"
+      },
+      "method": "recompute-script",
+      "notes": "Table row; current and target counts are identical approximate ranges. Anchor-doc classification requires filtering results/**.md (audit plan § 5.2 defines 'anchor doc'), hence recompute-script rather than a plain find/wc."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          324,
+          324
+        ],
+        "section": "Documents in Revision Policy Scope"
+      },
+      "claim_text": "| `outputs/**/post_run_report.md` | Per-run post-run reports | 4 + 1 retrospective | ~22 | 4 compliant; 14 missing entirely; back-fill in audit Phase 3 |",
+      "values": [
+        {
+          "quantity": "count of outputs/**/post_run_report.md files (2026-05-26, non-retrospective)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of outputs/**/post_run_report.md retrospective files (2026-05-26)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "post-audit target count of outputs/**/post_run_report.md files",
+          "value_verbatim": "~22",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of post_run_report.md files judged compliant with the schema",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of post_run_report.md files missing entirely (post-audit target gap)",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/",
+        "path": "find outputs -name post_run_report.md"
+      },
+      "method": "recompute-script",
+      "notes": "Table row. '4 + 1 retrospective' and 'compliant: 4' are directly recomputable by globbing outputs/**/post_run_report.md; '~22' (target) and '14' (missing) are derived from that same approximate target and are not independently checkable against a current artefact, hence anchor-unknown for those two values (v1.2 rule 3: every multi-value claim gives non-read values an explicit method)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          325,
+          325
+        ],
+        "section": "Documents in Revision Policy Scope"
+      },
+      "claim_text": "| `outputs/**/experiment_intent.md` | Per-pass / per-run intent files | 139 | 139 | Informal; in scope going forward |",
+      "values": [
+        {
+          "quantity": "count of outputs/**/experiment_intent.md files (2026-05-26)",
+          "value_verbatim": "139",
+          "value_parsed": 139,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "post-audit target count of outputs/**/experiment_intent.md files",
+          "value_verbatim": "139",
+          "value_parsed": 139,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/",
+        "path": "find outputs -name experiment_intent.md"
+      },
+      "method": "recompute-script",
+      "notes": "Table row; current count already equals the target (informal/in-scope-going-forward, no further authoring expected to change the count)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          326,
+          326
+        ],
+        "section": "Documents in Revision Policy Scope"
+      },
+      "claim_text": "| `outputs/**/evaluation.md` | Per-run evaluation summaries | 11 | 11 | Informal; in scope going forward |",
+      "values": [
+        {
+          "quantity": "count of outputs/**/evaluation.md files (2026-05-26)",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "post-audit target count of outputs/**/evaluation.md files",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/",
+        "path": "find outputs -name evaluation.md"
+      },
+      "method": "recompute-script",
+      "notes": "Table row; current count already equals the target."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          327,
+          327
+        ],
+        "section": "Documents in Revision Policy Scope"
+      },
+      "claim_text": "| `outputs/**/pre_launch_audit.md` | audit-config skill outputs | 1 (`55maps-text-high-t0.3-generalisation`) | varies | In scope going forward |",
+      "values": [
+        {
+          "quantity": "count of outputs/**/pre_launch_audit.md files (2026-05-26)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/",
+        "path": "find outputs -name pre_launch_audit.md"
+      },
+      "method": "recompute-script",
+      "notes": "Table row; target cell ('varies') is not numeric. The named example '55maps-text-high-t0.3-generalisation' is a condition/run name (rule 5), not a claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          345,
+          345
+        ],
+        "section": "Immediate TODOs — 1. Track pv-diag-384 in git"
+      },
+      "claim_text": "The top-tier results (F1=0.89) live in `outputs/h11/pv-diag-384/` on",
+      "values": [
+        {
+          "quantity": "F1 score, top-tier pv-diag-384 result (live TODOs-section mention)",
+          "value_verbatim": "0.89",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Presented as a live, present-tense fact in the Immediate TODOs section ('The top-tier results (F1=0.89) live in outputs/h11/pv-diag-384/'), distinct from the identical-looking value in the Changelog's before/after table (lines 425/417), which explicitly frames the SAME phrase as a dropped/historical parenthetical from the Status section. This body-text mention was evidently not touched by that edit, so it is extracted here as a live (not historical) claim, flagged for triage given the tension with the changelog's 'dropped stale F1=0.89 parenthetical' claim. No single scalar artefact (threshold_sweep.json / evaluation.json) was found directly under outputs/h11/pv-diag-384/ on a quick existence check — the directory holds ~20 condition subdirectories (scale-4-optimal-487, consensus, verified, etc.); recompute-script needed to locate the specific top-tier result."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          360,
+          360
+        ],
+        "section": "Immediate TODOs — 1. Track pv-diag-384 in git"
+      },
+      "claim_text": "4. Verify total committed size is reasonable (~5–15 MB expected)",
+      "values": [
+        {
+          "quantity": "expected total committed size (minimum) after committing pv-diag-384 lightweight outputs",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "MB",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "expected total committed size (maximum) after committing pv-diag-384 lightweight outputs",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": "MB",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Pre-commit expectation ('~5-15 MB expected'), not a measured figure; TODO item 4, list marker not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          364,
+          365
+        ],
+        "section": "Immediate TODOs — 2. Extract consensus-384 detections"
+      },
+      "claim_text": "The `outputs/h11/consensus-384/` directory has 30 runs of\n`batch_working/` JSONL (2.3 GB) but no extracted detection GeoJSONs.",
+      "values": [
+        {
+          "quantity": "count of consensus-384 batch_working/ runs",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total batch_working/ JSONL size, consensus-384",
+          "value_verbatim": "2.3",
+          "value_parsed": 2.3,
+          "unit": "GB",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "outputs/h11/consensus-384/ does not exist on this clone (confirmed via directory listing); the doc implies it exists on sapphire only. No anchor file to name here — triage should check sapphire directly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          406,
+          408
+        ],
+        "section": "Changelog — 2026-05-26"
+      },
+      "claim_text": "**Refresh trigger**: Stage Gate 1 approval of\n`planning/documentation-audit-plan.md` (2026-05-26). Codified four\npreviously unwritten conventions and refreshed one stale status note.",
+      "values": [
+        {
+          "quantity": "count of previously unwritten conventions codified by this revision",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "conventions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of stale status notes refreshed by this revision",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": "notes",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/output-directory-standard.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Self-consistent with the Changes table immediately below (lines 412-418): four rows marked '(new)' (Post-Run Report Schema, Dual-location convention, Cross-reference / Lineage Block, Documents in Revision Policy Scope) plus one marked '(refreshed)' (Status). Anchored to this same document's own table rather than an external artefact, since the table is the structured record the prose summarises (not prose-to-prose in the sense rule 2 warns against)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          414,
+          414
+        ],
+        "section": "Changelog — 2026-05-26 — Changes table"
+      },
+      "claim_text": "| `## Post-Run Report Schema` (new) | Codified the 12-section post-run-report template lifted from Exemplar A (`outputs/55maps-image-generalisation/post_run_report.md`); added applicability carve-out, worked-exemplar pointer, templated-generator forward reference. Bootstrap CI params verified against Exemplar A lines 19, 26 pre-commit. | `c611c573` |",
+      "values": [
+        {
+          "quantity": "section count in the codified post-run-report template",
+          "value_verbatim": "12-section",
+          "value_parsed": 12,
+          "unit": "sections",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/output-directory-standard.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the 'Required sections, in order' list at lines 158-188 of this same document (items 1-12). Commit hash 'c611c573' and the 'lines 19, 26' citation into Exemplar A are out of C4 scope (rule 5: git hashes, line-number citations)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          415,
+          415
+        ],
+        "section": "Changelog — 2026-05-26 — Changes table"
+      },
+      "claim_text": "| `## Post-Run Report Schema → ### Dual-location convention` (new) | Codified outputs/-canonical, configs/-stub rule for runs with duplicated reports; added dated snapshot of asymmetric reality (2/4 dual-located, 1 configs-only, 1 neither, 1 retrospective with divergent suffixes). | `1aaece11` |",
+      "values": [
+        {
+          "quantity": "count of dual-located 55-map runs (Changes-table restatement)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "total 55-map runs in the dual-location accounting (Changes-table restatement)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of configs-only 55-map runs",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of 55-map runs with a report at neither location",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of retrospective runs with divergent filename suffixes",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/",
+        "path": "count of 55maps-*-generalisation runs by report-location category"
+      },
+      "method": "recompute-script",
+      "notes": "Restates the line-225 '2 of the 4' finding in denser form (2/4 dual-located, 1 configs-only, 1 neither, 1 retrospective); distinct claim span (Changes table row vs body prose). Commit hash '1aaece11' out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          417,
+          417
+        ],
+        "section": "Changelog — 2026-05-26 — Changes table"
+      },
+      "claim_text": "| `## Status` (refreshed) | Replaced stale \"outputs/h11/pv-diag-384/ is gitignored and only on sapphire\" with verified-against-filesystem replacement (1,497 of 48,666 files tracked; only **/*.log gitignored; present on both machines). Dropped stale \"F1=0.89\" parenthetical. | `d9cc2501` |",
+      "values": [
+        {
+          "quantity": "count of pv-diag-384 files tracked in git, per the 2026-05-26 Status refresh",
+          "value_verbatim": "1,497",
+          "value_parsed": 1497,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "total file count under pv-diag-384, per the 2026-05-26 Status refresh",
+          "value_verbatim": "48,666",
+          "value_parsed": 48666,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "F1 score parenthetical dropped from the Status section by this revision",
+          "value_verbatim": "0.89",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Changes-table cell describing the Status-section refresh. The 1,497/48,666 tracked-vs-total file counts are recomputable via `git ls-files` vs a full directory walk of outputs/h11/pv-diag-384/ (a quick check on this clone today found different current counts, consistent with drift since 2026-05-26 — not adjudicated here). The F1=0.89 figure is explicitly framed as dropped/superseded ('Dropped stale F1=0.89 parenthetical'), hence historical; commit hash 'd9cc2501' out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          418,
+          418
+        ],
+        "section": "Changelog — 2026-05-26 — Changes table"
+      },
+      "claim_text": "| `## Documents in Revision Policy Scope` (new) | Authoritative enumeration of the six in-scope path patterns with 2026-05-26 file counts (139 experiment_intent, 11 evaluation, 1 pre_launch_audit, etc.) + post-audit target counts + compliance notes. CLAUDE.md cross-references back. | `c30ce58a` |",
+      "values": [
+        {
+          "quantity": "count of in-scope path patterns enumerated in Documents in Revision Policy Scope",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": "patterns",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "experiment_intent.md file count cited in the Changes-table summary",
+          "value_verbatim": "139",
+          "value_parsed": 139,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "evaluation.md file count cited in the Changes-table summary",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "pre_launch_audit.md file count cited in the Changes-table summary",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/output-directory-standard.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'six' matches the six rows of the Documents in Revision Policy Scope table (lines 320-327 of this same document); the 139/11/1 figures restate the experiment_intent.md/evaluation.md/pre_launch_audit.md row counts from that same table at a different span. Commit hash 'c30ce58a' out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          424,
+          424
+        ],
+        "section": "Changelog — Before → after table"
+      },
+      "claim_text": "| `outputs/h11/pv-diag-384/` tracking state | \"gitignored, only exists on sapphire\" | \"1,497 of 48,666 files tracked; **/*.log gitignored; present on zbook and sapphire\" |",
+      "values": [
+        {
+          "quantity": "pv-diag-384 tracked-vs-total file counts, live 'After' value (files tracked)",
+          "value_verbatim": "1,497",
+          "value_parsed": 1497,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "pv-diag-384 tracked-vs-total file counts, live 'After' value (total files)",
+          "value_verbatim": "48,666",
+          "value_parsed": 48666,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Before→after table (Known trap: dense with historical values). The 'Before' column here ('gitignored, only exists on sapphire') carries no number. The 'After' column restates the same live 1,497/48,666 figures as the line-417 Changes-table cell, at a distinct span; same recompute-script anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          425,
+          425
+        ],
+        "section": "Changelog — Before → after table"
+      },
+      "claim_text": "| Stale F1 reference | \"top-tier F1=0.89 results\" | Parenthetical dropped (spec docs shouldn't carry canonical headline numbers) |",
+      "values": [
+        {
+          "quantity": "F1 score, 'Before' (superseded) Status-section reference",
+          "value_verbatim": "0.89",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Before→after table row; 'Before' column is the explicitly superseded value ('top-tier F1=0.89 results', quoted as the pre-revision Status-section text) — the canonical historical case per hard rule 3. 'After' column ('Parenthetical dropped...') carries no number."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          434,
+          434
+        ],
+        "section": "Changelog — What did NOT change"
+      },
+      "claim_text": "- The Immediate TODOs section (items 1–4 still pending).",
+      "values": [
+        {
+          "quantity": "range of still-pending Immediate TODOs item numbers",
+          "value_verbatim": "1–4",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/output-directory-standard.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Self-referential: the Immediate TODOs section of this same document (lines 341-401) has exactly four numbered items (### 1.-### 4.), matching 'items 1-4 still pending'. value_parsed left null as this is a range of ordinal item labels rather than a single measured quantity; flagged as borderline between a genuine item count and an identifier range (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          440,
+          441
+        ],
+        "section": "Changelog — Open items flagged during this revision"
+      },
+      "claim_text": "- § 3.2 of the audit plan assumed all four 55-map runs were\n  dual-located; actually 2 are.",
+      "values": [
+        {
+          "quantity": "55-map run count the audit plan (§ 3.2) wrongly assumed were all dual-located",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "actual count of dual-located 55-map runs, correcting the audit-plan assumption",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "planning/documentation-audit-plan.md",
+        "path": null
+      },
+      "method": "historical",
+      "notes": "Correction block ('assumed all four... were dual-located; actually 2 are'): 'four' is the wrong assumption attributed to planning/documentation-audit-plan.md § 3.2 (historical per hard rule 3), '2' is the corrected live figure matching the line-225/415 claims. Claim-level method set to the historical (superseded) side; the live '2' carries its own recompute-script method per v1.2 rule 3."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          444,
+          444
+        ],
+        "section": "Changelog — Open items flagged during this revision"
+      },
+      "claim_text": "- `experiment_intent.md` count: plan said ~50; actual 139.",
+      "values": [
+        {
+          "quantity": "experiment_intent.md count the audit plan wrongly estimated",
+          "value_verbatim": "~50",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "actual experiment_intent.md count, correcting the audit-plan estimate",
+          "value_verbatim": "139",
+          "value_parsed": 139,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "planning/documentation-audit-plan.md",
+        "path": null
+      },
+      "method": "historical",
+      "notes": "Correction block ('plan said ~50; actual 139'); '~50' is the superseded estimate (historical), '139' matches the live experiment_intent.md count claimed at lines 325 and 418 of this same document."
+    }
+  ]
+}
