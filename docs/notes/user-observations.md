@@ -246,3 +246,18 @@ specimens.
 
 *(Working-notes candidate WN-1 from this session's gate was also
 accepted — promoted to Obs 375, the outcome-blind fork.)*
+
+## Session 121 close — 2026-07-31 (Shawn's in-session reaction, recorded verbatim)
+
+"What a good session this was, we made substantial progress such that I
+am building more confidence in the map-reader results/reports, after
+the initial disappointment of finding crucial errors after I thought
+these docs were ready. It's a bonus that we are generalising this for
+use in other projects."
+
+Context for the register: this marks the epistemic trajectory the
+verification charter was designed for — docs believed ready (pre-S118)
+→ crucial errors found (S118–119) → systematic programme (S120–121) →
+confidence *rebuilt on checking rather than assumed*. The
+generalisation he calls a bonus is charter § 1's designed-in
+reusability (next targets: inscriptions, llm-reproducibility).
