@@ -98,6 +98,9 @@ def match_at_quoted_precision(quoted: ParsedValue, actual: float) -> dict:
         "truncate" | "approx" | "mismatch"), ``actual`` (float), and
         ``abs_error`` (float).
     """
+    if not math.isfinite(actual):
+        return {"match": False, "mode": "mismatch", "actual": actual,
+                "abs_error": math.inf}
     dp = quoted.decimal_places
     abs_error = abs(actual - quoted.value)
     if actual == quoted.value:

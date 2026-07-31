@@ -59,7 +59,9 @@ def collect_numbers(obj, pool: set[float]) -> None:
     if isinstance(obj, bool):
         return
     if isinstance(obj, (int, float)):
-        pool.add(float(obj))
+        value = float(obj)
+        if value == value and abs(value) != float("inf"):  # drop NaN/inf
+            pool.add(value)
     elif isinstance(obj, dict):
         for v in obj.values():
             collect_numbers(v, pool)

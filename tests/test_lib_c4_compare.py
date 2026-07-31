@@ -71,6 +71,15 @@ def test_match_exact_and_mismatch_and_approx():
 
 
 @pytest.mark.tier1
+def test_match_nonfinite_actual_never_matches():
+    import math
+
+    result = match_at_quoted_precision(parse_value("0.890"), math.nan)
+    assert result["match"] is False and result["abs_error"] == math.inf
+    assert match_at_quoted_precision(parse_value("487"), math.inf)["match"] is False
+
+
+@pytest.mark.tier1
 def test_resolve_path_forms():
     doc = {
         "results": {"20m": {"f1": 0.8902}},
