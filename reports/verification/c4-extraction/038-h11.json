@@ -1,0 +1,2532 @@
+{
+  "schema_version": "1.0",
+  "extracted_at": "2026-07-31T00:00:00Z",
+  "source_document": {
+    "file": "reports/h11-reorganisation-cost-estimate-2026-05-28.md",
+    "git_blob": "b63f79085c9d",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.1"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          9,
+          9
+        ],
+        "section": "TL;DR"
+      },
+      "claim_text": "- **Five candidate subdirs were proposed for relocation**; the user also flagged `n1-outstanding-384/` as a possible move. After investigation, the candidate set shrinks to **four** subdirs to move and one to keep (`n1-outstanding-384/` is H11-proper). One further candidate (`e47-propose-brief/`) is ambiguous and is flagged as a decision question, not a confident move.",
+      "values": [
+        {
+          "quantity": "count of candidate sub-directories originally proposed for relocation",
+          "value_verbatim": "Five",
+          "value_parsed": 5,
+          "unit": "subdirectories",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of sub-directories the investigation confirms should move",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "subdirectories",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of candidate sub-directories to keep in place",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": "subdirectories",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of further candidates flagged as an undecided decision question",
+          "value_verbatim": "One",
+          "value_parsed": 1,
+          "unit": "subdirectories",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Counts over a candidate set supplied by the user and adjudicated in this document's own recategorisation table; no committed artefact enumerates it. 'H11' and the numeral inside `n1-outstanding-384/` are identifiers, out of C4 scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          10,
+          10
+        ],
+        "section": "TL;DR"
+      },
+      "claim_text": "- **Aggregate workload** for the four confident moves: **6.5 – 11.5 hours**",
+      "values": [
+        {
+          "quantity": "count of confident moves the aggregate workload covers",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "subdirectories",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "aggregate reorganisation workload, low bound (planning estimate)",
+          "value_verbatim": "6.5",
+          "value_parsed": 6.5,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "aggregate reorganisation workload, high bound (planning estimate)",
+          "value_verbatim": "11.5",
+          "value_parsed": 11.5,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning estimate authored by the report; no committed artefact decides it (rule 2 forbids anchoring prose to prose). Recorded as stated: line 134 gives 4.5-7.5 hours for the four-subdir confident-move set and line 144 gives 6.5-11.5 hours for the five-subdir full set, so this TL;DR line pairs the four-move framing with the full-set range. Flagged for triage without adjudication (instrument rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          11,
+          11
+        ],
+        "section": "TL;DR"
+      },
+      "claim_text": "Active code references (scripts, configs, YAML) total 26 lines across all candidates; markdown body lines total 96 in active docs (results/, reports/, docs/, planning/).",
+      "values": [
+        {
+          "quantity": "total lines of active code (scripts, configs, YAML) referencing the candidate sub-directories",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total markdown body lines in active documentation referencing the candidate sub-directories",
+          "value_verbatim": "96",
+          "value_parsed": 96,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Grep-derived count taken at the time of writing; no committed artefact records it, so triage must reproduce it (git grep over the tracked tree) against the document's own commit. Note that some candidate directories have since moved (for example gold-standard-v2 now sits at outputs/gs/gold-standard-v2), which the reproduction must account for."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          12,
+          12
+        ],
+        "section": "TL;DR"
+      },
+      "claim_text": "~340 lines across tracked JSON files contain absolute paths derived from `planning/condition-inventory.json`.",
+      "values": [
+        {
+          "quantity": "lines across tracked JSON files carrying absolute paths to the candidate sub-directories",
+          "value_verbatim": "~340",
+          "value_parsed": 340,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Grep-derived count taken at the time of writing; no committed artefact records it, so triage must reproduce it (git grep over the tracked tree) against the document's own commit. Note that some candidate directories have since moved (for example gold-standard-v2 now sits at outputs/gs/gold-standard-v2), which the reproduction must account for. Section 1 of Hidden gotchas breaks the same population down per sub-directory (132, 39, 5, 2, 2 lines) plus 31 archive references; recorded without adjudicating the relationship."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          12,
+          12
+        ],
+        "section": "TL;DR"
+      },
+      "claim_text": "These are regenerable artefacts (script `scripts/build_combined_leaderboard.sh`), but each affected Era costs 30–60 minutes on sapphire.",
+      "values": [
+        {
+          "quantity": "leaderboard regeneration wall-clock per Era, low bound",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "minutes",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "leaderboard regeneration wall-clock per Era, high bound",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "minutes",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/build_combined_leaderboard.sh",
+        "path": "header comment: per-Era runtime estimate"
+      },
+      "method": "read",
+      "notes": "Line 86 attributes the 30-60 minute figure to the script header of scripts/build_combined_leaderboard.sh, so the anchor is that script's header comment (a non-JSON anchor, legitimate per instrument v1.1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          12,
+          12
+        ],
+        "section": "TL;DR"
+      },
+      "claim_text": "Inventory edits + leaderboard rebuild is mandatory for any path change that touches an inventory entry — currently only `e47-propose-brief` (2 entries) of the candidates.",
+      "values": [
+        {
+          "quantity": "count of condition-inventory entries pointing at e47-propose-brief",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "entries",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "planning/condition-inventory.json",
+        "path": "len:$[?(@.path =~ /e47-propose-brief/)]"
+      },
+      "method": "read",
+      "notes": "The inventory is a JSON array of condition records each carrying a `path` field; the claim is the number of records whose path lies under outputs/h11/e47-propose-brief/."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          13,
+          13
+        ],
+        "section": "TL;DR"
+      },
+      "claim_text": "- **Partial reorganisation gets ~80% of the benefit at ~30% of the cost.** Move the easy three (`propose-brief-v1-test`, `v2-proposer-test`, `wbf`) now",
+      "values": [
+        {
+          "quantity": "share of the reorganisation benefit obtained by the partial option (judgement estimate)",
+          "value_verbatim": "~80%",
+          "value_parsed": 80.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "share of the reorganisation cost incurred by the partial option (judgement estimate)",
+          "value_verbatim": "~30%",
+          "value_parsed": 30.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of easy sub-directories to move first",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "subdirectories",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning estimate authored by the report; no committed artefact decides it (rule 2 forbids anchoring prose to prose). The benefit and cost shares are the author's judgement, not measured quantities."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          19,
+          19
+        ],
+        "section": "Recategorisation summary"
+      },
+      "claim_text": "| `e47-propose-brief/` | Move to `outputs/e47-propose-brief/` | **Inventory tags it `hypothesis=H11`** (2 entries). Methodologically it is a proposer-prompt swap experiment, not a tile-size axis. **Decision required** before moving. | Medium |",
+      "values": [
+        {
+          "quantity": "count of condition-inventory entries tagging e47-propose-brief as H11",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "entries",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "planning/condition-inventory.json",
+        "path": "len:$[?(@.path =~ /e47-propose-brief/ && @.hypothesis == 'H11')]"
+      },
+      "method": "read",
+      "notes": "Table row. 'H11' is a hypothesis identifier, out of C4 scope; the checkable claim is the entry count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          20,
+          20
+        ],
+        "section": "Recategorisation summary"
+      },
+      "claim_text": "| `propose-brief-v1-test/` | Move alongside e47 | Confirmed orphan; tiny (6 files, 2 commits). Safe to move. | High |",
+      "values": [
+        {
+          "quantity": "count of files under outputs/h11/propose-brief-v1-test/",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of git commits touching outputs/h11/propose-brief-v1-test/",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "commits",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "File count is a filesystem count of the sub-directory and the commit count is git history (`git log --oneline -- <path> | wc -l`); neither is recorded in a committed artefact. Not to be confused with git blob/hash identifiers, which are out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          21,
+          21
+        ],
+        "section": "Recategorisation summary"
+      },
+      "claim_text": "| `gold-standard-v2/` | Move to `outputs/gold-standard-v2/` or `outputs/gs/` | Confirmed not H11-proper (no inventory entries), but is the canonical 4-map production pipeline cited as the paper headline result. Code-light, doc-heavy. | High |",
+      "values": [
+        {
+          "quantity": "count of condition-inventory entries pointing at gold-standard-v2",
+          "value_verbatim": "no",
+          "value_parsed": 0,
+          "unit": "entries",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of map sheets in the gold-standard production sub-corpus",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "map sheets",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "planning/condition-inventory.json",
+        "path": "len:$[?(@.path =~ /gold-standard-v2/)]"
+      },
+      "method": "read",
+      "notes": "Mixed span: the asserted zero inventory entries resolve against the inventory; the 4-map sub-corpus is delimited by inputs/vectors/bounds/gs-4maps-sheet-bounds.geojson (len:$.features), which is a different file, so it is flagged per-value anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          22,
+          22
+        ],
+        "section": "Recategorisation summary"
+      },
+      "claim_text": "| `v2-proposer-test/` | Move to `outputs/v2-proposer-test/` | Confirmed orphan; tiny (4 files, 2 commits). Safe to move. | High |",
+      "values": [
+        {
+          "quantity": "count of files under outputs/h11/v2-proposer-test/",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of git commits touching outputs/h11/v2-proposer-test/",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "commits",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Filesystem and git-history counts; no committed artefact records them."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          23,
+          23
+        ],
+        "section": "Recategorisation summary"
+      },
+      "claim_text": "| `wbf/` | Move to `outputs/wbf/` | Confirmed methodology axis (aggregation), not tile-size. Safe to move, but `scripts/fuse_detections_wbf.py` carries 6 hardcoded `default_output_dir` strings. | High |",
+      "values": [
+        {
+          "quantity": "count of hardcoded default_output_dir path strings in scripts/fuse_detections_wbf.py",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "strings",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/fuse_detections_wbf.py",
+        "path": "count of `default_output_dir` string literals"
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (a Python source file), legitimate per instrument v1.1; the harness routes it to triage. Line 34 asserts 3 default_output_dir strings for the wbf/ subset of the same dictionary — recorded separately without adjudication."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          24,
+          24
+        ],
+        "section": "Recategorisation summary"
+      },
+      "claim_text": "| `n1-outstanding-384/` | \"Probably H11-proper\" | **Confirmed H11-proper.** 8 inventory entries tagged `hypothesis=H11, era=2`. Configs `mcc-eval-384px.yaml` and `n1-eval-384px-all-buffers.yaml` interleave it with `pv-diag-384/` paths. **Do not move.** | High |",
+      "values": [
+        {
+          "quantity": "count of condition-inventory entries tagging n1-outstanding-384 as hypothesis H11, era 2",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": "entries",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "planning/condition-inventory.json",
+        "path": "len:$[?(@.path =~ /n1-outstanding-384/ && @.hypothesis == 'H11' && @.era == 2)]"
+      },
+      "method": "read",
+      "notes": "The tag values `hypothesis=H11` and `era=2`, and the numerals inside the directory and config file names (384px, pv-diag-384), are identifiers, out of C4 scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          32,
+          32
+        ],
+        "section": "Reference inventory by remediation cost — Critical: active code that will break silently if not updated"
+      },
+      "claim_text": "| `gold-standard-v2/` | 9 .py, 5 .sh, 1 config (markdown-suffix) | `scripts/gs-fp-classify.py`, `scripts/analyse_inter_pass_agreement.py`, `scripts/analyse_subtype_classification.py`, `scripts/analyse_verifier_t_pilot.py`, `scripts/fuse_detections_wbf.py`, `scripts/gs-v2-t0.7-recovery.sh`, `scripts/lib_batch_api.py`, `scripts/run_verifier_t_stage_b.py`, `scripts/11maps-gold-standard-v2.sh`, `configs/run-configs/55maps_text_high_generalisation_post_run_report.md` |",
+      "values": [
+        {
+          "quantity": "count of Python scripts carrying active references to gold-standard-v2",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of shell scripts carrying active references to gold-standard-v2",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of config files (markdown-suffix) referencing gold-standard-v2",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Grep-derived count taken at the time of writing; no committed artefact records it, so triage must reproduce it (git grep over the tracked tree) against the document's own commit. Note that some candidate directories have since moved (for example gold-standard-v2 now sits at outputs/gs/gold-standard-v2), which the reproduction must account for. The row's 'Where' column lists seven .py paths, two .sh paths, and one markdown config document; the counts are recorded exactly as asserted without adjudication (instrument rule 4). Numerals inside file names (11maps-, 55maps_, t0.7) are names, out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          33,
+          33
+        ],
+        "section": "Reference inventory by remediation cost — Critical: active code that will break silently if not updated"
+      },
+      "claim_text": "| `e47-propose-brief/` | 1 .py | `scripts/fuse_detections_wbf.py` (5 hardcoded path strings in `SPECIAL_CONFIGS`) |",
+      "values": [
+        {
+          "quantity": "count of Python scripts carrying active references to e47-propose-brief",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of hardcoded e47-propose-brief path strings in the SPECIAL_CONFIGS dictionary of scripts/fuse_detections_wbf.py",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "strings",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/fuse_detections_wbf.py",
+        "path": "SPECIAL_CONFIGS: count of `outputs/h11/e47-propose-brief/` path strings"
+      },
+      "method": "read",
+      "notes": "Mixed span: the file count is a repo-wide grep (anchor-unknown); the string count resolves inside scripts/fuse_detections_wbf.py."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          34,
+          34
+        ],
+        "section": "Reference inventory by remediation cost — Critical: active code that will break silently if not updated"
+      },
+      "claim_text": "| `wbf/` | 2 .py | `scripts/fuse_detections_wbf.py` (3 `default_output_dir`), `scripts/compare_wbf_greedy_pv_permutation.py` |",
+      "values": [
+        {
+          "quantity": "count of Python scripts carrying active references to wbf/",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of default_output_dir strings pointing at outputs/h11/wbf/ in scripts/fuse_detections_wbf.py",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "strings",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/fuse_detections_wbf.py",
+        "path": "count of `default_output_dir` strings pointing at outputs/h11/wbf/"
+      },
+      "method": "read",
+      "notes": "Mixed span: the two named .py files are a repo-wide grep result (anchor-unknown); the three-string count resolves inside scripts/fuse_detections_wbf.py."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          35,
+          35
+        ],
+        "section": "Reference inventory by remediation cost — Critical: active code that will break silently if not updated"
+      },
+      "claim_text": "| `propose-brief-v1-test/` | 0 | — |",
+      "values": [
+        {
+          "quantity": "count of active code files referencing propose-brief-v1-test",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Grep-derived count taken at the time of writing; no committed artefact records it, so triage must reproduce it (git grep over the tracked tree) against the document's own commit. Note that some candidate directories have since moved (for example gold-standard-v2 now sits at outputs/gs/gold-standard-v2), which the reproduction must account for."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          36,
+          36
+        ],
+        "section": "Reference inventory by remediation cost — Critical: active code that will break silently if not updated"
+      },
+      "claim_text": "| `v2-proposer-test/` | 0 | — |",
+      "values": [
+        {
+          "quantity": "count of active code files referencing v2-proposer-test",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Grep-derived count taken at the time of writing; no committed artefact records it, so triage must reproduce it (git grep over the tracked tree) against the document's own commit. Note that some candidate directories have since moved (for example gold-standard-v2 now sits at outputs/gs/gold-standard-v2), which the reproduction must account for."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          38,
+          38
+        ],
+        "section": "Reference inventory by remediation cost — Critical: active code that will break silently if not updated"
+      },
+      "claim_text": "Verbatim counts: `git grep -c` per extension produced py=17 sh=5 for gold-standard-v2; py=6 sh=6 for e47-propose-brief (sh count inflates because `gs-v2-t0.7-recovery.sh` mentions both subdirs — same file already counted under gold-standard-v2).",
+      "values": [
+        {
+          "quantity": "git grep -c hit count in .py files for gold-standard-v2",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "git grep -c hit count in .sh files for gold-standard-v2",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "git grep -c hit count in .py files for e47-propose-brief",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "git grep -c hit count in .sh files for e47-propose-brief",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Grep-derived count taken at the time of writing; no committed artefact records it, so triage must reproduce it (git grep over the tracked tree) against the document's own commit. Note that some candidate directories have since moved (for example gold-standard-v2 now sits at outputs/gs/gold-standard-v2), which the reproduction must account for. The document flags the .sh count as inflated by a shared script mentioning both sub-directories; recorded as stated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          44,
+          44
+        ],
+        "section": "Reference inventory by remediation cost — Documentation: active docs that need updating"
+      },
+      "claim_text": "| `gold-standard-v2/` | 49 lines across ~13 active markdown files |",
+      "values": [
+        {
+          "quantity": "active markdown body lines referencing gold-standard-v2",
+          "value_verbatim": "49",
+          "value_parsed": 49,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of active markdown files carrying those references",
+          "value_verbatim": "~13",
+          "value_parsed": 13,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Grep-derived count taken at the time of writing; no committed artefact records it, so triage must reproduce it (git grep over the tracked tree) against the document's own commit. Note that some candidate directories have since moved (for example gold-standard-v2 now sits at outputs/gs/gold-standard-v2), which the reproduction must account for."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          45,
+          45
+        ],
+        "section": "Reference inventory by remediation cost — Documentation: active docs that need updating"
+      },
+      "claim_text": "| `e47-propose-brief/` | 34 lines |",
+      "values": [
+        {
+          "quantity": "active markdown body lines referencing e47-propose-brief",
+          "value_verbatim": "34",
+          "value_parsed": 34,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Grep-derived count taken at the time of writing; no committed artefact records it, so triage must reproduce it (git grep over the tracked tree) against the document's own commit. Note that some candidate directories have since moved (for example gold-standard-v2 now sits at outputs/gs/gold-standard-v2), which the reproduction must account for."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          46,
+          46
+        ],
+        "section": "Reference inventory by remediation cost — Documentation: active docs that need updating"
+      },
+      "claim_text": "| `wbf/` | 12 lines |",
+      "values": [
+        {
+          "quantity": "active markdown body lines referencing wbf/",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Grep-derived count taken at the time of writing; no committed artefact records it, so triage must reproduce it (git grep over the tracked tree) against the document's own commit. Note that some candidate directories have since moved (for example gold-standard-v2 now sits at outputs/gs/gold-standard-v2), which the reproduction must account for."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          47,
+          47
+        ],
+        "section": "Reference inventory by remediation cost — Documentation: active docs that need updating"
+      },
+      "claim_text": "| `propose-brief-v1-test/` | 1 line |",
+      "values": [
+        {
+          "quantity": "active markdown body lines referencing propose-brief-v1-test",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Grep-derived count taken at the time of writing; no committed artefact records it, so triage must reproduce it (git grep over the tracked tree) against the document's own commit. Note that some candidate directories have since moved (for example gold-standard-v2 now sits at outputs/gs/gold-standard-v2), which the reproduction must account for."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          48,
+          48
+        ],
+        "section": "Reference inventory by remediation cost — Documentation: active docs that need updating"
+      },
+      "claim_text": "| `v2-proposer-test/` | 0 lines |",
+      "values": [
+        {
+          "quantity": "active markdown body lines referencing v2-proposer-test",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Grep-derived count taken at the time of writing; no committed artefact records it, so triage must reproduce it (git grep over the tracked tree) against the document's own commit. Note that some candidate directories have since moved (for example gold-standard-v2 now sits at outputs/gs/gold-standard-v2), which the reproduction must account for."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          52,
+          52
+        ],
+        "section": "Reference inventory by remediation cost — Documentation: active docs that need updating"
+      },
+      "claim_text": "- `results/meta-findings-summary.md` (3 refs)",
+      "values": [
+        {
+          "quantity": "count of gold-standard-v2 references in results/meta-findings-summary.md",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "references",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/meta-findings-summary.md",
+        "path": "count of `gold-standard-v2` reference lines"
+      },
+      "method": "read",
+      "notes": "Single named markdown file decides this count, so it anchors there rather than being left unknown; a non-JSON anchor, routed to triage per instrument v1.1."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          53,
+          53
+        ],
+        "section": "Reference inventory by remediation cost — Documentation: active docs that need updating"
+      },
+      "claim_text": "- `results/paper-tables/gold-standard-spatial-tolerance.md` (1 ref)",
+      "values": [
+        {
+          "quantity": "count of gold-standard-v2 references in results/paper-tables/gold-standard-spatial-tolerance.md",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "references",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/gold-standard-spatial-tolerance.md",
+        "path": "count of `gold-standard-v2` reference lines"
+      },
+      "method": "read",
+      "notes": "Single named markdown file decides this count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          66,
+          66
+        ],
+        "section": "Reference inventory by remediation cost — Historical: leave as-is"
+      },
+      "claim_text": "| `e47-propose-brief/` | 36 | 7 | Leave; the archive subdirs (`archive/v2-verifier-contamination/`) are explicitly historical |",
+      "values": [
+        {
+          "quantity": "archive markdown body lines referencing e47-propose-brief",
+          "value_verbatim": "36",
+          "value_parsed": 36,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of git commits touching outputs/h11/e47-propose-brief/",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": "commits",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "archive/",
+        "path": "count of markdown body lines referencing `e47-propose-brief`"
+      },
+      "method": "read",
+      "notes": "Mixed span: the markdown line count is a grep over the archive/ tree; the commit count comes from git history, which no committed artefact records."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          67,
+          67
+        ],
+        "section": "Reference inventory by remediation cost — Historical: leave as-is"
+      },
+      "claim_text": "| `gold-standard-v2/` | 21 | 9 | Leave |",
+      "values": [
+        {
+          "quantity": "archive markdown body lines referencing gold-standard-v2",
+          "value_verbatim": "21",
+          "value_parsed": 21,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of git commits touching outputs/h11/gold-standard-v2/",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": "commits",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "archive/",
+        "path": "count of markdown body lines referencing `gold-standard-v2`"
+      },
+      "method": "read",
+      "notes": "As line 66: grep over archive/ plus a git-history commit count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          68,
+          68
+        ],
+        "section": "Reference inventory by remediation cost — Historical: leave as-is"
+      },
+      "claim_text": "| `wbf/` | 3 | 7 | Leave |",
+      "values": [
+        {
+          "quantity": "archive markdown body lines referencing wbf/",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of git commits touching outputs/h11/wbf/",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": "commits",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "archive/",
+        "path": "count of markdown body lines referencing `wbf`"
+      },
+      "method": "read",
+      "notes": "As line 66: grep over archive/ plus a git-history commit count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          69,
+          69
+        ],
+        "section": "Reference inventory by remediation cost — Historical: leave as-is"
+      },
+      "claim_text": "| `propose-brief-v1-test/` | 2 | 2 | Leave |",
+      "values": [
+        {
+          "quantity": "archive markdown body lines referencing propose-brief-v1-test",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of git commits touching outputs/h11/propose-brief-v1-test/",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "commits",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "archive/",
+        "path": "count of markdown body lines referencing `propose-brief-v1-test`"
+      },
+      "method": "read",
+      "notes": "As line 66: grep over archive/ plus a git-history commit count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          70
+        ],
+        "section": "Reference inventory by remediation cost — Historical: leave as-is"
+      },
+      "claim_text": "| `v2-proposer-test/` | 3 | 2 | Leave |",
+      "values": [
+        {
+          "quantity": "archive markdown body lines referencing v2-proposer-test",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of git commits touching outputs/h11/v2-proposer-test/",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "commits",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "archive/",
+        "path": "count of markdown body lines referencing `v2-proposer-test`"
+      },
+      "method": "read",
+      "notes": "As line 66: grep over archive/ plus a git-history commit count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          78,
+          78
+        ],
+        "section": "Hidden gotchas — 1. Tracked JSON path embeddings (the leaderboard cache)"
+      },
+      "claim_text": "- `e47-propose-brief/`: **132 lines** across 85 JSON files",
+      "values": [
+        {
+          "quantity": "tracked JSON lines embedding e47-propose-brief paths",
+          "value_verbatim": "132",
+          "value_parsed": 132,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of tracked JSON files carrying those lines",
+          "value_verbatim": "85",
+          "value_parsed": 85,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Grep-derived count taken at the time of writing; no committed artefact records it, so triage must reproduce it (git grep over the tracked tree) against the document's own commit. Note that some candidate directories have since moved (for example gold-standard-v2 now sits at outputs/gs/gold-standard-v2), which the reproduction must account for."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          79,
+          79
+        ],
+        "section": "Hidden gotchas — 1. Tracked JSON path embeddings (the leaderboard cache)"
+      },
+      "claim_text": "- `gold-standard-v2/`: **39 lines** across 29 JSON files",
+      "values": [
+        {
+          "quantity": "tracked JSON lines embedding gold-standard-v2 paths",
+          "value_verbatim": "39",
+          "value_parsed": 39,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of tracked JSON files carrying those lines",
+          "value_verbatim": "29",
+          "value_parsed": 29,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Grep-derived count taken at the time of writing; no committed artefact records it, so triage must reproduce it (git grep over the tracked tree) against the document's own commit. Note that some candidate directories have since moved (for example gold-standard-v2 now sits at outputs/gs/gold-standard-v2), which the reproduction must account for."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          80,
+          80
+        ],
+        "section": "Hidden gotchas — 1. Tracked JSON path embeddings (the leaderboard cache)"
+      },
+      "claim_text": "- `wbf/`: **5 lines** across 1 JSON file",
+      "values": [
+        {
+          "quantity": "tracked JSON lines embedding wbf/ paths",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of tracked JSON files carrying those lines",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Grep-derived count taken at the time of writing; no committed artefact records it, so triage must reproduce it (git grep over the tracked tree) against the document's own commit. Note that some candidate directories have since moved (for example gold-standard-v2 now sits at outputs/gs/gold-standard-v2), which the reproduction must account for."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          81,
+          81
+        ],
+        "section": "Hidden gotchas — 1. Tracked JSON path embeddings (the leaderboard cache)"
+      },
+      "claim_text": "- `propose-brief-v1-test/`: **2 lines** across 2 JSON files",
+      "values": [
+        {
+          "quantity": "tracked JSON lines embedding propose-brief-v1-test paths",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of tracked JSON files carrying those lines",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Grep-derived count taken at the time of writing; no committed artefact records it, so triage must reproduce it (git grep over the tracked tree) against the document's own commit. Note that some candidate directories have since moved (for example gold-standard-v2 now sits at outputs/gs/gold-standard-v2), which the reproduction must account for."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          82,
+          82
+        ],
+        "section": "Hidden gotchas — 1. Tracked JSON path embeddings (the leaderboard cache)"
+      },
+      "claim_text": "- `v2-proposer-test/`: **2 lines** across 2 JSON files",
+      "values": [
+        {
+          "quantity": "tracked JSON lines embedding v2-proposer-test paths",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of tracked JSON files carrying those lines",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Grep-derived count taken at the time of writing; no committed artefact records it, so triage must reproduce it (git grep over the tracked tree) against the document's own commit. Note that some candidate directories have since moved (for example gold-standard-v2 now sits at outputs/gs/gold-standard-v2), which the reproduction must account for."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          84
+        ],
+        "section": "Hidden gotchas — 1. Tracked JSON path embeddings (the leaderboard cache)"
+      },
+      "claim_text": "The bulk of `e47-propose-brief/` JSON references (30 files, 30 lines) live under `results/leaderboard/combined/era2/`",
+      "values": [
+        {
+          "quantity": "count of leaderboard JSON files under results/leaderboard/combined/era2/ embedding e47-propose-brief paths",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of lines in those files embedding e47-propose-brief paths",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/leaderboard/combined/era2",
+        "path": "count of files and of lines containing `e47-propose-brief` absolute paths"
+      },
+      "method": "read",
+      "notes": "The claim scopes the count to a single named directory, so it anchors there. The absolute example path and the numerals inside file names (consensus_t3.geojson, leaderboard_tiers_f1_100m.json) are names, out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          86,
+          86
+        ],
+        "section": "Hidden gotchas — 1. Tracked JSON path embeddings (the leaderboard cache)"
+      },
+      "claim_text": "Cost per Era: 30–60 minutes on sapphire (per the script header).",
+      "values": [
+        {
+          "quantity": "leaderboard regeneration wall-clock per Era, low bound",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "minutes",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "leaderboard regeneration wall-clock per Era, high bound",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "minutes",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/build_combined_leaderboard.sh",
+        "path": "header comment: per-Era runtime estimate"
+      },
+      "method": "read",
+      "notes": "Restates the TL;DR figure at line 12 and attributes it explicitly to the script header. The line-number citation (scripts/augment_per_arch_with_mcc.py:152) earlier in the same paragraph is out of C4 scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          88,
+          88
+        ],
+        "section": "Hidden gotchas — 1. Tracked JSON path embeddings (the leaderboard cache)"
+      },
+      "claim_text": "A further 31 e47 references live under `archive/v2-verifier-contamination/`.",
+      "values": [
+        {
+          "quantity": "count of e47-propose-brief references under archive/v2-verifier-contamination/",
+          "value_verbatim": "31",
+          "value_parsed": 31,
+          "unit": "references",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/v2-verifier-contamination",
+        "path": "count of `e47-propose-brief` references"
+      },
+      "method": "read",
+      "notes": "Scoped to a single named archive directory, so it anchors there."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          92,
+          92
+        ],
+        "section": "Hidden gotchas — 2. Hardcoded paths in scripts/fuse_detections_wbf.py"
+      },
+      "claim_text": "Moving any of the three breaks all three configs.",
+      "values": [
+        {
+          "quantity": "count of candidate sub-directories coupled through the SPECIAL_CONFIGS dictionary of scripts/fuse_detections_wbf.py",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": "subdirectories",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/fuse_detections_wbf.py",
+        "path": "SPECIAL_CONFIGS: count of distinct outputs/h11/<candidate>/ sub-directories referenced"
+      },
+      "method": "read",
+      "notes": "'three' appears twice in the span for the same count and is recorded once. The '(lines 50-110+)' citation in the preceding sentence is a line-number reference, out of C4 scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          96,
+          96
+        ],
+        "section": "Hidden gotchas — 3. .gitignore rules"
+      },
+      "claim_text": "6 active rules under `.gitignore` reference candidate paths:",
+      "values": [
+        {
+          "quantity": "count of active .gitignore rules referencing candidate sub-directory paths",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "rules",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": ".gitignore",
+        "path": "count of active rules referencing outputs/h11/<candidate>/ paths"
+      },
+      "method": "read",
+      "notes": "Scope decision: the bullets at lines 98-102 give only .gitignore line numbers, which are line-number citations out of C4 scope per rule 5, so no claims were extracted from them; the rule count here is the checkable claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          108,
+          108
+        ],
+        "section": "Hidden gotchas — 4. Configs that reference candidates"
+      },
+      "claim_text": "- `configs/mcc-eval-384px.yaml` and `configs/n1-eval-384px-all-buffers.yaml` reference `outputs/h11/n1-outstanding-384/...` extensively (16 YAML lines combined).",
+      "values": [
+        {
+          "quantity": "combined count of YAML lines in the two named configs referencing outputs/h11/n1-outstanding-384/",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "configs/mcc-eval-384px.yaml",
+        "path": null,
+        "expression": "a + b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "configs/mcc-eval-384px.yaml",
+            "path": "count of lines containing `outputs/h11/n1-outstanding-384/`"
+          },
+          {
+            "name": "b",
+            "file": "configs/n1-eval-384px-all-buffers.yaml",
+            "path": "count of lines containing `outputs/h11/n1-outstanding-384/`"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "The claim is explicitly a combined count across two named YAML configs, so it is encoded as the sum of two per-file grep counts. Numerals inside the config and directory names (384px, pv-diag-384) are names, out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          117,
+          117
+        ],
+        "section": "Hidden gotchas — 6. No symlinks"
+      },
+      "claim_text": "`find outputs/h11/ -maxdepth 3 -type l` returned no results.",
+      "values": [
+        {
+          "quantity": "count of symlinks found under outputs/h11/ to depth 3",
+          "value_verbatim": "no results",
+          "value_parsed": 0,
+          "unit": "symlinks",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11",
+        "path": "count of symlinks to depth 3"
+      },
+      "method": "read",
+      "notes": "The `-maxdepth 3` argument is a command flag rather than an asserted study quantity, so it is not extracted; the asserted zero is the claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          123,
+          123
+        ],
+        "section": "Workload estimate per subdir"
+      },
+      "claim_text": "| `propose-brief-v1-test/` | 0.25 / 0.5 | 0 | 1 | None | High |",
+      "values": [
+        {
+          "quantity": "workload for propose-brief-v1-test, low bound (planning estimate)",
+          "value_verbatim": "0.25",
+          "value_parsed": 0.25,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "workload for propose-brief-v1-test, high bound (planning estimate)",
+          "value_verbatim": "0.5",
+          "value_parsed": 0.5,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "critical active-code references for propose-brief-v1-test",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "active documentation references for propose-brief-v1-test",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning estimate authored by the report; no committed artefact decides it (rule 2 forbids anchoring prose to prose). The reference counts restate lines 35 and 47."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          124,
+          124
+        ],
+        "section": "Workload estimate per subdir"
+      },
+      "claim_text": "| `v2-proposer-test/` | 0.25 / 0.5 | 0 | 0 | None | High |",
+      "values": [
+        {
+          "quantity": "workload for v2-proposer-test, low bound (planning estimate)",
+          "value_verbatim": "0.25",
+          "value_parsed": 0.25,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "workload for v2-proposer-test, high bound (planning estimate)",
+          "value_verbatim": "0.5",
+          "value_parsed": 0.5,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "critical active-code references for v2-proposer-test",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "active documentation references for v2-proposer-test",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning estimate authored by the report; no committed artefact decides it (rule 2 forbids anchoring prose to prose). The reference counts restate lines 36 and 48."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          125,
+          125
+        ],
+        "section": "Workload estimate per subdir"
+      },
+      "claim_text": "| `wbf/` | 1.0 / 1.5 | 2 .py | 12 | `fuse_detections_wbf.py` SPECIAL_CONFIGS coupling with e47 + gs-v2 | High |",
+      "values": [
+        {
+          "quantity": "workload for wbf/, low bound (planning estimate)",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "workload for wbf/, high bound (planning estimate)",
+          "value_verbatim": "1.5",
+          "value_parsed": 1.5,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "critical active-code references for wbf/ (Python files)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "active documentation references for wbf/",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning estimate authored by the report; no committed artefact decides it (rule 2 forbids anchoring prose to prose). The reference counts restate lines 34 and 46."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          126,
+          126
+        ],
+        "section": "Workload estimate per subdir"
+      },
+      "claim_text": "| `gold-standard-v2/` | 3.0 / 5.0 | 9 .py + 5 .sh + 1 config-doc | 49 | Heavy script coupling; `lib_batch_api.py` docstring mention; paper-cited docs need Document Revision Policy changelog stubs | High |",
+      "values": [
+        {
+          "quantity": "workload for gold-standard-v2, low bound (planning estimate)",
+          "value_verbatim": "3.0",
+          "value_parsed": 3.0,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "workload for gold-standard-v2, high bound (planning estimate)",
+          "value_verbatim": "5.0",
+          "value_parsed": 5.0,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "critical active-code references for gold-standard-v2 (Python files)",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "critical active-code references for gold-standard-v2 (shell scripts)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "critical config-document references for gold-standard-v2",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "active documentation references for gold-standard-v2",
+          "value_verbatim": "49",
+          "value_parsed": 49,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning estimate authored by the report; no committed artefact decides it (rule 2 forbids anchoring prose to prose). The reference counts restate lines 32 and 44."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          127,
+          127
+        ],
+        "section": "Workload estimate per subdir"
+      },
+      "claim_text": "| `e47-propose-brief/` *(if moved)* | 2.0 / 4.0 | 1 .py (shared) | 34 | Inventory edit + leaderboard regen on Era 2 (30–60 min on sapphire); 132 lines of JSON regenerate as a side effect; archive refs are intentionally frozen | Medium |",
+      "values": [
+        {
+          "quantity": "workload for e47-propose-brief, low bound (planning estimate)",
+          "value_verbatim": "2.0",
+          "value_parsed": 2.0,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "workload for e47-propose-brief, high bound (planning estimate)",
+          "value_verbatim": "4.0",
+          "value_parsed": 4.0,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "critical active-code references for e47-propose-brief (Python files)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "active documentation references for e47-propose-brief",
+          "value_verbatim": "34",
+          "value_parsed": 34,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "Era 2 leaderboard regeneration wall-clock, low bound",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "minutes",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "Era 2 leaderboard regeneration wall-clock, high bound",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "minutes",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tracked JSON lines that regenerate as a side effect of the move",
+          "value_verbatim": "132",
+          "value_parsed": 132,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning estimate authored by the report; no committed artefact decides it (rule 2 forbids anchoring prose to prose). The embedded counts restate lines 33, 45, 12/86 (regen wall-clock, anchored there to scripts/build_combined_leaderboard.sh) and 78."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          128,
+          128
+        ],
+        "section": "Workload estimate per subdir"
+      },
+      "claim_text": "| `n1-outstanding-384/` | **0 — do not move** | 7 .py + 1 .sh + 2 YAML | 2 | Confirmed H11-proper | High |",
+      "values": [
+        {
+          "quantity": "workload for n1-outstanding-384 (asserted zero: do not move)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "critical active-code references for n1-outstanding-384 (Python files)",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "critical active-code references for n1-outstanding-384 (shell scripts)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "critical active-code references for n1-outstanding-384 (YAML configs)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "active documentation references for n1-outstanding-384",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning estimate authored by the report; no committed artefact decides it (rule 2 forbids anchoring prose to prose). Grep-derived count taken at the time of writing; no committed artefact records it, so triage must reproduce it (git grep over the tracked tree) against the document's own commit. Note that some candidate directories have since moved (for example gold-standard-v2 now sits at outputs/gs/gold-standard-v2), which the reproduction must account for. The numeral in the directory name is a name, out of scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          130,
+          130
+        ],
+        "section": "Workload estimate per subdir"
+      },
+      "claim_text": "Each entry above includes ~15–30 minutes per subdir for **verification**",
+      "values": [
+        {
+          "quantity": "per-subdirectory verification allowance, low bound (planning estimate)",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": "minutes",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "per-subdirectory verification allowance, high bound (planning estimate)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "minutes",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning estimate authored by the report; no committed artefact decides it (rule 2 forbids anchoring prose to prose)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          134,
+          134
+        ],
+        "section": "Aggregate estimate"
+      },
+      "claim_text": "**Confident-move set (4 subdirs, excluding `e47-propose-brief`)**: **4.5 – 7.5 hours**",
+      "values": [
+        {
+          "quantity": "count of sub-directories in the confident-move set",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "subdirectories",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "confident-move-set workload, low bound (planning estimate)",
+          "value_verbatim": "4.5",
+          "value_parsed": 4.5,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "confident-move-set workload, high bound (planning estimate)",
+          "value_verbatim": "7.5",
+          "value_parsed": 7.5,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning estimate authored by the report; no committed artefact decides it (rule 2 forbids anchoring prose to prose)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          138,
+          138
+        ],
+        "section": "Aggregate estimate"
+      },
+      "claim_text": "| `propose-brief-v1-test/` | 0.25 | 0.5 |",
+      "values": [
+        {
+          "quantity": "workload for propose-brief-v1-test, low bound (planning estimate)",
+          "value_verbatim": "0.25",
+          "value_parsed": 0.25,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "workload for propose-brief-v1-test, high bound (planning estimate)",
+          "value_verbatim": "0.5",
+          "value_parsed": 0.5,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning estimate authored by the report; no committed artefact decides it (rule 2 forbids anchoring prose to prose). Restates line 123."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          139,
+          139
+        ],
+        "section": "Aggregate estimate"
+      },
+      "claim_text": "| `v2-proposer-test/` | 0.25 | 0.5 |",
+      "values": [
+        {
+          "quantity": "workload for v2-proposer-test, low bound (planning estimate)",
+          "value_verbatim": "0.25",
+          "value_parsed": 0.25,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "workload for v2-proposer-test, high bound (planning estimate)",
+          "value_verbatim": "0.5",
+          "value_parsed": 0.5,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning estimate authored by the report; no committed artefact decides it (rule 2 forbids anchoring prose to prose). Restates line 124."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          140,
+          140
+        ],
+        "section": "Aggregate estimate"
+      },
+      "claim_text": "| `wbf/` | 1.0 | 1.5 |",
+      "values": [
+        {
+          "quantity": "workload for wbf/, low bound (planning estimate)",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "workload for wbf/, high bound (planning estimate)",
+          "value_verbatim": "1.5",
+          "value_parsed": 1.5,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning estimate authored by the report; no committed artefact decides it (rule 2 forbids anchoring prose to prose). Restates line 125."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          141,
+          141
+        ],
+        "section": "Aggregate estimate"
+      },
+      "claim_text": "| `gold-standard-v2/` | 3.0 | 5.0 |",
+      "values": [
+        {
+          "quantity": "workload for gold-standard-v2, low bound (planning estimate)",
+          "value_verbatim": "3.0",
+          "value_parsed": 3.0,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "workload for gold-standard-v2, high bound (planning estimate)",
+          "value_verbatim": "5.0",
+          "value_parsed": 5.0,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning estimate authored by the report; no committed artefact decides it (rule 2 forbids anchoring prose to prose). Restates line 126."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          142
+        ],
+        "section": "Aggregate estimate"
+      },
+      "claim_text": "| **Total** | **4.5** | **7.5** |",
+      "values": [
+        {
+          "quantity": "confident-move-set workload total, low bound (planning estimate)",
+          "value_verbatim": "4.5",
+          "value_parsed": 4.5,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "confident-move-set workload total, high bound (planning estimate)",
+          "value_verbatim": "7.5",
+          "value_parsed": 7.5,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Column totals of the four rows above (0.25 + 0.25 + 1.0 + 3.0 low; 0.5 + 0.5 + 1.5 + 5.0 high). The operands live in this same prose document, so rule 2 forbids an arithmetic anchor; triage can check the sum internally."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          144,
+          144
+        ],
+        "section": "Aggregate estimate"
+      },
+      "claim_text": "**Full set (including `e47-propose-brief` if its move is decided)**: **6.5 – 11.5 hours**.",
+      "values": [
+        {
+          "quantity": "full-set (five sub-directory) workload, low bound (planning estimate)",
+          "value_verbatim": "6.5",
+          "value_parsed": 6.5,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "full-set (five sub-directory) workload, high bound (planning estimate)",
+          "value_verbatim": "11.5",
+          "value_parsed": 11.5,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning estimate authored by the report; no committed artefact decides it (rule 2 forbids anchoring prose to prose). Equals the confident-set total plus the e47-propose-brief row (2.0 / 4.0 at line 127); recorded without adjudication."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          144,
+          144
+        ],
+        "section": "Aggregate estimate"
+      },
+      "claim_text": "Add Era-2 leaderboard regen wall-clock (30–60 min on sapphire, runs unattended).",
+      "values": [
+        {
+          "quantity": "Era 2 leaderboard regeneration wall-clock, low bound",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "minutes",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "Era 2 leaderboard regeneration wall-clock, high bound",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "minutes",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/build_combined_leaderboard.sh",
+        "path": "header comment: per-Era runtime estimate"
+      },
+      "method": "read",
+      "notes": "Restates the per-Era regeneration figure attributed to the script header at line 86. 'Era-2' is a scope label."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          150,
+          150
+        ],
+        "section": "Alternative strategies — Strategy A: Easy three now (recommended for low-risk progress)"
+      },
+      "claim_text": "Move `propose-brief-v1-test/`, `v2-proposer-test/`, `wbf/` in one focused 2-hour session.",
+      "values": [
+        {
+          "quantity": "session length for moving the easy three sub-directories (planning estimate)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning estimate authored by the report; no committed artefact decides it (rule 2 forbids anchoring prose to prose). 'one focused ... session' is a quantifier on the session rather than a study quantity and is not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          152,
+          152
+        ],
+        "section": "Alternative strategies — Strategy A: Easy three now (recommended for low-risk progress)"
+      },
+      "claim_text": "- Removes 3 of the 5 misplaced subdirs (60% reduction in clutter for ~25% of the cost).",
+      "values": [
+        {
+          "quantity": "count of misplaced sub-directories removed by Strategy A",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "subdirectories",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of misplaced sub-directories in total",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "subdirectories",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "clutter reduction achieved by Strategy A",
+          "value_verbatim": "60%",
+          "value_parsed": 60.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "share of the total cost incurred by Strategy A (judgement estimate)",
+          "value_verbatim": "~25%",
+          "value_parsed": 25.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-counts over the candidate set plus two derived shares; the 60 % follows from 3 of 5, the ~25 % is a judgement estimate. Note the TL;DR at line 13 states ~30 % of the cost for the same option — both recorded as stated, without adjudication."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          153,
+          153
+        ],
+        "section": "Alternative strategies — Strategy A: Easy three now (recommended for low-risk progress)"
+      },
+      "claim_text": "- No inventory edits, no leaderboard regen, no paper-cited doc revisions.",
+      "values": [
+        {
+          "quantity": "count of condition-inventory entries needing edits under Strategy A",
+          "value_verbatim": "No",
+          "value_parsed": 0,
+          "unit": "entries",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of leaderboard regenerations required under Strategy A",
+          "value_verbatim": "no",
+          "value_parsed": 0,
+          "unit": "regenerations",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of paper-cited document revisions required under Strategy A",
+          "value_verbatim": "no",
+          "value_parsed": 0,
+          "unit": "revisions",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "planning/condition-inventory.json",
+        "path": "len:$[?(@.path =~ /propose-brief-v1-test|v2-proposer-test|wbf/)]"
+      },
+      "method": "read",
+      "notes": "Three asserted zero counts for the easy-three option. The inventory-edit zero resolves against the condition inventory (none of the three easy candidates should appear); the other two follow from that plus the documentation table, so they are flagged per-value anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          158,
+          158
+        ],
+        "section": "Alternative strategies — Strategy B: Easy three + gold-standard-v2/ (recommended for repo-publication push)"
+      },
+      "claim_text": "Adds `gold-standard-v2/` (the canonical 4-map pipeline). Highest doc-update cost but no leaderboard regen. ~6 hours total.",
+      "values": [
+        {
+          "quantity": "count of map sheets in the gold-standard production pipeline corpus",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "map sheets",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "Strategy B total workload (planning estimate)",
+          "value_verbatim": "~6",
+          "value_parsed": 6.0,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning estimate authored by the report; no committed artefact decides it (rule 2 forbids anchoring prose to prose). The 4-map sub-corpus is delimited by inputs/vectors/bounds/gs-4maps-sheet-bounds.geojson (len:$.features) if triage wants an artefact for that value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          162,
+          162
+        ],
+        "section": "Alternative strategies — Strategy C: All five"
+      },
+      "claim_text": "~9 hours active + ~1 hour wall-clock unattended.",
+      "values": [
+        {
+          "quantity": "Strategy C active workload (planning estimate)",
+          "value_verbatim": "~9",
+          "value_parsed": 9.0,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "Strategy C unattended wall-clock (planning estimate)",
+          "value_verbatim": "~1",
+          "value_parsed": 1.0,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning estimate authored by the report; no committed artefact decides it (rule 2 forbids anchoring prose to prose)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          170,
+          170
+        ],
+        "section": "Hidden questions worth surfacing before proceeding"
+      },
+      "claim_text": "The inventory tags it `hypothesis=H11, era=2`, but methodologically it's a proposer-prompt-swap experiment (`propose_brief-text`, K=5) that happens to use 384px tiles.",
+      "values": [
+        {
+          "quantity": "number of detection passes (K) in the e47-propose-brief proposer-prompt-swap experiment",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile size used by the e47-propose-brief experiment",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "planning/condition-inventory.json",
+        "path": "$[?(@.path =~ /e47-propose-brief/)].K"
+      },
+      "method": "read",
+      "notes": "Mixed span: K resolves against the condition inventory; the 384 px tile size is recorded in the run metadata instead — outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_1/detections_propose_brief-text_run01.meta.json at $.configuration.tile_size — a different file, hence per-value anchor-unknown. The tag values `hypothesis=H11, era=2`, the config name `propose_brief-text`, and '384px' where it names the production pipeline are identifiers."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          176,
+          176
+        ],
+        "section": "Hidden questions worth surfacing before proceeding"
+      },
+      "claim_text": "For `gold-standard-v2/`, that's ~13 docs to back-fill. I have factored this into the 3–5 hour estimate but called it \"doc revisions\"; if back-fill is a separate task, subtract ~1 hour from the gold-standard-v2 estimate and budget it separately.",
+      "values": [
+        {
+          "quantity": "count of documents needing Document Revision Policy back-fill for the gold-standard-v2 move",
+          "value_verbatim": "~13",
+          "value_parsed": 13,
+          "unit": "documents",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "gold-standard-v2 workload, low bound (planning estimate)",
+          "value_verbatim": "3",
+          "value_parsed": 3.0,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "gold-standard-v2 workload, high bound (planning estimate)",
+          "value_verbatim": "5",
+          "value_parsed": 5.0,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "back-fill allowance to subtract if handled separately (planning estimate)",
+          "value_verbatim": "~1",
+          "value_parsed": 1.0,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning estimate authored by the report; no committed artefact decides it (rule 2 forbids anchoring prose to prose). The ~13 documents restates line 44's '~13 active markdown files' and the 3-5 hours restates line 126."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          184,
+          184
+        ],
+        "section": "Changelog — 2026-05-28 Original publication"
+      },
+      "claim_text": "Investigated 6 candidate subdirs (5 from the user's list + `n1-outstanding-384/`).",
+      "values": [
+        {
+          "quantity": "count of candidate sub-directories investigated",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "subdirectories",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of those candidates supplied by the user's list",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "subdirectories",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Changelog original-publication stub restating the body; the counts are live claims, not superseded values, so they are not classed historical. Scope decision: 'No repo changes made' (lines 5 and 184) is a process assertion about the authoring session rather than a quantity about the study, and is not extracted; likewise the .gitignore line numbers at lines 98-102 and the enumerators at line 166."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          184,
+          184
+        ],
+        "section": "Changelog — 2026-05-28 Original publication"
+      },
+      "claim_text": "the other 4 are confidently misplaced.",
+      "values": [
+        {
+          "quantity": "count of candidates judged confidently misplaced",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "subdirectories",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates the TL;DR count of four confident moves at line 9."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          184,
+          184
+        ],
+        "section": "Changelog — 2026-05-28 Original publication"
+      },
+      "claim_text": "Total estimated cost: 4.5–7.5 hours for the confident set, 6.5–11.5 hours including `e47-propose-brief`.",
+      "values": [
+        {
+          "quantity": "confident-set total workload, low bound (planning estimate)",
+          "value_verbatim": "4.5",
+          "value_parsed": 4.5,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "confident-set total workload, high bound (planning estimate)",
+          "value_verbatim": "7.5",
+          "value_parsed": 7.5,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "full-set total workload, low bound (planning estimate)",
+          "value_verbatim": "6.5",
+          "value_parsed": 6.5,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "full-set total workload, high bound (planning estimate)",
+          "value_verbatim": "11.5",
+          "value_parsed": 11.5,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning estimate authored by the report; no committed artefact decides it (rule 2 forbids anchoring prose to prose). Restates lines 134 and 144."
+    }
+  ]
+}
