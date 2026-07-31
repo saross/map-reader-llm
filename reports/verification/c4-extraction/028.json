@@ -1,0 +1,2822 @@
+{
+  "schema_version": "1.0",
+  "extracted_at": "2026-07-31T00:00:00Z",
+  "source_document": {
+    "file": "reports/adversarial-audit-report.md",
+    "git_blob": "09ace3d3cef8",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.1"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          4,
+          4
+        ],
+        "section": "Header (condition under audit)"
+      },
+      "claim_text": "**Reported claim:** F1 > 0.9",
+      "values": [
+        {
+          "quantity": "F1 threshold asserted as the reported claim for condition flash-high-text-16-of-30--flash-min-vf",
+          "value_verbatim": "0.9",
+          "value_parsed": 0.9,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.buffers[1].f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json",
+        "path": "$.buffers[1].f1"
+      },
+      "method": "read",
+      "notes": "Inequality assertion, not a point value: the harness should check that the condition's F1 at the 30 m buffer exceeds 0.9. Anchored to the 30 m entry of the condition's buffer_sensitivity.json (buffers[1] is buffer_metres = 30)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          5,
+          5
+        ],
+        "section": "Header (condition under audit)"
+      },
+      "claim_text": "**Actual point estimate:** F1 = 0.9044 at 30m spatial tolerance",
+      "values": [
+        {
+          "quantity": "F1, condition flash-high-text-16-of-30--flash-min-vf at 30 m buffer",
+          "value_verbatim": "0.9044",
+          "value_parsed": 0.9044,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.buffers[1].f1",
+          "method": null
+        },
+        {
+          "quantity": "spatial tolerance (buffer radius) for the headline F1",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffers[1].buffer_metres",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json",
+        "path": "$.buffers[1].f1"
+      },
+      "method": "read",
+      "notes": "The buffer_sensitivity.json records f1 to four decimal places; the pairwise artefact records the same quantity at six ($.condition_a.f1 in results/pairwise/leaderboard-30m/group_8/leaderboard-distinguishability-flash-high-text-16-of-30-flash-min-vf-t-0-2-vs-text-baseline-flash-min-vf-t-0-15.json). Rounding tolerance is the harness's to own."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          6,
+          6
+        ],
+        "section": "Header (condition under audit)"
+      },
+      "claim_text": "**Bootstrap 95% CI:** [0.8779, 0.9277]",
+      "values": [
+        {
+          "quantity": "bootstrap confidence level for the F1 interval",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap CI lower bound for F1 at 30 m",
+          "value_verbatim": "0.8779",
+          "value_parsed": 0.8779,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.buffers[1].ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "bootstrap CI upper bound for F1 at 30 m",
+          "value_verbatim": "0.9277",
+          "value_parsed": 0.9277,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.buffers[1].ci.f1.upper",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json",
+        "path": "$.buffers[1].ci.f1"
+      },
+      "method": "read",
+      "notes": "The 95% confidence level is not recorded as a field in buffer_sensitivity.json; it is implied by the 2.5th/97.5th percentile method in scripts/lib_advanced_metrics.py, so that value is flagged anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          13,
+          13
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "### Layer 1: Ground Truth Integrity (5 claims)",
+      "values": [
+        {
+          "quantity": "count of claims inventoried in Layer 1 of the Phase 1 inventory",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "claims",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document-internal bookkeeping: the count is checkable only by counting the numbered list items in this section of reports/adversarial-audit-report.md itself. Instrument rule 2 forbids anchoring prose to prose, so no artefact anchor is proposed. Included per the include-when-in-doubt rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          21,
+          21
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "### Layer 2: Tile Generation and Coverage (5 claims)",
+      "values": [
+        {
+          "quantity": "count of claims inventoried in Layer 2 of the Phase 1 inventory",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "claims",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document-internal bookkeeping: the count is checkable only by counting the numbered list items in this section of reports/adversarial-audit-report.md itself. Instrument rule 2 forbids anchoring prose to prose, so no artefact anchor is proposed. Included per the include-when-in-doubt rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          29,
+          29
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "### Layer 3: API Response Parsing (6 claims)",
+      "values": [
+        {
+          "quantity": "count of claims inventoried in Layer 3 of the Phase 1 inventory",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "claims",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document-internal bookkeeping: the count is checkable only by counting the numbered list items in this section of reports/adversarial-audit-report.md itself. Instrument rule 2 forbids anchoring prose to prose, so no artefact anchor is proposed. Included per the include-when-in-doubt rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          38,
+          38
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "### Layer 4: Spatial Matching (5 claims)",
+      "values": [
+        {
+          "quantity": "count of claims inventoried in Layer 4 of the Phase 1 inventory",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "claims",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document-internal bookkeeping: the count is checkable only by counting the numbered list items in this section of reports/adversarial-audit-report.md itself. Instrument rule 2 forbids anchoring prose to prose, so no artefact anchor is proposed. Included per the include-when-in-doubt rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          46,
+          46
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "### Layer 5: Metric Calculation (5 claims)",
+      "values": [
+        {
+          "quantity": "count of claims inventoried in Layer 5 of the Phase 1 inventory",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "claims",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document-internal bookkeeping: the count is checkable only by counting the numbered list items in this section of reports/adversarial-audit-report.md itself. Instrument rule 2 forbids anchoring prose to prose, so no artefact anchor is proposed. Included per the include-when-in-doubt rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          54,
+          54
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "### Layer 6: Configuration and Pipeline Integrity (5 claims)",
+      "values": [
+        {
+          "quantity": "count of claims inventoried in Layer 6 of the Phase 1 inventory",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "claims",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document-internal bookkeeping: the count is checkable only by counting the numbered list items in this section of reports/adversarial-audit-report.md itself. Instrument rule 2 forbids anchoring prose to prose, so no artefact anchor is proposed. Included per the include-when-in-doubt rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          62,
+          62
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "### Layer 7: Cross-Configuration Consistency (5 claims)",
+      "values": [
+        {
+          "quantity": "count of claims inventoried in Layer 7 of the Phase 1 inventory",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "claims",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document-internal bookkeeping: the count is checkable only by counting the numbered list items in this section of reports/adversarial-audit-report.md itself. Instrument rule 2 forbids anchoring prose to prose, so no artefact anchor is proposed. Included per the include-when-in-doubt rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          70
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "### Layer 8: Statistical Validity (5 claims)",
+      "values": [
+        {
+          "quantity": "count of claims inventoried in Layer 8 of the Phase 1 inventory",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "claims",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document-internal bookkeeping: the count is checkable only by counting the numbered list items in this section of reports/adversarial-audit-report.md itself. Instrument rule 2 forbids anchoring prose to prose, so no artefact anchor is proposed. Included per the include-when-in-doubt rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          15,
+          15
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "Ground truth contains 569 annotations across 4 maps (136 + 217 + 196 + 20)",
+      "values": [
+        {
+          "quantity": "ground-truth annotation count, gold-standard 4-map corpus",
+          "value_verbatim": "569",
+          "value_parsed": 569,
+          "unit": "annotations",
+          "kind": "count",
+          "path": "$.features.length",
+          "method": "read"
+        },
+        {
+          "quantity": "count of maps contributing ground-truth annotations",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "maps",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "annotation count, reference_K-35-052-4_32635.geojson",
+          "value_verbatim": "136",
+          "value_parsed": 136,
+          "unit": "annotations",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "annotation count, reference_K-35-053-3_Elenovo.geojson",
+          "value_verbatim": "217",
+          "value_parsed": 217,
+          "unit": "annotations",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "annotation count, reference_K-35-062-2_Rakovski.geojson",
+          "value_verbatim": "196",
+          "value_parsed": 196,
+          "unit": "annotations",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "annotation count, reference_K-35-078-1_Lesovo.geojson",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "annotations",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": "$.features.length",
+        "expression": "a + b + c + d",
+        "operands": [
+          {
+            "name": "a",
+            "file": "inputs/vectors/references/reference_K-35-052-4_32635.geojson",
+            "path": "$.features.length"
+          },
+          {
+            "name": "b",
+            "file": "inputs/vectors/references/reference_K-35-053-3_Elenovo.geojson",
+            "path": "$.features.length"
+          },
+          {
+            "name": "c",
+            "file": "inputs/vectors/references/reference_K-35-062-2_Rakovski.geojson",
+            "path": "$.features.length"
+          },
+          {
+            "name": "d",
+            "file": "inputs/vectors/references/reference_K-35-078-1_Lesovo.geojson",
+            "path": "$.features.length"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "The aggregate 569 is both the sum (expression a + b + c + d) and a direct read of $.features.length in the aggregate reference. The four per-map counts are operands a, b, c and d respectively, in the order quoted; their anchors are the operand entries, not anchor.path, so they are flagged anchor-unknown to keep the harness from resolving them against the aggregate file and manufacturing a mismatch. The map count 4 is the number of per-map reference GeoJSONs in inputs/vectors/references/ (the operand files)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          16,
+          16
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "No duplicate annotations exist (no two points within 5m)",
+      "values": [
+        {
+          "quantity": "minimum-separation threshold used to test for duplicate annotations",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson"
+      },
+      "method": "recompute-script",
+      "notes": "Requires a pairwise distance sweep over the 569 reference points in projected metres (EPSG:32635); no committed artefact records the result."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          18,
+          18
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "Every ground truth point maps to exactly one tile at each tile size (384px, 512px)",
+      "values": [
+        {
+          "quantity": "number of tiles each ground-truth point is assigned to",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_advanced_metrics.py",
+        "path": "_assign_refs_to_primary_tiles"
+      },
+      "method": "recompute-script",
+      "notes": "Scope decision: the tile sizes '384px' and '512px' are read here as labels naming the two tile sets, not as asserted tiling parameters, so they are not extracted on this line; they ARE extracted where the document asserts them as tiling parameters (lines 24 and 106). The related idiom 'one-to-one matching' at line 40 was likewise treated as an algorithmic property, not a count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          19,
+          19
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "The count of 569 is consistent across every report, script, and output file",
+      "values": [
+        {
+          "quantity": "ground-truth annotation count asserted as repo-wide constant",
+          "value_verbatim": "569",
+          "value_parsed": 569,
+          "unit": "annotations",
+          "kind": "count",
+          "path": "$.features.length",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": "$.features.length"
+      },
+      "method": "read",
+      "notes": "The consistency half of the claim is a cross-document assertion that triage must chase; the value itself is decided by the aggregate reference GeoJSON."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          24,
+          24
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "7. 512px: stride=448, overlap=64; 384px: stride=336, overlap=48",
+      "values": [
+        {
+          "quantity": "tile size, 512px tile set",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": "TILE_SIZE",
+          "method": null
+        },
+        {
+          "quantity": "tile stride, 512px tile set",
+          "value_verbatim": "448",
+          "value_parsed": 448,
+          "unit": "px",
+          "kind": "parameter",
+          "path": "STRIDE",
+          "method": null
+        },
+        {
+          "quantity": "tile overlap, 512px tile set",
+          "value_verbatim": "64",
+          "value_parsed": 64,
+          "unit": "px",
+          "kind": "parameter",
+          "path": "OVERLAP",
+          "method": null
+        },
+        {
+          "quantity": "tile size, 384px tile set",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tile stride, 384px tile set",
+          "value_verbatim": "336",
+          "value_parsed": 336,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tile overlap, 384px tile set",
+          "value_verbatim": "48",
+          "value_parsed": 48,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "config.py",
+        "path": "TILE_SIZE"
+      },
+      "method": "read",
+      "notes": "config.py carries the 512px constants (TILE_SIZE, OVERLAP, STRIDE) as module-level values — a legitimate non-JSON anchor under instrument v1.1. The 384px trio is not in config.py; the document itself says they come 'from tile coordinate analysis' (line 106), i.e. from the tile filenames under inputs/tiles_384, so those three values are flagged anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          27,
+          27
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "10. Tile counts: 512px = 360 (340 eval); 384px = 611 (487 eval)",
+      "values": [
+        {
+          "quantity": "generated tile count, 512px tile set",
+          "value_verbatim": "360",
+          "value_parsed": 360,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "evaluation tile count, 512px tile set",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "generated tile count, 384px tile set",
+          "value_verbatim": "611",
+          "value_parsed": 611,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.total_new_tiles",
+          "method": null
+        },
+        {
+          "quantity": "evaluation tile count, 384px tile set",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles_384/tile_selection_metadata.json",
+        "path": "$.total_new_tiles"
+      },
+      "method": "read",
+      "notes": "Multi-file span; the schema allows only one anchor file per claim, so the cross-file values are flagged anchor-unknown with their locators given here: 360 = PNG count under inputs/tiles; 340 = array length of inputs/tiles/full_evaluation_manifest.json; 487 = array length of inputs/tiles_384/full_evaluation_manifest.json (equivalently $.evaluation_tiles in results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          35,
+          35
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "All 487 evaluation tiles have results across all 30 proposer runs",
+      "values": [
+        {
+          "quantity": "evaluation tile count, 384px production set",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "number of proposer passes in the 16-of-30 consensus pool",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7"
+      },
+      "method": "read",
+      "notes": "Anchor is the proposer run directory holding run_1 … run_30, each with a *.meta.json carrying $.execution_stats.items_processed. 30 = number of run subdirectories; 487 = items_processed per run (line 126 records run_27 as the one exception at 486)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          36,
+          36
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "The consensus clustering algorithm correctly applies 16-of-30 threshold",
+      "values": [
+        {
+          "quantity": "consensus vote threshold applied to the 30-pass pool",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": "votes",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "number of proposer passes in the consensus pool",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "runs",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/consensus/flash-high-text-16of30.geojson"
+      },
+      "method": "read",
+      "notes": "The consensus GeoJSON carries per-feature vote_count and total_passes; the threshold claim is decided by min(vote_count) = 16 and total_passes = 30 over its features. Doubtful case flagged per instrument rule 5: '16-of-30' also functions as the condition name, but here it is asserted as the operative threshold, so it is extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          41,
+          41
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "The pixel-to-metre conversion is correct (~5.01 m/pixel at 384px)",
+      "values": [
+        {
+          "quantity": "map raster ground sample distance",
+          "value_verbatim": "5.01",
+          "value_parsed": 5.01,
+          "unit": "m/pixel",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/rasters/K-35-052-4_32635.tif"
+      },
+      "method": "read",
+      "notes": "Decided by the GeoTIFF geotransform (pixel size) of the source rasters under inputs/rasters; the audit describes this as coming from the world file. The '384px' here is a set label, not an extracted parameter (see line 18 note)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          42,
+          42
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "19. 30m tolerance = ~6 pixels at 384px; correctly computed in projected metres",
+      "values": [
+        {
+          "quantity": "spatial tolerance (buffer radius) for the headline evaluation",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffers[1].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "spatial tolerance expressed in raster pixels",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json",
+        "path": "$.buffers[1].buffer_metres"
+      },
+      "method": "read",
+      "notes": "The pixel figure is derived: 30 m / 5.01 m per pixel = 5.99 px, using the geotransform of inputs/rasters/K-35-052-4_32635.tif. Recorded as recompute-script rather than arithmetic because the divisor lives in a GeoTIFF header, not a JSON path."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          48,
+          48
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "22. F1 = 0.9044 is correctly computed from TP=383, FP=29, FN=52 (scoped GT=435)",
+      "values": [
+        {
+          "quantity": "F1 at 30 m, condition flash-high-text-16-of-30--flash-min-vf",
+          "value_verbatim": "0.9044",
+          "value_parsed": 0.9044,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.condition_a.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "true positives at 30 m",
+          "value_verbatim": "383",
+          "value_parsed": 383,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.condition_a.tp",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives at 30 m",
+          "value_verbatim": "29",
+          "value_parsed": 29,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.condition_a.fp",
+          "method": "read"
+        },
+        {
+          "quantity": "false negatives at 30 m",
+          "value_verbatim": "52",
+          "value_parsed": 52,
+          "unit": "references",
+          "kind": "count",
+          "path": "$.condition_a.fn",
+          "method": "read"
+        },
+        {
+          "quantity": "scoped ground-truth count (evaluation denominator) = TP + FN",
+          "value_verbatim": "435",
+          "value_parsed": 435,
+          "unit": "references",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/leaderboard-30m/group_8/leaderboard-distinguishability-flash-high-text-16-of-30-flash-min-vf-t-0-2-vs-text-baseline-flash-min-vf-t-0-15.json",
+        "path": "$.condition_a.f1",
+        "expression": "a + b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/pairwise/leaderboard-30m/group_8/leaderboard-distinguishability-flash-high-text-16-of-30-flash-min-vf-t-0-2-vs-text-baseline-flash-min-vf-t-0-15.json",
+            "path": "$.condition_a.tp"
+          },
+          {
+            "name": "b",
+            "file": "results/pairwise/leaderboard-30m/group_8/leaderboard-distinguishability-flash-high-text-16-of-30-flash-min-vf-t-0-2-vs-text-baseline-flash-min-vf-t-0-15.json",
+            "path": "$.condition_a.fn"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "Scoped GT is not stored directly; it is TP + FN, hence the claim-level arithmetic. The other four values are direct reads from the same pairwise artefact, which names its inputs in $.condition_a.source."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          50,
+          50
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "24. The 16-of-30 voting threshold is applied before spatial matching",
+      "values": [
+        {
+          "quantity": "consensus vote threshold applied to the 30-pass pool",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": "votes",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "number of proposer passes in the consensus pool",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "runs",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/consensus/flash-high-text-16of30.geojson"
+      },
+      "method": "read",
+      "notes": "Same threshold pair as line 36; anchored to the consensus GeoJSON's per-feature vote_count / total_passes."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          52,
+          52
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "26. Bootstrap CIs use tile-level resampling (1,000 iterations, seed=42)",
+      "values": [
+        {
+          "quantity": "bootstrap iterations for the condition's confidence intervals",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": "iterations",
+          "kind": "parameter",
+          "path": "$.bootstrap_iterations",
+          "method": null
+        },
+        {
+          "quantity": "random seed for the bootstrap",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json",
+        "path": "$.bootstrap_iterations"
+      },
+      "method": "read",
+      "notes": "Both values are recorded at the top level of the condition's buffer_sensitivity.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          66,
+          66
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "34. 384px outperforms 512px by 5–7 F1 points (significant, p ≤ 0.004)",
+      "values": [
+        {
+          "quantity": "lower bound of the 384px-over-512px F1 advantage",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "F1 points",
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "upper bound of the 384px-over-512px F1 advantage",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": "F1 points",
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "permutation p-value ceiling for the tile-size comparison",
+          "value_verbatim": "0.004",
+          "value_parsed": 0.004,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No artefact is named on this line and the document is dated 2026-03-27. The closest sources I found are results/h11-tile-size-results.md (a markdown results document — prose, so instrument rule 2 forbids anchoring to it; its line 533 row carries 0.004) and results/pairwise/tile-size-mcnemar-30m/tile_size_comparison.json (generated 2026-04-30, i.e. after this audit). Triage should chase the chain."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          72,
+          72
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "37. The 30 consensus runs are truly independent API calls",
+      "values": [
+        {
+          "quantity": "number of proposer passes in the consensus pool",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7"
+      },
+      "method": "read",
+      "notes": "Count of run_N subdirectories, each with its own run_id and timestamps in *.meta.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          74,
+          74
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "39. Multiple comparison correction is applied via FDR at q = 0.05",
+      "values": [
+        {
+          "quantity": "false-discovery-rate threshold q applied to the pairwise family",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "q",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/apply_fdr_correction.py",
+        "path": "q"
+      },
+      "method": "read",
+      "notes": "results/pairwise/30m/fdr/pairwise_results_fdr.json records the method (Benjamini-Hochberg) but not q; the value is the default of the --q argument in scripts/apply_fdr_correction.py — a non-JSON anchor, legitimate under instrument v1.1."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          75,
+          75
+        ],
+        "section": "Phase 1 — Claims Inventory"
+      },
+      "claim_text": "40. The F1 > 0.9 result survives FDR correction",
+      "values": [
+        {
+          "quantity": "F1 threshold whose significance is claimed to survive FDR correction",
+          "value_verbatim": "0.9",
+          "value_parsed": 0.9,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.buffers[1].f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json",
+        "path": "$.buffers[1].f1"
+      },
+      "method": "read",
+      "notes": "Inequality assertion again (cf. line 4). The survival half of the claim is decided by results/pairwise/30m/fdr/pairwise_results_fdr.json ($.comparisons[*].significant for the group-1 PV-vs-consensus row)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          84
+        ],
+        "section": "Phase 2 — Verification — Layer 1"
+      },
+      "claim_text": "**Claims inventoried:** 5",
+      "values": [
+        {
+          "quantity": "count of claims carried into Phase 2 verification for Layer 1",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "claims",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document-internal bookkeeping (mirrors the Phase 1 header count for the same layer); no external artefact decides it, and instrument rule 2 forbids anchoring prose to prose."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          101,
+          101
+        ],
+        "section": "Phase 2 — Verification — Layer 2"
+      },
+      "claim_text": "**Claims inventoried:** 5",
+      "values": [
+        {
+          "quantity": "count of claims carried into Phase 2 verification for Layer 2",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "claims",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document-internal bookkeeping (mirrors the Phase 1 header count for the same layer); no external artefact decides it, and instrument rule 2 forbids anchoring prose to prose."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          118,
+          118
+        ],
+        "section": "Phase 2 — Verification — Layer 3"
+      },
+      "claim_text": "**Claims inventoried:** 6",
+      "values": [
+        {
+          "quantity": "count of claims carried into Phase 2 verification for Layer 3",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "claims",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document-internal bookkeeping (mirrors the Phase 1 header count for the same layer); no external artefact decides it, and instrument rule 2 forbids anchoring prose to prose."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          136,
+          136
+        ],
+        "section": "Phase 2 — Verification — Layer 4"
+      },
+      "claim_text": "**Claims inventoried:** 5",
+      "values": [
+        {
+          "quantity": "count of claims carried into Phase 2 verification for Layer 4",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "claims",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document-internal bookkeeping (mirrors the Phase 1 header count for the same layer); no external artefact decides it, and instrument rule 2 forbids anchoring prose to prose."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          153,
+          153
+        ],
+        "section": "Phase 2 — Verification — Layer 5"
+      },
+      "claim_text": "**Claims inventoried:** 5",
+      "values": [
+        {
+          "quantity": "count of claims carried into Phase 2 verification for Layer 5",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "claims",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document-internal bookkeeping (mirrors the Phase 1 header count for the same layer); no external artefact decides it, and instrument rule 2 forbids anchoring prose to prose."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          88,
+          88
+        ],
+        "section": "Phase 2 — Verification — Layer 1"
+      },
+      "claim_text": "| 1 | 569 annotations across 4 maps | Counted features in each GeoJSON: 136+217+196+20=569. Aggregate `mounds-reference.geojson` also 569. Coordinate sets identical at 6 decimal places. | PASS | None |",
+      "values": [
+        {
+          "quantity": "ground-truth annotation count, gold-standard 4-map corpus",
+          "value_verbatim": "569",
+          "value_parsed": 569,
+          "unit": "annotations",
+          "kind": "count",
+          "path": "$.features.length",
+          "method": "read"
+        },
+        {
+          "quantity": "count of maps contributing ground-truth annotations",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "maps",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "annotation count, reference_K-35-052-4_32635.geojson",
+          "value_verbatim": "136",
+          "value_parsed": 136,
+          "unit": "annotations",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "annotation count, reference_K-35-053-3_Elenovo.geojson",
+          "value_verbatim": "217",
+          "value_parsed": 217,
+          "unit": "annotations",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "annotation count, reference_K-35-062-2_Rakovski.geojson",
+          "value_verbatim": "196",
+          "value_parsed": 196,
+          "unit": "annotations",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "annotation count, reference_K-35-078-1_Lesovo.geojson",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "annotations",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "sum of the four per-map annotation counts",
+          "value_verbatim": "569",
+          "value_parsed": 569,
+          "unit": "annotations",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "annotation count in the aggregate mounds-reference.geojson",
+          "value_verbatim": "569",
+          "value_parsed": 569,
+          "unit": "annotations",
+          "kind": "count",
+          "path": "$.features.length",
+          "method": "read"
+        },
+        {
+          "quantity": "decimal places at which per-map and aggregate coordinates agree",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "decimal places",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": "$.features.length",
+        "expression": "a + b + c + d",
+        "operands": [
+          {
+            "name": "a",
+            "file": "inputs/vectors/references/reference_K-35-052-4_32635.geojson",
+            "path": "$.features.length"
+          },
+          {
+            "name": "b",
+            "file": "inputs/vectors/references/reference_K-35-053-3_Elenovo.geojson",
+            "path": "$.features.length"
+          },
+          {
+            "name": "c",
+            "file": "inputs/vectors/references/reference_K-35-062-2_Rakovski.geojson",
+            "path": "$.features.length"
+          },
+          {
+            "name": "d",
+            "file": "inputs/vectors/references/reference_K-35-078-1_Lesovo.geojson",
+            "path": "$.features.length"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "Table row. The per-map counts map to operands a, b, c and d in quoted order; they are flagged anchor-unknown at value level so the harness does not resolve them against anchor.path (the aggregate file) and manufacture a mismatch — their true anchors are the operand entries. The map count 4 is the number of per-map reference GeoJSONs in inputs/vectors/references/. The 6-decimal-place coordinate agreement needs a scripted comparison of the per-map files against the aggregate, hence recompute-script for that value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          89,
+          89
+        ],
+        "section": "Phase 2 — Verification — Layer 1"
+      },
+      "claim_text": "| 2 | No duplicate annotations | All 569 points checked pairwise: zero pairs within 5m; zero within 20m | PASS | None |",
+      "values": [
+        {
+          "quantity": "ground-truth points entering the pairwise duplicate check",
+          "value_verbatim": "569",
+          "value_parsed": 569,
+          "unit": "annotations",
+          "kind": "count",
+          "path": "$.features.length",
+          "method": "read"
+        },
+        {
+          "quantity": "annotation pairs separated by less than 5 m",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": "pairs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "duplicate-detection distance threshold (tight)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "annotation pairs separated by less than 20 m",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": "pairs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "duplicate-detection distance threshold (loose)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson"
+      },
+      "method": "recompute-script",
+      "notes": "Needs a pairwise distance sweep in projected metres over the reference points; no committed artefact records the two zero counts."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          90,
+          90
+        ],
+        "section": "Phase 2 — Verification — Layer 1"
+      },
+      "claim_text": "| 3 | Coordinate alignment correct | 3 points from 3 maps traced through tiling transform via world files. All land on correct tiles at both 384px and 512px. | PASS | None |",
+      "values": [
+        {
+          "quantity": "ground-truth points hand-traced through the tiling transform",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "points",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "maps the traced points were drawn from",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "maps",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "A manual spot-check: which three points and which three maps were traced is recorded nowhere in the repository, so neither count can be resolved against an artefact. I looked for a spot-check log under results/ and outputs/ and found none."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          91,
+          91
+        ],
+        "section": "Phase 2 — Verification — Layer 1"
+      },
+      "claim_text": "Zero points lost at boundaries.",
+      "values": [
+        {
+          "quantity": "ground-truth points lost at tile boundaries during scoping",
+          "value_verbatim": "Zero",
+          "value_parsed": 0,
+          "unit": "points",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_advanced_metrics.py",
+        "path": "scope_references_to_tiles"
+      },
+      "method": "recompute-script",
+      "notes": "Decided by re-running the scoping helpers in scripts/lib_advanced_metrics.py over the reference GeoJSON and the 384px evaluation manifest."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          92,
+          92
+        ],
+        "section": "Phase 2 — Verification — Layer 1"
+      },
+      "claim_text": "| 5 | Count of 569 consistent everywhere | Searched codebase: 569 in preregistration, methodology reports, methods outline, all threshold sweep JSONs. 435 correctly reported as scoped count for 384px. | PASS | None |",
+      "values": [
+        {
+          "quantity": "ground-truth annotation count asserted as repo-wide constant",
+          "value_verbatim": "569",
+          "value_parsed": 569,
+          "unit": "annotations",
+          "kind": "count",
+          "path": "$.features.length",
+          "method": "read"
+        },
+        {
+          "quantity": "scoped ground-truth count for the 384px evaluation",
+          "value_verbatim": "435",
+          "value_parsed": 435,
+          "unit": "references",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": "$.features.length"
+      },
+      "method": "read",
+      "notes": "Multi-file span. 435 is not in the reference GeoJSON: its anchor is known but not expressible under the one-file-per-claim constraint — it is $.condition_a.tp + $.condition_a.fn in results/pairwise/leaderboard-30m/group_8/leaderboard-distinguishability-flash-high-text-16-of-30-flash-min-vf-t-0-2-vs-text-baseline-flash-min-vf-t-0-15.json (383 + 52)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          95,
+          95
+        ],
+        "section": "Phase 2 — Verification — Layer 1"
+      },
+      "claim_text": "The single nuance is that `ground_truth_mounds: 569` in result JSONs is the pre-scoped total, while the actual evaluation denominator is 435 (after scoping to the 487-tile evaluation bounds).",
+      "values": [
+        {
+          "quantity": "pre-scoped ground-truth total recorded in result JSONs",
+          "value_verbatim": "569",
+          "value_parsed": 569,
+          "unit": "annotations",
+          "kind": "count",
+          "path": "$.ground_truth_mounds",
+          "method": "read"
+        },
+        {
+          "quantity": "scoped ground-truth count used as the evaluation denominator",
+          "value_verbatim": "435",
+          "value_parsed": 435,
+          "unit": "references",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "evaluation tile count, 384px production set",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.evaluation_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json",
+        "path": "$.ground_truth_mounds"
+      },
+      "method": "read",
+      "notes": "569 and 487 are both top-level fields of the condition's buffer_sensitivity.json. 435 is cross-file: $.condition_a.tp + $.condition_a.fn in results/pairwise/leaderboard-30m/group_8/leaderboard-distinguishability-flash-high-text-16-of-30-flash-min-vf-t-0-2-vs-text-baseline-flash-min-vf-t-0-15.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          105,
+          105
+        ],
+        "section": "Phase 2 — Verification — Layer 2"
+      },
+      "claim_text": "| 6 | Same geographic extent | Both tile sizes source from the same 4 GeoTIFFs with `boundless=True`. Raw tiling covers identical area. BUT evaluation footprints differ: 384px evaluates 435 mounds across 487 tiles; 512px evaluates 539 mounds across 340 tiles.",
+      "values": [
+        {
+          "quantity": "source GeoTIFF rasters underlying both tile sets",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "rasters",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "scoped ground-truth mounds, 384px evaluation",
+          "value_verbatim": "435",
+          "value_parsed": 435,
+          "unit": "references",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "evaluation tile count, 384px production set",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.evaluation_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "scoped ground-truth mounds, 512px evaluation",
+          "value_verbatim": "539",
+          "value_parsed": 539,
+          "unit": "references",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "evaluation tile count, 512px production set",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json",
+        "path": "$.evaluation_tiles"
+      },
+      "method": "read",
+      "notes": "Multi-file span; cross-file locators, all known: 4 = count of *.tif under inputs/rasters; 435 = $.condition_a.tp + $.condition_a.fn in results/pairwise/leaderboard-30m/group_8/leaderboard-distinguishability-flash-high-text-16-of-30-flash-min-vf-t-0-2-vs-text-baseline-flash-min-vf-t-0-15.json; 340 = array length of inputs/tiles/full_evaluation_manifest.json; 539 is the 512px scoped mound count, for which I could not find a committed evaluation artefact for a matching 512px condition — triage should chase it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          106,
+          106
+        ],
+        "section": "Phase 2 — Verification — Layer 2"
+      },
+      "claim_text": "| 7 | Stride/overlap correct | 512px: stride=448, overlap=64 (from `config.py`). 384px: stride=336, overlap=48 (from tile coordinate analysis). Both verified from actual tile files. | PASS | None |",
+      "values": [
+        {
+          "quantity": "tile size, 512px tile set",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": "TILE_SIZE",
+          "method": null
+        },
+        {
+          "quantity": "tile stride, 512px tile set",
+          "value_verbatim": "448",
+          "value_parsed": 448,
+          "unit": "px",
+          "kind": "parameter",
+          "path": "STRIDE",
+          "method": null
+        },
+        {
+          "quantity": "tile overlap, 512px tile set",
+          "value_verbatim": "64",
+          "value_parsed": 64,
+          "unit": "px",
+          "kind": "parameter",
+          "path": "OVERLAP",
+          "method": null
+        },
+        {
+          "quantity": "tile size, 384px tile set",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tile stride, 384px tile set",
+          "value_verbatim": "336",
+          "value_parsed": 336,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tile overlap, 384px tile set",
+          "value_verbatim": "48",
+          "value_parsed": 48,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "config.py",
+        "path": "TILE_SIZE"
+      },
+      "method": "read",
+      "notes": "The row names config.py as its source for the 512px trio (module-level TILE_SIZE / STRIDE / OVERLAP). The 384px trio is stated to come from tile coordinate analysis, i.e. the tile filenames under inputs/tiles_384; flagged anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          108,
+          108
+        ],
+        "section": "Phase 2 — Verification — Layer 2"
+      },
+      "claim_text": "124 tiles excluded from 384px for geographic overlap with 512px calibration area.",
+      "values": [
+        {
+          "quantity": "384px tiles excluded from evaluation for overlap with the 512px calibration area",
+          "value_verbatim": "124",
+          "value_parsed": 124,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles_384/tile_selection_metadata.json",
+        "path": "$.total_new_tiles",
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "inputs/tiles_384/tile_selection_metadata.json",
+            "path": "$.total_new_tiles"
+          },
+          {
+            "name": "b",
+            "file": "results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json",
+            "path": "$.evaluation_tiles"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "124 = 611 generated 384px tiles minus 487 evaluated (operand b, $.evaluation_tiles, equals the array length of inputs/tiles_384/full_evaluation_manifest.json). The same row's claim that the 384px calibration manifest is empty is decided by inputs/tiles_384/calibration_manifest.json (a zero-length array) but carries no numeral in the prose, so it is not a separate claim row."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          109,
+          109
+        ],
+        "section": "Phase 2 — Verification — Layer 2"
+      },
+      "claim_text": "| 10 | Tile counts correct | 512px: 360 generated, 340 evaluated. 384px: 611 generated, 487 evaluated. All verified against directory listings and manifest files. | PASS | None |",
+      "values": [
+        {
+          "quantity": "generated tile count, 512px tile set",
+          "value_verbatim": "360",
+          "value_parsed": 360,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "evaluation tile count, 512px tile set",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "generated tile count, 384px tile set",
+          "value_verbatim": "611",
+          "value_parsed": 611,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.total_new_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "evaluation tile count, 384px tile set",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles_384/tile_selection_metadata.json",
+        "path": "$.total_new_tiles"
+      },
+      "method": "read",
+      "notes": "Multi-file span; cross-file locators: 360 = PNG count under inputs/tiles; 340 = array length of inputs/tiles/full_evaluation_manifest.json; 487 = array length of inputs/tiles_384/full_evaluation_manifest.json (equivalently $.evaluation_tiles in results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          112,
+          112
+        ],
+        "section": "Phase 2 — Verification — Layer 2"
+      },
+      "claim_text": "The one concern is that the 384px evaluation (487 tiles, 435 mounds) and 512px evaluation (340 tiles, 539 mounds) cover different geographic regions and different ground truth corpora.",
+      "values": [
+        {
+          "quantity": "evaluation tile count, 384px production set",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.evaluation_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "scoped ground-truth mounds, 384px evaluation",
+          "value_verbatim": "435",
+          "value_parsed": 435,
+          "unit": "references",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "evaluation tile count, 512px production set",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "scoped ground-truth mounds, 512px evaluation",
+          "value_verbatim": "539",
+          "value_parsed": 539,
+          "unit": "references",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json",
+        "path": "$.evaluation_tiles"
+      },
+      "method": "read",
+      "notes": "Restatement of the line-105 figures in the layer reasoning; same cross-file locators (435 = tp + fn in results/pairwise/leaderboard-30m/group_8/leaderboard-distinguishability-flash-high-text-16-of-30-flash-min-vf-t-0-2-vs-text-baseline-flash-min-vf-t-0-15.json; 340 = array length of inputs/tiles/full_evaluation_manifest.json; 539 unresolved)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          122,
+          122
+        ],
+        "section": "Phase 2 — Verification — Layer 3"
+      },
+      "claim_text": "| 11 | Responses archived | Each of 30 runs has `.meta.json` recording UUID, timestamps, git commit, model version, token counts.",
+      "values": [
+        {
+          "quantity": "proposer runs each carrying a .meta.json sidecar",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7"
+      },
+      "method": "read",
+      "notes": "Count of run_N subdirectories under the 30-pass proposer output. The claim that each meta records token counts is an era-sensitive sub-claim (this run predates the retest era, so usage_stats should be populated), but the numeral extracted here is only the run count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          124,
+          124
+        ],
+        "section": "Phase 2 — Verification — Layer 3"
+      },
+      "claim_text": "| 13 | Verifier parse errors conservative | Parse errors get `mound_probability = 0.0` (`lib_verifier.py` lines 959–968). At threshold 0.2, this means rejection. Zero parse errors in actual data (729 candidates). | PASS | None |",
+      "values": [
+        {
+          "quantity": "mound probability assigned to a verifier parse error",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "verifier acceptance probability threshold for this condition",
+          "value_verbatim": "0.2",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "verifier parse errors in the 16-of-30 candidate set",
+          "value_verbatim": "Zero",
+          "value_parsed": 0,
+          "unit": "errors",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "candidates entering the verifier at the 16-of-30 threshold",
+          "value_verbatim": "729",
+          "value_parsed": 729,
+          "unit": "candidates",
+          "kind": "count",
+          "path": "$.total_detections",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/flash-high-text-16of30/candidate_manifest.json",
+        "path": "$.total_detections"
+      },
+      "method": "read",
+      "notes": "Multi-file span; cross-file locators: the 0.0 parse-error default is a constant in scripts/lib_verifier.py (the line numbers cited are out of C4 scope); the 0.2 threshold is $.threshold in results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json; the zero-parse-error count needs a scripted pass over outputs/h11/pv-diag-384/verified/flash-high-text-16of30/probabilities.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          125,
+          125
+        ],
+        "section": "Phase 2 — Verification — Layer 3"
+      },
+      "claim_text": "Proposer → consensus clustering (20m, `cKDTree`) → candidate extraction (150×150 crops) → verifier (sees crop image + text labels only) → probability threshold.",
+      "values": [
+        {
+          "quantity": "consensus clustering distance threshold",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "candidate crop width",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.crop_dimensions",
+          "method": null
+        },
+        {
+          "quantity": "candidate crop height",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.crop_dimensions",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/flash-high-text-16of30/candidate_manifest.json",
+        "path": "$.crop_dimensions"
+      },
+      "method": "read",
+      "notes": "The candidate manifest records crop_dimensions '150x150' (and $.padding = 75). The 20 m clustering radius is the DISTANCE_THRESHOLD_METRES constant in scripts/lib_consensus.py — known but cross-file, so flagged anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          126,
+          126
+        ],
+        "section": "Phase 2 — Verification — Layer 3"
+      },
+      "claim_text": "| 15 | All tiles have results | 29/30 runs: 487/487 tiles. Run 27: 486/487 tiles (one tile short). Impact: one tile has max 29 votes instead of 30. Negligible effect on 16-of-30 threshold. | PASS | Negligible |",
+      "values": [
+        {
+          "quantity": "proposer runs with complete tile coverage",
+          "value_verbatim": "29",
+          "value_parsed": 29,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "proposer runs in the pool",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tiles processed by each complete run",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tiles in the 384px evaluation set",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tiles processed by run 27",
+          "value_verbatim": "486",
+          "value_parsed": 486,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.execution_stats.items_processed",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles in the 384px evaluation set (run 27 denominator)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tiles missing from run 27",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.execution_stats.items_failed",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles whose maximum achievable vote count is reduced",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "maximum votes available on the affected tile",
+          "value_verbatim": "29",
+          "value_parsed": 29,
+          "unit": "votes",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "maximum votes available on every other tile",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "votes",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "consensus vote threshold",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": "votes",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "passes in the consensus pool",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "runs",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_27/detections_text-t0.7_run27.meta.json",
+        "path": "$.execution_stats.items_processed"
+      },
+      "method": "read",
+      "notes": "Dense row. The anchor file is run 27's meta ($.execution_stats.items_processed = the 486 figure; $.execution_stats.items_failed = the one missing tile). The remaining values are cross-file but locatable: run and coverage counts from the sibling run_N metas under outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7; 487 also = $.evaluation_tiles in results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json; the 16/30 threshold pair from outputs/h11/pv-diag-384/consensus/flash-high-text-16of30.geojson. 'Run 27' is a run identifier and is out of C4 scope as a value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          127,
+          127
+        ],
+        "section": "Phase 2 — Verification — Layer 3"
+      },
+      "claim_text": "All 729 candidates in 16of30 manifest have vote_count ≥ 16. Verified as strict subset of 11,771 in 1of30.",
+      "values": [
+        {
+          "quantity": "candidates at the 16-of-30 consensus threshold",
+          "value_verbatim": "729",
+          "value_parsed": 729,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "minimum vote count among those candidates",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": "votes",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "candidates in the 1-of-30 union",
+          "value_verbatim": "11,771",
+          "value_parsed": 11771,
+          "unit": "candidates",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/consensus/flash-high-text-16of30.geojson"
+      },
+      "method": "read",
+      "notes": "729 is the feature count of the 16-of-30 consensus GeoJSON (also $.total_detections in outputs/h11/pv-diag-384/verified/flash-high-text-16of30/candidate_manifest.json). The 11,771 union count is cross-file: feature count of outputs/h11/pv-diag-384/consensus/flash-high-text-1of30.geojson, equivalently $.raster_crops in outputs/h11/pv-diag-384/verified/flash-high-text-16of30/candidate_manifest.json. 'Vote_count >= 16' for every feature needs a scripted min() over the feature properties. The digits inside '16of30' and '1of30' are file/condition names, not extracted values."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          140,
+          140
+        ],
+        "section": "Phase 2 — Verification — Layer 4"
+      },
+      "claim_text": "cost matrix with `inf_cost = max_distance * 1000` for beyond-tolerance pairs",
+      "values": [
+        {
+          "quantity": "multiplier producing the effectively-infinite cost for beyond-tolerance detection/reference pairs",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_advanced_metrics.py",
+        "path": "inf_cost"
+      },
+      "method": "read",
+      "notes": "The Hungarian cost-matrix constant lives in scripts/lib_advanced_metrics.py (the module that also defines scope_references_to_tiles and calculate_f1_internal). Non-JSON anchor, expected under instrument v1.1."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          141,
+          141
+        ],
+        "section": "Phase 2 — Verification — Layer 4"
+      },
+      "claim_text": "World file confirms pixel size = 5.01 m/pixel. Detections converted from normalised coordinates (0–1000) → pixel → UTM via rasterio affine transform.",
+      "values": [
+        {
+          "quantity": "map raster ground sample distance",
+          "value_verbatim": "5.01",
+          "value_parsed": 5.01,
+          "unit": "m/pixel",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "lower bound of the model's normalised coordinate range",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper bound of the model's normalised coordinate range",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/rasters/K-35-052-4_32635.tif"
+      },
+      "method": "read",
+      "notes": "Pixel size comes from the GeoTIFF geotransform. The 0-1000 normalised coordinate range is specified in the proposer system instruction prompts/system-instructions/detect_brief-text.md ('Return JSON with normalised coordinates (0-1000)') — cross-file, so flagged anchor-unknown. EPSG:32635 is a CRS identifier and out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          142
+        ],
+        "section": "Phase 2 — Verification — Layer 4"
+      },
+      "claim_text": "| 19 | 30m = ~6 pixels | 30m / 5.01 m/pixel = 5.99 pixels. 20m / 5.01 = 3.99 pixels. Both physically reasonable (mound symbols span 10–20 pixels). | PASS | None |",
+      "values": [
+        {
+          "quantity": "headline spatial tolerance",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "map raster ground sample distance",
+          "value_verbatim": "5.01",
+          "value_parsed": 5.01,
+          "unit": "m/pixel",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "30 m tolerance expressed in pixels",
+          "value_verbatim": "5.99",
+          "value_parsed": 5.99,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "secondary spatial tolerance",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "map raster ground sample distance (restated)",
+          "value_verbatim": "5.01",
+          "value_parsed": 5.01,
+          "unit": "m/pixel",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "20 m tolerance expressed in pixels",
+          "value_verbatim": "3.99",
+          "value_parsed": 3.99,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "lower bound of the asserted mound-symbol diameter",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper bound of the asserted mound-symbol diameter",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/rasters/K-35-052-4_32635.tif"
+      },
+      "method": "recompute-script",
+      "notes": "Both pixel figures are divisions by the GeoTIFF pixel size, which is not a JSON path, so the row is recompute-script rather than arithmetic. The 10-20 px mound-symbol span is asserted in the proposer system instruction prompts/system-instructions/detect_brief-text.md ('~10-20 pixels diameter') — cross-file, flagged anchor-unknown. The '6' in the row's claim label restates line 42 and is not re-extracted here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          144,
+          144
+        ],
+        "section": "Phase 2 — Verification — Layer 4"
+      },
+      "claim_text": "| 21 | Tolerance curve monotonic | `buffer_sensitivity.json`: F1 = 0.890 (20m), 0.904 (30m), 0.904 (40m), 0.904 (50m). Monotonically non-decreasing. Plateau at 30m means zero additional matches between 30–50m. | PASS | None |",
+      "values": [
+        {
+          "quantity": "F1 at the 20 m buffer",
+          "value_verbatim": "0.890",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.buffers[0].f1",
+          "method": null
+        },
+        {
+          "quantity": "buffer radius, first sweep point",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffers[0].buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "F1 at the 30 m buffer",
+          "value_verbatim": "0.904",
+          "value_parsed": 0.904,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.buffers[1].f1",
+          "method": null
+        },
+        {
+          "quantity": "buffer radius, second sweep point",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffers[1].buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "F1 at the 40 m buffer",
+          "value_verbatim": "0.904",
+          "value_parsed": 0.904,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.buffers[2].f1",
+          "method": null
+        },
+        {
+          "quantity": "buffer radius, third sweep point",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffers[2].buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "F1 at the 50 m buffer",
+          "value_verbatim": "0.904",
+          "value_parsed": 0.904,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.buffers[3].f1",
+          "method": null
+        },
+        {
+          "quantity": "buffer radius, fourth sweep point",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffers[3].buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "buffer radius at which the tolerance curve plateaus",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffers[1].buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "additional matches gained between 30 m and 50 m",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": "matches",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "plateau band lower edge",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffers[1].buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "plateau band upper edge",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffers[3].buffer_metres",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json",
+        "path": "$.buffers"
+      },
+      "method": "read",
+      "notes": "The row names buffer_sensitivity.json as its source. Note the precision difference the instrument warns about: the artefact stores 0.8902 and 0.9044 where the row quotes 0.890 and 0.904 — match at the quoted precision. The 'zero additional matches' assertion needs a scripted comparison of matched pairs at 30 m versus 50 m."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          147,
+          147
+        ],
+        "section": "Phase 2 — Verification — Layer 4"
+      },
+      "claim_text": "The tolerance curve's plateau at 30m confirms that the 30m buffer captures all viable matches without artificial inflation.",
+      "values": [
+        {
+          "quantity": "buffer radius at which the tolerance curve plateaus",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffers[1].buffer_metres",
+          "method": null
+        },
+        {
+          "quantity": "headline evaluation buffer radius",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.buffers[1].buffer_metres",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json",
+        "path": "$.buffers[1].buffer_metres"
+      },
+      "method": "read",
+      "notes": "Layer-reasoning restatement of the line-144 plateau; included for full enumeration although it adds no new quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          157,
+          157
+        ],
+        "section": "Phase 2 — Verification — Layer 5"
+      },
+      "claim_text": "| 22 | F1 arithmetic correct | TP=383, FP=29, FN=52. P=383/412=0.9296, R=383/435=0.8805. F1=2×0.9296×0.8805/(0.9296+0.8805)=0.9044. TP+FN=435 matches scoped GT. TP+FP=412 matches `n_accepted`. | PASS | None |",
+      "values": [
+        {
+          "quantity": "true positives at 30 m",
+          "value_verbatim": "383",
+          "value_parsed": 383,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.condition_a.tp",
+          "method": "read"
+        },
+        {
+          "quantity": "false positives at 30 m",
+          "value_verbatim": "29",
+          "value_parsed": 29,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.condition_a.fp",
+          "method": "read"
+        },
+        {
+          "quantity": "false negatives at 30 m",
+          "value_verbatim": "52",
+          "value_parsed": 52,
+          "unit": "references",
+          "kind": "count",
+          "path": "$.condition_a.fn",
+          "method": "read"
+        },
+        {
+          "quantity": "accepted detections (precision denominator)",
+          "value_verbatim": "412",
+          "value_parsed": 412,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.condition_a.n_detections",
+          "method": "read"
+        },
+        {
+          "quantity": "precision at 30 m",
+          "value_verbatim": "0.9296",
+          "value_parsed": 0.9296,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.condition_a.precision",
+          "method": "read"
+        },
+        {
+          "quantity": "scoped ground-truth count (recall denominator)",
+          "value_verbatim": "435",
+          "value_parsed": 435,
+          "unit": "references",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "recall at 30 m",
+          "value_verbatim": "0.8805",
+          "value_parsed": 0.8805,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.condition_a.recall",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at 30 m",
+          "value_verbatim": "0.9044",
+          "value_parsed": 0.9044,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.condition_a.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "TP + FN, asserted to equal the scoped ground-truth count",
+          "value_verbatim": "435",
+          "value_parsed": 435,
+          "unit": "references",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "TP + FP, asserted to equal n_accepted",
+          "value_verbatim": "412",
+          "value_parsed": 412,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.condition_a.n_detections",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/leaderboard-30m/group_8/leaderboard-distinguishability-flash-high-text-16-of-30-flash-min-vf-t-0-2-vs-text-baseline-flash-min-vf-t-0-15.json",
+        "path": "$.condition_a.f1",
+        "expression": "a + b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/pairwise/leaderboard-30m/group_8/leaderboard-distinguishability-flash-high-text-16-of-30-flash-min-vf-t-0-2-vs-text-baseline-flash-min-vf-t-0-15.json",
+            "path": "$.condition_a.tp"
+          },
+          {
+            "name": "b",
+            "file": "results/pairwise/leaderboard-30m/group_8/leaderboard-distinguishability-flash-high-text-16-of-30-flash-min-vf-t-0-2-vs-text-baseline-flash-min-vf-t-0-15.json",
+            "path": "$.condition_a.fn"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "Scope decision: the operands repeated inside the F1 formula (383, 0.9296, 0.8805 restated) and the literal 2 in the F1 definition are not re-extracted — they are the same asserted quantities and a formula constant. The two 435 values inherit the claim-level arithmetic (TP + FN). n_accepted is also $.n_accepted in results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          158,
+          158
+        ],
+        "section": "Phase 2 — Verification — Layer 5"
+      },
+      "claim_text": "F1 returns 0.0 when P+R=0, not 1.0. 279 of 487 tiles are true empties contributing (0,0,0).",
+      "values": [
+        {
+          "quantity": "F1 value returned when precision and recall are both zero",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "calculate_f1_internal",
+          "method": null
+        },
+        {
+          "quantity": "precision-plus-recall value triggering the guard",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "calculate_f1_internal",
+          "method": null
+        },
+        {
+          "quantity": "F1 value explicitly NOT returned in the degenerate case",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "calculate_f1_internal",
+          "method": null
+        },
+        {
+          "quantity": "tiles that are true empties (no ground truth, no detections)",
+          "value_verbatim": "279",
+          "value_parsed": 279,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "evaluation tiles, 384px production set",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "TP, FP, FN contributed by an empty tile",
+          "value_verbatim": "0,0,0",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_advanced_metrics.py",
+        "path": "calculate_f1_internal"
+      },
+      "method": "read",
+      "notes": "The degenerate-case behaviour is a property of calculate_f1_internal in scripts/lib_advanced_metrics.py (non-JSON anchor). The 279 empty-tile count needs a scripted pass over the 384px evaluation manifest, the reference GeoJSON, and the condition's accepted detections; 487 = $.evaluation_tiles in results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          159,
+          159
+        ],
+        "section": "Phase 2 — Verification — Layer 5"
+      },
+      "claim_text": "Sequence verified: 30 runs → consensus clustering → 1-of-30 union (11,771) → candidate extraction → verifier → 16-of-30 filter (729) → probability threshold (412) → Hungarian matching.",
+      "values": [
+        {
+          "quantity": "proposer runs feeding the consensus",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "candidates in the 1-of-30 union",
+          "value_verbatim": "11,771",
+          "value_parsed": 11771,
+          "unit": "candidates",
+          "kind": "count",
+          "path": "$.raster_crops",
+          "method": "read"
+        },
+        {
+          "quantity": "candidates surviving the 16-of-30 vote filter",
+          "value_verbatim": "729",
+          "value_parsed": 729,
+          "unit": "candidates",
+          "kind": "count",
+          "path": "$.total_detections",
+          "method": "read"
+        },
+        {
+          "quantity": "detections surviving the verifier probability threshold",
+          "value_verbatim": "412",
+          "value_parsed": 412,
+          "unit": "detections",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/verified/flash-high-text-16of30/candidate_manifest.json",
+        "path": "$.total_detections"
+      },
+      "method": "read",
+      "notes": "The candidate manifest holds both consensus stage counts ($.raster_crops = the 1-of-30 union crop count; $.total_detections = the 16-of-30 candidate count) and names its source GeoJSON. 412 is cross-file: $.n_accepted in results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json. Scope decisions: the digits in '1-of-30' and '16-of-30' function as product names here (the threshold itself is extracted at lines 36 and 50), and the pipeline step numbers 6-7 and 8 later in the row are positional identifiers, not quantities."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          160,
+          160
+        ],
+        "section": "Phase 2 — Verification — Layer 5"
+      },
+      "claim_text": "| 25 | Spot-check matches | 3 tiles checked. Matched pairs at 2.0–15.9m (well within 30m). Unmatched GT at 85–737m (genuine misses). No suspicious near-boundary matches. | PASS | None |",
+      "values": [
+        {
+          "quantity": "tiles hand-checked for match plausibility",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "shortest matched detection-to-reference distance in the spot-check",
+          "value_verbatim": "2.0",
+          "value_parsed": 2.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "longest matched detection-to-reference distance in the spot-check",
+          "value_verbatim": "15.9",
+          "value_parsed": 15.9,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "matching tolerance the spot-check distances are compared against",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "shortest unmatched ground-truth distance in the spot-check",
+          "value_verbatim": "85",
+          "value_parsed": 85,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "longest unmatched ground-truth distance in the spot-check",
+          "value_verbatim": "737",
+          "value_parsed": 737,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "A manual spot-check: which three tiles were inspected is not recorded, so the distance ranges cannot be resolved against an artefact even though matched-pair distances are recomputable in principle. I looked for a spot-check log under results/ and outputs/ and found none. The 30 m tolerance in the parenthetical is separately anchored at $.buffers[1].buffer_metres in results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          161,
+          161
+        ],
+        "section": "Phase 2 — Verification — Layer 5"
+      },
+      "claim_text": "1,000 iterations, seed=42. Percentile method (2.5th/97.5th). Pre-computed per-tile TP/FP/FN (errata E26 fix prevents deduplication bias). CI width 0.050 plausible for 487 tiles.",
+      "values": [
+        {
+          "quantity": "bootstrap iterations",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": "iterations",
+          "kind": "parameter",
+          "path": "$.bootstrap_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap random seed",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "lower percentile of the bootstrap interval",
+          "value_verbatim": "2.5",
+          "value_parsed": 2.5,
+          "unit": "%",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper percentile of the bootstrap interval",
+          "value_verbatim": "97.5",
+          "value_parsed": 97.5,
+          "unit": "%",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "width of the F1 confidence interval at 30 m (upper minus lower)",
+          "value_verbatim": "0.050",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "evaluation tiles the interval is computed over",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.evaluation_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json",
+        "path": "$.buffers[1].ci.f1",
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json",
+            "path": "$.buffers[1].ci.f1.upper"
+          },
+          {
+            "name": "b",
+            "file": "results/paper-eval/pv/flash-high-text-16-of-30--flash-min-vf/buffer_sensitivity.json",
+            "path": "$.buffers[1].ci.f1.lower"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "CI width is upper minus lower at the 30 m buffer, hence the claim-level arithmetic; the other values are direct reads from the same file except the 2.5/97.5 percentile pair, which is a property of the bootstrap helper in scripts/lib_advanced_metrics.py. The errata identifier E26 is out of C4 scope."
+    }
+  ]
+}

@@ -1,0 +1,3029 @@
+{
+  "schema_version": "1.0",
+  "extracted_at": "2026-07-31T00:00:00Z",
+  "source_document": {
+    "file": "reports/results-summary-session-58.md",
+    "git_blob": "7375c5b1f8cb",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.1"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          6,
+          7
+        ],
+        "section": "Preamble (scope of all reported metrics)"
+      },
+      "claim_text": "All metrics use 384px tiles, 20m spatial buffer (unless noted), and the\nfull evaluation area (487 tiles, 569 reference mounds).",
+      "values": [
+        {
+          "quantity": "tile size asserted for all metrics in this document",
+          "value_verbatim": "384",
+          "value_parsed": 384.0,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "spatial matching buffer asserted for all metrics unless noted",
+          "value_verbatim": "20",
+          "value_parsed": 20.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "evaluation tile count, full evaluation area",
+          "value_verbatim": "487",
+          "value_parsed": 487.0,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.evaluation_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "reference (ground-truth) mound count, full evaluation area",
+          "value_verbatim": "569",
+          "value_parsed": 569.0,
+          "unit": "mounds",
+          "kind": "count",
+          "path": "$.ground_truth_mounds",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-16of30/threshold_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 487-tile / 569-mound corpus scalars are recorded in every dict-format threshold_sweep.json under this sweep directory; the top-ranked cell is used as the representative anchor. Tile size (384 px) and buffer (20 m) are not recorded in threshold_sweep.json or in the sibling candidate_manifest.json (checked: keys are version/source_geojson/rasters_dir/tiles_dir/padding/crop_dimensions/…), so they are left anchor-unknown for triage to route to the pv-diag-384 tiling and evaluation configs."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          17,
+          17
+        ],
+        "section": "1. Overall PV Leaderboard"
+      },
+      "claim_text": "Top 15 Proposer-Verifier (PV) pipeline configurations ranked by F1.",
+      "values": [
+        {
+          "quantity": "number of PV configurations listed in the overall leaderboard",
+          "value_verbatim": "15",
+          "value_parsed": 15.0,
+          "unit": "configurations",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Selection claim: the fifteen highest-F1 PV configurations over the pv-diag-384 sweep set. Verifying it means re-ranking every cell's optimal F1 under this directory, not reading a single locator. Flagged as a doubtful claim (it is also simply the row count of the table below)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          22,
+          22
+        ],
+        "section": "1. Overall PV Leaderboard"
+      },
+      "claim_text": "| 1 | Flash HIGH text 16-of-30 | **0.890** | [0.863, 0.915] | 0.915 | 0.867 | 0.20 | 412 |",
+      "values": [
+        {
+          "quantity": "F1@20m, PV condition Flash HIGH text 16-of-30",
+          "value_verbatim": "0.890",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI lower bound, PV condition Flash HIGH text 16-of-30",
+          "value_verbatim": "0.863",
+          "value_parsed": 0.863,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI upper bound, PV condition Flash HIGH text 16-of-30",
+          "value_verbatim": "0.915",
+          "value_parsed": 0.915,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.upper",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m, PV condition Flash HIGH text 16-of-30",
+          "value_verbatim": "0.915",
+          "value_parsed": 0.915,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m, PV condition Flash HIGH text 16-of-30",
+          "value_verbatim": "0.867",
+          "value_parsed": 0.867,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, PV condition Flash HIGH text 16-of-30",
+          "value_verbatim": "0.20",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": null
+        },
+        {
+          "quantity": "accepted detection count at the optimal threshold, PV condition Flash HIGH text 16-of-30",
+          "value_verbatim": "412",
+          "value_parsed": 412.0,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.optimal.n_accepted",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-16of30/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Leaderboard table row. Scope decision: the Rank column is a table index and the vote-threshold / temperature tokens inside the Condition label (e.g. '16-of-30', 'T=0.7') are condition names, both out of C4 scope per instrument rule 5. Sweep cell mapped from the condition label to 'flash-high-text-16of30'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          23,
+          23
+        ],
+        "section": "1. Overall PV Leaderboard"
+      },
+      "claim_text": "| 2 | Flash HIGH text 17-of-30 | 0.890 | [0.862, 0.915] | 0.917 | 0.864 | 0.20 | 410 |",
+      "values": [
+        {
+          "quantity": "F1@20m, PV condition Flash HIGH text 17-of-30",
+          "value_verbatim": "0.890",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI lower bound, PV condition Flash HIGH text 17-of-30",
+          "value_verbatim": "0.862",
+          "value_parsed": 0.862,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI upper bound, PV condition Flash HIGH text 17-of-30",
+          "value_verbatim": "0.915",
+          "value_parsed": 0.915,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.upper",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m, PV condition Flash HIGH text 17-of-30",
+          "value_verbatim": "0.917",
+          "value_parsed": 0.917,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m, PV condition Flash HIGH text 17-of-30",
+          "value_verbatim": "0.864",
+          "value_parsed": 0.864,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, PV condition Flash HIGH text 17-of-30",
+          "value_verbatim": "0.20",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": null
+        },
+        {
+          "quantity": "accepted detection count at the optimal threshold, PV condition Flash HIGH text 17-of-30",
+          "value_verbatim": "410",
+          "value_parsed": 410.0,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.optimal.n_accepted",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-17of30/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Leaderboard table row; sweep cell 'flash-high-text-17of30'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          24,
+          24
+        ],
+        "section": "1. Overall PV Leaderboard"
+      },
+      "claim_text": "| 3 | Flash HIGH text 18-of-30 | 0.887 | [0.859, 0.914] | 0.929 | 0.848 | 0.20 | 397 |",
+      "values": [
+        {
+          "quantity": "F1@20m, PV condition Flash HIGH text 18-of-30",
+          "value_verbatim": "0.887",
+          "value_parsed": 0.887,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI lower bound, PV condition Flash HIGH text 18-of-30",
+          "value_verbatim": "0.859",
+          "value_parsed": 0.859,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI upper bound, PV condition Flash HIGH text 18-of-30",
+          "value_verbatim": "0.914",
+          "value_parsed": 0.914,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.upper",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m, PV condition Flash HIGH text 18-of-30",
+          "value_verbatim": "0.929",
+          "value_parsed": 0.929,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m, PV condition Flash HIGH text 18-of-30",
+          "value_verbatim": "0.848",
+          "value_parsed": 0.848,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, PV condition Flash HIGH text 18-of-30",
+          "value_verbatim": "0.20",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": null
+        },
+        {
+          "quantity": "accepted detection count at the optimal threshold, PV condition Flash HIGH text 18-of-30",
+          "value_verbatim": "397",
+          "value_parsed": 397.0,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.optimal.n_accepted",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-18of30/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Leaderboard table row; sweep cell 'flash-high-text-18of30'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          25,
+          25
+        ],
+        "section": "1. Overall PV Leaderboard"
+      },
+      "claim_text": "| 4 | Flash HIGH text 19-of-30 | 0.887 | [0.859, 0.912] | 0.932 | 0.846 | 0.15 | 395 |",
+      "values": [
+        {
+          "quantity": "F1@20m, PV condition Flash HIGH text 19-of-30",
+          "value_verbatim": "0.887",
+          "value_parsed": 0.887,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI lower bound, PV condition Flash HIGH text 19-of-30",
+          "value_verbatim": "0.859",
+          "value_parsed": 0.859,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI upper bound, PV condition Flash HIGH text 19-of-30",
+          "value_verbatim": "0.912",
+          "value_parsed": 0.912,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.upper",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m, PV condition Flash HIGH text 19-of-30",
+          "value_verbatim": "0.932",
+          "value_parsed": 0.932,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m, PV condition Flash HIGH text 19-of-30",
+          "value_verbatim": "0.846",
+          "value_parsed": 0.846,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, PV condition Flash HIGH text 19-of-30",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": null
+        },
+        {
+          "quantity": "accepted detection count at the optimal threshold, PV condition Flash HIGH text 19-of-30",
+          "value_verbatim": "395",
+          "value_parsed": 395.0,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.optimal.n_accepted",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-19of30/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Leaderboard table row; sweep cell 'flash-high-text-19of30'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          26,
+          26
+        ],
+        "section": "1. Overall PV Leaderboard"
+      },
+      "claim_text": "| 5 | Flash HIGH text 15-of-30 | 0.885 | [0.856, 0.911] | 0.902 | 0.869 | 0.20 | 419 |",
+      "values": [
+        {
+          "quantity": "F1@20m, PV condition Flash HIGH text 15-of-30",
+          "value_verbatim": "0.885",
+          "value_parsed": 0.885,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI lower bound, PV condition Flash HIGH text 15-of-30",
+          "value_verbatim": "0.856",
+          "value_parsed": 0.856,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI upper bound, PV condition Flash HIGH text 15-of-30",
+          "value_verbatim": "0.911",
+          "value_parsed": 0.911,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.upper",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m, PV condition Flash HIGH text 15-of-30",
+          "value_verbatim": "0.902",
+          "value_parsed": 0.902,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m, PV condition Flash HIGH text 15-of-30",
+          "value_verbatim": "0.869",
+          "value_parsed": 0.869,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, PV condition Flash HIGH text 15-of-30",
+          "value_verbatim": "0.20",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": null
+        },
+        {
+          "quantity": "accepted detection count at the optimal threshold, PV condition Flash HIGH text 15-of-30",
+          "value_verbatim": "419",
+          "value_parsed": 419.0,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.optimal.n_accepted",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-15of30/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Leaderboard table row; sweep cell 'flash-high-text-15of30'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          27,
+          27
+        ],
+        "section": "1. Overall PV Leaderboard"
+      },
+      "claim_text": "| 6 | Flash HIGH text 14-of-30 | 0.884 | [0.855, 0.910] | 0.900 | 0.869 | 0.20 | 420 |",
+      "values": [
+        {
+          "quantity": "F1@20m, PV condition Flash HIGH text 14-of-30",
+          "value_verbatim": "0.884",
+          "value_parsed": 0.884,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI lower bound, PV condition Flash HIGH text 14-of-30",
+          "value_verbatim": "0.855",
+          "value_parsed": 0.855,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI upper bound, PV condition Flash HIGH text 14-of-30",
+          "value_verbatim": "0.910",
+          "value_parsed": 0.91,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.upper",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m, PV condition Flash HIGH text 14-of-30",
+          "value_verbatim": "0.900",
+          "value_parsed": 0.9,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m, PV condition Flash HIGH text 14-of-30",
+          "value_verbatim": "0.869",
+          "value_parsed": 0.869,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, PV condition Flash HIGH text 14-of-30",
+          "value_verbatim": "0.20",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": null
+        },
+        {
+          "quantity": "accepted detection count at the optimal threshold, PV condition Flash HIGH text 14-of-30",
+          "value_verbatim": "420",
+          "value_parsed": 420.0,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.optimal.n_accepted",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-14of30/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Leaderboard table row; sweep cell 'flash-high-text-14of30'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          28,
+          28
+        ],
+        "section": "1. Overall PV Leaderboard"
+      },
+      "claim_text": "| 7 | Flash HIGH text 20-of-30 | 0.884 | [0.855, 0.910] | 0.940 | 0.835 | 0.15 | 386 |",
+      "values": [
+        {
+          "quantity": "F1@20m, PV condition Flash HIGH text 20-of-30",
+          "value_verbatim": "0.884",
+          "value_parsed": 0.884,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI lower bound, PV condition Flash HIGH text 20-of-30",
+          "value_verbatim": "0.855",
+          "value_parsed": 0.855,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI upper bound, PV condition Flash HIGH text 20-of-30",
+          "value_verbatim": "0.910",
+          "value_parsed": 0.91,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.upper",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m, PV condition Flash HIGH text 20-of-30",
+          "value_verbatim": "0.940",
+          "value_parsed": 0.94,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m, PV condition Flash HIGH text 20-of-30",
+          "value_verbatim": "0.835",
+          "value_parsed": 0.835,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, PV condition Flash HIGH text 20-of-30",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": null
+        },
+        {
+          "quantity": "accepted detection count at the optimal threshold, PV condition Flash HIGH text 20-of-30",
+          "value_verbatim": "386",
+          "value_parsed": 386.0,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.optimal.n_accepted",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-20of30/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Leaderboard table row; sweep cell 'flash-high-text-20of30'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          29,
+          29
+        ],
+        "section": "1. Overall PV Leaderboard"
+      },
+      "claim_text": "| 8 | Flash HIGH text 13-of-30 | 0.880 | [0.852, 0.905] | 0.886 | 0.874 | 0.20 | 429 |",
+      "values": [
+        {
+          "quantity": "F1@20m, PV condition Flash HIGH text 13-of-30",
+          "value_verbatim": "0.880",
+          "value_parsed": 0.88,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI lower bound, PV condition Flash HIGH text 13-of-30",
+          "value_verbatim": "0.852",
+          "value_parsed": 0.852,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI upper bound, PV condition Flash HIGH text 13-of-30",
+          "value_verbatim": "0.905",
+          "value_parsed": 0.905,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.upper",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m, PV condition Flash HIGH text 13-of-30",
+          "value_verbatim": "0.886",
+          "value_parsed": 0.886,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m, PV condition Flash HIGH text 13-of-30",
+          "value_verbatim": "0.874",
+          "value_parsed": 0.874,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, PV condition Flash HIGH text 13-of-30",
+          "value_verbatim": "0.20",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": null
+        },
+        {
+          "quantity": "accepted detection count at the optimal threshold, PV condition Flash HIGH text 13-of-30",
+          "value_verbatim": "429",
+          "value_parsed": 429.0,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.optimal.n_accepted",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-13of30/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Leaderboard table row; sweep cell 'flash-high-text-13of30'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          30,
+          30
+        ],
+        "section": "1. Overall PV Leaderboard"
+      },
+      "claim_text": "| 9 | Flash HIGH text 22-of-30 | 0.880 | [0.851, 0.907] | 0.950 | 0.821 | 0.15 | 376 |",
+      "values": [
+        {
+          "quantity": "F1@20m, PV condition Flash HIGH text 22-of-30",
+          "value_verbatim": "0.880",
+          "value_parsed": 0.88,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI lower bound, PV condition Flash HIGH text 22-of-30",
+          "value_verbatim": "0.851",
+          "value_parsed": 0.851,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI upper bound, PV condition Flash HIGH text 22-of-30",
+          "value_verbatim": "0.907",
+          "value_parsed": 0.907,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.upper",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m, PV condition Flash HIGH text 22-of-30",
+          "value_verbatim": "0.950",
+          "value_parsed": 0.95,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m, PV condition Flash HIGH text 22-of-30",
+          "value_verbatim": "0.821",
+          "value_parsed": 0.821,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, PV condition Flash HIGH text 22-of-30",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": null
+        },
+        {
+          "quantity": "accepted detection count at the optimal threshold, PV condition Flash HIGH text 22-of-30",
+          "value_verbatim": "376",
+          "value_parsed": 376.0,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.optimal.n_accepted",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-22of30/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Leaderboard table row; sweep cell 'flash-high-text-22of30'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          31
+        ],
+        "section": "1. Overall PV Leaderboard"
+      },
+      "claim_text": "| 10 | Flash HIGH text 6-of-10 | **0.877** | [0.850, 0.903] | 0.895 | 0.860 | 0.20 | 418 |",
+      "values": [
+        {
+          "quantity": "F1@20m, PV condition Flash HIGH text 6-of-10",
+          "value_verbatim": "0.877",
+          "value_parsed": 0.877,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI lower bound, PV condition Flash HIGH text 6-of-10",
+          "value_verbatim": "0.850",
+          "value_parsed": 0.85,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI upper bound, PV condition Flash HIGH text 6-of-10",
+          "value_verbatim": "0.903",
+          "value_parsed": 0.903,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.upper",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m, PV condition Flash HIGH text 6-of-10",
+          "value_verbatim": "0.895",
+          "value_parsed": 0.895,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m, PV condition Flash HIGH text 6-of-10",
+          "value_verbatim": "0.860",
+          "value_parsed": 0.86,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, PV condition Flash HIGH text 6-of-10",
+          "value_verbatim": "0.20",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": null
+        },
+        {
+          "quantity": "accepted detection count at the optimal threshold, PV condition Flash HIGH text 6-of-10",
+          "value_verbatim": "418",
+          "value_parsed": 418.0,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.optimal.n_accepted",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-6of10/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Leaderboard table row; sweep cell 'flash-high-text-6of10'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          32,
+          32
+        ],
+        "section": "1. Overall PV Leaderboard"
+      },
+      "claim_text": "| 11 | Flash HIGH text 12-of-30 | 0.877 | [0.848, 0.901] | 0.878 | 0.876 | 0.20 | 434 |",
+      "values": [
+        {
+          "quantity": "F1@20m, PV condition Flash HIGH text 12-of-30",
+          "value_verbatim": "0.877",
+          "value_parsed": 0.877,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI lower bound, PV condition Flash HIGH text 12-of-30",
+          "value_verbatim": "0.848",
+          "value_parsed": 0.848,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI upper bound, PV condition Flash HIGH text 12-of-30",
+          "value_verbatim": "0.901",
+          "value_parsed": 0.901,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.upper",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m, PV condition Flash HIGH text 12-of-30",
+          "value_verbatim": "0.878",
+          "value_parsed": 0.878,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m, PV condition Flash HIGH text 12-of-30",
+          "value_verbatim": "0.876",
+          "value_parsed": 0.876,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, PV condition Flash HIGH text 12-of-30",
+          "value_verbatim": "0.20",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": null
+        },
+        {
+          "quantity": "accepted detection count at the optimal threshold, PV condition Flash HIGH text 12-of-30",
+          "value_verbatim": "434",
+          "value_parsed": 434.0,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.optimal.n_accepted",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-12of30/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Leaderboard table row; sweep cell 'flash-high-text-12of30'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          33,
+          33
+        ],
+        "section": "1. Overall PV Leaderboard"
+      },
+      "claim_text": "| 12 | Flash HIGH text 7-of-10 | 0.872 | [0.845, 0.898] | 0.919 | 0.830 | 0.20 | 393 |",
+      "values": [
+        {
+          "quantity": "F1@20m, PV condition Flash HIGH text 7-of-10",
+          "value_verbatim": "0.872",
+          "value_parsed": 0.872,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI lower bound, PV condition Flash HIGH text 7-of-10",
+          "value_verbatim": "0.845",
+          "value_parsed": 0.845,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI upper bound, PV condition Flash HIGH text 7-of-10",
+          "value_verbatim": "0.898",
+          "value_parsed": 0.898,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.upper",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m, PV condition Flash HIGH text 7-of-10",
+          "value_verbatim": "0.919",
+          "value_parsed": 0.919,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m, PV condition Flash HIGH text 7-of-10",
+          "value_verbatim": "0.830",
+          "value_parsed": 0.83,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, PV condition Flash HIGH text 7-of-10",
+          "value_verbatim": "0.20",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": null
+        },
+        {
+          "quantity": "accepted detection count at the optimal threshold, PV condition Flash HIGH text 7-of-10",
+          "value_verbatim": "393",
+          "value_parsed": 393.0,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.optimal.n_accepted",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-7of10/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Leaderboard table row; sweep cell 'flash-high-text-7of10'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          34,
+          34
+        ],
+        "section": "1. Overall PV Leaderboard"
+      },
+      "claim_text": "| 13 | Flash HIGH text 5-of-10 | 0.872 | [0.843, 0.898] | 0.877 | 0.867 | 0.20 | 430 |",
+      "values": [
+        {
+          "quantity": "F1@20m, PV condition Flash HIGH text 5-of-10",
+          "value_verbatim": "0.872",
+          "value_parsed": 0.872,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI lower bound, PV condition Flash HIGH text 5-of-10",
+          "value_verbatim": "0.843",
+          "value_parsed": 0.843,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI upper bound, PV condition Flash HIGH text 5-of-10",
+          "value_verbatim": "0.898",
+          "value_parsed": 0.898,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.upper",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m, PV condition Flash HIGH text 5-of-10",
+          "value_verbatim": "0.877",
+          "value_parsed": 0.877,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m, PV condition Flash HIGH text 5-of-10",
+          "value_verbatim": "0.867",
+          "value_parsed": 0.867,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, PV condition Flash HIGH text 5-of-10",
+          "value_verbatim": "0.20",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": null
+        },
+        {
+          "quantity": "accepted detection count at the optimal threshold, PV condition Flash HIGH text 5-of-10",
+          "value_verbatim": "430",
+          "value_parsed": 430.0,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.optimal.n_accepted",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-5of10/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Leaderboard table row; sweep cell 'flash-high-text-5of10'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          35,
+          35
+        ],
+        "section": "1. Overall PV Leaderboard"
+      },
+      "claim_text": "| 14 | Flash MINIMAL T=0.7 4-of-5 | **0.871** | [0.842, 0.899] | 0.936 | 0.814 | 0.15 | 378 |",
+      "values": [
+        {
+          "quantity": "F1@20m, PV condition Flash MINIMAL T=0.7 4-of-5",
+          "value_verbatim": "0.871",
+          "value_parsed": 0.871,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI lower bound, PV condition Flash MINIMAL T=0.7 4-of-5",
+          "value_verbatim": "0.842",
+          "value_parsed": 0.842,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI upper bound, PV condition Flash MINIMAL T=0.7 4-of-5",
+          "value_verbatim": "0.899",
+          "value_parsed": 0.899,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.upper",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m, PV condition Flash MINIMAL T=0.7 4-of-5",
+          "value_verbatim": "0.936",
+          "value_parsed": 0.936,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m, PV condition Flash MINIMAL T=0.7 4-of-5",
+          "value_verbatim": "0.814",
+          "value_parsed": 0.814,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, PV condition Flash MINIMAL T=0.7 4-of-5",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": null
+        },
+        {
+          "quantity": "accepted detection count at the optimal threshold, PV condition Flash MINIMAL T=0.7 4-of-5",
+          "value_verbatim": "378",
+          "value_parsed": 378.0,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.optimal.n_accepted",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-minimal-text-t07-4of5/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Leaderboard table row; sweep cell 'flash-minimal-text-t07-4of5'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          36,
+          36
+        ],
+        "section": "1. Overall PV Leaderboard"
+      },
+      "claim_text": "| 15 | Flash HIGH text 8-of-10 | 0.871 | [0.842, 0.898] | 0.944 | 0.809 | 0.20 | 373 |",
+      "values": [
+        {
+          "quantity": "F1@20m, PV condition Flash HIGH text 8-of-10",
+          "value_verbatim": "0.871",
+          "value_parsed": 0.871,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI lower bound, PV condition Flash HIGH text 8-of-10",
+          "value_verbatim": "0.842",
+          "value_parsed": 0.842,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI upper bound, PV condition Flash HIGH text 8-of-10",
+          "value_verbatim": "0.898",
+          "value_parsed": 0.898,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.upper",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m, PV condition Flash HIGH text 8-of-10",
+          "value_verbatim": "0.944",
+          "value_parsed": 0.944,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m, PV condition Flash HIGH text 8-of-10",
+          "value_verbatim": "0.809",
+          "value_parsed": 0.809,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, PV condition Flash HIGH text 8-of-10",
+          "value_verbatim": "0.20",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": null
+        },
+        {
+          "quantity": "accepted detection count at the optimal threshold, PV condition Flash HIGH text 8-of-10",
+          "value_verbatim": "373",
+          "value_parsed": 373.0,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.optimal.n_accepted",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-8of10/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Leaderboard table row; sweep cell 'flash-high-text-8of10'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          40,
+          41
+        ],
+        "section": "1. Overall PV Leaderboard"
+      },
+      "claim_text": "- The top result (F1=0.890) occurs at 16-of-30, with a broad plateau from\n  13-of-30 to 19-of-30 (all F1 ≥ 0.884).",
+      "values": [
+        {
+          "quantity": "F1@20m, top-ranked PV condition (Flash HIGH text 16-of-30)",
+          "value_verbatim": "0.890",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "minimum F1@20m across the 13-of-30 to 19-of-30 plateau",
+          "value_verbatim": "0.884",
+          "value_parsed": 0.884,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-16of30/threshold_sweep.json",
+        "path": "$.optimal.f1"
+      },
+      "method": "read",
+      "notes": "The plateau floor (0.884) is a minimum over seven sweep cells (flash-high-text-13of30 … flash-high-text-19of30, $.optimal.f1 in each) and so cannot be read from a single locator. Vote-threshold labels are condition names (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          43,
+          44
+        ],
+        "section": "1. Overall PV Leaderboard"
+      },
+      "claim_text": "- N=10 (6-of-10, F1=0.877) nearly matches N=30 — diminishing returns from\n  scaling beyond 10 passes.",
+      "values": [
+        {
+          "quantity": "F1@20m, PV condition Flash HIGH text 6-of-10",
+          "value_verbatim": "0.877",
+          "value_parsed": 0.877,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "proposer pass count of the N=10 consensus family",
+          "value_verbatim": "10",
+          "value_parsed": 10.0,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-6of10/threshold_sweep.json",
+        "path": "$.optimal.f1"
+      },
+      "method": "read",
+      "notes": "Doubtful inclusion: '10 passes' restates the N=10 condition-family label, which instrument rule 5 would place out of scope; included because the sentence asserts it as a pass count. No pass-count field is present in threshold_sweep.json or candidate_manifest.json, so it is left anchor-unknown for triage to route to the pv-diag-384 proposer run configuration."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          45,
+          46
+        ],
+        "section": "1. Overall PV Leaderboard"
+      },
+      "claim_text": "- Flash MINIMAL T=0.7 4-of-5 (F1=0.871) appears at rank 14, demonstrating\n  that the cheapest proposer with strict voting matches HIGH text N=10.",
+      "values": [
+        {
+          "quantity": "F1@20m, PV condition Flash MINIMAL T=0.7 4-of-5",
+          "value_verbatim": "0.871",
+          "value_parsed": 0.871,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "leaderboard rank of Flash MINIMAL T=0.7 4-of-5",
+          "value_verbatim": "14",
+          "value_parsed": 14.0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-minimal-text-t07-4of5/threshold_sweep.json",
+        "path": "$.optimal.f1"
+      },
+      "method": "read",
+      "notes": "The rank (14) is a position in the F1 ordering over the sweep set and needs re-ranking rather than a read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          58,
+          58
+        ],
+        "section": "1a. Pro Verifier Results"
+      },
+      "claim_text": "| **Pro medium** | 0.751 | 0.850 | 0.874 | **0.879** | 0.847 |",
+      "values": [
+        {
+          "quantity": "best F1@20m, Pro medium (gemini-3.1-pro) verifier on Flash HIGH text N=5 candidates at 1-of-5",
+          "value_verbatim": "0.751",
+          "value_parsed": 0.751,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-pro-vf-1of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "best F1@20m, Pro medium (gemini-3.1-pro) verifier on Flash HIGH text N=5 candidates at 2-of-5",
+          "value_verbatim": "0.850",
+          "value_parsed": 0.85,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-pro-vf-2of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "best F1@20m, Pro medium (gemini-3.1-pro) verifier on Flash HIGH text N=5 candidates at 3-of-5",
+          "value_verbatim": "0.874",
+          "value_parsed": 0.874,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-pro-vf-3of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "best F1@20m, Pro medium (gemini-3.1-pro) verifier on Flash HIGH text N=5 candidates at 4-of-5",
+          "value_verbatim": "0.879",
+          "value_parsed": 0.879,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-pro-vf-4of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "best F1@20m, Pro medium (gemini-3.1-pro) verifier on Flash HIGH text N=5 candidates at 5-of-5",
+          "value_verbatim": "0.847",
+          "value_parsed": 0.847,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-pro-vf-5of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Verifier × vote-threshold matrix row; the five cells sit in five sibling sweep directories, so the claim anchors on the sweep directory and each value carries its own '<cell>/threshold_sweep.json#<jsonpath>' locator. Column headers ('1-of-5' … '5-of-5') are condition names (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          59,
+          59
+        ],
+        "section": "1a. Pro Verifier Results"
+      },
+      "claim_text": "| Flash minimal | 0.740 | 0.830 | 0.853 | 0.864 | 0.837 |",
+      "values": [
+        {
+          "quantity": "best F1@20m, Flash minimal verifier on Flash HIGH text N=5 candidates at 1-of-5",
+          "value_verbatim": "0.740",
+          "value_parsed": 0.74,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-1of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "best F1@20m, Flash minimal verifier on Flash HIGH text N=5 candidates at 2-of-5",
+          "value_verbatim": "0.830",
+          "value_parsed": 0.83,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-2of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "best F1@20m, Flash minimal verifier on Flash HIGH text N=5 candidates at 3-of-5",
+          "value_verbatim": "0.853",
+          "value_parsed": 0.853,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-3of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "best F1@20m, Flash minimal verifier on Flash HIGH text N=5 candidates at 4-of-5",
+          "value_verbatim": "0.864",
+          "value_parsed": 0.864,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-4of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "best F1@20m, Flash minimal verifier on Flash HIGH text N=5 candidates at 5-of-5",
+          "value_verbatim": "0.837",
+          "value_parsed": 0.837,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-5of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Verifier × vote-threshold matrix row; the five cells sit in five sibling sweep directories, so the claim anchors on the sweep directory and each value carries its own '<cell>/threshold_sweep.json#<jsonpath>' locator. Column headers ('1-of-5' … '5-of-5') are condition names (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          60,
+          60
+        ],
+        "section": "1a. Pro Verifier Results"
+      },
+      "claim_text": "| Flash medium | 0.548 | 0.772 | 0.834 | 0.859 | 0.840 |",
+      "values": [
+        {
+          "quantity": "best F1@20m, Flash medium verifier on Flash HIGH text N=5 candidates at 1-of-5",
+          "value_verbatim": "0.548",
+          "value_parsed": 0.548,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-medium-vf-1of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "best F1@20m, Flash medium verifier on Flash HIGH text N=5 candidates at 2-of-5",
+          "value_verbatim": "0.772",
+          "value_parsed": 0.772,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-medium-vf-2of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "best F1@20m, Flash medium verifier on Flash HIGH text N=5 candidates at 3-of-5",
+          "value_verbatim": "0.834",
+          "value_parsed": 0.834,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-medium-vf-3of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "best F1@20m, Flash medium verifier on Flash HIGH text N=5 candidates at 4-of-5",
+          "value_verbatim": "0.859",
+          "value_parsed": 0.859,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-medium-vf-4of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "best F1@20m, Flash medium verifier on Flash HIGH text N=5 candidates at 5-of-5",
+          "value_verbatim": "0.840",
+          "value_parsed": 0.84,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-medium-vf-5of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Verifier × vote-threshold matrix row; the five cells sit in five sibling sweep directories, so the claim anchors on the sweep directory and each value carries its own '<cell>/threshold_sweep.json#<jsonpath>' locator. Column headers ('1-of-5' … '5-of-5') are condition names (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          61,
+          61
+        ],
+        "section": "1a. Pro Verifier Results"
+      },
+      "claim_text": "| Flash HIGH | 0.521 | 0.745 | 0.821 | 0.853 | 0.841 |",
+      "values": [
+        {
+          "quantity": "best F1@20m, Flash HIGH verifier on Flash HIGH text N=5 candidates at 1-of-5",
+          "value_verbatim": "0.521",
+          "value_parsed": 0.521,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-high-vf-1of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "best F1@20m, Flash HIGH verifier on Flash HIGH text N=5 candidates at 2-of-5",
+          "value_verbatim": "0.745",
+          "value_parsed": 0.745,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-high-vf-2of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "best F1@20m, Flash HIGH verifier on Flash HIGH text N=5 candidates at 3-of-5",
+          "value_verbatim": "0.821",
+          "value_parsed": 0.821,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-high-vf-3of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "best F1@20m, Flash HIGH verifier on Flash HIGH text N=5 candidates at 4-of-5",
+          "value_verbatim": "0.853",
+          "value_parsed": 0.853,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-high-vf-4of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "best F1@20m, Flash HIGH verifier on Flash HIGH text N=5 candidates at 5-of-5",
+          "value_verbatim": "0.841",
+          "value_parsed": 0.841,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-high-vf-5of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Verifier × vote-threshold matrix row; the five cells sit in five sibling sweep directories, so the claim anchors on the sweep directory and each value carries its own '<cell>/threshold_sweep.json#<jsonpath>' locator. Column headers ('1-of-5' … '5-of-5') are condition names (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          63,
+          64
+        ],
+        "section": "1a. Pro Verifier Results"
+      },
+      "claim_text": "**Pro verifier wins at 4-of-5: F1=0.879** [0.850, 0.907] vs Flash minimal\n0.864 [0.833, 0.893].",
+      "values": [
+        {
+          "quantity": "F1@20m, Flash HIGH text 4-of-5 with Pro medium verifier",
+          "value_verbatim": "0.879",
+          "value_parsed": 0.879,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-pro-vf-4of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI lower bound, Flash HIGH text 4-of-5 with Pro medium verifier",
+          "value_verbatim": "0.850",
+          "value_parsed": 0.85,
+          "unit": null,
+          "kind": "statistic",
+          "path": "flash-high-text-pro-vf-4of5/threshold_sweep.json#$.optimal.ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI upper bound, Flash HIGH text 4-of-5 with Pro medium verifier",
+          "value_verbatim": "0.907",
+          "value_parsed": 0.907,
+          "unit": null,
+          "kind": "statistic",
+          "path": "flash-high-text-pro-vf-4of5/threshold_sweep.json#$.optimal.ci.f1.upper",
+          "method": null
+        },
+        {
+          "quantity": "F1@20m, Flash HIGH text 4-of-5 with Flash minimal verifier",
+          "value_verbatim": "0.864",
+          "value_parsed": 0.864,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-4of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI lower bound, Flash HIGH text 4-of-5 with Flash minimal verifier",
+          "value_verbatim": "0.833",
+          "value_parsed": 0.833,
+          "unit": null,
+          "kind": "statistic",
+          "path": "flash-high-text-4of5/threshold_sweep.json#$.optimal.ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI upper bound, Flash HIGH text 4-of-5 with Flash minimal verifier",
+          "value_verbatim": "0.893",
+          "value_parsed": 0.893,
+          "unit": null,
+          "kind": "statistic",
+          "path": "flash-high-text-4of5/threshold_sweep.json#$.optimal.ci.f1.upper",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Two sweep cells in one span, hence the directory anchor with per-value locators. The accompanying 'CIs overlap, so the difference is not significant' assertion carries no number and is not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          71,
+          71
+        ],
+        "section": "1a. Pro Verifier Results — Pro verifier on Pro proposer (Pro × Pro)"
+      },
+      "claim_text": "| Pro HIGH text + Pro vf | 0.851 | 3-of-5, t=0.15 | 0.957 | 0.765 |",
+      "values": [
+        {
+          "quantity": "best F1@20m, Pro HIGH text proposer + Pro verifier",
+          "value_verbatim": "0.851",
+          "value_parsed": 0.851,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, Pro HIGH text proposer + Pro verifier",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m at the optimal threshold, Pro HIGH text proposer + Pro verifier",
+          "value_verbatim": "0.957",
+          "value_parsed": 0.957,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m at the optimal threshold, Pro HIGH text proposer + Pro verifier",
+          "value_verbatim": "0.765",
+          "value_parsed": 0.765,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/pro-high-text-pro-vf-3of5/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Pro × Pro table row; sweep cell 'pro-high-text-pro-vf-3of5'. The '3-of-5' token in the Config column is a condition name (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          72,
+          72
+        ],
+        "section": "1a. Pro Verifier Results — Pro verifier on Pro proposer (Pro × Pro)"
+      },
+      "claim_text": "| Pro HIGH text + Flash min vf | 0.849 | 3-of-5, t=0.15 | 0.957 | 0.763 |",
+      "values": [
+        {
+          "quantity": "best F1@20m, Pro HIGH text proposer + Flash minimal verifier",
+          "value_verbatim": "0.849",
+          "value_parsed": 0.849,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, Pro HIGH text proposer + Flash minimal verifier",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m at the optimal threshold, Pro HIGH text proposer + Flash minimal verifier",
+          "value_verbatim": "0.957",
+          "value_parsed": 0.957,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m at the optimal threshold, Pro HIGH text proposer + Flash minimal verifier",
+          "value_verbatim": "0.763",
+          "value_parsed": 0.763,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/pro-high-text-flash-min-vf-3of5/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Pro × Pro table row; sweep cell 'pro-high-text-flash-min-vf-3of5'. The '3-of-5' token in the Config column is a condition name (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          73,
+          73
+        ],
+        "section": "1a. Pro Verifier Results — Pro verifier on Pro proposer (Pro × Pro)"
+      },
+      "claim_text": "| Pro HIGH text + Flash med vf | 0.850 | 3-of-5, t=0.05 | 0.954 | 0.765 |",
+      "values": [
+        {
+          "quantity": "best F1@20m, Pro HIGH text proposer + Flash medium verifier",
+          "value_verbatim": "0.850",
+          "value_parsed": 0.85,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, Pro HIGH text proposer + Flash medium verifier",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m at the optimal threshold, Pro HIGH text proposer + Flash medium verifier",
+          "value_verbatim": "0.954",
+          "value_parsed": 0.954,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m at the optimal threshold, Pro HIGH text proposer + Flash medium verifier",
+          "value_verbatim": "0.765",
+          "value_parsed": 0.765,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/pro-high-text-3of5/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Pro × Pro table row; sweep cell 'pro-high-text-3of5'. The '3-of-5' token in the Config column is a condition name (instrument rule 5). Cell mapping is inferred: the sweep directory holds 'pro-high-text-3of5' alongside explicitly suffixed '-flash-min-vf-' and '-pro-vf-' siblings, so the unsuffixed cell is taken to be the Flash medium verifier arm. Triage should confirm the verifier identity from the run configuration."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          74,
+          74
+        ],
+        "section": "1a. Pro Verifier Results — Pro verifier on Pro proposer (Pro × Pro)"
+      },
+      "claim_text": "| Pro HIGH image + Pro vf | 0.707 | 3-of-5, t=0.05 | 0.710 | 0.703 |",
+      "values": [
+        {
+          "quantity": "best F1@20m, Pro HIGH image proposer + Pro verifier",
+          "value_verbatim": "0.707",
+          "value_parsed": 0.707,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, Pro HIGH image proposer + Pro verifier",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m at the optimal threshold, Pro HIGH image proposer + Pro verifier",
+          "value_verbatim": "0.710",
+          "value_parsed": 0.71,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m at the optimal threshold, Pro HIGH image proposer + Pro verifier",
+          "value_verbatim": "0.703",
+          "value_parsed": 0.703,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/pro-high-image-pro-vf-3of5/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Pro × Pro table row; sweep cell 'pro-high-image-pro-vf-3of5'. The '3-of-5' token in the Config column is a condition name (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          76,
+          77
+        ],
+        "section": "1a. Pro Verifier Results — Pro verifier on Pro proposer (Pro × Pro)"
+      },
+      "claim_text": "Pro proposer shows minimal verifier sensitivity — all three verifiers\nproduce nearly identical F1 (0.849–0.851).",
+      "values": [
+        {
+          "quantity": "number of verifier models compared on the Pro HIGH text proposer",
+          "value_verbatim": "three",
+          "value_parsed": 3.0,
+          "unit": "verifier models",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "lowest best-F1@20m across the three Pro-proposer verifier arms",
+          "value_verbatim": "0.849",
+          "value_parsed": 0.849,
+          "unit": null,
+          "kind": "metric",
+          "path": "pro-high-text-flash-min-vf-3of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "highest best-F1@20m across the three Pro-proposer verifier arms",
+          "value_verbatim": "0.851",
+          "value_parsed": 0.851,
+          "unit": null,
+          "kind": "metric",
+          "path": "pro-high-text-pro-vf-3of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The count of three verifier arms corresponds to the three Pro HIGH text rows of the table above (cells pro-high-text-pro-vf-3of5, pro-high-text-flash-min-vf-3of5 and pro-high-text-3of5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          84
+        ],
+        "section": "1a. Pro Verifier Results — Single-pass baselines + Pro verifier"
+      },
+      "claim_text": "| Flash text baseline + Pro vf | 0.820 | 0.807 | 0.835 |",
+      "values": [
+        {
+          "quantity": "best F1@20m, Flash text single-pass baseline + Pro verifier",
+          "value_verbatim": "0.820",
+          "value_parsed": 0.82,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m at the optimal threshold, Flash text single-pass baseline + Pro verifier",
+          "value_verbatim": "0.807",
+          "value_parsed": 0.807,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m at the optimal threshold, Flash text single-pass baseline + Pro verifier",
+          "value_verbatim": "0.835",
+          "value_parsed": 0.835,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/text-baseline-pro-verifier/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Single-pass baseline table row; sweep cell 'text-baseline-pro-verifier'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          85,
+          85
+        ],
+        "section": "1a. Pro Verifier Results — Single-pass baselines + Pro verifier"
+      },
+      "claim_text": "| Flash image baseline + Pro vf | 0.731 | 0.678 | 0.793 |",
+      "values": [
+        {
+          "quantity": "best F1@20m, Flash image single-pass baseline + Pro verifier",
+          "value_verbatim": "0.731",
+          "value_parsed": 0.731,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m at the optimal threshold, Flash image single-pass baseline + Pro verifier",
+          "value_verbatim": "0.678",
+          "value_parsed": 0.678,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m at the optimal threshold, Flash image single-pass baseline + Pro verifier",
+          "value_verbatim": "0.793",
+          "value_parsed": 0.793,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/image-baseline-pro-verifier/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Single-pass baseline table row; sweep cell 'image-baseline-pro-verifier'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          86,
+          86
+        ],
+        "section": "1a. Pro Verifier Results — Single-pass baselines + Pro verifier"
+      },
+      "claim_text": "| Pro text baseline + Pro vf | 0.786 | 0.818 | 0.756 |",
+      "values": [
+        {
+          "quantity": "best F1@20m, Pro text single-pass baseline + Pro verifier",
+          "value_verbatim": "0.786",
+          "value_parsed": 0.786,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m at the optimal threshold, Pro text single-pass baseline + Pro verifier",
+          "value_verbatim": "0.818",
+          "value_parsed": 0.818,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m at the optimal threshold, Pro text single-pass baseline + Pro verifier",
+          "value_verbatim": "0.756",
+          "value_parsed": 0.756,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/pro-medium-text-baseline-pro-verifier/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Single-pass baseline table row; sweep cell 'pro-medium-text-baseline-pro-verifier'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          87,
+          87
+        ],
+        "section": "1a. Pro Verifier Results — Single-pass baselines + Pro verifier"
+      },
+      "claim_text": "| Pro image baseline + Pro vf | 0.609 | 0.596 | 0.623 |",
+      "values": [
+        {
+          "quantity": "best F1@20m, Pro image single-pass baseline + Pro verifier",
+          "value_verbatim": "0.609",
+          "value_parsed": 0.609,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m at the optimal threshold, Pro image single-pass baseline + Pro verifier",
+          "value_verbatim": "0.596",
+          "value_parsed": 0.596,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m at the optimal threshold, Pro image single-pass baseline + Pro verifier",
+          "value_verbatim": "0.623",
+          "value_parsed": 0.623,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/pro-medium-image-baseline-pro-verifier/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Single-pass baseline table row; sweep cell 'pro-medium-image-baseline-pro-verifier'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          98,
+          98
+        ],
+        "section": "1b. Proposer × Verifier Model Comparison"
+      },
+      "claim_text": "| **Flash HIGH proposer (text)** | 0.864 | 0.859 | **0.879** |",
+      "values": [
+        {
+          "quantity": "best F1@20m at N=5, Flash HIGH text proposer at 4-of-5 with Flash minimal verifier",
+          "value_verbatim": "0.864",
+          "value_parsed": 0.864,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-4of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "best F1@20m at N=5, Flash HIGH text proposer at 4-of-5 with Flash medium verifier",
+          "value_verbatim": "0.859",
+          "value_parsed": 0.859,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-medium-vf-4of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "best F1@20m at N=5, Flash HIGH text proposer at 4-of-5 with Pro medium verifier",
+          "value_verbatim": "0.879",
+          "value_parsed": 0.879,
+          "unit": null,
+          "kind": "metric",
+          "path": "flash-high-text-pro-vf-4of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Proposer × verifier summary row: best F1 over vote thresholds at N=5, which falls at 4-of-5 for the Flash proposer and 3-of-5 for the Pro proposer. The 'Flash medium vf' column for the Pro proposer maps to the unsuffixed 'pro-high-text-3of5' cell (same inference as the Pro × Pro table row)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          99,
+          99
+        ],
+        "section": "1b. Proposer × Verifier Model Comparison"
+      },
+      "claim_text": "| **Pro HIGH proposer (text)** | 0.849 | 0.850 | 0.851 |",
+      "values": [
+        {
+          "quantity": "best F1@20m at N=5, Pro HIGH text proposer at 3-of-5 with Flash minimal verifier",
+          "value_verbatim": "0.849",
+          "value_parsed": 0.849,
+          "unit": null,
+          "kind": "metric",
+          "path": "pro-high-text-flash-min-vf-3of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "best F1@20m at N=5, Pro HIGH text proposer at 3-of-5 with Flash medium verifier",
+          "value_verbatim": "0.850",
+          "value_parsed": 0.85,
+          "unit": null,
+          "kind": "metric",
+          "path": "pro-high-text-3of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "best F1@20m at N=5, Pro HIGH text proposer at 3-of-5 with Pro medium verifier",
+          "value_verbatim": "0.851",
+          "value_parsed": 0.851,
+          "unit": null,
+          "kind": "metric",
+          "path": "pro-high-text-pro-vf-3of5/threshold_sweep.json#$.optimal.f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Proposer × verifier summary row: best F1 over vote thresholds at N=5, which falls at 4-of-5 for the Flash proposer and 3-of-5 for the Pro proposer. The 'Flash medium vf' column for the Pro proposer maps to the unsuffixed 'pro-high-text-3of5' cell (same inference as the Pro × Pro table row)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          101,
+          102
+        ],
+        "section": "1b. Proposer × Verifier Model Comparison"
+      },
+      "claim_text": "**Key finding**: Verifier model matters for Flash proposer (+0.015 from\nFlash→Pro verifier) but not for Pro proposer (all verifiers ≈0.850).",
+      "values": [
+        {
+          "quantity": "F1@20m uplift at N=5 from the Flash minimal verifier to the Pro verifier, Flash HIGH text proposer",
+          "value_verbatim": "+0.015",
+          "value_parsed": 0.015,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "approximate best F1@20m shared by all three verifiers on the Pro HIGH text proposer",
+          "value_verbatim": "0.850",
+          "value_parsed": 0.85,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/",
+        "path": null,
+        "expression": "a - b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "results/h11-384-pv-diagnostic/flash-high-text-pro-vf-4of5/threshold_sweep.json",
+            "path": "$.optimal.f1"
+          },
+          {
+            "name": "b",
+            "file": "results/h11-384-pv-diagnostic/flash-high-text-4of5/threshold_sweep.json",
+            "path": "$.optimal.f1"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "The uplift is the difference between the Pro-verifier and Flash-minimal-verifier arms of the Flash HIGH text 4-of-5 condition. The '≈0.850' figure is an approximation over three Pro-proposer cells (0.849 / 0.850 / 0.851 as tabulated at line 99), so it needs a spread computed across those cells rather than a single read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          111,
+          111
+        ],
+        "section": "1c. Verifier Thinking-Level Comparison"
+      },
+      "claim_text": "Flash verifier at three thinking levels on Flash HIGH text 4-of-5",
+      "values": [
+        {
+          "quantity": "number of Flash verifier thinking levels compared",
+          "value_verbatim": "three",
+          "value_parsed": 3.0,
+          "unit": "thinking levels",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The three thinking levels correspond to sweep cells flash-high-text-4of5 (minimal), flash-high-text-medium-vf-4of5 and flash-high-text-high-vf-4of5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          116,
+          116
+        ],
+        "section": "1c. Verifier Thinking-Level Comparison"
+      },
+      "claim_text": "| Minimal | **0.864** | 0.915 | 0.818 | 0.15 |",
+      "values": [
+        {
+          "quantity": "best F1@20m, Flash minimal verifier on Flash HIGH text 4-of-5",
+          "value_verbatim": "0.864",
+          "value_parsed": 0.864,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m at the optimal threshold, Flash minimal verifier on Flash HIGH text 4-of-5",
+          "value_verbatim": "0.915",
+          "value_parsed": 0.915,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m at the optimal threshold, Flash minimal verifier on Flash HIGH text 4-of-5",
+          "value_verbatim": "0.818",
+          "value_parsed": 0.818,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, Flash minimal verifier on Flash HIGH text 4-of-5",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-4of5/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Verifier thinking-level table row; sweep cell 'flash-high-text-4of5'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          117,
+          117
+        ],
+        "section": "1c. Verifier Thinking-Level Comparison"
+      },
+      "claim_text": "| Medium | 0.859 | 0.878 | 0.841 | 0.95 |",
+      "values": [
+        {
+          "quantity": "best F1@20m, Flash medium verifier on Flash HIGH text 4-of-5",
+          "value_verbatim": "0.859",
+          "value_parsed": 0.859,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m at the optimal threshold, Flash medium verifier on Flash HIGH text 4-of-5",
+          "value_verbatim": "0.878",
+          "value_parsed": 0.878,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m at the optimal threshold, Flash medium verifier on Flash HIGH text 4-of-5",
+          "value_verbatim": "0.841",
+          "value_parsed": 0.841,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, Flash medium verifier on Flash HIGH text 4-of-5",
+          "value_verbatim": "0.95",
+          "value_parsed": 0.95,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-medium-vf-4of5/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Verifier thinking-level table row; sweep cell 'flash-high-text-medium-vf-4of5'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          118,
+          118
+        ],
+        "section": "1c. Verifier Thinking-Level Comparison"
+      },
+      "claim_text": "| HIGH | 0.853 | 0.867 | 0.839 | 0.95 |",
+      "values": [
+        {
+          "quantity": "best F1@20m, Flash HIGH verifier on Flash HIGH text 4-of-5",
+          "value_verbatim": "0.853",
+          "value_parsed": 0.853,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m at the optimal threshold, Flash HIGH verifier on Flash HIGH text 4-of-5",
+          "value_verbatim": "0.867",
+          "value_parsed": 0.867,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m at the optimal threshold, Flash HIGH verifier on Flash HIGH text 4-of-5",
+          "value_verbatim": "0.839",
+          "value_parsed": 0.839,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, Flash HIGH verifier on Flash HIGH text 4-of-5",
+          "value_verbatim": "0.95",
+          "value_parsed": 0.95,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optimal.threshold",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-high-vf-4of5/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Verifier thinking-level table row; sweep cell 'flash-high-text-high-vf-4of5'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          125,
+          126
+        ],
+        "section": "1c. Verifier Thinking-Level Comparison"
+      },
+      "claim_text": "The optimal verifier threshold shifts dramatically: minimal peaks at\nt=0.15, while medium and HIGH peak at t=0.95.",
+      "values": [
+        {
+          "quantity": "optimal verifier probability threshold, Flash minimal verifier on Flash HIGH text 4-of-5",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": "flash-high-text-4of5/threshold_sweep.json#$.optimal.threshold",
+          "method": null
+        },
+        {
+          "quantity": "optimal verifier probability threshold, Flash medium and Flash HIGH verifiers on Flash HIGH text 4-of-5",
+          "value_verbatim": "0.95",
+          "value_parsed": 0.95,
+          "unit": null,
+          "kind": "parameter",
+          "path": "flash-high-text-medium-vf-4of5/threshold_sweep.json#$.optimal.threshold",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 0.95 figure is asserted for two cells; the locator names the medium-thinking cell and the same path in flash-high-text-high-vf-4of5 carries the HIGH arm. The later phrase 'near 0 or 1' describes the shape of the probability distribution rather than asserting a measured value and is not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          136,
+          137
+        ],
+        "section": "2. Low-Cost N=5 Tier"
+      },
+      "claim_text": "Top 5 PV configurations using only 5 proposer passes (minimum practical\nPV pipeline).",
+      "values": [
+        {
+          "quantity": "number of PV configurations listed in the low-cost N=5 tier",
+          "value_verbatim": "5",
+          "value_parsed": 5.0,
+          "unit": "configurations",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "proposer pass count of the low-cost tier",
+          "value_verbatim": "5",
+          "value_parsed": 5.0,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Selection claim: the five highest-F1 configurations restricted to N=5 proposer cells, which requires re-ranking the N=5 cells under this directory. The second value ('5 proposer passes') is a doubtful inclusion — it restates the N=5 condition-family label that instrument rule 5 places out of scope — and no pass-count field exists in threshold_sweep.json, so it is left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          141,
+          141
+        ],
+        "section": "2. Low-Cost N=5 Tier"
+      },
+      "claim_text": "| 1 | Flash MINIMAL T=0.7 4-of-5 | **0.871** | [0.842, 0.899] | 0.936 | 0.814 | 378 |",
+      "values": [
+        {
+          "quantity": "F1@20m, PV condition Flash MINIMAL T=0.7 4-of-5",
+          "value_verbatim": "0.871",
+          "value_parsed": 0.871,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI lower bound, PV condition Flash MINIMAL T=0.7 4-of-5",
+          "value_verbatim": "0.842",
+          "value_parsed": 0.842,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI upper bound, PV condition Flash MINIMAL T=0.7 4-of-5",
+          "value_verbatim": "0.899",
+          "value_parsed": 0.899,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.upper",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m, PV condition Flash MINIMAL T=0.7 4-of-5",
+          "value_verbatim": "0.936",
+          "value_parsed": 0.936,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m, PV condition Flash MINIMAL T=0.7 4-of-5",
+          "value_verbatim": "0.814",
+          "value_parsed": 0.814,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "accepted detection count at the optimal threshold, PV condition Flash MINIMAL T=0.7 4-of-5",
+          "value_verbatim": "378",
+          "value_parsed": 378.0,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.optimal.n_accepted",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-minimal-text-t07-4of5/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Low-cost N=5 tier table row; sweep cell 'flash-minimal-text-t07-4of5'. Rank column and condition-name tokens are out of C4 scope (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          142,
+          142
+        ],
+        "section": "2. Low-Cost N=5 Tier"
+      },
+      "claim_text": "| 2 | Flash MINIMAL T=0.7 3-of-5 | 0.870 | [0.840, 0.899] | 0.905 | 0.837 | 402 |",
+      "values": [
+        {
+          "quantity": "F1@20m, PV condition Flash MINIMAL T=0.7 3-of-5",
+          "value_verbatim": "0.870",
+          "value_parsed": 0.87,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI lower bound, PV condition Flash MINIMAL T=0.7 3-of-5",
+          "value_verbatim": "0.840",
+          "value_parsed": 0.84,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI upper bound, PV condition Flash MINIMAL T=0.7 3-of-5",
+          "value_verbatim": "0.899",
+          "value_parsed": 0.899,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.upper",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m, PV condition Flash MINIMAL T=0.7 3-of-5",
+          "value_verbatim": "0.905",
+          "value_parsed": 0.905,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m, PV condition Flash MINIMAL T=0.7 3-of-5",
+          "value_verbatim": "0.837",
+          "value_parsed": 0.837,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "accepted detection count at the optimal threshold, PV condition Flash MINIMAL T=0.7 3-of-5",
+          "value_verbatim": "402",
+          "value_parsed": 402.0,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.optimal.n_accepted",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-minimal-text-t07-3of5/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Low-cost N=5 tier table row; sweep cell 'flash-minimal-text-t07-3of5'. Rank column and condition-name tokens are out of C4 scope (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          143,
+          143
+        ],
+        "section": "2. Low-Cost N=5 Tier"
+      },
+      "claim_text": "| 3 | Flash HIGH text 4-of-5 | 0.864 | [0.833, 0.893] | 0.915 | 0.818 | 389 |",
+      "values": [
+        {
+          "quantity": "F1@20m, PV condition Flash HIGH text 4-of-5",
+          "value_verbatim": "0.864",
+          "value_parsed": 0.864,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI lower bound, PV condition Flash HIGH text 4-of-5",
+          "value_verbatim": "0.833",
+          "value_parsed": 0.833,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI upper bound, PV condition Flash HIGH text 4-of-5",
+          "value_verbatim": "0.893",
+          "value_parsed": 0.893,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.upper",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m, PV condition Flash HIGH text 4-of-5",
+          "value_verbatim": "0.915",
+          "value_parsed": 0.915,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m, PV condition Flash HIGH text 4-of-5",
+          "value_verbatim": "0.818",
+          "value_parsed": 0.818,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "accepted detection count at the optimal threshold, PV condition Flash HIGH text 4-of-5",
+          "value_verbatim": "389",
+          "value_parsed": 389.0,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.optimal.n_accepted",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-4of5/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Low-cost N=5 tier table row; sweep cell 'flash-high-text-4of5'. Rank column and condition-name tokens are out of C4 scope (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          144,
+          144
+        ],
+        "section": "2. Low-Cost N=5 Tier"
+      },
+      "claim_text": "| 4 | Flash MINIMAL T=0.7 2-of-5 | 0.863 | [0.830, 0.892] | 0.875 | 0.851 | 423 |",
+      "values": [
+        {
+          "quantity": "F1@20m, PV condition Flash MINIMAL T=0.7 2-of-5",
+          "value_verbatim": "0.863",
+          "value_parsed": 0.863,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI lower bound, PV condition Flash MINIMAL T=0.7 2-of-5",
+          "value_verbatim": "0.830",
+          "value_parsed": 0.83,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI upper bound, PV condition Flash MINIMAL T=0.7 2-of-5",
+          "value_verbatim": "0.892",
+          "value_parsed": 0.892,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.upper",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m, PV condition Flash MINIMAL T=0.7 2-of-5",
+          "value_verbatim": "0.875",
+          "value_parsed": 0.875,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m, PV condition Flash MINIMAL T=0.7 2-of-5",
+          "value_verbatim": "0.851",
+          "value_parsed": 0.851,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "accepted detection count at the optimal threshold, PV condition Flash MINIMAL T=0.7 2-of-5",
+          "value_verbatim": "423",
+          "value_parsed": 423.0,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.optimal.n_accepted",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-minimal-text-t07-2of5/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Low-cost N=5 tier table row; sweep cell 'flash-minimal-text-t07-2of5'. Rank column and condition-name tokens are out of C4 scope (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          145,
+          145
+        ],
+        "section": "2. Low-Cost N=5 Tier"
+      },
+      "claim_text": "| 5 | Flash HIGH text 3-of-5 | 0.853 | [0.822, 0.883] | 0.846 | 0.860 | 442 |",
+      "values": [
+        {
+          "quantity": "F1@20m, PV condition Flash HIGH text 3-of-5",
+          "value_verbatim": "0.853",
+          "value_parsed": 0.853,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI lower bound, PV condition Flash HIGH text 3-of-5",
+          "value_verbatim": "0.822",
+          "value_parsed": 0.822,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.lower",
+          "method": null
+        },
+        {
+          "quantity": "F1 95% CI upper bound, PV condition Flash HIGH text 3-of-5",
+          "value_verbatim": "0.883",
+          "value_parsed": 0.883,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.optimal.ci.f1.upper",
+          "method": null
+        },
+        {
+          "quantity": "precision@20m, PV condition Flash HIGH text 3-of-5",
+          "value_verbatim": "0.846",
+          "value_parsed": 0.846,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.precision",
+          "method": null
+        },
+        {
+          "quantity": "recall@20m, PV condition Flash HIGH text 3-of-5",
+          "value_verbatim": "0.860",
+          "value_parsed": 0.86,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.recall",
+          "method": null
+        },
+        {
+          "quantity": "accepted detection count at the optimal threshold, PV condition Flash HIGH text 3-of-5",
+          "value_verbatim": "442",
+          "value_parsed": 442.0,
+          "unit": "detections",
+          "kind": "count",
+          "path": "$.optimal.n_accepted",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-3of5/threshold_sweep.json",
+        "path": "$.optimal"
+      },
+      "method": "read",
+      "notes": "Low-cost N=5 tier table row; sweep cell 'flash-high-text-3of5'. Rank column and condition-name tokens are out of C4 scope (instrument rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          147,
+          147
+        ],
+        "section": "2. Low-Cost N=5 Tier"
+      },
+      "claim_text": "Three of the top five use MINIMAL thinking.",
+      "values": [
+        {
+          "quantity": "number of MINIMAL-thinking configurations among the top five N=5 configurations",
+          "value_verbatim": "Three",
+          "value_parsed": 3.0,
+          "unit": "configurations",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "size of the low-cost tier over which the count is taken",
+          "value_verbatim": "five",
+          "value_parsed": 5.0,
+          "unit": "configurations",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Composition claim over the re-ranked N=5 tier; verifying it means rebuilding the top-five ordering and classifying each entry's proposer thinking level."
+    }
+  ]
+}
