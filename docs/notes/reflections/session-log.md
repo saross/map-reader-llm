@@ -7627,3 +7627,70 @@ fifth of the registered worst case. The 10-vs-15 original-ladder
 discrepancy (Session 53 vs E71 evidence) was flagged unresolved in
 Obs 374 rather than harmonised. Sapphire was the compute host
 throughout; amd-tower ran only the API-bound recovery driver.
+
+## Session 122 — 2026-07-31 — Phase 3 (C4) claimed: registry, machinery, calibration, fleet waves 1–2, generated stratum ~80 % verified
+
+**Phase 3 claimed** (charter § 7 tick, commit `75474970c`). All work
+US$0.00 API (Max-plan agents + sapphire scripts).
+
+**Deliverable 1 — generated-file registry** (GATE 0 decision 2):
+`reports/verification/generated-file-registry.json` — 2,334 mine
+files: 2,192 generated (100 % attributed), 142 hand-written, 7
+hand-edited-generated. Built by
+`scripts/build_generated_file_registry.py` (marker scan + 86-rule
+`apparatus/generator-map.json`, assembled from three read-only Opus
+attribution agents' write-site evidence; H1-signature disambiguation;
+stratum overrides; `--check` drift hook; 9 tier-1 tests). Two live
+clobber hazards identified and (after PI ruling) fixed same session.
+
+**C4 machinery** (45 tier-1 tests total): extraction instrument
+v1.0→v1.1 (`apparatus/c4-extraction-instructions.md`) +
+`docs/manifest-schemas/c4-claims.schema.json`;
+`scripts/validate_c4_extraction.py` (v1.2 by session end);
+`scripts/lib_c4_compare.py`; `scripts/recompute_c4_claims.py`;
+`scripts/verify_evaluation_md_family.py`;
+`scripts/sweep_sibling_json_consistency.py`.
+
+**Generated stratum** (`c4-regen/regen-results.jsonl` probes
+0001–0005 + 0002b): threshold_sweep 81/81 byte-identical (+34
+never-rendered summaries minted, committed); evaluation.md
+1,634/1,635 cell-verified on sapphire (renderer prints bootstrap
+means for MCC/Sens/Spec — Obs 376, commit `78f9e442b`); manifest
+companions no-op-regen clean (ALL VALID); 55map leaderboard
+byte-identical; sibling-JSON heuristic sweep 122 CONSISTENT /
+125 SUSPECT (triage queue).
+
+**Extraction fleet**: 2 calibration + 14 wave-1/2 batches committed —
+16 files, ~1,070 claims, all validator-clean at authoring. Calibration
+caught the registered-value anchor trap (instrument v1.1 rule). Batch
+plan `apparatus/c4-batch-plan.json`: 178 batches, 15 extracted, 163
+pending.
+
+**First full recompute** (sapphire, `c4-recompute-report.json`):
+2,491 value checks — MATCH 607 / MISMATCH 30 / SKIPPED 763 /
+UNRESOLVED 1,091 (376 file#path syntax, 349 re-anchor, 204
+file-level, 89 non-JSON, 12 empty expressions → validator v1.2 now
+rejects that class; 8 committed claims in 029/052 queued for repair).
+
+**PI rulings** (interactive, `phase3-rulings-2026-07-31.md`): (1)
+dated session reports = snapshots (ledger + banner-where-material;
+bodies never edited); (2) clobber guards fixed now
+(analyse_dawid_skene_v2, run_experiment_e → _autogen; pinned by
+tests); (3) MCC-means Obs approved (→ Obs 376); (4) Sonnet permitted
+for the fleet's mechanical tail.
+
+**Corrections**: Obs 376's writer independently re-derived the
+finding and corrected three specifics in regen-0002 (the "439" gloss,
+the one-ulp characterisation, the renderer line citation) → regen-0002b
+append-only + dated correction block in the rulings doc.
+
+Commits `75474970c`→`46ed9eb97` (~35), all pushed; local + sapphire
+level. Beacon updated for S123 (triage the 30 MISMATCH rows under
+ruling 1; resolver file#path extension; fleet continuation; exact
+comparers; then ledger + GATE 3).
+
+**Contextual assumptions**: agent scale (18 subagents) reflects the
+GATE 0-approved fleet design, with the 178-batch full-enumeration
+scope (vs Phase 0's 40–60 estimate) flagged for GATE 3 rather than
+re-gated mid-phase; the four PI rulings were collected mid-session
+because Shawn was present — earlier phases batched rulings at gates.

@@ -6670,3 +6670,53 @@ pattern for AI-assisted confirmatory work: the option space for any
 registered-analysis decision is the *registration's* space, not the
 artefact tree's, and the AI should enumerate the unexecuted members
 explicitly with costs, every time.
+
+## Session 122 — 2026-07-31 (externalised acceptance criteria beat exhortation; a recording task became a verification task; and specifics decay into glosses under compression)
+
+**Externalised acceptance criteria outperformed prompt exhortation by
+a wide margin.** Sixteen extraction agents (two calibration + fourteen
+fleet) each ran the committed validator inside their own loop —
+"iterate until exit 0" — and all sixteen delivered
+structurally-perfect files on first hand-back: verbatim spans located,
+blob pins correct, anchor invariants satisfied. Compare the
+attribution agents, who worked from prose instructions alone: their
+output was excellent but needed reconciliation (overlapping scopes,
+one incorrect flag name relayed as `--rebuild-md-only` for
+`--rebuild-md`). The difference is not agent quality — same model,
+same day — but that the extraction agents had a machine-checkable
+definition of done they could run themselves. The general form: an
+instruction the agent can *execute* is worth ten it can only *read*.
+
+**A recording task spontaneously became a verification task, because
+the output schema demanded reproducibility.** The obs-writer was
+dispatched to transcribe an already-adjudicated finding into the Obs
+register. Its entry contract (schema 2: session anchors, auditable
+claims, research-corpus standards) made bare transcription
+insufficient — so it re-derived the numbers on sapphire, failed to
+reproduce one, and corrected three specifics in the source record
+(regen-0002b). Nobody instructed it to audit; the *format* did. This
+is the same mechanism as the C1 five-element trigger rule and the
+ledger's verbatim-span requirement: schemas that structurally cannot
+express an unverified claim convert every writer into a checker.
+
+**Specifics decay into glosses under compression, even inside a
+verification programme.** My regen-0002 row turned "439 files with at
+least one problem of any kind under the point-only comparer" into
+"439 files differ in the 3rd decimal" — a homogeneous-sounding claim
+welded from a heterogeneous count, exactly the failure mode the
+write-side anti-confabulation rule names. The instructive part is
+*where* it happened: not in a memory or a session summary but in a
+freshly-written probe record, thirty minutes after the run, by the
+operator of the verification programme itself. Proximity to the
+evidence does not immunise the summary. Only re-derivation does.
+
+**Content signatures beat metadata for provenance, in both
+directions.** The generation-marker heuristic failed seven files as
+false positives (hand-written docs carrying `**Generated**` lines) and
+whole families as false negatives (81 markerless render-only
+summaries); meanwhile H1 heading signatures cleanly separated three
+generators sharing the basename `tiering_20m.md`, and the reliable
+discriminator for the mixed `report.md` stratum turned out to be the
+*presence of a report_autogen.md sibling* — a structural fact, not a
+declared one. Files tell you what they are by shape more honestly
+than by label; the registry now encodes that lesson as rules.

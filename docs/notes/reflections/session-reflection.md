@@ -5313,7 +5313,6 @@ session's most interesting finding.
 
 ---
 
-<<<<<<< HEAD
 ### Session 51 Reflection — 2026-03-15 (map-reader-llm)
 
 This session was unusual in that its primary productive output was
@@ -9321,3 +9320,66 @@ document preserves the mechanics; what it cannot preserve is how close
 the default came to being accepted, and that the blindness-restoring
 option entered the choice set only because his instinct reached for a
 contrast the executed artefacts did not contain.
+
+## Session 122 — 2026-07-31 — the sweep that turned on its operator, and the fleet that ran itself
+
+### Prompt: What's the single most important thing a future reader should know about this session?
+
+That the verification programme caught its own operator inside a
+single working day, and that this was the designed behaviour rather
+than an embarrassment. I wrote probe record regen-0002 in the morning:
+"439 of 1,635 files differ from the point values in the 3rd decimal."
+By evening, an obs-writer agent dispatched merely to *record* that
+finding had instead re-derived it — because the Obs corpus schema
+demands reproducibility — and could not reproduce 439 under eight
+readings of the predicate. The figure was real but the gloss was
+false: 439 counted files failing a comparer run *for any reason*, and
+I had compressed it into a homogeneous divergence count. Two further
+specifics fell the same way (a line citation that named the CSV writer
+instead of the markdown renderer; a "one ulp" characterisation that
+understates a 0.0151 maximum). This is the write-side
+anti-confabulation rule violated by the person who invokes it most,
+detected by charter rule 2 operating exactly as written: the author of
+a claim never verifies it in their own context. The correction landed
+append-only (regen-0002b, a dated block in the rulings doc) within the
+hour. A future reader skimming the ledgers will see tidy rows; they
+should know the tidiness is the product of the apparatus biting its
+own builder, not of the builder being careful enough.
+
+### Prompt: What would you do differently if you replayed this session?
+
+Calibrate the *probe records*, not just the extraction fleet. I ran a
+two-agent calibration pass before scaling extraction — that discipline
+worked, catching the registered-value anchor trap before it could
+contaminate 178 batches. But I wrote regen-0001 through regen-0005 as
+single-author records with no fresh-context check, and regen-0002
+carried the 439 gloss for six hours until an agent with a different
+brief happened to audit it. The replay fix is cheap: any probe row
+whose result field contains a computed figure gets the same treatment
+as an extraction file — an independent re-derivation before commit, or
+failing that, the verbatim command output pasted rather than a prose
+summary. The second thing I would change is smaller: I let the
+attribution agents' scopes overlap slightly (two agents both touched
+the dawid-skene family), which cost reconciliation attention at map
+assembly. Scope partitions for parallel agents should be
+disjoint-by-construction — the S108 lesson about path partitioning,
+which I re-learned at lower stakes.
+
+### Prompt: What felt uncertain or unresolved at the end?
+
+The 1,091 UNRESOLVED values are honestly bucketed but not yet
+understood in aggregate. I can name the mechanical fractions — 376
+path-syntax failures the resolver must learn to parse, 349 wrong-path
+guesses, 204 deliberate file-level anchors, 89 non-JSON anchors — but
+not the *quality* distribution underneath: how many of the 349 are
+one-keystroke path slips versus claims whose anchors genuinely do not
+exist. That distinction decides whether triage is an afternoon or a
+week. Similarly unresolved: whether Sonnet extraction on the
+mechanical tail will hold the quality bar the Opus calibration set
+(the ruling permits it; nothing yet measures it — the first Sonnet
+batches should be spot-audited against the validator *and* against an
+Opus duplicate before the tail runs free), and who operationalises
+"material" in the snapshot-banner ruling — the ledger records
+divergence mechanically, but materiality is a judgement that currently
+lives nowhere except the triage prompt. All three land on Session
+123's desk.

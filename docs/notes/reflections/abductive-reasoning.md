@@ -5978,3 +5978,90 @@ Pipelines that rely on T=0 for reproducibility need a failure-recovery
 strategy that does not rely on resampling — budget headroom, a
 high-temperature fallback pass for stuck tiles, or acceptance with the
 residue individually identified, as done here.
+
+## Session 122 — 2026-07-31 — 439 mismatches that were one renderer decision, and the figure its own recorder could not reproduce
+
+**Session:** 0ccbbc67-31be-4b1b-9600-b6a0f85e7780
+**Instance:** primary
+
+### Episode 1 — the third-decimal mismatches that were bootstrap means
+
+### Surprising fact
+
+The first run of the evaluation.md family comparer reported 439 of
+1,635 generated files MISMATCHING their own sibling evaluation.json —
+but every mismatch sat in the MCC/Sensitivity/Specificity columns,
+none in F1/P/R, all small, and in *both* directions. Data corruption,
+rounding convention, and stale-regeneration explanations all predict
+either column-agnostic errors or one-directional bias; none predicts
+column-selective, bidirectional, small-magnitude divergence.
+
+### Probe
+
+Took one mismatching file and compared the quoted cell against every
+numeric field in its JSON record: quoted 0.869 matched neither
+point (0.8682) rounded nor truncated — but matched `mean` (0.8691)
+exactly at quoted precision. Read the renderer: the markdown table is
+filled from `tile_classification.<metric>.mean` while the JSON
+headline is `.point`. The columns that diverge are precisely the
+columns rendered from a different statistic.
+
+### Belief revision
+
+The 439 "mismatches" were one renderer design decision: evaluation.md
+tables print bootstrap means for the tile-classification metrics.
+Under mean-first comparison the family verified 1,634/1,635 (single
+degenerate zero-detection exception). Revised beliefs: (a) the
+generated stratum was never corrupt — the *comparer's semantics* were
+wrong; (b) every downstream document quoting MCC from an
+evaluation.md table quotes a mean, which retroactively explains
+third-decimal wobbles previously attributed to rounding; (c) C4
+triage must carry this as a known equivalence class. Recorded as
+Obs 376.
+
+### What would change this belief
+
+If files where mean and point agree at 3 d.p. had *still* mismatched
+(they did not), or if the renderer source showed `.point` at the
+table-write site (it shows `.mean` at :912–915), the
+renderer-semantics explanation would collapse back towards data
+corruption.
+
+### Episode 2 — the probe record its own recorder could not reproduce
+
+### Surprising fact
+
+The obs-writer agent, dispatched only to transcribe Episode 1 into
+the Obs register, reported that "439" could not be re-derived: eight
+plausible readings of the predicate gave 193, 344, 347, 387, 622,
+623, 1,231, and 1,392 — never 439.
+
+### Probe
+
+Traced 439 to its origin: it was the comparer's *file-level* MISMATCH
+count from the point-only run — files with ≥ 1 problem of ANY kind
+(including CI-consistency and absent-value problems), not files
+exhibiting mean/point divergence. My probe record regen-0002 had
+compressed the heterogeneous count into a homogeneous-sounding claim
+("439 files differ from point values in the 3rd decimal"). The
+rule-explicit counts are 387 (mean-matches-but-point-does-not) and
+623 (plain 3 d.p. difference).
+
+### Belief revision
+
+The write-side anti-confabulation rule is not advice for *other*
+writers: a fresh, evidence-adjacent, verification-programme-authored
+record glossed its own figure within thirty minutes of computing it.
+Proximity to evidence does not protect a summary; only independent
+re-derivation does. Practice change adopted the same hour: probe rows
+carrying computed figures get verbatim command output or a
+fresh-context re-derivation before commit (regen-0002b landed
+append-only; the rulings doc carries a dated correction block).
+
+### Implications for practice
+
+Both episodes argue for the same asymmetry: mechanical verdicts are
+only as good as the *semantics* loaded into the verifier, and record
+prose is only as good as the re-derivability of its figures. The
+comparer needed the renderer's truth, not the JSON's headline; the
+record needed the command's output, not the author's memory of it.
