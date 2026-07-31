@@ -1,0 +1,2953 @@
+{
+  "schema_version": "1.0",
+  "extracted_at": "2026-07-31T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/n1-baseline-matrix.md",
+    "git_blob": "107ce7c07ff7d5beddb7175d89c7f4105afd85a0",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5[1m]",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          329,
+          333
+        ],
+        "section": "§ 6. The leaderboard finding — statistical tiering"
+      },
+      "claim_text": "The 18 cells are ranked by the headline **F1@20 m** and grouped into\nstatistically distinguishable **tiers** by the project's canonical leaderboard\nmethod, run here as `scripts/n1_baseline_leaderboard_tiering.py` (results:\n`results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.{json,md}`; computed\non sapphire, $0 API):",
+      "values": [
+        {
+          "quantity": "count of cells on the N=1 baseline leaderboard",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": "cells",
+          "kind": "count",
+          "path": "len:$.ranking",
+          "method": "read"
+        },
+        {
+          "quantity": "headline F1 buffer used for the tiering, metres",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "API cost USD of the tiering computation",
+          "value_verbatim": "$0",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The $0 API claim asserts the tiering was CPU-only; no repo artefact records costs for analysis (non-dispatch) jobs — results/passes-manifest.json carries cost_usd only for detection passes — hence anchor-unknown for that value. 'F1@20 m' recurs throughout § 6 as the headline metric label; the 20 m buffer is extracted here, at the § 6 method changelog entry (line 533) and at the preregistered-buffer statement (line 563), not at every incidental mention."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          335,
+          338
+        ],
+        "section": "§ 6. The leaderboard finding — statistical tiering"
+      },
+      "claim_text": "- **Round-robin paired permutation** — all C(18, 2) = 153 pairs, a tile-swap\n  permutation on the **pass-averaged per-tile** TP/FP/FN (the expected\n  single-pass micro-F1 — the same statistic the bootstrap CIs use), 10 000\n  permutations, seed 42, two-sided.",
+      "values": [
+        {
+          "quantity": "count of cells entering the round-robin pairing",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": "cells",
+          "kind": "count",
+          "path": "len:$.ranking",
+          "method": "read"
+        },
+        {
+          "quantity": "count of pairwise permutation tests (all cell pairs)",
+          "value_verbatim": "153",
+          "value_parsed": 153,
+          "unit": "pairs",
+          "kind": "count",
+          "path": "len:$.pairwise",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation iterations per pairwise test",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": "permutations",
+          "kind": "parameter",
+          "path": "$.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed for the permutation test",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The '2' in 'C(18, 2)' is combinatorial notation for pairwise comparison, not an asserted study quantity, so it is not extracted. 'E45' is an erratum identifier (out of C4 scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          341,
+          344
+        ],
+        "section": "§ 6. The leaderboard finding — statistical tiering"
+      },
+      "claim_text": "Cross-check: the permutation's observed\n  micro-F1-of-the-mean matches each cell's mean-of-per-pass board F1 (§ 5) to\n  within **≤0.0003** at every replicate count (1–30 passes), so the test ranks\n  exactly what the leaderboard reports.",
+      "values": [
+        {
+          "quantity": "maximum absolute board-F1 vs observed-micro-F1 gap across the 18 cells",
+          "value_verbatim": "≤0.0003",
+          "value_parsed": 0.0003,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.ranking[*].f1_gap",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "minimum replicate (pass) count across the 18 cells",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.ranking[*].n_passes",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "maximum replicate (pass) count across the 18 cells",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.ranking[*].n_passes",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "All three values need a min/max reduction over an array, so they are recorded as recompute-script rather than read: the ≤0.0003 bound is max(|f1_gap|) over $.ranking, and 1–30 is the min/max of $.ranking[*].n_passes."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          345,
+          349
+        ],
+        "section": "§ 6. The leaderboard finding — statistical tiering"
+      },
+      "claim_text": "- **Benjamini–Hochberg FDR** at q = 0.05 over the 153 raw p-values, then\n  **greedy clique tiering** (identical to\n  `build_tiered_leaderboard.apply_fdr_and_tier`): cells are processed in\n  F1-descending order, each joining the current tier iff indistinguishable from\n  **all** current members. 129/153 pairs significant → **7 tiers**.",
+      "values": [
+        {
+          "quantity": "Benjamini–Hochberg false-discovery-rate level q",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.fdr_q",
+          "method": "read"
+        },
+        {
+          "quantity": "count of raw p-values entering the FDR correction",
+          "value_verbatim": "153",
+          "value_parsed": 153,
+          "unit": "p-values",
+          "kind": "count",
+          "path": "len:$.pairwise",
+          "method": "read"
+        },
+        {
+          "quantity": "count of pairwise comparisons significant after BH correction",
+          "value_verbatim": "129",
+          "value_parsed": 129,
+          "unit": "pairs",
+          "kind": "count",
+          "path": "$.pairwise[*].significant",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of pairwise comparisons tested",
+          "value_verbatim": "153",
+          "value_parsed": 153,
+          "unit": "pairs",
+          "kind": "count",
+          "path": "len:$.pairwise",
+          "method": "read"
+        },
+        {
+          "quantity": "count of statistically distinguishable tiers on the board",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": "tiers",
+          "kind": "count",
+          "path": "len:$.tiers",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "129 requires counting $.pairwise entries with significant == true, hence recompute-script; the two 153s are the array length and resolve mechanically."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          351,
+          354
+        ],
+        "section": "§ 6. The leaderboard finding — statistical tiering"
+      },
+      "claim_text": "The most precise detectors at the top of\nthe board (the genuine Pro-text leaders) are flagged `ci_unreliable`\n(`sparse_cross_grid`, § 2.2): being high-precision they leave >50 % of tiles empty,\nso their bootstrap F1 CIs are unreliable — exactly at the decisive top comparison.",
+      "values": [
+        {
+          "quantity": "fraction of tiles empty (bootstrap zero fraction) at 20 m for the genuine Pro-text leaders",
+          "value_verbatim": ">50 %",
+          "value_parsed": 50,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "$.summary.buffers[?(@.buffer_metres==20)].ci_zero_fraction",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-high-t-0-0/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The claim is made of both Tier-1 Pro-text leaders; anchored to the pro-text-high-t-0-0 eval, with the second leader at results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json at the same locator. The artefact stores a fraction (0–1) while the document quotes a percentage; unit '%' is set so the harness can bridge the scales. '§ 2.2' is a section reference (out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          363,
+          363
+        ],
+        "section": "§ 6 — The tiers (F1@20 m)"
+      },
+      "claim_text": "| **1 — `tie_set`** | `pro-text-high-t-0-0` (0.804), `pro-text-medium-t-0-0` (0.792) — genuine Pro text, **both T=0.0** |",
+      "values": [
+        {
+          "quantity": "F1@20 m, condition pro-text-high-t-0-0 (Tier 1 member)",
+          "value_verbatim": "0.804",
+          "value_parsed": 0.804,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-pro-text-high-t-0-0')].board_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, condition pro-text-medium-t-0-0 (Tier 1 member)",
+          "value_verbatim": "0.792",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-pro-text-medium-t-0-0')].board_f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The trailing '**both T=0.0**' restates the temperature already encoded in the two condition slugs (rule 5: numbers inside condition names are names); the temperature is extracted as a claim at the § 6 finding paragraph (lines 375-379) where it is asserted as what was run. The row's tier index '1' is a structural label, not a measured quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          364,
+          364
+        ],
+        "section": "§ 6 — The tiers (F1@20 m)"
+      },
+      "claim_text": "| 2 | `pro-text-medium-t-0-7` (0.755), `pro-text-high-t-0-7` (0.745) — both T=0.7 |",
+      "values": [
+        {
+          "quantity": "F1@20 m, condition pro-text-medium-t-0-7 (Tier 2 member)",
+          "value_verbatim": "0.755",
+          "value_parsed": 0.755,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-pro-text-medium-t-0-7')].board_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, condition pro-text-high-t-0-7 (Tier 2 member)",
+          "value_verbatim": "0.745",
+          "value_parsed": 0.745,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-pro-text-high-t-0-7')].board_f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'both T=0.7' restates the condition slugs; the temperature claim is extracted at lines 375-379 and 402-406. Tier index is a structural label."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          365,
+          365
+        ],
+        "section": "§ 6 — The tiers (F1@20 m)"
+      },
+      "claim_text": "| 3 | `pro-image-high-t-0-0` (0.666), `pro-image-medium-t-0-0` (0.655) |",
+      "values": [
+        {
+          "quantity": "F1@20 m, condition pro-image-high-t-0-0 (Tier 3 member)",
+          "value_verbatim": "0.666",
+          "value_parsed": 0.666,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-pro-image-high-t-0-0')].board_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, condition pro-image-medium-t-0-0 (Tier 3 member)",
+          "value_verbatim": "0.655",
+          "value_parsed": 0.655,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-pro-image-medium-t-0-0')].board_f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Tier 3 membership row of the § 6 tier table; each value is the cell's board F1@20 m. Tier index is a structural label, not a measured quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          366,
+          366
+        ],
+        "section": "§ 6 — The tiers (F1@20 m)"
+      },
+      "claim_text": "| 4 | `flash-image-minimal-t-0-0` (0.600), `flash-image-minimal-t-0-0-487-tiles` (0.598), `pro-image-medium-t-0-7` (0.595), `flash-image-minimal-t-0-3` (0.593), `pro-image-high-t-0-7` (0.591) |",
+      "values": [
+        {
+          "quantity": "F1@20 m, condition flash-image-minimal-t-0-0 (Tier 4 member)",
+          "value_verbatim": "0.600",
+          "value_parsed": 0.6,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-flash-image-minimal-t-0-0')].board_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, condition flash-image-minimal-t-0-0-487-tiles (Tier 4 member)",
+          "value_verbatim": "0.598",
+          "value_parsed": 0.598,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-flash-image-minimal-t-0-0-487-tiles')].board_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, condition pro-image-medium-t-0-7 (Tier 4 member)",
+          "value_verbatim": "0.595",
+          "value_parsed": 0.595,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-pro-image-medium-t-0-7')].board_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, condition flash-image-minimal-t-0-3 (Tier 4 member)",
+          "value_verbatim": "0.593",
+          "value_parsed": 0.593,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-flash-image-minimal-t-0-3')].board_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, condition pro-image-high-t-0-7 (Tier 4 member)",
+          "value_verbatim": "0.591",
+          "value_parsed": 0.591,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-pro-image-high-t-0-7')].board_f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The '487' inside `flash-image-minimal-t-0-0-487-tiles` is part of the condition slug (rule 5), not an asserted tile count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          367,
+          367
+        ],
+        "section": "§ 6 — The tiers (F1@20 m)"
+      },
+      "claim_text": "| 5 | `flash-image-minimal-t-0-7` (0.553), `flash-text-minimal-t-0-0-pv-baseline` (0.520) |",
+      "values": [
+        {
+          "quantity": "F1@20 m, condition flash-image-minimal-t-0-7 (Tier 5 member)",
+          "value_verbatim": "0.553",
+          "value_parsed": 0.553,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-flash-image-minimal-t-0-7')].board_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, condition flash-text-minimal-t-0-0-pv-baseline (Tier 5 member)",
+          "value_verbatim": "0.520",
+          "value_parsed": 0.52,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-flash-text-minimal-t-0-0-pv-baseline')].board_f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Tier 5 membership row of the § 6 tier table; each value is the cell's board F1@20 m. Tier index is a structural label, not a measured quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          368,
+          368
+        ],
+        "section": "§ 6 — The tiers (F1@20 m)"
+      },
+      "claim_text": "| 6 | `flash-text-minimal-t-0-0` (0.503), `flash-text-minimal-t-0-3` (0.499), `flash-image-high-t-0-7` (0.499), `flash-text-minimal-t-0-7` (0.488) |",
+      "values": [
+        {
+          "quantity": "F1@20 m, condition flash-text-minimal-t-0-0 (Tier 6 member)",
+          "value_verbatim": "0.503",
+          "value_parsed": 0.503,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-flash-text-minimal-t-0-0')].board_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, condition flash-text-minimal-t-0-3 (Tier 6 member)",
+          "value_verbatim": "0.499",
+          "value_parsed": 0.499,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-flash-text-minimal-t-0-3')].board_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, condition flash-image-high-t-0-7 (Tier 6 member)",
+          "value_verbatim": "0.499",
+          "value_parsed": 0.499,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-flash-image-high-t-0-7')].board_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, condition flash-text-minimal-t-0-7 (Tier 6 member)",
+          "value_verbatim": "0.488",
+          "value_parsed": 0.488,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-flash-text-minimal-t-0-7')].board_f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Two cells share the quoted value 0.499; both are listed, in order of appearance, with their own per-cell locators."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          369,
+          369
+        ],
+        "section": "§ 6 — The tiers (F1@20 m)"
+      },
+      "claim_text": "| 7 | `flash-text-high-t-0-7` (0.387) |",
+      "values": [
+        {
+          "quantity": "F1@20 m, condition flash-text-high-t-0-7 (Tier 7 member)",
+          "value_verbatim": "0.387",
+          "value_parsed": 0.387,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-flash-text-high-t-0-7')].board_f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Tier 7 membership row of the § 6 tier table; each value is the cell's board F1@20 m. Tier index is a structural label, not a measured quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          371,
+          373
+        ],
+        "section": "§ 6. The leaderboard finding — statistical tiering"
+      },
+      "claim_text": "(The eight genuine-Pro cells are the four `n1-pro-rerun-384` anti-diagonal cells plus\nthe four `pv-diag-384` diagonal cells; the four medium-thinking cells are n=3, the four\nhigh-thinking already were.",
+      "values": [
+        {
+          "quantity": "count of genuine-Gemini-Pro cells on the 18-cell board",
+          "value_verbatim": "eight",
+          "value_parsed": 8,
+          "unit": "cells",
+          "kind": "count",
+          "path": "$.passes[*].model_version",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of n1-pro-rerun-384 anti-diagonal cells on the board",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "cells",
+          "kind": "count",
+          "path": "$.passes[?(@.run_id=='n1-pro-rerun-384')].proposer_pool",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of pv-diag-384 diagonal genuine-Pro cells on the board",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "cells",
+          "kind": "count",
+          "path": "$.passes[?(@.run_id=='pv-diag-384')].proposer_pool",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of medium-thinking genuine-Pro cells on the board",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "cells",
+          "kind": "count",
+          "path": "$.passes[*].thinking_level",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "replicate passes per medium-thinking Pro cell",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "passes",
+          "kind": "count",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json#$.ranking[?(@.label=='baseline-pro-text-medium-t-0-0')].n_passes",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of high-thinking genuine-Pro cells on the board",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "cells",
+          "kind": "count",
+          "path": "$.passes[*].thinking_level",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Every value here requires a join between board membership (tiering_20m.json $.ranking labels / the analyses-manifest conditions_compared) and the per-pass model_version and thinking_level in results/passes-manifest.json, so all are recorded as recompute-script. The n=3 claim is asserted of all four medium-thinking cells; the locator given resolves one representative (pro-text-medium-t-0-0). '§ 3.4', 'E57' and '§ 5' are references (out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          375,
+          379
+        ],
+        "section": "§ 6. The leaderboard finding — statistical tiering"
+      },
+      "claim_text": "**The finding.** **Tier 1 — the `tie_set` — is a two-member tie between\n`pro-text-high-t-0-0` (F1 0.804) and `pro-text-medium-t-0-0` (0.792)**, both genuine\nGemini 3 Pro text at **T=0.0**: the permutation cannot separate them, and both are\nsignificantly clear of the Tier-2 pair (the two Pro-text **T=0.7** cells,\n`pro-text-medium-t-0-7` 0.755 and `pro-text-high-t-0-7` 0.745).",
+      "values": [
+        {
+          "quantity": "count of cells in the Tier-1 tie_set",
+          "value_verbatim": "two-member",
+          "value_parsed": 2,
+          "unit": "cells",
+          "kind": "count",
+          "path": "len:$.tie_set",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, condition pro-text-high-t-0-0",
+          "value_verbatim": "0.804",
+          "value_parsed": 0.804,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-pro-text-high-t-0-0')].board_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, condition pro-text-medium-t-0-0",
+          "value_verbatim": "0.792",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-pro-text-medium-t-0-0')].board_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, the two Tier-1 genuine-Pro text cells",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/passes-manifest.json#$.passes[?(@.pass_id=='n1-pro-rerun-384::pro-text-high-t0::run1')].temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of cells in Tier 2",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "cells",
+          "kind": "count",
+          "path": "len:$.tiers[1].members",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, the two Tier-2 Pro-text cells",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/passes-manifest.json#$.passes[?(@.pass_id=='n1-pro-rerun-384::pro-text-medium-t07::run1')].temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, condition pro-text-medium-t-0-7",
+          "value_verbatim": "0.755",
+          "value_parsed": 0.755,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-pro-text-medium-t-0-7')].board_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, condition pro-text-high-t-0-7",
+          "value_verbatim": "0.745",
+          "value_parsed": 0.745,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-pro-text-high-t-0-7')].board_f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Temperatures are claims about what was RUN (not about the registration), so they anchor to results/passes-manifest.json; the T=0.0 locator resolves the n1-pro-rerun-384 Tier-1 cell (the pv-diag counterpart is pv-diag-384::pro-medium-text-baseline-text-t0.0::run1) and the T=0.7 locator the n1-pro-rerun-384 Tier-2 cell (counterpart pv-diag-384 pro-high-text-n5/text-t0.7). 'Gemini 3 Pro' is a model version string and 'Tier-2' a structural label (both out of scope). The adjacent assertion 'the permutation cannot separate them' is a non-numeric significance claim decidable from the tie_set pair's bh_adjusted_p in $.pairwise."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          379,
+          381
+        ],
+        "section": "§ 6. The leaderboard finding — statistical tiering"
+      },
+      "claim_text": "So at T=0.0 the\nthinking level (HIGH vs MEDIUM) does not significantly matter, and T=0.0 beats T=0.7\nat matched model and modality.",
+      "values": [
+        {
+          "quantity": "temperature as run, the two Tier-1 genuine-Pro text cells",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.passes[?(@.pass_id=='n1-pro-rerun-384::pro-text-high-t0::run1')].temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, the two Tier-2 Pro-text cells",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.passes[?(@.pass_id=='n1-pro-rerun-384::pro-text-medium-t07::run1')].temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the temperatures already claimed at lines 375-379; 'T=0.0' occurs twice in this span and is listed once. The surrounding assertions ('the thinking level does not significantly matter', 'T=0.0 beats T=0.7') are non-numeric statistical claims decidable from the pairwise BH-adjusted p-values in the tiering artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          381,
+          382
+        ],
+        "section": "§ 6. The leaderboard finding — statistical tiering"
+      },
+      "claim_text": "The top four cells are all Pro text and the top six all\ngenuine Pro.",
+      "values": [
+        {
+          "quantity": "count of top-ranked cells that are all Pro text",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "cells",
+          "kind": "count",
+          "path": "$.ranking[*].label",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of top-ranked cells that are all genuine Pro",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": "cells",
+          "kind": "count",
+          "path": "$.ranking[*].label",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Both counts need the ranked labels joined to model-of-record and modality (results/passes-manifest.json model_version / modality), hence recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          382,
+          382
+        ],
+        "section": "§ 6. The leaderboard finding — statistical tiering"
+      },
+      "claim_text": "(This is the n=3, complete-coverage result. The brief intermediate \"sole",
+      "values": [
+        {
+          "quantity": "replicate passes per genuine-Pro cell on the final board",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.ranking[*].n_passes",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "n=3 is asserted of the genuine-Pro cells collectively; verifying it means checking n_passes across the eight Pro entries in $.ranking."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          382,
+          385
+        ],
+        "section": "§ 6. The leaderboard finding — statistical tiering"
+      },
+      "claim_text": "The brief intermediate \"sole\nleader\" reading — `pro-text-high-t-0-0` alone — was an artefact of the incomplete\npv-diag medium-t-0-0 `run_1`, whose ~5 % unretried tile failures depressed it to 0.763;\nrecovered to 487/487 it scores 0.792 and ties.",
+      "values": [
+        {
+          "quantity": "unretried tile-failure rate in the incomplete pv-diag medium-t-0-0 run_1 (pre-recovery)",
+          "value_verbatim": "~5 %",
+          "value_parsed": 5,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20 m, pro-text-medium-t-0-0 before coverage recovery",
+          "value_verbatim": "0.763",
+          "value_parsed": 0.763,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "tiles processed by the recovered pv-diag pro-text-medium-t-0-0 run_1 pass",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.passes[?(@.pass_id=='pv-diag-384::pro-medium-text-baseline-text-t0.0::run1')].n_tiles_processed",
+          "method": "read"
+        },
+        {
+          "quantity": "total tiles in the 384 px full evaluation bounds",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson#len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, pro-text-medium-t-0-0 after coverage recovery",
+          "value_verbatim": "0.792",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json#$.ranking[?(@.label=='baseline-pro-text-medium-t-0-0')].board_f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed span: the ~5 % failure rate and the depressed 0.763 describe the superseded pre-recovery state (historical); 487/487 and 0.792 are live. The second 487 is read as the denominator (total evaluation tiles) from the bounds GeoJSON."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          385,
+          386
+        ],
+        "section": "§ 6. The leaderboard finding — statistical tiering"
+      },
+      "claim_text": "The pre-E57 board's tie was a different,\nlower pair, 0.763/0.745, with Flash-misdispatched cells in the mix",
+      "values": [
+        {
+          "quantity": "F1@20 m, first member of the pre-E57 tie (pro-text-medium-t-0-0, Flash-era board)",
+          "value_verbatim": "0.763",
+          "value_parsed": 0.763,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20 m, second member of the pre-E57 tie (pro-text-high-t-0-7, Flash-era board)",
+          "value_verbatim": "0.745",
+          "value_parsed": 0.745,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Both values are the quoted pre-E57 (superseded) tie pair; the current board's 0.745 for pro-text-high-t-0-7 coincides numerically but is a separate live claim extracted at lines 375-379 and at the § 6 tier table row 364."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          389,
+          392
+        ],
+        "section": "§ 6. The leaderboard finding — statistical tiering"
+      },
+      "claim_text": "The Tier-1 cells\n  lead *localisation* (F1@20 m) but are not the *tile-discrimination* leader: that is\n  genuine Pro **image** — `pro-image-medium-t-0-7` (MCC +0.911, but 9th on F1 at 0.595)\n  and `pro-image-high-t-0-0` (MCC +0.868) — which sit in Tiers 4 / 3 on F1.",
+      "values": [
+        {
+          "quantity": "MCC (replicate mean), condition pro-image-medium-t-0-7",
+          "value_verbatim": "+0.911",
+          "value_parsed": 0.911,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-medium-t-0-7/evaluation.json#$.summary.tile_classification.mcc.mean",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m rank of pro-image-medium-t-0-7 on the 18-cell board",
+          "value_verbatim": "9th",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": "$.ranking[?(@.label=='baseline-pro-image-medium-t-0-7')].rank",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, condition pro-image-medium-t-0-7",
+          "value_verbatim": "0.595",
+          "value_parsed": 0.595,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-pro-image-medium-t-0-7')].board_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "MCC (replicate mean), condition pro-image-high-t-0-0",
+          "value_verbatim": "+0.868",
+          "value_parsed": 0.868,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-high-t-0-0/evaluation.json#$.summary.tile_classification.mcc.mean",
+          "method": "read"
+        },
+        {
+          "quantity": "tier of pro-image-medium-t-0-7 on the F1@20 m board",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.ranking[?(@.label=='baseline-pro-image-medium-t-0-7')].tier",
+          "method": "read"
+        },
+        {
+          "quantity": "tier of pro-image-high-t-0-0 on the F1@20 m board",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.ranking[?(@.label=='baseline-pro-image-high-t-0-0')].tier",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "MCC does not live in the tiering artefact, so those two values carry cross-file locators into their cells' evaluation.json. The 'Tiers 4 / 3' values are here asserted memberships (checkable against $.ranking[].tier), not mere row labels. 'F1@20 m' repeats the headline buffer extracted at line 329."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          392,
+          395
+        ],
+        "section": "§ 6. The leaderboard finding — statistical tiering"
+      },
+      "claim_text": "Text wins\n  precise localisation; image wins flagging the right tiles — the MCC-alongside-F1\n  split (§ 2.2) made concrete, and *sharper* than the pre-E57 board (the genuine\n  Pro-image cells reach MCC +0.91, above the former leader's +0.852).",
+      "values": [
+        {
+          "quantity": "MCC (replicate mean), highest genuine-Pro-image cell (pro-image-medium-t-0-7)",
+          "value_verbatim": "+0.91",
+          "value_parsed": 0.91,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.tile_classification.mcc.mean",
+          "method": "read"
+        },
+        {
+          "quantity": "MCC (replicate mean), former MCC leader pro-image-high-t-0-7",
+          "value_verbatim": "+0.852",
+          "value_parsed": 0.852,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/pro-image-high-t-0-7/evaluation.json#$.summary.tile_classification.mcc.mean",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-medium-t-0-7/evaluation.json",
+        "path": "$.summary.tile_classification.mcc.mean"
+      },
+      "method": "read",
+      "notes": "'+0.91' is the same quantity as the '+0.911' at line 391 quoted to two decimals; the harness owns rounding tolerance at the quoted precision. '§ 2.2' is a section reference (out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          396,
+          398
+        ],
+        "section": "§ 6. The leaderboard finding — statistical tiering"
+      },
+      "claim_text": "- **H6 (Pro vs Flash) holds at the top and uniformly.** The top six cells are all\n  genuine Pro; every Pro-text cell beats the best Flash cell (`flash-image-minimal-t-0-0`,\n  F1 0.600), and the genuine Pro-image cells match Flash on F1 while dominating MCC.",
+      "values": [
+        {
+          "quantity": "count of top-ranked cells that are all genuine Pro",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": "cells",
+          "kind": "count",
+          "path": "$.ranking[*].label",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "F1@20 m, best Flash cell (flash-image-minimal-t-0-0)",
+          "value_verbatim": "0.600",
+          "value_parsed": 0.6,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-flash-image-minimal-t-0-0')].board_f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'H6' is a hypothesis identifier (out of scope). The top-six-all-Pro count needs the ranked labels joined to model-of-record, hence recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          399,
+          401
+        ],
+        "section": "§ 6. The leaderboard finding — statistical tiering"
+      },
+      "claim_text": "The pre-E57 board's apparent \"Flash image-MINIMAL beats weak Pro\" was an **artefact\n  of the Flash-misdispatched anti-diagonal** (E57): those four cells were Flash, not\n  Pro, and genuine Pro at the same corners scores 0.59–0.80.",
+      "values": [
+        {
+          "quantity": "count of anti-diagonal cells dispatched as Flash rather than Pro (E57)",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "cells",
+          "kind": "count",
+          "path": "$.passes[?(@.run_id=='n1-outstanding-384')].model_version",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "minimum F1@20 m across the four genuine-Pro anti-diagonal cells",
+          "value_verbatim": "0.59",
+          "value_parsed": 0.59,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json#$.ranking[?(@.label=='baseline-pro-image-medium-t-0-7')].board_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "maximum F1@20 m across the four genuine-Pro anti-diagonal cells",
+          "value_verbatim": "0.80",
+          "value_parsed": 0.8,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json#$.ranking[?(@.label=='baseline-pro-text-high-t-0-0')].board_f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 0.59–0.80 range endpoints are the minimum and maximum board F1@20 m of the four n1-pro-rerun-384 cells; locators resolve the cells that carry them (pro-image-medium-t-0-7 = 0.595 low, pro-text-high-t-0-0 = 0.8045 high), quoted to two decimals. 'E57' is an erratum identifier (out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          401,
+          406
+        ],
+        "section": "§ 6. The leaderboard finding — statistical tiering"
+      },
+      "claim_text": "**H7's registered\n  prediction is falsified, and the direction is consistent across Pro text**: the\n  preregistration predicted T=1.0 (vendor recommended) optimal, with lower\n  temperatures degrading performance (`osf/preregistration.md:711`); instead the two\n  Tier-1 cells are both T=0.0 and the two Tier-2 cells are both T=0.7 — a clear\n  T=0.0 > T=0.7 ordering, reversing the registered vendor-recommendation prediction.",
+      "values": [
+        {
+          "quantity": "preregistered optimal temperature (vendor-recommended) predicted by H7",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of Tier-1 cells",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "cells",
+          "kind": "count",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json#len:$.tiers[0].members",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, the two Tier-1 cells",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/passes-manifest.json#$.passes[?(@.pass_id=='n1-pro-rerun-384::pro-text-high-t0::run1')].temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "count of Tier-2 cells",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "cells",
+          "kind": "count",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json#len:$.tiers[1].members",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, the two Tier-2 cells",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/passes-manifest.json#$.passes[?(@.pass_id=='n1-pro-rerun-384::pro-text-medium-t07::run1')].temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 calibration rule: the T=1.0 prediction is a claim about what the REGISTRATION specifies, so it anchors to the lodged preregistration with a null path, never to an executed config. The remaining values are claims about what was run and carry cross-file locators. The trailing 'T=0.0 > T=0.7 ordering' restates the two temperatures already listed. 'H7' is a hypothesis identifier and 'osf/preregistration.md:711' a line-number citation (both out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          407,
+          407
+        ],
+        "section": "§ 6. The leaderboard finding — statistical tiering"
+      },
+      "claim_text": "(T=0.0 is a registered *level*, not a registered optimum; corrected 2026-07-28,",
+      "values": [
+        {
+          "quantity": "registered temperature level T=0.0 in the preregistration",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 calibration rule: a claim about what the registration specifies anchors to the lodged preregistration document, path null. The trailing date and the 'D17 audit FALSE-16' identifier are out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          414,
+          417
+        ],
+        "section": "§ 6. The leaderboard finding — statistical tiering"
+      },
+      "claim_text": "but the 18-cell ranked board was not itself in the\npreregistered analysis plan — it operationalises the **single-pass baseline\narm** that the consensus (H3) and proposer-verifier (H2) architectures are\nmeasured against.",
+      "values": [
+        {
+          "quantity": "count of cells in the ranked leaderboard analysis n1-baseline-matrix-384",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": "cells",
+          "kind": "count",
+          "path": "len:$.analyses[?(@.analysis_id=='n1-baseline-matrix-384')].conditions_compared",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/analyses-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The board's membership is defined by the analysis row's conditions_compared, so the count is anchored there rather than to the tiering artefact (which carries the same 18 at len:$.ranking). 'H3'/'H2' are hypothesis identifiers (out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          417,
+          420
+        ],
+        "section": "§ 6. The leaderboard finding — statistical tiering"
+      },
+      "claim_text": "The consensus (H3) arm is realised in `diversity-dividend-384`\n(Session 103): the best Flash HIGH-text consensus joins **Tier 1** with the two\ngenuine-Pro single-pass text leaders of this board — cheap Flash consensus\nreaching the Pro single-pass tier on localisation F1 (though not on MCC).",
+      "values": [
+        {
+          "quantity": "count of genuine-Pro single-pass text leaders of this board in the tie_set",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "cells",
+          "kind": "count",
+          "path": "len:$.tie_set",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 'Tier 1' referred to is the diversity-dividend-384 analysis's own tiering, a different artefact not chased here (rule 7); the extracted 'two' is this board's tie_set size. 'Session 103' is a session number and 'H3' a hypothesis identifier (both out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          430,
+          430
+        ],
+        "section": "§ 7. Cross-references"
+      },
+      "claim_text": "- `results/paper-eval/n1/384px-14buf-mcc/` — the 18 per-cell evals (current).",
+      "values": [
+        {
+          "quantity": "count of per-cell evaluations under 384px-14buf-mcc/",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": "evals",
+          "kind": "count",
+          "path": "$.n_conditions",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/batch_summary.json",
+        "path": "$.n_conditions"
+      },
+      "method": "read",
+      "notes": "The batch summary written alongside the 18 evals carries the count as a scalar; the directory itself is not machine-readable as an anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          431,
+          432
+        ],
+        "section": "§ 7. Cross-references"
+      },
+      "claim_text": "- `results/paper-eval/n1/384px-all-buffers/` — the superseded 4-buffer, no-MCC\n  evals",
+      "values": [
+        {
+          "quantity": "count of buffers in the superseded 384px-all-buffers evals",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "buffers",
+          "kind": "count",
+          "path": "len:$.summary.buffers",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-all-buffers/pro-text-high-t-0-7/evaluation.json",
+        "path": "len:$.summary.buffers"
+      },
+      "method": "read",
+      "notes": "Anchored to a representative eval under the superseded directory (pro-text-high-t-0-7); every eval in that directory carries the same buffer list. Numbers inside the directory names (384, 14) are path components (out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          435,
+          437
+        ],
+        "section": "§ 7. Cross-references"
+      },
+      "claim_text": "- `results/run-conditions.json` — the 18 baseline conditions (the\n  `baseline-<slug>` entries on pv-diag-384 / n1-outstanding-384 /\n  **n1-pro-rerun-384** / retest-h11-single-pass-384-t0).",
+      "values": [
+        {
+          "quantity": "count of baseline-<slug> conditions authored for the matrix in run-conditions.json",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": "conditions",
+          "kind": "count",
+          "path": "$.decomposition",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-conditions.json",
+        "path": "$.decomposition"
+      },
+      "method": "recompute-script",
+      "notes": "Verifying requires counting conditions whose label starts 'baseline-' across the four named runs (pv-diag-384, n1-outstanding-384, n1-pro-rerun-384, retest-h11-single-pass-384-t0) and excluding the off-board E57 cells, so this is recorded as recompute-script rather than read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          438,
+          440
+        ],
+        "section": "§ 7. Cross-references"
+      },
+      "claim_text": "- `results/run-analyses.json` → `results/analyses-manifest.json` — the leaderboard\n  analysis (`analysis_id n1-baseline-matrix-384`, `type=leaderboard`) over the 18\n  cells.",
+      "values": [
+        {
+          "quantity": "count of cells compared by the leaderboard analysis n1-baseline-matrix-384",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": "cells",
+          "kind": "count",
+          "path": "len:$.analyses[?(@.analysis_id=='n1-baseline-matrix-384')].conditions_compared",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/analyses-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'analysis_id n1-baseline-matrix-384' and 'type=leaderboard' are identifiers, not quantitative claims."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          440,
+          442
+        ],
+        "section": "§ 7. Cross-references"
+      },
+      "claim_text": "**Finding authored 2026-06-03, revised same day for the E57 genuine-Pro\n  replace and the n=3 completeness top-up** (`tie_set` = the two Tier-1 Pro-text-T=0.0\n  cells `pro-text-high-t-0-0` + `pro-text-medium-t-0-0`,",
+      "values": [
+        {
+          "quantity": "replicate passes per medium-thinking Pro cell after the completeness top-up",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "passes",
+          "kind": "count",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json#$.ranking[*].n_passes",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of cells in the analysis tie_set",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "cells",
+          "kind": "count",
+          "path": "len:$.analyses[?(@.analysis_id=='n1-baseline-matrix-384')].tie_set",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, the two Tier-1 Pro-text cells",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/passes-manifest.json#$.passes[?(@.pass_id=='n1-pro-rerun-384::pro-text-high-t0::run1')].temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/analyses-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The n=3 claim needs n_passes checked across the four medium-thinking Pro entries in the tiering ranking, hence recompute-script. Dates, 'E57' and 'H1/H6/H7' are out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          448,
+          450
+        ],
+        "section": "§ 7. Cross-references"
+      },
+      "claim_text": "- `results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.{json,md}` — the\n  tiering result: per-pair p-values (raw + BH-adjusted), the 7-tier structure, the\n  per-cell board-F1-vs-observed cross-check, and the `tie_set`.",
+      "values": [
+        {
+          "quantity": "count of tiers in the tiering result",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": "tiers",
+          "kind": "count",
+          "path": "len:$.tiers",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": "len:$.tiers"
+      },
+      "method": "read",
+      "notes": "'tiering_20m' names the 20 m buffer of the artefact filename (out of scope as a path component); the buffer parameter itself is extracted at line 329."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          451,
+          452
+        ],
+        "section": "§ 7. Cross-references"
+      },
+      "claim_text": "- `results/paper-eval/n1/384px-14buf-mcc/pro-rerun/` — the four genuine-Pro re-run\n  evals (`n1-pro-rerun-384`);",
+      "values": [
+        {
+          "quantity": "count of genuine-Pro re-run evaluations under pro-rerun/",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "evals",
+          "kind": "count",
+          "path": "$.n_conditions",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/batch_summary.json",
+        "path": "$.n_conditions"
+      },
+      "method": "read",
+      "notes": "Anchored to the batch summary written alongside the four pro-rerun evals."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          454,
+          456
+        ],
+        "section": "§ 7. Cross-references"
+      },
+      "claim_text": "- `docs/methodology/preregistration/protocol-errata.md` — E57 (Pro-pool\n  model-of-record + the 2026-06-03 billing reconciliation: four \"Pro\" cells were\n  Flash, genuine-Pro re-run, finding change)",
+      "values": [
+        {
+          "quantity": "count of 'Pro' cells found to have been dispatched as Flash (E57)",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "cells",
+          "kind": "count",
+          "path": "$.passes[?(@.run_id=='n1-outstanding-384')].model_version",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Counting the n1-outstanding-384 'pro-*' pools whose model_version is gemini-3-flash-preview needs a filtered count, hence recompute-script. 'E57'/'E56' are erratum identifiers (out of scope). Rule 7: the document names docs/methodology/preregistration/protocol-errata.md, but that is prose — the passes manifest is the least-writable artefact that decides the count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          460,
+          461
+        ],
+        "section": "§ 7. Cross-references"
+      },
+      "claim_text": "- `planning/performance-shape-availability-map-2026-05-31.md` — the per-run\n  performance-shape 2×2 map.",
+      "values": [
+        {
+          "quantity": "dimensions of the per-run performance-shape map",
+          "value_verbatim": "2×2",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Included under the instrument's 'when in doubt, include and flag the doubt' rule: '2×2' describes the shape of a map in another planning document and may well be a descriptive name rather than a checkable claim. Not chased beyond anchor identification (rule 7)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          469,
+          470
+        ],
+        "section": "Changelog — 2026-06-03 n=3 completeness top-up + recovery (Session 98)"
+      },
+      "claim_text": "The four medium-thinking Pro\ncells were brought to **n=3** (anti-noise; the four high-thinking cells already were).",
+      "values": [
+        {
+          "quantity": "count of medium-thinking Pro cells brought to n=3",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "cells",
+          "kind": "count",
+          "path": "$.ranking[*].label",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "replicate passes per medium-thinking Pro cell after top-up",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.ranking[*].n_passes",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of high-thinking Pro cells already at n=3",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "cells",
+          "kind": "count",
+          "path": "$.ranking[*].n_passes",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "All three need the ranked labels filtered by thinking level before reading n_passes, hence recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          471,
+          473
+        ],
+        "section": "Changelog — 2026-06-03 n=3 completeness top-up + recovery (Session 98)"
+      },
+      "claim_text": "The completeness audit then found the two **pv-diag medium-t-0-0** `run_1` batch passes\nhad ~5 % **unretried tile failures** (25/23 of 487) — isolated to those two cells\n(every other board pass ≤1 failure)",
+      "values": [
+        {
+          "quantity": "count of pv-diag medium-t-0-0 run_1 batch passes with unretried failures",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.passes[?(@.run_id=='pv-diag-384')].pass_id",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "unretried tile-failure rate in those two passes (pre-recovery)",
+          "value_verbatim": "~5 %",
+          "value_parsed": 5,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "unretried tile failures, pv-diag pro-text-medium-t-0-0 run_1 (pre-recovery)",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "unretried tile failures, pv-diag pro-image-medium-t-0-0 run_1 (pre-recovery)",
+          "value_verbatim": "23",
+          "value_parsed": 23,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "total tiles in the 384 px full evaluation bounds",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson#len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "count of board cells affected by the unretried failures",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "cells",
+          "kind": "count",
+          "path": "$.passes[?(@.run_id=='pv-diag-384')].pass_id",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "maximum unretried tile failures on any other board pass",
+          "value_verbatim": "≤1",
+          "value_parsed": 1,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "historical",
+      "notes": "The failure counts (25/23, ~5 %, ≤1) describe the superseded pre-recovery state and are recorded as historical — the passes manifest now records the recovered passes. The 487 denominator is live and read from the evaluation bounds GeoJSON. The two structural counts are recompute-script (filtered counts over the pv-diag pass list)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          473,
+          474
+        ],
+        "section": "Changelog — 2026-06-03 n=3 completeness top-up + recovery (Session 98)"
+      },
+      "claim_text": "Recovered via\nthe standard resume-merge path to 487/487 (single round each).",
+      "values": [
+        {
+          "quantity": "tiles processed by the recovered pv-diag pro-text-medium-t-0-0 run_1 pass",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.passes[?(@.pass_id=='pv-diag-384::pro-medium-text-baseline-text-t0.0::run1')].n_tiles_processed",
+          "method": "read"
+        },
+        {
+          "quantity": "total tiles in the 384 px full evaluation bounds",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson#len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'487/487' is read as tiles-processed over total evaluation tiles; the same claim is asserted for the pv-diag pro-image-medium-t-0-0 run_1 pass (pv-diag-384::pro-medium-image-baseline-image-t0.0::run1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          476,
+          478
+        ],
+        "section": "Changelog — 2026-06-03 n=3 completeness top-up + recovery (Session 98)"
+      },
+      "claim_text": "- **Top-up**: +2 genuine-Pro realtime+flex+cache passes per medium cell (8 passes; all\n  `gemini-3.1-pro-preview`, 487/0). The two pv-diag pools are now MIXED batch+realtime\n  → eval/tiering use a union glob (`*/detections*.geojson`). Manifests: 76→80 passes.",
+      "values": [
+        {
+          "quantity": "genuine-Pro passes added per medium cell",
+          "value_verbatim": "+2",
+          "value_parsed": 2,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.passes[?(@.run_id=='pv-diag-384')].pass_id",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "total top-up passes added across the four medium cells",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": "passes",
+          "kind": "count",
+          "path": "$.passes[*].pass_id",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "tiles processed per top-up pass",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.passes[?(@.pass_id=='pv-diag-384::pro-medium-text-baseline-text-t0.0::run2')].n_tiles_processed",
+          "method": "read"
+        },
+        {
+          "quantity": "tile failures per top-up pass",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of pv-diag pools now MIXED batch+realtime",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "pools",
+          "kind": "count",
+          "path": "$.passes[?(@.run_id=='pv-diag-384')].proposer_pool",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "passes-manifest total before the top-up",
+          "value_verbatim": "76",
+          "value_parsed": 76,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "passes-manifest total after the top-up",
+          "value_verbatim": "80",
+          "value_parsed": 80,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "76→80 is a point-in-time manifest total inside a dated changelog; the manifest has since grown well past 80 (current total at len:$.passes), so BOTH sides are recorded as historical to avoid manufacturing a false mismatch — triage can compare against the manifest as of commit 0f32ec00 if the point-in-time value matters. 'gemini-3.1-pro-preview' is a model version string (out of scope); the '0' of '487/0' is the failure count, which has no scalar field in the manifest."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          479,
+          480
+        ],
+        "section": "Changelog — 2026-06-03 n=3 completeness top-up + recovery (Session 98)"
+      },
+      "claim_text": "- **Recovery**: `pro-text-medium-t-0-0` 0.763→**0.792**, `pro-image-medium-t-0-0`\n  0.606→**0.655** (coverage artefact removed). Cost ≈ $0.96.",
+      "values": [
+        {
+          "quantity": "F1@20 m, pro-text-medium-t-0-0 before recovery",
+          "value_verbatim": "0.763",
+          "value_parsed": 0.763,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20 m, pro-text-medium-t-0-0 after recovery",
+          "value_verbatim": "0.792",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-pro-text-medium-t-0-0')].board_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, pro-image-medium-t-0-0 before recovery",
+          "value_verbatim": "0.606",
+          "value_parsed": 0.606,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20 m, pro-image-medium-t-0-0 after recovery",
+          "value_verbatim": "0.655",
+          "value_parsed": 0.655,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-pro-image-medium-t-0-0')].board_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "API cost USD of the top-up and recovery passes",
+          "value_verbatim": "≈ $0.96",
+          "value_parsed": 0.96,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "results/passes-manifest.json#$.passes[*].cost_usd",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Standard changelog before→after pattern: the 0.763/0.606 side is historical, the 0.792/0.655 side live. The cost needs summing cost_usd over the top-up and recovery passes in the passes manifest, hence recompute-script; the approximation marker is preserved in value_verbatim per v1.2 rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          484,
+          484
+        ],
+        "section": "Changelog — 2026-06-03 n=3 completeness top-up + recovery (Session 98)"
+      },
+      "claim_text": "  | `tie_set` | single: `pro-text-high-t-0-0` (0.804) | **2-member tie**: `pro-text-high-t-0-0` (0.804) + `pro-text-medium-t-0-0` (0.792), **both T=0.0** |",
+      "values": [
+        {
+          "quantity": "F1@20 m, sole leader pro-text-high-t-0-0 (post-E57, pre-top-up board)",
+          "value_verbatim": "0.804",
+          "value_parsed": 0.804,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of cells in the final tie_set",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "cells",
+          "kind": "count",
+          "path": "len:$.tie_set",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, condition pro-text-high-t-0-0 (final board)",
+          "value_verbatim": "0.804",
+          "value_parsed": 0.804,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-pro-text-high-t-0-0')].board_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, condition pro-text-medium-t-0-0 (final board)",
+          "value_verbatim": "0.792",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-pro-text-medium-t-0-0')].board_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, the two Tier-1 cells",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/passes-manifest.json#$.passes[?(@.pass_id=='n1-pro-rerun-384::pro-text-high-t0::run1')].temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Changelog before→after row: the before-column 0.804 is the quoted sole-leader state (historical) even though it coincides numerically with the live value; the after-column values are the current board."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          485,
+          485
+        ],
+        "section": "Changelog — 2026-06-03 n=3 completeness top-up + recovery (Session 98)"
+      },
+      "claim_text": "  | tiers | 7 (120/153 sig) | 7 (129/153 sig) |",
+      "values": [
+        {
+          "quantity": "count of tiers, pre-top-up board",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": "tiers",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of significant pairs, pre-top-up board",
+          "value_verbatim": "120",
+          "value_parsed": 120,
+          "unit": "pairs",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of pairs tested, pre-top-up board",
+          "value_verbatim": "153",
+          "value_parsed": 153,
+          "unit": "pairs",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of tiers, final board",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": "tiers",
+          "kind": "count",
+          "path": "len:$.tiers",
+          "method": "read"
+        },
+        {
+          "quantity": "count of significant pairs, final board",
+          "value_verbatim": "129",
+          "value_parsed": 129,
+          "unit": "pairs",
+          "kind": "count",
+          "path": "$.pairwise[*].significant",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of pairs tested, final board",
+          "value_verbatim": "153",
+          "value_parsed": 153,
+          "unit": "pairs",
+          "kind": "count",
+          "path": "len:$.pairwise",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Changelog before→after row: the left column is historical, the right column live. The 129 significant-pair count needs a filtered count over $.pairwise, hence recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          486,
+          486
+        ],
+        "section": "Changelog — 2026-06-03 n=3 completeness top-up + recovery (Session 98)"
+      },
+      "claim_text": "  | H7 (T=0.0 optimum) | \"at the apex (sole leader is T=0.0)\" | **clean**: Tier 1 both T=0.0, Tier 2 both T=0.7 |",
+      "values": [
+        {
+          "quantity": "temperature named in the tracked H7 claim (row label)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "temperature of the sole leader, pre-top-up board",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "temperature as run, the two Tier-1 cells (final board)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.passes[?(@.pass_id=='n1-pro-rerun-384::pro-text-high-t0::run1')].temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature as run, the two Tier-2 cells (final board)",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.passes[?(@.pass_id=='n1-pro-rerun-384::pro-text-medium-t07::run1')].temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "historical",
+      "notes": "Changelog before→after row. The first 0.0 is part of the row label naming the tracked H7 claim and the second is the before-column quotation; both are recorded as historical. The after-column temperatures are live and anchored to the passes manifest. 'H7', 'Tier 1' and 'Tier 2' are identifiers/labels (out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          488,
+          490
+        ],
+        "section": "Changelog — 2026-06-03 n=3 completeness top-up + recovery (Session 98)"
+      },
+      "claim_text": "- **Why the change**: the sole-leader result was an artefact of the incomplete `run_1`;\n  with coverage fixed, `pro-text-medium-t-0-0` rises to 0.792 and ties the leader. Note\n  the final tie is a *different, higher* pair than the pre-E57 tie (0.763/0.745).",
+      "values": [
+        {
+          "quantity": "F1@20 m, pro-text-medium-t-0-0 after coverage fix",
+          "value_verbatim": "0.792",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.ranking[?(@.label=='baseline-pro-text-medium-t-0-0')].board_f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m, first member of the pre-E57 tie",
+          "value_verbatim": "0.763",
+          "value_parsed": 0.763,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20 m, second member of the pre-E57 tie",
+          "value_verbatim": "0.745",
+          "value_parsed": 0.745,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 0.763/0.745 pair is the quoted pre-E57 (superseded) tie; 0.792 is live."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          496,
+          497
+        ],
+        "section": "Changelog — 2026-06-03 E57 genuine-Pro replace + re-tier (Session 98)"
+      },
+      "claim_text": "The E57 billing reconciliation found the four anti-diagonal \"Pro\" cells from\n`n1-outstanding-384` were dispatched as **Flash**",
+      "values": [
+        {
+          "quantity": "count of anti-diagonal 'Pro' cells dispatched as Flash",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "cells",
+          "kind": "count",
+          "path": "$.passes[?(@.run_id=='n1-outstanding-384')].model_version",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The 'n=3' in the superseding note two lines below points at the top-up changelog entry title and is extracted there, not here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          502,
+          504
+        ],
+        "section": "Changelog — 2026-06-03 E57 genuine-Pro replace + re-tier (Session 98)"
+      },
+      "claim_text": "- **Trigger**: `per_item_metadata.model_version = gemini-3-flash-preview` on the four\n  `n1-outstanding-384` \"Pro\" cells (the `--model` override never threaded); genuine-Pro\n  re-run committed `1cdf9438`, scored at 14-buffer + MCC (`pro-rerun/`).",
+      "values": [
+        {
+          "quantity": "count of n1-outstanding-384 'Pro' cells with Flash model_version",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": "cells",
+          "kind": "count",
+          "path": "$.passes[?(@.run_id=='n1-outstanding-384')].model_version",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of buffers in the genuine-Pro re-run evaluations",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": "buffers",
+          "kind": "count",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-high-t-0-0/evaluation.json#len:$.summary.buffers",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Model version strings and the commit hash 1cdf9438 are out of C4 scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          505,
+          506
+        ],
+        "section": "Changelog — 2026-06-03 E57 genuine-Pro replace + re-tier (Session 98)"
+      },
+      "claim_text": "- **Board**: `conditions_compared` swaps the 4 `n1-outstanding-384::pro-*` refs for\n  `n1-pro-rerun-384::pro-*` (18 cells, all genuine-model);",
+      "values": [
+        {
+          "quantity": "count of n1-outstanding-384 pro-* refs swapped out of conditions_compared",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "conditions",
+          "kind": "count",
+          "path": "$.analyses[?(@.analysis_id=='n1-baseline-matrix-384')].conditions_compared",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of cells compared by the leaderboard analysis",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": "cells",
+          "kind": "count",
+          "path": "len:$.analyses[?(@.analysis_id=='n1-baseline-matrix-384')].conditions_compared",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/analyses-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The swapped-out count requires inspecting which refs the analysis row now carries (all n1-pro-rerun-384, none from n1-outstanding-384), hence recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          508,
+          509
+        ],
+        "section": "Changelog — 2026-06-03 E57 genuine-Pro replace + re-tier (Session 98)"
+      },
+      "claim_text": "Manifests: 27→28 runs, 110→114 conditions,\n  68→76 passes.",
+      "values": [
+        {
+          "quantity": "runs-manifest total before E57",
+          "value_verbatim": "27",
+          "value_parsed": 27,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "runs-manifest total after E57",
+          "value_verbatim": "28",
+          "value_parsed": 28,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "conditions-manifest total before E57",
+          "value_verbatim": "110",
+          "value_parsed": 110,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "conditions-manifest total after E57",
+          "value_verbatim": "114",
+          "value_parsed": 114,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "passes-manifest total before E57",
+          "value_verbatim": "68",
+          "value_parsed": 68,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "passes-manifest total after E57",
+          "value_verbatim": "76",
+          "value_parsed": 76,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Point-in-time manifest totals inside a dated changelog entry that the document itself marks superseded (lines 499-500). The live totals now sit at len:$.runs in results/runs-manifest.json, len:$.conditions in results/conditions-manifest.json and len:$.passes in results/passes-manifest.json and are far larger; treating the after-column as live would manufacture guaranteed mismatches."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          513,
+          513
+        ],
+        "section": "Changelog — 2026-06-03 E57 genuine-Pro replace + re-tier (Session 98)"
+      },
+      "claim_text": "  | tiers | 6 (112/153 sig) | **7** (120/153 sig) |",
+      "values": [
+        {
+          "quantity": "count of tiers, pre-E57 board",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "tiers",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of significant pairs, pre-E57 board",
+          "value_verbatim": "112",
+          "value_parsed": 112,
+          "unit": "pairs",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of pairs tested, pre-E57 board",
+          "value_verbatim": "153",
+          "value_parsed": 153,
+          "unit": "pairs",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of tiers, post-E57 (intermediate) board",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": "tiers",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of significant pairs, post-E57 (intermediate) board",
+          "value_verbatim": "120",
+          "value_parsed": 120,
+          "unit": "pairs",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of pairs tested, post-E57 (intermediate) board",
+          "value_verbatim": "153",
+          "value_parsed": 153,
+          "unit": "pairs",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Both columns are historical: the entry is marked superseded and the final board is 129/153 significant. The pair count 153 is unchanged on the current board but is quoted here as part of the superseded state."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          514,
+          514
+        ],
+        "section": "Changelog — 2026-06-03 E57 genuine-Pro replace + re-tier (Session 98)"
+      },
+      "claim_text": "  | `tie_set` | 2-member tie: `pro-text-medium-t-0-0` (0.763) + `pro-text-high-t-0-7` (0.745) | **single leader** `pro-text-high-t-0-0` (0.804) |",
+      "values": [
+        {
+          "quantity": "count of cells in the pre-E57 tie_set",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20 m, pro-text-medium-t-0-0 on the pre-E57 board",
+          "value_verbatim": "0.763",
+          "value_parsed": 0.763,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20 m, pro-text-high-t-0-7 on the pre-E57 board",
+          "value_verbatim": "0.745",
+          "value_parsed": 0.745,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20 m, sole leader pro-text-high-t-0-0 (post-E57, intermediate)",
+          "value_verbatim": "0.804",
+          "value_parsed": 0.804,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Both columns are historical: the single-leader result was superseded the same day by the n=3 top-up entry."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          515,
+          515
+        ],
+        "section": "Changelog — 2026-06-03 E57 genuine-Pro replace + re-tier (Session 98)"
+      },
+      "claim_text": "  | \"weak Pro\" anti-diagonal F1 | 0.42–0.53 (were Flash) | 0.59–0.80 (genuine Pro) |",
+      "values": [
+        {
+          "quantity": "minimum F1@20 m, Flash-misdispatched anti-diagonal cells",
+          "value_verbatim": "0.42",
+          "value_parsed": 0.42,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "maximum F1@20 m, Flash-misdispatched anti-diagonal cells",
+          "value_verbatim": "0.53",
+          "value_parsed": 0.53,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "minimum F1@20 m, genuine-Pro anti-diagonal cells",
+          "value_verbatim": "0.59",
+          "value_parsed": 0.59,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "maximum F1@20 m, genuine-Pro anti-diagonal cells",
+          "value_verbatim": "0.80",
+          "value_parsed": 0.8,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Recorded as historical because the entry is marked superseded; the after-column range 0.59–0.80 duplicates the live claim extracted at lines 399-401, where it is anchored to the tiering artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          516,
+          516
+        ],
+        "section": "Changelog — 2026-06-03 E57 genuine-Pro replace + re-tier (Session 98)"
+      },
+      "claim_text": "  | MCC leader | `pro-image-high-t-0-7` (+0.852) | `pro-image-medium-t-0-7` (+0.913) |",
+      "values": [
+        {
+          "quantity": "MCC, pre-E57 MCC leader pro-image-high-t-0-7",
+          "value_verbatim": "+0.852",
+          "value_parsed": 0.852,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "MCC, post-E57 MCC leader pro-image-medium-t-0-7",
+          "value_verbatim": "+0.913",
+          "value_parsed": 0.913,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Both historical (superseded entry). The current pro-image-high-t-0-7 MCC coincides with +0.852 and is extracted live at lines 392-395; the after-column +0.913 differs from the current +0.911 quoted at line 391 — flagged for triage as a possible pre-top-up value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          517,
+          517
+        ],
+        "section": "Changelog — 2026-06-03 E57 genuine-Pro replace + re-tier (Session 98)"
+      },
+      "claim_text": "  | H6 (Pro ≥ Flash) | \"not uniform\" (Flash beat weak Pro) | **uniform** (top 5 all genuine Pro) |",
+      "values": [
+        {
+          "quantity": "count of top-ranked cells all genuine Pro, post-E57 (intermediate)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Historical: superseded by the final board's 'top six all genuine Pro' (lines 381-382, 396). 'H6' is a hypothesis identifier (out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          519,
+          520
+        ],
+        "section": "Changelog — 2026-06-03 E57 genuine-Pro replace + re-tier (Session 98)"
+      },
+      "claim_text": "- **What did NOT change**: the eval protocol (14-buffer + MCC, bootstrap 10 000, seed\n  42);",
+      "values": [
+        {
+          "quantity": "count of buffers in the eval protocol",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": "buffers",
+          "kind": "count",
+          "path": "len:$.summary.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iterations in the eval protocol",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": "iterations",
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.n_iterations",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap seed in the eval protocol",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$._metadata.bootstrap.seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-high-t-0-0/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Live protocol facts (explicitly stated as unchanged), anchored to a representative 14-buffer + MCC eval."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          531,
+          533
+        ],
+        "section": "Changelog — 2026-06-03 Leaderboard finding (Session 97)"
+      },
+      "claim_text": "- **Method**: round-robin paired tile-swap permutation (replicate-mean\n  per-tile, 10 000 perms, seed 42, two-sided) + Benjamini–Hochberg FDR\n  (q = 0.05) + greedy-clique tiering at 20 m, on zbook ($0 API).",
+      "values": [
+        {
+          "quantity": "permutation iterations per pairwise test",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": "permutations",
+          "kind": "parameter",
+          "path": "$.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "random seed for the permutation test",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.seed",
+          "method": "read"
+        },
+        {
+          "quantity": "Benjamini–Hochberg false-discovery-rate level q",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.fdr_q",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer at which the tiering was computed, metres",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "parameter",
+          "path": "$.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "API cost USD of the tiering computation",
+          "value_verbatim": "$0",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The method parameters are stated as unchanged by the later entries, so they are live reads against the current tiering artefact. The $0 API figure has no repo artefact (no cost manifest covers CPU-only analysis jobs)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          536,
+          538
+        ],
+        "section": "Changelog — 2026-06-03 Leaderboard finding (Session 97)"
+      },
+      "claim_text": "- **Result**: 112/153 pairs significant → **6 tiers**; **`tie_set` (Tier 1) =\n  `pro-text-medium-t-0-0` + `pro-text-high-t-0-7`** (BH-adjusted p = 0.50\n  between them; both adj-p = 0.0000 vs rank 3).",
+      "values": [
+        {
+          "quantity": "count of significant pairs, Session-97 board",
+          "value_verbatim": "112",
+          "value_parsed": 112,
+          "unit": "pairs",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of pairs tested, Session-97 board",
+          "value_verbatim": "153",
+          "value_parsed": 153,
+          "unit": "pairs",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of tiers, Session-97 board",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "tiers",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "BH-adjusted p between the two Session-97 tie_set members",
+          "value_verbatim": "0.50",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "BH-adjusted p of each Session-97 tie_set member versus rank 3",
+          "value_verbatim": "0.0000",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "rank of the comparison cell in the Session-97 board",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "The whole Session-97 result was superseded twice on 2026-06-03 (E57 replace, then the n=3 top-up), so every value is historical. The current board is 129/153 significant and 7 tiers."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          542,
+          543
+        ],
+        "section": "Changelog — 2026-06-03 Leaderboard finding (Session 97)"
+      },
+      "claim_text": "`analyses-manifest.{json,md}`\n  regenerated (ALL VALID: 27 runs + 110 conditions + 68 passes + 1 analysis).",
+      "values": [
+        {
+          "quantity": "runs-manifest total at Session 97",
+          "value_verbatim": "27",
+          "value_parsed": 27,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "conditions-manifest total at Session 97",
+          "value_verbatim": "110",
+          "value_parsed": 110,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "passes-manifest total at Session 97",
+          "value_verbatim": "68",
+          "value_parsed": 68,
+          "unit": "passes",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "analyses-manifest total at Session 97",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "analyses",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Point-in-time manifest totals; the next changelog entry already moves them to 28/114/76 and the current manifests are far larger (len:$.runs / len:$.conditions / len:$.passes / len:$.analyses)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          544,
+          545
+        ],
+        "section": "Changelog — 2026-06-03 Leaderboard finding (Session 97)"
+      },
+      "claim_text": "- **What did NOT change**: the 18 cells' F1/MCC values (§ 5) or the detection\n  geometries",
+      "values": [
+        {
+          "quantity": "count of cells whose F1/MCC values were unchanged by the tiering",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": "cells",
+          "kind": "count",
+          "path": "len:$.ranking",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": "len:$.ranking"
+      },
+      "method": "read",
+      "notes": "'§ 5' is a section reference (out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          551,
+          552
+        ],
+        "section": "Changelog — 2026-06-02 Original publication (Session 96)"
+      },
+      "claim_text": "Created alongside the re-score of the 18 N=1 baseline pools to the 14-buffer\n(`5…150 m`) + MCC standard and their authoring as single-pass conditions.",
+      "values": [
+        {
+          "quantity": "count of N=1 baseline pools re-scored",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": "pools",
+          "kind": "count",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/batch_summary.json#$.n_conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "count of uniform buffers in the re-score standard",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": "buffers",
+          "kind": "count",
+          "path": "len:$.summary.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "smallest buffer in the 14-buffer standard, metres",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[0].buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "largest buffer in the 14-buffer standard, metres",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.summary.buffers[13].buffer_metres",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-high-t-0-0/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 'N=1' of 'N=1 baseline pools' is the name of the matrix (rule 5), not an asserted count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          554,
+          555
+        ],
+        "section": "Changelog — 2026-06-02 Original publication (Session 96)"
+      },
+      "claim_text": "- **Re-score**: `results/paper-eval/n1/384px-all-buffers/` (4 buffers, no MCC) →\n  `results/paper-eval/n1/384px-14buf-mcc/` (14 buffers + MCC)",
+      "values": [
+        {
+          "quantity": "count of buffers in the superseded 384px-all-buffers evals",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "buffers",
+          "kind": "count",
+          "path": "len:$.summary.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "count of buffers in the 384px-14buf-mcc evals",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": "buffers",
+          "kind": "count",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-high-t-0-0/evaluation.json#len:$.summary.buffers",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-all-buffers/pro-text-high-t-0-7/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Anchored to a representative eval in each directory; the numbers inside the directory names (384px, 14buf) are path components (out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          558,
+          560
+        ],
+        "section": "Changelog — 2026-06-02 Original publication (Session 96)"
+      },
+      "claim_text": "- **Conditions**: +18 single-pass conditions in `results/run-conditions.json`\n  (pv-diag-384 ×10 as a new conditions-only entry; n1-outstanding-384 ×7;\n  retest-h11-single-pass-384-t0 ×1). Manifest conditions: 92 → 110.",
+      "values": [
+        {
+          "quantity": "count of single-pass baseline conditions added",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": "conditions",
+          "kind": "count",
+          "path": "$.decomposition",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "baseline conditions added on pv-diag-384",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "conditions",
+          "kind": "count",
+          "path": "$.decomposition['pv-diag-384'].conditions",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "baseline conditions added on n1-outstanding-384",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": "conditions",
+          "kind": "count",
+          "path": "$.decomposition['n1-outstanding-384'].conditions",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "baseline conditions added on retest-h11-single-pass-384-t0",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "conditions",
+          "kind": "count",
+          "path": "$.decomposition['retest-h11-single-pass-384-t0'].conditions",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "conditions-manifest total before the addition",
+          "value_verbatim": "92",
+          "value_parsed": 92,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "conditions-manifest total after the addition",
+          "value_verbatim": "110",
+          "value_parsed": 110,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-conditions.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The per-run counts need filtering on the 'baseline-' label prefix, hence recompute-script. 92 → 110 are point-in-time manifest totals; the current total (len:$.conditions in results/conditions-manifest.json) is far larger, so both sides are historical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          561,
+          563
+        ],
+        "section": "Changelog — 2026-06-02 Original publication (Session 96)"
+      },
+      "claim_text": "- **What did NOT change**: the detection geometries (re-score is eval-only); the\n  per-pass single-pass conditions on n1 / retest (the new cells are the headline\n  aggregate, complementary to them); the F1 headline buffer (20 m, preregistered).",
+      "values": [
+        {
+          "quantity": "preregistered headline F1 buffer, metres",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 calibration rule: the claim is about what the registration specifies ('preregistered'), so it anchors to the lodged preregistration with a null path rather than to the eval config that executed it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          564,
+          565
+        ],
+        "section": "Changelog — 2026-06-02 Original publication (Session 96)"
+      },
+      "claim_text": "- Landed across two commits (eval provenance → repo-relative; conditions +\n  manifest + doc)",
+      "values": [
+        {
+          "quantity": "count of commits the original publication landed across",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": "commits",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Included under the instrument's 'when in doubt, include and flag the doubt' rule: a commit count is git history rather than a study artefact, and sits next to the rule-5 exclusion of git hashes; no repo artefact records it."
+    }
+  ]
+}
