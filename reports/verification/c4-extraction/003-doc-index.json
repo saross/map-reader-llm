@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "extracted_at": "2026-07-31T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/documentation-index.md",
+    "git_blob": "95b43c07dff97fbadc580fcfe6cbb074be318874",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          21,
+          21
+        ],
+        "section": "Document Map"
+      },
+      "claim_text": "| Study YAMLs (`studies/`) | Experiment definitions | Per-study | 22 files |",
+      "values": [
+        {
+          "quantity": "count of study YAML experiment-definition files under studies/",
+          "value_verbatim": "22",
+          "value_parsed": 22,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "studies/",
+        "path": "count of `*.yaml` files"
+      },
+      "method": "read",
+      "notes": "Non-JSON directory anchor (a file count), legitimate per instrument v1.1; the harness routes it to triage. Scope decision covering the rest of this document (rule 5): this is a documentation index whose numeric content is almost entirely identifier-scheme ranges out of C4 scope — the 'Document Map' table's other rows (Obs N 1–165, Decision N 1–21, EN E1–E60, H1–H15, Session N 1–50), the 'Phase → Document Cross-Reference' table (lines 28–42, all D#/E#/H#/Obs# identifiers), the 'Decision → Evidence Cross-Reference' table (lines 47–68, same identifier classes plus dates), the 'Observation Clusters' bullets (lines 74–99, Obs# identifiers; '384' in 'Obs 160: Recall saturation at 384 tiles' is the tile-size naming convention, not a tile count), and the 'Notes' section (lines 102–129: session numbers, Obs/Decision/erratum identifiers, a git commit hash, section-reference '§ 4', line-number citations 'line 516'/'line 810', and version strings 'v2.0'/'v2.9'). This 22-file count is the only row in the whole document asserting a plain, unit-bearing count rather than an identifier range."
+    }
+  ]
+}

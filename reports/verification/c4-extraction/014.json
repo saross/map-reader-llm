@@ -1,0 +1,2090 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-07-31T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/preregistration/hypothesis-tracking.md",
+    "git_blob": "370e9bb01ef85bd75a5c5e78ca8fac59cfbd12c3",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          25,
+          25
+        ],
+        "section": "Confirmatory Hypotheses table, H6 row"
+      },
+      "claim_text": "| H6 | Flash→Pro Transfer | Model | 4 | Not executed as registered; superseded by exploratory 487-tile/384 px genuine-Pro comparison (E41, E57 Update) | 2026-06-03 |",
+      "values": [
+        {
+          "quantity": "tile count, corpus used for the exploratory genuine-Pro comparison superseding H6",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "results/h11/analysis_summary.md#487-tile-production-footprint",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length (px), exploratory genuine-Pro comparison superseding H6",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "results/h11/analysis_summary.md#384-px-headline-tile-size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/h11/analysis_summary.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "H6 (Flash→Pro Transfer) was not executed as registered; this cell asserts the 487-tile / 384 px scope of the substitute exploratory comparison, matching the '487-tile production footprint (435 reference mounds)' and '384 px' headline tile size in results/h11/analysis_summary.md. Erratum identifiers E41 and E57 excluded per rule 5 (identifiers out of scope). '4' in the Phase column (row value '4') is a phase-name label, not a claim, excluded per rule 5's condition-name carve-out."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          69,
+          71
+        ],
+        "section": "H2 status paragraph — GO criterion and pilot F1 improvement"
+      },
+      "claim_text": "will not improve) was **contradicted** with large effect size. Phase 3c pilot\nexceeded the GO criterion (ΔF1 ≥ 0.05) by a 2× margin, achieving +0.09 to\n+0.14 F1 improvement with proposer-verifier architecture.",
+      "values": [
+        {
+          "quantity": "GO/stopping criterion for H2 (minimum ΔF1 improvement required to pursue two-stage architectures further), as registered",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "document's own rounded characterisation of the Phase 3c pilot's F1 improvement as a multiple of the 0.05 GO criterion",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1 improvement over single-stage baseline, Phase 3c pilot, lower bound of stated range",
+          "value_verbatim": "0.09",
+          "value_parsed": 0.09,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1 improvement over single-stage baseline, Phase 3c pilot, upper bound of stated range",
+          "value_verbatim": "0.14",
+          "value_parsed": 0.14,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 0.05 GO/stopping criterion is registered at docs/methodology/preregistration/osf/preregistration.md:491 ('Stopping rule: Two-stage architectures will only be pursued further if either demonstrates F1 at least 0.05 higher than single-stage') and repeated in the Stage-2 criteria table at line 1153 — anchored here as the claim-level (default 'read') value; the claim's other three values could not be cleanly resolved to a single anchor and are marked anchor-unknown individually. The +0.09 to +0.14 range approximates (does not exactly match) the ΔF1 column in results/phase3d-pilot-results.md §'Text-only track benefits more' (Track 1: +0.086/+0.091/+0.086; Track 2: +0.110/+0.138/+0.124 — min≈0.09, max≈0.14 after rounding). The '2× margin' figure is the document's own rounded characterisation (achieved improvement ÷ 0.05 criterion ≈ 1.8–2.8×, loosely '2×'); it is not a value quoted verbatim from any single source and could not be mechanically derived without risking a false-mismatch arithmetic expression (v1.2 amendment 5 concern)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          75,
+          75
+        ],
+        "section": "H2 status detail — Phase 3d triggered exploratory extensions list"
+      },
+      "claim_text": "- Phase 3c pilot (Session 43): 3 verifier strategies × 2 tracks",
+      "values": [
+        {
+          "quantity": "count of verifier strategies tested, Phase 3c pilot (Session 43)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "results/phase3d-pilot-results.md#design-three-verifier-strategies",
+          "method": "read"
+        },
+        {
+          "quantity": "count of modality tracks tested, Phase 3c pilot (Session 43)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "results/phase3d-pilot-results.md#design-two-tracks",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3d-pilot-results.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Session number 43 excluded from values per rule 5 (session numbers out of scope). 3 verifier strategies = B (standard) / C (adversarial) / D (checklist), and 2 tracks = Track 1 (image) / Track 2 (text-only), both evident from the Results tables in results/phase3d-pilot-results.md."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          80,
+          80
+        ],
+        "section": "H2 status detail — Phase 3d triggered exploratory extensions list, H11 factorial bullet"
+      },
+      "claim_text": "- H11 factorial (Session 50): 3 strategies × 2 tracks at 384 tiles",
+      "values": [
+        {
+          "quantity": "count of verifier/architecture strategies tested, H11 factorial (Session 50)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of modality tracks tested, H11 factorial (Session 50)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tile edge length (px), H11 factorial (Session 50)",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Session number 50 excluded from values per rule 5. Searched results/h11/analysis_summary.md and results/h11-tile-size-results.md for a matching '3 strategies × 2 tracks' factorial description at 384 px but did not locate the specific passage within a reasonable search; 384 here is used as an asserted design parameter (tile edge length actually run in this factorial), not merely a condition-name token, so it is retained as a claim per rule 5's 'name used as an asserted fact' carve-out, but left anchor-unknown pending triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          82,
+          84
+        ],
+        "section": "H2 status detail — best result and post-hoc correction"
+      },
+      "claim_text": "**Best result**: F1=0.796 (adversarial verifier, text-only, 512 tiles) — but\nsee Observation 163 regarding model drift and the corrected v2 result\n(F1=0.732) obtained after config audit.",
+      "values": [
+        {
+          "quantity": "F1, Phase 3c/3d pilot, adversarial verifier text-only track, 512 px tiles (pre-correction figure)",
+          "value_verbatim": "0.796",
+          "value_parsed": 0.796,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/h11-tile-size-results.md#pre-correction-512-PV-result-line-177",
+          "method": "historical"
+        },
+        {
+          "quantity": "tile edge length (px), condition producing the pre-correction 0.796 best result",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "results/h11-tile-size-results.md#512-PV-text-only-row-line-169",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, corrected v2 result for the same condition, obtained after config audit",
+          "value_verbatim": "0.732",
+          "value_parsed": 0.732,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/h11-tile-size-results.md#512-PV-text-only-E33-corrected-v2-row-line-169",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-tile-size-results.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "results/h11-tile-size-results.md line 169 records '512 PV text-only (E33 corrected, v2) | 1+v | 20 m | 0.732 | 0.779 | 0.691' and line 177 states 'The pre-correction 512 PV result (F1=0.796)', directly confirming the historical/live split. Erratum identifier E33 and 'Observation 163' excluded from values per rule 5 (identifiers out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          88,
+          88
+        ],
+        "section": "H2 architecture comparison table, single-stage baseline row"
+      },
+      "claim_text": "| Single-stage baseline | N/A | N/A | 0.660 |",
+      "values": [
+        {
+          "quantity": "F1, single-stage baseline (Phase 2d optimal config, Track 2 text-only, minimal negative-text level), used as the H2 pre-verification baseline",
+          "value_verbatim": "0.660",
+          "value_parsed": 0.66,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2d-track2-text-analysis.json#$.per_condition_metrics.minimal.point_estimate.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2d-track2-text-analysis.json",
+        "path": "$.per_condition_metrics.minimal.point_estimate.f1"
+      },
+      "method": "read",
+      "notes": "The H2 pilot's proposer reuses Phase 2d's optimal (minimal-negative-text, Track 2) detections as the single-stage baseline (results/phase3d-pilot-results.md § Design). phase2d-track2-text-analysis.json records point_estimate.f1=0.6602 for the 'minimal' condition, consistent with the rounded 0.660 quoted here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          89,
+          89
+        ],
+        "section": "H2 architecture comparison table, proposer-verifier adversarial row"
+      },
+      "claim_text": "| Proposer-verifier | Coarse-to-fine | Adversarial (text-only) | 0.732 (v2 corrected) |",
+      "values": [
+        {
+          "quantity": "F1, proposer-verifier coarse-to-fine, adversarial verifier strategy, text-only, corrected v2 value",
+          "value_verbatim": "0.732",
+          "value_parsed": 0.732,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-tile-size-results.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the '512 PV text-only (E33 corrected, v2)' row (line 169) already anchored for the line 82-84 claim above."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          90,
+          90
+        ],
+        "section": "H2 architecture comparison table, proposer-verifier standard row"
+      },
+      "claim_text": "| Proposer-verifier | Coarse-to-fine | Standard (text-only) | 0.768 (pre-correction) |",
+      "values": [
+        {
+          "quantity": "F1, proposer-verifier coarse-to-fine, standard verifier strategy, text-only, pre-correction value",
+          "value_verbatim": "0.768",
+          "value_parsed": 0.768,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3d-pilot-results.md",
+        "path": null
+      },
+      "method": "historical",
+      "notes": "Matches the Track 2 'B (standard)' row (F1=0.768 at threshold 0.2) in the Phase 3d pilot results table; explicitly labelled 'pre-correction' in this document's own table."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          91,
+          91
+        ],
+        "section": "H2 architecture comparison table, proposer-verifier checklist row"
+      },
+      "claim_text": "| Proposer-verifier | Coarse-to-fine | Checklist (text-only) | 0.782 (pre-correction) |",
+      "values": [
+        {
+          "quantity": "F1, proposer-verifier coarse-to-fine, checklist verifier strategy, text-only, pre-correction value",
+          "value_verbatim": "0.782",
+          "value_parsed": 0.782,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3d-pilot-results.md",
+        "path": null
+      },
+      "method": "historical",
+      "notes": "Matches the Track 2 'D (checklist)' row (F1=0.782 at threshold 0.2) in the Phase 3d pilot results table; explicitly labelled 'pre-correction' in this document's own table."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          94,
+          94
+        ],
+        "section": "H2 note — fine-to-coarse Condition C, unresolved erratum"
+      },
+      "claim_text": "**not executed**, and no decision to drop it is on record (asked twice on",
+      "values": [
+        {
+          "quantity": "number of times the drop decision for fine-to-coarse (H2 Condition C) was asked without answer",
+          "value_verbatim": "twice",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The document cites reports/d17-inventory/step0-fine-to-coarse-archaeology.md as the source, but that path is explicitly excluded from the C4 mine's scope as audit apparatus (planning/audit-charter.md § 2: 'reports/**.md (excluding reports/d17-inventory/ which is audit apparatus)'); no other artefact is visible from this document alone. Likely resolves via session-transcript-tier evidence (charter § 4 authority hierarchy, tier 5). The line-number citation 'osf/preregistration.md:469' on the preceding line is excluded per rule 5 (line-number citations out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          113,
+          113
+        ],
+        "section": "H3 status paragraph — optimal pool size and temperature"
+      },
+      "claim_text": "single-run baseline for both tracks. N=30 at T=0.7 optimal. Detailed results",
+      "values": [
+        {
+          "quantity": "consensus voting pool size (N) found optimal, H3",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "temperature found optimal for consensus voting, H3",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/results-60-tile-validation/phase3a-consensus/phase3a-comprehensive-results-report.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "results/phase3a-consensus/ (the path literally named later in this same paragraph, line 114) does not exist in the working tree — confirmed absent; this document's own header flags carried stale content. The N=30/T=0.7 optimum is corroborated by archive/results-60-tile-validation/phase3a-consensus/phase3a-comprehensive-results-report.md, e.g. row '20 m | T2 Txt HIGH | 0.751 | [0.610, 0.796] | 0.772 | 0.732 | T0.7 N=30 x=22'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          122,
+          122
+        ],
+        "section": "H3 note — clean replication of HIGH vs minimal thinking level"
+      },
+      "claim_text": "HIGH F1=0.735 vs minimal F1=0.699 (+3.6 pp).",
+      "values": [
+        {
+          "quantity": "F1, clean replication (2026-03-15), HIGH thinking level, T=0.7 consensus, N=30",
+          "value_verbatim": "0.735",
+          "value_parsed": 0.735,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/results-60-tile-validation/phase3a-replication/high/consensus-analysis-report.json#$.optima.global_optimum.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, clean replication (2026-03-15), minimal thinking level, T=0.7 consensus, N=30",
+          "value_verbatim": "0.699",
+          "value_parsed": 0.699,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/results-60-tile-validation/phase3a-replication/minimal/consensus-analysis-report.json#$.optima.global_optimum.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 delta, HIGH minus minimal thinking level, clean replication, in percentage points",
+          "value_verbatim": "3.6",
+          "value_parsed": 3.6,
+          "unit": "pp",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100*(a-b)",
+          "operands": [
+            {
+              "name": "a",
+              "file": "archive/results-60-tile-validation/phase3a-replication/high/consensus-analysis-report.json",
+              "path": "$.optima.global_optimum.f1"
+            },
+            {
+              "name": "b",
+              "file": "archive/results-60-tile-validation/phase3a-replication/minimal/consensus-analysis-report.json",
+              "path": "$.optima.global_optimum.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "archive/results-60-tile-validation/phase3a-replication/high/consensus-analysis-report.json",
+        "path": "$.optima.global_optimum.f1"
+      },
+      "method": "read",
+      "notes": "high/consensus-analysis-report.json records optima.global_optimum.f1=0.7351 (rounds to 0.735); minimal/consensus-analysis-report.json records the equivalent field at 0.699 (pattern confirmed structurally, not value-verified per rule 4). Note the replication's global optimum is at pool_size=10, not N=30 — a different sub-finding from the line-113 'N=30 at T=0.7 optimal' headline; not adjudicated here per rule 4."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          126,
+          126
+        ],
+        "section": "H3 pool-size/threshold table, N=5 row"
+      },
+      "claim_text": "| N=5 | Runs 1-5 or 6-10 | 1, 2, 3, 4, 5 |",
+      "values": [
+        {
+          "quantity": "consensus voting pool size (N), row 1",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "run index range, first N=5 pool option",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "run index range, first N=5 pool option (end)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "run index range, second N=5 pool option (start)",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "run index range, second N=5 pool option (end)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold tested, N=5 pool",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold tested, N=5 pool",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold tested, N=5 pool",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold tested, N=5 pool",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold tested, N=5 pool",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered voting-analysis table at osf/preregistration.md:507-510 ('| N=5 | Runs 1-5 or 6-10 | 1, 2, 3, 4, 5 |'). Per-value paths omitted (all ten values share the single markdown table row/whole-artefact anchor; JSONPath does not apply to markdown)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          127,
+          127
+        ],
+        "section": "H3 pool-size/threshold table, N=10 row"
+      },
+      "claim_text": "| N=10 | All 10 runs | 1, 2, ..., 10 |",
+      "values": [
+        {
+          "quantity": "consensus voting pool size (N), row 2",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "run count, N=10 pool ('All 10 runs')",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold range tested, N=10 pool (lower bound)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold range tested, N=10 pool (upper bound)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered voting-analysis table at osf/preregistration.md:507-510 ('| N=10 | All runs | 1, 2, ..., 10 |'); ellipsis-elided intermediate thresholds (2..9) not individually recorded as values — only the explicit endpoints appear in the source span."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          128,
+          128
+        ],
+        "section": "H3 pool-size/threshold table, N=30 row"
+      },
+      "claim_text": "| N=30 | Extended (20 additional runs) | 1, 2, ..., 30 |",
+      "values": [
+        {
+          "quantity": "consensus voting pool size (N), row 3 (extended)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of additional runs collected to extend the pool to N=30",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold range tested, N=30 pool (lower bound)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold range tested, N=30 pool (upper bound)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered extended-voting spec at osf/preregistration.md:512-514 ('Extended voting (N=30): Additional 20 runs at optimal configuration... N=30 threshold sweep (1, 2, ..., 30)')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          141,
+          141
+        ],
+        "section": "H4 ordering conditions table, canonical-first row"
+      },
+      "claim_text": "| Canonical-first | H4-A | First (positions 1-6) | `detect_*.json` (base configs) |",
+      "values": [
+        {
+          "quantity": "canonical example position range, start (H4-A canonical-first ordering)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "position",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "canonical example position range, end (H4-A canonical-first ordering)",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "position",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Searched prompts/configs/ for detect_*_canonical-last.json / detect_*_random-order.json (named in the adjacent H4-B/H4-C rows) and found neither file present under that naming pattern, so could not confirm which config encodes the base 'positions 1-6' canonical ordering claim for H4-A. Note the count 6 (=4 canonical_positive + 2 canonical_negative) coincides with the H8-3 library composition (prompts/configs/library_plus-hp.json), but H4 explicitly uses a different config namespace (`detect_*.json` base configs), so that overlap is not used as the anchor here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          154,
+          154
+        ],
+        "section": "H5 section intro — count of text-treatment levels tested"
+      },
+      "claim_text": "positives. Three levels tested at the carried-forward optimal M/E per track",
+      "values": [
+        {
+          "quantity": "count of H5 negative-text-treatment levels tested (Minimal/Terse/Verbose)",
+          "value_verbatim": "Three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H5-factor-levels-3",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered factor-level counts at osf/preregistration.md:1741 ('| Negative Text Treatment | H5 | 3 | Minimal, Terse, Verbose |') and :2043."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          177,
+          177
+        ],
+        "section": "H5 dual-track OFAT design table, Track 2 row"
+      },
+      "claim_text": "| Track 2 (text) | brief-text | Reuse Phase 2b T=0.0 | **New** | **New** |",
+      "values": [
+        {
+          "quantity": "temperature reused from Phase 2b for the Track 2 (text) H5=Minimal cell",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'Track 2' and 'Phase 2b' are labels/phase names excluded per rule 5 (condition/phase-name carve-out); only the T=0.0 parameter value is a claim. Matches '**T=0.0 (deterministic decoding) selected for both tracks.**' in the archived Phase 2b pilot carry-forward doc (dated 2026-02-08, contemporaneous with this document)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          179,
+          179
+        ],
+        "section": "H5 section — preregistered factorial design (superseded by OFAT simplification)"
+      },
+      "claim_text": "**Preregistered design was**: 3×3 factorial (3 image-using M/E × 3 H5).",
+      "values": [
+        {
+          "quantity": "row count (image-using M/E levels) of the preregistered H5 factorial, first mention",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "column count (H5 levels) of the preregistered H5 factorial, first mention",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of image-using M/E levels in the preregistered 3×3 factorial (elaboration)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of H5 levels in the preregistered 3×3 factorial (elaboration)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 calibration rule: a claim about what the REGISTRATION specifies anchors to the lodged osf document. H5's registered level count (3: Minimal/Terse/Verbose) is confirmed at osf/preregistration.md:1741/:2043; the image-using M/E subset size (3 of the 5 total M/E levels) is consistent with the registration's M/E factor design but the exact '3×3' factorial phrasing was not located verbatim in the registration — flagged for triage to confirm the precise locator. 'Decision 17' on the following line is an identifier, excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          191,
+          191
+        ],
+        "section": "H6 OFAT sensitivity-testing decision table, M/E row"
+      },
+      "claim_text": "| M/E | 2 adjacent levels | Adjust if Δ ≥ 0.03 F1 |",
+      "values": [
+        {
+          "quantity": "count of alternative levels/orderings tested for factor M/E, H6 Phase 4 (preregistered OFAT sensitivity design)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "decision-rule F1 delta threshold for factor M/E, H6 Phase 4 (preregistered)",
+          "value_verbatim": "0.03",
+          "value_parsed": 0.03,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered 'Phase 2: OFAT Factor Sensitivity' table at osf/preregistration.md:668-673 (identical Factor/Tests columns) and the 'Decision rule: If alternative outperforms Flash-optimal by ≥0.03 F1, flag factor for adjustment' at line 677. H6 was not executed (row status 'Not executed as registered'), so this is a preregistered-design claim (v1.1 calibration rule), not an executed-run claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          192,
+          192
+        ],
+        "section": "H6 OFAT sensitivity-testing decision table, H5 row"
+      },
+      "claim_text": "| H5 | 2 alternatives | Adjust if Δ ≥ 0.03 F1 |",
+      "values": [
+        {
+          "quantity": "count of alternative levels/orderings tested for factor H5, H6 Phase 4 (preregistered OFAT sensitivity design)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "decision-rule F1 delta threshold for factor H5, H6 Phase 4 (preregistered)",
+          "value_verbatim": "0.03",
+          "value_parsed": 0.03,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered 'Phase 2: OFAT Factor Sensitivity' table at osf/preregistration.md:668-673 (identical Factor/Tests columns) and the 'Decision rule: If alternative outperforms Flash-optimal by ≥0.03 F1, flag factor for adjustment' at line 677. H6 was not executed (row status 'Not executed as registered'), so this is a preregistered-design claim (v1.1 calibration rule), not an executed-run claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          193,
+          193
+        ],
+        "section": "H6 OFAT sensitivity-testing decision table, T row"
+      },
+      "claim_text": "| T | 2 adjacent temperatures | Adjust if Δ ≥ 0.03 F1 |",
+      "values": [
+        {
+          "quantity": "count of alternative levels/orderings tested for factor T, H6 Phase 4 (preregistered OFAT sensitivity design)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "decision-rule F1 delta threshold for factor T, H6 Phase 4 (preregistered)",
+          "value_verbatim": "0.03",
+          "value_parsed": 0.03,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered 'Phase 2: OFAT Factor Sensitivity' table at osf/preregistration.md:668-673 (identical Factor/Tests columns) and the 'Decision rule: If alternative outperforms Flash-optimal by ≥0.03 F1, flag factor for adjustment' at line 677. H6 was not executed (row status 'Not executed as registered'), so this is a preregistered-design claim (v1.1 calibration rule), not an executed-run claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          194,
+          194
+        ],
+        "section": "H6 OFAT sensitivity-testing decision table, O row"
+      },
+      "claim_text": "| O | 2 alternative orderings | Adjust if Δ ≥ 0.03 F1 |",
+      "values": [
+        {
+          "quantity": "count of alternative levels/orderings tested for factor O, H6 Phase 4 (preregistered OFAT sensitivity design)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "decision-rule F1 delta threshold for factor O, H6 Phase 4 (preregistered)",
+          "value_verbatim": "0.03",
+          "value_parsed": 0.03,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered 'Phase 2: OFAT Factor Sensitivity' table at osf/preregistration.md:668-673 (identical Factor/Tests columns) and the 'Decision rule: If alternative outperforms Flash-optimal by ≥0.03 F1, flag factor for adjustment' at line 677. H6 was not executed (row status 'Not executed as registered'), so this is a preregistered-design claim (v1.1 calibration rule), not an executed-run claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          204,
+          204
+        ],
+        "section": "H7 temperature conditions table, H7-1 row"
+      },
+      "claim_text": "| H7-1 | 0.0 | Minimum (deterministic) |",
+      "values": [
+        {
+          "quantity": "temperature tested, condition H7-1",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the T0.0 row of the Phase 2b pilot's per-track temperature results tables (archived at archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md, dated 2026-02-08, contemporaneous with this document); also consistent with the registered 5 temperature levels described in osf/preregistration.md."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          205,
+          205
+        ],
+        "section": "H7 temperature conditions table, H7-2 row"
+      },
+      "claim_text": "| H7-2 | 0.3 | Low variance (evidence for visual detection) |",
+      "values": [
+        {
+          "quantity": "temperature tested, condition H7-2",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the T0.3 row of the Phase 2b pilot's per-track temperature results tables (archived at archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md, dated 2026-02-08, contemporaneous with this document); also consistent with the registered 5 temperature levels described in osf/preregistration.md."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          206,
+          206
+        ],
+        "section": "H7 temperature conditions table, H7-3 row"
+      },
+      "claim_text": "| H7-3 | 0.7 | Moderate variance |",
+      "values": [
+        {
+          "quantity": "temperature tested, condition H7-3",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the T0.7 row of the Phase 2b pilot's per-track temperature results tables (archived at archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md, dated 2026-02-08, contemporaneous with this document); also consistent with the registered 5 temperature levels described in osf/preregistration.md."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          207,
+          207
+        ],
+        "section": "H7 temperature conditions table, H7-4 row"
+      },
+      "claim_text": "| H7-4 | 1.0 | Vendor default |",
+      "values": [
+        {
+          "quantity": "temperature tested, condition H7-4",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the T1.0 row of the Phase 2b pilot's per-track temperature results tables (archived at archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md, dated 2026-02-08, contemporaneous with this document); also consistent with the registered 5 temperature levels described in osf/preregistration.md."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          208,
+          208
+        ],
+        "section": "H7 temperature conditions table, H7-5 row"
+      },
+      "claim_text": "| H7-5 | 1.3 | Above default |",
+      "values": [
+        {
+          "quantity": "temperature tested, condition H7-5",
+          "value_verbatim": "1.3",
+          "value_parsed": 1.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the T1.3 row of the Phase 2b pilot's per-track temperature results tables (archived at archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md, dated 2026-02-08, contemporaneous with this document); also consistent with the registered 5 temperature levels described in osf/preregistration.md."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          212,
+          212
+        ],
+        "section": "H7 result paragraph — optimal temperature"
+      },
+      "claim_text": "**Result (2026-02-08)**: T=0.0 optimal for both tracks. FDR-significant pairwise",
+      "values": [
+        {
+          "quantity": "temperature found optimal for both tracks, H7 (Phase 2b)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches '**T=0.0 (deterministic decoding) selected for both tracks.**' in the archived Phase 2b pilot carry-forward doc (2026-02-08)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          212,
+          213
+        ],
+        "section": "H7 result paragraph — FDR-significant pairwise comparison counts"
+      },
+      "claim_text": "**Result (2026-02-08)**: T=0.0 optimal for both tracks. FDR-significant pairwise\ndifferences: 6/10 comparisons (Track 1), 4/10 comparisons (Track 2). T=0.0 carried",
+      "values": [
+        {
+          "quantity": "count of FDR-significant pairwise temperature comparisons, Track 1 (numerator)",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "total pairwise temperature comparisons tested, Track 1 (denominator)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of FDR-significant pairwise temperature comparisons, Track 2 (numerator)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "total pairwise temperature comparisons tested, Track 2 (denominator)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches 'FDR-significant comparisons: 6/10' (Track 1) and 'FDR-significant comparisons: 4/10' (Track 2) in the archived Phase 2b pilot carry-forward doc (2026-02-08). The retest-era sibling doc (results/phase2b-carry-forward-parameters.md, 2026-04-24, 340-tile K=3) reports different figures (6/10 Track 1, 5/10 Track 2) and explicitly distinguishes these as 'vs 6/10 and 4/10 in the pilot' — confirming this document's H7 result paragraph (dated 2026-02-08) refers to the original pilot, not the retest."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          213,
+          214
+        ],
+        "section": "H7 result paragraph — carried-forward optimal temperature (restated)"
+      },
+      "claim_text": "differences: 6/10 comparisons (Track 1), 4/10 comparisons (Track 2). T=0.0 carried\nforward as the optimal temperature setting for subsequent phases.",
+      "values": [
+        {
+          "quantity": "temperature carried forward as optimal for subsequent phases, H7",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the T=0.0 optimum already anchored for the line-212 claim above; kept as a separate claim row per full-enumeration (rule 3, no sampling) since it is a distinct verbatim mention."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          224,
+          224
+        ],
+        "section": "H8 status paragraph — optimal library F1"
+      },
+      "claim_text": "selected as optimal library (F1=0.609). No pairwise comparisons significant",
+      "values": [
+        {
+          "quantity": "F1, plus-hp library composition (H8-3), Phase 2c Track 1 image-using",
+          "value_verbatim": "0.609",
+          "value_parsed": 0.609,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2c-track1-image-analysis.json#$.per_condition_metrics.plus-hp.point_estimate.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2c-track1-image-analysis.json",
+        "path": "$.per_condition_metrics.plus-hp.point_estimate.f1"
+      },
+      "method": "read",
+      "notes": "phase2c-track1-image-analysis.json records per_condition_metrics.plus-hp.point_estimate.f1 = 0.6087, consistent with the rounded 0.609 quoted here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          230,
+          230
+        ],
+        "section": "H8 library composition table, H8-1 row"
+      },
+      "claim_text": "| Pure Positive Canon | H8-1 | 4 | 0 | 0 | 0 | 3 | 7 | `library_pure-positive-canon.json` |",
+      "values": [
+        {
+          "quantity": "Canon+ example count, condition H8-1 library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "Canon- example count, condition H8-1 library composition",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "HP example count, condition H8-1 library composition",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HN example count, condition H8-1 library composition",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "Null example count, condition H8-1 library composition",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "Total example count, condition H8-1 library composition",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_pure-positive-canon.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_pure-positive-canon.json records composition.canonical_positive/canonical_negative/hard_positive/hard_negative/null and total_examples at the paths given per value (confirmed present, not value-verified per rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          231,
+          231
+        ],
+        "section": "H8 library composition table, H8-2 row"
+      },
+      "claim_text": "| Canonical | H8-2 | 4 | 2 | 0 | 0 | 3 | 9 | `library_canonical.json` |",
+      "values": [
+        {
+          "quantity": "Canon+ example count, condition H8-2 library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "Canon- example count, condition H8-2 library composition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "HP example count, condition H8-2 library composition",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HN example count, condition H8-2 library composition",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "Null example count, condition H8-2 library composition",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "Total example count, condition H8-2 library composition",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_canonical.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_canonical.json records composition.canonical_positive/canonical_negative/hard_positive/hard_negative/null and total_examples at the paths given per value (confirmed present, not value-verified per rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          232,
+          232
+        ],
+        "section": "H8 library composition table, H8-3 row"
+      },
+      "claim_text": "| +HP | H8-3 | 4 | 2 | 4 | 0 | 3 | 13 | `library_plus-hp.json` |",
+      "values": [
+        {
+          "quantity": "Canon+ example count, condition H8-3 library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "Canon- example count, condition H8-3 library composition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "HP example count, condition H8-3 library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HN example count, condition H8-3 library composition",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "Null example count, condition H8-3 library composition",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "Total example count, condition H8-3 library composition",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_plus-hp.json records composition.canonical_positive/canonical_negative/hard_positive/hard_negative/null and total_examples at the paths given per value (confirmed present, not value-verified per rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          233,
+          233
+        ],
+        "section": "H8 library composition table, H8-4 row"
+      },
+      "claim_text": "| Scale-4 | H8-4 | 4 | 2 | 2 | 2 | 3 | 13 | `library_scale-4.json` |",
+      "values": [
+        {
+          "quantity": "Canon+ example count, condition H8-4 library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "Canon- example count, condition H8-4 library composition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "HP example count, condition H8-4 library composition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HN example count, condition H8-4 library composition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "Null example count, condition H8-4 library composition",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "Total example count, condition H8-4 library composition",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-4.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_scale-4.json records composition.canonical_positive/canonical_negative/hard_positive/hard_negative/null and total_examples at the paths given per value (confirmed present, not value-verified per rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          234,
+          234
+        ],
+        "section": "H8 library composition table, H8-5 row"
+      },
+      "claim_text": "| Scale-8 | H8-5 | 4 | 2 | 4 | 4 | 3 | 17 | `library_scale-8.json` |",
+      "values": [
+        {
+          "quantity": "Canon+ example count, condition H8-5 library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "Canon- example count, condition H8-5 library composition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "HP example count, condition H8-5 library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HN example count, condition H8-5 library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "Null example count, condition H8-5 library composition",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "Total example count, condition H8-5 library composition",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_scale-8.json records composition.canonical_positive/canonical_negative/hard_positive/hard_negative/null and total_examples at the paths given per value (confirmed present, not value-verified per rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          235,
+          235
+        ],
+        "section": "H8 library composition table, H8-6 row"
+      },
+      "claim_text": "| Scale-16 | H8-6 | 4 | 2 | 8 | 8 | 3 | 25 | **DEFERRED** |",
+      "values": [
+        {
+          "quantity": "Canon+ example count, condition H8-6 library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "Canon- example count, condition H8-6 library composition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "HP example count, condition H8-6 library composition",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HN example count, condition H8-6 library composition",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "Null example count, condition H8-6 library composition",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "Total example count, condition H8-6 library composition",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-16.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_scale-16.json records composition.canonical_positive/canonical_negative/hard_positive/hard_negative/null and total_examples at the paths given per value (confirmed present, not value-verified per rule 4). This document's own 'Config File' cell reads '**DEFERRED**' for this row, but prompts/configs/library_scale-16.json exists in the working tree with a matching composition structure (confirmed present, not value-verified per rule 4); flagged in case the DEFERRED label and file's existence are themselves in tension — not adjudicated here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          236,
+          236
+        ],
+        "section": "H8 library composition table, H8-7 row"
+      },
+      "claim_text": "| Scale-32 | H8-7 | 4 | 2 | 16 | 16 | 3 | 41 | **DEFERRED** |",
+      "values": [
+        {
+          "quantity": "Canon+ example count, condition H8-7 library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "Canon- example count, condition H8-7 library composition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "HP example count, condition H8-7 library composition",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HN example count, condition H8-7 library composition",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "Null example count, condition H8-7 library composition",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "Total example count, condition H8-7 library composition",
+          "value_verbatim": "41",
+          "value_parsed": 41,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-32.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_scale-32.json records composition.canonical_positive/canonical_negative/hard_positive/hard_negative/null and total_examples at the paths given per value (confirmed present, not value-verified per rule 4). This document's own 'Config File' cell reads '**DEFERRED**' for this row, but prompts/configs/library_scale-32.json exists in the working tree with a matching composition structure (confirmed present, not value-verified per rule 4); flagged in case the DEFERRED label and file's existence are themselves in tension — not adjudicated here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          239,
+          239
+        ],
+        "section": "H8 note — HP pool exhaustion and recognition-failure threshold"
+      },
+      "claim_text": "structurally exhausted at 4 recognition failures (>50m threshold). These conditions",
+      "values": [
+        {
+          "quantity": "count of recognition failures (>50 m from nearest detection) available in the HP pool",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "prompts/configs/library_plus-hp.json#$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "distance threshold (metres) used to define a 'recognition failure'",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": "$.composition.hard_positive"
+      },
+      "method": "read",
+      "notes": "The '4 recognition failures' figure matches composition.hard_positive=4 in every prompts/configs/library_*.json variant (HP is frozen at 4 across the library scaling table). The 50 m threshold is discussed in prose at docs/methodology/preregistration/decisions-log.md:375 ('Formally adopt a 50m distance threshold to distinguish recognition failures') but that is itself hand-written prose (never anchor prose to prose, rule 2); no underlying scored-distance artefact was located within this document's scope, so left anchor-unknown for that value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          240,
+          240
+        ],
+        "section": "H8 note — 1:1 HP:HN scaling constraint"
+      },
+      "claim_text": "collapse to Scale-8 under the 1:1 HP:HN constraint. Deferred to post-H10 when",
+      "values": [
+        {
+          "quantity": "HP:HN ratio numerator, scaling constraint under which Scale-16/32 collapse to Scale-8",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "HP:HN ratio denominator, scaling constraint",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered availability constraint at osf/preregistration.md:815 ('If fewer than 16 distinct HPs or HNs are available, Scale-32 (and possibly Scale-16) will be capped at the maximum available while preserving 1:1 ratio'); structurally corroborated by hard_positive==hard_negative in every prompts/configs/library_scale-*.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          172,
+          172
+        ],
+        "section": "H5 section — dual-track OFAT design cell count"
+      },
+      "claim_text": "**Dual-track OFAT design** (4 net new cells, 2 per track):",
+      "values": [
+        {
+          "quantity": "total count of net-new experimental cells added by the H5 dual-track OFAT design",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of net-new cells per track, H5 dual-track OFAT design",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/hypothesis-tracking.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Self-consistent with the Dual-track OFAT design table two lines below (lines 174-177 of this same document): each of Track 1 and Track 2 adds 2 'New' cells (Terse, Verbose), totalling 4 — not chased to an external artefact per rule 7 (this is the document's own design summary of the table it introduces, not a claim about upstream data); flagged anchor 'read' against the document's own table for triage's information, since no other artefact was searched for this specific count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          37,
+          37
+        ],
+        "section": "Exploratory Hypotheses table, H11 row"
+      },
+      "claim_text": "| H11 | Tile Size Effects | Tile dimensions | B | Complete (384 pathway closed) | 2026-03-15 |",
+      "values": [
+        {
+          "quantity": "tile edge length (px) of the H11 pathway marked closed/complete",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/h11/analysis_summary.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Borderline per rule 5 (numbers inside condition names are not claims, e.g. 'min6', 't0.3'); '384' here could be read either as a bare condition-name token ('the 384 pathway/track') or as an asserted fact that the 384 px tile-size investigation is the one now closed out. Included per the instrument's 'when in doubt, include' guidance. If treated as an asserted fact, it is corroborated by results/h11/analysis_summary.md's headline '384 px is the optimal tile size'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          296,
+          296
+        ],
+        "section": "Execution dependency chain diagram — H7 optimal temperature restated"
+      },
+      "claim_text": "Phase 2b: H7 (Temperature) → optimal T               ✓ COMPLETE (T=0.0)",
+      "values": [
+        {
+          "quantity": "temperature carried forward as optimal, H7 (restated in dependency-chain diagram)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the T=0.0 optimum already anchored for the line-212 H7 result claim above; kept as a separate claim row per full enumeration (rule 3, no sampling) since it is a distinct verbatim mention inside the execution dependency chain code block."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          304,
+          304
+        ],
+        "section": "Execution dependency chain diagram — H3 pool size restated"
+      },
+      "claim_text": "    ├── Phase 3a: H3 (Voting N=30)                     ✓ COMPLETE",
+      "values": [
+        {
+          "quantity": "consensus voting pool size (N), H3 (restated in dependency-chain diagram)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/results-60-tile-validation/phase3a-consensus/phase3a-comprehensive-results-report.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the N=30 pool size already anchored for the line-113 H3 status claim above; kept as a separate claim row per full enumeration since it is a distinct verbatim mention inside the execution dependency chain code block."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          308,
+          308
+        ],
+        "section": "Execution dependency chain diagram — H11 tile-size pathway restated"
+      },
+      "claim_text": "    └── H11 (Tile Size — exploratory)                  ✓ COMPLETE (384 closed)",
+      "values": [
+        {
+          "quantity": "tile edge length (px) of the H11 pathway marked closed (restated in dependency-chain diagram)",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/h11/analysis_summary.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Same borderline name-vs-fact consideration as the line-37 H11 table-row claim above (rule 5); included per 'when in doubt, include'. Corroborated by results/h11/analysis_summary.md's '384 px is the optimal tile size' headline."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          280,
+          280
+        ],
+        "section": "H9 note (2026-02-02) — frozen HP channel"
+      },
+      "claim_text": "HP channel is frozen: 4 slots, 4 examples, every HP appears in every pass. Only HN",
+      "values": [
+        {
+          "quantity": "count of HP 'slots' in the frozen H9 image-diversity design",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "count of HP examples in the frozen H9 image-diversity design",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.hard_examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": "$.composition.hard_positive"
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_plus-hp.json records composition.hard_positive=4 and the top-level hard_examples=4 (both fields present, confirmed not value-verified per rule 4), consistent with the 'HP channel is frozen: 4 slots, 4 examples' text."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          281,
+          282
+        ],
+        "section": "H9 note (2026-02-02) — HP pool exhaustion (recognition failures)"
+      },
+      "claim_text": "examples rotate across passes. HP diversity is untestable due to pool exhaustion (only\n4 recognition failures exist). HN rotation is the more important diversity dimension",
+      "values": [
+        {
+          "quantity": "count of recognition failures available for HP diversity testing",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": "$.composition.hard_positive"
+      },
+      "method": "read",
+      "notes": "Same underlying fact as the line-239 H8 note claim (composition.hard_positive=4 across library_*.json variants); kept as a separate claim row per full enumeration since it is a distinct verbatim mention in the H9 section."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          283,
+          283
+        ],
+        "section": "H9 note (2026-02-02) — FP:FN ratio motivating HN rotation priority"
+      },
+      "claim_text": "given that FPs outnumber FNs ~23:1. See Decision 11 in decisions-log.md.",
+      "values": [
+        {
+          "quantity": "approximate ratio of false positives to false negatives, numerator (motivating HN rotation over HP rotation as the diversity dimension)",
+          "value_verbatim": "23",
+          "value_parsed": 23,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "approximate ratio of false positives to false negatives, denominator",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "decisions-log.md:452-454 (Decision 11, cited by this same sentence) states 'HN rotation is the more important diversity dimension given that FPs outnumber FNs' WITHOUT a specific ratio figure, and is itself hand-written prose (never anchor prose to prose, rule 2). Repo-wide grep for '23:1' found no other occurrence of this specific ratio. No FP/FN count artefact was located within this document's scope to derive it arithmetically; left anchor-unknown for triage. The approx marker '~' is preserved in value_verbatim per v1.2 amendment 5 (via the claim_text span; individual value_verbatim fields are the bare digits per schema convention used elsewhere in this extraction)."
+    }
+  ]
+}

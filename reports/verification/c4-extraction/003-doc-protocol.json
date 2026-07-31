@@ -1,0 +1,83 @@
+{
+  "schema_version": "1.0",
+  "extracted_at": "2026-07-31T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/documentation-protocol.md",
+    "git_blob": "dd4b009be06e8cfe9aa02087fcb22f937d6ab865",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          59,
+          60
+        ],
+        "section": "Document Responsibilities — Decisions log (`decisions-log.md`) — Decisions"
+      },
+      "claim_text": "**Cadence**: Per-decision. Typically 1-3 per session when running\nexperiments; 0 for analysis-only sessions.",
+      "values": [
+        {
+          "quantity": "typical decisions-log entries per session while running experiments (low bound, protocol norm)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "entries per session",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "typical decisions-log entries per session while running experiments (high bound, protocol norm)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "entries per session",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "decisions-log entries per session for analysis-only sessions (protocol norm)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "entries per session",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "This is a documentation-protocol norm describing expected decisions-log cadence, not a reported outcome; no committed artefact decides it directly, though it could in principle be cross-checked by grouping decisions-log.md entry dates against session-log.md session boundaries. Included per the instrument's include-when-in-doubt rule since it is a genuine numeric assertion, flagged as a protocol guideline rather than a measured result for triage to adjudicate."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          90,
+          90
+        ],
+        "section": "Document Responsibilities — Results files (`results/`) — Per-phase outputs"
+      },
+      "claim_text": "**Cadence**: Once per phase, updated if results are revised (e.g., v2).",
+      "values": [
+        {
+          "quantity": "results-file update cadence, occurrences per phase (protocol norm)",
+          "value_verbatim": "Once",
+          "value_parsed": 1,
+          "unit": "per phase",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Documentation-protocol norm; 'v2' is a version string, out of C4 scope per rule 5. No committed artefact decides this cadence claim; included per the instrument's include-when-in-doubt rule, flagged as a protocol guideline rather than a measured result. Scope decision covering the rest of the document: apart from these two cadence lines, no other genuine quantitative claims were found — the remaining numeric-looking tokens are list-item markers (1.-4. in 'Anti-Patterns to Avoid'), an erratum identifier ('See E33', line 159, out of scope per rule 5), and the '384 tiles' phrase at line 52 ('closing 384 tiles'), which names the 384-pixel tile-size track (cf. rule 5's 'pv-diag-384' example) rather than asserting a tile count."
+    }
+  ]
+}
