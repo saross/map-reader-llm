@@ -213,41 +213,36 @@ Silence holds them over (2026-07-05 rule).
    blind calibration probes. The pattern he responded to: methods that
    measure their own reliability before asking to be trusted.
 
-## Session 121 — 2026-07-30 (candidates — pending Shawn's review)
+## Session 121 — 2026-07-30 (approved 2026-07-31)
 
-- **Candidate A**: Your two operational-memory checks changed real
-  outcomes — "check which pro model we ran" caught the registration
-  mislabelling the E57 Flash corners as Pro (collapsing the rerun to
-  all-Flash and a fifth of the cost), and "normally we try ~10x"
-  caught the patcher's too-shallow 3+3 ladder (the deeper sweep
-  recovered 10 more tiles). Both fired on operational norms no
-  checklist encoded.
-- **Candidate B**: The morning-rulings format (structured decision
-  batches with recommendations and pros/cons on request — E62 split,
-  H1 options, H8 (i)-vs-(iii)) let you rule on ~15 decision points in
-  one sitting, including reversing my H8 recommendation after asking
-  for the trade-offs. Worth keeping as the standard gate-morning shape?
-- **Candidate C**: Your "I need a fuller explanation here" on H1 —
-  rather than accepting the recommended default — is what surfaced the
-  option-(iv) run-it-now path, which then changed the study's
-  confirmatory headline. The gate question format should make "explain
-  further" as cheap as picking an option.
+**His operational-memory checks changed real outcomes.** "Check which
+pro model we ran" caught the registration mislabelling the E57 Flash
+corners as Pro (collapsing the rerun to all-Flash and a fifth of the
+cost), and "normally we try ~10x" caught the patcher's too-shallow 3+3
+ladder (the deeper sweep recovered 10 more tiles). Both fired on
+operational norms no checklist encoded.
 
-Candidates drafted at handoff; accept / edit / discard / replace.
-Held-over from earlier sessions (S118/S119/S120 pending sections above):
-silence continues to hold them.
+**The morning-rulings format stays as the standard gate-morning shape —
+with an explicit trade-off habit for the load-bearing calls.** The
+structured decision batches (recommendations attached, verbatim
+evidence, outcome-materiality labelled) let him rule on ~15 decision
+points in one sitting. His rider on accepting (verbatim): "On decisions
+that are actual 'close calls' or load-bearing, let's also get in the
+habit of explicitly looking at trade-offs — as soon as you did the
+deeper dive on H8 the indecision evaporated and the correct path became
+clear."
 
-### Working-notes candidate (also pending, same gate)
+**Two decision registers, two presentation depths.** His elaboration on
+the H1 "explain further" moment (verbatim): "a species of the
+load-bearing decision above where a deeper dive is needed — the brief
+presentation of options as per yesterday's morning rulings is *great*
+for straightforward decisions, but the entailed + load-bearing ones
+need a deeper dive. H1 and H8 were good examples of this." The
+calibration rule this sets: brief structured options for
+straightforward rulings; proactive trade-off analysis (not merely
+on-request) for entailed and load-bearing ones — H1 (outcome-material
+selection) and H8 (methods-defensibility choice) are the type
+specimens.
 
-- **Candidate WN-1 (Obs 375 if accepted)**: "The outcome-blind fork —
-  registering a never-executed contrast restored genuine blindness
-  exactly where selection was outcome-material." H1's three visible
-  candidate p-values spanned 0.004–0.38 (selection would have decided
-  the rejection set); the PI instead selected the never-run registered
-  CMT-0106 pooled contrast under the run-it-now policy, with its
-  reconstruction rule committed before computation; the result (null,
-  p = 0.1774) shrank the rejection set to {H2, H3, H7} against the
-  visible defaults' direction. Anchors:
-  reports/verification/family-fdr-registration.md §§ 5.1/9/11,
-  results/family-fdr/, phase2-rulings § 3.1. Paper-relevant (Methods —
-  statistical analysis; Discussion — preregistration practice).
+*(Working-notes candidate WN-1 from this session's gate was also
+accepted — promoted to Obs 375, the outcome-blind fork.)*

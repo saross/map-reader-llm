@@ -63,10 +63,14 @@ verified anchors. Inherit the per-era verifiability map
 (`reports/verification/phase2-gate-package.md` § 4): retest-era
 token-level claims are permanently unverifiable — flag, don't fight.
 
-**Carry-forwards**: pending user-obs candidates S118/S119/S120 + NEW
-S121 candidates A–C and working-notes candidate WN-1 (the outcome-blind
-fork; would be Obs 375) in `docs/notes/user-observations.md` — silence
-holds all; queued register re-anchoring (stale line ranges +
+**Carry-forwards**: S121 user-obs candidates A–C **ACCEPTED 2026-07-31**
+(with a standing calibration rule: brief structured options for
+straightforward rulings; PROACTIVE trade-off analysis for close-call /
+load-bearing / entailed decisions — H1 and H8 are the type specimens;
+recorded in `user-observations.md` S121 entry and the global
+scratchpad) and WN-1 **promoted to Obs 375** (the outcome-blind fork);
+S118/S119/S120 user-obs candidates in
+`docs/notes/user-observations.md` remain pending — silence holds; queued register re-anchoring (stale line ranges +
 E62–E71 decomposition) before any future census
 (`licence-census.json` `_resolution_note`); flash35 run_3 meta
 merge-repair residue (manifest 486 vs true 487, disclosed in the gate

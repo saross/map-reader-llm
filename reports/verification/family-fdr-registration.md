@@ -160,7 +160,7 @@ p-value: `comparisons[i].f1_p_value`.
 contrast 4 (`CMT-0106`) now.** The registration names four planned
 contrasts and designates none as headline; no omnibus/main-effect test
 across the five M/E levels was executed. Selection was outcome-material
-across the three *executed* candidates (p-values spanning 0.004 to 0.94):
+across the three *executed* candidates (p-values spanning 0.004 to 0.38):
 
 | option | contrast | artefact index | `f1_delta` | `f1_p_value` |
 | --- | --- | --- | --- | --- |
@@ -1034,6 +1034,18 @@ Verbatim record: `reports/verification/phase2-rulings-2026-07-30.md` § 3.
 ---
 
 ## Changelog
+
+### 2026-07-31 — Prose range corrected (documentation only)
+
+§ 5.1's lead-in said the three executed candidates' p-values "span
+0.004 to 0.94"; the option table (and the artefact) give 0.004, 0.006,
+and 0.38 — the 0.94 belonged to the elaboration limb discussed
+separately below the table, a residue of the pre-ruling draft wording.
+Corrected to 0.38. No family parameter, selection, or § 8 procedure is
+touched; the correction was caught by the Obs 375 writer's independent
+re-verification. (Registered-state integrity note: § 8.2's amendment
+rule concerns the family specification; this is a prose-accuracy fix
+outside that scope, recorded here for transparency.)
 
 ### 2026-07-30 — REGISTERED (same day; PI rulings incorporated)
 
