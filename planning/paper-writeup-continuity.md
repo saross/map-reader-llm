@@ -8,7 +8,63 @@ project state.
 
 ---
 
-## 🎯 NEXT SESSION (122) — PHASE 3 (C4 QUANTITATIVE SWEEP) [Session 121 CLOSED 2026-07-30; ran in Fable]
+## 🎯 NEXT SESSION (123) — PHASE 3 CONTINUATION: FLEET + TRIAGE [Session 122 IN PROGRESS 2026-07-31; ran in Fable]
+
+> **The controller is `planning/audit-charter.md` § 9** — unchanged.
+> **Phase 3 claimed (S122)**; deliverable 1 complete; fleet mid-flight.
+
+**What Session 122 did** (commits `75474970c`→`789d9ffbe`, ~30 commits,
+**US$0.00 API**): **Phase 3 claimed; the generated-file registry landed
+(deliverable 1, GATE 0 decision 2); the C4 machinery built, calibrated,
+and the extraction fleet started; the generated stratum ~80 %
+file-level verified.**
+(1) **Registry** `reports/verification/generated-file-registry.json`:
+2,334 mine files — 2,192 generated (100 % attributed via the 86-rule
+`apparatus/generator-map.json`, assembled from three read-only Opus
+attribution agents' write-site evidence), 142 hand-written, 7
+hand-edited-generated. Marker heuristic fails BOTH ways (7 hand-written
+files carry **Generated** lines; markerless generated families);
+`build_generated_file_registry.py --check` is the drift hook. **Two
+live clobber hazards for GATE 3**: hand-levelled `dawid-skene-v2`
+report.md (analyse_dawid_skene_v2.py:1391 still writes it) and
+`phase3d-experiment-e-results.md` (run_experiment_e.py:545).
+(2) **Machinery** (45 tier-1 tests): instrument v1.1
+(`apparatus/c4-extraction-instructions.md` — v1.1 rule: REGISTERED-value
+claims anchor to the lodged doc, never the executed config),
+`c4-claims.schema.json`, `validate_c4_extraction.py`,
+`lib_c4_compare.py` (quoted-precision match), `recompute_c4_claims.py`.
+(3) **Generated stratum** (`c4-regen/regen-results.jsonl`, probes
+0001–0005): evaluation.md 1,634/1,635 cell-verified on sapphire (1
+benign zero-detection case); threshold_sweep 81/81 byte-identical
+(+34 never-rendered summaries minted); manifest companions no-op-regen
+clean; 55map leaderboard byte-identical; sibling-JSON heuristic sweep
+122 CONSISTENT / 125 SUSPECT (renderer-constant noise → triage).
+**Finding worth an Obs (Shawn to rule)**: evaluation.md MCC/Sens/Spec
+columns are BOOTSTRAP MEANS (evaluate_detections.py:834,837), not
+point estimates — 439 files differ in the 3rd decimal.
+(4) **Extraction fleet**: calibration (calib-a/b) + 14 batch files
+committed, ~1,070 claims, ALL validator-clean; batch plan
+`apparatus/c4-batch-plan.json` (178 batches; 15 extracted, **163
+pending** — scope grew from Phase 0's 40–60-run estimate, flag at
+GATE 3). (5) **First full recompute**
+(`c4-recompute-report.json`, sapphire): 2,491 value checks — MATCH
+607 / **MISMATCH 30 (the S123 triage queue)** / SKIPPED 763 /
+UNRESOLVED 1,091 (376 file#path syntax the resolver must learn, 349
+re-anchor, 204 file-level, 89 non-JSON, 12 empty expressions =
+validator v1.2 gap).
+
+**Session 123's queue**: (a) triage the 30 MISMATCH rows (incl.
+calib-b's 2 registered-value re-anchors; b036's live 47-vs-57 errata
+count; b038's h11 internal ranges); (b) extend the resolver
+(file#path form) + validator v1.2 (per-value arithmetic check), rerun
+recompute; (c) continue the fleet (163 batches: methodology docs +
+results/ hand-written); (d) exact comparers for remaining generated
+families (calibration_autogen, tier_stability, per-arch tiers…); (e)
+then generate_c4_ledger.py + GATE 3 package.
+
+### [CLOSED 2026-07-30] Historical: the Session 122 brief follows
+
+## NEXT SESSION (122) — PHASE 3 (C4 QUANTITATIVE SWEEP) [Session 121 CLOSED 2026-07-30; ran in Fable]
 
 > **The controller is `planning/audit-charter.md` § 9** — unchanged.
 > **GATE 2 PASSED** (charter § 10 item 8); **Phase 3 is unlocked and is
