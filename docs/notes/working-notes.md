@@ -22675,3 +22675,397 @@ archive-never-delete does not cover derived artefacts; Session 123 2026-08-01.
 `results/conditions-manifest.json`;
 `outputs/h11/pv-diag-384/flash-high-text-n5/` (pools and `verified-v1-n*`
 cells); commits `63f8e50f4`, `857d5f714`, `f6116cba0`, `77bb342b4`.
+
+## Observation 378: At validator-gated extraction, the model-tier difference expressed itself as span convention, not recall — a blind Sonnet/Opus duplicate produced line-identical claim coverage and zero missed claims either way (Session 123, 2026-08-01)
+
+*Source anchors: `reports/verification/c4-triage/spot-audit/spot-audit-verdict-2026-07-31.md`
+(design at `:7–16`; head-to-head table at `:20–33`);
+`reports/verification/c4-extraction/014.json` (`extractor.model`
+`claude-sonnet-5`, `instrument_version` `1.2`);
+`reports/verification/c4-triage/spot-audit/014-opus-reference.json`
+(`extractor.model` `claude-opus-5[1m]`, same instrument);
+`docs/methodology/preregistration/hypothesis-tracking.md` (the shared
+target; blob `370e9bb01ef85bd75a5c5e78ca8fac59cfbd12c3`, which is also
+`HEAD:` for that file at repo state `8c23b41b4`);
+`reports/verification/phase3-rulings-2026-07-31.md` § 4 (the gate) and § 5
+(the gate discharged); `scripts/validate_c4_extraction.py` (the validator
+both agents cleared). All claim, value, coverage, and kind counts below
+were re-derived from the two JSON files on 2026-08-01, not copied from the
+verdict document.*
+
+### The finding
+
+Ruling 4 permitted Sonnet on the C4 extraction fleet's mechanical tail,
+gated on a spot-audit against an Opus duplicate. Batch b014 — the whole of
+`hypothesis-tracking.md` — was therefore extracted twice under instrument
+v1.2 against the identical git blob: once by `claude-sonnet-5`, once by
+`claude-opus-5[1m]` with no visibility of the Sonnet output. Both outputs
+were validator-clean on first submission, after each agent's own self-check
+loop.
+
+**Independently re-derived from the two files:**
+
+| measure | Sonnet (`014.json`) | Opus (`014-opus-reference.json`) |
+| :--- | --: | --: |
+| claims | 49 | 46 |
+| values | 127 | 114 |
+| mean values per claim | 2.59 | 2.48 |
+| distinct source lines covered | **54** | **54** |
+| lines covered by one side only | `214` | `223` |
+| `kind: count` values | 80 | 69 |
+| `kind: parameter` | 24 | 24 |
+| `kind: metric` | 11 | 12 |
+| `kind: physical` | 6 | 6 |
+| `kind: ratio` | 5 | 3 |
+| `kind: percentage` | 1 | 0 |
+
+**Coverage is line-identical.** Expanding every claim's `source.lines`
+`[a, b]` into a closed integer range and unioning gives 54 distinct lines
+on each side, intersection 53, union 55. The one line each side holds
+alone is a wrapped-span boundary, not a missed claim: Sonnet's `T=0.0
+carried forward` claim spans `213–214` where Opus stopped at `213`; Opus's
+`F1=0.609` claim spans `223–224` where Sonnet started at `224`. Every
+underlying value on those lines (`T=0.0`, `6`, `10`, `4`, `10`; `0.609`)
+appears in **both** files. **Zero missed claims in either direction.**
+
+**The only systematic difference is verbatim-span convention.** Opus keeps
+affixes attached inside `value_verbatim`; Sonnet strips them and records
+the bare numeral. Excluding two word-form verbatims present in both
+(`Three`, `twice`), Sonnet recorded **zero** verbatims carrying a
+non-numeric character; Opus recorded five distinct ones —
+`+0.09`, `+0.14`, `1:1`, `2×`, `~23:1`. Worked examples, same source
+lines:
+
+| source lines | Opus `value_verbatim` | Sonnet `value_verbatim` |
+| :--- | :--- | :--- |
+| `69–71` | `2×`, `+0.09`, `+0.14` | `0.05`, `2`, `0.09`, `0.14` |
+| `283` | `~23:1` (one `ratio`) | `23`, `1` (two `ratio`) |
+| `239–240` | `1:1` in one claim | `1`, `1`, split across two claims |
+| `212–214` | one claim (`212–213`) | three claims (`212`, `212–213`, `213–214`) |
+
+The harness parses both forms. The residual value-count gap is finer
+enumeration of small counts by Sonnet: `kind: count` is 80 vs 69, which
+accounts for 11 of the 13 extra values.
+
+Sonnet also applied the v1.1 registered-value rule unprompted, used
+schema-1.1 per-value arithmetic once, and surfaced a genuine stale
+reference the Opus run did not flag: `hypothesis-tracking.md:114` points
+readers to `results/phase3a-consensus/`, which does not exist in the
+working tree — re-verified on 2026-08-01. Sonnet anchored the claim to the
+surviving copy at
+`archive/results-60-tile-validation/phase3a-consensus/phase3a-comprehensive-results-report.md`
+and logged the absence in `claims[10].notes`.
+
+### Why this matters
+
+1. **Interpretation (offered as interpretation, not as a measurement):**
+   the validator + hard schema + agent self-check sandwich appears to
+   **flatten** the model-tier capability difference at this task shape.
+   Exhaustive span extraction against a schema that rejects malformed
+   output leaves little room for the tier gap to express itself as recall;
+   it surfaced instead as house style. The generalisation that does *not*
+   follow is that tiers are interchangeable — only that at a
+   heavily-constrained, mechanically-checkable task, the constraint is
+   doing work the model tier would otherwise have to do.
+2. **This is the empirical basis of ruling 5** (`§ 5`, Session 123): the
+   Sonnet tail runs free on ruling 4's document classes, Opus stays the
+   default for dense results prose, and new task kinds or radically
+   different sources get a fresh Opus-duplicate comparison before Sonnet
+   scales there. At the projected fleet size, the Sonnet share is material
+   top-tier-credit conservation, so the gate mattered financially as well
+   as evidentially.
+3. **Extraction totals are extractor-dependent, and the paper should not
+   quote them as corpus properties.** The same document yields 127 or 114
+   values depending on who reads it — an 11 % swing. The first full
+   recompute's "2,491 value checks" (commit `789d9ffbe`;
+   `_meta.counts` MATCH 607 + SKIPPED 763 + UNRESOLVED 1091 + MISMATCH 30)
+   is therefore a property of the fleet's composition, not of the corpus.
+   Denominators built from it are comparable within a wave, not across
+   re-extractions.
+
+### Caveats / methodological notes
+
+- **n = 1 document, one document class.** b014 is a hand-written tracking
+  document: table rows, status lines, short prose. The finding does not
+  transfer to dense results prose, and ruling 5 explicitly does not let it.
+  The b003 Sonnet batches (`003-doc-index`, `003-doc-protocol`,
+  `003-mcc-perm`, 1 + 2 + 15 claims) have **no** Opus duplicate; their
+  quality notes in the verdict document are single-rater judgements.
+- **The validator does not check recall.** Coverage identity was
+  established *post hoc* by comparing two files, not by any gate in the
+  pipeline. A single Sonnet run that silently dropped a claim would have
+  passed the validator exactly as cleanly. The reassurance here comes from
+  the duplicate, and duplicates are not run at fleet scale.
+- **`extractor.model` is self-reported** by the agent writing the file. It
+  is a record of intent, not independent attestation of which model
+  produced the JSON.
+- **Not fully independent in every respect.** The two runs shared the
+  instrument, the schema, and the self-check protocol; only the output was
+  blind. Convention convergence in the *anchoring* rules may partly reflect
+  the instrument's specificity rather than agreement between models.
+- **The tier flattening cuts both ways** — see **[[Obs 379]]**: the batch
+  that produced the session's worst harness artefacts (`052.json`) was
+  extracted by `claude-opus-5`, under the earlier instrument v1.1. Tier did
+  not protect against that defect class; the instrument version did.
+- Paper-relevant sections: Methods (verification apparatus, model
+  allocation across the extraction fleet); any statement about how the
+  quantitative-claim census was produced.
+
+### Findable later
+
+Sonnet Opus duplicate extraction; b014 head-to-head; spot-audit verdict
+2026-07-31; model tier flattened by validator; span convention not recall;
+zero missed claims either direction; 49 vs 46 claims; 127 vs 114 values;
+54 lines covered each; line 214 vs line 223 wrapped span; affix retention
+`2×` `+0.09` `+0.14` `~23:1` `1:1`; Sonnet splits affixes; count kind 80
+vs 69; mean values per claim 2.59 vs 2.48; blob
+370e9bb01ef85bd75a5c5e78ca8fac59cfbd12c3; extractor.model claude-sonnet-5
+claude-opus-5[1m]; instrument v1.2; validator-clean first submission;
+ruling 4 gate ruling 5 gate discharged; Sonnet fleet tail runs free;
+top-tier-credit conservation; stale reference results/phase3a-consensus
+does not exist; hypothesis-tracking.md line 114; 2,491 value checks
+extractor-dependent denominator; Session 123 2026-08-01.
+
+### Related observations and artefacts
+
+- **[[Obs 379]]** (silent anchor-path fallbacks manufacture wrong-quantity
+  comparisons) — the companion finding from the same session and the same
+  fleet: what the validator sandwich did *not* catch. Read together, the
+  pair says the gate's strength is schema conformance, not semantic
+  correctness of the anchoring.
+- **[[Obs 377]]** (round-4 refutation of the triager's causal story for
+  four of five flagged cells) and **[[Obs 376]]** (the regen-0002b writer
+  corrected the author's probe record) — the two prior cases where a blind
+  re-derivation by a fresh context corrected the record. Ruling 11 § 11
+  generalises all three into standing practice; this Obs is the case where
+  the independent duplicate *confirmed* rather than refuted, which is the
+  outcome that makes the pattern trustworthy.
+- **[[Obs 314]]** (agent context-biasing as a distinct reasoning failure
+  mode) — the contrast case: on an open-ended identification task with no
+  schema and no validator, agent output degraded in a way no mechanical
+  gate would have caught. The flattening claimed here is specific to
+  constrained, checkable tasks.
+- **[[Obs 353]]** (non-isolated background agents share the working tree)
+  — the other operational finding about running agent fleets on this
+  project; both bear on how Phase 3 fleet work is scheduled and priced.
+
+**Artefacts**:
+`reports/verification/c4-triage/spot-audit/spot-audit-verdict-2026-07-31.md`;
+`reports/verification/c4-extraction/014.json`;
+`reports/verification/c4-triage/spot-audit/014-opus-reference.json`;
+`reports/verification/c4-extraction/003-doc-index.json`,
+`003-doc-protocol.json`, `003-mcc-perm.json` (the ungated Sonnet b003
+batches); `docs/methodology/preregistration/hypothesis-tracking.md`
+(`:114`, `:212–214`, `:223–224`);
+`reports/verification/phase3-rulings-2026-07-31.md` (§ 4, § 5, § 11);
+`reports/verification/apparatus/c4-extraction-instructions.md` (instrument
+v1.2); `scripts/validate_c4_extraction.py`;
+`docs/notes/reflections/llm-observations.md` (Session-123 entry, the
+reflections-layer companion); commits `789d9ffbe`, `8c23b41b4`.
+
+## Observation 379: A silent anchor-path fallback manufactured confident wrong-quantity comparisons — "5 passes" was checked against a temperature of 0.7, and 7 of the first recompute's 30 MISMATCHes were the instrument, not the documents (Session 123, 2026-08-01)
+
+*Source anchors: `scripts/recompute_c4_claims.py` (`:196` the fallback,
+`:197–202` the read branch, `:211–212` the exception handler, `:50`
+`MECHANICAL`); the first full recompute report at commit `789d9ffbe`
+(`reports/verification/c4-recompute-report.json`, `_meta.counts`) versus
+the current post-repair report at `8c23b41b4`;
+`reports/verification/c4-triage/mismatch-triage-2026-07-31.json` (`rows`,
+batch `052`; `addendum_round2_3._scope` and class `043-arm-pool-rebind`);
+`reports/verification/c4-extraction/052.json` (`extractor.model`
+`claude-opus-5`, `instrument_version` `1.1`);
+`reports/verification/apparatus/c4-extraction-instructions.md` (`:125–132`,
+v1.2 amendment 3); `scripts/validate_c4_extraction.py` (`:102–141`);
+`reports/token-load-audit-2026-06-12.md` (`:48`, `:65`, `:82`, `:92`);
+`reports/verification/phase3-rulings-2026-07-31.md` § 8, § 11. Pre-repair
+row states were re-derived by reading the extraction files and the
+recompute report as they stood at `789d9ffbe`, on 2026-08-01.*
+
+### The finding
+
+`recompute_c4_claims.py` resolves a `read` value against its own JSONPath,
+falling back to the claim anchor's path when the value has none:
+
+```python
+path = value.get("path") or (anchor.get("path") if anchor else None)
+```
+
+The word "fallback" does not appear anywhere in that file — it is an
+unnamed `or` idiom, `:196`. When it fires and the anchor path resolves, the
+harness compares the quoted value against **a different quantity** and
+emits a confident MISMATCH with a computed `abs_error`. Nothing errors: the
+handler at `:211–212` catches only `KeyError`, `ValueError`, `OSError`, and
+`JSONDecodeError`, and a successful read of the wrong path raises none of
+them.
+
+**The four pass-count rows** (`reports/token-load-audit-2026-06-12.md`
+section headings of the form "### 3.1 text-min (5 passes; minimal
+thinking, T = 0.7)"), as they stood in the first full recompute:
+
+| row | source line | quoted | fell back to | compared against | `abs_error` | after repair |
+| :--- | :--- | :--- | :--- | --: | --: | :--- |
+| `052#13[0]` | `:48` | `5` | `$.configuration.temperature` | 0.7 | 4.3 | SKIPPED |
+| `052#20[0]` | `:65` | `5` | `$.configuration.temperature` | 0.7 | 4.3 | SKIPPED |
+| `052#28[0]` | `:82` | `5` | `$.configuration.temperature` | 0.3 | 4.7 | SKIPPED |
+| `052#33[0]` | `:92` | `5` | `$.configuration.temperature` | 0.7 | 4.3 | SKIPPED |
+
+The quoted `5` is correct: each of the four proposer directories holds
+`run_1` … `run_5`, verified on disk (5, 5, 5, 5). A pass count is not a
+scalar in any meta — it is the count of `run_*` directories — so the value
+had no path to give, and the fallback supplied the claim anchor's
+temperature path instead.
+
+**The census — 7 of 30, and all in one batch.** Re-running the pre-repair
+extraction files against the pre-repair report, I classified every one of
+the first recompute's 30 MISMATCH rows by whether the value was pathless in
+a multi-value claim whose anchor carried a path. Seven qualify (23 % of the
+MISMATCH headline), every one of them in batch `052`:
+
+| kind | rows | example |
+| :--- | :--- | :--- |
+| **wrong quantity** | 5 | the four pass-counts above, plus `052#48[0]`: `1,502` input tokens **per tile** compared against `$.usage_stats.total_input_tokens` = 731,474, `abs_error` **729,972** |
+| **wrong instance** | 2 | `052#22[0]` `17,040` and `052#34[1]` `17,084` — range minima living in a sibling run's meta, compared against `run_1`'s `items_processed` (17,057 and 17,090) |
+
+The two wrong-instance rows are the benign form: the right quantity read
+from the wrong file, error of 17 and 6. The five wrong-quantity rows are
+the pathological form — a pass count against a temperature, a per-tile rate
+against a per-pass total — where the `abs_error` column is not merely
+wrong but meaningless, because the operands are incommensurable.
+
+**The trap needs a well-formed anchor.** Had the anchor also been pathless,
+`:197–198` would have emitted `UNRESOLVED — read claim without anchor
+path`, which is honest and cheap. The failure mode requires a
+plausible-looking anchor path, so it strikes hardest exactly where the
+extraction looks healthiest.
+
+**The repair, as landed.** Instrument v1.2 amendment 3 (`:125–132`) forbids
+pathless values in multi-value claims and names this case in its own text —
+"the pass-count-vs-temperature trap". The four pass-count values were moved
+to `method: "recompute-script"` (deferred scope), which the harness skips
+rather than mis-compares; they now read SKIPPED in the current report.
+`052#48[0]` was repaired to `arithmetic` with expression `a/b`
+(731,474 / 487 = 1,501.998 → `1,502`) and now MATCHes; `052#22[0]` and
+`052#34[1]` got amendment 2's cross-file `file#jsonpath` locators and now
+MATCH.
+
+### Why this matters
+
+1. **The general principle for verification tooling: a fallback that can
+   change *what question is being asked* must fail loudly.** Defaulting is
+   a reasonable idiom when it substitutes a value of the same kind. It is
+   never reasonable when it substitutes a different *quantity*, because the
+   output is then not a weaker answer but an answer to another question,
+   dressed in the same schema. `UNRESOLVED` costs a triage row;
+   `MISMATCH` on incommensurable operands costs an adjudication, and
+   invites a narrative to explain it.
+2. **Verification headlines need the instrument-defect class separated
+   before they are quoted.** "30 MISMATCH rows" reads as 30 documents
+   caught misquoting their sources. Seven of the 30 were the harness
+   mis-reading well-formed extractions; the documents were innocent. Any
+   Methods-section figure of the form "N claims failed recomputation" must
+   net out this class or it overstates document error by, here, 23 %.
+3. **The same failure signature recurred one layer up, at the human /
+   triage layer, in the same session.** In rounds 2 and 3, batch `043`'s
+   verifier-completeness rows were adjudicated as era divergence caused by
+   recovery campaigns rebuilding consensus pools — a causal story built on
+   top of numbers that came from binding the full `consensus/` pool where
+   the arm-specific `consensus-nK/` pool was meant. Round 4 re-bound them:
+   class `043-arm-pool-rebind`, 8 rows, every one `expected_after_repair:
+   MATCH`, each carrying the note "CORRECTED 2026-08-01 (Obs 377 writer's
+   independent refutation of the round-2/3 adjudication)". Wrong operand →
+   confident number → plausible explanation is a signature that recurs at
+   every layer of a verification stack, including the layer staffed by
+   reasoning agents and humans. Ruling 11 § 11 is the standing response.
+
+### Caveats / methodological notes
+
+- **The repair is documentary, not structural — the defect is still
+  live.** `recompute_c4_claims.py:196` still contains the fallback, and
+  `validate_c4_extraction.py` still does not check for it: the validator
+  enforces amendment 1 (every effective-`arithmetic` value needs an
+  expression and operands, `:123–140`) but has no rule against a pathless
+  `read` value in a multi-value claim. Amendment 3 caps growth of the class
+  by instruction only. Ruling 8 schedules a dedicated repair pass over the
+  ~204 pathless file-level values as the first item of Session 124; that
+  pass drains the backlog but does not close the hole in the harness.
+- **Silent MATCHes are unquantified.** The census counts only fallback
+  rows that surfaced *as MISMATCH*. A pathless value whose fallback happens
+  to resolve to a number equal to the quoted one emerges as a spurious
+  MATCH, and nothing in the pipeline currently flags it. Size of that class:
+  unknown, and not estimable from the report alone.
+- **Census scope is the first recompute's 30 MISMATCH rows only.** Rounds
+  2 and 3 surfaced a further 80 first-time-checked MISMATCH rows
+  (`addendum_round2_3._scope`); those were not classified for this failure
+  mode here, so 7/30 is a rate within one wave, not a fleet-wide figure.
+- **Not a Sonnet-tier defect.** `052.json` records `extractor.model`
+  `claude-opus-5` under instrument v1.1 — the top-tier model, before the
+  amendment existed. The determining variable was instrument version, not
+  model tier (cf. **[[Obs 378]]**).
+- **The triage caught all seven.** This is a story about a hazard and its
+  cost in adjudication effort, not about a wrong number reaching the paper:
+  every row was dispositioned `EXTRACTION-REPAIR`, and no quoted figure in
+  `token-load-audit-2026-06-12.md` was found wanting.
+- Paper-relevant sections: Methods (verification apparatus and its known
+  failure modes); any reported count of failed claim recomputations.
+
+### Findable later
+
+anchor-path fallback; pathless value falls back to anchor.path; silent
+fallback wrong quantity; pass-count-vs-temperature trap; "5" compared
+against 0.7; abs_error 4.3; abs_error 4.7; 052#13 052#20 052#28 052#33;
+052#48 1,502 vs 731,474 abs_error 729,972; 052#22 17,040; 052#34 17,084;
+7 of 30 MISMATCH rows were instrument defects; 23 % of the MISMATCH
+headline; recompute_c4_claims.py:196; `value.get("path") or anchor.get`;
+UNRESOLVED read claim without anchor path; instrument v1.2 amendment 3 no
+pathless values in multi-value claims; amendment 2 cross-file locators
+file#jsonpath; method recompute-script deferred scope; validate_c4_extraction.py
+does not enforce amendment 3; ruling 8 ~204 pathless file-level values;
+043-arm-pool-rebind 8 rows; wrong operand confident number plausible
+explanation; fail loudly not fall back; token-load-audit-2026-06-12.md
+lines 48 65 82 92; run_1..run_5; commit 789d9ffbe first full recompute
+2,491 value checks; Session 123 2026-08-01.
+
+### Related observations and artefacts
+
+- **[[Obs 377]]** (the four flagged cells were a sub-pool operand-binding
+  artefact, not recovery-campaign damage) — the same failure signature at
+  the adjudication layer, and the reason ruling 11 exists. Obs 377 is the
+  wrong-operand case that was *explained* before it was *checked*; this Obs
+  is the wrong-operand case that was caught mechanically because the
+  quantities were absurd enough (a pass count of 5 against 0.7) to be
+  self-evidently incommensurable. The difference between the two outcomes
+  is whether the wrong number looked plausible.
+- **[[Obs 378]]** (model tier expressed itself as span convention, not
+  recall) — the companion: the validator + schema sandwich flattens tier
+  differences precisely because it checks *conformance*. This Obs is the
+  complement, showing what conformance-checking does not reach — whether
+  the anchor points at the quantity the sentence is about.
+- **[[Obs 327]]** (building the conditions manifest surfaced ~12
+  never-scored detection outputs — a schema as completeness audit) — the
+  optimistic case of the same mechanism: a schema strict enough to reject
+  an incomplete record turns validation failure into a discovery signal.
+  Here the schema was *permissive* in one field (`path: null` allowed
+  everywhere), and the permissiveness propagated into wrong answers. Schema
+  strictness is an audit instrument in both directions.
+- **[[Obs 353]]** (non-isolated background agents share the working tree)
+  — the other case where a convenience default in the tooling produced
+  silent cross-contamination rather than a loud failure.
+
+**Artefacts**: `scripts/recompute_c4_claims.py` (`:196`, `:197–202`,
+`:211–212`); `scripts/validate_c4_extraction.py` (`:102–141`);
+`reports/verification/c4-recompute-report.json` (current, post-repair) and
+its state at commit `789d9ffbe` (`_meta.counts`: MATCH 607, SKIPPED 763,
+UNRESOLVED 1091, MISMATCH 30);
+`reports/verification/c4-triage/mismatch-triage-2026-07-31.json` (batch
+`052` rows; `addendum_round2_3`, class `043-arm-pool-rebind`);
+`reports/verification/c4-extraction/052.json` (`claims[13]`, `[20]`,
+`[28]`, `[33]`, `[48]`, `[22]`, `[34]`);
+`reports/verification/apparatus/c4-extraction-instructions.md` (`:125–132`);
+`reports/token-load-audit-2026-06-12.md` (`:48`, `:65`, `:82`, `:92`);
+`reports/verification/phase3-rulings-2026-07-31.md` (§ 8, § 11);
+`outputs/55maps-text-min-generalisation/`,
+`outputs/55maps-text-high-generalisation/`,
+`outputs/55maps-text-high-t0.3-generalisation/`,
+`outputs/55maps-image-generalisation/` (the `run_1` … `run_5` proposer
+directories); commits `789d9ffbe`, `187cc6a45`, `692d6f564`, `74f258219`,
+`209ab2bfe`.
