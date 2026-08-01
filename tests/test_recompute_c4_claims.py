@@ -61,12 +61,60 @@ def test_read_match_at_quoted_precision(anchored_repo):
 
 @pytest.mark.tier1
 def test_read_mismatch_and_len_prefix(anchored_repo):
-    claim = make_claim(values=[val("0.900"), val("3", path="len:$.features")],
+    # Multi-value claims need explicit per-value paths (v1.2 amendment 3).
+    claim = make_claim(values=[val("0.900", path="$.results['20m'].f1"),
+                               val("3", path="len:$.features")],
                        anchor={"file": "results/eval.json",
                                "path": "$.results['20m'].f1"})
     rows = process_claim("b", 0, claim)
     assert rows[0]["status"] == "MISMATCH"
     assert rows[1]["status"] == "MATCH" and rows[1]["mode"] == "exact"
+
+
+@pytest.mark.tier1
+def test_multi_value_fallback_refused(anchored_repo):
+    """Obs 379: a pathless value in a multi-value claim must fail loudly,
+    never inherit the claim anchor's path (v1.2 amendment 3)."""
+    claim = make_claim(values=[val("5"), val("3", path="len:$.features")],
+                       anchor={"file": "results/eval.json",
+                               "path": "$.results['20m'].f1"})
+    rows = process_claim("b", 0, claim)
+    assert rows[0]["status"] == "UNRESOLVED"
+    assert "amendment 3" in rows[0]["reason"]
+    assert rows[1]["status"] == "MATCH"  # explicit paths still resolve
+
+
+@pytest.mark.tier1
+def test_single_value_fallback_survives(anchored_repo):
+    """For a single-value claim the anchor path IS the claim's locator —
+    the fallback is definitionally correct and must keep working."""
+    claim = make_claim(values=[val("0.890")],
+                       anchor={"file": "results/eval.json",
+                               "path": "$.results['20m'].f1"})
+    (row,) = process_claim("b", 0, claim)
+    assert row["status"] == "MATCH" and row["mode"] == "round"
+
+
+@pytest.mark.tier1
+def test_non_json_anchor_reasons(anchored_repo):
+    """Non-JSON anchors get the triage-scope reason whether or not a
+    path is present; a cross-file locator into JSON still resolves."""
+    (anchored_repo / "notes.md").write_text("prose\n")
+    pathless = make_claim(values=[val("20")],
+                          anchor={"file": "notes.md", "path": None})
+    (row,) = process_claim("b", 0, pathless)
+    assert row["status"] == "UNRESOLVED" and "non-JSON anchor" in row["reason"]
+
+    with_path = make_claim(values=[val("20", path="$.x")],
+                           anchor={"file": "notes.md", "path": None})
+    (row,) = process_claim("b", 0, with_path)
+    assert row["status"] == "UNRESOLVED" and "non-JSON anchor" in row["reason"]
+
+    crossfile = make_claim(
+        values=[val("3", path="results/eval.json#len:$.features")],
+        anchor={"file": "notes.md", "path": None})
+    (row,) = process_claim("b", 0, crossfile)
+    assert row["status"] == "MATCH" and row["mode"] == "exact"
 
 
 @pytest.mark.tier1
@@ -103,13 +151,24 @@ def test_unresolved_and_skipped_buckets(anchored_repo):
     (row,) = process_claim("b", 0, historical)
     assert row["status"] == "SKIPPED"
 
-    # Per-value method override: one live read, one historical, same span.
-    mixed = make_claim(values=[val("0.890"), val("0.850", method="historical")],
+    # Per-value method override: one live read, one historical, same
+    # span. The read value needs its own path — amendment 3 is strict
+    # about multi-VALUE claims even when only one value is a live read,
+    # because the anchor path could locate the historical quantity.
+    mixed = make_claim(values=[val("0.890", path="$.results['20m'].f1"),
+                               val("0.850", method="historical")],
                        anchor={"file": "results/eval.json",
                                "path": "$.results['20m'].f1"})
     rows = process_claim("b", 0, mixed)
     assert rows[0]["status"] == "MATCH"
     assert rows[1]["status"] == "SKIPPED"
+
+    pathless_mixed = make_claim(values=[val("0.890"),
+                                        val("0.850", method="historical")],
+                                anchor={"file": "results/eval.json",
+                                        "path": "$.results['20m'].f1"})
+    rows = process_claim("b", 0, pathless_mixed)
+    assert rows[0]["status"] == "UNRESOLVED" and "amendment 3" in rows[0]["reason"]
 
 
 @pytest.mark.tier1

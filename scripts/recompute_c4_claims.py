@@ -16,6 +16,12 @@ Per-value statuses:
 - ``APPROX`` — approx-marked quote (``~``); computed error recorded,
   triage decides.
 - ``UNRESOLVED`` — anchor/path/operand failed to resolve (reason given).
+  Includes the instrument v1.2 amendment 3 refusal: a pathless value in
+  a multi-value claim never inherits the claim anchor's path (Obs 379 —
+  the silent fallback compared pass counts against temperatures); the
+  fallback survives only for single-value claims, where the anchor path
+  is by definition the claim's locator. Non-JSON anchors get a distinct
+  ``triage scope`` reason whether or not a path is present.
 - ``SKIPPED`` — method out of mechanical scope (recompute-script,
   regen-diff, historical, unverifiable-era, external, anchor-unknown).
 
@@ -193,11 +199,31 @@ def process_claim(batch: str, index: int, claim: dict) -> list[dict]:
             continue
         try:
             if method == "read":
-                path = value.get("path") or (anchor.get("path") if anchor else None)
-                if not anchor or not path:
+                own_path = value.get("path")
+                anchor_path = anchor.get("path") if anchor else None
+                anchor_file = anchor.get("file") if anchor else None
+                effective = own_path or anchor_path
+                # A cross-file locator names its own source, so a
+                # non-JSON claim anchor does not block resolution.
+                crosses = bool(effective) and "#" in effective \
+                    and not effective.startswith(("$", "len:"))
+                if anchor_file and not crosses \
+                        and not anchor_file.endswith((".json", ".geojson")):
+                    row.update(status="UNRESOLVED",
+                               reason=f"non-JSON anchor {anchor_file} (triage scope)")
+                elif not own_path and anchor_path and len(claim["values"]) > 1:
+                    # Obs 379: the silent anchor-path fallback compared
+                    # pass counts against temperatures. Instrument v1.2
+                    # amendment 3 forbids this configuration — refuse it
+                    # loudly rather than compare the wrong quantity.
+                    row.update(status="UNRESOLVED",
+                               reason="pathless value in multi-value claim "
+                                      "(v1.2 amendment 3) — anchor-path "
+                                      "fallback refused")
+                elif not anchor or not effective:
                     row.update(status="UNRESOLVED", reason="read claim without anchor path")
                 else:
-                    actual = resolve_anchor_value(anchor["file"], path)
+                    actual = resolve_anchor_value(anchor_file, effective)
                     row.update(compare(value["value_verbatim"], actual,
                                        unit=value.get("unit")))
             else:  # arithmetic — value-level expression (schema 1.1) wins

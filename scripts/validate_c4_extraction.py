@@ -14,7 +14,11 @@ Checks, in order (mirroring ``validate_commitments.py``):
    ``anchor-unknown`` / ``historical`` / ``unverifiable-era`` /
    ``external``; method ``arithmetic`` requires ``expression`` plus
    ``operands`` whose names cover the expression's variables; anchored
-   files must exist in the working tree.
+   files must exist in the working tree; in a multi-value claim whose
+   anchor carries a path, every effective-``read`` value must carry its
+   own ``path`` (instrument v1.2 amendment 3 — the recompute harness
+   refuses the anchor-path fallback there, because it silently compares
+   the wrong quantity; Obs 379).
 4. **Source blob pinning**: the recorded ``git_blob`` matches the
    working tree (detects drift between extraction and validation).
 
@@ -138,6 +142,18 @@ def validate_file(path: Path, validator: jsonschema.Draft202012Validator) -> lis
             for op in operands:
                 if not (REPO_ROOT / op["file"]).exists():
                     errors.append(f"{tag}: operand file missing: {op['file']}")
+        # v1.2 amendment 3: in a multi-value claim whose anchor carries
+        # a path, a pathless read value would silently inherit that path
+        # at recompute time and be compared against the wrong quantity
+        # (Obs 379: "5 passes" vs a temperature of 0.7). Require an
+        # explicit per-value path in that configuration.
+        if len(claim["values"]) > 1 and anchor.get("path"):
+            for j, value in enumerate(claim["values"]):
+                if (value.get("method") or method) == "read" and not value.get("path"):
+                    errors.append(
+                        f"{tag}: values[{j}] pathless read in a multi-value claim "
+                        "with an anchored path (v1.2 amendment 3 — the recompute "
+                        "harness refuses the anchor-path fallback)")
     return errors
 
 
