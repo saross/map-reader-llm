@@ -23330,3 +23330,224 @@ MISMATCH 123, APPROX 7); `scripts/recompute_c4_claims.py` (`:291`);
 `planning/paper-writeup-continuity.md` (`:73–75`); commits `b10aa7e1c`
 (era), `414ee8a4b` and `c6b5e6b10` (the overwrites), `189e9b866` (the
 doc's only post-era edit), `9fa55c684` (wave-2 triage landing).
+
+## Observation 381: Wrong-control sampling — a set-level mechanism claim checked on one convenient member drew an untouched control, and the ruling-11 blind pass corrected the record for the third consecutive session (Session 124, 2026-08-01)
+
+*Source anchors:
+`reports/verification/c4-triage/mismatch-triage-2026-08-01.json`
+(`_meta.verification`; `_meta.triager`; family `002-session78-meta-overwrite`
+— `disposition`, `mechanism`, `evidence`);
+`reports/verification/phase3-rulings-2026-07-31.md` § 11 (PI ruling verbatim);
+commit `9fa55c684` (the triage landing) and `b46c59fc0` (Obs 380);
+the 14 tracked
+`outputs/h11/pv-diag-384/*/*/session-78-matrix/verified-*/run.meta.json`
+files, era commit `b10aa7e1c`;
+`~/personal-assistant/data/scratchpads/map-reader-llm.md` (`:49–61`, the
+triager's own same-day record — outside the repo, so not a durable
+project anchor). The 7/14 census, the per-pool name pattern, and the era
+sums below were re-derived independently on 2026-08-01 by blob-comparing
+each meta at `b10aa7e1c` against `HEAD`.*
+
+### The finding
+
+The ruling-11 independent-verification pattern caught a wrong adjudication
+for the third consecutive session, and this instance isolates a specific,
+generalisable failure mode: **wrong-control sampling**.
+
+During Session-124 wave-2 triage, the triager (the interactive session
+itself, `_meta.triager`: "Claude Fable 5 interactive session (Session 124)")
+adjudicated the four batch-002 cost/token MISMATCH rows — `002#6[2]`,
+`002#12[3]`, `002#12[4]`, `002#12[5]` — as **SNAPSHOT-DEFECT**, meaning the
+document's figures were unreproducible from committed artefacts. The
+evidence base for that call was the git history of **one** of the 14
+`run.meta.json` operands. It showed a single 2026-04-25 commit, from which
+the triager generalised "metas are era-stable" to the whole set and built
+a mechanism narrative on it (the figures came from operator console totals
+rather than the artefacts). The narrative was plausible and wrong.
+
+The ruling-11 blind pass — a fresh context given only the raw mismatch
+rows, with no dispositions — checked all 14. Seven had been overwritten in
+place by 2026-05 recovery cleanups, and the document's figures reproduce
+**exactly** at its authoring commit `b10aa7e1c`. The triager's sampled meta
+was one of the seven untouched controls. The draft was refuted before
+ledger emission; the final disposition is **SNAPSHOT-DIVERGENCE** —
+document innocent, artefacts moved.
+
+**Why one draw was worse than a coin flip.** The damage was not scattered
+across the 14; it tracked a nameable subset. Every `-text`-suffixed cell
+was overwritten, and exactly one un-suffixed cell was:
+
+| cell | image pool | text pool |
+| :--- | :--- | :--- |
+| `verified-adversarial` | control | control |
+| `verified-brief` | control | control |
+| `verified-checklist` | **overwritten** | control |
+| `verified-comparative` | control | control |
+| `verified-adversarial-text` | overwritten | overwritten |
+| `verified-brief-text` | overwritten | overwritten |
+| `verified-checklist-text` | overwritten | overwritten |
+
+Six of the seven un-suffixed cells are controls, and `verified-adversarial`
+— the first member of `verified-*` in glob order, in **both** pools — is a
+control. A convenience sample is not a random draw: it favours the
+first-listed, plainest-named member, and here that selection rule lands on
+an untouched artefact with near-certainty. When damage correlates with a
+subset-defining property, convenience sampling is not merely risky, it is
+actively anti-correlated with detection.
+
+### Why this matters
+
+1. **The wrong disposition would have buried Obs 380, not just mislabelled
+   a row.** SNAPSHOT-DEFECT closes the question — the document is blamed,
+   the artefacts are presumed sound, and the investigation ends.
+   SNAPSHOT-DIVERGENCE opens it, and opening it is what produced Obs 380:
+   `run.meta.json` is last-writer-wins, and $30.95 of real spend plus
+   23,071 requests now exist only in git history. A verification apparatus
+   that blames documents for artefact drift does not merely record a false
+   blemish; it suppresses the artefact-integrity finding underneath. The
+   same blind pass that refuted the draft established the replacement
+   finding — one pass, two products.
+2. **Ruling 11 has now earned its cost three times running.** The PI's
+   framing when systematising it ("We should systematise the
+   independent-verification pattern wherever possible, it's the way to be
+   sure about things", § 11) is now backed by a 3-for-3 record of material
+   corrections, each landing *before* the artefact it would have
+   contaminated:
+
+   | catch | session | trigger | what the blind pass corrected |
+   | :--- | :--- | :--- | :--- |
+   | 1 | S122 | Obs 376 / regen-0002b | writer corrected the author's probe record |
+   | 2 | S123 | Obs 377 / round-4 | writer refuted the triager's causal story for 4 of 5 cells |
+   | 3 | S124 | this triage (`9fa55c684`) | blind pass refuted family-A: SNAPSHOT-DEFECT → SNAPSHOT-DIVERGENCE |
+
+   Ruling 11 was written *after* catch 2, systematising a pattern observed
+   twice; catch 3 is the first instance where the systematised rule, rather
+   than an ad-hoc habit, produced the correction.
+3. **A third distinct location for the same error shape.** "Wrong operand →
+   confident number → plausible explanation" has now recurred at three
+   layers: the harness (Obs 379 — a silent anchor-path fallback compared
+   "5 passes" against a temperature of 0.7), the triage's operand binding
+   (Obs 377 — a sub-pool binding artefact), and here the *evidence base*.
+   This is the instance where nothing was mis-bound: the right file was
+   read correctly, and the error was reading only one of fourteen. The
+   fluency of the resulting story was undiminished — a mechanism narrative
+   was constructed for an effect that did not exist.
+4. **Operational rule for Phase 3+ adjudications.** A mechanism claim
+   quantified over a set — "never rewritten", "all era-stable", "every X
+   does Y" — must be verified over every member, or over a genuine sample
+   drawn without regard to convenience. The single convenient member is
+   disproportionately likely to be a control, because untouched artefacts
+   are precisely the ones that raise no flags and cost nothing to check.
+
+### Caveats / methodological notes
+
+- **The sampled meta's identity is not recorded.** The claim that it was a
+  control rests on the blind pass's 14-member census plus the triager's own
+  same-day scratchpad admission, not on a preserved draft adjudication. The
+  draft was overwritten before the ledger landed, so the specific file
+  cannot be re-identified from the repository. Future triage drafts should
+  record which operands were checked, not merely the conclusion drawn.
+- **3-for-3 is a catch record, not a catch rate.** The denominator is
+  unknown: no count exists of adjudications that passed a blind pass
+  unchallenged and were right, nor — more importantly — of any that passed
+  unchallenged and were wrong. Nothing here estimates the false-negative
+  rate of the pattern. Three consecutive catches establish that the check
+  is not ceremonial; they do not establish that it is sufficient.
+- **"Independent" means context-independent, not model-independent.** The
+  blind pass shares the triager's model family, training, and project
+  priors. It controls for *context contamination* — the draft's framing,
+  the partial evidence, the sunk narrative — and nothing else. A shared
+  systematic bias would survive it untouched. The demonstrated failure mode
+  it catches is anchoring on a prematurely-formed story, which is exactly
+  what all three catches were.
+- **Catch 1 corrected the author, not the triager.** The triage JSON's
+  `_meta.verification` compresses the series as "the third consecutive
+  session in which the independent-verification pattern corrected the
+  triager"; § 11 is more precise, recording catch 1 as the writer
+  correcting the *author's* probe record. The invariant across all three is
+  that a fresh context corrected the record before emission — the corrected
+  role varies. This Obs follows § 11.
+- **The pattern is not free.** Each blind pass is an additional context,
+  additional wall-clock time, and additional spend, and it is only usable
+  where the check can be posed without leaking the draft's conclusion.
+  Family-A qualified because the raw mismatch rows stand alone; an
+  adjudication whose framing cannot be stripped is not a candidate.
+- Paper-relevant sections: Methods (verification apparatus design — why
+  adjudications pass through blind re-derivation before ledger emission);
+  any claim about the reliability of LLM-led verification.
+
+### Findable later
+
+wrong-control sampling; set-level claim needs set-level check; single
+convenient member is a control; sampled one of 14 run.meta.json operands;
+generalised metas era-stable; SNAPSHOT-DEFECT refuted; SNAPSHOT-DIVERGENCE
+final; family 002-session78-meta-overwrite; ruling 11 independent
+verification; blind re-derivation before ledger emission; third consecutive
+session; 3-for-3 catch record; catch 1 Obs 376 regen-0002b S122; catch 2
+Obs 377 round-4 S123; catch 3 Session 124; operator console totals
+hypothesis refuted; 7 of 14 overwritten; -text suffix correlates with
+overwrite; verified-adversarial first in glob order is a control; damage
+correlated with nameable subset; convenience sample anti-correlated with
+detection; wrong operand confident number plausible explanation; wrong
+evidence base not wrong binding; catch record not catch rate; context-blind
+not model-independent; b10aa7e1c era commit; 9fa55c684 triage landing;
+b46c59fc0 Obs 380; phase3-rulings § 11; it's the way to be sure about
+things; Session 124 2026-08-01.
+
+### Related observations and artefacts
+
+- **[[Obs 380]]** (`run.meta.json` is last-writer-wins — 7 of 14
+  Session-78 metas overwritten in place, $30.95 of spend surviving only in
+  git history) — the substantive finding this same blind pass established,
+  and the direct product of the refutation. Obs 380 is what the corrected
+  disposition *found*; this Obs is how the correction happened and why the
+  draft would have prevented it. Read together they are one event: the
+  triager's story would have closed the file on a real artefact defect.
+- **[[Obs 377]]** (recovery campaigns can silently invalidate downstream
+  verifier outputs — 4 of 5 flagged cells were a sub-pool operand-binding
+  artefact) — catch 2, the immediate predecessor in the series and the
+  reason ruling 11 exists. Substantively the closest cousin: there the
+  operand *binding* was wrong, here the binding was right and the operand
+  *set* was under-sampled. Both produced a confident causal story that a
+  full-population check dissolved.
+- **[[Obs 379]]** (a silent anchor-path fallback manufactured confident
+  wrong-quantity comparisons — "5 passes" checked against a temperature of
+  0.7) — the harness-layer instance of the same error shape, and the source
+  of the standing rule that a MISMATCH count is a triage input, never a
+  finding. This Obs extends the layer census from harness and binding to
+  evidence base.
+- **[[Obs 376]]** (`evaluation.md` MCC / Sens / Spec columns are bootstrap
+  means, not point estimates) — catch 1, where the writer corrected the
+  author's probe record. Also the same genre as Obs 380: a divergence that
+  looks like an error but is an undocumented property of how an artefact
+  was written.
+- **[[Obs 375]]** (the outcome-blind fork — registering a never-executed
+  contrast restored genuine blindness exactly where selection was
+  outcome-material) — the project's other blindness-design finding, and the
+  general principle behind ruling 11: blindness is worth engineering
+  precisely at the points where the analyst's prior formed before the
+  evidence did.
+- **Standing rule reinforced**: § 11's requirement that triage
+  adjudications asserting causal mechanisms get an independent check before
+  ledger emission. This Obs adds a sharpened trigger — a claim quantified
+  over a set is a causal-mechanism claim for these purposes, and the check
+  must span the set.
+- **Carried to GATE 3**: whether triage drafts should be required to record
+  their checked operands (not just conclusions), so a refuted draft leaves
+  a re-identifiable evidence trail. Not decided here.
+
+**Artefacts**:
+`reports/verification/c4-triage/mismatch-triage-2026-08-01.json`
+(`_meta.verification`, `_meta.triager`, family `002-session78-meta-overwrite`:
+rows `002#6[2]`, `002#12[3]`, `002#12[4]`, `002#12[5]`, disposition
+`SNAPSHOT-DIVERGENCE`; 22 rows adjudicated across 4 families);
+`reports/verification/phase3-rulings-2026-07-31.md` (§ 11);
+the 14
+`outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-*/run.meta.json`
+and `.../flash-high-text-n5/text-t0.7/session-78-matrix/verified-*/run.meta.json`
+files (era blobs at `b10aa7e1c`);
+`docs/methodology/data-reproduction-2026-04-25.md` (`:36`, `:43–45`);
+`planning/audit-charter.md` (§ 7 Phase 3);
+`~/personal-assistant/data/scratchpads/map-reader-llm.md` (`:49–61`);
+commits `9fa55c684` (wave-2 triage landing), `b46c59fc0` (Obs 380),
+`b10aa7e1c` (era), `414ee8a4b` and `c6b5e6b10` (the overwrites).
