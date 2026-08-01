@@ -56,7 +56,12 @@ materiality ratifications; independent verification systematised).
 **Session 124's queue** (order per rulings 7–8): (a) **file-level
 repair pass** (~204 pathless values; ruling 8) — shared
 quantity→anchor mapping (conditions-manifest filter paths, bounds
-`len:` counts) + LLM tail; (b) **runner registry** (ruling 7) —
+`len:` counts) + LLM tail; **fold in the Obs 379 structural fix**
+(the anchor-path fallback survives in `recompute_c4_claims.py` and
+the validator does not yet enforce v1.2 amendment 3 — make the
+harness fail loudly on pathless values in multi-value claims; Obs
+379's census: 7 of the 30 round-1 mismatches were fallback-implicated,
+not 4); (b) **runner registry** (ruling 7) —
 census/count primitive first (~half the class), then audited-flex
 cost/token runner, then statistical runners on existing machinery
 (sapphire); execute over the current corpus, re-execute per wave;
