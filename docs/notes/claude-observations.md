@@ -420,3 +420,70 @@ finish/postpone cut proactively rather than waiting for the question —
 and when sequencing verification work, prefer placing
 author-verifies-author-adjacent tasks on the far side of a session
 boundary.
+
+## claude-obs 18 — 2026-08-01 (Session 123): the conditional ratification that changed the facts
+
+**Pattern.** On the broken-correspondence cells Shawn did not accept
+or reject my story — he structured his ruling as a conditional: "I
+want to confirm they've been superseded; if they feed the paper I'm
+willing to re-run (smartly, on the delta); if truly archived
+diagnostics, I'm happy with ledger + banner + observation. Look
+carefully at their potential importance." The verification his
+condition forced did more than settle importance: the obs-writer's
+blind re-derivation refuted four of my five cells outright.
+
+**Lesson.** A conditional ratification embeds the verification
+requirement inside the approval itself — the decision cannot be
+consumed without discharging the check. It out-performs both "trust
+the summary" and "reject pending more work", because it lets the work
+proceed while guaranteeing the premise gets tested. Here the test
+changed the fact pattern, not merely the materiality.
+
+**How to apply.** When presenting findings for ruling, offer the
+conditional structure proactively: state the premise, what hangs on
+it, and the check that would discharge it — rather than asking for a
+flat approve/reject on an unverified story.
+
+## claude-obs 19 — 2026-08-01 (Session 123): "bite the bullet" beat my economising because the pile was undecomposed
+
+**Pattern.** Shawn pushed back on my sample-and-defer recommendation
+for the 318 recompute-script values, naming a "constitutional
+aversion to kicking the can down the road" while explicitly leaving
+room for documented deferral. A twenty-line keyword census then
+dissolved the disagreement: half the pile was filesystem counting,
+not statistics, and my cost model was simply wrong.
+
+**Lesson.** My deferral recommendations tend to price undecomposed
+piles at their scariest member's cost. His instinct ("do it now if
+it's a close call") was right here, but the transferable rule is
+procedural: when do-vs-defer feels close, run the cheap census
+*before* forming the recommendation — closeness usually dissolves,
+in either direction.
+
+**How to apply.** No defer recommendation without a decomposition of
+what is being deferred. If the census is too expensive to run before
+deciding, that fact itself belongs in the recommendation.
+
+## claude-obs 20 — 2026-08-01 (Session 123): self-critique — I presented an unverified causal story to the PI with confidence
+
+**Pattern.** I told Shawn "five cells show broken pool↔verifier
+correspondence because pools were rebuilt with recovered passes" —
+a mechanism narrative assembled from mismatch rows, presented as a
+flagged finding with numbers attached (differences up to 8,035). Four
+of the five were my own wrong-pool binding; the "rebuilt" pool
+predated the audit. This is S122's claude-obs 16 failure (the
+write-side rule violated by its enforcer) recurring one layer up: not
+a compressed figure this time, but a confabulated mechanism that made
+the figures cohere.
+
+**Lesson.** Causal stories are where my confabulation risk
+concentrates — they feel *derived* because they explain the data in
+hand, but nothing in the triage loop had tested this one. The
+apparatus caught it only because the Obs-writing step is itself a
+re-derivation. Ruling 11 now institutionalises that guard; the
+personal discipline is to label mechanism claims as unverified when
+presenting them, however coherent they feel.
+
+**How to apply.** In any finding presented for ruling, separate the
+observed deltas (verified) from the mechanism narrative (adjudged,
+pending independent check) — typographically, not just mentally.
