@@ -8,7 +8,105 @@ project state.
 
 ---
 
-## 🎯 NEXT SESSION (124) — PHASE 3: REPAIR PASS + RUNNER REGISTRY + FLEET [Session 123 CLOSED 2026-08-01; ran in Fable]
+## 🎯 NEXT SESSION (125) — PHASE 3: FLEET WAVES + WAVE-3 TRIAGE + RUNNER TRANCHES 2–3 [Session 124 CLOSED 2026-08-01; ran in Fable]
+
+> **The controller is `planning/audit-charter.md` § 9** — unchanged.
+> **Rulings that bind**: `reports/verification/phase3-rulings-2026-07-31.md`
+> §§ 1–11. Ruling 11 (independent verification) caught the triager a
+> THIRD consecutive time this session — see wave-2 triage below.
+
+**What Session 124 did** (commits `117b43e14`→`19808866f` + sapphire
+report commits, **US$0.00 API** — all Claude-side agents + sapphire):
+**queue items (a)–(d) of the S124 brief ALL LANDED; fleet waves (e)
+deliberately deferred to S125 with a strictly stronger instrument.**
+(1) **Obs 379 structural fix**: the silent anchor-path fallback is
+DEAD — `recompute_c4_claims.py` refuses pathless values in
+multi-value claims (fallback survives only for single-value claims,
+where the anchor path is definitionally the locator);
+`validate_c4_extraction.py` enforces instrument v1.2 amendment 3 at
+authoring time. (2) **File-level repair pass (ruling 8)**: 129 values
+repaired by the shared quantity→anchor mapping
+(`scripts/repair_c4_pathless_values.py`, 4 verified rule families —
+operand-a, canonical tile counts, local tile counts, self-GeoJSON
+feature counts) + 126-row LLM tail (4 Opus agents: 30 path-set, 54 →
+recompute-script, 42 verified left-as-is); **Obs 379's silent-MATCH
+census closed at ZERO wrong numbers** (all 89 fallback MATCHes
+re-resolve identically under correct locators); validator green
+26/26 files, 1,337 claims; audit log + dispositions:
+`c4-triage/pathless-repair-2026-08-01.json`. (3) **Wave-2 triage (22
+rows) landed** with a ruling-11 BLIND verification pass that REFUTED
+the triager's family-A story (draft said metas era-stable from a
+1-of-14 history check — the blind pass proved the doc quoted its era
+EXACTLY at `b10aa7e1c` and 7 of 14 `run.meta.json` were later
+OVERWRITTEN IN PLACE by recovery cleanups; wrong-control sampling):
+`c4-triage/mismatch-triage-2026-08-01.json` — 17× SNAPSHOT-DIVERGENCE
+(002), 5× LIVING-DOC-FIX applied (`n1-baseline-matrix.md` § 4 table
+1→3 ×4 + range endpoint +0.35→+0.34, banner + changelog). (4)
+**Runner registry (ruling 7, tranche 1 EXECUTED)**:
+`scripts/lib_c4_runners.py` (4 census primitives, 6 tests) + harness
+wiring + `apparatus/recompute-script-registry.json` — 488
+recompute-script rows classified, **90 census specs verified
+executing**, 398 rows in **17 NAMED families** with
+reason_not_specced (GATE 3 accounting balances exactly). (5)
+**Git-era resolver (ruling 9)**: missing anchors resolve at the
+source doc's era commit (path-filtered blob match) with
+unique-suffix disambiguation, then a `suffix-current` unique-match
+fallback for later-materialised regen copies; rows labelled
+`resolution: git-era`/`suffix-current`; all 36 batch-047 rows →
+MATCH. (6) **Comparer fixes**: space/NBSP thousands parsing
+('44 220' etc., +63 rows now compare). (7) **Canonical recompute
+(sapphire, committed)**: **MATCH 1938 / MISMATCH 123 / SKIPPED 1137
+/ UNRESOLVED 395 / APPROX 7** (from 1742/104/1173/575/6 at S123
+close).
+
+**Session 125's queue**: (a) **wave-3 triage**: the +19 new MISMATCH
+rows (18 census-runner-surfaced — incl. e47 inventory doc-2-vs-1,
+n1-outstanding doc-8-vs-7, output-directory-standard dated census
+drift — + parsing-surfaced remainder), the **7 APPROX rows** (per the
+new protocol: incl. `~$63.77` vs current $48.30, 32 % — same
+meta-overwrite mechanism), and the **005#2[0] escalation** (doc
+bounds board-vs-micro F1 gap ≤0.0003; `tiering_20m.json` f1_gap
+spans to 0.000466 — flagged, unadjudicated); ruling 11 applies. (b)
+**Fleet waves** (158 pending; ruling-5 model policy; per-wave
+recompute + triage — the instrument is now strictly stronger:
+amendment-3 validator, era resolution, registry, thousands parsing).
+(c) **Runner tranches 2–3**: cost/token (NOTE: 7 of 14 session-78
+metas hold only cleanup-fragment usage — era-blob reads REQUIRED for
+cost recomputation over overwritten metas) then statistical on
+sapphire. (d) **Instrument hygiene**: machine-scope guard for census
+specs (3 glob-count specs count gitignored content — sapphire 127,281
+vs local 48,707 pv-diag files; 037#37 verdict flips by machine);
+untracked-anchor guard (4 rows in 044 anchor `outputs/wbf/**` crops
+manifests that exist locally but were never committed — resolve
+nowhere else); 'no'/'No' comparer vocabulary (2 rows). (e) **PI
+decisions pending**: ruling-9 moved-anchor extension (era-resolve
+OVERWRITTEN anchors? — would flip all 17 batch-002 rows to era-MATCH;
+carried in the wave-2 triage file); Obs candidates: (i) run.meta.json
+last-writer-wins overwrites destroy spend records (7/14 recoverable
+only from git), (ii) third consecutive ruling-11 catch
+(wrong-control sampling); pre-existing tier-1 failures FLAGGED NOT
+FIXED: `test_validate_commitments` ×2 (C2 ledger 915→920 + gate-1
+status counts moved by the 2026-07-30 recovery close-out — tests pin
+gate-package numbers; row lifecycle belongs to the Phase 5
+`revalidate_ledgers.py` design) and
+`test_pass_counts_completed_not_dispatched` (472 vs 486). (f) Then
+generated-stratum exact comparers + 125 SUSPECT sibling-JSON rows;
+(g) `generate_c4_ledger.py` (verification lane per ruling 11) + GATE
+3 package (carry the Phase-0 scope-growth flag).
+
+**Carry-forward**: MCC/Sens/Spec in evaluation.md tables are
+bootstrap means (Obs 376); user-obs candidates S118–120 + S122 still
+pending in `user-observations.md` (silence holds); WN-1
+(provenance-by-shape) pending; register re-anchoring still queued
+before any future census; old stash stack (6 entries, session-83-era
+tops) left untouched — a bare `git stash pop` will conflict, don't
+pop blind; Sol (Phase 4) untouched, $150 cap, keys in
+`~/personal-assistant/.env` — never read that file into context;
+always run realtime API calls in flex mode.
+
+### [CLOSED 2026-08-01] Historical: the Session 124 brief follows
+
+## NEXT SESSION (124) — PHASE 3: REPAIR PASS + RUNNER REGISTRY + FLEET [Session 123 CLOSED 2026-08-01; ran in Fable]
 
 > **The controller is `planning/audit-charter.md` § 9** — unchanged.
 > **Rulings that bind**: `reports/verification/phase3-rulings-2026-07-31.md`
