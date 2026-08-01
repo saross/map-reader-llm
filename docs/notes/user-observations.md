@@ -296,3 +296,34 @@ append-only within the hour and reported prominently in the close-out
 (rather than quietly fixed). If this transparency-on-self-error is
 the behaviour Shawn wants locked in, accepting this candidate makes
 it a standing expectation rather than a one-off.
+
+## Session 123 — 2026-08-01 (candidates — pending Shawn's review)
+
+**Candidate A — trusting the escalation judgment, not the model
+labels.** When ratifying the Sonnet fleet policy you didn't re-litigate
+the comparison data; you observed "it seems like you were thorough and
+that you are escalating to Opus when in doubt" and made the
+escalation *judgment* the thing you licensed — Sonnet where cleared,
+fresh comparison on new task kinds, Opus on doubt. If that reading is
+right, what earned the delegation was the visible spot-audit apparatus
+plus the stated escalation rule, not the head-to-head numbers alone.
+
+**Candidate B — the apparatus catching Claude is what makes Claude
+trustworthy.** Your response to the round-4 refutation (four of my
+five flagged cells were my own binding artefact) was not concern about
+the error but "we should systematise the independent-verification
+pattern wherever possible, it's the way to be sure about things." The
+observation: you treat a system that visibly catches its operator as
+*more* reliable than one that reports no errors — and you moved
+immediately to institutionalise the catch mechanism (ruling 11) rather
+than to add scrutiny of the operator.
+
+**Candidate C — census-grounded walkthroughs make rulings cheap.**
+The C/D do-vs-defer discussion resolved in a single message ("I
+confirm C and D") once the piles were decomposed and each option
+carried a concrete recommendation with its trade-off named. Compare
+the five-cell story, which you (rightly) declined to ratify while it
+rested on an unverified mechanism narrative. If the pattern holds:
+decision-ready = decomposed evidence + explicit recommendation +
+falsifiable premise, and anything short of that gets a conditional
+rather than a ruling.
