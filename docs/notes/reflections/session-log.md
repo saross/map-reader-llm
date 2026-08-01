@@ -7694,3 +7694,55 @@ GATE 0-approved fleet design, with the 178-batch full-enumeration
 scope (vs Phase 0's 40–60 estimate) flagged for GATE 3 rather than
 re-gated mid-phase; the four PI rulings were collected mid-session
 because Shawn was present — earlier phases batched rulings at gates.
+
+## Session 123 — 2026-07-31/08-01 — C4 triage cycle 1 complete; resolver extended; fleet wave 2; rulings 5–11
+
+**Scope**: Phase 3 continuation per the S122 beacon: triage the 30
+MISMATCH rows, repair the 8 v1.2-non-conforming claims, extend the
+resolver, continue the fleet. All discharged, plus a round-4
+correction arc and seven new PI rulings. **US$0 API** (sapphire +
+Claude-side agents throughout).
+
+**Triage**: 110 dispositions in
+`reports/verification/c4-triage/mismatch-triage-2026-07-31.json` (30
+round-1 + 80 round-2/3 addendum + round-4 corrections). Genuine doc
+errors: 3, all in `experimental-progression.md` (missed 1/10→0/10
+instance; stale March-era CI → [0.874, 0.910]), corrected in place
+with changelog. Snapshot classes ledgered under ruling 1; one
+superseded-figures banner (completeness audit 2026-05-03, amended
+2026-08-01 to the corrected single-regression story).
+
+**Harness**: lib_c4_compare + recompute_c4_claims learned file#path
+locators, equality filters, [*] constant-collapse, four length
+spellings, decimal half-up, unit-aware percent bridging; schema 1.1
+per-value expression/operands; validator per-value arithmetic checks;
+12 new tier-1 tests (55 pass). Instrument v1.2 (seven amendments).
+Recompute rerun ×4 on sapphire: final counts MATCH 1,742 / MISMATCH
+104 / SKIPPED 1,173 / UNRESOLVED 575 / APPROX 6 over 26 files /
+1,337 claims.
+
+**Fleet**: b003 + b014 (Sonnet) + Opus b014 duplicate → spot-audit
+PASS (zero missed claims either direction; verdict committed); wave 2
+b001/b002/b004/b005/b006 (4 Opus + 1 Sonnet), all validator-clean;
+158 batches pending; 22 wave-2 mismatches (17×b002, 5×b004) queued
+for S124 triage.
+
+**Obs 377** (via obs-writer, `00420b076`): recovery re-materialised
+`text-t0.0/verified-v1-n3`'s pool (1,256→1,319, 2026-07-30) without a
+verifier re-run — the single genuine regression; the writer's
+independent verification refuted the other four flagged cells as a
+triager binding artefact (round-4: re-bound, rerun, MATCH).
+
+**Rulings 5–11** (`phase3-rulings-2026-07-31.md`, S123 section):
+Sonnet tail free with fresh-comparison-on-new-task-kinds; ledger +
+banner + Obs for the regression, no re-run; recompute-script class
+comprehensive via runner registry (no silent deferrals); file-level
+repair pass first in S124; git-era anchor resolution; materiality
+ratifications; independent verification systematised.
+
+**Contextual assumptions**: the committed recompute report's 043/044
+`source_lines` predate the final −1 banner re-span (statuses
+unaffected; next rerun refreshes). Batch-plan pending count (158) is
+the plan's own status field, not the beacon's stale 163. Wave-2
+agents ran non-isolated in the shared tree writing disjoint output
+files only.

@@ -6065,3 +6065,70 @@ only as good as the *semantics* loaded into the verifier, and record
 prose is only as good as the re-derivability of its figures. The
 comparer needed the renderer's truth, not the JSON's headline; the
 record needed the command's output, not the author's memory of it.
+
+## Session 123 — 2026-08-01 — the five broken cells that were one, and the wrong pool the triager bound
+
+**Session:** bb8b7cef-9dc4-4b62-90e2-5928ab422b2f
+**Instance:** primary
+
+### Surprising fact
+
+An obs-writer agent dispatched to *record* a PI-approved finding —
+"five pv-diag-384 diagnostic cells audited complete now show broken
+pool↔verifier correspondence (differences up to 8,035 candidates)
+because recovery campaigns rebuilt their consensus pools" — instead
+refuted its causal core. Only one of the five cells showed a genuine
+regression. The other four possess arm-specific pools
+(`consensus-n5/`, `consensus-n10/`) whose feature counts match the
+audited expected values *exactly* (5,866 / 3,736 / 2,954 / 3,760),
+and the "grown" 11,771-feature pool I had cited as evidence of
+post-audit rebuilding predates the audit (single commit, mtime
+2026-04-17).
+
+### Probe
+
+A systematic sweep of batch 043's operand bindings against the
+filesystem: for every gap-table claim naming a `verified-v1-nK` cell,
+locate an arm-specific `consensus-nK/consensus_t1.geojson` beside the
+bound full-pool file and compare feature counts. Result: arm dirs
+exist for exactly the four refuted cells and carry exactly the
+audited counts; the fifth cell (`text-t0.0/verified-v1-n3`) has no
+arm dir, and its pool's git history shows re-materialisation
+1,256 → 1,319 on 2026-07-30 (`f6116cba0`, `77bb342b4`) with no
+verifier re-run — a real gap of 63. Re-binding the four and rerunning
+the recompute on sapphire flipped all eight affected rows to MATCH;
+the fifth cell's two rows remained divergent, as they should.
+
+### Belief revision
+
+From "recovery campaigns silently invalidated five cells' derived
+artefacts" to "my round-2 triage repair bound the cell-generic pool
+where the arm-specific pool was meant; one cell genuinely regressed,
+two days before the sweep ran". The deeper revision is reflexive: the
+C4 sweep exists because authors compress and confabulate under
+context pressure, and this episode reproduced that failure mode
+*inside the sweep's own triage layer*, one session after regen-0002b
+reproduced it inside a probe record. The apparatus caught both — but
+only because the recording step is itself a re-derivation step
+(charter rule 2 applied to the recorder). Adjudications are claims.
+
+### What would change this belief
+
+If the `consensus-nK` directories were themselves post-audit
+creations, the original "rebuilt pools" story would partially revive
+(the arm pools could have been regenerated to match). Checked: their
+git history is single-commit and pre-audit. Separately, if a future
+census finds registered conditions whose provenance resolves into the
+`outputs/h11/.../flash-high-text-n5` tree, ruling 6's
+"no paper exposure" premise fails and the no-remediation decision
+must be revisited.
+
+### Implications for practice
+
+Ruling 11 (2026-08-01) systematises the pattern: blind independent
+re-derivation before any artefact that encodes a causal story lands —
+obs entries, triage adjudications asserting mechanisms, ledger rows,
+gate packages. Writer-vs-author disagreement is treated as signal.
+The concrete cost this session was one obs-writer agent; the concrete
+benefit was four false ledger rows and one wrong banner narrative
+intercepted before GATE 3.

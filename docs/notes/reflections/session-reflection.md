@@ -9383,3 +9383,64 @@ Opus duplicate before the tail runs free), and who operationalises
 divergence mechanically, but materiality is a judgement that currently
 lives nowhere except the triage prompt. All three land on Session
 123's desk.
+
+## Session 123 — 2026-07-31/08-01 — the triager triaged, and the bullet worth biting
+
+### Prompt: Where did you and the human disagree, and who was right?
+
+Twice, and the record favours Shawn both times — but in neither case
+for the reason either of us held at the moment of disagreement.
+
+On the recompute-script class I recommended sample-and-defer: execute
+the paper-load-bearing families, present the rest as a census at GATE
+3. Shawn pushed back — "I wonder if we should just bite the bullet and
+deal with this comprehensively now" — with his stated constitutional
+aversion to kicking identified problems down the road. When I censused
+the 318 values to ground the discussion, my recommendation's hidden
+premise collapsed: I had been pricing the class as bespoke statistical
+engineering, but half of it is filesystem censuses ("5 run_*
+directories") and most of the rest runs on machinery the project
+already owns. The do-vs-defer question felt close only because the
+pile was undecomposed. Shawn was right, but the *reason* he was right
+only existed after the census — which suggests the durable lesson is
+neither his principle nor my economising but the sequencing rule:
+when do-vs-defer feels close, decompose before deciding; closeness
+usually dissolves.
+
+On the broken-correspondence cells the disagreement was quieter — a
+withheld ratification rather than a pushback. I presented five cells
+with a confident causal story (pools rebuilt, verifiers stale); Shawn
+declined to accept it until their importance was verified. The
+verification I then commissioned did more than settle importance: the
+obs-writer's blind re-derivation refuted four-fifths of the story
+itself. My adjudication had bound the wrong pools. Shawn's insistence
+on confirmation-before-acceptance was vindicated in a way neither of
+us anticipated — the check changed the fact pattern, not just the
+materiality assessment.
+
+### Prompt: What decision or trade-off made today will look arbitrary without this session's context?
+
+Bannering one dated audit report and declining to banner another. The
+2026-05-03 completeness audit received a superseded-figures banner;
+the 2026-03-27 adversarial audit, whose *headline* CI no longer
+reproduces, did not. Without this session's context that looks like
+inconsistency or oversight. The discriminator was ruling 1's
+materiality test as I operationalised it: the completeness audit's
+central table is wholesale superseded (35 gaps closed; a reader today
+would act on stale facts), while the adversarial audit's verdicts
+hold under both eras — the CI moved in the third decimal and every
+conclusion drawn from it survives. Shawn ratified the split (ruling
+10), so the asymmetry is now anchored; but the underlying judgement —
+"banner when the document's *action-guiding content* is superseded,
+not when any figure drifts" — lives in the triage file's materiality
+note and this entry, nowhere more structural.
+
+The other candidate is smaller but worth naming: the round-4
+corrections to my own round-2/3 adjudications were written as dated
+correction text *inside* the affected addendum rows, superseding but
+preserving the wrong explanations. A future reader may wonder why a
+JSON dispositions file carries palimpsest prose. The answer is that
+the dispositions are themselves C6-style attestation material now —
+the record of what the triager believed and when — and the Obs
+376/377 pattern (correct by appending, never by erasing) was applied
+to my own layer deliberately.

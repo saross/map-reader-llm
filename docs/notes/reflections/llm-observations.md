@@ -6720,3 +6720,52 @@ discriminator for the mixed `report.md` stratum turned out to be the
 *presence of a report_autogen.md sibling* — a structural fact, not a
 declared one. Files tell you what they are by shape more honestly
 than by label; the registry now encodes that lesson as rules.
+
+## Session 123 — 2026-07-31/08-01 (fresh context catches causal stories, not just figures; tier differences surfaced as conventions; silent fallbacks manufacture wrong comparisons)
+
+**Fresh-context verification catches adjudications, not only
+recorded figures.** S122's lesson was that a recording task became a
+verification task and corrected three *specifics* (regen-0002b). This
+session escalated the pattern one layer: the obs-writer refuted the
+*causal story* of a PI-approved triage adjudication — four of five
+"broken-correspondence" cells were the triager binding the wrong pool,
+not recovery campaigns breaking anything. The distinction matters for
+where verification effort goes: numbers are cheap to re-derive, but
+the expensive confabulations are mechanism narratives ("pools were
+rebuilt with recovered passes") that make several numbers cohere.
+Fresh context tested the narrative by rebuilding it from artefacts and
+found a different one. Ruling 11 now systematises this: adjudications
+that assert causal mechanisms get an independent check before ledger
+emission.
+
+**A model-tier comparison that surfaced as convention differences,
+not competence differences.** The b014 Sonnet-vs-Opus head-to-head
+(same instrument, same document, blind to each other) produced
+line-identical claim coverage with zero missed claims either way. The
+*only* systematic difference was verbatim-span convention: Opus keeps
+affixes attached ("2×", "+0.09", "~23:1"); Sonnet splits them and
+enumerates small counts more finely (127 vs 114 values). At this task
+shape — exhaustive span extraction against a hard schema with a
+validator loop — the tier gap expressed itself as style, not recall.
+Worth remembering when pricing fleet work: the validator+harness
+sandwich appears to flatten capability differences that would show up
+in open-ended tasks.
+
+**Silent fallbacks convert missing data into confident wrong
+answers.** The recompute harness's value-path fallback (no per-value
+path → use the claim anchor's path) produced the session's most
+instructive false mismatches: "5 passes" compared against a
+temperature of 0.7. Nothing errored; the comparison was simply of the
+wrong quantity. The repair (instrument v1.2 amendment 3: no pathless
+values in multi-value claims) is really a general harness-design
+principle: in verification tooling, a fallback that can change *what
+question is being asked* must fail loudly instead. The same shape
+recurred in my own round-2 repair (full pool bound where an arm pool
+was meant) — a human-level fallback with the same signature.
+
+**Decompose before deciding do-vs-defer.** The 318-value
+recompute-script pile supported opposite recommendations while
+undecomposed; a twenty-line keyword census dissolved the dilemma in
+one direction (half the pile is filesystem counting, not statistics).
+Cheap censuses before contested decisions may be the highest-leverage
+habit this programme has produced.
