@@ -14,7 +14,18 @@
    "canonical-quantity",
    "self-geojson-feature-count",
    "tile-count-local-artefact"
-  ]
+  ],
+  "tail_executed": {
+   "date": "2026-08-01",
+   "executor": "4 Opus-class repair agents (Session 124), one file-partition each",
+   "action_counts": {
+    "method-recompute-script": 54,
+    "path-set": 30,
+    "left-as-is": 42
+   },
+   "validator_after": "all 26 files valid; 1337 claims",
+   "post_hoc_fixes": "035 claims 9/46 dotted numeric keys -> quoted-key form (tile_size values resolve; thresholds.2 rows remain UNRESOLVED key-tautologies, triage scope); 035 claims 32/36 values[0] len: prefix added (resolve to 5 and 4)"
+  }
  },
  "repairs": [
   {
@@ -3210,6 +3221,1032 @@
    "anchor_path": null,
    "n_values": 4,
    "prior_status": "UNRESOLVED"
+  }
+ ],
+ "tail_dispositions": [
+  {
+   "batch": "035",
+   "claim_index": 2,
+   "value_index": 1,
+   "action": "method-recompute-script",
+   "rationale": "512 px is the PNG dimension of the 60-tile holdout grid (inputs/tiles/, measured 512x512); no JSON scalar carries it — inputs/tiles/tile_selection_metadata.json $.parameters.tile_size is 448 (the stride), so pathing there would locate the wrong quantity",
+   "new_method": "recompute-script"
+  },
+  {
+   "batch": "035",
+   "claim_index": 3,
+   "value_index": 1,
+   "action": "path-set",
+   "rationale": "Era 1 corpus tile size: runs-manifest record for the Phase-2a re-execution ties tile_size_px 512 to scope test_set_id era-1-340 (340 tiles)",
+   "new_path": "results/runs-manifest.json#$.runs[?(@.run_id=='retest-phase2a')].tile_size_px"
+  },
+  {
+   "batch": "035",
+   "claim_index": 4,
+   "value_index": 1,
+   "action": "path-set",
+   "rationale": "Era 2 corpus tile size: the generation parameter of the 384-px tile set, sibling of the claim's own anchor manifest (PNGs measured 384x384)",
+   "new_path": "inputs/tiles_384/tile_selection_metadata.json#$.parameters.tile_size"
+  },
+  {
+   "batch": "035",
+   "claim_index": 6,
+   "value_index": 1,
+   "action": "method-recompute-script",
+   "rationale": "512 px is the PNG dimension of the 60-tile holdout grid (inputs/tiles/, measured 512x512); no JSON scalar carries it — inputs/tiles/tile_selection_metadata.json $.parameters.tile_size is 448 (the stride), so pathing there would locate the wrong quantity",
+   "new_method": "recompute-script"
+  },
+  {
+   "batch": "035",
+   "claim_index": 15,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "rationale": "Count of executed OFAT sub-phases is a census of studies/phase2[a-e]-*.yaml study definitions — a directory listing over non-JSON content",
+   "new_method": "recompute-script"
+  },
+  {
+   "batch": "035",
+   "claim_index": 15,
+   "value_index": 2,
+   "action": "method-recompute-script",
+   "rationale": "512 px is the PNG dimension of the 60-tile holdout grid (inputs/tiles/, measured 512x512); no JSON scalar carries it — inputs/tiles/tile_selection_metadata.json $.parameters.tile_size is 448 (the stride), so pathing there would locate the wrong quantity",
+   "new_method": "recompute-script"
+  },
+  {
+   "batch": "035",
+   "claim_index": 25,
+   "value_index": 1,
+   "action": "path-set",
+   "rationale": "Era 1 corpus tile size; same runs-manifest record as claim 3 (tile_size_px 512 on scope era-1-340)",
+   "new_path": "results/runs-manifest.json#$.runs[?(@.run_id=='retest-phase2a')].tile_size_px"
+  },
+  {
+   "batch": "035",
+   "claim_index": 27,
+   "value_index": 1,
+   "action": "path-set",
+   "rationale": "Era 1 corpus tile size; same runs-manifest record as claim 3",
+   "new_path": "results/runs-manifest.json#$.runs[?(@.run_id=='retest-phase2a')].tile_size_px"
+  },
+  {
+   "batch": "035",
+   "claim_index": 33,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "rationale": "10 = sum of the two track manifests' conditions arrays (5 + 5); a cross-file sum is not expressible as one locator",
+   "new_method": "recompute-script"
+  },
+  {
+   "batch": "035",
+   "claim_index": 33,
+   "value_index": 1,
+   "action": "method-recompute-script",
+   "rationale": "Track count is a census of the outputs/retest/phase2b/ track subdirectories, not a JSON scalar",
+   "new_method": "recompute-script"
+  },
+  {
+   "batch": "035",
+   "claim_index": 34,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "rationale": "10 = sum of the two Phase 2c track manifests' conditions arrays (5 + 5)",
+   "new_method": "recompute-script"
+  },
+  {
+   "batch": "035",
+   "claim_index": 34,
+   "value_index": 1,
+   "action": "method-recompute-script",
+   "rationale": "Track count is a census of the outputs/retest/phase2c/ track subdirectories",
+   "new_method": "recompute-script"
+  },
+  {
+   "batch": "035",
+   "claim_index": 35,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "rationale": "4 = sum of the two Phase 2d track manifests' conditions arrays (2 + 2)",
+   "new_method": "recompute-script"
+  },
+  {
+   "batch": "035",
+   "claim_index": 35,
+   "value_index": 1,
+   "action": "method-recompute-script",
+   "rationale": "Track count is a census of the outputs/retest/phase2d/ track subdirectories",
+   "new_method": "recompute-script"
+  },
+  {
+   "batch": "035",
+   "claim_index": 37,
+   "value_index": 0,
+   "action": "path-set",
+   "rationale": "Consensus pool size is the n_passes field of the Phase-3a retest N=30 conditions in the canonical condition registry (all nine agree; the image track matches this claim's track1 anchor)",
+   "new_path": "results/conditions-manifest.json#$.conditions[?(@.condition_id=='retest-phase3a::image-t0.7-n30-18of30')].n_passes"
+  },
+  {
+   "batch": "035",
+   "claim_index": 38,
+   "value_index": 0,
+   "action": "path-set",
+   "rationale": "'512px validation phase' is the Era 1 corpus; same runs-manifest record as claim 3",
+   "new_path": "results/runs-manifest.json#$.runs[?(@.run_id=='retest-phase2a')].tile_size_px"
+  },
+  {
+   "batch": "035",
+   "claim_index": 43,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "rationale": "Temperature arms live only inside the pairwise register's question/label strings; conditions-manifest carries no proposer temperature field, so the level needs scripted extraction",
+   "new_method": "recompute-script"
+  },
+  {
+   "batch": "035",
+   "claim_index": 43,
+   "value_index": 1,
+   "action": "method-recompute-script",
+   "rationale": "As for value 0 — the T=1.0 arm is a label string, not a JSON scalar",
+   "new_method": "recompute-script"
+  },
+  {
+   "batch": "035",
+   "claim_index": 43,
+   "value_index": 2,
+   "action": "method-recompute-script",
+   "rationale": "Group-4 carries three T=0.7-vs-T=1.0 rows with distinct delta_f1 (0.1685 / 0.1716 / 0.1941); the quoted +0.17 summarises them, so it needs an aggregation rather than one row's locator",
+   "new_method": "recompute-script"
+  },
+  {
+   "batch": "035",
+   "claim_index": 43,
+   "value_index": 3,
+   "action": "method-recompute-script",
+   "rationale": "'all p<0.001' is a ceiling over the group-4 p_value_adj rows, not a stored p-value",
+   "new_method": "recompute-script"
+  },
+  {
+   "batch": "035",
+   "claim_index": 45,
+   "value_index": 1,
+   "action": "path-set",
+   "rationale": "Era 2 corpus tile size; same tiling parameter as claim 4",
+   "new_path": "inputs/tiles_384/tile_selection_metadata.json#$.parameters.tile_size"
+  },
+  {
+   "batch": "035",
+   "claim_index": 48,
+   "value_index": 0,
+   "action": "path-set",
+   "rationale": "The 256-px H11 arm is run pv-diag-256 (primary_hypothesis H11); its tile_size_px is exactly this value's quantity",
+   "new_path": "results/runs-manifest.json#$.runs[?(@.run_id=='pv-diag-256')].tile_size_px"
+  },
+  {
+   "batch": "035",
+   "claim_index": 48,
+   "value_index": 2,
+   "action": "path-set",
+   "rationale": "The 512-px H11 arm is run proposer-verifier-512 (run-facts flags it '512px arm of H11 tile-size study'); tile_size_px 512",
+   "new_path": "results/runs-manifest.json#$.runs[?(@.run_id=='proposer-verifier-512')].tile_size_px"
+  },
+  {
+   "batch": "035",
+   "claim_index": 49,
+   "value_index": 1,
+   "action": "path-set",
+   "rationale": "Disfavoured arm of the tile-size x architecture interaction is the 512-px consensus+PV run proposer-verifier-512",
+   "new_path": "results/runs-manifest.json#$.runs[?(@.run_id=='proposer-verifier-512')].tile_size_px"
+  },
+  {
+   "batch": "035",
+   "claim_index": 50,
+   "value_index": 0,
+   "action": "path-set",
+   "rationale": "Era 2 production tile size; same tiling parameter as claim 4",
+   "new_path": "inputs/tiles_384/tile_selection_metadata.json#$.parameters.tile_size"
+  },
+  {
+   "batch": "035",
+   "claim_index": 50,
+   "value_index": 2,
+   "action": "path-set",
+   "rationale": "Map-sheet count is the key count of the 384-px selection metadata's by_map object (four sheets)",
+   "new_path": "inputs/tiles_384/tile_selection_metadata.json#len:$.by_map"
+  },
+  {
+   "batch": "035",
+   "claim_index": 59,
+   "value_index": 4,
+   "action": "path-set",
+   "rationale": "The best pipeline's consensus filter is recorded as vote_threshold 16 in the 16-of-30 proposer artefact feeding the PV stage",
+   "new_path": "outputs/h11/pv-diag-384/verified/flash-high-text-16of30/probabilities.json#$.vote_threshold"
+  },
+  {
+   "batch": "035",
+   "claim_index": 59,
+   "value_index": 5,
+   "action": "path-set",
+   "rationale": "Pool size is the constant total_passes property (30) on every feature of the 16-of-30 consensus GeoJSON the best pipeline verified",
+   "new_path": "outputs/h11/pv-diag-384/consensus/flash-high-text-16of30.geojson#$.features[*].properties.total_passes"
+  },
+  {
+   "batch": "035",
+   "claim_index": 62,
+   "value_index": 0,
+   "action": "path-set",
+   "rationale": "Larger plateau arm is the pairwise group-7 row's label_a 'Flash HIGH text 9-of-10'; that condition's n_passes is the pool size",
+   "new_path": "results/conditions-manifest.json#$.conditions[?(@.condition_id=='pv-diag-384::flash-high-text-n5-text-t0.7-consensus-n10-9of10')].n_passes"
+  },
+  {
+   "batch": "035",
+   "claim_index": 62,
+   "value_index": 1,
+   "action": "path-set",
+   "rationale": "Smaller plateau arm is the same row's label_b 'Flash HIGH text 5-of-5'; that condition's n_passes is the pool size",
+   "new_path": "results/conditions-manifest.json#$.conditions[?(@.condition_id=='pv-diag-384::flash-high-text-n5-text-t0.7-consensus-n5-5of5')].n_passes"
+  },
+  {
+   "batch": "035",
+   "claim_index": 66,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "rationale": "Registered set size lives in the lodged preregistration markdown (docs/methodology/preregistration/osf/preregistration.md); no JSON home, so it is a markdown census, not a read",
+   "new_method": "recompute-script"
+  },
+  {
+   "batch": "035",
+   "claim_index": 66,
+   "value_index": 1,
+   "action": "path-set",
+   "rationale": "As-run Phase 1 set size is the length of the claim anchor's own holdout manifest (60 entries)",
+   "new_path": "len:$"
+  },
+  {
+   "batch": "035",
+   "claim_index": 66,
+   "value_index": 2,
+   "action": "path-set",
+   "rationale": "As-run Era 1 set size is the feature count of the Era 1 bounds GeoJSON (340)",
+   "new_path": "inputs/vectors/bounds/full_evaluation_bounds.geojson#len:$.features"
+  },
+  {
+   "batch": "035",
+   "claim_index": 66,
+   "value_index": 3,
+   "action": "path-set",
+   "rationale": "As-run Era 2 set size is the length of the 384-px evaluation manifest (487)",
+   "new_path": "inputs/tiles_384/full_evaluation_manifest.json#len:$"
+  },
+  {
+   "batch": "004",
+   "claim_index": 6,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path $.n_conditions in results/paper-eval/n1/384px-14buf-mcc/batch_summary.json locates the named quantity (number of cells in the N=1 baseline matrix) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 8,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path $.n_conditions in results/paper-eval/n1/384px-14buf-mcc/batch_summary.json locates the named quantity (number of cells in the N=1 baseline matrix) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 14,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path len:$.decomposition['n1-pro-rerun-384'].conditions in results/run-conditions.json locates the named quantity (number of anti-diagonal corners n1-outstanding-384 was intended to supply as Pro) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 15,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path len:$.decomposition['n1-pro-rerun-384'].conditions in results/run-conditions.json locates the named quantity (number of Pro anti-diagonal cells now taken from the genuine-Pro re-run) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 18,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path $.summary.n_runs in results/paper-eval/n1/384px-14buf-mcc/flash-text-high-t-0-7/evaluation.json locates the named quantity (largest replicate count among the matrix cells (exemplar: flash-text-high-t-0-7)) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 24,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path $.summary.buffers[0].buffer_metres in results/paper-eval/mcc/384px/flash-image-high-t-0-7/evaluation.json locates the named quantity (buffer label on the superseded MCC-only evaluation (results/paper-eval/mcc/384px)) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 30,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path $.decomposition['pv-diag-384'].conditions[?(@.label=='baseline-flash-image-high-t-0-7')].n_passes in results/run-conditions.json locates the named quantity (n_passes recorded on each baseline-matrix condition) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 41,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path len:$.decomposition['n1-pro-rerun-384'].conditions in results/run-conditions.json locates the named quantity (number of Pro anti-diagonal cells the board now uses) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 43,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path $.n_conditions in results/paper-eval/n1/384px-14buf-mcc/batch_summary.json locates the named quantity (number of cells in the N=1 baseline matrix) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 44,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path $.summary.n_runs in results/paper-eval/n1/384px-14buf-mcc/flash-image-high-t-0-7/evaluation.json locates the named quantity (replicate single passes averaged, cell flash-image-high-t-0-7) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 46,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path $.summary.n_runs in results/paper-eval/n1/384px-14buf-mcc/flash-image-minimal-t-0-7/evaluation.json locates the named quantity (replicate single passes averaged, cell flash-image-minimal-t-0-7) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 47,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path $.summary.n_runs in results/paper-eval/n1/384px-14buf-mcc/flash-text-high-t-0-7/evaluation.json locates the named quantity (replicate single passes averaged, cell flash-text-high-t-0-7) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 49,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path $.summary.n_runs in results/paper-eval/n1/384px-14buf-mcc/flash-text-minimal-t-0-7/evaluation.json locates the named quantity (replicate single passes averaged, cell flash-text-minimal-t-0-7) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 50,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path $.summary.n_runs in results/paper-eval/n1/384px-14buf-mcc/pro-image-high-t-0-7/evaluation.json locates the named quantity (replicate single passes averaged, cell pro-image-high-t-0-7) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 51,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path $.summary.n_runs in results/paper-eval/n1/384px-14buf-mcc/pro-image-medium-t-0-0/evaluation.json locates the named quantity (replicate single passes averaged, cell pro-image-medium-t-0-0) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 52,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path $.summary.n_runs in results/paper-eval/n1/384px-14buf-mcc/pro-text-high-t-0-7/evaluation.json locates the named quantity (replicate single passes averaged, cell pro-text-high-t-0-7) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 53,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path $.summary.n_runs in results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json locates the named quantity (replicate single passes averaged, cell pro-text-medium-t-0-0) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 54,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path $.summary.n_runs in results/paper-eval/n1/384px-14buf-mcc/flash-image-minimal-t-0-0-487-tiles/evaluation.json locates the named quantity (replicate single passes averaged, cell flash-image-minimal-t-0-0-487-tiles) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 55,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path $.summary.n_runs in results/paper-eval/n1/384px-14buf-mcc/flash-image-minimal-t-0-3/evaluation.json locates the named quantity (replicate single passes averaged, cell flash-image-minimal-t-0-3) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 56,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path $.summary.n_runs in results/paper-eval/n1/384px-14buf-mcc/flash-text-minimal-t-0-3/evaluation.json locates the named quantity (replicate single passes averaged, cell flash-text-minimal-t-0-3) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 57,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path $.summary.n_runs in results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-high-t-0-0/evaluation.json locates the named quantity (replicate single passes averaged, cell pro-rerun/pro-image-high-t-0-0) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 58,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path $.summary.n_runs in results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-medium-t-0-7/evaluation.json locates the named quantity (replicate single passes averaged, cell pro-rerun/pro-image-medium-t-0-7) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 59,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path $.summary.n_runs in results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-high-t-0-0/evaluation.json locates the named quantity (replicate single passes averaged, cell pro-rerun/pro-text-high-t-0-0) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 60,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path $.summary.n_runs in results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-medium-t-0-7/evaluation.json locates the named quantity (replicate single passes averaged, cell pro-rerun/pro-text-medium-t-0-7) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 61,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path $.summary.n_runs in results/paper-eval/n1/384px-14buf-mcc/flash-text-minimal-t-0-0/evaluation.json locates the named quantity (replicate single passes averaged, cell flash-text-minimal-t-0-0) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 62,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path len:$.decomposition['n1-pro-rerun-384'].conditions in results/run-conditions.json locates the named quantity (number of n1-pro-rerun-384 cells whose evals live under pro-rerun/) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 84,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path len:$.decomposition['n1-pro-rerun-384'].conditions in results/run-conditions.json locates the named quantity (number of genuine-Pro anti-diagonal rows in the results table) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "004",
+   "claim_index": 94,
+   "value_index": 0,
+   "action": "left-as-is",
+   "new_path": null,
+   "new_method": null,
+   "rationale": "Single-value claim; anchor path len:$.ranking in results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json locates the named quantity (number of cells ranked and tiered in the leaderboard finding) — legal amendment-3 fallback, resolver confirmed."
+  },
+  {
+   "batch": "043",
+   "claim_index": 18,
+   "value_index": 0,
+   "action": "path-set",
+   "new_path": "len:$.candidates",
+   "new_method": "read",
+   "rationale": "n_consensus is defined by the audit's own methodology as n_manifest x iterations (iterations=1), i.e. the candidates-array length of the sibling crops manifest that is already this claim's anchor file; resolves to 8942."
+  },
+  {
+   "batch": "044",
+   "claim_index": 44,
+   "value_index": 0,
+   "action": "path-set",
+   "new_path": "len:$.candidates",
+   "new_method": "read",
+   "rationale": "Same rule as the 89 sibling repairs (expected-verifier-input = len:$.candidates of the name-matched crops manifest); the manifest is already this claim's anchor file, so an in-anchor path suffices; resolves to 974."
+  },
+  {
+   "batch": "038-h11",
+   "claim_index": 4,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Wall-clock estimate quoted from the header comment of a .sh script (line 30) — non-JSON, no locator exists."
+  },
+  {
+   "batch": "038-h11",
+   "claim_index": 4,
+   "value_index": 1,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Wall-clock estimate quoted from the header comment of a .sh script (line 30) — non-JSON, no locator exists."
+  },
+  {
+   "batch": "038-h11",
+   "claim_index": 5,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Count over pattern-matched condition-inventory entries; the resolver has no regex filter (census-runner family, ruling 7)."
+  },
+  {
+   "batch": "038-h11",
+   "claim_index": 7,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Count over pattern-matched condition-inventory entries; the resolver has no regex filter (census-runner family, ruling 7)."
+  },
+  {
+   "batch": "038-h11",
+   "claim_index": 9,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Count over pattern-matched condition-inventory entries; the resolver has no regex filter (census-runner family, ruling 7)."
+  },
+  {
+   "batch": "038-h11",
+   "claim_index": 12,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Count over pattern-matched condition-inventory entries; the resolver has no regex filter (census-runner family, ruling 7)."
+  },
+  {
+   "batch": "038-h11",
+   "claim_index": 14,
+   "value_index": 1,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Count of hardcoded path strings inside the SPECIAL_CONFIGS dict of a .py script — a source-constant census, not a JSONPath."
+  },
+  {
+   "batch": "038-h11",
+   "claim_index": 15,
+   "value_index": 1,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Count of default_output_dir string constants in a .py script — a source-constant census, not a JSONPath."
+  },
+  {
+   "batch": "038-h11",
+   "claim_index": 26,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Count of markdown body lines matching a string across the archive/ tree — a grep, not a JSONPath."
+  },
+  {
+   "batch": "038-h11",
+   "claim_index": 27,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Count of markdown body lines matching a string across the archive/ tree — a grep, not a JSONPath."
+  },
+  {
+   "batch": "038-h11",
+   "claim_index": 28,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Count of markdown body lines matching a string across the archive/ tree — a grep, not a JSONPath."
+  },
+  {
+   "batch": "038-h11",
+   "claim_index": 29,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Count of markdown body lines matching a string across the archive/ tree — a grep, not a JSONPath."
+  },
+  {
+   "batch": "038-h11",
+   "claim_index": 30,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Count of markdown body lines matching a string across the archive/ tree — a grep, not a JSONPath."
+  },
+  {
+   "batch": "038-h11",
+   "claim_index": 36,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Count of files in a directory containing a path substring — a directory-level grep; the anchor is a directory, not a JSON file."
+  },
+  {
+   "batch": "038-h11",
+   "claim_index": 36,
+   "value_index": 1,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Count of matching lines across those files — a directory-level grep, not a JSONPath."
+  },
+  {
+   "batch": "038-h11",
+   "claim_index": 37,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Wall-clock estimate quoted from the header comment of a .sh script (line 30) — non-JSON, no locator exists."
+  },
+  {
+   "batch": "038-h11",
+   "claim_index": 37,
+   "value_index": 1,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Wall-clock estimate quoted from the header comment of a .sh script (line 30) — non-JSON, no locator exists."
+  },
+  {
+   "batch": "038-h11",
+   "claim_index": 57,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Wall-clock estimate quoted from the header comment of a .sh script (line 30) — non-JSON, no locator exists."
+  },
+  {
+   "batch": "038-h11",
+   "claim_index": 57,
+   "value_index": 1,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Wall-clock estimate quoted from the header comment of a .sh script (line 30) — non-JSON, no locator exists."
+  },
+  {
+   "batch": "038-h11",
+   "claim_index": 60,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Count over pattern-matched condition-inventory entries; the resolver has no regex filter (census-runner family, ruling 7)."
+  },
+  {
+   "batch": "038-h11",
+   "claim_index": 63,
+   "value_index": 0,
+   "action": "path-set",
+   "new_path": "$[?(@.id=='h11-e47-propose-brief')].K",
+   "rationale": "K for the e47-propose-brief condition lives in the claim's own anchor file; single-key equality filter on the record id matches exactly 1."
+  },
+  {
+   "batch": "038-gs",
+   "claim_index": 0,
+   "value_index": 0,
+   "action": "left-as-is",
+   "rationale": "Single-value claim; anchor $.summary.buffers[*].coverage.n_tiles is the n_tiles quantity itself — legal fallback."
+  },
+  {
+   "batch": "038-gs",
+   "claim_index": 1,
+   "value_index": 0,
+   "action": "left-as-is",
+   "rationale": "Single-value claim; anchor $.summary.buffers[*].coverage.n_tiles is the n_tiles quantity itself — legal fallback."
+  },
+  {
+   "batch": "038-gs",
+   "claim_index": 2,
+   "value_index": 0,
+   "action": "left-as-is",
+   "rationale": "Single-value claim; anchor $.n_total_classified is the classified-detection count itself — legal fallback."
+  },
+  {
+   "batch": "038-gs",
+   "claim_index": 3,
+   "value_index": 0,
+   "action": "left-as-is",
+   "rationale": "Single-value claim; anchor $.summary.n_detections is the verified-detection count itself — legal fallback."
+  },
+  {
+   "batch": "038-gs",
+   "claim_index": 8,
+   "value_index": 0,
+   "action": "left-as-is",
+   "rationale": "Single-value claim; anchor len:$.features on the calibration bounds GeoJSON is the 160-tile count itself — legal fallback."
+  },
+  {
+   "batch": "052",
+   "claim_index": 11,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Count of run DIRECTORIES at service_tier flex; the anchor path locates one exemplar's tier string, not the count (the Obs 379 shape)."
+  },
+  {
+   "batch": "052",
+   "claim_index": 42,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Pass-index range asserted by the existence of proposer/run_6..run_10 directories — a directory listing, and the anchor path is a temperature (the Obs 379 trap itself)."
+  },
+  {
+   "batch": "039",
+   "claim_index": 4,
+   "value_index": 0,
+   "action": "path-set",
+   "new_path": "inputs/vectors/bounds/gs-4maps-sheet-bounds.geojson#len:$.features",
+   "rationale": "The claim anchor (flat tile-name array) carries the map count only via filename prefixes; the gold-standard sheet-bounds GeoJSON holds one polygon per curated map (resolves to 4) — same quantity, same corpus as claims 9 and 46."
+  },
+  {
+   "batch": "039",
+   "claim_index": 5,
+   "value_index": 0,
+   "action": "left-as-is",
+   "rationale": "Single-value claim; anchor path $.map_universe_size is the deployment-corpus map count itself. Already MATCH."
+  },
+  {
+   "batch": "039",
+   "claim_index": 6,
+   "value_index": 0,
+   "action": "left-as-is",
+   "rationale": "Single-value claim; anchor path $.pairwise[0].n_tiles is the deployment tile denominator being quoted. Already MATCH."
+  },
+  {
+   "batch": "039",
+   "claim_index": 9,
+   "value_index": 0,
+   "action": "path-set",
+   "new_path": "len:$.features",
+   "rationale": "Count of gold-standard maps is the feature count of the claim-anchor sheet-bounds GeoJSON (resolves to 4)."
+  },
+  {
+   "batch": "039",
+   "claim_index": 12,
+   "value_index": 0,
+   "action": "left-as-is",
+   "rationale": "Single-value claim; anchor path $.ranking[0].eval_f1 is the best single-pass F1 being quoted. Already MATCH."
+  },
+  {
+   "batch": "039",
+   "claim_index": 23,
+   "value_index": 1,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "pareto_v2.json rungs store f1/passes/costs but no vote threshold; the 16 lives only in the pool label, and the manifest cell has vote_threshold null."
+  },
+  {
+   "batch": "039",
+   "claim_index": 28,
+   "value_index": 0,
+   "action": "left-as-is",
+   "rationale": "Single-value claim; anchor path $.buffer_m is the matching buffer being asserted. Already MATCH."
+  },
+  {
+   "batch": "039",
+   "claim_index": 38,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "\"doubling\" is a ratio derived from two conditions' n_passes (10 = 2 x 5) — a cross-cell derivation, not a value any read path returns."
+  },
+  {
+   "batch": "039",
+   "claim_index": 41,
+   "value_index": 2,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Rank 7 is an ordinal position in the F1-sorted $.cells list of a different artefact; cells carry no rank field and the resolver returns values, not indices."
+  },
+  {
+   "batch": "039",
+   "claim_index": 43,
+   "value_index": 0,
+   "action": "left-as-is",
+   "rationale": "Single-value claim; anchor path $.vote2.spearman_all8 is the quoted rho. Already MATCH."
+  },
+  {
+   "batch": "039",
+   "claim_index": 44,
+   "value_index": 0,
+   "action": "left-as-is",
+   "rationale": "Single-value claim; anchor path is the headline F1@20 m cell being restated. Already MATCH."
+  },
+  {
+   "batch": "039",
+   "claim_index": 45,
+   "value_index": 0,
+   "action": "left-as-is",
+   "rationale": "Single-value claim; anchor path is the best deployment cell's f1_50. Already MATCH."
+  },
+  {
+   "batch": "039",
+   "claim_index": 46,
+   "value_index": 0,
+   "action": "path-set",
+   "new_path": "len:$.features",
+   "rationale": "Count of gold-standard maps is the feature count of the claim-anchor sheet-bounds GeoJSON (resolves to 4)."
+  },
+  {
+   "batch": "039",
+   "claim_index": 47,
+   "value_index": 1,
+   "action": "path-set",
+   "new_path": "results/55maps-per-map-shell-variance/per_map_shell_rates.json#$.map_universe_size",
+   "rationale": "The 55-map count lives in a different artefact from the claim anchor (leaderboard); cross-file locator to the corpus-size scalar (resolves to 55)."
+  },
+  {
+   "batch": "039",
+   "claim_index": 50,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "\"one corpus\" is a scope assertion over the whole gtfree artefact (its $.design string names a single canonical-GT board); no scalar corpus count exists."
+  },
+  {
+   "batch": "050",
+   "claim_index": 23,
+   "value_index": 2,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "R = 50 m is a KEY of $.ambiguity_by_buffer, not a stored scalar; the only path returning 50 would filter on buffer_m == 50 and read it back — a tautology."
+  },
+  {
+   "batch": "050",
+   "claim_index": 23,
+   "value_index": 4,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "R = 125 m is likewise a key of $.ambiguity_by_buffer, not a stored scalar."
+  },
+  {
+   "batch": "050",
+   "claim_index": 37,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Count of conditions with run_id == \"verifier-robustness\" is a subset count over 322 manifest entries; single-match equality filters cannot count."
+  },
+  {
+   "batch": "050",
+   "claim_index": 37,
+   "value_index": 1,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Count of pv-diag-384 conditions added in one registration is a subset count with no single-key equality expression."
+  },
+  {
+   "batch": "050",
+   "claim_index": 38,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Count of analyses added in a registration is a subset count; analyses-manifest.json carries no run grouping (all 20 entries have no run_id)."
+  },
+  {
+   "batch": "calib-b",
+   "claim_index": 4,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Count of the five execution fields ADDED to a flat 14-key config is a subset count over named keys; len: over the object would count all keys."
+  },
+  {
+   "batch": "calib-b",
+   "claim_index": 14,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Tiles per sheet requires grouping calibration_bounds.geojson features by map_name (20 features / 4 sheets); no path expresses a group-by."
+  },
+  {
+   "batch": "calib-b",
+   "claim_index": 16,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "The 20 m buffer is a constant inside scripts/6_accuracy_report.py:validate_file() — a Python source value, outside the JSON resolver."
+  },
+  {
+   "batch": "calib-b",
+   "claim_index": 16,
+   "value_index": 2,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Same script constant as values[0]; non-JSON source, script scope."
+  },
+  {
+   "batch": "calib-b",
+   "claim_index": 39,
+   "value_index": 3,
+   "action": "path-set",
+   "new_path": "len:$.features",
+   "rationale": "Total Phase 1 false negatives is the whole-artefact feature count of the claim-anchor merged_detections_fn.geojson (resolves to 24)."
+  },
+  {
+   "batch": "028",
+   "claim_index": 18,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "The 16-vote threshold is min(vote_count) over the consensus GeoJSON features; the manifest cell pv-diag-384::verified-adv-text-consensus-16of30 stores vote_threshold null, so no read path locates it."
+  },
+  {
+   "batch": "028",
+   "claim_index": 18,
+   "value_index": 1,
+   "action": "path-set",
+   "new_path": "$.features[*].properties.total_passes",
+   "rationale": "Pool size 30 is asserted per feature as total_passes and is constant across all 729 features of the claim-anchor GeoJSON ([*] constant collapse resolves to 30)."
+  },
+  {
+   "batch": "028",
+   "claim_index": 22,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Same quantity as claim 18 values[0]: min(vote_count) derivation, no scalar home."
+  },
+  {
+   "batch": "028",
+   "claim_index": 22,
+   "value_index": 1,
+   "action": "path-set",
+   "new_path": "$.features[*].properties.total_passes",
+   "rationale": "Same quantity as claim 18 values[1]: constant total_passes = 30 on the anchor GeoJSON features."
+  },
+  {
+   "batch": "036",
+   "claim_index": 5,
+   "value_index": 0,
+   "action": "left-as-is",
+   "rationale": "Single-value claim whose anchor path is exactly the F1@20 m cell being quoted — the legal anchor-path fallback; already MATCH."
+  },
+  {
+   "batch": "036",
+   "claim_index": 28,
+   "value_index": 2,
+   "action": "path-set",
+   "new_path": "len:$.features",
+   "rationale": "Sheet count of the gold-standard corpus is the feature count of the claim-anchor gs-4maps-sheet-bounds.geojson (resolves to 4)."
+  },
+  {
+   "batch": "036",
+   "claim_index": 29,
+   "value_index": 3,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "The 2-of-5 numerator exists in pilot_results.json only as a KEY of $.sizes.*.thresholds and is selected in pilot_decision.md (Markdown); no read path returns the scalar 2."
+  },
+  {
+   "batch": "036",
+   "claim_index": 33,
+   "value_index": 0,
+   "action": "left-as-is",
+   "rationale": "Single-value claim; the anchor path (distinct map_name count) locates exactly the quoted 55-map count. Already MATCH."
+  },
+  {
+   "batch": "006-output-dir-standard",
+   "claim_index": 14,
+   "value_index": 0,
+   "action": "method-recompute-script",
+   "new_method": "recompute-script",
+   "rationale": "Count of outputs/55maps-*-generalisation/post_run_report.md files is a directory listing over Markdown artefacts — no JSON locator exists."
   }
  ]
 }

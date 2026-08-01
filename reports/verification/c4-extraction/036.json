@@ -1139,7 +1139,7 @@
      "value_parsed": 4,
      "unit": "sheets",
      "kind": "count",
-     "path": null,
+     "path": "len:$.features",
      "method": null
     }
    ],
@@ -1195,7 +1195,7 @@
      "unit": "votes",
      "kind": "parameter",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     },
     {
      "quantity": "consensus pool size used in the tile-size pilot (denominator)",

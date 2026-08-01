@@ -183,7 +183,7 @@
           "unit": "minutes",
           "kind": "other",
           "path": null,
-          "method": null
+          "method": "recompute-script"
         },
         {
           "quantity": "leaderboard regeneration wall-clock per Era, high bound",
@@ -192,7 +192,7 @@
           "unit": "minutes",
           "kind": "other",
           "path": null,
-          "method": null
+          "method": "recompute-script"
         }
       ],
       "anchor": {
@@ -220,7 +220,7 @@
           "unit": "entries",
           "kind": "count",
           "path": null,
-          "method": null
+          "method": "recompute-script"
         }
       ],
       "anchor": {
@@ -291,7 +291,7 @@
           "unit": "entries",
           "kind": "count",
           "path": null,
-          "method": null
+          "method": "recompute-script"
         }
       ],
       "anchor": {
@@ -353,7 +353,7 @@
           "unit": "entries",
           "kind": "count",
           "path": null,
-          "method": null
+          "method": "recompute-script"
         },
         {
           "quantity": "count of map sheets in the gold-standard production sub-corpus",
@@ -452,7 +452,7 @@
           "unit": "entries",
           "kind": "count",
           "path": null,
-          "method": null
+          "method": "recompute-script"
         }
       ],
       "anchor": {
@@ -532,7 +532,7 @@
           "unit": "strings",
           "kind": "count",
           "path": null,
-          "method": null
+          "method": "recompute-script"
         }
       ],
       "anchor": {
@@ -569,7 +569,7 @@
           "unit": "strings",
           "kind": "count",
           "path": null,
-          "method": null
+          "method": "recompute-script"
         }
       ],
       "anchor": {
@@ -889,7 +889,7 @@
           "unit": "lines",
           "kind": "count",
           "path": null,
-          "method": null
+          "method": "recompute-script"
         },
         {
           "quantity": "count of git commits touching outputs/h11/e47-propose-brief/",
@@ -926,7 +926,7 @@
           "unit": "lines",
           "kind": "count",
           "path": null,
-          "method": null
+          "method": "recompute-script"
         },
         {
           "quantity": "count of git commits touching outputs/h11/gold-standard-v2/",
@@ -963,7 +963,7 @@
           "unit": "lines",
           "kind": "count",
           "path": null,
-          "method": null
+          "method": "recompute-script"
         },
         {
           "quantity": "count of git commits touching outputs/h11/wbf/",
@@ -1000,7 +1000,7 @@
           "unit": "lines",
           "kind": "count",
           "path": null,
-          "method": null
+          "method": "recompute-script"
         },
         {
           "quantity": "count of git commits touching outputs/h11/propose-brief-v1-test/",
@@ -1037,7 +1037,7 @@
           "unit": "lines",
           "kind": "count",
           "path": null,
-          "method": null
+          "method": "recompute-script"
         },
         {
           "quantity": "count of git commits touching outputs/h11/v2-proposer-test/",
@@ -1244,7 +1244,7 @@
           "unit": "files",
           "kind": "count",
           "path": null,
-          "method": null
+          "method": "recompute-script"
         },
         {
           "quantity": "count of lines in those files embedding e47-propose-brief paths",
@@ -1253,7 +1253,7 @@
           "unit": "lines",
           "kind": "count",
           "path": null,
-          "method": null
+          "method": "recompute-script"
         }
       ],
       "anchor": {
@@ -1281,7 +1281,7 @@
           "unit": "minutes",
           "kind": "other",
           "path": null,
-          "method": null
+          "method": "recompute-script"
         },
         {
           "quantity": "leaderboard regeneration wall-clock per Era, high bound",
@@ -1290,7 +1290,7 @@
           "unit": "minutes",
           "kind": "other",
           "path": null,
-          "method": null
+          "method": "recompute-script"
         }
       ],
       "anchor": {
@@ -2118,7 +2118,7 @@
           "unit": "minutes",
           "kind": "other",
           "path": null,
-          "method": null
+          "method": "recompute-script"
         },
         {
           "quantity": "Era 2 leaderboard regeneration wall-clock, high bound",
@@ -2127,7 +2127,7 @@
           "unit": "minutes",
           "kind": "other",
           "path": null,
-          "method": null
+          "method": "recompute-script"
         }
       ],
       "anchor": {
@@ -2232,7 +2232,7 @@
           "unit": "entries",
           "kind": "count",
           "path": null,
-          "method": null
+          "method": "recompute-script"
         },
         {
           "quantity": "count of leaderboard regenerations required under Strategy A",
@@ -2345,7 +2345,7 @@
           "value_parsed": 5,
           "unit": "passes",
           "kind": "parameter",
-          "path": null,
+          "path": "$[?(@.id=='h11-e47-propose-brief')].K",
           "method": null
         },
         {

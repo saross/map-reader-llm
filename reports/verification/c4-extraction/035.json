@@ -109,7 +109,7 @@
      "unit": "px",
      "kind": "parameter",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     }
    ],
    "anchor": {
@@ -145,7 +145,7 @@
      "value_parsed": 512,
      "unit": "px",
      "kind": "parameter",
-     "path": null,
+     "path": "results/runs-manifest.json#$.runs[?(@.run_id=='retest-phase2a')].tile_size_px",
      "method": null
     }
    ],
@@ -182,7 +182,7 @@
      "value_parsed": 384,
      "unit": "px",
      "kind": "parameter",
-     "path": null,
+     "path": "inputs/tiles_384/tile_selection_metadata.json#$.parameters.tile_size",
      "method": null
     }
    ],
@@ -248,7 +248,7 @@
      "unit": "px",
      "kind": "parameter",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     }
    ],
    "anchor": {
@@ -385,7 +385,7 @@
      "value_parsed": 256,
      "unit": "px",
      "kind": "parameter",
-     "path": "$.sizes.256.tile_size",
+     "path": "$.sizes['256'].tile_size",
      "method": null
     },
     {
@@ -394,7 +394,7 @@
      "value_parsed": 512,
      "unit": "px",
      "kind": "parameter",
-     "path": "$.sizes.512.tile_size",
+     "path": "$.sizes['512'].tile_size",
      "method": null
     },
     {
@@ -421,7 +421,7 @@
      "value_parsed": 2,
      "unit": "votes",
      "kind": "parameter",
-     "path": "$.sizes.512.thresholds.2",
+     "path": "$.sizes['512'].thresholds.2",
      "method": null
     },
     {
@@ -671,7 +671,7 @@
      "unit": "phases",
      "kind": "count",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     },
     {
      "quantity": "tile count, Phase 1 holdout set",
@@ -689,7 +689,7 @@
      "unit": "px",
      "kind": "parameter",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     }
    ],
    "anchor": {
@@ -1067,7 +1067,7 @@
      "value_parsed": 512,
      "unit": "px",
      "kind": "parameter",
-     "path": null,
+     "path": "results/runs-manifest.json#$.runs[?(@.run_id=='retest-phase2a')].tile_size_px",
      "method": null
     }
    ],
@@ -1132,7 +1132,7 @@
      "value_parsed": 512,
      "unit": "px",
      "kind": "parameter",
-     "path": null,
+     "path": "results/runs-manifest.json#$.runs[?(@.run_id=='retest-phase2a')].tile_size_px",
      "method": null
     }
    ],
@@ -1299,7 +1299,7 @@
      "value_parsed": 5,
      "unit": "conditions",
      "kind": "count",
-     "path": "$.conditions",
+     "path": "len:$.conditions",
      "method": null
     },
     {
@@ -1337,7 +1337,7 @@
      "unit": "conditions",
      "kind": "count",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     },
     {
      "quantity": "count of tracks, Phase 2b retest",
@@ -1346,7 +1346,7 @@
      "unit": "tracks",
      "kind": "count",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     },
     {
      "quantity": "runs per condition, Phase 2b retest",
@@ -1383,7 +1383,7 @@
      "unit": "conditions",
      "kind": "count",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     },
     {
      "quantity": "count of tracks, Phase 2c retest",
@@ -1392,7 +1392,7 @@
      "unit": "tracks",
      "kind": "count",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     },
     {
      "quantity": "runs per condition, Phase 2c retest",
@@ -1447,7 +1447,7 @@
      "unit": "conditions",
      "kind": "count",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     },
     {
      "quantity": "count of tracks, Phase 2d retest",
@@ -1456,7 +1456,7 @@
      "unit": "tracks",
      "kind": "count",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     },
     {
      "quantity": "runs per condition, Phase 2d retest",
@@ -1501,7 +1501,7 @@
      "value_parsed": 4,
      "unit": "conditions",
      "kind": "count",
-     "path": "$.conditions",
+     "path": "len:$.conditions",
      "method": null
     },
     {
@@ -1547,7 +1547,7 @@
      "value_parsed": 30,
      "unit": "passes",
      "kind": "parameter",
-     "path": null,
+     "path": "results/conditions-manifest.json#$.conditions[?(@.condition_id=='retest-phase3a::image-t0.7-n30-18of30')].n_passes",
      "method": null
     },
     {
@@ -1584,7 +1584,7 @@
      "value_parsed": 512,
      "unit": "px",
      "kind": "parameter",
-     "path": null,
+     "path": "results/runs-manifest.json#$.runs[?(@.run_id=='retest-phase2a')].tile_size_px",
      "method": null
     },
     {
@@ -1761,7 +1761,7 @@
      "unit": null,
      "kind": "parameter",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     },
     {
      "quantity": "temperature, disfavoured arm of the comparison",
@@ -1770,7 +1770,7 @@
      "unit": null,
      "kind": "parameter",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     },
     {
      "quantity": "ΔF1, T=0.7 vs T=1.0 at consensus",
@@ -1779,7 +1779,7 @@
      "unit": "F1",
      "kind": "metric",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     },
     {
      "quantity": "p-value ceiling asserted for the temperature comparisons",
@@ -1788,7 +1788,7 @@
      "unit": null,
      "kind": "statistic",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     },
     {
      "quantity": "Gemini API default temperature (vendor default)",
@@ -1870,7 +1870,7 @@
      "value_parsed": 384,
      "unit": "px",
      "kind": "parameter",
-     "path": null,
+     "path": "inputs/tiles_384/tile_selection_metadata.json#$.parameters.tile_size",
      "method": null
     }
    ],
@@ -1898,7 +1898,7 @@
      "value_parsed": 512,
      "unit": "px",
      "kind": "parameter",
-     "path": "$.sizes.512.tile_size",
+     "path": "$.sizes['512'].tile_size",
      "method": null
     },
     {
@@ -1916,7 +1916,7 @@
      "value_parsed": 2,
      "unit": "votes",
      "kind": "parameter",
-     "path": "$.sizes.512.thresholds.2",
+     "path": "$.sizes['512'].thresholds.2",
      "method": null
     },
     {
@@ -1981,7 +1981,7 @@
      "value_parsed": 256,
      "unit": "px",
      "kind": "parameter",
-     "path": null,
+     "path": "results/runs-manifest.json#$.runs[?(@.run_id=='pv-diag-256')].tile_size_px",
      "method": null
     },
     {
@@ -1999,7 +1999,7 @@
      "value_parsed": 512,
      "unit": "px",
      "kind": "parameter",
-     "path": null,
+     "path": "results/runs-manifest.json#$.runs[?(@.run_id=='proposer-verifier-512')].tile_size_px",
      "method": null
     }
    ],
@@ -2036,7 +2036,7 @@
      "value_parsed": 512,
      "unit": "px",
      "kind": "parameter",
-     "path": null,
+     "path": "results/runs-manifest.json#$.runs[?(@.run_id=='proposer-verifier-512')].tile_size_px",
      "method": null
     }
    ],
@@ -2064,7 +2064,7 @@
      "value_parsed": 384,
      "unit": "px",
      "kind": "parameter",
-     "path": null,
+     "path": "inputs/tiles_384/tile_selection_metadata.json#$.parameters.tile_size",
      "method": null
     },
     {
@@ -2082,7 +2082,7 @@
      "value_parsed": 4,
      "unit": "map sheets",
      "kind": "count",
-     "path": null,
+     "path": "inputs/tiles_384/tile_selection_metadata.json#len:$.by_map",
      "method": null
     }
    ],
@@ -2523,7 +2523,7 @@
      "value_parsed": 16,
      "unit": "votes",
      "kind": "parameter",
-     "path": null,
+     "path": "outputs/h11/pv-diag-384/verified/flash-high-text-16of30/probabilities.json#$.vote_threshold",
      "method": null
     },
     {
@@ -2532,7 +2532,7 @@
      "value_parsed": 30,
      "unit": "passes",
      "kind": "parameter",
-     "path": null,
+     "path": "outputs/h11/pv-diag-384/consensus/flash-high-text-16of30.geojson#$.features[*].properties.total_passes",
      "method": null
     }
    ],
@@ -2656,7 +2656,7 @@
      "value_parsed": 10,
      "unit": "passes",
      "kind": "parameter",
-     "path": null,
+     "path": "results/conditions-manifest.json#$.conditions[?(@.condition_id=='pv-diag-384::flash-high-text-n5-text-t0.7-consensus-n10-9of10')].n_passes",
      "method": null
     },
     {
@@ -2665,7 +2665,7 @@
      "value_parsed": 5,
      "unit": "passes",
      "kind": "parameter",
-     "path": null,
+     "path": "results/conditions-manifest.json#$.conditions[?(@.condition_id=='pv-diag-384::flash-high-text-n5-text-t0.7-consensus-n5-5of5')].n_passes",
      "method": null
     }
    ],
@@ -2823,7 +2823,7 @@
      "unit": "tiles",
      "kind": "count",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     },
     {
      "quantity": "evaluation-set size, Phase 1 as run",
@@ -2831,7 +2831,7 @@
      "value_parsed": 60,
      "unit": "tiles",
      "kind": "count",
-     "path": null,
+     "path": "len:$",
      "method": null
     },
     {
@@ -2840,7 +2840,7 @@
      "value_parsed": 340,
      "unit": "tiles",
      "kind": "count",
-     "path": null,
+     "path": "inputs/vectors/bounds/full_evaluation_bounds.geojson#len:$.features",
      "method": null
     },
     {
@@ -2849,7 +2849,7 @@
      "value_parsed": 487,
      "unit": "tiles",
      "kind": "count",
-     "path": null,
+     "path": "inputs/tiles_384/full_evaluation_manifest.json#len:$",
      "method": null
     }
    ],

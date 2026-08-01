@@ -683,7 +683,7 @@
      "unit": "votes",
      "kind": "parameter",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     },
     {
      "quantity": "number of proposer passes in the consensus pool",
@@ -691,7 +691,7 @@
      "value_parsed": 30,
      "unit": "runs",
      "kind": "parameter",
-     "path": null,
+     "path": "$.features[*].properties.total_passes",
      "method": null
     }
    ],
@@ -860,7 +860,7 @@
      "unit": "votes",
      "kind": "parameter",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     },
     {
      "quantity": "number of proposer passes in the consensus pool",
@@ -868,7 +868,7 @@
      "value_parsed": 30,
      "unit": "runs",
      "kind": "parameter",
-     "path": null,
+     "path": "$.features[*].properties.total_passes",
      "method": null
     }
    ],

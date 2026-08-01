@@ -146,7 +146,7 @@
      "value_parsed": 4,
      "unit": "maps",
      "kind": "count",
-     "path": null,
+     "path": "inputs/vectors/bounds/gs-4maps-sheet-bounds.geojson#len:$.features",
      "method": null
     },
     {
@@ -295,7 +295,7 @@
      "value_parsed": 4,
      "unit": "maps",
      "kind": "count",
-     "path": null,
+     "path": "len:$.features",
      "method": null
     }
    ],
@@ -931,7 +931,7 @@
      "unit": "votes",
      "kind": "parameter",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     },
     {
      "quantity": "F1@20 m on the GS maps, high31 headline rung",
@@ -1684,7 +1684,7 @@
      "unit": null,
      "kind": "ratio",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     }
    ],
    "anchor": {
@@ -1840,7 +1840,7 @@
      "unit": null,
      "kind": "count",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     }
    ],
    "anchor": {
@@ -1976,7 +1976,7 @@
      "value_parsed": 4,
      "unit": "maps",
      "kind": "count",
-     "path": null,
+     "path": "len:$.features",
      "method": null
     }
    ],
@@ -2013,7 +2013,7 @@
      "value_parsed": 55,
      "unit": "maps",
      "kind": "count",
-     "path": null,
+     "path": "results/55maps-per-map-shell-variance/per_map_shell_rates.json#$.map_universe_size",
      "method": null
     }
    ],
@@ -2125,7 +2125,7 @@
      "unit": "corpora",
      "kind": "count",
      "path": null,
-     "method": null
+     "method": "recompute-script"
     },
     {
      "quantity": "count of configurations the ground-truth-free selector was validated over",
