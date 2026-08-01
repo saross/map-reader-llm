@@ -76,11 +76,10 @@ estimate vs 178-batch plan).
 bootstrap means (Obs 376; max |mean−point| 0.0151, no one-ulp
 tolerance); the committed recompute report's 043/044 `source_lines`
 predate the final −1 banner re-span (statuses unaffected; next rerun
-refreshes); working-notes candidates from S123 HELD OVER for /observe
-review (Sonnet-vs-Opus tier gap expressed as span conventions not
-recall; silent anchor-path fallbacks manufacture wrong-quantity
-comparisons); user-obs candidates S118–120 + S122 + **S123 (new)**
-pending in `user-observations.md` (silence holds); WN-1
+refreshes); S123 candidates RESOLVED at close (working-notes both accepted →
+Obs via obs-writer; user-obs A/B approved, C dropped); user-obs
+candidates S118–120 + S122 still pending in `user-observations.md`
+(silence holds); WN-1
 (provenance-by-shape) pending; register re-anchoring still queued
 before any future census; Sol (Phase 4) untouched, $150 cap, keys in
 `~/personal-assistant/.env` — never read that file into context;

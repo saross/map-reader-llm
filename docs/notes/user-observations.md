@@ -297,7 +297,7 @@ append-only within the hour and reported prominently in the close-out
 the behaviour Shawn wants locked in, accepting this candidate makes
 it a standing expectation rather than a one-off.
 
-## Session 123 — 2026-08-01 (candidates — pending Shawn's review)
+## Session 123 — 2026-08-01 (approved 2026-08-01; candidate C dropped at review)
 
 **Candidate A — trusting the escalation judgment, not the model
 labels.** When ratifying the Sonnet fleet policy you didn't re-litigate
@@ -318,12 +318,5 @@ observation: you treat a system that visibly catches its operator as
 immediately to institutionalise the catch mechanism (ruling 11) rather
 than to add scrutiny of the operator.
 
-**Candidate C — census-grounded walkthroughs make rulings cheap.**
-The C/D do-vs-defer discussion resolved in a single message ("I
-confirm C and D") once the piles were decomposed and each option
-carried a concrete recommendation with its trade-off named. Compare
-the five-cell story, which you (rightly) declined to ratify while it
-rested on an unverified mechanism narrative. If the pattern holds:
-decision-ready = decomposed evidence + explicit recommendation +
-falsifiable premise, and anything short of that gets a conditional
-rather than a ruling.
+*(Candidate C — census-grounded walkthroughs make rulings cheap —
+dropped at review, 2026-08-01.)*
