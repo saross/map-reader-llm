@@ -42,6 +42,16 @@ disambiguation for era-relative locators. Era-resolved rows are
 marked ``resolution: "git-era"`` — they attest the document against
 its era, not the current artefact.
 
+Era check for moved anchors (ruling 12): on dated-snapshot documents
+(dated filename/title — detected from the filename stem for now,
+provisional per the ruling), a MISMATCH on a mechanical
+(``read``/``arithmetic``) row gains a supplementary ``era_check``
+field: the locator (or every operand) is re-resolved at the era
+commit and compared again, recording whether the document was
+faithful to its era. Never a status change — the primary verdict
+stays the current-artefact comparison; triage uses the field to
+separate SNAPSHOT-DIVERGENCE from SNAPSHOT-DEFECT mechanically.
+
 Usage::
 
     python3 scripts/recompute_c4_claims.py [paths...] [--out reports/verification/c4-recompute-report.json]
@@ -52,6 +62,7 @@ from __future__ import annotations
 import argparse
 import ast
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -293,6 +304,50 @@ def compare(quoted_verbatim: str, actual, unit: str | None = None) -> dict:
             "actual": result["actual"], "abs_error": result["abs_error"]}
 
 
+# Dated filename stems mark snapshot documents (ruling 12's provisional
+# classification rule: dated filename or dated title controls, not the
+# directory; title detection awaits experience in use).
+SNAPSHOT_STEM_RE = re.compile(r"\d{4}-\d{2}-\d{2}|session-\d+", re.IGNORECASE)
+
+
+def is_snapshot_doc(doc_path: str) -> bool:
+    """Ruling-12 snapshot classification from the filename stem."""
+    return bool(SNAPSHOT_STEM_RE.search(Path(doc_path).stem))
+
+
+def _era_check(row: dict, claim: dict, value: dict, era: dict) -> None:
+    """Attach the ruling-12 ``era_check`` field to a MISMATCH row.
+
+    Re-resolves the row's locator (read) or every operand (arithmetic)
+    at the source document's era commit and records whether the quote
+    was faithful to its era. Failures land as ``era_check.error`` —
+    never an exception, never a status change.
+    """
+    commit = find_era_commit(era["doc"], era["blob"])
+    if commit is None:
+        row["era_check"] = {"error": "no era commit found for source blob"}
+        return
+    try:
+        anchor = claim.get("anchor") or {}
+        if row["method"] == "read":
+            path = value.get("path") or anchor.get("path")
+            actual, _ = era_resolve(commit, anchor.get("file") or "", path)
+        else:  # arithmetic
+            source = value if value.get("expression") else anchor
+            names = {op["name"]: float(era_resolve(commit, op["file"],
+                                                   op["path"])[0])
+                     for op in source.get("operands") or []}
+            actual = safe_eval(source.get("expression") or "", names)
+        verdict = compare(value["value_verbatim"], actual,
+                          unit=value.get("unit"))
+        row["era_check"] = {"faithful": verdict["status"] == "MATCH",
+                            "status": verdict["status"],
+                            "actual_era": verdict.get("actual", actual),
+                            "commit": commit[:12]}
+    except (KeyError, ValueError, OSError, json.JSONDecodeError) as exc:
+        row["era_check"] = {"error": str(exc)}
+
+
 def process_claim(batch: str, index: int, claim: dict,
                   registry: dict | None = None,
                   era: dict | None = None) -> list[dict]:
@@ -415,6 +470,9 @@ def process_claim(batch: str, index: int, claim: dict,
                                    unit=value.get("unit")))
         except (KeyError, ValueError, OSError, json.JSONDecodeError) as exc:
             row.update(status="UNRESOLVED", reason=str(exc))
+        if (row.get("status") == "MISMATCH" and era and era.get("snapshot")
+                and method in MECHANICAL):
+            _era_check(row, claim, value, era)
         rows.append(row)
     return rows
 
@@ -433,7 +491,8 @@ def main(argv: list[str] | None = None) -> int:
         data = json.loads(Path(path).read_text(encoding="utf-8"))
         batch = Path(path).stem
         era = {"doc": data["source_document"]["file"],
-               "blob": data["source_document"]["git_blob"]}
+               "blob": data["source_document"]["git_blob"],
+               "snapshot": is_snapshot_doc(data["source_document"]["file"])}
         for i, claim in enumerate(data["claims"]):
             for row in process_claim(batch, i, claim, registry, era):
                 row["source_file"] = data["source_document"]["file"]

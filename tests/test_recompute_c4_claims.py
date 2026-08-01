@@ -243,6 +243,53 @@ def test_git_era_resolution(tmp_path, monkeypatch):
 
 
 @pytest.mark.tier1
+def test_era_check_on_overwritten_anchor(tmp_path, monkeypatch):
+    """Ruling 12: a MISMATCH on a snapshot doc against an anchor that
+    was OVERWRITTEN (not deleted) gains a supplementary era_check
+    field recording era-faithfulness; the primary status is unchanged;
+    non-snapshot docs get no era_check."""
+    import subprocess as sp
+
+    def git(*args):
+        sp.run(["git", *args], cwd=tmp_path, check=True, capture_output=True)
+
+    git("init", "-q")
+    git("config", "user.email", "t@example.org")
+    git("config", "user.name", "t")
+    (tmp_path / "report-2026-04-25.md").write_text("cost was $127.55\n")
+    (tmp_path / "meta.json").write_text(json.dumps({"cost": 127.55}))
+    git("add", ".")
+    git("commit", "-qm", "era state")
+    blob = sp.run(["git", "hash-object", "report-2026-04-25.md"],
+                  cwd=tmp_path, capture_output=True, text=True).stdout.strip()
+    # Cleanup pass overwrites the meta in place (last-writer-wins).
+    (tmp_path / "meta.json").write_text(json.dumps({"cost": 96.59}))
+    git("add", "-A")
+    git("commit", "-qm", "cleanup overwrites the meta")
+
+    monkeypatch.setattr(rc, "REPO_ROOT", tmp_path)
+    rc._json_cache.clear()
+    rc._era_commit_cache.clear()
+    rc._era_tree_cache.clear()
+
+    claim = make_claim(values=[val("$127.55", path="$.cost")],
+                       anchor={"file": "meta.json", "path": None})
+    era = {"doc": "report-2026-04-25.md", "blob": blob,
+           "snapshot": rc.is_snapshot_doc("report-2026-04-25.md")}
+    assert era["snapshot"] is True
+    (row,) = process_claim("b", 0, claim, None, era)
+    assert row["status"] == "MISMATCH"  # primary verdict unchanged
+    assert row["era_check"]["faithful"] is True
+    assert row["era_check"]["actual_era"] == pytest.approx(127.55)
+
+    # A living doc (undated stem) gets no era_check.
+    rc._json_cache.clear()
+    living = {"doc": "report-2026-04-25.md", "blob": blob, "snapshot": False}
+    (row,) = process_claim("b", 0, claim, None, living)
+    assert row["status"] == "MISMATCH" and "era_check" not in row
+
+
+@pytest.mark.tier1
 def test_safe_eval_rejects_hostile_expressions():
     with pytest.raises(ValueError):
         safe_eval("__import__('os').system('x')", {})

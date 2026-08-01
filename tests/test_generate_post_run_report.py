@@ -1200,9 +1200,12 @@ def test_pass_counts_completed_not_dispatched(registry):
     by_n = {p["pass_n"]: p for p in passes}
     p1 = by_n[1]
     assert validate_row("passes", p1, registry) == []
-    assert p1["n_tiles_processed"] == 472  # completed, not len(pim)
+    # 486 completed since the E71 recovery merged 14 of this pass's 15
+    # failed tiles (1 permanent; close-out 2026-07-30, bff914c02) —
+    # was 472 pre-recovery. Still ≠ dispatched, which is the point.
+    assert p1["n_tiles_processed"] == 486  # completed, not len(pim)
     assert p1["n_tiles_dispatched"] == 487  # dispatched preserved
-    assert p1["status"] == "partial"  # 15 failed items
+    assert p1["status"] == "partial"  # 1 permanently failed item
 
 
 @pytest.mark.tier1

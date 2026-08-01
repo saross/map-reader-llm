@@ -4,7 +4,8 @@ Four rulings collected interactively mid-phase (structured options per
 the S121 calibration rule); recorded here so triage and the fleet can
 proceed without re-litigating them at GATE 3. Controller:
 `planning/audit-charter.md` § 7 Phase 3. **Session-123 rulings 5–11
-appended 2026-08-01 (§§ 5–11 below).**
+appended 2026-08-01 (§§ 5–11 below); Session-124 rulings 12–13
+appended 2026-08-01, second batch (§§ 12–13 below).**
 
 ## 1. Dated-snapshot correction policy (load-bearing for triage)
 
@@ -143,3 +144,33 @@ adjudications that assert causal mechanisms get an independent check
 before ledger emission; `generate_c4_ledger.py` carries a
 verification lane; gate packages are assembled with the same
 discipline. Writer-vs-author disagreement is signal, not friction.
+
+---
+
+## Session-124 rulings — 2026-08-01 (second batch)
+
+Collected interactively after the S124 wave-2 triage and repair arc;
+same force as rulings 1–11.
+
+## 12. Era-check extension for moved anchors + snapshot classification
+
+**Ruling: approved as recommended.** On dated-snapshot documents, a
+MISMATCH on a mechanical (`read`/`arithmetic`) row gains a
+supplementary `era_check` field — the harness re-resolves the locator
+(or every operand) at the source document's era commit and records
+whether the document was faithful to its era. Never a status change:
+the primary verdict stays the current-artefact comparison; the field
+lets triage separate SNAPSHOT-DIVERGENCE from SNAPSHOT-DEFECT
+mechanically. **Snapshot classification rule (provisional — finalise
+after experience in actual use): a dated filename or dated title
+makes a document a snapshot, regardless of directory location.**
+Motivating case: wave-2 family 002 — 7 of 14 `run.meta.json` operands
+overwritten in place; era-faithfulness took a manual blind pass to
+establish (Obs 380).
+
+## 13. The 005#2[0] gap-bound escalation
+
+**Ruling: adjudicate in wave-3 under the usual discipline.** The
+`n1-baseline-matrix.md` "board-vs-micro F1 gap ≤ 0.0003" bound versus
+`tiering_20m.json` `f1_gap` spanning to 0.000466: blind verification
+before any edit; LIVING-DOC-FIX with changelog if confirmed.
