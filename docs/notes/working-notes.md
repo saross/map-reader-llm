@@ -22499,3 +22499,179 @@ Session 122 2026-07-31; sapphire de8041913.
 `reports/verification/c4-regen/regen-results.jsonl` (`regen-0002`);
 `reports/verification/phase3-rulings-2026-07-31.md` § 3;
 `planning/audit-charter.md` § 7.
+
+## Observation 377: Recovery campaigns can silently invalidate downstream verifier outputs — but only 1 of the 5 flagged cells is real; the other 4 are a sub-pool operand-binding artefact (Session 123, 2026-08-01)
+
+*Source anchors: `reports/phase3a-verifier-completeness-audit-2026-05-03.md`
+(`:18` "Cells audited: 210"; rows at current `:159,160,165,167,169` — add
+13 to reach these from the C4 extractor's recorded `source_lines`
+`146,147,152,154,156`, the offset being the 2026-07-31 superseded-figures
+banner prepended after extraction);
+`reports/verification/c4-recompute-report.json` (`_meta.counts`; batch
+`043` rows at `claim_index` 64, 65, 70, 72, 74);
+`reports/verification/c4-triage/mismatch-triage-2026-07-31.json`
+(`addendum_round2_3`, 80 rows, class `043-gap-opened` = 5);
+`reports/verification/c4-extraction/043.json` (`claims[64].anchor.operands`
+and `claims[70].anchor.operands` — the operand binding this Obs corrects);
+`scripts/audit_verifier_completeness.py:115–153`
+(`find_consensus_expected_count`); `scripts/build_phase3_subpool_consensus.py:35–36`
+(the `consensus-n5/` and `consensus-n10/` sub-pool contract);
+`results/conditions-manifest.json`;
+`reports/verification/phase3-rulings-2026-07-31.md` § 1 (the dated-snapshot
+policy under which this was handled). Feature counts, file mtimes, and git
+history re-derived on 2026-08-01 against repo state `b93cf6540`.*
+
+### The finding
+
+The C4 quantitative sweep re-ran the dated 2026-05-03 verifier-completeness
+audit (210 cells) against era-current artefacts and flagged **five**
+`pv-diag-384/flash-high-text-n5` `verified-v1` cells that had audited
+**COMPLETE (gap 0)** but now showed pool-minus-verifier differences of 63 to
+8,035 candidates. The triage addendum attributed all five to the May–July
+recovery campaigns rebuilding consensus pools without re-running the
+verifiers.
+
+**Re-derivation on disk shows that diagnosis holds for exactly one of the
+five.** Every one of these cells' `probabilities.json` still carries its
+audited count and an April mtime; what differs is *which pool the C4
+extractor bound as the comparison operand*.
+
+| cell (`.../flash-high-text-n5/`) | audited pool / verifier / gap | extractor operand (`consensus/`) | recomputed "gap" | correct arm pool | true gap | verdict |
+| --- | --- | --: | --: | --- | --: | --- |
+| `text-t0.7/verified-v1-n10` | 5866 / 5866 / 0 | 11,771 | 5,905 | `consensus-n10/` = 5,866 | **0** | artefact |
+| `text-t0.7/verified-v1-n5` | 3736 / 3736 / 0 | 11,771 | 8,035 | `consensus-n5/` = 3,736 | **0** | artefact |
+| `text-t0.3/verified-v1-n5` | 2954 / 2954 / 0 | 4,313 | 1,359 | `consensus-n5/` = 2,954 | **0** | artefact |
+| `text-t1.0/verified-v1-n5` | 3760 / 3760 / 0 | 5,920 | 2,160 | `consensus-n5/` = 3,760 | **0** | artefact |
+| `text-t0.0/verified-v1-n3` | 1256 / 1256 / 0 | 1,319 | 63 | *(none exists)* | **63** | **genuine** |
+
+**The four artefacts.** `build_phase3_subpool_consensus.py` (`:35–36`) builds
+*arm-specific* sub-pool directories — `consensus-n5/`, `consensus-n10/` —
+alongside the full-pool `consensus/`. A `verified-v1-n5` cell's correct
+operand is `consensus-n5/consensus_t1.geojson`. The C4 extractor bound the
+top-level `consensus/` for **every** row (`043.json`
+`claims[64].anchor.operands`), so it compared an n=5 verifier run against the
+full 30-pass pool. Nothing was rebuilt: `text-t0.7/consensus/consensus_t1.geojson`
+(11,771 features) has mtime **2026-04-17 13:32** and a single commit
+(`63f8e50f4`, 2026-04-17) — it *predates the audit* and is not grown from
+5,866. The t0.3 and t1.0 top-level pools likewise still hold their audited
+`verified-v1-n10` counts (4,313 and 5,920) at April mtimes, which is exactly
+why their n10 arms were *not* flagged.
+
+**The one genuine case.** `text-t0.0` ran only 3 passes and has **no**
+sub-pool directory, so `consensus/` *is* the correct operand. That pool was
+re-materialised on **2026-07-30** by recovery commits `f6116cba0`
+("re-materialised consensus + re-evaluation for the two live t0.0 cells") and
+`77bb342b4`, growing 1,256 → **1,319** features, while
+`text-t0.0/verified-v1-n3/probabilities.json` still has its single original
+commit (`857d5f714`) and 1,256 results. Pool and verifier are genuinely out
+of correspondence by **63 candidates**, and nothing flagged it.
+
+**The audit could not have caught this.** `find_consensus_expected_count`
+(`audit_verifier_completeness.py:115–153`) selects a sibling `consensus*`
+directory **only if its feature count already equals the verifier's result
+count** (`:149`, `if n == actual`). For the `consensus-t1` source class the
+rule is self-fulfilling: it either matches (gap 0) or resolves nothing. All
+**14** `consensus-t1` rows in the audit report gap 0 — a structural property
+of the resolver, not an empirical finding.
+
+**No paper exposure.** `results/conditions-manifest.json` contains **zero**
+occurrences of the string `pv-diag-384/flash-high-text-n5`. Of the 32
+registered conditions mentioning `flash-high-text`, 10 (`e47-propose-brief::*`)
+draw provenance from frozen copies under `results/rescore-2026-05-31/`, and
+the rest carry embedded consensus metrics with no path into the live outputs
+tree.
+
+### Why this matters
+
+1. **The general hazard is real, and the t0.0 cell is the proof.**
+   "Archive, never delete" preserves *inputs*; it says nothing about
+   mid-pipeline *derived* artefacts. A recovery campaign that regenerates a
+   consensus pool without re-running its verifier leaves the tree internally
+   inconsistent, and no check in the project fires. The exposure is to anyone
+   **re-deriving** from current on-disk pools — not to the frozen, already-cited
+   evaluations.
+2. **Era-current recomputation must replicate the in-era resolution rule.**
+   Four false positives here — one of them a 8,035-candidate headline number —
+   came from a resolver that bound a plausible-looking but wrong operand. A
+   sweep that compares "the same quantity" across eras is only sound if the
+   operand-selection logic is carried across too. Nested sub-pool layouts
+   (`consensus/` vs `consensus-nK/`) are a live trap for path-globbing
+   extractors.
+3. **A self-fulfilling audit rule is worse than no rule.** The 2026-05-03
+   audit's 14 gap-0 `consensus-t1` rows read as 14 clean cells; they were 14
+   unverifiable cells. Any future completeness audit should resolve the
+   expected operand *structurally* (from the cell's `n` and the sub-pool
+   contract) and report UNRESOLVED when it cannot, rather than count-matching.
+
+### Caveats / methodological notes
+
+- **This Obs corrects the triage addendum's explanation, and edits nothing.**
+  All five `043-gap-opened` rows carry the same explanation string
+  attributing the divergence to pool rebuild; that is accurate only for
+  `text-t0.0/verified-v1-n3`. Per the Session-122 dated-snapshot policy
+  (`phase3-rulings-2026-07-31.md` § 1) and the precedent of Obs 376, the
+  triage JSON, the extraction file, and the audit document are **left
+  unedited**; this Obs is the correction of record.
+- **The audit doc's superseded-figures banner is now imprecise on one point.**
+  It says "five pv-diag-384 `flash-high-text-n5` cells that audited complete
+  now show a pool↔verifier count difference on disk" — true as stated (the
+  difference is on disk), but the banner's framing ("several consensus pools
+  were later rebuilt") applies to one cell, not five. Not corrected here; a
+  banner amendment would be a separate explicit edit-commit.
+- **The 63-candidate gap is not quantified as an error.** No claim is made
+  about how the 63 added features would score if verified; establishing that
+  needs a `run_pv.py` re-run, which the PI declined (no remediation).
+- **Scope of the false-positive risk is bounded but unmeasured.** Only the
+  `verified-v1-n*` sub-pool family was checked. Other C4 batches binding
+  `consensus/` operands against sub-pool cells may carry the same artefact.
+- Paper-relevant sections: Methods (data-provenance and reproducibility
+  statement); any future re-derivation from `outputs/h11/pv-diag-384/`.
+
+### Findable later
+
+recovery campaign invalidates downstream artefacts; consensus pool rebuilt
+verifier not re-run; pool↔verifier correspondence broken; 043-gap-opened;
+five cells flagged one genuine; sub-pool operand binding; `consensus-n5`
+vs `consensus-n10` vs `consensus`; wrong operand full pool; 11,771 features
+predates audit; 5,866 → 11,771 is NOT growth; gap 5,905; gap 8,035; gap
+1,359; gap 2,160; gap 63; text-t0.0 verified-v1-n3; 1,256 → 1,319;
+commits f6116cba0 77bb342b4 857d5f714 63f8e50f4; find_consensus_expected_count;
+`if n == actual`; self-fulfilling resolver; 14 consensus-t1 rows all gap 0;
+audit_verifier_completeness.py:115–153; build_phase3_subpool_consensus.py;
+c4-extraction/043.json anchor operands; era-current recompute resolution rule;
+zero conditions-manifest hits; e47-propose-brief rescore-2026-05-31;
+archive-never-delete does not cover derived artefacts; Session 123 2026-08-01.
+
+### Related observations and artefacts
+
+- **[[Obs 320]]** (T=0.7 55-map recovery + propagation closure — 160/160
+  tiles recovered, four bugs surfaced during propagation) — the closest
+  precedent: recovery campaigns reliably generate downstream propagation
+  work, and the bugs surface during propagation rather than being flagged
+  by the campaign itself. This Obs is the case where propagation was simply
+  never run for one cell.
+- **[[Obs 374]]** (intransigent tiles; the permanent post-recovery residue
+  is tile-intrinsic and non-random) — the other half of the recovery-campaign
+  ledger: Obs 374 covers what recovery *fails* to fix, this Obs covers what
+  recovery *breaks downstream* while succeeding.
+- **[[Obs 376]]** (`evaluation.md` MCC columns are bootstrap means) — the
+  sibling Phase 3 C4 finding, and the procedural template followed here:
+  an Obs that corrects specifics in a ruling/triage artefact without
+  editing that artefact's body.
+- `reports/verification/phase3-rulings-2026-07-31.md` § 1 — the dated-snapshot
+  policy (snapshot + forward-pointing banner, never edit the body) under
+  which this divergence was dispositioned; PI approval for this Obs was given
+  interactively in Session 123.
+
+**Artefacts**: `reports/phase3a-verifier-completeness-audit-2026-05-03.md`
+(`:18`, `:159,160,165,167,169`);
+`reports/verification/c4-recompute-report.json` (batch `043`, `claim_index`
+64, 65, 70, 72, 74);
+`reports/verification/c4-triage/mismatch-triage-2026-07-31.json`
+(`addendum_round2_3`, class `043-gap-opened`);
+`reports/verification/c4-extraction/043.json` (`claims[64]`, `claims[70]`);
+`scripts/audit_verifier_completeness.py` (`:115–153`);
+`scripts/build_phase3_subpool_consensus.py` (`:35–36`);
+`results/conditions-manifest.json`;
+`outputs/h11/pv-diag-384/flash-high-text-n5/` (pools and `verified-v1-n*`
+cells); commits `63f8e50f4`, `857d5f714`, `f6116cba0`, `77bb342b4`.
