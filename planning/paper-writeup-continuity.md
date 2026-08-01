@@ -202,7 +202,7 @@ always run realtime API calls in flex mode.
 > session log written (`docs/notes/reflections/`); claude-obs 15–17;
 > **S122 user-obs candidates A–C pending** in `user-observations.md`
 > (silence holds; S118–120 candidates also still pending).
-
+>
 > **The controller is `planning/audit-charter.md` § 9** — unchanged.
 > **Phase 3 claimed (S122)**; deliverable 1 complete; fleet mid-flight.
 
@@ -252,7 +252,7 @@ validator v1.2 gap).
 records: ledger records divergence, dated superseded-figures banner
 only where material, bodies never edited; living docs (findings,
 leaderboards, methodology) still corrected in place; (2) clobber
-guards LANDED (analyse_dawid_skene_v2 + run_experiment_e → _autogen,
+guards LANDED (analyse_dawid_skene_v2 + run_experiment_e → `_autogen`,
 tests pin targets); (3) MCC bootstrap-means Obs approved (obs-writer
 dispatched); (4) **Sonnet permitted for the fleet's mechanical tail**
 (tracking docs/checklists/low-density files; Opus for dense results
