@@ -23069,3 +23069,264 @@ UNRESOLVED 1091, MISMATCH 30);
 `outputs/55maps-image-generalisation/` (the `run_1` … `run_5` proposer
 directories); commits `789d9ffbe`, `187cc6a45`, `692d6f564`, `74f258219`,
 `209ab2bfe`.
+
+## Observation 380: `run.meta.json` is last-writer-wins — cleanup passes overwrote 7 of the 14 Session-78 metas in place, so $30.95 of real spend now exists only in git history (Session 124, 2026-08-01)
+
+*Source anchors: the 14 tracked
+`outputs/h11/pv-diag-384/*/*/session-78-matrix/verified-*/run.meta.json`
+files, compared blob-by-blob between commit `b10aa7e1c` (2026-04-25, the
+authoring commit of `docs/methodology/data-reproduction-2026-04-25.md`) and
+`HEAD`; the overwrite commits `414ee8a4b` (2026-05-03) and `c6b5e6b10`
+(2026-05-06); `docs/methodology/data-reproduction-2026-04-25.md` (`:36`,
+`:43–45`); `reports/verification/c4-recompute-report.json` (batch `002`
+rows, `_meta.counts`); `reports/verification/c4-triage/mismatch-triage-2026-08-01.json`
+(family `002-session78-meta-overwrite`; `instrument_findings[0]`);
+`scripts/recompute_c4_claims.py` (`:291`);
+`reports/token-load-audit-2026-06-12.md` (`:56–63`, `:68–74`, `:95–99`);
+`reports/verification/phase3-rulings-2026-07-31.md` § 7, § 9, § 11;
+`planning/audit-charter.md` (`:476–479`). All sums below were
+re-derived independently on 2026-08-01 by summing the era blobs
+(`git show b10aa7e1c:<path>`) against the working-tree files.*
+
+### The finding
+
+`run.meta.json` is rewritten wholesale, not merged. When a recovery or
+cleanup pass re-runs a handful of items in a cell that originally ran
+thousands, the pass writes its own `usage_stats`, `execution_stats`, and
+`cost_estimate` over the full run's record. The original spend is not
+merged, not moved to a sidecar, and not otherwise retained — it survives
+only as a git blob.
+
+**Census.** Of the 14 tracked Session-78 matrix verifier metas, exactly 7
+were modified after the era commit and 7 are byte-identical era-vs-current:
+
+| overwrite commit | date | cells | metas |
+| :--- | :--- | :--- | --: |
+| `414ee8a4b` | 2026-05-03 | the six `-text` cells (adversarial / brief / checklist × image-pool and text-pool arms) | 6 |
+| `c6b5e6b10` | 2026-05-06 | image-pool `verified-checklist` | 1 |
+| — | — | untouched control (byte-identical) | 7 |
+
+**Per-cell magnitude.** Every overwritten meta lost the great majority of
+its record:
+
+| cell | era requests | now | era cost | now |
+| :--- | --: | --: | --: | --: |
+| image `verified-checklist` | 2,022 | **1** | $9.4651 | $0.0047 |
+| text `verified-checklist-text` | 4,551 | 21 | $5.3399 | $0.0300 |
+| text `verified-adversarial-text` | 4,627 | 41 | $5.0686 | $0.0560 |
+| text `verified-brief-text` | 4,527 | 27 | $3.6796 | $0.0269 |
+| image `verified-checklist-text` | 2,515 | 19 | $2.8544 | $0.0271 |
+| image `verified-adversarial-text` | 2,515 | 26 | $2.7710 | $0.0364 |
+| image `verified-brief-text` | 2,468 | 19 | $1.9755 | $0.0188 |
+
+The image-pool `verified-checklist` case is the extreme: a 2,022-request
+run now presents as a **single request**, and its `execution_stats.items_processed`
+reads `1`. A meta that records one item is indistinguishable, on its face,
+from a cell that only ever ran one item.
+
+**Fleet totals across the 14 metas** — the era column is what
+`data-reproduction-2026-04-25.md` quoted; the current column is what a
+naïve sum over live metas returns today:
+
+| quantity | era (`b10aa7e1c`) | current | delta |
+| :--- | --: | --: | --: |
+| requests | 44,220 | 21,149 | −23,071 |
+| input tokens | 220,869,378 | 173,890,447 | −46,978,931 |
+| output tokens | 5,704,259 | 3,215,969 | −2,488,290 |
+| total tokens | 226,573,637 | 177,106,416 | −49,467,221 |
+| list cost | $127.547466 | $96.593129 | **−$30.95** |
+
+**The document is innocent; the artefacts moved.** All five quoted
+cost/token figures reproduce exactly from the era blobs: input
+220,869,378 → "220.9" million; output 5,704,259 → "5.7" million; requests
+44,220 → "~44 220"; cost 127.547466 → "$127.55"; half-cost 63.773733 →
+"~$63.77". The doc has been edited once since era (`189e9b866`,
+2026-05-02) and that edit touched only an archive path at `:172–180` —
+the figure block at `:36` and `:43–45` is byte-identical to its era text.
+The entire divergence is the overwrites.
+
+**The harness's "actual" is not a corrected total.** The recompute
+report's `actual` values ($96.593129, 173.890447 M, 3.215969 M) sum seven
+full runs plus seven cleanup fragments. It is not the true spend under
+either accounting — it is a chimera of two eras, and lower than either.
+
+**Seven report rows, not four.** The triage family
+`002-session78-meta-overwrite` names 4 rows (`002#6[2]`, `002#12[3]`,
+`002#12[4]`, `002#12[5]`) because those are the ones that surfaced as
+MISMATCH. Three further batch-002 rows carry the identical mechanism but
+were dispositioned APPROX purely because the doc hedged them with a tilde:
+
+| row | quoted | actual | `abs_error` | status |
+| :--- | :--- | --: | --: | :--- |
+| `002#12[2]` | `~44 220` | 21,149 | 23,071 | APPROX |
+| `002#6[3]` | `~$63.77` | 48.2966 | 15.4734 | APPROX |
+| `002#12[7]` | `~$63.77` | 48.2966 | 15.4734 | APPROX |
+
+`recompute_c4_claims.py:291` reads
+`status = "APPROX" if result["mode"] == "approx" else "MISMATCH"` — a
+failed match on an approx-marked quote is downgraded unconditionally,
+with **no magnitude gate**. A 52 % divergence in the request count
+therefore never reached MISMATCH triage. The triage's
+`instrument_findings[0]` (`approx-magnitude-blindspot`) reaches the same
+conclusion independently and folds APPROX review into per-wave triage from
+wave 3; no harness change, since the unconditional APPROX preserves the
+extraction contract that approx markers are verbatim.
+
+### Why this matters
+
+1. **The ruling-7 cost/token runner tranche must read era blobs.** Tranche
+   2 (queued for Session 125, `planning/paper-writeup-continuity.md:73–75`)
+   recomputes cost and token claims. Summing live metas over these seven
+   cells silently undercounts by $30.95, 23,071 requests, and 49.5 million
+   tokens — and undercounts *quietly*, because nothing in a clobbered meta
+   signals that it is a fragment. Era-blob reads are required, not
+   optional, for any cell whose meta post-dates its document.
+2. **Any future spend audit over live metas inherits the same
+   undercount.** This is not a one-document problem. The defect is in the
+   artefact-writing convention, so every downstream consumer of
+   `usage_stats` — cost manifests, Methods-section spend totals, per-cell
+   efficiency figures — is exposed wherever a cleanup pass has run.
+3. **A third distinct way the usage record misstates true spend, and it
+   points the opposite way from the first two.** The token-load audit
+   found merged `usage_stats` inflated 2.0–3.0× where recovery passes
+   summed original into cumulative usage (`:68–74`, `:95–99`), and
+   `cost_usd` omitting thinking tokens entirely (`:20–25`). Those
+   **over**-count or under-price. This one **under**-counts. The two
+   recovery paths in this codebase fail in opposite directions on the same
+   underlying question — what to do with the pre-existing record — and
+   neither answer is "merge it correctly": one kept the original alongside
+   and let a generator double-count it, the other discarded it. Any spend
+   figure must therefore name *which* path produced its inputs; a
+   blanket correction factor would be wrong for half the fleet.
+4. **The candidate structural fix is flagged only, not implemented.**
+   Cleanup and recovery passes should either merge `usage_stats`
+   additively-with-provenance or write a sidecar meta rather than clobber.
+   That is a design question for the PI, not a decision taken here, and
+   nothing in this Obs changes the writer.
+
+### Caveats / methodological notes
+
+- **Immaterial to the paper's cost history, by the triage's ruling.** The
+  family is dispositioned `SNAPSHOT-DIVERGENCE`, ledger row, no banner:
+  `data-reproduction-2026-04-25.md` is a dated incident record whose
+  figures were faithful at authoring, and the canonical cost history is
+  the S113-audited, billing-corroborated manifests — not these metas. This
+  Obs is about the *mechanism* and its forward exposure, not about a wrong
+  number in the paper.
+- **The seven untouched metas are the control that kills the alternative
+  story.** Had a global recompute or a pricing change moved the numbers,
+  all 14 would have shifted. Seven are byte-identical, which localises the
+  cause to the two named cleanup commits. This control also matters
+  procedurally: the triager's draft adjudication sampled a *single*
+  untouched meta, concluded "metas are era-stable", and built an
+  operator-totals hypothesis on it; the ruling-11 blind pass refuted that
+  by checking all 14 (`_meta.verification`).
+- **No sidecar survives for the Session-78 cells.** No
+  `*.backup` or `*.pre-recovery*` file exists anywhere under
+  `outputs/h11/pv-diag-384/*/*/session-78-matrix/`. By contrast the 55-map
+  recovery path did write `run.meta.json.pre-recovery-*.backup` sidecars —
+  but that is weak comfort: the five proposer backups the image manifest
+  merged no longer exist on disk (`:59–61`), the one surviving verifier
+  backup
+  (`outputs/55maps-text-high-generalisation/verified/run.meta.json.pre-recovery-20260502T235106.backup`)
+  is **untracked**, and no `*.meta.json.pre-recovery*` file is git-tracked
+  today. Git history is currently the only durable preservation for either
+  path.
+- **Scope is the 14 Session-78 matrix metas.** Other cells touched by
+  `c6b5e6b10` (which also rewrote five `verified-v1-n*` metas outside
+  `session-78-matrix/`) were not audited here. The rate 7/14 is within one
+  matrix, not a fleet-wide figure, and the fleet-wide exposure is unknown.
+- **The APPROX blindspot is a general hazard, not specific to this
+  family.** Only 7 APPROX rows exist report-wide (`_meta.counts`), so the
+  class is small today — but its size is a function of how often documents
+  hedge with a tilde, not of how wrong the artefacts are.
+- Paper-relevant sections: Methods (cost and token reporting, artefact
+  provenance); any aggregate API-spend figure.
+
+### Findable later
+
+run.meta.json last-writer-wins; cleanup pass overwrites meta in place;
+7 of 14 session-78-matrix metas overwritten; era blob required for cost
+recomputation; $127.55 -> $96.59; delta $30.95; 44,220 -> 21,149 requests;
+220,869,378 input era; 5,704,259 output era; 226,573,637 total tokens era;
+173,890,447 current input; 96.593129; 127.547466; 63.773733; image-pool
+verified-checklist 2,022 requests -> 1; items_processed 1 not a one-item
+run; overwrite commits 414ee8a4b c6b5e6b10; era commit b10aa7e1c;
+002-session78-meta-overwrite; SNAPSHOT-DIVERGENCE; 002#6[2] 002#12[3]
+002#12[4] 002#12[5]; APPROX rows 002#12[2] 002#6[3] 002#12[7];
+approx-magnitude-blindspot; recompute_c4_claims.py:291 no magnitude gate;
+tilde hedge downgrades MISMATCH to APPROX; seven untouched metas
+byte-identical control; ruling 7 cost/token runner tranche 2 Session 125;
+ruling 9 git-era resolution should trigger on moved not only deleted
+anchors; third usage_stats defect class; undercount vs double-count
+opposite signs; no pre-recovery sidecar for session-78 cells;
+data-reproduction-2026-04-25.md lines 36 43-45; Session 124 2026-08-01.
+
+### Related observations and artefacts
+
+- **[[Obs 379]]** (a silent anchor-path fallback manufactured confident
+  wrong-quantity comparisons; instrument-defect classes must be separated
+  before verification headlines are quoted) — the direct methodological
+  parent, and the inverse case. There, the *documents* were innocent and
+  the *harness* was wrong. Here, both the document and the harness did
+  their jobs correctly and the *artefacts* moved underneath them. The
+  shared lesson is that a MISMATCH count is a triage input, never a
+  finding: this family's four MISMATCHes plus three APPROXes describe one
+  artefact-integrity defect, not seven document errors.
+- **[[Obs 377]]** (recovery campaigns can silently invalidate downstream
+  verifier outputs — 4 of 5 flagged cells were a sub-pool operand-binding
+  artefact) — the immediate predecessor in the ruling-11 series and the
+  closest cousin in substance: recovery campaigns leaving damage that
+  surfaces only at verification time. Obs 377's damage turned out mostly
+  illusory; this one is real, and the difference was established the same
+  way — by checking the full population rather than a sampled member.
+- **[[Obs 376]]** (evaluation.md MCC / Sens / Spec columns are bootstrap
+  means, not point estimates) — the other ruling-11 correction, and the
+  same underlying genre: a divergence that looks like an error but is
+  actually an undocumented property of how the artefact was written.
+- **[[Obs 337]]** (the four n1-outstanding-384 "Pro" cells were dispatched
+  as Flash — intent ≠ request ≠ service, E57 billing reconciliation) — the
+  provenance-hierarchy precedent for cost claims. Obs 337 showed the
+  *configuration* record could misdescribe what was billed; this shows the
+  *usage* record can too, by being partially erased. Cost provenance in
+  this project has now failed at both ends of the same file.
+- **[[Obs 277]]** (verifier-prompt variation cannot rescue image-track
+  miscalibration — the Session 78 matrix) — the scientific result these
+  14 cells were run to produce, and the citation
+  `data-reproduction-2026-04-25.md` carries at `:172–174`. The
+  finding is untouched by this Obs: only the spend record moved, not the
+  probabilities or the calibration verdicts.
+- **[[Obs 141]]** (serendipitous error as abductive catalyst) — the
+  project's standing warrant for treating an artefact anomaly as a
+  discovery rather than a cleanup task; the era-blob comparison here
+  exists because the divergence was investigated instead of explained
+  away.
+- **Standing rules touched**: the always-flex instruction for realtime API
+  calls and the per-pass own-model rule for recoveries, both standing from
+  the 2026-07-30 phase-2 rulings and recorded at
+  `planning/audit-charter.md:476–479`. The flex rule is why the doc's
+  "$63.77" exists as a derived half of list price, and so why the
+  overwrite propagated into two quoted figures rather than one.
+- **Open question carried to GATE 3**: ruling 9 currently resolves anchors
+  at document era only for anchors *deleted* after extraction. The triage's
+  carry-forward note asks the PI whether it should also trigger on anchors
+  *overwritten in place*; applied at era, all 17 batch-002 rows become
+  exact MATCH. Not decided here.
+
+**Artefacts**: the 14
+`outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-*/run.meta.json`
+and `.../flash-high-text-n5/text-t0.7/session-78-matrix/verified-*/run.meta.json`
+files (era blobs at `b10aa7e1c`);
+`docs/methodology/data-reproduction-2026-04-25.md` (`:36`, `:43–45`);
+`reports/verification/c4-triage/mismatch-triage-2026-08-01.json` (family
+`002-session78-meta-overwrite`; `instrument_findings[0]`
+`approx-magnitude-blindspot`; `carry_forward_notes`);
+`reports/verification/c4-recompute-report.json` (batch `002`: 229 rows,
+17 MISMATCH; `_meta.counts` MATCH 1938, SKIPPED 1137, UNRESOLVED 395,
+MISMATCH 123, APPROX 7); `scripts/recompute_c4_claims.py` (`:291`);
+`reports/token-load-audit-2026-06-12.md` (`:20–25`, `:56–63`, `:68–74`,
+`:95–99`); `reports/verification/phase3-rulings-2026-07-31.md` (§ 7, § 9,
+§ 11); `planning/audit-charter.md` (`:476–479`);
+`planning/paper-writeup-continuity.md` (`:73–75`); commits `b10aa7e1c`
+(era), `414ee8a4b` and `c6b5e6b10` (the overwrites), `189e9b866` (the
+doc's only post-era edit), `9fa55c684` (wave-2 triage landing).
