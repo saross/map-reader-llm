@@ -30,6 +30,10 @@ from scripts.lib_c4_compare import (
         ("92.0 %", 92.0, 1, False, True, None),
         ("487", 487.0, 0, False, False, None),
         ("≈ 12", 12.0, 0, True, False, None),
+        ("44 220", 44220.0, 0, False, False, None),   # space thousands
+        ("~44 220", 44220.0, 0, True, False, None),
+        ("3 736", 3736.0, 0, False, False, None),
+        ("10 000", 10000.0, 0, False, False, None),   # NBSP thousands
     ],
 )
 def test_parse_value_conventions(verbatim, value, dp, approx, pct, currency):

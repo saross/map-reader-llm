@@ -22,8 +22,14 @@ Per-value statuses:
   fallback survives only for single-value claims, where the anchor path
   is by definition the claim's locator. Non-JSON anchors get a distinct
   ``triage scope`` reason whether or not a path is present.
-- ``SKIPPED`` — method out of mechanical scope (recompute-script,
-  regen-diff, historical, unverifiable-era, external, anchor-unknown).
+- ``SKIPPED`` — method out of mechanical scope (regen-diff,
+  historical, unverifiable-era, external, anchor-unknown; and
+  ``recompute-script`` values with no registered runner — those
+  reasons name the gap so unspecced families surface as NAMED lines
+  in gate packages, per ruling 7). A ``recompute-script`` value WITH
+  a registered runner spec (``lib_c4_runners``,
+  ``apparatus/recompute-script-registry.json``) is executed and
+  compared exactly like a read.
 
 Path extension over the lib resolver: a ``len:`` prefix counts the
 resolved collection (GeoJSON feature counts etc.).
@@ -48,6 +54,7 @@ from lib_c4_compare import (  # noqa: E402
     parse_value,
     resolve_path,
 )
+from lib_c4_runners import execute_spec, load_registry  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_DIR = REPO_ROOT / "reports" / "verification" / "c4-extraction"
@@ -182,8 +189,18 @@ def compare(quoted_verbatim: str, actual, unit: str | None = None) -> dict:
             "actual": result["actual"], "abs_error": result["abs_error"]}
 
 
-def process_claim(batch: str, index: int, claim: dict) -> list[dict]:
-    """Produce one report row per value in a claim."""
+def process_claim(batch: str, index: int, claim: dict,
+                  registry: dict | None = None) -> list[dict]:
+    """Produce one report row per value in a claim.
+
+    Args:
+        batch: Extraction-file stem (report row key).
+        index: Claim index within the file.
+        claim: The claim object.
+        registry: Runner-spec index from
+            :func:`lib_c4_runners.load_registry` (``None`` → no specs,
+            every ``recompute-script`` value stays SKIPPED).
+    """
     rows: list[dict] = []
     anchor = claim["anchor"]
     for vi, value in enumerate(claim["values"]):
@@ -193,6 +210,22 @@ def process_claim(batch: str, index: int, claim: dict) -> list[dict]:
             "method": method, "quantity": value["quantity"],
             "value_verbatim": value["value_verbatim"],
         }
+        if method == "recompute-script":
+            spec = (registry or {}).get((batch, index, vi))
+            if spec is None:
+                row.update(status="SKIPPED",
+                           reason="recompute-script without registered runner")
+            else:
+                try:
+                    result = execute_spec(spec)
+                    row.update(compare(value["value_verbatim"], result,
+                                       unit=value.get("unit")))
+                    row["runner"] = spec["runner"]
+                except (KeyError, ValueError, OSError, json.JSONDecodeError) as exc:
+                    row.update(status="UNRESOLVED",
+                               reason=f"runner {spec.get('runner')} failed: {exc}")
+            rows.append(row)
+            continue
         if method not in MECHANICAL:
             row.update(status="SKIPPED", reason=f"method {method} is triage/deferred scope")
             rows.append(row)
@@ -248,12 +281,13 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     paths = args.paths or sorted(DEFAULT_DIR.glob("*.json"))
+    registry = load_registry()
     rows: list[dict] = []
     for path in paths:
         data = json.loads(Path(path).read_text(encoding="utf-8"))
         batch = Path(path).stem
         for i, claim in enumerate(data["claims"]):
-            for row in process_claim(batch, i, claim):
+            for row in process_claim(batch, i, claim, registry):
                 row["source_file"] = data["source_document"]["file"]
                 row["source_lines"] = claim["source"]["lines"]
                 rows.append(row)

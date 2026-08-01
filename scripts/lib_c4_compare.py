@@ -27,7 +27,7 @@ _VALUE_RE = re.compile(
     r"^\s*(?P<approx>[~≈]|approx\.?\s*)?"
     r"(?P<sign>[-+−])?\s*"
     r"(?P<currency>(?:US)?\$|€|£)?\s*"
-    r"(?P<digits>\d{1,3}(?:,\d{3})+|\d+)"
+    r"(?P<digits>\d{1,3}(?:[,   ]\d{3})+|\d+)"
     r"(?P<frac>\.\d+)?"
     r"\s*(?P<pct>%)?"
     r"(?P<unit>\s*[A-Za-z×]{1,12})?\s*$"
@@ -92,7 +92,10 @@ def parse_value(verbatim: str) -> ParsedValue | None:
     unit = (match.group("unit") or "").strip()
     if unit in _MULTIPLIER_SUFFIXES:
         return None
-    digits = match.group("digits").replace(",", "")
+    # Group separators: comma, plain space, NBSP, narrow NBSP — the
+    # corpus quotes "16,484" and "44 220" alike (wave-2 finding: the
+    # space-separated form left 15+ quotes unparseable).
+    digits = re.sub(r"[,   ]", "", match.group("digits"))
     frac = match.group("frac") or ""
     value = float(digits + frac)
     if match.group("sign") in ("-", "−"):

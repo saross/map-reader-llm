@@ -172,6 +172,30 @@ def test_unresolved_and_skipped_buckets(anchored_repo):
 
 
 @pytest.mark.tier1
+def test_recompute_script_registry_execution(anchored_repo, monkeypatch):
+    """A recompute-script value with a registered spec is executed and
+    compared like a read; without a spec it stays SKIPPED with the
+    named-gap reason (ruling 7: no silent deferrals)."""
+    # Patch the module instance the harness bound (plain name via
+    # sys.path), not the scripts.-package twin.
+    import lib_c4_runners as runners
+    monkeypatch.setattr(runners, "REPO_ROOT", anchored_repo)
+    claim = make_claim(method="recompute-script", values=[val("3")],
+                       anchor={"file": "results/eval.json", "path": None})
+    spec = {"batch": "b", "claim_index": 0, "value_index": 0,
+            "runner": "json-subset-count",
+            "params": {"file": "results/eval.json", "list_path": "$.features",
+                       "where": []}}
+    # features is [1,2,3] — non-dict elements match an empty conjunction.
+    (row,) = process_claim("b", 0, claim, {("b", 0, 0): spec})
+    assert row["status"] == "MATCH" and row["runner"] == "json-subset-count"
+
+    (row,) = process_claim("b", 0, claim, {})
+    assert row["status"] == "SKIPPED"
+    assert "without registered runner" in row["reason"]
+
+
+@pytest.mark.tier1
 def test_safe_eval_rejects_hostile_expressions():
     with pytest.raises(ValueError):
         safe_eval("__import__('os').system('x')", {})
