@@ -12,7 +12,7 @@
    "EXTRACTION-REPAIR": "extraction claim mis-structured or mis-anchored; extraction file repaired, recompute rerun",
    "COMPARER-FIX": "lib_c4_compare gap (rounding/unit convention); comparer extended, recompute rerun"
   },
-  "materiality_note": "Round 1: no superseded-figures banner - no divergence changes a verdict. Rounds 2-3: a dated superseded-figures banner IS added to phase3a-verifier-completeness-audit-2026-05-03.md (wholesale supersession: 35 audited gaps closed by recovery; 5 diagnostic cells' pools rebuilt without verifier re-runs - the latter FLAGGED for PI as a possible Obs). Judgment calls for GATE 3: (1) the 2026-03-27 audit report's header CI moved in era but verdicts hold; (2) S111 band edge 2.64% quoted 2.7%; (3) the gap-opened flag."
+  "materiality_note": "Round 1: no superseded-figures banner - no divergence changes a verdict. Rounds 2-3 + round-4 correction (2026-08-01): banner on phase3a-verifier-completeness-audit-2026-05-03.md for the 35 recovery-closed gaps and ONE genuine post-audit regression (text-t0.0/verified-v1-n3, gap 63, Obs 377 - PI-ruled: no re-run); the other four flagged cells were an adjudication artefact (wrong pool bound), corrected by the Obs 377 writer's independent verification. Ratified at 2026-08-01: no banner on the 2026-03-27 audit CI; S111 2.7% band edge stands as in-era presentation."
  },
  "rows": [
   {
@@ -1079,45 +1079,49 @@
     "batch": "043",
     "claim_index": 64,
     "value_index": 0,
-    "disposition": "SNAPSHOT-DIVERGENCE",
-    "class": "043-expected-changed",
+    "disposition": "EXTRACTION-REPAIR",
+    "class": "043-arm-pool-rebind",
     "quoted": "5866",
     "actual_era_current": 11771.0,
-    "explanation": "Era divergence companion row: expected input counts (consensus pool / candidate manifest sizes) changed when pools were rebuilt with recovered passes after the audit date.",
-    "materiality": "immaterial — historical record correct in-era; ledger only"
+    "explanation": "CORRECTED 2026-08-01 (Obs 377 writer's independent refutation of the round-2/3 adjudication): NOT era divergence — the extraction bound the cell's full consensus/ pool, but the verified-v1-nK arm consumes the arm-specific consensus-nK/ pool, which matches the audited count exactly (gaps genuinely 0, in-era AND now). Re-bound; expect MATCH.",
+    "materiality": "none — adjudication artefact, corrected",
+    "expected_after_repair": "MATCH"
    },
    {
     "batch": "043",
     "claim_index": 64,
     "value_index": 2,
-    "disposition": "SNAPSHOT-DIVERGENCE",
-    "class": "043-gap-opened",
+    "disposition": "EXTRACTION-REPAIR",
+    "class": "043-arm-pool-rebind",
     "quoted": "0",
     "actual_era_current": 5905.0,
-    "explanation": "Era divergence, FLAGGED for PI: the audit found this diagnostic cell complete (gap 0), but its consensus pool was later rebuilt with recovered passes while the verified-v1 outputs were NOT re-run, so the on-disk pool<->verifier correspondence is broken (current pool minus recorded results > 0). Affects 5 pv-diag-384 flash-high-text-n5 verified-v1 cells (t0.0/t0.3/t0.7 n5+n10/t1.0). The frozen evaluations the paper cites are untouched; the hazard is to anyone re-deriving from the current pool. Possible Obs candidate - PI to rule.",
-    "materiality": "flagged — see explanation"
+    "explanation": "CORRECTED 2026-08-01 (Obs 377 writer's independent refutation of the round-2/3 adjudication): NOT era divergence — the extraction bound the cell's full consensus/ pool, but the verified-v1-nK arm consumes the arm-specific consensus-nK/ pool, which matches the audited count exactly (gaps genuinely 0, in-era AND now). Re-bound; expect MATCH.",
+    "materiality": "none — adjudication artefact, corrected",
+    "expected_after_repair": "MATCH"
    },
    {
     "batch": "043",
     "claim_index": 65,
     "value_index": 0,
-    "disposition": "SNAPSHOT-DIVERGENCE",
-    "class": "043-expected-changed",
+    "disposition": "EXTRACTION-REPAIR",
+    "class": "043-arm-pool-rebind",
     "quoted": "3736",
     "actual_era_current": 11771.0,
-    "explanation": "Era divergence companion row: expected input counts (consensus pool / candidate manifest sizes) changed when pools were rebuilt with recovered passes after the audit date.",
-    "materiality": "immaterial — historical record correct in-era; ledger only"
+    "explanation": "CORRECTED 2026-08-01 (Obs 377 writer's independent refutation of the round-2/3 adjudication): NOT era divergence — the extraction bound the cell's full consensus/ pool, but the verified-v1-nK arm consumes the arm-specific consensus-nK/ pool, which matches the audited count exactly (gaps genuinely 0, in-era AND now). Re-bound; expect MATCH.",
+    "materiality": "none — adjudication artefact, corrected",
+    "expected_after_repair": "MATCH"
    },
    {
     "batch": "043",
     "claim_index": 65,
     "value_index": 2,
-    "disposition": "SNAPSHOT-DIVERGENCE",
-    "class": "043-gap-opened",
+    "disposition": "EXTRACTION-REPAIR",
+    "class": "043-arm-pool-rebind",
     "quoted": "0",
     "actual_era_current": 8035.0,
-    "explanation": "Era divergence, FLAGGED for PI: the audit found this diagnostic cell complete (gap 0), but its consensus pool was later rebuilt with recovered passes while the verified-v1 outputs were NOT re-run, so the on-disk pool<->verifier correspondence is broken (current pool minus recorded results > 0). Affects 5 pv-diag-384 flash-high-text-n5 verified-v1 cells (t0.0/t0.3/t0.7 n5+n10/t1.0). The frozen evaluations the paper cites are untouched; the hazard is to anyone re-deriving from the current pool. Possible Obs candidate - PI to rule.",
-    "materiality": "flagged — see explanation"
+    "explanation": "CORRECTED 2026-08-01 (Obs 377 writer's independent refutation of the round-2/3 adjudication): NOT era divergence — the extraction bound the cell's full consensus/ pool, but the verified-v1-nK arm consumes the arm-specific consensus-nK/ pool, which matches the audited count exactly (gaps genuinely 0, in-era AND now). Re-bound; expect MATCH.",
+    "materiality": "none — adjudication artefact, corrected",
+    "expected_after_repair": "MATCH"
    },
    {
     "batch": "043",
@@ -1127,8 +1131,8 @@
     "class": "043-expected-changed",
     "quoted": "1256",
     "actual_era_current": 1319.0,
-    "explanation": "Era divergence companion row: expected input counts (consensus pool / candidate manifest sizes) changed when pools were rebuilt with recovered passes after the audit date.",
-    "materiality": "immaterial — historical record correct in-era; ledger only"
+    "explanation": "VERIFIED 2026-08-01 (Obs 377): the single genuine post-audit regression — text-t0.0/verified-v1-n3's pool was re-materialised 1,256 -> 1,319 on 2026-07-30 (f6116cba0, 77bb342b4) without re-running its verifier; gap 63. Archived diagnostic; zero conditions-manifest exposure (verified). PI ruling: ledger + banner + Obs 377, no re-run.",
+    "materiality": "flagged and RESOLVED per PI ruling (Obs 377)"
    },
    {
     "batch": "043",
@@ -1138,52 +1142,56 @@
     "class": "043-gap-opened",
     "quoted": "0",
     "actual_era_current": 63.0,
-    "explanation": "Era divergence, FLAGGED for PI: the audit found this diagnostic cell complete (gap 0), but its consensus pool was later rebuilt with recovered passes while the verified-v1 outputs were NOT re-run, so the on-disk pool<->verifier correspondence is broken (current pool minus recorded results > 0). Affects 5 pv-diag-384 flash-high-text-n5 verified-v1 cells (t0.0/t0.3/t0.7 n5+n10/t1.0). The frozen evaluations the paper cites are untouched; the hazard is to anyone re-deriving from the current pool. Possible Obs candidate - PI to rule.",
-    "materiality": "flagged — see explanation"
+    "explanation": "VERIFIED 2026-08-01 (Obs 377): the single genuine post-audit regression — text-t0.0/verified-v1-n3's pool was re-materialised 1,256 -> 1,319 on 2026-07-30 (f6116cba0, 77bb342b4) without re-running its verifier; gap 63. Archived diagnostic; zero conditions-manifest exposure (verified). PI ruling: ledger + banner + Obs 377, no re-run.",
+    "materiality": "flagged and RESOLVED per PI ruling (Obs 377)"
    },
    {
     "batch": "043",
     "claim_index": 72,
     "value_index": 0,
-    "disposition": "SNAPSHOT-DIVERGENCE",
-    "class": "043-expected-changed",
+    "disposition": "EXTRACTION-REPAIR",
+    "class": "043-arm-pool-rebind",
     "quoted": "2954",
     "actual_era_current": 4313.0,
-    "explanation": "Era divergence companion row: expected input counts (consensus pool / candidate manifest sizes) changed when pools were rebuilt with recovered passes after the audit date.",
-    "materiality": "immaterial — historical record correct in-era; ledger only"
+    "explanation": "CORRECTED 2026-08-01 (Obs 377 writer's independent refutation of the round-2/3 adjudication): NOT era divergence — the extraction bound the cell's full consensus/ pool, but the verified-v1-nK arm consumes the arm-specific consensus-nK/ pool, which matches the audited count exactly (gaps genuinely 0, in-era AND now). Re-bound; expect MATCH.",
+    "materiality": "none — adjudication artefact, corrected",
+    "expected_after_repair": "MATCH"
    },
    {
     "batch": "043",
     "claim_index": 72,
     "value_index": 2,
-    "disposition": "SNAPSHOT-DIVERGENCE",
-    "class": "043-gap-opened",
+    "disposition": "EXTRACTION-REPAIR",
+    "class": "043-arm-pool-rebind",
     "quoted": "0",
     "actual_era_current": 1359.0,
-    "explanation": "Era divergence, FLAGGED for PI: the audit found this diagnostic cell complete (gap 0), but its consensus pool was later rebuilt with recovered passes while the verified-v1 outputs were NOT re-run, so the on-disk pool<->verifier correspondence is broken (current pool minus recorded results > 0). Affects 5 pv-diag-384 flash-high-text-n5 verified-v1 cells (t0.0/t0.3/t0.7 n5+n10/t1.0). The frozen evaluations the paper cites are untouched; the hazard is to anyone re-deriving from the current pool. Possible Obs candidate - PI to rule.",
-    "materiality": "flagged — see explanation"
+    "explanation": "CORRECTED 2026-08-01 (Obs 377 writer's independent refutation of the round-2/3 adjudication): NOT era divergence — the extraction bound the cell's full consensus/ pool, but the verified-v1-nK arm consumes the arm-specific consensus-nK/ pool, which matches the audited count exactly (gaps genuinely 0, in-era AND now). Re-bound; expect MATCH.",
+    "materiality": "none — adjudication artefact, corrected",
+    "expected_after_repair": "MATCH"
    },
    {
     "batch": "043",
     "claim_index": 74,
     "value_index": 0,
-    "disposition": "SNAPSHOT-DIVERGENCE",
-    "class": "043-expected-changed",
+    "disposition": "EXTRACTION-REPAIR",
+    "class": "043-arm-pool-rebind",
     "quoted": "3760",
     "actual_era_current": 5920.0,
-    "explanation": "Era divergence companion row: expected input counts (consensus pool / candidate manifest sizes) changed when pools were rebuilt with recovered passes after the audit date.",
-    "materiality": "immaterial — historical record correct in-era; ledger only"
+    "explanation": "CORRECTED 2026-08-01 (Obs 377 writer's independent refutation of the round-2/3 adjudication): NOT era divergence — the extraction bound the cell's full consensus/ pool, but the verified-v1-nK arm consumes the arm-specific consensus-nK/ pool, which matches the audited count exactly (gaps genuinely 0, in-era AND now). Re-bound; expect MATCH.",
+    "materiality": "none — adjudication artefact, corrected",
+    "expected_after_repair": "MATCH"
    },
    {
     "batch": "043",
     "claim_index": 74,
     "value_index": 2,
-    "disposition": "SNAPSHOT-DIVERGENCE",
-    "class": "043-gap-opened",
+    "disposition": "EXTRACTION-REPAIR",
+    "class": "043-arm-pool-rebind",
     "quoted": "0",
     "actual_era_current": 2160.0,
-    "explanation": "Era divergence, FLAGGED for PI: the audit found this diagnostic cell complete (gap 0), but its consensus pool was later rebuilt with recovered passes while the verified-v1 outputs were NOT re-run, so the on-disk pool<->verifier correspondence is broken (current pool minus recorded results > 0). Affects 5 pv-diag-384 flash-high-text-n5 verified-v1 cells (t0.0/t0.3/t0.7 n5+n10/t1.0). The frozen evaluations the paper cites are untouched; the hazard is to anyone re-deriving from the current pool. Possible Obs candidate - PI to rule.",
-    "materiality": "flagged — see explanation"
+    "explanation": "CORRECTED 2026-08-01 (Obs 377 writer's independent refutation of the round-2/3 adjudication): NOT era divergence — the extraction bound the cell's full consensus/ pool, but the verified-v1-nK arm consumes the arm-specific consensus-nK/ pool, which matches the audited count exactly (gaps genuinely 0, in-era AND now). Re-bound; expect MATCH.",
+    "materiality": "none — adjudication artefact, corrected",
+    "expected_after_repair": "MATCH"
    },
    {
     "batch": "050",
