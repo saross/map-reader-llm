@@ -1,12 +1,12 @@
 # The N=1 baseline matrix — what it is, how it is scored, and how it enters the manifest
 
-> **Last revised**: 2026-06-03 (Session 98 — **E57 genuine-Pro replace** + **n=3
-> completeness top-up**: the four anti-diagonal "Pro" cells were Flash, replaced by a
-> genuine-Pro re-run; all four medium-thinking Pro cells brought to n=3 after
-> recovering ~5% unretried tile failures in the pv-diag medium-t-0-0 run_1.
-> **7 tiers**; `tie_set` (Tier 1) = **two genuine-Pro text cells at T=0.0** —
-> `pro-text-high-t-0-0` (0.804) + `pro-text-medium-t-0-0` (0.792). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-01 (Session 124 — C4 wave-2 triage: § 4
+> provenance-table replicate counts corrected 1 → 3 for the four medium-thinking
+> Pro cells, and the § 5 gain-range endpoint +0.35 → +0.34 — both stale since the
+> same-day 2026-06-03 n=3 top-up re-score). **7 tiers**; `tie_set` (Tier 1) =
+> **two genuine-Pro text cells at T=0.0** — `pro-text-high-t-0-0` (0.804) +
+> `pro-text-medium-t-0-0` (0.792). See [§ Changelog](#changelog) for revision
+> history.
 
 **Purpose**: a single legible map of the **N=1 baseline matrix** — the
 cross-architecture single-pass leaderboard at 384 px on the 4-map gold-standard
@@ -239,16 +239,16 @@ n1 / retest; a relative pool-dir path for pv-diag-384).
 | pv-diag-384 | flash-text-minimal-t-0-0-pv-baseline | 1 | text-baseline/text-t0.0 | baseline-flash-text-minimal-t-0-0-pv-baseline |
 | pv-diag-384 | flash-text-minimal-t-0-7 | 30 | flash-minimal-text-n30-t07/text-t0.7 | baseline-flash-text-minimal-t-0-7 |
 | pv-diag-384 | pro-image-high-t-0-7 | 5 | pro-high-image-n5/image-t0.7 | baseline-pro-image-high-t-0-7 |
-| pv-diag-384 | pro-image-medium-t-0-0 | 1 | pro-medium-image-baseline/image-t0.0 | baseline-pro-image-medium-t-0-0 |
+| pv-diag-384 | pro-image-medium-t-0-0 | 3 | pro-medium-image-baseline/image-t0.0 | baseline-pro-image-medium-t-0-0 |
 | pv-diag-384 | pro-text-high-t-0-7 | 10 | pro-high-text-n5/text-t0.7 | baseline-pro-text-high-t-0-7 |
-| pv-diag-384 | pro-text-medium-t-0-0 | 1 | pro-medium-text-baseline/text-t0.0 | baseline-pro-text-medium-t-0-0 |
+| pv-diag-384 | pro-text-medium-t-0-0 | 3 | pro-medium-text-baseline/text-t0.0 | baseline-pro-text-medium-t-0-0 |
 | n1-outstanding-384 | flash-image-minimal-t-0-0-487-tiles | 3 | image-t0 | baseline-flash-image-minimal-t-0-0-487-tiles |
 | n1-outstanding-384 | flash-image-minimal-t-0-3 | 3 | image-t03 | baseline-flash-image-minimal-t-0-3 |
 | n1-outstanding-384 | flash-text-minimal-t-0-3 | 3 | brief-text-t03 | baseline-flash-text-minimal-t-0-3 |
 | n1-pro-rerun-384 | pro-rerun/pro-image-high-t-0-0 | 3 | pro-image-high-t0 | baseline-pro-image-high-t-0-0 |
-| n1-pro-rerun-384 | pro-rerun/pro-image-medium-t-0-7 | 1 | pro-image-medium-t07 | baseline-pro-image-medium-t-0-7 |
+| n1-pro-rerun-384 | pro-rerun/pro-image-medium-t-0-7 | 3 | pro-image-medium-t07 | baseline-pro-image-medium-t-0-7 |
 | n1-pro-rerun-384 | pro-rerun/pro-text-high-t-0-0 | 3 | pro-text-high-t0 | baseline-pro-text-high-t-0-0 |
-| n1-pro-rerun-384 | pro-rerun/pro-text-medium-t-0-7 | 1 | pro-text-medium-t07 | baseline-pro-text-medium-t-0-7 |
+| n1-pro-rerun-384 | pro-rerun/pro-text-medium-t-0-7 | 3 | pro-text-medium-t07 | baseline-pro-text-medium-t-0-7 |
 | retest-h11-single-pass-384-t0 | flash-text-minimal-t-0-0 | 10 | brief-text-t0 | baseline-flash-text-minimal-t-0-0 |
 
 The four `n1-pro-rerun-384` cells' evals live under the `pro-rerun/` subdirectory of
@@ -293,7 +293,7 @@ tile-classification value; the confusion block is one tile-set's worth (sums to 
 The four `n1-pro-rerun-384` rows are the **genuine-Pro** anti-diagonal (evals under
 `384px-14buf-mcc/pro-rerun/`). The off-board **Flash** dispatches of the same configs
 (E57) scored far lower — F1@20 m 0.528 / 0.452 / 0.494 / 0.416 — so genuine Pro adds
-**+0.14 to +0.35 F1** at these corners (full before→after table in errata E57). All
+**+0.14 to +0.34 F1** at these corners (full before→after table in errata E57). All
 four medium-thinking Pro cells are **n=3** (the four HIGH-thinking cells already were);
 the two pv-diag medium-t-0-0 cells were topped up after recovering ~5% unretried tile
 failures in their `run_1` that had depressed them (`pro-text-medium-t-0-0` 0.763→0.792,
@@ -463,6 +463,26 @@ architecture-baseline prereg-framing template this analysis sets.
 ---
 
 ## Changelog
+
+### 2026-08-01 — C4 wave-2 triage corrections (Session 124)
+
+**Trigger**: the Phase-3 C4 quantitative sweep's wave-2 recompute
+(`reports/verification/c4-triage/mismatch-triage-2026-08-01.json`, family
+`004-n1-provenance-table-stale` and `004-pro-gain-range-endpoint`), adjudication
+confirmed by a ruling-11 blind re-derivation.
+
+| Claim | Before | After |
+|---|---|---|
+| § 4 provenance table, replicates: `pro-image-medium-t-0-0`, `pro-text-medium-t-0-0`, `pro-rerun/pro-image-medium-t-0-7`, `pro-rerun/pro-text-medium-t-0-7` | 1 | 3 |
+| § 5 prose, genuine-Pro gain range endpoint | +0.35 | +0.34 |
+
+Both figures went stale in the same 2026-06-03 session that produced them: the
+n=3 top-up re-score (`0f32ec00c`, 12:39 UTC) landed after the table lines were
+authored and 13 minutes before the prose revision (`3b5dc1eb1c`, 12:52 UTC),
+which updated the § 5 table and banner but missed these spots. The § 5 cell
+value itself (0.755) and errata E57 already carried the corrected figures; tier
+structure, tie_set, and every other figure in this document are unchanged.
+Corrected in commit noted in git history for this date.
 
 ### 2026-06-03 — n=3 completeness top-up + recovery → tie reopens (Session 98)
 

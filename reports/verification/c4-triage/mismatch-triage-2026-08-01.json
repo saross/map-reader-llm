@@ -1,0 +1,68 @@
+{
+ "_meta": {
+  "title": "C4 wave-2 MISMATCH triage — Session 124 (22 rows: 17 batch 002, 5 batch 004)",
+  "date": "2026-08-01",
+  "triager": "Claude Fable 5 interactive session (Session 124)",
+  "verification": "ruling-11 blind re-derivation by a fresh context (scratchpad wave2-blind-verification; evidence embedded below). The blind pass REFUTED the triager's family-A adjudication (draft: SNAPSHOT-DEFECT with an operator-totals hypothesis, built on a single-meta history check that happened to sample an untouched control) — the third consecutive session in which the independent-verification pattern corrected the triager. Families B, C, D: independent agreement; family-B materiality strengthened by the verifier's re-derivation of the doc's headline maxima.",
+  "input": "reports/verification/c4-recompute-report.json wave-2 MISMATCH rows",
+  "predecessor": "reports/verification/c4-triage/mismatch-triage-2026-07-31.json (cycle-1 conventions and disposition classes)",
+  "controller": "planning/audit-charter.md § 7 Phase 3; rulings reports/verification/phase3-rulings-2026-07-31.md"
+ },
+ "families": [
+  {
+   "name": "002-session78-meta-overwrite",
+   "rows": ["002#6[2]", "002#12[3]", "002#12[4]", "002#12[5]"],
+   "disposition": "SNAPSHOT-DIVERGENCE",
+   "document_class": "dated snapshot (docs/methodology/data-reproduction-2026-04-25.md — date in filename, incident-record framing; directory location does not control classification)",
+   "mechanism": "The doc quoted its era artefacts EXACTLY: summing the 14 session-78-matrix verified-*/run.meta.json blobs at the doc's authoring commit b10aa7e1c (2026-04-25) reproduces input 220,869,378 -> '220.9' M, output 5,704,259 -> '5.7' M, cost 127.547466 -> '$127.55', requests 44,220 -> '~44 220', half-cost 63.773733 -> '~$63.77'. Seven of the 14 metas were later OVERWRITTEN IN PLACE by p3a-recovery cleanup passes (six -text cells at 414ee8a4b 2026-05-03; image-pool verified-checklist at c6b5e6b10 2026-05-06); run.meta.json is last-writer-wins, so those files now record only the cleanup pass's usage (image verified-checklist: era 2,022 requests -> current 1). The harness's 'actual' ($96.59 / 173.89M / 3.216M) sums seven full runs plus seven cleanup fragments — it is not a corrected total. The seven untouched metas are byte-identical era-vs-current (the control that excludes a global-recompute story; also the control the triager's refuted draft sampled and wrongly generalised from).",
+   "materiality": "immaterial — ledger row, no banner. The canonical cost history is the S113-audited manifests (billing-corroborated); this note is an incident record whose figures were faithful at authoring.",
+   "evidence": "git show b10aa7e1c:<meta> sums (verifier); git log 414ee8a4b, c6b5e6b10; per-meta era-vs-current byte comparison, 7 identical / 7 overwritten"
+  },
+  {
+   "name": "002-calibration-recovery-rescore",
+   "rows": ["002#41[1]", "002#41[4]", "002#43[1]", "002#43[4]", "002#45[1]", "002#45[4]", "002#46[1]", "002#46[4]", "002#48[1]", "002#48[4]", "002#50[1]", "002#52[1]", "002#52[4]"],
+   "disposition": "SNAPSHOT-DIVERGENCE",
+   "document_class": "dated snapshot (same document)",
+   "mechanism": "Every quoted 4-d.p. AUC/ECE value reproduces exactly from git show b10aa7e1c:results/verifier-calibration-matrix/<cell>/calibration.json (triager independently confirmed for image-adversarial-text and text-adversarial-text from the 2026-04-25 commit c0eb61f9f; verifier confirmed all 13 rows). The divergent cells are precisely the seven re-scored by p3a recovery (b3ed509e6 2026-05-03, six -text cells; c6b5e6b10 2026-05-06, image-checklist); the other seven cells are identical era-vs-current to 10 d.p. No .mean field exists in calibration.json — NOT the Obs 376 point-vs-mean family.",
+   "materiality": "immaterial — ledger rows only, no banner (ruling-10 standard: verdicts hold in both eras). Verifier re-derived the doc's headline maxima against current artefacts: max|dAUC| 0.0090 -> 0.0080 (same cell), max|dECE| 0.0086 -> 0.0088 (same cell), all delta signs preserved; the load-bearing claim (all 14 cells within original bootstrap 95% CIs; Obs 277) is untouched.",
+   "evidence": "git show b10aa7e1c / c0eb61f9f era blobs; git log b3ed509e6, c6b5e6b10; verifier's 13/13 era-exact reproduction"
+  },
+  {
+   "name": "004-n1-provenance-table-stale",
+   "rows": ["004#51[0]", "004#53[0]", "004#58[0]", "004#60[0]"],
+   "disposition": "LIVING-DOC-FIX",
+   "document_class": "living methodology doc (docs/methodology/n1-baseline-matrix.md)",
+   "mechanism": "The four Pro medium-thinking cells reached n_runs=3 at 0f32ec00c (2026-06-03 12:39 UTC). The same-day doc revision 3b5dc1eb1c (12:52 UTC) updated the banner, § 5 table, and § 5 prose ('All four medium-thinking Pro cells are n=3') but left § 4's provenance table at 1 (blame: lines 242/244 c36490c469, 249/251 dcf3364a98 — both pre-re-score). Verifier refuted the alternative reading (column tracks conditions-manifest): the manifest records n_passes=1 for ALL 18 baseline conditions including rows the doc gives as 10/30/5/3; 14 sibling rows in the same column MATCH $.summary.n_runs.",
+   "materiality": "material to internal consistency, cheap: 1 -> 3 on lines 242, 244, 249, 251 + changelog (applied this session).",
+   "evidence": "git blame -L 242,251 and -L 295,297; git log/show 78d6dd756 (07:10 UTC, n=1 scoring), 0f32ec00c (12:39 UTC, n=3 re-score), 3b5dc1eb1c (12:52 UTC); conditions-manifest n_passes census (verifier)"
+  },
+  {
+   "name": "004-pro-gain-range-endpoint",
+   "rows": ["004#86[1]"],
+   "disposition": "LIVING-DOC-FIX",
+   "document_class": "living methodology doc (same document)",
+   "mechanism": "Correct when written, stale within the same day: at dcf3364a98 the era blob had pro-rerun/pro-text-medium-t-0-7 f1@20 0.7638; 0.7638 - 0.416 = 0.3478 -> '+0.35' exact. The n=3 top-up re-score (0f32ec00c) moved it to 0.7555 -> 0.3395 -> '+0.34'. Revision 3b5dc1eb1c updated the § 5 table cell (0.764 -> 0.755) but missed the prose range endpoint. Errata E57 (protocol-errata.md:2052,2057) already carries the corrected 0.755 and names the 0.764 -> 0.755 move.",
+   "materiality": "low — one-hundredth on a prose range endpoint; fixed in place (+0.35 -> +0.34) + changelog (applied this session).",
+   "evidence": "git show dcf3364a98/0f32ec00c era f1 values; commit timestamps; protocol-errata.md:2052,2057"
+  }
+ ],
+ "instrument_findings": [
+  {
+   "name": "approx-magnitude-blindspot",
+   "class": "COMPARER-FIX (policy: triage protocol)",
+   "finding": "~-marked quotes receive unconditional APPROX status with no magnitude gate; a 32% divergence (quoted ~$63.77 vs current-artefact $48.30, same overwrite mechanism as family 002-session78-meta-overwrite) therefore never reached MISMATCH triage. APPROX rows carry computed abs_error — the gap is that no process reviews them. Resolution: APPROX review folded into per-wave triage from wave 3; no harness change (the unconditional APPROX preserves the extraction-instrument contract that approx markers are verbatim).",
+   "status": "adopted into triage protocol this session"
+  },
+  {
+   "name": "space-separated-thousands-unparseable",
+   "class": "COMPARER-FIX",
+   "finding": "parse_value cannot read space-separated thousands ('44 220', '3 736', '2 017', '10 000' — 15+ UNRESOLVED rows), so those quotes never compare. Fixed this session in lib_c4_compare.parse_value (ASCII space and NBSP/narrow-NBSP group separators); rows resolve on the next recompute.",
+   "status": "fixed this session"
+  }
+ ],
+ "carry_forward_notes": [
+  "Ruling-9 extension question for the PI: git-era resolution should arguably trigger on anchors that MOVED (overwritten in place), not only deleted — applied at era, all 17 batch-002 rows above become exact MATCH. Interacts with snapshot-vs-current comparison semantics; flagged for GATE 3 rather than decided unilaterally.",
+  "Obs candidate (artefact integrity): cleanup/recovery passes overwrite run.meta.json in place (last-writer-wins), so the full-run spend record for 7 of 14 Session-78 cells now exists only in git history. Bears on the ruling-7 cost/token runner tranche: era-blob reads may be required for cost recomputation.",
+  "Obs candidate (process): third consecutive ruling-11 catch — the blind verifier refuted the triager's family-A causal story (wrong-control sampling: one untouched meta generalised to 'metas era-stable')."
+ ]
+}
