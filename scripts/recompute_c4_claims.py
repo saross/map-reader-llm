@@ -34,6 +34,14 @@ Per-value statuses:
 Path extension over the lib resolver: a ``len:`` prefix counts the
 resolved collection (GeoJSON feature counts etc.).
 
+Git-era resolution (ruling 9): a ``read`` anchor missing from the
+working tree is retried against the repository tree at the source
+document's era commit (the newest commit still holding the
+extraction's recorded ``git_blob``), with unique-suffix
+disambiguation for era-relative locators. Era-resolved rows are
+marked ``resolution: "git-era"`` — they attest the document against
+its era, not the current artefact.
+
 Usage::
 
     python3 scripts/recompute_c4_claims.py [paths...] [--out reports/verification/c4-recompute-report.json]
@@ -44,6 +52,7 @@ from __future__ import annotations
 import argparse
 import ast
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -98,13 +107,25 @@ def resolve_anchor_value(file: str, path: str):
     Raises:
         KeyError: On any resolution failure (message says why).
     """
+    file, path = split_locator(file, path)
+    return resolve_in_obj(load_json(file), path)
+
+
+def split_locator(file: str, path: str) -> tuple[str, str]:
+    """Split a ``<file>#<jsonpath>`` cross-file locator; pass through
+    plain paths unchanged."""
     path = path.strip()
     if "#" in path and not path.startswith(("$", "len:")):
         override, _, subpath = path.partition("#")
         if not subpath:
             raise KeyError(f"file#path locator missing path part: {path!r}")
-        file, path = override.strip(), subpath.strip()
-    obj = load_json(file)
+        return override.strip(), subpath.strip()
+    return file, path
+
+
+def resolve_in_obj(obj, path: str):
+    """Resolve a locator path against already-loaded JSON (shared by
+    working-tree and git-era resolution)."""
     # Plain resolution first so a genuine key named ``length`` wins;
     # the length/count spellings are retried only when it fails.
     collection_op = None
@@ -133,6 +154,89 @@ def resolve_anchor_value(file: str, path: str):
             f"[*] resolved {len(value)} elements with {len(unique)} distinct "
             f"values (a scalar quote needs a constant collection): {path!r}")
     return value
+
+
+def _git(*args: str) -> str:
+    """Run a git command in the repo root and return stdout.
+
+    Raises:
+        KeyError: On git failure — the era-resolution layer treats any
+            git error as an unresolvable anchor, never a crash.
+    """
+    result = subprocess.run(["git", *args], cwd=REPO_ROOT,
+                            capture_output=True, text=True)
+    if result.returncode != 0:
+        raise KeyError(f"git {' '.join(args[:2])} failed: "
+                       f"{result.stderr.strip()[:120]}")
+    return result.stdout
+
+
+_era_commit_cache: dict[tuple[str, str], str | None] = {}
+_era_tree_cache: dict[str, list[str]] = {}
+_tracked_files_cache: list[str] | None = None
+
+
+def _tracked_files() -> list[str]:
+    """Tracked working-tree paths (cached), for suffix disambiguation."""
+    global _tracked_files_cache
+    if _tracked_files_cache is None:
+        _tracked_files_cache = _git("ls-files").splitlines()
+    return _tracked_files_cache
+
+
+def find_era_commit(doc_path: str, doc_blob: str) -> str | None:
+    """Newest commit whose tree holds the extraction's recorded blob of
+    the source document — the document's era (ruling 9 / ruling 1)."""
+    key = (doc_path, doc_blob)
+    if key not in _era_commit_cache:
+        _era_commit_cache[key] = None
+        try:
+            for commit in _git("log", "--format=%H", "--", doc_path).split():
+                try:
+                    blob = _git("rev-parse", f"{commit}:{doc_path}").strip()
+                except KeyError:
+                    continue
+                if blob.startswith(doc_blob):
+                    _era_commit_cache[key] = commit
+                    break
+        except KeyError:
+            pass
+    return _era_commit_cache[key]
+
+
+def era_resolve(era_commit: str, file: str, path: str):
+    """Resolve a locator against the repository tree at the document's
+    era commit (ruling 9: anchors deleted after extraction).
+
+    A file absent from the era tree at its exact path is retried as a
+    unique SUFFIX match — session-era documents quote cell-relative
+    locators (``<cell>/threshold_sweep.json``) whose parent directory
+    the era tree disambiguates. Ambiguity fails loudly.
+
+    Returns:
+        ``(value, resolved_file)`` — the resolved value and the
+        era-tree path it came from.
+
+    Raises:
+        KeyError: On any failure (message says why).
+    """
+    file, path = split_locator(file, path)
+    if not file.endswith((".json", ".geojson")):
+        raise KeyError(f"non-JSON anchor {file} (triage scope)")
+    if era_commit not in _era_tree_cache:
+        _era_tree_cache[era_commit] = _git(
+            "ls-tree", "-r", "--name-only", era_commit).splitlines()
+    tree = _era_tree_cache[era_commit]
+    resolved_file = file
+    if file not in tree:
+        hits = [t for t in tree if t.endswith("/" + file)]
+        if len(hits) != 1:
+            raise KeyError(
+                f"era-resolution: {len(hits)} candidates for {file!r} "
+                f"at {era_commit[:9]}")
+        resolved_file = hits[0]
+    obj = json.loads(_git("show", f"{era_commit}:{resolved_file}"))
+    return resolve_in_obj(obj, path), resolved_file
 
 
 def safe_eval(expression: str, names: dict[str, float]) -> float:
@@ -190,7 +294,8 @@ def compare(quoted_verbatim: str, actual, unit: str | None = None) -> dict:
 
 
 def process_claim(batch: str, index: int, claim: dict,
-                  registry: dict | None = None) -> list[dict]:
+                  registry: dict | None = None,
+                  era: dict | None = None) -> list[dict]:
     """Produce one report row per value in a claim.
 
     Args:
@@ -200,6 +305,13 @@ def process_claim(batch: str, index: int, claim: dict,
         registry: Runner-spec index from
             :func:`lib_c4_runners.load_registry` (``None`` → no specs,
             every ``recompute-script`` value stays SKIPPED).
+        era: Source-document era context ``{"doc": path, "blob": hash}``
+            for ruling-9 git-era resolution of ``read`` anchors missing
+            from the working tree (``None`` → missing anchors stay
+            UNRESOLVED). Era-resolved rows carry ``resolution:
+            "git-era"`` plus the commit and era-tree path — a MATCH
+            there attests the document against its ERA, not against
+            the current artefact.
     """
     rows: list[dict] = []
     anchor = claim["anchor"]
@@ -256,7 +368,41 @@ def process_claim(batch: str, index: int, claim: dict,
                 elif not anchor or not effective:
                     row.update(status="UNRESOLVED", reason="read claim without anchor path")
                 else:
-                    actual = resolve_anchor_value(anchor_file, effective)
+                    try:
+                        actual = resolve_anchor_value(anchor_file, effective)
+                    except FileNotFoundError as missing:
+                        # Ruling 9: anchor deleted (or era-relative)
+                        # after extraction — resolve at the source
+                        # document's era commit.
+                        commit = (find_era_commit(era["doc"], era["blob"])
+                                  if era else None)
+                        if commit is None:
+                            raise KeyError(
+                                f"anchor missing from working tree "
+                                f"({missing}); no era context") from missing
+                        try:
+                            actual, era_file = era_resolve(
+                                commit, anchor_file, effective)
+                            row.update(resolution="git-era",
+                                       era_commit=commit[:12],
+                                       era_file=era_file)
+                        except KeyError as era_fail:
+                            # Artefact absent at era too (e.g. a
+                            # later-materialised regen copy): bind an
+                            # era-relative locator to a UNIQUE tracked
+                            # working-tree suffix match; ambiguity
+                            # stays a loud failure.
+                            file, sub = split_locator(anchor_file,
+                                                      effective)
+                            hits = [t for t in _tracked_files()
+                                    if t.endswith("/" + file)]
+                            if len(hits) != 1:
+                                raise KeyError(
+                                    f"{era_fail}; working-tree suffix: "
+                                    f"{len(hits)} candidates") from era_fail
+                            actual = resolve_in_obj(load_json(hits[0]), sub)
+                            row.update(resolution="suffix-current",
+                                       resolved_file=hits[0])
                     row.update(compare(value["value_verbatim"], actual,
                                        unit=value.get("unit")))
             else:  # arithmetic — value-level expression (schema 1.1) wins
@@ -286,8 +432,10 @@ def main(argv: list[str] | None = None) -> int:
     for path in paths:
         data = json.loads(Path(path).read_text(encoding="utf-8"))
         batch = Path(path).stem
+        era = {"doc": data["source_document"]["file"],
+               "blob": data["source_document"]["git_blob"]}
         for i, claim in enumerate(data["claims"]):
-            for row in process_claim(batch, i, claim, registry):
+            for row in process_claim(batch, i, claim, registry, era):
                 row["source_file"] = data["source_document"]["file"]
                 row["source_lines"] = claim["source"]["lines"]
                 rows.append(row)

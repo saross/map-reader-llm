@@ -196,6 +196,53 @@ def test_recompute_script_registry_execution(anchored_repo, monkeypatch):
 
 
 @pytest.mark.tier1
+def test_git_era_resolution(tmp_path, monkeypatch):
+    """Ruling 9: an anchor deleted after extraction resolves from the
+    blob at the source document's era commit, with unique-suffix
+    disambiguation for era-relative locators; rows are marked
+    resolution=git-era."""
+    import subprocess as sp
+
+    def git(*args):
+        sp.run(["git", *args], cwd=tmp_path, check=True, capture_output=True)
+
+    git("init", "-q")
+    git("config", "user.email", "t@example.org")
+    git("config", "user.name", "t")
+    (tmp_path / "doc.md").write_text("the sweep optimum was 3\n")
+    cell = tmp_path / "results" / "deep" / "cell-a"
+    cell.mkdir(parents=True)
+    (cell / "sweep.json").write_text(json.dumps({"optimal": {"f1": 3}}))
+    git("add", ".")
+    git("commit", "-qm", "era state")
+    blob = sp.run(["git", "hash-object", "doc.md"], cwd=tmp_path,
+                  capture_output=True, text=True).stdout.strip()
+    (cell / "sweep.json").unlink()
+    git("add", "-A")
+    git("commit", "-qm", "cleanup deletes the anchor")
+
+    monkeypatch.setattr(rc, "REPO_ROOT", tmp_path)
+    rc._json_cache.clear()
+    rc._era_commit_cache.clear()
+    rc._era_tree_cache.clear()
+    era = {"doc": "doc.md", "blob": blob}
+
+    # Era-relative locator (missing prefix) — unique suffix match.
+    claim = make_claim(values=[val("3", path="cell-a/sweep.json#$.optimal.f1")],
+                       anchor={"file": "results/deep/cell-a/sweep.json",
+                               "path": None})
+    (row,) = process_claim("b", 0, claim, None, era)
+    assert row["status"] == "MATCH"
+    assert row["resolution"] == "git-era"
+    assert row["era_file"] == "results/deep/cell-a/sweep.json"
+
+    # Without era context the missing anchor stays UNRESOLVED.
+    rc._json_cache.clear()
+    (row,) = process_claim("b", 0, claim, None, None)
+    assert row["status"] == "UNRESOLVED" and "no era context" in row["reason"]
+
+
+@pytest.mark.tier1
 def test_safe_eval_rejects_hostile_expressions():
     with pytest.raises(ValueError):
         safe_eval("__import__('os').system('x')", {})
