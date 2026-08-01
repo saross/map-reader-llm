@@ -68,7 +68,8 @@ def test_all_six_schemas_load():
     _reg, contents = load_schema_registry()
     # runs/conditions/passes/analyses/run-registry/common-defs + commitments
     # (the commitment spine, Phase 1 of the verification programme)
-    assert len(contents) == 7
+    # + c4-claims (the Phase 3 extraction-fleet schema, added S122)
+    assert len(contents) == 8
 
 
 @pytest.mark.tier1

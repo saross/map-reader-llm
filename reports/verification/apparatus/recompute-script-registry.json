@@ -1,0 +1,1691 @@
+{
+  "_meta": {
+    "generator": "authored 2026-08-01 for ruling 7 (reports/verification/phase3-rulings-2026-07-31.md § 7)",
+    "date": "2026-08-01",
+    "ruling": "phase3-rulings-2026-07-31.md § 7 — recompute-script class comprehensive, not deferred; census/count primitive tranche first, hard families NAMED",
+    "runner_library": "scripts/lib_c4_runners.py",
+    "source_report": "reports/verification/c4-recompute-report.json",
+    "recompute_script_rows": 488,
+    "tranche_counts": {
+      "CENSUS_specced": 90,
+      "COST_TOKEN_tranche_2": 64,
+      "STATISTICAL_tranche_3": 38,
+      "OTHER_HARD": 296
+    },
+    "named_families": [
+      {
+        "family": "cost-token-flex-repricing",
+        "tranche": "COST-TOKEN",
+        "row_count": 27,
+        "reason_not_specced": "USD figures repriced from token totals at flex rates; needs the pricing block plus per-pass token sums (tranche 2)."
+      },
+      {
+        "family": "cost-token-aggregate",
+        "tranche": "COST-TOKEN",
+        "row_count": 25,
+        "reason_not_specced": "Per-pass / per-tile token means, sums and derived shares over cost manifests and pass metas (tranche 2)."
+      },
+      {
+        "family": "cost-token-usage-stats-inflation",
+        "tranche": "COST-TOKEN",
+        "row_count": 12,
+        "reason_not_specced": "usage_stats-vs-per_item_metadata double-count factors; needs a per-axis ratio over every pass meta of a run (tranche 2, audited-flex cost/token runner)."
+      },
+      {
+        "family": "grouped-subset-aggregate",
+        "tranche": "OTHER-HARD",
+        "row_count": 61,
+        "reason_not_specced": "Group-by reductions, distinct-level enumerations and per-condition group sizes within one artefact; beyond count-distinct over a flat list."
+      },
+      {
+        "family": "cross-file-aggregate",
+        "tranche": "OTHER-HARD",
+        "row_count": 55,
+        "reason_not_specced": "min/max/sum reductions spanning more than one artefact, which the single-file aggregate primitive cannot express."
+      },
+      {
+        "family": "geospatial-recompute",
+        "tranche": "OTHER-HARD",
+        "row_count": 42,
+        "reason_not_specced": "Areas, containment fractions, pairwise point distances, point-in-bounds counts and GeoTIFF ground-sample-distance conversions; needs a geometry stack."
+      },
+      {
+        "family": "audit-script-rerun",
+        "tranche": "OTHER-HARD",
+        "row_count": 34,
+        "reason_not_specced": "Values only reproducible by re-running an audit/verifier script whose output was never committed."
+      },
+      {
+        "family": "detection-set-recompute",
+        "tranche": "OTHER-HARD",
+        "row_count": 23,
+        "reason_not_specced": "TP/FP/FN, empty-tile, candidate-flip and candidate-pool set operations recomputed from detection and probability artefacts."
+      },
+      {
+        "family": "multi-file-grep-census",
+        "tranche": "OTHER-HARD",
+        "row_count": 18,
+        "reason_not_specced": "Greps spanning a directory tree (matching files or matching lines across many files); regex-count operates on a single file."
+      },
+      {
+        "family": "board-ranking-selection",
+        "tranche": "OTHER-HARD",
+        "row_count": 12,
+        "reason_not_specced": "Ranks, top-N memberships and best-of-category selections requiring the board to be re-ordered and its members re-classified."
+      },
+      {
+        "family": "unparseable-range-quote",
+        "tranche": "OTHER-HARD",
+        "row_count": 11,
+        "reason_not_specced": "The quoted span is an interval or non-numeric token, so no scalar comparison is possible whatever the runner returns."
+      },
+      {
+        "family": "run-meta-sweep",
+        "tranche": "OTHER-HARD",
+        "row_count": 9,
+        "reason_not_specced": "Sweeps over many per-run *.meta.json files (items_processed, unique completed_items, timestamp spans); needs multi-file traversal with per-file reduction."
+      },
+      {
+        "family": "script-header-constant",
+        "tranche": "OTHER-HARD",
+        "row_count": 9,
+        "reason_not_specced": "Wall-clock estimates and numeric constants living in .sh/.py source text; regex-count counts occurrences, it cannot return the constant."
+      },
+      {
+        "family": "structural-absence-assertion",
+        "tranche": "OTHER-HARD",
+        "row_count": 9,
+        "reason_not_specced": "Counts encoded by the ABSENCE of a field or block (single-run evals carrying no n_runs, one-MCC-per-cell, one-tile-per-point); needs a schema assertion, not a count."
+      },
+      {
+        "family": "key-as-value",
+        "tranche": "OTHER-HARD",
+        "row_count": 7,
+        "reason_not_specced": "Numerals that exist only as JSON object keys or inside label strings; reading them back would be a tautology."
+      },
+      {
+        "family": "png-dimension-census",
+        "tranche": "OTHER-HARD",
+        "row_count": 4,
+        "reason_not_specced": "Tile edge lengths that exist only as the pixel dimensions of on-disk PNGs; needs an image reader, which no runner primitive provides."
+      },
+      {
+        "family": "git-tracked-file-census",
+        "tranche": "OTHER-HARD",
+        "row_count": 2,
+        "reason_not_specced": "Tracked-vs-total file counts requiring `git ls-files`; no runner primitive shells out to git."
+      },
+      {
+        "family": "statistical-fdr-significance",
+        "tranche": "STATISTICAL",
+        "row_count": 13,
+        "reason_not_specced": "Counts of comparisons significant after Benjamini-Hochberg correction where the artefact stores raw p-values only (tranche 3)."
+      },
+      {
+        "family": "statistical-permutation-null",
+        "tranche": "STATISTICAL",
+        "row_count": 11,
+        "reason_not_specced": "Permutation-test statistics (observed delta, null mean/SD/quantiles, p-values and p-value bounds); needs the permutation machinery on sapphire (tranche 3)."
+      },
+      {
+        "family": "statistical-determinism-spread",
+        "tranche": "STATISTICAL",
+        "row_count": 7,
+        "reason_not_specced": "SD / min-max / mean-vs-consensus spread summaries over nested robustness-grid structures (tranche 3)."
+      },
+      {
+        "family": "statistical-bootstrap-ci",
+        "tranche": "STATISTICAL",
+        "row_count": 4,
+        "reason_not_specced": "Bootstrap confidence-interval widths and containment checks (tranche 3)."
+      },
+      {
+        "family": "statistical-resolution-floor",
+        "tranche": "STATISTICAL",
+        "row_count": 3,
+        "reason_not_specced": "Derived resolution floors from permutation null_std at a given tile count (tranche 3)."
+      }
+    ],
+    "gate3_accounting": "Every recompute-script row is either specced below or a member of exactly one named family above; specced + sum(row_count) == recompute_script_rows.",
+    "note_on_mismatches": "Spec notes record the value each runner returned at authoring time. Specs express the quantity the value NAMES; where the executed value differs from the document's quote that divergence is the finding, not a spec defect."
+  },
+  "specs": [
+    {
+      "batch": "004",
+      "claim_index": 0,
+      "value_index": 0,
+      "runner": "json-aggregate",
+      "params": {
+        "file": "results/passes-manifest.json",
+        "list_path": "$.passes",
+        "key": "proposer_pool",
+        "agg": "count-distinct",
+        "where": [
+          {
+            "key": "run_id",
+            "op": "eq",
+            "value": "n1-outstanding-384"
+          },
+          {
+            "key": "proposer_pool",
+            "op": "regex",
+            "value": "^pro-"
+          },
+          {
+            "key": "model_version",
+            "op": "eq",
+            "value": "gemini-3-flash-preview"
+          }
+        ]
+      },
+      "note": "Distinct n1-outstanding-384 pro-* proposer pools whose recorded model_version is gemini-3-flash-preview (the E57 anti-diagonal). Executed 4 (document quotes 'four')."
+    },
+    {
+      "batch": "004",
+      "claim_index": 1,
+      "value_index": 0,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "list_path": "$.ranking",
+        "where": [
+          {
+            "key": "label",
+            "op": "regex",
+            "value": "^baseline-pro-(text|image)-medium-"
+          }
+        ]
+      },
+      "note": "Board cells whose ranked label marks a medium-thinking Pro configuration. Executed 4 (document quotes 'four')."
+    },
+    {
+      "batch": "004",
+      "claim_index": 10,
+      "value_index": 0,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/run-conditions.json",
+        "list_path": "$.decomposition['pv-diag-384'].conditions",
+        "where": [
+          {
+            "key": "label",
+            "op": "regex",
+            "value": "^baseline-"
+          }
+        ]
+      },
+      "note": "Count of pv-diag-384 conditions whose label carries the 'baseline-' prefix. Executed 10 (document quotes '10')."
+    },
+    {
+      "batch": "004",
+      "claim_index": 11,
+      "value_index": 0,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/run-conditions.json",
+        "list_path": "$.decomposition['n1-outstanding-384'].conditions",
+        "where": [
+          {
+            "key": "label",
+            "op": "regex",
+            "value": "^baseline-flash-"
+          }
+        ]
+      },
+      "note": "The on-board n1-outstanding-384 baseline cells are its Flash ones (the four baseline-pro-* entries are the off-board E57 cells). Executed 3 (document quotes '3')."
+    },
+    {
+      "batch": "004",
+      "claim_index": 13,
+      "value_index": 0,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/run-conditions.json",
+        "list_path": "$.decomposition['retest-h11-single-pass-384-t0'].conditions",
+        "where": [
+          {
+            "key": "label",
+            "op": "regex",
+            "value": "^baseline-"
+          }
+        ]
+      },
+      "note": "Count of retest-h11-single-pass-384-t0 conditions with a 'baseline-' label prefix. Executed 1 (document quotes '1')."
+    },
+    {
+      "batch": "004",
+      "claim_index": 33,
+      "value_index": 0,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/run-conditions.json",
+        "list_path": "$.decomposition['pv-diag-384'].conditions",
+        "where": [
+          {
+            "key": "label",
+            "op": "regex",
+            "value": "^baseline-"
+          }
+        ]
+      },
+      "note": "Count of pv-diag-384 conditions whose label carries the 'baseline-' prefix. Executed 10 (document quotes '10')."
+    },
+    {
+      "batch": "004",
+      "claim_index": 34,
+      "value_index": 0,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/run-conditions.json",
+        "list_path": "$.decomposition['pv-diag-384'].conditions",
+        "where": [
+          {
+            "key": "label",
+            "op": "regex",
+            "value": "^baseline-"
+          }
+        ]
+      },
+      "note": "Count of pv-diag-384 conditions whose label carries the 'baseline-' prefix. Executed 10 (document quotes '10')."
+    },
+    {
+      "batch": "004",
+      "claim_index": 36,
+      "value_index": 0,
+      "runner": "json-aggregate",
+      "params": {
+        "file": "results/passes-manifest.json",
+        "list_path": "$.passes",
+        "key": "proposer_pool",
+        "agg": "count-distinct",
+        "where": [
+          {
+            "key": "run_id",
+            "op": "regex",
+            "value": "^(pv-diag-384|n1-outstanding-384)$"
+          },
+          {
+            "key": "proposer_pool",
+            "op": "regex",
+            "value": "^pro-"
+          }
+        ]
+      },
+      "note": "Distinct pro-* pools across the two runs that supplied the pre-E57 'Pro' cells (pv-diag-384 plus the n1-outstanding-384 anti-diagonal). Executed 8 (document quotes 'eight')."
+    },
+    {
+      "batch": "004",
+      "claim_index": 37,
+      "value_index": 0,
+      "runner": "json-aggregate",
+      "params": {
+        "file": "results/passes-manifest.json",
+        "list_path": "$.passes",
+        "key": "proposer_pool",
+        "agg": "count-distinct",
+        "where": [
+          {
+            "key": "run_id",
+            "op": "eq",
+            "value": "pv-diag-384"
+          },
+          {
+            "key": "proposer_pool",
+            "op": "regex",
+            "value": "^pro-"
+          }
+        ]
+      },
+      "note": "Distinct pv-diag-384 proposer pools whose name begins 'pro-'. Executed 4 (document quotes 'four')."
+    },
+    {
+      "batch": "004",
+      "claim_index": 39,
+      "value_index": 0,
+      "runner": "json-aggregate",
+      "params": {
+        "file": "results/passes-manifest.json",
+        "list_path": "$.passes",
+        "key": "proposer_pool",
+        "agg": "count-distinct",
+        "where": [
+          {
+            "key": "run_id",
+            "op": "eq",
+            "value": "n1-outstanding-384"
+          },
+          {
+            "key": "proposer_pool",
+            "op": "regex",
+            "value": "^pro-"
+          },
+          {
+            "key": "model_version",
+            "op": "eq",
+            "value": "gemini-3-flash-preview"
+          }
+        ]
+      },
+      "note": "Distinct n1-outstanding-384 pro-* proposer pools whose recorded model_version is gemini-3-flash-preview (the E57 anti-diagonal). Executed 4 (document quotes 'four')."
+    },
+    {
+      "batch": "004",
+      "claim_index": 42,
+      "value_index": 0,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/passes-manifest.json",
+        "list_path": "$.passes",
+        "where": [
+          {
+            "key": "run_id",
+            "op": "eq",
+            "value": "n1-outstanding-384"
+          },
+          {
+            "key": "proposer_pool",
+            "op": "regex",
+            "value": "^pro-"
+          },
+          {
+            "key": "model_version",
+            "op": "eq",
+            "value": "gemini-3-flash-preview"
+          }
+        ]
+      },
+      "note": "Passes (not pools) on n1-outstanding-384 pro-* pools now recorded as gemini-3-flash-preview. Executed 8 (document quotes '8')."
+    },
+    {
+      "batch": "004",
+      "claim_index": 87,
+      "value_index": 0,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "list_path": "$.ranking",
+        "where": [
+          {
+            "key": "label",
+            "op": "regex",
+            "value": "^baseline-pro-(text|image)-medium-"
+          }
+        ]
+      },
+      "note": "Board cells whose ranked label marks a medium-thinking Pro configuration. Executed 4 (document quotes 'four')."
+    },
+    {
+      "batch": "004",
+      "claim_index": 87,
+      "value_index": 2,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "list_path": "$.ranking",
+        "where": [
+          {
+            "key": "label",
+            "op": "regex",
+            "value": "^baseline-pro-(text|image)-high-"
+          }
+        ]
+      },
+      "note": "Board cells whose ranked label marks a high-thinking Pro configuration. Executed 4 (document quotes 'four')."
+    },
+    {
+      "batch": "004",
+      "claim_index": 88,
+      "value_index": 0,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "list_path": "$.ranking",
+        "where": [
+          {
+            "key": "label",
+            "op": "regex",
+            "value": "^baseline-pro-(text|image)-medium-t-0-0$"
+          }
+        ]
+      },
+      "note": "The two pv-diag-384 medium-thinking T=0.0 board cells (the pair the coverage top-up touched). Executed 2 (document quotes 'two')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 2,
+      "value_index": 1,
+      "runner": "json-aggregate",
+      "params": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "list_path": "$.ranking",
+        "key": "n_passes",
+        "agg": "min"
+      },
+      "note": "Minimum replicate count over the 18 ranked board cells. Executed 1 (document quotes '1')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 2,
+      "value_index": 2,
+      "runner": "json-aggregate",
+      "params": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "list_path": "$.ranking",
+        "key": "n_passes",
+        "agg": "max"
+      },
+      "note": "Maximum replicate count over the 18 ranked board cells. Executed 30 (document quotes '30')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 3,
+      "value_index": 2,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "list_path": "$.pairwise",
+        "where": [
+          {
+            "key": "significant",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      },
+      "note": "Count of $.pairwise entries flagged significant in the 20 m baseline-matrix tiering artefact. Executed 129 (document quotes '129')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 12,
+      "value_index": 0,
+      "runner": "json-aggregate",
+      "params": {
+        "file": "results/passes-manifest.json",
+        "list_path": "$.passes",
+        "key": "proposer_pool",
+        "agg": "count-distinct",
+        "where": [
+          {
+            "key": "run_id",
+            "op": "regex",
+            "value": "^(pv-diag-384|n1-pro-rerun-384)$"
+          },
+          {
+            "key": "proposer_pool",
+            "op": "regex",
+            "value": "^pro-"
+          }
+        ]
+      },
+      "note": "Distinct pro-* pools across the two runs the claim enumerates as the genuine-Pro board cells (pv-diag-384 diagonal + n1-pro-rerun-384). Executed 8 (document quotes 'eight')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 12,
+      "value_index": 1,
+      "runner": "json-aggregate",
+      "params": {
+        "file": "results/passes-manifest.json",
+        "list_path": "$.passes",
+        "key": "proposer_pool",
+        "agg": "count-distinct",
+        "where": [
+          {
+            "key": "run_id",
+            "op": "eq",
+            "value": "n1-pro-rerun-384"
+          }
+        ]
+      },
+      "note": "Distinct proposer pools on the n1-pro-rerun-384 re-run. Executed 4 (document quotes 'four')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 12,
+      "value_index": 2,
+      "runner": "json-aggregate",
+      "params": {
+        "file": "results/passes-manifest.json",
+        "list_path": "$.passes",
+        "key": "proposer_pool",
+        "agg": "count-distinct",
+        "where": [
+          {
+            "key": "run_id",
+            "op": "eq",
+            "value": "pv-diag-384"
+          },
+          {
+            "key": "proposer_pool",
+            "op": "regex",
+            "value": "^pro-"
+          }
+        ]
+      },
+      "note": "Distinct pv-diag-384 diagonal Pro proposer pools. Executed 4 (document quotes 'four')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 12,
+      "value_index": 3,
+      "runner": "json-aggregate",
+      "params": {
+        "file": "results/passes-manifest.json",
+        "list_path": "$.passes",
+        "key": "proposer_pool",
+        "agg": "count-distinct",
+        "where": [
+          {
+            "key": "run_id",
+            "op": "regex",
+            "value": "^(pv-diag-384|n1-pro-rerun-384)$"
+          },
+          {
+            "key": "proposer_pool",
+            "op": "regex",
+            "value": "^pro-"
+          },
+          {
+            "key": "thinking_level",
+            "op": "eq",
+            "value": "medium"
+          }
+        ]
+      },
+      "note": "Distinct medium-thinking genuine-Pro pools across the two runs the claim enumerates (value path $.passes[*].thinking_level). Executed 4 (document quotes 'four')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 12,
+      "value_index": 4,
+      "runner": "json-aggregate",
+      "params": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "list_path": "$.ranking",
+        "key": "n_passes",
+        "agg": "min",
+        "where": [
+          {
+            "key": "label",
+            "op": "regex",
+            "value": "^baseline-pro-(text|image)-medium-"
+          }
+        ]
+      },
+      "note": "Replicate count over the medium-thinking Pro board cells; min is reported because the claim asserts the level of every such cell (max over the same subset was identical at authoring time). Executed 3 (document quotes '3')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 12,
+      "value_index": 5,
+      "runner": "json-aggregate",
+      "params": {
+        "file": "results/passes-manifest.json",
+        "list_path": "$.passes",
+        "key": "proposer_pool",
+        "agg": "count-distinct",
+        "where": [
+          {
+            "key": "run_id",
+            "op": "regex",
+            "value": "^(pv-diag-384|n1-pro-rerun-384)$"
+          },
+          {
+            "key": "proposer_pool",
+            "op": "regex",
+            "value": "^pro-"
+          },
+          {
+            "key": "thinking_level",
+            "op": "eq",
+            "value": "high"
+          }
+        ]
+      },
+      "note": "Distinct high-thinking genuine-Pro pools across the two runs the claim enumerates (value path $.passes[*].thinking_level). Executed 4 (document quotes 'four')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 22,
+      "value_index": 0,
+      "runner": "json-aggregate",
+      "params": {
+        "file": "results/passes-manifest.json",
+        "list_path": "$.passes",
+        "key": "proposer_pool",
+        "agg": "count-distinct",
+        "where": [
+          {
+            "key": "run_id",
+            "op": "eq",
+            "value": "n1-outstanding-384"
+          },
+          {
+            "key": "proposer_pool",
+            "op": "regex",
+            "value": "^pro-"
+          },
+          {
+            "key": "model_version",
+            "op": "eq",
+            "value": "gemini-3-flash-preview"
+          }
+        ]
+      },
+      "note": "Distinct n1-outstanding-384 pro-* proposer pools whose recorded model_version is gemini-3-flash-preview (the E57 anti-diagonal). Executed 4 (document quotes 'four')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 29,
+      "value_index": 0,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/conditions-manifest.json",
+        "list_path": "$.conditions",
+        "where": [
+          {
+            "key": "label",
+            "op": "regex",
+            "value": "^baseline-"
+          },
+          {
+            "key": "run_id",
+            "op": "regex",
+            "value": "^(pv-diag-384|n1-outstanding-384|n1-pro-rerun-384|retest-h11-single-pass-384-t0)$"
+          }
+        ]
+      },
+      "note": "Baseline-<slug> conditions across the four runs the claim names (pv-diag-384 / n1-outstanding-384 / n1-pro-rerun-384 / retest-h11-single-pass-384-t0). Executed 22 (document quotes '18')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 31,
+      "value_index": 0,
+      "runner": "json-aggregate",
+      "params": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "list_path": "$.ranking",
+        "key": "n_passes",
+        "agg": "min",
+        "where": [
+          {
+            "key": "label",
+            "op": "regex",
+            "value": "^baseline-pro-(text|image)-medium-"
+          }
+        ]
+      },
+      "note": "Replicate count over the medium-thinking Pro board cells; min is reported because the claim asserts the level of every such cell (max over the same subset was identical at authoring time). Executed 3 (document quotes '3')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 34,
+      "value_index": 0,
+      "runner": "json-aggregate",
+      "params": {
+        "file": "results/passes-manifest.json",
+        "list_path": "$.passes",
+        "key": "proposer_pool",
+        "agg": "count-distinct",
+        "where": [
+          {
+            "key": "run_id",
+            "op": "eq",
+            "value": "n1-outstanding-384"
+          },
+          {
+            "key": "proposer_pool",
+            "op": "regex",
+            "value": "^pro-"
+          },
+          {
+            "key": "model_version",
+            "op": "eq",
+            "value": "gemini-3-flash-preview"
+          }
+        ]
+      },
+      "note": "Distinct n1-outstanding-384 pro-* proposer pools whose recorded model_version is gemini-3-flash-preview (the E57 anti-diagonal). Executed 4 (document quotes 'four')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 36,
+      "value_index": 0,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "list_path": "$.ranking",
+        "where": [
+          {
+            "key": "label",
+            "op": "regex",
+            "value": "^baseline-pro-(text|image)-medium-"
+          }
+        ]
+      },
+      "note": "Board cells whose ranked label marks a medium-thinking Pro configuration. Executed 4 (document quotes 'four')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 36,
+      "value_index": 1,
+      "runner": "json-aggregate",
+      "params": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "list_path": "$.ranking",
+        "key": "n_passes",
+        "agg": "min",
+        "where": [
+          {
+            "key": "label",
+            "op": "regex",
+            "value": "^baseline-pro-(text|image)-medium-"
+          }
+        ]
+      },
+      "note": "Replicate count over the medium-thinking Pro board cells; min is reported because the claim asserts the level of every such cell (max over the same subset was identical at authoring time). Executed 3 (document quotes '3')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 36,
+      "value_index": 2,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "list_path": "$.ranking",
+        "where": [
+          {
+            "key": "label",
+            "op": "regex",
+            "value": "^baseline-pro-(text|image)-high-"
+          }
+        ]
+      },
+      "note": "Board cells whose ranked label marks a high-thinking Pro configuration. Executed 4 (document quotes 'four')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 37,
+      "value_index": 5,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "list_path": "$.ranking",
+        "where": [
+          {
+            "key": "label",
+            "op": "regex",
+            "value": "^baseline-pro-(text|image)-medium-t-0-0$"
+          }
+        ]
+      },
+      "note": "The two pv-diag-384 medium-thinking T=0.0 board cells (the pair the coverage top-up touched). Executed 2 (document quotes 'two')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 42,
+      "value_index": 4,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "list_path": "$.pairwise",
+        "where": [
+          {
+            "key": "significant",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      },
+      "note": "Count of $.pairwise entries flagged significant in the 20 m baseline-matrix tiering artefact. Executed 129 (document quotes '129')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 45,
+      "value_index": 0,
+      "runner": "json-aggregate",
+      "params": {
+        "file": "results/passes-manifest.json",
+        "list_path": "$.passes",
+        "key": "proposer_pool",
+        "agg": "count-distinct",
+        "where": [
+          {
+            "key": "run_id",
+            "op": "eq",
+            "value": "n1-outstanding-384"
+          },
+          {
+            "key": "proposer_pool",
+            "op": "regex",
+            "value": "^pro-"
+          },
+          {
+            "key": "model_version",
+            "op": "eq",
+            "value": "gemini-3-flash-preview"
+          }
+        ]
+      },
+      "note": "Distinct n1-outstanding-384 pro-* proposer pools whose recorded model_version is gemini-3-flash-preview (the E57 anti-diagonal). Executed 4 (document quotes 'four')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 46,
+      "value_index": 0,
+      "runner": "json-aggregate",
+      "params": {
+        "file": "results/passes-manifest.json",
+        "list_path": "$.passes",
+        "key": "proposer_pool",
+        "agg": "count-distinct",
+        "where": [
+          {
+            "key": "run_id",
+            "op": "eq",
+            "value": "n1-outstanding-384"
+          },
+          {
+            "key": "proposer_pool",
+            "op": "regex",
+            "value": "^pro-"
+          },
+          {
+            "key": "model_version",
+            "op": "eq",
+            "value": "gemini-3-flash-preview"
+          }
+        ]
+      },
+      "note": "Distinct n1-outstanding-384 pro-* proposer pools whose recorded model_version is gemini-3-flash-preview (the E57 anti-diagonal). Executed 4 (document quotes 'four')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 61,
+      "value_index": 0,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/conditions-manifest.json",
+        "list_path": "$.conditions",
+        "where": [
+          {
+            "key": "label",
+            "op": "regex",
+            "value": "^baseline-"
+          },
+          {
+            "key": "run_id",
+            "op": "regex",
+            "value": "^(pv-diag-384|n1-outstanding-384|n1-pro-rerun-384|retest-h11-single-pass-384-t0)$"
+          }
+        ]
+      },
+      "note": "Baseline-<slug> conditions across the four runs the claim names (pv-diag-384 / n1-outstanding-384 / n1-pro-rerun-384 / retest-h11-single-pass-384-t0). Executed 22 (document quotes '18')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 61,
+      "value_index": 1,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/run-conditions.json",
+        "list_path": "$.decomposition['pv-diag-384'].conditions",
+        "where": [
+          {
+            "key": "label",
+            "op": "regex",
+            "value": "^baseline-"
+          }
+        ]
+      },
+      "note": "Baseline conditions registered on pv-diag-384. Executed 10 (document quotes '10')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 61,
+      "value_index": 2,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/run-conditions.json",
+        "list_path": "$.decomposition['n1-outstanding-384'].conditions",
+        "where": [
+          {
+            "key": "label",
+            "op": "regex",
+            "value": "^baseline-"
+          }
+        ]
+      },
+      "note": "Baseline conditions registered on n1-outstanding-384 (all seven, on-board plus off-board). Executed 7 (document quotes '7')."
+    },
+    {
+      "batch": "005",
+      "claim_index": 61,
+      "value_index": 3,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/run-conditions.json",
+        "list_path": "$.decomposition['retest-h11-single-pass-384-t0'].conditions",
+        "where": [
+          {
+            "key": "label",
+            "op": "regex",
+            "value": "^baseline-"
+          }
+        ]
+      },
+      "note": "Baseline conditions registered on retest-h11-single-pass-384-t0. Executed 1 (document quotes '1')."
+    },
+    {
+      "batch": "006-output-dir-standard",
+      "claim_index": 14,
+      "value_index": 0,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs",
+        "glob": "55maps-*-generalisation/post_run_report.md",
+        "kind": "file"
+      },
+      "note": "Anchor 'count of 55maps-*-generalisation/post_run_report.md files'. Executed 2 (document quotes 'four')."
+    },
+    {
+      "batch": "006-output-dir-standard",
+      "claim_index": 22,
+      "value_index": 0,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs",
+        "glob": "**/post_run_report.md",
+        "kind": "file"
+      },
+      "note": "Anchor 'find outputs -name post_run_report.md' (the non-retrospective files; the retrospective one is post_run_report_retrospective.md). Executed 2 (document quotes '4')."
+    },
+    {
+      "batch": "006-output-dir-standard",
+      "claim_index": 22,
+      "value_index": 1,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs",
+        "glob": "**/post_run_report_retrospective.md",
+        "kind": "file"
+      },
+      "note": "The retrospective post-run report is a separately named file under outputs/; this globs exactly that class. Executed 1 (document quotes '1')."
+    },
+    {
+      "batch": "006-output-dir-standard",
+      "claim_index": 23,
+      "value_index": 0,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs",
+        "glob": "**/experiment_intent.md",
+        "kind": "file"
+      },
+      "note": "Anchor 'find outputs -name experiment_intent.md'. Executed 174 (document quotes '139')."
+    },
+    {
+      "batch": "006-output-dir-standard",
+      "claim_index": 23,
+      "value_index": 1,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs",
+        "glob": "**/experiment_intent.md",
+        "kind": "file"
+      },
+      "note": "Anchor 'find outputs -name experiment_intent.md'. Executed 174 (document quotes '139')."
+    },
+    {
+      "batch": "006-output-dir-standard",
+      "claim_index": 24,
+      "value_index": 0,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs",
+        "glob": "**/evaluation.md",
+        "kind": "file"
+      },
+      "note": "Anchor 'find outputs -name evaluation.md'. Executed 46 (document quotes '11')."
+    },
+    {
+      "batch": "006-output-dir-standard",
+      "claim_index": 24,
+      "value_index": 1,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs",
+        "glob": "**/evaluation.md",
+        "kind": "file"
+      },
+      "note": "Anchor 'find outputs -name evaluation.md'. Executed 46 (document quotes '11')."
+    },
+    {
+      "batch": "006-output-dir-standard",
+      "claim_index": 25,
+      "value_index": 0,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs",
+        "glob": "**/pre_launch_audit.md",
+        "kind": "file"
+      },
+      "note": "Anchor 'find outputs -name pre_launch_audit.md'. Executed 1 (document quotes '1')."
+    },
+    {
+      "batch": "006-output-dir-standard",
+      "claim_index": 32,
+      "value_index": 1,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs/h11/pv-diag-384",
+        "glob": "**/*",
+        "kind": "file"
+      },
+      "note": "Total-file walk of outputs/h11/pv-diag-384/ (the tracked-file side of the same span needs git ls-files and stays unspecced). Executed 48707 (document quotes '48,666')."
+    },
+    {
+      "batch": "006-output-dir-standard",
+      "claim_index": 33,
+      "value_index": 1,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs",
+        "glob": "**/experiment_intent.md",
+        "kind": "file"
+      },
+      "note": "Changes-table restatement of the experiment_intent.md census. Executed 174 (document quotes '139')."
+    },
+    {
+      "batch": "006-output-dir-standard",
+      "claim_index": 33,
+      "value_index": 2,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs",
+        "glob": "**/evaluation.md",
+        "kind": "file"
+      },
+      "note": "Changes-table restatement of the evaluation.md census. Executed 46 (document quotes '11')."
+    },
+    {
+      "batch": "006-output-dir-standard",
+      "claim_index": 33,
+      "value_index": 3,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs",
+        "glob": "**/pre_launch_audit.md",
+        "kind": "file"
+      },
+      "note": "Changes-table restatement of the pre_launch_audit.md census. Executed 1 (document quotes '1')."
+    },
+    {
+      "batch": "006-output-dir-standard",
+      "claim_index": 34,
+      "value_index": 1,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs/h11/pv-diag-384",
+        "glob": "**/*",
+        "kind": "file"
+      },
+      "note": "'After'-column restatement of the same total-file walk. Executed 48707 (document quotes '48,666')."
+    },
+    {
+      "batch": "006-output-dir-standard",
+      "claim_index": 38,
+      "value_index": 1,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs",
+        "glob": "**/experiment_intent.md",
+        "kind": "file"
+      },
+      "note": "Correction-block restatement of the experiment_intent.md census. Executed 174 (document quotes '139')."
+    },
+    {
+      "batch": "006-prereg-analysis-summary",
+      "claim_index": 1,
+      "value_index": 0,
+      "runner": "regex-count",
+      "params": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "pattern": "^### H[0-9]+:",
+        "scope": "lines"
+      },
+      "note": "Counts '### H<N>:' headings in the lodged preregistration; the pattern excludes the triggered exploratory H4b heading by construction. Executed 15 (document quotes '15')."
+    },
+    {
+      "batch": "028",
+      "claim_index": 18,
+      "value_index": 0,
+      "runner": "json-aggregate",
+      "params": {
+        "file": "outputs/h11/pv-diag-384/consensus/flash-high-text-16of30.geojson",
+        "list_path": "$.features",
+        "key": "properties.vote_count",
+        "agg": "min"
+      },
+      "note": "min(vote_count) over the 16-of-30 consensus GeoJSON features — the operative threshold the claim asserts. Executed 16 (document quotes '16')."
+    },
+    {
+      "batch": "028",
+      "claim_index": 22,
+      "value_index": 0,
+      "runner": "json-aggregate",
+      "params": {
+        "file": "outputs/h11/pv-diag-384/consensus/flash-high-text-16of30.geojson",
+        "list_path": "$.features",
+        "key": "properties.vote_count",
+        "agg": "min"
+      },
+      "note": "min(vote_count) over the 16-of-30 consensus GeoJSON features — the operative threshold the claim asserts. Executed 16 (document quotes '16')."
+    },
+    {
+      "batch": "028",
+      "claim_index": 48,
+      "value_index": 1,
+      "runner": "json-aggregate",
+      "params": {
+        "file": "outputs/h11/pv-diag-384/consensus/flash-high-text-16of30.geojson",
+        "list_path": "$.features",
+        "key": "properties.vote_count",
+        "agg": "min"
+      },
+      "note": "min(vote_count) over the 16-of-30 consensus GeoJSON features — the operative threshold the claim asserts. Executed 16 (document quotes '16')."
+    },
+    {
+      "batch": "029",
+      "claim_index": 19,
+      "value_index": 1,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "inputs/tiles_384/full_evaluation_manifest.json",
+        "list_path": "$",
+        "where": []
+      },
+      "note": "Extraction note: the 487 evaluation-tile denominator is the length of inputs/tiles_384/full_evaluation_manifest.json. Executed 487 (document quotes '487')."
+    },
+    {
+      "batch": "029",
+      "claim_index": 19,
+      "value_index": 3,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7",
+        "glob": "run_*",
+        "kind": "dir"
+      },
+      "note": "Census of the run_* directories in the 30-pass proposer pool. Executed 30 (document quotes '30')."
+    },
+    {
+      "batch": "029",
+      "claim_index": 19,
+      "value_index": 5,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7",
+        "glob": "run_*",
+        "kind": "dir"
+      },
+      "note": "Census of the run_* directories in the 30-pass proposer pool. Executed 30 (document quotes '30')."
+    },
+    {
+      "batch": "035",
+      "claim_index": 19,
+      "value_index": 0,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "inputs/tiles/validation_manifest.json",
+        "list_path": "$",
+        "where": []
+      },
+      "note": "Extraction note: the 60-tile count anchors to inputs/tiles/validation_manifest.json (list length). Executed 60 (document quotes '60')."
+    },
+    {
+      "batch": "035",
+      "claim_index": 28,
+      "value_index": 1,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "inputs/tiles/validation_manifest.json",
+        "list_path": "$",
+        "where": []
+      },
+      "note": "Extraction note: the 60-tile count anchors to inputs/tiles/validation_manifest.json (list length). Executed 60 (document quotes '60')."
+    },
+    {
+      "batch": "035",
+      "claim_index": 33,
+      "value_index": 1,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs/retest/phase2b",
+        "glob": "track*",
+        "kind": "dir"
+      },
+      "note": "Census of the outputs/retest/phase2b/ track subdirectories (repair rationale: 'a census of the track subdirectories'). Executed 2 (document quotes '2')."
+    },
+    {
+      "batch": "035",
+      "claim_index": 34,
+      "value_index": 1,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs/retest/phase2c",
+        "glob": "track*",
+        "kind": "dir"
+      },
+      "note": "Census of the outputs/retest/phase2c/ track subdirectories (repair rationale: 'a census of the track subdirectories'). Executed 3 (document quotes '2')."
+    },
+    {
+      "batch": "035",
+      "claim_index": 35,
+      "value_index": 1,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs/retest/phase2d",
+        "glob": "track*",
+        "kind": "dir"
+      },
+      "note": "Census of the outputs/retest/phase2d/ track subdirectories (repair rationale: 'a census of the track subdirectories'). Executed 2 (document quotes '2')."
+    },
+    {
+      "batch": "035",
+      "claim_index": 42,
+      "value_index": 2,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "inputs/tiles/validation_manifest.json",
+        "list_path": "$",
+        "where": []
+      },
+      "note": "Extraction note: the 60-tile count anchors to inputs/tiles/validation_manifest.json (list length). Executed 60 (document quotes '60')."
+    },
+    {
+      "batch": "037",
+      "claim_index": 37,
+      "value_index": 0,
+      "runner": "glob-count",
+      "params": {
+        "root": "results/gs-125m-fp-side-6-crop-review/crops",
+        "glob": "*",
+        "kind": "file"
+      },
+      "note": "Extraction note gives the crop files under results/gs-125m-fp-side-6-crop-review/crops/ as the parallel anchor for the >125 m false-positive cohort count. Executed 6 (document quotes 'six')."
+    },
+    {
+      "batch": "038-h11",
+      "claim_index": 5,
+      "value_index": 0,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "planning/condition-inventory.json",
+        "list_path": "$",
+        "where": [
+          {
+            "key": "path",
+            "op": "regex",
+            "value": "e47-propose-brief"
+          }
+        ]
+      },
+      "note": "Faithful translation of the claim anchor len:$[?(@.path =~ /e47-propose-brief/)]. Executed 1 (document quotes '2')."
+    },
+    {
+      "batch": "038-h11",
+      "claim_index": 7,
+      "value_index": 0,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "planning/condition-inventory.json",
+        "list_path": "$",
+        "where": [
+          {
+            "key": "path",
+            "op": "regex",
+            "value": "e47-propose-brief"
+          },
+          {
+            "key": "hypothesis",
+            "op": "eq",
+            "value": "H11"
+          }
+        ]
+      },
+      "note": "Anchor len:$[?(@.path =~ /e47-propose-brief/ && @.hypothesis == 'H11')]. Executed 1 (document quotes '2')."
+    },
+    {
+      "batch": "038-h11",
+      "claim_index": 9,
+      "value_index": 0,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "planning/condition-inventory.json",
+        "list_path": "$",
+        "where": [
+          {
+            "key": "path",
+            "op": "regex",
+            "value": "gold-standard-v2"
+          }
+        ]
+      },
+      "note": "Anchor len:$[?(@.path =~ /gold-standard-v2/)]; quoted value is the word 'no'. Executed 0 (document quotes 'no')."
+    },
+    {
+      "batch": "038-h11",
+      "claim_index": 12,
+      "value_index": 0,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "planning/condition-inventory.json",
+        "list_path": "$",
+        "where": [
+          {
+            "key": "path",
+            "op": "regex",
+            "value": "n1-outstanding-384"
+          },
+          {
+            "key": "hypothesis",
+            "op": "eq",
+            "value": "H11"
+          },
+          {
+            "key": "era",
+            "op": "eq",
+            "value": 2
+          }
+        ]
+      },
+      "note": "Anchor len:$[?(@.path =~ /n1-outstanding-384/ && @.hypothesis == 'H11' && @.era == 2)]. Executed 7 (document quotes '8')."
+    },
+    {
+      "batch": "038-h11",
+      "claim_index": 14,
+      "value_index": 1,
+      "runner": "regex-count",
+      "params": {
+        "file": "scripts/fuse_detections_wbf.py",
+        "pattern": "outputs/h11/e47-propose-brief/",
+        "scope": "occurrences"
+      },
+      "note": "Occurrence census of the hardcoded e47-propose-brief path string in scripts/fuse_detections_wbf.py (all occurrences sit inside SPECIAL_CONFIGS). Executed 5 (document quotes '5')."
+    },
+    {
+      "batch": "038-h11",
+      "claim_index": 15,
+      "value_index": 1,
+      "runner": "regex-count",
+      "params": {
+        "file": "scripts/fuse_detections_wbf.py",
+        "pattern": "\"default_output_dir\":\\s*f?\"outputs/h11/wbf/",
+        "scope": "occurrences"
+      },
+      "note": "Occurrence census of default_output_dir constants pointing at outputs/h11/wbf/ — the quantity the value names. Executed 0 (document quotes '3')."
+    },
+    {
+      "batch": "038-h11",
+      "claim_index": 60,
+      "value_index": 0,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "planning/condition-inventory.json",
+        "list_path": "$",
+        "where": [
+          {
+            "key": "path",
+            "op": "regex",
+            "value": "propose-brief-v1-test|v2-proposer-test|wbf"
+          }
+        ]
+      },
+      "note": "Anchor len:$[?(@.path =~ /propose-brief-v1-test|v2-proposer-test|wbf/)]; quoted value is the word 'No'. Executed 0 (document quotes 'No')."
+    },
+    {
+      "batch": "050",
+      "claim_index": 37,
+      "value_index": 0,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/conditions-manifest.json",
+        "list_path": "$.conditions",
+        "where": [
+          {
+            "key": "run_id",
+            "op": "eq",
+            "value": "verifier-robustness"
+          }
+        ]
+      },
+      "note": "Repair rationale: count of conditions with run_id == 'verifier-robustness' over the 322-entry manifest. Executed 8 (document quotes '8')."
+    },
+    {
+      "batch": "052",
+      "claim_index": 10,
+      "value_index": 2,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "inputs/tiles_384/full_evaluation_manifest.json",
+        "list_path": "$",
+        "where": []
+      },
+      "note": "Extraction note: the GS (4-map) corpus tile count is the length of inputs/tiles_384/full_evaluation_manifest.json. Executed 487 (document quotes '487')."
+    },
+    {
+      "batch": "052",
+      "claim_index": 13,
+      "value_index": 0,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs/55maps-text-min-generalisation/proposer",
+        "glob": "*/run_*",
+        "kind": "dir"
+      },
+      "note": "S123 triage repair: pass count is the run_* directory census under outputs/55maps-text-min-generalisation/proposer/. Executed 5 (document quotes '5')."
+    },
+    {
+      "batch": "052",
+      "claim_index": 20,
+      "value_index": 0,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs/55maps-text-high-generalisation/proposer",
+        "glob": "*/run_*",
+        "kind": "dir"
+      },
+      "note": "S123 triage repair: pass count is the run_* directory census under outputs/55maps-text-high-generalisation/proposer/. Executed 5 (document quotes '5')."
+    },
+    {
+      "batch": "052",
+      "claim_index": 28,
+      "value_index": 0,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs/55maps-text-high-t0.3-generalisation/proposer",
+        "glob": "*/run_*",
+        "kind": "dir"
+      },
+      "note": "S123 triage repair: pass count is the run_* directory census under outputs/55maps-text-high-t0.3-generalisation/proposer/. Executed 5 (document quotes '5')."
+    },
+    {
+      "batch": "052",
+      "claim_index": 33,
+      "value_index": 0,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs/55maps-image-generalisation/proposer",
+        "glob": "*/run_*",
+        "kind": "dir"
+      },
+      "note": "S123 triage repair: pass count is the run_* directory census under outputs/55maps-image-generalisation/proposer/. Executed 5 (document quotes '5')."
+    },
+    {
+      "batch": "052",
+      "claim_index": 47,
+      "value_index": 1,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0",
+        "glob": "run_*",
+        "kind": "dir"
+      },
+      "note": "Extraction note: pass counts are the run_* directory counts under each temperature (text-t0.0). Executed 3 (document quotes '3')."
+    },
+    {
+      "batch": "052",
+      "claim_index": 47,
+      "value_index": 4,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3",
+        "glob": "run_*",
+        "kind": "dir"
+      },
+      "note": "Extraction note: pass counts are the run_* directory counts under each temperature (text-t0.3). Executed 10 (document quotes '10')."
+    },
+    {
+      "batch": "052",
+      "claim_index": 47,
+      "value_index": 7,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0",
+        "glob": "run_*",
+        "kind": "dir"
+      },
+      "note": "Extraction note: pass counts are the run_* directory counts under each temperature (text-t1.0). Executed 10 (document quotes '10')."
+    },
+    {
+      "batch": "052",
+      "claim_index": 51,
+      "value_index": 0,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs/55maps-text-high-generalisation/proposer",
+        "glob": "*/run_*",
+        "kind": "dir"
+      },
+      "note": "The 'five measured 55-map T0.7 passes' of § 3.2 are the run_* directories of the text-high generalisation proposer. Executed 5 (document quotes 'five')."
+    },
+    {
+      "batch": "052",
+      "claim_index": 51,
+      "value_index": 1,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "inputs/tiles_384/full_evaluation_manifest.json",
+        "list_path": "$",
+        "where": []
+      },
+      "note": "Extraction note: the GS (4-map) corpus tile count is the length of inputs/tiles_384/full_evaluation_manifest.json. Executed 487 (document quotes '487')."
+    },
+    {
+      "batch": "052",
+      "claim_index": 52,
+      "value_index": 0,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0",
+        "glob": "run_*",
+        "kind": "dir"
+      },
+      "note": "Extraction note: pass count is the run_* directory count under flash-minimal-text-n30-t07/text-t1.0/. Executed 10 (document quotes '10')."
+    },
+    {
+      "batch": "052",
+      "claim_index": 53,
+      "value_index": 0,
+      "runner": "glob-count",
+      "params": {
+        "root": "outputs",
+        "glob": "55maps-text-min-*/proposer/**/run_*",
+        "kind": "dir"
+      },
+      "note": "The 'ten measured 55-map minimal passes' are the five 55maps-text-min-generalisation passes plus the five 55maps-text-min-n10-uplift passes. Executed 10 (document quotes 'ten')."
+    },
+    {
+      "batch": "calib-a",
+      "claim_index": 49,
+      "value_index": 0,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/verifier-robustness/matrix_tiering.json",
+        "list_path": "$.tiers[0]",
+        "where": []
+      },
+      "note": "Membership count of the first tier in the verifier-robustness matrix tiering artefact. Executed 5 (document quotes 'five')."
+    },
+    {
+      "batch": "calib-a",
+      "claim_index": 49,
+      "value_index": 1,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/verifier-robustness/matrix_tiering.json",
+        "list_path": "$.pairwise",
+        "where": [
+          {
+            "key": "significant",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "key": "ref_a",
+            "op": "ne",
+            "value": "high-T0.0"
+          },
+          {
+            "key": "ref_b",
+            "op": "ne",
+            "value": "high-T0.0"
+          }
+        ]
+      },
+      "note": "Significant pairs whose two members are both N=5 configurations (i.e. neither side is the single-pass high-thinking prior high-T0.0). Executed 0 (document quotes '0')."
+    },
+    {
+      "batch": "calib-a",
+      "claim_index": 49,
+      "value_index": 2,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/verifier-robustness/matrix_tiering.json",
+        "list_path": "$.pairwise",
+        "where": [
+          {
+            "key": "ref_a",
+            "op": "ne",
+            "value": "high-T0.0"
+          },
+          {
+            "key": "ref_b",
+            "op": "ne",
+            "value": "high-T0.0"
+          }
+        ]
+      },
+      "note": "Pairwise comparisons among the five N=5 configurations. Executed 10 (document quotes '10')."
+    },
+    {
+      "batch": "calib-a",
+      "claim_index": 49,
+      "value_index": 3,
+      "runner": "json-subset-count",
+      "params": {
+        "file": "results/verifier-robustness/matrix_tiering.json",
+        "list_path": "$.pairwise",
+        "where": [
+          {
+            "key": "significant",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      },
+      "note": "Significant pairs involving high-T0.0. The predicate language has no disjunction, so this counts ALL significant pairs; the claim's own framing ('all 5 significant pairs are it-vs-others') makes the two identical, and the sibling spec (value_index 1) independently verifies that no significant pair sits inside the N=5 set. Executed 5 (document quotes '5')."
+    }
+  ]
+}
