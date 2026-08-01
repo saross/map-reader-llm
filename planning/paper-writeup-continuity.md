@@ -8,7 +8,87 @@ project state.
 
 ---
 
-## 🎯 NEXT SESSION (123) — PHASE 3 CONTINUATION: FLEET + TRIAGE [Session 122 CLOSED 2026-07-31; ran in Fable]
+## 🎯 NEXT SESSION (124) — PHASE 3: REPAIR PASS + RUNNER REGISTRY + FLEET [Session 123 CLOSED 2026-08-01; ran in Fable]
+
+> **The controller is `planning/audit-charter.md` § 9** — unchanged.
+> **Rulings that bind**: `reports/verification/phase3-rulings-2026-07-31.md`
+> now carries BOTH sections — 1–4 (S122) and **5–11 (S123, 2026-08-01)**.
+> Ruling 11 (independent verification systematised) applies to every
+> artefact that encodes a causal story: obs, adjudications, ledger
+> rows, gate packages.
+
+**What Session 123 did** (commits `546ca1ee9`→`000e2c68b`, 22 commits,
+**US$0.00 API** — sapphire + Claude-side agents throughout): **triage
+cycle 1 closed end-to-end; the resolver/harness generation matured;
+fleet wave 2 landed with the Sonnet gate discharged; and the
+independent-verification pattern caught the triager himself (round 4).**
+(1) **Triage**: 110 dispositions (30 S122 rows + 80 surfaced by the
+resolver extensions) in
+`reports/verification/c4-triage/mismatch-triage-2026-07-31.json`.
+Genuine doc errors: 3, all `experimental-progression.md` (missed
+"1/10→0/10" instance; stale March CI → **[0.874, 0.910]**), corrected
+in place + changelog. One superseded-figures banner
+(`phase3a-verifier-completeness-audit-2026-05-03.md`, amended
+2026-08-01 to the corrected story). (2) **Harness**: file#path
+locators, equality filters, `[*]` constant-collapse, four length
+spellings, decimal half-up, unit-% bridge; **schema 1.1** per-value
+expression/operands; **instrument v1.2** (7 amendments — fleet must
+not run on v1.1); 12 new tier-1 tests (55 pass). Recompute ×4 on
+sapphire; final: **MATCH 1,742 / MISMATCH 104 / SKIPPED 1,173 /
+UNRESOLVED 575 / APPROX 6** over 26 files / 1,337 claims (all
+committed MISMATCHes adjudicated except the 22 wave-2 rows below).
+(3) **Fleet**: 7 batches extracted (b001/b002/b004/b005/b006 +
+calibration b003/b014); **Sonnet spot-audit PASS**
+(`c4-triage/spot-audit/spot-audit-verdict-2026-07-31.md`: zero missed
+claims vs the Opus b014 duplicate); **158 batches pending** (plan's
+own status field). (4) **Obs 377** (`00420b076`) + **round 4**: the
+writer's blind re-derivation REFUTED 4 of 5 "broken-correspondence"
+cells (triager bound the cell-generic pool where arm-specific
+`consensus-nK/` was meant — re-bound, rerun, MATCH); ONE real
+regression stands (`text-t0.0/verified-v1-n3`, pool re-materialised
+1,256→1,319 on 2026-07-30, gap 63, **zero conditions-manifest
+exposure** — verified; no re-run per ruling 6). (5) **Rulings 5–11**
+collected and recorded (Sonnet tail free + fresh-comparison-on-new-
+task-kinds; corrected B; recompute-script comprehensive via runner
+registry; file-level repair pass; git-era anchor resolution;
+materiality ratifications; independent verification systematised).
+
+**Session 124's queue** (order per rulings 7–8): (a) **file-level
+repair pass** (~204 pathless values; ruling 8) — shared
+quantity→anchor mapping (conditions-manifest filter paths, bounds
+`len:` counts) + LLM tail; (b) **runner registry** (ruling 7) —
+census/count primitive first (~half the class), then audited-flex
+cost/token runner, then statistical runners on existing machinery
+(sapphire); execute over the current corpus, re-execute per wave;
+hard families become NAMED lines in the GATE 3 package; (c) triage
+the **22 wave-2 mismatches** (17 in b002, 5 in b004 — recompute
+report vs triage file identifies them); (d) **git-era resolver mode**
+(ruling 9; ~38 deleted-anchor rows); (e) **fleet waves continue**
+(158 pending; ruling 5 model policy; per-wave recompute + triage);
+(f) then generated-stratum exact comparers (calibration_autogen,
+tier_stability, per-arch tiers…) + the **125 SUSPECT** sibling-JSON
+rows (`c4-regen/sibling-consistency-report.json`); (g) then
+`generate_c4_ledger.py` (with a verification lane per ruling 11) +
+the GATE 3 package (carry the Phase-0 scope-growth flag: 40–60-run
+estimate vs 178-batch plan).
+
+**Carry-forward**: MCC/Sens/Spec in evaluation.md tables are
+bootstrap means (Obs 376; max |mean−point| 0.0151, no one-ulp
+tolerance); the committed recompute report's 043/044 `source_lines`
+predate the final −1 banner re-span (statuses unaffected; next rerun
+refreshes); working-notes candidates from S123 HELD OVER for /observe
+review (Sonnet-vs-Opus tier gap expressed as span conventions not
+recall; silent anchor-path fallbacks manufacture wrong-quantity
+comparisons); user-obs candidates S118–120 + S122 + **S123 (new)**
+pending in `user-observations.md` (silence holds); WN-1
+(provenance-by-shape) pending; register re-anchoring still queued
+before any future census; Sol (Phase 4) untouched, $150 cap, keys in
+`~/personal-assistant/.env` — never read that file into context;
+always run realtime API calls in flex mode.
+
+### [CLOSED 2026-08-01] Historical: the Session 123 brief follows
+
+## NEXT SESSION (123) — PHASE 3 CONTINUATION: FLEET + TRIAGE [Session 122 CLOSED 2026-07-31; ran in Fable]
 
 > **Close-out addendum** (post-rulings): **Obs 376** landed (MCC
 > bootstrap-means; commit `78f9e442b`) and its writer's re-derivation
