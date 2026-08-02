@@ -55,7 +55,7 @@ adjudicated in a dedicated addendum — commit `8545b715c` over-claimed
 it, corrected in `84cffb471`): pre-expansion-holdout STALE banners
 (data_split_strategy, metrics_strategy), **tile-selection-methodology
 LIVING-DOC-FIX (HIGH — the lodged prereg cites it; holdout 20/5→60/15
-+ seeds + honest dated 80/80 addendum)**, Decision-20 + Scale-32
+with seeds and an honest dated 80/80 addendum)**, Decision-20 + Scale-32
 anchor-fallthrough extractions repaired (docs exact), errata
 snapshot-divergences dated to the second (E47's 253 written NINE
 SECONDS before the C(23,2) manifest; E71 superseded by its own
