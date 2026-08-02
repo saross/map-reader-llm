@@ -1,8 +1,11 @@
 # E43 coverage confound — investigation findings and remediation proposal
 
-> **Last revised**: 2026-08-02 (original publication). Status: PROPOSAL —
-> Phase R1 evidence runs executing; Phases R2–R4 await PI decisions.
-> See [§ Changelog](#changelog).
+> **Last revised**: 2026-08-02 (R1 complete — permutation results in
+> `results/e43-matched-temperature/` at `6176b985e`; the
+> false-negative count corrected 221 → **193** and the 240-leg framing
+> qualified, both per R1's independent re-derivation). Status:
+> PROPOSAL — Phases R2–R4 await PI decisions. See
+> [§ Changelog](#changelog).
 
 **Investigators**: Session 125 (Claude Fable 5); two independent blind
 investigation passes (design-intent; contamination surface) following
@@ -17,16 +20,30 @@ outperforms T=1.0, ΔF1 ~+0.15, p<0.0001 at all pool sizes" (also
 Obs 190) — is a **coverage artefact**, not a temperature effect. The
 T=1.0 arm (`outputs/h11/consensus-384-UNINTENDED-T1.0/`, 30 runs)
 covers 240 of 487 tiles; every post-2026-03-26 evaluation scored it
-against 487-tile bounds, counting 221 of 435 ground-truth mounds
-(50.8 %) as automatic false negatives. At matched scope the effect
-disappears or reverses:
+against 487-tile bounds, counting **193 of 435 ground-truth mounds
+(44.4 %)** as automatic false negatives (242 mounds lie inside the
+240-tile area; recall ceiling 242/435 = 0.556 — the R1 pass
+re-derived the split two independent ways and corrected this
+document's original 221). At matched scope the effect disappears or
+reverses:
 
 | comparison | scope | ΔF1 (T=0.7 − T=1.0) | source |
 | :--- | :--- | ---: | :--- |
 | Published (group_4) | MISMATCHED 487-vs-240 | +0.168 / +0.172 / +0.194 (N=5/10/30), p=0.0 | `results/pairwise/20m/group_4_temperature/` |
-| Matched 487-tile | both arms 487 | **−0.021 (N=5) / −0.033 (N=10)** | `results/phase3a-text-matrix/minimal-t{0.7,1.0}/` |
-| Matched 240-tile | both arms 240 | **+0.012**, CIs overlap | `archive/results-60-tile-validation/h11-384-consensus-flash-minimal-text-t{07,10}/` |
-| Preregistered Phase 2b (Era 1, single-pass, K=3) | matched 340 | **+0.072**, FDR p=0.004 | `results/retest/phase2b/analysis_summary.md` |
+| Matched 487-tile, 20 m (R1) | both arms 487 | **−0.021 (N=5, p=0.335) / −0.034 (N=10, p=0.082)** | `results/e43-matched-temperature/` (`6176b985e`) |
+| Matched 487-tile, 30 m (R1) | both arms 487 | **−0.020 (N=5, p=0.358) / −0.032 (N=10, p=0.096)** | idem |
+| Matched 240-tile (archived, read back by R1) | both 240 | global-optimum +0.012; matched-N spans −0.007 (5-of-5) to +0.039 (29-of-30), all CIs overlapping | `archive/results-60-tile-validation/h11-384-consensus-flash-minimal-text-t{07,10}/` |
+| Preregistered Phase 2b (Era 1, single-pass, K=3) | matched 340 | text **+0.072**, FDR p=0.004; image **+0.014**, ns | `results/retest/phase2b/analysis_summary.md` |
+
+R1's honest summary: **at matched scope there is no reliable
+temperature difference at consensus level** — all four new tests
+favour T=1.0 by 0.02–0.03 F1, none significant (N=10 sits just
+outside at p≈0.08–0.10). Phase 2b supports "T=1.0 is a poor default"
+(text track) more strongly than a universal T=0.7 superiority (its
+image track is +0.014 ns). One uncontrolled variable is documented in
+the findings § 8.3: the arms took different execution paths (batch
+API vs governed realtime, 24 days apart) with identical
+system-instruction and library hashes.
 
 **The paper's headline temperature claim is unaffected**: it rests on
 the preregistered Phase 2b sweep, and `docs/paper/**` prose is clean —
@@ -212,6 +229,21 @@ mis-scoped); any remediation restoring the matched number must use
 0.6443.
 
 ## Changelog
+
+### 2026-08-02 (later) — R1 results folded in; two figures corrected
+
+**Trigger**: Phase R1 completed on sapphire (`6176b985e`).
+
+| Claim | Before | After |
+|---|---|---|
+| Automatic false negatives | 221 of 435 (50.8 %) | **193 of 435 (44.4 %)** (242 mounds inside the 240-tile area; R1 re-derived two ways — the original figure was internally inconsistent with the 0.556 recall ceiling, which stands) |
+| Matched 240-tile leg | "+0.012, CIs overlap" | global-optimum +0.012; matched-N −0.007 … +0.039, all CIs overlapping |
+
+Added: R1 permutation p-values (no significant matched-scope
+difference; sign consistently negative at 487), the Phase 2b
+text-vs-image nuance, and the execution-path caveat. What did NOT
+change: the § 2 design-intent verdict, the § 4 inventory, the phased
+plan, and the recall ceiling 0.556.
 
 ### 2026-08-02 — Original publication
 
