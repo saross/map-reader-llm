@@ -74,14 +74,23 @@
           "enum": ["ok", "partial", "failed"]
         },
         "n_tiles_processed": {
-          "type": "integer",
+          "type": ["integer", "null"],
           "minimum": 0,
-          "description": "Items COMPLETED (E71, 2026-07-30): tiles for proposer passes, candidate crops for verifier passes. Uniform completed-count semantics; before E71 this column carried tiles-dispatched where per_item_metadata existed."
+          "description": "TILES completed. Proposer passes only. NULL for verifier passes (E72, 2026-08-02): a verifier operates on candidate crops and its meta records candidate ids, never tile ids, so no tile count exists to report — the crop count lives in n_candidates_verified and n_tiles_null_reason says why this is null. Before E72 this column carried the crop count for verifier rows (E71 Defect 2 / GAP-8), which made the column non-comparable across rows; before E71 it carried tiles-dispatched where per_item_metadata existed. Required but nullable: a row must state a tile count or state that none exists."
+        },
+        "n_tiles_null_reason": {
+          "type": ["string", "null"],
+          "description": "Why n_tiles_processed is null. Populated for verifier passes (E72); null whenever n_tiles_processed carries a count. Never a substitute for a derivable count — if genuine tile data appears in a future meta era, the count is recorded and this returns to null."
+        },
+        "n_candidates_verified": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "description": "Candidate crops COMPLETED by a verifier pass (E72). Null for proposer passes, which have no candidate stage. This is where the crop-scale count that E71 Defect 2 mislabelled as tiles now lives, under a name that says what it counts."
         },
         "n_tiles_dispatched": {
           "type": ["integer", "null"],
           "minimum": 0,
-          "description": "Items dispatched per per_item_metadata, where available (E71). Null for meta eras without per-item records. dispatched minus processed = items that produced no output."
+          "description": "TILES dispatched per per_item_metadata, where available (E71). Null for meta eras without per-item records, and null for verifier passes (E72 — per_item_metadata there records candidate-crop API items, not tiles). dispatched minus processed = tiles that produced no output."
         },
         "tokens": {
           "type": ["object", "null"],
@@ -121,7 +130,7 @@
         "provenance"
       ],
       "additionalProperties": false,
-      "$comment": "Lenient back-fill policy: identity (pass_id, run_id, proposer_pool, pass_n), the authoritative model_used, modality, status, n_tiles_processed, and provenance are required. Cost/token/timing fields are nullable so older runs without a cost_manifest.json still validate."
+      "$comment": "Lenient back-fill policy: identity (pass_id, run_id, proposer_pool, pass_n), the authoritative model_used, modality, status, n_tiles_processed, and provenance are required. n_tiles_processed stays REQUIRED but is nullable (E72): the contract is that a row must account for its tile coverage — with a count, or with an explicit null plus n_tiles_null_reason. Cost/token/timing fields are nullable so older runs without a cost_manifest.json still validate."
     }
   }
 }

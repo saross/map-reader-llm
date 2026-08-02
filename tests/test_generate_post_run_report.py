@@ -32,6 +32,7 @@ import pytest
 
 from scripts.generate_post_run_report import (
     PLANNED_STALE_DAYS,
+    VERIFIER_N_TILES_NULL_REASON,
     _carry_timestamps,
     _stabilise_timestamps,
     _strip_ts,
@@ -54,6 +55,7 @@ from scripts.generate_post_run_report import (
     validate_manifest,
     validate_row,
 )
+from scripts.rederive_manifest_fields import is_verifier_pass, rederive_pass
 
 
 @pytest.fixture(scope="module")
@@ -153,6 +155,187 @@ def test_verifier_pass_sidecar_meta(registry):
     assert passes[0]["model_used"] == "gemini-3-flash-preview"  # per-item, not cfg.model
     assert passes[0]["model_version"] == "gemini-3-flash-preview"
     assert passes[0]["status"] == "ok"
+
+
+# ---------------------------------------------------------------------------
+# E72 / GAP-8: verifier passes report no tile count
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.tier1
+def test_verifier_pass_reports_null_tiles_with_reason(registry):
+    """A verifier row must state "no tile count", not a crop count.
+
+    This is the defect named in the E43/E72 remediation proposal § 4: the
+    ``proposer-verifier-512`` verifier pass read its 140 candidate crops as
+    140 tiles. A verifier's meta records candidate ids
+    (``execution_stats.completed_items`` = ``cand_0001``…) and candidate API
+    items (``per_item_metadata``), so there is no tile-scale record in the
+    source at all. The row therefore carries ``n_tiles_processed = None``
+    plus a reason, with the crop count preserved under a name that says
+    what it counts.
+    """
+    ctx = {
+        "run_id": "proposer-verifier-512",
+        "directory_path": "outputs/h11/proposer-verifier-512",
+        "scope": {},
+        "proposer_pools": {},
+        "verifier_passes": {"verified-adversarial-text": {"modality": "text"}},
+        "conditions": [],
+    }
+    passes = extract_passes(ctx)
+    assert len(passes) == 1
+    row = passes[0]
+    assert validate_row("passes", row, registry) == []
+
+    # The tile columns are null — no tile fact exists to report.
+    assert row["n_tiles_processed"] is None
+    assert row["n_tiles_dispatched"] is None
+
+    # …and the row says why, rather than leaving a bare null.
+    assert row["n_tiles_null_reason"] == VERIFIER_N_TILES_NULL_REASON
+    assert "candidate crops" in row["n_tiles_null_reason"]
+
+    # The 140 that used to masquerade as tiles is preserved, correctly named.
+    assert row["n_candidates_verified"] == 140
+
+
+@pytest.mark.tier1
+def test_proposer_pass_keeps_its_tile_count(registry):
+    """The E72 fix must not touch proposer rows.
+
+    Proposer passes DO have tile data — their ``completed_items`` are tile
+    filenames — so they keep an integer ``n_tiles_processed``, carry no
+    null-reason, and have no candidate count (there is no candidate stage).
+    """
+    ctx = {
+        "run_id": "consensus-384-t1-0",
+        "directory_path": "outputs/h11/consensus-384-UNINTENDED-T1.0",
+        "scope": {},
+        "proposer_pools": {"384": {"modality": "text", "path": "384"}},
+        "verifier_passes": {},
+        "conditions": [],
+    }
+    passes = extract_passes(ctx)
+    assert passes, "expected the 30 proposer passes of the E72 study"
+    for row in passes:
+        assert validate_row("passes", row, registry) == []
+        assert isinstance(row["n_tiles_processed"], int)
+        assert row["n_tiles_null_reason"] is None
+        assert row["n_candidates_verified"] is None
+    # This study is the 240-tile pool (evaluation-scopes.md § 12) — the tile
+    # count is a real count, and it is 240, not 487.
+    assert {row["n_tiles_processed"] for row in passes} == {240}
+
+
+@pytest.mark.tier1
+def test_schema_rejects_a_crop_count_in_the_tile_column(registry):
+    """Guards the contract, not just the current extractor output.
+
+    ``n_tiles_processed`` stays REQUIRED (a row must account for its tile
+    coverage) while becoming nullable. A row that omits the key entirely is
+    still invalid — silence and an explicit null are different claims.
+    """
+    ctx = {
+        "run_id": "proposer-verifier-512",
+        "directory_path": "outputs/h11/proposer-verifier-512",
+        "scope": {},
+        "proposer_pools": {},
+        "verifier_passes": {"verified-adversarial-text": {"modality": "text"}},
+        "conditions": [],
+    }
+    row = extract_passes(ctx)[0]
+
+    without_key = {k: v for k, v in row.items() if k != "n_tiles_processed"}
+    assert validate_row("passes", without_key, registry) != []
+
+    explicit_null = dict(row)
+    explicit_null["n_tiles_processed"] = None
+    assert validate_row("passes", explicit_null, registry) == []
+
+
+@pytest.mark.tier1
+def test_every_verifier_row_in_the_manifest_is_tile_null():
+    """Whole-manifest sweep: no verifier row carries a tile count.
+
+    Reads the committed manifest and the hand-authored sidecar that declares
+    which pools are verifier passes, so this catches a regression anywhere in
+    the corpus rather than only in the two extractors exercised above.
+    """
+    manifest_path = Path("results/passes-manifest.json")
+    sidecar_path = Path("results/run-conditions.json")
+    if not (manifest_path.exists() and sidecar_path.exists()):
+        pytest.skip("manifests not present in this checkout")
+
+    rows = json.loads(manifest_path.read_text(encoding="utf-8"))["passes"]
+    decomposition = json.loads(
+        sidecar_path.read_text(encoding="utf-8"),
+    )["decomposition"]
+    verifier_pools = {
+        run_id: set(entry.get("verifier_passes") or {})
+        for run_id, entry in decomposition.items()
+    }
+
+    verifier_rows = [
+        r for r in rows
+        if r["proposer_pool"] in verifier_pools.get(r["run_id"], set())
+    ]
+    proposer_rows = [
+        r for r in rows
+        if r["proposer_pool"] not in verifier_pools.get(r["run_id"], set())
+    ]
+    assert verifier_rows, "expected verifier passes in the manifest"
+
+    for r in verifier_rows:
+        assert r["n_tiles_processed"] is None, r["pass_id"]
+        assert r["n_tiles_dispatched"] is None, r["pass_id"]
+        assert r["n_tiles_null_reason"], r["pass_id"]
+        assert isinstance(r["n_candidates_verified"], int), r["pass_id"]
+    for r in proposer_rows:
+        assert isinstance(r["n_tiles_processed"], int), r["pass_id"]
+        assert r.get("n_tiles_null_reason") is None, r["pass_id"]
+        assert r.get("n_candidates_verified") is None, r["pass_id"]
+
+
+@pytest.mark.tier1
+def test_rederiver_treats_verifier_tile_count_as_source_silent():
+    """The independent re-deriver must not MISMATCH on the new nulls.
+
+    ``rederive_manifest_fields.py`` re-derives every field from the raw
+    sources. For a verifier row the raw source carries a crop count, so
+    re-deriving a tile count would assert something the source never said —
+    the verdict is SOURCE_SILENT, and the crop count is checked against
+    ``n_candidates_verified`` instead.
+    """
+    row = {
+        "pass_id": "proposer-verifier-512::verified-adversarial-text::run1",
+        "run_id": "proposer-verifier-512",
+        "proposer_pool": "verified-adversarial-text",
+        "pass_n": 1,
+        "modality": "text",
+        "n_tiles_processed": None,
+        "n_candidates_verified": 140,
+        "provenance": {"source_files": [
+            "outputs/h11/proposer-verifier-512/"
+            "verified-adversarial-text.meta.json",
+        ]},
+    }
+    decomposition = {
+        "proposer-verifier-512": {
+            "verifier_passes": {"verified-adversarial-text": "text"},
+        },
+    }
+    assert is_verifier_pass(row, decomposition) is True
+
+    result = rederive_pass(row, decomposition)
+    verdicts = {f["field"]: f for f in result["fields"]}
+    assert verdicts["n_tiles_processed"]["verdict"] == "SOURCE_SILENT"
+    assert "candidate crops" in verdicts["n_tiles_processed"]["note"]
+    assert verdicts["n_candidates_verified"]["verdict"] == "MATCH"
+
+    # Without the sidecar the row is treated as a proposer pass — the
+    # pre-E72 behaviour, which is what makes the sidecar lookup load-bearing.
+    assert is_verifier_pass(row, {}) is False
 
 
 @pytest.mark.tier1
@@ -1210,11 +1393,18 @@ def test_pass_counts_completed_not_dispatched(registry):
 
 @pytest.mark.tier1
 def test_verifier_pass_counts_items_processed_not_request_count(registry):
-    """E71 (GAP-8 resolution): verifier rows count crops verified, not requests.
+    """E71 then E72: verifier rows count crops COMPLETED, in the crop column.
 
-    The 55maps uplift verifier meta records request_count 16,484 (retry-
-    inflated: retries_total 2) against items_processed 16,482. The manifest
-    must carry the completed count.
+    E71 (GAP-8) fixed the retry inflation: the 55maps uplift verifier meta
+    records request_count 16,484 (retries_total 2) against items_processed
+    16,482, and the manifest must carry the completed count — this half of
+    the assertion is unchanged.
+
+    E72 (2026-08-02) fixed where that count lands. It is a candidate-crop
+    count, so it belongs in ``n_candidates_verified``; the tile column is
+    null because the verifier meta holds no tile-scale record. The
+    row is the one that surfaced the E71 defect in the first place, so it
+    is the right place to pin both halves.
     """
     ctx = {
         "run_id": "55maps-text-min-n10-uplift",
@@ -1227,7 +1417,11 @@ def test_verifier_pass_counts_items_processed_not_request_count(registry):
     passes = extract_passes(ctx)
     assert len(passes) == 1
     assert validate_row("passes", passes[0], registry) == []
-    assert passes[0]["n_tiles_processed"] == 16482  # items_processed
+    # E71: the completed count, not the retry-inflated 16,484.
+    assert passes[0]["n_candidates_verified"] == 16482
+    # E72: and it is no longer wearing the tile column's name.
+    assert passes[0]["n_tiles_processed"] is None
+    assert passes[0]["n_tiles_null_reason"] == VERIFIER_N_TILES_NULL_REASON
     assert passes[0]["retries"] == 2  # the inflation E71 documents
 
 

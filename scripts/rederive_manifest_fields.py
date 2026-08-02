@@ -106,9 +106,47 @@ STRUCTURAL_PASS_FIELDS = ("pass_id", "run_id", "proposer_pool", "pass_n",
                           "modality")
 
 
-def rederive_pass(row: dict) -> dict:
-    """Re-derive one passes-manifest row from its cited meta file(s)."""
+def is_verifier_pass(row: dict, decomposition: dict) -> bool:
+    """Is this pass row a verifier pass rather than a proposer pass?
+
+    Read from the hand-authored ``run-conditions.json`` sidecar, which lists
+    each run's ``verifier_passes`` directories. The sidecar is an INPUT that
+    both this re-deriver and the generator consume; consulting it does not
+    breach the charter's independence rule (§ 5 rule 1), which forbids
+    importing the *extraction logic* under test, not reading the same
+    declared inputs.
+
+    The distinction matters for tile accounting (E72): a verifier operates
+    on candidate crops and its meta records candidate ids, so its
+    ``execution_stats`` counts are crop-scale and there is no tile count in
+    the source to re-derive.
+
+    Args:
+        row: A passes-manifest row.
+        decomposition: The ``decomposition`` block of
+            ``results/run-conditions.json``.
+
+    Returns:
+        True when the row's ``proposer_pool`` is one of its run's declared
+        verifier-pass directories.
+    """
+    fam = decomposition.get(row.get("run_id"), {}) or {}
+    return row.get("proposer_pool") in (fam.get("verifier_passes") or {})
+
+
+def rederive_pass(row: dict, decomposition: dict | None = None) -> dict:
+    """Re-derive one passes-manifest row from its cited meta file(s).
+
+    Args:
+        row: A passes-manifest row to re-derive.
+        decomposition: Optional ``decomposition`` block from
+            ``results/run-conditions.json``, used only to tell verifier
+            passes from proposer passes for the E72 tile-count rule.
+            Omitting it treats every row as a proposer pass (the pre-E72
+            behaviour).
+    """
     fields: list[dict] = []
+    verifier = is_verifier_pass(row, decomposition or {})
     sources = row.get("provenance", {}).get("source_files", [])
     metas = []
     for s in sources:
@@ -200,8 +238,26 @@ def rederive_pass(row: dict) -> dict:
         else:
             derived_status = "failed"
         fields.append(verdict_row("status", row.get("status"), derived_status))
-        fields.append(verdict_row("n_tiles_processed",
-                                  row.get("n_tiles_processed"), n_proc))
+        if verifier:
+            # E72: a verifier meta's execution_stats count candidate crops
+            # (its completed_items are cand_NNNN ids), so the source is
+            # silent on tiles. Re-deriving n_proc here and calling the
+            # manifest's null a MISMATCH would assert a tile count the
+            # source never made. The crop count is checked separately.
+            fields.append({
+                "field": "n_tiles_processed",
+                "verdict": "SOURCE_SILENT",
+                "manifest": row.get("n_tiles_processed"),
+                "derived": None,
+                "note": ("verifier pass: meta records candidate crops, not "
+                         "tiles — no tile count in source (E72)"),
+            })
+            fields.append(verdict_row("n_candidates_verified",
+                                      row.get("n_candidates_verified"),
+                                      n_proc))
+        else:
+            fields.append(verdict_row("n_tiles_processed",
+                                      row.get("n_tiles_processed"), n_proc))
     elif ex_all_zero:
         for f in ("status", "n_tiles_processed"):
             fields.append({"field": f, "verdict": "SOURCE_SILENT",
@@ -210,9 +266,22 @@ def rederive_pass(row: dict) -> dict:
     else:
         fields.append(verdict_row("status", row.get("status"),
                                   dig(meta, "status", "run_status")))
-        fields.append(verdict_row(
-            "n_tiles_processed", row.get("n_tiles_processed"),
-            dig(meta, "n_tiles_processed", "tiles_processed")))
+        if verifier:
+            # Same E72 rule on the no-execution_stats path: the fallback
+            # source (usage_stats request_count) is an API-request count
+            # over candidate crops, never a tile count.
+            fields.append({
+                "field": "n_tiles_processed",
+                "verdict": "SOURCE_SILENT",
+                "manifest": row.get("n_tiles_processed"),
+                "derived": None,
+                "note": ("verifier pass: meta records candidate crops, not "
+                         "tiles — no tile count in source (E72)"),
+            })
+        else:
+            fields.append(verdict_row(
+                "n_tiles_processed", row.get("n_tiles_processed"),
+                dig(meta, "n_tiles_processed", "tiles_processed")))
 
     # tokens: the retest-era wall — usage blocks present but all-zero are
     # treated as SILENT when the manifest also records zeros/nulls, and as
@@ -442,7 +511,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.limit:
         passes, conditions = passes[:args.limit], conditions[:args.limit]
 
-    pass_results = [rederive_pass(r) for r in passes]
+    pass_results = [rederive_pass(r, decomposition) for r in passes]
     cond_results = [rederive_condition(r, decomposition) for r in conditions]
     simple_results = rederive_simple()
 

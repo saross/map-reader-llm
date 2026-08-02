@@ -82,7 +82,26 @@ SCHEMA_DIR: Path = REPO_ROOT / "docs" / "manifest-schemas"
 #: ``n_tiles_dispatched`` preserves the per_item_metadata count; verifier rows drop
 #: the GAP-8 retry-inflated ``request_count`` for ``items_processed``; and
 #: E55-corrected verifier passes list ``run.log`` in provenance as promised.
-GENERATOR_VERSION: str = "0.6.0"
+#: 0.7.0 (Session 126, 2026-08-02) closes GAP-8 properly (E72 remediation item 4):
+#: ``n_tiles_processed`` is now a TILE count or nothing. Verifier passes report
+#: ``null`` plus an ``n_tiles_null_reason``, because a verifier's meta records
+#: candidate-crop ids and never tile ids — 0.6.0 still wrote the crop count into
+#: a column named for tiles, which is what made verifier rows incomparable with
+#: proposer rows. The crop count is preserved under the new
+#: ``n_candidates_verified``; ``n_tiles_dispatched`` is likewise nulled for
+#: verifier rows (its per_item_metadata source counts crop API items).
+GENERATOR_VERSION: str = "0.7.0"
+
+#: Why a verifier pass's ``n_tiles_processed`` is null. Written verbatim into
+#: every verifier row so the manifest explains itself without a reader having
+#: to find the erratum first (E72; GAP-8 closed).
+VERIFIER_N_TILES_NULL_REASON: str = (
+    "verifier pass: operates on candidate crops, not tiles. The verifier meta "
+    "records candidate ids (cand_NNNN) in execution_stats.completed_items and "
+    "candidate API items in per_item_metadata, so no tile-scale record exists "
+    "to report. Completed crop count is in n_candidates_verified. "
+    "(E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)"
+)
 
 #: Manifest format version embedded at the top of each emitted manifest. Must
 #: match the ``schema_version`` const in the schema files.
@@ -464,6 +483,8 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                 "library_hash": cfg.get("library_hash"),
                 "status": status,
                 "n_tiles_processed": n_proc,
+                "n_tiles_null_reason": None,  # proposer rows carry a real count
+                "n_candidates_verified": None,  # no candidate stage
                 "n_tiles_dispatched": n_dispatched,
                 "tokens": _tokens_from_usage(meta.get("usage_stats", {})),
                 "cost_usd": (meta.get("cost_estimate") or {}).get("total_cost_usd"),
@@ -511,22 +532,36 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             or cfg.get("model")
         )
         model_version = next((it.get("model_version") for it in pim if it.get("model_version")), None)
-        # GAP-8 resolved (E71, 2026-07-30): request_count is retry-inflated (it counts
-        # API requests, not completions). Prefer the union of completed_items, then
-        # the items_processed scalar, matching the proposer rows' COMPLETED
-        # semantics; request_count remains the fallback for verifier eras that left
-        # execution_stats unpopulated (there it equals completions when nothing was
-        # retried). Verifier passes operate on crops, not tiles — the count remains
-        # crop-scale, documented as such in E71.
+        # Candidate-crop completion count. E71 (2026-07-30) fixed the retry
+        # inflation here — ``request_count`` counts API requests, not completions
+        # — by preferring the union of ``completed_items``, then the
+        # ``items_processed`` scalar, with ``request_count`` surviving only as the
+        # fallback for verifier eras that left ``execution_stats`` unpopulated
+        # (there it equals completions when nothing was retried).
+        #
+        # E72 (2026-08-02) closes what E71 left open. The value below is a
+        # CANDIDATE-CROP count and always was: ``completed_items`` for a verifier
+        # holds candidate ids (``cand_0001``…), never tile filenames, and
+        # ``per_item_metadata`` holds one record per candidate API call. E71
+        # documented that mismatch and kept writing the crop count into
+        # ``n_tiles_processed`` anyway, which made the column mean different
+        # things on different rows — the same class of defect as E72's own
+        # 240-vs-487 scope mixing, one column over. So the crop count now goes
+        # to ``n_candidates_verified``, ``n_tiles_processed`` is null, and
+        # ``n_tiles_null_reason`` records why. No tile count is fabricated from
+        # the verified GeoJSON's ``source_tile`` values: that would count tiles
+        # with a SURVIVING detection, which is not "tiles processed" and would
+        # be a different quantity wearing the same name.
         v_es = meta.get("execution_stats", {}) or {}
         v_completed = v_es.get("completed_items")
         if v_completed:
-            n_items = len(set(v_completed))
+            n_candidates = len(set(v_completed))
         elif v_es.get("items_processed"):
-            n_items = v_es["items_processed"]
+            n_candidates = v_es["items_processed"]
         else:
-            n_items = (usage.get("by_provider", {}).get("google_gemini", {}) or {}).get(
-                "request_count", 0)
+            n_candidates = (
+                usage.get("by_provider", {}).get("google_gemini", {}) or {}
+            ).get("request_count", 0)
         # E55 correction (2026-07-30): where the meta's temperature was corrected from
         # the run.log CLI override (configuration.temperature_effective), the log is
         # part of the value's provenance and is listed as E55 promised.
@@ -549,8 +584,12 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             "instruction_hash": cfg.get("system_instruction_hash"),
             "library_hash": cfg.get("library_hash"),
             "status": "ok",
-            "n_tiles_processed": n_items,
-            "n_tiles_dispatched": len(pim) if pim else None,
+            "n_tiles_processed": None,
+            "n_tiles_null_reason": VERIFIER_N_TILES_NULL_REASON,
+            "n_candidates_verified": n_candidates,
+            # per_item_metadata on a verifier pass records candidate API items,
+            # not tiles dispatched — so this tile-scale field is null too.
+            "n_tiles_dispatched": None,
             "tokens": _tokens_from_usage(usage),
             "cost_usd": (meta.get("cost_estimate") or {}).get("total_cost_usd"),
             "wall_clock_s": (meta.get("timestamp") or {}).get("duration_seconds"),
@@ -1295,10 +1334,15 @@ def render_manifest(manifest: str, obj: dict, json_rel: str) -> str:
               r["n_passes"], r["metrics"]["per_buffer"].get("20", {}).get("f1"),
               r["metrics"]["tile_classification"]["mcc"], r["n_detections"]] for r in rows])
     elif manifest == "passes":
+        # ``tiles`` renders as an em dash for verifier rows, whose tile count is
+        # null by construction (E72); ``cands`` carries their crop count so the
+        # row is not silently empty. ``_md_table`` renders None as "—".
         table = _md_table(
-            ["pass_id", "model", "modality", "think", "T", "status", "tiles", "cost_usd"],
+            ["pass_id", "model", "modality", "think", "T", "status", "tiles",
+             "cands", "cost_usd"],
             [[r["pass_id"], r["model_used"], r["modality"], r["thinking_level"], r["temperature"],
-              r["status"], r["n_tiles_processed"], r["cost_usd"]] for r in rows])
+              r["status"], r["n_tiles_processed"], r.get("n_candidates_verified"),
+              r["cost_usd"]] for r in rows])
     elif manifest == "analyses":
         table = _md_table(
             ["analysis_id", "type", "#conditions", "preregistered", "paper_section", "outcome"],

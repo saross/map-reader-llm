@@ -1,4 +1,4 @@
-<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/run-registry.json by scripts/generate_post_run_report.py v0.6.0. Edit the source-of-truth files and regenerate. -->
+<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/run-registry.json by scripts/generate_post_run_report.py v0.7.0. Edit the source-of-truth files and regenerate. -->
 
 # Run registry
 
