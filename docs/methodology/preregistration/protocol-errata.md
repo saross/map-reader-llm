@@ -1245,6 +1245,35 @@ to `consensus-384-UNINTENDED-T1.0` with explanatory README.
 **Corrected baseline**: `outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/`
 (30 runs, 487 tiles, T=0.7, Flash MINIMAL, produced Session 56).
 
+**Correction (2026-08-02)**: this erratum's Impact row says "30 runs ×
+487 tiles"; the study executed **240 tiles** (all 30 runs: 240/240
+completed, 0 failed — `*.tiles.json` sidecars, `run.meta.json`
+`items_processed`, and the union of `processed_tiles` across all 30
+GeoJSONs agree; `results/passes-manifest.json` records the honest 240
+throughout). 240 was the *designed* scope
+(`studies/h11-384-consensus.yaml:69,106-112` — the H11 tile-size
+comparison, planned before the 487-tile 384 px bounds existed). The
+Data-disposition paragraph's temperature claim ("Obs 190: dF1 ~+0.15,
+p<0.0001 at all pool sizes — T=0.7 dramatically outperforms T=1.0") is
+a **coverage artefact and does not survive matched-scope comparison**:
+the cited tests scored this study's 240-tile detections against
+487-tile bounds, counting 193 of 435 ground-truth mounds (44.4 %) as
+automatic false negatives (recall ceiling 242/435 = 0.556 — the E71
+artificial-false-negative mechanism at ~247 tiles). At matched
+487-tile scope (the 10-run `text-t1.0` arm, identical
+system-instruction and library hashes) ΔF1 = −0.021 (N=5, p=0.335) /
+−0.034 (N=10, p=0.082) at 20 m, similar at 30 m — sign reversed,
+nothing significant; at matched 240-tile scope (archived 2026-03-24
+evaluations) the matched-N deltas span −0.007 to +0.039 with all CIs
+overlapping; the preregistered Phase 2b evidence (text +0.072, FDR
+p=0.004; image +0.014, ns) is the citable temperature result, as
+working-notes already directs. See E72 for the full disposition,
+`results/e43-matched-temperature/` for the matched analysis, and
+`reports/e43-coverage-confound-remediation-2026-08-02.md` for the
+investigation. Identified by the C4 verification sweep (wave-4 blind
+triage, Session 125); matched figures re-derived from committed
+artefacts by two independent investigation passes.
+
 ---
 
 ### E44: single-pass-384 executed at T=1.0 instead of T=0.0
@@ -3211,3 +3240,97 @@ failed tiles (through usual API-gate process including dry-run, approval, etc.)"
 
 Cross-references: E55 (and its 2026-07-30 correction block), E57, E70, GAP-8
 (`scripts/generate_post_run_report.py:487`).
+
+**Rider (2026-08-02)**: the registered recovery rerun executed
+2026-07-30 (commit `99ae28ec4`, 255/288 tiles recovered, ~2.5 h after
+this entry landed). Post-recovery coverage for the six affected
+passes: image run_1/2/3 → 484/483/485, text run_1/2/3 → 485/486/486
+(shortfalls 1–4, from 16–34). The Live-impact paragraph above
+describes the pre-recovery state; residual F1 deflation is now bounded
+by 1–4 tiles per pass, not 19–34.
+
+---
+
+### E72: Temperature comparison (group_4/group_12) scored a 240-tile arm against 487-tile bounds — coverage confound in an unregistered exploratory analysis
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-08-02 (identified by C4 verification sweep, Session 125) |
+| Type | Analysis defect (exploratory; no registered hypothesis affected) |
+| Files | `results/pairwise/{20m,30m}/group_4_temperature/`, `results/pairwise/factor-analysis-20m/group_12/`, `results/paper-eval/flash-min-text-t10-*/`, 9 paper tables (inventory: `reports/e43-coverage-confound-remediation-2026-08-02.md` § 4) |
+| Impact | ΔF1 +0.168…+0.194 "temperature effect" is a coverage artefact; matched scope gives −0.034…+0.039, nothing significant; ~530 clean tests' BH q-values were computed against confounded p-values |
+
+**Description**: The 2026-03-26 bounds standardisation re-scored all
+paper evaluations against `full_evaluation_bounds.geojson` (487
+tiles). Seven of eight studies in that pass had full coverage; the E43
+study covers 240 tiles by design, and no coverage check ran (the
+sparse-coverage guard reads zero-detection fractions, which
+mound-bearing unprocessed tiles evade — zero_fraction 0.4641 vs the
+0.5 threshold). The 2026-03-28 temperature comparison then paired this
+arm against 487-tile T=0.7 arms under the unexpected-data policy —
+defensible at the time (the only 384 px T=1.0 data then in existence)
+but never revisited after the matched 10-run 487-tile `text-t1.0` arm
+landed on 2026-04-17. One uncontrolled variable is documented in the
+matched analysis (`results/e43-matched-temperature/findings.md`
+§ 8.3): the arms took different execution paths (async Batch API vs
+governed realtime, 24 days apart) with identical system-instruction
+and library hashes.
+
+**Remediation (PI commissioning and approval, 2026-08-02)**:
+
+1. this disclosure + the E43 correction block;
+2. matched-scope re-analysis at N=5/10 (both buffers, 10,000
+   permutations, first-N verified from `contributing_passes`):
+   `results/e43-matched-temperature/` (commit `6176b985e`) — no
+   significant matched-scope difference at any pool size or buffer;
+3. the matched cells filed as their own first-class analysis
+   (14-buffer + MCC, manifest-registered) rather than spliced into
+   the March board; the March 26-condition round-robin regenerated as
+   a 23-condition board (confounded cells dropped; BH q-values
+   recomputed over the retained pairs); superseded-figures banners on
+   the affected dated snapshots;
+4. instrument hardening: the 240-tile pool registered in
+   `results/evaluation-scopes.md`; the coverage guard counts
+   unprocessed tiles directly from `processed_tiles`;
+   conditions-manifest coverage caveats set for the derived
+   conditions; the verifier-pass `n_tiles_processed` defect fixed.
+
+Cross-references: E43 (+ its 2026-08-02 correction block), E44 (scope
+expansion "for consistency" — the comparability cost), E71 (the same
+mechanism at 15–34 tiles), Obs 190 (superseded; correction Obs
+follows the register landing). The paper's citable temperature
+evidence is the preregistered Phase 2b sweep (text +0.072, FDR
+p=0.004; image +0.014, ns) — "T=1.0 is a poor default" is supported;
+a universal T=0.7 superiority is not.
+
+---
+
+### E73: Preregistration pointer and manifest-name integrity defects (documentation; lodged text immutable)
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-08-02 (identified by C4 wave-4 blind verification, Session 125) |
+| Type | Documentation integrity |
+| Files | `docs/methodology/preregistration/osf/preregistration.md` (§ 8.6 pointer, artefact list), `scripts/select_tiles_phase2.py` |
+| Impact | Three stale references between the lodged registration and the live repo; one reproducibility defect on a prereg-cited script |
+
+**Description**: (1) `preregistration.md:1915` cites
+`docs/methodology/tile-selection-methodology.md` as the methodology of
+record; the file moved to `docs/methodology/reports/` on 2026-01-08
+(`e4a871dfd`), so the lodged pointer is a dead path. (2)
+`preregistration.md:1951` names `inputs/tiles/holdout_manifest.json`,
+renamed to `validation_manifest.json` on 2026-01-21 (`640caa0c3`).
+(3) `scripts/select_tiles_phase2.py:570,577` still *writes*
+`holdout_manifest.json` (and `holdout_samples_per_map` at `:526`),
+whereas the live pipeline reads `validation_manifest.json`
+(`generate_tile_bounds.py:457`, `preflight_check.py:355`) — re-running
+the documented selection command would not regenerate the file the
+pipeline consumes.
+
+**Disposition**: the lodged text cannot change; this entry is the
+durable cross-walk. The script's output filename and field name are
+aligned to the live pipeline in the same landing wave (a rename-only
+behavioural fix, PI-approved 2026-08-02; the selection logic and seeds
+are untouched). The methodology doc itself was corrected the same day
+(holdout figures 20/5 → 60/15 — see its Revised note and
+`reports/verification/c4-triage/mismatch-triage-2026-08-02-wave4.json`).

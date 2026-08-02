@@ -1,5 +1,10 @@
 # H11 — Tile Size Effect Analysis Summary
 
+> **Last revised**: 2026-08-02 (E43/E72 remediation — the § Origin
+> bullet's "487-tile scope" for the consensus study corrected to
+> 240-tile, resolving this document's self-contradiction with the
+> adjacent E44 bullet). See [§ Changelog](#changelog).
+
 **Study**: H11 — Tile Size Effect on Detection Performance (pilot + production + 256 px diagnostic)
 **Date**: 2026-03-15 (pilot) / 2026-03-22 (production 384 px / 487-tile) / 2026-03-23 (256 px diagnostic) / 2026-03-28 (downstream Obs 203 synthesis)
 **Model**: Gemini 3 Flash (`gemini-3-flash-preview`) — verified against H11 run meta.json files; distinct from the `gemini-3-flash` alias used by Phase 2b retest runs in the same time window
@@ -105,8 +110,10 @@ origin-of-data signal:
 
 **Origin**: two distinct but root-cause-linked errata —
 
-- **§E43** (consensus): 30 consensus-pipeline runs at 487-tile scope
-  inadvertently executed at T=1.0 when T=0.7 was intended.
+- **§E43** (consensus): 30 consensus-pipeline runs at 240-tile scope
+  inadvertently executed at T=1.0 when T=0.7 was intended (scope
+  corrected 2026-08-02 — see E43's correction block; this bullet
+  previously said 487).
 - **§E44** (single-pass): 10 single-pass runs at 240-tile scope
   inadvertently executed at T=1.0 when the deterministic T=0.0
   baseline was intended.
@@ -118,9 +125,16 @@ instead of the YAML-specified temperature override. Discovered in
 the Session 57 configuration audit (2026-03-25); documented in
 `docs/methodology/preregistration/protocol-errata.md` §E43 + §E44.
 
-**Status**: retained for 487-tile / Era 2-scope T=1.0 coverage where
-the preregistered Phase 2b (340-tile, K=3 × 5 T × 2 tracks) does not
-extend. The corrected T=0.7 baseline was re-run separately at
+**Status** (corrected 2026-08-02 — see E72): retained as the earliest
+384 px T=1.0 data, but its scope is **240-tile**, so it cannot supply
+487-tile / Era 2-scope T=1.0 coverage (any 487-bounds evaluation of it
+carries the E72 coverage confound: 193 of 435 mounds become automatic
+false negatives). 487-tile / Era 2 T=1.0 coverage is provided by
+`outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/`
+(10 runs × 487 tiles, 2026-04-17, identical config hashes; matched
+analysis at `results/e43-matched-temperature/`). The same 240-tile
+caveat applies to the E44 single-pass sibling. The corrected T=0.7
+baseline was re-run separately at
 `outputs/retest/h11-single-pass-384-t0/` and the corrected T=0.7
 consensus baseline lives at
 `outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/`.
@@ -129,8 +143,8 @@ consensus baseline lives at
 
 | Claim | Cite |
 |-------|------|
-| "T=1.0 (Gemini default) is suboptimal" (scientific) | `results/retest/phase2b/analysis_summary.md` (preregistered 340-tile K=3 H7 temperature sweep) |
-| 487-tile / Era 2 T=1.0 leaderboard rows and pairwise tests | `outputs/h11/{consensus,single-pass}-384-UNINTENDED-T1.0/` — with transparent "UNINTENDED" provenance labelling |
+| "T=1.0 (Gemini default) is suboptimal" (scientific) | `results/retest/phase2b/analysis_summary.md` (preregistered 340-tile K=3 H7 temperature sweep; text +0.072 FDR p=0.004, image +0.014 ns — supports "poor default", not universal T=0.7 superiority) |
+| 487-tile / Era 2 T=1.0 consensus rows and pairwise tests | `outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/` + `results/e43-matched-temperature/` (corrected 2026-08-02 per E72; the UNINTENDED dirs are 240-tile scope and must not be scored against 487-tile bounds) |
 
 Dual-role READMEs committed 2026-04-23 as commit `5ae94041`
 ("docs(unintended): clarify dual-role disposition for UNINTENDED-T1.0
@@ -304,3 +318,25 @@ narrative) as the focused claim-level layer. The UNINTENDED-T1.0
 disposition is settled per commit `5ae94041`; the pilot-era findings
 in `h11-tile-size-results.md` §§2–7 are retracted as citable paper
 material but retained as historical record.
+
+## Changelog
+
+### 2026-08-02 — E43/E72 scope correction
+
+**Trigger**: the E43 coverage-confound remediation (PI-approved;
+`reports/e43-coverage-confound-remediation-2026-08-02.md`).
+
+| Claim | Before | After |
+|---|---|---|
+| § Origin, E43 bullet: consensus-study scope | 487-tile | 240-tile |
+| § Status: "retained for 487-tile / Era 2-scope T=1.0 coverage" | as stated | 240-tile scope; 487-tile T=1.0 coverage is `text-t1.0/` (10 × 487) |
+| Paper citation rule, second row | cite the UNINTENDED dirs for 487-tile T=1.0 rows | cite `text-t1.0/` + the matched analysis; UNINTENDED dirs must not be scored against 487-tile bounds |
+
+The consensus study executed 240/240 tiles by design; the 487 figure
+was never true of the runs and contradicted the adjacent E44 bullet in
+this document. The 2026-04-23 dual-role disposition inherited the
+false premise, so its citation rule pointed 487-tile T=1.0 use at
+240-tile data — redirected to the matched arm. The three-way
+tile-size analysis itself is unaffected (its 384 px arm is the
+corrected T=0.7 baseline, which genuinely covers 487 tiles). Corrected
+in commit noted in git history for this date.

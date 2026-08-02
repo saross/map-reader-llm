@@ -567,7 +567,11 @@ def main() -> int:
     print("=" * 60)
 
     calibration_manifest_path = TILES_DIR / "calibration_manifest.json"
-    holdout_manifest_path = TILES_DIR / "holdout_manifest.json"
+    # E73 (2026-08-02): aligned with the live pipeline, which reads
+    # validation_manifest.json (generate_tile_bounds.py, preflight_check.py);
+    # this script previously wrote holdout_manifest.json, so the documented
+    # regeneration command did not produce the file the pipeline consumes.
+    holdout_manifest_path = TILES_DIR / "validation_manifest.json"
     metadata_path = TILES_DIR / "tile_selection_metadata.json"
 
     with open(calibration_manifest_path, "w") as f:

@@ -1,8 +1,11 @@
-# consensus-384-UNINTENDED-T1.0 — E43 deviation data (serendipitous Era 2 T=1.0 coverage)
+# consensus-384-UNINTENDED-T1.0 — E43 deviation data (serendipitous T=1.0 data — 240-tile scope; see E72 for the coverage caveat on any 487-bounds comparison)
 
 ## Origin (protocol deviation)
 
-This directory contains 30 consensus-pipeline runs at 487-tile scope that
+This directory contains 30 consensus-pipeline runs at **240-tile scope**
+(the 384 px re-projection of the Era-1 validation split — this README
+previously said 487-tile, which was never true of the runs; corrected
+2026-08-02 per E43's correction block and E72) that
 were inadvertently executed at temperature T=1.0 when T=0.7 was intended.
 The root cause was a config propagation failure: the `detect_brief-text.json`
 prompt config has `"temperature": 1.0` hardcoded, and `run_phase2.py` used

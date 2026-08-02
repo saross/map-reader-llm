@@ -1,5 +1,15 @@
 # Results Summary — Session 58 (2026-03-25/26)
 
+> **⚠ Superseded figures (2026-08-02, E72)**: the temperature-sensitivity
+> section's T=0.7-vs-T=1.0 comparison scores a 240-tile study against
+> 487-tile bounds (coverage confound — see protocol-errata E43's
+> 2026-08-02 correction block and E72) and understates the T=1.0 arm by
+> ~0.17–0.19 F1; at matched scope there is no significant difference
+> (`results/e43-matched-temperature/`). Its ΔF1 column is additionally
+> internally inconsistent with its own F1 columns (a separate,
+> pre-existing defect). This document is a dated session record and its
+> body is unchanged; do not cite the temperature rows.
+
 Consolidated results from Sessions 56–58 covering consensus sweeps, PV
 pipeline evaluations, proposer × verifier model matrix, buffer sensitivity,
 temperature sensitivity, diversity analysis, and the configuration audit.
