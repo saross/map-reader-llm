@@ -23551,3 +23551,247 @@ files (era blobs at `b10aa7e1c`);
 `~/personal-assistant/data/scratchpads/map-reader-llm.md` (`:49–61`);
 commits `9fa55c684` (wave-2 triage landing), `b46c59fc0` (Obs 380),
 `b10aa7e1c` (era), `414ee8a4b` and `c6b5e6b10` (the overwrites).
+
+## Observation 382: A semantics-driven repair leaves the MISMATCH count alone — 255 pathless values repaired, +68 rows to MATCH, and the same 104 mismatch rows row-for-row (Session 124, 2026-08-02)
+
+*Source anchors: `scripts/repair_c4_pathless_values.py` (module docstring,
+the "never gates the repair" design constraint);
+`reports/verification/c4-triage/pathless-repair-2026-08-01.json`
+(`_meta.counts`, `_meta.tail_executed`, `repairs`, `tail_worklist`,
+`tail_dispositions`); `reports/verification/c4-recompute-report.json` at
+three states — `209ab2bfe` (S123 close, pre-repair), `6b680a56d`
+(post-repair), `0f1bd549f` (canonical post-registry);
+`scripts/recompute_c4_claims.py` (`:14–24` status vocabulary, `:414–422`
+the amendment-3 refusal); `reports/verification/phase3-rulings-2026-07-31.md`
+§ 8. Status counts and every transition figure below were re-derived on
+2026-08-02 by joining the three report states on
+`(batch, claim_index, value_index)` — not read from any prior summary.*
+
+### The finding
+
+The Session-124 ruling-8 repair pass gave explicit locators, or honest
+non-read methods, to **255 pathless `read` values**: 129 by the shared
+quantity→anchor mapping in `repair_c4_pathless_values.py` (across 11
+edited files) and 126 by a four-agent LLM tail (`_meta.tail_executed`:
+"4 Opus-class repair agents (Session 124), one file-partition each").
+Across that repair the recompute status counts moved as follows.
+
+| report state | commit | MATCH | MISMATCH | SKIPPED | UNRESOLVED | APPROX | total |
+| :--- | :--- | --: | --: | --: | --: | --: | --: |
+| pre-repair (S123 close) | `209ab2bfe` | 1742 | **104** | 1173 | 575 | 6 | 3600 |
+| post-repair | `6b680a56d` | 1810 | **104** | 1227 | 453 | 6 | 3600 |
+| canonical (post-registry) | `0f1bd549f` | 1938 | **123** | 1137 | 395 | 7 | 3600 |
+
+MATCH rose **+68** net and UNRESOLVED fell **−122** while MISMATCH stayed
+exactly flat. The value population is fixed at **3,600 rows in all three
+states** — the key sets are identical, so nothing here is explained by
+values entering or leaving the corpus.
+
+**The invariant is stronger than the aggregate.** Joining pre-repair to
+post-repair row-by-row, the flat 104 is not a coincidence of offsetting
+moves: it is the **same 104 rows, row for row** — zero rows left MISMATCH,
+zero rows entered it.
+
+| transition (pre → post) | rows |
+| :--- | --: |
+| UNRESOLVED → MATCH | 70 |
+| UNRESOLVED → SKIPPED | 54 |
+| MATCH → UNRESOLVED | 2 |
+| **MISMATCH → anything** | **0** |
+| **anything → MISMATCH** | **0** |
+
+The net +68 MATCH is a gross +70 with **two MATCHes surrendered**. Both
+are batch `044` rows (`044#84[0]` `5862` and `044#88[0]` `2724`,
+"expected verifier input count (n_consensus)"): the repair rule pointed
+them at `outputs/.../crops/candidate_manifest.json#len:$.candidates`,
+which resolved correctly at apply time (`resolved: 5862`, `2724`) but is
+invisible to the recompute harness, whose era-resolution and working-tree
+suffix search both run over *tracked* files while `outputs/` is
+gitignored ("era-resolution: 0 candidates … at `5d91c2a97`; working-tree
+suffix: 0 candidates"). They now read honest UNRESOLVED. A match-tuned
+repair would never trade a MATCH for an UNRESOLVED.
+
+**The later rise to 123 is new questions, not changed answers.** All 19
+additional MISMATCHes were previously SKIPPED with the reason "method
+recompute-script is triage/deferred scope", and all 19 carry
+`method: recompute-script` — the runner registry executing comparisons
+that had never been performed (batches `006-output-dir-standard` 11,
+`038-h11` 4, `005` 2, `035` 1, `037` 1). **Zero** of the original 104
+were cleared in that step.
+
+| transition (post → canon) | rows |
+| :--- | --: |
+| SKIPPED → MATCH | 69 |
+| UNRESOLVED → MATCH | 59 |
+| SKIPPED → MISMATCH | 19 |
+| SKIPPED → UNRESOLVED | 2 |
+| UNRESOLVED → APPROX | 1 |
+| **MISMATCH → anything** | **0** |
+
+**Why the invariant holds — by construction.** The repair script's
+docstring states the constraint as a design rule: rules key on the
+value's `quantity` semantics, "never on whether a candidate path happens
+to reproduce the quoted number, which would launder coincidences into
+MATCHes"; every applied locator is "verified to *resolve* at apply time;
+the resolved value is logged but never gates the repair — a genuine
+document error must still surface as a MISMATCH downstream". The
+four-agent tail carried the same rule in its brief, recorded as "never
+copy the anchor path because the number matches; the path must locate the
+NAMED quantity; prefer honest deferral over a clever locator". A repair
+with no read access to match outcomes cannot convert MISMATCH to MATCH
+except by accident.
+
+**The complementary result: the Obs 379 silent-MATCH census closed at
+zero wrong numbers.** Obs 379 flagged an unquantified class — a pathless
+value whose fallback happens to resolve to the quoted number emerges as a
+spurious MATCH. Of the 129 script repairs, **92 had `prior_status: MATCH`**
+(89 under rule `expected-verifier-input-operand-a`, 3 under
+`tile-count-local-artefact`). Given correct locators, 91 re-resolved to
+exactly the quoted number; the single nominal difference is `038-gs#14[0]`,
+quoted "`~60`" and resolved `60` — a tilde-marked approximation resolving
+correctly, not a wrong number. The mechanical confirmation is broader
+still: across the whole Session-124 arc (`209ab2bfe` → `0f1bd549f`), **no
+MATCH row ever became a MISMATCH**.
+
+### Why this matters
+
+1. **It supplies a cheap, mechanical honesty test for repair waves.**
+   Extraction repair is the step where a verification apparatus is most
+   able to flatter itself: the same agents that adjudicate the numbers
+   also choose the locators. Diffing before/after status counts turns
+   that risk into a checkable invariant that costs one join. The
+   asymmetry is the whole point — a repair *can* legitimately move
+   UNRESOLVED and SKIPPED in any direction, but it has no honest
+   mechanism for reducing MISMATCH.
+2. **The converse is the operational teeth: a repair pass that "fixes"
+   mismatches should be suspect by default.** A decrease has exactly two
+   sources. Either it fixed genuine instrument defects — which must then
+   be *individually attributable*, as in Obs 379's 7-of-30 census, where
+   each row was named, classified, and dispositioned — or it laundered
+   coincidences into agreements. There is no third explanation, and the
+   burden falls on the repair to say which.
+3. **It separates the two ways a verification headline can move.**
+   104 → 104 → 123 looks like drift if read as a single series. It is
+   two different events: a repair that re-dispositioned 126 rows without
+   touching a single mismatch, then a registry that asked 90 previously
+   deferred questions and got 19 disagreements. Any Methods-section
+   figure of the form "N claims failed recomputation" needs the
+   compared-set size alongside it, or the denominator moves invisibly
+   underneath the numerator.
+
+### Caveats / methodological notes
+
+- **The invariant is evidence of honesty, not proof of correctness.** A
+  semantics-driven repair can still assign a *wrong* locator; it simply
+  cannot preferentially assign one that manufactures agreement. The 70
+  UNRESOLVED → MATCH rows are not independently audited here — they are
+  only shown not to have come out of the mismatch pool.
+- **The 89 / 92 distinction matters if the figure is quoted.** "89" is
+  the row count for rule `expected-verifier-input-operand-a` (all of them
+  `prior_status: MATCH`); the full prior-MATCH census within the script
+  repairs is **92**. A further 40 prior-MATCH rows sat in the 126-row
+  tail worklist, of which 38 were dispositioned `left-as-is` and 2
+  `path-set`, so the tail does not extend the re-resolution census much.
+  Quote 92 for "silent-MATCH rows re-resolved under correct locators",
+  not 89.
+- **Ruling 8 estimated the class at "~204 pathless file-level values";
+  the executed pass covered 255.** The estimate was low by a quarter —
+  worth knowing when scoping comparable backlogs from a triage report.
+- **This supersedes Obs 379's "the defect is still live" caveat.** Obs 379
+  recorded that `recompute_c4_claims.py` still contained the silent
+  fallback. As of Session 124 the harness refuses it for the trap
+  configuration: `:414–422` emits "pathless value in multi-value claim
+  (v1.2 amendment 3) — anchor-path fallback refused". Per the module
+  docstring (`:22–23`) the fallback "survives only for single-value
+  claims, where the anchor path is by definition the claim's locator".
+  The hole Obs 379 described as open is now closed for multi-value
+  claims.
+- **Single-wave evidence.** The invariant held across one repair of one
+  corpus. It is proposed as a standing check because the *mechanism* is
+  general (semantics-keyed repair has no access to match outcomes), not
+  because it has been observed to hold repeatedly.
+- Paper-relevant sections: Methods (verification apparatus, repair
+  protocol, and its self-audit); any reported count of failed claim
+  recomputations.
+
+### Proposed standing check
+
+On any future extraction-repair wave: diff the before/after recompute
+status counts, joined on row identity. **Require MISMATCH monotone
+non-decreasing**, unless every decrease is attributed to a named
+instrument-defect row of the Obs 379 class. Report the compared-set size
+(MATCH + MISMATCH + APPROX: here 1852 → 1920 → 2068) alongside any
+mismatch count, so a growing denominator is never mistaken for
+degrading document quality.
+
+### Findable later
+
+semantics-driven repair leaves mismatch count unchanged; flat MISMATCH
+is evidence of repair honesty; a repair that fixes mismatches is
+suspect; MISMATCH monotone non-decreasing standing check; 104 before 104
+after; 255 pathless values repaired; 129 script repairs plus 126 LLM
+tail; four Opus-class repair agents one file-partition each; ruling 8
+file-level repair pass; ~204 estimate vs 255 executed; MATCH +68 net +70
+gross; UNRESOLVED −122; 3,600 rows constant; same 104 rows row-for-row;
+zero MISMATCH transitions in or out; 044#84 5862 044#88 2724 MATCH
+surrendered to UNRESOLVED; candidate_manifest.json gitignored outputs
+era-resolution 0 candidates; rise to 123 from recompute-script runners;
+19 SKIPPED to MISMATCH; method recompute-script triage/deferred scope;
+launder coincidences into MATCHes; never gates the repair; path must
+locate the NAMED quantity; prefer honest deferral over a clever locator;
+silent-MATCH census closed zero wrong numbers; 92 prior_status MATCH
+rows; 89 expected-verifier-input-operand-a; 038-gs#14 ~60 resolves 60;
+amendment 3 fallback refused recompute_c4_claims.py:414–422; commits
+209ab2bfe 6b680a56d 0f1bd549f; compared-set 1852 1920 2068; Session 124
+2026-08-01/02.
+
+### Related observations and artefacts
+
+- **[[Obs 379]]** (a silent anchor-path fallback manufactured confident
+  wrong-quantity comparisons; 7 of 30 MISMATCHes were the instrument)
+  — the direct parent. Obs 379 is the class that *legitimately* moves a
+  mismatch count downward, and therefore the exception this Obs's
+  standing check must carve out: those seven rows were individually
+  named, classified as wrong-quantity or wrong-instance, and
+  dispositioned one at a time. That attributability is what separates a
+  defensible mismatch reduction from a laundered one. This Obs also
+  closes two of Obs 379's open items — the unquantified silent-MATCH
+  class (92 rows, zero wrong numbers) and the "defect still live"
+  caveat (now refused at `:414–422`).
+- **[[Obs 380]]** (`run.meta.json` is last-writer-wins; $30.95 of spend
+  survives only in git history) — the same session's other honesty
+  machinery, and the mirror-image case. There the artefact could not
+  testify about its own past because the record was overwritten in
+  place; here the record is append-only across three committed report
+  states, which is precisely what makes the row-level join possible. An
+  invariant of this kind is only checkable on an apparatus that keeps
+  its prior states.
+- **[[Obs 381]]** (wrong-control sampling — a set-level claim checked on
+  one convenient member drew an untouched control) — the sampling
+  counterpart. Obs 381 is about evidence selection that is
+  anti-correlated with the defect; this Obs is the opposite discipline,
+  a check that examines the *entire* population (all 3,600 rows, joined)
+  rather than sampling it, and so cannot be gamed by convenient
+  selection. Read together they give the rule: for set-level claims,
+  join the whole set or draw randomly — never take the first member.
+- **[[Obs 377]]** (four flagged cells were a sub-pool operand-binding
+  artefact) — the adjudication-layer instance of wrong operand →
+  confident number → plausible explanation. This Obs is the structural
+  defence against that pattern at the repair layer: deny the repair any
+  access to the outcome it might be tempted to explain.
+
+**Artefacts**: `scripts/repair_c4_pathless_values.py` (module docstring,
+the quantity→anchor rule set, `--apply` semantics);
+`reports/verification/c4-triage/pathless-repair-2026-08-01.json`
+(`_meta.counts` `repaired` 129 / `tail` 126 / `files_edited` 11;
+`_meta.tail_executed.action_counts` `method-recompute-script` 54 /
+`path-set` 30 / `left-as-is` 42; `repairs` array `prior_status` and
+`resolved` fields; `tail_worklist`, `tail_dispositions`);
+`reports/verification/c4-recompute-report.json` at `209ab2bfe`
+(1742/104/1173/575/6), `6b680a56d` (1810/104/1227/453/6), and
+`0f1bd549f` (1938/123/1137/395/7);
+`scripts/recompute_c4_claims.py` (`:14–24`, `:414–422`);
+`reports/verification/phase3-rulings-2026-07-31.md` (§ 8);
+`docs/notes/reflections/llm-observations.md` (Session 124 entry — the
+reflections-layer companion); commits `209ab2bfe`, `6b680a56d`,
+`0f1bd549f`, `8b7adfbec` (Obs 381).
