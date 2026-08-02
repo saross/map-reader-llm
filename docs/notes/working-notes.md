@@ -23795,3 +23795,292 @@ the quantity→anchor rule set, `--apply` semantics);
 `docs/notes/reflections/llm-observations.md` (Session 124 entry — the
 reflections-layer companion); commits `209ab2bfe`, `6b680a56d`,
 `0f1bd549f`, `8b7adfbec` (Obs 381).
+
+## Observation 383: A quantitative claim about an uncommitted artefact has no canonical referent tree — the same recompute returns 1938/123 on sapphire and 1943/122 on amd-tower, and one verdict flips MATCH↔MISMATCH purely by machine (Session 124, 2026-08-02)
+
+*Source anchors: `reports/verification/c4-recompute-report.json` at
+`0f1bd549f` ("canonical post-registry recompute on sapphire (S124)") —
+`_meta.counts` and all 3,600 rows read back out of the commit, not the
+working tree; the amd-tower counterpart run, which was never committed
+and survives only as a Session-124 scratchpad copy
+(`local-final.json`, 3,600 rows);
+`reports/verification/apparatus/recompute-script-registry.json`
+(`_meta.tranche_counts`, the 30 `glob-count` specs);
+`planning/audit-charter.md` § 4 (authority hierarchy);
+`scripts/recompute_c4_claims.py` (`:187–195` tracked-file cache,
+`:452` its use); `docs/notes/reflections/session-log.md` (Session 124
+entry, the 7-row cross-machine note). Both machines' live file counts
+were re-measured on 2026-08-02 — amd-tower locally, sapphire over
+`ssh` — and the row-level divergence was re-derived by joining the two
+report states on `(batch, claim_index, value_index)`.*
+
+### The finding
+
+The Session-124 post-registry recompute was executed twice from the
+same harness code: once on **sapphire** (committed as canonical at
+`0f1bd549f`) and once on **amd-tower**. The two runs disagree.
+
+| run | machine | MATCH | MISMATCH | SKIPPED | UNRESOLVED | APPROX | total |
+| :--- | :--- | --: | --: | --: | --: | --: | --: |
+| canonical (committed `0f1bd549f`) | sapphire | 1938 | **123** | 1137 | 395 | 7 | 3600 |
+| uncommitted counterpart | amd-tower | 1943 | **122** | 1137 | 391 | 7 | 3600 |
+
+The value population is **identical** — the key sets join exactly,
+3,600 rows to 3,600 rows — so nothing here is a corpus difference.
+Joining row by row, **exactly 7 rows differ in any field**: 5 differ
+in `status`, and 2 more agree on the verdict while disagreeing on the
+computed `actual` by a factor of 2.6.
+
+| row | method | source doc (line) | quoted | amd-tower | sapphire | verdict |
+| :--- | :--- | :--- | --: | --: | --: | :--- |
+| `006-output-dir-standard#32[1]` | `recompute-script` | `output-directory-standard.md` (417) | 48,666 | 48,707 | 127,281 | MISMATCH both, `abs_error` 41 vs 78,615 |
+| `006-output-dir-standard#34[1]` | `recompute-script` | `output-directory-standard.md` (424) | 48,666 | 48,707 | 127,281 | MISMATCH both, `abs_error` 41 vs 78,615 |
+| `037#37[0]` | `recompute-script` | `gs-tile-pool-mapping-2026-05-28.md` (77) | six | 6 | 0 | **MATCH → MISMATCH** |
+| `044#84[0]` | `read` | `phase3a-verifier-completeness-audit-2026-05-03.md` (308) | 5862 | 5862 | — | **MATCH → UNRESOLVED** |
+| `044#84[2]` | `arithmetic` | idem (308) | 0 | 0 | — | **MATCH → UNRESOLVED** |
+| `044#88[0]` | `read` | idem (312) | 2724 | 2724 | — | **MATCH → UNRESOLVED** |
+| `044#88[2]` | `arithmetic` | idem (312) | 0 | 0 | — | **MATCH → UNRESOLVED** |
+
+**Two mechanisms, both re-verified live on 2026-08-02.**
+
+*Mechanism 1 — census specs that walk gitignored trees.* Rows
+`006#32[1]` and `#34[1]` share one `glob-count` spec: root
+`outputs/h11/pv-diag-384`, glob `**/*`, kind `file`. Counted today it
+returns **48,707 on amd-tower and 127,281 on sapphire**. Both are
+honest counts; they are counts of different working trees. Only
+**1,538 of the 48,707** local files are git-tracked, so ~97 % of the
+walked population is invisible to the repository. Row `037#37[0]`
+counts files under `results/gs-125m-fp-side-6-crop-review/crops` —
+**6 on amd-tower, 0 on sapphire** — because the crops are gitignored
+by `.gitignore:69` (`**/crops/**/*.png`) and only two files
+(`README.md`, `index.md`) under that directory are tracked. The
+document says "six". The machine therefore *decides the verdict*:
+`mode: exact` locally, `mode: mismatch` canonically.
+
+*Mechanism 2 — anchors that were never committed at all.* The four
+`044` rows resolve through
+`outputs/wbf/fh-text-{n30,n5}/crops/candidate_manifest.json`. Both
+files exist on amd-tower and neither exists on sapphire.
+`git log --all` over that path pattern returns **nothing** — the blobs
+were never in git, on any commit, so no machine can recover them.
+Sapphire's rows record exactly that: `"era-resolution: 0 candidates
+… at 5d91c2a97"; working-tree suffix: 0 candidates` for the `read`
+rows, and a bare `[Errno 2] No such file or directory` for the
+`arithmetic` rows that depend on them. These are the same four rows
+Obs 382 recorded as MATCHes *surrendered* to honest UNRESOLVED — this
+Obs supplies the reason they were ever MATCHes: the repair agent ran
+on the one machine where the files happened to exist.
+
+**The registry's own provenance notes are machine-stamped too.** The
+spec note for `006#32[1]` reads "Executed 48707 (document quotes
+'48,666')" and for `037#37[0]` "Executed 6 (document quotes 'six')" —
+both authored on amd-tower. The second now contradicts the canonical
+committed report, which records 0 and MISMATCH for that row. A reader
+comparing registry to report finds two committed artefacts disagreeing
+with no field explaining why.
+
+**The latent exposure is larger than the observed divergence.** Of the
+**30 `glob-count` specs** in the registry (out of 90 census specs
+overall, drawn from 488 `recompute-script` rows):
+
+| repo-reproducibility of the matched set | specs |
+| :--- | --: |
+| every matched item git-tracked | 23 |
+| partially tracked | 6 |
+| zero matched items tracked | 1 |
+
+So **7 of 30** are not reproducible from the repository alone, but
+only 3 actually diverged on this machine pair. The other four —
+`006#23[0]`, `#23[1]`, `#33[1]`, `#38[1]`, all counting
+`outputs/**/experiment_intent.md` (184 live files, **174 tracked**) —
+agreed by luck: the 10 untracked files, all under
+`outputs/55maps-text-min-n10-uplift/proposer-all/run_{1..10}/`,
+happen to be present on both machines. Agreement between two machines
+is not evidence of machine-independence.
+
+### Why this matters
+
+1. **"Verifiable" is doing undeclared work in these rows.** For a
+   claim whose referent is a committed blob, "verifiable" means what
+   it usually means: any reader, any machine, one `git show`. For
+   these seven it can only mean *verifiable-relative-to-a-named-
+   machine* — and the verification programme has no convention for
+   naming one. There is no `machine_scope` field in the registry, no
+   host stamp on a report row, and no sentence in the charter that
+   distinguishes the two senses. The claims are not unverifiable; they
+   are verifiable against a referent nobody wrote down.
+2. **The charter's authority hierarchy has no machine axis, and its
+   top tier is the machine-dependent one.** `planning/audit-charter.md`
+   § 4 is ordered "least-writable first" and ranks **raw run outputs
+   (`outputs/**`, `*.meta.json`, detection GeoJSONs, eval JSONs) at
+   tier 1**, above the lodged registration, with git history last at
+   tier 7. That ordering optimises a single property — resistance to
+   authorial rewriting — and silently assumes availability. It is
+   now failing on both counts at the same tier: Obs 380 showed tier-1
+   `run.meta.json` files are last-writer-wins (not least-writable),
+   and this Obs shows tier-1 trees differ by host (not machine-
+   independent). Meanwhile tier 7, git history, is the only member of
+   the list that is the same everywhere.
+3. **A "canonical" recompute is canonical only over its
+   machine-independent subset.** Committing the sapphire run made 123
+   the headline mismatch count; committing the amd-tower run would
+   have made it 122, with `037#37[0]` reported as a document that
+   checks out. Nothing in either report tells a reader that this
+   choice was made, or that it was load-bearing for those rows. Any
+   Methods-section sentence of the form "N claims failed
+   recomputation" currently inherits an undocumented host parameter.
+4. **The fix is a decision, not just a guard.** Two coherent options:
+   **(a)** rule such claims out of mechanical scope — specs must
+   target git-tracked artefacts, and rows with untracked anchors move
+   to a named triage family with an explicit reason; or **(b)** give
+   the registry a `machine_scope` field naming the referent host per
+   spec, and stamp each report row with the machine that produced it.
+   Option (a) is cleaner for the paper: every quoted verification
+   figure becomes reproducible from the repository alone, which is
+   the property a reader can actually exercise. Option (b) preserves
+   more coverage at the cost of publishing figures no external reader
+   can check. **Flagged for the Session-125 hygiene work and the
+   GATE 3 package, not decided here.**
+
+### Caveats / methodological notes
+
+- **The amd-tower figures are themselves machine-ephemeral, and that
+  is part of the finding.** The local run was never committed. Its
+  counts were re-derived on 2026-08-02 from a Session-124 scratchpad
+  copy under `/tmp/claude-1000/…/scratchpad/local-final.json`, and
+  independently corroborated by the Session-124 session-log entry
+  ("sapphire 127,281 vs local 48,707 pv-diag files, 037#37 verdict
+  flips; 4 rows in 044") and by re-counting both file trees live. The
+  scratchpad will be garbage-collected; after that, **1943/122/1137/
+  391/7 will be quotable only from this Obs and the session log**.
+  An Obs recording the non-durability of uncommitted numbers should
+  not be the last durable copy of some — treat these five figures as
+  attested, not re-derivable.
+- **Neither machine reproduces the document's figure, and the
+  document's own figure is a third machine-state.** The quoted 48,666
+  was recorded on 2026-05-26 as "1,497 of 48,666 files tracked …
+  present on zbook and sapphire". Today amd-tower reads 48,707 total
+  and 1,538 tracked. So the claim is MISMATCH either way — the
+  cross-machine problem changes the *magnitude* of the error
+  (41 vs 78,615) and hence any triage judgement about whether it is
+  drift or a category error, but not the verdict.
+- **Only one verdict genuinely flips MATCH↔MISMATCH.** The other four
+  flips are MATCH↔UNRESOLVED, which is a weaker failure: UNRESOLVED
+  is an honest refusal, not a wrong answer. The headline claim should
+  be stated as "one verdict flips, four resolutions vanish", not
+  "five verdicts flip".
+- **Machine choice is not adversarial here.** Sapphire is the
+  project's mandated compute host, so committing its run followed
+  standing policy rather than shopping for a result. The point is
+  that the policy silently doubles as a verification parameter.
+- **Sample of two.** Two machines, one harness version, one corpus.
+  The mechanism generalises — a census over gitignored content is
+  machine-relative by construction — but the 7-row figure is specific
+  to this pair, and a third host would likely produce a different
+  count.
+- Paper-relevant sections: Methods (verification apparatus, scope and
+  reproducibility of recomputation); any reported count of failed
+  claim recomputations; the limitations paragraph on what an external
+  reader can and cannot re-run.
+
+### Proposed guards (queued for Session 125, not yet implemented)
+
+1. **Validator check on spec targets and read anchors.** Reject, or
+   flag at authoring time, any `recompute-script` spec whose matched
+   set is not fully git-tracked, and any `read` anchor pointing at an
+   untracked path. The machinery already exists:
+   `scripts/recompute_c4_claims.py:187–195` caches `git ls-files`
+   for suffix disambiguation and uses it at `:452` — the same cache
+   answers "is this target tracked?".
+2. **Re-anchor or reclassify the four `044` rows** to committed
+   evidence, or move them to a named triage family with
+   "anchor never committed" as the stated reason.
+3. **Report-level host stamp** regardless of which option is taken:
+   a report that names the machine that produced it costs one field
+   and removes the ambiguity retrospectively.
+
+### Findable later
+
+verifiable-relative-to-a-named-machine; uncommitted artefacts have no
+canonical referent tree; cross-machine recompute divergence; sapphire
+1938/123/1137/395/7 vs amd-tower 1943/122/1137/391/7; 7 rows differ 5
+statuses flip; verdict flips by machine; 037#37 six local 6 MATCH
+sapphire 0 MISMATCH; glob-count over gitignored tree; pv-diag-384
+48,707 vs 127,281; 48,666 quoted abs_error 41 vs 78,615; 1,538 of
+48,707 tracked; 1,497 of 48,666 zbook and sapphire; .gitignore:69
+crops png; gs-125m-fp-side-6-crop-review; candidate_manifest.json
+never committed git log --all empty; outputs/wbf/fh-text-n30
+fh-text-n5; 044#84 5862 044#88 2724 MATCH to UNRESOLVED; era-
+resolution 0 candidates 5d91c2a97; 7 of 30 glob-count specs not
+repo-reproducible; 23 fully tracked 6 partial 1 zero; 174 of 184
+experiment_intent tracked agree by luck; machine_scope field proposal;
+specs must target tracked artefacts; charter authority hierarchy tier
+1 outputs/** tier 7 git history; least-writable is not machine-
+independent; recompute_c4_claims.py:187-195 tracked-file cache;
+registry note Executed 48707 Executed 6 amd-tower-stamped; GATE 3
+package S125 hygiene; Session 124 2026-08-02.
+
+### Related observations and artefacts
+
+- **[[Obs 380]]** (`run.meta.json` is last-writer-wins; $30.95 of
+  spend survives only in git history) — the sibling artefact-integrity
+  finding, and the other half of the same structural defect. Obs 380
+  attacks charter tier 1 on *writability*: the raw outputs ranked
+  least-writable were overwritten in place. This Obs attacks the same
+  tier on *availability*: those trees differ by host. Read together
+  they say the hierarchy conflates two properties that came apart, and
+  that the artefact class the charter trusts most is the one the
+  repository preserves least. Obs 380's artefacts at least entered git
+  and could be recovered from history; the four `044` manifests here
+  never entered git at all, which is the strictly worse case — there
+  is no history to recover them from.
+- **[[Obs 382]]** (a semantics-driven repair leaves the MISMATCH count
+  alone; 255 pathless values repaired, same 104 rows row-for-row) —
+  the same session's cross-machine diff is what surfaced this, and the
+  two Obs share four rows. Obs 382 recorded `044#84[0]` and `044#88[0]`
+  as MATCHes *surrendered* to UNRESOLVED and read that as evidence of
+  repair honesty. That reading stands, and this Obs completes it: the
+  repair could assign those locators at all because it ran where the
+  files existed, and the harness refused them because it ran where
+  they did not. The honesty invariant is intact; the *provenance* of
+  the locators was machine-contingent.
+- **[[Obs 381]]** (wrong-control sampling — a set-level claim checked
+  on one convenient member) — the epistemic rhyme. There, a claim was
+  checked against a conveniently available member; here, a claim is
+  checked against a conveniently available *working tree*. Both are
+  the same failure of asking "available to whom?" before treating an
+  answer as the answer.
+- **[[Obs 353]]** (non-isolated background agents share the working
+  tree — concurrency discipline for agent fleets) — the operational
+  ancestor. Obs 353 established that the working tree is shared
+  mutable state *within* a machine; this Obs extends the concern
+  across machines, where the trees are not shared at all and diverge
+  silently. The common lesson is that the working tree is an implicit
+  parameter of any agent-run computation and must be named when
+  results are recorded.
+- **[[Obs 379]]** (a silent anchor-path fallback manufactured
+  confident wrong-quantity comparisons) — the precedent for "the
+  instrument, not the document". Obs 379's defect produced wrong
+  answers from a correct tree; this one produces honest answers from
+  inconsistent trees. Both are instrument findings that a naive
+  reading would book as document errors.
+
+**Artefacts**: `reports/verification/c4-recompute-report.json` at
+`0f1bd549f` (canonical sapphire run, 1938/123/1137/395/7; the 7 rows
+listed above, with `reason` strings for the `044` UNRESOLVEDs);
+`reports/verification/apparatus/recompute-script-registry.json`
+(`_meta.tranche_counts` `CENSUS_specced` 90 of 488 `recompute-script`
+rows; the 30 `glob-count` specs, of which the `outputs/h11/pv-diag-384`
+pair and `results/gs-125m-fp-side-6-crop-review/crops` are the three
+implicated; the amd-tower-stamped `note` fields);
+`planning/audit-charter.md` (§ 4 authority hierarchy, tiers 1 and 7);
+`scripts/recompute_c4_claims.py` (`:187–195`, `:452`);
+`docs/methodology/output-directory-standard.md` (`:417`, `:424` — the
+48,666 claim and its "present on zbook and sapphire" provenance);
+`reports/gs-tile-pool-mapping-2026-05-28.md` (`:77`);
+`reports/phase3a-verifier-completeness-audit-2026-05-03.md`
+(`:308`, `:312`); `.gitignore` (`:69`);
+`docs/notes/reflections/session-log.md` (Session 124 entry — the
+7-row cross-machine note, and the durable anchor for the uncommitted
+amd-tower counts); commits `0f1bd549f`, `5d91c2a97` (the era commit
+the `044` rows resolve against), `1bdbca86e` (Obs 382).
