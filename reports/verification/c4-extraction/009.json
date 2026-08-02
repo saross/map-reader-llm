@@ -1,2938 +1,2938 @@
 {
-  "schema_version": "1.1",
-  "extracted_at": "2026-08-02T00:00:00Z",
-  "source_document": {
-    "file": "docs/methodology/preregistration/decisions-log.md",
-    "git_blob": "dde72a9fae0e5272e35dd61dfd5ead8471613a6b",
-    "stratum": "hand-written"
-  },
-  "extractor": {
-    "model": "claude-sonnet-5",
-    "instrument_version": "1.2"
-  },
-  "claims": [
+ "schema_version": "1.1",
+ "extracted_at": "2026-08-02T00:00:00Z",
+ "source_document": {
+  "file": "docs/methodology/preregistration/decisions-log.md",
+  "git_blob": "dde72a9fae0e5272e35dd61dfd5ead8471613a6b",
+  "stratum": "hand-written"
+ },
+ "extractor": {
+  "model": "claude-sonnet-5",
+  "instrument_version": "1.2"
+ },
+ "claims": [
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     793,
+     795
+    ],
+    "section": "Convergence at Phase 3 — K=10 runs feeding post-hoc voting analysis"
+   },
+   "claim_text": "and image-using runs could be tested alongside single-track ensembles. The\nK=10 runs from Phase 2a already provide data for post-hoc voting analysis at\nboth M/E levels.",
+   "values": [
     {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          793,
-          795
-        ],
-        "section": "Convergence at Phase 3 \u2014 K=10 runs feeding post-hoc voting analysis"
-      },
-      "claim_text": "and image-using runs could be tested alongside single-track ensembles. The\nK=10 runs from Phase 2a already provide data for post-hoc voting analysis at\nboth M/E levels.",
-      "values": [
-        {
-          "quantity": "count of proposer passes (K), Phase 2a runs cited as available for post-hoc Phase 3a voting analysis",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Document names `outputs/phase2a/analysis_summary.md` as the evidence file (lines 797-799) but that literal path does not exist in the working tree; the nearest surviving artefact is archive/outputs-pre-retest-60-tile/phase2a/analysis_summary.md (confirmed present), which records per-condition F1 aggregates only \u2014 no explicit run-count (K) field. Could not locate a committed artefact stating '10' runs for Phase 2a explicitly; K=10 matches the standard Phase 2 pilot run count used elsewhere (e.g. Phase 2d, Phase 2e)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          808,
-          808
-        ],
-        "section": "Decision 17 \u2014 Phase 2d decision statement, dual-track design"
-      },
-      "claim_text": "single-factor design across two tracks, with instruction text adapted to",
-      "values": [
-        {
-          "quantity": "count of tracks tested in the Phase 2d H5 OFAT design",
-          "value_verbatim": "two",
-          "value_parsed": 2,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/phase2d-carry-forward-parameters.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "results/phase2d-carry-forward-parameters.md states 'Both tracks were executed in a dual-track OFAT design (Decision 17): Track 1 (image-using)... Track 2 (text-only)...', confirming 2 tracks."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          815,
-          815
-        ],
-        "section": "Decision 17 \u2014 Design changes from preregistration table, Library row"
-      },
-      "claim_text": "| Library | Scale-8 (17 examples, incl. 4 HN) | plus-hp (13 examples, no HN) |",
-      "values": [
-        {
-          "quantity": "example count, Scale-8 library, as preregistered for H5",
-          "value_verbatim": "17",
-          "value_parsed": 17,
-          "unit": null,
-          "kind": "count",
-          "path": "#scale-8-library-17-examples-line611-769",
-          "method": "read"
-        },
-        {
-          "quantity": "hard-negative (HN) example count, Scale-8 library, as preregistered for H5",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "count",
-          "path": "#scale-8-library-hn-4-line769",
-          "method": "read"
-        },
-        {
-          "quantity": "example count, plus-hp library, actual Phase 2d carry-forward",
-          "value_verbatim": "13",
-          "value_parsed": 13,
-          "unit": null,
-          "kind": "count",
-          "path": "prompts/configs/library_plus-hp.json#$.total_examples",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "docs/methodology/preregistration/osf/preregistration.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "v1.1 calibration rule: the 'Preregistered' column values (17, 4) anchor to the lodged osf document \u2014 preregistration.md:611 ('Scale-8, 17 examples') and :769 (composition row '4 | 2 | 4 | 4 | 3 | 17', where the 4th column is hard_negative=4). The 'Actual' column value (13) anchors to the committed plus-hp config (cross-file locator, v1.2 amendment 2)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          816,
-          816
-        ],
-        "section": "Decision 17 \u2014 Design changes from preregistration table, Design row"
-      },
-      "claim_text": "| Design | 3\u00d73 factorial (M/E \u00d7 H5) | Single-factor OFAT (H5 at optimal M/E) |",
-      "values": [
-        {
-          "quantity": "row count (M/E levels), preregistered H5 factorial (Decision 17 table)",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": "#h5-9-cells-3x3-line1806",
-          "method": "read"
-        },
-        {
-          "quantity": "column count (H5 levels), preregistered H5 factorial (Decision 17 table)",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": "#h5-9-cells-3x3-line1806",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "docs/methodology/preregistration/osf/preregistration.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Matches preregistration.md:1806 ('H5 totals: 9 cells (3 M/E \u00d7 3 H5)') and :1333 ('creating a 3\u00d73 design'). v1.1 calibration rule: preregistered-design claim, anchors to the lodged document."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          822,
-          822
-        ],
-        "section": "Decision 17 \u2014 Library carry-forward paragraph, plus-hp composition"
-      },
-      "claim_text": "Phase 2c determined plus-hp (4C+ 4HP 2C- 3null, no HN) as the optimal",
-      "values": [
-        {
-          "quantity": "Canon+ example count, plus-hp library composition",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "count",
-          "path": "$.composition.canonical_positive",
-          "method": "read"
-        },
-        {
-          "quantity": "hard-positive example count, plus-hp library composition",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "count",
-          "path": "$.composition.hard_positive",
-          "method": "read"
-        },
-        {
-          "quantity": "Canon- example count, plus-hp library composition",
-          "value_verbatim": "2",
-          "value_parsed": 2,
-          "unit": null,
-          "kind": "count",
-          "path": "$.composition.canonical_negative",
-          "method": "read"
-        },
-        {
-          "quantity": "null example count, plus-hp library composition",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": "$.composition.null",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "prompts/configs/library_plus-hp.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "prompts/configs/library_plus-hp.json records composition.canonical_positive=4, hard_positive=4, canonical_negative=2, null=3 (confirmed present, not value-verified per rule 4). 'no HN' in the source span is qualitative (no digit), excluded per rule 5."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          823,
-          823
-        ],
-        "section": "Decision 17 \u2014 Library carry-forward paragraph, preregistered Scale-8 HN count"
-      },
-      "claim_text": "library. The preregistered H5 design assumed Scale-8 (including 4 HN) would",
-      "values": [
-        {
-          "quantity": "hard-negative (HN) example count, Scale-8 library, as preregistered for H5 (distinct verbatim mention)",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "count",
-          "path": "#scale-8-library-hn-4-line769",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "docs/methodology/preregistration/osf/preregistration.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Restates the '4 HN' figure already anchored for the line-815 table claim above; kept as a separate claim row per full-enumeration (rule 3) since it is a distinct verbatim mention."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          842,
-          843
-        ],
-        "section": "Decision 17 \u2014 Instruction text adaptation, rejected minimal-instruction re-run"
-      },
-      "claim_text": "baseline for Track 1 and Phase 2b baseline for Track 2. Re-running 1,200\nAPI calls to fix a conditional sentence (\"If reference examples are provided\")",
-      "values": [
-        {
-          "quantity": "count of API calls a full re-run of the minimal instruction would have required (rejected as not justified by the minor confound)",
-          "value_verbatim": "1,200",
-          "value_parsed": 1200,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Hypothetical/rejected re-run estimate in the decision's own rationale, not a run that was executed. No committed manifest records this count; likely 600 calls/track \u00d7 2 tracks (Phase 2c Track 1 + Phase 2b Track 2 baselines) but no single artefact confirms it directly."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          849,
-          849
-        ],
-        "section": "Decision 17 \u2014 OFAT simplification paragraph, preregistered cell count"
-      },
-      "claim_text": "The preregistered 3\u00d73 M/E \u00d7 H5 factorial (9 cells) collapsed because the",
-      "values": [
-        {
-          "quantity": "row count (M/E levels), preregistered H5 factorial (OFAT-simplification paragraph)",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": "#h5-9-cells-3x3-line1806",
-          "method": "read"
-        },
-        {
-          "quantity": "column count (H5 levels), preregistered H5 factorial (OFAT-simplification paragraph)",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": "#h5-9-cells-3x3-line1806",
-          "method": "read"
-        },
-        {
-          "quantity": "total cell count, preregistered H5 3\u00d73 factorial",
-          "value_verbatim": "9",
-          "value_parsed": 9,
-          "unit": null,
-          "kind": "count",
-          "path": "#h5-9-cells-3x3-line1806",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "docs/methodology/preregistration/osf/preregistration.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Matches preregistration.md:1806 verbatim: 'H5 totals: 9 cells (3 M/E \u00d7 3 H5)'."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          851,
-          852
-        ],
-        "section": "Decision 17 \u2014 OFAT simplification paragraph, actual cell count"
-      },
-      "claim_text": "the carried-forward M/E level gives 3 cells per track (1 reused baseline,\n2 new), totalling 4 new cells across both tracks.",
-      "values": [
-        {
-          "quantity": "count of H5 factor levels (cells) tested per track after OFAT simplification",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.factors.negative_text_treatment.levels",
-          "method": "read"
-        },
-        {
-          "quantity": "count of reused-baseline cells per track",
-          "value_verbatim": "1",
-          "value_parsed": 1,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "count of new cells per track",
-          "value_verbatim": "2",
-          "value_parsed": 2,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "total count of new cells across both tracks, Phase 2d H5",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "studies/phase2d-h5-negtext.yaml",
-        "path": null
-      },
-      "method": "read",
-      "notes": "'3 cells per track' matches the 3-level (minimal/terse/verbose) negative_text_treatment factor in studies/phase2d-h5-negtext.yaml (and its Track 2 sibling phase2d-h5-negtext-text-only.yaml). The reused-vs-new breakdown (1, 2, 4) is not separately field-encoded in either study YAML; left anchor-unknown."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          866,
-          866
-        ],
-        "section": "Decision 17 \u2014 Track 2 activation rationale, cost estimate"
-      },
-      "claim_text": "3. Cost is low (~$2.50 for 1,200 API calls, no images in prompt)",
-      "values": [
-        {
-          "quantity": "estimated cost (USD), Track 2 activation (2 new cells, terse+verbose)",
-          "value_verbatim": "~$2.50",
-          "value_parsed": 2.5,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "external"
-        },
-        {
-          "quantity": "count of API calls, Track 2 activation (2 new cells, terse+verbose)",
-          "value_verbatim": "1,200",
-          "value_parsed": 1200,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "external",
-      "notes": "Cost estimate is a vendor-pricing-derived back-of-envelope figure (rule 3 'external'); no repo artefact audits it. The 1,200 API calls figure is consistent with 2 new cells \u00d7 600 calls/cell (matching the Implementation table below) but no single committed artefact states the per-cell call count directly, so left anchor-unknown."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          872,
-          872
-        ],
-        "section": "Decision 17 \u2014 Implementation table, Track 1 row"
-      },
-      "claim_text": "| Track 1 (image) | brief-text-image | plus-hp (13 ex.) | Phase 2c | terse, verbose |",
-      "values": [
-        {
-          "quantity": "example count, plus-hp library, Track 1 implementation",
-          "value_verbatim": "13",
-          "value_parsed": 13,
-          "unit": null,
-          "kind": "count",
-          "path": "$.total_examples",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "prompts/configs/library_plus-hp.json",
-        "path": "$.total_examples"
-      },
-      "method": "read",
-      "notes": "Matches prompts/configs/library_plus-hp.json total_examples=13; distinct verbatim mention from the line-815 table claim (full enumeration, rule 3)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          873,
-          873
-        ],
-        "section": "Decision 17 \u2014 Implementation table, Track 2 row"
-      },
-      "claim_text": "| Track 2 (text) | brief-text | Scale-8 metadata (17 ex., none sent) | Phase 2b T=0.0 | terse, verbose |",
-      "values": [
-        {
-          "quantity": "example count, Scale-8 library metadata, Track 2 (text-only) implementation",
-          "value_verbatim": "17",
-          "value_parsed": 17,
-          "unit": null,
-          "kind": "count",
-          "path": "$.total_examples",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "prompts/configs/library_scale-8-text.json",
-        "path": "$.total_examples"
-      },
-      "method": "read",
-      "notes": "Matches prompts/configs/library_scale-8-text.json total_examples=17 \u2014 the text-only-mode config whose metadata is bookkept but whose example images are not sent (Track 2 is text-only)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          875,
-          875
-        ],
-        "section": "Decision 17 \u2014 Implementation, total new API calls"
-      },
-      "claim_text": "**Total new API calls**: 2,400 (4 cells \u00d7 600)",
-      "values": [
-        {
-          "quantity": "total new API calls, Phase 2d H5 dual-track implementation",
-          "value_verbatim": "2,400",
-          "value_parsed": 2400,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "count of new cells across both tracks (factor in the 2,400 total)",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "API calls per new cell (factor in the 2,400 total)",
-          "value_verbatim": "600",
-          "value_parsed": 600,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Internally self-consistent (4\u00d7600=2,400) with the Implementation table above and the 1,200-call Track 2 figure (line 866: 2 new cells \u00d7 600), but no committed manifest/study-run-count artefact for Phase 2d's pre-retest 60-tile pilot was located confirming 600 calls/cell directly (likely 60 tiles \u00d7 K=10 runs, matching the corpus-size pattern used elsewhere, but not confirmed against a specific Phase 2d output manifest)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          876,
-          876
-        ],
-        "section": "Decision 17 \u2014 Implementation, estimated cost breakdown"
-      },
-      "claim_text": "**Estimated cost**: ~$6.90 ($4.40 Track 1 + $2.50 Track 2)",
-      "values": [
-        {
-          "quantity": "total estimated cost (USD), Phase 2d H5 dual-track implementation",
-          "value_verbatim": "~$6.90",
-          "value_parsed": 6.9,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "external"
-        },
-        {
-          "quantity": "estimated cost (USD), Track 1 (image-using) implementation",
-          "value_verbatim": "4.40",
-          "value_parsed": 4.4,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "external"
-        },
-        {
-          "quantity": "estimated cost (USD), Track 2 (text-only) implementation",
-          "value_verbatim": "2.50",
-          "value_parsed": 2.5,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "external"
-        }
-      ],
-      "anchor": null,
-      "method": "external",
-      "notes": "Vendor-pricing-derived cost estimates (rule 3 'external'); no repo artefact audits them. Internally consistent (4.40+2.50=6.90)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          888,
-          888
-        ],
-        "section": "Decision 18 \u2014 decision statement, 4th ordering condition"
-      },
-      "claim_text": "**Decision**: Add `config-default` as an explicit 4th ordering condition in Phase 2e",
-      "values": [
-        {
-          "quantity": "total count of ordering conditions in Phase 2e (H4) after adding config-default",
-          "value_verbatim": "4th",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.factors.ordering.levels",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "studies/phase2e-h4-ordering.yaml",
-        "path": "len:$.factors.ordering.levels"
-      },
-      "method": "read",
-      "notes": "studies/phase2e-h4-ordering.yaml factors.ordering.levels lists exactly 4 entries (config-default, canonical-first, canonical-last, random), confirming the 4th-condition count."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          899,
-          899
-        ],
-        "section": "Decision 18 \u2014 Alternatives considered, rejected 3-condition option"
-      },
-      "claim_text": "1. **Proceed with 3 conditions** (fix canonical-first, drop config-default): Would",
-      "values": [
-        {
-          "quantity": "count of ordering conditions in the rejected 'proceed with 3 conditions' alternative",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Describes a rejected design alternative (not implemented); no artefact exists that could confirm a 3-condition Phase 2e design since it was never run."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          909,
-          909
-        ],
-        "section": "Decision 18 \u2014 Rationale, count of orderings compared"
-      },
-      "claim_text": "The two orderings differ in HP placement relative to canonical negatives:",
-      "values": [
-        {
-          "quantity": "count of orderings compared in the Decision 18 rationale (config-default vs canonical-first)",
-          "value_verbatim": "two",
-          "value_parsed": 2,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Self-referential structural count (the two rows of the comparison table immediately below, lines 912-915); no external artefact to anchor to."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          921,
-          922
-        ],
-        "section": "Decision 18 \u2014 Cost paragraph, zero-cost reused runs"
-      },
-      "claim_text": "**Cost**: Zero additional API calls. The 10 config-default runs are reused from\nPhase 2c plus-hp outputs via symlinks and are pre-checkpointed.",
-      "values": [
-        {
-          "quantity": "additional API calls required for the config-default condition (reused via symlink)",
-          "value_verbatim": "Zero",
-          "value_parsed": 0,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "run count, config-default condition, Phase 2e",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": null,
-          "kind": "count",
-          "path": "$.execution.runs",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "studies/phase2e-h4-ordering.yaml",
-        "path": "$.execution.runs"
-      },
-      "method": "read",
-      "notes": "studies/phase2e-h4-ordering.yaml execution.runs=10, applying to all 4 ordering conditions including the reused config-default. 'Zero' is a definitional design characterisation (reuse via symlink), not read from a specific field."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          928,
-          928
-        ],
-        "section": "Decision 18 \u2014 Design table, config-default row"
-      },
-      "claim_text": "| config-default | 10 | 0 (reused) | Phase 2c plus-hp symlinks |",
-      "values": [
-        {
-          "quantity": "run count, config-default condition",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": null,
-          "kind": "count",
-          "path": "$.execution.runs",
-          "method": "read"
-        },
-        {
-          "quantity": "API call count, config-default condition (reused)",
-          "value_verbatim": "0",
-          "value_parsed": 0,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "studies/phase2e-h4-ordering.yaml",
-        "path": "$.execution.runs"
-      },
-      "method": "read",
-      "notes": "Matches studies/phase2e-h4-ordering.yaml execution.runs=10; the 0-call figure is definitional (symlink reuse), left anchor-unknown."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          929,
-          929
-        ],
-        "section": "Decision 18 \u2014 Design table, canonical-first row"
-      },
-      "claim_text": "| canonical-first | 10 | 600 | New |",
-      "values": [
-        {
-          "quantity": "run count, canonical-first condition",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": null,
-          "kind": "count",
-          "path": "$.execution.runs",
-          "method": "read"
-        },
-        {
-          "quantity": "API call count, canonical-first condition (new)",
-          "value_verbatim": "600",
-          "value_parsed": 600,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a*b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "inputs/tiles/validation_manifest.json",
-              "path": "len:$"
-            },
-            {
-              "name": "b",
-              "file": "studies/phase2e-h4-ordering.yaml",
-              "path": "$.execution.runs"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "studies/phase2e-h4-ordering.yaml",
-        "path": "$.execution.runs"
-      },
-      "method": "read",
-      "notes": "inputs/tiles/validation_manifest.json is a 60-tile list; 60 tiles \u00d7 execution.runs=10 = 600 API calls for a new condition."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          930,
-          930
-        ],
-        "section": "Decision 18 \u2014 Design table, canonical-last row"
-      },
-      "claim_text": "| canonical-last | 10 | 600 | New |",
-      "values": [
-        {
-          "quantity": "run count, canonical-last condition",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": null,
-          "kind": "count",
-          "path": "$.execution.runs",
-          "method": "read"
-        },
-        {
-          "quantity": "API call count, canonical-last condition (new)",
-          "value_verbatim": "600",
-          "value_parsed": 600,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a*b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "inputs/tiles/validation_manifest.json",
-              "path": "len:$"
-            },
-            {
-              "name": "b",
-              "file": "studies/phase2e-h4-ordering.yaml",
-              "path": "$.execution.runs"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "studies/phase2e-h4-ordering.yaml",
-        "path": "$.execution.runs"
-      },
-      "method": "read",
-      "notes": "Same derivation as the canonical-first row (60 tiles \u00d7 10 runs = 600); distinct verbatim table row, extracted separately per rule 6."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          931,
-          931
-        ],
-        "section": "Decision 18 \u2014 Design table, random row"
-      },
-      "claim_text": "| random | 10 | 600 | New |",
-      "values": [
-        {
-          "quantity": "run count, random-ordering condition",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": null,
-          "kind": "count",
-          "path": "$.execution.runs",
-          "method": "read"
-        },
-        {
-          "quantity": "API call count, random-ordering condition (new)",
-          "value_verbatim": "600",
-          "value_parsed": 600,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a*b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "inputs/tiles/validation_manifest.json",
-              "path": "len:$"
-            },
-            {
-              "name": "b",
-              "file": "studies/phase2e-h4-ordering.yaml",
-              "path": "$.execution.runs"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "studies/phase2e-h4-ordering.yaml",
-        "path": "$.execution.runs"
-      },
-      "method": "read",
-      "notes": "Same derivation as the canonical-first/canonical-last rows (60 tiles \u00d7 10 runs = 600); distinct verbatim table row, extracted separately per rule 6."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          932,
-          932
-        ],
-        "section": "Decision 18 \u2014 Design table, Total row"
-      },
-      "claim_text": "| **Total** | **40** | **1,800** | |",
-      "values": [
-        {
-          "quantity": "total run count, Phase 2e H4 ordering design (4 conditions)",
-          "value_verbatim": "40",
-          "value_parsed": 40,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a*b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "studies/phase2e-h4-ordering.yaml",
-              "path": "len:$.factors.ordering.levels"
-            },
-            {
-              "name": "b",
-              "file": "studies/phase2e-h4-ordering.yaml",
-              "path": "$.execution.runs"
-            }
-          ]
-        },
-        {
-          "quantity": "total new API call count, Phase 2e H4 ordering design",
-          "value_verbatim": "1,800",
-          "value_parsed": 1800,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "studies/phase2e-h4-ordering.yaml",
-        "path": null
-      },
-      "method": "arithmetic",
-      "notes": "40 = 4 ordering conditions (len:$.factors.ordering.levels) \u00d7 execution.runs=10. 1,800 = 3 new conditions \u00d7 600 calls, a two-factor compound derivation not expressible as a single clean expression against committed operands; left anchor-unknown per v1.2 amendment 1 (one derivation per expression)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          944,
-          946
-        ],
-        "section": "Decision 19 \u2014 decision statement, tile sizes re-run"
-      },
-      "claim_text": "**Decision**: Re-run all H11 proposer-verifier experiments (512 and 384)\nwith verifier configs corrected to match the Phase 3d baseline prompt\nassembly. Supersede all prior PV results with \"v2\" corrected results.",
-      "values": [
-        {
-          "quantity": "tile edge length (px), first H11 PV condition re-run under Decision 19",
-          "value_verbatim": "512",
-          "value_parsed": 512,
-          "unit": "px",
-          "kind": "physical",
-          "path": "#512-pv-text-only-row-line169",
-          "method": "read"
-        },
-        {
-          "quantity": "tile edge length (px), second H11 PV condition re-run under Decision 19",
-          "value_verbatim": "384",
-          "value_parsed": 384,
-          "unit": "px",
-          "kind": "physical",
-          "path": "#384-pv-best-row-line167",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/h11-tile-size-results.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Both tile sizes are documented as PV-pipeline conditions in results/h11-tile-size-results.md (512 PV text-only row, line 169; 384 PV best row, line 167)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          954,
-          955
-        ],
-        "section": "Decision 19 \u2014 Rationale item 1, text-only config missing labels"
-      },
-      "claim_text": "1. **Text-only configs** (`verify_*-text.json`): missing the 6 text-only\n   example labels that Phase 3d's `run_h2_pilot.py` sent",
-      "values": [
-        {
-          "quantity": "count of text-only example labels Phase 3d's verifier sent (target/corrected count for verify_*-text.json)",
-          "value_verbatim": "6",
-          "value_parsed": 6,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.text_only_labels",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "prompts/configs/verify_adversarial-text.json",
-        "path": "len:$.text_only_labels"
-      },
-      "method": "read",
-      "notes": "prompts/configs/verify_adversarial-text.json (post-fix) text_only_labels array has exactly 6 entries, matching Phase 3d's run_h2_pilot.py baseline."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          956,
-          957
-        ],
-        "section": "Decision 19 \u2014 Rationale item 2, image config example-count drift"
-      },
-      "claim_text": "2. **Image configs** (`verify_*.json`): 9 examples instead of Phase 3d's 6,\n   with modified labels and 3 extra null examples",
-      "values": [
-        {
-          "quantity": "example count, pre-correction image verifier configs (erroneous)",
-          "value_verbatim": "9",
-          "value_parsed": 9,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "historical"
-        },
-        {
-          "quantity": "example count, Phase 3d's actual baseline image verifier config (target/corrected count)",
-          "value_verbatim": "6",
-          "value_parsed": 6,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.examples",
-          "method": "read"
-        },
-        {
-          "quantity": "count of extra null examples in the pre-correction image verifier configs (erroneous)",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "historical"
-        }
-      ],
-      "anchor": {
-        "file": "prompts/configs/verify_adversarial.json",
-        "path": "len:$.examples"
-      },
-      "method": "read",
-      "notes": "prompts/configs/verify_adversarial.json (post-fix) examples array has exactly 6 entries, matching Phase 3d's baseline. The pre-correction '9 examples... 3 extra null examples' describes the erroneous, since-corrected state; not preserved as a separate committed artefact, so marked historical with no anchor (schema permits anchor:null for method historical)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          974,
-          975
-        ],
-        "section": "Decision 19 \u2014 Result paragraph, v2 corrected F1 values and gap"
-      },
-      "claim_text": "v2 corrected results: 512 PV F1=0.732 (was 0.796 pre-correction), 384 PV\nbest F1=0.682. Gap narrowed from 11.2 pp to 5.0 pp, though model drift",
-      "values": [
-        {
-          "quantity": "F1, 512 PV text-only, v2 corrected (E33)",
-          "value_verbatim": "0.732",
-          "value_parsed": 0.732,
-          "unit": null,
-          "kind": "metric",
-          "path": "#512-pv-text-only-E33-corrected-v2-row-line169",
-          "method": "read"
-        },
-        {
-          "quantity": "F1, 512 PV text-only, pre-correction (historical)",
-          "value_verbatim": "0.796",
-          "value_parsed": 0.796,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "historical"
-        },
-        {
-          "quantity": "F1, 384 PV best (adversarial text, t=0.2), v2 corrected",
-          "value_verbatim": "0.682",
-          "value_parsed": 0.682,
-          "unit": null,
-          "kind": "metric",
-          "path": "#384-pv-best-adversarial-text-row-line167",
-          "method": "read"
-        },
-        {
-          "quantity": "gap (pp) between 512 PV and 384 PV, pre-correction",
-          "value_verbatim": "11.2",
-          "value_parsed": 11.2,
-          "unit": "pp",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100*(a-b)",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/h11-tile-size-results.md",
-              "path": "#primary-finding-512-pv-f1-0796-line100"
-            },
-            {
-              "name": "b",
-              "file": "results/h11-tile-size-results.md",
-              "path": "#primary-finding-384-pv-f1-0684-line99"
-            }
-          ]
-        },
-        {
-          "quantity": "gap (pp) between 512 PV and 384 PV, v2 corrected",
-          "value_verbatim": "5.0",
-          "value_parsed": 5.0,
-          "unit": "pp",
-          "kind": "percentage",
-          "path": "#512-pv-leads-by-5pp-line186-326",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/h11-tile-size-results.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "0.732/0.682 are the v2-corrected values at results/h11-tile-size-results.md lines 169/167. 0.796 is the pre-correction value quoted historically (matches h11-tile-size-results.md line 100 and line 177). The 5.0 pp gap is directly stated in that same document (lines 186, 326: 'the 512 pipeline leads by 5.0 pp'). The 11.2 pp figure is not directly stated anywhere found; it derives arithmetically from the doc's own 'Primary Finding' paragraph (F1=0.796 512 vs F1=0.684 384, lines 99-100), which is itself apparently a stale pre-correction summary not updated to the v2 384 figure (0.682) used elsewhere in the same document \u2014 flagged for triage, not adjudicated here."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          986,
-          986
-        ],
-        "section": "Decision 20 \u2014 decision statement, replication parameters"
-      },
-      "claim_text": "**Decision**: Run a clean N=30 consensus replication at T=0.7 with both",
-      "values": [
-        {
-          "quantity": "consensus voting pool size (N), Decision 20 clean replication",
-          "value_verbatim": "30",
-          "value_parsed": 30,
-          "unit": null,
-          "kind": "count",
-          "path": "$.execution.runs",
-          "method": "read"
-        },
-        {
-          "quantity": "temperature, Decision 20 clean replication",
-          "value_verbatim": "0.7",
-          "value_parsed": 0.7,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.fixed.temperature",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "studies/phase3a-replication.yaml",
-        "path": null
-      },
-      "method": "read",
-      "notes": "studies/phase3a-replication.yaml: execution.runs=30, fixed.temperature=0.7."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1000,
-          1000
-        ],
-        "section": "Decision 20 \u2014 Rationale item 1, original thinking-level comparison"
-      },
-      "claim_text": "1. The Phase 3a thinking-level comparison (F1=0.751 vs 0.683) is valid",
-      "values": [
-        {
-          "quantity": "F1, Phase 3a original consensus, Track 2 Text HIGH thinking level, 20 m",
-          "value_verbatim": "0.751",
-          "value_parsed": 0.751,
-          "unit": null,
-          "kind": "metric",
-          "path": "#t2-txt-high-20m-f1-0751",
-          "method": "read"
-        },
-        {
-          "quantity": "F1, Phase 3a original consensus, Track 2 Text MINIMAL thinking level, 20 m",
-          "value_verbatim": "0.683",
-          "value_parsed": 0.683,
-          "unit": null,
-          "kind": "metric",
-          "path": "#t2-txt-min-20m-f1-0683",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "archive/results-60-tile-validation/phase3a-consensus/phase3a-spatial-tolerance-sensitivity.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Matches archive/results-60-tile-validation/phase3a-consensus/phase3a-spatial-tolerance-sensitivity.md lines 352 (T2 Text HIGH, 20 m, F1=0.751) and 348 (T2 Text MINIMAL, 20 m, F1=0.683)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1004,
-          1005
-        ],
-        "section": "Decision 20 \u2014 Rationale item 3, historical range for drift test"
-      },
-      "claim_text": "3. The replication also serves as a model drift test \u2014 if minimal\n   replication departs from the historical range [0.683, 0.751], the",
-      "values": [
-        {
-          "quantity": "historical F1 range lower bound (minimal thinking), Phase 3a original consensus, used as drift-test floor",
-          "value_verbatim": "0.683",
-          "value_parsed": 0.683,
-          "unit": null,
-          "kind": "metric",
-          "path": "#t2-txt-min-20m-f1-0683",
-          "method": "read"
-        },
-        {
-          "quantity": "historical F1 range upper bound (HIGH thinking), Phase 3a original consensus, used as drift-test ceiling",
-          "value_verbatim": "0.751",
-          "value_parsed": 0.751,
-          "unit": null,
-          "kind": "metric",
-          "path": "#t2-txt-high-20m-f1-0751",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "archive/results-60-tile-validation/phase3a-consensus/phase3a-spatial-tolerance-sensitivity.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Restates the 0.683/0.751 figures already anchored for the line-1000 claim above (reversed order: [min, HIGH]); kept as a separate claim row per full-enumeration (rule 3), distinct verbatim mention."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1010,
-          1012
-        ],
-        "section": "Decision 20 \u2014 Result paragraph, clean replication F1 values and delta"
-      },
-      "claim_text": "Replication confirms the direction: HIGH F1=0.735 vs minimal F1=0.699\n(+3.6 pp). Model drift is modest \u2014 minimal replication (0.699) falls\nwithin historical CI.",
-      "values": [
-        {
-          "quantity": "F1, clean replication (Decision 20), HIGH thinking level, T=0.7 consensus, N=30",
-          "value_verbatim": "0.735",
-          "value_parsed": 0.735,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.optima.global_optimum.f1",
-          "method": "read"
-        },
-        {
-          "quantity": "F1, clean replication (Decision 20), minimal thinking level, T=0.7 consensus, N=30",
-          "value_verbatim": "0.699",
-          "value_parsed": 0.699,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.optima.global_optimum.f1",
-          "method": "read"
-        },
-        {
-          "quantity": "F1 delta, HIGH minus minimal thinking level, clean replication, in percentage points",
-          "value_verbatim": "3.6",
-          "value_parsed": 3.6,
-          "unit": "pp",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100*(a-b)",
-          "operands": [
-            {
-              "name": "a",
-              "file": "archive/results-60-tile-validation/phase3a-replication/high/consensus-analysis-report.json",
-              "path": "$.optima.global_optimum.f1"
-            },
-            {
-              "name": "b",
-              "file": "archive/results-60-tile-validation/phase3a-replication/minimal/consensus-analysis-report.json",
-              "path": "$.optima.global_optimum.f1"
-            }
-          ]
-        },
-        {
-          "quantity": "F1, minimal replication, restated for drift-test comparison",
-          "value_verbatim": "0.699",
-          "value_parsed": 0.699,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.optima.global_optimum.f1",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "archive/results-60-tile-validation/phase3a-replication/high/consensus-analysis-report.json",
-        "path": "$.optima.global_optimum.f1"
-      },
-      "method": "read",
-      "notes": "high/consensus-analysis-report.json records optima.global_optimum.f1=0.7351 (rounds to 0.735); minimal/consensus-analysis-report.json records the equivalent field at 0.699 (structure confirmed, not value-verified per rule 4). Same result reported in docs/methodology/preregistration/hypothesis-tracking.md line 122 (see 014.json extraction of that document); extracted independently here as a distinct decisions-log.md mention."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1030,
-          1030
-        ],
-        "section": "Decision 21 \u2014 Rationale, Batch API cost multiplier"
-      },
-      "claim_text": "enable comprehensive statistical reruns at 4\u00d7 lower cost (Batch API pricing).",
-      "values": [
-        {
-          "quantity": "cost reduction multiplier, Flash-Lite + Batch API pricing vs standard real-time pricing",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": "\u00d7",
-          "kind": "ratio",
-          "path": "#totals-flash-lite-2x-4x-batch",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "archive/planning/flash-lite-transfer-pilot.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Named path `planning/flash-lite-transfer-pilot.md` in the Evidence line (1062) has moved to archive/planning/flash-lite-transfer-pilot.md, which states directly: \"Flash-Lite's 2x lower cost (4x with Batch API) would make comprehensive reruns... affordable\", confirming the 4x figure verbatim."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1032,
-          1032
-        ],
-        "section": "Decision 21 \u2014 Stage 1 capability gate threshold and variant count"
-      },
-      "claim_text": "Stage 1 (basic capability gate, F1 > 0.2) failed across all three variants:",
-      "values": [
-        {
-          "quantity": "F1 threshold for the Flash-Lite Stage 1 capability gate",
-          "value_verbatim": "0.2",
-          "value_parsed": 0.2,
-          "unit": null,
-          "kind": "parameter",
-          "path": "#stage1-gate-f1-02",
-          "method": "read"
-        },
-        {
-          "quantity": "count of Flash-Lite Stage 1 variants tested",
-          "value_verbatim": "three",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "archive/planning/flash-lite-transfer-pilot.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "'Gate: F1 > 0.2 at 20 m tolerance' is stated directly in archive/planning/flash-lite-transfer-pilot.md \u00a7 Stage 1. The 'three variants' count matches the 3-row results table immediately below (lines 1034-1038)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1036,
-          1036
-        ],
-        "section": "Decision 21 \u2014 Stage 1 results table, Minimal T=0.0 row"
-      },
-      "claim_text": "| Minimal T=0.0 | 282 | 21 | 261 | 0.111 |",
-      "values": [
-        {
-          "quantity": "temperature, Flash-Lite Stage 1 Minimal T=0.0 variant",
-          "value_verbatim": "0.0",
-          "value_parsed": 0.0,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "detection count, Flash-Lite Stage 1 Minimal T=0.0 variant",
-          "value_verbatim": "282",
-          "value_parsed": 282,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.features",
-          "method": "read"
-        },
-        {
-          "quantity": "true positive count, Flash-Lite Stage 1 Minimal T=0.0 variant",
-          "value_verbatim": "21",
-          "value_parsed": 21,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "false positive count, Flash-Lite Stage 1 Minimal T=0.0 variant",
-          "value_verbatim": "261",
-          "value_parsed": 261,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "F1, Flash-Lite Stage 1 Minimal T=0.0 variant",
-          "value_verbatim": "0.111",
-          "value_parsed": 0.111,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "archive/outputs-experimental-pilot/flash-lite-pilot/stage1-optimal/detections-detect_brief-text-3.1-flash-lite-2026-03-15.geojson",
-        "path": "len:$.features"
-      },
-      "method": "read",
-      "notes": "The detections geojson at archive/outputs-experimental-pilot/flash-lite-pilot/stage1-optimal/ gives a mechanically countable detection count via len:$.features. TP/FP/F1 require an evaluation artefact not located alongside the raw detections/meta/tiles files present there; left anchor-unknown. Temperature (0.0) is asserted design metadata, not independently verified against the run's meta.json in this pass."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1037,
-          1037
-        ],
-        "section": "Decision 21 \u2014 Stage 1 results table, Minimal T=0.3 row"
-      },
-      "claim_text": "| Minimal T=0.3 | 267 | 23 | 244 | 0.126 |",
-      "values": [
-        {
-          "quantity": "temperature, Flash-Lite Stage 1 Minimal T=0.3 variant",
-          "value_verbatim": "0.3",
-          "value_parsed": 0.3,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "detection count, Flash-Lite Stage 1 Minimal T=0.3 variant",
-          "value_verbatim": "267",
-          "value_parsed": 267,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.features",
-          "method": "read"
-        },
-        {
-          "quantity": "true positive count, Flash-Lite Stage 1 Minimal T=0.3 variant",
-          "value_verbatim": "23",
-          "value_parsed": 23,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "false positive count, Flash-Lite Stage 1 Minimal T=0.3 variant",
-          "value_verbatim": "244",
-          "value_parsed": 244,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "F1, Flash-Lite Stage 1 Minimal T=0.3 variant",
-          "value_verbatim": "0.126",
-          "value_parsed": 0.126,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "archive/outputs-experimental-pilot/flash-lite-pilot/stage1-t0.3/detections-detect_brief-text-3.1-flash-lite-2026-03-15.geojson",
-        "path": "len:$.features"
-      },
-      "method": "read",
-      "notes": "Mirrors the Minimal T=0.0 row's anchoring approach; detections geojson at the stage1-t0.3 output directory."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1038,
-          1038
-        ],
-        "section": "Decision 21 \u2014 Stage 1 results table, HIGH T=0.0 row"
-      },
-      "claim_text": "| HIGH T=0.0 | 89 | 9 | 80 | 0.097 |",
-      "values": [
-        {
-          "quantity": "temperature, Flash-Lite Stage 1 HIGH T=0.0 variant",
-          "value_verbatim": "0.0",
-          "value_parsed": 0.0,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "detection count, Flash-Lite Stage 1 HIGH T=0.0 variant",
-          "value_verbatim": "89",
-          "value_parsed": 89,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.features",
-          "method": "read"
-        },
-        {
-          "quantity": "true positive count, Flash-Lite Stage 1 HIGH T=0.0 variant",
-          "value_verbatim": "9",
-          "value_parsed": 9,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "false positive count, Flash-Lite Stage 1 HIGH T=0.0 variant",
-          "value_verbatim": "80",
-          "value_parsed": 80,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "F1, Flash-Lite Stage 1 HIGH T=0.0 variant",
-          "value_verbatim": "0.097",
-          "value_parsed": 0.097,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "archive/outputs-experimental-pilot/flash-lite-pilot/stage1-high-thinking/detections-detect_brief-text-3.1-flash-lite-2026-03-15.geojson",
-        "path": "len:$.features"
-      },
-      "method": "read",
-      "notes": "Mirrors the other Stage 1 rows' anchoring approach; detections geojson at the stage1-high-thinking output directory."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1041,
-          1042
-        ],
-        "section": "Decision 21 \u2014 MMMU Pro gap and F1 collapse characterisation"
-      },
-      "claim_text": "from other cartographic elements. The 4.4 pp MMMU Pro gap (76.8% vs 81.2%)\ntranslates to a ~43 pp F1 collapse on this task.",
-      "values": [
-        {
-          "quantity": "MMMU Pro benchmark score gap (percentage points), Flash-Lite vs Flash (vendor benchmark)",
-          "value_verbatim": "4.4",
-          "value_parsed": 4.4,
-          "unit": "pp",
-          "kind": "percentage",
-          "path": null,
-          "method": "external"
-        },
-        {
-          "quantity": "MMMU Pro benchmark score, Flash-Lite (vendor benchmark)",
-          "value_verbatim": "76.8",
-          "value_parsed": 76.8,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "external"
-        },
-        {
-          "quantity": "MMMU Pro benchmark score, Flash (vendor benchmark)",
-          "value_verbatim": "81.2",
-          "value_parsed": 81.2,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "external"
-        },
-        {
-          "quantity": "approximate F1 collapse (percentage points) attributed to the MMMU Pro gap, this project's own task",
-          "value_verbatim": "~43",
-          "value_parsed": 43,
-          "unit": "pp",
-          "kind": "percentage",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "external",
-      "notes": "MMMU Pro scores are third-party vendor-reported benchmark figures (rule 3 'external'; no repo artefact decides them). The '~43 pp F1 collapse' is this project's own rough characterisation relating the MMMU gap to the observed Flash-Lite F1 collapse; not a clean single-hop derivation from any two committed values found, left anchor-unknown."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1049,
-          1050
-        ],
-        "section": "Decision 21 \u2014 Alternative 2, MMMU Pro cross-model screening threshold"
-      },
-      "claim_text": "2. **Try other cheaper models (Claude Haiku, GPT-4o-mini)**: Deferred to\n   H14 cross-model testing. Models with MMMU Pro < 77% are likely to fail",
-      "values": [
-        {
-          "quantity": "MMMU Pro score threshold below which cheaper models are predicted to fail similarly to Flash-Lite (H14 screening criterion)",
-          "value_verbatim": "77",
-          "value_parsed": 77,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Proposed future H14 screening criterion, not yet executed; closely tracks (but is not identical to) Flash-Lite's own 76.8% MMMU Pro score quoted at line 1041. No committed artefact fixes this threshold."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1057,
-          1060
-        ],
-        "section": "Decision 21 \u2014 Implications, Flash vendor pricing and pilot spend"
-      },
-      "claim_text": "Full-scale statistical reruns must use Flash pricing ($0.50/M input,\n$3.00/M output standard; $0.25/$1.50 Batch API). This constrains the\nbudget for comprehensive reruns. The staged pilot design limited wasted\nbudget to ~$0.05.",
-      "values": [
-        {
-          "quantity": "Flash standard real-time API price, per 1M input tokens (USD)",
-          "value_verbatim": "0.50",
-          "value_parsed": 0.5,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "external"
-        },
-        {
-          "quantity": "Flash standard real-time API price, per 1M output tokens (USD)",
-          "value_verbatim": "3.00",
-          "value_parsed": 3.0,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "external"
-        },
-        {
-          "quantity": "Flash Batch API price, per 1M input tokens (USD)",
-          "value_verbatim": "0.25",
-          "value_parsed": 0.25,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "external"
-        },
-        {
-          "quantity": "Flash Batch API price, per 1M output tokens (USD)",
-          "value_verbatim": "1.50",
-          "value_parsed": 1.5,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "external"
-        },
-        {
-          "quantity": "total wasted budget (USD), staged Flash-Lite pilot design",
-          "value_verbatim": "~$0.05",
-          "value_parsed": 0.05,
-          "unit": "USD",
-          "kind": "cost",
-          "path": "#totals-table-total-005",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "archive/planning/flash-lite-transfer-pilot.md",
-        "path": "#totals-table-total-005"
-      },
-      "method": "external",
-      "notes": "Standard/Batch per-token pricing figures are vendor pricing (rule 3 'external'). The ~$0.05 wasted-budget figure is directly confirmed in archive/planning/flash-lite-transfer-pilot.md's own Totals table: 'Total | 620 | ~$0.05'."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1080,
-          1080
-        ],
-        "section": "Decision 22 \u2014 Rationale item 1, 60-tile pilot F1 improvement"
-      },
-      "claim_text": "1. The 60-tile pilot demonstrated +0.14 F1 improvement (0.605 \u2192 0.796) from adding a verifier stage (Obs 150)",
-      "values": [
-        {
-          "quantity": "F1 improvement (document's own stated delta) from adding a verifier stage, 60-tile pilot",
-          "value_verbatim": "0.14",
-          "value_parsed": 0.14,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "b-a",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/pv/phase1/pv-phase1-analysis.md",
-              "path": "#proposer-only-baseline-f1-06052"
-            },
-            {
-              "name": "b",
-              "file": "results/phase3d-verifier-experiments-abc.md",
-              "path": "#text-only-single-track-f1-0796-line44"
-            }
-          ]
-        },
-        {
-          "quantity": "tile count, pilot corpus",
-          "value_verbatim": "60",
-          "value_parsed": 60,
-          "unit": null,
-          "kind": "count",
-          "path": "inputs/tiles/validation_manifest.json#len:$",
-          "method": "read"
-        },
-        {
-          "quantity": "F1, proposer-only baseline (pre-verifier)",
-          "value_verbatim": "0.605",
-          "value_parsed": 0.605,
-          "unit": null,
-          "kind": "metric",
-          "path": "results/pv/phase1/pv-phase1-analysis.md#proposer-only-baseline-f1-06052",
-          "method": "read"
-        },
-        {
-          "quantity": "F1, with verifier stage added (60-tile pilot benchmark)",
-          "value_verbatim": "0.796",
-          "value_parsed": 0.796,
-          "unit": null,
-          "kind": "metric",
-          "path": "#text-only-single-track-f1-0796-line44",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/phase3d-verifier-experiments-abc.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Both cited evidence files for Decision 22 (line 1088) contain matching figures: results/phase3d-verifier-experiments-abc.md line 44 states 'Text-only single-track (ref.) | 0.796'; results/pv/phase1/pv-phase1-analysis.md states 'F1 from 0.6052 (proposer only) to 0.7669 (with verifier)... consistent with the pilot result (F1=0.796 on 60 tiles)' \u2014 0.6052 rounds to the quoted 0.605. Tile count 60 anchors to inputs/tiles/validation_manifest.json but that file is not the file this claim's F1 values come from; recorded generically as count kind with len:$ against the 60-tile validation manifest. The document's own arithmetic (0.796 \u2212 0.605 = 0.191) does not equal the quoted +0.14 \u2014 recorded via 'arithmetic' method per rule 3 so the harness can surface this as a potential inconsistency; not adjudicated here per rule 4."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1081,
-          1081
-        ],
-        "section": "Decision 22 \u2014 Rationale item 2, zero additional proposer API calls"
-      },
-      "claim_text": "2. The PV approach reuses all existing proposer data \u2014 zero additional proposer API calls needed",
-      "values": [
-        {
-          "quantity": "count of additional proposer API calls required by the PV approach (architectural characterisation)",
-          "value_verbatim": "zero",
-          "value_parsed": 0,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Definitional/architectural claim (PV reuses existing proposer detections by design); not a value read from a specific committed artefact."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1082,
-          1082
-        ],
-        "section": "Decision 22 \u2014 Rationale item 3, verifier cost per candidate"
-      },
-      "claim_text": "3. Verifier cost is negligible (~$0.0002 per candidate) compared to proposer cost",
-      "values": [
-        {
-          "quantity": "estimated verifier cost per candidate (USD)",
-          "value_verbatim": "~$0.0002",
-          "value_parsed": 0.0002,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "external"
-        }
-      ],
-      "anchor": null,
-      "method": "external",
-      "notes": "Vendor-pricing-derived per-candidate cost estimate (rule 3 'external'); no repo artefact audits it."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1096,
-          1096
-        ],
-        "section": "Decision 23 \u2014 decision statement, crop size and padding"
-      },
-      "claim_text": "**Decision**: Use 150\u00d7150 pixel crops (padding=75) as the default crop size for the PV verifier. Users may adjust without meaningful performance change.",
-      "values": [
-        {
-          "quantity": "crop width (px), default PV verifier crop size",
-          "value_verbatim": "150",
-          "value_parsed": 150,
-          "unit": "px",
-          "kind": "physical",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "2*a",
-          "operands": [
-            {
-              "name": "a",
-              "file": "scripts/extract_candidates.py",
-              "path": "DEFAULT_PADDING"
-            }
-          ]
-        },
-        {
-          "quantity": "crop height (px), default PV verifier crop size",
-          "value_verbatim": "150",
-          "value_parsed": 150,
-          "unit": "px",
-          "kind": "physical",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "2*a",
-          "operands": [
-            {
-              "name": "a",
-              "file": "scripts/extract_candidates.py",
-              "path": "DEFAULT_PADDING"
-            }
-          ]
-        },
-        {
-          "quantity": "padding (px), default PV verifier crop extraction",
-          "value_verbatim": "75",
-          "value_parsed": 75,
-          "unit": "px",
-          "kind": "physical",
-          "path": "DEFAULT_PADDING",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "scripts/extract_candidates.py",
-        "path": "DEFAULT_PADDING"
-      },
-      "method": "read",
-      "notes": "scripts/extract_candidates.py:66 sets DEFAULT_PADDING = 75; the document itself states 'crop size = padding \u00d7 2' (line 1111), giving the 150\u00d7150 = 2\u00d775 derivation."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1100,
-          1100
-        ],
-        "section": "Decision 23 \u2014 Alternatives considered, 75x75 px option"
-      },
-      "claim_text": "- 75\u00d775 px (tighter, better signal-to-noise ratio for small symbols)",
-      "values": [
-        {
-          "quantity": "crop width (px), rejected tighter-crop alternative",
-          "value_verbatim": "75",
-          "value_parsed": 75,
-          "unit": "px",
-          "kind": "physical",
-          "path": "#crop-size-75px-row",
-          "method": "read"
-        },
-        {
-          "quantity": "crop height (px), rejected tighter-crop alternative",
-          "value_verbatim": "75",
-          "value_parsed": 75,
-          "unit": "px",
-          "kind": "physical",
-          "path": "#crop-size-75px-row",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/pv/phase1/pv-phase1-analysis.md",
-        "path": "#crop-size-75px-row"
-      },
-      "method": "read",
-      "notes": "Matches the '75 px' row of the empirical crop-size sweep table in results/pv/phase1/pv-phase1-analysis.md (F1=0.7681) \u2014 this alternative was, in fact, empirically tested, not merely proposed."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1101,
-          1101
-        ],
-        "section": "Decision 23 \u2014 Alternatives considered, 300x300 px option"
-      },
-      "claim_text": "- 300\u00d7300 px (more context for disambiguation)",
-      "values": [
-        {
-          "quantity": "crop width (px), rejected wider-crop alternative",
-          "value_verbatim": "300",
-          "value_parsed": 300,
-          "unit": "px",
-          "kind": "physical",
-          "path": "#crop-size-300px-row",
-          "method": "read"
-        },
-        {
-          "quantity": "crop height (px), rejected wider-crop alternative",
-          "value_verbatim": "300",
-          "value_parsed": 300,
-          "unit": "px",
-          "kind": "physical",
-          "path": "#crop-size-300px-row",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/pv/phase1/pv-phase1-analysis.md",
-        "path": "#crop-size-300px-row"
-      },
-      "method": "read",
-      "notes": "Matches the '300 px' row of the empirical crop-size sweep table (F1=0.7607)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1102,
-          1102
-        ],
-        "section": "Decision 23 \u2014 Alternatives considered, 40x40 px option"
-      },
-      "claim_text": "- 40\u00d740 px (minimal context, smallest possible crop)",
-      "values": [
-        {
-          "quantity": "crop width (px), rejected minimal-crop alternative",
-          "value_verbatim": "40",
-          "value_parsed": 40,
-          "unit": "px",
-          "kind": "physical",
-          "path": "#crop-size-40px-row",
-          "method": "read"
-        },
-        {
-          "quantity": "crop height (px), rejected minimal-crop alternative",
-          "value_verbatim": "40",
-          "value_parsed": 40,
-          "unit": "px",
-          "kind": "physical",
-          "path": "#crop-size-40px-row",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/pv/phase1/pv-phase1-analysis.md",
-        "path": "#crop-size-40px-row"
-      },
-      "method": "read",
-      "notes": "Matches the '40 px' row of the empirical crop-size sweep table (F1=0.7407)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1106,
-          1106
-        ],
-        "section": "Decision 23 \u2014 Rationale item 1, empirical crop-size sweep"
-      },
-      "claim_text": "1. Empirical sweep across 4 crop sizes (40, 76, 150, 300 px) showed F1 is insensitive between 75\u2013300px (Obs 166)",
-      "values": [
-        {
-          "quantity": "count of crop sizes empirically swept",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "count",
-          "path": "#crop-size-sweep-table-4-rows",
-          "method": "read"
-        },
-        {
-          "quantity": "crop size (px), sweep value 1",
-          "value_verbatim": "40",
-          "value_parsed": 40,
-          "unit": "px",
-          "kind": "physical",
-          "path": "#crop-size-40px-row",
-          "method": "read"
-        },
-        {
-          "quantity": "crop size (px), sweep value 2",
-          "value_verbatim": "76",
-          "value_parsed": 76,
-          "unit": "px",
-          "kind": "physical",
-          "path": "#crop-size-75px-row",
-          "method": "read"
-        },
-        {
-          "quantity": "crop size (px), sweep value 3",
-          "value_verbatim": "150",
-          "value_parsed": 150,
-          "unit": "px",
-          "kind": "physical",
-          "path": "#crop-size-150px-row",
-          "method": "read"
-        },
-        {
-          "quantity": "crop size (px), sweep value 4",
-          "value_verbatim": "300",
-          "value_parsed": 300,
-          "unit": "px",
-          "kind": "physical",
-          "path": "#crop-size-300px-row",
-          "method": "read"
-        },
-        {
-          "quantity": "crop-size insensitivity range lower bound (px)",
-          "value_verbatim": "75",
-          "value_parsed": 75,
-          "unit": "px",
-          "kind": "physical",
-          "path": "#crop-size-75px-row",
-          "method": "read"
-        },
-        {
-          "quantity": "crop-size insensitivity range upper bound (px)",
-          "value_verbatim": "300",
-          "value_parsed": 300,
-          "unit": "px",
-          "kind": "physical",
-          "path": "#crop-size-300px-row",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/pv/phase1/pv-phase1-analysis.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The sweep table (results/pv/phase1/pv-phase1-analysis.md \u00a7 Crop Size Sensitivity, Obs 166) has 4 rows: 40, 75, 150, 300 px. This claim's second value is quoted verbatim as '76' but the source table's corresponding row is '75 px' \u2014 recorded faithfully as read/anchored to the 75 px row per rule 4 (extraction does not adjudicate the discrepancy)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1107,
-          1107
-        ],
-        "section": "Decision 23 \u2014 Rationale item 2, sweet-spot context multiplier"
-      },
-      "claim_text": "2. 150px is the sweet spot: mound symbols are ~10\u201320px, so 150px provides 7\u201315\u00d7 context",
-      "values": [
-        {
-          "quantity": "crop size (px), selected default (restated)",
-          "value_verbatim": "150",
-          "value_parsed": 150,
-          "unit": "px",
-          "kind": "physical",
-          "path": "DEFAULT_PADDING",
-          "method": "read"
-        },
-        {
-          "quantity": "mound symbol diameter (px), lower bound",
-          "value_verbatim": "~10",
-          "value_parsed": 10,
-          "unit": "px",
-          "kind": "physical",
-          "path": "#burial-mound-symbol-size-line11",
-          "method": "read"
-        },
-        {
-          "quantity": "mound symbol diameter (px), upper bound",
-          "value_verbatim": "20",
-          "value_parsed": 20,
-          "unit": "px",
-          "kind": "physical",
-          "path": "#burial-mound-symbol-size-line11",
-          "method": "read"
-        },
-        {
-          "quantity": "crop size (px), used to compute context multiplier (restated)",
-          "value_verbatim": "150",
-          "value_parsed": 150,
-          "unit": "px",
-          "kind": "physical",
-          "path": "DEFAULT_PADDING",
-          "method": "read"
-        },
-        {
-          "quantity": "context multiplier, lower bound (crop size \u00f7 largest symbol)",
-          "value_verbatim": "7",
-          "value_parsed": 7,
-          "unit": "\u00d7",
-          "kind": "ratio",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a/c",
-          "operands": [
-            {
-              "name": "a",
-              "file": "scripts/extract_candidates.py",
-              "path": "DEFAULT_PADDING*2"
-            },
-            {
-              "name": "c",
-              "file": "prompts/system-instructions/detect_brief-text.md",
-              "path": "#burial-mound-symbol-size-line11-upper"
-            }
-          ]
-        },
-        {
-          "quantity": "context multiplier, upper bound (crop size \u00f7 smallest symbol)",
-          "value_verbatim": "15",
-          "value_parsed": 15,
-          "unit": "\u00d7",
-          "kind": "ratio",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a/b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "scripts/extract_candidates.py",
-              "path": "DEFAULT_PADDING*2"
-            },
-            {
-              "name": "b",
-              "file": "prompts/system-instructions/detect_brief-text.md",
-              "path": "#burial-mound-symbol-size-line11-lower"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "prompts/system-instructions/detect_brief-text.md",
-        "path": "#burial-mound-symbol-size-line11"
-      },
-      "method": "read",
-      "notes": "prompts/system-instructions/detect_brief-text.md:11 states 'Burial mound (kurgan): ... ~10-20 pixels diameter.' 150/10=15 (exact); 150/20=7.5 (quoted as 7, floor-rounded) \u2014 both derivable from the 150 px crop size (2\u00d7DEFAULT_PADDING) divided by the symbol-size bounds."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1108,
-          1108
-        ],
-        "section": "Decision 23 \u2014 Rationale item 3, 40px degradation vs sweet spot"
-      },
-      "claim_text": "3. 40px showed the only noticeable degradation (F1 0.741 vs 0.770), confirming a lower bound",
-      "values": [
-        {
-          "quantity": "crop size (px), degraded condition",
-          "value_verbatim": "40",
-          "value_parsed": 40,
-          "unit": "px",
-          "kind": "physical",
-          "path": "#crop-size-40px-row",
-          "method": "read"
-        },
-        {
-          "quantity": "F1, 40 px crop (degraded)",
-          "value_verbatim": "0.741",
-          "value_parsed": 0.741,
-          "unit": null,
-          "kind": "metric",
-          "path": "#crop-size-40px-row",
-          "method": "read"
-        },
-        {
-          "quantity": "F1, 150 px crop (sweet-spot default, comparison)",
-          "value_verbatim": "0.770",
-          "value_parsed": 0.77,
-          "unit": null,
-          "kind": "metric",
-          "path": "#crop-size-150px-row",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/pv/phase1/pv-phase1-analysis.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "40 px row F1=0.7407 rounds to the quoted 0.741. The 150 px row F1=0.7669 rounds to 0.767, not the quoted 0.770 \u2014 recorded faithfully (rule 4, not adjudicated); anchored to the same crop-size sweep table."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1109,
-          1109
-        ],
-        "section": "Decision 23 \u2014 Rationale item 4, 300px vs 150px"
-      },
-      "claim_text": "4. 300px was marginally worse than 150px, suggesting additional context adds noise",
-      "values": [
-        {
-          "quantity": "crop size (px), condition marginally worse than the default",
-          "value_verbatim": "300",
-          "value_parsed": 300,
-          "unit": "px",
-          "kind": "physical",
-          "path": "#crop-size-300px-row",
-          "method": "read"
-        },
-        {
-          "quantity": "crop size (px), default (comparison)",
-          "value_verbatim": "150",
-          "value_parsed": 150,
-          "unit": "px",
-          "kind": "physical",
-          "path": "#crop-size-150px-row",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/pv/phase1/pv-phase1-analysis.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Restates the 300 px (F1=0.7607) vs 150 px (F1=0.7669) comparison from the same crop-size sweep table."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1111,
-          1111
-        ],
-        "section": "Decision 23 \u2014 Implementation line, DEFAULT_PADDING constant"
-      },
-      "claim_text": "**Implementation**: `DEFAULT_PADDING = 75` in `extract_candidates.py` (crop size = padding \u00d7 2)",
-      "values": [
-        {
-          "quantity": "padding constant (px), PV verifier crop extraction (restated)",
-          "value_verbatim": "75",
-          "value_parsed": 75,
-          "unit": "px",
-          "kind": "physical",
-          "path": "DEFAULT_PADDING",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "scripts/extract_candidates.py",
-        "path": "DEFAULT_PADDING"
-      },
-      "method": "read",
-      "notes": "Restates the DEFAULT_PADDING=75 constant already anchored for the line-1096 claim above; distinct verbatim mention, extracted separately per full-enumeration (rule 3)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1121,
-          1121
-        ],
-        "section": "Decision 24 \u2014 decision statement, N=1 vs N=5"
-      },
-      "claim_text": "**Decision**: Use N=1 single-pass verification rather than N=5 consensus voting for the verifier stage. Consensus voting adds no significant value at the verification stage.",
-      "values": [
-        {
-          "quantity": "verifier pass count, selected default",
-          "value_verbatim": "1",
-          "value_parsed": 1,
-          "unit": null,
-          "kind": "count",
-          "path": "#consensus-n1-t00-row",
-          "method": "read"
-        },
-        {
-          "quantity": "verifier pass count, rejected consensus alternative",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": null,
-          "kind": "count",
-          "path": "#consensus-n5-t07-row",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/pv/phase1/pv-phase1-analysis.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Matches the 'Consensus N=1 vs N=5 (Obs 167)' table in results/pv/phase1/pv-phase1-analysis.md."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1125,
-          1126
-        ],
-        "section": "Decision 24 \u2014 Alternatives considered, N=5 and N=3"
-      },
-      "claim_text": "- N=5 consensus at T=0.7 (matching proposer consensus approach)\n- N=3 consensus as a lighter alternative",
-      "values": [
-        {
-          "quantity": "verifier pass count, N=5 alternative",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": null,
-          "kind": "count",
-          "path": "#consensus-n5-t07-row",
-          "method": "read"
-        },
-        {
-          "quantity": "temperature, N=5 alternative",
-          "value_verbatim": "0.7",
-          "value_parsed": 0.7,
-          "unit": null,
-          "kind": "parameter",
-          "path": "#consensus-n5-t07-row",
-          "method": "read"
-        },
-        {
-          "quantity": "verifier pass count, N=3 alternative (untested)",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "results/pv/phase1/pv-phase1-analysis.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "N=5/T=0.7 matches the pv-phase1-analysis.md consensus table row. N=3 for the *verifier* stage (as opposed to the unrelated proposer-side 3-of-10 consensus in PV Phase 2) does not appear to have been tested; no artefact located, left anchor-unknown."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1130,
-          1130
-        ],
-        "section": "Decision 24 \u2014 Rationale item 1, N=5 vs N=1 F1 comparison"
-      },
-      "claim_text": "1. N=5 T=0.7 consensus produced F1=0.774 vs N=1 T=0.0 at F1=0.770 \u2014 a +0.004 difference well within CI overlap (Obs 167)",
-      "values": [
-        {
-          "quantity": "verifier pass count, N=5 consensus",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": null,
-          "kind": "count",
-          "path": "#consensus-n5-t07-row",
-          "method": "read"
-        },
-        {
-          "quantity": "temperature, N=5 consensus",
-          "value_verbatim": "0.7",
-          "value_parsed": 0.7,
-          "unit": null,
-          "kind": "parameter",
-          "path": "#consensus-n5-t07-row",
-          "method": "read"
-        },
-        {
-          "quantity": "F1, N=5 T=0.7 consensus verifier",
-          "value_verbatim": "0.774",
-          "value_parsed": 0.774,
-          "unit": null,
-          "kind": "metric",
-          "path": "#consensus-n5-t07-row",
-          "method": "read"
-        },
-        {
-          "quantity": "verifier pass count, N=1 single-pass",
-          "value_verbatim": "1",
-          "value_parsed": 1,
-          "unit": null,
-          "kind": "count",
-          "path": "#consensus-n1-t00-row",
-          "method": "read"
-        },
-        {
-          "quantity": "temperature, N=1 single-pass",
-          "value_verbatim": "0.0",
-          "value_parsed": 0.0,
-          "unit": null,
-          "kind": "parameter",
-          "path": "#consensus-n1-t00-row",
-          "method": "read"
-        },
-        {
-          "quantity": "F1, N=1 T=0.0 single-pass verifier",
-          "value_verbatim": "0.770",
-          "value_parsed": 0.77,
-          "unit": null,
-          "kind": "metric",
-          "path": "#consensus-n1-t00-row",
-          "method": "read"
-        },
-        {
-          "quantity": "F1 difference, N=5 consensus minus N=1 single-pass (document's own stated delta)",
-          "value_verbatim": "0.004",
-          "value_parsed": 0.004,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "b-a",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/pv/phase1/pv-phase1-analysis.md",
-              "path": "#consensus-n1-t00-row"
-            },
-            {
-              "name": "b",
-              "file": "results/pv/phase1/pv-phase1-analysis.md",
-              "path": "#consensus-n5-t07-row"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/pv/phase1/pv-phase1-analysis.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "N=5,T=0.7 row: F1=0.7737 (rounds to quoted 0.774). N=1,T=0.0 row: F1=0.7669 (rounds to 0.767, not the quoted 0.770 \u2014 recorded faithfully, not adjudicated). The document's own text at pv-phase1-analysis.md:35 states the delta as '+0.0068', not the +0.004 quoted in decisions-log.md \u2014 recorded via arithmetic method so the harness can surface this."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1132,
-          1132
-        ],
-        "section": "Decision 24 \u2014 Rationale item 3, cost and speed multiplier"
-      },
-      "claim_text": "3. N=1 is 5\u00d7 cheaper in API calls and 5\u00d7 faster in wall-clock time",
-      "values": [
-        {
-          "quantity": "cost multiplier, N=1 vs N=5 verifier consensus (API calls)",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": "\u00d7",
-          "kind": "ratio",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "b/a",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/pv/phase1/pv-phase1-analysis.md",
-              "path": "#consensus-n1-t00-row"
-            },
-            {
-              "name": "b",
-              "file": "results/pv/phase1/pv-phase1-analysis.md",
-              "path": "#consensus-n5-t07-row"
-            }
-          ]
-        },
-        {
-          "quantity": "speed multiplier, N=1 vs N=5 verifier consensus (wall-clock time)",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": "\u00d7",
-          "kind": "ratio",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "b/a",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/pv/phase1/pv-phase1-analysis.md",
-              "path": "#consensus-n1-t00-row"
-            },
-            {
-              "name": "b",
-              "file": "results/pv/phase1/pv-phase1-analysis.md",
-              "path": "#consensus-n5-t07-row"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/pv/phase1/pv-phase1-analysis.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Both 5\u00d7 figures are the trivial pass-count ratio (N=5 \u00f7 N=1 = 5) implied by the same consensus table already anchored above."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1135,
-          1135
-        ],
-        "section": "Decision 24 \u2014 Implementation, default iterations flag"
-      },
-      "claim_text": "**Implementation**: `--iterations 1` default in `run_pv.py verify`",
-      "values": [
-        {
-          "quantity": "default value of the --iterations CLI flag, run_pv.py verify subcommand",
-          "value_verbatim": "1",
-          "value_parsed": 1,
-          "unit": null,
-          "kind": "parameter",
-          "path": "--iterations default",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "scripts/run_pv.py",
-        "path": "--iterations default"
-      },
-      "method": "read",
-      "notes": "Non-JSON anchor (CLI argparse default), legitimate per v1.1 calibration rule allowance for config.py-style constants."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1145,
-          1145
-        ],
-        "section": "Decision 25 \u2014 decision statement, recommended configuration"
-      },
-      "claim_text": "**Decision**: Recommend 10 proposer passes with a 3-of-10 or 5-of-10 vote threshold, followed by a single verifier pass, as the optimal PV pipeline configuration. This achieves F1=0.823\u20130.831.",
-      "values": [
-        {
-          "quantity": "proposer pass count, Decision 25 recommended configuration",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "read"
-        },
-        {
-          "quantity": "vote-threshold numerator, lower-recommended option (3-of-10)",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "parameter",
-          "path": "#leaderboard-row-08-text-3of10",
-          "method": "read"
-        },
-        {
-          "quantity": "vote-threshold denominator, lower-recommended option (3-of-10)",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": null,
-          "kind": "parameter",
-          "path": "#leaderboard-row-08-text-3of10",
-          "method": "read"
-        },
-        {
-          "quantity": "vote-threshold numerator, upper-recommended option (5-of-10)",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": null,
-          "kind": "parameter",
-          "path": "#leaderboard-row-09-text-5of10",
-          "method": "read"
-        },
-        {
-          "quantity": "vote-threshold denominator, upper-recommended option (5-of-10)",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": null,
-          "kind": "parameter",
-          "path": "#leaderboard-row-09-text-5of10",
-          "method": "read"
-        },
-        {
-          "quantity": "F1, recommended configuration, lower bound (text-3of10 + PV)",
-          "value_verbatim": "0.823",
-          "value_parsed": 0.823,
-          "unit": null,
-          "kind": "metric",
-          "path": "#leaderboard-row-08-text-3of10",
-          "method": "read"
-        },
-        {
-          "quantity": "F1, recommended configuration, upper bound (text-5of10 + PV)",
-          "value_verbatim": "0.831",
-          "value_parsed": 0.831,
-          "unit": null,
-          "kind": "metric",
-          "path": "#leaderboard-row-09-text-5of10",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/pv/phase2/pv-phase2-analysis.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Matches the Leaderboard: rank 1 '09 | text-5of10 | ... | 0.8314' (rounds to 0.831) and rank 2 '08 | text-3of10 | ... | 0.8227' (rounds to 0.823). 10 proposer passes matches the '5of10'/'3of10' pool-size-10 naming."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1149,
-          1149
-        ],
-        "section": "Decision 25 \u2014 Alternatives considered, N=1 simple option"
-      },
-      "claim_text": "- N=1 single pass + verifier (simpler, cheaper, F1 \u2248 0.77)",
-      "values": [
-        {
-          "quantity": "proposer pass count, N=1 alternative",
-          "value_verbatim": "1",
-          "value_parsed": 1,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "F1, N=1 single pass + verifier alternative (approx.)",
-          "value_verbatim": "\u2248 0.77",
-          "value_parsed": 0.77,
-          "unit": null,
-          "kind": "metric",
-          "path": "#consensus-n1-t00-row",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/pv/phase1/pv-phase1-analysis.md",
-        "path": "#consensus-n1-t00-row"
-      },
-      "method": "read",
-      "notes": "\u22480.77 matches the N=1,T=0.0 verifier row F1=0.7669 in pv-phase1-analysis.md. The bare 'N=1' proposer-pass-count restatement here is not itself sourced to a specific committed field distinct from the F1 value; left anchor-unknown."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1150,
-          1150
-        ],
-        "section": "Decision 25 \u2014 Alternatives considered, N=30 strict option"
-      },
-      "claim_text": "- N=30 strict consensus + verifier (expensive, HIGH thinking needed, F1 \u2248 0.79)",
-      "values": [
-        {
-          "quantity": "proposer pass count, N=30 strict-consensus alternative",
-          "value_verbatim": "30",
-          "value_parsed": 30,
-          "unit": null,
-          "kind": "count",
-          "path": "#leaderboard-row-26-high-25of30",
-          "method": "read"
-        },
-        {
-          "quantity": "F1, N=30 strict consensus + verifier alternative (approx.)",
-          "value_verbatim": "\u2248 0.79",
-          "value_parsed": 0.79,
-          "unit": null,
-          "kind": "metric",
-          "path": "#leaderboard-row-26-high-25of30",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/pv/phase2/pv-phase2-analysis.md",
-        "path": "#leaderboard-row-26-high-25of30"
-      },
-      "method": "read",
-      "notes": "\u22480.79 most closely matches the 'high-25of30' row (F1=0.7852, the strict/aggressive HIGH-thinking consensus threshold) in the pv-phase2 leaderboard."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1151,
-          1151
-        ],
-        "section": "Decision 25 \u2014 Alternatives considered, N=30 loose union option"
-      },
-      "claim_text": "- N=30 loose union (1-of-30) + verifier (extreme recall but verifier can't filter enough FPs)",
-      "values": [
-        {
-          "quantity": "pool size, N=30 loose-union alternative",
-          "value_verbatim": "30",
-          "value_parsed": 30,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "read"
-        },
-        {
-          "quantity": "vote threshold, 1-of-30 loose union alternative",
-          "value_verbatim": "1",
-          "value_parsed": 1,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/pv/phase2/pv-phase2-analysis.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Matches the '1-of-30' rows (experiments 22 text-1of30, 24 image-1of30) in the pv-phase2 Top-Performer Additions table; ambiguous between the text and image variants so anchored generically to the document (path null)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1155,
-          1155
-        ],
-        "section": "Decision 25 \u2014 Rationale item 1, Goldilocks zone"
-      },
-      "claim_text": "1. Moderate consensus (3-of-10) creates a \"Goldilocks zone\": enough agreement to filter single-run FPs, enough diversity to boost recall above N=1 (Obs 171)",
-      "values": [
-        {
-          "quantity": "vote-threshold numerator, Goldilocks-zone configuration",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "parameter",
-          "path": "#leaderboard-row-08-text-3of10",
-          "method": "read"
-        },
-        {
-          "quantity": "vote-threshold denominator, Goldilocks-zone configuration",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": null,
-          "kind": "parameter",
-          "path": "#leaderboard-row-08-text-3of10",
-          "method": "read"
-        },
-        {
-          "quantity": "proposer pass count, single-run comparison baseline (N=1)",
-          "value_verbatim": "1",
-          "value_parsed": 1,
-          "unit": null,
-          "kind": "count",
-          "path": "#group-a-n1-single-runs-pv",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/pv/phase2/pv-phase2-analysis.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Matches the 'Goldilocks zone' paragraph (line 73) naming 3-of-10 and 5-of-10 as the top performers; N=1 restates the single-run baseline."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1156,
-          1156
-        ],
-        "section": "Decision 25 \u2014 Rationale item 2, new project best vs previous best"
-      },
-      "claim_text": "2. Text 5-of-10 + PV achieves F1=0.831 \u2014 new project best, surpassing HIGH 25-of-30 consensus (F1=0.763) by +0.068",
-      "values": [
-        {
-          "quantity": "vote-threshold numerator, new project-best configuration (5-of-10)",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": null,
-          "kind": "parameter",
-          "path": "#leaderboard-row-09-text-5of10",
-          "method": "read"
-        },
-        {
-          "quantity": "vote-threshold denominator, new project-best configuration (5-of-10)",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": null,
-          "kind": "parameter",
-          "path": "#leaderboard-row-09-text-5of10",
-          "method": "read"
-        },
-        {
-          "quantity": "F1, new project-best configuration (text-5of10 + PV)",
-          "value_verbatim": "0.831",
-          "value_parsed": 0.831,
-          "unit": null,
-          "kind": "metric",
-          "path": "#leaderboard-row-09-text-5of10",
-          "method": "read"
-        },
-        {
-          "quantity": "vote-threshold numerator, previous-best configuration (HIGH 25-of-30)",
-          "value_verbatim": "25",
-          "value_parsed": 25,
-          "unit": null,
-          "kind": "parameter",
-          "path": "#leaderboard-row-26-high-25of30",
-          "method": "read"
-        },
-        {
-          "quantity": "vote-threshold denominator, previous-best configuration (HIGH 25-of-30)",
-          "value_verbatim": "30",
-          "value_parsed": 30,
-          "unit": null,
-          "kind": "parameter",
-          "path": "#leaderboard-row-26-high-25of30",
-          "method": "read"
-        },
-        {
-          "quantity": "F1, previous project-best configuration (HIGH 25-of-30 consensus, no PV)",
-          "value_verbatim": "0.763",
-          "value_parsed": 0.763,
-          "unit": null,
-          "kind": "metric",
-          "path": "#cost-efficiency-high-25of30-no-pv",
-          "method": "read"
-        },
-        {
-          "quantity": "F1 improvement, new project-best over previous project-best",
-          "value_verbatim": "0.068",
-          "value_parsed": 0.068,
-          "unit": null,
-          "kind": "metric",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a-b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/pv/phase2/pv-phase2-analysis.md",
-              "path": "#leaderboard-row-09-text-5of10"
-            },
-            {
-              "name": "b",
-              "file": "results/pv/phase2/pv-phase2-analysis.md",
-              "path": "#cost-efficiency-high-25of30-no-pv"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/pv/phase2/pv-phase2-analysis.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "0.831 matches leaderboard row 09 (F1=0.8314). The 'previous project best without PV' is stated directly as 'HIGH 25-of-30 consensus, F1=0.7620' (line 36) and in the Cost-Efficiency table (line 119, F1=0.7620) \u2014 the quoted 0.763 rounds slightly differently (0.762 vs 0.763), recorded faithfully. 0.8314\u22120.7620=0.0694, close to but not exactly the quoted +0.068 \u2014 recorded via arithmetic per rule 3, not adjudicated."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          1157,
-          1157
-        ],
-        "section": "Decision 25 \u2014 Rationale item 3, pass count and cost efficiency"
-      },
-      "claim_text": "3. The approach uses 11 total API calls per tile (10 proposer + 1 verifier) vs 30 for the previous best \u2014 63% fewer passes at 6.5\u00d7 lower cost per tile (Obs 174)",
-      "values": [
-        {
-          "quantity": "total API calls per tile, recommended configuration (10 proposer + 1 verifier)",
-          "value_verbatim": "11",
-          "value_parsed": 11,
-          "unit": null,
-          "kind": "count",
-          "path": "#cost-efficiency-text-5of10-pv",
-          "method": "read"
-        },
-        {
-          "quantity": "proposer pass count, recommended configuration",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": null,
-          "kind": "count",
-          "path": "#cost-efficiency-text-5of10-pv",
-          "method": "read"
-        },
-        {
-          "quantity": "verifier pass count, recommended configuration",
-          "value_verbatim": "1",
-          "value_parsed": 1,
-          "unit": null,
-          "kind": "count",
-          "path": "#cost-efficiency-text-5of10-pv",
-          "method": "read"
-        },
-        {
-          "quantity": "total passes, previous-best configuration (HIGH 25-of-30, no PV)",
-          "value_verbatim": "30",
-          "value_parsed": 30,
-          "unit": null,
-          "kind": "count",
-          "path": "#cost-efficiency-high-25of30-no-pv",
-          "method": "read"
-        },
-        {
-          "quantity": "percentage reduction in passes, recommended vs previous-best configuration",
-          "value_verbatim": "63",
-          "value_parsed": 63,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "100*(b-a)/b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/pv/phase2/pv-phase2-analysis.md",
-              "path": "#cost-efficiency-text-5of10-pv"
-            },
-            {
-              "name": "b",
-              "file": "results/pv/phase2/pv-phase2-analysis.md",
-              "path": "#cost-efficiency-high-25of30-no-pv"
-            }
-          ]
-        },
-        {
-          "quantity": "cost reduction multiplier per tile, recommended vs previous-best configuration",
-          "value_verbatim": "6.5",
-          "value_parsed": 6.5,
-          "unit": "\u00d7",
-          "kind": "ratio",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "b/a",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/pv/phase2/pv-phase2-analysis.md",
-              "path": "#cost-efficiency-text-5of10-pv-cost"
-            },
-            {
-              "name": "b",
-              "file": "results/pv/phase2/pv-phase2-analysis.md",
-              "path": "#cost-efficiency-high-25of30-no-pv-cost"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/pv/phase2/pv-phase2-analysis.md",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Cost-Efficiency Analysis table: 'text-5of10 + PV | 11 | ~$0.004' and 'HIGH 25-of-30 (no PV) | 30 | ~$0.026'. (30\u221211)/30=63.3% (rounds to 63%); 0.026/0.004=6.5 exactly, matching the quoted 6.5\u00d7 precisely."
+     "quantity": "count of proposer passes (K), Phase 2a runs cited as available for post-hoc Phase 3a voting analysis",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
     }
-  ]
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Document names `outputs/phase2a/analysis_summary.md` as the evidence file (lines 797-799) but that literal path does not exist in the working tree; the nearest surviving artefact is archive/outputs-pre-retest-60-tile/phase2a/analysis_summary.md (confirmed present), which records per-condition F1 aggregates only — no explicit run-count (K) field. Could not locate a committed artefact stating '10' runs for Phase 2a explicitly; K=10 matches the standard Phase 2 pilot run count used elsewhere (e.g. Phase 2d, Phase 2e)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     808,
+     808
+    ],
+    "section": "Decision 17 — Phase 2d decision statement, dual-track design"
+   },
+   "claim_text": "single-factor design across two tracks, with instruction text adapted to",
+   "values": [
+    {
+     "quantity": "count of tracks tested in the Phase 2d H5 OFAT design",
+     "value_verbatim": "two",
+     "value_parsed": 2,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/phase2d-carry-forward-parameters.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "results/phase2d-carry-forward-parameters.md states 'Both tracks were executed in a dual-track OFAT design (Decision 17): Track 1 (image-using)... Track 2 (text-only)...', confirming 2 tracks."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     815,
+     815
+    ],
+    "section": "Decision 17 — Design changes from preregistration table, Library row"
+   },
+   "claim_text": "| Library | Scale-8 (17 examples, incl. 4 HN) | plus-hp (13 examples, no HN) |",
+   "values": [
+    {
+     "quantity": "example count, Scale-8 library, as preregistered for H5",
+     "value_verbatim": "17",
+     "value_parsed": 17,
+     "unit": null,
+     "kind": "count",
+     "path": "#scale-8-library-17-examples-line611-769",
+     "method": "read"
+    },
+    {
+     "quantity": "hard-negative (HN) example count, Scale-8 library, as preregistered for H5",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": null,
+     "kind": "count",
+     "path": "#scale-8-library-hn-4-line769",
+     "method": "read"
+    },
+    {
+     "quantity": "example count, plus-hp library, actual Phase 2d carry-forward",
+     "value_verbatim": "13",
+     "value_parsed": 13,
+     "unit": null,
+     "kind": "count",
+     "path": "prompts/configs/library_plus-hp.json#$.total_examples",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "docs/methodology/preregistration/osf/preregistration.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "v1.1 calibration rule: the 'Preregistered' column values (17, 4) anchor to the lodged osf document — preregistration.md:611 ('Scale-8, 17 examples') and :769 (composition row '4 | 2 | 4 | 4 | 3 | 17', where the 4th column is hard_negative=4). The 'Actual' column value (13) anchors to the committed plus-hp config (cross-file locator, v1.2 amendment 2)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     816,
+     816
+    ],
+    "section": "Decision 17 — Design changes from preregistration table, Design row"
+   },
+   "claim_text": "| Design | 3×3 factorial (M/E × H5) | Single-factor OFAT (H5 at optimal M/E) |",
+   "values": [
+    {
+     "quantity": "row count (M/E levels), preregistered H5 factorial (Decision 17 table)",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": "#h5-9-cells-3x3-line1806",
+     "method": "read"
+    },
+    {
+     "quantity": "column count (H5 levels), preregistered H5 factorial (Decision 17 table)",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": "#h5-9-cells-3x3-line1806",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "docs/methodology/preregistration/osf/preregistration.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Matches preregistration.md:1806 ('H5 totals: 9 cells (3 M/E × 3 H5)') and :1333 ('creating a 3×3 design'). v1.1 calibration rule: preregistered-design claim, anchors to the lodged document."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     822,
+     822
+    ],
+    "section": "Decision 17 — Library carry-forward paragraph, plus-hp composition"
+   },
+   "claim_text": "Phase 2c determined plus-hp (4C+ 4HP 2C- 3null, no HN) as the optimal",
+   "values": [
+    {
+     "quantity": "Canon+ example count, plus-hp library composition",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": null,
+     "kind": "count",
+     "path": "$.composition.canonical_positive",
+     "method": "read"
+    },
+    {
+     "quantity": "hard-positive example count, plus-hp library composition",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": null,
+     "kind": "count",
+     "path": "$.composition.hard_positive",
+     "method": "read"
+    },
+    {
+     "quantity": "Canon- example count, plus-hp library composition",
+     "value_verbatim": "2",
+     "value_parsed": 2,
+     "unit": null,
+     "kind": "count",
+     "path": "$.composition.canonical_negative",
+     "method": "read"
+    },
+    {
+     "quantity": "null example count, plus-hp library composition",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": "$.composition.null",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "prompts/configs/library_plus-hp.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "prompts/configs/library_plus-hp.json records composition.canonical_positive=4, hard_positive=4, canonical_negative=2, null=3 (confirmed present, not value-verified per rule 4). 'no HN' in the source span is qualitative (no digit), excluded per rule 5."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     823,
+     823
+    ],
+    "section": "Decision 17 — Library carry-forward paragraph, preregistered Scale-8 HN count"
+   },
+   "claim_text": "library. The preregistered H5 design assumed Scale-8 (including 4 HN) would",
+   "values": [
+    {
+     "quantity": "hard-negative (HN) example count, Scale-8 library, as preregistered for H5 (distinct verbatim mention)",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": null,
+     "kind": "count",
+     "path": "#scale-8-library-hn-4-line769",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "docs/methodology/preregistration/osf/preregistration.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Restates the '4 HN' figure already anchored for the line-815 table claim above; kept as a separate claim row per full-enumeration (rule 3) since it is a distinct verbatim mention."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     842,
+     843
+    ],
+    "section": "Decision 17 — Instruction text adaptation, rejected minimal-instruction re-run"
+   },
+   "claim_text": "baseline for Track 1 and Phase 2b baseline for Track 2. Re-running 1,200\nAPI calls to fix a conditional sentence (\"If reference examples are provided\")",
+   "values": [
+    {
+     "quantity": "count of API calls a full re-run of the minimal instruction would have required (rejected as not justified by the minor confound)",
+     "value_verbatim": "1,200",
+     "value_parsed": 1200,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Hypothetical/rejected re-run estimate in the decision's own rationale, not a run that was executed. No committed manifest records this count; likely 600 calls/track × 2 tracks (Phase 2c Track 1 + Phase 2b Track 2 baselines) but no single artefact confirms it directly."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     849,
+     849
+    ],
+    "section": "Decision 17 — OFAT simplification paragraph, preregistered cell count"
+   },
+   "claim_text": "The preregistered 3×3 M/E × H5 factorial (9 cells) collapsed because the",
+   "values": [
+    {
+     "quantity": "row count (M/E levels), preregistered H5 factorial (OFAT-simplification paragraph)",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": "#h5-9-cells-3x3-line1806",
+     "method": "read"
+    },
+    {
+     "quantity": "column count (H5 levels), preregistered H5 factorial (OFAT-simplification paragraph)",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": "#h5-9-cells-3x3-line1806",
+     "method": "read"
+    },
+    {
+     "quantity": "total cell count, preregistered H5 3×3 factorial",
+     "value_verbatim": "9",
+     "value_parsed": 9,
+     "unit": null,
+     "kind": "count",
+     "path": "#h5-9-cells-3x3-line1806",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "docs/methodology/preregistration/osf/preregistration.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Matches preregistration.md:1806 verbatim: 'H5 totals: 9 cells (3 M/E × 3 H5)'."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     851,
+     852
+    ],
+    "section": "Decision 17 — OFAT simplification paragraph, actual cell count"
+   },
+   "claim_text": "the carried-forward M/E level gives 3 cells per track (1 reused baseline,\n2 new), totalling 4 new cells across both tracks.",
+   "values": [
+    {
+     "quantity": "count of H5 factor levels (cells) tested per track after OFAT simplification",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.factors.negative_text_treatment.levels",
+     "method": "read"
+    },
+    {
+     "quantity": "count of reused-baseline cells per track",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "count of new cells per track",
+     "value_verbatim": "2",
+     "value_parsed": 2,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "total count of new cells across both tracks, Phase 2d H5",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "studies/phase2d-h5-negtext.yaml",
+    "path": null
+   },
+   "method": "read",
+   "notes": "'3 cells per track' matches the 3-level (minimal/terse/verbose) negative_text_treatment factor in studies/phase2d-h5-negtext.yaml (and its Track 2 sibling phase2d-h5-negtext-text-only.yaml). The reused-vs-new breakdown (1, 2, 4) is not separately field-encoded in either study YAML; left anchor-unknown."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     866,
+     866
+    ],
+    "section": "Decision 17 — Track 2 activation rationale, cost estimate"
+   },
+   "claim_text": "3. Cost is low (~$2.50 for 1,200 API calls, no images in prompt)",
+   "values": [
+    {
+     "quantity": "estimated cost (USD), Track 2 activation (2 new cells, terse+verbose)",
+     "value_verbatim": "~$2.50",
+     "value_parsed": 2.5,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "external"
+    },
+    {
+     "quantity": "count of API calls, Track 2 activation (2 new cells, terse+verbose)",
+     "value_verbatim": "1,200",
+     "value_parsed": 1200,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": null,
+   "method": "external",
+   "notes": "Cost estimate is a vendor-pricing-derived back-of-envelope figure (rule 3 'external'); no repo artefact audits it. The 1,200 API calls figure is consistent with 2 new cells × 600 calls/cell (matching the Implementation table below) but no single committed artefact states the per-cell call count directly, so left anchor-unknown."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     872,
+     872
+    ],
+    "section": "Decision 17 — Implementation table, Track 1 row"
+   },
+   "claim_text": "| Track 1 (image) | brief-text-image | plus-hp (13 ex.) | Phase 2c | terse, verbose |",
+   "values": [
+    {
+     "quantity": "example count, plus-hp library, Track 1 implementation",
+     "value_verbatim": "13",
+     "value_parsed": 13,
+     "unit": null,
+     "kind": "count",
+     "path": "$.total_examples",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "prompts/configs/library_plus-hp.json",
+    "path": "$.total_examples"
+   },
+   "method": "read",
+   "notes": "Matches prompts/configs/library_plus-hp.json total_examples=13; distinct verbatim mention from the line-815 table claim (full enumeration, rule 3)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     873,
+     873
+    ],
+    "section": "Decision 17 — Implementation table, Track 2 row"
+   },
+   "claim_text": "| Track 2 (text) | brief-text | Scale-8 metadata (17 ex., none sent) | Phase 2b T=0.0 | terse, verbose |",
+   "values": [
+    {
+     "quantity": "example count, Scale-8 library metadata, Track 2 (text-only) implementation",
+     "value_verbatim": "17",
+     "value_parsed": 17,
+     "unit": null,
+     "kind": "count",
+     "path": "$.total_examples",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "prompts/configs/library_scale-8-text.json",
+    "path": "$.total_examples"
+   },
+   "method": "read",
+   "notes": "Matches prompts/configs/library_scale-8-text.json total_examples=17 — the text-only-mode config whose metadata is bookkept but whose example images are not sent (Track 2 is text-only)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     875,
+     875
+    ],
+    "section": "Decision 17 — Implementation, total new API calls"
+   },
+   "claim_text": "**Total new API calls**: 2,400 (4 cells × 600)",
+   "values": [
+    {
+     "quantity": "total new API calls, Phase 2d H5 dual-track implementation",
+     "value_verbatim": "2,400",
+     "value_parsed": 2400,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "count of new cells across both tracks (factor in the 2,400 total)",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "API calls per new cell (factor in the 2,400 total)",
+     "value_verbatim": "600",
+     "value_parsed": 600,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Internally self-consistent (4×600=2,400) with the Implementation table above and the 1,200-call Track 2 figure (line 866: 2 new cells × 600), but no committed manifest/study-run-count artefact for Phase 2d's pre-retest 60-tile pilot was located confirming 600 calls/cell directly (likely 60 tiles × K=10 runs, matching the corpus-size pattern used elsewhere, but not confirmed against a specific Phase 2d output manifest)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     876,
+     876
+    ],
+    "section": "Decision 17 — Implementation, estimated cost breakdown"
+   },
+   "claim_text": "**Estimated cost**: ~$6.90 ($4.40 Track 1 + $2.50 Track 2)",
+   "values": [
+    {
+     "quantity": "total estimated cost (USD), Phase 2d H5 dual-track implementation",
+     "value_verbatim": "~$6.90",
+     "value_parsed": 6.9,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "external"
+    },
+    {
+     "quantity": "estimated cost (USD), Track 1 (image-using) implementation",
+     "value_verbatim": "4.40",
+     "value_parsed": 4.4,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "external"
+    },
+    {
+     "quantity": "estimated cost (USD), Track 2 (text-only) implementation",
+     "value_verbatim": "2.50",
+     "value_parsed": 2.5,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "external"
+    }
+   ],
+   "anchor": null,
+   "method": "external",
+   "notes": "Vendor-pricing-derived cost estimates (rule 3 'external'); no repo artefact audits them. Internally consistent (4.40+2.50=6.90)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     888,
+     888
+    ],
+    "section": "Decision 18 — decision statement, 4th ordering condition"
+   },
+   "claim_text": "**Decision**: Add `config-default` as an explicit 4th ordering condition in Phase 2e",
+   "values": [
+    {
+     "quantity": "total count of ordering conditions in Phase 2e (H4) after adding config-default",
+     "value_verbatim": "4th",
+     "value_parsed": 4,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.factors.ordering.levels",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "studies/phase2e-h4-ordering.yaml",
+    "path": "len:$.factors.ordering.levels"
+   },
+   "method": "read",
+   "notes": "studies/phase2e-h4-ordering.yaml factors.ordering.levels lists exactly 4 entries (config-default, canonical-first, canonical-last, random), confirming the 4th-condition count."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     899,
+     899
+    ],
+    "section": "Decision 18 — Alternatives considered, rejected 3-condition option"
+   },
+   "claim_text": "1. **Proceed with 3 conditions** (fix canonical-first, drop config-default): Would",
+   "values": [
+    {
+     "quantity": "count of ordering conditions in the rejected 'proceed with 3 conditions' alternative",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Describes a rejected design alternative (not implemented); no artefact exists that could confirm a 3-condition Phase 2e design since it was never run."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     909,
+     909
+    ],
+    "section": "Decision 18 — Rationale, count of orderings compared"
+   },
+   "claim_text": "The two orderings differ in HP placement relative to canonical negatives:",
+   "values": [
+    {
+     "quantity": "count of orderings compared in the Decision 18 rationale (config-default vs canonical-first)",
+     "value_verbatim": "two",
+     "value_parsed": 2,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Self-referential structural count (the two rows of the comparison table immediately below, lines 912-915); no external artefact to anchor to."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     921,
+     922
+    ],
+    "section": "Decision 18 — Cost paragraph, zero-cost reused runs"
+   },
+   "claim_text": "**Cost**: Zero additional API calls. The 10 config-default runs are reused from\nPhase 2c plus-hp outputs via symlinks and are pre-checkpointed.",
+   "values": [
+    {
+     "quantity": "additional API calls required for the config-default condition (reused via symlink)",
+     "value_verbatim": "Zero",
+     "value_parsed": 0,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "run count, config-default condition, Phase 2e",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": null,
+     "kind": "count",
+     "path": "$.execution.runs",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "studies/phase2e-h4-ordering.yaml",
+    "path": "$.execution.runs"
+   },
+   "method": "read",
+   "notes": "studies/phase2e-h4-ordering.yaml execution.runs=10, applying to all 4 ordering conditions including the reused config-default. 'Zero' is a definitional design characterisation (reuse via symlink), not read from a specific field."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     928,
+     928
+    ],
+    "section": "Decision 18 — Design table, config-default row"
+   },
+   "claim_text": "| config-default | 10 | 0 (reused) | Phase 2c plus-hp symlinks |",
+   "values": [
+    {
+     "quantity": "run count, config-default condition",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": null,
+     "kind": "count",
+     "path": "$.execution.runs",
+     "method": "read"
+    },
+    {
+     "quantity": "API call count, config-default condition (reused)",
+     "value_verbatim": "0",
+     "value_parsed": 0,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "studies/phase2e-h4-ordering.yaml",
+    "path": "$.execution.runs"
+   },
+   "method": "read",
+   "notes": "Matches studies/phase2e-h4-ordering.yaml execution.runs=10; the 0-call figure is definitional (symlink reuse), left anchor-unknown."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     929,
+     929
+    ],
+    "section": "Decision 18 — Design table, canonical-first row"
+   },
+   "claim_text": "| canonical-first | 10 | 600 | New |",
+   "values": [
+    {
+     "quantity": "run count, canonical-first condition",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": null,
+     "kind": "count",
+     "path": "$.execution.runs",
+     "method": "read"
+    },
+    {
+     "quantity": "API call count, canonical-first condition (new)",
+     "value_verbatim": "600",
+     "value_parsed": 600,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a*b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "inputs/tiles/validation_manifest.json",
+       "path": "len:$"
+      },
+      {
+       "name": "b",
+       "file": "studies/phase2e-h4-ordering.yaml",
+       "path": "$.execution.runs"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "studies/phase2e-h4-ordering.yaml",
+    "path": "$.execution.runs"
+   },
+   "method": "read",
+   "notes": "inputs/tiles/validation_manifest.json is a 60-tile list; 60 tiles × execution.runs=10 = 600 API calls for a new condition."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     930,
+     930
+    ],
+    "section": "Decision 18 — Design table, canonical-last row"
+   },
+   "claim_text": "| canonical-last | 10 | 600 | New |",
+   "values": [
+    {
+     "quantity": "run count, canonical-last condition",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": null,
+     "kind": "count",
+     "path": "$.execution.runs",
+     "method": "read"
+    },
+    {
+     "quantity": "API call count, canonical-last condition (new)",
+     "value_verbatim": "600",
+     "value_parsed": 600,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a*b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "inputs/tiles/validation_manifest.json",
+       "path": "len:$"
+      },
+      {
+       "name": "b",
+       "file": "studies/phase2e-h4-ordering.yaml",
+       "path": "$.execution.runs"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "studies/phase2e-h4-ordering.yaml",
+    "path": "$.execution.runs"
+   },
+   "method": "read",
+   "notes": "Same derivation as the canonical-first row (60 tiles × 10 runs = 600); distinct verbatim table row, extracted separately per rule 6."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     931,
+     931
+    ],
+    "section": "Decision 18 — Design table, random row"
+   },
+   "claim_text": "| random | 10 | 600 | New |",
+   "values": [
+    {
+     "quantity": "run count, random-ordering condition",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": null,
+     "kind": "count",
+     "path": "$.execution.runs",
+     "method": "read"
+    },
+    {
+     "quantity": "API call count, random-ordering condition (new)",
+     "value_verbatim": "600",
+     "value_parsed": 600,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a*b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "inputs/tiles/validation_manifest.json",
+       "path": "len:$"
+      },
+      {
+       "name": "b",
+       "file": "studies/phase2e-h4-ordering.yaml",
+       "path": "$.execution.runs"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "studies/phase2e-h4-ordering.yaml",
+    "path": "$.execution.runs"
+   },
+   "method": "read",
+   "notes": "Same derivation as the canonical-first/canonical-last rows (60 tiles × 10 runs = 600); distinct verbatim table row, extracted separately per rule 6."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     932,
+     932
+    ],
+    "section": "Decision 18 — Design table, Total row"
+   },
+   "claim_text": "| **Total** | **40** | **1,800** | |",
+   "values": [
+    {
+     "quantity": "total run count, Phase 2e H4 ordering design (4 conditions)",
+     "value_verbatim": "40",
+     "value_parsed": 40,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a*b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "studies/phase2e-h4-ordering.yaml",
+       "path": "len:$.factors.ordering.levels"
+      },
+      {
+       "name": "b",
+       "file": "studies/phase2e-h4-ordering.yaml",
+       "path": "$.execution.runs"
+      }
+     ]
+    },
+    {
+     "quantity": "total new API call count, Phase 2e H4 ordering design",
+     "value_verbatim": "1,800",
+     "value_parsed": 1800,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "studies/phase2e-h4-ordering.yaml",
+    "path": null
+   },
+   "method": "arithmetic",
+   "notes": "40 = 4 ordering conditions (len:$.factors.ordering.levels) × execution.runs=10. 1,800 = 3 new conditions × 600 calls, a two-factor compound derivation not expressible as a single clean expression against committed operands; left anchor-unknown per v1.2 amendment 1 (one derivation per expression)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     944,
+     946
+    ],
+    "section": "Decision 19 — decision statement, tile sizes re-run"
+   },
+   "claim_text": "**Decision**: Re-run all H11 proposer-verifier experiments (512 and 384)\nwith verifier configs corrected to match the Phase 3d baseline prompt\nassembly. Supersede all prior PV results with \"v2\" corrected results.",
+   "values": [
+    {
+     "quantity": "tile edge length (px), first H11 PV condition re-run under Decision 19",
+     "value_verbatim": "512",
+     "value_parsed": 512,
+     "unit": "px",
+     "kind": "physical",
+     "path": "#512-pv-text-only-row-line169",
+     "method": "read"
+    },
+    {
+     "quantity": "tile edge length (px), second H11 PV condition re-run under Decision 19",
+     "value_verbatim": "384",
+     "value_parsed": 384,
+     "unit": "px",
+     "kind": "physical",
+     "path": "#384-pv-best-row-line167",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/h11-tile-size-results.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Both tile sizes are documented as PV-pipeline conditions in results/h11-tile-size-results.md (512 PV text-only row, line 169; 384 PV best row, line 167)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     954,
+     955
+    ],
+    "section": "Decision 19 — Rationale item 1, text-only config missing labels"
+   },
+   "claim_text": "1. **Text-only configs** (`verify_*-text.json`): missing the 6 text-only\n   example labels that Phase 3d's `run_h2_pilot.py` sent",
+   "values": [
+    {
+     "quantity": "count of text-only example labels Phase 3d's verifier sent (target/corrected count for verify_*-text.json)",
+     "value_verbatim": "6",
+     "value_parsed": 6,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.text_only_labels",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "prompts/configs/verify_adversarial-text.json",
+    "path": "len:$.text_only_labels"
+   },
+   "method": "read",
+   "notes": "prompts/configs/verify_adversarial-text.json (post-fix) text_only_labels array has exactly 6 entries, matching Phase 3d's run_h2_pilot.py baseline."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     956,
+     957
+    ],
+    "section": "Decision 19 — Rationale item 2, image config example-count drift"
+   },
+   "claim_text": "2. **Image configs** (`verify_*.json`): 9 examples instead of Phase 3d's 6,\n   with modified labels and 3 extra null examples",
+   "values": [
+    {
+     "quantity": "example count, pre-correction image verifier configs (erroneous)",
+     "value_verbatim": "9",
+     "value_parsed": 9,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "historical"
+    },
+    {
+     "quantity": "example count, Phase 3d's actual baseline image verifier config (target/corrected count)",
+     "value_verbatim": "6",
+     "value_parsed": 6,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.examples",
+     "method": "read"
+    },
+    {
+     "quantity": "count of extra null examples in the pre-correction image verifier configs (erroneous)",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "historical"
+    }
+   ],
+   "anchor": {
+    "file": "prompts/configs/verify_adversarial.json",
+    "path": "len:$.examples"
+   },
+   "method": "read",
+   "notes": "prompts/configs/verify_adversarial.json (post-fix) examples array has exactly 6 entries, matching Phase 3d's baseline. The pre-correction '9 examples... 3 extra null examples' describes the erroneous, since-corrected state; not preserved as a separate committed artefact, so marked historical with no anchor (schema permits anchor:null for method historical)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     974,
+     975
+    ],
+    "section": "Decision 19 — Result paragraph, v2 corrected F1 values and gap"
+   },
+   "claim_text": "v2 corrected results: 512 PV F1=0.732 (was 0.796 pre-correction), 384 PV\nbest F1=0.682. Gap narrowed from 11.2 pp to 5.0 pp, though model drift",
+   "values": [
+    {
+     "quantity": "F1, 512 PV text-only, v2 corrected (E33)",
+     "value_verbatim": "0.732",
+     "value_parsed": 0.732,
+     "unit": null,
+     "kind": "metric",
+     "path": "#512-pv-text-only-E33-corrected-v2-row-line169",
+     "method": "read"
+    },
+    {
+     "quantity": "F1, 512 PV text-only, pre-correction (historical)",
+     "value_verbatim": "0.796",
+     "value_parsed": 0.796,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "historical"
+    },
+    {
+     "quantity": "F1, 384 PV best (adversarial text, t=0.2), v2 corrected",
+     "value_verbatim": "0.682",
+     "value_parsed": 0.682,
+     "unit": null,
+     "kind": "metric",
+     "path": "#384-pv-best-adversarial-text-row-line167",
+     "method": "read"
+    },
+    {
+     "quantity": "gap (pp) between 512 PV and 384 PV, pre-correction",
+     "value_verbatim": "11.2",
+     "value_parsed": 11.2,
+     "unit": "pp",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100*(a-b)",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/h11-tile-size-results.md",
+       "path": "#primary-finding-512-pv-f1-0796-line100"
+      },
+      {
+       "name": "b",
+       "file": "results/h11-tile-size-results.md",
+       "path": "#primary-finding-384-pv-f1-0684-line99"
+      }
+     ]
+    },
+    {
+     "quantity": "gap (pp) between 512 PV and 384 PV, v2 corrected",
+     "value_verbatim": "5.0",
+     "value_parsed": 5.0,
+     "unit": "pp",
+     "kind": "percentage",
+     "path": "#512-pv-leads-by-5pp-line186-326",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/h11-tile-size-results.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "0.732/0.682 are the v2-corrected values at results/h11-tile-size-results.md lines 169/167. 0.796 is the pre-correction value quoted historically (matches h11-tile-size-results.md line 100 and line 177). The 5.0 pp gap is directly stated in that same document (lines 186, 326: 'the 512 pipeline leads by 5.0 pp'). The 11.2 pp figure is not directly stated anywhere found; it derives arithmetically from the doc's own 'Primary Finding' paragraph (F1=0.796 512 vs F1=0.684 384, lines 99-100), which is itself apparently a stale pre-correction summary not updated to the v2 384 figure (0.682) used elsewhere in the same document — flagged for triage, not adjudicated here."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     986,
+     986
+    ],
+    "section": "Decision 20 — decision statement, replication parameters"
+   },
+   "claim_text": "**Decision**: Run a clean N=30 consensus replication at T=0.7 with both",
+   "values": [
+    {
+     "quantity": "consensus voting pool size (N), Decision 20 clean replication",
+     "value_verbatim": "30",
+     "value_parsed": 30,
+     "unit": null,
+     "kind": "count",
+     "path": "$.execution.runs",
+     "method": "read"
+    },
+    {
+     "quantity": "temperature, Decision 20 clean replication",
+     "value_verbatim": "0.7",
+     "value_parsed": 0.7,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.fixed.temperature",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "studies/phase3a-replication.yaml",
+    "path": null
+   },
+   "method": "read",
+   "notes": "studies/phase3a-replication.yaml: execution.runs=30, fixed.temperature=0.7."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1000,
+     1000
+    ],
+    "section": "Decision 20 — Rationale item 1, original thinking-level comparison"
+   },
+   "claim_text": "1. The Phase 3a thinking-level comparison (F1=0.751 vs 0.683) is valid",
+   "values": [
+    {
+     "quantity": "F1, Phase 3a original consensus, Track 2 Text HIGH thinking level, 20 m",
+     "value_verbatim": "0.751",
+     "value_parsed": 0.751,
+     "unit": null,
+     "kind": "metric",
+     "path": "#t2-txt-high-20m-f1-0751",
+     "method": "read"
+    },
+    {
+     "quantity": "F1, Phase 3a original consensus, Track 2 Text MINIMAL thinking level, 20 m",
+     "value_verbatim": "0.683",
+     "value_parsed": 0.683,
+     "unit": null,
+     "kind": "metric",
+     "path": "#t2-txt-min-20m-f1-0683",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "archive/results-60-tile-validation/phase3a-consensus/phase3a-spatial-tolerance-sensitivity.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Matches archive/results-60-tile-validation/phase3a-consensus/phase3a-spatial-tolerance-sensitivity.md lines 352 (T2 Text HIGH, 20 m, F1=0.751) and 348 (T2 Text MINIMAL, 20 m, F1=0.683)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1004,
+     1005
+    ],
+    "section": "Decision 20 — Rationale item 3, historical range for drift test"
+   },
+   "claim_text": "3. The replication also serves as a model drift test — if minimal\n   replication departs from the historical range [0.683, 0.751], the",
+   "values": [
+    {
+     "quantity": "historical F1 range lower bound (minimal thinking), Phase 3a original consensus, used as drift-test floor",
+     "value_verbatim": "0.683",
+     "value_parsed": 0.683,
+     "unit": null,
+     "kind": "metric",
+     "path": "#t2-txt-min-20m-f1-0683",
+     "method": "read"
+    },
+    {
+     "quantity": "historical F1 range upper bound (HIGH thinking), Phase 3a original consensus, used as drift-test ceiling",
+     "value_verbatim": "0.751",
+     "value_parsed": 0.751,
+     "unit": null,
+     "kind": "metric",
+     "path": "#t2-txt-high-20m-f1-0751",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "archive/results-60-tile-validation/phase3a-consensus/phase3a-spatial-tolerance-sensitivity.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Restates the 0.683/0.751 figures already anchored for the line-1000 claim above (reversed order: [min, HIGH]); kept as a separate claim row per full-enumeration (rule 3), distinct verbatim mention."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1010,
+     1012
+    ],
+    "section": "Decision 20 — Result paragraph, clean replication F1 values and delta"
+   },
+   "claim_text": "Replication confirms the direction: HIGH F1=0.735 vs minimal F1=0.699\n(+3.6 pp). Model drift is modest — minimal replication (0.699) falls\nwithin historical CI.",
+   "values": [
+    {
+     "quantity": "F1, clean replication (Decision 20), HIGH thinking level, T=0.7 consensus, N=30",
+     "value_verbatim": "0.735",
+     "value_parsed": 0.735,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.optima.global_optimum.f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1, clean replication (Decision 20), minimal thinking level, T=0.7 consensus, N=30",
+     "value_verbatim": "0.699",
+     "value_parsed": 0.699,
+     "unit": null,
+     "kind": "metric",
+     "path": "archive/results-60-tile-validation/phase3a-replication/minimal/consensus-analysis-report.json#$.optima.global_optimum.f1",
+     "method": "read"
+    },
+    {
+     "quantity": "F1 delta, HIGH minus minimal thinking level, clean replication, in percentage points",
+     "value_verbatim": "3.6",
+     "value_parsed": 3.6,
+     "unit": "pp",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100*(a-b)",
+     "operands": [
+      {
+       "name": "a",
+       "file": "archive/results-60-tile-validation/phase3a-replication/high/consensus-analysis-report.json",
+       "path": "$.optima.global_optimum.f1"
+      },
+      {
+       "name": "b",
+       "file": "archive/results-60-tile-validation/phase3a-replication/minimal/consensus-analysis-report.json",
+       "path": "$.optima.global_optimum.f1"
+      }
+     ]
+    },
+    {
+     "quantity": "F1, minimal replication, restated for drift-test comparison",
+     "value_verbatim": "0.699",
+     "value_parsed": 0.699,
+     "unit": null,
+     "kind": "metric",
+     "path": "archive/results-60-tile-validation/phase3a-replication/minimal/consensus-analysis-report.json#$.optima.global_optimum.f1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "archive/results-60-tile-validation/phase3a-replication/high/consensus-analysis-report.json",
+    "path": "$.optima.global_optimum.f1"
+   },
+   "method": "read",
+   "notes": "[S125 wave-4 repair] values[1] and values[3] (minimal condition) were falling through to the claim-level HIGH anchor file — cross-file locators added per instrument v1.2 amendment 2 (blind-verified: the minimal report returns 0.699 exactly). high/consensus-analysis-report.json records optima.global_optimum.f1=0.7351 (rounds to 0.735); minimal/consensus-analysis-report.json records the equivalent field at 0.699 (structure confirmed, not value-verified per rule 4). Same result reported in docs/methodology/preregistration/hypothesis-tracking.md line 122 (see 014.json extraction of that document); extracted independently here as a distinct decisions-log.md mention."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1030,
+     1030
+    ],
+    "section": "Decision 21 — Rationale, Batch API cost multiplier"
+   },
+   "claim_text": "enable comprehensive statistical reruns at 4× lower cost (Batch API pricing).",
+   "values": [
+    {
+     "quantity": "cost reduction multiplier, Flash-Lite + Batch API pricing vs standard real-time pricing",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": "×",
+     "kind": "ratio",
+     "path": "#totals-flash-lite-2x-4x-batch",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "archive/planning/flash-lite-transfer-pilot.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Named path `planning/flash-lite-transfer-pilot.md` in the Evidence line (1062) has moved to archive/planning/flash-lite-transfer-pilot.md, which states directly: \"Flash-Lite's 2x lower cost (4x with Batch API) would make comprehensive reruns... affordable\", confirming the 4x figure verbatim."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1032,
+     1032
+    ],
+    "section": "Decision 21 — Stage 1 capability gate threshold and variant count"
+   },
+   "claim_text": "Stage 1 (basic capability gate, F1 > 0.2) failed across all three variants:",
+   "values": [
+    {
+     "quantity": "F1 threshold for the Flash-Lite Stage 1 capability gate",
+     "value_verbatim": "0.2",
+     "value_parsed": 0.2,
+     "unit": null,
+     "kind": "parameter",
+     "path": "#stage1-gate-f1-02",
+     "method": "read"
+    },
+    {
+     "quantity": "count of Flash-Lite Stage 1 variants tested",
+     "value_verbatim": "three",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "archive/planning/flash-lite-transfer-pilot.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "'Gate: F1 > 0.2 at 20 m tolerance' is stated directly in archive/planning/flash-lite-transfer-pilot.md § Stage 1. The 'three variants' count matches the 3-row results table immediately below (lines 1034-1038)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1036,
+     1036
+    ],
+    "section": "Decision 21 — Stage 1 results table, Minimal T=0.0 row"
+   },
+   "claim_text": "| Minimal T=0.0 | 282 | 21 | 261 | 0.111 |",
+   "values": [
+    {
+     "quantity": "temperature, Flash-Lite Stage 1 Minimal T=0.0 variant",
+     "value_verbatim": "0.0",
+     "value_parsed": 0.0,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "detection count, Flash-Lite Stage 1 Minimal T=0.0 variant",
+     "value_verbatim": "282",
+     "value_parsed": 282,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.features",
+     "method": "read"
+    },
+    {
+     "quantity": "true positive count, Flash-Lite Stage 1 Minimal T=0.0 variant",
+     "value_verbatim": "21",
+     "value_parsed": 21,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "false positive count, Flash-Lite Stage 1 Minimal T=0.0 variant",
+     "value_verbatim": "261",
+     "value_parsed": 261,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "F1, Flash-Lite Stage 1 Minimal T=0.0 variant",
+     "value_verbatim": "0.111",
+     "value_parsed": 0.111,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "archive/outputs-experimental-pilot/flash-lite-pilot/stage1-optimal/detections-detect_brief-text-3.1-flash-lite-2026-03-15.geojson",
+    "path": "len:$.features"
+   },
+   "method": "read",
+   "notes": "The detections geojson at archive/outputs-experimental-pilot/flash-lite-pilot/stage1-optimal/ gives a mechanically countable detection count via len:$.features. TP/FP/F1 require an evaluation artefact not located alongside the raw detections/meta/tiles files present there; left anchor-unknown. Temperature (0.0) is asserted design metadata, not independently verified against the run's meta.json in this pass."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1037,
+     1037
+    ],
+    "section": "Decision 21 — Stage 1 results table, Minimal T=0.3 row"
+   },
+   "claim_text": "| Minimal T=0.3 | 267 | 23 | 244 | 0.126 |",
+   "values": [
+    {
+     "quantity": "temperature, Flash-Lite Stage 1 Minimal T=0.3 variant",
+     "value_verbatim": "0.3",
+     "value_parsed": 0.3,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "detection count, Flash-Lite Stage 1 Minimal T=0.3 variant",
+     "value_verbatim": "267",
+     "value_parsed": 267,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.features",
+     "method": "read"
+    },
+    {
+     "quantity": "true positive count, Flash-Lite Stage 1 Minimal T=0.3 variant",
+     "value_verbatim": "23",
+     "value_parsed": 23,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "false positive count, Flash-Lite Stage 1 Minimal T=0.3 variant",
+     "value_verbatim": "244",
+     "value_parsed": 244,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "F1, Flash-Lite Stage 1 Minimal T=0.3 variant",
+     "value_verbatim": "0.126",
+     "value_parsed": 0.126,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "archive/outputs-experimental-pilot/flash-lite-pilot/stage1-t0.3/detections-detect_brief-text-3.1-flash-lite-2026-03-15.geojson",
+    "path": "len:$.features"
+   },
+   "method": "read",
+   "notes": "Mirrors the Minimal T=0.0 row's anchoring approach; detections geojson at the stage1-t0.3 output directory."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1038,
+     1038
+    ],
+    "section": "Decision 21 — Stage 1 results table, HIGH T=0.0 row"
+   },
+   "claim_text": "| HIGH T=0.0 | 89 | 9 | 80 | 0.097 |",
+   "values": [
+    {
+     "quantity": "temperature, Flash-Lite Stage 1 HIGH T=0.0 variant",
+     "value_verbatim": "0.0",
+     "value_parsed": 0.0,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "detection count, Flash-Lite Stage 1 HIGH T=0.0 variant",
+     "value_verbatim": "89",
+     "value_parsed": 89,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.features",
+     "method": "read"
+    },
+    {
+     "quantity": "true positive count, Flash-Lite Stage 1 HIGH T=0.0 variant",
+     "value_verbatim": "9",
+     "value_parsed": 9,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "false positive count, Flash-Lite Stage 1 HIGH T=0.0 variant",
+     "value_verbatim": "80",
+     "value_parsed": 80,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "F1, Flash-Lite Stage 1 HIGH T=0.0 variant",
+     "value_verbatim": "0.097",
+     "value_parsed": 0.097,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "archive/outputs-experimental-pilot/flash-lite-pilot/stage1-high-thinking/detections-detect_brief-text-3.1-flash-lite-2026-03-15.geojson",
+    "path": "len:$.features"
+   },
+   "method": "read",
+   "notes": "Mirrors the other Stage 1 rows' anchoring approach; detections geojson at the stage1-high-thinking output directory."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1041,
+     1042
+    ],
+    "section": "Decision 21 — MMMU Pro gap and F1 collapse characterisation"
+   },
+   "claim_text": "from other cartographic elements. The 4.4 pp MMMU Pro gap (76.8% vs 81.2%)\ntranslates to a ~43 pp F1 collapse on this task.",
+   "values": [
+    {
+     "quantity": "MMMU Pro benchmark score gap (percentage points), Flash-Lite vs Flash (vendor benchmark)",
+     "value_verbatim": "4.4",
+     "value_parsed": 4.4,
+     "unit": "pp",
+     "kind": "percentage",
+     "path": null,
+     "method": "external"
+    },
+    {
+     "quantity": "MMMU Pro benchmark score, Flash-Lite (vendor benchmark)",
+     "value_verbatim": "76.8",
+     "value_parsed": 76.8,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "external"
+    },
+    {
+     "quantity": "MMMU Pro benchmark score, Flash (vendor benchmark)",
+     "value_verbatim": "81.2",
+     "value_parsed": 81.2,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "external"
+    },
+    {
+     "quantity": "approximate F1 collapse (percentage points) attributed to the MMMU Pro gap, this project's own task",
+     "value_verbatim": "~43",
+     "value_parsed": 43,
+     "unit": "pp",
+     "kind": "percentage",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": null,
+   "method": "external",
+   "notes": "MMMU Pro scores are third-party vendor-reported benchmark figures (rule 3 'external'; no repo artefact decides them). The '~43 pp F1 collapse' is this project's own rough characterisation relating the MMMU gap to the observed Flash-Lite F1 collapse; not a clean single-hop derivation from any two committed values found, left anchor-unknown."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1049,
+     1050
+    ],
+    "section": "Decision 21 — Alternative 2, MMMU Pro cross-model screening threshold"
+   },
+   "claim_text": "2. **Try other cheaper models (Claude Haiku, GPT-4o-mini)**: Deferred to\n   H14 cross-model testing. Models with MMMU Pro < 77% are likely to fail",
+   "values": [
+    {
+     "quantity": "MMMU Pro score threshold below which cheaper models are predicted to fail similarly to Flash-Lite (H14 screening criterion)",
+     "value_verbatim": "77",
+     "value_parsed": 77,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Proposed future H14 screening criterion, not yet executed; closely tracks (but is not identical to) Flash-Lite's own 76.8% MMMU Pro score quoted at line 1041. No committed artefact fixes this threshold."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1057,
+     1060
+    ],
+    "section": "Decision 21 — Implications, Flash vendor pricing and pilot spend"
+   },
+   "claim_text": "Full-scale statistical reruns must use Flash pricing ($0.50/M input,\n$3.00/M output standard; $0.25/$1.50 Batch API). This constrains the\nbudget for comprehensive reruns. The staged pilot design limited wasted\nbudget to ~$0.05.",
+   "values": [
+    {
+     "quantity": "Flash standard real-time API price, per 1M input tokens (USD)",
+     "value_verbatim": "0.50",
+     "value_parsed": 0.5,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "external"
+    },
+    {
+     "quantity": "Flash standard real-time API price, per 1M output tokens (USD)",
+     "value_verbatim": "3.00",
+     "value_parsed": 3.0,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "external"
+    },
+    {
+     "quantity": "Flash Batch API price, per 1M input tokens (USD)",
+     "value_verbatim": "0.25",
+     "value_parsed": 0.25,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "external"
+    },
+    {
+     "quantity": "Flash Batch API price, per 1M output tokens (USD)",
+     "value_verbatim": "1.50",
+     "value_parsed": 1.5,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "external"
+    },
+    {
+     "quantity": "total wasted budget (USD), staged Flash-Lite pilot design",
+     "value_verbatim": "~$0.05",
+     "value_parsed": 0.05,
+     "unit": "USD",
+     "kind": "cost",
+     "path": "#totals-table-total-005",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "archive/planning/flash-lite-transfer-pilot.md",
+    "path": "#totals-table-total-005"
+   },
+   "method": "external",
+   "notes": "Standard/Batch per-token pricing figures are vendor pricing (rule 3 'external'). The ~$0.05 wasted-budget figure is directly confirmed in archive/planning/flash-lite-transfer-pilot.md's own Totals table: 'Total | 620 | ~$0.05'."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1080,
+     1080
+    ],
+    "section": "Decision 22 — Rationale item 1, 60-tile pilot F1 improvement"
+   },
+   "claim_text": "1. The 60-tile pilot demonstrated +0.14 F1 improvement (0.605 → 0.796) from adding a verifier stage (Obs 150)",
+   "values": [
+    {
+     "quantity": "F1 improvement (document's own stated delta) from adding a verifier stage, 60-tile pilot",
+     "value_verbatim": "0.14",
+     "value_parsed": 0.14,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "b-a",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/pv/phase1/pv-phase1-analysis.md",
+       "path": "#proposer-only-baseline-f1-06052"
+      },
+      {
+       "name": "b",
+       "file": "results/phase3d-verifier-experiments-abc.md",
+       "path": "#text-only-single-track-f1-0796-line44"
+      }
+     ]
+    },
+    {
+     "quantity": "tile count, pilot corpus",
+     "value_verbatim": "60",
+     "value_parsed": 60,
+     "unit": null,
+     "kind": "count",
+     "path": "inputs/tiles/validation_manifest.json#len:$",
+     "method": "read"
+    },
+    {
+     "quantity": "F1, proposer-only baseline (pre-verifier)",
+     "value_verbatim": "0.605",
+     "value_parsed": 0.605,
+     "unit": null,
+     "kind": "metric",
+     "path": "results/pv/phase1/pv-phase1-analysis.md#proposer-only-baseline-f1-06052",
+     "method": "read"
+    },
+    {
+     "quantity": "F1, with verifier stage added (60-tile pilot benchmark)",
+     "value_verbatim": "0.796",
+     "value_parsed": 0.796,
+     "unit": null,
+     "kind": "metric",
+     "path": "#text-only-single-track-f1-0796-line44",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/phase3d-verifier-experiments-abc.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Both cited evidence files for Decision 22 (line 1088) contain matching figures: results/phase3d-verifier-experiments-abc.md line 44 states 'Text-only single-track (ref.) | 0.796'; results/pv/phase1/pv-phase1-analysis.md states 'F1 from 0.6052 (proposer only) to 0.7669 (with verifier)... consistent with the pilot result (F1=0.796 on 60 tiles)' — 0.6052 rounds to the quoted 0.605. Tile count 60 anchors to inputs/tiles/validation_manifest.json but that file is not the file this claim's F1 values come from; recorded generically as count kind with len:$ against the 60-tile validation manifest. The document's own arithmetic (0.796 − 0.605 = 0.191) does not equal the quoted +0.14 — recorded via 'arithmetic' method per rule 3 so the harness can surface this as a potential inconsistency; not adjudicated here per rule 4."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1081,
+     1081
+    ],
+    "section": "Decision 22 — Rationale item 2, zero additional proposer API calls"
+   },
+   "claim_text": "2. The PV approach reuses all existing proposer data — zero additional proposer API calls needed",
+   "values": [
+    {
+     "quantity": "count of additional proposer API calls required by the PV approach (architectural characterisation)",
+     "value_verbatim": "zero",
+     "value_parsed": 0,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Definitional/architectural claim (PV reuses existing proposer detections by design); not a value read from a specific committed artefact."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1082,
+     1082
+    ],
+    "section": "Decision 22 — Rationale item 3, verifier cost per candidate"
+   },
+   "claim_text": "3. Verifier cost is negligible (~$0.0002 per candidate) compared to proposer cost",
+   "values": [
+    {
+     "quantity": "estimated verifier cost per candidate (USD)",
+     "value_verbatim": "~$0.0002",
+     "value_parsed": 0.0002,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "external"
+    }
+   ],
+   "anchor": null,
+   "method": "external",
+   "notes": "Vendor-pricing-derived per-candidate cost estimate (rule 3 'external'); no repo artefact audits it."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1096,
+     1096
+    ],
+    "section": "Decision 23 — decision statement, crop size and padding"
+   },
+   "claim_text": "**Decision**: Use 150×150 pixel crops (padding=75) as the default crop size for the PV verifier. Users may adjust without meaningful performance change.",
+   "values": [
+    {
+     "quantity": "crop width (px), default PV verifier crop size",
+     "value_verbatim": "150",
+     "value_parsed": 150,
+     "unit": "px",
+     "kind": "physical",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "2*a",
+     "operands": [
+      {
+       "name": "a",
+       "file": "scripts/extract_candidates.py",
+       "path": "DEFAULT_PADDING"
+      }
+     ]
+    },
+    {
+     "quantity": "crop height (px), default PV verifier crop size",
+     "value_verbatim": "150",
+     "value_parsed": 150,
+     "unit": "px",
+     "kind": "physical",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "2*a",
+     "operands": [
+      {
+       "name": "a",
+       "file": "scripts/extract_candidates.py",
+       "path": "DEFAULT_PADDING"
+      }
+     ]
+    },
+    {
+     "quantity": "padding (px), default PV verifier crop extraction",
+     "value_verbatim": "75",
+     "value_parsed": 75,
+     "unit": "px",
+     "kind": "physical",
+     "path": "DEFAULT_PADDING",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "scripts/extract_candidates.py",
+    "path": "DEFAULT_PADDING"
+   },
+   "method": "read",
+   "notes": "scripts/extract_candidates.py:66 sets DEFAULT_PADDING = 75; the document itself states 'crop size = padding × 2' (line 1111), giving the 150×150 = 2×75 derivation."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1100,
+     1100
+    ],
+    "section": "Decision 23 — Alternatives considered, 75x75 px option"
+   },
+   "claim_text": "- 75×75 px (tighter, better signal-to-noise ratio for small symbols)",
+   "values": [
+    {
+     "quantity": "crop width (px), rejected tighter-crop alternative",
+     "value_verbatim": "75",
+     "value_parsed": 75,
+     "unit": "px",
+     "kind": "physical",
+     "path": "#crop-size-75px-row",
+     "method": "read"
+    },
+    {
+     "quantity": "crop height (px), rejected tighter-crop alternative",
+     "value_verbatim": "75",
+     "value_parsed": 75,
+     "unit": "px",
+     "kind": "physical",
+     "path": "#crop-size-75px-row",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/pv/phase1/pv-phase1-analysis.md",
+    "path": "#crop-size-75px-row"
+   },
+   "method": "read",
+   "notes": "Matches the '75 px' row of the empirical crop-size sweep table in results/pv/phase1/pv-phase1-analysis.md (F1=0.7681) — this alternative was, in fact, empirically tested, not merely proposed."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1101,
+     1101
+    ],
+    "section": "Decision 23 — Alternatives considered, 300x300 px option"
+   },
+   "claim_text": "- 300×300 px (more context for disambiguation)",
+   "values": [
+    {
+     "quantity": "crop width (px), rejected wider-crop alternative",
+     "value_verbatim": "300",
+     "value_parsed": 300,
+     "unit": "px",
+     "kind": "physical",
+     "path": "#crop-size-300px-row",
+     "method": "read"
+    },
+    {
+     "quantity": "crop height (px), rejected wider-crop alternative",
+     "value_verbatim": "300",
+     "value_parsed": 300,
+     "unit": "px",
+     "kind": "physical",
+     "path": "#crop-size-300px-row",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/pv/phase1/pv-phase1-analysis.md",
+    "path": "#crop-size-300px-row"
+   },
+   "method": "read",
+   "notes": "Matches the '300 px' row of the empirical crop-size sweep table (F1=0.7607)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1102,
+     1102
+    ],
+    "section": "Decision 23 — Alternatives considered, 40x40 px option"
+   },
+   "claim_text": "- 40×40 px (minimal context, smallest possible crop)",
+   "values": [
+    {
+     "quantity": "crop width (px), rejected minimal-crop alternative",
+     "value_verbatim": "40",
+     "value_parsed": 40,
+     "unit": "px",
+     "kind": "physical",
+     "path": "#crop-size-40px-row",
+     "method": "read"
+    },
+    {
+     "quantity": "crop height (px), rejected minimal-crop alternative",
+     "value_verbatim": "40",
+     "value_parsed": 40,
+     "unit": "px",
+     "kind": "physical",
+     "path": "#crop-size-40px-row",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/pv/phase1/pv-phase1-analysis.md",
+    "path": "#crop-size-40px-row"
+   },
+   "method": "read",
+   "notes": "Matches the '40 px' row of the empirical crop-size sweep table (F1=0.7407)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1106,
+     1106
+    ],
+    "section": "Decision 23 — Rationale item 1, empirical crop-size sweep"
+   },
+   "claim_text": "1. Empirical sweep across 4 crop sizes (40, 76, 150, 300 px) showed F1 is insensitive between 75–300px (Obs 166)",
+   "values": [
+    {
+     "quantity": "count of crop sizes empirically swept",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": null,
+     "kind": "count",
+     "path": "#crop-size-sweep-table-4-rows",
+     "method": "read"
+    },
+    {
+     "quantity": "crop size (px), sweep value 1",
+     "value_verbatim": "40",
+     "value_parsed": 40,
+     "unit": "px",
+     "kind": "physical",
+     "path": "#crop-size-40px-row",
+     "method": "read"
+    },
+    {
+     "quantity": "crop size (px), sweep value 2",
+     "value_verbatim": "76",
+     "value_parsed": 76,
+     "unit": "px",
+     "kind": "physical",
+     "path": "#crop-size-75px-row",
+     "method": "read"
+    },
+    {
+     "quantity": "crop size (px), sweep value 3",
+     "value_verbatim": "150",
+     "value_parsed": 150,
+     "unit": "px",
+     "kind": "physical",
+     "path": "#crop-size-150px-row",
+     "method": "read"
+    },
+    {
+     "quantity": "crop size (px), sweep value 4",
+     "value_verbatim": "300",
+     "value_parsed": 300,
+     "unit": "px",
+     "kind": "physical",
+     "path": "#crop-size-300px-row",
+     "method": "read"
+    },
+    {
+     "quantity": "crop-size insensitivity range lower bound (px)",
+     "value_verbatim": "75",
+     "value_parsed": 75,
+     "unit": "px",
+     "kind": "physical",
+     "path": "#crop-size-75px-row",
+     "method": "read"
+    },
+    {
+     "quantity": "crop-size insensitivity range upper bound (px)",
+     "value_verbatim": "300",
+     "value_parsed": 300,
+     "unit": "px",
+     "kind": "physical",
+     "path": "#crop-size-300px-row",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/pv/phase1/pv-phase1-analysis.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The sweep table (results/pv/phase1/pv-phase1-analysis.md § Crop Size Sensitivity, Obs 166) has 4 rows: 40, 75, 150, 300 px. This claim's second value is quoted verbatim as '76' but the source table's corresponding row is '75 px' — recorded faithfully as read/anchored to the 75 px row per rule 4 (extraction does not adjudicate the discrepancy)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1107,
+     1107
+    ],
+    "section": "Decision 23 — Rationale item 2, sweet-spot context multiplier"
+   },
+   "claim_text": "2. 150px is the sweet spot: mound symbols are ~10–20px, so 150px provides 7–15× context",
+   "values": [
+    {
+     "quantity": "crop size (px), selected default (restated)",
+     "value_verbatim": "150",
+     "value_parsed": 150,
+     "unit": "px",
+     "kind": "physical",
+     "path": "DEFAULT_PADDING",
+     "method": "read"
+    },
+    {
+     "quantity": "mound symbol diameter (px), lower bound",
+     "value_verbatim": "~10",
+     "value_parsed": 10,
+     "unit": "px",
+     "kind": "physical",
+     "path": "#burial-mound-symbol-size-line11",
+     "method": "read"
+    },
+    {
+     "quantity": "mound symbol diameter (px), upper bound",
+     "value_verbatim": "20",
+     "value_parsed": 20,
+     "unit": "px",
+     "kind": "physical",
+     "path": "#burial-mound-symbol-size-line11",
+     "method": "read"
+    },
+    {
+     "quantity": "crop size (px), used to compute context multiplier (restated)",
+     "value_verbatim": "150",
+     "value_parsed": 150,
+     "unit": "px",
+     "kind": "physical",
+     "path": "DEFAULT_PADDING",
+     "method": "read"
+    },
+    {
+     "quantity": "context multiplier, lower bound (crop size ÷ largest symbol)",
+     "value_verbatim": "7",
+     "value_parsed": 7,
+     "unit": "×",
+     "kind": "ratio",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a/c",
+     "operands": [
+      {
+       "name": "a",
+       "file": "scripts/extract_candidates.py",
+       "path": "DEFAULT_PADDING*2"
+      },
+      {
+       "name": "c",
+       "file": "prompts/system-instructions/detect_brief-text.md",
+       "path": "#burial-mound-symbol-size-line11-upper"
+      }
+     ]
+    },
+    {
+     "quantity": "context multiplier, upper bound (crop size ÷ smallest symbol)",
+     "value_verbatim": "15",
+     "value_parsed": 15,
+     "unit": "×",
+     "kind": "ratio",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a/b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "scripts/extract_candidates.py",
+       "path": "DEFAULT_PADDING*2"
+      },
+      {
+       "name": "b",
+       "file": "prompts/system-instructions/detect_brief-text.md",
+       "path": "#burial-mound-symbol-size-line11-lower"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "prompts/system-instructions/detect_brief-text.md",
+    "path": "#burial-mound-symbol-size-line11"
+   },
+   "method": "read",
+   "notes": "prompts/system-instructions/detect_brief-text.md:11 states 'Burial mound (kurgan): ... ~10-20 pixels diameter.' 150/10=15 (exact); 150/20=7.5 (quoted as 7, floor-rounded) — both derivable from the 150 px crop size (2×DEFAULT_PADDING) divided by the symbol-size bounds."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1108,
+     1108
+    ],
+    "section": "Decision 23 — Rationale item 3, 40px degradation vs sweet spot"
+   },
+   "claim_text": "3. 40px showed the only noticeable degradation (F1 0.741 vs 0.770), confirming a lower bound",
+   "values": [
+    {
+     "quantity": "crop size (px), degraded condition",
+     "value_verbatim": "40",
+     "value_parsed": 40,
+     "unit": "px",
+     "kind": "physical",
+     "path": "#crop-size-40px-row",
+     "method": "read"
+    },
+    {
+     "quantity": "F1, 40 px crop (degraded)",
+     "value_verbatim": "0.741",
+     "value_parsed": 0.741,
+     "unit": null,
+     "kind": "metric",
+     "path": "#crop-size-40px-row",
+     "method": "read"
+    },
+    {
+     "quantity": "F1, 150 px crop (sweet-spot default, comparison)",
+     "value_verbatim": "0.770",
+     "value_parsed": 0.77,
+     "unit": null,
+     "kind": "metric",
+     "path": "#crop-size-150px-row",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/pv/phase1/pv-phase1-analysis.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "40 px row F1=0.7407 rounds to the quoted 0.741. The 150 px row F1=0.7669 rounds to 0.767, not the quoted 0.770 — recorded faithfully (rule 4, not adjudicated); anchored to the same crop-size sweep table."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1109,
+     1109
+    ],
+    "section": "Decision 23 — Rationale item 4, 300px vs 150px"
+   },
+   "claim_text": "4. 300px was marginally worse than 150px, suggesting additional context adds noise",
+   "values": [
+    {
+     "quantity": "crop size (px), condition marginally worse than the default",
+     "value_verbatim": "300",
+     "value_parsed": 300,
+     "unit": "px",
+     "kind": "physical",
+     "path": "#crop-size-300px-row",
+     "method": "read"
+    },
+    {
+     "quantity": "crop size (px), default (comparison)",
+     "value_verbatim": "150",
+     "value_parsed": 150,
+     "unit": "px",
+     "kind": "physical",
+     "path": "#crop-size-150px-row",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/pv/phase1/pv-phase1-analysis.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Restates the 300 px (F1=0.7607) vs 150 px (F1=0.7669) comparison from the same crop-size sweep table."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1111,
+     1111
+    ],
+    "section": "Decision 23 — Implementation line, DEFAULT_PADDING constant"
+   },
+   "claim_text": "**Implementation**: `DEFAULT_PADDING = 75` in `extract_candidates.py` (crop size = padding × 2)",
+   "values": [
+    {
+     "quantity": "padding constant (px), PV verifier crop extraction (restated)",
+     "value_verbatim": "75",
+     "value_parsed": 75,
+     "unit": "px",
+     "kind": "physical",
+     "path": "DEFAULT_PADDING",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "scripts/extract_candidates.py",
+    "path": "DEFAULT_PADDING"
+   },
+   "method": "read",
+   "notes": "Restates the DEFAULT_PADDING=75 constant already anchored for the line-1096 claim above; distinct verbatim mention, extracted separately per full-enumeration (rule 3)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1121,
+     1121
+    ],
+    "section": "Decision 24 — decision statement, N=1 vs N=5"
+   },
+   "claim_text": "**Decision**: Use N=1 single-pass verification rather than N=5 consensus voting for the verifier stage. Consensus voting adds no significant value at the verification stage.",
+   "values": [
+    {
+     "quantity": "verifier pass count, selected default",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": null,
+     "kind": "count",
+     "path": "#consensus-n1-t00-row",
+     "method": "read"
+    },
+    {
+     "quantity": "verifier pass count, rejected consensus alternative",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": null,
+     "kind": "count",
+     "path": "#consensus-n5-t07-row",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/pv/phase1/pv-phase1-analysis.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Matches the 'Consensus N=1 vs N=5 (Obs 167)' table in results/pv/phase1/pv-phase1-analysis.md."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1125,
+     1126
+    ],
+    "section": "Decision 24 — Alternatives considered, N=5 and N=3"
+   },
+   "claim_text": "- N=5 consensus at T=0.7 (matching proposer consensus approach)\n- N=3 consensus as a lighter alternative",
+   "values": [
+    {
+     "quantity": "verifier pass count, N=5 alternative",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": null,
+     "kind": "count",
+     "path": "#consensus-n5-t07-row",
+     "method": "read"
+    },
+    {
+     "quantity": "temperature, N=5 alternative",
+     "value_verbatim": "0.7",
+     "value_parsed": 0.7,
+     "unit": null,
+     "kind": "parameter",
+     "path": "#consensus-n5-t07-row",
+     "method": "read"
+    },
+    {
+     "quantity": "verifier pass count, N=3 alternative (untested)",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "results/pv/phase1/pv-phase1-analysis.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "N=5/T=0.7 matches the pv-phase1-analysis.md consensus table row. N=3 for the *verifier* stage (as opposed to the unrelated proposer-side 3-of-10 consensus in PV Phase 2) does not appear to have been tested; no artefact located, left anchor-unknown."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1130,
+     1130
+    ],
+    "section": "Decision 24 — Rationale item 1, N=5 vs N=1 F1 comparison"
+   },
+   "claim_text": "1. N=5 T=0.7 consensus produced F1=0.774 vs N=1 T=0.0 at F1=0.770 — a +0.004 difference well within CI overlap (Obs 167)",
+   "values": [
+    {
+     "quantity": "verifier pass count, N=5 consensus",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": null,
+     "kind": "count",
+     "path": "#consensus-n5-t07-row",
+     "method": "read"
+    },
+    {
+     "quantity": "temperature, N=5 consensus",
+     "value_verbatim": "0.7",
+     "value_parsed": 0.7,
+     "unit": null,
+     "kind": "parameter",
+     "path": "#consensus-n5-t07-row",
+     "method": "read"
+    },
+    {
+     "quantity": "F1, N=5 T=0.7 consensus verifier",
+     "value_verbatim": "0.774",
+     "value_parsed": 0.774,
+     "unit": null,
+     "kind": "metric",
+     "path": "#consensus-n5-t07-row",
+     "method": "read"
+    },
+    {
+     "quantity": "verifier pass count, N=1 single-pass",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": null,
+     "kind": "count",
+     "path": "#consensus-n1-t00-row",
+     "method": "read"
+    },
+    {
+     "quantity": "temperature, N=1 single-pass",
+     "value_verbatim": "0.0",
+     "value_parsed": 0.0,
+     "unit": null,
+     "kind": "parameter",
+     "path": "#consensus-n1-t00-row",
+     "method": "read"
+    },
+    {
+     "quantity": "F1, N=1 T=0.0 single-pass verifier",
+     "value_verbatim": "0.770",
+     "value_parsed": 0.77,
+     "unit": null,
+     "kind": "metric",
+     "path": "#consensus-n1-t00-row",
+     "method": "read"
+    },
+    {
+     "quantity": "F1 difference, N=5 consensus minus N=1 single-pass (document's own stated delta)",
+     "value_verbatim": "0.004",
+     "value_parsed": 0.004,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "b-a",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/pv/phase1/pv-phase1-analysis.md",
+       "path": "#consensus-n1-t00-row"
+      },
+      {
+       "name": "b",
+       "file": "results/pv/phase1/pv-phase1-analysis.md",
+       "path": "#consensus-n5-t07-row"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/pv/phase1/pv-phase1-analysis.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "N=5,T=0.7 row: F1=0.7737 (rounds to quoted 0.774). N=1,T=0.0 row: F1=0.7669 (rounds to 0.767, not the quoted 0.770 — recorded faithfully, not adjudicated). The document's own text at pv-phase1-analysis.md:35 states the delta as '+0.0068', not the +0.004 quoted in decisions-log.md — recorded via arithmetic method so the harness can surface this."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1132,
+     1132
+    ],
+    "section": "Decision 24 — Rationale item 3, cost and speed multiplier"
+   },
+   "claim_text": "3. N=1 is 5× cheaper in API calls and 5× faster in wall-clock time",
+   "values": [
+    {
+     "quantity": "cost multiplier, N=1 vs N=5 verifier consensus (API calls)",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": "×",
+     "kind": "ratio",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "b/a",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/pv/phase1/pv-phase1-analysis.md",
+       "path": "#consensus-n1-t00-row"
+      },
+      {
+       "name": "b",
+       "file": "results/pv/phase1/pv-phase1-analysis.md",
+       "path": "#consensus-n5-t07-row"
+      }
+     ]
+    },
+    {
+     "quantity": "speed multiplier, N=1 vs N=5 verifier consensus (wall-clock time)",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": "×",
+     "kind": "ratio",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "b/a",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/pv/phase1/pv-phase1-analysis.md",
+       "path": "#consensus-n1-t00-row"
+      },
+      {
+       "name": "b",
+       "file": "results/pv/phase1/pv-phase1-analysis.md",
+       "path": "#consensus-n5-t07-row"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/pv/phase1/pv-phase1-analysis.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Both 5× figures are the trivial pass-count ratio (N=5 ÷ N=1 = 5) implied by the same consensus table already anchored above."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1135,
+     1135
+    ],
+    "section": "Decision 24 — Implementation, default iterations flag"
+   },
+   "claim_text": "**Implementation**: `--iterations 1` default in `run_pv.py verify`",
+   "values": [
+    {
+     "quantity": "default value of the --iterations CLI flag, run_pv.py verify subcommand",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": null,
+     "kind": "parameter",
+     "path": "--iterations default",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "scripts/run_pv.py",
+    "path": "--iterations default"
+   },
+   "method": "read",
+   "notes": "Non-JSON anchor (CLI argparse default), legitimate per v1.1 calibration rule allowance for config.py-style constants."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1145,
+     1145
+    ],
+    "section": "Decision 25 — decision statement, recommended configuration"
+   },
+   "claim_text": "**Decision**: Recommend 10 proposer passes with a 3-of-10 or 5-of-10 vote threshold, followed by a single verifier pass, as the optimal PV pipeline configuration. This achieves F1=0.823–0.831.",
+   "values": [
+    {
+     "quantity": "proposer pass count, Decision 25 recommended configuration",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "read"
+    },
+    {
+     "quantity": "vote-threshold numerator, lower-recommended option (3-of-10)",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "parameter",
+     "path": "#leaderboard-row-08-text-3of10",
+     "method": "read"
+    },
+    {
+     "quantity": "vote-threshold denominator, lower-recommended option (3-of-10)",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": null,
+     "kind": "parameter",
+     "path": "#leaderboard-row-08-text-3of10",
+     "method": "read"
+    },
+    {
+     "quantity": "vote-threshold numerator, upper-recommended option (5-of-10)",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": null,
+     "kind": "parameter",
+     "path": "#leaderboard-row-09-text-5of10",
+     "method": "read"
+    },
+    {
+     "quantity": "vote-threshold denominator, upper-recommended option (5-of-10)",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": null,
+     "kind": "parameter",
+     "path": "#leaderboard-row-09-text-5of10",
+     "method": "read"
+    },
+    {
+     "quantity": "F1, recommended configuration, lower bound (text-3of10 + PV)",
+     "value_verbatim": "0.823",
+     "value_parsed": 0.823,
+     "unit": null,
+     "kind": "metric",
+     "path": "#leaderboard-row-08-text-3of10",
+     "method": "read"
+    },
+    {
+     "quantity": "F1, recommended configuration, upper bound (text-5of10 + PV)",
+     "value_verbatim": "0.831",
+     "value_parsed": 0.831,
+     "unit": null,
+     "kind": "metric",
+     "path": "#leaderboard-row-09-text-5of10",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/pv/phase2/pv-phase2-analysis.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Matches the Leaderboard: rank 1 '09 | text-5of10 | ... | 0.8314' (rounds to 0.831) and rank 2 '08 | text-3of10 | ... | 0.8227' (rounds to 0.823). 10 proposer passes matches the '5of10'/'3of10' pool-size-10 naming."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1149,
+     1149
+    ],
+    "section": "Decision 25 — Alternatives considered, N=1 simple option"
+   },
+   "claim_text": "- N=1 single pass + verifier (simpler, cheaper, F1 ≈ 0.77)",
+   "values": [
+    {
+     "quantity": "proposer pass count, N=1 alternative",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "F1, N=1 single pass + verifier alternative (approx.)",
+     "value_verbatim": "≈ 0.77",
+     "value_parsed": 0.77,
+     "unit": null,
+     "kind": "metric",
+     "path": "#consensus-n1-t00-row",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/pv/phase1/pv-phase1-analysis.md",
+    "path": "#consensus-n1-t00-row"
+   },
+   "method": "read",
+   "notes": "≈0.77 matches the N=1,T=0.0 verifier row F1=0.7669 in pv-phase1-analysis.md. The bare 'N=1' proposer-pass-count restatement here is not itself sourced to a specific committed field distinct from the F1 value; left anchor-unknown."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1150,
+     1150
+    ],
+    "section": "Decision 25 — Alternatives considered, N=30 strict option"
+   },
+   "claim_text": "- N=30 strict consensus + verifier (expensive, HIGH thinking needed, F1 ≈ 0.79)",
+   "values": [
+    {
+     "quantity": "proposer pass count, N=30 strict-consensus alternative",
+     "value_verbatim": "30",
+     "value_parsed": 30,
+     "unit": null,
+     "kind": "count",
+     "path": "#leaderboard-row-26-high-25of30",
+     "method": "read"
+    },
+    {
+     "quantity": "F1, N=30 strict consensus + verifier alternative (approx.)",
+     "value_verbatim": "≈ 0.79",
+     "value_parsed": 0.79,
+     "unit": null,
+     "kind": "metric",
+     "path": "#leaderboard-row-26-high-25of30",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/pv/phase2/pv-phase2-analysis.md",
+    "path": "#leaderboard-row-26-high-25of30"
+   },
+   "method": "read",
+   "notes": "≈0.79 most closely matches the 'high-25of30' row (F1=0.7852, the strict/aggressive HIGH-thinking consensus threshold) in the pv-phase2 leaderboard."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1151,
+     1151
+    ],
+    "section": "Decision 25 — Alternatives considered, N=30 loose union option"
+   },
+   "claim_text": "- N=30 loose union (1-of-30) + verifier (extreme recall but verifier can't filter enough FPs)",
+   "values": [
+    {
+     "quantity": "pool size, N=30 loose-union alternative",
+     "value_verbatim": "30",
+     "value_parsed": 30,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "read"
+    },
+    {
+     "quantity": "vote threshold, 1-of-30 loose union alternative",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/pv/phase2/pv-phase2-analysis.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Matches the '1-of-30' rows (experiments 22 text-1of30, 24 image-1of30) in the pv-phase2 Top-Performer Additions table; ambiguous between the text and image variants so anchored generically to the document (path null)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1155,
+     1155
+    ],
+    "section": "Decision 25 — Rationale item 1, Goldilocks zone"
+   },
+   "claim_text": "1. Moderate consensus (3-of-10) creates a \"Goldilocks zone\": enough agreement to filter single-run FPs, enough diversity to boost recall above N=1 (Obs 171)",
+   "values": [
+    {
+     "quantity": "vote-threshold numerator, Goldilocks-zone configuration",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "parameter",
+     "path": "#leaderboard-row-08-text-3of10",
+     "method": "read"
+    },
+    {
+     "quantity": "vote-threshold denominator, Goldilocks-zone configuration",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": null,
+     "kind": "parameter",
+     "path": "#leaderboard-row-08-text-3of10",
+     "method": "read"
+    },
+    {
+     "quantity": "proposer pass count, single-run comparison baseline (N=1)",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": null,
+     "kind": "count",
+     "path": "#group-a-n1-single-runs-pv",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/pv/phase2/pv-phase2-analysis.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Matches the 'Goldilocks zone' paragraph (line 73) naming 3-of-10 and 5-of-10 as the top performers; N=1 restates the single-run baseline."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1156,
+     1156
+    ],
+    "section": "Decision 25 — Rationale item 2, new project best vs previous best"
+   },
+   "claim_text": "2. Text 5-of-10 + PV achieves F1=0.831 — new project best, surpassing HIGH 25-of-30 consensus (F1=0.763) by +0.068",
+   "values": [
+    {
+     "quantity": "vote-threshold numerator, new project-best configuration (5-of-10)",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": null,
+     "kind": "parameter",
+     "path": "#leaderboard-row-09-text-5of10",
+     "method": "read"
+    },
+    {
+     "quantity": "vote-threshold denominator, new project-best configuration (5-of-10)",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": null,
+     "kind": "parameter",
+     "path": "#leaderboard-row-09-text-5of10",
+     "method": "read"
+    },
+    {
+     "quantity": "F1, new project-best configuration (text-5of10 + PV)",
+     "value_verbatim": "0.831",
+     "value_parsed": 0.831,
+     "unit": null,
+     "kind": "metric",
+     "path": "#leaderboard-row-09-text-5of10",
+     "method": "read"
+    },
+    {
+     "quantity": "vote-threshold numerator, previous-best configuration (HIGH 25-of-30)",
+     "value_verbatim": "25",
+     "value_parsed": 25,
+     "unit": null,
+     "kind": "parameter",
+     "path": "#leaderboard-row-26-high-25of30",
+     "method": "read"
+    },
+    {
+     "quantity": "vote-threshold denominator, previous-best configuration (HIGH 25-of-30)",
+     "value_verbatim": "30",
+     "value_parsed": 30,
+     "unit": null,
+     "kind": "parameter",
+     "path": "#leaderboard-row-26-high-25of30",
+     "method": "read"
+    },
+    {
+     "quantity": "F1, previous project-best configuration (HIGH 25-of-30 consensus, no PV)",
+     "value_verbatim": "0.763",
+     "value_parsed": 0.763,
+     "unit": null,
+     "kind": "metric",
+     "path": "#cost-efficiency-high-25of30-no-pv",
+     "method": "read"
+    },
+    {
+     "quantity": "F1 improvement, new project-best over previous project-best",
+     "value_verbatim": "0.068",
+     "value_parsed": 0.068,
+     "unit": null,
+     "kind": "metric",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a-b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/pv/phase2/pv-phase2-analysis.md",
+       "path": "#leaderboard-row-09-text-5of10"
+      },
+      {
+       "name": "b",
+       "file": "results/pv/phase2/pv-phase2-analysis.md",
+       "path": "#cost-efficiency-high-25of30-no-pv"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/pv/phase2/pv-phase2-analysis.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "0.831 matches leaderboard row 09 (F1=0.8314). The 'previous project best without PV' is stated directly as 'HIGH 25-of-30 consensus, F1=0.7620' (line 36) and in the Cost-Efficiency table (line 119, F1=0.7620) — the quoted 0.763 rounds slightly differently (0.762 vs 0.763), recorded faithfully. 0.8314−0.7620=0.0694, close to but not exactly the quoted +0.068 — recorded via arithmetic per rule 3, not adjudicated."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     1157,
+     1157
+    ],
+    "section": "Decision 25 — Rationale item 3, pass count and cost efficiency"
+   },
+   "claim_text": "3. The approach uses 11 total API calls per tile (10 proposer + 1 verifier) vs 30 for the previous best — 63% fewer passes at 6.5× lower cost per tile (Obs 174)",
+   "values": [
+    {
+     "quantity": "total API calls per tile, recommended configuration (10 proposer + 1 verifier)",
+     "value_verbatim": "11",
+     "value_parsed": 11,
+     "unit": null,
+     "kind": "count",
+     "path": "#cost-efficiency-text-5of10-pv",
+     "method": "read"
+    },
+    {
+     "quantity": "proposer pass count, recommended configuration",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": null,
+     "kind": "count",
+     "path": "#cost-efficiency-text-5of10-pv",
+     "method": "read"
+    },
+    {
+     "quantity": "verifier pass count, recommended configuration",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": null,
+     "kind": "count",
+     "path": "#cost-efficiency-text-5of10-pv",
+     "method": "read"
+    },
+    {
+     "quantity": "total passes, previous-best configuration (HIGH 25-of-30, no PV)",
+     "value_verbatim": "30",
+     "value_parsed": 30,
+     "unit": null,
+     "kind": "count",
+     "path": "#cost-efficiency-high-25of30-no-pv",
+     "method": "read"
+    },
+    {
+     "quantity": "percentage reduction in passes, recommended vs previous-best configuration",
+     "value_verbatim": "63",
+     "value_parsed": 63,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "100*(b-a)/b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/pv/phase2/pv-phase2-analysis.md",
+       "path": "#cost-efficiency-text-5of10-pv"
+      },
+      {
+       "name": "b",
+       "file": "results/pv/phase2/pv-phase2-analysis.md",
+       "path": "#cost-efficiency-high-25of30-no-pv"
+      }
+     ]
+    },
+    {
+     "quantity": "cost reduction multiplier per tile, recommended vs previous-best configuration",
+     "value_verbatim": "6.5",
+     "value_parsed": 6.5,
+     "unit": "×",
+     "kind": "ratio",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "b/a",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/pv/phase2/pv-phase2-analysis.md",
+       "path": "#cost-efficiency-text-5of10-pv-cost"
+      },
+      {
+       "name": "b",
+       "file": "results/pv/phase2/pv-phase2-analysis.md",
+       "path": "#cost-efficiency-high-25of30-no-pv-cost"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/pv/phase2/pv-phase2-analysis.md",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Cost-Efficiency Analysis table: 'text-5of10 + PV | 11 | ~$0.004' and 'HIGH 25-of-30 (no PV) | 30 | ~$0.026'. (30−11)/30=63.3% (rounds to 63%); 0.026/0.004=6.5 exactly, matching the quoted 6.5× precisely."
+  }
+ ]
 }

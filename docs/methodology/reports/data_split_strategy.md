@@ -1,15 +1,27 @@
 # Formal Machine Learning Methodology (Remote Sensing)
 
+> **STALE — pre-registration planning document (December 2025); do not
+> cite against the lodged design.** This report describes the planning
+> stage before the 2026-01-04 holdout expansion (`4d011a839`): the
+> lodged registration specifies a **60-tile holdout (15 per map)** and
+> a **281-tile reserve**, not the 20-tile test set and ~321-tile
+> production pool planned here (`docs/methodology/preregistration/osf/preregistration.md`
+> lines 75-76, 1929-1930). Retained as a historical design note.
+> Banner added 2026-08-02 (C4 wave-4 triage).
+
 **Objective**: Ensure statistical rigor for the final publication by separating "tuning" data from "reporting" data.
 
 ## 1. Dataset Overview
+
 *   **Total Corpus**: 361 Tiled Images (1km x 1km approx).
 *   **Source**: 4 Map Sheets (Rakovski, Lesovo, Elenovo, 32635).
 
 ## 2. The Three-Split Protocol
+
 Standard ML practice is to divide data into three distinct buckets.
 
 ### A. Training & Development Set (The "Lab" Set)
+
 *   **Size**: **20 Tiles** (The "Original 20").
 *   **Composition**: A stratified sample representing ~5% of the corpus.
 *   **Usage**:
@@ -18,12 +30,14 @@ Standard ML practice is to divide data into three distinct buckets.
 *   **Status**: **Biased/Burned**. Since the prompt is explicitly designed to solve *these* tiles, performance here will be higher than on unseen data. This is expected.
 
 ### B. Test / Holdout Set (The "Safety Check")
+
 *   **Size**: **20 NEW Tiles** (~5%).
 *   **Role**: **Intermediate Verification**.
 *   **Why do we need this?** Before we commit to the full "Production Run" (which consumes time/quota and generates massive data), we run this small, unbiased set to confirm our prompt works on data it has never seen.
 *   **Publication Usage**: We report these numbers as "Preliminary Validation" or "Pilot Performance".
 
 ### C. Production Run (The "Archaeological Result")
+
 *   **Size**: **All Remaining Tiles** (~321 tiles).
 *   **Role**: **Final Deployment**.
 *   **Publication Usage**:
@@ -32,22 +46,27 @@ Standard ML practice is to divide data into three distinct buckets.
     3.  **Spatial Analysis**: We map the distribution of mounds across the landscape.
 
 **Summary**:
+
 *   **Dev Set** = "Build the tool."
 *   **Test Set** = "Verify the tool works."
 *   **Production** = "Use the tool to do Science."
 
 ## 3. Revised Plan of Action
+
 1.  **Restoration**: I have restored the full **20-tile Development Set** to `inputs/target_tiles_manifest.json`.
 2.  **Tuning (Phase 3)**: We will continue optimizing the "Hybrid" prompt using this 20-tile set.
 3.  **Future**: When we are happy with v3.x, we will define the 20-tile Test Set.
 
 ## 4. Scaling Strategy: The 80-Map Corpus
+
 You noted that our 4 maps are a "Gold Standard" sample of a larger 80-map corpus with noisy (student) labels (6-7% error).
 
 ### The Challenge
+
 We cannot benchmark against the 80 maps directly because the "Ground Truth" is unreliable. If the Model disagrees with a Student, the Student might be wrong.
 
 ### The Solution: "Disagreement Sampling"
+
 1.  **Prove the Tool (The 4 Maps)**: We use our current "Gold Standard" dataset (361 tiles) to rigorously prove the model's Precision and Recall. This satisfies the "Methodology" section of the paper.
 2.  **Apply the Tool (The 80 Maps)**: We run the proven model on the remaining 76 maps.
 3.  **Audit the Students (The "Results" Section)**:

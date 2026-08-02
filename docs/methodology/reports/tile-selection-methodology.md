@@ -1,6 +1,12 @@
 # Tile Selection Methodology (Phase 2)
 
 **Created**: 2025-12-23
+**Revised**: 2026-08-02 (C4 wave-4 triage: § Sample Size holdout figures
+20 tiles / 5 per map → 60 / 15, stale since the 2026-01-04 holdout
+expansion `4d011a839`; two-seed randomisation note added; dated
+post-expansion path check appended to § Verification Checklist. The
+lodged registration cites this file as its methodology of record —
+`preregistration.md` § 8.6.)
 **Purpose**: Documented procedure for selecting calibration and holdout tile sets with provenance tracking
 
 ---
@@ -35,8 +41,10 @@ Tiles must have **≤75% background pixels** (black [0,0,0]) to be eligible.
 
 ### Sample Size
 
-- **Calibration set**: 20 tiles (5 per map)
-- **Holdout set**: 20 tiles (5 per map)
+- **Calibration set**: 20 tiles (5 per map; seed 1766464625, selected 2025-12-23)
+- **Holdout set**: 60 tiles (15 per map; seed 1767425239, re-selected
+  2026-01-03 — expanded from the original 20 tiles / 5 per map by
+  `4d011a839`, lodged as the registered design)
 
 ### Stratification
 
@@ -200,3 +208,11 @@ Executed: 2025-12-23 | Seed: 1766464625
 - [x] Density distribution approximately matched (calibration: 8 empty, 7 sparse, 5 dense; holdout: identical)
 - [x] Random seed documented (1766464625)
 - [x] All file paths verified (40/40 tiles exist)
+
+Post-expansion check — executed 2026-08-02 (C4 wave-4 triage; the
+block above is the verbatim 2025-12-23 pre-expansion record and is
+deliberately unchanged):
+
+- [x] All file paths verified against the lodged design (80/80 tiles
+  exist: 20 calibration, seed 1766464625 + 60 holdout, seed
+  1767425239)
