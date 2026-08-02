@@ -89,32 +89,41 @@ amendment-3 validator, era resolution, registry, thousands parsing).
 (c) **Runner tranches 2–3**: cost/token (NOTE: 7 of 14 session-78
 metas hold only cleanup-fragment usage — era-blob reads REQUIRED for
 cost recomputation over overwritten metas) then statistical on
-sapphire. (d) **Instrument hygiene**: machine-scope guard for census
-specs (3 glob-count specs count gitignored content — sapphire 127,281
-vs local 48,707 pv-diag files; 037#37 verdict flips by machine);
-untracked-anchor guard (4 rows in 044 anchor `outputs/wbf/**` crops
-manifests that exist locally but were never committed — resolve
-nowhere else); 'no'/'No' comparer vocabulary (2 rows). (e) **Held-over
-review queue (no-silent-discard)**: working-notes candidates from
-S124 pending Shawn's verdict — **WN-A** flat-mismatch-count as a
-repair-honesty invariant (MISMATCH stayed 104 through the 255-value
-repair; a repair pass that "fixes" mismatches is suspect by default)
-and **WN-B** the machine-referent question (claims about uncommitted
-artefacts have no canonical tree — sapphire vs amd-tower census
-counts differ; is such a claim verifiable at all, or only
-relative-to-a-named-machine? feeds the (d) guards and GATE 3);
-user-obs candidates S118–120, S122, **S124 A–C** pending in
-`user-observations.md`. NOTE the S124 rulings CLOSED the former (e)
-items: ruling 12 landed (the moved-anchor era question resolved as
-the era_check field), Obs 380/381 landed, tier-1 failures fixed. (f) Then
+sapphire. (d) **Instrument hygiene — scope per Obs 383**: machine
+guard for census specs (**7 of 30 glob-count specs are
+machine-dependent**, not 3 — sapphire 127,281 vs amd-tower 48,707
+pv-diag files; 037#37 is the one MATCH↔MISMATCH flip, four rows flip
+MATCH↔UNRESOLVED; 4 more specs agreed across machines only by luck);
+untracked-anchor guard (the 4 044 rows anchor never-committed
+`outputs/wbf/**` manifests; the harness's `_tracked_files()` cache is
+the ready machinery); 'no'/'No' comparer vocabulary (2 rows). Obs
+383's decision question goes IN THE GATE 3 PACKAGE: rule
+uncommitted-artefact claims out of mechanical scope (every quoted
+verification figure repo-reproducible) vs per-spec machine_scope
+fields — NOTE Obs 383's charter finding, § 4 ranks raw `outputs/**`
+at authority TIER 1, so the top tier is the machine-dependent one.
+(e) **Held-over review queue — CLEARED at S124 close**: WN-A/WN-B
+approved and landed as **Obs 382** (`1bdbca86e`, flat-mismatch
+repair-honesty invariant + proposed standing check: MISMATCH monotone
+non-decreasing through repairs unless attributed to named
+instrument-defect rows) and **Obs 383** (`ac10b6074`,
+machine-referent question); user-obs S124 A–C APPROVED (B generalised
+by Shawn: for genuine decisions, hypothesise the most principled /
+lowest-debt option, test it, then decide). Still pending: user-obs
+S118–120 + S122 (silence holds); WN-1 (provenance-by-shape); the
+former PI-pending items are all closed (ruling 12 landed, Obs
+380/381, tier-1 fixed). (f) Then
 generated-stratum exact comparers + 125 SUSPECT sibling-JSON rows;
 (g) `generate_c4_ledger.py` (verification lane per ruling 11) + GATE
 3 package (carry the Phase-0 scope-growth flag).
 
 **Carry-forward**: MCC/Sens/Spec in evaluation.md tables are
-bootstrap means (Obs 376); user-obs candidates S118–120 + S122 +
-S124 A–C pending in `user-observations.md` (silence holds); WN-1
-(provenance-by-shape) + S124 WN-A/WN-B pending (queue item (e));
+bootstrap means (Obs 376); user-obs candidates S118–120 + S122
+pending in `user-observations.md` (silence holds; S124 A–C approved
+2026-08-02); WN-1 (provenance-by-shape) pending; Obs 382's standing
+check applies to every future repair wave; Obs 383 warns the
+amd-tower census figures survive ONLY in the Obs + session log (the
+scratchpad copy is garbage-collectable);
 register re-anchoring still queued before any future census; the
 reflection set carries ~160 accepted legacy whitespace-lint errors —
 append-only convention outranks fix-on-touch there; normalising them
