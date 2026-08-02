@@ -1,99 +1,170 @@
 {
-  "_meta": {
-    "title": "C4 wave-4 triage — Session 125 (17 new MISMATCH + 1 new APPROX from the wave-3 fleet batches)",
-    "date": "2026-08-02",
-    "triager": "Claude Fable 5 session (Session 125)",
-    "verification": "ruling-11 discipline: draft stories pre-registered to the scratchpad before three blind Opus verification passes. The blind passes corrected the triager AGAIN: 018#11[1] was drafted as a wrong-binding instrument row and is the INVERSE (the anchor and all four artefact families agree on 240; the hand-written erratum and the study README are wrong — DOC-DEFECT-AT-ERA); 018#15[0] was drafted era-faithful and is era-UNVERIFIABLE with the directional claim reversing under matched coverage; 009#30 was resolved to anchor fall-through (doc exact). Confirmed: the 20-to-60 holdout family, board growth, in-place recovery merges.",
-    "input": "reports/verification/c4-recompute-report.json at c4aeac922 (canonical post-wave-3 sapphire recompute, 2402/135/2285/1709/8); the 17 MISMATCH + 1 APPROX rows new to wave-3 batches",
-    "predecessor": "reports/verification/c4-triage/mismatch-triage-2026-08-02.json (wave 3)",
-    "controller": "planning/audit-charter.md § 7 Phase 3; rulings phase3-rulings-2026-07-31.md §§ 1-13",
-    "pi_escalation": "FAMILY W4-E43 CARRIES A LIVE RESEARCH FINDING REQUIRING PI DECISION — see families[6] and the escalations block. No registration-adjacent artefact (protocol-errata.md, paper tables) was edited this session."
+ "_meta": {
+  "title": "C4 wave-4 triage — Session 125 (17 new MISMATCH + 1 new APPROX from the wave-3 fleet batches)",
+  "date": "2026-08-02",
+  "triager": "Claude Fable 5 session (Session 125)",
+  "verification": "ruling-11 discipline: draft stories pre-registered to the scratchpad before three blind Opus verification passes. The blind passes corrected the triager AGAIN: 018#11[1] was drafted as a wrong-binding instrument row and is the INVERSE (the anchor and all four artefact families agree on 240; the hand-written erratum and the study README are wrong — DOC-DEFECT-AT-ERA); 018#15[0] was drafted era-faithful and is era-UNVERIFIABLE with the directional claim reversing under matched coverage; 009#30 was resolved to anchor fall-through (doc exact). Confirmed: the 20-to-60 holdout family, board growth, in-place recovery merges.",
+  "input": "reports/verification/c4-recompute-report.json at c4aeac922 (canonical post-wave-3 sapphire recompute, 2402/135/2285/1709/8); the 17 MISMATCH + 1 APPROX rows new to wave-3 batches",
+  "predecessor": "reports/verification/c4-triage/mismatch-triage-2026-08-02.json (wave 3)",
+  "controller": "planning/audit-charter.md § 7 Phase 3; rulings phase3-rulings-2026-07-31.md §§ 1-13",
+  "pi_escalation": "FAMILY W4-E43 CARRIES A LIVE RESEARCH FINDING REQUIRING PI DECISION — see families[6] and the escalations block. No registration-adjacent artefact (protocol-errata.md, paper tables) was edited this session.",
+  "accounting_correction": "2026-08-02 addendum: the original landing covered 17 of the wave's 18 rows; 012#48[3] was dropped from the blind-verification partition yet listed in commit 8545b715c's claims line. This addendum adjudicates it and corrects the count. Full wave-4 set: 18 rows, 8 families."
+ },
+ "families": [
+  {
+   "name": "w4-preexpansion-holdout-stale-banners",
+   "rows": [
+    "024-data-split-strategy#6[0]",
+    "024-data-split-strategy#11[0]",
+    "024-metrics-strategy#3[1]"
+   ],
+   "disposition": "STALE-PLANNING-DOC-BANNER applied (era-faithful; superseded by the 2026-01-04 holdout expansion)",
+   "document_class": "undated pre-registration planning reports (docs/methodology/reports/), December 2025, frozen at the planning stage",
+   "mechanism": "Both docs describe the E1/E2 planning-era design (20-tile test set, ~321-tile production pool, N=10 variability pool) that commit 4d011a839 (2026-01-04, 'Expand holdout set from 20 to 60 tiles') superseded — the expansion back-propagated into the prereg, execution plan, and script, but not into these reports. Era-faithful: the 20-tile design was real at authoring (archive/preregistration/inputs-v1/tile_selection_metadata_v1_original.json: holdout.total_tiles 20, samples_per_map 5). Banners applied 2026-08-02 covering the flagged figures PLUS the co-stale reserve figures (~321 vs lodged 281) and pool sizes (N=10/3-5-10 vs lodged 5/10/30), and labelling metrics_strategy § 3's F1/CI numbers as illustrative examples (an unlabelled confabulation hazard the blind pass flagged).",
+   "materiality": "low (data_split_strategy) / low-medium (metrics_strategy — the bootstrap method survives into the lodged protocol, so the wrong n is inheritable)",
+   "verification_lane": {
+    "triager_draft": "stale-planning-doc banners",
+    "blind_verdict": "confirmed, with banner scope extended to reserve/pool figures and the unlabelled-example hazard",
+    "agreement": "confirmed-with-extension"
+   },
+   "evidence": "commits 9fb2c5fbe, 894c7611a, 156a9f3e0, 3f66fc3f8, 4d011a839; archive/preregistration/inputs-v1/tile_selection_metadata_v1_original.json; preregistration.md:75-76, 1907, 1929-1930"
   },
-  "families": [
-    {
-      "name": "w4-preexpansion-holdout-stale-banners",
-      "rows": ["024-data-split-strategy#6[0]", "024-data-split-strategy#11[0]", "024-metrics-strategy#3[1]"],
-      "disposition": "STALE-PLANNING-DOC-BANNER applied (era-faithful; superseded by the 2026-01-04 holdout expansion)",
-      "document_class": "undated pre-registration planning reports (docs/methodology/reports/), December 2025, frozen at the planning stage",
-      "mechanism": "Both docs describe the E1/E2 planning-era design (20-tile test set, ~321-tile production pool, N=10 variability pool) that commit 4d011a839 (2026-01-04, 'Expand holdout set from 20 to 60 tiles') superseded — the expansion back-propagated into the prereg, execution plan, and script, but not into these reports. Era-faithful: the 20-tile design was real at authoring (archive/preregistration/inputs-v1/tile_selection_metadata_v1_original.json: holdout.total_tiles 20, samples_per_map 5). Banners applied 2026-08-02 covering the flagged figures PLUS the co-stale reserve figures (~321 vs lodged 281) and pool sizes (N=10/3-5-10 vs lodged 5/10/30), and labelling metrics_strategy § 3's F1/CI numbers as illustrative examples (an unlabelled confabulation hazard the blind pass flagged).",
-      "materiality": "low (data_split_strategy) / low-medium (metrics_strategy — the bootstrap method survives into the lodged protocol, so the wrong n is inheritable)",
-      "verification_lane": {"triager_draft": "stale-planning-doc banners", "blind_verdict": "confirmed, with banner scope extended to reserve/pool figures and the unlabelled-example hazard", "agreement": "confirmed-with-extension"},
-      "evidence": "commits 9fb2c5fbe, 894c7611a, 156a9f3e0, 3f66fc3f8, 4d011a839; archive/preregistration/inputs-v1/tile_selection_metadata_v1_original.json; preregistration.md:75-76, 1907, 1929-1930"
-    },
-    {
-      "name": "w4-tile-selection-methodology-living-fix",
-      "rows": ["024-tile-selection-methodology#7[0]", "024-tile-selection-methodology#7[1]"],
-      "disposition": "LIVING-DOC-FIX applied — HIGH materiality",
-      "document_class": "living methodology doc: the LODGED REGISTRATION cites it as its methodology of record (preregistration.md § 8.6), its script is live, and it was actively maintained after the expansion (cfc10c133 edited the adjacent line 38; 5c19b8256 refreshed paths; both skipped the stale line 39 twice)",
-      "mechanism": "Missed update, not abandonment: line 39's 'Holdout set: 20 tiles (5 per map)' contradicted the prereg's own table (60 / 15 per map) while the line above it remained correct — reading as authoritative. Era-faithful at 2025-12-23. Fixed in place (60 tiles / 15 per map, both seeds recorded); a banner would have orphaned the prereg's pointer.",
-      "materiality": "high — a reader following the lodged prereg's § 8.6 pointer landed on text contradicting the prereg's own table",
-      "verification_lane": {"triager_draft": "grouped with the banner family", "blind_verdict": "REFUTED the banner treatment for this doc — living-doc fix, highest materiality of the seven", "agreement": "refuted-then-adopted"},
-      "evidence": "preregistration.md:92, 1915, 1929-1930, 1944; scripts/select_tiles_phase2.py:63-64; inputs/tiles/tile_selection_metadata.json; commits 4d011a839, cfc10c133, 5c19b8256"
-    },
-    {
-      "name": "w4-dated-execution-record-mis-scoped",
-      "rows": ["024-tile-selection-methodology#24[0]", "024-tile-selection-methodology#24[1]"],
-      "disposition": "INSTRUMENT (recompute mis-scoped a dated run log as a live claim) — original record kept verbatim; dated post-expansion check APPENDED",
-      "document_class": "dated execution record inside the living doc (§ Verification Checklist, 'Executed: 2025-12-23 | Seed: 1766464625')",
-      "mechanism": "The 40/40 file-existence check is the E2 selection's run log — genuinely 20+20=40 at execution. Overwriting it to 80/80 would falsify a dated record and break the seed-1766464625 provenance chain. Remediation: the 2025-12-23 block is unchanged; a 2026-08-02-dated post-expansion check (80/80 verified against the lodged design, both seeds) is appended — the 80/80 verification was actually performed this session (blind pass re-resolved all 80 manifest paths), so the appended record is honest, not backdated.",
-      "materiality": "low as written; the genuine risk was the repair, not the defect",
-      "verification_lane": {"triager_draft": "same-expansion family", "blind_verdict": "categorically different — dated run log; append, never overwrite", "agreement": "refined-by-blind-pass"},
-      "evidence": "tile-selection-methodology.md:195-202 (pre-edit numbering); archive/preregistration/inputs-v1 metadata; commit 3f66fc3f8"
-    },
-    {
-      "name": "w4-decision20-anchor-fallthrough",
-      "rows": ["009#30[1]", "009#30[3]"],
-      "disposition": "INSTRUMENT (extraction anchor fall-through) — extraction repaired, doc exact",
-      "document_class": "dated decision record (decisions-log.md Decision 20, 2026-03-15)",
-      "mechanism": "The claim-level anchor names the HIGH-condition consensus-analysis-report; values[1]/[3] describe the MINIMAL condition and carried path but no per-value file, so they fell through to the HIGH artefact (0.7351). The correct minimal locator returns 0.699 EXACTLY; the artefact is byte-identical from first commit (blob 295a832cd; pure path move to archive/ at 276e4ca80). Repaired in 009.json with amendment-2 cross-file locators (path = file#jsonpath), validator green. STRUCTURAL CLASS FLAG: a value whose quantity names a different condition than the claim anchor file, with own path but no own file, silently mis-binds — adjacent to amendment 3 (which covers only pathless values). Sweep queued for the fleet corpus.",
-      "materiality": "zero for the document (quoted figure exact); material for the instrument",
-      "expected_transition": "MISMATCH -> MATCH x2 on next recompute (Obs 382 attribution: this named repair)",
-      "verification_lane": {"triager_draft": "flagged both stories (snapshot vs wrong-anchor), unresolved", "blind_verdict": "wrong-anchor proven; the extraction's OWN notes already located the correct file without binding it", "agreement": "resolved-by-blind-pass"},
-      "evidence": "archive/results-60-tile-validation/phase3a-replication/{minimal,high}/consensus-analysis-report.json; commits 1ea2e435a, 03a233da6, 276e4ca80"
-    },
-    {
-      "name": "w4-errata-snapshot-divergences",
-      "rows": ["018#6[0]", "018#45[1]", "023#37[2]", "023#39[2]", "023#39[3]"],
-      "disposition": "SNAPSHOT-DIVERGENCE (errata entries faithful at their own dates; artefacts moved afterwards)",
-      "document_class": "dated errata entries in protocol-errata.md (the snapshot unit is the ENTRY, not the file — GATE 3 note for the ruling-12 refinement)",
-      "mechanism": "018#6[0]: pro-high-text-n5 ran 5 runs at E42's date (2026-03-25); run_{6..10} executed 2026-03-29 (per-run meta timestamps; git cannot date it — outputs/ gitignored until 3d22184d6). 018#45[1]: E47's 253 = C(23,2) was written NINE SECONDS before the 253-comparison manifest commit; the board grew 23→25→26 conditions the same day (f859cd1ad 11:32:57, 899bb39ef 12:27, f3bb8e46b 21:58) — current 325 = C(26,2). 023#37/39: E71's 471-coverage/16-shortfall figures were exact at 12:50 on 2026-07-30; the erratum's own prescribed remediation ran at 15:25 the same day (99ae28ec4, 255/288 tiles recovered) lifting coverage to 484/shortfall 3 — self-inflicted divergence.",
-      "materiality": "low (018#45, scene-setting count) / low-medium (018#6, only prose record of the Pro run inventory) / medium-as-disclosure (E71 — its Live-impact paragraph now overstates residual F1 deflation; a dated rider recording post-recovery counts is PROPOSED to the PI, never an in-place edit)",
-      "verification_lane": {"triager_draft": "all three mechanisms predicted (later runs; C(23,2) vs C(26,2) board growth; recovery merge)", "blind_verdict": "confirmed with to-the-second dating", "agreement": "confirmed"},
-      "evidence": "run metas under outputs/h11/pv-diag-384/pro-high-text-n5/; results/pairwise/leaderboard-20m/run_manifest.json history; commits 75323f191, f859cd1ad, 899bb39ef, f3bb8e46b, 2159d25b4d, 99ae28ec4"
-    },
-    {
-      "name": "w4-e39-superseded-sweep-instrument",
-      "rows": ["017#52[2]"],
-      "disposition": "INSTRUMENT (anchor is a superseded coarser-grid sweep) — erratum right, committed artefact and a published table wrong",
-      "document_class": "dated erratum entry (E39, 2026-03-21)",
-      "mechanism": "The committed results/pv/phase1/adversarial-text-150/.../threshold_sweep.json is an OLDER step-0.1/100-bootstrap sweep (no 0.15 grid row; optimum 0.7669 at 0.2); the checklist/brief siblings are step-0.05/1000-bootstrap. Re-running the adversarial arm at the siblings' settings on the archived inputs reproduces E39 exactly (0.7701 at threshold 0.15; sapphire). The step-0.05 adversarial sweep was never committed. REPO-SIDE DEFECT: results/pv/phase1/pv-phase1-analysis.md:43 publishes the incommensurable 0.7669 beside two fine-grid numbers as a like-for-like comparison — queued fix (regenerate + commit the fine-grid sweep, correct the table under the Revision Policy). CI caveat: the 2026-04-30 percentile→BCa switch (2026999ad) means CIs will not reproduce for ANY pre-May sweep — point estimates do; future waves must not read CI mismatches as doc defects.",
-      "materiality": "low for the erratum; medium for the repo (published comparability defect)",
-      "verification_lane": {"triager_draft": "re-scored-optimum guess", "blind_verdict": "superseded-grid mechanism with exact reproduction of the entry's figure", "agreement": "corrected-by-blind-pass"},
-      "evidence": "commits e686e695e, 9a1b9e1d5, 1b670151c, 2026999ad; archive/outputs-experimental-pilot/pv/... inputs; sapphire re-sweep this session"
-    },
-    {
-      "name": "w4-e43-coverage-artefact-ESCALATION",
-      "rows": ["018#11[1]", "018#15[0]"],
-      "disposition": "DOC-DEFECT-AT-ERA (both) — NO EDITS MADE; escalated to the PI (registration-adjacent + live paper-table exposure)",
-      "document_class": "dated erratum entry (E43, 2026-03-26) in the registration's errata register",
-      "mechanism": "018#11[1]: E43 states the UNINTENDED-T1.0 study ran '30 runs x 487 tiles'; every artefact family agrees it ran 240 tiles (per-run metas items_processed 240; .tiles.json 240/240/0; union of processed_tiles across 30 GeoJSONs exactly 240 = the Era-1 validation bounds, a strict subset of the 487 full-evaluation bounds; passes-manifest n_tiles_processed 240 x30). The 487 appears carried across from the corrected baseline named three lines later. The study README repeats the false premise. 018#15[0]: the '~+0.15 at all pool sizes' ΔF1 (T=0.7 over T=1.0) has NO era artefact it was ever true of (earliest permutation tests postdate the entry by two days; committed deltas 0.168-0.194) — and the comparison itself is coverage-mismatched: the T=1.0 arm is the 240-tile study scored against 487-tile bounds (identical detection set scores 0.6639 on matched bounds vs 0.4712 mis-scoped; recall ceiling 0.556 with 247 dead tiles as artificial false negatives — the E71 mechanism at ~250 tiles). A coverage-matched T=1.0 arm EXISTS in the same study directory (flash-minimal-text-n30-t07/text-t1.0, 10x487): at N=10/20 m it REVERSES the sign — T=1.0 0.6667 vs T=0.7 0.6332, ΔF1 = −0.0335. group_4 and group_12 permutation tests carry the same confound; depressed rows are live in results/paper-tables/spatial_tolerance_comparison.md:33-35,63-65.",
-      "materiality": "HIGH — a directional finding in the registration's errata register that reverses under a matched comparison already on disk, with live paper-table exposure",
-      "verification_lane": {"triager_draft": "REFUTED twice: 018#11[1] drafted as wrong-binding instrument (inverse — anchor right, prose wrong); 018#15[0] drafted era-faithful (era-unverifiable + sign reversal)", "blind_verdict": "as recorded; the verifier itself recommended PI escalation", "agreement": "refuted-then-adopted"},
-      "evidence": "outputs/h11/consensus-384-UNINTENDED-T1.0/** (metas, tiles.json, GeoJSONs, README); inputs/vectors/bounds/384/{validation,full_evaluation}_bounds.geojson (240 / 487 features); results/h11/consensus-sweep-384/consensus-analysis-report.json at 75323f191 (matched: 0.6639); results/paper-eval/flash-min-text-t10-20m/consensus-analysis-report.json (mis-scoped: 0.4712); results/phase3a-text-matrix/minimal-t{0.7,1.0}/n10/*/evaluation.json (matched arms 0.6332 vs 0.6667); results/pairwise/factor-analysis-20m/group_{4,12}; geopandas recall-ceiling computation on sapphire this session"
-    }
-  ],
-  "escalations_for_pi": [
-    "1. E43 coverage artefact (family w4-e43): decide (a) a new dated erratum correcting E43's 487-tile claim and re-scoping/retracting the temperature-sensitivity direction, (b) whether to commission a full coverage-matched temperature re-analysis (the blind check was one operating point, N=10 9-of-10 at 20 m), and (c) remediation of the depressed flash-min-text-t10 rows in results/paper-tables/spatial_tolerance_comparison.md and the UNINTENDED-T1.0 README.",
-    "2. E71 dated rider proposal (family w4-errata-snapshot-divergences): a rider recording post-recovery coverage (484-486, shortfall 1-4) so the entry's Live-impact paragraph stops overstating residual deflation.",
-    "3. Preregistration-integrity findings from the holdout family's blind pass (NOT edited): preregistration.md:1915 cites docs/methodology/tile-selection-methodology.md at a path the file left on 2026-01-08 (e4a871dfd); preregistration.md:1951 names inputs/tiles/holdout_manifest.json, renamed to validation_manifest.json at 640caa0c3; scripts/select_tiles_phase2.py still WRITES holdout_manifest.json (:570,577) so the documented regeneration command does not produce the file the pipeline reads — a reproducibility defect on a prereg-cited script. Lodged text cannot change; candidate new errata entries.",
-    "4. E39 repo-side fix (family w4-e39): regenerate + commit the step-0.05/1000-bootstrap adversarial sweep and correct pv-phase1-analysis.md:43 under the Revision Policy (queued, not executed).",
-    "5. Governance gap: docs/methodology/reports/** is in neither the Revision-Policy scope list nor the explicit out-of-scope list (output-directory-standard.md:323-342); this wave banner-fixed three of its files ad hoc."
-  ],
-  "carry_forward_notes": [
-    "Anchor fall-through class (w4-decision20): sweep the fleet corpus for multi-value claims where a value carries path but no cross-file locator while its quantity names a different condition than the claim anchor — the amendment-3 refusal does not catch this shape.",
-    "BCa caveat (2026999ad): CI values in any pre-2026-04-30 sweep artefact will not reproduce under current lib_advanced_metrics; point estimates do. Comparers must never book CI mismatches as doc defects without checking the method era.",
-    "E47's load-bearing siblings ('solitary Tier 1' at 20 m; 'top 3 indistinguishable' at 30 m) were computed on the 23-condition board and deserve a re-check against the final 26-condition board (not in this wave's row set).",
-    "tile-selection-observations.md:178 carries a wrong-year creation date (2024-12-23 vs repo-evidenced 2025-12-23) — one-character fix, queued for next touch of that file.",
-    "Expected transitions on next recompute (Obs 382 register): 009#30[1], 009#30[3] MISMATCH -> MATCH (extraction repair); 024-* rows unchanged (banners do not alter extraction quotes; doc-fix rows 024-tile-selection-methodology#7[0]/[1] still MISMATCH against the pre-fix quotes until re-extraction — attributed here); errata rows unchanged (no edits by design)."
-  ]
+  {
+   "name": "w4-tile-selection-methodology-living-fix",
+   "rows": [
+    "024-tile-selection-methodology#7[0]",
+    "024-tile-selection-methodology#7[1]"
+   ],
+   "disposition": "LIVING-DOC-FIX applied — HIGH materiality",
+   "document_class": "living methodology doc: the LODGED REGISTRATION cites it as its methodology of record (preregistration.md § 8.6), its script is live, and it was actively maintained after the expansion (cfc10c133 edited the adjacent line 38; 5c19b8256 refreshed paths; both skipped the stale line 39 twice)",
+   "mechanism": "Missed update, not abandonment: line 39's 'Holdout set: 20 tiles (5 per map)' contradicted the prereg's own table (60 / 15 per map) while the line above it remained correct — reading as authoritative. Era-faithful at 2025-12-23. Fixed in place (60 tiles / 15 per map, both seeds recorded); a banner would have orphaned the prereg's pointer.",
+   "materiality": "high — a reader following the lodged prereg's § 8.6 pointer landed on text contradicting the prereg's own table",
+   "verification_lane": {
+    "triager_draft": "grouped with the banner family",
+    "blind_verdict": "REFUTED the banner treatment for this doc — living-doc fix, highest materiality of the seven",
+    "agreement": "refuted-then-adopted"
+   },
+   "evidence": "preregistration.md:92, 1915, 1929-1930, 1944; scripts/select_tiles_phase2.py:63-64; inputs/tiles/tile_selection_metadata.json; commits 4d011a839, cfc10c133, 5c19b8256"
+  },
+  {
+   "name": "w4-dated-execution-record-mis-scoped",
+   "rows": [
+    "024-tile-selection-methodology#24[0]",
+    "024-tile-selection-methodology#24[1]"
+   ],
+   "disposition": "INSTRUMENT (recompute mis-scoped a dated run log as a live claim) — original record kept verbatim; dated post-expansion check APPENDED",
+   "document_class": "dated execution record inside the living doc (§ Verification Checklist, 'Executed: 2025-12-23 | Seed: 1766464625')",
+   "mechanism": "The 40/40 file-existence check is the E2 selection's run log — genuinely 20+20=40 at execution. Overwriting it to 80/80 would falsify a dated record and break the seed-1766464625 provenance chain. Remediation: the 2025-12-23 block is unchanged; a 2026-08-02-dated post-expansion check (80/80 verified against the lodged design, both seeds) is appended — the 80/80 verification was actually performed this session (blind pass re-resolved all 80 manifest paths), so the appended record is honest, not backdated.",
+   "materiality": "low as written; the genuine risk was the repair, not the defect",
+   "verification_lane": {
+    "triager_draft": "same-expansion family",
+    "blind_verdict": "categorically different — dated run log; append, never overwrite",
+    "agreement": "refined-by-blind-pass"
+   },
+   "evidence": "tile-selection-methodology.md:195-202 (pre-edit numbering); archive/preregistration/inputs-v1 metadata; commit 3f66fc3f8"
+  },
+  {
+   "name": "w4-decision20-anchor-fallthrough",
+   "rows": [
+    "009#30[1]",
+    "009#30[3]"
+   ],
+   "disposition": "INSTRUMENT (extraction anchor fall-through) — extraction repaired, doc exact",
+   "document_class": "dated decision record (decisions-log.md Decision 20, 2026-03-15)",
+   "mechanism": "The claim-level anchor names the HIGH-condition consensus-analysis-report; values[1]/[3] describe the MINIMAL condition and carried path but no per-value file, so they fell through to the HIGH artefact (0.7351). The correct minimal locator returns 0.699 EXACTLY; the artefact is byte-identical from first commit (blob 295a832cd; pure path move to archive/ at 276e4ca80). Repaired in 009.json with amendment-2 cross-file locators (path = file#jsonpath), validator green. STRUCTURAL CLASS FLAG: a value whose quantity names a different condition than the claim anchor file, with own path but no own file, silently mis-binds — adjacent to amendment 3 (which covers only pathless values). Sweep queued for the fleet corpus.",
+   "materiality": "zero for the document (quoted figure exact); material for the instrument",
+   "expected_transition": "MISMATCH -> MATCH x2 on next recompute (Obs 382 attribution: this named repair)",
+   "verification_lane": {
+    "triager_draft": "flagged both stories (snapshot vs wrong-anchor), unresolved",
+    "blind_verdict": "wrong-anchor proven; the extraction's OWN notes already located the correct file without binding it",
+    "agreement": "resolved-by-blind-pass"
+   },
+   "evidence": "archive/results-60-tile-validation/phase3a-replication/{minimal,high}/consensus-analysis-report.json; commits 1ea2e435a, 03a233da6, 276e4ca80"
+  },
+  {
+   "name": "w4-errata-snapshot-divergences",
+   "rows": [
+    "018#6[0]",
+    "018#45[1]",
+    "023#37[2]",
+    "023#39[2]",
+    "023#39[3]"
+   ],
+   "disposition": "SNAPSHOT-DIVERGENCE (errata entries faithful at their own dates; artefacts moved afterwards)",
+   "document_class": "dated errata entries in protocol-errata.md (the snapshot unit is the ENTRY, not the file — GATE 3 note for the ruling-12 refinement)",
+   "mechanism": "018#6[0]: pro-high-text-n5 ran 5 runs at E42's date (2026-03-25); run_{6..10} executed 2026-03-29 (per-run meta timestamps; git cannot date it — outputs/ gitignored until 3d22184d6). 018#45[1]: E47's 253 = C(23,2) was written NINE SECONDS before the 253-comparison manifest commit; the board grew 23→25→26 conditions the same day (f859cd1ad 11:32:57, 899bb39ef 12:27, f3bb8e46b 21:58) — current 325 = C(26,2). 023#37/39: E71's 471-coverage/16-shortfall figures were exact at 12:50 on 2026-07-30; the erratum's own prescribed remediation ran at 15:25 the same day (99ae28ec4, 255/288 tiles recovered) lifting coverage to 484/shortfall 3 — self-inflicted divergence.",
+   "materiality": "low (018#45, scene-setting count) / low-medium (018#6, only prose record of the Pro run inventory) / medium-as-disclosure (E71 — its Live-impact paragraph now overstates residual F1 deflation; a dated rider recording post-recovery counts is PROPOSED to the PI, never an in-place edit)",
+   "verification_lane": {
+    "triager_draft": "all three mechanisms predicted (later runs; C(23,2) vs C(26,2) board growth; recovery merge)",
+    "blind_verdict": "confirmed with to-the-second dating",
+    "agreement": "confirmed"
+   },
+   "evidence": "run metas under outputs/h11/pv-diag-384/pro-high-text-n5/; results/pairwise/leaderboard-20m/run_manifest.json history; commits 75323f191, f859cd1ad, 899bb39ef, f3bb8e46b, 2159d25b4d, 99ae28ec4"
+  },
+  {
+   "name": "w4-e39-superseded-sweep-instrument",
+   "rows": [
+    "017#52[2]"
+   ],
+   "disposition": "INSTRUMENT (anchor is a superseded coarser-grid sweep) — erratum right, committed artefact and a published table wrong",
+   "document_class": "dated erratum entry (E39, 2026-03-21)",
+   "mechanism": "The committed results/pv/phase1/adversarial-text-150/.../threshold_sweep.json is an OLDER step-0.1/100-bootstrap sweep (no 0.15 grid row; optimum 0.7669 at 0.2); the checklist/brief siblings are step-0.05/1000-bootstrap. Re-running the adversarial arm at the siblings' settings on the archived inputs reproduces E39 exactly (0.7701 at threshold 0.15; sapphire). The step-0.05 adversarial sweep was never committed. REPO-SIDE DEFECT: results/pv/phase1/pv-phase1-analysis.md:43 publishes the incommensurable 0.7669 beside two fine-grid numbers as a like-for-like comparison — queued fix (regenerate + commit the fine-grid sweep, correct the table under the Revision Policy). CI caveat: the 2026-04-30 percentile→BCa switch (2026999ad) means CIs will not reproduce for ANY pre-May sweep — point estimates do; future waves must not read CI mismatches as doc defects.",
+   "materiality": "low for the erratum; medium for the repo (published comparability defect)",
+   "verification_lane": {
+    "triager_draft": "re-scored-optimum guess",
+    "blind_verdict": "superseded-grid mechanism with exact reproduction of the entry's figure",
+    "agreement": "corrected-by-blind-pass"
+   },
+   "evidence": "commits e686e695e, 9a1b9e1d5, 1b670151c, 2026999ad; archive/outputs-experimental-pilot/pv/... inputs; sapphire re-sweep this session"
+  },
+  {
+   "name": "w4-e43-coverage-artefact-ESCALATION",
+   "rows": [
+    "018#11[1]",
+    "018#15[0]"
+   ],
+   "disposition": "DOC-DEFECT-AT-ERA (both) — NO EDITS MADE; escalated to the PI (registration-adjacent + live paper-table exposure)",
+   "document_class": "dated erratum entry (E43, 2026-03-26) in the registration's errata register",
+   "mechanism": "018#11[1]: E43 states the UNINTENDED-T1.0 study ran '30 runs x 487 tiles'; every artefact family agrees it ran 240 tiles (per-run metas items_processed 240; .tiles.json 240/240/0; union of processed_tiles across 30 GeoJSONs exactly 240 = the Era-1 validation bounds, a strict subset of the 487 full-evaluation bounds; passes-manifest n_tiles_processed 240 x30). The 487 appears carried across from the corrected baseline named three lines later. The study README repeats the false premise. 018#15[0]: the '~+0.15 at all pool sizes' ΔF1 (T=0.7 over T=1.0) has NO era artefact it was ever true of (earliest permutation tests postdate the entry by two days; committed deltas 0.168-0.194) — and the comparison itself is coverage-mismatched: the T=1.0 arm is the 240-tile study scored against 487-tile bounds (identical detection set scores 0.6639 on matched bounds vs 0.4712 mis-scoped; recall ceiling 0.556 with 247 dead tiles as artificial false negatives — the E71 mechanism at ~250 tiles). A coverage-matched T=1.0 arm EXISTS in the same study directory (flash-minimal-text-n30-t07/text-t1.0, 10x487): at N=10/20 m it REVERSES the sign — T=1.0 0.6667 vs T=0.7 0.6332, ΔF1 = −0.0335. group_4 and group_12 permutation tests carry the same confound; depressed rows are live in results/paper-tables/spatial_tolerance_comparison.md:33-35,63-65.",
+   "materiality": "HIGH — a directional finding in the registration's errata register that reverses under a matched comparison already on disk, with live paper-table exposure",
+   "verification_lane": {
+    "triager_draft": "REFUTED twice: 018#11[1] drafted as wrong-binding instrument (inverse — anchor right, prose wrong); 018#15[0] drafted era-faithful (era-unverifiable + sign reversal)",
+    "blind_verdict": "as recorded; the verifier itself recommended PI escalation",
+    "agreement": "refuted-then-adopted"
+   },
+   "evidence": "outputs/h11/consensus-384-UNINTENDED-T1.0/** (metas, tiles.json, GeoJSONs, README); inputs/vectors/bounds/384/{validation,full_evaluation}_bounds.geojson (240 / 487 features); results/h11/consensus-sweep-384/consensus-analysis-report.json at 75323f191 (matched: 0.6639); results/paper-eval/flash-min-text-t10-20m/consensus-analysis-report.json (mis-scoped: 0.4712); results/phase3a-text-matrix/minimal-t{0.7,1.0}/n10/*/evaluation.json (matched arms 0.6332 vs 0.6667); results/pairwise/factor-analysis-20m/group_{4,12}; geopandas recall-ceiling computation on sapphire this session"
+  },
+  {
+   "name": "w4-scale32-bare-path-fallthrough (ADDENDUM)",
+   "rows": [
+    "012#48[3]"
+   ],
+   "disposition": "INSTRUMENT (bare-path anchor fall-through) — extraction repaired, doc faithful at era AND now",
+   "document_class": "registration planning doc (execution-plan.md line 716, forward-looking budget estimate, authored 4fe5513f6 2026-01-14)",
+   "mechanism": "values[3] (Scale-32, '41') carried a bare '$.total_examples' instead of the amendment-2 cross-file form, falling through to the claim-level library_scale-8.json anchor (17). The Scale-32 config holds total_examples 41 at era and now (all three touching commits), corroborated by the registered H8 table (preregistration.md:771); 41 is unique to Scale-32 across all 17 library configs. Repaired with the cross-file locator. TWO new instrument sub-findings: (i) notes-claim-defence-not-applied — the extractor's notes cite amendment 2/3 correctly while the payload omits the form, so note-skimming review passes a wrong binding; (ii) the amendment-3 guard tests only path PRESENCE, not file-blindness — 'locator silently inherits the wrong file' passes it. Same structural class as w4-decision20; both feed the queued corpus sweep. ALSO: Scale-32 was never built (c614542ed 2026-02-02 marked it deferred, emptied examples[] to 0, retained total_examples 41) — a live trap for future len:$.examples anchors on that config.",
+   "materiality": "nil for the document; instrument-only",
+   "expected_transition": "MISMATCH -> MATCH on next recompute (Obs 382 attribution: this named repair)",
+   "verification_lane": {
+    "triager_draft": "NONE — this row was DROPPED from the triager's agent partition (nobody was assigned batch 012); the omission was caught by the triager's own post-commit accounting check against the commit message, which had over-claimed the row. Blind check run as a dedicated pass before this addendum.",
+    "blind_verdict": "INSTRUMENT wrong-binding with exact era+current reproduction",
+    "agreement": "resolved-by-blind-pass"
+   },
+   "evidence": "prompts/configs/library_scale-32.json:14; library_scale-8.json; preregistration.md:769,771; commits 4fe5513f6, ce17da492, 8ae218f4f, e41d80de8, c614542ed; recompute_c4_claims.py:127-136, :437-455"
+  }
+ ],
+ "escalations_for_pi": [
+  "1. E43 coverage artefact (family w4-e43): decide (a) a new dated erratum correcting E43's 487-tile claim and re-scoping/retracting the temperature-sensitivity direction, (b) whether to commission a full coverage-matched temperature re-analysis (the blind check was one operating point, N=10 9-of-10 at 20 m), and (c) remediation of the depressed flash-min-text-t10 rows in results/paper-tables/spatial_tolerance_comparison.md and the UNINTENDED-T1.0 README.",
+  "2. E71 dated rider proposal (family w4-errata-snapshot-divergences): a rider recording post-recovery coverage (484-486, shortfall 1-4) so the entry's Live-impact paragraph stops overstating residual deflation.",
+  "3. Preregistration-integrity findings from the holdout family's blind pass (NOT edited): preregistration.md:1915 cites docs/methodology/tile-selection-methodology.md at a path the file left on 2026-01-08 (e4a871dfd); preregistration.md:1951 names inputs/tiles/holdout_manifest.json, renamed to validation_manifest.json at 640caa0c3; scripts/select_tiles_phase2.py still WRITES holdout_manifest.json (:570,577) so the documented regeneration command does not produce the file the pipeline reads — a reproducibility defect on a prereg-cited script. Lodged text cannot change; candidate new errata entries.",
+  "4. E39 repo-side fix (family w4-e39): regenerate + commit the step-0.05/1000-bootstrap adversarial sweep and correct pv-phase1-analysis.md:43 under the Revision Policy (queued, not executed).",
+  "5. Governance gap: docs/methodology/reports/** is in neither the Revision-Policy scope list nor the explicit out-of-scope list (output-directory-standard.md:323-342); this wave banner-fixed three of its files ad hoc."
+ ],
+ "carry_forward_notes": [
+  "Anchor fall-through class (w4-decision20): sweep the fleet corpus for multi-value claims where a value carries path but no cross-file locator while its quantity names a different condition than the claim anchor — the amendment-3 refusal does not catch this shape.",
+  "BCa caveat (2026999ad): CI values in any pre-2026-04-30 sweep artefact will not reproduce under current lib_advanced_metrics; point estimates do. Comparers must never book CI mismatches as doc defects without checking the method era.",
+  "E47's load-bearing siblings ('solitary Tier 1' at 20 m; 'top 3 indistinguishable' at 30 m) were computed on the 23-condition board and deserve a re-check against the final 26-condition board (not in this wave's row set).",
+  "tile-selection-observations.md:178 carries a wrong-year creation date (2024-12-23 vs repo-evidenced 2025-12-23) — one-character fix, queued for next touch of that file.",
+  "Expected transitions on next recompute (Obs 382 register): 009#30[1], 009#30[3] MISMATCH -> MATCH (extraction repair); 024-* rows unchanged (banners do not alter extraction quotes; doc-fix rows 024-tile-selection-methodology#7[0]/[1] still MISMATCH against the pre-fix quotes until re-extraction — attributed here); errata rows unchanged (no edits by design).",
+  "Anchor fall-through sweep scope (updated): TWO sub-shapes — (a) path-present-file-blind bare paths in multi-value claims (012#48[3]), (b) condition-crossing values with no cross-file locator (009#30); consider hardening the amendment-3 guard to flag multi-value claims whose values' quantities name different subjects but whose paths do not cross files."
+ ]
 }
