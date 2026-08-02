@@ -115,8 +115,9 @@ generated-stratum exact comparers + 125 SUSPECT sibling-JSON rows;
 decision + snapshot-classification refinement).
 
 **Carry-forward**: unchanged from S125 close — MCC/Sens/Spec in
-evaluation.md tables are bootstrap means (Obs 376); user-obs S118–120
-+ S122 pending (silence holds); WN-1 (provenance-by-shape) pending;
+evaluation.md tables are bootstrap means (Obs 376); user-obs
+S118–120 and S122 pending (silence holds); WN-1 (provenance-by-shape)
+pending;
 Obs 382's standing check every wave (S125: CLEAN); register
 re-anchoring before any future census; reflection set append-only —
 never --fix there; old stash stack (6 entries, session-83-era tops) —
