@@ -56,10 +56,23 @@ def _resolve_list(file: str, list_path: str):
 
 
 def _match(element, where: list[dict]) -> bool:
-    """Evaluate predicate conjunction over one list element."""
+    """Evaluate predicate conjunction over one list element.
+
+    A ``key`` of ``"*"`` matches against the element's full JSON
+    serialisation (any-field search, ``regex``/``contains`` only) —
+    for claims scoped to ENTRIES rather than a named field (wave-3
+    finding: a ``path``-scoped spec missed an entry referencing its
+    target via ``pv_sweep_source``).
+    """
     for cond in where:
-        raw = element.get(cond["key"]) if isinstance(element, dict) else None
         op = cond["op"]
+        if cond["key"] == "*":
+            if op not in ("regex", "contains"):
+                raise ValueError(
+                    f"any-field key '*' supports regex/contains only, not {op!r}")
+            raw = json.dumps(element, ensure_ascii=False)
+        else:
+            raw = element.get(cond["key"]) if isinstance(element, dict) else None
         if op == "eq":
             ok = raw == cond["value"]
         elif op == "ne":
@@ -75,21 +88,56 @@ def _match(element, where: list[dict]) -> bool:
     return True
 
 
-def run_glob_count(params: dict) -> int:
-    """Count filesystem entries matching a glob under a root.
+def glob_entries(params: dict) -> list[Path]:
+    """Resolve a glob-count spec to its matched entries.
 
     Params: ``root`` (repo-relative dir), ``glob`` (pattern, may
     contain ``**``), optional ``kind`` (``file``/``dir``/``any``,
-    default ``file``).
+    default ``file``), optional ``exclude`` (fnmatch pattern applied to
+    the entry NAME; matching entries are dropped — e.g. counting the
+    modality-track directories while excluding a ``*-exploratory``
+    sub-study).
+
+    The census is symlink-consistent with a plain ``find`` (which does
+    not follow directory symlinks): entries that are symlinks, or that
+    are reachable only through a symlinked directory, are excluded —
+    ``Path.glob`` traverses them on Python 3.13, and a follow-symlinks
+    census double-counts (wave-3 finding: it inflated the
+    ``experiment_intent.md`` census 174 → 184 through ``proposer-all``
+    links, contaminating an Obs 383 sub-example).
     """
+    from fnmatch import fnmatch
     root = REPO_ROOT / params["root"]
     kind = params.get("kind", "file")
-    hits = root.glob(params["glob"])
+    exclude = params.get("exclude")
+
+    def crosses_symlink(entry: Path) -> bool:
+        cur = root
+        for part in entry.relative_to(root).parts[:-1]:
+            cur = cur / part
+            if cur.is_symlink():
+                return True
+        return False
+
+    hits = [h for h in root.glob(params["glob"])
+            if not h.is_symlink() and not crosses_symlink(h)]
     if kind == "file":
-        return sum(1 for h in hits if h.is_file())
-    if kind == "dir":
-        return sum(1 for h in hits if h.is_dir())
-    return sum(1 for _ in hits)
+        entries = [h for h in hits if h.is_file()]
+    elif kind == "dir":
+        entries = [h for h in hits if h.is_dir()]
+    else:
+        entries = hits
+    if exclude:
+        entries = [h for h in entries if not fnmatch(h.name, exclude)]
+    return entries
+
+
+def run_glob_count(params: dict) -> int:
+    """Count filesystem entries matching a glob under a root.
+
+    See :func:`glob_entries` for the parameter set.
+    """
+    return len(glob_entries(params))
 
 
 def run_regex_count(params: dict) -> int:

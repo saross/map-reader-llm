@@ -196,6 +196,51 @@ def test_recompute_script_registry_execution(anchored_repo, monkeypatch):
 
 
 @pytest.mark.tier1
+def test_glob_count_census_scope_stamp(tmp_path, monkeypatch):
+    """Obs 383 guard: a glob-count row is stamped with its tracked/total
+    census and a machine_scope flag — machine-relative when any counted
+    entry is untracked, repo-reproducible when all are tracked."""
+    import subprocess as sp
+
+    import lib_c4_runners as runners
+
+    def git(*args):
+        sp.run(["git", *args], cwd=tmp_path, check=True, capture_output=True)
+
+    git("init", "-q")
+    git("config", "user.email", "t@example.org")
+    git("config", "user.name", "t")
+    outdir = tmp_path / "outputs"
+    outdir.mkdir()
+    (outdir / "a.txt").write_text("x\n")
+    (outdir / "b.txt").write_text("x\n")
+    git("add", "outputs/a.txt")
+    git("commit", "-qm", "track a only")
+
+    monkeypatch.setattr(rc, "REPO_ROOT", tmp_path)
+    monkeypatch.setattr(runners, "REPO_ROOT", tmp_path)
+    monkeypatch.setattr(rc, "_tracked_files_cache", None)
+    rc._json_cache.clear()
+
+    claim = make_claim(method="recompute-script", values=[val("2")],
+                       anchor={"file": "outputs", "path": None})
+    spec = {"batch": "b", "claim_index": 0, "value_index": 0,
+            "runner": "glob-count",
+            "params": {"root": "outputs", "glob": "*.txt"}}
+    (row,) = process_claim("b", 0, claim, {("b", 0, 0): spec})
+    assert row["status"] == "MATCH"
+    assert (row["census_total"], row["census_tracked"]) == (2, 1)
+    assert row["machine_scope"] == "machine-relative"
+
+    git("add", "outputs/b.txt")
+    git("commit", "-qm", "track b too")
+    monkeypatch.setattr(rc, "_tracked_files_cache", None)
+    (row,) = process_claim("b", 0, claim, {("b", 0, 0): spec})
+    assert row["machine_scope"] == "repo-reproducible"
+    assert (row["census_total"], row["census_tracked"]) == (2, 2)
+
+
+@pytest.mark.tier1
 def test_git_era_resolution(tmp_path, monkeypatch):
     """Ruling 9: an anchor deleted after extraction resolves from the
     blob at the source document's era commit, with unique-suffix

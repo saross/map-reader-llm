@@ -62,6 +62,7 @@ from __future__ import annotations
 import argparse
 import ast
 import json
+import platform
 import re
 import subprocess
 import sys
@@ -74,7 +75,7 @@ from lib_c4_compare import (  # noqa: E402
     parse_value,
     resolve_path,
 )
-from lib_c4_runners import execute_spec, load_registry  # noqa: E402
+from lib_c4_runners import execute_spec, glob_entries, load_registry  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_DIR = REPO_ROOT / "reports" / "verification" / "c4-extraction"
@@ -193,6 +194,38 @@ def _tracked_files() -> list[str]:
     if _tracked_files_cache is None:
         _tracked_files_cache = _git("ls-files").splitlines()
     return _tracked_files_cache
+
+
+def _census_scope(params: dict) -> dict:
+    """Stamp a glob-count row with its repo-reproducibility (Obs 383).
+
+    A census over a partially-gitignored tree is machine-relative: the
+    same spec returns different numbers on different hosts, and one
+    wave-3 verdict flipped MATCH↔MISMATCH purely by machine. This guard
+    FLAGS the condition per row rather than deciding scope — the
+    rule-out-vs-machine_scope decision belongs to the GATE 3 package.
+
+    Returns ``census_total`` (entries the runner counted here),
+    ``census_tracked`` (how many are git-tracked; a directory counts as
+    tracked when at least one tracked file sits under it), and
+    ``machine_scope`` ("repo-reproducible" when every counted entry is
+    tracked, else "machine-relative").
+    """
+    tracked = set(_tracked_files())
+    total = 0
+    tracked_n = 0
+    for entry in glob_entries(params):
+        total += 1
+        rel = entry.relative_to(REPO_ROOT).as_posix()
+        if entry.is_dir():
+            prefix = rel + "/"
+            if any(t.startswith(prefix) for t in tracked):
+                tracked_n += 1
+        elif rel in tracked:
+            tracked_n += 1
+    scope = "repo-reproducible" if tracked_n == total else "machine-relative"
+    return {"census_total": total, "census_tracked": tracked_n,
+            "machine_scope": scope}
 
 
 def find_era_commit(doc_path: str, doc_blob: str) -> str | None:
@@ -388,6 +421,8 @@ def process_claim(batch: str, index: int, claim: dict,
                     row.update(compare(value["value_verbatim"], result,
                                        unit=value.get("unit")))
                     row["runner"] = spec["runner"]
+                    if spec["runner"] == "glob-count":
+                        row.update(_census_scope(spec["params"]))
                 except (KeyError, ValueError, OSError, json.JSONDecodeError) as exc:
                     row.update(status="UNRESOLVED",
                                reason=f"runner {spec.get('runner')} failed: {exc}")
@@ -502,7 +537,10 @@ def main(argv: list[str] | None = None) -> int:
     counts: dict[str, int] = {}
     for row in rows:
         counts[row["status"]] = counts.get(row["status"], 0) + 1
+    # Host stamp (Obs 383 guard 3): censuses over gitignored strata are
+    # machine-relative, so the report names the machine that produced it.
     report = {"_meta": {"generator": "scripts/recompute_c4_claims.py",
+                        "host": platform.node(),
                         "inputs": [str(p) for p in paths], "counts": counts},
               "rows": rows}
     args.out.parent.mkdir(parents=True, exist_ok=True)

@@ -34,6 +34,10 @@ from scripts.lib_c4_compare import (
         ("~44 220", 44220.0, 0, True, False, None),
         ("3 736", 3736.0, 0, False, False, None),
         ("10 000", 10000.0, 0, False, False, None),   # NBSP thousands
+        # Count-negation vocabulary (wave-3 hygiene): "No entries" = 0.
+        ("no", 0.0, 0, False, False, None),
+        ("No", 0.0, 0, False, False, None),
+        ("none", 0.0, 0, False, False, None),
     ],
 )
 def test_parse_value_conventions(verbatim, value, dp, approx, pct, currency):

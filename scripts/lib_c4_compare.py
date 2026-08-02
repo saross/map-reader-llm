@@ -43,6 +43,10 @@ _NUMBER_WORDS = {
     "zero": 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
     "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10,
     "eleven": 11, "twelve": 12,
+    # Count-negation vocabulary (wave-3 hygiene): documents quote
+    # "No"/"none" as the answer to a count question ("No entries point
+    # at gold-standard-v2") — numerically zero.
+    "no": 0, "none": 0,
 }
 
 # Bare magnitude suffixes ("10k", "1.2 K", "3M") are multipliers, not

@@ -100,6 +100,52 @@ def test_registry_roundtrip_and_execute(runner_repo):
 
 
 @pytest.mark.tier1
+def test_glob_count_exclude(runner_repo):
+    # Wave-3 (035#34[1]): a *-exploratory sub-study directory must be
+    # excludable from a modality-track census by name.
+    (runner_repo / "outputs" / "run_1-exploratory").mkdir()
+    assert run_glob_count({"root": "outputs", "glob": "run_*",
+                           "kind": "dir"}) == 3
+    assert run_glob_count({"root": "outputs", "glob": "run_*", "kind": "dir",
+                           "exclude": "*-exploratory"}) == 2
+
+
+@pytest.mark.tier1
+def test_glob_count_ignores_dir_symlinks(runner_repo):
+    # Wave-3 symlink finding: a census must not double-count entries
+    # reachable only through a symlinked directory (find-consistent).
+    (runner_repo / "outputs" / "link-a").symlink_to(
+        runner_repo / "outputs" / "a", target_is_directory=True)
+    assert run_glob_count({"root": "outputs",
+                           "glob": "*/post_run_report.md"}) == 2
+
+
+@pytest.mark.tier1
+def test_json_subset_count_any_field(runner_repo):
+    # Wave-3 (038-h11#12[0]): entry-scoped claims match ANY field via
+    # key "*" — a path-only filter missed a pv_sweep_source reference.
+    (runner_repo / "inv2.json").write_text(json.dumps([
+        {"id": "a", "path": "outputs/n1-outstanding-384/x", "H": "H11"},
+        {"id": "b", "path": "results/other.geojson", "H": "H11",
+         "pv_sweep_source": "outputs/n1-outstanding-384/sweep.json"},
+        {"id": "c", "path": "outputs/elsewhere", "H": "H3"},
+    ]))
+    path_only = run_json_subset_count({
+        "file": "inv2.json", "list_path": "$",
+        "where": [{"key": "path", "op": "regex",
+                   "value": "n1-outstanding-384"}]})
+    any_field = run_json_subset_count({
+        "file": "inv2.json", "list_path": "$",
+        "where": [{"key": "*", "op": "regex",
+                   "value": "n1-outstanding-384"}]})
+    assert (path_only, any_field) == (1, 2)
+    with pytest.raises(ValueError):
+        run_json_subset_count({
+            "file": "inv2.json", "list_path": "$",
+            "where": [{"key": "*", "op": "eq", "value": "x"}]})
+
+
+@pytest.mark.tier1
 def test_runner_errors_fail_loudly(runner_repo):
     with pytest.raises(KeyError):
         execute_spec({"runner": "no-such-runner", "params": {}})
