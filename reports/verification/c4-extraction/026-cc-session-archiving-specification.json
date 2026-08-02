@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/transparency/cc-session-archiving-specification.md",
+    "git_blob": "fa0e80db6d1c090ad36ce9c0a6ad5b81fbe00d79",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          80,
+          80
+        ],
+        "section": "§2.3 Rationale for LLM-Intermediated Access — 'Scale' bullet (list item 1)"
+      },
+      "claim_text": "1. **Scale**: A 2-hour CC session can produce 50,000+ lines of JSONL; any \"complete\" MD version would be similarly unwieldy",
+      "values": [
+        {
+          "quantity": "session duration (hours) in the document's own illustrative example of typical Claude Code session scale, offered to motivate LLM-intermediated over pre-generated access",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "hours",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of JSONL lines a typical session of that duration can produce, the document's own illustrative estimate motivating LLM-intermediated access",
+          "value_verbatim": "50,000+",
+          "value_parsed": 50000,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Full-document sweep (rule 3, no sampling) found no other quantitative claims. This is a Version 1.0-draft specification proposing a session-archiving schema, not a report of study results, so it is overwhelmingly non-numeric prose plus illustrative examples. Outside its ~13 fenced code blocks (lines 46-64, 98-230, 345-390, 396-434, 440-484, 490-539, 545-597, 615-831, 835-847, 857-908, 912-949, 957-990, 996-1003, 1007-1036, 1074-1103), every remaining digit hit across the prose ranges is a section/subsection heading number ('## 1.', '### 3.2.1', …), a numbered-list ordinal, a FAIR-principle code (F1/F2/F3/F4/A1/A2/I1/I2/I3/R1/R1.1-R1.3 — identifiers, not quantities), or a version/date string ('1.0-draft', '2026-01-08') — all excluded per rule 5, logged here as an explicit scope decision rather than silently. The fenced JSON/Python/bash blocks are illustrative schema/script examples, not real study data: the schema's own '$schema' URL uses the fictional 'https://example.org/schemas/...' domain, the CATALOG.json example elides its second session with a literal '...', and 'archive/cc-sessions/' does not yet exist in the working tree (checked: 0 directories present), so example figures such as '15' sessions, '47' turns, or '$0.85' estimated cost cannot be real assertions about this project's archive — they illustrate the proposed schema's shape only. The line-80 'Scale' bullet is consequently the sole substantive numeric claim in the entire 1140-line document, and even it is a generic illustrative estimate (no specific session is cited as its source) rather than a measured fact about a real session — included per the task instruction to resolve doubt in favour of extraction, and left anchor-unknown since no artefact is named or locatable for it within this document."
+    }
+  ]
+}

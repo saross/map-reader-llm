@@ -1,0 +1,2907 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methods-outline.md",
+    "git_blob": "3eb395a0f34a8f66b29909e5fc696502a704461b",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          7,
+          7
+        ],
+        "section": "Intro paragraph — key methodological decisions, clause (1) model selection"
+      },
+      "claim_text": "use of Gemini 3 Flash (Google's `gemini-3-flash-preview`) as a cost-effective, free-tier model with sufficient capability for detection tasks at consensus scales up to K=30",
+      "values": [
+        {
+          "quantity": "maximum consensus voting pool size (K) cited in the model-selection rationale",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/results-60-tile-validation/phase3a-consensus/phase3a-comprehensive-results-report.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "K=30 is presented here as the upper bound of consensus scales the free-tier model choice was expected to handle economically; this matches the executed N=30 pool-size condition evidenced in the Phase 3a consensus report (row 'T2 Txt HIGH | 0.751 ... T0.7 N=30 x=22'), used as anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          7,
+          7
+        ],
+        "section": "Intro paragraph — key methodological decisions, clause (3) spatial tolerance"
+      },
+      "claim_text": "**spatial tolerance** — 20 m matching threshold to account for georeferencing error, symbol centroid ambiguity, and map digitisation precision",
+      "values": [
+        {
+          "quantity": "primary spatial matching tolerance (m), cited in the study's key-decisions summary",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches 'All primary results reported at 20m' (osf/preregistration.md, 'Spatial tolerance sensitivity' bullet)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          7,
+          7
+        ],
+        "section": "Intro paragraph — key methodological decisions, clause (4) consensus voting approach"
+      },
+      "claim_text": "**consensus voting approach** — pooling K=10–30 independent runs with cross-pass clustering and optimal threshold identification to improve precision through diversity",
+      "values": [
+        {
+          "quantity": "consensus voting pool size range, lower bound (K), cited in the key-decisions summary",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus voting pool size range, upper bound (K), cited in the key-decisions summary",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered/executed H3 voting-analysis pool sizes (N=5, 10, 30) at osf/preregistration.md's voting-analysis table; only the 10 and 30 endpoints appear in this span."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          7,
+          7
+        ],
+        "section": "Intro paragraph — key methodological decisions, clause (6) statistical methods"
+      },
+      "claim_text": "**statistical methods** — 95% bootstrap confidence intervals with Benjamini-Hochberg FDR correction across confirmatory hypotheses (the registered text specifies bootstrap CIs and FDR; the iteration count of 1,000, percentile method, and tile-level resampling unit were fixed pre-lodgement in Decision 10, `decisions-log.md:337`, and are reported as pre-specified analysis parameters, not registered ones)",
+      "values": [
+        {
+          "quantity": "bootstrap confidence interval level (%), cited in the key-decisions summary",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap resampling iteration count, cited as a pre-specified (not registered) analysis parameter fixed in Decision 10",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/decisions-log.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "This span itself asserts the 95%/FDR combination is the REGISTERED text (v1.1 calibration rule would anchor 95% to osf/preregistration.md, e.g. 'Report effect sizes ... with 95% bootstrapped CIs'), while explicitly stating the 1,000-iteration count, percentile method, and tile-level resampling unit were fixed pre-lodgement in 'Decision 10' — confirmed at decisions-log.md 'Decision 10: Statistical Methods — Bootstrap CIs with FDR Correction', row 'Confidence intervals | Bootstrap resampling (tile-level) | 1000 iterations, percentile method (2.5th/97.5th)'. Claim-level anchor set to decisions-log.md since the document's own text singles that file out as the source of record for the specific parameters it flags as non-registered; the 95% value is a per-value read override with anchor.path null (whole-document, no separate file). 'Decision 10' and 'decisions-log.md:337' (a line-number citation) excluded from values per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          7,
+          7
+        ],
+        "section": "Intro paragraph — human-AI collaboration subsection description"
+      },
+      "claim_text": "drawing on 50+ archived session transcripts and structured reflections",
+      "values": [
+        {
+          "quantity": "count of archived session transcripts underpinning the human-AI collaboration subsection, approximate lower bound",
+          "value_verbatim": "50+",
+          "value_parsed": 50,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No archive/cc-sessions/ directory (referenced by project CLAUDE.md convention) is present in the working tree at extraction time; session transcripts are stated elsewhere in this document (§6.3) to be 'archived at [Zenodo DOI TBD]', i.e. not yet a committed repo artefact. Approx marker '+' retained in value_verbatim per v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          18,
+          18
+        ],
+        "section": "§1 Study Design Overview — hypothesis count bullet"
+      },
+      "claim_text": "- 15 hypotheses: 8 confirmatory (H1–H8), 7 exploratory (H9–H15)",
+      "values": [
+        {
+          "quantity": "total number of preregistered hypotheses",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "number of confirmatory hypotheses",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "number of exploratory hypotheses",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md changelog entry 'v4.0: Major simplification — Hypotheses renumbered H1-H15 (8 confirmatory, 7 exploratory)'. The 'H1–H8'/'H9–H15' hypothesis-id ranges in the span are project-convention labels (CLAUDE.md: 'Use format H1, H2, ... H15'), analogous to condition names, so their embedded digits are excluded from values per rule 5; only the explicit counts 15/8/7 are extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          21,
+          22
+        ],
+        "section": "§1 Study Design Overview — OFAT rationale bullet (cost constraint)"
+      },
+      "claim_text": "cost constraint (~$250 budget\n  ceiling; full factorial would require ~54+ cells × 10 runs × 60 tiles)",
+      "values": [
+        {
+          "quantity": "soft budget ceiling for the study (USD), approximate",
+          "value_verbatim": "~$250",
+          "value_parsed": 250,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "estimated cell count a full factorial design would have required, approximate lower bound (hypothetical, not executed)",
+          "value_verbatim": "~54+",
+          "value_parsed": 54,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "hypothetical runs-per-cell a full factorial would have required (matches the actual preregistered K=10 runs/condition)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "hypothetical tile-corpus size a full factorial would have required (matches the actual 60-tile holdout set)",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/execution-plan.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The $250 figure matches execution-plan.md ('Budget reaches $250 | Pause, review and prioritise remaining experiments'; 'soft budget limit $250; budget ceiling ~$335'). The '~54+ cells x 10 runs x 60 tiles' full-factorial estimate is a hypothetical rationale for a design that was never run; no artefact records this counterfactual multiplication, so its three values are left anchor-unknown individually (v1.2 amendment 3 — this claim has >1 value and the claim anchor carries path:null, so the amendment-3 per-value-path requirement does not apply, but distinct methods are still used since only $250 is independently confirmed). Per amendment 1, none of these anchor-unknown values should be later mis-classified as arithmetic operands of one another."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          30,
+          30
+        ],
+        "section": "§2.1 Cartographic Sources — map sheet count and scale"
+      },
+      "claim_text": "Four Soviet 1:50,000 topographic map sheets",
+      "values": [
+        {
+          "quantity": "count of Soviet topographic map sheets forming the study corpus",
+          "value_verbatim": "Four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cartographic scale of the source map sheets (denominator of 1:N ratio)",
+          "value_verbatim": "1:50,000",
+          "value_parsed": 50000,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches 'Soviet-era 1:50,000 topographic maps of Bulgaria' (osf/preregistration.md §1) and 'Total: 361 tiles from 4 annotated Soviet topographic map sheets' (§2.1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          35,
+          35
+        ],
+        "section": "§2.1 Cartographic Sources — pixel resolution"
+      },
+      "claim_text": "- Pixel resolution: ~5.02 m/pixel at native scan resolution",
+      "values": [
+        {
+          "quantity": "native scan pixel resolution (m/pixel)",
+          "value_verbatim": "~5.02",
+          "value_parsed": 5.02,
+          "unit": "m/pixel",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "config.py",
+        "path": "PIXEL_RESOLUTION"
+      },
+      "method": "read",
+      "notes": "config.py:79 'PIXEL_RESOLUTION = 5.02 # Meters per pixel' (non-JSON code-constant anchor, legitimate per instrument v1.1 note). Approx marker '~' retained in value_verbatim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          41,
+          41
+        ],
+        "section": "§2.2 Tile Generation — tile size, overlap, stride"
+      },
+      "claim_text": "- 512 × 512 pixel tiles with 64-pixel overlap (stride 448 px)",
+      "values": [
+        {
+          "quantity": "tile width (px)",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "TILE_SIZE",
+          "method": "read"
+        },
+        {
+          "quantity": "tile height (px)",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "TILE_SIZE",
+          "method": "read"
+        },
+        {
+          "quantity": "tile overlap (px)",
+          "value_verbatim": "64",
+          "value_parsed": 64,
+          "unit": "px",
+          "kind": "physical",
+          "path": "OVERLAP",
+          "method": "read"
+        },
+        {
+          "quantity": "tile stride (px)",
+          "value_verbatim": "448",
+          "value_parsed": 448,
+          "unit": "px",
+          "kind": "physical",
+          "path": "STRIDE",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "config.py",
+        "path": "TILE_SIZE"
+      },
+      "method": "read",
+      "notes": "config.py:66-68 'TILE_SIZE = 512  # Actual tile dimensions in pixels (512x512)', 'OVERLAP = 64', 'STRIDE = TILE_SIZE - OVERLAP  # Distance between tile origins (448px)'. Per-value paths given since this is a multi-value claim (v1.2 amendment 3); STRIDE is a computed Python expression but its value is documented literally (448px) in the adjacent comment, so treated as read rather than arithmetic (amendment 1 — do not let 512/64 inherit an arithmetic method for an expression they merely feed elsewhere)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          42,
+          42
+        ],
+        "section": "§2.2 Tile Generation — background content threshold"
+      },
+      "claim_text": "- Content threshold: tiles with >75% background filtered out",
+      "values": [
+        {
+          "quantity": "maximum permitted background-pixel percentage for tile inclusion",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "config.py",
+        "path": "MAX_BACKGROUND_PERCENT"
+      },
+      "method": "read",
+      "notes": "config.py:71 'MAX_BACKGROUND_PERCENT = 0.75  # Tiles must have <=75% background (black) pixels'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          43,
+          43
+        ],
+        "section": "§2.2 Tile Generation — total corpus size"
+      },
+      "claim_text": "- Total corpus: 361 tiles across 4 map sheets",
+      "values": [
+        {
+          "quantity": "total tile corpus size",
+          "value_verbatim": "361",
+          "value_parsed": 361,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of map sheets contributing to the total corpus",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md §2.1 'Total: 361 tiles from 4 annotated Soviet topographic map sheets.'"
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          44,
+          44
+        ],
+        "section": "§2.2 Tile Generation — ground coverage per tile"
+      },
+      "claim_text": "- Each tile covers approximately 2.57 × 2.57 km on the ground",
+      "values": [
+        {
+          "quantity": "tile ground coverage, width (km), nominal/approximate",
+          "value_verbatim": "2.57",
+          "value_parsed": 2.57,
+          "unit": "km",
+          "kind": "physical",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a*b/1000",
+          "operands": [
+            {
+              "name": "a",
+              "file": "config.py",
+              "path": "TILE_SIZE"
+            },
+            {
+              "name": "b",
+              "file": "config.py",
+              "path": "PIXEL_RESOLUTION"
+            }
+          ]
+        },
+        {
+          "quantity": "tile ground coverage, height (km), nominal/approximate",
+          "value_verbatim": "2.57",
+          "value_parsed": 2.57,
+          "unit": "km",
+          "kind": "physical",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a*b/1000",
+          "operands": [
+            {
+              "name": "a",
+              "file": "config.py",
+              "path": "TILE_SIZE"
+            },
+            {
+              "name": "b",
+              "file": "config.py",
+              "path": "PIXEL_RESOLUTION"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "config.py",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "512 px x 5.02 m/px = 2570.24 m = 2.57 km, i.e. the tile-edge (TILE_SIZE) x pixel-resolution (PIXEL_RESOLUTION) product from config.py, matching 'approximately 2.57 x 2.57 km' here. Per amendment 1, each of the two repeated 2.57 values carries its own expression/operands so the harness evaluates each independently rather than comparing one against the other."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          48,
+          48
+        ],
+        "section": "§2.3 Ground Truth — annotated mound symbol count"
+      },
+      "claim_text": "- 569 annotated mound symbols across the full corpus",
+      "values": [
+        {
+          "quantity": "total annotated mound symbols across the full corpus",
+          "value_verbatim": "569",
+          "value_parsed": 569,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md '**Ground Truth**: 569 annotated mound symbols across all maps'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          58,
+          60
+        ],
+        "section": "§2.4 Data Allocation — training/calibration set"
+      },
+      "claim_text": "**Training/calibration set**: 20 tiles (5 per map sheet) — used for\n  prompt development and hard example selection (contaminated, excluded\n  from evaluation)",
+      "values": [
+        {
+          "quantity": "training/calibration tile count",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "training tiles per map sheet",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the 'Development set (\\'training tiles\\') | 20' row of the §2.1 Map Tile Corpus table and the density-distribution training column (8+7+5=20 across 4 map sheets, i.e. 5/sheet)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          61,
+          63
+        ],
+        "section": "§2.4 Data Allocation — holdout evaluation set and density strata"
+      },
+      "claim_text": "**Holdout evaluation set**: 60 tiles (15 per map sheet, stratified by\n  density: 30 empty, 18 sparse [1–2 mounds], 12 dense [3+]) — 79 mound\n  symbols; used for all confirmatory and most exploratory tests",
+      "values": [
+        {
+          "quantity": "holdout evaluation tile count",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "holdout tiles per map sheet",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "holdout empty-density tile count",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "holdout sparse-density tile count",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "sparse-density definition, lower bound (mounds)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "sparse-density definition, upper bound (mounds)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "holdout dense-density tile count",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "dense-density definition, lower bound (mounds)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "holdout mound symbol count",
+          "value_verbatim": "79",
+          "value_parsed": 79,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md §2.5 'Density Distribution' table (Holdout column: Empty=30, Sparse (1-2 mounds)=18, Dense (3+ mounds)=12), 'Holdout set summary: 60 tiles, 79 mounds total', and 'The expanded holdout set includes 15 tiles from each map'. The dense-density upper bound ('3+') has no numeric ceiling in the span beyond '3', so only the lower bound is extracted per value (approx '+' marker not attached to a second literal)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          64,
+          65
+        ],
+        "section": "§2.4 Data Allocation — reserve pool"
+      },
+      "claim_text": "- **Reserve pool**: 281 tiles — untouched, reserved for future Stage 2\n  validation",
+      "values": [
+        {
+          "quantity": "reserve (untouched) tile pool size",
+          "value_verbatim": "281",
+          "value_parsed": 281,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md §2.1 table row '| Reserve set | 281 | Confirmatory testing | **Untouched** |'. Note osf/preregistration.md elsewhere states 'Maximum training pool: ~301 tiles (361 - 60 holdout)' — a different framing of the non-holdout pool that does not itself split into 20 (used) + 281 (reserved); not adjudicated here per rule 4. 'Stage 2' is a named validation stage, excluded from values per rule 5 (phase/stage-name carve-out)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          75,
+          76
+        ],
+        "section": "§3.1 Model — rationale for single-model focus"
+      },
+      "claim_text": "Rationale for single-model focus: free-tier access, sufficient\n  capability for detection task, cost-effective at K=30 consensus scale",
+      "values": [
+        {
+          "quantity": "consensus voting scale cited in the single-model-focus cost rationale",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/results-60-tile-validation/phase3a-consensus/phase3a-comprehensive-results-report.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Repeats the K=30 consensus-scale figure in a fresh span (distinct from the line-7 mention); same anchor as that earlier claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          80,
+          81
+        ],
+        "section": "§3.2 Prompt Architecture — system instruction output format"
+      },
+      "claim_text": "output format specification (JSON with normalised 0–1000 coordinates)",
+      "values": [
+        {
+          "quantity": "coordinate normalisation range, lower bound",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "coordinate normalisation range, upper bound",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md 'Output format: JSON schema specification with normalised coordinates (0-1000)' and the example prompt 'Return JSON with normalised coordinates (0-1000)'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          85,
+          85
+        ],
+        "section": "§3.2 Prompt Architecture — target tile size"
+      },
+      "claim_text": "**Target tile**: 512 × 512 px PNG tile as final input",
+      "values": [
+        {
+          "quantity": "target tile width (px), final VLM input",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "TILE_SIZE",
+          "method": "read"
+        },
+        {
+          "quantity": "target tile height (px), final VLM input",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "TILE_SIZE",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "config.py",
+        "path": "TILE_SIZE"
+      },
+      "method": "read",
+      "notes": "Repeats the 512x512 tile-size figure in a fresh span; same config.py anchor as the §2.2 claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          89,
+          90
+        ],
+        "section": "§3.2 Prompt Architecture — maximum output tokens"
+      },
+      "claim_text": "Maximum output tokens: 8192 (accommodates thinking tokens + detection\n  JSON)",
+      "values": [
+        {
+          "quantity": "maximum output tokens permitted per VLM call",
+          "value_verbatim": "8192",
+          "value_parsed": 8192,
+          "unit": "tokens",
+          "kind": "tokens",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md '`max_output_tokens`: 8192'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          98,
+          98
+        ],
+        "section": "§3.3 Experimental Factors table — Modality/Elaboration row"
+      },
+      "claim_text": "| Modality/Elaboration | M/E | 5: image-only, brief-text, brief-text+image, verbose-text, verbose-text+image | 2a |",
+      "values": [
+        {
+          "quantity": "count of Modality/Elaboration (M/E) factor levels",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md factor-summary table row 'M/E (Modality/Elaboration) | 5 | Image-only, Brief+image, Verbose+image, Brief-text, Verbose-text |'. Phase label '2a' excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          99,
+          99
+        ],
+        "section": "§3.3 Experimental Factors table — Temperature row"
+      },
+      "claim_text": "| Temperature | T | 5: 0.0, 0.3, 0.7, 1.0, 1.3 | 2b |",
+      "values": [
+        {
+          "quantity": "count of Temperature (T) factor levels",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature level 1",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature level 2",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature level 3",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature level 4",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature level 5",
+          "value_verbatim": "1.3",
+          "value_parsed": 1.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md 'T (Temperature) | 5 | 0.0, 0.3, 0.7, 1.0, 1.3 |'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          100,
+          100
+        ],
+        "section": "§3.3 Experimental Factors table — Library composition row"
+      },
+      "claim_text": "| Library composition | Lib | 7: pure-positive-canon through scale-32 | 2c |",
+      "values": [
+        {
+          "quantity": "count of Library composition (Lib) factor levels",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md 'L (Library composition) | 7 | Pure Positive Canon, Canonical, +HP, Scale-4, Scale-8, Scale-16, Scale-32 |'. 'scale-32' in the span is a condition name, excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          101,
+          101
+        ],
+        "section": "§3.3 Experimental Factors table — Negative text treatment row"
+      },
+      "claim_text": "| Negative text treatment | H5 | 3: minimal, terse, verbose | 2d |",
+      "values": [
+        {
+          "quantity": "count of Negative text treatment (H5) factor levels",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md 'H5 (Negative text) | 3 | Minimal, Terse, Verbose |'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          102,
+          102
+        ],
+        "section": "§3.3 Experimental Factors table — Example ordering row"
+      },
+      "claim_text": "| Example ordering | Ord | 4: config-default, canonical-first, canonical-last, random | 2e |",
+      "values": [
+        {
+          "quantity": "count of Example ordering (Ord) factor levels, as executed",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "osf/preregistration.md's registered factor-summary table lists only 3 Ordering levels ('O (Ordering) | 3 | Canonical-first, Canonical-last, Random |'); this document's row states 4 (adding 'config-default' as an implicit baseline level). Flagging this count discrepancy for triage rather than adjudicating (rule 4); anchored to the registered table as the closest artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          103,
+          103
+        ],
+        "section": "§3.3 Experimental Factors table — Consensus voting pool row"
+      },
+      "claim_text": "| Consensus voting pool | N | 3: 5, 10, 30 | 3a |",
+      "values": [
+        {
+          "quantity": "count of Consensus voting pool (N) factor levels",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus voting pool size, level 1",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus voting pool size, level 2",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus voting pool size, level 3",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md H3 voting-analysis table pool sizes N=5, N=10, N=30."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          108,
+          109
+        ],
+        "section": "§3.4 Output Processing — detection coordinate scale"
+      },
+      "claim_text": "normalised bounding-box\n  coordinates (0–1000 scale)",
+      "values": [
+        {
+          "quantity": "VLM output coordinate normalisation range, lower bound",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "VLM output coordinate normalisation range, upper bound",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Repeats the 0-1000 coordinate normalisation figure in a fresh span; same osf/preregistration.md anchor as the §3.2 claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          122,
+          122
+        ],
+        "section": "§3.5 Two-Stage Proposer-Verifier Pipeline — verification iterations"
+      },
+      "claim_text": "- Multiple verification iterations (K=5) with voting threshold",
+      "values": [
+        {
+          "quantity": "count of verification iterations (K) in the two-stage pipeline's voting scheme",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The Phase 3d pilot (results/phase3d-pilot-results.md) tests H2 at K=1 with three verifier strategies (B/C/D), not K=5-with-voting-threshold as described here; a plausible later source is outputs/h11/e47-propose-brief/verified/flash-high-text-{1..4}of5/ (an apparent 5-run verification voting scheme), but no committed analysis artefact matching 'K=5 with voting threshold' was confirmed within a reasonable search."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          128,
+          130
+        ],
+        "section": "§3.6 Consensus Voting Mechanism — within-pass deduplication tolerance"
+      },
+      "claim_text": "**Within-pass deduplication**: greedy clustering at 20 m tolerance\n  removes duplicates from overlapping tiles within a single detection\n  pass",
+      "values": [
+        {
+          "quantity": "within-pass deduplication clustering tolerance (m)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the study's standard 20 m spatial tolerance (osf/preregistration.md 'All primary results reported at 20m')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          131,
+          133
+        ],
+        "section": "§3.6 Consensus Voting Mechanism — cross-pass clustering tolerance"
+      },
+      "claim_text": "**Cross-pass clustering**: pool deduplicated detections from K passes;\n  cluster across passes at 20 m Euclidean distance; count distinct\n  passes per cluster",
+      "values": [
+        {
+          "quantity": "cross-pass clustering Euclidean distance tolerance (m)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Repeats the 20 m tolerance in a fresh span (cross-pass rather than within-pass); same anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          134,
+          135
+        ],
+        "section": "§3.6 Consensus Voting Mechanism — vote threshold sweep"
+      },
+      "claim_text": "**Vote threshold**: retain clusters where vote count ≥ T; sweep all T\n  ∈ [1, K] to identify optimal threshold",
+      "values": [
+        {
+          "quantity": "vote-threshold sweep lower bound",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md's voting-analysis design (threshold sweeps starting at 1, e.g. 'N=5 | Runs 1-5 or 6-10 | 1, 2, 3, 4, 5' and 'N=30 threshold sweep (1, ..., 30)'). 'K' (the upper sweep bound) is a symbolic variable in this span, not a literal number."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          136,
+          137
+        ],
+        "section": "§3.6 Consensus Voting Mechanism — temperatures and pool sizes tested"
+      },
+      "claim_text": "Voting tested at multiple temperatures (T=0.0, 0.3, 0.7) and pool\n  sizes (N=5, 10, 30)",
+      "values": [
+        {
+          "quantity": "voting-sensitivity temperature tested, level 1",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "voting-sensitivity temperature tested, level 2",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "voting-sensitivity temperature tested, level 3",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "voting-sensitivity pool size tested, level 1",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "voting-sensitivity pool size tested, level 2",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "voting-sensitivity pool size tested, level 3",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Repeats temperature levels {0.0,0.3,0.7} (subset of the registered 5) and pool sizes {5,10,30} in a fresh span; same osf/preregistration.md anchors as the §3.3 table claims."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          147,
+          149
+        ],
+        "section": "§4.1 Adaptive extension (Erratum E27) — Phase 2a text-vs-image F1 outperformance"
+      },
+      "claim_text": "Phase 2a revealed that the\ntext-only condition (`brief-text`, F1=0.543) outperformed the best\nimage-using condition (`brief-text-image`, F1=0.462) by +0.08 F1",
+      "values": [
+        {
+          "quantity": "F1, brief-text (text-only) condition, Phase 2a",
+          "value_verbatim": "0.543",
+          "value_parsed": 0.543,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_condition_metrics['brief-text'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, brief-text-image (best image-using) condition, Phase 2a",
+          "value_verbatim": "0.462",
+          "value_parsed": 0.462,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_condition_metrics['brief-text-image'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 delta, brief-text minus brief-text-image, Phase 2a",
+          "value_verbatim": "0.08",
+          "value_parsed": 0.08,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a-b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2a-analysis-report.json",
+              "path": "$.per_condition_metrics['brief-text'].point_estimate.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2a-analysis-report.json",
+              "path": "$.per_condition_metrics['brief-text-image'].point_estimate.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "results/phase2a-analysis-report.json records per_condition_metrics['brief-text'].point_estimate.f1=0.5425 (rounds to 0.543) and ['brief-text-image'].point_estimate.f1=0.4617 (rounds to 0.462); pairwise_comparisons entry {condition_a: brief-text, condition_b: brief-text-image}.f1_difference.mean=0.0824 (rounds to +0.08). decisions-log.md 'Decision 16' corroborates with the same rounded figures ('Brief-text achieved the highest mean F1 (0.5425), exceeding brief-text-image by +0.08'). 'Erratum E27' excluded from values per rule 5 (identifier); 'Phase 2a' excluded (phase-name carve-out)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          167,
+          173
+        ],
+        "section": "§4.1 — Track 1 additive framing: documented scope reductions and H5 factorial"
+      },
+      "claim_text": "with three documented reductions in scope (H5's 3×3 factorial\ncollapsed to OFAT, E28; H8 Scale-16/32 deferred, E11, later re-run under\nE51; H2 Condition C not executed — erratum pending),",
+      "values": [
+        {
+          "quantity": "count of documented scope reductions within Track 1's otherwise-full preregistered OFAT sequence",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "row count (image-using M/E levels) of H5's preregistered factorial, before collapse to OFAT",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "column count (H5 text-treatment levels) of H5's preregistered factorial, before collapse to OFAT",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 calibration rule: the '3x3 factorial' describes what was REGISTERED (before the OFAT collapse), so it anchors to osf/preregistration.md, consistent with H5's registered 3-level text-treatment factor and its paired image-using M/E subset; the precise '3x3' phrasing was not located verbatim (same caveat as a prior extraction of the cognate hypothesis-tracking.md document). 'The count of three documented reductions' itself (H5 3x3->OFAT / H8 Scale-16/32 deferred / H2 Condition C not executed) was not located as an explicit '3' statement in decisions-log.md or protocol-errata.md within a reasonable search, so left anchor-unknown. Erratum identifiers E28, E11, E51 excluded from values per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          171,
+          173
+        ],
+        "section": "§4.1 — Track 1 additive framing: dual-track additional cost"
+      },
+      "claim_text": "The modest\nadditional cost (~$55 for extra temperature cells) was justified by the\nscientific value of understanding the text-only pathway.",
+      "values": [
+        {
+          "quantity": "additional API spend incurred by the dual-track (Track 2) extension, approximate (USD)",
+          "value_verbatim": "~$55",
+          "value_parsed": 55,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/decisions-log.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches decisions-log.md 'Decision 16' § Budget implications: 'Total additional cost from dual-track: ~$55 (5 cells x $11).' Also corroborated at protocol-errata.md ('~$55 for 5 extra temperature cells')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          177,
+          177
+        ],
+        "section": "§4.2 Runs Per Condition — preregistered runs per condition"
+      },
+      "claim_text": "- K=10 independent single-pass runs per condition per phase (preregistered)",
+      "values": [
+        {
+          "quantity": "independent single-pass runs per condition per phase, as preregistered",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md 'Each condition in the main factorial is evaluated using K=10 independent single-pass runs.'"
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          178,
+          178
+        ],
+        "section": "§4.2 Runs Per Condition — Phase 3a voting study runs"
+      },
+      "claim_text": "- K=30 runs for Phase 3a voting study",
+      "values": [
+        {
+          "quantity": "runs per condition, Phase 3a voting study",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/results-60-tile-validation/phase3a-consensus/phase3a-comprehensive-results-report.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the executed N=30 pool-size condition in the Phase 3a consensus report. 'Phase 3a' excluded from values per rule 5 (phase-name carve-out)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          179,
+          179
+        ],
+        "section": "§4.2 Runs Per Condition — holdout set used for all runs"
+      },
+      "claim_text": "- All runs on the same 60-tile holdout set",
+      "values": [
+        {
+          "quantity": "holdout tile-set size used for all runs",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Repeats the 60-tile holdout figure in a fresh span; same osf/preregistration.md anchor as the §2.4 claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          185,
+          185
+        ],
+        "section": "§4.3 Phase Execution Summary table — Phase 2a row"
+      },
+      "claim_text": "| 2a | H1 (M/E) | 5 | 10 | Complete | brief-text (T2), brief-text-image (T1) |",
+      "values": [
+        {
+          "quantity": "cell count, Phase 2a (H1 M/E)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "runs per cell, Phase 2a",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.per_condition_metrics['brief-text'].n_runs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": "$.n_conditions"
+      },
+      "method": "read",
+      "notes": "results/phase2a-analysis-report.json records n_conditions=5 (image-only, brief-text, brief-text-image, verbose-text, verbose-text-image) and per_condition_metrics[*].n_runs=10. Phase label '2a' and hypothesis id 'H1' excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          186,
+          186
+        ],
+        "section": "§4.3 Phase Execution Summary table — Phase 2b row"
+      },
+      "claim_text": "| 2b | H7 (Temp) | 5×2 tracks | 10 | Complete | T=0.0 (both tracks) |",
+      "values": [
+        {
+          "quantity": "temperature-level count, Phase 2b (H7 Temp)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "track count, Phase 2b",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs per cell, Phase 2b",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "optimal temperature found, Phase 2b, both tracks",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the archived Phase 2b pilot carry-forward doc: 'T=0.0 (deterministic decoding) selected for both tracks.' Phase/hypothesis labels excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          187,
+          187
+        ],
+        "section": "§4.3 Phase Execution Summary table — Phase 2c row"
+      },
+      "claim_text": "| 2c | H8 (Library) | 4×2 tracks | 10 | Complete | plus-hp (13 examples) |",
+      "values": [
+        {
+          "quantity": "library-level count, Phase 2c (H8 Library)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "track count, Phase 2c",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs per cell, Phase 2c",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "example count, optimal (plus-hp) library, Phase 2c",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_plus-hp.json records total_examples=13, matching 'plus-hp (13 examples)'. Note the '4' library-level cell count here differs from the 7 registered/table-3.3 Library levels (Scale-16/32 deferred per erratum E11 — see §4.1), consistent with Track 1's documented scope reduction; not adjudicated further (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          188,
+          188
+        ],
+        "section": "§4.3 Phase Execution Summary table — Phase 2d row"
+      },
+      "claim_text": "| 2d | H5 (Neg text) | 3×2 tracks | 10 | Complete | Minimal |",
+      "values": [
+        {
+          "quantity": "negative-text-level count, Phase 2d (H5 Neg text)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "track count, Phase 2d",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs per cell, Phase 2d",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2d-track2-text-analysis.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "3-level negative-text-treatment design (Minimal/Terse/Verbose) matches results/phase2d-track2-text-analysis.json's per_condition_metrics keys."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          189,
+          189
+        ],
+        "section": "§4.3 Phase Execution Summary table — Phase 2e row"
+      },
+      "claim_text": "| 2e | H4 (Ordering) | 4 | 10 | Complete | No significant effect |",
+      "values": [
+        {
+          "quantity": "ordering-level count, Phase 2e (H4 Ordering)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs per cell, Phase 2e",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Same 3-vs-4 Ordering-level discrepancy already flagged for the §3.3 table row applies here (registered O has 3 levels; this row states 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          190,
+          190
+        ],
+        "section": "§4.3 Phase Execution Summary table — Phase 3a row"
+      },
+      "claim_text": "| 3a | H3 (Voting) | 4 conditions | 30 | Complete | N=30, T=0.7, F1=0.751 |",
+      "values": [
+        {
+          "quantity": "condition count, Phase 3a (H3 Voting)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "runs per cell, Phase 3a",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "optimal consensus pool size (N) found, Phase 3a",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "optimal temperature (T) found, Phase 3a",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at optimal N/T, Phase 3a",
+          "value_verbatim": "0.751",
+          "value_parsed": 0.751,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/results-60-tile-validation/phase3a-consensus/phase3a-comprehensive-results-report.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches archive/results-60-tile-validation/phase3a-consensus/phase3a-comprehensive-results-report.md row '| 20 m | T2 Txt HIGH | 0.751 | [0.610, 0.796] | 0.772 | 0.732 | T0.7 N=30 x=22 |'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          191,
+          191
+        ],
+        "section": "§4.3 Phase Execution Summary table — Phase 3d row"
+      },
+      "claim_text": "| 3d | H2 (Two-stage) | Multiple configs | Varies | Complete | PV improved +0.09–0.14 F1 |",
+      "values": [
+        {
+          "quantity": "F1 improvement over single-stage baseline, PV pipeline, lower bound of stated range",
+          "value_verbatim": "0.09",
+          "value_parsed": 0.09,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "F1 improvement over single-stage baseline, PV pipeline, upper bound of stated range",
+          "value_verbatim": "0.14",
+          "value_parsed": 0.14,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3d-pilot-results.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Approximates (does not exactly match) the per-condition F1 deltas in results/phase3d-pilot-results.md (Track 1: +0.086/+0.091; Track 2: +0.110/+0.138/+0.124) — min~0.09 (rounding 0.086), max~0.14 (rounding 0.138) across both tracks and all three verifier strategies."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          195,
+          197
+        ],
+        "section": "§4.4 Errata — implementation error count"
+      },
+      "claim_text": "Two implementation errors affected data collection and analysis\nmethodology respectively; both were detected and corrected before results\nwere interpreted:",
+      "values": [
+        {
+          "quantity": "count of implementation errors affecting data collection/analysis methodology",
+          "value_verbatim": "Two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/protocol-errata.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The two errors are enumerated immediately below as E25 and E26; protocol-errata.md is the canonical errata register."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          199,
+          203
+        ],
+        "section": "§4.4 Errata — E25 modality manipulation failure"
+      },
+      "claim_text": "**E25 (Modality manipulation failure)**: The batch detection script\n  failed to conditionally skip example images for text-only conditions in\n  Phase 2a. All five M/E conditions received identical images, producing\n  anomalously clustered results that prompted investigation. Corrected\n  and re-run.",
+      "values": [
+        {
+          "quantity": "count of M/E conditions affected by the E25 modality-manipulation bug, Phase 2a",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/protocol-errata.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the 5-level M/E factor (image-only, brief-text, brief-text-image, verbose-text, verbose-text-image) already anchored via the §3.3 table claim. 'E25' excluded per rule 5 (identifier); 'Phase 2a' excluded (phase-name carve-out)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          209,
+          211
+        ],
+        "section": "§4.4 Errata — complete errata log entry count"
+      },
+      "claim_text": "A complete errata log (30+ entries, classified as correction /\nclarification / deviation with impact assessment)",
+      "values": [
+        {
+          "quantity": "count of entries in the complete errata log, approximate lower bound, as stated in §4.4",
+          "value_verbatim": "30+",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/protocol-errata.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "protocol-errata.md is the errata register; this document's §6.1 states a higher figure (57 entries) for the 'living errata log' — not adjudicated here per rule 4 (may reflect different points in time or different counting conventions). Approx marker '+' retained in value_verbatim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          217,
+          218
+        ],
+        "section": "§5.1 Primary Outcome — spatial tolerance"
+      },
+      "claim_text": "Spatial tolerance: 20 m (accounts for georeferencing error, symbol\n  centroid ambiguity, and map digitisation precision)",
+      "values": [
+        {
+          "quantity": "primary spatial matching tolerance (m)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Repeats the 20 m tolerance in a fresh span; same osf/preregistration.md anchor as earlier occurrences."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          222,
+          222
+        ],
+        "section": "§5.1 Primary Outcome — Hungarian matching cost matrix threshold"
+      },
+      "claim_text": "  - Cost matrix: pairwise Euclidean distances; distances >20 m set to ∞",
+      "values": [
+        {
+          "quantity": "cost-matrix infinity-substitution distance threshold (m)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Same 20 m tolerance figure, applied here to the Hungarian-algorithm cost matrix; same anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          227,
+          227
+        ],
+        "section": "§5.1 Primary Outcome — robustness-check tolerances"
+      },
+      "claim_text": "- Robustness checks at 10 m, 30 m, and 50 m tolerances (supplementary)",
+      "values": [
+        {
+          "quantity": "robustness-check spatial tolerance, level 1 (m)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "robustness-check spatial tolerance, level 2 (m)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "robustness-check spatial tolerance, level 3 (m)",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md 'Spatial tolerance sensitivity: All primary results reported at 20m; robustness checks at 10m, 30m, and 50m included in supplementary materials.'"
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          233,
+          234
+        ],
+        "section": "§5.2 Secondary Outcome — balanced holdout tile counts for MCC"
+      },
+      "claim_text": "Balanced holdout set (30 empty, 30 populated tiles) makes MCC\n  preferable to accuracy",
+      "values": [
+        {
+          "quantity": "holdout empty-tile count, used for balanced MCC evaluation",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "holdout populated-tile count, used for balanced MCC evaluation",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md 'MCC is preferred over accuracy given balanced class distribution in the holdout set (30 empty tiles, 30 non-empty tiles).' 30 populated = 18 sparse + 12 dense from the §2.4/§2.5 density stratification already anchored above."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          239,
+          239
+        ],
+        "section": "§5.3 Statistical Analysis — confidence intervals"
+      },
+      "claim_text": "- **Confidence intervals**: 95% bootstrap CIs (1,000 iterations)",
+      "values": [
+        {
+          "quantity": "bootstrap confidence interval level (%)",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap resampling iteration count",
+          "value_verbatim": "1,000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/decisions-log.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Repeats the 95%/1,000-iteration figures in a fresh span; same reasoning and anchor as the line-7 intro-paragraph claim (95% is registered per osf/preregistration.md; the 1,000-iteration count was fixed pre-lodgement per Decision 10 in decisions-log.md, per this document's own explicit sourcing in §Intro)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          240,
+          241
+        ],
+        "section": "§5.3 Statistical Analysis — FDR correction"
+      },
+      "claim_text": "**Multiple comparison correction**: Benjamini-Hochberg FDR at q = 0.05\n  across 8 confirmatory hypotheses",
+      "values": [
+        {
+          "quantity": "Benjamini-Hochberg FDR correction threshold (q)",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of confirmatory hypotheses the FDR correction is applied across",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md 'Multiple comparison correction: Benjamini-Hochberg FDR at q = 0.05 across confirmatory hypotheses' and 'With 8 confirmatory hypotheses tested on 60 tiles (79 mound symbols)...'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          242,
+          243
+        ],
+        "section": "§5.3 Statistical Analysis — power/MDE"
+      },
+      "claim_text": "**Power**: minimum detectable effect ~0.07–0.09 F1 (80% power,\n  α = 0.05, two-tailed) given 60 holdout tiles with 79 mound symbols",
+      "values": [
+        {
+          "quantity": "minimum detectable effect (F1), lower bound of stated range, approximate",
+          "value_verbatim": "0.07",
+          "value_parsed": 0.07,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "minimum detectable effect (F1), upper bound of stated range, approximate",
+          "value_verbatim": "0.09",
+          "value_parsed": 0.09,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "statistical power (%) assumed for the MDE calculation",
+          "value_verbatim": "80",
+          "value_parsed": 80,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "significance level (alpha) assumed for the MDE calculation",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "holdout tile count underlying the power calculation",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "holdout mound symbol count underlying the power calculation",
+          "value_verbatim": "79",
+          "value_parsed": 79,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md 'With 60 holdout tiles containing 79 mound symbols, statistical power is adequate for detecting moderate effects. Approximate detectable effect sizes (80% power, alpha = 0.05, two-tailed)' and 'The expanded holdout provides adequate power to detect moderate effects (MDE ~ 0.07-0.09 for F1).'"
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          244,
+          245
+        ],
+        "section": "§5.3 Statistical Analysis — per-condition metric aggregation runs"
+      },
+      "claim_text": "Per-condition metrics computed as mean across K runs (K=10 for phases\n  2a–2e; K=30 for Phase 3a)",
+      "values": [
+        {
+          "quantity": "runs per condition (K) used for per-condition metric means, phases 2a-2e",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "runs per condition (K) used for per-condition metric means, Phase 3a",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Repeats the K=10 (main OFAT phases) / K=30 (Phase 3a voting) run-count figures already anchored via the §4.2 claims."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          252,
+          256
+        ],
+        "section": "§5.4 Cost Measurement — audited pricing basis"
+      },
+      "claim_text": "every dollar figure in the paper is computed from\n  per-request token metadata priced at June 2026 Gemini flex-tier rates\n  (Flash 3 $0.25/$1.50 per 1M input/output tokens), with **thinking\n  tokens billed at the output rate** — verified against\n  <https://ai.google.dev/gemini-api/docs/pricing> (retrieved 2026-06-12).",
+      "values": [
+        {
+          "quantity": "Gemini Flash 3 flex-tier price per 1M input tokens (USD), June 2026",
+          "value_verbatim": "$0.25",
+          "value_parsed": 0.25,
+          "unit": "USD/1M tokens",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "Gemini Flash 3 flex-tier price per 1M output tokens (USD), June 2026",
+          "value_verbatim": "$1.50",
+          "value_parsed": 1.5,
+          "unit": "USD/1M tokens",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Vendor pricing rate (Google Gemini API pricing page) — no repo artefact can decide it; the document's own citation ('verified against <https://ai.google.dev/gemini-api/docs/pricing>, retrieved 2026-06-12>') is itself an external-website attestation. reports/token-load-audit-2026-06-12.md §2 'Method' independently records the identical rate ('$0.25 / 1M input ... and $1.50 / 1M output'), corroborating but not superseding the external vendor source per rule 3. Retrieval date excluded from values per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          257,
+          261
+        ],
+        "section": "§5.4 Cost Measurement — why an audit was needed (defect classes)"
+      },
+      "claim_text": "recorded run-time cost manifests carried\n  three defect classes — recovery-merge double-counting (2–3× on three\n  of four deployment campaigns), standard-tier rates recorded for runs\n  executed at flex, and omitted thinking tokens (HIGH-thinking passes\n  under-priced ~1.4×).",
+      "values": [
+        {
+          "quantity": "count of defect classes found in recorded run-time cost manifests",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "recovery-merge double-counting multiplier, lower bound of stated range",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "recovery-merge double-counting multiplier, upper bound of stated range",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of deployment campaigns affected by recovery-merge double-counting",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "total deployment campaigns considered for the double-counting defect",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "HIGH-thinking pass under-pricing multiplier from omitted thinking tokens, approximate",
+          "value_verbatim": "~1.4",
+          "value_parsed": 1.4,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/token-load-audit-2026-06-12.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches reports/token-load-audit-2026-06-12.md §1 'Verdict summary' table (three of four manifests '2.0x inflated'/'3.0x inflated', one 'clean (1.0x)' — i.e. 2-3x on three of four) and §5 'Corrected cost model' ('HIGH_PASS_USD ... was 1.4x too LOW ... proposer-side HIGH thinking ... dominates the pass cost'). Whole-document anchor (path null); per amendment 3 the pathless-value rule only bites when anchor.path is set, so it does not apply here for a markdown, whole-document anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          261,
+          264
+        ],
+        "section": "§5.4 Cost Measurement — corrected per-pass costs and min:HIGH ratio"
+      },
+      "claim_text": "Corrected per-pass costs (8,541-tile deployment):\n  minimal text $4.66, HIGH text T0.7 $40.19, HIGH text T0.3 $50.82,\n  image (cached) $39.07 — a true min : HIGH ratio of **8.6×** per pass,\n  not the 3× of the superseded model.",
+      "values": [
+        {
+          "quantity": "deployment corpus size (tiles) underlying the corrected per-pass cost figures",
+          "value_verbatim": "8,541",
+          "value_parsed": 8541,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "corrected per-pass cost, minimal text (USD)",
+          "value_verbatim": "$4.66",
+          "value_parsed": 4.66,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "corrected per-pass cost, HIGH text T0.7 (USD)",
+          "value_verbatim": "$40.19",
+          "value_parsed": 40.19,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "corrected per-pass cost, HIGH text T0.3 (USD)",
+          "value_verbatim": "$50.82",
+          "value_parsed": 50.82,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "corrected per-pass cost, image (cached) (USD)",
+          "value_verbatim": "$39.07",
+          "value_parsed": 39.07,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "true min:HIGH cost ratio per pass, corrected",
+          "value_verbatim": "8.6",
+          "value_parsed": 8.6,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "superseded (pre-correction) min:HIGH cost ratio per pass",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/token-load-audit-2026-06-12.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches reports/token-load-audit-2026-06-12.md §5 'Corrected cost model' table (Minimal text T0.7 $4.66 / 10 passes; HIGH text T0.7 $40.19 / 5 passes; HIGH text T0.3 $50.82 / 5 passes; HIGH image cached $39.07 / 5 passes) and 'The true min : HIGH ratio per pass is 8.6x, not 3x.' §3 'Per-run findings (55-map corpus, 8,541 tiles/pass)' confirms the 8,541-tile deployment scale."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          265,
+          269
+        ],
+        "section": "§5.4 Cost Measurement — billing-console corroboration"
+      },
+      "claim_text": "audited predictions match the\n  Google billing console (ground truth) — 18 April single-day check:\n  $402.08 billed vs $419.64 predicted (−4%) for the three campaign\n  proposer legs, excluding the legacy manifest figures by ~3×; June\n  10–11 dailies consistent with the audited uplift incremental (~$34.5).",
+      "values": [
+        {
+          "quantity": "Google billing-console figure, single-day check, 18 April (USD)",
+          "value_verbatim": "$402.08",
+          "value_parsed": 402.08,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "audited prediction for the same single-day check (USD)",
+          "value_verbatim": "$419.64",
+          "value_parsed": 419.64,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "relative deviation of audited prediction from billed figure (%)",
+          "value_verbatim": "−4",
+          "value_parsed": -4,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of campaign proposer legs covered by the 18 April billing check",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "multiplier by which legacy (pre-audit) manifest figures overstated the same-day spend, approximate",
+          "value_verbatim": "~3",
+          "value_parsed": 3,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "audited uplift incremental spend, corroborated against June 10-11 dailies (USD), approximate",
+          "value_verbatim": "~$34.5",
+          "value_parsed": 34.5,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/token-load-audit-2026-06-12.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches reports/token-load-audit-2026-06-12.md §10 'Billing-console corroboration' table row '18 Apr ... | $402.08 | $419.64 (three proposer legs) | match, -4% - excludes the manifests' $1,281 for the same runs by 3x' and the '9-11 Jun dailies ... the audited $34.5 fits' row. The $402.08 billed figure is Google-billing-console ground truth (method external); the $419.64 prediction and -4% deviation are the audit document's own computed/recorded values (method read)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          270,
+          272
+        ],
+        "section": "§5.4 Cost Measurement — lower-bound caveat and total corrected spend"
+      },
+      "claim_text": "clean token loads are lower bounds — retry\n  spend is not recorded on disk (audit § 8). Total corrected spend\n  across the five 55-map deployment campaigns ≈ $722 flex (audit § 6).",
+      "values": [
+        {
+          "quantity": "count of 55-map deployment campaigns summed for the total corrected spend",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "map count per deployment campaign",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total corrected spend across the five 55-map deployment campaigns (USD flex), approximate",
+          "value_verbatim": "$722",
+          "value_parsed": 722,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "reports/token-load-audit-2026-06-12.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches reports/token-load-audit-2026-06-12.md §6 'Corrected whole-run spend' — 'Total corrected proposer + verifier spend across these five campaigns: ~$722 flex.' The five campaigns are text-min, text-high, text-high-t0.3, image (all four named 55-map manifests) plus the unmanifested 'uplift' run, reconciling with the 'three of four' figure in the earlier defect-classes claim (four MANIFESTED campaigns had defect issues; five is the TOTAL campaign count including the uplift run). '55-map' functions here both as a naming convention (results/55maps-* directories) and as an asserted corpus-scale fact, so its digits are retained as a claim per rule 5's name-and-fact carve-out. 'audit § 8'/'audit § 6' section citations excluded from values per rule 5 (citation-locator carve-out, analogous to line-number citations)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          284,
+          286
+        ],
+        "section": "§6.1 Preregistration — living errata log entry count"
+      },
+      "claim_text": "All deviations documented in a living errata log (57 entries) with\n  classification (correction / clarification / deviation) and impact\n  assessment",
+      "values": [
+        {
+          "quantity": "count of entries in the living errata log",
+          "value_verbatim": "57",
+          "value_parsed": 57,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/protocol-errata.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "protocol-errata.md is the canonical errata register; this document's §4.4 states a lower figure (30+ entries) for the 'complete errata log' — not adjudicated here per rule 4."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          304,
+          305
+        ],
+        "section": "§6.3 Human-AI Collaborative Development — session count and duration"
+      },
+      "claim_text": "spanned 50+ documented sessions over approximately six weeks.",
+      "values": [
+        {
+          "quantity": "count of documented collaborative sessions, approximate lower bound",
+          "value_verbatim": "50+",
+          "value_parsed": 50,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "collaboration duration (weeks), approximate",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Repeats the 50+ session-count figure in a fresh span (distinct wording from the line-7 '50+ archived session transcripts' mention); same anchor-unknown reasoning (no archive/cc-sessions/ directory present; transcripts stated to be archived at '[Zenodo DOI TBD]', not yet a committed artefact). 'approximately' precedes 'six weeks' as a word (not a symbol glued to the digit), so the bare number 'six' is used in value_verbatim per the extractor's convention for word-based approximations (contrast with symbol-glued markers like '~5.02' or '~$250')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          321,
+          322
+        ],
+        "section": "§6.3 Human-AI Collaborative Development — systematic-checking scale, config file count"
+      },
+      "claim_text": "63 config files",
+      "values": [
+        {
+          "quantity": "count of prompt/detection config files, cited as evidence of systematic-checking scale",
+          "value_verbatim": "63",
+          "value_parsed": 63,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "A direct file-count of prompts/configs/*.json at extraction time returns 84 files, not 63 (discrepancy not adjudicated per rule 4 — the config directory may have grown since this figure was written, or '63' may refer to a subset such as detect_*.json only). File-count claims require a scripted directory listing rather than a single JSON read, hence method recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          321,
+          322
+        ],
+        "section": "§6.3 Human-AI Collaborative Development — systematic-checking scale, errata entry count"
+      },
+      "claim_text": "30+ errata entries",
+      "values": [
+        {
+          "quantity": "count of errata entries, cited as evidence of systematic-checking scale, approximate lower bound",
+          "value_verbatim": "30+",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/protocol-errata.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Repeats the §4.4 '30+ entries' figure in a fresh span; same protocol-errata.md anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          347,
+          347
+        ],
+        "section": "Notes for Drafting — H6 not-executed table row"
+      },
+      "claim_text": "| H6 (Flash → Pro transfer) | Not executed as registered (20-tile holdout at 512 px, K=10, OFAT factors); deliberately deferred 2026-03-11 for a competing paper deadline, then superseded by the exploratory 487-tile/384 px genuine-Pro comparison (E41, E57 Update) |",
+      "values": [
+        {
+          "quantity": "registered H6 holdout tile count",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered H6 tile edge length (px)",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered H6 runs per condition (K)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile count, exploratory 487-tile corpus that superseded H6",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile edge length (px), exploratory genuine-Pro comparison that superseded H6",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The registered '20-tile holdout at 512 px, K=10' design matches osf/preregistration.md §H6 Phase 1 'K=10 runs on 20 stratified holdout tiles (subset of 60, preserving density distribution)' (512 px is the study's general tile size, established elsewhere in the same registration, and not repeated verbatim in the H6 section itself). The superseding '487-tile/384 px' exploratory comparison matches results/h11/analysis_summary.md ('the 487-tile production footprint (435 reference mounds)'; '384 px is the optimal tile size') — a distinct executed artefact from the registered H6 design, hence not the same anchor file for all five values, but bundled as one claim row per the single contiguous table-row span rule (anchor.path is null so amendment 3 does not require per-value paths). Date '2026-03-11' and erratum identifiers E41/E57 excluded from values per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          348,
+          348
+        ],
+        "section": "Notes for Drafting — H10 not-executed table row"
+      },
+      "claim_text": "| H10 (Training pool size) | Hard positive pool exhausted at 4 examples |",
+      "values": [
+        {
+          "quantity": "hard positive (HP) training-example pool size at which H10 (training pool size) exhausted",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No H10-specific artefact recording the HP pool exhaustion count was located within a reasonable search. prompts/configs/library_plus-hp.json's composition.hard_positive field independently records 4, a plausible corroborating figure for the same underlying training-pool constraint, but it describes the H8-3 library composition, not an H10-specific finding, so it is not used as the anchor here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          358,
+          359
+        ],
+        "section": "Notes for Drafting — Key Surprises #2, two-stage improvement"
+      },
+      "claim_text": "**Two-stage improvement (H2)**: Contradicted preregistered null;\n   proposer–verifier achieved +0.09–0.14 F1",
+      "values": [
+        {
+          "quantity": "F1 improvement over single-stage baseline, PV pipeline, lower bound of stated range (surprise list)",
+          "value_verbatim": "0.09",
+          "value_parsed": 0.09,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "F1 improvement over single-stage baseline, PV pipeline, upper bound of stated range (surprise list)",
+          "value_verbatim": "0.14",
+          "value_parsed": 0.14,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3d-pilot-results.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Repeats the +0.09-0.14 F1 improvement figure in a fresh span; same results/phase3d-pilot-results.md anchor and approximation caveat as the §4.3 Phase 3d table-row claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          360,
+          361
+        ],
+        "section": "Notes for Drafting — Key Surprises #3, deterministic temperature"
+      },
+      "claim_text": "**Deterministic temperature (H7)**: T=0.0 best for single-pass\n   despite literature suggesting stochasticity aids diversity",
+      "values": [
+        {
+          "quantity": "optimal temperature for single-pass detection, H7 (surprise list)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Repeats the T=0.0-optimal figure in a fresh span; same archived Phase 2b carry-forward anchor as the §4.3 Phase 2b table-row claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          364,
+          365
+        ],
+        "section": "Notes for Drafting — Key Surprises #5, consensus voting ceiling"
+      },
+      "claim_text": "**Consensus voting ceiling (H3)**: N=30 at T=0.7 achieved F1=0.751,\n   a substantial improvement but with diminishing returns",
+      "values": [
+        {
+          "quantity": "optimal consensus pool size (N), H3 (surprise list)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "optimal temperature (T) at the consensus voting ceiling, H3 (surprise list)",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "F1 at the consensus voting ceiling, H3 (surprise list)",
+          "value_verbatim": "0.751",
+          "value_parsed": 0.751,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/results-60-tile-validation/phase3a-consensus/phase3a-comprehensive-results-report.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Repeats the N=30/T=0.7/F1=0.751 figures in a fresh span; same Phase 3a consensus report anchor as the §4.3 Phase 3a table-row claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          375,
+          377
+        ],
+        "section": "Notes for Drafting — Resolved Framing, human-AI collaboration follow-up"
+      },
+      "claim_text": "deeper analysis of 40+ session reflections planned as separate\n  contribution",
+      "values": [
+        {
+          "quantity": "count of session reflections planned for deeper follow-up analysis, approximate lower bound",
+          "value_verbatim": "40+",
+          "value_parsed": 40,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No archive/cc-sessions/ directory or working-notes.md Observation-count artefact confirming this specific '40+' figure was located within a reasonable search; differs from the '50+' session/transcript figures elsewhere in this document (line 7, line 305) — not adjudicated per rule 4."
+    }
+  ]
+}

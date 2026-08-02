@@ -1,0 +1,580 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/reports/metrics_strategy.md",
+    "git_blob": "33cbd031fbc1dfded1fcb78b39678d01e84f9782",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          4,
+          4
+        ],
+        "section": "1. Core Principles — intro sentence"
+      },
+      "claim_text": "To move beyond anecdotal observation, all production benchmarks must quantify two types of uncertainty:",
+      "values": [
+        {
+          "quantity": "count of uncertainty types the metrics strategy quantifies (spatial + strategy)",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Design description; no repo artefact enumerates 'two types of uncertainty' as a scalar — the document's own two-item list (lines 5-6) is the only evidence."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          6,
+          6
+        ],
+        "section": "1. Core Principles — Strategy Uncertainty list item"
+      },
+      "claim_text": "2.  **Strategy Uncertainty (Multi-Run)**: How robust is the *strategy* (e.g. \"Vote 2/3\") to the specific random subset of runs? (Measured via Exhaustive/Combinatorial Simulation).",
+      "values": [
+        {
+          "quantity": "vote threshold, illustrative 'Vote 2/3' strategy example",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "voting pool size (N), illustrative 'Vote 2/3' strategy example",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Explicitly an illustrative example ('e.g.'), not an asserted executed configuration; no artefact to anchor an example to."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          13,
+          13
+        ],
+        "section": "2A. Single Run Analysis — Spatial Tolerance Curve bullet"
+      },
+      "claim_text": "*   **Spatial Tolerance Curve**: F1 scores at buffer distances [10m, 20m, 30m, 50m]. Answer: \"Is the model just missing slightly?\"",
+      "values": [
+        {
+          "quantity": "spatial tolerance buffer distance, level 1",
+          "value_verbatim": "10m",
+          "value_parsed": 10,
+          "unit": "m",
+          "kind": "physical",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#spatial-tolerance-curve-buffer-distances",
+          "method": "read"
+        },
+        {
+          "quantity": "spatial tolerance buffer distance, level 2 (primary matching threshold)",
+          "value_verbatim": "20m",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#spatial-tolerance-curve-buffer-distances",
+          "method": "read"
+        },
+        {
+          "quantity": "spatial tolerance buffer distance, level 3",
+          "value_verbatim": "30m",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#spatial-tolerance-curve-buffer-distances",
+          "method": "read"
+        },
+        {
+          "quantity": "spatial tolerance buffer distance, level 4",
+          "value_verbatim": "50m",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#spatial-tolerance-curve-buffer-distances",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered spatial tolerance sensitivity design (osf/preregistration.md: primary matching threshold 20m, 'robustness checks at 10m, 30m, and 50m included in supplementary materials') — an exact four-value match, so anchored per rule 2 ('the value plainly lives in a standard artefact') rather than left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          14,
+          14
+        ],
+        "section": "2A. Single Run Analysis — Bootstrap 95% CI bullet"
+      },
+      "claim_text": "*   **Bootstrap 95% CI**: Resample the 20 test tiles with replacement (N=1000) to generate a distribution of F1 scores. Answer: \"Was this run lucky?\"",
+      "values": [
+        {
+          "quantity": "confidence interval level, bootstrap resampling of tiles",
+          "value_verbatim": "95%",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#bootstrap-95-percent-ci-convention",
+          "method": null
+        },
+        {
+          "quantity": "count of test tiles resampled with replacement, single-run bootstrap analysis",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles/validation_manifest.json#len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "count of bootstrap resamples (N), single-run analysis",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 95% CI level matches the registration's consistent convention (used at osf/preregistration.md lines 293, 436, 570, 632, 727, 821, etc.). '20 test tiles' is anchored to inputs/tiles/validation_manifest.json (the current holdout manifest); that file now holds 60 entries, not 20 — possible design-evolution drift (cf. the pre-/post-expansion holdout noted in tile-selection-observations.md), flagged for the harness/triage, not adjudicated here (rule 4). It is also ambiguous whether 'test tiles' means the holdout (validation_manifest.json) or the calibration set (also 20 tiles at inputs/tiles/calibration_manifest.json) — flagged, not resolved. Searched osf/preregistration.md for a matching N=1000 (or 10,000) bootstrap-resample count near 'bootstrap'/'resample'; none found, so anchor-unknown for that value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          17,
+          17
+        ],
+        "section": "2B. Variability & Consensus Analysis — intro sentence"
+      },
+      "claim_text": "To determine the optimal production strategy (e.g., \"Run 3 times, keep agreements\"), we simulate all possibilities from our available N=10 variability pool.",
+      "values": [
+        {
+          "quantity": "count of runs, illustrative 'Run 3 times, keep agreements' example",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "voting pool size (N), the available variability pool this methodology simulates over",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#k10-independent-runs-voting-pool",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'Run 3 times' is an illustrative parenthetical example, not an asserted configuration — anchor-unknown. 'N=10 variability pool' matches the registered 'K=10 independent runs from the main factorial enable voting analysis at multiple pool sizes and thresholds' / 'N=10 voting: all runs as single pool' (osf/preregistration.md). results/passes-manifest.json also shows 16 distinct (run, proposer_pool) groups reaching max pass_n=10, corroborating that a K=10 pool was actually executed, but this document does not name a specific run/pool, so the executed manifest is not used as the anchor (would require guessing which group)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          20,
+          20
+        ],
+        "section": "2B. Simulation Parameters — Pool Sizes bullet"
+      },
+      "claim_text": "*   **Pool Sizes (N)**: 3, 5, 10.",
+      "values": [
+        {
+          "quantity": "voting pool size (N) listed in this methodology's Simulation Parameters, level 1",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "voting pool size (N) listed in this methodology's Simulation Parameters, level 2",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#voting-analysis-pool-size-table",
+          "method": "read"
+        },
+        {
+          "quantity": "voting pool size (N) listed in this methodology's Simulation Parameters, level 3",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#voting-analysis-pool-size-table",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The registered voting-analysis pool-size table (osf/preregistration.md) enumerates N=5, N=10, N=30 — this document's '3, 5, 10' list matches two of the three registered levels (5, 10) but substitutes 3 for 30. The '3' has no registered or executed-manifest match found and is left anchor-unknown; the discrepancy is recorded here, not adjudicated (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          21,
+          21
+        ],
+        "section": "2B. Simulation Parameters — Voting Thresholds bullet"
+      },
+      "claim_text": "*   **Voting Thresholds (T)**: 1 to N.",
+      "values": [
+        {
+          "quantity": "minimum vote threshold (lower bound of the 1-to-N range), this methodology's Simulation Parameters",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#voting-analysis-threshold-lists-start-at-1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered voting-analysis threshold lists, which all start at 1 (e.g. '1, 2, 3, 4, 5'; '1, 2, ..., 10'; '1, 2, ..., 30')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          25,
+          25
+        ],
+        "section": "2B. Workflow — Generate Combinations step"
+      },
+      "claim_text": "1.  **Generate Combinations**: Create all unique combinations of N runs from the Total Pool (Size 10).",
+      "values": [
+        {
+          "quantity": "total pool size, restated in the Workflow's Generate Combinations step",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#k10-independent-runs-voting-pool",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the line-17 N=10 variability pool figure; same anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          26,
+          26
+        ],
+        "section": "2B. Workflow — Generate Combinations step, worked example"
+      },
+      "claim_text": "*   *Example (N=3)*: ${_10}C_3 = 120$ combinations.",
+      "values": [
+        {
+          "quantity": "example subset size (N), worked combinatorics example",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total pool size, worked combinatorics example (restated)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#k10-independent-runs-voting-pool",
+          "method": "read"
+        },
+        {
+          "quantity": "computed combination count, 10 choose 3, worked example",
+          "value_verbatim": "120",
+          "value_parsed": 120,
+          "unit": null,
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/reports/metrics_strategy.md",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "'120' is a self-contained mathematical identity (10 choose 3) computable from the two numbers already in this same span; recorded as recompute-script (needs the harness to evaluate math.comb(10,3) and compare, not a value 'read' from any file) rather than 'arithmetic', since neither of its two operands is itself anchored in a committed machine-readable artefact (the '10' anchors only to registration prose, not a JSONPath-resolvable value; v1.2 amendment 1 — do not fabricate an arithmetic derivation from an unresolvable operand). The example's N=3 does not match any registered pool-size level (5/10/30) and is anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          29,
+          29
+        ],
+        "section": "2B. Workflow — Strategy Statistics step"
+      },
+      "claim_text": "4.  **Strategy Statistics**: report the Mean, Median, Min, Max, and 95% CI of the resulting F1 distribution.",
+      "values": [
+        {
+          "quantity": "confidence interval level, strategy statistics reporting, restated",
+          "value_verbatim": "95%",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#bootstrap-95-percent-ci-convention",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the line-14 95% CI convention; same registered match."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          34,
+          34
+        ],
+        "section": "2C. Definitions — Confidence Interval (CI) bullet"
+      },
+      "claim_text": "*   **Confidence Interval (CI)**: The range [2.5th percentile, 97.5th percentile] of the distribution.",
+      "values": [
+        {
+          "quantity": "lower percentile bound defining the CI range",
+          "value_verbatim": "2.5th",
+          "value_parsed": 2.5,
+          "unit": "percentile",
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "upper percentile bound defining the CI range",
+          "value_verbatim": "97.5th",
+          "value_parsed": 97.5,
+          "unit": "percentile",
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Standard percentile-bootstrap consequence of a 95% CI (100−95=5, split 2.5/2.5 per tail), but not itself stated anywhere found in osf/preregistration.md (searched for '2.5'/'97.5'/'percentile'; only an unrelated section-number match, '### 2.5 Density Distribution', was found) — anchor-unknown rather than fabricating a definitional-arithmetic link to the unanchored 95% prose figure."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          41,
+          41
+        ],
+        "section": "3. Reporting Format — example table, Single Run row"
+      },
+      "claim_text": "| **Single Run** | 0.85 | [0.80, 0.89] | 0.86 | 0.83 | 1x |",
+      "values": [
+        {
+          "quantity": "mean F1, 'Single Run' example row (Reporting Format template table)",
+          "value_verbatim": "0.85",
+          "value_parsed": 0.85,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "95% CI lower bound, 'Single Run' example row",
+          "value_verbatim": "0.80",
+          "value_parsed": 0.8,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "95% CI upper bound, 'Single Run' example row",
+          "value_verbatim": "0.89",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "precision, 'Single Run' example row",
+          "value_verbatim": "0.86",
+          "value_parsed": 0.86,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "recall, 'Single Run' example row",
+          "value_verbatim": "0.83",
+          "value_parsed": 0.83,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cost (runs), 'Single Run' example row",
+          "value_verbatim": "1x",
+          "value_parsed": 1,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "This table sits under '## 3. Reporting Format', introduced by 'Results will be presented in comparative tables...' (future tense, line 37) — read as a template/mock-up illustrating the eventual reporting FORMAT, not yet a reported result. No run, condition, or config is named that would let this row be located in any evaluation artefact, and the figures do not obviously match any headline result elsewhere in the project. Flagged per the 'when in doubt, include' rule; extractor's doubt about live-vs-template status is recorded here for triage, not resolved."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          42,
+          42
+        ],
+        "section": "3. Reporting Format — example table, 5-Run (Vote 2) row"
+      },
+      "claim_text": "| **5-Run (Vote 2)** | 0.90 | [0.87, 0.92] | 0.86 | 0.93 | 5x |",
+      "values": [
+        {
+          "quantity": "voting pool size (N), '5-Run (Vote 2)' example row",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "vote threshold, '5-Run (Vote 2)' example row",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "mean F1, '5-Run (Vote 2)' example row",
+          "value_verbatim": "0.90",
+          "value_parsed": 0.9,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "95% CI lower bound, '5-Run (Vote 2)' example row",
+          "value_verbatim": "0.87",
+          "value_parsed": 0.87,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "95% CI upper bound, '5-Run (Vote 2)' example row",
+          "value_verbatim": "0.92",
+          "value_parsed": 0.92,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "precision, '5-Run (Vote 2)' example row",
+          "value_verbatim": "0.86",
+          "value_parsed": 0.86,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "recall, '5-Run (Vote 2)' example row",
+          "value_verbatim": "0.93",
+          "value_parsed": 0.93,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cost (runs), '5-Run (Vote 2)' example row",
+          "value_verbatim": "5x",
+          "value_parsed": 5,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "This table sits under '## 3. Reporting Format', introduced by 'Results will be presented in comparative tables...' (future tense, line 37) — read as a template/mock-up illustrating the eventual reporting FORMAT, not yet a reported result. No run, condition, or config is named that would let this row be located in any evaluation artefact, and the figures do not obviously match any headline result elsewhere in the project. Flagged per the 'when in doubt, include' rule; extractor's doubt about live-vs-template status is recorded here for triage, not resolved."
+    }
+  ]
+}

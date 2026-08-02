@@ -1,0 +1,1803 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/preregistration/protocol-errata.md",
+    "git_blob": "b4fe2c5c45d80b0de9792cf17ba7e467dbf68ea7",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          45,
+          45
+        ],
+        "section": "E2 description — missing execution fields"
+      },
+      "claim_text": "The library config file used by Phase 1 (`run_phase1.py`) was missing five execution fields required by the batch detection script (`4_detect_mounds_batch.py`):",
+      "values": [
+        {
+          "quantity": "count of execution fields missing from the Phase 1 library config file library_pure-positive-canon.json",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/4_detect_mounds_batch.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "[BATCH NOTE b015] lines 1-248 overlap calib-b; calib-b supersedes at assembly. The five missing fields are enumerated in the table immediately below (model, temperature, instruction_file, thinking_level, max_output_tokens); checkable by comparing scripts/4_detect_mounds_batch.py's required/consumed config fields against prompts/configs/library_pure-positive-canon.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          50,
+          50
+        ],
+        "section": "E2 missing-fields table, temperature row"
+      },
+      "claim_text": "| `temperature` | `0.1` (wrong) | `1.0` |",
+      "values": [
+        {
+          "quantity": "temperature, missing/wrong fallback default the batch script would have applied before the fix, library_pure-positive-canon.json",
+          "value_verbatim": "0.1",
+          "value_parsed": 0.1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "temperature, preregistered value for Phase 1 (Section 8.9)",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#section-8.9-execution-parameters",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The '0.1 (wrong)' cell describes a buggy fallback default the batch script would have silently applied had the fix not been made (per the surrounding Description); not independently checkable against a current artefact since the bug was fixed before any run used it, so treated as historical/superseded (changelog before/after pattern) rather than a live executed value. '1.0' is the preregistered temperature per the entry's own Fix note."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          53,
+          53
+        ],
+        "section": "E2 missing-fields table, max_output_tokens row"
+      },
+      "claim_text": "| `max_output_tokens` | `8192` | `8192` |",
+      "values": [
+        {
+          "quantity": "max_output_tokens, missing-field script fallback default (already matched the preregistered value), library_pure-positive-canon.json",
+          "value_verbatim": "8192",
+          "value_parsed": 8192,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "max_output_tokens, preregistered value for Phase 1 (Section 8.9)",
+          "value_verbatim": "8192",
+          "value_parsed": 8192,
+          "unit": null,
+          "kind": "parameter",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#section-8.9-execution-parameters",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Unlike the other four rows in this table, max_output_tokens' fallback default already matched the preregistered value (both 8192) — this row does not describe a wrong-value bug, only that the field was technically absent from the config file; not treated as historical since nothing diverges."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          89,
+          89
+        ],
+        "section": "E4 description — Y-axis inversion bounds shift"
+      },
+      "claim_text": "This shifted all tile bounds one tile height south (~2565m), causing the F1 evaluation to scope ground truth references to incorrect spatial areas.",
+      "values": [
+        {
+          "quantity": "north-south tile-bounds shift caused by the Y-axis inversion bug (one tile height, approx, metres)",
+          "value_verbatim": "~2565m",
+          "value_parsed": 2565,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Approximates TILE_SIZE (512 px, config.py:66) x the affected map's pixel_size_y (order ~5 m/px per this document's own '~5m/px' reference at line 195), but pixel_size_y is calibration/map-specific (e.g. inputs/tiles/calibration_manifest.json, confirmed present at extraction time) rather than a single fixed constant, so no single clean anchor was located; flagged for triage rather than asserting an arithmetic expression (v1.2 amendment 1 caution)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          108,
+          108
+        ],
+        "section": "E5 description — count of evaluation pipeline bugs"
+      },
+      "claim_text": "Three bugs in the evaluation pipeline:",
+      "values": [
+        {
+          "quantity": "count of bugs identified in the evaluation-pipeline reference-loading path",
+          "value_verbatim": "Three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-enumerated by the three-item list immediately following (lines 110-112); no external artefact confirms the count beyond the document's own list — flagged per the Task section's doubt-inclusion guidance rather than silently omitted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          127,
+          127
+        ],
+        "section": "E6 description — Phase 2 cost estimate and validation-category count"
+      },
+      "claim_text": "To prevent recurrence in Phase 2 (~15,000 API calls per sub-phase, ~$286 total), three categories of contract validation were added:",
+      "values": [
+        {
+          "quantity": "estimated API call count per Phase 2 sub-phase (approximate)",
+          "value_verbatim": "~15,000",
+          "value_parsed": 15000,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated total cost, Phase 2 contract-validation context (approximate, USD)",
+          "value_verbatim": "~$286",
+          "value_parsed": 286,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of contract-validation categories added by the E6 hardening",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No specific cost-formula source is named in this entry for the ~15,000/~$286 estimate (cf. E17's execution-plan.md cost formulas, outside this batch's 1-393 range). The 'three categories' is self-enumerated by the three-item list immediately below (lines 129-133)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          133,
+          133
+        ],
+        "section": "E6 description — count of new pytest tests, pipeline-contract hardening"
+      },
+      "claim_text": "3. **Pipeline contract integration tests** (`tests/test_integration_pipeline_contracts.py`): Seven new pytest tests exercising stage-boundary contracts:",
+      "values": [
+        {
+          "quantity": "count of new pytest tests added by the E6 pipeline-contract hardening",
+          "value_verbatim": "Seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "tests/test_integration_pipeline_contracts.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confirmed at extraction time: tests/test_integration_pipeline_contracts.py's TestSourceTileNormalisation, TestReferenceLoadingContract, TestBoundsMetadataContract, and TestMergeToEvaluateContract classes together hold 7 test methods (1+2+1+3), matching the 5 bullet-point contract areas enumerated below; file/structure existence confirmed, value not adjudicated per rule 4."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          153,
+          153
+        ],
+        "section": "E7 description — Phase 1 calibration tiles per sheet"
+      },
+      "claim_text": "With non-adjacent tiles, `union_all()` produces a MultiPolygon equivalent to per-tile checking, so the Phase 1 calibration results (5 scattered tiles per sheet) are unaffected.",
+      "values": [
+        {
+          "quantity": "tile count per map sheet, Phase 1 calibration set",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/calibration_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "inputs/tiles/calibration_manifest.json exists (confirmed present at extraction time; not opened for value content per rule 4) and is the likely locator for per-sheet calibration tile counts."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          153,
+          153
+        ],
+        "section": "E7 description — Phase 2 validation set tile count"
+      },
+      "claim_text": "However, with denser tile configurations — such as the 60-tile validation set in Phase 2, which may include adjacent or overlapping tiles — the union could merge adjacent tile polygons and include references falling in inter-tile gaps.",
+      "values": [
+        {
+          "quantity": "tile count, Phase 2 validation set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles/validation_manifest.json",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/validation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "inputs/tiles/validation_manifest.json exists (confirmed present at extraction time, not opened for content per rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          155,
+          155
+        ],
+        "section": "E7 description — buffering-order bug illustration"
+      },
+      "claim_text": "A secondary issue in `6_accuracy_report.py` compounded the risk: references were buffered by 20m *before* the scoping check, meaning a reference 15m outside a tile boundary would have its 20m-radius buffer circle overlap the tile polygon, passing the scope check even though the reference point itself is outside.",
+      "values": [
+        {
+          "quantity": "registered spatial-match buffer/tolerance distance (metres) used to buffer references before scoping (bug context)",
+          "value_verbatim": "20m",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#20m-spatial-tolerance",
+          "method": "read"
+        },
+        {
+          "quantity": "hypothetical reference-to-tile-boundary distance used to illustrate the buffering-order bug (not an executed measurement)",
+          "value_verbatim": "15m",
+          "value_parsed": 15,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "buffer radius (restates the 20m tolerance) in the illustrative bug example",
+          "value_verbatim": "20m",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 20m spatial tolerance is the registered evaluation buffer (repeated throughout this document and the preregistration). The '15m' is a hypothetical illustrative distance ('would have') used to explain the bug mechanism, not an asserted executed measurement — flagged rather than silently excluded per Task guidance on doubtful claims."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          165,
+          165
+        ],
+        "section": "E7 fix — spatial_tolerance_curve default buffer list change"
+      },
+      "claim_text": "Additionally, the `spatial_tolerance_curve()` default buffer list was updated from `[10, 20, 30, 50]` to `[10, 20, 30, 40, 50]` to include the 40m tolerance level used in the two-dimensional failure ranking framework.",
+      "values": [
+        {
+          "quantity": "spatial_tolerance_curve() default buffer list, pre-change element 1 (superseded)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "spatial_tolerance_curve() default buffer list, pre-change element 2 (superseded)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "spatial_tolerance_curve() default buffer list, pre-change element 3 (superseded)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "spatial_tolerance_curve() default buffer list, pre-change element 4 (superseded)",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "spatial_tolerance_curve() default buffer list, current element 1",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "spatial_tolerance_curve() default buffer list, current element 2",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "spatial_tolerance_curve() default buffer list, current element 3",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "spatial_tolerance_curve() default buffer list, current element 4 (newly added 40m level)",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "spatial_tolerance_curve() default buffer list, current element 5",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_advanced_metrics.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confirmed at extraction time: scripts/lib_advanced_metrics.py's spatial_tolerance_curve() sets `buffers = [10, 20, 30, 40, 50]` when the buffers argument is None (docstring: 'default [10, 20, 30, 40, 50]'), matching the live list exactly. The pre-change [10, 20, 30, 50] list is the changelog 'was' side (historical); no separate artefact retains it (superseded in the working tree)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          167,
+          167
+        ],
+        "section": "E7 verification — test suite pass count"
+      },
+      "claim_text": "**Verification**: All 274 tests pass (267 existing + 7 new).",
+      "values": [
+        {
+          "quantity": "total passing pytest count after the E7 reference-scoping fix (whole suite)",
+          "value_verbatim": "274",
+          "value_parsed": 274,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "pre-existing passing pytest count before the E7 fix (whole suite)",
+          "value_verbatim": "267",
+          "value_parsed": 267,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of new tests added by the E7 fix (matches 'Added 7 new integration tests' earlier in this entry)",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "tests/test_integration_pipeline_contracts.py#TestReferenceScoping-class",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "tests/test_integration_pipeline_contracts.py",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "274 and 267 are whole-suite counts at two points in time, not resolvable from a single committed artefact — verifying requires actually running pytest (274 now) and reconstructing the pre-fix count (267), hence recompute-script rather than read. The '7 new' figure is independently confirmed: tests/test_integration_pipeline_contracts.py's TestReferenceScoping class holds exactly 7 test methods at extraction time."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          182,
+          182
+        ],
+        "section": "E8 description — crop extraction size vs detection tile size"
+      },
+      "claim_text": "Instead, all hard example crops (both hard positives and hard negatives) were extracted as 128×128 pixel regions from the full map GeoTIFFs (`inputs/rasters/*.tif`), not from the 512×512 detection tiles.",
+      "values": [
+        {
+          "quantity": "hard example crop edge length (square, both hard positives and hard negatives), px",
+          "value_verbatim": "128",
+          "value_parsed": 128,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "detection tile edge length (square), px",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "config.py#TILE_SIZE",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/examples/hard-positive/example_05_rakovski.png",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confirmed at extraction time: inputs/examples/hard-positive/example_05_rakovski.png is 128x128 px (PIL Image.open().size), matching the crop-size claim. config.py:66 sets TILE_SIZE = 512 ('Actual tile dimensions in pixels (512x512)'), matching the detection-tile-size claim. Both confirmed present/consistent at extraction time per rule 4; not adjudicated as a match."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          189,
+          189
+        ],
+        "section": "E8 description — Tile-bounded crops option, off-centre case count"
+      },
+      "claim_text": "When the reference point is near a tile edge, the target symbol is off-centre — in 2 of 4 cases, the symbol was within 60 pixels of a tile corner, producing asymmetric crops that could teach the VLM to associate mounds with image edges.",
+      "values": [
+        {
+          "quantity": "count of hard-positive extraction cases where the symbol was within 60px of a tile corner (numerator)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total hard-positive extraction cases considered (denominator)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "distance from tile corner used as the near-edge threshold observed in this design review, px",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No specific artefact (e.g. outputs/phase1-library/fp-fn-register.md, since archived — see E10/E11 notes) is cited by this sentence for the case-level '2 of 4'/60px detail; not chased per rule 7."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          193,
+          193
+        ],
+        "section": "E8 rationale — hard positive disambiguation case count (restated)"
+      },
+      "claim_text": "For hard positives, centring the target symbol disambiguates when multiple features appear in the same crop (observed in 2 of 4 hard positive examples).",
+      "values": [
+        {
+          "quantity": "count of hard-positive examples where multiple features appeared in the same crop (numerator, restates the line-189 figure)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total hard-positive examples considered (denominator, restates the line-189 figure)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates the '2 of 4' figure from line 189 in a new sentence/location; logged separately per full-enumeration (rule 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          193,
+          193
+        ],
+        "section": "E8 rationale — adjacent tile overlap"
+      },
+      "claim_text": "the cross-tile-boundary content is from the same continuous map sheet and represents realistic context the model would see in adjacent tiles (which overlap by 64 pixels).",
+      "values": [
+        {
+          "quantity": "detection tile overlap, px",
+          "value_verbatim": "64",
+          "value_parsed": 64,
+          "unit": "px",
+          "kind": "physical",
+          "path": "config.py#OVERLAP",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "config.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confirmed at extraction time: config.py:67 sets OVERLAP = 64 ('Overlap in pixels. 20-30px mounds -> 64px is safe.'), matching. Also consistent with scripts/preprocess_tiling.py's documented default ('Default 512x512 tiles with 64px overlap')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          195,
+          195
+        ],
+        "section": "E8 — crop size heading (restated)"
+      },
+      "claim_text": "**Crop size** (128×128): Selected based on VLM few-shot reference sizing research.",
+      "values": [
+        {
+          "quantity": "hard example crop edge length (square), px — restated",
+          "value_verbatim": "128",
+          "value_parsed": 128,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/examples/hard-positive/example_05_rakovski.png",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the line-182 128x128 crop-size claim in a new location (section heading)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          195,
+          195
+        ],
+        "section": "E8 — crop size rationale, resolution and symbol proportion"
+      },
+      "claim_text": "At ~5m/px, a 15–20px mound symbol occupies ~1–2.5% of a 128×128 crop — sufficient context without drowning the feature.",
+      "values": [
+        {
+          "quantity": "map spatial resolution (approx, metres per pixel)",
+          "value_verbatim": "~5m/px",
+          "value_parsed": 5,
+          "unit": "m/px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "mound symbol size, lower bound, px",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "mound symbol size, upper bound, px",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "proportion of 128x128 crop occupied by mound symbol, lower bound (approx, %)",
+          "value_verbatim": "~1",
+          "value_parsed": 1,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "proportion of 128x128 crop occupied by mound symbol, upper bound (approx, %)",
+          "value_verbatim": "2.5",
+          "value_parsed": 2.5,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "crop edge length, px — restated a third time",
+          "value_verbatim": "128",
+          "value_parsed": 128,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/examples/hard-positive/example_05_rakovski.png",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Only the 128px crop size is cleanly anchored (see line-182 claim); the resolution and symbol-size/proportion figures are approximate design reasoning with no named source in this entry — flagged anchor-unknown individually rather than left unrecorded."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          195,
+          195
+        ],
+        "section": "E8 — VLM minimum input size citation"
+      },
+      "claim_text": "VLM minimum input size recommendations (typically ≥300px) apply to analysis targets, not reference exemplars which are internally upscaled.",
+      "values": [
+        {
+          "quantity": "VLM minimum input size recommendation cited by the entry (typically, px)",
+          "value_verbatim": "300",
+          "value_parsed": 300,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Cited as a general VLM few-shot sizing research recommendation without a specific reference; no repo artefact can decide this uncited external claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          195,
+          195
+        ],
+        "section": "E8 — canonical positive legend crop size"
+      },
+      "claim_text": "The canonical positive legend crops are ~64px; hard examples need more context to show difficult real-world conditions.",
+      "values": [
+        {
+          "quantity": "canonical positive ('legend') example crop size (approx, px), as stated at the time of this entry",
+          "value_verbatim": "~64px",
+          "value_parsed": 64,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Checked inputs/examples/legend-positive/ at extraction time: current files (e.g. benchmark_mound.png 319x316, burial_mound.png 212x189, settlement_mound.png 444x240) are substantially larger than ~64px, so either this describes a superseded/earlier example set or an approximation that no longer holds. Flagged for triage rather than adjudicated (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          195,
+          195
+        ],
+        "section": "E8 — future crop-size OFAT experiment levels"
+      },
+      "claim_text": "Crop size is flagged as a future exploratory variable (64, 128, 256, 512px OFAT experiment).",
+      "values": [
+        {
+          "quantity": "planned crop-size OFAT level 1, px",
+          "value_verbatim": "64",
+          "value_parsed": 64,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "planned crop-size OFAT level 2, px",
+          "value_verbatim": "128",
+          "value_parsed": 128,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "planned crop-size OFAT level 3, px",
+          "value_verbatim": "256",
+          "value_parsed": 256,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "planned crop-size OFAT level 4, px",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Describes a future/planned experiment, not yet named to a specific study file in this entry; flagged for triage to locate whether/where this was later executed (cf. the H11 384px tile-size work referenced elsewhere in the project)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          207,
+          207
+        ],
+        "section": "E9 table — files touched, detect_*.md count"
+      },
+      "claim_text": "| Files | All 11 `prompts/system-instructions/detect_*.md` files |",
+      "values": [
+        {
+          "quantity": "count of detect_*.md system-instruction files touched by the E9 centre-pointing addition",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/system-instructions/detect_verbose-text-image.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "At extraction time, prompts/system-instructions/detect_*.md currently numbers 19 files, not 11 — this entry is dated 2026-02-02, early in the project, and the config namespace has since grown (more M/E x H5 x ordering conditions added in later phases). The 11-count reflects the file set at that time; flagged for triage rather than adjudicated (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          214,
+          214
+        ],
+        "section": "E9 description — crop size context (restated)"
+      },
+      "claim_text": "This addresses an ambiguity in 128×128 hard example crops: when a crop centred on a confusable feature also contains a real mound at the periphery, the model needs to know which feature the label applies to.",
+      "values": [
+        {
+          "quantity": "hard example crop edge length (square), px — restated",
+          "value_verbatim": "128",
+          "value_parsed": 128,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/examples/hard-positive/example_05_rakovski.png",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the 128x128 crop-size claim (line 182) in a new location."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          231,
+          231
+        ],
+        "section": "E10 corrected description — registered FN/HP eligibility quote"
+      },
+      "claim_text": "(`osf/preregistration.md:1450` \"Ground truth mounds missed in ≥3/5 passes\"; `:1510` \"FN mining\")",
+      "values": [
+        {
+          "quantity": "registered FN/HP-eligibility threshold, passes missed (numerator)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#line-1450-ge-3-5-passes",
+          "method": null
+        },
+        {
+          "quantity": "registered FN/HP-eligibility threshold, passes missed (denominator)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#line-1450-ge-3-5-passes",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Verbatim quotation (within protocol-errata.md) of the registered HP/FN-eligibility criterion; per the v1.1 calibration rule this anchors to the lodged preregistration, not to any execution artefact. Line-number citations ('osf/preregistration.md:1450', ':1510', 'working-notes.md:1471' later in the same sentence) excluded from values per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          233,
+          233
+        ],
+        "section": "E10 description — distributional cliff range"
+      },
+      "claim_text": "Analysis of the Phase 1 FN distance distribution revealed a distributional cliff between 30m and 50m: below 30m, FNs cluster tightly (clear localisation errors); above 50m, FNs are sparse and widely dispersed (clear recognition failures).",
+      "values": [
+        {
+          "quantity": "lower boundary of the ambiguous FN-distance range identified by the distributional-cliff analysis, metres",
+          "value_verbatim": "30m",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper boundary of the ambiguous FN-distance range, metres — becomes the selected recognition/localisation threshold",
+          "value_verbatim": "50m",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Distributional-cliff analysis result; no specific artefact (e.g. a distance-distribution plot) is named in this sentence. The entry cites 'outputs/phase1-library/fp-fn-register.md', which no longer exists in the working tree — it has moved to archive/outputs-pre-retest-60-tile/phase1-library/fp-fn-register.md (confirmed via find; a second, empty archive copy exists at archive/results-60-tile-validation/phase1-library/ with no fp-fn-register.md file). Anchored to the archived location per the least-writable-existing-artefact principle (cf. the H3/phase3a-consensus precedent in 014.json)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          233,
+          233
+        ],
+        "section": "E10 description — selected threshold and FN breakdown"
+      },
+      "claim_text": "A 50m threshold was selected as the boundary, yielding 9 recognition failures and 15 localisation failures from 24 total FNs.",
+      "values": [
+        {
+          "quantity": "selected recognition/localisation threshold, metres, as adopted",
+          "value_verbatim": "50m",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "docs/methodology/preregistration/decisions-log.md#decision-11",
+          "method": null
+        },
+        {
+          "quantity": "count of Phase 1 false negatives classified as recognition failures (>50m threshold)",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of Phase 1 false negatives classified as localisation failures (≤50m)",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total Phase 1 false negatives",
+          "value_verbatim": "24",
+          "value_parsed": 24,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase1-library/fp-fn-register.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The entry cites 'outputs/phase1-library/fp-fn-register.md', which no longer exists in the working tree — it has moved to archive/outputs-pre-retest-60-tile/phase1-library/fp-fn-register.md (confirmed via find; a second, empty archive copy exists at archive/results-60-tile-validation/phase1-library/ with no fp-fn-register.md file). Anchored to the archived location per the least-writable-existing-artefact principle (cf. the H3/phase3a-consensus precedent in 014.json). 9 + 15 = 24 (internally consistent); each figure marked 'read' individually rather than derived via arithmetic, per v1.2 amendment 1 (avoiding the operand-inherits-arithmetic trap). The 50m threshold's decision record (Decision 11) is separately anchored to decisions-log.md, also named in this entry's Files field, via a cross-file locator (v1.2 amendment 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          248,
+          248
+        ],
+        "section": "E11 description — HP pool exhaustion breakdown"
+      },
+      "claim_text": "The HP pool is structurally exhausted at 4 recognition failures (>50m threshold). Of 9 total recognition failures, 4 are selected for Scale-8, 3 are out-of-scope boundary artefacts, 1 is a newly discovered out-of-scope candidate (fid 489, outside all calibration tiles), and 1 is edge-truncated (fid 161). Zero recognition failures remain for library expansion.",
+      "values": [
+        {
+          "quantity": "HP pool size, structurally exhausted at (recognition failures available for HP selection)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total recognition failures (restates the E10 figure)",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of recognition failures selected for Scale-8 (restates the pool-size figure)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of recognition failures classified as out-of-scope boundary artefacts",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of newly discovered out-of-scope recognition-failure candidates",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of edge-truncated recognition-failure candidates",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of recognition failures remaining available for library expansion",
+          "value_verbatim": "Zero",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase1-library/fp-fn-register.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The entry cites 'outputs/phase1-library/fp-fn-register.md', which no longer exists in the working tree — it has moved to archive/outputs-pre-retest-60-tile/phase1-library/fp-fn-register.md (confirmed via find; a second, empty archive copy exists at archive/results-60-tile-validation/phase1-library/ with no fp-fn-register.md file). Anchored to the archived location per the least-writable-existing-artefact principle (cf. the H3/phase3a-consensus precedent in 014.json). 4+3+1+1=9 (internally consistent breakdown of the 9 total recognition failures); each figure marked 'read' individually (not arithmetic) per v1.2 amendment 1. Feature IDs 'fid 489' and 'fid 161' excluded from values as record identifiers (rule 5 spirit — functionally identical to the explicitly excluded identifier classes, though not itself enumerated there)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          250,
+          250
+        ],
+        "section": "E11 description — Scale-16/Scale-32 HP requirements"
+      },
+      "claim_text": "Scale-16 requires 8 HP and Scale-32 requires 16 HP.",
+      "values": [
+        {
+          "quantity": "hard-positive example count required by the Scale-16 library condition (H8-6)",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": null
+        },
+        {
+          "quantity": "hard-positive example count required by the Scale-32 library condition (H8-7)",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": "prompts/configs/library_scale-32.json#$.composition.hard_positive",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-16.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confirmed at extraction time: prompts/configs/library_scale-16.json composition.hard_positive=8 (total_examples=25, hard_examples=16); prompts/configs/library_scale-32.json composition.hard_positive=16 (total_examples=41, hard_examples=32). Both configs are 'status': 'deferred' with empty example arrays, consistent with this entry's description; values not adjudicated (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          250,
+          252
+        ],
+        "section": "E11 description — 1:1 HP:HN constraint and registered contingency quote"
+      },
+      "claim_text": "Under the preregistered 1:1 HP:HN constraint, both conditions collapse to Scale-8. This activates the contingency anticipated at preregistration line 815: \"If fewer than 16 distinct HPs or HNs are available, Scale-32 (and possibly Scale-16) will be capped at the maximum available while preserving 1:1 ratio.\"",
+      "values": [
+        {
+          "quantity": "registered HP:HN ratio constraint, numerator",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered HP:HN ratio constraint, denominator",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered contingency threshold: minimum distinct HPs/HNs below which Scale-32/Scale-16 are capped",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered HP:HN ratio preserved under the capping contingency, numerator (restated)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "registered HP:HN ratio preserved under the capping contingency, denominator (restated)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 1:1 HP:HN constraint and the capping contingency are quoted/paraphrased from the registered preregistration (v1.1 calibration rule: registered-design claims anchor to the lodged document). Line-number citation ('preregistration line 815') excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          269,
+          269
+        ],
+        "section": "E12 description — frozen HP pool size"
+      },
+      "claim_text": "Due to HP pool exhaustion (E11), the HP channel is frozen: 4 slots, 4 examples, every HP appears in every pass.",
+      "values": [
+        {
+          "quantity": "frozen HP pool size (slots/examples), H9-C image diversity",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "library_plus-hp.json composition.hard_positive=4, matching (confirmed present at extraction time; consistent with plus-hp established as the optimal H8 library at line 224 of this document). The two textual mentions ('4 slots', '4 examples') refer to the same fact and are logged once."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          269,
+          269
+        ],
+        "section": "E12 description — baseline FP:FN asymmetry"
+      },
+      "claim_text": "HN rotation is the more informative diversity dimension given the ~23:1 FP-to-FN asymmetry observed at baseline.",
+      "values": [
+        {
+          "quantity": "observed baseline FP-to-FN asymmetry ratio, FP part (approx)",
+          "value_verbatim": "23",
+          "value_parsed": 23,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "observed baseline FP-to-FN asymmetry ratio, FN part (approx)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No specific baseline-results artefact is named in this entry for the ~23:1 figure; plausibly checkable against Phase 1 baseline FP/FN counts (see The entry cites 'outputs/phase1-library/fp-fn-register.md', which no longer exists in the working tree — it has moved to archive/outputs-pre-retest-60-tile/phase1-library/fp-fn-register.md (confirmed via find; a second, empty archive copy exists at archive/results-60-tile-validation/phase1-library/ with no fp-fn-register.md file). Anchored to the archived location per the least-writable-existing-artefact principle (cf. the H3/phase3a-consensus precedent in 014.json).), not cited directly here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          284,
+          284
+        ],
+        "section": "E13 description — capped HP pool and confounded ratio examples"
+      },
+      "claim_text": "With HP capped at 4, the only testable ratios are HP-constant with varying HN counts (e.g., 4:4, 4:8, 4:12), which confounds ratio with total library size.",
+      "values": [
+        {
+          "quantity": "frozen/capped HP pool size (restated)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "illustrative testable HP:HN ratio example 1, HP part",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "illustrative testable HP:HN ratio example 1, HN part",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "illustrative testable HP:HN ratio example 2, HN part",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "illustrative testable HP:HN ratio example 3, HN part",
+          "value_verbatim": "12",
+          "value_parsed": 12,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 'e.g., 4:4, 4:8, 4:12' figures are the document's own illustrative examples of confounded ratios H12 could test, not values from an executed config; flagged anchor-unknown individually. The capped HP=4 figure matches library_plus-hp.json composition.hard_positive=4."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          286,
+          286
+        ],
+        "section": "E13 description — symmetric ratio design example"
+      },
+      "claim_text": "The full symmetric ratio design (e.g., 4:8 vs 8:4) requires a larger HP pool, which may become available after H10 (training pool expansion via calibration tile expansion using reserve tiles).",
+      "values": [
+        {
+          "quantity": "illustrative symmetric-ratio design example, ratio A HP part",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "illustrative symmetric-ratio design example, ratio A HN part",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "illustrative symmetric-ratio design example, ratio B HP part",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "illustrative symmetric-ratio design example, ratio B HN part",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Illustrative example of a not-yet-possible symmetric ratio design (H12 deferred to post-H10), not an executed value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          303,
+          303
+        ],
+        "section": "E14 description — verbose instruction word count"
+      },
+      "claim_text": "Iterative prompt refinement across Sessions 12–14 (decision procedure restructuring, centre-pointing language, exclusion criteria updates) has grown the verbose-level instruction text to 779 words.",
+      "values": [
+        {
+          "quantity": "verbose-level (M/E) system-instruction word count, as of this entry",
+          "value_verbatim": "779",
+          "value_parsed": 779,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/system-instructions/detect_verbose-text-image.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Session numbers ('12-14') excluded per rule 5. Word count mechanically checkable via `wc -w` on the named verbose instruction file(s); not run at extraction time (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          303,
+          303
+        ],
+        "section": "E14 description — brief:verbose ratio and preregistered-range overshoot"
+      },
+      "claim_text": "The brief-to-verbose ratio is now approximately 1:3.7 (213:779), which exceeds the preregistered range by ~80 words.",
+      "values": [
+        {
+          "quantity": "brief-to-verbose word-count ratio, brief part (approx)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "brief-to-verbose word-count ratio, verbose part (approx)",
+          "value_verbatim": "3.7",
+          "value_parsed": 3.7,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "brief-level (M/E) system-instruction word count",
+          "value_verbatim": "213",
+          "value_parsed": 213,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "verbose-level word count, restated",
+          "value_verbatim": "779",
+          "value_parsed": 779,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "overshoot beyond the preregistered verbose-level word-count range (approx, words)",
+          "value_verbatim": "~80",
+          "value_parsed": 80,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/system-instructions/detect_verbose-text-image.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 213 (brief) word count has no file named in this entry's Files field (only verbose files are listed); flagged anchor-unknown. The preregistered word-count range itself is not quoted with numbers in this entry, so the ~80-word overshoot cannot be independently derived here; flagged anchor-unknown pending the actual preregistered range (likely in osf/preregistration.md, not confirmed in this entry)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          320,
+          320
+        ],
+        "section": "E15 description — operative Phase 1 pass count and threshold"
+      },
+      "claim_text": "The operative procedure (lines 98–99) specifies \"5 passes\" with a \"≥3/5 passes\" threshold, consistent with the execution simulation and the v2.1 changelog (\"aligned Phase 1 baseline with preregistration (5 passes, ≥3/5 threshold)\").",
+      "values": [
+        {
+          "quantity": "operative Phase 1 baseline pass count (K), per the appendix's operative procedure (lines 98-99)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "operative Phase 1 baseline pass-count threshold (numerator) for FN/HP eligibility",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "operative Phase 1 baseline pass-count threshold (denominator)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration-appendix-prompts.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Per the v1.1 calibration rule, anchors to the lodged appendix (operative procedure at its lines 98-99, excluded from values per rule 5). The same '5 passes, >=3/5 threshold' figures are restated verbatim a second time within this sentence via a quoted v2.1 changelog entry; not re-logged as separate values given the tight single-sentence repetition (full-enumeration judgement, rule 3). Version string 'v2.1' excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          324,
+          324
+        ],
+        "section": "E15 inconsistency table — Line 115 (HP selection) row"
+      },
+      "claim_text": "| Line 115 (HP selection) | \"≥3/10 passes missed\" | ≥3/5 |",
+      "values": [
+        {
+          "quantity": "stale HP-selection pass-count reference (numerator), appendix (inconsistent with the operative 5-pass procedure)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "stale HP-selection pass-count reference (denominator)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "intended/corrected HP-selection pass-count threshold, numerator",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "intended/corrected HP-selection pass-count threshold, denominator",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration-appendix-prompts.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Line-number citation ('Line 115') excluded per rule 5. This entry frames '>=3/10' as a stale reference from an earlier draft misaligned with the operative K=5 procedure, but per the Root cause paragraph it does not appear to have been corrected in the appendix text itself — only decisions-log.md Decision 4 was corrected. Kept at claim-level 'read' (both cells are literal appendix text) rather than 'historical', since no edit to the appendix itself is described here; flagged for triage to confirm whether >=3/10 still appears in the current appendix."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          325,
+          325
+        ],
+        "section": "E15 inconsistency table — Line 1694 (HN TBD table) row"
+      },
+      "claim_text": "| Line 1694 (HN TBD table) | \"≥3/10 runs\" | ≥3/5 |",
+      "values": [
+        {
+          "quantity": "stale HN TBD-table pass-count reference (numerator), appendix",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "stale HN TBD-table pass-count reference (denominator)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "intended/corrected HN pass-count threshold, numerator",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "intended/corrected HN pass-count threshold, denominator",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration-appendix-prompts.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Line-number citation ('Line 1694') excluded per rule 5. Same stale-vs-intended framing as the Line 115 row above."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          329,
+          329
+        ],
+        "section": "E15 root cause — appendix v2.1 K=5 alignment"
+      },
+      "claim_text": "**Root cause**: The appendix v2.1 update aligned the HN procedure (lines 98–99) and HP TBD table (line 1695) to K=5 but missed the HP description (line 115) and HN TBD table (line 1694).",
+      "values": [
+        {
+          "quantity": "pass count (K) the appendix v2.1 update aligned the HN procedure and HP TBD table to",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration-appendix-prompts.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Version string ('v2.1') and line-number citations excluded per rule 5. Restates the K=5 pass count already established at line 320 of this entry."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          331,
+          331
+        ],
+        "section": "E15 protocol impact — actual FN/FP vote outcomes"
+      },
+      "claim_text": "The threshold is moot in any case: all 24 FNs were complete misses (0/5) and all selected FPs occurred at 5/5 or ≥3/5 votes.",
+      "values": [
+        {
+          "quantity": "total Phase 1 false negatives (restated)",
+          "value_verbatim": "24",
+          "value_parsed": 24,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "complete-miss vote fraction for all 24 FNs, numerator",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "complete-miss vote fraction for all 24 FNs, denominator",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "selected-FP vote fraction, unanimous case, numerator",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "selected-FP vote fraction, unanimous case, denominator",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "selected-FP vote fraction, majority-threshold case, numerator",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "selected-FP vote fraction, majority-threshold case, denominator",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates the 24-total-FN figure (E10/E11) and describes Phase 1 FP/FN vote-fraction outcomes; no artefact is named in this entry for these figures. The entry cites 'outputs/phase1-library/fp-fn-register.md', which no longer exists in the working tree — it has moved to archive/outputs-pre-retest-60-tile/phase1-library/fp-fn-register.md (confirmed via find; a second, empty archive copy exists at archive/results-60-tile-validation/phase1-library/ with no fp-fn-register.md file). Anchored to the archived location per the least-writable-existing-artefact principle (cf. the H3/phase3a-consensus precedent in 014.json)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          350,
+          352
+        ],
+        "section": "E16 correction — count of new exclusion sections added by commit 2d46311"
+      },
+      "claim_text": "Commit `2d46311`, which this erratum records, did\nnot only reword existing material: it **added three new exclusion sections**, enumerated\nin the commit's own message:",
+      "values": [
+        {
+          "quantity": "count of new exclusion sections added to the detection prompts by commit 2d46311 (per this correction's re-characterisation of E16)",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/system-instructions/detect_verbose-text-image.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Enumerated by the 3-row table immediately below (Cyrillic Map Text, Other Round Shapes in Mound-Like Colours, Symbols Amid Dense Features headings); the correction states these are 'verifiable as additions in git show 2d46311 -- prompts/system-instructions' (git hash excluded from values per rule 5). Anchored to a representative current prompt file where the added headings should still appear; not opened to confirm heading presence per rule 4."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          381,
+          383
+        ],
+        "section": "E16 correction — count and turnaround of post-lodgement drift commits"
+      },
+      "claim_text": "appendix was byte-accurate at lodgement, all drift is post-lodgement across five commits\n(2026-02-02 to 2026-02-11), four of them erratum'd within 24 hours, and the restructure",
+      "values": [
+        {
+          "quantity": "count of post-lodgement commits responsible for all prompt-text drift (2026-02-02 to 2026-02-11)",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of those drift commits that were erratum'd within 24 hours",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "turnaround-time threshold within which four of the five drift commits were erratum'd, hours",
+          "value_verbatim": "24",
+          "value_parsed": 24,
+          "unit": "hours",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/system-instructions/detect_verbose-text-image.md",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Confirmed at extraction time: `git log --since=2026-02-02 --until=2026-02-11 -- prompts/system-instructions/` returns exactly 5 commits (54b26f5c3, 2d4631171, 5e7601d77, 52d54e981, b0d7dd080), consistent with 'five commits'. The 'erratum'd within 24 hours' sub-claim ('four of them') is not independently checked here (would need cross-referencing each commit's timestamp against its erratum's Date field) — recompute-script rather than read, since verification requires scripted git-log/date reconciliation, not a single artefact lookup. Dates excluded from values per rule 5; the source cited immediately before this span (reports/verification/apparatus/defence-pass-adjudication-2026-07-29.md) appears to be audit apparatus (reports/verification/apparatus/, matching the excluded-from-mine-scope pattern the instrument documents for reports/d17-inventory/) rather than a data artefact, so it is not used as the anchor here."
+    }
+  ]
+}

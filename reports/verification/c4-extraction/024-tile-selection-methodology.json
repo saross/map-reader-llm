@@ -1,0 +1,939 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/reports/tile-selection-methodology.md",
+    "git_blob": "18c6374ecd426658deb03d0efe0e3a19d3990ff1",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          14,
+          14
+        ],
+        "section": "Data Sources — Maps bullet"
+      },
+      "claim_text": "- **Maps**: 4 Soviet 1:50,000 topographic maps (Bulgaria)",
+      "values": [
+        {
+          "quantity": "count of source topographic maps",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.calibration.by_map",
+          "method": "read"
+        },
+        {
+          "quantity": "map scale denominator (1:N representative fraction), source topographic maps",
+          "value_verbatim": "50,000",
+          "value_parsed": 50000,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Map count matches inputs/tiles/tile_selection_metadata.json $.calibration.by_map (4 keys). No repo artefact (raster header, config constant) was found recording the cartographic scale denominator; GeoTIFF headers would be the ideal source per the charter's authority hierarchy but were not inspected here (out of scope for this document's extraction)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          20,
+          20
+        ],
+        "section": "Data Sources — Tiles bullet"
+      },
+      "claim_text": "- **Tiles**: 512×512 pixel tiles at native resolution (64px overlap, 448px stride)",
+      "values": [
+        {
+          "quantity": "tile width, native resolution",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "TILE_SIZE",
+          "method": "read"
+        },
+        {
+          "quantity": "tile height, native resolution",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "TILE_SIZE",
+          "method": "read"
+        },
+        {
+          "quantity": "tile overlap",
+          "value_verbatim": "64",
+          "value_parsed": 64,
+          "unit": "px",
+          "kind": "physical",
+          "path": "OVERLAP",
+          "method": "read"
+        },
+        {
+          "quantity": "tile stride (distance between tile origins)",
+          "value_verbatim": "448",
+          "value_parsed": 448,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a-b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "config.py",
+              "path": "TILE_SIZE"
+            },
+            {
+              "name": "b",
+              "file": "config.py",
+              "path": "OVERLAP"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "config.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "config.py defines TILE_SIZE=512, OVERLAP=64, STRIDE=TILE_SIZE-OVERLAP=448 (STRIDE is computed in source, hence 'arithmetic' for the 448 value; TILE_SIZE and OVERLAP are each 'read' with their own path per v1.2 amendment 1, so they are not compared against their own difference)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          21,
+          21
+        ],
+        "section": "Data Sources — Tiles bullet, per-map sub-item"
+      },
+      "claim_text": "  - ~90 tiles per map",
+      "values": [
+        {
+          "quantity": "approximate tile count per map",
+          "value_verbatim": "~90",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No manifest scalar found enumerating the full (unfiltered) per-map tile corpus; directly counting PNG files under each of the four inputs/tiles/<map>/ directories gives exactly 90 per map (verified by directory listing, not a committed manifest), consistent with the approximation but not itself a named artefact to anchor to."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          22,
+          22
+        ],
+        "section": "Data Sources — Tiles bullet, total sub-item"
+      },
+      "claim_text": "  - ~360 tiles total",
+      "values": [
+        {
+          "quantity": "approximate total tile count, full corpus",
+          "value_verbatim": "~360",
+          "value_parsed": 360,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Consistent with 4 maps x 90 tiles/map (line 21) = 360 actual PNG files across the four inputs/tiles/<map>/ directories, but no single manifest file enumerates the full corpus as a scalar, so anchor-unknown rather than a directory-count anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          24,
+          25
+        ],
+        "section": "Data Sources — Ground Truth bullet"
+      },
+      "claim_text": "- **Ground Truth**: `inputs/vectors/references/mounds-reference.geojson`\n  - 569 annotated mound symbols across all maps",
+      "values": [
+        {
+          "quantity": "count of annotated mound symbols, ground-truth reference",
+          "value_verbatim": "569",
+          "value_parsed": 569,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "inputs/vectors/references/mounds-reference.geojson has exactly 569 features, an exact match (not value-verified beyond the count per rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          32,
+          32
+        ],
+        "section": "Selection Criteria — Content Threshold"
+      },
+      "claim_text": "Tiles must have **≤75% background pixels** (black [0,0,0]) to be eligible.",
+      "values": [
+        {
+          "quantity": "maximum background-pixel proportion, tile content-threshold eligibility rule",
+          "value_verbatim": "75%",
+          "value_parsed": 75,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "MAX_BACKGROUND_PERCENT",
+          "method": "read"
+        },
+        {
+          "quantity": "RGB definition of a 'background' (black) pixel, content-threshold algorithm",
+          "value_verbatim": "[0,0,0]",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "config.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "config.py MAX_BACKGROUND_PERCENT = 0.75 (a 0-1 fraction; the document quotes it as a percentage '75%' — a scale difference the harness/triage should bridge, not adjudicated here). Also confirmed at inputs/tiles/tile_selection_metadata.json $.parameters.max_background_percent = 0.75. The black-pixel RGB triple [0,0,0] is a definitional detail of the content-threshold algorithm (scripts/select_tiles_phase2.py check_tile_content()); no single scalar anchor applies to an RGB triple, so anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          38,
+          38
+        ],
+        "section": "Selection Criteria — Sample Size, Calibration set bullet"
+      },
+      "claim_text": "- **Calibration set**: 20 tiles (5 per map)",
+      "values": [
+        {
+          "quantity": "total size (tile count), calibration set",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration.total_tiles",
+          "method": null
+        },
+        {
+          "quantity": "per-map sample size, calibration set",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "$.parameters.calibration_samples_per_map",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both figures match inputs/tiles/tile_selection_metadata.json exactly ($.calibration.total_tiles=20, $.parameters.calibration_samples_per_map=5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          39,
+          39
+        ],
+        "section": "Selection Criteria — Sample Size, Holdout set bullet"
+      },
+      "claim_text": "- **Holdout set**: 20 tiles (5 per map)",
+      "values": [
+        {
+          "quantity": "total size (tile count), holdout set, as documented here",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "$.validation.total_tiles",
+          "method": null
+        },
+        {
+          "quantity": "per-map sample size, holdout set, as documented here",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "$.parameters.validation_samples_per_map",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "inputs/tiles/tile_selection_metadata.json currently records $.validation.total_tiles=60 and $.parameters.validation_samples_per_map=15 — both differ from the 20/5 figures quoted here, consistent with the holdout-expansion noted elsewhere in this mine (tile-selection-observations.md's stale banner: pre-expansion 20-tile holdout vs the lodged 60-tile design). Anchored anyway per rule 2 so the harness can surface the drift; not adjudicated here (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          47,
+          50
+        ],
+        "section": "Selection Criteria — Stratification, Calibration Set step 3"
+      },
+      "claim_text": "3. Stratify by density category:\n   - Empty (0 mounds)\n   - Sparse (1-2 mounds)\n   - Dense (3+ mounds)",
+      "values": [
+        {
+          "quantity": "mound count defining the 'empty' density category",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "categorise_density",
+          "method": "read"
+        },
+        {
+          "quantity": "mound count lower bound, 'sparse' density category",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": "categorise_density",
+          "method": "read"
+        },
+        {
+          "quantity": "mound count upper bound, 'sparse' density category",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "parameter",
+          "path": "categorise_density",
+          "method": "read"
+        },
+        {
+          "quantity": "mound count lower bound (floor), 'dense' density category",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "categorise_density",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/select_tiles_phase2.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "scripts/select_tiles_phase2.py categorise_density(mound_count) implements exactly this rule: mound_count==0 -> empty; mound_count<=2 -> sparse; else -> dense. Confirmed present, not value-verified beyond visual inspection (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          58,
+          58
+        ],
+        "section": "Selection Criteria — Stratification, Holdout Set step 3"
+      },
+      "claim_text": "3. Apply **spatial separation**: exclude tiles adjacent to calibration tiles (Manhattan distance ≤ 1 in grid units, i.e., 448px stride)",
+      "values": [
+        {
+          "quantity": "Manhattan (grid) distance threshold defining 'adjacent', spatial separation rule",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": "ADJACENCY_DISTANCE",
+          "method": "read"
+        },
+        {
+          "quantity": "stride (px), spatial separation grid unit, restated",
+          "value_verbatim": "448",
+          "value_parsed": 448,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a-b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "config.py",
+              "path": "TILE_SIZE"
+            },
+            {
+              "name": "b",
+              "file": "config.py",
+              "path": "OVERLAP"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "config.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "config.py ADJACENCY_DISTANCE = 1, confirmed used by scripts/select_tiles_phase2.py is_adjacent(). The 448px stride restates the line-20 TILE_SIZE-OVERLAP derivation."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          111,
+          111
+        ],
+        "section": "Few-Shot Example Rules — Null Tiles, Selection methodology step 1"
+      },
+      "claim_text": "1. Pool: All calibration tiles with `density: empty` (mound_count = 0)",
+      "values": [
+        {
+          "quantity": "mound count defining 'empty' density, restated (null-tile pool filter)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "categorise_density",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/select_tiles_phase2.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the line-47/48 empty-category threshold; same anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          112,
+          112
+        ],
+        "section": "Few-Shot Example Rules — Null Tiles, Selection methodology step 2"
+      },
+      "claim_text": "2. Filter: Must meet content threshold (≤75% background)",
+      "values": [
+        {
+          "quantity": "maximum background-pixel proportion, restated (null-tile pool filter)",
+          "value_verbatim": "75%",
+          "value_parsed": 75,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "MAX_BACKGROUND_PERCENT",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "config.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the line-32 content-threshold figure; same anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          115,
+          115
+        ],
+        "section": "Few-Shot Example Rules — Null Tiles, Selection methodology step 5"
+      },
+      "claim_text": "5. Random seed: 20251223 (date-based for reproducibility)",
+      "values": [
+        {
+          "quantity": "random seed used for null-tile selection",
+          "value_verbatim": "20251223",
+          "value_parsed": 20251223,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Named manifest `inputs/null_tiles_manifest.json` (line 125) is confirmed absent from the working tree. This seed (20251223) matches neither of the two seeds recorded in inputs/tiles/tile_selection_metadata.json ($.calibration.random_seed=1766464625, $.validation.random_seed=1767425239) — a distinct, apparently unrecorded seed. anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          121,
+          121
+        ],
+        "section": "Few-Shot Example Rules — Selected null tiles table, Lesovo row"
+      },
+      "claim_text": "| `K-35-078-1_Lesovo_x2240_y2688.png`   | Lesovo (required) | 0.1%         |",
+      "values": [
+        {
+          "quantity": "background-pixel percentage, selected null tile (Lesovo)",
+          "value_verbatim": "0.1%",
+          "value_parsed": 0.1,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/K-35-078-1_Lesovo/K-35-078-1_Lesovo_x2240_y2688.png",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The named manifest inputs/null_tiles_manifest.json is confirmed absent from the working tree, but the underlying tile PNG is present, so the background-pixel percentage is independently recomputable directly from the image (scripts/select_tiles_phase2.py check_tile_content() computes exactly this ratio). Filename pixel-offset tokens (x/y coordinates) excluded per rule 5. File located at inputs/tiles/K-35-078-1_Lesovo/K-35-078-1_Lesovo_x2240_y2688.png."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          122,
+          122
+        ],
+        "section": "Few-Shot Example Rules — Selected null tiles table, Elenovo row"
+      },
+      "claim_text": "| `K-35-053-3_Elenovo_x3584_y1344.png`  | Elenovo           | 0.3%         |",
+      "values": [
+        {
+          "quantity": "background-pixel percentage, selected null tile (Elenovo)",
+          "value_verbatim": "0.3%",
+          "value_parsed": 0.3,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/K-35-053-3_Elenovo/K-35-053-3_Elenovo_x3584_y1344.png",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The named manifest inputs/null_tiles_manifest.json is confirmed absent from the working tree, but the underlying tile PNG is present, so the background-pixel percentage is independently recomputable directly from the image (scripts/select_tiles_phase2.py check_tile_content() computes exactly this ratio). Filename pixel-offset tokens (x/y coordinates) excluded per rule 5. File located at inputs/tiles/K-35-053-3_Elenovo/K-35-053-3_Elenovo_x3584_y1344.png."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          123,
+          123
+        ],
+        "section": "Few-Shot Example Rules — Selected null tiles table, 32635 row"
+      },
+      "claim_text": "| `K-35-052-4_32635_x896_y1792.png`     | 32635             | 0.1%         |",
+      "values": [
+        {
+          "quantity": "background-pixel percentage, selected null tile (32635)",
+          "value_verbatim": "0.1%",
+          "value_parsed": 0.1,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/K-35-052-4_32635/K-35-052-4_32635_x896_y1792.png",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The named manifest inputs/null_tiles_manifest.json is confirmed absent from the working tree, but the underlying tile PNG is present, so the background-pixel percentage is independently recomputable directly from the image (scripts/select_tiles_phase2.py check_tile_content() computes exactly this ratio). Filename pixel-offset tokens (x/y coordinates) excluded per rule 5. File located at inputs/tiles/K-35-052-4_32635/K-35-052-4_32635_x896_y1792.png."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          144,
+          144
+        ],
+        "section": "Evaluation Metrics — Per-Symbol Metrics, Spatial Tolerance Curve bullet"
+      },
+      "claim_text": "- **Spatial Tolerance Curve**: F1 at varying match distances (10m, 20m, 30m, 50m)",
+      "values": [
+        {
+          "quantity": "spatial tolerance buffer distance, level 1 (restated)",
+          "value_verbatim": "10m",
+          "value_parsed": 10,
+          "unit": "m",
+          "kind": "physical",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#spatial-tolerance-curve-buffer-distances",
+          "method": "read"
+        },
+        {
+          "quantity": "spatial tolerance buffer distance, level 2 / primary matching threshold (restated)",
+          "value_verbatim": "20m",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#spatial-tolerance-curve-buffer-distances",
+          "method": "read"
+        },
+        {
+          "quantity": "spatial tolerance buffer distance, level 3 (restated)",
+          "value_verbatim": "30m",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#spatial-tolerance-curve-buffer-distances",
+          "method": "read"
+        },
+        {
+          "quantity": "spatial tolerance buffer distance, level 4 (restated)",
+          "value_verbatim": "50m",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#spatial-tolerance-curve-buffer-distances",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered spatial-tolerance sensitivity design (osf/preregistration.md), same as the identical figure in metrics_strategy.md."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          164,
+          164
+        ],
+        "section": "Evaluation Metrics — Tile-Level Metrics, Applicable metrics, MCC bullet"
+      },
+      "claim_text": "- **MCC (Matthews Correlation Coefficient)**: Balanced measure accounting for all four quadrants; ranges from -1 to +1",
+      "values": [
+        {
+          "quantity": "theoretical lower bound of the MCC statistic's range (definitional, not study-specific)",
+          "value_verbatim": "-1",
+          "value_parsed": -1,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "theoretical upper bound of the MCC statistic's range (definitional, not study-specific)",
+          "value_verbatim": "+1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "A textbook/definitional property of the MCC statistic (a mathematical constant, not a study-specific measurement); included per full enumeration and 'when in doubt, include', flagged here as likely prunable by triage as non-checkable-against-any-artefact by construction."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          174,
+          174
+        ],
+        "section": "Evaluation Metrics — Uncertainty Quantification, Bootstrap 95% CIs bullet"
+      },
+      "claim_text": "- **Bootstrap 95% CIs**: Resample tiles with replacement (N=1000) for confidence intervals",
+      "values": [
+        {
+          "quantity": "confidence interval level, bootstrap resampling (restated)",
+          "value_verbatim": "95%",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#bootstrap-95-percent-ci-convention",
+          "method": "read"
+        },
+        {
+          "quantity": "count of bootstrap resamples (N), restated",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Same 95%-CI / N=1000 pattern as metrics_strategy.md line 14: the 95% level matches the registration's convention; no repo artefact was found recording an N=1000 bootstrap-resample count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          195,
+          195
+        ],
+        "section": "Verification Checklist — header line"
+      },
+      "claim_text": "Executed: 2025-12-23 | Seed: 1766464625",
+      "values": [
+        {
+          "quantity": "random seed used, tile selection run (checklist header)",
+          "value_verbatim": "1766464625",
+          "value_parsed": 1766464625,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.calibration.random_seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Date excluded per rule 5. Seed matches inputs/tiles/tile_selection_metadata.json $.calibration.random_seed exactly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          197,
+          197
+        ],
+        "section": "Verification Checklist — mutual exclusivity item"
+      },
+      "claim_text": "- [x] Calibration and holdout sets are mutually exclusive (verified: 0 overlap)",
+      "values": [
+        {
+          "quantity": "count of tiles appearing in both the calibration and holdout sets",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/calibration_manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Recomputable as the set intersection of inputs/tiles/calibration_manifest.json and inputs/tiles/validation_manifest.json filenames; recorded as recompute-script (a set operation, not a simple JSONPath read) rather than 'read', with calibration_manifest.json as the primary anchor (the comparison also needs validation_manifest.json, noted here since the schema allows only one claim-level anchor file)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          198,
+          198
+        ],
+        "section": "Verification Checklist — content threshold item"
+      },
+      "claim_text": "- [x] All selected tiles meet content threshold (≤75% background)",
+      "values": [
+        {
+          "quantity": "maximum background-pixel proportion, restated in checklist",
+          "value_verbatim": "75%",
+          "value_parsed": 75,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "MAX_BACKGROUND_PERCENT",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "config.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the line-32 content-threshold figure; same anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          200,
+          200
+        ],
+        "section": "Verification Checklist — density distribution item"
+      },
+      "claim_text": "- [x] Density distribution approximately matched (calibration: 8 empty, 7 sparse, 5 dense; holdout: identical)",
+      "values": [
+        {
+          "quantity": "count of calibration tiles in the 'empty' density stratum",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.calibration.tiles[?(@.density=='empty')]",
+          "method": "read"
+        },
+        {
+          "quantity": "count of calibration tiles in the 'sparse' density stratum",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.calibration.tiles[?(@.density=='sparse')]",
+          "method": "read"
+        },
+        {
+          "quantity": "count of calibration tiles in the 'dense' density stratum",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.calibration.tiles[?(@.density=='dense')]",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confirmed by direct inspection of inputs/tiles/tile_selection_metadata.json: calibration tiles currently break down as empty=8, sparse=7, dense=5 (exact match). 'holdout: identical' is a qualitative assertion with no restated digit sequence in the span, so no holdout values are extracted here (nothing to anchor a number to) — flagged for triage awareness that the current $.validation.tiles breakdown is empty=30/sparse=18/dense=12 (60 total, the expanded holdout), no longer 'identical' to calibration's 8/7/5; not adjudicated here (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          201,
+          201
+        ],
+        "section": "Verification Checklist — random seed item"
+      },
+      "claim_text": "- [x] Random seed documented (1766464625)",
+      "values": [
+        {
+          "quantity": "random seed used, tile selection run, restated in checklist",
+          "value_verbatim": "1766464625",
+          "value_parsed": 1766464625,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.calibration.random_seed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the line-195 seed figure; same anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          202,
+          202
+        ],
+        "section": "Verification Checklist — file paths verified item"
+      },
+      "claim_text": "- [x] All file paths verified (40/40 tiles exist)",
+      "values": [
+        {
+          "quantity": "count of tile file paths verified to exist (numerator)",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a+b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "inputs/tiles/calibration_manifest.json",
+              "path": "len:$"
+            },
+            {
+              "name": "b",
+              "file": "inputs/tiles/validation_manifest.json",
+              "path": "len:$"
+            }
+          ]
+        },
+        {
+          "quantity": "total count of tiles checked (denominator)",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a+b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "inputs/tiles/calibration_manifest.json",
+              "path": "len:$"
+            },
+            {
+              "name": "b",
+              "file": "inputs/tiles/validation_manifest.json",
+              "path": "len:$"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/calibration_manifest.json",
+        "path": null,
+        "expression": "a+b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "inputs/tiles/calibration_manifest.json",
+            "path": "len:$"
+          },
+          {
+            "name": "b",
+            "file": "inputs/tiles/validation_manifest.json",
+            "path": "len:$"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "40 = 20 (calibration) + 20 (holdout, as documented in this file at the time of the 2025-12-23 checklist run). Expressed as arithmetic over the current calibration/validation manifests; inputs/tiles/validation_manifest.json now holds 60 entries (not 20), so this expression is expected to evaluate to 80, not 40, reflecting the same holdout-expansion drift already flagged at the line-39/200 claims — recorded here for the harness to surface, not adjudicated (rule 4)."
+    }
+  ]
+}

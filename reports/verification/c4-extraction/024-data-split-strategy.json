@@ -1,0 +1,489 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/reports/data_split_strategy.md",
+    "git_blob": "92d3132c9962026fb5b2aea1e96b2b69b583f89c",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          6,
+          6
+        ],
+        "section": "1. Dataset Overview — Total Corpus bullet"
+      },
+      "claim_text": "*   **Total Corpus**: 361 Tiled Images (1km x 1km approx).",
+      "values": [
+        {
+          "quantity": "total corpus size (tiled images), Three-Split Protocol document",
+          "value_verbatim": "361",
+          "value_parsed": 361,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#total-361-tile-corpus",
+          "method": "read"
+        },
+        {
+          "quantity": "tile ground footprint width, approx.",
+          "value_verbatim": "1km",
+          "value_parsed": 1,
+          "unit": "km",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tile ground footprint height, approx.",
+          "value_verbatim": "1km",
+          "value_parsed": 1,
+          "unit": "km",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 361-tile total corpus figure matches the lodged registration exactly (osf/preregistration.md: 'This study adopts a two-stage trial framework using a 361-tile corpus...'; 'Total: 361 tiles from 4 annotated Soviet topographic map sheets'; 'Total tiles available: 361'), so anchored there per rule 2 rather than left anchor-unknown. No source was found for the '1km x 1km' tile footprint figure."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          7,
+          7
+        ],
+        "section": "1. Dataset Overview — Source bullet"
+      },
+      "claim_text": "*   **Source**: 4 Map Sheets (Rakovski, Lesovo, Elenovo, 32635).",
+      "values": [
+        {
+          "quantity": "count of map sheets forming the study corpus",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.calibration.by_map",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "inputs/tiles/tile_selection_metadata.json $.calibration.by_map has exactly 4 keys (one per map), confirming the map-sheet count (not value-verified per rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          10,
+          10
+        ],
+        "section": "2. The Three-Split Protocol — intro sentence"
+      },
+      "claim_text": "Standard ML practice is to divide data into three distinct buckets.",
+      "values": [
+        {
+          "quantity": "count of data-split buckets in the protocol (dev / test / production)",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Design description; no repo artefact enumerates 'three buckets' as a scalar. The document's own structure (sections A/B/C below) is the only evidence."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          13,
+          13
+        ],
+        "section": "2A. Training & Development Set — Size bullet"
+      },
+      "claim_text": "*   **Size**: **20 Tiles** (The \"Original 20\").",
+      "values": [
+        {
+          "quantity": "size (tile count), Training & Development ('dev') set",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/calibration_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "inputs/tiles/calibration_manifest.json is a flat list of 20 tile filenames, matching the quoted dev-set size (not value-verified per rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          14,
+          14
+        ],
+        "section": "2A. Training & Development Set — Composition bullet"
+      },
+      "claim_text": "*   **Composition**: A stratified sample representing ~5% of the corpus.",
+      "values": [
+        {
+          "quantity": "dev set share of total corpus, approx.",
+          "value_verbatim": "~5%",
+          "value_parsed": 5,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "This document names no manifest, script, or eval JSON as its source for this figure (informal internal planning note); no repo artefact was found that exactly matches the quoted value (searched inputs/tiles/ per-map subdirectory PNG counts [90/map, 360 total], inputs/tiles/full_evaluation_manifest.json [340 entries], and the tile-selection manifests) so anchor-unknown per rule 2 rather than a forced/approximate anchor. Would be arithmetic (20 / 361) if both operands were anchored, but the 361-tile total corpus figure (line 6) has no anchor, so the ratio cannot be mechanically derived from committed values."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          16,
+          16
+        ],
+        "section": "2A. Training & Development Set — Usage, Prompt Engineering bullet"
+      },
+      "claim_text": "All few-shot examples (the \"teaching material\") are cropped from these 20 tiles.",
+      "values": [
+        {
+          "quantity": "count of dev tiles used as the few-shot cropping source, restated",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/calibration_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the line-13 dev-set size; kept as a separate row per full enumeration (distinct verbatim mention)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          21,
+          21
+        ],
+        "section": "2B. Test / Holdout Set — Size bullet"
+      },
+      "claim_text": "*   **Size**: **20 NEW Tiles** (~5%).",
+      "values": [
+        {
+          "quantity": "size (tile count), Test / Holdout set, as planned in this document",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "holdout set share of total corpus, approx.",
+          "value_verbatim": "~5%",
+          "value_parsed": 5,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/validation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "At the time of writing this document treats the holdout set as not-yet-defined (line 42: 'we will define the 20-tile Test Set'). Anchored to inputs/tiles/validation_manifest.json (the current holdout manifest) for the count value; that file now holds 60 entries, not 20 — flagged as a possible design-evolution mismatch for the harness/triage, not adjudicated here (rule 4). The ~5% share has no committed-value derivation available (line-6 total corpus figure is itself unanchored)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          27,
+          27
+        ],
+        "section": "2C. Production Run — Size bullet"
+      },
+      "claim_text": "*   **Size**: **All Remaining Tiles** (~321 tiles).",
+      "values": [
+        {
+          "quantity": "size (tile count), Production Run set, approx.",
+          "value_verbatim": "~321",
+          "value_parsed": 321,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Internally consistent with 361 − 20 − 20 = 321 (line 6/13/21 figures). All three operands are now individually anchored (361 to osf/preregistration.md prose; the two 20s to calibration_manifest.json/validation_manifest.json), but 361's anchor is markdown prose, not a JSONPath-resolvable value, so a mechanical 'arithmetic' derivation is not possible (v1.1/v1.2 — non-JSON anchors route to triage rather than mechanical resolution); left anchor-unknown for this specific value. For context (not adjudicated): the lodged registration's own analogous figure instead subtracts a 60-tile holdout — 'Maximum training pool: ~301 tiles (361 − 60 holdout)' (osf/preregistration.md) — reflecting the same 20-tile-vs-60-tile holdout-size difference already flagged at the line-21 claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          30,
+          30
+        ],
+        "section": "2C. Production Run — Publication Usage, Global Metrics bullet"
+      },
+      "claim_text": "Since we have Ground Truth for the whole area, we can report the *true* accuracy of the method (n=321). This is the gold standard.",
+      "values": [
+        {
+          "quantity": "production run sample size, restated as n=321",
+          "value_verbatim": "321",
+          "value_parsed": 321,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates the line-27 production-run size; same anchor-unknown status and registration-context note."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          40,
+          40
+        ],
+        "section": "3. Revised Plan of Action — Restoration bullet"
+      },
+      "claim_text": "1.  **Restoration**: I have restored the full **20-tile Development Set** to `inputs/target_tiles_manifest.json`.",
+      "values": [
+        {
+          "quantity": "size (tile count), restored Development Set",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Named source `inputs/target_tiles_manifest.json` is confirmed absent from the working tree (checked via git ls-files and direct existence check). inputs/tiles/calibration_manifest.json (20 entries) is a plausible current-day successor artefact holding the same count under a different filename, but extractor does not assert file equivalence — flagged anchor-unknown for triage to resolve."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          41,
+          41
+        ],
+        "section": "3. Revised Plan of Action — Tuning bullet"
+      },
+      "claim_text": "2.  **Tuning (Phase 3)**: We will continue optimizing the \"Hybrid\" prompt using this 20-tile set.",
+      "values": [
+        {
+          "quantity": "size (tile count), dev set used for continued prompt tuning, restated",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/calibration_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'Phase 3' excluded per rule 5 (phase-name label). The 20-tile figure is restated from line 13 and anchors to inputs/tiles/calibration_manifest.json as before."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          42,
+          42
+        ],
+        "section": "3. Revised Plan of Action — Future bullet"
+      },
+      "claim_text": "3.  **Future**: When we are happy with v3.x, we will define the 20-tile Test Set.",
+      "values": [
+        {
+          "quantity": "planned size (tile count), Test Set, restated",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/validation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'v3.x' excluded per rule 5 (version string). Restates the line-21 planned holdout size; anchored to inputs/tiles/validation_manifest.json as before (currently 60 entries, not 20 — flagged, not adjudicated)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          45,
+          45
+        ],
+        "section": "4. Scaling Strategy — Challenge intro sentence"
+      },
+      "claim_text": "You noted that our 4 maps are a \"Gold Standard\" sample of a larger 80-map corpus with noisy (student) labels (6-7% error).",
+      "values": [
+        {
+          "quantity": "count of maps in the current 'Gold Standard' corpus, restated",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.calibration.by_map",
+          "method": null
+        },
+        {
+          "quantity": "count of maps in the larger corpus the 4-map sample is drawn from",
+          "value_verbatim": "80",
+          "value_parsed": 80,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "student-annotation error rate, larger 80-map corpus, lower bound",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "student-annotation error rate, larger 80-map corpus, upper bound",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 80-map corpus and its 6-7% student-label error rate are external context (Sobotkova et al. corpus, referenced independently in tile-selection-observations.md); no artefact in this repo enumerates the 80-map corpus or its error rate, so those three values are anchor-unknown. The 4-map count reuses the line-7/45 anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          51,
+          51
+        ],
+        "section": "4. Scaling Strategy — Solution, Prove the Tool bullet"
+      },
+      "claim_text": "1.  **Prove the Tool (The 4 Maps)**: We use our current \"Gold Standard\" dataset (361 tiles) to rigorously prove the model's Precision and Recall. This satisfies the \"Methodology\" section of the paper.",
+      "values": [
+        {
+          "quantity": "count of maps, 'Gold Standard' dataset, restated",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.calibration.by_map",
+          "method": null
+        },
+        {
+          "quantity": "total corpus size (tiles), 'Gold Standard' dataset, restated",
+          "value_verbatim": "361",
+          "value_parsed": 361,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'4' restates the line-7 map count (anchored as before). '361' restates the line-6 total-corpus figure, still with no matching artefact (see line-6 claim notes)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          52,
+          52
+        ],
+        "section": "4. Scaling Strategy — Solution, Apply the Tool bullet"
+      },
+      "claim_text": "2.  **Apply the Tool (The 80 Maps)**: We run the proven model on the remaining 76 maps.",
+      "values": [
+        {
+          "quantity": "count of maps in the larger corpus, restated",
+          "value_verbatim": "80",
+          "value_parsed": 80,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of remaining maps to which the proven model is applied (80 total minus the 4 'Gold Standard' maps)",
+          "value_verbatim": "76",
+          "value_parsed": 76,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "This document names no manifest, script, or eval JSON as its source for this figure (informal internal planning note); no repo artefact was found that exactly matches the quoted value (searched inputs/tiles/ per-map subdirectory PNG counts [90/map, 360 total], inputs/tiles/full_evaluation_manifest.json [340 entries], and the tile-selection manifests) so anchor-unknown per rule 2 rather than a forced/approximate anchor. Internally consistent with 80 − 4 = 76, but neither the 80-map corpus nor its 80/76 split is enumerated in any repo artefact, so not treated as arithmetic (v1.2 amendment 1 — unanchored operands)."
+    }
+  ]
+}

@@ -1,0 +1,694 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/preregistration/execution-checklist.md",
+    "git_blob": "dfad34a02681ef4614d47c849168ffa639eb0b50",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          24,
+          24
+        ],
+        "section": "Pre-Registration Tasks -- test tile IDs"
+      },
+      "claim_text": "- [x] Specify exact test tile IDs (60 tiles in `inputs/tiles/validation_manifest.json`)",
+      "values": [
+        {
+          "quantity": "count of tiles in the preregistered validation-tile manifest",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/validation_manifest.json",
+        "path": "len:$"
+      },
+      "method": "read",
+      "notes": "inputs/tiles/validation_manifest.json's root is a JSON array of 60 entries (len: prefix per v1.2 amendment 4; confirmed present per rule 4, not value-adjudicated beyond length)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          25,
+          25
+        ],
+        "section": "Pre-Registration Tasks -- primary outcome spatial tolerance"
+      },
+      "claim_text": "- [x] Specify primary outcome: Overall F1 at 20m spatial tolerance",
+      "values": [
+        {
+          "quantity": "primary-outcome spatial tolerance, as registered",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 calibration rule: registered-spec claim, anchored to the lodged osf document (Section 4.1.1 'Primary matching threshold: 20 metres'; 'Overall F1 at 20m spatial tolerance' echoed at Section 2224 of that file)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          26,
+          26
+        ],
+        "section": "Pre-Registration Tasks -- H11 trigger success threshold"
+      },
+      "claim_text": "- [x] Specify success threshold: F1 ≥ 0.85 triggers H11 tile size testing",
+      "values": [
+        {
+          "quantity": "F1 success threshold that triggers H11 tile-size testing, as registered",
+          "value_verbatim": "0.85",
+          "value_parsed": 0.85,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 calibration rule: registered-spec claim, anchored to the lodged osf document. 'H11' hypothesis identifier excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          39,
+          39
+        ],
+        "section": "Pre-Evaluation Tasks -- thinking_level calibration pilot design"
+      },
+      "claim_text": "  - Pilot tested minimal, low, high across 20 tiles × K=10",
+      "values": [
+        {
+          "quantity": "count of tiles used in the thinking_level calibration pilot",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "replication count (K) per thinking-level condition, thinking_level calibration pilot",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "osf/preregistration.md documents this calibration write-up (Section 8.9, per line 42 of this document): 'Minimal is 2.84x faster than high (34.2s vs 97.3s per 20 tiles)' corroborates the 20-tile pilot size. inputs/tiles/calibration_manifest.json independently records total_tiles=20 for the project's calibration set (not used as the anchor here, since this specific pilot's own write-up lives in the registration document). K=10 not independently re-confirmed beyond the prose."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          40,
+          40
+        ],
+        "section": "Pre-Evaluation Tasks -- thinking_level calibration result, latency ratio"
+      },
+      "claim_text": "  - Result: minimal achieves equivalent F1 to high at 1/3 latency",
+      "values": [
+        {
+          "quantity": "latency ratio of minimal vs high thinking_level at equivalent F1, thinking_level calibration pilot",
+          "value_verbatim": "1/3",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "osf/preregistration.md states 'If minimal is truly equivalent at 1/3 the latency, this is a practical finding...' verbatim (Section 8.9 region), confirming this figure; the same section separately states 'Minimal is 2.84x faster than high' (a related but distinct ratio, not this claim's value; not adjudicated here per rule 4). value_parsed left null: '1/3' is a fraction, not directly representable as a single decimal without rounding ambiguity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          46,
+          46
+        ],
+        "section": "Pre-Evaluation Tasks -- hard-negative example documentation"
+      },
+      "claim_text": "  - 4 hard positives + 4 hard negatives selected (Decision 4 in decisions-log)",
+      "values": [
+        {
+          "quantity": "count of hard-positive examples selected for the few-shot library (Phase 1)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of hard-negative examples selected for the few-shot library (Phase 1)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/examples/neutral-naming/MANIFEST.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "inputs/examples/neutral-naming/MANIFEST.md's Scale-8 library composition table lists 'Hard Positive | 4' and 'Hard Negative | 4' (confirmed present per rule 4). This document also cites `outputs/phase1-library/fp-fn-register.md` as the source for the underlying FP/FN ranking (preceding line 45); that path does not exist in the working tree (confirmed absent per rule 4) -- not used as anchor. 'Decision 4' identifier excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          87,
+          87
+        ],
+        "section": "Post-Registration Notes -- E4 tile-bounds Y-axis inversion"
+      },
+      "claim_text": "| 2026-02-01 | E4: Tile bounds Y-axis inversion | Correction — bounds generation misinterpreted metadata, shifted bounds ~2565m south |",
+      "values": [
+        {
+          "quantity": "magnitude of the erroneous southward tile-bounds shift caused by the Y-axis inversion bug (E4)",
+          "value_verbatim": "~2565m",
+          "value_parsed": 2565,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "docs/methodology/preregistration/osf/phase1-errata-and-decisions.md line 53 discusses this figure ('shifting all bounds one tile height south (~2565 m)'), but that is itself a hand-written narrative document (same stratum as this mine document) -- anchoring prose to prose is disallowed per rule 2; left anchor-unknown and the document named here for triage to chase further. 'E4' identifier excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          89,
+          89
+        ],
+        "section": "Post-Registration Notes -- E6 pipeline contract validation"
+      },
+      "claim_text": "| 2026-02-01 | E6: Pipeline contract validation | Correction — added assertions, bounds validation, and 7 integration tests to prevent E4-E5 recurrence |",
+      "values": [
+        {
+          "quantity": "count of integration tests added by the E6 pipeline-contract-validation fix",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "protocol-errata.md (docs/methodology/preregistration/protocol-errata.md, itself hand-written prose, not used as anchor per rule 2) names `tests/test_integration_pipeline_contracts.py` as the test file added for E6 ('Seven new pytest tests exercising stage-boundary contracts'). That file currently contains 14 `def test_*` functions (counted per rule 4), i.e. more than the 7 cited -- consistent with later, unrelated additions to the same file rather than a discrepancy in the E6 claim itself; a raw len: count of the current file would not correctly verify a 'tests added at the time of E6' claim, so anchor-unknown is used rather than a mechanical read that would manufacture a false mismatch (not adjudicated, per rule 4). 'E4-E5' identifiers excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          90,
+          90
+        ],
+        "section": "Post-Registration Notes -- E17 passes-multiplier correction"
+      },
+      "claim_text": "| 2026-02-05 | E17: Passes multiplier correction | Correction — execution plan and all Phase 2 YAMLs contained erroneous N=5 passes; corrected to single-pass per §3.8 |",
+      "values": [
+        {
+          "quantity": "erroneous passes-per-run parameter present in the execution plan and Phase 2 YAMLs before the E17 fix",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "corrected passes-per-run parameter after the E17 fix ('single-pass')",
+          "value_verbatim": "single",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "'N=5 passes' is the erroneous pre-fix value (changelog 'was X' side, method historical per rule 3). The corrected 'single-pass' value has no specific artefact named within this document's line-90 span -- left anchor-unknown. 'Section 3.8' section-reference number excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          93,
+          93
+        ],
+        "section": "Post-Registration Notes -- E19 validation-bounds-from-wrong-manifest correction"
+      },
+      "claim_text": "| 2026-02-05 | E19: Validation bounds from wrong manifest | Correction — bounds generated from calibration (20 tiles) instead of validation (60 tiles) |",
+      "values": [
+        {
+          "quantity": "count of tiles in the calibration manifest (wrongly used as the bounds source before the E19 fix)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration.total_tiles",
+          "method": null
+        },
+        {
+          "quantity": "count of tiles in the validation manifest (the correct bounds source after the E19 fix, restated)",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles/validation_manifest.json#len:$",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": "$.calibration.total_tiles"
+      },
+      "method": "read",
+      "notes": "inputs/tiles/tile_selection_metadata.json records calibration.total_tiles=20 (confirmed present per rule 4). The 60-tile validation count restates the value already anchored to inputs/tiles/validation_manifest.json at line 24 above; cross-file locator per v1.2 amendment 2 ('inputs/tiles/validation_manifest.json#len:$')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          96,
+          96
+        ],
+        "section": "Post-Registration Notes -- E22 per-run evaluation architecture correction"
+      },
+      "claim_text": "| 2026-02-05 | E22: Per-run evaluation architecture | Correction — was merging all runs (10× inflation); now computes F1 per run independently |",
+      "values": [
+        {
+          "quantity": "inflation factor in F1 evaluation caused by merging all runs together before the E22 fix",
+          "value_verbatim": "10×",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Descriptive characterisation of the pre-fix bug's effect ('10x inflation'); no specific artefact quantifying this factor is named within this document's line-96 span. 'E22' identifier excluded per rule 5 (elsewhere in the row, not part of the extracted value)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          108,
+          108
+        ],
+        "section": "Execution Log -- Phase 1: Library + Text"
+      },
+      "claim_text": "| Phase 1: Library + Text | 2026-02-01 | 2026-02-03 | Detection passes complete (F1=0.489 baseline); hard examples selected (4 HP + 4 HN); two-stage prompts reviewed and updated |",
+      "values": [
+        {
+          "quantity": "F1, Phase 1 detection-passes baseline",
+          "value_verbatim": "0.489",
+          "value_parsed": 0.489,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of hard-positive examples selected for the few-shot library (Phase 1, restated)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of hard-negative examples selected for the few-shot library (Phase 1, restated)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "inputs/examples/neutral-naming/MANIFEST.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 4 HP + 4 HN counts restate the already-anchored MANIFEST.md figures (line 46 above), kept as a separate distinct verbatim mention per full enumeration (rule 3). F1=0.489 is discussed in prose at docs/notes/working-notes.md line 1463 ('the 20m-tolerance F1 of 0.489') but that is itself a hand-written document -- prose-to-prose anchoring disallowed per rule 2 -- so this value is left anchor-unknown despite the claim-level anchor covering the other two values in this span."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          109,
+          109
+        ],
+        "section": "Execution Log -- Phase 2a: H1 M/E Level"
+      },
+      "claim_text": "| Phase 2a: H1 M/E Level | 2026-02-05 | 2026-02-06 | Infrastructure built; sanity checks passed (3 runs, F1 0.36–0.44); analysis script fixed (E21–E22); metadata capture enhanced (E23); dry-run bug fixed (E24); K=10 runs complete; surprising result — text-only brief-text (F1=0.5425) outperformed all image-using conditions; dual-track carry-forward established (Decision 16) |",
+      "values": [
+        {
+          "quantity": "count of sanity-check runs, Phase 2a infrastructure build",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, lower bound of the sanity-check run range, Phase 2a",
+          "value_verbatim": "0.36",
+          "value_parsed": 0.36,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, upper bound of the sanity-check run range, Phase 2a",
+          "value_verbatim": "0.44",
+          "value_parsed": 0.44,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "replication count (K) per condition, Phase 2a full run",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.per_condition_metrics.brief-text.n_runs",
+          "method": null
+        },
+        {
+          "quantity": "F1, text-only brief-text condition, Phase 2a (surprising result, outperformed all image-using conditions)",
+          "value_verbatim": "0.5425",
+          "value_parsed": 0.5425,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_condition_metrics.brief-text.point_estimate.f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": "$.per_condition_metrics.brief-text.point_estimate.f1"
+      },
+      "method": "read",
+      "notes": "results/phase2a-analysis-report.json records per_condition_metrics.brief-text.point_estimate.f1 = 0.5425, an exact match to this document's headline figure (confirmed present per rule 4, not adjudicated as a 'match' beyond noting the identity). The '3 runs, F1 0.36-0.44' preliminary sanity-check figures describe an earlier smoke-test stage distinct from the final 5-condition table in that same JSON (whose F1s range 0.4252-0.5425); no artefact recording the specific 3-run sanity-check values was located within rule 7's scope -- left anchor-unknown. K=10 is the replication count for the full Phase 2a run (per_condition_metrics.brief-text.n_runs = 10 in the same JSON, confirmed present per rule 4). 'E21-E22', '(E23)', '(E24)', 'Decision 16', 'H1' identifiers excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          110,
+          110
+        ],
+        "section": "Execution Log -- Phase 2b: H7 Temperature"
+      },
+      "claim_text": "| Phase 2b: H7 Temperature | 2026-02-07 | 2026-02-08 | Dual-track: Track 1 (brief-text-image), Track 2 (brief-text); 5 temperatures × K=10 per track; T=0.0 optimal both tracks |",
+      "values": [
+        {
+          "quantity": "count of temperature levels tested, Phase 2b (H7)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "replication count (K) per temperature per track, Phase 2b (H7)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature found optimal for both tracks, Phase 2b (H7)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the five-temperature (T0.0/T0.3/T0.7/T1.0/T1.3), K=10-per-track design and 'T=0.0 (deterministic decoding) selected for both tracks' finding in the archived Phase 2b pilot carry-forward doc (confirmed present per rule 4; same anchor pattern as the companion hypothesis-tracking.md extraction's H7 claims). 'Track 1'/'Track 2'/'H7' labels excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          111,
+          111
+        ],
+        "section": "Execution Log -- Phase 2c: H8 Library Composition"
+      },
+      "claim_text": "| Phase 2c: H8 Library Composition | 2026-02-08 | 2026-02-09 | Track 1 only (library composition is visual; text-only conditions collapse to identical prompts); plus-hp library optimal (F1=0.609) |",
+      "values": [
+        {
+          "quantity": "F1, plus-hp library composition, Phase 2c Track 1 image-using, optimal condition",
+          "value_verbatim": "0.609",
+          "value_parsed": 0.609,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_condition_metrics.plus-hp.point_estimate.f1",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2c-track1-image-analysis.json",
+        "path": "$.per_condition_metrics.plus-hp.point_estimate.f1"
+      },
+      "method": "read",
+      "notes": "results/phase2c-track1-image-analysis.json records per_condition_metrics.plus-hp.point_estimate.f1 = 0.6087, consistent with the rounded 0.609 quoted here (same anchor as the companion hypothesis-tracking.md extraction's H8 claim). 'Track 1'/'H8' labels excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          113,
+          113
+        ],
+        "section": "Execution Log -- Phase 2e: H4 Ordering"
+      },
+      "claim_text": "| Phase 2e: H4 Ordering | 2026-02-12 | 2026-02-12 | Single-track (image-using only; text-only has nothing to reorder); 4 conditions × K=10; no significant effect after FDR correction; retrospective carry-forward 2026-03-09 |",
+      "values": [
+        {
+          "quantity": "count of ordering conditions tested, Phase 2e (H4)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "replication count (K) per ordering condition, Phase 2e (H4)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No specific results artefact for the 4-condition x K=10 design is named within this document's line-113 span; the four H4 ordering conditions are documented in the companion hypothesis-tracking.md (canonical-first/canonical-last/random-order/etc.), but chasing there is beyond this assigned document (rule 7) -- left anchor-unknown. 'H4' identifier excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          114,
+          114
+        ],
+        "section": "Execution Log -- Phase 3a: H3 N=30 Extension"
+      },
+      "claim_text": "| Phase 3a: H3 N=30 Extension | 2026-02-12 | 2026-03-07 | 2×2×4 full analysis (dual-track, two thinking levels, four spatial tolerances); consensus voting improves F1 across all conditions |",
+      "values": [
+        {
+          "quantity": "count of tracks in the Phase 3a full factorial (dual-track)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of thinking levels in the Phase 3a full factorial",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of spatial tolerances in the Phase 3a full factorial",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "consensus voting pool size (N), Phase 3a extension (restated from the row label)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "osf/preregistration.md's spatial-tolerance table (Section 4.1.1) lists exactly four buffers (10/20/30/50 m), corroborating the 'four spatial tolerances' figure; 'dual-track' (2) and 'two thinking levels' (2) are corroborated by the project's established Track 1/Track 2 and minimal/HIGH thinking-level design elsewhere in the registration (not individually re-verified per rule 4). The N=30 figure in the row's own Phase-column label ('H3 N=30 Extension') restates the pool-size extension discussed extensively elsewhere (e.g. this document's companion hypothesis-tracking.md H3 claims); left anchor-unknown here since no artefact is named within this specific span. 'H3' identifier excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          116,
+          116
+        ],
+        "section": "Execution Log -- Phase 3c: H2 Two-Stage"
+      },
+      "claim_text": "| Phase 3c: H2 Two-Stage | 2026-03-08 | 2026-03-09 | Pilot: adversarial verifier improves F1 by +0.086 to +0.138 vs single-stage baseline; GO for full experiment |",
+      "values": [
+        {
+          "quantity": "F1 improvement over single-stage baseline, Phase 3c pilot, lower bound",
+          "value_verbatim": "0.086",
+          "value_parsed": 0.086,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "F1 improvement over single-stage baseline, Phase 3c pilot, upper bound",
+          "value_verbatim": "0.138",
+          "value_parsed": 0.138,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3d-pilot-results.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "results/phase3d-pilot-results.md's Track 1/Track 2 delta-F1 results include +0.086 (Track 1) and +0.138 (Track 2) verbatim among the reported per-condition deltas (confirmed present per rule 4; same underlying data as the companion hypothesis-tracking.md extraction's rounded '+0.09 to +0.14' claim, but here an exact match rather than a rounded approximation). 'H2' identifier excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          117,
+          117
+        ],
+        "section": "Execution Log -- Phase 3d: Triggered Exploratory"
+      },
+      "claim_text": "| Phase 3d: Triggered Exploratory | 2026-03-09 | 2026-03-11 | Pilot extensions (cross-modal union recall=0.835); verifier experiments A–D (max ΔF1=+0.011, perceptual limit); HIGH-thinking verifier (negative); Experiment E text proposer ablation (negative — baseline at capability frontier) |",
+      "values": [
+        {
+          "quantity": "recall, cross-modal union proposer, Phase 3d pilot extensions",
+          "value_verbatim": "0.835",
+          "value_parsed": 0.835,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase3d-union-results.md#union-adversarial-row",
+          "method": null
+        },
+        {
+          "quantity": "maximum DeltaF1 across verifier experiments A-D, Phase 3d",
+          "value_verbatim": "0.011",
+          "value_parsed": 0.011,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase3d-verifier-experiments-abc.md#experiment-a-provenance-preamble",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase3d-union-results.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "results/phase3d-union-results.md states 'the highest verified recall (0.835) of any configuration' and 'the union's 0.835 recall (81/97 mounds)' (confirmed present per rule 4). results/phase3d-verifier-experiments-abc.md separately states 'produced a maximum DeltaF1 of +0.011' and shows Experiment A ('Provenance preamble') at +0.011 in its results table (confirmed present per rule 4, cross-file locator per v1.2 amendment 2 since this claim's own anchor.file is the union-results doc). 'A-D' experiment-label range excluded per rule 5."
+    }
+  ]
+}

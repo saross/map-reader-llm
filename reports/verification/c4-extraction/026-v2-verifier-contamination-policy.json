@@ -1,0 +1,313 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/v2-verifier-contamination-policy.md",
+    "git_blob": "808682965e16f7ba610dcb4c5c5ac8f643c1e2b6",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          7,
+          8
+        ],
+        "section": "What happened — origin of the v2 verifier revisions, first GS-set mention"
+      },
+      "claim_text": "written after inspecting false positives from the four-map gold-standard\n(GS) set.",
+      "values": [
+        {
+          "quantity": "count of maps in the gold-standard (GS) set the v2 verifier prompt was calibrated against",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/evaluation-scopes.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the '4-map gold-standard' scope named throughout results/evaluation-scopes.md (e.g. '4-map gold-standard subtype classification' and 'the 4-map gold-standard corpus that underlies Era 1 / Era 2 / Era 3'), the project's canonical tile-pool taxonomy document per docs/manifest-schemas/common-defs.schema.json § scope. First of three verbatim mentions of this quantity in this document (see also the lines 19-20 and line 41 claims below); logged as separate claim rows per full enumeration (rule 3, no sampling)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          19,
+          20
+        ],
+        "section": "What is quarantined — intro sentence, second GS-set mention"
+      },
+      "claim_text": "Everything produced by running v2 over the 4 GS maps or a superset has\nbeen moved to `archive/v2-verifier-contamination/`.",
+      "values": [
+        {
+          "quantity": "count of maps in the gold-standard (GS) set (second mention)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/evaluation-scopes.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Second verbatim mention of the 4-map GS quantity anchored for the lines 7-8 claim above; kept as a separate claim row per full enumeration (rule 3, no sampling), since it is a distinct span."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          20,
+          21
+        ],
+        "section": "What is quarantined — sub-folder count intro"
+      },
+      "claim_text": "The three sub-folders\nare:",
+      "values": [
+        {
+          "quantity": "count of quarantine sub-folders under archive/v2-verifier-contamination/",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/v2-verifier-contamination/MANIFEST.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "MANIFEST.md § Summary lists exactly three rows (leaderboard-cells/, e47-v1-vs-v2/, raw-outputs/), matching 'three sub-folders'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          23,
+          23
+        ],
+        "section": "What is quarantined — leaderboard-cells/ bullet"
+      },
+      "claim_text": "- `leaderboard-cells/` — 1 file (GS v2 greedy leaderboard cell)",
+      "values": [
+        {
+          "quantity": "count of files quarantined in leaderboard-cells/",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/v2-verifier-contamination/MANIFEST.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the MANIFEST.md § Summary row 'leaderboard-cells/ | results/leaderboard/cells/ | 1 | 47 KB', corroborated by the single-row § Detailed Inventory table for that sub-folder."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          24,
+          25
+        ],
+        "section": "What is quarantined — e47-v1-vs-v2/ bullet"
+      },
+      "claim_text": "- `e47-v1-vs-v2/` — 80 files (the whole prompt-development comparison\n  directory; v1 and v2 halves are entangled as a unit)",
+      "values": [
+        {
+          "quantity": "count of files quarantined in e47-v1-vs-v2/",
+          "value_verbatim": "80",
+          "value_parsed": 80,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/v2-verifier-contamination/MANIFEST.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the MANIFEST.md § Summary row 'e47-v1-vs-v2/ | results/e47-v1-vs-v2/ | 80 | ~5 MB'; corroborated by MANIFEST.md's own sub-tree breakdown (detect-single-pass 16 + grid 20 + grid-multibuffer 32 + pairwise 4 + v1/v2/v1-sweep/v2-sweep 8 = 80), not itself re-summed here per rule 4 (do not verify while extracting). 'v1' and 'v2' excluded from values per rule 5 (version strings out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          26,
+          27
+        ],
+        "section": "What is quarantined — raw-outputs/ bullet"
+      },
+      "claim_text": "- `raw-outputs/` — 19 files across 7 sub-directories of raw probabilities,\n  run metadata, and post-processed GeoJSON",
+      "values": [
+        {
+          "quantity": "count of files quarantined in raw-outputs/",
+          "value_verbatim": "19",
+          "value_parsed": 19,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of sub-directories the raw-outputs/ files span",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/v2-verifier-contamination/MANIFEST.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the MANIFEST.md § Summary row 'raw-outputs/ | outputs/h11/..., outputs/qgis-sanity-check-v2-30m/ | 19 | ~3 MB'; the '### raw-outputs/' § Detailed Inventory table beneath it lists exactly 7 rows (one per sub-directory), matching '7 sub-directories'. anchor.path left null (markdown tables, no JSONPath); both values share the one anchor file so the v1.2 amendment 3 per-value-path requirement does not apply (anchor.path itself is null)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          35,
+          38
+        ],
+        "section": "What is still valid — paper headline F1 bullet"
+      },
+      "claim_text": "- **Paper headline F1 = 0.904** uses verifier **v1**\n  (`verify_adversarial.md`), confirmed via the run-metadata chain for the\n  condition `flash-high-text-16-of-30--flash-min-vf`. The headline is not\n  contaminated.",
+      "values": [
+        {
+          "quantity": "F1, paper headline, condition flash-high-text-16-of-30--flash-min-vf @ 50 m, verifier v1 (uncontaminated)",
+          "value_verbatim": "0.904",
+          "value_parsed": 0.904,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/metrics_master.json",
+        "path": "$.rows[?(@.condition_label=='flash-high-text-16-of-30--flash-min-vf' && @.buffer_metres==50)].f1"
+      },
+      "method": "read",
+      "notes": "results/evaluation-scopes.md:129 cross-confirms this as the 'Detection F1 headline 0.904 [0.878, 0.928] @ 50 m' (487-tile matrix, K=30 text-HIGH + PV), sourced there to results/paper-tables/metrics_master.json. That file's row for condition_label 'flash-high-text-16-of-30--flash-min-vf' at buffer_metres=50 records f1=0.9044, consistent with the rounded 0.904 quoted here (existence and path confirmed, not value-verified per rule 4). Condition name (including its embedded '16-of-30' pool/threshold figures) and the 'v1' verifier-version label excluded from values per rule 5 (names and version strings out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          41,
+          41
+        ],
+        "section": "What is still valid — 55-map generalisation bullet, disjointness sentence"
+      },
+      "claim_text": "55-map student corpus is disjoint from the 4 GS maps, so v2 evaluation",
+      "values": [
+        {
+          "quantity": "count of maps in the 55-map student generalisation corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of maps in the gold-standard (GS) set (third mention)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/evaluation-scopes.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches results/evaluation-scopes.md § 11 table ('Map sheets | 55' and 'Intersection with 4-map GS set | 0 (disjoint)') and its prose ('The 55-map generalisation corpus is a separate evaluation scope, disjoint from the 4-map gold-standard corpus'). Near-verbatim corroboration also in archive/v2-verifier-contamination/MANIFEST.md § Files NOT Moved ('55-map student corpus, disjoint from the 4 GS maps'), not itself used as the anchor per rule 2 (prefer the canonical scope document over an archive manifest). Both values share the one anchor file, so the v1.2 amendment 3 per-value-path requirement does not apply (anchor.path is null)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          49,
+          49
+        ],
+        "section": "Future work — item 1, student ground-truth labels"
+      },
+      "claim_text": "Obtain student GT labels for the 55-map corpus, then re-evaluate v2",
+      "values": [
+        {
+          "quantity": "count of maps in the 55-map student generalisation corpus (fourth mention)",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/evaluation-scopes.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Fourth verbatim mention of the 55-map corpus size in this document (first as a label at line 39, then as asserted facts at line 41 and here); kept as a separate claim row per full enumeration (rule 3, no sampling). Leading list ordinal '1.' excluded per rule 5 (markdown list marker, not a quantitative claim)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          54,
+          54
+        ],
+        "section": "Future work — item 3, condition-inventory pv-*-v2 entries"
+      },
+      "claim_text": "Update `planning/condition-inventory.json`: the six `pv-*-v2` entries",
+      "values": [
+        {
+          "quantity": "count of entries in condition-inventory.json whose id matches the pv-*-v2 naming pattern (flagged for manual QUARANTINED-status review)",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "planning/condition-inventory.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confirmed present: exactly six entries in the array carry an id matching the pv-*-v2 pattern (pv-adversarial-image-v2, pv-adversarial-text-v2, pv-brief-image-v2, pv-brief-text-v2, pv-checklist-image-v2, pv-checklist-text-v2), corroborated by archive/v2-verifier-contamination/MANIFEST.md § Flag for Manual Review ('entries 3303-3565 (six entries with \"id\": \"pv-*-v2\")'), not itself used as the anchor per rule 2 (the JSON inventory is the less-writable, machine-built artefact; MANIFEST.md is prose). No single JSONPath filter cleanly expresses this wildcard-suffix match (v1.2 amendment 7 sanctions equality filters and [*] collapse, not general regex), so anchor.path is left null pending harness/triage resolution of the exact locator; the count itself is not in doubt. Leading list ordinal '3.' excluded per rule 5."
+    }
+  ]
+}

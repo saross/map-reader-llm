@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/reports/lessons-learned-llm-reproducibility.md",
+    "git_blob": "84e1d7763ef0a5186b57826be80c98ac45f72d40",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          28,
+          28
+        ],
+        "section": "Heading — Shorter Version (for Discussion section)"
+      },
+      "claim_text": "## Shorter Version (for Discussion section, ~150 words)",
+      "values": [
+        {
+          "quantity": "approximate word count, 'Shorter Version' section (the paragraph this heading introduces, line 30)",
+          "value_verbatim": "~150",
+          "value_parsed": 150,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/reports/lessons-learned-llm-reproducibility.md",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Self-referential word-count claim about the paragraph immediately following this heading within the same document (line 30). Not verified here per rule 4; a script counting words in that span would be needed to check the approximate figure."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          36,
+          36
+        ],
+        "section": "Heading — One-Paragraph Version"
+      },
+      "claim_text": "## One-Paragraph Version (~80 words)",
+      "values": [
+        {
+          "quantity": "approximate word count, 'One-Paragraph Version' section (the paragraph this heading introduces, line 38)",
+          "value_verbatim": "~80",
+          "value_parsed": 80,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/reports/lessons-learned-llm-reproducibility.md",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Self-referential word-count claim about the paragraph immediately following this heading within the same document (line 38). Not verified here per rule 4."
+    }
+  ]
+}

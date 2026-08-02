@@ -1,0 +1,1669 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/reports/tile-selection-observations.md",
+    "git_blob": "e59d37fe31973579e6c550d81324e5e8a60cb47b",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          3,
+          5
+        ],
+        "section": "Top-of-document STALE banner"
+      },
+      "claim_text": "> **STALE — predates the holdout expansion.** This document describes the\n> pre-expansion 20-tile holdout (28 mounds); the lodged design is 60 holdout\n> tiles with 79 mounds (`osf/preregistration.md:234`). Its \"preregistered",
+      "values": [
+        {
+          "quantity": "pre-expansion holdout size (tile count), as this document originally described it",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "pre-expansion holdout mound count, as this document originally described it",
+          "value_verbatim": "28",
+          "value_parsed": 28,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "lodged (current) holdout size (tile count)",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#holdout-set-summary-60-tiles-79-mounds",
+          "method": "read"
+        },
+        {
+          "quantity": "lodged (current) holdout mound count",
+          "value_verbatim": "79",
+          "value_parsed": 79,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#holdout-set-summary-60-tiles-79-mounds",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Banner added 2026-07-28 (date excluded per rule 5); 'D17 audit' / 'FALSE-22' are audit/finding identifiers, excluded per rule 5. The 60/79 live figures match osf/preregistration.md exactly: '**Holdout set summary**: 60 tiles, 79 mounds total.' Line-number citation 'osf/preregistration.md:234' excluded per rule 5 (line-number citations out of scope) but the file itself is the anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          5,
+          8
+        ],
+        "section": "Top-of-document STALE banner — disclaimed 'preregistered estimate'"
+      },
+      "claim_text": "tiles with 79 mounds (`osf/preregistration.md:234`). Its \"preregistered\n> estimate (40-60 symbols)\" has no source in any lodged document (D17 audit\n> FALSE-22). Retained as a historical design note; do not cite against the\n> registration. Banner added 2026-07-28.",
+      "values": [
+        {
+          "quantity": "lower bound of a 'preregistered estimate' the document itself flags as unsourced",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "upper bound of the same disclaimed 'preregistered estimate'",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The banner explicitly states this 40-60 range 'has no source in any lodged document' (D17 audit finding FALSE-22, identifier excluded per rule 5) — extracted as a claim per full enumeration, but the document itself disclaims it as unsupported; anchor-unknown reflects that self-disclaimer, not an extractor failure to search. '79 mounds' recurs in this window (shared with claim 1 above) but is not re-listed as a value here to avoid duplicate rows for the same number."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          16,
+          16
+        ],
+        "section": "Context — intro paragraph"
+      },
+      "claim_text": "Four Soviet 1:50,000 topographic maps (Bulgaria) serve as the study corpus. These maps were randomly selected for Sobotkova et al. (2023) to evaluate student digitisation performance, representing a ~5% sample of a larger corpus (~80 maps, ~10,000 mounds total). The current study inherits these maps; they were not cherry-picked for VLM evaluation.",
+      "values": [
+        {
+          "quantity": "count of maps in the current study corpus",
+          "value_verbatim": "Four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.calibration.by_map",
+          "method": "read"
+        },
+        {
+          "quantity": "study corpus's share of the larger external corpus, approx.",
+          "value_verbatim": "~5%",
+          "value_parsed": 5,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of maps in the larger external corpus the study corpus is drawn from, approx.",
+          "value_verbatim": "~80",
+          "value_parsed": 80,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of mounds in the larger external corpus, approx.",
+          "value_verbatim": "~10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'2023' excluded per rule 5 (citation year). The 4-map count matches inputs/tiles/tile_selection_metadata.json. The ~80-map/~10,000-mound external (Sobotkova et al.) corpus and the ~5% share are external context with no repo artefact (consistent with the same 80-map corpus referenced independently in data_split_strategy.md); rule 7 — not chased beyond this document."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          20,
+          20
+        ],
+        "section": "Context — per-map mound-count table"
+      },
+      "claim_text": "| K-35-053-3_Elenovo | 217 | 38% | — |",
+      "values": [
+        {
+          "quantity": "count of annotated mounds, K-35-053-3_Elenovo",
+          "value_verbatim": "217",
+          "value_parsed": 217,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features[?(@.properties.Map=='K-35-053-3_Elenovo')]",
+          "method": "read"
+        },
+        {
+          "quantity": "K-35-053-3_Elenovo's share of the 569-mound corpus total",
+          "value_verbatim": "38%",
+          "value_parsed": 38,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100*a/b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features[?(@.properties.Map=='K-35-053-3_Elenovo')]"
+            },
+            {
+              "name": "b",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mound count matches inputs/vectors/references/mounds-reference.geojson exactly (verified via feature count grouped by the 'Map' property). The percentage is arithmetic-derivable from two directly-anchored geojson counts (this map's count and the 569-feature total), not from any other already-derived value (v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          21,
+          21
+        ],
+        "section": "Context — per-map mound-count table"
+      },
+      "claim_text": "| K-35-062-2_Rakovski | 196 | 34% | — |",
+      "values": [
+        {
+          "quantity": "count of annotated mounds, K-35-062-2_Rakovski",
+          "value_verbatim": "196",
+          "value_parsed": 196,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features[?(@.properties.Map=='K-35-062-2_Rakovski')]",
+          "method": "read"
+        },
+        {
+          "quantity": "K-35-062-2_Rakovski's share of the 569-mound corpus total",
+          "value_verbatim": "34%",
+          "value_parsed": 34,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100*a/b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features[?(@.properties.Map=='K-35-062-2_Rakovski')]"
+            },
+            {
+              "name": "b",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mound count matches inputs/vectors/references/mounds-reference.geojson exactly (verified via feature count grouped by the 'Map' property). The percentage is arithmetic-derivable from two directly-anchored geojson counts (this map's count and the 569-feature total), not from any other already-derived value (v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          22,
+          22
+        ],
+        "section": "Context — per-map mound-count table"
+      },
+      "claim_text": "| K-35-052-4_32635 | 136 | 24% | — |",
+      "values": [
+        {
+          "quantity": "count of annotated mounds, K-35-052-4_32635",
+          "value_verbatim": "136",
+          "value_parsed": 136,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features[?(@.properties.Map=='K-35-052-4_32635')]",
+          "method": "read"
+        },
+        {
+          "quantity": "K-35-052-4_32635's share of the 569-mound corpus total",
+          "value_verbatim": "24%",
+          "value_parsed": 24,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100*a/b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features[?(@.properties.Map=='K-35-052-4_32635')]"
+            },
+            {
+              "name": "b",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mound count matches inputs/vectors/references/mounds-reference.geojson exactly (verified via feature count grouped by the 'Map' property). The percentage is arithmetic-derivable from two directly-anchored geojson counts (this map's count and the 569-feature total), not from any other already-derived value (v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          23,
+          23
+        ],
+        "section": "Context — per-map mound-count table"
+      },
+      "claim_text": "| K-35-078-1_Lesovo | 20 | 3.5% | Rugged, dense contours |",
+      "values": [
+        {
+          "quantity": "count of annotated mounds, K-35-078-1_Lesovo",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features[?(@.properties.Map=='K-35-078-1_Lesovo')]",
+          "method": "read"
+        },
+        {
+          "quantity": "K-35-078-1_Lesovo's share of the 569-mound corpus total",
+          "value_verbatim": "3.5%",
+          "value_parsed": 3.5,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100*a/b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features[?(@.properties.Map=='K-35-078-1_Lesovo')]"
+            },
+            {
+              "name": "b",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mound count matches inputs/vectors/references/mounds-reference.geojson exactly (verified via feature count grouped by the 'Map' property). The percentage is arithmetic-derivable from two directly-anchored geojson counts (this map's count and the 569-feature total), not from any other already-derived value (v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          24,
+          24
+        ],
+        "section": "Context — per-map mound-count table, Total row"
+      },
+      "claim_text": "| **Total** | **569** | **100%** | |",
+      "values": [
+        {
+          "quantity": "total count of annotated mounds, all four maps",
+          "value_verbatim": "569",
+          "value_parsed": 569,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "total percentage (all maps sum to the corpus total, definitional)",
+          "value_verbatim": "100%",
+          "value_parsed": 100,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "569 matches inputs/vectors/references/mounds-reference.geojson exactly. The per-map counts (217+196+136+20=569) sum exactly to this total; note the geojson also contains one additional feature with Symbol='Burial Mound' (capitalised variant, likely a data-entry duplicate of the 'Burial mound' class) not separately reflected in this document's tables — not adjudicated here (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          27,
+          27
+        ],
+        "section": "Context — Symbol type distribution list"
+      },
+      "claim_text": "- Burial mound: 455 (80%)",
+      "values": [
+        {
+          "quantity": "count of 'Burial mound' symbols, corpus-wide",
+          "value_verbatim": "455",
+          "value_parsed": 455,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features[?(@.properties.Symbol=='Burial mound')]",
+          "method": "read"
+        },
+        {
+          "quantity": "'Burial mound' share of the 569-mound corpus total",
+          "value_verbatim": "80%",
+          "value_parsed": 80,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100*a/b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features[?(@.properties.Symbol=='Burial mound')]"
+            },
+            {
+              "name": "b",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Count matches inputs/vectors/references/mounds-reference.geojson exactly (Symbol property = 'Burial mound'; a separate capitalised 'Burial Mound' variant with 1 feature also exists in the geojson and is not included in this filter or in the document's count). Percentage is arithmetic from two directly-anchored geojson counts (this symbol-type count and the 569-feature total)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          28,
+          28
+        ],
+        "section": "Context — Symbol type distribution list"
+      },
+      "claim_text": "- Benchmark on burial mound: 65 (11%)",
+      "values": [
+        {
+          "quantity": "count of 'Benchmark on burial mound' symbols, corpus-wide",
+          "value_verbatim": "65",
+          "value_parsed": 65,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features[?(@.properties.Symbol=='Bench mark on burial mound')]",
+          "method": "read"
+        },
+        {
+          "quantity": "'Benchmark on burial mound' share of the 569-mound corpus total",
+          "value_verbatim": "11%",
+          "value_parsed": 11,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100*a/b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features[?(@.properties.Symbol=='Bench mark on burial mound')]"
+            },
+            {
+              "name": "b",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Count matches inputs/vectors/references/mounds-reference.geojson exactly (Symbol property = 'Bench mark on burial mound'; note the document's label ('Benchmark') differs slightly in wording from the geojson property value ('Bench mark'), not adjudicated here). Percentage is arithmetic from two directly-anchored geojson counts (this symbol-type count and the 569-feature total)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          29,
+          29
+        ],
+        "section": "Context — Symbol type distribution list"
+      },
+      "claim_text": "- Triangulation point on burial mound: 43 (8%)",
+      "values": [
+        {
+          "quantity": "count of 'Triangulation point on burial mound' symbols, corpus-wide",
+          "value_verbatim": "43",
+          "value_parsed": 43,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features[?(@.properties.Symbol=='Triangulation point on burial mound')]",
+          "method": "read"
+        },
+        {
+          "quantity": "'Triangulation point on burial mound' share of the 569-mound corpus total",
+          "value_verbatim": "8%",
+          "value_parsed": 8,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100*a/b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features[?(@.properties.Symbol=='Triangulation point on burial mound')]"
+            },
+            {
+              "name": "b",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Count matches inputs/vectors/references/mounds-reference.geojson exactly (Symbol property = 'Triangulation point on burial mound'). Percentage is arithmetic from two directly-anchored geojson counts (this symbol-type count and the 569-feature total)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          30,
+          30
+        ],
+        "section": "Context — Symbol type distribution list"
+      },
+      "claim_text": "- Settlement mound: 5 (1%)",
+      "values": [
+        {
+          "quantity": "count of 'Settlement mound' symbols, corpus-wide",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features[?(@.properties.Symbol=='Settlement mound')]",
+          "method": "read"
+        },
+        {
+          "quantity": "'Settlement mound' share of the 569-mound corpus total",
+          "value_verbatim": "1%",
+          "value_parsed": 1,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100*a/b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features[?(@.properties.Symbol=='Settlement mound')]"
+            },
+            {
+              "name": "b",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Count matches inputs/vectors/references/mounds-reference.geojson exactly (Symbol property = 'Settlement mound'). Percentage is arithmetic from two directly-anchored geojson counts (this symbol-type count and the 569-feature total)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          38,
+          38
+        ],
+        "section": "Sampling Design — Chosen approach, training tiles bullet"
+      },
+      "claim_text": "- 5 training tiles per map (20 total)",
+      "values": [
+        {
+          "quantity": "training/calibration tiles sampled per map",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "$.parameters.calibration_samples_per_map",
+          "method": "read"
+        },
+        {
+          "quantity": "total training/calibration set size (tiles)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration.total_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches inputs/tiles/tile_selection_metadata.json exactly (unlike the holdout figures below, the calibration side of the design is unchanged by the later holdout expansion)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          39,
+          39
+        ],
+        "section": "Sampling Design — Chosen approach, holdout tiles bullet"
+      },
+      "claim_text": "- 5 holdout tiles per map (20 total)",
+      "values": [
+        {
+          "quantity": "pre-expansion holdout tiles per map, as this document describes it",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "pre-expansion total holdout set size (tiles), as this document describes it",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "This document carries a top-of-file STALE banner (lines 3-8, extracted separately below): it describes the pre-expansion 20-tile/28-mound holdout, superseded by the lodged 60-tile/79-mound design (osf/preregistration.md, 'Holdout set summary: 60 tiles, 79 mounds total'). This value concerns the holdout-specific figure and is treated as historical (the banner's own 'was X' side) rather than a live claim, per hard rule 3. Current inputs/tiles/tile_selection_metadata.json records $.parameters.validation_samples_per_map=15 and $.validation.total_tiles=60."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          46,
+          46
+        ],
+        "section": "Sampling Design — Overweighting sparse maps, implication table"
+      },
+      "claim_text": "| Elenovo | 38% | 25% | 0.66× (underweighted) |",
+      "values": [
+        {
+          "quantity": "corpus mound share, Elenovo (restated from the Context table)",
+          "value_verbatim": "38%",
+          "value_parsed": 38,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100*a/b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features[?(@.properties.Map=='K-35-053-3_Elenovo')]"
+            },
+            {
+              "name": "b",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features"
+            }
+          ]
+        },
+        {
+          "quantity": "holdout sampling weight (equal per-map allocation), Elenovo",
+          "value_verbatim": "25%",
+          "value_parsed": 25,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100/a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "inputs/tiles/tile_selection_metadata.json",
+              "path": "len:$.calibration.by_map"
+            }
+          ]
+        },
+        {
+          "quantity": "relative over/underweight ratio, Elenovo (sampling weight ÷ corpus share)",
+          "value_verbatim": "0.66×",
+          "value_parsed": 0.66,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "Corpus mound share restates the Context table's per-map percentage (same geojson-derived arithmetic). Sampling weight (25% = 1 of 4 equally-weighted maps) is arithmetic from the anchored 4-map count. The over/underweight ratio is the document's own computed characterisation (sampling weight ÷ corpus share) — not chained through the two already-derived percentages above (v1.2 amendment 1), so left anchor-unknown rather than a fabricated multi-hop expression. This weighting concept is NOT holdout-size-dependent (equal-per-map allocation is still 25% each under the current 15-per-map/60-total holdout, same proportion as the pre-expansion 5-per-map/20-total design), so — unlike the raw holdout tile/mound counts elsewhere in this document — these percentages are not treated as historical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          47,
+          47
+        ],
+        "section": "Sampling Design — Overweighting sparse maps, implication table"
+      },
+      "claim_text": "| Rakovski | 34% | 25% | 0.74× (underweighted) |",
+      "values": [
+        {
+          "quantity": "corpus mound share, Rakovski (restated from the Context table)",
+          "value_verbatim": "34%",
+          "value_parsed": 34,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100*a/b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features[?(@.properties.Map=='K-35-062-2_Rakovski')]"
+            },
+            {
+              "name": "b",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features"
+            }
+          ]
+        },
+        {
+          "quantity": "holdout sampling weight (equal per-map allocation), Rakovski",
+          "value_verbatim": "25%",
+          "value_parsed": 25,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100/a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "inputs/tiles/tile_selection_metadata.json",
+              "path": "len:$.calibration.by_map"
+            }
+          ]
+        },
+        {
+          "quantity": "relative over/underweight ratio, Rakovski (sampling weight ÷ corpus share)",
+          "value_verbatim": "0.74×",
+          "value_parsed": 0.74,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "Corpus mound share restates the Context table's per-map percentage (same geojson-derived arithmetic). Sampling weight (25% = 1 of 4 equally-weighted maps) is arithmetic from the anchored 4-map count. The over/underweight ratio is the document's own computed characterisation (sampling weight ÷ corpus share) — not chained through the two already-derived percentages above (v1.2 amendment 1), so left anchor-unknown rather than a fabricated multi-hop expression. This weighting concept is NOT holdout-size-dependent (equal-per-map allocation is still 25% each under the current 15-per-map/60-total holdout, same proportion as the pre-expansion 5-per-map/20-total design), so — unlike the raw holdout tile/mound counts elsewhere in this document — these percentages are not treated as historical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          48,
+          48
+        ],
+        "section": "Sampling Design — Overweighting sparse maps, implication table"
+      },
+      "claim_text": "| K-35-052-4 | 24% | 25% | 1.04× (approximately matched) |",
+      "values": [
+        {
+          "quantity": "corpus mound share, K-35-052-4 (restated from the Context table)",
+          "value_verbatim": "24%",
+          "value_parsed": 24,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100*a/b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features[?(@.properties.Map=='K-35-052-4_32635')]"
+            },
+            {
+              "name": "b",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features"
+            }
+          ]
+        },
+        {
+          "quantity": "holdout sampling weight (equal per-map allocation), K-35-052-4",
+          "value_verbatim": "25%",
+          "value_parsed": 25,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100/a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "inputs/tiles/tile_selection_metadata.json",
+              "path": "len:$.calibration.by_map"
+            }
+          ]
+        },
+        {
+          "quantity": "relative over/underweight ratio, K-35-052-4 (sampling weight ÷ corpus share)",
+          "value_verbatim": "1.04×",
+          "value_parsed": 1.04,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "Corpus mound share restates the Context table's per-map percentage (same geojson-derived arithmetic). Sampling weight (25% = 1 of 4 equally-weighted maps) is arithmetic from the anchored 4-map count. The over/underweight ratio is the document's own computed characterisation (sampling weight ÷ corpus share) — not chained through the two already-derived percentages above (v1.2 amendment 1), so left anchor-unknown rather than a fabricated multi-hop expression. This weighting concept is NOT holdout-size-dependent (equal-per-map allocation is still 25% each under the current 15-per-map/60-total holdout, same proportion as the pre-expansion 5-per-map/20-total design), so — unlike the raw holdout tile/mound counts elsewhere in this document — these percentages are not treated as historical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          49,
+          49
+        ],
+        "section": "Sampling Design — Overweighting sparse maps, implication table"
+      },
+      "claim_text": "| Lesovo | 3.5% | 25% | 7× (overweighted) |",
+      "values": [
+        {
+          "quantity": "corpus mound share, Lesovo (restated from the Context table)",
+          "value_verbatim": "3.5%",
+          "value_parsed": 3.5,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100*a/b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features[?(@.properties.Map=='K-35-078-1_Lesovo')]"
+            },
+            {
+              "name": "b",
+              "file": "inputs/vectors/references/mounds-reference.geojson",
+              "path": "len:$.features"
+            }
+          ]
+        },
+        {
+          "quantity": "holdout sampling weight (equal per-map allocation), Lesovo",
+          "value_verbatim": "25%",
+          "value_parsed": 25,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "100/a",
+          "operands": [
+            {
+              "name": "a",
+              "file": "inputs/tiles/tile_selection_metadata.json",
+              "path": "len:$.calibration.by_map"
+            }
+          ]
+        },
+        {
+          "quantity": "relative over/underweight ratio, Lesovo (sampling weight ÷ corpus share)",
+          "value_verbatim": "7×",
+          "value_parsed": 7,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "Corpus mound share restates the Context table's per-map percentage (same geojson-derived arithmetic). Sampling weight (25% = 1 of 4 equally-weighted maps) is arithmetic from the anchored 4-map count. The over/underweight ratio is the document's own computed characterisation (sampling weight ÷ corpus share) — not chained through the two already-derived percentages above (v1.2 amendment 1), so left anchor-unknown rather than a fabricated multi-hop expression. This weighting concept is NOT holdout-size-dependent (equal-per-map allocation is still 25% each under the current 15-per-map/60-total holdout, same proportion as the pre-expansion 5-per-map/20-total design), so — unlike the raw holdout tile/mound counts elsewhere in this document — these percentages are not treated as historical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          65,
+          65
+        ],
+        "section": "Sampling Design — Alternative not chosen, Proportional sampling paragraph"
+      },
+      "claim_text": "Proportional sampling would concentrate ~72% of holdout tiles on Elenovo and Rakovski, maximising power for corpus-level F1 estimation but:",
+      "values": [
+        {
+          "quantity": "approx. combined corpus mound share, Elenovo + Rakovski (hypothetical proportional-sampling scenario)",
+          "value_verbatim": "~72%",
+          "value_parsed": 72,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "arithmetic"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": null,
+        "expression": "100*(a+b)/c",
+        "operands": [
+          {
+            "name": "a",
+            "file": "inputs/vectors/references/mounds-reference.geojson",
+            "path": "len:$.features[?(@.properties.Map=='K-35-053-3_Elenovo')]"
+          },
+          {
+            "name": "b",
+            "file": "inputs/vectors/references/mounds-reference.geojson",
+            "path": "len:$.features[?(@.properties.Map=='K-35-062-2_Rakovski')]"
+          },
+          {
+            "name": "c",
+            "file": "inputs/vectors/references/mounds-reference.geojson",
+            "path": "len:$.features"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "Counterfactual ('would concentrate') for an alternative NOT chosen. Directly re-derivable from two anchored geojson counts (Elenovo 217 + Rakovski 196) over the 569 total (413/569=72.6%, rounds to ~72/73%; not chained through the already-derived 38%/34% figures, v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          66,
+          66
+        ],
+        "section": "Sampling Design — Alternative not chosen, Undersampling bullet"
+      },
+      "claim_text": "- Undersampling sparse maps (Lesovo might contribute 1 tile)",
+      "values": [
+        {
+          "quantity": "hypothetical Lesovo tile contribution under proportional sampling (illustrative, not executed)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Speculative illustrative figure ('might contribute') for a scenario not chosen/executed; no artefact to anchor a hypothetical to."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          76,
+          76
+        ],
+        "section": "Power Implications — Holdout mound count bullet"
+      },
+      "claim_text": "- 28 mounds in holdout set",
+      "values": [
+        {
+          "quantity": "pre-expansion holdout mound count, restated",
+          "value_verbatim": "28",
+          "value_parsed": 28,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "This document carries a top-of-file STALE banner (lines 3-8, extracted separately below): it describes the pre-expansion 20-tile/28-mound holdout, superseded by the lodged 60-tile/79-mound design (osf/preregistration.md, 'Holdout set summary: 60 tiles, 79 mounds total'). This value concerns the holdout-specific figure and is treated as historical (the banner's own 'was X' side) rather than a live claim, per hard rule 3."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          77,
+          77
+        ],
+        "section": "Power Implications — drafting-era estimate bullet"
+      },
+      "claim_text": "- Toward lower end of the drafting-era working estimate (40-60 symbols; not in any lodged document)",
+      "values": [
+        {
+          "quantity": "lower bound, drafting-era working estimate, restated (self-disclaimed as unsourced)",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "upper bound, drafting-era working estimate, restated (self-disclaimed as unsourced)",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates the banner's disclaimed 40-60 estimate; the span itself states 'not in any lodged document', consistent with the banner's D17 FALSE-22 finding (identifier excluded per rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          78,
+          78
+        ],
+        "section": "Power Implications — Detectable effect size bullet"
+      },
+      "claim_text": "- Detectable effect size: F1 ≈ 0.10-0.12 (vs. 0.08 with larger sample)",
+      "values": [
+        {
+          "quantity": "minimum detectable F1 effect size, pre-expansion 28-mound holdout, lower bound",
+          "value_verbatim": "0.10",
+          "value_parsed": 0.1,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "minimum detectable F1 effect size, pre-expansion 28-mound holdout, upper bound",
+          "value_verbatim": "0.12",
+          "value_parsed": 0.12,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "minimum detectable F1 effect size, forward reference to the larger (expanded) holdout sample",
+          "value_verbatim": "0.08",
+          "value_parsed": 0.08,
+          "unit": null,
+          "kind": "statistic",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#power-considerations-detectable-effect-f1-008",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'vs. 0.08 with larger sample' anticipates the eventual expanded holdout and matches osf/preregistration.md § 3.6 Power Considerations: 'Effects of F1 ≈ 0.08 or larger should be detectable with reasonable power' (60-tile/79-mound holdout). The registration's own minimum detectable difference for that holdout is stated slightly differently elsewhere in the same section ('Symbol-level F1: Minimum detectable difference ≈ 0.07-0.09'); not adjudicated here (rule 4). The 0.10-0.12 range is this document's own pre-expansion (28-mound) estimate."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          85,
+          85
+        ],
+        "section": "Power Implications — Symbol-type subgroup power, expected holdout distribution"
+      },
+      "claim_text": "- Burial mounds: ~22",
+      "values": [
+        {
+          "quantity": "expected count of Burial mounds in the pre-expansion (28-mound) holdout, proportional projection",
+          "value_verbatim": "~22",
+          "value_parsed": 22,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Historical: a proportional projection from the pre-expansion 28-mound holdout (28/569 of the corpus-wide Burial mounds count, 455/569 ≈ 22.4, quoted here rounded/approximate). Superseded by the lodged 60-tile/79-mound holdout; not recomputed for the new holdout size in this document."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          86,
+          86
+        ],
+        "section": "Power Implications — Symbol-type subgroup power, expected holdout distribution"
+      },
+      "claim_text": "- Benchmark mounds: ~3",
+      "values": [
+        {
+          "quantity": "expected count of Benchmark mounds in the pre-expansion (28-mound) holdout, proportional projection",
+          "value_verbatim": "~3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Historical: a proportional projection from the pre-expansion 28-mound holdout (28/569 of the corpus-wide Benchmark mounds count, 65/569 ≈ 3.2, quoted here rounded/approximate). Superseded by the lodged 60-tile/79-mound holdout; not recomputed for the new holdout size in this document."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          87,
+          87
+        ],
+        "section": "Power Implications — Symbol-type subgroup power, expected holdout distribution"
+      },
+      "claim_text": "- Triangulation mounds: ~2",
+      "values": [
+        {
+          "quantity": "expected count of Triangulation mounds in the pre-expansion (28-mound) holdout, proportional projection",
+          "value_verbatim": "~2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Historical: a proportional projection from the pre-expansion 28-mound holdout (28/569 of the corpus-wide Triangulation mounds count, 43/569 ≈ 2.1, quoted here rounded/approximate). Superseded by the lodged 60-tile/79-mound holdout; not recomputed for the new holdout size in this document."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          88,
+          88
+        ],
+        "section": "Power Implications — Symbol-type subgroup power, expected holdout distribution"
+      },
+      "claim_text": "- Settlement mounds: ~0",
+      "values": [
+        {
+          "quantity": "expected count of Settlement mounds in the pre-expansion (28-mound) holdout, proportional projection",
+          "value_verbatim": "~0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Historical: a proportional projection from the pre-expansion 28-mound holdout (28/569 of the corpus-wide Settlement mounds count, 5/569 ≈ 0.2, quoted here rounded/approximate). Superseded by the lodged 60-tile/79-mound holdout; not recomputed for the new holdout size in this document."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          90,
+          90
+        ],
+        "section": "Power Implications — Limitation paragraph"
+      },
+      "claim_text": "**Limitation**: With only ~3 benchmark mounds in holdout, symbol-type-specific performance cannot be reliably assessed. Preliminary findings (benchmark problematic, triangulation perfect recall) cannot be confirmed at subgroup level.",
+      "values": [
+        {
+          "quantity": "expected benchmark-mound count in the pre-expansion holdout, restated",
+          "value_verbatim": "~3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "This document carries a top-of-file STALE banner (lines 3-8, extracted separately below): it describes the pre-expansion 20-tile/28-mound holdout, superseded by the lodged 60-tile/79-mound design (osf/preregistration.md, 'Holdout set summary: 60 tiles, 79 mounds total'). This value concerns the holdout-specific figure and is treated as historical (the banner's own 'was X' side) rather than a live claim, per hard rule 3. Restates the line-86 projection."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          92,
+          92
+        ],
+        "section": "Power Implications — Acknowledgement for paper"
+      },
+      "claim_text": "**Acknowledgement for paper**: \"Symbol-type-specific performance is reported descriptively but should be interpreted cautiously due to small subgroup sizes (n < 5 for non-burial-mound types).\"",
+      "values": [
+        {
+          "quantity": "subgroup-size threshold below which symbol-type performance is flagged as unreliable",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Grounded in the pre-expansion projections (benchmark ~3, triangulation ~2, settlement ~0 — all < 5). Under the lodged 79-mound holdout, proportional projections would be considerably larger (benchmark ≈9, triangulation ≈6), so this blanket 'n<5 for non-burial-mound types' characterisation may no longer hold for benchmark/triangulation under the current design — flagged per the STALE banner, not adjudicated here (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          102,
+          102
+        ],
+        "section": "Density Distribution Matching — table"
+      },
+      "claim_text": "| Empty (0 mounds) | 8 | 8 |",
+      "values": [
+        {
+          "quantity": "count of training/calibration tiles, 'Empty (0 mounds)' density category",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.calibration.tiles[?(@.density=='empty')]",
+          "method": "read"
+        },
+        {
+          "quantity": "count of holdout tiles, 'Empty (0 mounds)' density category, as this document describes it (pre-expansion, force-matched to training)",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Training-column count matches inputs/tiles/tile_selection_metadata.json's current calibration density breakdown exactly (confirmed by direct inspection: empty=8, sparse=7, dense=5). Holdout column is historical — the document describes a force-matched pre-expansion design; the current $.validation density breakdown is empty=30, sparse=18, dense=12 (60 total), no longer 'identical' to training. This document carries a top-of-file STALE banner (lines 3-8, extracted separately below): it describes the pre-expansion 20-tile/28-mound holdout, superseded by the lodged 60-tile/79-mound design (osf/preregistration.md, 'Holdout set summary: 60 tiles, 79 mounds total'). This value concerns the holdout-specific figure and is treated as historical (the banner's own 'was X' side) rather than a live claim, per hard rule 3."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          103,
+          103
+        ],
+        "section": "Density Distribution Matching — table"
+      },
+      "claim_text": "| Sparse (1-2 mounds) | 7 | 7 |",
+      "values": [
+        {
+          "quantity": "count of training/calibration tiles, 'Sparse (1-2 mounds)' density category",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.calibration.tiles[?(@.density=='sparse')]",
+          "method": "read"
+        },
+        {
+          "quantity": "count of holdout tiles, 'Sparse (1-2 mounds)' density category, as this document describes it (pre-expansion, force-matched to training)",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Training-column count matches inputs/tiles/tile_selection_metadata.json's current calibration density breakdown exactly (confirmed by direct inspection: empty=8, sparse=7, dense=5). Holdout column is historical — the document describes a force-matched pre-expansion design; the current $.validation density breakdown is empty=30, sparse=18, dense=12 (60 total), no longer 'identical' to training. This document carries a top-of-file STALE banner (lines 3-8, extracted separately below): it describes the pre-expansion 20-tile/28-mound holdout, superseded by the lodged 60-tile/79-mound design (osf/preregistration.md, 'Holdout set summary: 60 tiles, 79 mounds total'). This value concerns the holdout-specific figure and is treated as historical (the banner's own 'was X' side) rather than a live claim, per hard rule 3."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          104,
+          104
+        ],
+        "section": "Density Distribution Matching — table"
+      },
+      "claim_text": "| Dense (3+ mounds) | 5 | 5 |",
+      "values": [
+        {
+          "quantity": "count of training/calibration tiles, 'Dense (3+ mounds)' density category",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.calibration.tiles[?(@.density=='dense')]",
+          "method": "read"
+        },
+        {
+          "quantity": "count of holdout tiles, 'Dense (3+ mounds)' density category, as this document describes it (pre-expansion, force-matched to training)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Training-column count matches inputs/tiles/tile_selection_metadata.json's current calibration density breakdown exactly (confirmed by direct inspection: empty=8, sparse=7, dense=5). Holdout column is historical — the document describes a force-matched pre-expansion design; the current $.validation density breakdown is empty=30, sparse=18, dense=12 (60 total), no longer 'identical' to training. This document carries a top-of-file STALE banner (lines 3-8, extracted separately below): it describes the pre-expansion 20-tile/28-mound holdout, superseded by the lodged 60-tile/79-mound design (osf/preregistration.md, 'Holdout set summary: 60 tiles, 79 mounds total'). This value concerns the holdout-specific figure and is treated as historical (the banner's own 'was X' side) rather than a live claim, per hard rule 3."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          114,
+          114
+        ],
+        "section": "Spatial Separation — intro sentence"
+      },
+      "claim_text": "Holdout tiles exclude tiles adjacent to training tiles (Manhattan distance ≤ 1 tile = 448 pixels). This prevents:",
+      "values": [
+        {
+          "quantity": "Manhattan (grid) distance threshold defining 'adjacent'",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": "ADJACENCY_DISTANCE",
+          "method": "read"
+        },
+        {
+          "quantity": "pixel equivalent of one grid unit (tile stride)",
+          "value_verbatim": "448",
+          "value_parsed": 448,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a-b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "config.py",
+              "path": "TILE_SIZE"
+            },
+            {
+              "name": "b",
+              "file": "config.py",
+              "path": "OVERLAP"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "config.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "config.py ADJACENCY_DISTANCE=1 and TILE_SIZE-OVERLAP=448 (same as tile-selection-methodology.md's equivalent claims). This spatial-separation rule is a selection-time constraint independent of holdout size, so not treated as historical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          124,
+          124
+        ],
+        "section": "Empty Tiles for Anti-Hallucination — intro sentence"
+      },
+      "claim_text": "Empty training tiles (0 mounds) serve a distinct function from hard negative examples:",
+      "values": [
+        {
+          "quantity": "mound count defining an 'empty' training tile",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "categorise_density",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/select_tiles_phase2.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches scripts/select_tiles_phase2.py categorise_density() (mound_count==0 -> empty), same anchor as the equivalent tile-selection-methodology.md claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          141,
+          141
+        ],
+        "section": "Reporting Recommendations — Primary analysis paragraph"
+      },
+      "claim_text": "Report aggregate F1, precision, recall with bootstrapped 95% CIs on the full holdout set (28 mounds, 20 tiles).",
+      "values": [
+        {
+          "quantity": "confidence interval level, primary holdout analysis",
+          "value_verbatim": "95%",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#bootstrap-95-percent-ci-convention",
+          "method": "read"
+        },
+        {
+          "quantity": "pre-expansion holdout mound count, restated",
+          "value_verbatim": "28",
+          "value_parsed": 28,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "pre-expansion holdout tile count, restated",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "95% CI matches the registration's consistent convention. 28/20 restate the pre-expansion holdout figures; This document carries a top-of-file STALE banner (lines 3-8, extracted separately below): it describes the pre-expansion 20-tile/28-mound holdout, superseded by the lodged 60-tile/79-mound design (osf/preregistration.md, 'Holdout set summary: 60 tiles, 79 mounds total'). This value concerns the holdout-specific figure and is treated as historical (the banner's own 'was X' side) rather than a live claim, per hard rule 3."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          145,
+          145
+        ],
+        "section": "Reporting Recommendations — Secondary analyses, Per-map performance item"
+      },
+      "claim_text": "1. **Per-map performance**: Report F1 per map sheet. If performance varies substantially (e.g., F1=0.90 on Elenovo, F1=0.60 on Lesovo), this reveals generalization limits the aggregate would obscure.",
+      "values": [
+        {
+          "quantity": "illustrative example F1, Elenovo (hypothetical, 'e.g.')",
+          "value_verbatim": "0.90",
+          "value_parsed": 0.9,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "illustrative example F1, Lesovo (hypothetical, 'e.g.')",
+          "value_verbatim": "0.60",
+          "value_parsed": 0.6,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Explicitly illustrative ('e.g.') hypothetical figures demonstrating the kind of per-map variation that would be reportable, not an asserted result; no artefact to anchor a hypothetical example to."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          149,
+          149
+        ],
+        "section": "Reporting Recommendations — Secondary analyses, Empty-tile false positive rate item"
+      },
+      "claim_text": "3. **Empty-tile false positive rate**: Report false positives specifically on empty holdout tiles (8 tiles, 0 mounds). This is a direct test of hallucination control.",
+      "values": [
+        {
+          "quantity": "pre-expansion count of empty holdout tiles, as this document describes it",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "mound count defining 'empty', restated",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "categorise_density",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/select_tiles_phase2.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'8 tiles' restates the pre-expansion holdout's empty-density count (the Density Distribution Matching table); This document carries a top-of-file STALE banner (lines 3-8, extracted separately below): it describes the pre-expansion 20-tile/28-mound holdout, superseded by the lodged 60-tile/79-mound design (osf/preregistration.md, 'Holdout set summary: 60 tiles, 79 mounds total'). This value concerns the holdout-specific figure and is treated as historical (the banner's own 'was X' side) rather than a live claim, per hard rule 3. Current $.validation empty-density count is 30, not 8. The '0 mounds' definitional figure is unaffected by holdout size."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          170,
+          170
+        ],
+        "section": "Draft Text for Paper — Methods paragraph"
+      },
+      "claim_text": "\"Tiles were selected using stratified random sampling with documented provenance. Each of the four maps contributed five training and five holdout tiles, ensuring equal representation across visually and geographically diverse sheets. Within each map, tiles were stratified by mound density (empty, sparse, dense) and sampled to match distributions across training and holdout sets. Holdout tiles were spatially separated from training tiles (minimum 448-pixel gap) to prevent autocorrelation leakage. This design prioritises generalization testing across varying mound densities and terrain types rather than corpus-proportional sampling. The four maps were originally selected randomly for Sobotkova et al. (2023) and were not chosen specifically for this study.\"",
+      "values": [
+        {
+          "quantity": "count of maps, restated in draft Methods text",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.calibration.by_map",
+          "method": "read"
+        },
+        {
+          "quantity": "training tiles per map, restated in draft Methods text",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "$.parameters.calibration_samples_per_map",
+          "method": "read"
+        },
+        {
+          "quantity": "holdout tiles per map, restated in draft Methods text (pre-expansion)",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "minimum spatial-separation gap (px), restated in draft Methods text",
+          "value_verbatim": "448-pixel",
+          "value_parsed": 448,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a-b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "config.py",
+              "path": "TILE_SIZE"
+            },
+            {
+              "name": "b",
+              "file": "config.py",
+              "path": "OVERLAP"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'2023' excluded per rule 5. Map count and training-per-map figures are current/unchanged; the holdout-per-map figure (five) is the pre-expansion design (This document carries a top-of-file STALE banner (lines 3-8, extracted separately below): it describes the pre-expansion 20-tile/28-mound holdout, superseded by the lodged 60-tile/79-mound design (osf/preregistration.md, 'Holdout set summary: 60 tiles, 79 mounds total'). This value concerns the holdout-specific figure and is treated as historical (the banner's own 'was X' side) rather than a live claim, per hard rule 3.); the 448px gap is the holdout-size-independent spatial-separation constant."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          174,
+          174
+        ],
+        "section": "Draft Text for Paper — Limitations paragraph"
+      },
+      "claim_text": "\"The holdout set contains 28 mound symbols, providing adequate power for detecting directional effects (F1 differences ≥ 0.10) but limiting precision on effect size estimates. Symbol-type subgroups (benchmark, triangulation, settlement mounds) are too small for reliable subgroup analysis. Equal-per-map sampling overweights sparse sheets relative to their corpus prevalence; reported F1 reflects generalization performance rather than expected corpus-wide accuracy.\"",
+      "values": [
+        {
+          "quantity": "pre-expansion holdout mound count, restated in draft Limitations text",
+          "value_verbatim": "28",
+          "value_parsed": 28,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "minimum detectable F1 difference asserted as adequately powered, draft Limitations text",
+          "value_verbatim": "0.10",
+          "value_parsed": 0.1,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "28 mounds and the F1≥0.10 detectable-effect figure both restate this document's own pre-expansion (line 78) estimates; This document carries a top-of-file STALE banner (lines 3-8, extracted separately below): it describes the pre-expansion 20-tile/28-mound holdout, superseded by the lodged 60-tile/79-mound design (osf/preregistration.md, 'Holdout set summary: 60 tiles, 79 mounds total'). This value concerns the holdout-specific figure and is treated as historical (the banner's own 'was X' side) rather than a live claim, per hard rule 3."
+    }
+  ]
+}

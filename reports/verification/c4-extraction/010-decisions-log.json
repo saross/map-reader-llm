@@ -1,0 +1,998 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/preregistration/decisions-log.md",
+    "git_blob": "dde72a9fae0e5272e35dd61dfd5ead8471613a6b",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1171,
+          1171
+        ],
+        "section": "Decision 26 -- Decision statement, greedy-ball clustering radius"
+      },
+      "claim_text": "**Decision**: Retain the greedy-ball spatial clustering at a 20 m radius (implemented in `scripts/lib_consensus.py`, constant `DISTANCE_THRESHOLD_METRES = 20.0`)",
+      "values": [
+        {
+          "quantity": "greedy-ball consensus clustering distance-threshold radius, as adopted as the primary aggregation method",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "greedy-ball clustering distance threshold, as implemented (`DISTANCE_THRESHOLD_METRES` constant, `scripts/lib_consensus.py`)",
+          "value_verbatim": "20.0",
+          "value_parsed": 20.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_consensus.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "scripts/lib_consensus.py line 48 defines `DISTANCE_THRESHOLD_METRES = 20.0` (confirmed present per rule 4; value not adjudicated), corroborating both the prose '20 m radius' and the quoted constant. Trimmed the claim_text before the '(Phase 2a-2e, Phase 3a-3d, H10/H12, ...)' parenthetical, which lists phase-name and hypothesis-identifier labels excluded per rule 5 (condition/phase-name and identifier carve-outs)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1176,
+          1176
+        ],
+        "section": "Decision 26 alternatives considered -- retain-without-robustness-check rejection rationale"
+      },
+      "claim_text": "it does not use the ensemble confidence signal (vote counts) during clustering, operates on centroid distance rather than spatial overlap (IoU), and produces duplicate candidates for ~11.6 % of ground-truth mounds due to centroid drift exceeding the 20 m radius. A reviewer familiar with the modern object-detection literature would ask about these issues, and a post-hoc robustness check is the right response.",
+      "values": [
+        {
+          "quantity": "percentage of ground-truth mounds receiving duplicate candidate detections due to centroid drift exceeding the greedy-ball clustering radius (audit finding, Obs 228)",
+          "value_verbatim": "~11.6",
+          "value_parsed": 11.6,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "centroid-distance radius, greedy-ball consensus clustering (restated as context for the duplicate-candidate finding)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_consensus.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The ~11.6% duplicate-candidate figure is attributed to 'the audit process (Obs 228)' in the surrounding text; Obs 228 is an observation-log identifier, out of scope per rule 5, and no other artefact naming this percentage is visible from within this document (rule 7) -- left anchor-unknown for triage. Approx marker '~' retained verbatim per v1.2 amendment 5. The 20 m radius restates the clustering-distance threshold already anchored to scripts/lib_consensus.py's `DISTANCE_THRESHOLD_METRES` constant in the preceding claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1181,
+          1181
+        ],
+        "section": "Decision 26 rationale item 1 -- registered clustering algorithm (D17 audit correction)"
+      },
+      "claim_text": "The preregistration **does** specify the clustering algorithm: §8.5 step 4 registers **greedy clustering at 20 m** by name as a seven-step procedure (`osf/preregistration.md:1875-1885`, \"Greedy clustering: for each unclustered detection, find all others within 20m and matching label; group as cluster\")",
+      "values": [
+        {
+          "quantity": "greedy clustering distance, as specified in the registration (Section 8.5, paraphrase 'greedy clustering at 20 m')",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "step count of the registered greedy-clustering spatial-clustering-algorithm procedure (Section 8.5)",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "greedy clustering distance, as specified in the registration (Section 8.5, verbatim quoted spec text 'find all others within 20m')",
+          "value_verbatim": "20m",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 calibration rule: a claim about what the REGISTRATION specifies anchors to the lodged osf document, not the executed script. osf/preregistration.md's 'Spatial Clustering Algorithm' subsection (Section 8.5 region) lists exactly seven numbered steps; step 4 reads 'Cluster detections using distance threshold matching the F1 evaluation tolerance (20m): ... Greedy clustering: for each unclustered detection, find all others within 20m and matching label; group as cluster' -- confirming both the 20 m distance and the seven-step count (section located and file confirmed to exist per rule 4; not value-adjudicated). The line-number citation 'osf/preregistration.md:1875-1885' and the identifiers 'D17'/'FALSE-13'/section number 'Section 8.5'/'step 4' are excluded from values per rule 5 (line-number citations, audit identifiers, and section/step reference numbers)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1182,
+          1182
+        ],
+        "section": "Decision 26 rationale item 2 -- paired permutation test, tile/iteration counts"
+      },
+      "claim_text": "paired permutation test across 327 test tiles with 10,000 iterations",
+      "values": [
+        {
+          "quantity": "count of test tiles used in the H10/H12 hp4hn4 greedy-vs-WBF paired permutation test",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": null,
+          "kind": "count",
+          "path": "$.paired_permutation_test.n_tiles",
+          "method": null
+        },
+        {
+          "quantity": "count of permutation-test iterations, H10/H12 hp4hn4 greedy-vs-WBF comparison",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "count",
+          "path": "$.paired_permutation_test.n_permutations",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/h10-h12-v1-retracted-probe/results/h10/wbf/variant_c_vs_greedy_hp4hn4.json",
+        "path": "$.paired_permutation_test.n_tiles"
+      },
+      "method": "read",
+      "notes": "This document's Evidence list (line 1190) names `results/h10/wbf/variant_c_vs_greedy_hp4hn4.json` as the validation artefact; that exact path does not exist in the current working tree (confirmed absent per rule 4). A same-named file exists at `archive/h10-h12-v1-retracted-probe/results/h10/wbf/variant_c_vs_greedy_hp4hn4.json`, used as the anchor here; its paired_permutation_test block records n_tiles=327 and n_permutations=10000, matching this claim's values. Not adjudicated (per rule 4) whether the archive-vs-working-tree path difference reflects an archival move or a retraction -- the directory name is reported as found, for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1182,
+          1182
+        ],
+        "section": "Decision 26 rationale item 2 -- paired permutation test, DeltaF1 and p-value"
+      },
+      "claim_text": "gave ΔF1 = 0.0053 (greedy minus WBF) with two-sided p = 0.6019.",
+      "values": [
+        {
+          "quantity": "DeltaF1 (greedy minus WBF), paired permutation test, H10/H12 hp4hn4 configuration",
+          "value_verbatim": "0.0053",
+          "value_parsed": 0.0053,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.paired_permutation_test.observed_f1_diff_greedy_minus_wbf",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "two-sided p-value, paired permutation test, H10/H12 hp4hn4 configuration (greedy vs WBF)",
+          "value_verbatim": "0.6019",
+          "value_parsed": 0.6019,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.paired_permutation_test.p_value_two_sided",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/h10-h12-v1-retracted-probe/results/h10/wbf/variant_c_vs_greedy_hp4hn4.json",
+        "path": "$.paired_permutation_test.observed_f1_diff_greedy_minus_wbf"
+      },
+      "method": "recompute-script",
+      "notes": "Permutation-test statistics classified per instrument rule 3 ('recompute-script -- needs scripted recomputation... Record the claim; do NOT attempt the computation yourself'). Same archived-path caveat as the preceding claim applies (the working-tree path named in this document's Evidence list is absent; the archived copy is used as anchor)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1182,
+          1182
+        ],
+        "section": "Decision 26 rationale item 2 -- bootstrap 95% F1 CIs, greedy vs WBF"
+      },
+      "claim_text": "Bootstrap 95 % CIs for F1 overlap by ~97 % of their range (greedy [0.8483, 0.9165]; WBF [0.8452, 0.9108]).",
+      "values": [
+        {
+          "quantity": "percentage overlap between the greedy and WBF bootstrap 95% F1 confidence intervals, H10/H12 hp4hn4",
+          "value_verbatim": "~97",
+          "value_parsed": 97,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95% CI lower bound, F1, greedy baseline, H10/H12 hp4hn4",
+          "value_verbatim": "0.8483",
+          "value_parsed": 0.8483,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.greedy_baseline.f1_ci_95[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95% CI upper bound, F1, greedy baseline, H10/H12 hp4hn4",
+          "value_verbatim": "0.9165",
+          "value_parsed": 0.9165,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.greedy_baseline.f1_ci_95[1]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95% CI lower bound, F1, WBF variant C, H10/H12 hp4hn4",
+          "value_verbatim": "0.8452",
+          "value_parsed": 0.8452,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.wbf_variant_c.f1_ci_95[0]",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap 95% CI upper bound, F1, WBF variant C, H10/H12 hp4hn4",
+          "value_verbatim": "0.9108",
+          "value_parsed": 0.9108,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.wbf_variant_c.f1_ci_95[1]",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/h10-h12-v1-retracted-probe/results/h10/wbf/variant_c_vs_greedy_hp4hn4.json",
+        "path": "$.greedy_baseline.f1_ci_95"
+      },
+      "method": "recompute-script",
+      "notes": "Bootstrap CI bounds classified as recompute-script per instrument rule 3. The ~97% overlap figure is the document's own derived characterisation of the two intervals; no direct scalar field holds it, so it is kept recompute-script (an interval-overlap computation over the four CI bounds) rather than 'arithmetic', since it is not a single named a-op-b expression. Approx marker retained per v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1182,
+          1182
+        ],
+        "section": "Decision 26 rationale item 2 -- tile-level win/tie counts, greedy vs WBF"
+      },
+      "claim_text": "The tile-level disagreement is exactly symmetric: greedy wins 11 tiles, WBF wins 11 tiles, 305 tiles are exact F1 ties.",
+      "values": [
+        {
+          "quantity": "count of tiles where greedy-ball scores a strictly higher tile-level F1 than WBF, H10/H12 hp4hn4 paired comparison",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": null,
+          "kind": "count",
+          "path": "$.paired_permutation_test.wins_greedy",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of tiles where WBF scores a strictly higher tile-level F1 than greedy-ball, H10/H12 hp4hn4 paired comparison",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": null,
+          "kind": "count",
+          "path": "$.paired_permutation_test.wins_wbf",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of tiles with an exact tile-level F1 tie between greedy-ball and WBF, H10/H12 hp4hn4 paired comparison",
+          "value_verbatim": "305",
+          "value_parsed": 305,
+          "unit": null,
+          "kind": "count",
+          "path": "$.paired_permutation_test.ties",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/h10-h12-v1-retracted-probe/results/h10/wbf/variant_c_vs_greedy_hp4hn4.json",
+        "path": "$.paired_permutation_test.wins_greedy"
+      },
+      "method": "recompute-script",
+      "notes": "wins_greedy=11, wins_wbf=11, ties=305 sum to 327 tiles, consistent with the tile-count claim above (not adjudicated per rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1184,
+          1184
+        ],
+        "section": "Decision 26 rationale item 4 -- cartographic floor, minimum GT mound separation"
+      },
+      "claim_text": "investigated the cartographic floor (68.1 m minimum GT separation)",
+      "values": [
+        {
+          "quantity": "minimum ground-truth mound separation distance (cartographic floor, audit finding, Obs 228)",
+          "value_verbatim": "68.1",
+          "value_parsed": 68.1,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_fusion.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "scripts/lib_fusion.py's module docstring records 'no two real mounds are closer than ~68 m (minimum observed = 68.1 m in the 569-mound reference corpus)' (confirmed present per rule 4; not adjudicated). Obs 228 identifier excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1192,
+          1192
+        ],
+        "section": "Decision 26 Evidence -- Tests"
+      },
+      "claim_text": "- **Tests**: `tests/test_lib_fusion.py` (33 tier-1 unit tests covering box IoU, size filtering, WBF clustering, vote-aware minimum-separation, end-to-end pipeline)",
+      "values": [
+        {
+          "quantity": "count of unit tests in tests/test_lib_fusion.py covering the WBF library",
+          "value_verbatim": "33",
+          "value_parsed": 33,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "tests/test_lib_fusion.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON test-count anchor, legitimate per the v1.1 calibration rule ('test counts in tests/*.py are legitimate and expected'). tests/test_lib_fusion.py contains exactly 33 `def test_*` function definitions (counted per rule 4's confirm-existence allowance; not adjudicated as match/mismatch). 'tier-1' is a category label, not a separate count, excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1197,
+          1197
+        ],
+        "section": "Decision 26 WBF parameters -- confidence weights"
+      },
+      "claim_text": "- Confidence weights: uniform (1.0) — the proposer returns categorical `\"confidence\": \"high\"` for every detection, so WBF's weighted averaging degenerates to arithmetic mean",
+      "values": [
+        {
+          "quantity": "uniform confidence weight value used by WBF fusion (proposer detections carry no numeric confidence)",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_fusion.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "scripts/lib_fusion.py's `Box` dataclass defines `confidence: float = 1.0` and the module docstring states 'for the current VLM pipeline all boxes have confidence 1.0' (confirmed present per rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1198,
+          1198
+        ],
+        "section": "Decision 26 WBF parameters -- IoU threshold for clustering"
+      },
+      "claim_text": "- IoU threshold for clustering: 0.25 (captures same-mound drift up to ~45 m centroid offset for 75 m diameter symbols, while keeping IoU at zero at the 68 m cartographic floor)",
+      "values": [
+        {
+          "quantity": "IoU threshold for WBF clustering (Variant C robustness implementation)",
+          "value_verbatim": "0.25",
+          "value_parsed": 0.25,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "approximate maximum centroid offset captured as same-mound drift at the chosen IoU threshold, per this document's characterisation",
+          "value_verbatim": "~45",
+          "value_parsed": 45,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "assumed mound-symbol diameter used in the IoU-threshold/centroid-offset relationship",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "cartographic floor (minimum inter-mound separation), restated in rounded form",
+          "value_verbatim": "68",
+          "value_parsed": 68,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_fusion.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "scripts/lib_fusion.py sets `DEFAULT_IOU_THRESHOLD = 0.25` with an inline comment 'for 75 m diameter mound symbols, IoU ~ 0.25 corresponds to ~40 m centroid offset ... (p90 = 23 m, p99 = 37 m)' -- the code comment's own approximate figure (~40 m) differs from this document's '~45 m' figure; not adjudicated here per rule 4 (mirrors the N=30-vs-N=10 sub-finding precedent). The 75 m symbol-diameter figure appears only inline in that comment, not as a named constant -- left anchor-unknown pending a firmer locator. The 68 m cartographic-floor figure restates the 68.1 m minimum-separation claim already anchored above (rounded down here); kept separate per full enumeration (rule 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1199,
+          1199
+        ],
+        "section": "Decision 26 WBF parameters -- post-fusion minimum separation"
+      },
+      "claim_text": "- Post-fusion minimum separation: 30 m, vote-aware with anchor threshold ≥ 6 (matches the preregistered F1-sweep optimal vote_t for H10/H12 greedy ball; only merges pairs where at least one cluster has vote_count ≥ 6, preventing spurious FP-fragment combination while absorbing tight drift into high-confidence cores)",
+      "values": [
+        {
+          "quantity": "post-fusion minimum-separation radius, WBF Variant C robustness implementation",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "vote-count anchor threshold for the vote-aware post-fusion minimum-separation merge rule, WBF Variant C (first mention, 'anchor threshold >= 6')",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "parameter",
+          "path": "archive/h10-h12-v1-retracted-probe/results/h10/wbf/variant_c_vs_greedy_hp4hn4.json#$.greedy_baseline.vote_t",
+          "method": null
+        },
+        {
+          "quantity": "vote-count anchor threshold for the vote-aware post-fusion minimum-separation merge rule, WBF Variant C (restated, 'vote_count >= 6')",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "parameter",
+          "path": "archive/h10-h12-v1-retracted-probe/results/h10/wbf/variant_c_vs_greedy_hp4hn4.json#$.greedy_baseline.vote_t",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_fusion.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "scripts/lib_fusion.py defines `DEFAULT_MIN_SEPARATION_M = 60.0` (differing from the 30 m value quoted here) and `DEFAULT_ANCHOR_VOTE_THRESHOLD = 3` (differing from the 'anchor threshold >= 6' quoted here); the document states the 6 was chosen to match 'the preregistered F1-sweep optimal vote_t for H10/H12 greedy ball', which corresponds to `greedy_baseline.vote_t: 6` in the archived comparison JSON (cross-file locator per v1.2 amendment 2). None of this is adjudicated here (rule 4); the file-existence and constant discrepancies are reported factually for the harness/triage, mirroring the '487-160=327' and N=30-vs-N=10 precedents in prior extractions."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1200,
+          1200
+        ],
+        "section": "Decision 26 WBF parameters -- box size filter"
+      },
+      "claim_text": "- Box size filter: 20 m ≤ width, height ≤ 200 m; 400 m² ≤ area ≤ 40,000 m² (rejects pathological detections such as a 560 m wide outlier observed in the raw proposer output)",
+      "values": [
+        {
+          "quantity": "minimum box width/height for the WBF size filter",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "maximum box width/height for the WBF size filter",
+          "value_verbatim": "200",
+          "value_parsed": 200,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "minimum box area for the WBF size filter",
+          "value_verbatim": "400",
+          "value_parsed": 400,
+          "unit": "m²",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "maximum box area for the WBF size filter",
+          "value_verbatim": "40,000",
+          "value_parsed": 40000,
+          "unit": "m²",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "width of a pathological outlier detection observed in the raw proposer output, motivating the size filter",
+          "value_verbatim": "560",
+          "value_parsed": 560,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_fusion.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "scripts/lib_fusion.py defines DEFAULT_MIN_DIMENSION_M=20.0, DEFAULT_MAX_DIMENSION_M=200.0, DEFAULT_MIN_AREA_M2=400.0, DEFAULT_MAX_AREA_M2=40_000.0, and its module docstring explicitly names 'the pathological 560 m outlier' as the motivating case (all confirmed present per rule 4; not adjudicated)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1201,
+          1201
+        ],
+        "section": "Decision 26 WBF parameters -- matching tolerance for downstream evaluation"
+      },
+      "claim_text": "- Matching tolerance for downstream evaluation: **20 m Hungarian buffer, unchanged from the preregistration**",
+      "values": [
+        {
+          "quantity": "Hungarian-matching spatial tolerance for downstream F1 evaluation, as registered and carried forward unchanged",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 calibration rule: explicitly stated as 'unchanged from the preregistration', so anchored to the lodged osf document (Section 4.1.1 'Primary matching threshold: 20 metres'; Section 4.1.2 Hungarian algorithm description), not to an executed script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1205,
+          1205
+        ],
+        "section": "Decision 26 paper methods-section draft -- proposer pass count"
+      },
+      "claim_text": "Per-pass detections from the ten-pass proposer stage were aggregated into consensus candidates using greedy spatial clustering",
+      "values": [
+        {
+          "quantity": "count of proposer passes per tile, as characterised in the paper methods-section draft ('ten-pass proposer stage')",
+          "value_verbatim": "ten",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No specific artefact for the pass count is named in this draft blockquote; likely refers to the standard N=10 consensus-voting pool used from Phase 3a onward, but that inference is not chased beyond this document per rule 7."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1205,
+          1205
+        ],
+        "section": "Decision 26 paper methods-section draft -- clustering radius and Hungarian tolerance restated"
+      },
+      "claim_text": "using greedy spatial clustering at a 20 m centroid-distance radius, feeding the preregistered Hungarian-matching evaluation at the same 20 m tolerance.",
+      "values": [
+        {
+          "quantity": "greedy clustering centroid-distance radius, restated in the paper methods-section draft",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "Hungarian-matching evaluation spatial tolerance, restated in the paper methods-section draft",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_consensus.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both values restate quantities already anchored elsewhere in this document (clustering radius -> scripts/lib_consensus.py `DISTANCE_THRESHOLD_METRES`; Hungarian tolerance -> osf/preregistration.md Section 4.1, per the v1.1 calibration rule) -- kept here as separate, distinct verbatim mentions per full enumeration (rule 3), consistent with the H7 T=0.0 restatement precedent in the companion hypothesis-tracking.md extraction."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1205,
+          1205
+        ],
+        "section": "Decision 26 paper methods-section draft -- WBF parameters restated"
+      },
+      "claim_text": "with an IoU threshold of 0.25 and a vote-aware minimum-separation post-step (30 m radius, anchor vote_count ≥ 6)",
+      "values": [
+        {
+          "quantity": "WBF IoU threshold, restated in the paper methods-section draft",
+          "value_verbatim": "0.25",
+          "value_parsed": 0.25,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "post-fusion minimum-separation radius, restated in the paper methods-section draft",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "vote-count anchor threshold for the vote-aware minimum-separation rule, restated in the paper methods-section draft",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_fusion.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the three WBF-parameter values already anchored above (0.25 IoU threshold and 30 m separation -> scripts/lib_fusion.py; anchor vote_count=6 -> archive/h10-h12-v1-retracted-probe/results/h10/wbf/variant_c_vs_greedy_hp4hn4.json#$.greedy_baseline.vote_t) -- kept as separate distinct verbatim mentions per full enumeration (rule 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1205,
+          1205
+        ],
+        "section": "Decision 26 paper methods-section draft -- cartographic constraint restated"
+      },
+      "claim_text": "derived from the empirical cartographic constraint that burial mound symbols are never closer than ~68 m on these Soviet topographic maps (minimum observed separation = 68.1 m in the 569-mound reference corpus; 1st percentile = 72.0 m).",
+      "values": [
+        {
+          "quantity": "cartographic floor (minimum inter-mound separation), rounded approximate figure, restated in the paper methods-section draft",
+          "value_verbatim": "~68",
+          "value_parsed": 68,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "minimum observed inter-mound separation distance, exact figure, restated in the paper methods-section draft",
+          "value_verbatim": "68.1",
+          "value_parsed": 68.1,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of mounds in the reference corpus used for the minimum-separation cartographic-constraint analysis",
+          "value_verbatim": "569",
+          "value_parsed": 569,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "1st percentile of inter-mound separation distances, reference corpus",
+          "value_verbatim": "72.0",
+          "value_parsed": 72.0,
+          "unit": "m",
+          "kind": "statistic",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_fusion.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "scripts/lib_fusion.py's module docstring corroborates the ~68 m / 68.1 m / 569-mound figures verbatim ('no two real mounds are closer than ~68 m (minimum observed = 68.1 m in the 569-mound reference corpus)'), confirmed present per rule 4. The 569-mound reference corpus is corroborated independently by `ground_truth_mounds: 569` fields across multiple threshold_sweep.json files project-wide, though those are not the anchor used here. The '1st percentile = 72.0 m' figure was not located verbatim in scripts/lib_fusion.py or elsewhere within rule 7's scope -- left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1205,
+          1205
+        ],
+        "section": "Decision 26 paper methods-section draft -- statistical-equivalence figures restated"
+      },
+      "claim_text": "Paired permutation tests on the H10/H12 hp4hn4 configuration confirmed statistical equivalence (ΔF1 = 0.005, two-sided p = 0.60 at n = 10,000 permutations; bootstrap 95 % F1 CIs overlapping by ~97 % of their range).",
+      "values": [
+        {
+          "quantity": "DeltaF1 (greedy minus WBF), paired permutation test, restated at reduced precision in the paper methods-section draft",
+          "value_verbatim": "0.005",
+          "value_parsed": 0.005,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.paired_permutation_test.observed_f1_diff_greedy_minus_wbf",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "two-sided p-value, paired permutation test, restated at reduced precision in the paper methods-section draft",
+          "value_verbatim": "0.60",
+          "value_parsed": 0.6,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.paired_permutation_test.p_value_two_sided",
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "count of permutations, restated in the paper methods-section draft",
+          "value_verbatim": "10,000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "count",
+          "path": "$.paired_permutation_test.n_permutations",
+          "method": "read"
+        },
+        {
+          "quantity": "percentage overlap between the greedy and WBF bootstrap 95% F1 confidence intervals, restated in the paper methods-section draft",
+          "value_verbatim": "~97",
+          "value_parsed": 97,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/h10-h12-v1-retracted-probe/results/h10/wbf/variant_c_vs_greedy_hp4hn4.json",
+        "path": "$.paired_permutation_test.observed_f1_diff_greedy_minus_wbf"
+      },
+      "method": "recompute-script",
+      "notes": "Restates figures already anchored/classified in the earlier claims from lines 1182 and 1187-1192 above, at the coarser rounding used in the paper draft (0.005 vs 0.0053; 0.60 vs 0.6019); kept as a separate claim per full enumeration (rule 3, distinct verbatim mention)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1209,
+          1209
+        ],
+        "section": "Decision 26 scope of robustness-check replication -- required rollout"
+      },
+      "claim_text": "- **Required**: H10/H12 rollout to remaining 4 configs (hp2hn6, hp6hn2, hp8hn8, hp16hn16) at ~$7 API each = ~$28 total.",
+      "values": [
+        {
+          "quantity": "count of remaining H10/H12 library-composition configs requiring WBF-robustness rollout",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated API cost per remaining config, WBF-robustness rollout",
+          "value_verbatim": "~$7",
+          "value_parsed": 7,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated total API cost, WBF-robustness rollout across remaining configs",
+          "value_verbatim": "~$28",
+          "value_parsed": 28,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Forward-looking, not-yet-executed cost estimates for a proposed rollout; no repo artefact can attest to a future/unexecuted API run. 'hp2hn6, hp6hn2, hp8hn8, hp16hn16' are condition-name labels, excluded per rule 5 (not separately elaborated as counts in this span)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1209,
+          1209
+        ],
+        "section": "Decision 26 scope of robustness-check replication -- equivalence confirmed at hp4hn4"
+      },
+      "claim_text": "Confirms the p=0.60 equivalence holds across the library-composition sweep.",
+      "values": [
+        {
+          "quantity": "two-sided p-value, paired permutation test, restated as the equivalence result the rollout is meant to confirm across the sweep",
+          "value_verbatim": "0.60",
+          "value_parsed": 0.6,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.paired_permutation_test.p_value_two_sided",
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "archive/h10-h12-v1-retracted-probe/results/h10/wbf/variant_c_vs_greedy_hp4hn4.json",
+        "path": "$.paired_permutation_test.p_value_two_sided"
+      },
+      "method": "recompute-script",
+      "notes": "Restates the p-value already classified as recompute-script above."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1210,
+          1210
+        ],
+        "section": "Decision 26 scope of robustness-check replication -- recommended (production run)"
+      },
+      "claim_text": "- **Recommended**: Production run (4 maps, F1 = 0.885) WBF replication at ~$10 API. Directly validates the paper's headline number.",
+      "values": [
+        {
+          "quantity": "count of maps in the production run",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, production run (4-map), headline paper result",
+          "value_verbatim": "0.885",
+          "value_parsed": 0.885,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated API cost, proposed WBF replication of the production run",
+          "value_verbatim": "~$10",
+          "value_parsed": 10,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The production-run F1=0.885 headline figure and 4-map count are used elsewhere in the project, but no specific anchor file is named within this document's line-1210 span, and chasing beyond the assigned document is out of scope (rule 7) -- left anchor-unknown for triage. The $10 API estimate is a not-yet-executed proposal."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1211,
+          1211
+        ],
+        "section": "Decision 26 scope of robustness-check replication -- optional (generalisation run)"
+      },
+      "claim_text": "- **Optional**: Generalisation run (55 maps, F1 = 0.790 → D-S 0.808–0.814) WBF replication at ~$50–100 API. Strongest defence but substantial API spend.",
+      "values": [
+        {
+          "quantity": "count of maps in the generalisation run",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, generalisation run (55-map), raw headline figure",
+          "value_verbatim": "0.790",
+          "value_parsed": 0.79,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, generalisation run, 'D-S'-adjusted lower bound (abbreviation not resolved within this document's assigned span)",
+          "value_verbatim": "0.808",
+          "value_parsed": 0.808,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, generalisation run, 'D-S'-adjusted upper bound (abbreviation not resolved within this document's assigned span)",
+          "value_verbatim": "0.814",
+          "value_parsed": 0.814,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated API cost lower bound, proposed WBF replication of the generalisation run",
+          "value_verbatim": "~$50",
+          "value_parsed": 50,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated API cost upper bound, proposed WBF replication of the generalisation run",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "'D-S' is not expanded within this document's assigned span (lines 1166-1225); not guessed at here to avoid confabulating an expansion. The underlying figures likely anchor to a generalisation-run results file outside this document -- left anchor-unknown per rule 7 (no chase beyond assigned document). '$50-100' is a cost-range estimate for a not-yet-executed proposal."
+    }
+  ]
+}

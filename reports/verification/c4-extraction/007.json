@@ -1,0 +1,2511 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/preregistration/decisions-log.md",
+    "git_blob": "dde72a9fae0e5272e35dd61dfd5ead8471613a6b",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          3,
+          4
+        ],
+        "section": "Top-of-document banner — scope of the OSF lodgement"
+      },
+      "claim_text": "The registration comprises exactly three\n> documents, all in `osf/`",
+      "values": [
+        {
+          "quantity": "count of documents comprising the lodged OSF registration",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/README.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "osf/README.md line 3 states 'This registration contains three documents comprising the complete preregistration...', matching the banner's claim verbatim; the banner cites this file directly ('osf/README.md:3,9-11'). The line-number citation 'osf/README.md:3,9-11' is excluded per rule 5 (line-number citations out of scope); 'D17 audit' (line 9) is an identifier and '2026-07-28' a date, both excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          31
+        ],
+        "section": "Decision 1 rationale — rate limits (Gemini 3 Pro vs Flash)"
+      },
+      "claim_text": "1. **Rate limits**: Gemini 3 Pro has severe rate limits (~250 RPD on Tier 1 plan) causing 8+ minute delays per tile. Flash offers ~10k RPD.",
+      "values": [
+        {
+          "quantity": "Gemini 3 Pro rate limit, Tier 1 plan (approx., prior to production validation)",
+          "value_verbatim": "~250",
+          "value_parsed": 250,
+          "unit": "RPD",
+          "kind": "other",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "observed per-tile delay attributed to the Gemini 3 Pro Tier 1 rate limit (approx., lower bound)",
+          "value_verbatim": "8+",
+          "value_parsed": 8,
+          "unit": "minutes",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Gemini 3 Flash rate limit (approx.)",
+          "value_verbatim": "~10k",
+          "value_parsed": 10000,
+          "unit": "RPD",
+          "kind": "other",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Corroborating figures appear in docs/notes/working-notes.md (Observation 21 area, lines 189-190: '~250 RPD limit... causing 8+ minute delays'; '~10k RPD') but docs/notes/** is explicitly excluded from the C4 mine (audit-charter § 2) and is prose, so per rule 2 (never anchor prose to prose) it is named here, not used as an anchor. Vendor request-per-day quotas are 'external' per rule 3 (no repo artefact can decide them); the internally observed per-tile delay is not a vendor figure, so it is anchor-unknown rather than external."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          33,
+          33
+        ],
+        "section": "Decision 1 rationale — Flash/Pro performance parity"
+      },
+      "claim_text": "2. **Performance parity**: Surprisingly, Flash and Pro achieved similar accuracy on calibration tiles (F1 ~0.86). Flash's lower reasoning capability forces prompts to be explicit and robust (\"Strict Teacher\" effect).",
+      "values": [
+        {
+          "quantity": "F1, Flash vs Pro calibration-tile accuracy comparison (approx., cited as evidence for near-parity)",
+          "value_verbatim": "~0.86",
+          "value_parsed": 0.86,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "'Strict Teacher' is a named effect, not a claim value (rule 5 condition-name carve-out). Searched docs/notes/working-notes.md (prose, out of C4 mine scope per audit-charter § 2 but usable as attestation) for a matching Flash-vs-Pro calibration-tile F1~0.86 comparison; nearby but non-identical figures appear (e.g. 'Flash 2/5 (Consensus) F1 0.86' line 695, 'Baseline (Consensus) 0.86' line 239) — none reproduces this exact Flash-vs-Pro comparison, so left anchor-unknown per rule 2 (no traceable non-prose artefact located)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          35,
+          35
+        ],
+        "section": "Decision 1 rationale — cost efficiency (Flash Swarm vs Pro)"
+      },
+      "claim_text": "3. **Cost efficiency**: Flash is ~20× cheaper than Pro. Running Flash 30 times (\"Flash Swarm\") costs ~15% of running Pro 10 times, with comparable F1.",
+      "values": [
+        {
+          "quantity": "Flash cost relative to Pro, approx. multiple cheaper",
+          "value_verbatim": "~20",
+          "value_parsed": 20,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "count of Flash runs in the 'Flash Swarm' cost comparison",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Flash Swarm (30 runs) cost as a percentage of the compared Pro run cost, approx.",
+          "value_verbatim": "~15",
+          "value_parsed": 15,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "count of Pro runs in the cost comparison",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "'Flash Swarm' is a named strategy, not itself a claim (rule 5). Corroborating figures appear in docs/notes/working-notes.md Observation 31 ('The \"Flash Swarm\" Strategy (N=30)', line 417ff: '...running it 30 times is roughly 1.5x the cost of one Pro run') — prose, out of C4 mine scope (audit-charter § 2), so not usable as a repo anchor per rule 2; run counts (30, 10) left anchor-unknown, vendor cost ratio and percentage classified external per rule 3."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          58,
+          58
+        ],
+        "section": "Decision 2 rationale — pilot study design"
+      },
+      "claim_text": "Pilot study on 20 stratified tiles (10 runs each level) found:",
+      "values": [
+        {
+          "quantity": "tile count, thinking-level pilot study",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "run count per thinking level, pilot study",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "This is a January 2026 pilot predating systematic run tracking; searched for a matching config/manifest/eval JSON recording a 20-tile/10-run-per-level thinking-level pilot and found none — no artefact located, left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          62,
+          62
+        ],
+        "section": "Decision 2 pilot results table — Minimal thinking level row"
+      },
+      "claim_text": "| Minimal | 0.752 | 0.023 | 34.2s |",
+      "values": [
+        {
+          "quantity": "mean F1, thinking-level pilot, Minimal level",
+          "value_verbatim": "0.752",
+          "value_parsed": 0.752,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1 standard deviation, thinking-level pilot, Minimal level",
+          "value_verbatim": "0.023",
+          "value_parsed": 0.023,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "latency for 20 tiles, thinking-level pilot, Minimal level",
+          "value_verbatim": "34.2",
+          "value_parsed": 34.2,
+          "unit": "s",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No matching pilot artefact located (see line-58 claim note); this early January 2026 pilot predates systematic run tracking."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          63,
+          63
+        ],
+        "section": "Decision 2 pilot results table — Low thinking level row"
+      },
+      "claim_text": "| Low | 0.758 | 0.022 | 66.5s |",
+      "values": [
+        {
+          "quantity": "mean F1, thinking-level pilot, Low level",
+          "value_verbatim": "0.758",
+          "value_parsed": 0.758,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1 standard deviation, thinking-level pilot, Low level",
+          "value_verbatim": "0.022",
+          "value_parsed": 0.022,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "latency for 20 tiles, thinking-level pilot, Low level",
+          "value_verbatim": "66.5",
+          "value_parsed": 66.5,
+          "unit": "s",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No matching pilot artefact located (see line-58 claim note)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          64,
+          64
+        ],
+        "section": "Decision 2 pilot results table — High thinking level row"
+      },
+      "claim_text": "| High | 0.748 | 0.044 | 97.3s |",
+      "values": [
+        {
+          "quantity": "mean F1, thinking-level pilot, High level",
+          "value_verbatim": "0.748",
+          "value_parsed": 0.748,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1 standard deviation, thinking-level pilot, High level",
+          "value_verbatim": "0.044",
+          "value_parsed": 0.044,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "latency for 20 tiles, thinking-level pilot, High level",
+          "value_verbatim": "97.3",
+          "value_parsed": 97.3,
+          "unit": "s",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No matching pilot artefact located (see line-58 claim note)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          68,
+          68
+        ],
+        "section": "Decision 2 key findings — ANOVA significance"
+      },
+      "claim_text": "- No significant F1 difference between levels (ANOVA p > 0.05)",
+      "values": [
+        {
+          "quantity": "ANOVA significance threshold for F1 difference across thinking levels, thinking-level pilot",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No raw pilot data or ANOVA output artefact located for this January 2026 pilot; the underlying comparison (0.752/0.758/0.748) is itself anchor-unknown (see line-62/63/64 claims)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          69,
+          69
+        ],
+        "section": "Decision 2 key findings — High vs Minimal variance ratio"
+      },
+      "claim_text": "- High shows 2× the F1 variance of minimal",
+      "values": [
+        {
+          "quantity": "document's own characterisation of High thinking level's F1 variance as a multiple of Minimal's F1 variance, thinking-level pilot",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Consistent with the table's Std Dev ratio (0.044/0.023 ≈ 1.91, rounds to '2×') but the table itself is anchor-unknown (no artefact located), so this rounded characterisation cannot be mechanically derived without risking a false-mismatch arithmetic expression (v1.2 amendment 1/5 concern) — left anchor-unknown rather than arithmetic."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          70
+        ],
+        "section": "Decision 2 key findings — Minimal vs High speed ratio"
+      },
+      "claim_text": "- Minimal is 2.84× faster than high",
+      "values": [
+        {
+          "quantity": "document's own characterisation of Minimal thinking level's speed advantage over High, thinking-level pilot (multiple)",
+          "value_verbatim": "2.84",
+          "value_parsed": 2.84,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Consistent with the table's Latency ratio (97.3/34.2 ≈ 2.845) but the table itself is anchor-unknown (no artefact located); left anchor-unknown rather than arithmetic for the same reason as the line-69 variance-ratio claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          95,
+          95
+        ],
+        "section": "Decision 3 rationale table — single-stage 2/5 voting row"
+      },
+      "claim_text": "| Single-stage 2/5 voting | 0.86 | 0.85 | 0.86 | Simple, effective |",
+      "values": [
+        {
+          "quantity": "vote threshold, single-stage preliminary architecture comparison (2-of-5)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "voting pool size, single-stage preliminary architecture comparison (2-of-5)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, single-stage 2/5 voting, preliminary architecture comparison",
+          "value_verbatim": "0.86",
+          "value_parsed": 0.86,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "precision, single-stage 2/5 voting, preliminary architecture comparison",
+          "value_verbatim": "0.85",
+          "value_parsed": 0.85,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "recall, single-stage 2/5 voting, preliminary architecture comparison",
+          "value_verbatim": "0.86",
+          "value_parsed": 0.86,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "December 2025 preliminary finding predating systematic run tracking; docs/notes/working-notes.md contains several similar but non-identical 0.86/0.85/0.86-family figures (e.g. line 239 'Baseline (Consensus) | 0.85 | 0.86 | 0.86'), but that document is prose and out of C4 mine scope (rule 2, audit-charter § 2) — no committed artefact located."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          96,
+          96
+        ],
+        "section": "Decision 3 rationale table — two-stage (v4.5 verifier) row"
+      },
+      "claim_text": "| Two-stage (v4.5 verifier) | 0.80 | 0.77 | 0.84 | Context loss in cropped candidates |",
+      "values": [
+        {
+          "quantity": "F1, two-stage v4.5-verifier architecture, preliminary comparison",
+          "value_verbatim": "0.80",
+          "value_parsed": 0.8,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "precision, two-stage v4.5-verifier architecture, preliminary comparison",
+          "value_verbatim": "0.77",
+          "value_parsed": 0.77,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "recall, two-stage v4.5-verifier architecture, preliminary comparison",
+          "value_verbatim": "0.84",
+          "value_parsed": 0.84,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "'v4.5' is a prompt version string, excluded per rule 5. No committed artefact located for this preliminary comparison (see line-95 row note)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          97,
+          97
+        ],
+        "section": "Decision 3 rationale table — two-stage + voting row"
+      },
+      "claim_text": "| Two-stage + voting | 0.75 | - | - | Verifier too conservative |",
+      "values": [
+        {
+          "quantity": "F1, two-stage-plus-voting architecture, preliminary comparison",
+          "value_verbatim": "0.75",
+          "value_parsed": 0.75,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Precision/Recall cells are '-' (non-numeric, not extracted). No committed artefact located for this preliminary comparison (see line-95 row note)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          105,
+          105
+        ],
+        "section": "Decision 3 — literature review finding on two-stage F1 gain"
+      },
+      "claim_text": "**Literature review finding**: The \"+5-8% F1\" claim for two-stage VLM pipelines could not be traced to peer-reviewed sources. The figure appears extrapolated from traditional ML cascaded classifier literature.",
+      "values": [
+        {
+          "quantity": "F1 improvement figure attributed to unspecified two-stage VLM pipeline literature (lower bound of range; explicitly flagged by the document as untraceable to peer-reviewed sources)",
+          "value_verbatim": "+5",
+          "value_parsed": 5,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1 improvement figure attributed to unspecified two-stage VLM pipeline literature (upper bound of range; explicitly flagged by the document as untraceable to peer-reviewed sources)",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The document itself states this figure 'could not be traced to peer-reviewed sources' — no citation searched or found in docs/methodology/references/ within this document's own text; left anchor-unknown per the document's own admission of unverifiability."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          117,
+          117
+        ],
+        "section": "Decision 4 — decision statement, ranking dimensionality"
+      },
+      "claim_text": "**Decision**: Select hard positives and hard negatives from Phase 1 baseline evaluation using a two-dimensional ranking: (1) frequency (vote count / miss rate), (2) localisation accuracy (proximity to nearest counterpart). See `outputs/phase1-library/fp-fn-register.md` for the full register and Observation 76 in working notes.",
+      "values": [
+        {
+          "quantity": "count of ranking dimensions used for Phase 1 hard-example selection (frequency, localisation accuracy)",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "outputs/phase1-library/fp-fn-register.md is named as the full register but is absent from the working tree (confirmed missing); 'Observation 76' is an identifier, excluded per rule 5. No separate artefact confirms the dimensionality count itself (self-evident from the enumerated (1)/(2) items in the same sentence) — left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          121,
+          121
+        ],
+        "section": "Decision 4 — Hard Positive preregistered criteria (§8.4.2)"
+      },
+      "claim_text": "**Preregistered criteria** (§8.4.2): K=5 passes, rank by miss frequency. The appendix (line 115) contains a stale \"≥3/10 passes\" reference from an earlier draft, but the operative procedure (appendix lines 98–99) and execution simulation both specify K=5 with ≥3/5 threshold. See errata E15.",
+      "values": [
+        {
+          "quantity": "preregistered pass count (K) for hard-example selection ranking (§8.4.2), first mention",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "stale ('earlier draft') minimum vote-fraction numerator superseded by the operative ≥3/5 threshold",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "stale ('earlier draft') minimum vote-fraction denominator superseded by the operative ≥3/5 threshold",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "operative preregistered pass count (K) for hard-example selection ranking, confirmed non-stale",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "operative preregistered minimum vote-fraction numerator for hard-example selection ranking",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "operative preregistered minimum vote-fraction denominator for hard-example selection ranking",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration-appendix-prompts.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration-appendix-prompts.md lines 98-99 exactly ('1. Run image-only baseline on 20 training tiles (5 passes)'; '2. Identify False Positives (≥3/5 passes)') and protocol-errata.md E15 ('Inconsistent pass count references in preregistration appendix'), which documents the same stale-≥3/10-vs-operative-≥3/5 correction and cites Line 115 as the stale HP-selection reference — the '(line 115)' and 'appendix lines 98–399' citations here are line-number citations, excluded per rule 5; 'E15' is an identifier, excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          123,
+          123
+        ],
+        "section": "Decision 4 — Hard Positive actual execution"
+      },
+      "claim_text": "**Actual execution**: K=5 passes as preregistered. All 24 FNs were complete misses (0/5), so frequency alone provided no differentiation. Applied proximity-based secondary ranking:",
+      "values": [
+        {
+          "quantity": "pass count (K) actually run for Phase 1 hard-positive selection",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of complete-miss false negatives, Phase 1 baseline evaluation",
+          "value_verbatim": "24",
+          "value_parsed": 24,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "vote-count numerator, complete-miss false negatives (0 of 5)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "vote-count denominator, complete-miss false negatives (0 of 5)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/protocol-errata.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches protocol-errata.md E15 verbatim: 'Phase 1 was executed with K=5 passes as specified by the operative procedure... all 24 FNs were complete misses (0/5)...'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          125,
+          125
+        ],
+        "section": "Decision 4 — recognition-failure FN subset"
+      },
+      "claim_text": "- **Recognition failures** (>50m from nearest detection): 9 FNs, genuinely invisible to the model",
+      "values": [
+        {
+          "quantity": "distance threshold (metres) defining a recognition failure (>50m from nearest detection), Phase 1 FN taxonomy",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of recognition-failure FNs, Phase 1 baseline evaluation",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/protocol-errata.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches protocol-errata.md E10: 'A 50m threshold was selected as the boundary, yielding 9 recognition failures and 15 localisation failures from 24 total FNs.'"
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          126,
+          126
+        ],
+        "section": "Decision 4 — localisation-failure FN subset"
+      },
+      "claim_text": "- **Localisation failures** (20-50m from nearest detection): 15 FNs, detected but misplaced",
+      "values": [
+        {
+          "quantity": "distance range lower bound (metres) defining a localisation failure, Phase 1 FN taxonomy (matches the registered spatial evaluation tolerance)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "distance range upper bound (metres) defining a localisation failure, Phase 1 FN taxonomy",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of localisation-failure FNs, Phase 1 baseline evaluation",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/protocol-errata.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'15 FNs' and the 50m threshold match protocol-errata.md E10 ('9 recognition failures and 15 localisation failures from 24 total FNs'); the 20m lower bound matches the registered spatial-tolerance figure discussed in E7 ('references were buffered by 20m... 20m spatial tolerance')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          130,
+          130
+        ],
+        "section": "Decision 4 — initial hard-positive selection (Session 6)"
+      },
+      "claim_text": "Selected 4 recognition failures, one per map sheet (farthest from nearest detection first):",
+      "values": [
+        {
+          "quantity": "count of recognition failures selected for the initial hard-positive pick",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "per-map-sheet example count used as a stratification tiebreaker, initial hard-positive selection",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/protocol-errata.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'4' matches protocol-errata.md E11: 'Of 9 total recognition failures, 4 are selected for Scale-8...'. 'Session 6' is a session number, excluded per rule 5. No artefact located for the 'one per map sheet' stratification design choice itself — left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          134,
+          134
+        ],
+        "section": "Decision 4 — initial hard-positive selection table row"
+      },
+      "claim_text": "| 05 | 354 | Rakovski | 2449.9m | K-35-062-2_Rakovski_x0_y1344.png |",
+      "values": [
+        {
+          "quantity": "distance from reference mound to nearest detection, initial hard-positive Example 05 candidate (Rakovski)",
+          "value_verbatim": "2449.9",
+          "value_parsed": 2449.9,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "'Example' number and 'fid' are row identifiers, excluded per rule 5 (analogous to excluded identifier classes — not a measurement). outputs/phase1-library/fp-fn-register.md, the register this table is drawn from, is absent from the working tree (confirmed missing) — no alternative artefact located, left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          135,
+          135
+        ],
+        "section": "Decision 4 — initial hard-positive selection table row"
+      },
+      "claim_text": "| 06 | 249 | Lesovo | 1807.8m | K-35-078-1_Lesovo_x1344_y448.png |",
+      "values": [
+        {
+          "quantity": "distance from reference mound to nearest detection, initial hard-positive Example 06 candidate (Lesovo)",
+          "value_verbatim": "1807.8",
+          "value_parsed": 1807.8,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "'Example' number and 'fid' are row identifiers, excluded per rule 5 (analogous to excluded identifier classes — not a measurement). outputs/phase1-library/fp-fn-register.md, the register this table is drawn from, is absent from the working tree (confirmed missing) — no alternative artefact located, left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          136,
+          136
+        ],
+        "section": "Decision 4 — initial hard-positive selection table row"
+      },
+      "claim_text": "| 07 | 556 | K-35-052-4 | 572.1m | K-35-052-4_32635_x2240_y3136.png |",
+      "values": [
+        {
+          "quantity": "distance from reference mound to nearest detection, initial hard-positive Example 07 candidate (K-35-052-4)",
+          "value_verbatim": "572.1",
+          "value_parsed": 572.1,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "'Example' number and 'fid' are row identifiers, excluded per rule 5 (analogous to excluded identifier classes — not a measurement). outputs/phase1-library/fp-fn-register.md, the register this table is drawn from, is absent from the working tree (confirmed missing) — no alternative artefact located, left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          137,
+          137
+        ],
+        "section": "Decision 4 — initial hard-positive selection table row"
+      },
+      "claim_text": "| 08 | 105 | Elenovo | 243.6m | K-35-053-3_Elenovo_x896_y1344.png |",
+      "values": [
+        {
+          "quantity": "distance from reference mound to nearest detection, initial hard-positive Example 08 candidate (Elenovo)",
+          "value_verbatim": "243.6",
+          "value_parsed": 243.6,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "'Example' number and 'fid' are row identifiers, excluded per rule 5 (analogous to excluded identifier classes — not a measurement). outputs/phase1-library/fp-fn-register.md, the register this table is drawn from, is absent from the working tree (confirmed missing) — no alternative artefact located, left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          141,
+          141
+        ],
+        "section": "Decision 4 — boundary-artefact revision (Session 7)"
+      },
+      "claim_text": "Diagnostic analysis revealed that fids 354, 249, and 556 are entirely outside all calibration tile polygons — their reference coordinates fall in gaps between the 5 scattered tiles per sheet. They never contributed to the FN count and are not genuine recognition failures. The evaluation scoping bug (E7, see protocol errata) allowed these out-of-scope references to appear in the FN list because references were tested against `union_all()` of tile polygons rather than individual tiles. With non-adjacent calibration tiles, the union is geometrically equivalent to per-tile scoping, so the bug did not inflate the F1 metrics, but the register included these references in the unscoped crop analysis.",
+      "values": [
+        {
+          "quantity": "count of scattered calibration tiles per map sheet, Phase 1 baseline (context for the boundary-artefact discovery)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/protocol-errata.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches protocol-errata.md E7 verbatim: 'the Phase 1 calibration results (5 scattered tiles per sheet) are unaffected'. fids 354/249/556 are row identifiers, excluded per rule 5. 'Session 7' is a session number, excluded per rule 5. 'E7' is an identifier, excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          145,
+          145
+        ],
+        "section": "Decision 4 — final selection approach, priority rule"
+      },
+      "claim_text": "**Priority**: Recognition failures over localisation failures. Localisation failures (detection within 20-50m of reference) would be hits at production tolerances (~50m / 10px at 5m/px). The core hard example library should teach the model to *recognise* mounds, not to place centroids more precisely. See Observation 79 in working notes.",
+      "values": [
+        {
+          "quantity": "distance range lower bound (metres) defining a localisation failure (restated)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "distance range upper bound (metres) defining a localisation failure (restated)",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "production spatial tolerance, approx. (metres) — distinct from the 20m Phase 1 calibration evaluation tolerance",
+          "value_verbatim": "~50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "production spatial tolerance in pixels, corresponding to the ~50m tolerance",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "map scale (metres per pixel) used to convert the production tolerance between metres and pixels",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "m/px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/protocol-errata.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'20-50m' repeats the localisation-failure range already anchored at line 126 (protocol-errata.md E7/E10). The '~50m / 10px at 5m/px' production-tolerance figures are internally consistent (50 ÷ 5 = 10) but no external artefact was located confirming this specific production-tolerance framing — left anchor-unknown rather than arithmetic, since there is no separately anchored operand file to derive it from (self-referential same-document arithmetic is not supported by the schema). 'Observation 79' is an identifier, excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          147,
+          147
+        ],
+        "section": "Decision 4 — final selection approach, ranking rule"
+      },
+      "claim_text": "**Ranking**: Among recognition failures (>50m from nearest detection), rank by (1) vote count of nearest detection descending (more votes = more systematic miss), then (2) distance to nearest detection descending.",
+      "values": [
+        {
+          "quantity": "distance threshold (metres) defining a recognition failure, restated in the ranking rule (>50m from nearest detection)",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/protocol-errata.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the 50m recognition-failure threshold already anchored at line 125 (protocol-errata.md E10: 'A 50m threshold was selected...'). The '(1)' and '(2)' are enumeration markers, not claim values (rule 5 spirit)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          149,
+          149
+        ],
+        "section": "Decision 4 — edge-clearance rule for candidate exclusion"
+      },
+      "claim_text": "**Edge clearance**: Candidates where the mound symbol is truncated at the tile edge are excluded. Minimum ~5px clearance from any tile edge is required for the symbol to be fully visible. Truncated symbols are not genuine recognition failures because the 64px tile overlap ensures the full symbol appears in an adjacent tile. Fid 161 (Elenovo, west edge, ~2/3 truncated) was excluded on this basis.",
+      "values": [
+        {
+          "quantity": "minimum pixel clearance from any tile edge required for a candidate symbol to be considered fully visible, approx.",
+          "value_verbatim": "~5",
+          "value_parsed": 5,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tile overlap (pixels) ensuring a truncated symbol appears fully in an adjacent tile",
+          "value_verbatim": "64",
+          "value_parsed": 64,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "approximate fraction of the mound symbol truncated at the tile edge, fid 161 (Elenovo, west edge)",
+          "value_verbatim": "~2/3",
+          "value_parsed": 0.667,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/protocol-errata.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'64px tile overlap' matches protocol-errata.md E8: 'adjacent tiles (which overlap by 64 pixels)'. E11 confirms fid 161 as the edge-truncated exclusion ('1 is edge-truncated (fid 161)') but does not restate the ~5px clearance minimum or the ~2/3 truncation fraction — left anchor-unknown for those two values. 'Fid 161' is a row identifier, excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          151,
+          151
+        ],
+        "section": "Decision 4 — map-sheet stratification relaxation"
+      },
+      "claim_text": "**Map sheet stratification**: One-per-sheet diversity was used as a tiebreaker in the initial selection. In the revised selection, this constraint was relaxed because Lesovo and K-35-052-4 had zero recognition failures among their calibration FNs — all their FNs were either out-of-scope (boundary artefacts) or localisation failures. Requiring one-per-sheet would force inclusion of localisation failures on those sheets, contradicting the recognition-failure priority. The constraint is relaxed only for hard positives; hard negatives retain one-per-sheet stratification.",
+      "values": [
+        {
+          "quantity": "per-map-sheet example count used as the initial-selection stratification tiebreaker (restated)",
+          "value_verbatim": "One",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of recognition-failure FNs for the Lesovo and K-35-052-4 sheets, motivating relaxation of the one-per-sheet constraint",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No artefact located confirming the zero-recognition-failure count for these two sheets specifically, nor the one-per-sheet design rule itself; this is a narrative account of a post-hoc selection decision."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          157,
+          157
+        ],
+        "section": "Decision 4 — final hard-positive selection table row"
+      },
+      "claim_text": "| 05 | 399 | Rakovski | 0/5 | 1243.1m | K-35-062-2_Rakovski_x448_y2688.png |",
+      "values": [
+        {
+          "quantity": "vote-count numerator, final hard-positive Example 05 candidate (Rakovski) (0 of 5)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote-count denominator, final hard-positive Example 05 candidate (Rakovski) (0 of 5)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "distance from reference mound to nearest detection, final hard-positive Example 05 candidate (Rakovski)",
+          "value_verbatim": "1243.1",
+          "value_parsed": 1243.1,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "'Example' number and 'fid' are row identifiers, excluded per rule 5. outputs/phase1-library/fp-fn-register.md, the register this table is drawn from, is absent from the working tree (confirmed missing) — no alternative artefact located, left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          158,
+          158
+        ],
+        "section": "Decision 4 — final hard-positive selection table row"
+      },
+      "claim_text": "| 06 | 99 | Elenovo | 0/5 | 1047.1m | K-35-053-3_Elenovo_x896_y1344.png |",
+      "values": [
+        {
+          "quantity": "vote-count numerator, final hard-positive Example 06 candidate (Elenovo) (0 of 5)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote-count denominator, final hard-positive Example 06 candidate (Elenovo) (0 of 5)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "distance from reference mound to nearest detection, final hard-positive Example 06 candidate (Elenovo)",
+          "value_verbatim": "1047.1",
+          "value_parsed": 1047.1,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "'Example' number and 'fid' are row identifiers, excluded per rule 5. outputs/phase1-library/fp-fn-register.md, the register this table is drawn from, is absent from the working tree (confirmed missing) — no alternative artefact located, left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          159,
+          159
+        ],
+        "section": "Decision 4 — final hard-positive selection table row"
+      },
+      "claim_text": "| 07 | 15 | Rakovski | 0/5 | 905.6m | K-35-062-2_Rakovski_x896_y2688.png |",
+      "values": [
+        {
+          "quantity": "vote-count numerator, final hard-positive Example 07 candidate (Rakovski) (0 of 5)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote-count denominator, final hard-positive Example 07 candidate (Rakovski) (0 of 5)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "distance from reference mound to nearest detection, final hard-positive Example 07 candidate (Rakovski)",
+          "value_verbatim": "905.6",
+          "value_parsed": 905.6,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "'Example' number and 'fid' are row identifiers, excluded per rule 5. outputs/phase1-library/fp-fn-register.md, the register this table is drawn from, is absent from the working tree (confirmed missing) — no alternative artefact located, left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          160,
+          160
+        ],
+        "section": "Decision 4 — final hard-positive selection table row"
+      },
+      "claim_text": "| 08 | 105 | Elenovo | 0/5 | 243.6m | K-35-053-3_Elenovo_x896_y1344.png |",
+      "values": [
+        {
+          "quantity": "vote-count numerator, final hard-positive Example 08 candidate (Elenovo) (0 of 5)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote-count denominator, final hard-positive Example 08 candidate (Elenovo) (0 of 5)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "distance from reference mound to nearest detection, final hard-positive Example 08 candidate (Elenovo)",
+          "value_verbatim": "243.6",
+          "value_parsed": 243.6,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "'Example' number and 'fid' are row identifiers, excluded per rule 5. outputs/phase1-library/fp-fn-register.md, the register this table is drawn from, is absent from the working tree (confirmed missing) — no alternative artefact located, left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          162,
+          162
+        ],
+        "section": "Decision 4 — note on map-sheet overlap in final selection"
+      },
+      "claim_text": "**Note**: Examples 05 and 07 share Rakovski; examples 06 and 08 share Elenovo. This doubles up on two sheets while leaving Lesovo and K-35-052-4 unrepresented in hard positives. The trade-off is justified: prioritising genuine recognition failures provides more useful training signal than sheet diversity with inappropriate examples. The expanded library (Scale-16, Scale-32) will restore sheet diversity as more candidates are added.",
+      "values": [
+        {
+          "quantity": "count of map sheets doubled-up on in the final hard-positive selection (Rakovski, Elenovo)",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "'Examples 05 and 07' / '06 and 08' are identifiers, excluded per rule 5. 'Scale-16, Scale-32' are library/config names, excluded per rule 5 (no asserted count attached here). No separate artefact confirms the sheet-overlap count; it is self-evident from the same sentence — left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          164,
+          164
+        ],
+        "section": "Decision 4 — crop extraction method (Session 7)"
+      },
+      "claim_text": "**Crop extraction** (Session 7, continued): 128×128 pixel crops, centred on the reference mound coordinate, extracted from the full map GeoTIFFs (`inputs/rasters/*.tif`) rather than from detection tiles. This ensures the target symbol is always at the crop centre with symmetric real map context, even when the reference point is near a tile edge. See errata E8 for rationale and alternatives considered, and Observation 80 in working notes. Crop size (128×128) is flagged as a future OFAT exploratory variable (see Observation 78).",
+      "values": [
+        {
+          "quantity": "hard-example crop size (px, square edge length), as actually extracted from the full map GeoTIFFs",
+          "value_verbatim": "128×128",
+          "value_parsed": 128,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "hard-example crop size (px, square edge length), flagged as a future OFAT exploratory variable",
+          "value_verbatim": "128×128",
+          "value_parsed": 128,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/protocol-errata.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches protocol-errata.md E8 verbatim: 'extracted as 128×128 pixel regions from the full map GeoTIFFs' and 'Crop size is flagged as a future exploratory variable (64, 128, 256, 512px OFAT experiment).' 'Session 7' and 'Observation 80'/'Observation 78' are identifiers, excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          166,
+          166
+        ],
+        "section": "Decision 4 — departure from preregistered ranking (HP)"
+      },
+      "claim_text": "**Departure from preregistered frequency-only ranking**: Proximity-based secondary ranking was applied because frequency alone provided no differentiation (all FNs were 0/5 complete misses). The proximity dimension provides stricter differentiation than frequency alone. K=5 passes were used as preregistered (see E15 regarding an inconsistent stale reference in the appendix). The one-per-sheet tiebreaker and its relaxation are not preregistered — they are post-hoc selection criteria applied during library construction.",
+      "values": [
+        {
+          "quantity": "vote-count numerator, complete-miss FNs (0 of 5), restated",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "vote-count denominator, complete-miss FNs (0 of 5), restated",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "pass count (K) actually used for hard-positive selection, confirmed as preregistered",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "per-sheet example count referenced in the not-preregistered-tiebreaker statement (restated)",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/protocol-errata.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches protocol-errata.md E15: 'Phase 1 was executed with K=5 passes as specified by the operative procedure. The stale \"≥3/10\" references are residual from an earlier draft... all 24 FNs were complete misses (0/5)...'. 'E15' is an identifier, excluded per rule 5. The 'one-per-sheet tiebreaker' design-choice mention itself (as opposed to its specific 4-HN application, anchored separately at line 177) has no located artefact — left anchor-unknown, consistent with the line-151 treatment of the same design-choice statement."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          170,
+          170
+        ],
+        "section": "Decision 4 — Hard Negative preregistered criteria (§8.4.2)"
+      },
+      "claim_text": "**Preregistered criteria** (§8.4.2): K=5 passes, FPs occurring ≥3/5, rank by detection frequency.",
+      "values": [
+        {
+          "quantity": "preregistered pass count (K) for hard-negative selection ranking (§8.4.2)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "preregistered minimum vote-fraction numerator for hard-negative (FP) selection",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "preregistered minimum vote-fraction denominator for hard-negative (FP) selection",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration-appendix-prompts.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration-appendix-prompts.md lines 98-99: '1. Run image-only baseline on 20 training tiles (5 passes)'; '2. Identify False Positives (≥3/5 passes) → select top M as hard negatives'; also consistent with osf/preregistration.md lines 1450-1451 ('False Positives (FPs): Detections in ≥3/5 passes...')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          172,
+          172
+        ],
+        "section": "Decision 4 — Hard Negative actual execution"
+      },
+      "claim_text": "**Actual execution**: 18 FPs at vote ≥3/5 (6 at 5/5, 3 at 4/5, 9 at 3/5). Among the 6 vote-5/5 FPs, applied proximity-based secondary ranking:",
+      "values": [
+        {
+          "quantity": "total count of FPs at vote ≥3/5, Phase 1 hard-negative selection actual execution",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "minimum vote-fraction numerator, hard-negative selection (≥3/5), restated in the execution paragraph",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "minimum vote-fraction denominator, hard-negative selection (≥3/5), restated in the execution paragraph",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of FPs at the 5-of-5 vote tier",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote fraction, 5-of-5 tier (numerator=denominator=5)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote fraction, 5-of-5 tier (numerator=denominator=5)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of FPs at the 4-of-5 vote tier",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote-fraction numerator, 4-of-5 tier",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote-fraction denominator, 4-of-5 tier",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of FPs at the 3-of-5 vote tier",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote-fraction numerator, 3-of-5 tier",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote-fraction denominator, 3-of-5 tier",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of vote-5/5 FPs carried forward to proximity-based secondary ranking (restated)",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration-appendix-prompts.md",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "The ≥3/5 threshold matches osf/preregistration-appendix-prompts.md lines 98-99 (read). The specific execution tier breakdown (18 total; 6 at 5/5, 3 at 4/5, 9 at 3/5) is broadly consistent with protocol-errata.md E15 ('all selected FPs occurred at 5/5 or ≥3/5 votes') but E15 does not restate the exact per-tier counts, and outputs/phase1-library/fp-fn-register.md (the presumed source register) is absent from the working tree (confirmed missing) — the tier counts are left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          174,
+          174
+        ],
+        "section": "Decision 4 — hard-negative FP taxonomy, hallucinations"
+      },
+      "claim_text": "- **Hallucinations** (>500m from any reference): Model fabricates detections with no nearby ground truth",
+      "values": [
+        {
+          "quantity": "distance threshold (metres) defining a hallucination FP (>500m from any reference), Phase 1 FP taxonomy",
+          "value_verbatim": "500",
+          "value_parsed": 500,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/phase1-errata-and-decisions.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/phase1-errata-and-decisions.md: '4 HNs (one per map sheet) from vote-5/5 hallucinations (>500 m from any reference)' — part of the lodged registration (tier 2 authority)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          175,
+          175
+        ],
+        "section": "Decision 4 — hard-negative FP taxonomy, near-misses"
+      },
+      "claim_text": "- **Near-misses** (20-30m from a reference): Poorly localised true positives, not genuine false alarms",
+      "values": [
+        {
+          "quantity": "distance range lower bound (metres) defining a near-miss FP, Phase 1 FP taxonomy",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "distance range upper bound (metres) defining a near-miss FP, Phase 1 FP taxonomy",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Searched osf/phase1-errata-and-decisions.md and protocol-errata.md for a matching 20-30m near-miss classification range for the FP taxonomy; found only the analogous 50m/20-50m HP taxonomy and the unrelated E46 20m-vs-30m spatial-matching-buffer erratum — no artefact confirms this specific near-miss range, left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          177,
+          177
+        ],
+        "section": "Decision 4 — hallucination selection, vote-5/5 tier"
+      },
+      "claim_text": "Selected 4 hallucinations from vote-5/5 tier, one per map sheet:",
+      "values": [
+        {
+          "quantity": "count of hallucinations selected from the vote-5/5 tier for the hard-negative library",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "per-map-sheet example count used for the hallucination selection",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/phase1-errata-and-decisions.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/phase1-errata-and-decisions.md verbatim: '4 HNs (one per map sheet) from vote-5/5 hallucinations (>500 m from any reference)'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          181,
+          181
+        ],
+        "section": "Decision 4 — final hard-negative selection table row"
+      },
+      "claim_text": "| 11 | burial_mound | Rakovski | 1896.0m | K-35-062-2_Rakovski_x0_y3136.png |",
+      "values": [
+        {
+          "quantity": "distance from the hallucinated detection to the nearest reference, final hard-negative Example 11 candidate (Rakovski)",
+          "value_verbatim": "1896.0",
+          "value_parsed": 1896.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "'Example' number is a row identifier, excluded per rule 5. 'burial_mound'/'triangulation_mound' are subtype category labels, not numbers. outputs/phase1-library/fp-fn-register.md, the register this table is drawn from, is absent from the working tree (confirmed missing); osf/phase1-errata-and-decisions.md confirms the count (4 HNs) and threshold (>500m) but not the individual per-example distances — left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          182,
+          182
+        ],
+        "section": "Decision 4 — final hard-negative selection table row"
+      },
+      "claim_text": "| 12 | triangulation_mound | Lesovo | 1807.8m | K-35-078-1_Lesovo_x1344_y896.png |",
+      "values": [
+        {
+          "quantity": "distance from the hallucinated detection to the nearest reference, final hard-negative Example 12 candidate (Lesovo)",
+          "value_verbatim": "1807.8",
+          "value_parsed": 1807.8,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "'Example' number is a row identifier, excluded per rule 5. 'burial_mound'/'triangulation_mound' are subtype category labels, not numbers. outputs/phase1-library/fp-fn-register.md, the register this table is drawn from, is absent from the working tree (confirmed missing); osf/phase1-errata-and-decisions.md confirms the count (4 HNs) and threshold (>500m) but not the individual per-example distances — left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          183,
+          183
+        ],
+        "section": "Decision 4 — final hard-negative selection table row"
+      },
+      "claim_text": "| 13 | burial_mound | K-35-052-4 | 872.9m | K-35-052-4_32635_x1344_y1344.png |",
+      "values": [
+        {
+          "quantity": "distance from the hallucinated detection to the nearest reference, final hard-negative Example 13 candidate (K-35-052-4)",
+          "value_verbatim": "872.9",
+          "value_parsed": 872.9,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "'Example' number is a row identifier, excluded per rule 5. 'burial_mound'/'triangulation_mound' are subtype category labels, not numbers. outputs/phase1-library/fp-fn-register.md, the register this table is drawn from, is absent from the working tree (confirmed missing); osf/phase1-errata-and-decisions.md confirms the count (4 HNs) and threshold (>500m) but not the individual per-example distances — left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          184,
+          184
+        ],
+        "section": "Decision 4 — final hard-negative selection table row"
+      },
+      "claim_text": "| 14 | burial_mound | Elenovo | 725.0m | K-35-053-3_Elenovo_x3136_y3136.png |",
+      "values": [
+        {
+          "quantity": "distance from the hallucinated detection to the nearest reference, final hard-negative Example 14 candidate (Elenovo)",
+          "value_verbatim": "725.0",
+          "value_parsed": 725.0,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "'Example' number is a row identifier, excluded per rule 5. 'burial_mound'/'triangulation_mound' are subtype category labels, not numbers. outputs/phase1-library/fp-fn-register.md, the register this table is drawn from, is absent from the working tree (confirmed missing); osf/phase1-errata-and-decisions.md confirms the count (4 HNs) and threshold (>500m) but not the individual per-example distances — left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          186,
+          186
+        ],
+        "section": "Decision 4 — hard-negative tiebreaker rule"
+      },
+      "claim_text": "**Tiebreaker**: Map sheet stratification (one per sheet) was used as the primary tiebreaker after vote count and proximity classification. This maximises cartographic diversity in the library.",
+      "values": [
+        {
+          "quantity": "per-map-sheet example count used as the primary tiebreaker for hard-negative selection",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/phase1-errata-and-decisions.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/phase1-errata-and-decisions.md: '4 HNs (one per map sheet) from vote-5/5 hallucinations...'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          190,
+          190
+        ],
+        "section": "Decision 4 — Legend-Derived Negatives count"
+      },
+      "claim_text": "Two hard negatives can be specified before empirical analysis:",
+      "values": [
+        {
+          "quantity": "count of legend-derived (canonical) hard-negative categories specified before empirical analysis",
+          "value_verbatim": "Two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md line 1530 ('Standalone triangulation point, standalone benchmark') and the Canon- composition description at line 755 — exactly two legend-derived negative categories."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          205,
+          205
+        ],
+        "section": "Decision 5 — decision statement, baseline temperature"
+      },
+      "claim_text": "**Decision**: Use T=1.0 as the baseline temperature, with H7 testing alternatives.",
+      "values": [
+        {
+          "quantity": "baseline temperature selected for the study (pre-H7)",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md line 1444 ('- Temperature: T=1.0')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          209,
+          209
+        ],
+        "section": "Decision 5 — alternatives considered, deterministic"
+      },
+      "claim_text": "- T=0.0 (deterministic)",
+      "values": [
+        {
+          "quantity": "alternative temperature considered to the T=1.0 baseline (deterministic)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered H7 level set at osf/preregistration.md line 1421/1742 (T ∈ {0.0, 0.3, 0.7, 1.0, 1.3})."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          210,
+          210
+        ],
+        "section": "Decision 5 — alternatives considered, moderate variance"
+      },
+      "claim_text": "- T=0.7 (moderate variance)",
+      "values": [
+        {
+          "quantity": "alternative temperature considered to the T=1.0 baseline (moderate variance)",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered H7 level set at osf/preregistration.md line 1421/1742."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          211,
+          211
+        ],
+        "section": "Decision 5 — alternatives considered, literature evidence"
+      },
+      "claim_text": "- T=0.3 (evidence from literature)",
+      "values": [
+        {
+          "quantity": "alternative temperature considered to the T=1.0 baseline (literature-motivated)",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered H7 level set at osf/preregistration.md line 1421/1742."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          215,
+          215
+        ],
+        "section": "Decision 5 rationale — vendor recommendation"
+      },
+      "claim_text": "1. **Vendor recommendation**: Gemini documentation recommends T=1.0 for reasoning tasks",
+      "values": [
+        {
+          "quantity": "temperature recommended by Gemini vendor documentation for reasoning tasks",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Vendor-documentation recommendation; no repo artefact can decide a third-party vendor's documented recommendation (rule 3 'external')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          219,
+          219
+        ],
+        "section": "Decision 5 rationale — voting benefit at T=0.7"
+      },
+      "claim_text": "3. **Voting benefit**: Higher temperature increases output diversity across passes. T=0.7 achieved Union Recall of 0.94 on training set",
+      "values": [
+        {
+          "quantity": "temperature achieving the cited Union Recall figure",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "Union Recall, T=0.7 consensus voting, training set (evidence for the voting-benefit rationale)",
+          "value_verbatim": "0.94",
+          "value_parsed": 0.94,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "T=0.7 matches the registered H7 level set (osf/preregistration.md), so that value is read; the '0.94 Union Recall on training set' figure is corroborated only in docs/notes/working-notes.md (Observation 42, 'Union Recall hit 94%... Temp 0.7 maximized Union Recall (0.94 on Training)') — prose, out of C4 mine scope (audit-charter § 2) and excluded as a prose-to-prose anchor per rule 2, so left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          221,
+          221
+        ],
+        "section": "Decision 5 — remaining uncertainty, H7 level set"
+      },
+      "claim_text": "**Remaining uncertainty**: The optimal temperature may differ for single-pass vs voting. H7 tests 5 levels (0.0, 0.3, 0.7, 1.0, 1.3) to characterise the temperature-performance curve.",
+      "values": [
+        {
+          "quantity": "count of temperature levels tested in H7",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "H7 temperature level 1",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "H7 temperature level 2",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "H7 temperature level 3",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "H7 temperature level 4",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "H7 temperature level 5",
+          "value_verbatim": "1.3",
+          "value_parsed": 1.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md line 1421 ('T ∈ {0.0, 0.3, 0.7, 1.0, 1.3} (5 levels)') and the factor table at line 1742."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          246,
+          246
+        ],
+        "section": "Decision 6 rationale table — two-stage pipeline row"
+      },
+      "claim_text": "| Two-stage pipeline | Negative (0.80 vs 0.86) | High | Failed |",
+      "values": [
+        {
+          "quantity": "F1, two-stage pipeline, preliminary strategy comparison (restates the Decision 3 finding)",
+          "value_verbatim": "0.80",
+          "value_parsed": 0.8,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, single-stage/consensus comparator, preliminary strategy comparison (restates the Decision 3 finding)",
+          "value_verbatim": "0.86",
+          "value_parsed": 0.86,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates the same 0.80/0.86 figures as the Decision 3 rationale table (lines 95-96 above), which is itself anchor-unknown (no committed artefact located for this December 2025 preliminary comparison)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          247,
+          247
+        ],
+        "section": "Decision 6 rationale table — consensus voting row"
+      },
+      "claim_text": "| Consensus voting | +0.06 to +0.12 | Low | Success |",
+      "values": [
+        {
+          "quantity": "F1 improvement from consensus voting, preliminary strategy comparison (lower bound of range)",
+          "value_verbatim": "+0.06",
+          "value_parsed": 0.06,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1 improvement from consensus voting, preliminary strategy comparison (upper bound of range)",
+          "value_verbatim": "0.12",
+          "value_parsed": 0.12,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Searched archive/results-60-tile-validation/phase3a-consensus/ and docs/notes/working-notes.md for a matching '+0.06 to +0.12' consensus voting F1-improvement range; nearby but non-identical figures exist (e.g. +0.0613, +0.068, +0.0656) — none reproduces this exact range, and the closest prose source is out of C4 mine scope — left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          257,
+          257
+        ],
+        "section": "Decision 6 — implementation, H3 voting pool sizes"
+      },
+      "claim_text": "**Implementation**: H3 tests voting pool sizes (N=5, 10, 30) and thresholds.",
+      "values": [
+        {
+          "quantity": "H3 voting pool size, level 1",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "H3 voting pool size, level 2",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "H3 voting pool size, level 3",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md's registered voting-analysis design (N=5/10/30 pool sizes, lines 507-514: 'N=5 | Runs 1-5 or 6-10'; 'N=10 | All 10 runs'; 'N=30 | Extended (20 additional runs)')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          283,
+          283
+        ],
+        "section": "Decision 8 — decision statement, Scale-8 example count"
+      },
+      "claim_text": "**Decision**: Use Scale-8 library (17 examples) as the default for H5 testing and as the baseline for H8 comparisons.",
+      "values": [
+        {
+          "quantity": "total example count, Scale-8 library",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": "$.total_examples"
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_scale-8.json records total_examples: 17, matching exactly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          289,
+          289
+        ],
+        "section": "Decision 8 — Scale-8 composition table row"
+      },
+      "claim_text": "| Canonical Positive | 4 |",
+      "values": [
+        {
+          "quantity": "Canonical Positive example count, Scale-8 library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": "$.composition.canonical_positive"
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_scale-8.json records composition.canonical_positive = 4 at $.composition.canonical_positive, matching exactly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          290,
+          290
+        ],
+        "section": "Decision 8 — Scale-8 composition table row"
+      },
+      "claim_text": "| Canonical Negative | 2 |",
+      "values": [
+        {
+          "quantity": "Canonical Negative example count, Scale-8 library composition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": "$.composition.canonical_negative"
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_scale-8.json records composition.canonical_negative = 2 at $.composition.canonical_negative, matching exactly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          291,
+          291
+        ],
+        "section": "Decision 8 — Scale-8 composition table row"
+      },
+      "claim_text": "| Hard Positive | 4 |",
+      "values": [
+        {
+          "quantity": "Hard Positive example count, Scale-8 library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": "$.composition.hard_positive"
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_scale-8.json records composition.hard_positive = 4 at $.composition.hard_positive, matching exactly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          292,
+          292
+        ],
+        "section": "Decision 8 — Scale-8 composition table row"
+      },
+      "claim_text": "| Hard Negative | 4 |",
+      "values": [
+        {
+          "quantity": "Hard Negative example count, Scale-8 library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": "$.composition.hard_negative"
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_scale-8.json records composition.hard_negative = 4 at $.composition.hard_negative, matching exactly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          293,
+          293
+        ],
+        "section": "Decision 8 — Scale-8 composition table row"
+      },
+      "claim_text": "| Null | 3 |",
+      "values": [
+        {
+          "quantity": "Null example count, Scale-8 library composition",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": "$.composition.null"
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_scale-8.json records composition.null = 3 at $.composition.null, matching exactly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          294,
+          294
+        ],
+        "section": "Decision 8 — Scale-8 composition table, Total row"
+      },
+      "claim_text": "| **Total** | **17** |",
+      "values": [
+        {
+          "quantity": "total example count, Scale-8 library composition (table sum row)",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": "$.total_examples"
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_scale-8.json records total_examples: 17, matching exactly (equal to the sum of the five component rows above: 4+2+4+4+3=17)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          300,
+          300
+        ],
+        "section": "Decision 8 rationale — balanced HP:HN ratio"
+      },
+      "claim_text": "2. **Balanced HP:HN ratio**: 1:1 ratio avoids majority label bias",
+      "values": [
+        {
+          "quantity": "hard-positive-to-hard-negative ratio numerator, Scale-8 library (1:1)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a/b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.hard_negative"
+            }
+          ]
+        },
+        {
+          "quantity": "hard-positive-to-hard-negative ratio denominator, Scale-8 library (1:1)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a/b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_scale-8.json",
+              "path": "$.composition.hard_negative"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "1:1 is derivable as hard_positive ÷ hard_negative = 4 ÷ 4 = 1 from prompts/configs/library_scale-8.json's composition fields; both the ratio's numerator and denominator sides evaluate to the same derived value (1), so both values share the same expression/operands per the schema's per-value arithmetic form (v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          302,
+          302
+        ],
+        "section": "Decision 8 rationale — manageable token count"
+      },
+      "claim_text": "3. **Manageable token count**: 17 examples fit comfortably in context window",
+      "values": [
+        {
+          "quantity": "total example count, Scale-8 library (restated as evidence for manageable token count)",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": "$.total_examples"
+      },
+      "method": "read",
+      "notes": "Restates the '17 examples' figure already anchored at lines 283 and 294; a distinct verbatim mention, extracted separately per the full-enumeration rule."
+    }
+  ]
+}

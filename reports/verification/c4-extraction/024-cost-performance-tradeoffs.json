@@ -1,0 +1,754 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/reports/cost-performance-tradeoffs.md",
+    "git_blob": "4340ce8417da1f2f2b89e883eaf90b8ce7832567",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          19,
+          19
+        ],
+        "section": "Observed Tradeoffs, single-run comparison table, Gemini 3 Flash row"
+      },
+      "claim_text": "| Gemini 3 Flash | baseline | 1× |",
+      "values": [
+        {
+          "quantity": "relative cost per call, Gemini 3 Flash single-pass (baseline unit of the comparison table)",
+          "value_verbatim": "1×",
+          "value_parsed": 1,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document explicitly frames these figures as preliminary/indicative, drawn from training-phase development with inconsistent tile sets, not confirmatory results (§ Methodological Note, lines 81-83: 'exact figures should be treated as indicative rather than confirmatory'). No manifest, eval JSON, or other artefact is named as the source for any figure in this document; per rule 2 there is no artefact to anchor to and no other markdown document is cited either, so anchor-unknown throughout rather than anchor-to-prose. 'Gemini 3' model-name numeral excluded per rule 5 (version/name token, not a checkable fact distinct from the model identity)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          20,
+          20
+        ],
+        "section": "Observed Tradeoffs, single-run comparison table, Gemini 3 Pro row"
+      },
+      "claim_text": "| Gemini 3 Pro | baseline + 0.05–0.10 | ~10–20× |",
+      "values": [
+        {
+          "quantity": "F1 improvement over Flash baseline, Gemini 3 Pro single-pass, lower bound of stated range",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1 improvement over Flash baseline, Gemini 3 Pro single-pass, upper bound of stated range",
+          "value_verbatim": "0.10",
+          "value_parsed": 0.1,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "relative cost per call, Gemini 3 Pro vs Flash single-pass, lower bound (approx.)",
+          "value_verbatim": "~10",
+          "value_parsed": 10,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "relative cost per call, Gemini 3 Pro vs Flash single-pass, upper bound",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document explicitly frames these figures as preliminary/indicative, drawn from training-phase development with inconsistent tile sets, not confirmatory results (§ Methodological Note, lines 81-83: 'exact figures should be treated as indicative rather than confirmatory'). No manifest, eval JSON, or other artefact is named as the source for any figure in this document; per rule 2 there is no artefact to anchor to and no other markdown document is cited either, so anchor-unknown throughout rather than anchor-to-prose. 'Gemini 3' model-name numeral excluded per rule 5 (version/name token, not a checkable fact distinct from the model identity)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          26,
+          26
+        ],
+        "section": "Observed Tradeoffs, consensus-depth cost table, Flash 1-of-1 row"
+      },
+      "claim_text": "| Flash 1-of-1 | 1× | baseline |",
+      "values": [
+        {
+          "quantity": "vote threshold, Flash 1-of-1 configuration (consensus-depth cost table)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "voting pool size (N), Flash 1-of-1 configuration",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total relative cost, Flash 1-of-1 configuration",
+          "value_verbatim": "1×",
+          "value_parsed": 1,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document explicitly frames these figures as preliminary/indicative, drawn from training-phase development with inconsistent tile sets, not confirmatory results (§ Methodological Note, lines 81-83: 'exact figures should be treated as indicative rather than confirmatory'). No manifest, eval JSON, or other artefact is named as the source for any figure in this document; per rule 2 there is no artefact to anchor to and no other markdown document is cited either, so anchor-unknown throughout rather than anchor-to-prose. 'Gemini 3' model-name numeral excluded per rule 5 (version/name token, not a checkable fact distinct from the model identity)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          27,
+          27
+        ],
+        "section": "Observed Tradeoffs, consensus-depth cost table, Pro 1-of-1 row"
+      },
+      "claim_text": "| Pro 1-of-1 | 10–20× | baseline + 0.05–0.10 |",
+      "values": [
+        {
+          "quantity": "vote threshold, Pro 1-of-1 configuration",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "voting pool size (N), Pro 1-of-1 configuration",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total relative cost, Pro 1-of-1 configuration, lower bound",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total relative cost, Pro 1-of-1 configuration, upper bound",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1 improvement over Flash baseline, Pro 1-of-1, lower bound (restated)",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1 improvement over Flash baseline, Pro 1-of-1, upper bound (restated)",
+          "value_verbatim": "0.10",
+          "value_parsed": 0.1,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document explicitly frames these figures as preliminary/indicative, drawn from training-phase development with inconsistent tile sets, not confirmatory results (§ Methodological Note, lines 81-83: 'exact figures should be treated as indicative rather than confirmatory'). No manifest, eval JSON, or other artefact is named as the source for any figure in this document; per rule 2 there is no artefact to anchor to and no other markdown document is cited either, so anchor-unknown throughout rather than anchor-to-prose. 'Gemini 3' model-name numeral excluded per rule 5 (version/name token, not a checkable fact distinct from the model identity)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          28,
+          28
+        ],
+        "section": "Observed Tradeoffs, consensus-depth cost table, Flash 5-of-5 row"
+      },
+      "claim_text": "| Flash 5-of-5 (3/5 threshold) | 5× | baseline + ~0.08 |",
+      "values": [
+        {
+          "quantity": "voting pool size (N), Flash 5-of-5 configuration (label)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "voting pool size (N), Flash 5-of-5 configuration (label, second occurrence)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "actual vote threshold used, Flash 5-of-5 configuration, per the parenthetical clarification",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "voting pool size (N), Flash 5-of-5 configuration, per the parenthetical clarification denominator",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total relative cost, Flash 5-of-5 (3/5 threshold) configuration",
+          "value_verbatim": "5×",
+          "value_parsed": 5,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1 improvement over baseline, Flash 5-of-5 (3/5 threshold) configuration (approx.)",
+          "value_verbatim": "~0.08",
+          "value_parsed": 0.08,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document explicitly frames these figures as preliminary/indicative, drawn from training-phase development with inconsistent tile sets, not confirmatory results (§ Methodological Note, lines 81-83: 'exact figures should be treated as indicative rather than confirmatory'). No manifest, eval JSON, or other artefact is named as the source for any figure in this document; per rule 2 there is no artefact to anchor to and no other markdown document is cited either, so anchor-unknown throughout rather than anchor-to-prose. 'Gemini 3' model-name numeral excluded per rule 5 (version/name token, not a checkable fact distinct from the model identity). The row label '5-of-5' and the parenthetical '(3/5 threshold)' appear internally inconsistent (label implies threshold=pool=5; parenthetical states the actual threshold used was 3 of 5) — extracted as written, not adjudicated (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          29,
+          29
+        ],
+        "section": "Observed Tradeoffs, consensus-depth cost table, Flash 10-of-30 row"
+      },
+      "claim_text": "| Flash 10-of-30 (majority) | 30× | ≈ Pro 2-of-5 |",
+      "values": [
+        {
+          "quantity": "vote threshold, Flash 10-of-30 configuration",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "voting pool size (N), Flash 10-of-30 configuration",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total relative cost, Flash 10-of-30 configuration",
+          "value_verbatim": "30×",
+          "value_parsed": 30,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote threshold, the Pro configuration this Flash row is stated as approximately equivalent to",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "voting pool size (N), the Pro configuration this Flash row is stated as approximately equivalent to",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document explicitly frames these figures as preliminary/indicative, drawn from training-phase development with inconsistent tile sets, not confirmatory results (§ Methodological Note, lines 81-83: 'exact figures should be treated as indicative rather than confirmatory'). No manifest, eval JSON, or other artefact is named as the source for any figure in this document; per rule 2 there is no artefact to anchor to and no other markdown document is cited either, so anchor-unknown throughout rather than anchor-to-prose. 'Gemini 3' model-name numeral excluded per rule 5 (version/name token, not a checkable fact distinct from the model identity)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          30,
+          30
+        ],
+        "section": "Observed Tradeoffs, consensus-depth cost table, Pro 2-of-5 row"
+      },
+      "claim_text": "| Pro 2-of-5 (majority) | 50–100× | near-peak |",
+      "values": [
+        {
+          "quantity": "vote threshold, Pro 2-of-5 configuration",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "voting pool size (N), Pro 2-of-5 configuration",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total relative cost, Pro 2-of-5 configuration, lower bound",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total relative cost, Pro 2-of-5 configuration, upper bound",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document explicitly frames these figures as preliminary/indicative, drawn from training-phase development with inconsistent tile sets, not confirmatory results (§ Methodological Note, lines 81-83: 'exact figures should be treated as indicative rather than confirmatory'). No manifest, eval JSON, or other artefact is named as the source for any figure in this document; per rule 2 there is no artefact to anchor to and no other markdown document is cited either, so anchor-unknown throughout rather than anchor-to-prose. 'Gemini 3' model-name numeral excluded per rule 5 (version/name token, not a checkable fact distinct from the model identity)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          32,
+          32
+        ],
+        "section": "Observed Tradeoffs — Key finding paragraph"
+      },
+      "claim_text": "**Key finding**: Flash with 10-of-30 voting achieved comparable F1 to Pro with 2-of-5 voting, at roughly one-third to one-half the cost.",
+      "values": [
+        {
+          "quantity": "vote threshold, Flash configuration in the key-finding comparison",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "voting pool size (N), Flash configuration in the key-finding comparison",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote threshold, Pro configuration in the key-finding comparison",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "voting pool size (N), Pro configuration in the key-finding comparison",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "document's own rounded characterisation of Flash 10-of-30's cost as a fraction of Pro 2-of-5's cost, lower bound of the stated range",
+          "value_verbatim": "one-third",
+          "value_parsed": 0.3333333333333333,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "document's own rounded characterisation of Flash 10-of-30's cost as a fraction of Pro 2-of-5's cost, upper bound of the stated range",
+          "value_verbatim": "one-half",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document explicitly frames these figures as preliminary/indicative, drawn from training-phase development with inconsistent tile sets, not confirmatory results (§ Methodological Note, lines 81-83: 'exact figures should be treated as indicative rather than confirmatory'). No manifest, eval JSON, or other artefact is named as the source for any figure in this document; per rule 2 there is no artefact to anchor to and no other markdown document is cited either, so anchor-unknown throughout rather than anchor-to-prose. 'Gemini 3' model-name numeral excluded per rule 5 (version/name token, not a checkable fact distinct from the model identity). The 'one-third to one-half' figure is the document's own rounded characterisation, not a value quoted from an artefact or mechanically re-derivable without risking a false-mismatch arithmetic expression (cf. 014.json's '2× margin' precedent, v1.2 amendment 5 concern)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          50,
+          50
+        ],
+        "section": "Interpretation — Diminishing returns at both ends"
+      },
+      "claim_text": "- Adding consensus depth shows diminishing returns: the jump from 1-of-1 to 5-of-5 is larger than from 5-of-5 to 10-of-30",
+      "values": [
+        {
+          "quantity": "vote threshold, first configuration in the diminishing-returns comparison",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "voting pool size (N), first configuration in the diminishing-returns comparison",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote threshold, second configuration in the diminishing-returns comparison",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "voting pool size (N), second configuration in the diminishing-returns comparison",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote threshold, second configuration restated (upper end of first jump)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "voting pool size (N), second configuration restated (upper end of first jump)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote threshold, third configuration in the diminishing-returns comparison",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "voting pool size (N), third configuration in the diminishing-returns comparison",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document explicitly frames these figures as preliminary/indicative, drawn from training-phase development with inconsistent tile sets, not confirmatory results (§ Methodological Note, lines 81-83: 'exact figures should be treated as indicative rather than confirmatory'). No manifest, eval JSON, or other artefact is named as the source for any figure in this document; per rule 2 there is no artefact to anchor to and no other markdown document is cited either, so anchor-unknown throughout rather than anchor-to-prose. 'Gemini 3' model-name numeral excluded per rule 5 (version/name token, not a checkable fact distinct from the model identity)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          51,
+          51
+        ],
+        "section": "Interpretation — Diminishing returns, Pro single-pass scaling"
+      },
+      "claim_text": "Similarly, Pro's single-pass advantage (~0.05–0.10 F1) doesn't scale linearly with cost",
+      "values": [
+        {
+          "quantity": "F1 advantage, Pro single-pass over Flash single-pass, lower bound (restated, approx.)",
+          "value_verbatim": "~0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1 advantage, Pro single-pass over Flash single-pass, upper bound (restated)",
+          "value_verbatim": "0.10",
+          "value_parsed": 0.1,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document explicitly frames these figures as preliminary/indicative, drawn from training-phase development with inconsistent tile sets, not confirmatory results (§ Methodological Note, lines 81-83: 'exact figures should be treated as indicative rather than confirmatory'). No manifest, eval JSON, or other artefact is named as the source for any figure in this document; per rule 2 there is no artefact to anchor to and no other markdown document is cited either, so anchor-unknown throughout rather than anchor-to-prose. 'Gemini 3' model-name numeral excluded per rule 5 (version/name token, not a checkable fact distinct from the model identity)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          96,
+          96
+        ],
+        "section": "Draft Text for Paper — Methods (brief)"
+      },
+      "claim_text": "\"Development prioritised Gemini 3 Flash for cost efficiency, with periodic validation on Gemini 3 Pro. Preliminary experiments suggested that consensus voting depth and model capacity are partially substitutable: Flash with deep voting (10-of-30) achieved comparable F1 to Pro with shallow voting (2-of-5) at lower total cost. This informed our decision to optimise voting strategies on Flash before cross-model validation.\"",
+      "values": [
+        {
+          "quantity": "vote threshold, Flash configuration in the draft Methods text",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "voting pool size (N), Flash configuration in the draft Methods text",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote threshold, Pro configuration in the draft Methods text",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "voting pool size (N), Pro configuration in the draft Methods text",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document explicitly frames these figures as preliminary/indicative, drawn from training-phase development with inconsistent tile sets, not confirmatory results (§ Methodological Note, lines 81-83: 'exact figures should be treated as indicative rather than confirmatory'). No manifest, eval JSON, or other artefact is named as the source for any figure in this document; per rule 2 there is no artefact to anchor to and no other markdown document is cited either, so anchor-unknown throughout rather than anchor-to-prose. 'Gemini 3' model-name numeral excluded per rule 5 (version/name token, not a checkable fact distinct from the model identity). This is candidate draft prose for the paper's Methods section, not yet a reported result; the underlying config numbers repeat the Observed Tradeoffs table."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          100,
+          100
+        ],
+        "section": "Draft Text for Paper — Results (if confirmed on holdout)"
+      },
+      "claim_text": "\"We observed a substitutability relationship between model capacity and consensus depth. Gemini 3 Flash with 10-of-30 majority voting achieved F1 = [X], comparable to Gemini 3 Pro with 2-of-5 voting (F1 = [Y]), despite Pro's ~0.05–0.10 advantage in single-pass performance. At current API pricing, the Flash configuration cost approximately [Z]% of the Pro configuration for equivalent performance. This suggests practitioners can trade latency for cost by using smaller models with deeper consensus pools.\"",
+      "values": [
+        {
+          "quantity": "vote threshold, Flash configuration in the draft Results text",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "voting pool size (N), Flash configuration in the draft Results text",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote threshold, Pro configuration in the draft Results text",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "voting pool size (N), Pro configuration in the draft Results text",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1 advantage, Pro single-pass over Flash single-pass, restated in draft Results text, lower bound",
+          "value_verbatim": "~0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1 advantage, Pro single-pass over Flash single-pass, restated in draft Results text, upper bound",
+          "value_verbatim": "0.10",
+          "value_parsed": 0.1,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document explicitly frames these figures as preliminary/indicative, drawn from training-phase development with inconsistent tile sets, not confirmatory results (§ Methodological Note, lines 81-83: 'exact figures should be treated as indicative rather than confirmatory'). No manifest, eval JSON, or other artefact is named as the source for any figure in this document; per rule 2 there is no artefact to anchor to and no other markdown document is cited either, so anchor-unknown throughout rather than anchor-to-prose. 'Gemini 3' model-name numeral excluded per rule 5 (version/name token, not a checkable fact distinct from the model identity). '[X]', '[Y]', '[Z]' are unfilled placeholders (letters, not numbers) and are excluded per rule 5 — no reported value exists yet for the holdout F1s or the cost percentage; this is a fill-in-the-blank template, not an asserted result."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          61,
+          61
+        ],
+        "section": "Implications — For practical deployment, Default recommendation"
+      },
+      "claim_text": "1. **Default recommendation**: For cost-sensitive production use, Flash + moderate voting depth (e.g., 5-of-10 or 10-of-30) may be optimal. Pro is justified when latency matters or when operating near Flash's quality ceiling.",
+      "values": [
+        {
+          "quantity": "vote threshold, first example moderate-voting-depth configuration recommended",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "voting pool size (N), first example moderate-voting-depth configuration recommended",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote threshold, second example moderate-voting-depth configuration recommended (restated)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "voting pool size (N), second example moderate-voting-depth configuration recommended (restated)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Document explicitly frames these figures as preliminary/indicative, drawn from training-phase development with inconsistent tile sets, not confirmatory results (§ Methodological Note, lines 81-83: 'exact figures should be treated as indicative rather than confirmatory'). No manifest, eval JSON, or other artefact is named as the source for any figure in this document; per rule 2 there is no artefact to anchor to and no other markdown document is cited either, so anchor-unknown throughout rather than anchor-to-prose. 'Gemini 3' model-name numeral excluded per rule 5 (version/name token, not a checkable fact distinct from the model identity)."
+    }
+  ]
+}

@@ -1,0 +1,3209 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/preregistration/execution-plan.md",
+    "git_blob": "385a35efb7beea40cff17d9d446f5ed929d95b07",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          489,
+          489
+        ],
+        "section": "Phase 3a: H3 Voting Extension (N=30) — Duration"
+      },
+      "claim_text": "**Duration**: 0.5 days",
+      "values": [
+        {
+          "quantity": "estimated duration (days), Phase 3a (H3 N=30 voting extension)",
+          "value_verbatim": "0.5",
+          "value_parsed": 0.5,
+          "unit": "days",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning-stage duration estimate for a follow-up phase; no committed artefact (registered preregistration or an execution/manifest log) records planned sub-phase durations for this document to be checked against."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          490,
+          490
+        ],
+        "section": "Phase 3a: H3 Voting Extension (N=30) — Estimated cost"
+      },
+      "claim_text": "**Estimated cost**: ~$4 (Flash at $0.003/call)",
+      "values": [
+        {
+          "quantity": "estimated cost (USD), Phase 3a (H3 N=30 voting extension)",
+          "value_verbatim": "~$4",
+          "value_parsed": 4,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "Gemini 3 Flash per-call vendor pricing assumed for this estimate",
+          "value_verbatim": "$0.003",
+          "value_parsed": 0.003,
+          "unit": "USD/call",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The ~$4 figure is this document's own planning-stage cost estimate (no artefact to check it against). The $0.003/call rate is Gemini 3 Flash vendor pricing (rule 3 'external' — billing-console/vendor-rate figure, attestation only, not decidable by any repo artefact)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          495,
+          495
+        ],
+        "section": "Phase 3a — Design paragraph"
+      },
+      "claim_text": "The K=10 runs from Phase 2 provide data for voting analysis (H3) at N=5 and N=10. Phase 3a extends to N=30 at the optimal configuration only.",
+      "values": [
+        {
+          "quantity": "count of independent runs per condition, main factorial protocol (K)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#$3.8-K=10-evaluation-protocol-line-315",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus voting pool size available from Phase 2 K=10 runs (smaller sub-pool)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H3-voting-analysis-table-lines-505-510",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus voting pool size available from Phase 2 K=10 runs (full pool)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H3-voting-analysis-table-lines-505-510",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus voting pool size targeted by the Phase 3a extension",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H3-extended-voting-N=30-lines-512-514",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "K=10 matches 'Each condition in the main factorial is evaluated using K=10 independent single-pass runs' (osf/preregistration.md:315). N=5/N=10/N=30 match the registered voting-analysis table (osf/preregistration.md:505-510: 'N=5 | Runs 1-5 or 6-10 | 1,2,3,4,5' / 'N=10 | All runs | 1,2,...,10') and the 'Extended voting (N=30)' spec at :512-514."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          501,
+          501
+        ],
+        "section": "Phase 3a — Data-from-Phase-2 table, N=5 row"
+      },
+      "claim_text": "| 5 | Runs 1-5 or 6-10 | 1, 2, 3, 4, 5 |",
+      "values": [
+        {
+          "quantity": "consensus voting pool size, row 1",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "run index range, first N=5 pool option (start)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "run index range, first N=5 pool option (end)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "run index range, second N=5 pool option (start)",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "run index range, second N=5 pool option (end)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold tested, N=5 pool",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold tested, N=5 pool",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold tested, N=5 pool",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold tested, N=5 pool",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold tested, N=5 pool",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered voting-analysis table at osf/preregistration.md:507 ('| N=5 | Runs 1-5 or 6-10 | 1, 2, 3, 4, 5 |'). Per-value paths omitted (markdown table row, no JSONPath applies; all ten values share the single row/whole-artefact anchor)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          502,
+          502
+        ],
+        "section": "Phase 3a — Data-from-Phase-2 table, N=10 row"
+      },
+      "claim_text": "| 10 | All runs 1-10 | 1, 2, ..., 10 |",
+      "values": [
+        {
+          "quantity": "consensus voting pool size, row 2",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "run index range covered, N=10 pool (start)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "run index range covered, N=10 pool (end)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold range tested, N=10 pool (lower bound)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold range tested, N=10 pool (upper bound)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered voting-analysis table at osf/preregistration.md:508 ('| N=10 | All runs | 1, 2, ..., 10 |'); this document's phrasing 'All runs 1-10' differs cosmetically from the registered 'All runs' but the numeric content (pool size 10, threshold range 1..10) agrees. Ellipsis-elided intermediate thresholds (2..9) not individually recorded — only explicit endpoints appear in the source span."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          506,
+          506
+        ],
+        "section": "Phase 3a — Additional runs for N=30"
+      },
+      "claim_text": "- 20 additional runs at optimal config (already have 10 from Phase 2)",
+      "values": [
+        {
+          "quantity": "count of additional runs planned to extend the pool to N=30",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs already available from Phase 2 towards the N=30 pool",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches 'Extended voting (N=30): Additional 20 runs at optimal configuration' (osf/preregistration.md:512); the '10 from Phase 2' is the K=10 base pool (osf/preregistration.md:315), consistent with 20+10=30."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          507,
+          507
+        ],
+        "section": "Phase 3a — Additional runs for N=30, API call total"
+      },
+      "claim_text": "- 20 runs × 60 tiles = **1,200 API calls**",
+      "values": [
+        {
+          "quantity": "count of additional runs planned to extend the pool to N=30 (restated)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "holdout tile count evaluated per run",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#holdout-set-summary-line-234",
+          "method": "read"
+        },
+        {
+          "quantity": "total API calls estimated for the Phase 3a N=30 extension",
+          "value_verbatim": "1,200",
+          "value_parsed": 1200,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "20 (runs) and 60 (holdout tiles, osf/preregistration.md:234 'Holdout set summary: 60 tiles, 79 mounds total') are individually registered/confirmed constants. The 1,200 total is a self-contained arithmetic product (20×60=1,200) with no separate committed artefact recording it, so it is left anchor-unknown rather than forcing an arithmetic anchor with no legitimate JSON operand source (per v1.2 amendment 1, operands must resolve mechanically). NOTE — internal inconsistency: the Budget Summary table later in this same document (line 727) gives 'Phase 3a: H3 N=30 Extension | ~12,000 | ~$44', a 10x mismatch against this line's 1,200 calls / the ~$4 estimate at line 490. Flagged for triage; not adjudicated here per rule 4."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          512,
+          512
+        ],
+        "section": "Phase 3a — Execution step 2"
+      },
+      "claim_text": "2. Run 20 additional passes at that configuration",
+      "values": [
+        {
+          "quantity": "count of additional passes to run, Phase 3a execution step",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the 20 additional runs already anchored at line 506/507 (osf/preregistration.md:512); kept separate per full-enumeration (rule 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          513,
+          513
+        ],
+        "section": "Phase 3a — Execution step 3"
+      },
+      "claim_text": "3. Combine with K=10 runs for N=30 voting pool",
+      "values": [
+        {
+          "quantity": "count of base runs combined into the voting pool (K)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#$3.8-K=10-evaluation-protocol-line-315",
+          "method": "read"
+        },
+        {
+          "quantity": "target voting pool size after combination",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H3-extended-voting-N=30-lines-512-514",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates K=10 (osf/preregistration.md:315) and N=30 (osf/preregistration.md:512-514) already anchored above; kept separate per full-enumeration (rule 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          514,
+          514
+        ],
+        "section": "Phase 3a — Execution step 4"
+      },
+      "claim_text": "4. Analyse threshold sweep across N=5, 10, 30",
+      "values": [
+        {
+          "quantity": "pool size, threshold sweep (restated)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "pool size, threshold sweep (restated)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "pool size, threshold sweep (restated)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the N=5/10/30 pool sizes already anchored above (osf/preregistration.md voting-analysis table and extended-voting spec); kept separate per full-enumeration (rule 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          526,
+          526
+        ],
+        "section": "Phase 3b — Note on H4 simplification"
+      },
+      "claim_text": "**Note**: H4 ordering testing has been simplified and moved to Phase 2e. The original partial factorial design (3 orderings × 3 M/E levels = 9 cells) has been replaced with a single M/E level (optimal from H1, 3 cells). This change:",
+      "values": [
+        {
+          "quantity": "count of ordering conditions, original partial-factorial H4 design",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H4-ordering-conditions-table-lines-551-554",
+          "method": "read"
+        },
+        {
+          "quantity": "count of M/E levels, original partial-factorial H4 design",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "cell count, original partial-factorial H4 design (3 orderings x 3 M/E)",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of M/E levels used in the replaced/simplified H4 design",
+          "value_verbatim": "single",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "cell count, replaced/simplified H4 design (single M/E level)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H4-totals-line-1820",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The '3 ordering conditions' (Canonical-first/Canonical-last/Random) match the registered H4 test table (osf/preregistration.md:551-554); the final '3 cells' matches '**H4 totals**: 3 cells (at optimal M/E only)' (osf/preregistration.md:1820). The registered H4 section describes the abandoned design only as testing 'ordering across multiple M/E levels' without stating an exact old M/E-level count or 9-cell total, so the middle three values (3 M/E levels, 9 cells, 'single'=1 M/E level) could not be independently confirmed within scope and are left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          529,
+          529
+        ],
+        "section": "Phase 3b — Cells/cost saved"
+      },
+      "claim_text": "- Saves 6 cells (~$18)",
+      "values": [
+        {
+          "quantity": "count of cells saved by the H4 design simplification",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H4-simplification-rationale-line-559",
+          "method": "read"
+        },
+        {
+          "quantity": "estimated cost saved (USD) by the H4 design simplification",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'Saves 6 cells' is a verbatim match to osf/preregistration.md:559 (H4 'Simplification rationale' bullet). The ~$18 cost figure is this document's own cost translation and has no independent registered/artefact confirmation."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          538,
+          538
+        ],
+        "section": "Phase 3c: H9 Diversity Testing — Duration"
+      },
+      "claim_text": "**Duration**: 1 day",
+      "values": [
+        {
+          "quantity": "estimated duration (days), Phase 3c (H9 diversity testing)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "days",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning-stage duration estimate; no artefact records it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          539,
+          539
+        ],
+        "section": "Phase 3c: H9 Diversity Testing — Estimated cost"
+      },
+      "claim_text": "**Estimated cost**: ~$18 (Flash at $0.003/call)",
+      "values": [
+        {
+          "quantity": "estimated cost (USD), Phase 3c (H9 diversity testing)",
+          "value_verbatim": "~$18",
+          "value_parsed": 18,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "Gemini 3 Flash per-call vendor pricing assumed for this estimate",
+          "value_verbatim": "$0.003",
+          "value_parsed": 0.003,
+          "unit": "USD/call",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The ~$18 figure is this document's own planning estimate. $0.003/call is Flash vendor pricing (rule 3 'external')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          544,
+          544
+        ],
+        "section": "Phase 3c — Design, factorial structure"
+      },
+      "claim_text": "2×2 factorial at optimal configuration:",
+      "values": [
+        {
+          "quantity": "row dimension size, H9 factorial design as planned here",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "column dimension size, H9 factorial design as planned here",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "IMPORTANT DIVERGENCE: the registered H9 (osf/preregistration.md:841-870) is a '5-condition design' (Conditions A-E: Fixed/Fixed/Fixed baseline through Varied/Varied/Varied full diversity, adding a Temperature-diversity dimension absent here), not a 2×2 factorial over 4 conditions (A-D, Text × Images only). This section of execution-plan.md appears to describe an earlier/superseded draft of the H9 design; flagging rather than anchoring to avoid manufacturing a false mismatch against a design the registration does not describe (rule 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          549,
+          549
+        ],
+        "section": "Phase 3c — 2×2 factorial table, Condition B row"
+      },
+      "claim_text": "| B | Varied | Fixed | 5 prompt variants, same images |",
+      "values": [
+        {
+          "quantity": "count of prompt variants used for the text-diversity condition",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H9-text-diversity-implementation-lines-1358-1383",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered H9 'Text diversity implementation' spec (osf/preregistration.md:1358-1383), which lists exactly 5 numbered semantically-equivalent instruction variants. This specific value survives despite the surrounding 2×2/4-condition framing being superseded (see line 544 claim notes)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          555,
+          555
+        ],
+        "section": "Phase 3c — API calls per condition"
+      },
+      "claim_text": "- Each condition: 5 runs × 5 passes × 60 tiles = 1,500 calls",
+      "values": [
+        {
+          "quantity": "count of replicate runs per condition, Phase 3c (H9)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H9-replication-run-5-times",
+          "method": "read"
+        },
+        {
+          "quantity": "count of passes per run, Phase 3c (H9)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "holdout tile count evaluated per pass, Phase 3c (H9)",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#holdout-set-summary-line-234",
+          "method": "read"
+        },
+        {
+          "quantity": "total API calls estimated per condition, Phase 3c (H9)",
+          "value_verbatim": "1,500",
+          "value_parsed": 1500,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The '5 runs' replication count matches 'Each condition run 5 times to provide symmetric variance estimates' in the registered H9 design; 60 matches the registered holdout tile count. '5 passes' and the 1,500 product are not independently confirmable given the superseded 2×2/4-condition framing (see line 544 notes) and are left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          556,
+          556
+        ],
+        "section": "Phase 3c — Total API calls, all conditions"
+      },
+      "claim_text": "- 4 conditions × 1,500 = **6,000 calls**",
+      "values": [
+        {
+          "quantity": "count of conditions tested, Phase 3c (H9) as planned here",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total API calls per condition (restated)",
+          "value_verbatim": "1,500",
+          "value_parsed": 1500,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total API calls estimated, all Phase 3c (H9) conditions",
+          "value_verbatim": "6,000",
+          "value_parsed": 6000,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The registered H9 design has 5 conditions (A-E), not 4 — see the divergence flagged at line 544. Under the registered 5-condition/5-replicate design, the analogous total would be 5×1,500=7,500, not 6,000; this document's own Budget Summary table (line 728) independently states '~6,000' for Phase 3c too, so the 4-condition total is at least self-consistent within execution-plan.md even though it does not match the current registration."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          567,
+          567
+        ],
+        "section": "Phase 3d: H2 Two-Stage Pipeline — Duration"
+      },
+      "claim_text": "**Duration**: 1 day",
+      "values": [
+        {
+          "quantity": "estimated duration (days), Phase 3d (H2 two-stage pipeline)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "days",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning-stage duration estimate; no artefact records it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          568,
+          568
+        ],
+        "section": "Phase 3d — Estimated cost"
+      },
+      "claim_text": "**Estimated cost**: ~$4 (Flash at $0.003/call)",
+      "values": [
+        {
+          "quantity": "estimated cost (USD), Phase 3d (H2 two-stage pipeline)",
+          "value_verbatim": "~$4",
+          "value_parsed": 4,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "Gemini 3 Flash per-call vendor pricing assumed for this estimate",
+          "value_verbatim": "$0.003",
+          "value_parsed": 0.003,
+          "unit": "USD/call",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The ~$4 figure is this document's own planning estimate, consistent with the Budget Summary row at line 729 ('Phase 3d: H2 Two-Stage (exploratory) | ~1,200 | ~$4'). $0.003/call is Flash vendor pricing (rule 3 'external')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          600,
+          600
+        ],
+        "section": "Phase 3d — Protocol paragraph"
+      },
+      "claim_text": "**Protocol**: Each of the K=10 runs is independent (one proposer pass → one verifier pass). The verifier returns raw `mound_probability` scores used directly for evaluation — no binary thresholding or voting within the verification step.",
+      "values": [
+        {
+          "quantity": "count of independent runs, H2 two-stage protocol (K)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#$3.8-K=10-evaluation-protocol-line-315",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "K=10 matches the main-factorial protocol 'K=10 independent single-pass runs' (osf/preregistration.md:315), reused here for the H2 proposer/verifier design."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          604,
+          604
+        ],
+        "section": "Phase 3d — Proposer API calls"
+      },
+      "claim_text": "- Proposer: K=10 runs × 60 tiles = 600 calls",
+      "values": [
+        {
+          "quantity": "count of proposer runs, H2 two-stage pipeline (K)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#$3.8-K=10-evaluation-protocol-line-315",
+          "method": "read"
+        },
+        {
+          "quantity": "holdout tile count evaluated per proposer run",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#holdout-set-summary-line-234",
+          "method": "read"
+        },
+        {
+          "quantity": "total proposer API calls, H2 two-stage pipeline",
+          "value_verbatim": "600",
+          "value_parsed": 600,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "K=10 and 60 tiles both match registered protocol constants; the 600-call product is a self-contained arithmetic total (10×60) with no separate committed artefact and is left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          605,
+          605
+        ],
+        "section": "Phase 3d — Verifier API calls"
+      },
+      "claim_text": "- Verifier: ~X candidates × 60 tiles (depends on proposer output)",
+      "values": [
+        {
+          "quantity": "holdout tile count evaluated per verifier call",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#holdout-set-summary-line-234",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'~X candidates' is an unresolved variable placeholder, not a checkable numeric value (excluded); 60 tiles matches the registered holdout count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          606,
+          606
+        ],
+        "section": "Phase 3d — Total call estimate"
+      },
+      "claim_text": "- Estimate: ~600-1,200 total calls",
+      "values": [
+        {
+          "quantity": "total API calls estimated, H2 two-stage pipeline (lower bound)",
+          "value_verbatim": "600",
+          "value_parsed": 600,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total API calls estimated, H2 two-stage pipeline (upper bound)",
+          "value_verbatim": "1,200",
+          "value_parsed": 1200,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning-stage range estimate (proposer calls fixed at 600 per line 604; verifier calls unresolved pending 'X candidates'); no artefact fixes the range."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          608,
+          608
+        ],
+        "section": "Phase 3d — Stopping rule"
+      },
+      "claim_text": "**Stopping rule**: Two-stage must exceed single-stage by ≥0.05 F1 to justify ~2× cost overhead (see preregistration H2).",
+      "values": [
+        {
+          "quantity": "GO/stopping criterion for H2 (minimum F1 improvement required), as registered",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H2-stopping-rule-line-491",
+          "method": "read"
+        },
+        {
+          "quantity": "cost-overhead multiplier for the two-stage architecture, as registered",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H2-stopping-rule-line-491",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 calibration rule applies directly: the span explicitly names 'preregistration H2', and both values are an exact match to osf/preregistration.md:491 ('Stopping rule: Two-stage architectures will only be pursued further if either demonstrates F1 at least 0.05 higher than single-stage. Given the inherent cost (~2× API calls)...')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          619,
+          619
+        ],
+        "section": "Phase 4: H6 Flash->Pro Transfer — Duration"
+      },
+      "claim_text": "**Duration**: 2-3 days",
+      "values": [
+        {
+          "quantity": "estimated duration (days), Phase 4 (H6 lower bound)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "days",
+          "kind": "other",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated duration (days), Phase 4 (H6 upper bound)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "days",
+          "kind": "other",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning-stage duration estimate range; no artefact records it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          620,
+          620
+        ],
+        "section": "Phase 4 — Estimated cost"
+      },
+      "claim_text": "**Estimated cost**: ~$42-48 (Pro at ~$0.03/call, needs verification)",
+      "values": [
+        {
+          "quantity": "estimated cost (USD), Phase 4 (H6 lower bound)",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), Phase 4 (H6 upper bound)",
+          "value_verbatim": "48",
+          "value_parsed": 48,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "Gemini 3 Pro per-call vendor pricing assumed for this estimate, marked as needing verification",
+          "value_verbatim": "~$0.03",
+          "value_parsed": 0.03,
+          "unit": "USD/call",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "$42-48 is this document's own planning estimate, matching the Total-Phase-4 table at line 671. $0.03/call is Gemini 3 Pro vendor pricing, itself flagged in the source as 'needs verification' (rule 3 'external')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          625,
+          625
+        ],
+        "section": "Phase 4 — Design paragraph"
+      },
+      "claim_text": "Validate Flash-optimal configuration on Gemini 3 Pro using One-Factor-At-a-Time (OFAT) approach. Uses 20-tile stratified subset (preserving density distribution from the 60 holdout tiles).",
+      "values": [
+        {
+          "quantity": "tile count, stratified subset used for Pro validation (H6)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H6-phase-1-baseline-comparison-line-662",
+          "method": "read"
+        },
+        {
+          "quantity": "holdout tile count the stratified subset is drawn from",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H6-phase-1-baseline-comparison-line-662",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md:662 (H6 'Phase 1: Baseline Comparison': 'K=10 runs on 20 stratified holdout tiles (subset of 60, preserving density distribution)')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          631,
+          631
+        ],
+        "section": "Phase 4a — API calls"
+      },
+      "claim_text": "**API calls**: K=10 runs × 20 tiles = 200 calls",
+      "values": [
+        {
+          "quantity": "count of runs, Phase 4a baseline comparison (K)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H6-phase-1-baseline-comparison-line-662",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, Phase 4a baseline comparison",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H6-phase-1-baseline-comparison-line-662",
+          "method": "read"
+        },
+        {
+          "quantity": "total API calls estimated, Phase 4a baseline comparison",
+          "value_verbatim": "200",
+          "value_parsed": 200,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "K=10 and 20 tiles both match osf/preregistration.md:662 (H6 Phase 1: 'K=10 runs on 20 stratified holdout tiles'). The 200-call product is a self-contained arithmetic total (10×20) with no separate committed artefact and is left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          633,
+          633
+        ],
+        "section": "Phase 4a — Decision point"
+      },
+      "claim_text": "**Decision point**: If Pro F1 within 0.05 of Flash F1, proceed with OFAT. If large degradation (>0.10 F1), investigate before continuing.",
+      "values": [
+        {
+          "quantity": "F1 tolerance for proceeding with OFAT after the Phase 4a baseline check",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1 degradation threshold triggering an investigation pause, Phase 4a",
+          "value_verbatim": "0.10",
+          "value_parsed": 0.1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Searched the registered H6 section (osf/preregistration.md:651-700) for a matching baseline decision threshold; it states only a qualitative comparison ('Compare Pro vs Flash performance at matched configuration... Establish baseline for factor sensitivity testing') without these specific 0.05/0.10 F1 gate values, so no anchor was found."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          641,
+          641
+        ],
+        "section": "Phase 4b — OFAT table, M/E row"
+      },
+      "claim_text": "| M/E | (from Phase 2) | 1-2 adjacent levels |",
+      "values": [
+        {
+          "quantity": "lower bound, count of alternative levels tested for factor M/E, Phase 4b OFAT",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper bound, count of alternative levels tested for factor M/E, Phase 4b OFAT",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The registered H6 'Phase 2: OFAT Factor Sensitivity' table (osf/preregistration.md:668-673) states a fixed '2 adjacent levels' for M/E, not a 1-2 range; the range here does not cleanly match the registered fixed count, so it is left anchor-unknown rather than forcing a partial-match anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          642,
+          642
+        ],
+        "section": "Phase 4b — OFAT table, H5 row"
+      },
+      "claim_text": "| H5 | (from Phase 2) | 1-2 adjacent levels |",
+      "values": [
+        {
+          "quantity": "lower bound, count of alternative levels tested for factor H5, Phase 4b OFAT",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper bound, count of alternative levels tested for factor H5, Phase 4b OFAT",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The registered H6 OFAT table (osf/preregistration.md:668-673) states a fixed '2 alternatives' for H5, not a 1-2 range; left anchor-unknown for the same reason as the M/E row above."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          643,
+          643
+        ],
+        "section": "Phase 4b — OFAT table, T row"
+      },
+      "claim_text": "| T | (from Phase 2) | ±0.3 temperatures |",
+      "values": [
+        {
+          "quantity": "temperature delta tested either side of the Flash-optimal value, Phase 4b OFAT",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The registered H6 OFAT table (osf/preregistration.md:668-673) states '2 adjacent temperatures' for T without a numeric delta; a ±0.3 step size appears in the registered H9 (diversity, temperature-diversity implementation) as a different hypothesis's parameter, not this H6 OFAT table, so no anchor was forced here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          645,
+          645
+        ],
+        "section": "Phase 4b — API calls"
+      },
+      "claim_text": "**API calls**: ~3 factors × 2 alternatives × K=10 runs × 20 tiles = ~1,200 calls",
+      "values": [
+        {
+          "quantity": "count of factors tested, Phase 4b OFAT sensitivity",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of alternatives tested per factor, Phase 4b OFAT sensitivity",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H6-phase-2-ofat-factor-sensitivity-table-lines-668-673",
+          "method": "read"
+        },
+        {
+          "quantity": "count of runs per alternative, Phase 4b OFAT sensitivity (K)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H6-phase-1-baseline-comparison-line-662",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count evaluated per run, Phase 4b OFAT sensitivity",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H6-phase-1-baseline-comparison-line-662",
+          "method": "read"
+        },
+        {
+          "quantity": "total API calls estimated, Phase 4b OFAT sensitivity",
+          "value_verbatim": "1,200",
+          "value_parsed": 1200,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The registered H6 OFAT table (osf/preregistration.md:668-673) has 4 factors (M/E, H5, T, O), not 3 — this document's factor count omits the O (ordering) row entirely (compare lines 641-643 above), so '3 factors' is left anchor-unknown as a real divergence, not a false-mismatch risk. '2 alternatives' does match the registered per-factor test count; K=10 and 20 tiles match the H6 baseline protocol. The 1,200 total is a self-contained arithmetic product left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          661,
+          661
+        ],
+        "section": "Phase 4d — API calls (if triggered)"
+      },
+      "claim_text": "**API calls**: ~K=10 × 20 tiles = 200 calls (if triggered)",
+      "values": [
+        {
+          "quantity": "count of runs, Phase 4d refinement (K)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H6-phase-1-baseline-comparison-line-662",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count evaluated per run, Phase 4d refinement",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H6-phase-1-baseline-comparison-line-662",
+          "method": "read"
+        },
+        {
+          "quantity": "total API calls estimated, Phase 4d refinement (if triggered)",
+          "value_verbatim": "200",
+          "value_parsed": 200,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "K=10 and 20 tiles reuse the registered H6 baseline protocol constants (osf/preregistration.md:662). The registered H6 'Phase 4: Refinement (Conditional)' section (osf/preregistration.md ~684-689) instead describes 'test one additional level' or, for voting, 'run N=30 at Pro-adjusted config' — it does not state a fixed 200-call refinement estimate, so the 200 total is left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          667,
+          667
+        ],
+        "section": "Phase 4 — Total API calls table, 4a row"
+      },
+      "claim_text": "| 4a: Baseline | 200 | ~$6 |",
+      "values": [
+        {
+          "quantity": "total API calls, Phase 4a (restated in summary table)",
+          "value_verbatim": "200",
+          "value_parsed": 200,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated cost (USD), Phase 4a",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "200 restates the line 631 Phase 4a call estimate (self-consistent within this document). No artefact confirms the ~$6 cost."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          668,
+          668
+        ],
+        "section": "Phase 4 — Total API calls table, 4b row"
+      },
+      "claim_text": "| 4b: OFAT | ~1,200 | ~$36 |",
+      "values": [
+        {
+          "quantity": "total API calls, Phase 4b (restated in summary table)",
+          "value_verbatim": "1,200",
+          "value_parsed": 1200,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated cost (USD), Phase 4b",
+          "value_verbatim": "36",
+          "value_parsed": 36,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "1,200 restates the line 645 Phase 4b call estimate (self-consistent within this document, though that estimate itself rests on an under-counted 3-factor OFAT design — see line 645 notes). No artefact confirms the ~$36 cost."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          670,
+          670
+        ],
+        "section": "Phase 4 — Total API calls table, 4d row"
+      },
+      "claim_text": "| 4d: Refinement | 0-200 | $0-6 |",
+      "values": [
+        {
+          "quantity": "total API calls, Phase 4d (lower bound)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total API calls, Phase 4d (upper bound)",
+          "value_verbatim": "200",
+          "value_parsed": 200,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated cost (USD), Phase 4d (lower bound)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), Phase 4d (upper bound)",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Conditional range (0 if Phase 4b triggers no refinement, up to the line-661 200-call estimate if it does); no artefact confirms these figures."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          671,
+          671
+        ],
+        "section": "Phase 4 — Total API calls table, Total row"
+      },
+      "claim_text": "| **Total** | **~1,400-1,600** | **~$42-48** |",
+      "values": [
+        {
+          "quantity": "total API calls estimated, Phase 4 (H6) overall (lower bound)",
+          "value_verbatim": "1,400",
+          "value_parsed": 1400,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total API calls estimated, Phase 4 (H6) overall (upper bound)",
+          "value_verbatim": "1,600",
+          "value_parsed": 1600,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total estimated cost (USD), Phase 4 (H6) overall (lower bound)",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total estimated cost (USD), Phase 4 (H6) overall (upper bound)",
+          "value_verbatim": "48",
+          "value_parsed": 48,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "$42-48 restates the line 620 Phase 4 cost estimate (self-consistent). The 1,400-1,600 call range is the sum of the sub-phase rows above; no independent artefact confirms it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          673,
+          673
+        ],
+        "section": "Phase 4 — Note on Pro pricing"
+      },
+      "claim_text": "**Note**: Pro pricing assumed ~10× Flash (~$0.03/call vs ~$0.003/call). Actual Pro pricing to be verified at experiment start. If Pro shows dramatic superiority warranting full optimisation, budget for extended Pro testing (~$50-80 additional).",
+      "values": [
+        {
+          "quantity": "assumed multiplier of Gemini 3 Pro per-call pricing over Flash",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "Gemini 3 Pro per-call vendor pricing assumed",
+          "value_verbatim": "$0.03",
+          "value_parsed": 0.03,
+          "unit": "USD/call",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "Gemini 3 Flash per-call vendor pricing assumed",
+          "value_verbatim": "$0.003",
+          "value_parsed": 0.003,
+          "unit": "USD/call",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "contingency budget (USD) for extended Pro testing, lower bound",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "contingency budget (USD) for extended Pro testing, upper bound",
+          "value_verbatim": "80",
+          "value_parsed": 80,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "The 10×/$0.03/$0.003 figures are vendor pricing assumptions (rule 3 'external', explicitly flagged in the source as needing verification). The $50-80 contingency is this document's own planning estimate with no artefact to check it against."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          686,
+          686
+        ],
+        "section": "Phase 5 — Estimated cost"
+      },
+      "claim_text": "**Estimated cost**: ~$40-60 (budget permitting)",
+      "values": [
+        {
+          "quantity": "estimated cost (USD), Phase 5 exploratory hypotheses (lower bound)",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), Phase 5 exploratory hypotheses (upper bound)",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning-stage cost estimate; no artefact records it. Restated at line 733 ('Phase 5: Exploratory (H10-H15) | ~$40-60')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          694,
+          694
+        ],
+        "section": "Phase 5 — H14, cost bullet"
+      },
+      "claim_text": "- ~$40-60 (depends on provider pricing)",
+      "values": [
+        {
+          "quantity": "estimated cost (USD), H14 cross-model consistency testing (lower bound)",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), H14 cross-model consistency testing (upper bound)",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "DIVERGENCE: this document lists H14 as Priority-1 within Phase 5's active exploratory testing, but the registered document lists H14 as Tier C, 'Deferred to future work' (osf/preregistration.md:1170, 2007, 2177) — i.e. not part of this study's executed exploratory programme at all. No cost estimate for a deferred hypothesis appears in the registration, so left anchor-unknown rather than anchored to a status that contradicts this framing."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          697,
+          697
+        ],
+        "section": "Phase 5 — H15, design bullet"
+      },
+      "claim_text": "- 6-pass voting: 6×Flash vs 6×Sonnet vs 6×GPT vs 2×each",
+      "values": [
+        {
+          "quantity": "voting depth (passes), H15 cross-model voting design as planned here",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of Flash passes, single-model voting condition, H15",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of Sonnet passes, single-model voting condition, H15",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of GPT passes, single-model voting condition, H15",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of passes per model, mixed-model voting condition, H15",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "DIVERGENCE: as with H14 (line 694), H15 is registered Tier C 'Deferred to future work' (osf/preregistration.md:1171, 2008, 2177), not an active Phase 5 test; the registered H15 section (osf/preregistration.md:1074-1084) states only a research question, no 6-pass/2-pass design specification to check this against."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          698,
+          698
+        ],
+        "section": "Phase 5 — H15, cost bullet"
+      },
+      "claim_text": "- ~$15-25",
+      "values": [
+        {
+          "quantity": "estimated cost (USD), H15 cross-model voting (lower bound)",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), H15 cross-model voting (upper bound)",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No artefact confirms this estimate; H15 is registered as deferred (see line 697 notes)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          702,
+          702
+        ],
+        "section": "Phase 5 — H10, cost bullet"
+      },
+      "claim_text": "- ~$5-10",
+      "values": [
+        {
+          "quantity": "estimated cost (USD), H10 training pool size (lower bound)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), H10 training pool size (upper bound)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning-stage cost estimate; the registered H10 section (osf/preregistration.md:904ff) does not itemise a dollar estimate to compare."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          706,
+          706
+        ],
+        "section": "Phase 5 — H12, ratio bullet"
+      },
+      "claim_text": "- 3 ratios: 1:3 (HN-heavy), 1:1 (baseline), 3:1 (HP-heavy)",
+      "values": [
+        {
+          "quantity": "count of HP:HN ratios tested, H12",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H12-ratio-table-lines-998-1000",
+          "method": "read"
+        },
+        {
+          "quantity": "HP:HN ratio, condition R1 (HN-heavy)",
+          "value_verbatim": "1:3",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H12-ratio-table-lines-998-1000",
+          "method": "read"
+        },
+        {
+          "quantity": "HP:HN ratio, condition R2 (balanced/baseline)",
+          "value_verbatim": "1:1",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H12-ratio-table-lines-998-1000",
+          "method": "read"
+        },
+        {
+          "quantity": "HP:HN ratio, condition R3 (HP-heavy)",
+          "value_verbatim": "3:1",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H12-ratio-table-lines-998-1000",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered H12 test table (osf/preregistration.md:998-1000: R1=2:6 (1:3, HN-heavy), R2=4:4 (1:1, 'balanced'), R3=6:2 (3:1, HP-heavy)). This document labels the R2 condition '(baseline)' where the registration says '(balanced)' — a wording difference only, not a numeric one."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          708,
+          708
+        ],
+        "section": "Phase 5 — H12, incremental-cost bullet"
+      },
+      "claim_text": "- ~$9 incremental (1:1 ratio already tested in H8 scaling conditions)",
+      "values": [
+        {
+          "quantity": "estimated incremental cost (USD), H12 ratio exploration",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "HP:HN ratio already covered by H8 scaling conditions (restated)",
+          "value_verbatim": "1:1",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H12-ratio-table-lines-998-1000",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 1:1 ratio restates the H12 table match from line 706. The ~$9 incremental-cost figure is this document's own estimate with no artefact to check it against."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          716,
+          716
+        ],
+        "section": "Budget Summary — Pricing basis, Flash per-call derivation"
+      },
+      "claim_text": "Gemini 3 Flash at ~$0.003/call ($0.50/1M input + $3/1M output for ~5K input + 200 output tokens).",
+      "values": [
+        {
+          "quantity": "Gemini 3 Flash per-call vendor pricing assumed",
+          "value_verbatim": "$0.003",
+          "value_parsed": 0.003,
+          "unit": "USD/call",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "Gemini 3 Flash input-token vendor pricing",
+          "value_verbatim": "$0.50",
+          "value_parsed": 0.5,
+          "unit": "USD/1M tokens",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "Gemini 3 Flash output-token vendor pricing",
+          "value_verbatim": "$3",
+          "value_parsed": 3,
+          "unit": "USD/1M tokens",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "assumed input token count per call underlying the $0.003/call estimate",
+          "value_verbatim": "~5K",
+          "value_parsed": 5000,
+          "unit": "tokens",
+          "kind": "tokens",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "assumed output token count per call underlying the $0.003/call estimate",
+          "value_verbatim": "200",
+          "value_parsed": 200,
+          "unit": "tokens",
+          "kind": "tokens",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "$0.003/call, $0.50/1M input and $3/1M output are Gemini 3 Flash vendor rate-card figures (rule 3 'external'). The ~5K input / 200 output token assumptions feeding this per-call estimate are this document's own modelling assumption, not tied to any specific committed run's usage_stats, so left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          716,
+          716
+        ],
+        "section": "Budget Summary — Pricing basis, per-cell cost by library size"
+      },
+      "claim_text": "Per-cell cost varies with library size: ~$2/cell for Scale-8 (17 examples), ~$4/cell for Scale-32 (41 examples).",
+      "values": [
+        {
+          "quantity": "estimated cost per cell (USD), Scale-8 library condition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "USD/cell",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total example count, Scale-8 library composition",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_examples",
+          "method": "read"
+        },
+        {
+          "quantity": "estimated cost per cell (USD), Scale-32 library condition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "USD/cell",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total example count, Scale-32 library composition",
+          "value_verbatim": "41",
+          "value_parsed": 41,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": "$.total_examples"
+      },
+      "method": "read",
+      "notes": "17 and 41 match total_examples in the committed library config files (prompts/configs/library_scale-8.json and prompts/configs/library_scale-32.json respectively) and the registered H8 library table (osf/preregistration.md:769, 771: Scale-8 total '**17**'; Scale-32* total '**41**'). Per-value paths given since the two example-count values anchor to different files (v1.2 amendment 2/3); the two per-cell cost estimates ($2, $4) have no committed artefact, so each carries an explicit anchor-unknown override (v1.2 amendment 3 — no pathless values may silently fall back to the claim anchor's path in a multi-value claim)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          716,
+          716
+        ],
+        "section": "Budget Summary — Pricing basis, Pro multiplier"
+      },
+      "claim_text": "Pro estimated at ~10× Flash (~$0.03/call; needs verification).",
+      "values": [
+        {
+          "quantity": "assumed multiplier of Gemini 3 Pro per-call pricing over Flash",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "Gemini 3 Pro per-call vendor pricing assumed",
+          "value_verbatim": "$0.03",
+          "value_parsed": 0.03,
+          "unit": "USD/call",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Vendor pricing assumption, explicitly flagged in the source as needing verification (rule 3 'external')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          720,
+          720
+        ],
+        "section": "Budget Summary table — Phase 1: Library + Text row"
+      },
+      "claim_text": "| Phase 1: Library + Text | — | ~100 | ~$1 |",
+      "values": [
+        {
+          "quantity": "total API calls estimated, Phase 1 (Library + Text)",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), Phase 1 (Library + Text)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No Cells figure given (em-dash placeholder, not a value). Planning-stage estimate; no artefact confirms it and Phase 1 content lies outside this batch's assigned line range (482-769) for chasing further."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          721,
+          721
+        ],
+        "section": "Budget Summary table — Phase 2a: H1 — M/E Level row"
+      },
+      "claim_text": "| Phase 2a: H1 — M/E Level | 5 | 15,000 | ~$55 |",
+      "values": [
+        {
+          "quantity": "cell count, Phase 2a (H1 M/E level)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total API calls, Phase 2a (H1 M/E level)",
+          "value_verbatim": "15,000",
+          "value_parsed": 15000,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), Phase 2a (H1 M/E level)",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Cells (5) and calls (15,000) match the registered 'Total sequential design' table exactly (osf/preregistration.md:1826, 'H1 (M/E) | 5 | 15,000'). The $55 cost is consistent with the registration's blended '~$11/cell' rate (osf/preregistration.md:1841: 5×$11=$55) but that rate is not itself a per-row table figure, so the cost value is corroborating rather than a direct table match."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          722,
+          722
+        ],
+        "section": "Budget Summary table — Phase 2b: H7 — Temperature row"
+      },
+      "claim_text": "| Phase 2b: H7 — Temperature | 5 | 15,000 | ~$55 |",
+      "values": [
+        {
+          "quantity": "cell count, Phase 2b (H7 temperature)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total API calls, Phase 2b (H7 temperature)",
+          "value_verbatim": "15,000",
+          "value_parsed": 15000,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), Phase 2b (H7 temperature)",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Cells (5) and calls (15,000) match osf/preregistration.md:1827 ('H7 (Temperature) | 5 | 15,000'). $55 is consistent with the ~$11/cell blended rate (osf/preregistration.md:1841) as for the H1 row above."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          723,
+          723
+        ],
+        "section": "Budget Summary table — Phase 2c: H8 — Library Composition row"
+      },
+      "claim_text": "| Phase 2c: H8 — Library Composition | 7 | 21,000 | ~$77 |",
+      "values": [
+        {
+          "quantity": "cell count, Phase 2c (H8 library composition)",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total API calls, Phase 2c (H8 library composition)",
+          "value_verbatim": "21,000",
+          "value_parsed": 21000,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), Phase 2c (H8 library composition)",
+          "value_verbatim": "77",
+          "value_parsed": 77,
+          "unit": null,
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Cells (7) and calls (21,000) match osf/preregistration.md:1828 ('H8 (Composition) | 7 | 21,000'). $77 is consistent with the ~$11/cell blended rate (7×$11=$77)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          724,
+          724
+        ],
+        "section": "Budget Summary table — Phase 2d: H5 — Negative Text row"
+      },
+      "claim_text": "| Phase 2d: H5 — Negative Text | 6 | 18,000 | ~$66 |",
+      "values": [
+        {
+          "quantity": "cell count, Phase 2d (H5 negative text)",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total API calls, Phase 2d (H5 negative text)",
+          "value_verbatim": "18,000",
+          "value_parsed": 18000,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), Phase 2d (H5 negative text)",
+          "value_verbatim": "66",
+          "value_parsed": 66,
+          "unit": null,
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Cells (6) and calls (18,000) match osf/preregistration.md:1829 ('H5 (Negative Text) | 6* | 18,000'). $66 is consistent with the ~$11/cell blended rate (6×$11=$66)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          725,
+          725
+        ],
+        "section": "Budget Summary table — Phase 2e: H4 — Ordering row"
+      },
+      "claim_text": "| Phase 2e: H4 — Ordering | 4 (1 reused) | 1,800 net new | ~$7 |",
+      "values": [
+        {
+          "quantity": "cell count, Phase 2e (H4 ordering), total",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "cell count, Phase 2e (H4 ordering), reused from another phase",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "net-new API calls, Phase 2e (H4 ordering)",
+          "value_verbatim": "1,800",
+          "value_parsed": 1800,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), Phase 2e (H4 ordering)",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "DIVERGENCE: the registered 'Total sequential design' table gives H4 (Ordering) as 3 cells / 9,000 calls (osf/preregistration.md:1830), a different accounting (full cell/call total, not net-new-after-reuse) from this row's '4 (1 reused)' cells / '1,800 net new' calls; the two are not directly comparable without knowing the reuse convention, so left anchor-unknown rather than force-matched."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          726,
+          726
+        ],
+        "section": "Budget Summary table — Phase 2 Confirmatory row"
+      },
+      "claim_text": "| **Phase 2 Confirmatory** | **26** | **78,000** | **~$286** |",
+      "values": [
+        {
+          "quantity": "cell count, Phase 2 Confirmatory total",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total API calls, Phase 2 Confirmatory total",
+          "value_verbatim": "78,000",
+          "value_parsed": 78000,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), Phase 2 Confirmatory total",
+          "value_verbatim": "286",
+          "value_parsed": 286,
+          "unit": null,
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Exact match to the registered 'Total sequential design' table: '**Confirmatory total** | **26** | **78,000**' (osf/preregistration.md:1831) and 'Estimated cost: ~$286 for confirmatory tests (26 cells × ~$11/cell)' (osf/preregistration.md:1841)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          727,
+          727
+        ],
+        "section": "Budget Summary table — Phase 3a: H3 N=30 Extension row"
+      },
+      "claim_text": "| Phase 3a: H3 N=30 Extension | — | ~12,000 | ~$44 |",
+      "values": [
+        {
+          "quantity": "total API calls, Phase 3a (H3 N=30 extension) per Budget Summary",
+          "value_verbatim": "12,000",
+          "value_parsed": 12000,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), Phase 3a (H3 N=30 extension) per Budget Summary",
+          "value_verbatim": "44",
+          "value_parsed": 44,
+          "unit": null,
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "INTERNAL INCONSISTENCY: this Budget Summary figure (12,000 calls / ~$44) is roughly 10x the 1,200-call / ~$4 estimate given for the same Phase 3a earlier in this document (lines 490, 507). Both cannot be simultaneously correct; flagged for triage, not adjudicated here per rule 4."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          728,
+          728
+        ],
+        "section": "Budget Summary table — Phase 3c: H9 Diversity (exploratory) row"
+      },
+      "claim_text": "| Phase 3c: H9 Diversity (exploratory) | — | ~6,000 | ~$22 |",
+      "values": [
+        {
+          "quantity": "total API calls, Phase 3c (H9 diversity) per Budget Summary",
+          "value_verbatim": "6,000",
+          "value_parsed": 6000,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), Phase 3c (H9 diversity) per Budget Summary",
+          "value_verbatim": "22",
+          "value_parsed": 22,
+          "unit": null,
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "6,000 calls matches the line 556 Phase 3c total exactly (self-consistent, though both rest on the superseded 2×2/4-condition H9 design — see line 544 notes). The ~$22 cost differs slightly from the ~$18 estimate at line 539; minor inconsistency noted but not adjudicated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          729,
+          729
+        ],
+        "section": "Budget Summary table — Phase 3d: H2 Two-Stage (exploratory) row"
+      },
+      "claim_text": "| Phase 3d: H2 Two-Stage (exploratory) | — | ~1,200 | ~$4 |",
+      "values": [
+        {
+          "quantity": "total API calls, Phase 3d (H2 two-stage) per Budget Summary",
+          "value_verbatim": "1,200",
+          "value_parsed": 1200,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), Phase 3d (H2 two-stage) per Budget Summary",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Both figures are self-consistent with lines 568 (~$4) and 606 (up to 1,200 calls) earlier in this document."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          730,
+          730
+        ],
+        "section": "Budget Summary table — Flash Subtotal row"
+      },
+      "claim_text": "| **Flash Subtotal** | **26+** | **~97,300** | **~$357** |",
+      "values": [
+        {
+          "quantity": "cell count, Flash subtotal (at least)",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total API calls, Flash subtotal",
+          "value_verbatim": "97,300",
+          "value_parsed": 97300,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), Flash subtotal",
+          "value_verbatim": "357",
+          "value_parsed": 357,
+          "unit": null,
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "26 restates the confirmed Phase 2 Confirmatory cell count (line 726); the '+' and the 97,300/357 aggregate figures (summing the Phase 2/3a/3c/3d rows above, several of which are themselves internally inconsistent — see lines 727-729 notes) have no independent artefact to check them against."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          731,
+          731
+        ],
+        "section": "Budget Summary table — Phase 4: H6 Pro Transfer row"
+      },
+      "claim_text": "| Phase 4: H6 Pro Transfer | — | ~1,400-1,600 | ~$42-48 |",
+      "values": [
+        {
+          "quantity": "total API calls, Phase 4 (H6 Pro transfer) lower bound",
+          "value_verbatim": "1,400",
+          "value_parsed": 1400,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total API calls, Phase 4 (H6 Pro transfer) upper bound",
+          "value_verbatim": "1,600",
+          "value_parsed": 1600,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), Phase 4 (H6 Pro transfer) lower bound",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), Phase 4 (H6 Pro transfer) upper bound",
+          "value_verbatim": "48",
+          "value_parsed": 48,
+          "unit": null,
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates the line 671 Total-Phase-4 figures exactly (self-consistent); no independent artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          732,
+          732
+        ],
+        "section": "Budget Summary table — Confirmatory Total row"
+      },
+      "claim_text": "| **Confirmatory Total** | — | **~99,000** | **~$399-405** |",
+      "values": [
+        {
+          "quantity": "total API calls, Confirmatory Total (Flash + Pro)",
+          "value_verbatim": "99,000",
+          "value_parsed": 99000,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), Confirmatory Total, lower bound",
+          "value_verbatim": "399",
+          "value_parsed": 399,
+          "unit": null,
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), Confirmatory Total, upper bound",
+          "value_verbatim": "405",
+          "value_parsed": 405,
+          "unit": null,
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Aggregate of the Flash Subtotal and Phase 4 rows above; no independent artefact confirms it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          733,
+          733
+        ],
+        "section": "Budget Summary table — Phase 5: Exploratory (H10-H15) row"
+      },
+      "claim_text": "| Phase 5: Exploratory (H10-H15) | — | ~7,000-12,000 | ~$40-60 |",
+      "values": [
+        {
+          "quantity": "total API calls, Phase 5 exploratory (H10-H15) lower bound",
+          "value_verbatim": "7,000",
+          "value_parsed": 7000,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total API calls, Phase 5 exploratory (H10-H15) upper bound",
+          "value_verbatim": "12,000",
+          "value_parsed": 12000,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), Phase 5 exploratory lower bound",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": null,
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), Phase 5 exploratory upper bound",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "$40-60 restates the line 686 Phase 5 cost estimate exactly. The 7,000-12,000 call range has no independent artefact, and its constituent hypotheses (H14, H15) are registered as deferred, not part of the active exploratory programme — see line 694/697 notes."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          734,
+          734
+        ],
+        "section": "Budget Summary table — Grand Total row"
+      },
+      "claim_text": "| **Grand Total** | — | **~106,000-111,000** | **~$439-465** |",
+      "values": [
+        {
+          "quantity": "total API calls, Grand Total, lower bound",
+          "value_verbatim": "106,000",
+          "value_parsed": 106000,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total API calls, Grand Total, upper bound",
+          "value_verbatim": "111,000",
+          "value_parsed": 111000,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), Grand Total, lower bound",
+          "value_verbatim": "439",
+          "value_parsed": 439,
+          "unit": null,
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "estimated cost (USD), Grand Total, upper bound",
+          "value_verbatim": "465",
+          "value_parsed": 465,
+          "unit": null,
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Final aggregate of all rows above; no independent artefact confirms it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          740,
+          740
+        ],
+        "section": "Triggered exploratory table — H4b row"
+      },
+      "claim_text": "| H4b (HP/HN ordering) | H4 significant (p < 0.05) | 2 | 1,200 | ~$4 |",
+      "values": [
+        {
+          "quantity": "statistical-significance threshold triggering the H4b exploratory follow-up",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "statistic",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H4b-trigger-line-1100",
+          "method": "read"
+        },
+        {
+          "quantity": "cell count, H4b triggered exploratory condition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#triggered-exploratory-table-line-1834",
+          "method": "read"
+        },
+        {
+          "quantity": "total API calls, H4b triggered exploratory condition (per this document)",
+          "value_verbatim": "1,200",
+          "value_parsed": 1200,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated cost (USD), H4b triggered exploratory condition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "p < 0.05 matches the registered H4b trigger ('Trigger: H4 main effect is significant (FDR-corrected p < 0.05)', osf/preregistration.md:1100). Cell count 2 matches the registered triggered-exploratory table ('H4b (triggered) | 2 | 6,000', osf/preregistration.md:1834). DIVERGENCE: the call count here (1,200) does not match the registered 6,000 for the same H4b row; left anchor-unknown for that specific value rather than anchored to a figure it contradicts (v1.2 amendment 3 — per-value paths/methods for mixed spans)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          741,
+          741
+        ],
+        "section": "Triggered exploratory table — HN-only row"
+      },
+      "claim_text": "| HN-only condition | β_hardneg > 2×β_hardpos | 1 | 600 | ~$2 |",
+      "values": [
+        {
+          "quantity": "coefficient-ratio trigger threshold for the HN-only exploratory condition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "cell count, HN-only triggered exploratory condition",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#triggered-exploratory-table-line-1835",
+          "method": "read"
+        },
+        {
+          "quantity": "total API calls, HN-only triggered exploratory condition (per this document)",
+          "value_verbatim": "600",
+          "value_parsed": 600,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated cost (USD), HN-only triggered exploratory condition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Cell count 1 matches the registered triggered-exploratory table ('HN-only (triggered) | 1 | 3,000', osf/preregistration.md:1835). DIVERGENCE: the call count here (600) does not match the registered 3,000. The 'β_hardneg > 2×β_hardpos' trigger coefficient was not located verbatim in the registered H8/H12 sections within scope, so left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          742,
+          742
+        ],
+        "section": "Triggered exploratory table — Maximum triggered row"
+      },
+      "claim_text": "| **Maximum triggered** | | **3** | **1,800** | **~$6** |",
+      "values": [
+        {
+          "quantity": "cell count, maximum triggered exploratory total (per this document)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total API calls, maximum triggered exploratory total (per this document)",
+          "value_verbatim": "1,800",
+          "value_parsed": 1800,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated cost (USD), maximum triggered exploratory total",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "3 cells is the sum of the H4b (2) and HN-only (1) rows above, and 1,800 the sum of their 1,200+600 call estimates (self-consistent within this document). The registered document's own triggered-total row covers a different, wider scope ('Maximum total | 32 | 96,000', osf/preregistration.md:1836, which includes the base confirmatory 26 cells plus all triggered conditions), so it is not a comparable figure and no anchor is forced here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          744,
+          744
+        ],
+        "section": "Budget limits — Soft budget limit"
+      },
+      "claim_text": "**Soft budget limit**: $500 (triggers review, not hard cap)",
+      "values": [
+        {
+          "quantity": "soft budget limit (USD) triggering a review, not a hard cap",
+          "value_verbatim": "500",
+          "value_parsed": 500,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Searched osf/preregistration.md for a matching $500 review-trigger figure; none found within scope. Appears to be a planning decision specific to this execution-plan document."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          745,
+          745
+        ],
+        "section": "Budget limits — Contingency"
+      },
+      "claim_text": "**Contingency**: 20% buffer → **Budget ceiling: ~$600**",
+      "values": [
+        {
+          "quantity": "contingency buffer percentage applied to the soft budget limit",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "resulting budget ceiling (USD) after the contingency buffer",
+          "value_verbatim": "600",
+          "value_parsed": 600,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "600 is consistent with a 20% buffer on the $500 soft limit (500×1.2=600); no artefact records either figure independently."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          749,
+          749
+        ],
+        "section": "Budget Summary notes — Sequential design cell reduction"
+      },
+      "claim_text": "- Sequential design reduces confirmatory cells from ~54 to 26",
+      "values": [
+        {
+          "quantity": "confirmatory cell count under a (superseded) non-sequential/full-factorial design",
+          "value_verbatim": "54",
+          "value_parsed": 54,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "confirmatory cell count under the sequential design actually used",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'was ~54, now 26' is a before/after correction pattern: 54 is the superseded full-factorial cell count (historical, per instrument rule 3), while 26 is the live, currently-registered confirmatory cell count, matching osf/preregistration.md:1831 (already anchored at line 726 above)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          750,
+          750
+        ],
+        "section": "Budget Summary notes — H5 net-new cells"
+      },
+      "claim_text": "- H5 now tests at all 3 image-using M/E levels (3 M/E × 3 H5 = 9 cells, 6 net new)",
+      "values": [
+        {
+          "quantity": "count of image-using M/E levels H5 is tested at",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H5-net-new-cells-footnote-line-1839",
+          "method": "read"
+        },
+        {
+          "quantity": "count of H5 levels (Minimal/Terse/Verbose)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H5-net-new-cells-footnote-line-1839",
+          "method": "read"
+        },
+        {
+          "quantity": "cell count, full H5 x M/E cross (3x3)",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H5-net-new-cells-footnote-line-1839",
+          "method": "read"
+        },
+        {
+          "quantity": "net-new cell count, H5, after excluding overlap with H1 baselines",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#H5-net-new-cells-footnote-line-1839",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Near-verbatim match to osf/preregistration.md:1839 (and repeated at :2058): 'H5 tests 3 M/E × 3 H5 = 9 conditions total, but 3 overlap with H1 baselines → 6 net new cells' (this document says 'cells' where the registration says 'conditions'; the four numeric values are identical)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          752,
+          752
+        ],
+        "section": "Budget Summary notes — Flash-only confirmatory cost"
+      },
+      "claim_text": "- Flash-only confirmatory testing costs ~$286",
+      "values": [
+        {
+          "quantity": "estimated cost (USD), Flash-only confirmatory testing",
+          "value_verbatim": "286",
+          "value_parsed": 286,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the confirmed $286 figure already anchored at line 726 (osf/preregistration.md:1841: '~$286 for confirmatory tests')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          762,
+          762
+        ],
+        "section": "Quality Control Checkpoints — Parsing check, acceptable threshold"
+      },
+      "claim_text": "- Acceptable: ≥95%",
+      "values": [
+        {
+          "quantity": "minimum acceptable percentage of responses successfully parsed as JSON",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No matching 'parsing success rate' threshold found in osf/preregistration.md; the document's own '95%' occurrences all refer to bootstrapped confidence intervals (e.g. line 293, 315), a different concept, so not anchored there to avoid a false match."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          763,
+          763
+        ],
+        "section": "Quality Control Checkpoints — Parsing check, action threshold"
+      },
+      "claim_text": "- Action if <95%: Investigate malformed responses, adjust parsing",
+      "values": [
+        {
+          "quantity": "parsing-success percentage below which malformed responses are investigated",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates the line 762 threshold; same anchor-unknown reasoning applies."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          765,
+          765
+        ],
+        "section": "Quality Control Checkpoints — Sanity check tolerance"
+      },
+      "claim_text": "2. **Sanity check**: F1 on training tiles (should match Phase 1 baseline ±0.05)",
+      "values": [
+        {
+          "quantity": "F1 tolerance (±) for the training-tile sanity check against the Phase 1 baseline",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "A different use of '0.05' from the H2 GO/stopping criterion (line 608) and the Phase 4a decision-point tolerance (line 633) — this one is a sanity-check drift tolerance for training-tile F1. No matching threshold found in osf/preregistration.md within scope."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          769,
+          769
+        ],
+        "section": "Quality Control Checkpoints — Cost check threshold"
+      },
+      "claim_text": "- Action if >120% estimate: Pause, review before continuing",
+      "values": [
+        {
+          "quantity": "percentage of estimated spend above which the study is paused for review",
+          "value_verbatim": "120",
+          "value_parsed": 120,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No matching cost-overrun review threshold found in osf/preregistration.md within scope; appears specific to this execution-plan document's own operational checkpoints."
+    }
+  ]
+}

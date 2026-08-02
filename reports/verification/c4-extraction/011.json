@@ -1,0 +1,3592 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/preregistration/execution-plan.md",
+    "git_blob": "385a35efb7beea40cff17d9d446f5ed929d95b07",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          3,
+          4
+        ],
+        "section": "Top banner — OSF lodgement scope note"
+      },
+      "claim_text": "> **NOT PART OF THE OSF LODGEMENT.** The registration comprises exactly three\n> documents, all in `osf/` (`osf/README.md:3,9-11`); this file is not one of",
+      "values": [
+        {
+          "quantity": "count of documents comprising the OSF registration",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/README.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches 'This registration contains three documents comprising the complete preregistration...' at osf/README.md:3. The line-number citation 'osf/README.md:3,9-11' on the same span is excluded per rule 5 (line-number citations out of scope); 'D17' on line 9 is an identifier, also excluded."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          31
+        ],
+        "section": "Dependency Graph diagram — Phase 2a box"
+      },
+      "claim_text": "Phase 2a: H1 M/E Level (5 cells)",
+      "values": [
+        {
+          "quantity": "cell count, H1 M/E level, dependency-graph summary",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches 'H1 (M/E) | 5 | 5' cumulative-cells row at osf/preregistration.md:2052 and the 'Modality/Elaboration | M/E | 5' factor row at :1740."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          34,
+          34
+        ],
+        "section": "Dependency Graph diagram — Phase 2b box"
+      },
+      "claim_text": "Phase 2b: H7 Temperature (5 cells)",
+      "values": [
+        {
+          "quantity": "cell count, H7 temperature, dependency-graph summary",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches 'H7 (Temperature) | 5 | 10' cumulative-cells row at osf/preregistration.md:2053 and 'Temperature | T | 5' factor row at :1742."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          37,
+          37
+        ],
+        "section": "Dependency Graph diagram — Phase 2c box"
+      },
+      "claim_text": "Phase 2c: H8 Library Composition (7 cells)",
+      "values": [
+        {
+          "quantity": "cell count, H8 library composition, dependency-graph summary",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches 'H8 (Composition) | 7 | 17' cumulative-cells row at osf/preregistration.md:2054 and 'Library Composition | L | 7' factor row at :1743."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          40,
+          40
+        ],
+        "section": "Dependency Graph diagram — Phase 2d box"
+      },
+      "claim_text": "Phase 2d: H5 Negative Text Treatment (6 cells)",
+      "values": [
+        {
+          "quantity": "cell count, H5 negative text treatment, dependency-graph summary",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches 'H5 (Negative text) | 6* | 23' cumulative-cells row at osf/preregistration.md:2055 (net-new cells after the 3-cell H1 overlap)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          43,
+          43
+        ],
+        "section": "Dependency Graph diagram — Phase 2e box"
+      },
+      "claim_text": "Phase 2e: H4 Ordering (3 cells)",
+      "values": [
+        {
+          "quantity": "cell count, H4 ordering, dependency-graph summary",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches 'H4 (Ordering) | 3 | 26' cumulative-cells row at osf/preregistration.md:2056 and 'H4 totals: 3 cells' at :1820. Note this diagram figure (3) is the registered count; the later Phase 2e operational section (lines 388-399 of this document) describes 4 ordering conditions including a reused config-default baseline — see notes on that claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          45,
+          45
+        ],
+        "section": "Dependency Graph diagram — H4b triggered-exploratory annotation"
+      },
+      "claim_text": "    └── [H4b: HP/HN ordering - 2 cells, triggered exploratory]",
+      "values": [
+        {
+          "quantity": "cell count, H4b triggered exploratory (HP/HN ordering)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches 'H4b (triggered) | 2 | 6,000' at osf/preregistration.md:1835 and 'Triggered exploratory (if H4 significant): H4b tests HP-first vs HN-first within hard block (+2 cells)' at :1822."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          49,
+          51
+        ],
+        "section": "Dependency Graph diagram — Phase 3a box (H3 Voting)"
+      },
+      "claim_text": "Phase 3a:       Phase 3b:       Phase 3c:       Phase 3d:\nH3 Voting       H9 Diversity    H2 Two-Stage    Triggered\n(N=30 extend)   (exploratory)   (exploratory)   Exploratory",
+      "values": [
+        {
+          "quantity": "consensus voting pool size (N), extended H3 voting, dependency-graph summary",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches 'Additional N=30 runs are conducted at the optimal configuration to extend the voting characterisation' at osf/preregistration.md:329 and 'Extended voting (N=30)' at :512."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          62,
+          62
+        ],
+        "section": "Note after Dependency Graph — OFAT budget reduction"
+      },
+      "claim_text": "**Note**: The sequential OFAT design tests one factor at a time, carrying optimal parameters forward. This reduces budget from ~54 cells to 26 cells while ensuring each hypothesis runs at truly optimal parameters.",
+      "values": [
+        {
+          "quantity": "pre-OFAT-reduction cell-count estimate this document itself characterises as the alternative to the sequential design",
+          "value_verbatim": "~54",
+          "value_parsed": 54,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "confirmatory cell total after OFAT sequencing",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "26 matches the registered 'Confirmatory total | 26 | 78,000' row at osf/preregistration.md:1833 and 'Total confirmatory: 26 cells' at :2058. '~54 cells' is this document's own characterisation of the budget before OFAT reduction; no single registered artefact stating '54' was located (a naive full-factorial-per-hypothesis sum would exceed 54, so this appears to be a rounded illustrative figure) — flagged anchor-unknown, not adjudicated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          68,
+          68
+        ],
+        "section": "Phase 0: Preparation — Duration"
+      },
+      "claim_text": "**Duration**: 1-2 days",
+      "values": [
+        {
+          "quantity": "estimated duration (days), Phase 0 Preparation",
+          "value_verbatim": "1-2",
+          "value_parsed": null,
+          "unit": "days",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No committed artefact records actual Phase 0 duration; this is the document's own planning estimate. value_parsed left null because '1-2' is a range, not a single scalar — both bound values are folded into one value entry since the range denotes a single estimate span rather than two independently checkable figures (cf. hard rule 1's 'minimal span' guidance)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          69,
+          69
+        ],
+        "section": "Phase 0: Preparation — Cost"
+      },
+      "claim_text": "**Cost**: $0",
+      "values": [
+        {
+          "quantity": "estimated cost (USD), Phase 0 Preparation",
+          "value_verbatim": "$0",
+          "value_parsed": 0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No API calls are scheduled in Phase 0 per the checklist, so $0 is self-evident from the document's own design rather than confirmable against a billing or manifest artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          79,
+          79
+        ],
+        "section": "Phase 0 checklist — Prompts, H5 variants"
+      },
+      "claim_text": "  - [x] H5 variants (_terse, _verbose) at 3 image-using M/E levels (2026-01-14):",
+      "values": [
+        {
+          "quantity": "count of image-using M/E levels receiving H5 terse/verbose text variants",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered 3 image-using M/E levels within H5's '3 M/E × 3 H5' factorial design (osf/preregistration.md:1806, 2058); H5 tests text treatment 'at all image-based M/E levels' (:1808)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          80,
+          80
+        ],
+        "section": "Phase 0 checklist — Prompts, H5 image-only terse/verbose files"
+      },
+      "claim_text": "    - [x] `detect_image-only_{terse,verbose}.md` (2 files)",
+      "values": [
+        {
+          "quantity": "count of instruction files produced for H5 terse/verbose variants, image-only M/E level",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/system-instructions/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confirmed both files exist: prompts/system-instructions/detect_image-only_terse.md and detect_image-only_verbose.md. Anchor is the containing directory (whole-artefact listing) since the claim is a file count, not a single file's content."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          81,
+          81
+        ],
+        "section": "Phase 0 checklist — Prompts, H5 brief-text-image terse/verbose files"
+      },
+      "claim_text": "    - [x] `detect_brief-text-image_{terse,verbose}.md` (2 files)",
+      "values": [
+        {
+          "quantity": "count of instruction files produced for H5 terse/verbose variants, brief-text+image M/E level",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/system-instructions/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confirmed both files exist: prompts/system-instructions/detect_brief-text-image_terse.md and detect_brief-text-image_verbose.md."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          82,
+          82
+        ],
+        "section": "Phase 0 checklist — Prompts, H5 verbose-text-image terse/verbose files"
+      },
+      "claim_text": "    - [x] `detect_verbose-text-image_{terse,verbose}.md` (2 files)",
+      "values": [
+        {
+          "quantity": "count of instruction files produced for H5 terse/verbose variants, verbose-text+image M/E level",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/system-instructions/",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confirmed both files exist: prompts/system-instructions/detect_verbose-text-image_terse.md and detect_verbose-text-image_verbose.md."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          83,
+          83
+        ],
+        "section": "Phase 0 checklist — Prompts, H9 text variants"
+      },
+      "claim_text": "  - [ ] H9 text variants (5 semantically equivalent instructions, constructed after Phase 2)",
+      "values": [
+        {
+          "quantity": "count of semantically equivalent H9 text variant instructions (planned, not yet constructed at document time)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Checkbox is unticked ('[ ]') and the item states these are 'constructed after Phase 2' — no committed artefact exists yet at the point this plan was written; flagged rather than chased into later H9 configs (rule 7)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          87,
+          87
+        ],
+        "section": "Phase 0 checklist — Configs, 5 M/E configs"
+      },
+      "claim_text": "  - [x] 5 M/E configs: `detect_{modality}.json`",
+      "values": [
+        {
+          "quantity": "count of base M/E detection configs",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered 'Modality/Elaboration | M/E | 5' factor row (osf/preregistration.md:1740); confirmed 5 sibling files exist under prompts/configs/ (detect_image-only.json, detect_brief-text.json, detect_brief-text-image.json, detect_verbose-text.json, detect_verbose-text-image.json)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          88,
+          88
+        ],
+        "section": "Phase 0 checklist — Configs, H5 variant configs"
+      },
+      "claim_text": "  - [x] 6 H5 variant configs (_terse, _verbose) at 3 image-using M/E levels: `detect_{modality}_{terse,verbose}.json` (2026-01-14)",
+      "values": [
+        {
+          "quantity": "count of H5 terse/verbose variant configs (2 per image-using M/E level)",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of image-using M/E levels receiving H5 variant configs",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches 'Config count (H5 at all 3 image-using M/E levels): 3 M/E levels × 3 H5 levels = 9 H5 configs' at osf/preregistration.md:2064-2066 (6 = the terse/verbose subset of the 9, excluding the 3 minimal configs already covered by H1 baselines)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          89,
+          89
+        ],
+        "section": "Phase 0 checklist — Configs, H8 library configs"
+      },
+      "claim_text": "  - [ ] 7 H8 library configs: `library_{composition}.json`",
+      "values": [
+        {
+          "quantity": "count of H8 library composition configs",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered 'Library Composition | L | 7' factor row (osf/preregistration.md:1743); all 7 library_*.json siblings confirmed present under prompts/configs/ (pure-positive-canon, canonical, plus-hp, scale-4, scale-8, scale-16, scale-32)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          90,
+          90
+        ],
+        "section": "Phase 0 checklist — Configs, H4 ordering variants"
+      },
+      "claim_text": "  - [ ] H4 ordering variants: 2 additional orderings at optimal M/E",
+      "values": [
+        {
+          "quantity": "count of additional ordering configs planned beyond the baseline, H4",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Checkbox unticked ('[ ]'); no committed config artefact for this planning-stage count was located among prompts/configs/ at extraction time (ordering is described elsewhere, lines 388-405, as 3 new + 1 reused, not 2 — flagged for triage as a possible internal inconsistency, not adjudicated here per rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          102,
+          102
+        ],
+        "section": "Phase 0 checklist — Calibration pilots, thinking-level latency ratio"
+      },
+      "claim_text": "  - [x] Thinking level calibration complete — minimal achieves equivalent F1 to high at 1/3 latency (see §8.9)",
+      "values": [
+        {
+          "quantity": "latency ratio, minimal vs high thinking level (minimal as a fraction of high), thinking-level calibration",
+          "value_verbatim": "1/3",
+          "value_parsed": 0.3333333333333333,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "osf/preregistration.md §8.9 reports 'Minimal is 2.84× faster than high (34.2s vs 97.3s per 20 tiles)' (:2133) and asks 'If minimal is truly equivalent at 1/3 the latency...' (:2145) — the '1/3' wording is quoted directly from that post-hoc-verification framing; 34.2/97.3 ≈ 0.352, close to but not exactly 1/3."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          156,
+          156
+        ],
+        "section": "Phase 1: Library + Verbose Text Construction — Duration"
+      },
+      "claim_text": "**Duration**: 0.5 days",
+      "values": [
+        {
+          "quantity": "estimated duration (days), Phase 1",
+          "value_verbatim": "0.5",
+          "value_parsed": 0.5,
+          "unit": "days",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning estimate; no committed artefact records actual Phase 1 duration."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          157,
+          157
+        ],
+        "section": "Phase 1 — Estimated cost"
+      },
+      "claim_text": "**Estimated cost**: ~$1 (Flash at $0.003/call)",
+      "values": [
+        {
+          "quantity": "estimated cost (USD), Phase 1",
+          "value_verbatim": "~$1",
+          "value_parsed": null,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "assumed per-call rate (USD), Flash, Phase 1 cost estimate",
+          "value_verbatim": "$0.003",
+          "value_parsed": 0.003,
+          "unit": "USD/call",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "scripts/lib_llm_metadata.py PRICING stores per-token input/output rates (e.g. gemini-3-flash-preview: input $0.50, output $3.00 per M tokens), not a flat per-call constant; deriving $0.003/call from token-rate assumptions would require chasing beyond this document (rule 7), so flagged anchor-unknown rather than forced onto an ill-fitting scalar. value_parsed left null for '~$1' since it is an approximate total, not an exact scalar."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          171,
+          171
+        ],
+        "section": "Phase 1, Step 1 — Image-Only Baseline prompt composition"
+      },
+      "claim_text": "- Prompt: Image-only (4 canonical positives + 3 null tiles, minimal text instruction)",
+      "values": [
+        {
+          "quantity": "count of canonical positive examples, Phase 1 image-only baseline prompt",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "count of null tiles, Phase 1 image-only baseline prompt",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_pure-positive-canon.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "library_pure-positive-canon.json (H8-1, the minimal Canon+-only library) records composition.canonical_positive=4 and composition.null=3, matching this baseline prompt's '4 canonical positives + 3 null tiles' composition exactly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          172,
+          172
+        ],
+        "section": "Phase 1, Step 1 — Image-Only Baseline call volume"
+      },
+      "claim_text": "- Passes: 5 × 20 training tiles = 100 API calls",
+      "values": [
+        {
+          "quantity": "count of detection passes, Phase 1 image-only baseline",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of training tiles, Phase 1 image-only baseline",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "total API call count, Phase 1 image-only baseline (5 passes x 20 tiles)",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'20 training tiles' matches the registered training set size (osf/preregistration.md:44 'a modest training set (20 tiles)'; :815 'training set contains 36 mounds across 20 tiles'). '5 passes' and the resulting '100 API calls' are specific to this Phase-1 hard-example-mining baseline (distinct from the K=10 confirmatory protocol) and no separate committed artefact stating them was located — flagged anchor-unknown; 100 = 5x20 is internally consistent within this same span but not independently verifiable from a committed source."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          177,
+          177
+        ],
+        "section": "Phase 1, Step 2 — Failure Analysis, False Negative threshold"
+      },
+      "claim_text": "- Identify False Negatives (FNs): Ground truth mounds missed in ≥3/5 passes",
+      "values": [
+        {
+          "quantity": "frequency threshold numerator, False Negative selection (occurred in >= N of M passes)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "frequency threshold denominator (total passes), False Negative selection",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Procedural threshold specific to this document's Phase 1 hard-example mining; no separate script/config constant located confirming the 3/5 threshold."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          178,
+          178
+        ],
+        "section": "Phase 1, Step 2 — Failure Analysis, False Positive threshold"
+      },
+      "claim_text": "- Identify False Positives (FPs): Detections in ≥3/5 passes with no matching ground truth",
+      "values": [
+        {
+          "quantity": "frequency threshold numerator, False Positive selection (occurred in >= N of M passes)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "frequency threshold denominator (total passes), False Positive selection",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Procedural threshold specific to this document's Phase 1 hard-example mining; no separate script/config constant located confirming the 3/5 threshold."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          185,
+          185
+        ],
+        "section": "Phase 1, Step 3 — Hard positive target count"
+      },
+      "claim_text": "- Hard positives: Top K FNs (target K=4)",
+      "values": [
+        {
+          "quantity": "target count of hard positive examples selected, Phase 1 library construction",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "library_scale-8.json (the H8 Scale-8 condition ultimately built from this Phase 1 selection) records composition.hard_positive=4, matching the 'target K=4' figure."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          186,
+          186
+        ],
+        "section": "Phase 1, Step 3 — Hard negative target count"
+      },
+      "claim_text": "- Hard negatives: Top M FPs (target M=4)",
+      "values": [
+        {
+          "quantity": "target count of hard negative examples selected, Phase 1 library construction",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "library_scale-8.json records composition.hard_negative=4, matching the 'target M=4' figure."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          200,
+          200
+        ],
+        "section": "Phase 1, Step 4 — Brief text table, canonical descriptions row"
+      },
+      "claim_text": "| Canonical descriptions | Legend | Terse descriptions of 4 canonical mound types |",
+      "values": [
+        {
+          "quantity": "count of canonical mound types described, brief text",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_pure-positive-canon.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches composition.canonical_positive=4 in library_pure-positive-canon.json (the 4 canonical positive examples correspond to the 4 canonical mound types described in the text)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          203,
+          203
+        ],
+        "section": "Phase 1, Step 4 — Brief text word count target"
+      },
+      "claim_text": "Word count: ~200-300 words.",
+      "values": [
+        {
+          "quantity": "target word count, brief text",
+          "value_verbatim": "~200-300",
+          "value_parsed": null,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No standalone prompts/brief-text.md exists in the working tree (the Step 6 upload checklist at line 238 names it as a planned upload path, but the assembled text appears to live embedded within prompts/system-instructions/detect_brief-text.md instead); computing an actual word count from that file would require chasing beyond this document (rule 7), so flagged anchor-unknown. value_parsed left null: '~200-300' is an approximate range, not a single scalar."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          211,
+          211
+        ],
+        "section": "Phase 1, Step 5 — Verbose text table, canonical descriptions row"
+      },
+      "claim_text": "| Canonical descriptions | Legend | Detailed descriptions of 4 canonical types (size, colour, ray count, context) |",
+      "values": [
+        {
+          "quantity": "count of canonical mound types described, verbose text",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_pure-positive-canon.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches composition.canonical_positive=4 in library_pure-positive-canon.json, as for the brief-text table row above (same 4 canonical types, greater detail)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          214,
+          214
+        ],
+        "section": "Phase 1, Step 5 — Verbose text word count target"
+      },
+      "claim_text": "Word count: ~500-700 words.",
+      "values": [
+        {
+          "quantity": "target word count, verbose text",
+          "value_verbatim": "~500-700",
+          "value_parsed": null,
+          "unit": "words",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "No standalone prompts/verbose-text.md exists in the working tree (Step 6 upload checklist at line 239); as with the brief-text word count above, flagged anchor-unknown rather than chased into an embedded instruction file. value_parsed left null: '~500-700' is an approximate range, not a single scalar."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          221,
+          221
+        ],
+        "section": "Phase 1 — Note on exclusion guidance, H5=Terse bullet"
+      },
+      "claim_text": "- H5=Terse: Hard negative images with brief exclusion guidance (1-2 sentences)",
+      "values": [
+        {
+          "quantity": "target sentence count, H5=Terse exclusion guidance",
+          "value_verbatim": "1-2",
+          "value_parsed": null,
+          "unit": "sentences",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Design-intent description of prose length; no stored scalar artefact confirms this beyond opening and reading the relevant H5 terse instruction files (out of scope for extraction, rule 7). value_parsed null: range, not a scalar."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          235,
+          235
+        ],
+        "section": "Phase 1, Step 6 — Upload checklist, hard positives"
+      },
+      "claim_text": "- [ ] `inputs/few-shot-library/hard-positives/` (4 images)",
+      "values": [
+        {
+          "quantity": "count of hard positive images to upload",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches composition.hard_positive=4 in library_scale-8.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          236,
+          236
+        ],
+        "section": "Phase 1, Step 6 — Upload checklist, hard negatives"
+      },
+      "claim_text": "- [ ] `inputs/few-shot-library/hard-negatives/` (3 images)",
+      "values": [
+        {
+          "quantity": "count of hard negative images to upload",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "States 3 hard-negative images, but library_scale-8.json records composition.hard_negative=4 (matching the 'target M=4' figure at line 186), not 3 — a discrepancy between this checklist line and the Scale-8 library actually built. Flagged for triage rather than adjudicated here (rule 4); not anchored to library_scale-8.json to avoid manufacturing a false 4-vs-3 comparison at the wrong quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          244,
+          244
+        ],
+        "section": "Phase 1 — Decision Point, insufficient hard examples"
+      },
+      "claim_text": "If <4 distinct FNs or <3 distinct FPs are found:",
+      "values": [
+        {
+          "quantity": "minimum distinct False Negative count below which the decision point triggers",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "minimum distinct False Positive count below which the decision point triggers",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Decision-rule thresholds specific to this document's Phase 1 procedure (mirrors the target K=4/M=4 figures at lines 185-186, restated here as a minimum-viable-count decision trigger); no separate committed artefact confirms the thresholds themselves."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          247,
+          247
+        ],
+        "section": "Phase 1 — Decision Point, Option B lowered threshold"
+      },
+      "claim_text": "- Option B: Lower frequency threshold (≥2/5 instead of ≥3/5)",
+      "values": [
+        {
+          "quantity": "lowered frequency threshold numerator, Option B",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "lowered frequency threshold denominator, Option B",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "original frequency threshold numerator (Step 2), referenced for comparison",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "original frequency threshold denominator (Step 2), referenced for comparison",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates the Step 2 3/5 threshold (lines 177-178) alongside the proposed fallback 2/5 threshold; same anchor-unknown status as the originals."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          254,
+          254
+        ],
+        "section": "Phase 2: Sequential Hypothesis Testing — Duration"
+      },
+      "claim_text": "**Duration**: 2-3 days",
+      "values": [
+        {
+          "quantity": "estimated duration (days), Phase 2",
+          "value_verbatim": "2-3",
+          "value_parsed": null,
+          "unit": "days",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Planning estimate; no committed artefact records actual Phase 2 duration."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          255,
+          255
+        ],
+        "section": "Phase 2 — Estimated cost"
+      },
+      "claim_text": "**Estimated cost**: ~$57 confirmatory (26 cells at ~$2.20/cell)",
+      "values": [
+        {
+          "quantity": "estimated total cost (USD), confirmatory Phase 2",
+          "value_verbatim": "~$57",
+          "value_parsed": null,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "confirmatory cell count, Phase 2",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "assumed cost per cell (USD), Phase 2 confirmatory estimate",
+          "value_verbatim": "~$2.20",
+          "value_parsed": null,
+          "unit": "USD/cell",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "26 cells matches the registered confirmatory total (osf/preregistration.md:1833, :2058). The dollar figures do not: this document's own internal arithmetic (26 x ~$2.20 ~= $57) is self-consistent, but osf/preregistration.md states '~$286 for confirmatory tests (26 cells x ~$11/cell)' (:1841) for the same nominal quantity — a ~5x discrepancy between the internal planning estimate and the public registration's cost estimate. This document's own banner (lines 16-18) explains the two are independently maintained ('the public preregistration includes only summary cost information'), so the discrepancy is expected rather than necessarily an error; flagged for triage, not adjudicated (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          258,
+          258
+        ],
+        "section": "Phase 2 intro — OFAT budget reduction (restated)"
+      },
+      "claim_text": "The sequential OFAT design tests one factor at a time, carrying optimal parameters forward. This reduces budget from ~54 cells to 26 cells while ensuring each hypothesis runs at truly optimal parameters.",
+      "values": [
+        {
+          "quantity": "pre-OFAT-reduction cell-count estimate, restated at Phase 2 intro",
+          "value_verbatim": "~54",
+          "value_parsed": 54,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "confirmatory cell total after OFAT sequencing, restated at Phase 2 intro",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Identical wording to the line-62 note (this is the same sentence repeated verbatim at the Phase 2 section header); kept as a separate claim per full enumeration (rule 3, no sampling) since it is a distinct verbatim span. Same anchor/notes rationale as the line-62 claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          266,
+          266
+        ],
+        "section": "Phase 2a: H1 — Design statement"
+      },
+      "claim_text": "**Design**: 5 M/E levels at T=1.0 (default), Scale-8 library, canonical-first ordering:",
+      "values": [
+        {
+          "quantity": "count of M/E levels tested, H1",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "temperature fixed for H1 testing",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "5 matches 'Modality/Elaboration | M/E | 5' (osf/preregistration.md:1740); T=1.0 (vendor default, prior to H7 optimisation) is consistent with H1 being tested 'at T=1.0 (default)' before Phase 2b determines the optimal temperature."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          278,
+          278
+        ],
+        "section": "Phase 2a totals — cell count"
+      },
+      "claim_text": "- 5 M/E levels = **5 cells**",
+      "values": [
+        {
+          "quantity": "count of M/E levels, Phase 2a totals bullet",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "cell count, Phase 2a totals bullet",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches 'H1 (M/E) | 5 | 5' at osf/preregistration.md:2052."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          279,
+          279
+        ],
+        "section": "Phase 2a totals — API call volume"
+      },
+      "claim_text": "- 5 × K=10 × 60 tiles = **3,000 API calls** (~$11)",
+      "values": [
+        {
+          "quantity": "count of M/E levels/cells, H1 call-volume calculation",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of independent runs (K) per condition, confirmatory protocol",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of holdout tiles per run",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "total API call count, H1 (5 cells x K=10 x 60 tiles)",
+          "value_verbatim": "3,000",
+          "value_parsed": 3000,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated cost (USD), H1 phase",
+          "value_verbatim": "~$11",
+          "value_parsed": null,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "K=10 matches 'Number of passes (K): 10 for all confirmatory hypotheses' (osf/preregistration.md:2088) and 'K=10 independent single-pass runs' (:315). 60 tiles matches the registered holdout set (:234, :1930). The product '3,000 API calls' and '~$11' cost are this document's own derived totals with no separate committed artefact; note osf/preregistration.md's own summary table states a different H1 total ('H1 (M/E) | 5 | 15,000' at :1828) for the apparently same nominal quantity — a ~5x discrepancy consistent with the H1-cells-to-calls arithmetic used throughout that table (see also the line-255 cost-estimate note); flagged for triage, not adjudicated (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          281,
+          281
+        ],
+        "section": "Phase 2a — Fixed parameters"
+      },
+      "claim_text": "**Fixed parameters**: T=1.0, Scale-8 library (17 examples), canonical-first ordering.",
+      "values": [
+        {
+          "quantity": "temperature fixed for H1 testing (restated)",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "total example count, Scale-8 library used for H1 testing",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "library_scale-8.json records total_examples=17, matching 'Scale-8 library (17 examples)'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          283,
+          283
+        ],
+        "section": "Phase 2a — Analysis statement"
+      },
+      "claim_text": "**Analysis**: Pairwise bootstrap comparisons across 5 M/E levels (95% CIs, FDR-corrected). Identify optimal M/E for subsequent phases.",
+      "values": [
+        {
+          "quantity": "count of M/E levels compared, H1 pairwise bootstrap analysis",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "confidence interval level, H1 pairwise bootstrap analysis",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "statistic",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "5 M/E levels matches the registered factor level count; 95% CI matches the standard reporting convention used throughout the registration (e.g. 'mean F1, SD, 95% CI' at :315)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          293,
+          293
+        ],
+        "section": "Phase 2b: H7 — Design statement"
+      },
+      "claim_text": "**Design**: 5 temperature levels at optimal M/E:",
+      "values": [
+        {
+          "quantity": "count of temperature levels tested, H7",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches 'Temperature | T | 5' factor row (osf/preregistration.md:1742)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          297,
+          297
+        ],
+        "section": "Phase 2b: H7 temperature conditions table row"
+      },
+      "claim_text": "| 0.0 | Minimum (deterministic) |",
+      "values": [
+        {
+          "quantity": "temperature tested, H7 condition row (value 0.0)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered 'Temperature | T | 5 | 0.0, 0.3, 0.7, 1.0, 1.3' factor row (osf/preregistration.md:1742)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          298,
+          298
+        ],
+        "section": "Phase 2b: H7 temperature conditions table row"
+      },
+      "claim_text": "| 0.3 | Low variance (evidence for visual detection) |",
+      "values": [
+        {
+          "quantity": "temperature tested, H7 condition row (value 0.3)",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered 'Temperature | T | 5 | 0.0, 0.3, 0.7, 1.0, 1.3' factor row (osf/preregistration.md:1742)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          299,
+          299
+        ],
+        "section": "Phase 2b: H7 temperature conditions table row"
+      },
+      "claim_text": "| 0.7 | Moderate variance |",
+      "values": [
+        {
+          "quantity": "temperature tested, H7 condition row (value 0.7)",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered 'Temperature | T | 5 | 0.0, 0.3, 0.7, 1.0, 1.3' factor row (osf/preregistration.md:1742)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          300,
+          300
+        ],
+        "section": "Phase 2b: H7 temperature conditions table row"
+      },
+      "claim_text": "| 1.0 | Vendor default |",
+      "values": [
+        {
+          "quantity": "temperature tested, H7 condition row (value 1.0)",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered 'Temperature | T | 5 | 0.0, 0.3, 0.7, 1.0, 1.3' factor row (osf/preregistration.md:1742)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          301,
+          301
+        ],
+        "section": "Phase 2b: H7 temperature conditions table row"
+      },
+      "claim_text": "| 1.3 | Above default |",
+      "values": [
+        {
+          "quantity": "temperature tested, H7 condition row (value 1.3)",
+          "value_verbatim": "1.3",
+          "value_parsed": 1.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered 'Temperature | T | 5 | 0.0, 0.3, 0.7, 1.0, 1.3' factor row (osf/preregistration.md:1742)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          305,
+          305
+        ],
+        "section": "Phase 2b totals — cell count"
+      },
+      "claim_text": "- 5 T levels = **5 cells**",
+      "values": [
+        {
+          "quantity": "count of temperature levels, Phase 2b totals bullet",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "cell count, Phase 2b totals bullet",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches 'H7 (Temperature) | 5 | 10' at osf/preregistration.md:2053."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          306,
+          306
+        ],
+        "section": "Phase 2b totals — API call volume"
+      },
+      "claim_text": "- 5 × K=10 × 60 = **3,000 API calls** (~$11)",
+      "values": [
+        {
+          "quantity": "count of temperature levels/cells, H7 call-volume calculation",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of independent runs (K) per condition, confirmatory protocol",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of holdout tiles per run",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "total API call count, H7 (5 cells x K=10 x 60 tiles)",
+          "value_verbatim": "3,000",
+          "value_parsed": 3000,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated cost (USD), H7 phase",
+          "value_verbatim": "~$11",
+          "value_parsed": null,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Same K=10/60-tile registered anchors as the H1 call-volume claim above. osf/preregistration.md's own summary table states 'H7 (Temperature) | 5 | 15,000' (:1829) for the same nominal quantity, a ~5x discrepancy consistent with the pattern seen for H1; flagged, not adjudicated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          310,
+          310
+        ],
+        "section": "Phase 2b — Analysis statement"
+      },
+      "claim_text": "**Analysis**: Pairwise bootstrap comparisons across 5 T levels (95% CIs, FDR-corrected). Planned contrasts: T=1.0 vs each other level.",
+      "values": [
+        {
+          "quantity": "count of temperature levels compared, H7 pairwise bootstrap analysis",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "confidence interval level, H7 pairwise bootstrap analysis",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "statistic",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "reference temperature level for planned pairwise contrasts, H7",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "5 T levels and 95% CI as above. T=1.0 (vendor default) as the planned-contrast reference level is consistent with the H7 temperature table's own labelling of 1.0 as 'Vendor default' (line 300 of this document)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          320,
+          320
+        ],
+        "section": "Phase 2c: H8 — Design statement"
+      },
+      "claim_text": "**Design**: 7 library conditions:",
+      "values": [
+        {
+          "quantity": "count of library composition conditions tested, H8",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches 'Library Composition | L | 7' factor row (osf/preregistration.md:1743)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          324,
+          324
+        ],
+        "section": "Phase 2c: H8 library composition table, Pure Positive Canon row (H8-1)"
+      },
+      "claim_text": "| 1 | Pure Positive Canon | 4 | 0 | 0 | 0 | 3 | 7 |",
+      "values": [
+        {
+          "quantity": "Canon+ example count, Pure Positive Canon library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "Canon- example count, Pure Positive Canon library composition",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "HP example count, Pure Positive Canon library composition",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HN example count, Pure Positive Canon library composition",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "Null example count, Pure Positive Canon library composition",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "Total example count, Pure Positive Canon library composition",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_pure-positive-canon.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_pure-positive-canon.json records composition.canonical_positive/canonical_negative/hard_positive/hard_negative/null and total_examples at the paths given per value, matching this table row exactly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          325,
+          325
+        ],
+        "section": "Phase 2c: H8 library composition table, Canonical row (H8-2)"
+      },
+      "claim_text": "| 2 | Canonical | 4 | 2 | 0 | 0 | 3 | 9 |",
+      "values": [
+        {
+          "quantity": "Canon+ example count, Canonical library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "Canon- example count, Canonical library composition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "HP example count, Canonical library composition",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HN example count, Canonical library composition",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "Null example count, Canonical library composition",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "Total example count, Canonical library composition",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_canonical.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_canonical.json records composition.canonical_positive/canonical_negative/hard_positive/hard_negative/null and total_examples at the paths given per value, matching this table row exactly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          326,
+          326
+        ],
+        "section": "Phase 2c: H8 library composition table, +HP row (H8-3)"
+      },
+      "claim_text": "| 3 | +HP | 4 | 2 | 4 | 0 | 3 | 13 |",
+      "values": [
+        {
+          "quantity": "Canon+ example count, +HP library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "Canon- example count, +HP library composition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "HP example count, +HP library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HN example count, +HP library composition",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "Null example count, +HP library composition",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "Total example count, +HP library composition",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_plus-hp.json records composition.canonical_positive/canonical_negative/hard_positive/hard_negative/null and total_examples at the paths given per value, matching this table row exactly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          327,
+          327
+        ],
+        "section": "Phase 2c: H8 library composition table, Scale-4 row (H8-4)"
+      },
+      "claim_text": "| 4 | Scale-4 | 4 | 2 | 2 | 2 | 3 | 13 |",
+      "values": [
+        {
+          "quantity": "Canon+ example count, Scale-4 library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "Canon- example count, Scale-4 library composition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "HP example count, Scale-4 library composition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HN example count, Scale-4 library composition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "Null example count, Scale-4 library composition",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "Total example count, Scale-4 library composition",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-4.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_scale-4.json records composition.canonical_positive/canonical_negative/hard_positive/hard_negative/null and total_examples at the paths given per value, matching this table row exactly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          328,
+          328
+        ],
+        "section": "Phase 2c: H8 library composition table, Scale-8 row (H8-5)"
+      },
+      "claim_text": "| 5 | Scale-8 | 4 | 2 | 4 | 4 | 3 | 17 |",
+      "values": [
+        {
+          "quantity": "Canon+ example count, Scale-8 library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "Canon- example count, Scale-8 library composition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "HP example count, Scale-8 library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HN example count, Scale-8 library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "Null example count, Scale-8 library composition",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "Total example count, Scale-8 library composition",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_scale-8.json records composition.canonical_positive/canonical_negative/hard_positive/hard_negative/null and total_examples at the paths given per value, matching this table row exactly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          329,
+          329
+        ],
+        "section": "Phase 2c: H8 library composition table, Scale-16 row (H8-6)"
+      },
+      "claim_text": "| 6 | Scale-16 | 4 | 2 | 8 | 8 | 3 | 25 |",
+      "values": [
+        {
+          "quantity": "Canon+ example count, Scale-16 library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "Canon- example count, Scale-16 library composition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "HP example count, Scale-16 library composition",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HN example count, Scale-16 library composition",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "Null example count, Scale-16 library composition",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "Total example count, Scale-16 library composition",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-16.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_scale-16.json records composition.canonical_positive/canonical_negative/hard_positive/hard_negative/null and total_examples at the paths given per value, matching this table row exactly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          330,
+          330
+        ],
+        "section": "Phase 2c: H8 library composition table, Scale-32 row (H8-7)"
+      },
+      "claim_text": "| 7 | Scale-32 | 4 | 2 | 16 | 16 | 3 | 41 |",
+      "values": [
+        {
+          "quantity": "Canon+ example count, Scale-32 library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "Canon- example count, Scale-32 library composition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.canonical_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "HP example count, Scale-32 library composition",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HN example count, Scale-32 library composition",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "Null example count, Scale-32 library composition",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.null",
+          "method": "read"
+        },
+        {
+          "quantity": "Total example count, Scale-32 library composition",
+          "value_verbatim": "41",
+          "value_parsed": 41,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-32.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_scale-32.json records composition.canonical_positive/canonical_negative/hard_positive/hard_negative/null and total_examples at the paths given per value, matching this table row exactly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          334,
+          334
+        ],
+        "section": "Phase 2c totals — cell count"
+      },
+      "claim_text": "- 7 conditions = **7 cells**",
+      "values": [
+        {
+          "quantity": "count of library conditions, Phase 2c totals bullet",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "cell count, Phase 2c totals bullet",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches 'H8 (Composition) | 7 | 17' at osf/preregistration.md:2054."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          335,
+          335
+        ],
+        "section": "Phase 2c totals — API call volume"
+      },
+      "claim_text": "- 7 × K=10 × 60 = **4,200 API calls** (~$15)",
+      "values": [
+        {
+          "quantity": "count of library conditions/cells, H8 call-volume calculation",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of independent runs (K) per condition, confirmatory protocol",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of holdout tiles per run",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "total API call count, H8 (7 cells x K=10 x 60 tiles)",
+          "value_verbatim": "4,200",
+          "value_parsed": 4200,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated cost (USD), H8 phase",
+          "value_verbatim": "~$15",
+          "value_parsed": null,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Same K=10/60-tile registered anchors as above. osf/preregistration.md's own summary table states 'H8 (Composition) | 7 | 21,000' (:1830), a ~5x discrepancy consistent with the pattern seen for H1/H7; flagged, not adjudicated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          342,
+          342
+        ],
+        "section": "Phase 2c — Planned contrasts, Scaling bullet"
+      },
+      "claim_text": "- Scaling: S1 (4→8), S2 (8→16), S3 (16→32)",
+      "values": [
+        {
+          "quantity": "hard-example count, Scale-4 side of contrast S1",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "hard-example count, Scale-8 side of contrast S1",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "hard-example count, Scale-8 side of contrast S2",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "hard-example count, Scale-16 side of contrast S2",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "hard-example count, Scale-16 side of contrast S3",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "hard-example count, Scale-32 side of contrast S3",
+          "value_verbatim": "32",
+          "value_parsed": 32,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered scaling contrast table: 'S1 | Scale-4 -> Scale-8 | 4 -> 8 | Initial scaling value', 'S2 | Scale-8 -> Scale-16 | 8 -> 16 | Mid-range scaling', 'S3 | Scale-16 -> Scale-32 | 16 -> 32 | Ceiling/diminishing returns' (osf/preregistration.md:789-791)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          355,
+          355
+        ],
+        "section": "Phase 2d: H5 — Design statement"
+      },
+      "claim_text": "**Design**: 3 H5 levels × 3 image-using M/E levels (factorial):",
+      "values": [
+        {
+          "quantity": "count of H5 negative-text-treatment levels",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of image-using M/E levels tested with H5",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches 'Negative Text Treatment | H5 | 3' (osf/preregistration.md:1741) and the '3 image-using M/E levels' framing at :1806, 2058."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          360,
+          360
+        ],
+        "section": "Phase 2d — H5 level table, Terse row"
+      },
+      "claim_text": "| Terse | Brief guidance | 1-2 sentences: \"Do not detect triangulation points...\" |",
+      "values": [
+        {
+          "quantity": "target sentence count, H5=Terse exclusion guidance (table restatement)",
+          "value_verbatim": "1-2",
+          "value_parsed": null,
+          "unit": "sentences",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Same design-intent prose-length figure as the line-221 claim, restated here in the H5 level table; no stored scalar artefact confirms it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          371,
+          371
+        ],
+        "section": "Phase 2d totals — total cell count"
+      },
+      "claim_text": "- 3 M/E × 3 H5 = **9 cells** total",
+      "values": [
+        {
+          "quantity": "count of image-using M/E levels, H5 factorial",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of H5 levels, H5 factorial",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "total cell count, H5 factorial (3 M/E x 3 H5)",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches 'H5 tests 3 M/E x 3 H5 = 9 conditions total, but 3 overlap with H1 baselines -> 6 net new cells' (osf/preregistration.md:2058) and 'H5 totals: 9 cells (3 M/E x 3 H5), but 3 overlap with H1 -> 6 net new cells' (:1806)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          372,
+          372
+        ],
+        "section": "Phase 2d totals — H1-overlap cell count"
+      },
+      "claim_text": "- 3 cells overlap with H1 baseline (each M/E at H5=Minimal)",
+      "values": [
+        {
+          "quantity": "count of H5 cells overlapping with H1 baseline conditions",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches '3 overlap with H1 baselines' (osf/preregistration.md:2058)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          373,
+          373
+        ],
+        "section": "Phase 2d totals — net-new cell count"
+      },
+      "claim_text": "- Net new: **6 cells**",
+      "values": [
+        {
+          "quantity": "net-new cell count, H5 (after subtracting H1 overlap)",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches '6 net new cells' (osf/preregistration.md:2058) and 'H5 (Negative text) | 6* | 23' (:2055)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          374,
+          374
+        ],
+        "section": "Phase 2d totals — API call volume"
+      },
+      "claim_text": "- 6 × K=10 × 60 = **3,600 API calls** (~$13)",
+      "values": [
+        {
+          "quantity": "net-new cell count, H5 call-volume calculation",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of independent runs (K) per condition, confirmatory protocol",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of holdout tiles per run",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "total API call count, H5 (6 net-new cells x K=10 x 60 tiles)",
+          "value_verbatim": "3,600",
+          "value_parsed": 3600,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated cost (USD), H5 phase",
+          "value_verbatim": "~$13",
+          "value_parsed": null,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Same K=10/60-tile registered anchors as above. osf/preregistration.md's own summary table states 'H5 (Negative Text) | 6* | 18,000' (:1831), a 5x discrepancy consistent with the pattern seen for H1/H7/H8; flagged, not adjudicated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          378,
+          378
+        ],
+        "section": "Phase 2d — Analysis statement"
+      },
+      "claim_text": "**Analysis**: Bootstrap interaction test (3 M/E × 3 H5, difference-of-differences with 95% CI). Test H5 main effect and M/E × H5 interaction. Planned contrasts: Minimal vs Terse; Terse vs Verbose (pooled across M/E levels).",
+      "values": [
+        {
+          "quantity": "count of image-using M/E levels, H5 interaction test",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of H5 levels, H5 interaction test",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "confidence interval level, H5 difference-of-differences test",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "statistic",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "3x3 factorial and 95% CI reporting convention as established above."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          388,
+          388
+        ],
+        "section": "Phase 2e: H4 — Design statement"
+      },
+      "claim_text": "**Design**: 4 ordering conditions at optimal M/E only (see Decision 18, E29, E30):",
+      "values": [
+        {
+          "quantity": "count of ordering conditions tested, H4 (this document's operational design)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "osf/preregistration.md's H4 factor table lists only 3 conditions (Canonical-first, Canonical-last, Random — 'H4 totals: 3 cells' at :1820, 'Ordering | O | 3' at :1744). This execution plan operationalises a 4th 'Config-default' condition reused via symlinks from Phase 2c (see line 392, 'baseline reused from Phase 2c via symlinks'); the discrepancy between the registered 3-condition design and this document's 4-condition operational design is flagged for triage, not adjudicated here (rule 4). 'Decision 18', 'E29', 'E30' excluded from values per rule 5 (identifiers out of scope)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          399,
+          399
+        ],
+        "section": "Phase 2e totals — cell count and reuse breakdown"
+      },
+      "claim_text": "- 4 orderings = **4 cells** (1 reused, 3 new)",
+      "values": [
+        {
+          "quantity": "count of ordering conditions, Phase 2e totals bullet",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "cell count, Phase 2e totals bullet",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of reused (non-new) H4 cells",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of new H4 cells",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The overall '4' cell count carries the same registered-vs-operational discrepancy noted at line 388 (registration: 3 cells). The 1-reused/3-new split is this document's own operational bookkeeping with no separate registered anchor (the registration's 3-cell H4 design has no 'reused' condition at all)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          400,
+          400
+        ],
+        "section": "Phase 2e totals — API call volume"
+      },
+      "claim_text": "- Net new: 3 × K=10 × 60 = **1,800 API calls** (~$7)",
+      "values": [
+        {
+          "quantity": "count of new ordering cells, H4 call-volume calculation",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of independent runs (K) per condition, confirmatory protocol",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of holdout tiles per run",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "total API call count, H4 net-new (3 cells x K=10 x 60 tiles)",
+          "value_verbatim": "1,800",
+          "value_parsed": 1800,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated cost (USD), H4 phase",
+          "value_verbatim": "~$7",
+          "value_parsed": null,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Same K=10/60-tile registered anchors as above. osf/preregistration.md's own summary table states 'H4 (Ordering) | 3 | 9,000' (:1832) for its registered 3-cell design (all treated as calls-requiring, unlike this document's 1-reused/3-new split) — a 5x discrepancy in the per-cell multiplier consistent with the pattern seen for H1/H7/H8/H5; flagged, not adjudicated."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          401,
+          401
+        ],
+        "section": "Phase 2e totals — total run units"
+      },
+      "claim_text": "- Total units: 4 × K=10 = 40 (10 config-default pre-checkpointed)",
+      "values": [
+        {
+          "quantity": "count of ordering conditions, total-units calculation",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of independent runs (K) per condition, confirmatory protocol",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "total run-units, H4 (4 orderings x K=10)",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of config-default runs pre-checkpointed (reused from Phase 2c)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "K=10 as registered above. '40' and the '10 config-default pre-checkpointed' figure are this document's own operational bookkeeping without a separate committed artefact (the pre-checkpointed 10 runs would correspond to the Phase 2c H8-3 '+HP' Scale-8-adjacent condition's own K=10 runs, but tracing that specific correspondence is out of scope here per rule 7)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          405,
+          405
+        ],
+        "section": "Phase 2e — Analysis statement"
+      },
+      "claim_text": "**Analysis**: Pairwise bootstrap comparisons across 4 orderings (95% CIs, FDR-corrected). Planned contrasts: Canonical-first vs Canonical-last; Config-default vs Canonical-first.",
+      "values": [
+        {
+          "quantity": "count of ordering conditions compared, H4 pairwise bootstrap analysis",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "confidence interval level, H4 pairwise bootstrap analysis",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "statistic",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "4 orderings carries the same registered-vs-operational discrepancy noted at line 388 (registration: 3). 95% CI matches the standard reporting convention."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          407,
+          407
+        ],
+        "section": "Phase 2e — Triggered exploratory (H4b) trigger condition"
+      },
+      "claim_text": "**Triggered exploratory (H4b)**: If H4 significant (p < 0.05), test HP-first vs HN-first ordering within the hard block (+2 cells).",
+      "values": [
+        {
+          "quantity": "significance threshold (p-value) triggering the H4b exploratory extension",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "cell count added by the H4b triggered exploratory extension",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "p < 0.05 is the standard significance threshold used throughout the registration's analysis plan; '+2 cells' matches 'H4b (triggered) | 2 | 6,000' (osf/preregistration.md:1835) and 'Triggered exploratory (if H4 significant): H4b tests HP-first vs HN-first within hard block (+2 cells)' (:1822)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          413,
+          413
+        ],
+        "section": "Evaluation Protocol (All Phases) — K=10 statement"
+      },
+      "claim_text": "Each condition is evaluated using K=10 independent single-pass runs (see preregistration Section 3.8):",
+      "values": [
+        {
+          "quantity": "count of independent single-pass runs (K) per condition, evaluation protocol",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches 'Each condition in the main factorial is evaluated using K=10 independent single-pass runs' (osf/preregistration.md:315) and 'Number of passes (K): 10 for all confirmatory hypotheses' (:2088)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          415,
+          415
+        ],
+        "section": "Evaluation Protocol — single-pass API call statement"
+      },
+      "claim_text": "- Each run makes 1 API call per tile (single-pass; voting is itself under test in H3)",
+      "values": [
+        {
+          "quantity": "count of API calls per tile per run (single-pass)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Consistent with the registration's 'single-pass' framing of the K=10 protocol (Section 3.8, osf/preregistration.md:315) as distinct from voting, which is 'itself under test in H3'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          417,
+          417
+        ],
+        "section": "Evaluation Protocol — statistical characterisation statement"
+      },
+      "claim_text": "- Results characterised statistically (mean F1 across 10 runs, SD, 95% CI)",
+      "values": [
+        {
+          "quantity": "count of runs averaged for mean F1, evaluation protocol",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "confidence interval level, evaluation protocol statistical characterisation",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "statistic",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Near-verbatim match to 'Results are characterised statistically (mean F1, SD, 95% CI)' (osf/preregistration.md:315)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          418,
+          418
+        ],
+        "section": "Evaluation Protocol — post-hoc voting statement"
+      },
+      "claim_text": "- Post-hoc voting computed from the same runs (N=5 from runs 1-5 or 6-10; N=10 from all runs) without additional API calls",
+      "values": [
+        {
+          "quantity": "consensus voting pool size (N), smaller post-hoc option",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "run index range start, first N=5 pool option",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "run index range end, first N=5 pool option",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "run index range start, second N=5 pool option",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "run index range end, second N=5 pool option",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "consensus voting pool size (N), full post-hoc option (all runs)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the registered voting-analysis table: '| N=5 | Runs 1-5 or 6-10 | 1, 2, 3, 4, 5 |' and '| N=10 | All 10 runs | 1, 2, ..., 10 |' (osf/preregistration.md:507-510 per the primary-data-source section at :505)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          432,
+          432
+        ],
+        "section": "Execution Order pseudocode — inner run loop"
+      },
+      "claim_text": "            for run_num in range(10):  # K=10 independent runs",
+      "values": [
+        {
+          "quantity": "count of independent runs (K) per condition, pseudocode inner loop",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "K=10 as registered above; the value appears twice on this line ('range(10)' and the '# K=10' comment) — a single value entry is recorded for the one asserted quantity rather than duplicating the identical figure."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          438,
+          438
+        ],
+        "section": "Execution Order pseudocode — random seed, h1_conditions"
+      },
+      "claim_text": "run_phase(h1_conditions, seed=20260104)",
+      "values": [
+        {
+          "quantity": "random seed, sequential-execution pseudocode, h1_conditions",
+          "value_verbatim": "20260104",
+          "value_parsed": 20260104,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "This is illustrative pseudocode ('# Pseudocode for sequential phase execution', line 426) demonstrating the intended per-phase seeding scheme, not necessarily the literal seed recorded in any executed run's .meta.json. The seed is date-shaped (matches this doc's 2026-01-0x authoring window) but functions as a random.seed() parameter, which the task's own claim definition explicitly includes ('parameters asserted as what-was-run ... seeds') — included per the hard rule 1 'when in doubt, include' guidance rather than excluded as a bare date under rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          441,
+          441
+        ],
+        "section": "Execution Order pseudocode — random seed, h7_conditions"
+      },
+      "claim_text": "run_phase(h7_conditions, seed=20260105)",
+      "values": [
+        {
+          "quantity": "random seed, sequential-execution pseudocode, h7_conditions",
+          "value_verbatim": "20260105",
+          "value_parsed": 20260105,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "This is illustrative pseudocode ('# Pseudocode for sequential phase execution', line 426) demonstrating the intended per-phase seeding scheme, not necessarily the literal seed recorded in any executed run's .meta.json. The seed is date-shaped (matches this doc's 2026-01-0x authoring window) but functions as a random.seed() parameter, which the task's own claim definition explicitly includes ('parameters asserted as what-was-run ... seeds') — included per the hard rule 1 'when in doubt, include' guidance rather than excluded as a bare date under rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          444,
+          444
+        ],
+        "section": "Execution Order pseudocode — random seed, h8_conditions"
+      },
+      "claim_text": "run_phase(h8_conditions, seed=20260106)",
+      "values": [
+        {
+          "quantity": "random seed, sequential-execution pseudocode, h8_conditions",
+          "value_verbatim": "20260106",
+          "value_parsed": 20260106,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "This is illustrative pseudocode ('# Pseudocode for sequential phase execution', line 426) demonstrating the intended per-phase seeding scheme, not necessarily the literal seed recorded in any executed run's .meta.json. The seed is date-shaped (matches this doc's 2026-01-0x authoring window) but functions as a random.seed() parameter, which the task's own claim definition explicitly includes ('parameters asserted as what-was-run ... seeds') — included per the hard rule 1 'when in doubt, include' guidance rather than excluded as a bare date under rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          447,
+          447
+        ],
+        "section": "Execution Order pseudocode — random seed, h5_conditions"
+      },
+      "claim_text": "run_phase(h5_conditions, seed=20260107)",
+      "values": [
+        {
+          "quantity": "random seed, sequential-execution pseudocode, h5_conditions",
+          "value_verbatim": "20260107",
+          "value_parsed": 20260107,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "This is illustrative pseudocode ('# Pseudocode for sequential phase execution', line 426) demonstrating the intended per-phase seeding scheme, not necessarily the literal seed recorded in any executed run's .meta.json. The seed is date-shaped (matches this doc's 2026-01-0x authoring window) but functions as a random.seed() parameter, which the task's own claim definition explicitly includes ('parameters asserted as what-was-run ... seeds') — included per the hard rule 1 'when in doubt, include' guidance rather than excluded as a bare date under rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          450,
+          450
+        ],
+        "section": "Execution Order pseudocode — random seed, h4_conditions"
+      },
+      "claim_text": "run_phase(h4_conditions, seed=20260108)",
+      "values": [
+        {
+          "quantity": "random seed, sequential-execution pseudocode, h4_conditions",
+          "value_verbatim": "20260108",
+          "value_parsed": 20260108,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "This is illustrative pseudocode ('# Pseudocode for sequential phase execution', line 426) demonstrating the intended per-phase seeding scheme, not necessarily the literal seed recorded in any executed run's .meta.json. The seed is date-shaped (matches this doc's 2026-01-0x authoring window) but functions as a random.seed() parameter, which the task's own claim definition explicitly includes ('parameters asserted as what-was-run ... seeds') — included per the hard rule 1 'when in doubt, include' guidance rather than excluded as a bare date under rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          455,
+          455
+        ],
+        "section": "Execution Order pseudocode — random seed, h4b_conditions"
+      },
+      "claim_text": "    run_phase(h4b_conditions, seed=20260109)  # HP/HN ordering",
+      "values": [
+        {
+          "quantity": "random seed, sequential-execution pseudocode, h4b_conditions",
+          "value_verbatim": "20260109",
+          "value_parsed": 20260109,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "This is illustrative pseudocode ('# Pseudocode for sequential phase execution', line 426) demonstrating the intended per-phase seeding scheme, not necessarily the literal seed recorded in any executed run's .meta.json. The seed is date-shaped (matches this doc's 2026-01-0x authoring window) but functions as a random.seed() parameter, which the task's own claim definition explicitly includes ('parameters asserted as what-was-run ... seeds') — included per the hard rule 1 'when in doubt, include' guidance rather than excluded as a bare date under rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          460,
+          460
+        ],
+        "section": "Checkpoints — spot-check call-volume range"
+      },
+      "claim_text": "- After each phase (~600-4,200 calls): Spot-check parsing success rate",
+      "values": [
+        {
+          "quantity": "lower bound, per-phase-step API call count triggering a spot-check",
+          "value_verbatim": "~600",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper bound, per-phase-step API call count triggering a spot-check",
+          "value_verbatim": "4,200",
+          "value_parsed": 4200,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "4,200 plausibly matches this document's own H8 phase total (line 335 above); ~600 plausibly matches a single cell's K x tiles product (10 x 60 = 600, i.e. the smallest possible per-cell/per-step call count) rather than a per-phase total — the range appears to mix per-cell and per-phase units. Both figures are internally derivable from values already claimed elsewhere in this document rather than confirmable against an external artefact, so flagged anchor-unknown rather than force-anchored to this same source document (rule 2 prohibits prose-to-prose anchoring)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          461,
+          461
+        ],
+        "section": "Checkpoints — parsing failure threshold"
+      },
+      "claim_text": "- If parsing failure rate >5%: Pause and investigate",
+      "values": [
+        {
+          "quantity": "parsing failure rate threshold triggering a pause",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Operational threshold with no committed artefact located confirming it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          462,
+          462
+        ],
+        "section": "Checkpoints — API error rate threshold"
+      },
+      "claim_text": "- If API errors >10%: Pause and check rate limits",
+      "values": [
+        {
+          "quantity": "API error rate threshold triggering a pause",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Operational threshold with no committed artefact located confirming it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          475,
+          475
+        ],
+        "section": "Analysis Summary table — Phase 2a (H1) row"
+      },
+      "claim_text": "| 2a (H1) | Bootstrap pairwise (5 M/E levels) | Optimal M/E |",
+      "values": [
+        {
+          "quantity": "count of M/E levels, Analysis Summary table restatement",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the H1 M/E level count already established above; matches osf/preregistration.md:1740."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          476,
+          476
+        ],
+        "section": "Analysis Summary table — Phase 2b (H7) row"
+      },
+      "claim_text": "| 2b (H7) | Bootstrap pairwise (5 temperatures) | Optimal temperature |",
+      "values": [
+        {
+          "quantity": "count of temperature levels, Analysis Summary table restatement",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the H7 temperature level count already established above; matches osf/preregistration.md:1742."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          478,
+          478
+        ],
+        "section": "Analysis Summary table — Phase 2d (H5) row"
+      },
+      "claim_text": "| 2d (H5) | Bootstrap interaction (3 M/E × 3 H5) | Optimal negative text treatment |",
+      "values": [
+        {
+          "quantity": "count of image-using M/E levels, Analysis Summary table restatement",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of H5 levels, Analysis Summary table restatement",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the H5 3x3 factorial already established above; matches osf/preregistration.md:1741, 1806."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          479,
+          479
+        ],
+        "section": "Analysis Summary table — Phase 2e (H4) row"
+      },
+      "claim_text": "| 2e (H4) | Bootstrap pairwise (4 orderings) | Optimal ordering |",
+      "values": [
+        {
+          "quantity": "count of ordering conditions, Analysis Summary table restatement",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the '4 orderings' figure from line 405 above, carrying the same registered-vs-operational discrepancy already flagged at line 388 (registration: 3 cells)."
+    }
+  ]
+}

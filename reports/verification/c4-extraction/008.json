@@ -1,0 +1,2356 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/preregistration/decisions-log.md",
+    "git_blob": "dde72a9fae0e5272e35dd61dfd5ead8471613a6b",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          323,
+          323
+        ],
+        "section": "Decision 9 rationale — budget constraint (full factorial vs sequential OFAT)"
+      },
+      "claim_text": "1. **Budget constraint**: Full factorial would require ~54 cells at $11/cell ≈ $594. Sequential OFAT requires 26 cells ≈ $286.",
+      "values": [
+        {
+          "quantity": "cell count, rejected full-factorial alternative to sequential OFAT",
+          "value_verbatim": "~54",
+          "value_parsed": 54,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/execution-plan.md#L62",
+          "method": "read"
+        },
+        {
+          "quantity": "per-cell cost estimate (USD), Phase 2 confirmatory testing",
+          "value_verbatim": "$11",
+          "value_parsed": 11,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#L1841",
+          "method": "read"
+        },
+        {
+          "quantity": "total cost estimate (USD), rejected full-factorial alternative (54 cells x $11/cell)",
+          "value_verbatim": "≈ $594",
+          "value_parsed": 594,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a*b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "docs/methodology/preregistration/execution-plan.md",
+              "path": "#L62-54-cells"
+            },
+            {
+              "name": "b",
+              "file": "docs/methodology/preregistration/osf/preregistration.md",
+              "path": "#L1841-11-per-cell"
+            }
+          ]
+        },
+        {
+          "quantity": "cell count, adopted sequential OFAT design (Phase 2 confirmatory)",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/execution-plan.md#L62",
+          "method": "read"
+        },
+        {
+          "quantity": "total cost estimate (USD), adopted sequential OFAT design",
+          "value_verbatim": "≈ $286",
+          "value_parsed": 286,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#L1841",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/execution-plan.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "execution-plan.md:62 states verbatim 'This reduces budget from ~54 cells to 26 cells'; preregistration.md:1841 states '~$286 for confirmatory tests (26 cells × ~$11/cell)', also echoed at execution-plan.md:726 ('**~$286**'). The $594 full-factorial total is not independently quoted anywhere found in the repo; it is the document's own arithmetic (54×11≈594) and is flagged arithmetic against the two read-anchored operands rather than anchor-unknown, since both operands have solid non-JSON anchors. Non-JSON (markdown) anchors are explicitly legitimate per the extraction instrument § hard rule 3."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          345,
+          345
+        ],
+        "section": "Decision 10 statistical-approach table — confidence intervals row"
+      },
+      "claim_text": "| Confidence intervals | Bootstrap resampling (tile-level) | 1000 iterations, percentile method (2.5th/97.5th) |",
+      "values": [
+        {
+          "quantity": "bootstrap resampling iteration count, tile-level CIs",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap CI lower percentile bound",
+          "value_verbatim": "2.5",
+          "value_parsed": 2.5,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap CI upper percentile bound",
+          "value_verbatim": "97.5",
+          "value_parsed": 97.5,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_advanced_metrics.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "scripts/lib_advanced_metrics.py:134 sets 'n_iterations: int = 1000' (default bootstrap resample count) and lines 220-221/257-258 use np.percentile(distribution, 2.5) / np.percentile(distribution, 97.5) for the percentile-fallback CI, matching the '1000 iterations, percentile method (2.5th/97.5th)' cell verbatim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          346,
+          346
+        ],
+        "section": "Decision 10 statistical-approach table — multiple comparisons row"
+      },
+      "claim_text": "| Multiple comparisons | Benjamini-Hochberg FDR | q = 0.05 |",
+      "values": [
+        {
+          "quantity": "Benjamini-Hochberg FDR control level (q)",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/analyse_phase2_results.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "scripts/analyse_phase2_results.py:60 'DEFAULT_FDR_Q = 0.05' and :171 'q: float = 0.05'; also preregistration.md:270 'Benjamini-Hochberg FDR at q = 0.05 across confirmatory hypotheses'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          347,
+          347
+        ],
+        "section": "Decision 10 statistical-approach table — effect sizes row"
+      },
+      "claim_text": "| Effect sizes | F1 difference with 95% CI | Signed difference between conditions |",
+      "values": [
+        {
+          "quantity": "confidence interval level (%) used for F1-difference effect sizes",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "preregistration.md uses '95% CI' pervasively for pairwise bootstrap comparisons (e.g. lines 315, 436, 570, 632, 727, 821); no single scalar field, so anchored as a whole-document read rather than a JSONPath."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          359,
+          359
+        ],
+        "section": "Decision 10 implementation note — pseudo-p-value threshold"
+      },
+      "claim_text": "The FDR correction uses pseudo-p-values derived from bootstrap CI position rather than formal p-values. If the 95% CI for a difference excludes zero, we treat this as \"significant\" for FDR purposes (pseudo-p < 0.05). This is a pragmatic simplification:",
+      "values": [
+        {
+          "quantity": "confidence interval level (%) used for the pseudo-p significance rule",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "pseudo-p significance threshold (mirrors alpha = 0.05)",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/analyse_phase2_results.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "scripts/analyse_phase2_results.py:200-209 implements the pseudo-p rule described here ('pseudo_p = max(0.001, 0.05 - ci_lower)' etc., 'CI contains 0: not significant at α=0.05'), corroborating both the 95% CI and the 0.05 threshold restated in this sentence (0.05 already captured as the FDR q value at line 346; this is a distinct verbatim mention describing the pseudo-p decision rule specifically, kept separate per full enumeration)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          382,
+          383
+        ],
+        "section": "Decision 11 — distributional evidence intro (FN count, cliff range)"
+      },
+      "claim_text": "**Distributional evidence**: CC's boundary/edge-clearance analysis of all 24 FNs\nrevealed a distributional cliff between 30m and 50m:",
+      "values": [
+        {
+          "quantity": "count of false negatives (FNs) in the boundary/edge-clearance analysis",
+          "value_verbatim": "24",
+          "value_parsed": 24,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/outputs-pre-retest-60-tile/phase1-library/fp-fn-register.md#L76",
+          "method": "read"
+        },
+        {
+          "quantity": "lower bound (m) of the distributional cliff in FN distance distribution",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "archive/planning/hard-example-review/hard-example-library-decisions.md#L52",
+          "method": "read"
+        },
+        {
+          "quantity": "upper bound (m) of the distributional cliff in FN distance distribution",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "archive/planning/hard-example-review/hard-example-library-decisions.md#L52",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/planning/hard-example-review/hard-example-library-decisions.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "hard-example-library-decisions.md:52 states 'a distributional cliff between 30m and 50m in the FN distance distribution'. archive/.../fp-fn-register.md:76 independently confirms 'All 24 FNs have identical miss frequency' and :403 '24 total', corroborating the FN count via a cross-file locator."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          387,
+          387
+        ],
+        "section": "Decision 11 threshold table — >20m row"
+      },
+      "claim_text": "| >20m      | 18        | 4        | 14                     |",
+      "values": [
+        {
+          "quantity": "distance threshold (m), table row 1",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "usable FN count at >20m threshold",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "selected FN count at >20m threshold",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "FNs available for expansion at >20m threshold",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Searched archive/outputs-pre-retest-60-tile/phase1-library/fp-fn-register.md and archive/planning/hard-example-review/hard-example-library-decisions.md for this exact 'Usable FNs / Selected / Available for expansion' banding by threshold (20/30/50/100m); neither file reproduces this specific table. The register does confirm raw '9 recognition failures (>50m)' and '15 localisation failures (20-50m)' (fp-fn-register.md:80,108), but not the 18/9/4/3 'usable' figures at each threshold band, which appear to reflect additional filtering (boundary artefacts, edge risk) documented later in this same decision (lines 415-418) but not tied back to this specific table row by row."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          388,
+          388
+        ],
+        "section": "Decision 11 threshold table — >30m row"
+      },
+      "claim_text": "| >30m      | 9         | 4        | 5                      |",
+      "values": [
+        {
+          "quantity": "distance threshold (m), table row 2",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "usable FN count at >30m threshold",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "selected FN count at >30m threshold",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "FNs available for expansion at >30m threshold",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Same search as the >20m row (line 387) above; no matching banded table located."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          389,
+          389
+        ],
+        "section": "Decision 11 threshold table — >50m row"
+      },
+      "claim_text": "| >50m      | 4         | 4        | 0                      |",
+      "values": [
+        {
+          "quantity": "distance threshold (m), table row 3 (adopted threshold)",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "usable FN count at >50m threshold",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "selected FN count at >50m threshold",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "FNs available for expansion at >50m threshold",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Same search as the >20m row (line 387). Note fp-fn-register.md:80 heads a section 'Recognition Failures (9 FNs) — nearest detection >50m', i.e. 9 raw recognition failures at this threshold, not the '4 usable' figure in this row; the 4 in this row is left anchor-unknown rather than forced onto that non-matching 9, pending triage reconciliation (this decision's own later text at line 413 separately asserts 'Of 9 recognition failures (>50m)', which IS read-anchored to fp-fn-register.md — see the corresponding claim below)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          390,
+          390
+        ],
+        "section": "Decision 11 threshold table — >100m row"
+      },
+      "claim_text": "| >100m     | 3         | 3        | 0                      |",
+      "values": [
+        {
+          "quantity": "distance threshold (m), table row 4",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "usable FN count at >100m threshold",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "selected FN count at >100m threshold",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "FNs available for expansion at >100m threshold",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Same search as the >20m row (line 387) above; no matching banded table located."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          392,
+          393
+        ],
+        "section": "Decision 11 — cliff restated in prose (below/ambiguous/above bands)"
+      },
+      "claim_text": "Below 30m: clear localisation territory. 30–50m: ambiguous. Above 50m: genuine\nrecognition failures. The cliff itself is the empirical evidence for the threshold.",
+      "values": [
+        {
+          "quantity": "distance (m) below which FNs are clear localisation failures",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "archive/planning/hard-example-review/hard-example-library-decisions.md#L52",
+          "method": "read"
+        },
+        {
+          "quantity": "lower bound (m) of the ambiguous 30-50m band",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "archive/planning/hard-example-review/hard-example-library-decisions.md#L52",
+          "method": "read"
+        },
+        {
+          "quantity": "upper bound (m) of the ambiguous 30-50m band",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "archive/planning/hard-example-review/hard-example-library-decisions.md#L52",
+          "method": "read"
+        },
+        {
+          "quantity": "distance (m) above which FNs are genuine recognition failures",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "archive/planning/hard-example-review/hard-example-library-decisions.md#L52",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/planning/hard-example-review/hard-example-library-decisions.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Near-verbatim restatement of hard-example-library-decisions.md:52 'Below 30m: clear localisation territory. 30-50m: ambiguous. Above 50m: almost certainly genuine recognition failures.' (decisions-log drops 'almost certainly'). Kept as a separate claim from lines 382-383 per full enumeration — distinct verbatim mention."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          395,
+          397
+        ],
+        "section": "Decision 11 conceptual rationale — recognition failure definition (>50m)"
+      },
+      "claim_text": "**Conceptual rationale**: Few-shot libraries teach the model *what to look for*. A\nrecognition failure (FN >50m from nearest detection) is a mound the model could not\nidentify — showing it as an HP directly addresses that gap. A localisation failure",
+      "values": [
+        {
+          "quantity": "distance (m) defining a recognition failure (nearest detection threshold)",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "archive/planning/hard-example-review/hard-example-library-decisions.md#L52",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/planning/hard-example-review/hard-example-library-decisions.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the adopted 50m threshold in the recognition-failure definition; same anchor as the cliff statement above (this decision's single governing threshold)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          397,
+          399
+        ],
+        "section": "Decision 11 conceptual rationale — localisation failure definition (20-50m)"
+      },
+      "claim_text": "identify — showing it as an HP directly addresses that gap. A localisation failure\n(FN 20–50m from nearest detection) is a mound the model *did* recognise but placed\nincorrectly. Showing more examples of already-recognised mounds will not fix coordinate",
+      "values": [
+        {
+          "quantity": "lower bound (m) defining a localisation failure",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper bound (m) defining a localisation failure",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "archive/planning/hard-example-review/hard-example-library-decisions.md#L52",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/planning/hard-example-review/hard-example-library-decisions.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 50m upper bound matches the adopted threshold (hard-example-library-decisions.md:52). The 20m lower bound is not itself asserted in that source (which only discusses the 30-50m cliff, not a 20m cutoff); fp-fn-register.md:108 uses 'Localisation Failures (15 FNs) — nearest detection 20-50m', which does supply a 20m lower bound, but is not linked here to avoid conflating two different value paths in one value's per-value anchor — flagged anchor-unknown for triage to confirm against fp-fn-register.md:108."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          406,
+          409
+        ],
+        "section": "Decision 11 — alternative 100m threshold rejected (fid 99 case)"
+      },
+      "claim_text": "**Alternative considered**: 100m threshold (~25px, Opus suggestion). Rejected because it\nwould disqualify fid 99 (96.4m), dropping the usable HP pool from 4 to 3 and leaving\nScale-8 unfillable. The 50m boundary is supported by the distributional cliff and is the\nmaximum threshold that retains all 4 selected HPs.",
+      "values": [
+        {
+          "quantity": "alternative distance threshold (m) considered and rejected",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "approximate pixel equivalent (~px) of the rejected 100m threshold",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "distance (m) of the disqualifying case (fid 99) under the 100m alternative",
+          "value_verbatim": "96.4",
+          "value_parsed": 96.4,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "usable HP pool size before disqualification under the 100m alternative",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "prompts/configs/library_scale-8.json#$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "usable HP pool size after disqualification under the 100m alternative",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "distance (m) of the adopted threshold, restated",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "archive/planning/hard-example-review/hard-example-library-decisions.md#L52",
+          "method": "read"
+        },
+        {
+          "quantity": "count of HPs retained under the adopted 50m threshold",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "prompts/configs/library_scale-8.json#$.composition.hard_positive",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": "$.composition.hard_positive"
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_scale-8.json records composition.hard_positive = 4, corroborating the 'retains all 4 selected HPs' / 'pool from 4' figures. The fid-99-specific figures (96.4m distance, 3-example pool after disqualification, the rejected 25px/100m alternative) are not independently located in a committed artefact accessible from this document alone; 'fid 99' itself is excluded from values per rule 5 (identifier)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          413,
+          413
+        ],
+        "section": "Decision 11 — HP pool exhaustion intro (9 recognition failures)"
+      },
+      "claim_text": "Of 9 recognition failures (>50m) in the FN register:",
+      "values": [
+        {
+          "quantity": "count of recognition failures (>50m) in the FN register",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/outputs-pre-retest-60-tile/phase1-library/fp-fn-register.md#L80",
+          "method": "read"
+        },
+        {
+          "quantity": "distance threshold (m) defining recognition failures, restated",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "archive/planning/hard-example-review/hard-example-library-decisions.md#L52",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase1-library/fp-fn-register.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "fp-fn-register.md:80 'Recognition Failures (9 FNs) — nearest detection >50m' and :148 'Recognition failures (>50m) | 9 |' and :403 '9 recognition failures, 15 localisation failures, 24 total' all confirm the 9 figure exactly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          415,
+          415
+        ],
+        "section": "Decision 11 HP pool exhaustion — selected for Scale-8"
+      },
+      "claim_text": "- 4 selected for Scale-8 (fids 399, 99, 15, 105)",
+      "values": [
+        {
+          "quantity": "count of recognition failures selected for the Scale-8 HP set",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "prompts/configs/library_scale-8.json#$.composition.hard_positive",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": "$.composition.hard_positive"
+      },
+      "method": "read",
+      "notes": "fid list (399, 99, 15, 105) excluded from values per rule 5 (identifiers); the count of 4 matches library_scale-8.json composition.hard_positive."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          416,
+          416
+        ],
+        "section": "Decision 11 HP pool exhaustion — out of scope, boundary artefacts"
+      },
+      "claim_text": "- 3 out of scope — boundary artefacts (fids 354, 249, 556; see errata E7)",
+      "values": [
+        {
+          "quantity": "count of recognition failures out of scope as boundary artefacts",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "fid list and erratum E7 excluded per rule 5 (identifiers); no external artefact located that independently states this specific subset count of 3."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          417,
+          417
+        ],
+        "section": "Decision 11 HP pool exhaustion — out of scope, newly discovered"
+      },
+      "claim_text": "- 1 out of scope — newly discovered (fid 489, outside all calibration tiles)",
+      "values": [
+        {
+          "quantity": "count of recognition failures out of scope as newly discovered",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "fid excluded per rule 5 (identifier); no external artefact located."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          418,
+          418
+        ],
+        "section": "Decision 11 HP pool exhaustion — edge risk (symbol truncated)"
+      },
+      "claim_text": "- 1 edge risk — symbol truncated (fid 161, 3.3px from tile edge)",
+      "values": [
+        {
+          "quantity": "count of recognition failures flagged as edge risk",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "distance (px) of the edge-risk symbol from the tile edge",
+          "value_verbatim": "3.3",
+          "value_parsed": 3.3,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "fid excluded per rule 5 (identifier); no external artefact located for the 3.3px edge-clearance figure."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          420,
+          422
+        ],
+        "section": "Decision 11 — expansion pool exhausted (localisation failures remaining)"
+      },
+      "claim_text": "Zero recognition failures remain for library expansion. The expansion pool is entirely\nlocalisation failures (14 usable, 20–50m from nearest detection), which are excluded by\nthis decision.",
+      "values": [
+        {
+          "quantity": "count of recognition failures remaining for library expansion (exhausted)",
+          "value_verbatim": "Zero",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of usable localisation failures remaining in the expansion pool",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "lower bound (m) of the excluded localisation-failure range",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper bound (m) of the excluded localisation-failure range",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "archive/planning/hard-example-review/hard-example-library-decisions.md#L52",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/planning/hard-example-review/hard-example-library-decisions.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 50m upper bound is read-anchored to hard-example-library-decisions.md:52 (the decision's own governing threshold). The other three values (Zero/14/20) are left anchor-unknown at the per-value level: fp-fn-register.md:108 states 'Localisation Failures (15 FNs) — nearest detection 20-50m', i.e. 15 raw, not the '14 usable' figure asserted here — a 1-example discrepancy plausibly from further filtering not detailed in this excerpt. Left anchor-unknown pending triage reconciliation against fp-fn-register.md:108 rather than forcing a mismatch."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          426,
+          427
+        ],
+        "section": "Decision 11 HN pool status — usable FPs at 50m and 100m thresholds"
+      },
+      "claim_text": "The HN pool is not constrained. At the 50m threshold, 46 usable FPs are available for\nexpansion (89 total, all in scope). At a stricter 100m threshold, 30 remain available.",
+      "values": [
+        {
+          "quantity": "distance threshold (m) for the primary HN pool count",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "archive/planning/hard-example-review/hard-example-library-decisions.md#L52",
+          "method": "read"
+        },
+        {
+          "quantity": "count of usable FPs available for HN expansion at 50m threshold",
+          "value_verbatim": "46",
+          "value_parsed": 46,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total in-scope FP count at 50m threshold",
+          "value_verbatim": "89",
+          "value_parsed": 89,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "stricter distance threshold (m) considered for HN pool",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of FPs remaining available under the stricter 100m threshold",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "archive/planning/hard-example-review/hard-example-library-decisions.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 50m threshold is read-anchored to hard-example-library-decisions.md:52 (the decision's own governing threshold). The count values (46/89/100/30) are left anchor-unknown at the per-value level: fp-fn-register.md's own FP vote-distribution table (lines 164-167) sums to 3+9+14+59=85, and its Summary Statistics section (:401-402) states '8 total hallucinations at ≥2/5, 18 total at ≥3/5, 91 total' — neither figure matches the '46 usable' / '89 total' asserted here exactly, though '91' is close to '89'. Left anchor-unknown rather than forcing a match against a non-identical figure; flagged for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          428,
+          429
+        ],
+        "section": "Decision 11 HN pool status — vote-band distribution"
+      },
+      "claim_text": "Vote-band distribution among available HN candidates: 2 at 4/5, 3 at 3/5, 5 at 2/5,\n36 at 1/5.",
+      "values": [
+        {
+          "quantity": "count of HN candidates at 4/5 vote band",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote-band numerator, 4/5",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote-band denominator, 4/5",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of HN candidates at 3/5 vote band",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote-band numerator, 3/5",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote-band denominator, 3/5",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of HN candidates at 2/5 vote band",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote-band numerator, 2/5",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote-band denominator, 2/5",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of HN candidates at 1/5 vote band",
+          "value_verbatim": "36",
+          "value_parsed": 36,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote-band numerator, 1/5",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "vote-band denominator, 1/5",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "fp-fn-register.md's OWN vote-distribution table (lines 164-167: '4/5 | 3', '3/5 | 9', '2/5 | 14', '1/5 | 59') shows materially DIFFERENT tallies from the '2 at 4/5, 3 at 3/5, 5 at 2/5, 36 at 1/5' asserted here — this looks like a distinct sub-population (e.g. 'available HN candidates' after removing already-selected/out-of-scope FPs) rather than the raw register counts, but no committed artefact showing this specific filtered breakdown was located. Flagged anchor-unknown for triage; the scale of the discrepancy (e.g. 59 vs 36 at 1/5) is large enough to be worth a close look."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          435,
+          435
+        ],
+        "section": "Decision 11 H8 scaling table — Pure Pos. Canon row"
+      },
+      "claim_text": "| Pure Pos. Canon | 0  | 0  | Runs as designed |",
+      "values": [
+        {
+          "quantity": "HP count, Pure Positive Canon library composition",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HN count, Pure Positive Canon library composition",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_pure-positive-canon.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_pure-positive-canon.json records composition.hard_positive=0, composition.hard_negative=0."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          436,
+          436
+        ],
+        "section": "Decision 11 H8 scaling table — Canonical row"
+      },
+      "claim_text": "| Canonical       | 0  | 0  | Runs as designed |",
+      "values": [
+        {
+          "quantity": "HP count, Canonical library composition",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HN count, Canonical library composition",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_canonical.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_canonical.json records composition.hard_positive=0, composition.hard_negative=0."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          437,
+          437
+        ],
+        "section": "Decision 11 H8 scaling table — +HP row"
+      },
+      "claim_text": "| +HP             | 4  | 0  | Runs as designed |",
+      "values": [
+        {
+          "quantity": "HP count, +HP library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HN count, +HP library composition",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_plus-hp.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_plus-hp.json records composition.hard_positive=4, composition.hard_negative=0."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          438,
+          438
+        ],
+        "section": "Decision 11 H8 scaling table — Scale-4 row"
+      },
+      "claim_text": "| Scale-4         | 2  | 2  | Runs as designed |",
+      "values": [
+        {
+          "quantity": "HP count, Scale-4 library composition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HN count, Scale-4 library composition",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-4.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_scale-4.json records composition.hard_positive=2, composition.hard_negative=2."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          439,
+          439
+        ],
+        "section": "Decision 11 H8 scaling table — Scale-8 row"
+      },
+      "claim_text": "| Scale-8         | 4  | 4  | Runs as designed |",
+      "values": [
+        {
+          "quantity": "HP count, Scale-8 library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HN count, Scale-8 library composition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_scale-8.json records composition.hard_positive=4, composition.hard_negative=4."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          440,
+          440
+        ],
+        "section": "Decision 11 H8 scaling table — Scale-16 row (deferred)"
+      },
+      "claim_text": "| Scale-16        | 8  | 8  | Deferred — capped at Scale-8 under 1:1 HP:HN |",
+      "values": [
+        {
+          "quantity": "HP count, Scale-16 library composition (deferred)",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HN count, Scale-16 library composition (deferred)",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "HP:HN ratio asserted for Scale-16 (deferred, capped at Scale-8)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a/b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_scale-16.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_scale-16.json",
+              "path": "$.composition.hard_negative"
+            }
+          ]
+        },
+        {
+          "quantity": "HP:HN ratio denominator asserted for Scale-16",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-16.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_scale-16.json records composition.hard_positive=8, composition.hard_negative=8 (8/8 = 1:1 ratio). The second '1' in the '1:1' text is the ratio's own denominator and is not independently checkable beyond the equality already captured by the arithmetic value; left method null so it falls back to the claim-level 'read' rather than double-counting an arithmetic derivation."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          441,
+          441
+        ],
+        "section": "Decision 11 H8 scaling table — Scale-32 row (deferred)"
+      },
+      "claim_text": "| Scale-32        | 16 | 16 | Deferred — capped at Scale-8 under 1:1 HP:HN |",
+      "values": [
+        {
+          "quantity": "HP count, Scale-32 library composition (deferred)",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HN count, Scale-32 library composition (deferred)",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "HP:HN ratio asserted for Scale-32 (deferred, capped at Scale-8)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a/b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "prompts/configs/library_scale-32.json",
+              "path": "$.composition.hard_positive"
+            },
+            {
+              "name": "b",
+              "file": "prompts/configs/library_scale-32.json",
+              "path": "$.composition.hard_negative"
+            }
+          ]
+        },
+        {
+          "quantity": "HP:HN ratio denominator asserted for Scale-32",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-32.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "prompts/configs/library_scale-32.json records composition.hard_positive=16, composition.hard_negative=16 (16/16 = 1:1 ratio); same per-value pattern as the Scale-16 row above."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          443,
+          445
+        ],
+        "section": "Decision 11 — preregistration Scale-32/16 capping quote"
+      },
+      "claim_text": "This is anticipated by the preregistration (line 815): \"If fewer than 16 distinct HPs\nor HNs are available, Scale-32 (and possibly Scale-16) will be capped at the maximum\navailable while preserving 1:1 ratio.\"",
+      "values": [
+        {
+          "quantity": "distinct HP/HN count threshold below which Scale-32/16 are capped (as registered)",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "HP:HN ratio preserved when capping (as registered)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 calibration rule: a claim about what the REGISTRATION specifies anchors to the lodged osf document. preregistration.md:815 states 'If fewer than 16 distinct HPs or HNs are available, Scale-32 (and possibly Scale-16) will be capped at the maximum available, maintaining 1:1 ratio' — near-identical to this document's paraphrase/quote ('will be capped at the maximum\\navailable while preserving 1:1 ratio'), differing only in 'maintaining' vs 'while preserving'. The second '1' of the ratio is folded into the single ratio value above rather than double-counted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          452,
+          454
+        ],
+        "section": "Decision 11 — H9 implications (HP channel frozen at 4)"
+      },
+      "claim_text": "**H9**: Runs as HN-diversity-only test. HP channel is frozen (4 slots, 4 examples —\nevery HP appears in every pass). HN rotation is the more important diversity dimension\ngiven that FPs outnumber FNs. HP diversity is untestable due to pool exhaustion.",
+      "values": [
+        {
+          "quantity": "count of HP slots frozen for H9 diversity testing",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "prompts/configs/library_scale-8.json#$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "count of HP examples frozen for H9 diversity testing",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "prompts/configs/library_scale-8.json#$.composition.hard_positive",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": "$.composition.hard_positive"
+      },
+      "method": "read",
+      "notes": "Restates the Scale-8 HP count (library_scale-8.json composition.hard_positive=4) as the frozen H9 HP channel size; both '4 slots' and '4 examples' describe the same quantity, kept as two values per the span's own repetition."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          456,
+          457
+        ],
+        "section": "Decision 11 — H12 implications (HP capped at 4, example ratios)"
+      },
+      "claim_text": "**H12**: Deferred to post-H10. With HP capped at 4, the only testable ratios are\nHP-constant with varying HN (e.g., 4:4, 4:8), which confounds ratio with total count.",
+      "values": [
+        {
+          "quantity": "HP pool cap constraining H12 ratio testing",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "prompts/configs/library_scale-8.json#$.composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HP count, first example ratio (4:4)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "HN count, first example ratio (4:4)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "HP count, second example ratio (4:8)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "HN count, second example ratio (4:8)",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": "$.composition.hard_positive"
+      },
+      "method": "read",
+      "notes": "The HP=4 cap matches library_scale-8.json/library_plus-hp.json composition.hard_positive=4. The illustrative example ratios (4:4, 4:8) are hypothetical design examples, not asserted as executed cells, so left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          476,
+          478
+        ],
+        "section": "Decision 12 — decision statement (11 prompt variants)"
+      },
+      "claim_text": "**Decision**: Add a descriptive centre-pointing statement to all detection prompt\npreambles, applied uniformly across all 11 prompt variants including all H5 conditions\n(Minimal, Terse, Verbose).",
+      "values": [
+        {
+          "quantity": "count of prompt variants receiving the centre-pointing sentence",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/system-instructions",
+        "path": null
+      },
+      "method": "read",
+      "notes": "git commit 54b26f5c3 ('Add centre-pointing language for label disambiguation') modifies exactly 11 files matching prompts/system-instructions/detect_*.md, confirming the figure. preregistration.md §8.3.1a also states 'Instruction file count: 11 total' independently. NOTE: prompts/system-instructions/ currently contains 19 detect_*.md files (a superset, including later _v1-_v5 iteration variants added after this decision), so a naive present-day directory count would NOT reproduce 11 — the commit-scoped count is the correct check; flagged for the harness/triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          493,
+          496
+        ],
+        "section": "Decision 12 rationale 1 — 128x128 crops, 2-3 mound symbols"
+      },
+      "claim_text": "1. At 128×128 crops, images may contain 2–3 mound symbols if they cluster. Without\n   centre-pointing, the model may latch onto an easy neighbouring mound instead of the\n   difficult target HP.\n",
+      "values": [
+        {
+          "quantity": "crop edge length (px), first dimension",
+          "value_verbatim": "128",
+          "value_parsed": 128,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "crop edge length (px), second dimension",
+          "value_verbatim": "128",
+          "value_parsed": 128,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "lower bound of mound symbols that may co-occur in a crop",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "upper bound of mound symbols that may co-occur in a crop",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/planning/hard-example-review/hard-example-library-decisions.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "hard-example-library-decisions.md §2 states 'Use 128×128 pixel crops' (§1) and 'At 128×128, crops may contain 2-3 mound symbols if they cluster', matching this rationale point closely."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          524,
+          525
+        ],
+        "section": "Decision 12 — files-modified count (11 detect_*.md, restated)"
+      },
+      "claim_text": "**Files modified**: All 11 `detect_*.md` system instruction files in\n`prompts/system-instructions/`.",
+      "values": [
+        {
+          "quantity": "count of detect_*.md system instruction files modified",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/system-instructions",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the line-476-478 count as a distinct verbatim mention (full enumeration); same commit-based anchor (54b26f5c3, 11 files)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          535,
+          537
+        ],
+        "section": "Decision 13 — decision statement (128x128 exemplar resolution)"
+      },
+      "claim_text": "**Decision**: Prompt text describing hard example features should use only diagnostics\nthat are reliably resolved by VLMs at exemplar crop resolution (128×128 pixels), not\nall diagnostics that are cartographically valid at higher resolution.",
+      "values": [
+        {
+          "quantity": "exemplar crop resolution (px), first dimension",
+          "value_verbatim": "128",
+          "value_parsed": 128,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/planning/hard-example-review/hard-example-library-decisions.md#L15",
+          "method": "read"
+        },
+        {
+          "quantity": "exemplar crop resolution (px), second dimension",
+          "value_verbatim": "128",
+          "value_parsed": 128,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/planning/hard-example-review/hard-example-library-decisions.md#L15",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/planning/hard-example-review/hard-example-library-decisions.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "hard-example-library-decisions.md §1 'Use 128×128 pixel crops as the starting default'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          561,
+          563
+        ],
+        "section": "Decision 13 rationale 1 — resolution arithmetic (symbol/crop-area/hollow-centre figures)"
+      },
+      "claim_text": "1. **Resolution arithmetic**: At 128×128, a 15-20px mound symbol occupies ~1-2.5% of\n   crop area. The hollow centre is ~3-5px across — barely resolved even before any\n   compression or resampling artefacts. Fine internal structure is lost at this scale.",
+      "values": [
+        {
+          "quantity": "exemplar crop resolution (px), first dimension (restated)",
+          "value_verbatim": "128",
+          "value_parsed": 128,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/planning/hard-example-review/hard-example-library-decisions.md#L18",
+          "method": "read"
+        },
+        {
+          "quantity": "exemplar crop resolution (px), second dimension (restated)",
+          "value_verbatim": "128",
+          "value_parsed": 128,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/planning/hard-example-review/hard-example-library-decisions.md#L18",
+          "method": "read"
+        },
+        {
+          "quantity": "mound symbol size lower bound (px)",
+          "value_verbatim": "15",
+          "value_parsed": 15,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/planning/hard-example-review/hard-example-library-decisions.md#L18",
+          "method": "read"
+        },
+        {
+          "quantity": "mound symbol size upper bound (px)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/planning/hard-example-review/hard-example-library-decisions.md#L18",
+          "method": "read"
+        },
+        {
+          "quantity": "crop-area occupancy lower bound (%) of the mound symbol",
+          "value_verbatim": "~1",
+          "value_parsed": 1,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "archive/planning/hard-example-review/hard-example-library-decisions.md#L18",
+          "method": "read"
+        },
+        {
+          "quantity": "crop-area occupancy upper bound (%) of the mound symbol",
+          "value_verbatim": "2.5",
+          "value_parsed": 2.5,
+          "unit": "%",
+          "kind": "percentage",
+          "path": "archive/planning/hard-example-review/hard-example-library-decisions.md#L18",
+          "method": "read"
+        },
+        {
+          "quantity": "hollow-centre size lower bound (px)",
+          "value_verbatim": "~3",
+          "value_parsed": 3,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "hollow-centre size upper bound (px)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "archive/planning/hard-example-review/hard-example-library-decisions.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "hard-example-library-decisions.md §1 states verbatim 'At 128×128, a 15-20px symbol occupies ~1-2.5% of crop area', matching the first six values exactly. The '~3-5px' hollow-centre figure is not in that source (which discusses overall symbol occupancy, not hollow-centre size specifically); the Decision 13 table row (line 553, this document, out of this claim's own span) separately says 'blur erases at ~3-5px' for solid fill vs hollow centre — left anchor-unknown here since it is not confirmed against an external artefact within this span."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          570,
+          575
+        ],
+        "section": "Decision 13 rationale 3 — internal model resampling (224/336 token grid, 1.75-2.6x upscale)"
+      },
+      "claim_text": "3. **Internal model resampling**: VLMs typically resize input images to an internal grid\n   (architecture-dependent, often 224×224 or 336×336 tokens). A 128px crop is upscaled\n   ~1.75-2.6×, which introduces interpolation. Fine details that barely survive in the\n   input may be smoothed away during this resampling step. Features that extend into\n   surrounding space (rays) survive resampling better than features confined to a small\n   interior region (fill pattern).",
+      "values": [
+        {
+          "quantity": "VLM internal resizing grid (tokens), architecture-dependent option A, first dimension",
+          "value_verbatim": "224",
+          "value_parsed": 224,
+          "unit": null,
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "VLM internal resizing grid (tokens), architecture-dependent option A, second dimension",
+          "value_verbatim": "224",
+          "value_parsed": 224,
+          "unit": null,
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "VLM internal resizing grid (tokens), architecture-dependent option B, first dimension",
+          "value_verbatim": "336",
+          "value_parsed": 336,
+          "unit": null,
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "VLM internal resizing grid (tokens), architecture-dependent option B, second dimension",
+          "value_verbatim": "336",
+          "value_parsed": 336,
+          "unit": null,
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "crop size (px) being upscaled internally",
+          "value_verbatim": "128",
+          "value_parsed": 128,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/planning/hard-example-review/hard-example-library-decisions.md#L15",
+          "method": "read"
+        },
+        {
+          "quantity": "upscale factor lower bound (x)",
+          "value_verbatim": "1.75",
+          "value_parsed": 1.75,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upscale factor upper bound (x)",
+          "value_verbatim": "2.6",
+          "value_parsed": 2.6,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "archive/planning/hard-example-review/hard-example-library-decisions.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 128px crop size is read-anchored to hard-example-library-decisions.md:15 ('Use 128×128 pixel crops as the starting default'). The remaining values are general VLM-architecture facts (internal token-grid resizing, explicitly hedged 'architecture-dependent' in the source sentence itself), not project-specific measurements, and left anchor-unknown at the per-value level: no committed repo artefact stating the 224/336-token grid sizes or the 1.75-2.6× upscale factor was located (checked docs/methodology/research/*.md and working-notes.md Observation 87, the decision's own cited evidence, which does not restate these specific figures)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          648,
+          648
+        ],
+        "section": "Decision 14 — applied file count (10 detection prompt files)"
+      },
+      "claim_text": "Applied across all 10 detection prompt files. See errata E16.",
+      "values": [
+        {
+          "quantity": "count of detection prompt files the visual-appearance changes were applied to",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/system-instructions",
+        "path": null
+      },
+      "method": "read",
+      "notes": "git commit 2d46311714e5dc2459f117f0bc90be15e6d669aa ('Apply hard-example prompt text changes 1-4') modifies exactly 10 files matching prompts/system-instructions/detect_*.md, confirming the figure (one fewer than Decision 12's 11, since detect_brief-text-image_terse.md's centre-pointing predecessor set includes a file not touched by this later commit — not adjudicated here). Errata identifier E16 excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          663,
+          663
+        ],
+        "section": "Phase 1 Decisions Resolved — Scale-32 feasibility checklist item"
+      },
+      "claim_text": "- [x] Scale-32 feasibility — Decision 11 (HP pool exhausted at 4)",
+      "values": [
+        {
+          "quantity": "HP pool exhaustion count referenced in the resolved-decisions checklist",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "prompts/configs/library_scale-8.json#$.composition.hard_positive",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": "$.composition.hard_positive"
+      },
+      "method": "read",
+      "notes": "'Decision 11' and 'Decision 4' cross-references excluded per rule 5 (identifiers, matching the '\"Decision 17\" ... excluded per rule 5' precedent). The '4' restates the HP pool cap already anchored to library_scale-8.json composition.hard_positive."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          684,
+          684
+        ],
+        "section": "Decision 15 rationale — count of run_study.py incompatibilities"
+      },
+      "claim_text": "`run_study.py` has four incompatibilities with the OFAT YAML structure:",
+      "values": [
+        {
+          "quantity": "count of incompatibilities between run_study.py and the OFAT YAML structure",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential count of the numbered list immediately following in this same document (items 1-4, lines 686-689); not checkable against an external artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          686,
+          686
+        ],
+        "section": "Decision 15 rationale, item 1 — Phase 2a single factor"
+      },
+      "claim_text": "1. **Hardcoded factor names**: `generate_conditions()` expects `modality`, `ordering`, `hard_negatives`, `temperature` as factor keys. Phase 2a has a single factor `modality_elaboration`.",
+      "values": [
+        {
+          "quantity": "count of experimental factors, Phase 2a OFAT design",
+          "value_verbatim": "single",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "factors",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2a-h1-modality.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "studies/phase2a-h1-modality.yaml:26 defines exactly one top-level key under 'factors:' (modality_elaboration)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          688,
+          688
+        ],
+        "section": "Decision 15 rationale, item 3 — YAML declares runs: 10"
+      },
+      "claim_text": "3. **No runs loop**: The YAML declares `runs: 10`, but the runner calls the batch detector once per condition (one pass total), with no run iteration.",
+      "values": [
+        {
+          "quantity": "runs count declared in the OFAT YAML (K independent single-pass runs)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.execution.runs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2a-h1-modality.yaml",
+        "path": "$.execution.runs"
+      },
+      "method": "read",
+      "notes": "studies/phase2a-h1-modality.yaml:57 'runs: 10          # K=10 independent single-pass runs (§3.8)'. run_study.py itself (archived) has no 'for run in range(...)' loop, corroborating 'the runner calls the batch detector once per condition ... with no run iteration', though that specific behavioural assertion is not itself extracted as a separate value here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          695,
+          695
+        ],
+        "section": "Decision 15 design points — run_phase2.py parses single factor's levels"
+      },
+      "claim_text": "- Parses OFAT YAML: single factor's levels (each with `name` + `config`), `fixed` params, `inputs`, `execution` sections",
+      "values": [
+        {
+          "quantity": "count of factors parsed per OFAT YAML by run_phase2.py",
+          "value_verbatim": "single",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "factors",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2a-h1-modality.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Describes run_phase2.py's OFAT-YAML parsing design generically (one factor per YAML); anchored to the same representative single-factor YAML as the line-686 claim above (studies/phase2a-h1-modality.yaml)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          701,
+          701
+        ],
+        "section": "Decision 15 design points — cost monitoring warning threshold"
+      },
+      "claim_text": "- Cost monitoring with 120% warning threshold",
+      "values": [
+        {
+          "quantity": "cost warning threshold (%) relative to estimated budget",
+          "value_verbatim": "120",
+          "value_parsed": 120,
+          "unit": "%",
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/run_phase2.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "scripts/run_phase2.py:1135-1136 'cost_warn_threshold = estimated_cost * 1.2 if estimated_cost else float(\"inf\")' — a 1.2x multiplier, i.e. the 120% warning threshold."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          712,
+          716
+        ],
+        "section": "Decision 16 decision statement — two M/E levels carried forward, F1s"
+      },
+      "claim_text": "**Decision**: Carry forward two M/E levels from Phase 2a rather than the preregistered\nsingle winner: (1) **brief-text** (text-only, highest overall F1=0.5425) and\n(2) **brief-text-image** (best image-using condition, F1=0.4617). Each track\nfollows an independent optimisation path through subsequent phases, with the\ntext-only track receiving a tailored subset of tests.",
+      "values": [
+        {
+          "quantity": "count of M/E levels carried forward (deviating from the preregistered single winner)",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of M/E levels the preregistered design specifies carrying forward",
+          "value_verbatim": "single",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, brief-text (text-only), Phase 2a, highest overall",
+          "value_verbatim": "0.5425",
+          "value_parsed": 0.5425,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_condition_metrics.brief-text.point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, brief-text-image, Phase 2a, best image-using condition",
+          "value_verbatim": "0.4617",
+          "value_parsed": 0.4617,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_condition_metrics.brief-text-image.point_estimate.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "results/phase2a-analysis-report.json records per_condition_metrics.brief-text.point_estimate.f1=0.5425 and per_condition_metrics.brief-text-image.point_estimate.f1=0.4617 exactly; also cross-confirmed in results/phase2a-carry-forward-parameters.md and results/phase2a-analysis-summary.md. The 'two'/'single' M/E-level counts describe this document's own decision (not an external computed fact); left anchor-unknown — corroborating evidence is the subsequent existence of exactly two Phase 2b study YAMLs (studies/phase2b-h7-temperature.yaml and studies/phase2b-h7-temperature-text-only.yaml, one per track), not itself a cleanly JSONPath-anchorable fact. List markers '(1)'/'(2)' excluded from values (list numbering, not asserted facts)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          718,
+          724
+        ],
+        "section": "Decision 16 — deviation from preregistration (single carry-forward specification)"
+      },
+      "claim_text": "**Deviation from preregistration**: The preregistered OFAT design (§8.3.1a)\nspecifies a single carry-forward: \"select M/E level with highest F1\" for all\nsubsequent phases. This decision deviates by carrying two levels, because the\npreregistered design assumed the winner would be image-using and several\ndownstream phases are structurally incompatible with a text-only winner.\n\nSee erratum E27.",
+      "values": [
+        {
+          "quantity": "count of M/E levels the registered OFAT design specifies carrying forward",
+          "value_verbatim": "single",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of M/E levels carried forward under this deviation",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "v1.1 calibration rule: a claim about what the REGISTRATION specifies should anchor to the lodged osf document. The cited section (§8.3.1a) was checked in preregistration.md and covers the H5×M/E factorial structure table, not an OFAT single-carry-forward rule; a repo-wide search for 'select M/E level with highest F1' and 'carry forward'/'carried forward' in preregistration.md returned no matches (only execution-plan.md:62,258 use 'carrying ... forward', without the quoted 'select M/E level with highest F1' phrase). Left anchor-unknown; the section citation itself (§8.3.1a) is excluded from values per rule 5. Erratum E27 excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          726,
+          731
+        ],
+        "section": "Decision 16 rationale — Phase 2a result (F1s, delta, FDR)"
+      },
+      "claim_text": "### Rationale\n\nPhase 2a produced a counter-intuitive result: text-only conditions outperformed\nimage-using conditions. Brief-text achieved the highest mean F1 (0.5425),\nexceeding brief-text-image by +0.08. However, no pairwise comparisons survived\nFDR correction (q=0.05), so the result is suggestive rather than conclusive.",
+      "values": [
+        {
+          "quantity": "F1, brief-text, Phase 2a mean (restated)",
+          "value_verbatim": "0.5425",
+          "value_parsed": 0.5425,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_condition_metrics.brief-text.point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 delta, brief-text minus brief-text-image, Phase 2a",
+          "value_verbatim": "0.08",
+          "value_parsed": 0.08,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a-b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2a-analysis-report.json",
+              "path": "$.per_condition_metrics.brief-text.point_estimate.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2a-analysis-report.json",
+              "path": "$.per_condition_metrics.brief-text-image.point_estimate.f1"
+            }
+          ]
+        },
+        {
+          "quantity": "Benjamini-Hochberg FDR control level (q), Phase 2a pairwise comparisons",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "0.5425-0.4617=0.0808, rounding to the stated '+0.08'. q=0.05 restates the FDR control level already anchored at Decision 10 (scripts/analyse_phase2_results.py:60, DEFAULT_FDR_Q=0.05); kept as a separate claim row per full enumeration (distinct verbatim mention, Phase-2a-specific context)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          759,
+          764
+        ],
+        "section": "Decision 16 Track 1 table — H7/H8/H5/H4 cell counts"
+      },
+      "claim_text": "| Phase | Factor | Status |\n|-------|--------|--------|\n| 2b | H7 Temperature (5 levels) | Planned |\n| 2c | H8 Library composition (7 cells) | Planned |\n| 2d | H5 Negative text treatment (6 cells) | Planned |\n| 2e | H4 Ordering (3 cells) | Planned |",
+      "values": [
+        {
+          "quantity": "temperature levels tested, Track 1 Phase 2b (H7)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "library-composition cells, Track 1 Phase 2c (H8)",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "negative-text-treatment cells, Track 1 Phase 2d (H5)",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "ordering cells, Track 1 Phase 2e (H4)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/execution-plan.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "execution-plan.md's Budget Summary table (lines 720-726) gives cell counts 'Phase 2a: H1 | 5', 'Phase 2b: H7 | 5', 'Phase 2c: H8 | 7', 'Phase 2d: H5 | 6', 'Phase 2e: H4 | 4 (1 reused)' — matching 5 (H7), 7 (H8), 6 (H5) exactly; the H4 ordering figure here is '3 cells' vs execution-plan.md's '4 (1 reused)', i.e. 3 net-new cells after the 1 reused condition, consistent but not an identical literal quote — flagged for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          772,
+          772
+        ],
+        "section": "Decision 16 Track 2 table — H7 temperature row (5 levels, same as Track 1)"
+      },
+      "claim_text": "| 2b | H7 Temperature (5 levels) | Planned | Same 5 temperature levels; may optimise at a different T than Track 1 |",
+      "values": [
+        {
+          "quantity": "temperature levels tested, Track 2 Phase 2b (H7)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "temperature levels restated as identical between tracks",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/execution-plan.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both mentions of '5' in this row (the '(5 levels)' cell and the 'Same 5 temperature levels' note) restate execution-plan.md's Phase 2b cell count of 5 (line 722); kept as two values per their two distinct appearances in the span."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          786,
+          788
+        ],
+        "section": "Decision 16 budget implications — Track 1/Track 2 cell counts and cost"
+      },
+      "claim_text": "Track 1 runs the full preregistered sequence (21 cells beyond 2a). Track 2\nadds 5 cells for temperature testing, plus potential ad hoc cells for deferred\nitems if pursued. Total additional cost from dual-track: ~$55 (5 cells × $11).",
+      "values": [
+        {
+          "quantity": "count of cells Track 1 runs beyond Phase 2a (preregistered sequence)",
+          "value_verbatim": "21",
+          "value_parsed": 21,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of additional cells Track 2 adds for temperature testing",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "#L722",
+          "method": "read"
+        },
+        {
+          "quantity": "total additional cost (USD) from the dual-track decision",
+          "value_verbatim": "~$55",
+          "value_parsed": 55,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "#L722",
+          "method": "read"
+        },
+        {
+          "quantity": "count of additional cells, restated in the cost parenthetical",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "#L722",
+          "method": "read"
+        },
+        {
+          "quantity": "per-cell cost (USD) used in the dual-track cost calculation",
+          "value_verbatim": "$11",
+          "value_parsed": 11,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "#L1841",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/execution-plan.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "execution-plan.md:722 'Phase 2b: H7 — Temperature | 5 | 15,000 | ~$55' confirms the 5-cells/~$55 figures directly; protocol-errata.md:699 independently corroborates '~$55 for 5 extra temperature cells' in the dual-track justification context specifically. The $11/cell figure is the same preregistration.md:1841 per-cell rate used in Decision 9. The '21 cells beyond 2a' figure is consistent with summing execution-plan.md's per-phase cells (2b:5 + 2c:7 + 2d:6 + 2e:3 net-new = 21) but is not itself stated as a literal '21' anywhere found; left anchor-unknown pending triage. NOTE: execution-plan.md's Phase 2b row of '5 cells / ~$55' pre-dates the dual-track split and was originally a single-track figure; post-decision, Track 1 and Track 2 each separately run temperature cells at Phase 2b, so the total 2b spend may be double the table's single row — not adjudicated here, flagged for triage."
+    }
+  ]
+}

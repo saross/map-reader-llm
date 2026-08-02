@@ -1,0 +1,801 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/preregistration/execution-plan.md",
+    "git_blob": "385a35efb7beea40cff17d9d446f5ed929d95b07",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [775, 775],
+        "section": "Stopping Rules table, budget row"
+      },
+      "claim_text": "| Budget reaches $250 | Pause, review and prioritise remaining experiments |",
+      "values": [
+        {
+          "quantity": "budget stopping-rule threshold triggering a pause-and-review checkpoint",
+          "value_verbatim": "$250",
+          "value_parsed": 250,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/execution-plan.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Corroborated within this same document's own Changelog: the v2.7 entry (line 820, 'soft budget limit $250') introduced this figure and it survived every subsequent revision unchanged through to v3.0 (current), so anchored to the document's own internal consistency rather than an external artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [776, 776],
+        "section": "Stopping Rules table, API error-rate row"
+      },
+      "claim_text": "| API error rate >20% sustained | Pause, contact provider |",
+      "values": [
+        {
+          "quantity": "sustained API error-rate threshold triggering a pause to contact the provider",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Searched the lodged registration (docs/methodology/preregistration/osf/preregistration.md) and the rest of this document for a matching error-rate stopping threshold; found none. Appears to be an execution-plan-only operational rule with no independent artefact to check it against."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [778, 778],
+        "section": "Stopping Rules table, null-result row"
+      },
+      "claim_text": "| Clear null result (p > 0.5, effect ~0) | Complete condition but deprioritise follow-up |",
+      "values": [
+        {
+          "quantity": "p-value threshold above which a result is treated as a clear null for this stopping rule",
+          "value_verbatim": "0.5",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "effect-size threshold (approximately zero) for the clear-null stopping rule",
+          "value_verbatim": "~0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "As row 776 (line 776) — no matching decision rule located in the lodged registration or elsewhere in the document; execution-plan-only operational heuristic. Approx marker '~' on the effect-size threshold retained in value_verbatim per instrument v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [817, 817],
+        "section": "Changelog — v3.0 entry, H5 scope / cell-count clause"
+      },
+      "claim_text": "H5 scope expanded to test at all 3 image-using M/E levels (3 M/E × 3 H5 = 9 cells, 6 net new)",
+      "values": [
+        {
+          "quantity": "count of image-using M/E levels H5 is expanded to test at, per the registered v4.6 design",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "levels",
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#h5-3-me-levels",
+          "method": "read"
+        },
+        {
+          "quantity": "M/E factor level count in the registered 3×3 H5 cell-count statement",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "levels",
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#h5-totals-9-cells",
+          "method": "read"
+        },
+        {
+          "quantity": "H5 factor level count in the registered 3×3 H5 cell-count statement",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "levels",
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#h5-totals-9-cells",
+          "method": "read"
+        },
+        {
+          "quantity": "H5 cell count (3 M/E × 3 H5), per the registered v4.6 design",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": "cells",
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#h5-totals-9-cells",
+          "method": "read"
+        },
+        {
+          "quantity": "net-new H5 cell count after removing overlap with H1 baselines, per the registered v4.6 design",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "cells",
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#h5-totals-6-net-new",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 calibration rule: describes what the lodged registration specifies for H5's v4.6-expanded design, so anchors to osf/preregistration.md rather than any executed config. Corroborated at osf/preregistration.md:2058 ('H5 tests 3 M/E × 3 H5 = 9 conditions, 3 overlap with H1 baselines → 6 net new cells') and :2395 (v4.6 changelog: 'H5 now tests at all three image-based M/E levels... adds 6 net new cells'). Per-value path fragments are informal markdown anchors, not JSONPath."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [817, 817],
+        "section": "Changelog — v3.0 entry, confirmatory cell-count before→after clause"
+      },
+      "claim_text": "total confirmatory cells updated from 23 to 26",
+      "values": [
+        {
+          "quantity": "total confirmatory cell count before the v4.6 H5 scope expansion (superseded)",
+          "value_verbatim": "23",
+          "value_parsed": 23,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "total confirmatory cell count after the v4.6 H5 scope expansion (current)",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": "cells",
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#h5-totals-26-confirmatory-cells",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Before→after pair within a single changelog bullet (hard rule 3): 23 is the superseded pre-v4.6 total (historical), 26 is the live post-v4.6 total, corroborated at osf/preregistration.md:2058 ('Total confirmatory: 26 cells') and :2395."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [817, 817],
+        "section": "Changelog — v3.0 entry, cost-correction clause"
+      },
+      "claim_text": "cost estimates corrected (~$286 confirmatory)",
+      "values": [
+        {
+          "quantity": "confirmatory-testing cost estimate, per the registered v4.6 H5 cost correction",
+          "value_verbatim": "~$286",
+          "value_parsed": 286,
+          "unit": "USD",
+          "kind": "cost",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#v4.6-h5-cost-correction",
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches osf/preregistration.md:2395 ('cost estimates corrected to ~$11/cell based on actual Gemini 3 Flash pricing (~$286 confirmatory vs previous ~$59 estimate)'). Approx marker retained per v1.2 amendment 5. The registration's own '~$11/cell' and '~$59 previous estimate' figures are not extracted here as they do not appear within this document's assigned span."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [817, 817],
+        "section": "Changelog — v3.0 entry, Phase 0 checklist clause"
+      },
+      "claim_text": "Phase 0 checklist updated to reflect all 9 H5 instruction files and configs now created",
+      "values": [
+        {
+          "quantity": "count of H5 (M/E × text-treatment) system-instruction files created",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "prompts/system-instructions/",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "prompts/system-instructions/ contains detect_{image-only,brief-text-image,verbose-text-image}.md and their _terse/_verbose variants — 3 M/E × 3 H5 = 9 files matching the pattern (existence confirmed via directory listing; count not mechanically verified per hard rule 4). Flagged recompute-script since this is a directory-glob count, not a single scalar in a manifest."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [818, 818],
+        "section": "Changelog — v2.9 entry, H8/H4/H7 design clause"
+      },
+      "claim_text": "H8 expanded to 7 conditions with sequential addition (C1-C3) and scaling (S1-S3) contrasts; H4 simplified to optimal M/E only (3 cells); H7 adds T=0.3 (5 levels)",
+      "values": [
+        {
+          "quantity": "H8 library-composition condition count, current registered design",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": "conditions",
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#h8-totals-7-cells",
+          "method": "read"
+        },
+        {
+          "quantity": "H4 ordering condition count, current registered design (optimal M/E only)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "cells",
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#h4-totals-3-cells",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature level added to H7 in this redesign",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#h7-temperature-levels",
+          "method": "read"
+        },
+        {
+          "quantity": "H7 temperature level count, current registered design",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "levels",
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#h7-temperature-levels",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "These design facts, introduced in this v2.9 redesign (aligned with preregistration.md v4.5), persisted unchanged into the current v4.6 registration (only H5's scope and the confirmatory-cost figures were later revised by v3.0/v4.6). Corroborated at osf/preregistration.md:1788 ('H8 totals: 7 cells'), :1820 ('H4 totals: 3 cells (at optimal M/E only)'), and :1421 ('Temperature: T ∈ {0.0, 0.3, 0.7, 1.0, 1.3} (5 levels)'). 'C1-C3' and 'S1-S3' are contrast-label ranges, excluded per rule 5 (condition-name carve-out, no bare numeric value distinct from the label)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [818, 818],
+        "section": "Changelog — v2.9 entry, budget 'vs' clause"
+      },
+      "claim_text": "revised budget (~$50 confirmatory vs ~$171)",
+      "values": [
+        {
+          "quantity": "one side of the v2.9 confirmatory-budget 'vs' comparison (superseded by the current ~$286 figure)",
+          "value_verbatim": "~$50",
+          "value_parsed": 50,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "other side of the v2.9 confirmatory-budget 'vs' comparison (superseded by the current ~$286 figure)",
+          "value_verbatim": "~$171",
+          "value_parsed": 171,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Both figures describe a since-superseded confirmatory-budget estimate; the document's own text does not label which side is the pre- or post-revision value ('vs', not 'was X now Y'), and both are superseded by v3.0's ~$286 confirmatory figure (line 817, this same changelog). Treated historical throughout per the Known-traps guidance against flooding triage with false mismatches on superseded changelog states."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [820, 820],
+        "section": "Changelog — v2.7 entry, vendor-pricing clause"
+      },
+      "claim_text": "Updated pricing based on verified Gemini 3 Flash rates ($0.50/1M input, $3/1M output → $0.003/call); all Flash cost estimates doubled; Pro estimate revised to ~$0.03/call (needs verification)",
+      "values": [
+        {
+          "quantity": "Gemini 3 Flash input pricing per this v2.7 pricing correction",
+          "value_verbatim": "$0.50",
+          "value_parsed": 0.50,
+          "unit": "USD per 1M tokens",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "Gemini 3 Flash output pricing per this v2.7 pricing correction",
+          "value_verbatim": "$3",
+          "value_parsed": 3,
+          "unit": "USD per 1M tokens",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "Gemini 3 Flash derived per-call cost, per this v2.7 pricing correction",
+          "value_verbatim": "$0.003",
+          "value_parsed": 0.003,
+          "unit": "USD per call",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "document's own characterisation of the effect of this pricing correction on Flash cost estimates",
+          "value_verbatim": "doubled",
+          "value_parsed": 2,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Gemini 3 Pro estimated per-call cost, per this v2.7 pricing correction (self-flagged as needing verification)",
+          "value_verbatim": "~$0.03",
+          "value_parsed": 0.03,
+          "unit": "USD per call",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Vendor (Gemini API) list-pricing figures — no repo artefact can decide them (hard rule 3 'external'). The $0.003/call and ~$0.03/call figures are the document's own derived per-call estimates from the per-token rates (assumed token counts per call not stated in this span, so not expressed as a mechanical arithmetic expression). 'doubled' is the document's own qualitative characterisation of the correction's effect rather than a quoted rate, so given method anchor-unknown, mirroring the '2×' precedent in prior extractions (014.json). Pro estimate explicitly self-flagged 'needs verification' by the document's own author."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [820, 820],
+        "section": "Changelog — v2.7 entry, soft budget limit clause"
+      },
+      "claim_text": "soft budget limit $250",
+      "values": [
+        {
+          "quantity": "soft budget limit introduced by this v2.7 pricing correction",
+          "value_verbatim": "$250",
+          "value_parsed": 250,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/execution-plan.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Matches the Stopping Rules table's 'Budget reaches $250' row (line 775, this same document, this same extraction batch) — the figure introduced here survived unchanged through to the current v3.0 document state."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [820, 820],
+        "section": "Changelog — v2.7 entry, budget ceiling clause"
+      },
+      "claim_text": "budget ceiling ~$335",
+      "values": [
+        {
+          "quantity": "budget ceiling stated in this v2.7 pricing correction (superseded)",
+          "value_verbatim": "~$335",
+          "value_parsed": 335,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Superseded budget-ceiling estimate from the pre-v4.5/v4.6 design era; the current document's confirmatory-cost figure has since moved to ~$286 (v3.0, line 817) and the separate triggered-exploratory budget ceiling elsewhere in this document (outside this extraction's assigned line range) is ~$600 — neither matches ~$335, consistent with supersession."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [821, 821],
+        "section": "Changelog — v2.6 entry"
+      },
+      "claim_text": "Fixed text-only modality constraints in Strand 1 — text-only tested at H5=None only and T=1.0 only per preregistration.md; corrected Strand 1 calculation from 40 cells to 26 cells (24 image + 2 text); fixed API call count from 24,000 to 15,600; updated prompts checklist to note text-only has no hardneg variants; corrected Strand 2 cell count in dependency graph from 30 to 24",
+      "values": [
+        {
+          "quantity": "temperature constraint for text-only modality, per this v2.6 Strand 1 correction (abandoned framework)",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "pre-correction Strand 1 cell-count calculation (superseded)",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "post-correction Strand 1 cell-count calculation (itself later abandoned with the whole stranded-factorial framework)",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "image-modality cell count within the corrected Strand 1 total",
+          "value_verbatim": "24",
+          "value_parsed": 24,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "text-modality cell count within the corrected Strand 1 total",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "pre-correction API call count, Strand 1 (superseded)",
+          "value_verbatim": "24,000",
+          "value_parsed": 24000,
+          "unit": "calls",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "post-correction API call count, Strand 1 (itself later abandoned)",
+          "value_verbatim": "15,600",
+          "value_parsed": 15600,
+          "unit": "calls",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "pre-correction Strand 2 cell count in the dependency graph (superseded)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "post-correction Strand 2 cell count in the dependency graph (itself later abandoned)",
+          "value_verbatim": "24",
+          "value_parsed": 24,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Entire bullet concerns the 'Strand 1 / Strand 2' stranded-factorial framework, which v2.9 (line 818, this same changelog) explicitly replaced with the sequential OFAT design that persists in the current (v3.0) document — the registration's own 'Strand 1'/'Strand 2' terminology likewise appears only in its own now-superseded v3.5-v4.3 changelog entries (osf/preregistration.md:2399-2404), not the current v4.6 state. Treated wholesale historical (both pre- and post-correction sides) since no current artefact holds either value; T=1.0 for text-only is bundled in as it is presented as one of the 'Strand 1' constraints being fixed here, not evaluated independently against the current registration."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [822, 822],
+        "section": "Changelog — v2.5 entry, cell-counts clause"
+      },
+      "claim_text": "corrected cell counts (Strand 1: 26, H5 Confirmatory: 4)",
+      "values": [
+        {
+          "quantity": "Strand 1 cell count restated in this v2.5 consistency fix (abandoned framework)",
+          "value_verbatim": "26",
+          "value_parsed": 26,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "H5 Confirmatory cell count restated in this v2.5 consistency fix (superseded by the later 9-cell / 26-total H5 redesign)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "As with v2.6 (line 821), concerns the abandoned Strand 1/2 framework; H5's confirmatory cell count was later redesigned to 9 cells / 6 net new (v3.0, line 817, this same changelog). 'H8 label (was H15)' and 'H2/H6 status' on the same line are identifier/status corrections, not quantitative claims, excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [823, 823],
+        "section": "Changelog — v2.4 entry, factorial/budget clause"
+      },
+      "claim_text": "H5=hard negatives (3 levels), H7=temperature (4 levels), H4=ordering, H3=voting, H2=two-stage, H6=Flash→Pro, H8=library size, H9=diversity; updated factorial to 60 conditions (5 M/E × 3 H5 × 4 T); revised budget (~$94-101 Flash, ~$199-221 confirmatory)",
+      "values": [
+        {
+          "quantity": "H5 (hard negatives) level count, old hypothesis-numbering scheme (pre-T0.3, pre-v4.5)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "levels",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "H7 (temperature) level count, old hypothesis-numbering scheme (pre-T0.3)",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "levels",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "total conditions in the abandoned full-factorial design",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "M/E factor level count in the 60-condition full-factorial design",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "levels",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "H5 factor level count in the 60-condition full-factorial design",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "levels",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "temperature (T) factor level count in the 60-condition full-factorial design",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "levels",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "Flash budget range, lower bound, this v2.4 revision",
+          "value_verbatim": "~$94",
+          "value_parsed": 94,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "Flash budget range, upper bound, this v2.4 revision",
+          "value_verbatim": "101",
+          "value_parsed": 101,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "confirmatory budget range, lower bound, this v2.4 revision",
+          "value_verbatim": "~$199",
+          "value_parsed": 199,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "confirmatory budget range, upper bound, this v2.4 revision",
+          "value_verbatim": "221",
+          "value_parsed": 221,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Describes the old 5×3×4 = 60-condition full-factorial design (pre-dating both the later stranded-factorial and sequential-OFAT redesigns), long since abandoned — current design is the sequential OFAT with 26 confirmatory cells (v3.0, line 817). H5's level count here (3, hard negatives) and H7's (4, temperature) are the pre-T0.3, pre-v4.5 numbering, both later changed (line 818). Shared '~$' sign in each range attaches only to the first figure per v1.2 amendment 6; the second figure's unit field is set to bridge the scale."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [824, 824],
+        "section": "Changelog — v2.3 entry, sub-phases/library clause"
+      },
+      "claim_text": "Phase 2 now has 4 sub-phases (2a-2d); library size promoted to confirmatory with 6 library conditions (Pure, Canonical, A-D) using 1:1 HP:HN ratio",
+      "values": [
+        {
+          "quantity": "count of Phase 2 sub-phases, this v2.3 stranded-factorial restructure",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "sub-phases",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of library conditions promoted to confirmatory, this v2.3 restructure",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "hard-positive part of the 1:1 HP:HN library ratio, this v2.3 restructure",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "hard-negative part of the 1:1 HP:HN library ratio, this v2.3 restructure",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Describes the abandoned stranded-factorial (Strand 1/Strand 2) restructure, superseded by v2.9's sequential OFAT redesign (line 818). The '1:1' ratio is parsed as two separate '1' values (HP part, HN part) per full enumeration. 'A-D' and '2a-2d' are label ranges with no independent numeric claim, excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [825, 825],
+        "section": "Changelog — v2.2 entry, cost/structure/ordering clause"
+      },
+      "claim_text": "corrected Pro cost estimates (~$105-120); fixed budget summary totals; updated file naming to match 10-instruction structure; fixed ordering condition count (6 new, not 9)",
+      "values": [
+        {
+          "quantity": "Pro cost estimate range, lower bound, this v2.2 revision",
+          "value_verbatim": "~$105",
+          "value_parsed": 105,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "Pro cost estimate range, upper bound, this v2.2 revision",
+          "value_verbatim": "120",
+          "value_parsed": 120,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of instruction files in the file-naming structure adopted at this v2.2 revision",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "files",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "corrected count of new ordering conditions, this v2.2 revision",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "prior (wrong) count of new ordering conditions being corrected at this v2.2 revision",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Pro cost range and instruction-file-structure count both predate the later H5 instruction-file expansion (9 H5 files alone by v3.0, line 817) and the H4 ordering redesign (3 cells, optimal M/E only, per v2.9/v4.5, line 818) — all superseded. The '6 new, not 9' ordering-count correction concerns the pre-v4.5 ordering design (H4 tested across multiple M/E levels), abandoned when H4 was simplified to optimal-M/E-only."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [827, 827],
+        "section": "Changelog — v2.0 entry, factorial/protocol/subset clause"
+      },
+      "claim_text": "revised to 100-condition factorial; K=10 independent runs protocol; Phase 1 now includes verbose text construction with text-image alignment; elaboration integrated into main factorial; ordering partial cross design; Flash→Pro OFAT approach on 20-tile subset",
+      "values": [
+        {
+          "quantity": "total conditions in the original full-factorial design, this v2.0 revision",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "conditions",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "independent-run pool size (K) in the protocol introduced at this v2.0 revision",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "runs",
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile-subset size for the Flash→Pro OFAT approach, this v2.0 revision",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Describes the original 100-condition full-factorial design from this early execution-plan revision, entirely superseded by the later stranded-factorial (v2.3) and then sequential-OFAT (v2.9) redesigns; current confirmatory design has 26 cells (v3.0, line 817). The K=10 runs-protocol figure here predates and is unrelated to the later retest-era K=3/K=10 consensus-voting protocol used elsewhere in the project (different context; not corroborating this historical design figure)."
+    }
+  ]
+}

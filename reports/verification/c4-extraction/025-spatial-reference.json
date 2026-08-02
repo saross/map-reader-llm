@@ -1,0 +1,979 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T02:11:51Z",
+  "source_document": {
+    "file": "docs/methodology/spatial-reference.md",
+    "git_blob": "17770600a599e32196c617133a10675ab74f3507",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          16,
+          16
+        ],
+        "section": "The two CRS table, EPSG:32635 row"
+      },
+      "claim_text": "| **32635** | WGS 84 / **UTM Zone 35N** | **metres** | rasters/tiles, evaluation **bounds**, **ground-truth** mounds, and the **evaluation/matching** CRS the scorer reprojects everything to |",
+      "values": [
+        {
+          "quantity": "EPSG code, analysis/matching CRS (rasters, evaluation bounds, ground-truth, scorer target)",
+          "value_verbatim": "32635",
+          "value_parsed": 32635,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/rasters/K-35-052-4_32635.tif",
+        "path": null
+      },
+      "method": "read",
+      "notes": "This summary row spans four different artefact categories (rasters/tiles, evaluation bounds, ground-truth mounds, scorer target CRS) with no single anchor file; the raster GeoTIFF header is used as the anchor per the physical-measurement-outranks-prose principle (planning/audit-charter.md §4 item 1). The per-artefact breakdown is verified individually in the table at lines 21-27 (claims below). 'UTM Zone 35N' repeats the same identity as EPSG:32635 (not an independent checkable quantity) and is not extracted as a separate value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          17,
+          17
+        ],
+        "section": "The two CRS table, EPSG:4326 row"
+      },
+      "claim_text": "| **4326** | **WGS 84** (geographic) | **degrees** | **detection output geojsons** (the model/pipeline outputs; RFC 7946 GeoJSON convention) |",
+      "values": [
+        {
+          "quantity": "EPSG code, detection-output storage CRS",
+          "value_verbatim": "4326",
+          "value_parsed": 4326,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/gs/gold-standard-v2/consensus/consensus-4of5.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'RFC 7946' is a standard/spec identifier (out of C4 scope per rule 5, analogous to a version string), not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          23,
+          23
+        ],
+        "section": "Verified-2026-05-31 per-artefact table, source rasters row"
+      },
+      "claim_text": "| Source rasters | `inputs/rasters/K-35-052-4_32635.tif` (CRS is in the filename) | EPSG:32635 |",
+      "values": [
+        {
+          "quantity": "EPSG code, source raster CRS",
+          "value_verbatim": "32635",
+          "value_parsed": 32635,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/rasters/K-35-052-4_32635.tif",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'32635' also appears inside the filename; the row explicitly asserts it as fact ('CRS is in the filename'), so the rule-5 name-used-as-fact carve-out applies and it is extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          24,
+          24
+        ],
+        "section": "Verified-2026-05-31 per-artefact table, evaluation bounds row"
+      },
+      "claim_text": "| Evaluation bounds (all eras + 55-map) | `inputs/vectors/bounds/384/full_evaluation_bounds.geojson` | EPSG:32635 |",
+      "values": [
+        {
+          "quantity": "count of maps, '55-map' ground-truth-reviewed corpus label (name used as asserted fact re: bounds coverage)",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "EPSG code, evaluation bounds CRS",
+          "value_verbatim": "32635",
+          "value_parsed": 32635,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'384' is a directory-name component of the path only (not independently asserted as fact in this row's prose) — excluded per rule 5. '55' in '55-map' is used both as a corpus label and, per the parenthetical '(all eras + 55-map)', as an asserted coverage fact; included per the rule-5 name/fact carve-out but left anchor-unknown — no single artefact located within this extraction's bounded search that stores a map-count scalar for this corpus."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          25,
+          25
+        ],
+        "section": "Verified-2026-05-31 per-artefact table, ground truth curator row"
+      },
+      "claim_text": "| Ground truth — curator | `inputs/vectors/references/mounds-reference.geojson` | EPSG:32635 |",
+      "values": [
+        {
+          "quantity": "EPSG code, curator ground-truth CRS",
+          "value_verbatim": "32635",
+          "value_parsed": 32635,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": null
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          26,
+          26
+        ],
+        "section": "Verified-2026-05-31 per-artefact table, ground truth 55-map student row"
+      },
+      "claim_text": "| Ground truth — 55-map student | `inputs/vectors/references/student-mounds-55maps-reviewed.geojson` | EPSG:32635 |",
+      "values": [
+        {
+          "quantity": "count of maps, '55-map' student-reviewed ground-truth corpus (name used as asserted fact re: which ground-truth file this is)",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "EPSG code, 55-map student ground-truth CRS",
+          "value_verbatim": "32635",
+          "value_parsed": 32635,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The geojson carries a 'source_map' property per feature (4746 features total, confirmed present at extraction time); the '55' map count is mechanically recomputable as the distinct count of features[*].properties.source_map, hence method recompute-script rather than anchor-unknown for that value — not computed here per hard rule 4 (do not verify while extracting)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          27,
+          27
+        ],
+        "section": "Verified-2026-05-31 per-artefact table, detection outputs row"
+      },
+      "claim_text": "| Detection outputs | `outputs/gs/gold-standard-v2/consensus/consensus-4of5.geojson` | EPSG:4326 |",
+      "values": [
+        {
+          "quantity": "EPSG code, detection-output example file CRS",
+          "value_verbatim": "4326",
+          "value_parsed": 4326,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/gs/gold-standard-v2/consensus/consensus-4of5.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'2' in 'gold-standard-v2' is a version string (excluded, rule 5); '4of5' in the filename is a vote-threshold name component not independently asserted as fact in this row (excluded, rule 5 default)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          31,
+          32
+        ],
+        "section": "Evaluation pipeline reprojection paragraph — DEFAULT_CRS constant"
+      },
+      "claim_text": "`scripts/evaluate_detections.py` → `scripts/lib_advanced_metrics.py` defines\n`DEFAULT_CRS = \"EPSG:32635\"` (UTM 35N).",
+      "values": [
+        {
+          "quantity": "EPSG code, DEFAULT_CRS constant in lib_advanced_metrics.py",
+          "value_verbatim": "32635",
+          "value_parsed": 32635,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_advanced_metrics.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confirmed at scripts/lib_advanced_metrics.py:41: 'DEFAULT_CRS = \"EPSG:32635\"  # UTM Zone 35N (Bulgaria)'. Non-JSON (Python constant) anchor, path null per v1.1 guidance on config.py-style anchors. '35' in '(UTM 35N)' repeats the same identity as 32635, not extracted separately."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          38,
+          43
+        ],
+        "section": "'spatial' eval-metadata JSON block example"
+      },
+      "claim_text": "\"spatial\": {\n  \"evaluation_crs\": \"EPSG:32635\",\n  \"evaluation_crs_name\": \"UTM Zone 35N (Bulgaria)\",\n  \"geojson_storage_crs\": \"EPSG:4326\",\n  \"geojson_storage_note\": \"GeoJSON is WGS84 (RFC 7946) unless a file declares its own crs member; the scorer reprojects to evaluation_crs before matching.\"\n}",
+      "values": [
+        {
+          "quantity": "EPSG code, evaluation_crs field of the evaluation.json 'spatial' block",
+          "value_verbatim": "32635",
+          "value_parsed": 32635,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/rescore-2026-06-08/pv-diag-256/text-baseline/evaluation.json#$._metadata.spatial.evaluation_crs",
+          "method": "read"
+        },
+        {
+          "quantity": "EPSG code, geojson_storage_crs field of the evaluation.json 'spatial' block",
+          "value_verbatim": "4326",
+          "value_parsed": 4326,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/rescore-2026-06-08/pv-diag-256/text-baseline/evaluation.json#$._metadata.spatial.geojson_storage_crs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/rescore-2026-06-08/pv-diag-256/text-baseline/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "This is a wholly-reproduced JSON example matching the real schema (rule 6: generated snippets pasted into hand-written docs are still claims). Confirmed the field lives at $._metadata.spatial (not top-level $.spatial as the example's indentation might suggest) in results/rescore-2026-06-08/pv-diag-256/text-baseline/evaluation.json, verbatim-matching all four sub-fields quoted in the doc. 'RFC 7946' excluded (standard identifier, rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          48,
+          51
+        ],
+        "section": "'The gotcha' paragraph — missing-crs mislabel and its F1 effect"
+      },
+      "claim_text": "A GeoJSON written in **UTM metres (EPSG:32635) with NO `crs` member** is silently\nread as WGS84 degrees by GeoPandas (and by `load_geojson`), then mis-reprojected far\noff the tile grid → the detections match no mound at any buffer → **F1 = 0 at every\nradius**",
+      "values": [
+        {
+          "quantity": "EPSG code, true CRS of the mis-written (missing-crs) detection geojsons",
+          "value_verbatim": "32635",
+          "value_parsed": 32635,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "F1 value, affected h11 runs before repair (every buffer radius)",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "archive/data-repairs/proposer-verifier-384-missing-crs/verified-brief-text.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confirmed the archived pre-repair file has no top-level 'crs' key and coordinates with |x|>180000 (UTM metres), matching the described defect pattern. No pre-repair evaluation.json (showing F1=0) was located for these specific runs within a bounded search of results/ — searched for proposer-verifier-384 evaluation.json paths outside rescore/repaired trees; the F1=0 value is left anchor-unknown pending a fuller search."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          54,
+          54
+        ],
+        "section": "'The gotcha' paragraph — repair action (32635 to 4326 reprojection)"
+      },
+      "claim_text": "outputs). All were **repaired** by reprojecting 32635 → 4326 to match the storage",
+      "values": [
+        {
+          "quantity": "EPSG code, source CRS of the repair reprojection (missing-crs erratum)",
+          "value_verbatim": "32635",
+          "value_parsed": 32635,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "EPSG code, target CRS of the repair reprojection (missing-crs erratum)",
+          "value_verbatim": "4326",
+          "value_parsed": 4326,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Narrative description of a repair action applied across several h11 runs (see archive/data-repairs/<run>-missing-crs/ for the archived pre-repair originals, named earlier in this same paragraph); no single artefact records the '32635 → 4326' reprojection pair itself as a value. The underlying EPSG identities are independently anchored elsewhere in this file (e.g. the DEFAULT_CRS / spatial-block claims above)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          61,
+          62
+        ],
+        "section": "Trap paragraph — coordinate-magnitude smell test"
+      },
+      "claim_text": "signal that distinguishes the hazard is **coordinate magnitude**: a first\ncoordinate with `|x| > 180` cannot be a longitude in degrees.",
+      "values": [
+        {
+          "quantity": "magnitude threshold (degrees) distinguishing projected-metres coordinates from lon/lat",
+          "value_verbatim": "180",
+          "value_parsed": 180,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/verify_run_conditions.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confirmed at scripts/verify_run_conditions.py:113: 'return \"utm-no-crs\" if abs(coord[0]) > 180 and \"crs\" not in doc else \"ok\"'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          70,
+          72
+        ],
+        "section": "Consensus voting path — merge_passes.py analysis CRS and cluster tolerance"
+      },
+      "claim_text": "- `scripts/merge_passes.py` clusters in the **analysis CRS (EPSG:32635, metres)** —\n  it *assumes* its input geometries are already UTM (it computes the 20 m\n  dedup/cluster tolerance as a plain Euclidean distance on raw coordinates; the",
+      "values": [
+        {
+          "quantity": "EPSG code, merge_passes.py analysis/clustering CRS",
+          "value_verbatim": "32635",
+          "value_parsed": 32635,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "dedup/cluster distance tolerance (metres), merge_passes.py",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/merge_passes.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confirmed scripts/merge_passes.py:61 '_SOURCE_CRS = \"EPSG:32635\"' and line 71 'DISTANCE_THRESHOLD_METRES = 20.0  # Matches F1 evaluation tolerance'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          74,
+          75
+        ],
+        "section": "Consensus voting path — apply_threshold reprojects centroids to 4326"
+      },
+      "claim_text": "  wired into the production path). `apply_threshold()` then **reprojects the cluster\n  centroids to EPSG:4326** before returning them (commit `8c8e101fc`, 2026-04-11,",
+      "values": [
+        {
+          "quantity": "EPSG code, apply_threshold() output CRS",
+          "value_verbatim": "4326",
+          "value_parsed": 4326,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/merge_passes.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confirmed scripts/merge_passes.py line 343-346 area reprojects centroid 'from EPSG:32635 → EPSG:4326'. Commit hash '8c8e101fc' excluded (rule 5); date excluded (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          77,
+          78
+        ],
+        "section": "Consensus voting path — analyse_diversity.py reprojects back to analysis CRS"
+      },
+      "claim_text": "- `scripts/analyse_diversity.py:consensus_to_gdf()` **consumes** `apply_threshold`'s\n  in-memory output and must reproject it **back to the analysis CRS (32635)** before",
+      "values": [
+        {
+          "quantity": "EPSG code, analyse_diversity.py analysis CRS (post-fix target of consensus_to_gdf)",
+          "value_verbatim": "32635",
+          "value_parsed": 32635,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/analyse_diversity.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confirmed scripts/analyse_diversity.py:100 'TARGET_CRS = \"EPSG:32635\"' and the module docstring (lines 47-51) describing the same contract."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          81,
+          83
+        ],
+        "section": "Incident paragraph — consensus_to_gdf's pre-fix (historical) mislabel"
+      },
+      "claim_text": "**The incident**: `consensus_to_gdf` was written (2026-03-08) when `apply_threshold`\nstill returned UTM, so it labelled the output `EPSG:32635` *without reprojecting* —\ncorrect at the time. The `8c8e101fc` change to `apply_threshold` (a month later)",
+      "values": [
+        {
+          "quantity": "EPSG code, consensus_to_gdf's pre-fix output label (correct when written, later stale)",
+          "value_verbatim": "32635",
+          "value_parsed": 32635,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Quoted old-behaviour side of a correction block ('correct at the time', later broken by the 8c8e101fc change) — historical per hard rule 3. Commit hash and date excluded (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          84,
+          86
+        ],
+        "section": "Incident paragraph — mislabelled-4326-as-32635 offset and resulting F1=0"
+      },
+      "claim_text": "**silently broke** it: the now-4326 points, mislabelled as 32635, landed ~5×10⁵ m off\nthe grid → the intersects-join matched no tile → `source_tile = \"unknown\"` for every\ndetection → **F1 = 0 on any live re-run**. It went undetected because the **published",
+      "values": [
+        {
+          "quantity": "EPSG code, apply_threshold's actual (post-fix) output CRS, mislabelled by consensus_to_gdf",
+          "value_verbatim": "4326",
+          "value_parsed": 4326,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "EPSG code, the incorrect label consensus_to_gdf applied to the 4326 points",
+          "value_verbatim": "32635",
+          "value_parsed": 32635,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "magnitude of the resulting spatial offset off the tile grid (approx.)",
+          "value_verbatim": "~5×10⁵",
+          "value_parsed": 500000,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1 value on any live re-run of the (then-)broken consensus_to_gdf path",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Narrative bug-archaeology description. Full detail is in reports/diversity-crs-mislabel-investigation-2026-06-08.md (named at line 91) — a mine-scope markdown report, so per hard rule 2 (never anchor prose to prose) this is left anchor-unknown for triage to chase into that report's own evidence rather than anchored here directly. That report does independently corroborate 'F1 = 0' (its own lines 21, 89-91, 100, 185) but not the '~5×10⁵ m' offset figure within a bounded search."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          87,
+          90
+        ],
+        "section": "Incident paragraph — published Phase 3c CSVs predate the break, confirmed to ~0.001 F1"
+      },
+      "claim_text": "Phase 3c diversity CSVs predate the break** (2026-03-26) and the script was never\nre-run; the `results/phase3c-diversity/**` numbers are correct and were\nindependently confirmed via the standard scorer (`evaluate_detections.py`, which\nhandles CRS correctly) to ~0.001 F1.",
+      "values": [
+        {
+          "quantity": "F1 discrepancy margin between the published Phase 3c diversity CSVs and an independent evaluate_detections.py re-score (approx.)",
+          "value_verbatim": "~0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The 'Full archaeology' pointer (line 91) names reports/diversity-crs-mislabel-investigation-2026-06-08.md; per hard rule 2 this document is not itself a valid anchor (prose). Searched that report for '0.001' — not found verbatim within a bounded grep; the comparison value may live in an uncommitted/regenerated artefact under results/phase3c-diversity/** not identified here. Flagged for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          93,
+          94
+        ],
+        "section": "Stage-0 fix — consensus_to_gdf now declares 4326 honestly"
+      },
+      "claim_text": "**Stage-0 fix** (2026-06-08): `consensus_to_gdf` now declares the points\n`EPSG:4326` (honestly, what `apply_threshold` emits) and `.to_crs(TARGET_CRS)`",
+      "values": [
+        {
+          "quantity": "EPSG code, consensus_to_gdf's post-fix declared input CRS",
+          "value_verbatim": "4326",
+          "value_parsed": 4326,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/analyse_diversity.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confirmed scripts/analyse_diversity.py:274 'crs=\"EPSG:4326\"' in consensus_to_gdf(), matching the Stage-0 fix description."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          106,
+          107
+        ],
+        "section": "The principle, item 2 — hard-coded analysis CRS across ~89 scripts"
+      },
+      "claim_text": "2. **One analysis CRS, resolved once and threaded** — never assumed. Today that is\n   the hard-coded `EPSG:32635` (Bulgaria, UTM 35N) in ~89 scripts; for a *generalised*",
+      "values": [
+        {
+          "quantity": "EPSG code, project-wide hard-coded analysis CRS",
+          "value_verbatim": "32635",
+          "value_parsed": 32635,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of scripts hard-coding EPSG:32635 (approx.)",
+          "value_verbatim": "~89",
+          "value_parsed": 89,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_advanced_metrics.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "32635 anchored to the representative DEFAULT_CRS constant (as at lines 31-32 above); the '~89 scripts' corpus-wide count has no committed enumeration artefact — mechanically recomputable via a grep across scripts/ for 'EPSG:32635' hard-codes, but no such script currently exists in the repo, so left anchor-unknown rather than recompute-script."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          109,
+          109
+        ],
+        "section": "The principle, item 2 — metric tolerance restated"
+      },
+      "claim_text": "   explicitly, because the metric tolerance (20 m) is only meaningful in the right",
+      "values": [
+        {
+          "quantity": "dedup/cluster metric tolerance (metres), restated",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/merge_passes.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the DISTANCE_THRESHOLD_METRES=20.0 value already anchored at the lines-70-72 claim above; kept as a separate claim row per full-enumeration (rule 3), a distinct verbatim mention."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          111,
+          111
+        ],
+        "section": "The principle, item 3 — storage egress CRS restated"
+      },
+      "claim_text": "3. **Separate storage egress (→4326, RFC 7946) from analysis (stay in the analysis",
+      "values": [
+        {
+          "quantity": "EPSG code, storage-egress CRS, restated",
+          "value_verbatim": "4326",
+          "value_parsed": 4326,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/merge_passes.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the _GEOJSON_CRS='EPSG:4326' constant (scripts/merge_passes.py line 62); 'RFC 7946' excluded (standard identifier, rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          115,
+          115
+        ],
+        "section": "Roadmap pointer — retiring the 89-script hard-code"
+      },
+      "claim_text": "Stages 1–2 of this principle (a shared `lib_crs`, retiring the 89-script hard-code,",
+      "values": [
+        {
+          "quantity": "count of scripts hard-coding EPSG:32635, restated without approx. marker",
+          "value_verbatim": "89",
+          "value_parsed": 89,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates the ~89-scripts count from the lines-106-107 claim above, this time without the tilde (kept as a distinct value_verbatim per v1.2 amendment 5 — approx markers are verbatim, so the two mentions are not interchangeable). The document references planning/generalised-pipeline-roadmap.md, but per hard rule 7 that cross-reference is noted, not chased, and per hard rule 2 a markdown doc could not serve as the anchor regardless. 'Stages 1–2' are section labels, excluded per rule 5 (identifiers)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          124,
+          127
+        ],
+        "section": "Guards in place, item 2 — verifier flag thresholds"
+      },
+      "claim_text": "2. **Verifier flag** (`scripts/verify_run_conditions.py`): a condition whose\n   detections are projected metres (`|x| > 180`) with no `crs` member raises\n   **`crs-missing-utm`** (WARN); an eval that is F1=0 at every buffer raises\n   **`f1-all-zero`** (WARN). Both surface for human adjudication.",
+      "values": [
+        {
+          "quantity": "magnitude threshold (degrees) triggering the crs-missing-utm WARN flag",
+          "value_verbatim": "180",
+          "value_parsed": 180,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "F1 value threshold (every buffer) triggering the f1-all-zero WARN flag",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/verify_run_conditions.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confirmed scripts/verify_run_conditions.py:113 (the 180 magnitude test) and lines 206-210 (f1s all in (0, 0.0, None) across every buffer triggers the 'f1-all-zero' WARN)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          128,
+          131
+        ],
+        "section": "Guards in place, item 3 — storage convention and the e47/text-baseline exemplar"
+      },
+      "claim_text": "3. **Storage convention**: detection geojsons are EPSG:4326. A geojson that *must*\n   store projected coordinates should declare an explicit `crs` member (e.g.\n   `e47/text-baseline` correctly carries `EPSG::32635`, so the scorer reprojects it\n   right — the verifier does **not** flag a declared-CRS file).",
+      "values": [
+        {
+          "quantity": "EPSG code, default detection-geojson storage convention",
+          "value_verbatim": "4326",
+          "value_parsed": 4326,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "EPSG code, e47/text-baseline's explicitly declared crs member",
+          "value_verbatim": "32635",
+          "value_parsed": 32635,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/e47-propose-brief/text-baseline/detections-propose_brief-text-3-flash-2026-04-08.geojson#$.crs.properties.name",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/gs/gold-standard-v2/consensus/consensus-4of5.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Confirmed outputs/h11/e47-propose-brief/text-baseline/detections-propose_brief-text-3-flash-2026-04-08.geojson carries $.crs.properties.name = 'urn:ogc:def:crs:EPSG::32635', exactly matching the doc's 'EPSG::32635' (double-colon URN form) quote."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          140,
+          141
+        ],
+        "section": "How-to-check section — magnitude smell test restated"
+      },
+      "claim_text": "A quick magnitude smell-test (no GeoPandas): if the first coordinate's `|x| > 180`\nthe file is **not** lon/lat degrees — it must declare its CRS.",
+      "values": [
+        {
+          "quantity": "magnitude threshold (degrees), restated",
+          "value_verbatim": "180",
+          "value_parsed": 180,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/verify_run_conditions.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the 180 threshold already anchored at the lines-61-62 claim above; distinct verbatim mention, kept per full enumeration."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          147,
+          150
+        ],
+        "section": "Changelog 2026-06-08 — trigger paragraph"
+      },
+      "claim_text": "**Trigger**: a CRS investigation (Session 106) found `analyse_diversity.consensus_to_gdf`\nmislabelled `apply_threshold`'s output, silently broken since the `8c8e101fc`\n(2026-04-11) change made `apply_threshold` emit EPSG:4326. Re-running the diversity\nanalysis today produced F1=0 (all detections tagged `source_tile = \"unknown\"`).",
+      "values": [
+        {
+          "quantity": "EPSG code, apply_threshold's emitted CRS post-8c8e101fc",
+          "value_verbatim": "4326",
+          "value_parsed": 4326,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "F1 value, live re-run of the diversity analysis at the time of this changelog entry",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/merge_passes.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Session number excluded (rule 5); commit hash and date excluded (rule 5). The F1=0 re-run result is narrated, not a stored artefact value — reports/diversity-crs-mislabel-investigation-2026-06-08.md corroborates 'F1 = 0' in its own text (its lines 21, 89-91) but per hard rule 2 that markdown document cannot itself serve as the anchor; left anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          154,
+          155
+        ],
+        "section": "Changelog 2026-06-08 — what changed, Stage-0 fix landed"
+      },
+      "claim_text": "geometry). Landed the Stage-0 fix in `consensus_to_gdf` (declare 4326 + reproject to\nthe analysis CRS) with a regression test `tests/test_analyse_diversity_crs.py`.",
+      "values": [
+        {
+          "quantity": "EPSG code, consensus_to_gdf's declared CRS post-fix, restated",
+          "value_verbatim": "4326",
+          "value_parsed": 4326,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/analyse_diversity.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the Stage-0 fix claim already anchored at lines 93-94 above; distinct verbatim mention. tests/test_analyse_diversity_crs.py exists and pins this contract (confirmed present, not value-verified per hard rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          159,
+          160
+        ],
+        "section": "Changelog 2026-06-08 — what did NOT change, ~0.001 F1 confirmation restated"
+      },
+      "claim_text": "CSVs are authoritative as-is and were NOT regenerated** — they predate the break and\nwere independently confirmed correct via `evaluate_detections.py` (~0.001 F1). The",
+      "values": [
+        {
+          "quantity": "F1 discrepancy margin, evaluate_detections.py cross-check, restated",
+          "value_verbatim": "~0.001",
+          "value_parsed": 0.001,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates the ~0.001 F1 claim already flagged anchor-unknown at lines 87-90 above (see that claim's notes for the search performed); distinct verbatim mention, kept per full enumeration."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          167,
+          167
+        ],
+        "section": "Changelog 2026-05-31 — original publication, F1=0 bug mention"
+      },
+      "claim_text": "Created after the missing-`crs` F1=0 bug (and the `consensus-384-t1-0` crash) to make",
+      "values": [
+        {
+          "quantity": "F1 value, missing-crs erratum, restated in the original-publication changelog entry",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Backward reference to the missing-crs erratum already extracted (lines 48-51 claim above, itself anchor-unknown for the F1=0 value). 'consensus-384-t1-0' is a condition/run name, excluded (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          169,
+          169
+        ],
+        "section": "Changelog 2026-05-31 — original publication, evaluation reprojection CRS"
+      },
+      "claim_text": "the evaluation reprojection to EPSG:32635, the new `spatial` eval-metadata block",
+      "values": [
+        {
+          "quantity": "EPSG code, evaluation reprojection target, restated in the original-publication changelog entry",
+          "value_verbatim": "32635",
+          "value_parsed": 32635,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_advanced_metrics.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the DEFAULT_CRS=EPSG:32635 claim already anchored at lines 31-32 above; distinct verbatim mention."
+    }
+  ]
+}

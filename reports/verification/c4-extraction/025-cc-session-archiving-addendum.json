@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T02:11:51Z",
+  "source_document": {
+    "file": "docs/methodology/transparency/cc-session-archiving-addendum.md",
+    "git_blob": "7be9c261c8607afeddfa155d033700f8c137cff4",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-sonnet-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          123,
+          123
+        ],
+        "section": "A2.2 Scale Estimation — project-level estimates, session count/duration"
+      },
+      "claim_text": "- ~30 substantive CC sessions over 2-3 months",
+      "values": [
+        {
+          "quantity": "count of substantive Claude Code sessions, project-level estimate for the VLM burial mound detection project (approx.)",
+          "value_verbatim": "~30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "lower bound of the estimated project duration (months) underlying the session-count estimate",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "months",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper bound of the estimated project duration (months) underlying the session-count estimate",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "months",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "SCOPE DECISION for this whole document (logged here per rule 5, applies to the file as a whole): docs/methodology/transparency/cc-session-archiving-addendum.md is a design/specification draft ('Version: 1.0-draft-addendum-1', 2026-01-08) proposing a session-archiving schema, not a results document. The great majority of its numbers are either (a) illustrative example values inside JSON/YAML schema mockups (e.g. 'count': 89 thinking blocks, total_bytes: 4567890, total_duration_hours: 28.5 in the CATALOG.json example, model version strings) that are not asserted as fact about the study (the Task section's core test) — they illustrate a proposed field's shape, not a measured value — or (b) generic, non-project-specific heuristic tables (A2.2 tool-output-size ranges 'based on typical CC usage patterns', the Light/Medium/Heavy/Intensive session-type table, the A5.7 Adoption Friction Analysis workflow-timing table, the gzip '5-10x reduction' figure, the '<2 minutes' community-adoption target) describing the proposed tool in general, not this project specifically. None of these were extracted. The two claims in this file (this one and the 100-500 MB claim at line 124) are the sole places the document makes a numeric assertion explicitly named to 'the study' (the parenthetical 'e.g., VLM burial mound project' at line 122, immediately preceding this bullet). Even so, this is a forward-looking design-time projection (dated 2026-01-08, early in the project) for a session-archiving campaign; the repo contains no archive/cc-sessions/ directory at extraction time (confirmed: git ls-files and a filesystem check both return nothing), so no committed artefact could be identified as an anchor — left anchor-unknown for all three values."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          124,
+          124
+        ],
+        "section": "A2.2 Scale Estimation — project-level estimates, archive size"
+      },
+      "claim_text": "- Estimated total: 100-500 MB of JSONL archives",
+      "values": [
+        {
+          "quantity": "lower bound of estimated total JSONL archive size (MB), VLM burial mound project",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "MB",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper bound of estimated total JSONL archive size (MB), VLM burial mound project",
+          "value_verbatim": "500",
+          "value_parsed": 500,
+          "unit": "MB",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Same project-level estimate paragraph as the line-123 claim above (see that claim's notes for the document-wide scope decision). No archive/cc-sessions/ directory exists in the repo at extraction time to serve as a size anchor."
+    }
+  ]
+}
