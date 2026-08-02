@@ -63,6 +63,7 @@ remediation 2.5 h later).
 
 **⚠️ PI DECISIONS REQUIRED FIRST (S126 item a)** — package in
 `c4-triage/mismatch-triage-2026-08-02-wave4.json` → `escalations_for_pi`:
+
 1. **E43 coverage artefact (HIGH, LIVE)**: the register's "30 runs ×
    487 tiles" is wrong at era (study ran 240 — every artefact family
    agrees; README repeats it) AND its "T=0.7 dramatically outperforms
