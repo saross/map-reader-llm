@@ -1,9 +1,18 @@
 # Evaluation Tile Set Scopes
 
-**Purpose**: Documents the three test tile sets used across the experimental programme and their nesting relationships. Critical context for interpreting F1 comparisons across project phases and for the paper write-up.
+> **Last revised**: 2026-08-02 (E72 instrument hardening — the 240-tile
+> validation pool registered as §12). See [§ Changelog](#changelog) for
+> revision history.
+
+**Purpose**: Documents the test tile sets used across the experimental programme and their nesting relationships. Critical context for interpreting F1 comparisons across project phases and for the paper write-up.
 
 **Generated**: 2026-04-16 (commit `6d804934`)
 **Verified by**: spatial intersection analysis (zero-tolerance nesting check); see §10 Reproducibility for inputs and operation.
+
+**Document status**: hand-authored living document (the `**Generated**` line
+above is a hand-typed marker, not a generator stamp — attributed as such in
+`reports/verification/apparatus/generator-map.json` rule `hw-evaluation-scopes`).
+Edited in place under the revision policy; there is no source to regenerate from.
 
 ## 1. Executive summary
 
@@ -12,6 +21,13 @@ The project used **three nested test tile sets** across its experimental phases:
 - **Era 1** (pre-H11, H1–H9 retest): **340 × 512 px tiles**, ~1,751 sq km, 539 GT mounds. Scope manifest: `inputs/vectors/bounds/full_evaluation_bounds.geojson`.
 - **Era 2** (H11 tile-size study + PV diagnostic + consensus / N-sweep): **487 × 384 px tiles**, ~1,416 sq km, 435 GT mounds. Scope manifest: `inputs/tiles_384/full_evaluation_manifest.json`.
 - **Era 3** (post-H10 v2, covering H8 v2 / H10 v2 / H12 v2 library-design axis): **327 × 384 px tiles**, ~1,034 sq km, 319 GT mounds. Scope manifest: `inputs/calibration/h10-384/test_manifest.json`.
+
+Two further tile sets exist that are **not** eras and must not be treated as
+one: the **240-tile validation pool** (§12 — a 384 px sub-area of Era 2, covered
+by exactly two study outputs, both temperature deviations) and the **55-map
+generalisation corpus** (§11 — disjoint from the 4-map gold-standard corpus
+entirely). Both carry hard scoring rules; §12's rule is registered as erratum
+E72.
 
 **Strict nesting**: Era 3 ⊂ Era 2 ⊂ Era 1 at zero tolerance — Era 3 area inside Era 2 is 100.000 % (0.00 sq m outside); Era 2 inside Era 1 is 100.000 % (0.00 sq m outside); zero GT mounds are unique to a smaller scope. The nesting is geographic, not merely statistical, so cross-era F1 comparisons can treat the smaller scope as a strict subset of the larger one — with the coverage caveat in §7 below.
 
@@ -119,6 +135,7 @@ pool_020 ⊂ pool_040 ⊂ pool_080 ⊂ pool_160 (20, 40, 80, 160 tiles).
 - **The 80.8 % / 73.0 % / 59.0 % coverage fractions** and the near-identical mound-density ratios mean that cross-era F1 differences attributable purely to scope are expected to be small — but they should still be footnoted in leaderboard tables.
 - **Nesting is zero-tolerance geographic**, not statistical. A mound present in Era 3 is also present (as ground truth) in Era 2 and Era 1; a detection made in Era 3 is scorable against Era 2's GT by construction. This property is what licenses the Era 3 → Era 2 → Era 1 extrapolation used for the 55-map image-generalisation run (Era 2 configuration, trained and calibrated against Era 2 / Era 3 data).
 - **GT-count asymmetry**: Era 3 has 319 mounds (59.2 % of Era 1's 539). Per-buffer detection-rate comparisons across eras should normalise by the scope's GT count; raw TP counts across eras are not interpretable.
+- **Nesting licenses GT comparability, not DATA coverage.** The §3 nesting check is a statement about *bounds* — it says a smaller scope's ground truth is a subset of the larger's. It says nothing about whether a given detection set actually *covers* the bounds it is scored against. Scoring a detection set against bounds it does not cover converts every ground-truth mound on the uncovered tiles into an artificial false negative. This is the E72 failure mode; §12 registers the one tile pool in this project where it occurred, and the rule that prevents a repeat.
 
 ## 8. Paper implications
 
@@ -159,6 +176,9 @@ The nested-scope framework makes cross-era extrapolation **defensible rather tha
 | `inputs/vectors/bounds/384/h10_test_bounds.geojson` | Era 3 bounds (327 tiles, 384 px) |
 | `inputs/calibration/h10-384/test_manifest.json` | Era 3 tile manifest (327 tiles) |
 | `inputs/calibration/h10-384/calibration_bounds_160.geojson` | Era 3 calibration exclusion (160 tiles, pool_160) |
+| `inputs/vectors/bounds/384/validation_bounds.geojson` | 240-tile validation pool bounds (§12; **not an era**) |
+| `inputs/tiles_384/validation_manifest.json` | 240-tile validation pool manifest (§12) |
+| `inputs/tiles_384/tile_selection_metadata.json` | 240-tile validation pool selection provenance (§12) |
 | `inputs/vectors/references/mounds-reference.geojson` | Ground-truth mound reference (569 total mounds across all maps) |
 
 ## 10. Reproducibility
@@ -194,3 +214,156 @@ The 55-map generalisation corpus is a **separate evaluation scope**, disjoint fr
 **Ground-truth quality note**: the 55-map student-GT has position noise empirically quantified at ~25–35 m (4–5 px at 384-px tile scale) — see `results/gold-standard-extended-buffer-sweep/extended-buffer-report.md` §6 for the curve-shift argument. The 4-map curator-GT has materially smaller position noise, visible as the F1-curve plateau at 25 m on the 4-map set vs > 50 m on the 55-map set.
 
 **Paper-citation implication**: any cross-corpus F1 comparison (e.g., "55-map text-HIGH 0.788 at 50 m vs 4-map text-HIGH 0.826 at 50 m") is across **disjoint** sheet sets — so the comparison tests generalisation from calibration sheets (GS) to held-out sheets (55-map), not within-sheet variation.
+
+## 12. The 240-tile validation pool (nested inside Era 2 — NOT an era)
+
+Registered 2026-08-02 as instrument hardening for **erratum E72**
+(`docs/methodology/preregistration/protocol-errata.md` § E72; investigation
+`reports/e43-coverage-confound-remediation-2026-08-02.md`). The pool existed and
+was used from 2026-03-14, but was never listed here — and that omission is
+precisely what let a 240-tile detection set be re-scored against 487-tile bounds
+without anyone noticing a scope change had occurred.
+
+### 12.1 What it is
+
+The 240-tile pool is the **384 px geographic re-projection of the Era-1 60-tile
+validation split**. It is a sub-area of Era 2, not a calibration-controlled
+variant of it.
+
+| Property | Value |
+|----------|-------|
+| Tile size / stride | 384 px / 336 px (the Era 2/3 grid) |
+| Test tiles | **240** |
+| Bounds file | `inputs/vectors/bounds/384/validation_bounds.geojson` (240 features, EPSG:32635) |
+| Tile manifest | `inputs/tiles_384/validation_manifest.json` (240 entries; identical tile set to the bounds file) |
+| Union area | **727.0 sq km** (51.4 % of Era 2's 1,415.8 sq km) |
+| GT mounds inside | **242** (55.6 % of Era 2's 435) |
+| Position in the nesting | 240 ⊂ Era 2 at zero tolerance: **0.00 sq m** outside Era 2, 100.000 % inside |
+| Overlap with Era 3 | 167 of its 240 tiles are also Era 3 test tiles |
+| Calibration content | **Contains 73 of the 160 `pool_160` calibration tiles** — the *opposite* of Era 3's exclusion pattern |
+
+The calibration row is the reason this pool is filed as a sub-area rather than
+as "Era 2 minus calibration": Era 3 shrinks Era 2 by *removing* `pool_160`
+tiles, whereas the 240-tile pool retains 73 of them. It was never constructed as
+a leakage control and must not be read as one.
+
+### 12.2 Provenance
+
+- **Generator**: `scripts/select_tiles_by_area.py` — selects tiles from a new
+  tiling grid whose geographic extent overlaps a reference tile set, built for
+  **tile-size comparability** (fair 512 px vs 384 px comparison over the same
+  ground), not for calibration control.
+- **Selection record**: `inputs/tiles_384/tile_selection_metadata.json` —
+  created `2026-03-14T05:30:06Z`; `selection_method: geographic_overlap`;
+  `min_overlap: 0.1`; `reference_tiles: 60`; `total_new_tiles: 611`;
+  `selected_tiles: 240`. Per map: K-35-052-4 = 65, K-35-053-3 (Elenovo) = 57,
+  K-35-062-2 (Rakovski) = 59, K-35-078-1 (Lesovo) = 59.
+- **Era 2 bounds did not yet exist** when the pool was built: the 487-tile 384 px
+  bounds were first committed `8b52ab63b` (2026-03-22), eight days later. The
+  pool is not a reduction of Era 2; Era 2 is a later expansion past it.
+
+### 12.3 Study outputs covered by this pool (exhaustive)
+
+Exactly **two** study outputs have detection data at 240-tile coverage. Both are
+temperature deviations, and neither is a published result:
+
+| Study output | Passes × tiles | Erratum |
+|---|---|---|
+| `outputs/h11/consensus-384-UNINTENDED-T1.0/` | 30 × 240 | E43 (T=1.0 instead of T=0.7) |
+| `archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/` | 10 × 240 | E44 (T=1.0 instead of T=0.0) |
+
+Verified by sweeping the `processed_tiles` record of every non-FP/FN detection
+GeoJSON under `outputs/` and `archive/` (1,365 files, 16 without a
+`processed_tiles` record): 40 files report exactly 240 processed tiles, and all
+40 lie in those two directories. No third 240-coverage study exists.
+
+Execution matched design in both cases — 240/240 tiles, zero failed tiles. This
+is a **scope difference, not a coverage failure**: the runs did exactly what
+their study YAML asked for.
+
+### 12.4 The scoring rule (E72)
+
+> **Detections from a 240-scope study MUST NOT be scored against 487-tile
+> (Era 2) bounds.** There is no exception, including "for consistency with the
+> other cells" — that framing is exactly how E72 happened.
+
+Rationale: the 247 Era-2 tiles absent from the pool hold **193 of Era 2's 435
+ground-truth mounds**. Scoring 240-tile data against 487-tile bounds converts
+all 193 into artificial false negatives and caps recall at 242/435 = **0.556**,
+before any model behaviour is measured. The measured cost in the E72 case was a
+spurious ΔF1 of **+0.168 … +0.194** attributed to temperature; at matched scope
+the same comparison gives **−0.034 … +0.039**, nothing significant
+(`results/e43-matched-temperature/findings.md`).
+
+**What IS valid**:
+
+- **Within-240 comparisons** — two conditions both scored against
+  `validation_bounds.geojson` share a scope and are directly comparable. The
+  archived matched pair at
+  `archive/results-60-tile-validation/h11-384-consensus-flash-minimal-text-t{07,10}/`
+  is the worked example.
+- **Cross-scope comparisons where BOTH arms are re-scored to the smaller
+  scope** — the bounds must shrink symmetrically for both arms. If only one
+  arm's *data* shrinks while the bounds stay large, the design is broken by
+  construction.
+
+**The structural tell to check before any cross-study comparison**: in a
+legitimate scope reduction the BOUNDS change for both arms. If you find yourself
+holding bounds fixed while one arm's data covers less ground, stop.
+
+**Replacement analysis**: any question about T=0.7 vs T=1.0 at 384 px should
+cite `results/e43-matched-temperature/` (matched 487-tile arms, both buffers,
+10,000 permutations) or the preregistered Phase 2b sweep
+(`results/retest/phase2b/analysis_summary.md`), never the 240-scope study.
+
+### 12.5 Instrument backstop
+
+Registration alone is a documentation control. The mechanical backstop landed
+with this section: the sparse-coverage guard in
+`scripts/lib_advanced_metrics.py` now counts unprocessed tiles **directly** from
+a detection set's `processed_tiles` record against the evaluation bounds, and
+flags `coverage_status = "partial_coverage"` independent of the zero-detection
+heuristic that E72 slipped under (`zero_fraction` 0.4641 against a 0.5
+threshold — mound-bearing unprocessed tiles yield false negatives, not zeros, so
+the heuristic cannot see them). Per-pass detection GeoJSONs carry
+`processed_tiles`; consensus artefacts do not, so those still fall back to the
+heuristic and the rule in §12.4 remains the primary control there.
+
+## Changelog
+
+### 2026-08-02 — 240-tile validation pool registered (E72 instrument hardening)
+
+**Trigger**: erratum E72 — a 240-tile detection set was re-scored against
+487-tile bounds during the 2026-03-26 bounds standardisation and the resulting
+coverage artefact was read as a temperature effect. Remediation item R3.5
+(`reports/e43-coverage-confound-remediation-2026-08-02.md` § 5) requires the
+pool to be registered here.
+
+| Claim | Before | After |
+|---|---|---|
+| Tile sets documented | 3 eras + the 55-map corpus | + the 240-tile validation pool (§12) |
+| 240-tile pool | absent from this document | registered with bounds, manifest, provenance, exhaustive study list, and a hard scoring rule |
+| §7 caveats | nesting caveats only | + an explicit "nesting licenses GT comparability, not DATA coverage" caveat |
+| §9 files manifest | 8 scope-defining inputs | 11 (the three 240-pool inputs added) |
+
+What did NOT change: every Era 1 / Era 2 / Era 3 figure, the §3 nesting
+verification, the §4 coverage fractions, the §8 paper implications, and §11. The
+240-tile pool is nested inside Era 2 (0.00 sq m outside, verified for this
+revision), so no existing nesting claim is disturbed.
+
+**Figures re-derived for this revision** (GeoPandas 1.1.3, EPSG:32635, the §10
+operation applied to `validation_bounds.geojson`): 240 features; union area
+727.0 sq km; 242 GT mounds by `within` sjoin against
+`inputs/vectors/references/mounds-reference.geojson`; 100.000 % inside Era 2;
+73 tiles shared with `inputs/calibration/h10-384/calibration_manifest_160.json`;
+167 shared with `inputs/calibration/h10-384/test_manifest.json`.
+
+### 2026-04-16 — Original publication
+
+Introduced at commit `6d804934` documenting the three nested test tile sets
+(Era 1 = 340 × 512 px, Era 2 = 487 × 384 px, Era 3 = 327 × 384 px), their
+zero-tolerance geographic nesting, coverage fractions, calibration-exclusion
+rationale, per-era hypothesis assignment, cross-era comparability caveats, paper
+implications, files manifest, and the re-verification operation (§10). §11 (the
+disjoint 55-map generalisation scope) was added later in the document's life;
+this document has no generator and is edited in place.
