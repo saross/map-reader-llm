@@ -61,7 +61,44 @@ snapshot-divergences dated to the second (E47's 253 written NINE
 SECONDS before the C(23,2) manifest; E71 superseded by its own
 remediation 2.5 h later).
 
-**⚠️ PI DECISIONS REQUIRED FIRST (S126 item a)** — package in
+**✅ E43 ESCALATION RESOLVED IN-SESSION (S125 tail, PI interactive)**:
+Shawn commissioned the investigation, approved the remediation
+(option (a) drop-cells board regeneration + first-class matched
+filing), and the FULL arc landed — commits `7035b19db`→`17079d94f`
+(10 commits, $0 API): two blind investigation passes (verdict:
+coverage accident, NOT a calibration-subset design — the 240-tile set
+is the 384 px Era-1 validation re-projection and even contains 73
+pool_160 tiles); matched permutation tests
+(`results/e43-matched-temperature/`, no significant temperature
+difference, sign reversed); register remediation (E43 correction
+block, E72, E73, E71 rider — append-only house style); matched cells
+filed at 14-buf+MCC as analysis `e43-matched-temperature` (analyses
+20→21; zero new conditions — the four cells were already first-class,
+reproduced to 1e-9); 23-condition board regeneration
+(`results/e43-board-regen/`, BH recomputed, banners on six snapshots,
+three living docs corrected); instrument hardening (240-scope
+registered in evaluation-scopes; coverage guard counts unprocessed
+tiles directly; 35 conditions caveated; verifier n_tiles nulled with
+reason; generator 0.6.0→0.7.0); **Obs 384** (`17079d94f`) supersedes
+the Obs 191 claim (mis-cited as Obs 190 — locator corrected by the
+writer's blind pass). Tier-1 **1334/0**.
+
+**🚩 TWO NEW RESEARCH FLAGS FOR THE PAPER (from the remediation)**:
+(1) **MCC separates where F1 does not, favouring T=1.0** (ΔMCC −0.092
+N=5 / −0.050 N=10, non-overlapping BCa CIs; the gap is entirely
+FP-tile specificity; unpaired — a paired MCC permutation test is the
+natural optional follow-up). (2) **The March 20 m board's solitary
+Tier 1 dissolved on family-size alone** (leader-vs-runner-up q
+0.0488→0.0503 when the family shrank 325→253; nothing about either
+condition changed) — any distinguishable-from-runner-up claim on that
+board is family-size dependent; the 30 m board already said tied.
+(3) **Obs 209 firewall breach** (Obs 384 bonus finding): Obs 209
+attributes ΔF1 −0.17 to the preregistered Phase 2b — actually the
+confounded consensus magnitude; Phase 2b is +0.072 text / +0.014
+image. THE PAPER MUST NOT INHERIT −0.17-as-Phase-2b.
+
+**Remaining PI decisions (S126)** — the wave-4 package items NOT
+covered by the E43 arc, in
 `c4-triage/mismatch-triage-2026-08-02-wave4.json` → `escalations_for_pi`:
 
 1. **E43 coverage artefact (HIGH, LIVE)**: the register's "30 runs ×
