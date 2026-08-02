@@ -65,35 +65,164 @@ BOOTSTRAP_LIB: str = "scipy.stats.bootstrap"
 # case (~75 %), giving a clean separation in both directions. A strict ``>``
 # boundary (not ``>=``) is used so that the threshold is the maximum
 # acceptable coverage gap, not the minimum trigger.
+#
+# E72 hardening (2026-08-02) --------------------------------------------
+#
+# The zero-fraction heuristic above is an INFERENCE about coverage, and it
+# has a blind spot that cost the project a false finding. A tile that was
+# never processed but *does* contain ground-truth mounds contributes false
+# negatives, not zeros — so it raises the FN count instead of the zero
+# count, and the heuristic cannot see it. The E43/E72 case scored a
+# 240-tile detection set against 487-tile bounds: 247 unprocessed tiles,
+# 193 ground-truth mounds turned into artificial false negatives, and a
+# ``zero_fraction`` of 0.4641 that slipped under the 0.5 threshold. The
+# resulting +0.17 "temperature effect" was a coverage artefact
+# (``docs/methodology/preregistration/protocol-errata.md`` § E72).
+#
+# The fix is to stop inferring. When the caller can supply the detection
+# set's own record of which tiles it processed (the ``processed_tiles``
+# array that ``scripts/4_detect_mounds_batch.py`` writes into every
+# per-pass detection GeoJSON), coverage is COUNTED against the evaluation
+# bounds rather than guessed from detection density, and any shortfall is
+# flagged as ``partial_coverage`` regardless of what the zero-fraction
+# says. The heuristic remains the fallback for detection sets that carry
+# no ``processed_tiles`` record — notably consensus/voting artefacts,
+# which are written by the aggregation step and do not preserve it.
 DEFAULT_COVERAGE_THRESHOLD: float = 0.5
 COVERAGE_STATUS_NORMAL: str = "normal"
 COVERAGE_STATUS_SPARSE: str = "sparse_cross_grid"
+COVERAGE_STATUS_PARTIAL: str = "partial_coverage"
+
+#: How ``coverage_status`` was decided — direct evidence or inference.
+COVERAGE_SOURCE_PROCESSED_TILES: str = "processed_tiles"
+COVERAGE_SOURCE_HEURISTIC: str = "zero_fraction_heuristic"
+
+
+def read_processed_tiles(source: Path | str | dict) -> set[str] | None:
+    """Read a detection set's ``processed_tiles`` record, if it has one.
+
+    Every per-pass detection GeoJSON written by
+    ``scripts/4_detect_mounds_batch.py`` (and its Batch-API sibling in
+    ``scripts/lib_batch_api.py``) carries a top-level ``processed_tiles``
+    array listing the tile filenames the pass actually completed. That
+    array is the authoritative coverage record for the pass — the audit
+    charter's authority #1 for tile coverage — and is what
+    :func:`_compute_coverage` needs in order to count unprocessed tiles
+    instead of inferring them (E72).
+
+    Aggregation artefacts (``consensus_tN.geojson``, WBF/greedy fusions,
+    verified outputs) are written by a different code path and do **not**
+    preserve the array; this function returns ``None`` for them, which is
+    the signal to fall back to the zero-fraction heuristic.
+
+    Args:
+        source: Path to a detection GeoJSON, or an already-parsed GeoJSON
+            ``dict``. Passing the parsed dict avoids a second read when
+            the caller has already loaded the file.
+
+    Returns:
+        A set of processed tile filenames, or ``None`` when the source
+        carries no ``processed_tiles`` record (absent key, unreadable
+        file, or malformed JSON). ``None`` means "no coverage evidence",
+        which is deliberately distinct from an empty set (which would
+        mean "evidence that nothing was processed").
+
+    Example:
+        >>> tiles = read_processed_tiles(  # doctest: +SKIP
+        ...     Path("outputs/h11/consensus-384-UNINTENDED-T1.0/384/"
+        ...          "run_1/detections_384_run01.geojson")
+        ... )
+        >>> len(tiles)  # doctest: +SKIP
+        240
+    """
+    if isinstance(source, dict):
+        payload: Any = source
+    else:
+        path = Path(source)
+        try:
+            with path.open(encoding="utf-8") as handle:
+                payload = json.load(handle)
+        except (OSError, json.JSONDecodeError) as exc:
+            # A missing or malformed file is "no evidence", not an error:
+            # the caller's fallback (the heuristic) is still correct, and
+            # raising here would break evaluation of legitimately older
+            # artefacts. Log so the silence is visible.
+            logger.warning(
+                "Could not read processed_tiles from %s: %s", source, exc,
+            )
+            return None
+
+    if not isinstance(payload, dict):
+        return None
+    processed = payload.get("processed_tiles")
+    if processed is None or not isinstance(processed, (list, tuple, set)):
+        return None
+    return {str(tile) for tile in processed}
 
 
 def _compute_coverage(
     tile_metrics: pd.DataFrame,
     threshold: float = DEFAULT_COVERAGE_THRESHOLD,
+    processed_tiles: set[str] | None = None,
 ) -> dict[str, Any]:
-    """Compute Mitigation 3 sparse-coverage diagnostics for a tile-metrics frame.
+    """Compute sparse- and partial-coverage diagnostics for a tile-metrics frame.
 
-    Counts the fraction of tiles in the evaluation bounds with zero TP, FP,
-    and FN counts. When the fraction strictly exceeds ``threshold`` the
-    coverage is flagged as ``sparse_cross_grid`` — bootstrap CIs over such
-    distributions are unreliable and should be suppressed in human-readable
-    outputs. The numeric CI bounds are still computed and returned in the
-    JSON output for downstream consumers that opt to read them.
+    Two independent checks, in priority order:
+
+    1. **Partial coverage (E72, direct evidence)** — when ``processed_tiles``
+       is supplied, the evaluation-bounds tiles absent from it are counted
+       directly. Any shortfall sets ``coverage_status`` to
+       ``"partial_coverage"``: the detection set does not cover the bounds
+       it is being scored against, so every ground-truth mound on an
+       unprocessed tile is an artificial false negative. This check does
+       not consult the zero-fraction at all.
+    2. **Sparse coverage (Mitigation 3, inference)** — the fraction of
+       tiles with zero TP, FP, and FN counts. When it strictly exceeds
+       ``threshold`` the coverage is flagged ``sparse_cross_grid``:
+       bootstrap CIs over such distributions are unreliable and should be
+       suppressed in human-readable outputs. The numeric CI bounds are
+       still computed and returned in the JSON output for downstream
+       consumers that opt to read them.
+
+    Check 1 is authoritative where it applies because it counts rather
+    than infers; check 2 is the fallback for detection sets with no
+    ``processed_tiles`` record. Behaviour is unchanged from the pre-E72
+    implementation whenever ``processed_tiles`` is ``None`` (no evidence)
+    or complete (full coverage) — the hardening is purely additive.
 
     Args:
         tile_metrics: DataFrame with columns ``[tile_name, tp, fp, fn]``,
-            as returned by :func:`compute_per_tile_tp_fp_fn`.
+            as returned by :func:`compute_per_tile_tp_fp_fn`. Its
+            ``tile_name`` column is one row per evaluation-bounds tile,
+            which is what the partial-coverage check counts against.
         threshold: Zero-fraction threshold above which coverage is sparse.
             Defaults to :data:`DEFAULT_COVERAGE_THRESHOLD` (0.5). Strict
             ``>`` boundary semantics.
+        processed_tiles: Optional set of tile filenames the detection set
+            actually processed, from :func:`read_processed_tiles`. ``None``
+            (the default) means no coverage evidence is available and only
+            the zero-fraction heuristic runs.
 
     Returns:
         Dict with keys ``n_tiles``, ``n_zero_count_tiles``,
-        ``zero_fraction`` (all ints/floats), ``threshold`` (float), and
-        ``coverage_status`` (``"normal"`` or ``"sparse_cross_grid"``).
+        ``zero_fraction``, ``threshold``, ``coverage_status``
+        (``"normal"``, ``"sparse_cross_grid"``, or ``"partial_coverage"``),
+        ``coverage_source`` (``"processed_tiles"`` or
+        ``"zero_fraction_heuristic"``), ``n_processed_tiles`` and
+        ``n_unprocessed_tiles`` (``None`` under the heuristic), and
+        ``coverage_detail`` — a human-readable string such as
+        ``"partial: 247/487 tiles unprocessed"``, or ``None`` when
+        coverage is not partial.
+
+    Example:
+        >>> import pandas as pd
+        >>> frame = pd.DataFrame(
+        ...     [{"tile_name": f"t{i}", "tp": 1, "fp": 0, "fn": 0}
+        ...      for i in range(4)]
+        ... )
+        >>> cov = _compute_coverage(frame, processed_tiles={"t0", "t1"})
+        >>> cov["coverage_status"], cov["coverage_detail"]
+        ('partial_coverage', 'partial: 2/4 tiles unprocessed')
     """
     n_tiles = len(tile_metrics)
     if n_tiles == 0:
@@ -103,6 +232,14 @@ def _compute_coverage(
             "zero_fraction": 0.0,
             "threshold": float(threshold),
             "coverage_status": COVERAGE_STATUS_NORMAL,
+            "coverage_source": (
+                COVERAGE_SOURCE_PROCESSED_TILES
+                if processed_tiles is not None
+                else COVERAGE_SOURCE_HEURISTIC
+            ),
+            "n_processed_tiles": None,
+            "n_unprocessed_tiles": None,
+            "coverage_detail": None,
         }
 
     total_per_tile = (
@@ -117,14 +254,45 @@ def _compute_coverage(
     # the threshold the maximum acceptable coverage gap rather than the
     # minimum trigger.
     is_sparse = zero_fraction > threshold
+
+    # Direct coverage count (E72). ``tile_metrics`` carries one row per
+    # evaluation-bounds tile (``compute_per_tile_tp_fp_fn`` seeds its
+    # counter from every bounds row), so the bounds tile set is exactly
+    # this column and the set difference is the unprocessed tile count.
+    n_processed: int | None = None
+    n_unprocessed: int | None = None
+    detail: str | None = None
+    if processed_tiles is not None:
+        bounds_tiles = set(tile_metrics["tile_name"].astype(str))
+        unprocessed = bounds_tiles - processed_tiles
+        n_unprocessed = len(unprocessed)
+        n_processed = len(bounds_tiles) - n_unprocessed
+        if n_unprocessed:
+            detail = f"partial: {n_unprocessed}/{n_tiles} tiles unprocessed"
+
+    if n_unprocessed:
+        # Direct evidence of a coverage gap outranks the heuristic: the
+        # E72 set would read "normal" on zero-fraction alone (0.4641).
+        status = COVERAGE_STATUS_PARTIAL
+    elif is_sparse:
+        status = COVERAGE_STATUS_SPARSE
+    else:
+        status = COVERAGE_STATUS_NORMAL
+
     return {
         "n_tiles": int(n_tiles),
         "n_zero_count_tiles": n_zero,
         "zero_fraction": float(zero_fraction),
         "threshold": float(threshold),
-        "coverage_status": (
-            COVERAGE_STATUS_SPARSE if is_sparse else COVERAGE_STATUS_NORMAL
+        "coverage_status": status,
+        "coverage_source": (
+            COVERAGE_SOURCE_PROCESSED_TILES
+            if processed_tiles is not None
+            else COVERAGE_SOURCE_HEURISTIC
         ),
+        "n_processed_tiles": n_processed,
+        "n_unprocessed_tiles": n_unprocessed,
+        "coverage_detail": detail,
     }
 
 
@@ -1024,6 +1192,7 @@ def bootstrap_ci(
     random_seed: int | None = None,
     buffer_metres: int = 20,
     coverage_threshold: float = DEFAULT_COVERAGE_THRESHOLD,
+    processed_tiles: set[str] | None = None,
 ) -> dict:
     """
     BCa bootstrap 95 % confidence intervals for precision, recall, and F1.
@@ -1044,7 +1213,9 @@ def bootstrap_ci(
     * **Coverage check**: Mitigation 3 (sparse-coverage transparency).
       Counts tiles with TP+FP+FN == 0; flags ``coverage_status =
       "sparse_cross_grid"`` when the zero-fraction strictly exceeds
-      ``coverage_threshold`` (default 0.5).
+      ``coverage_threshold`` (default 0.5). When ``processed_tiles`` is
+      supplied, a direct unprocessed-tile count takes priority and flags
+      ``coverage_status = "partial_coverage"`` instead (E72).
 
     Returned dict preserves the legacy ``f1.ci_lower`` / ``f1.ci_upper``
     schema so downstream consumers do not break. New fields:
@@ -1068,6 +1239,13 @@ def bootstrap_ci(
         coverage_threshold: Zero-fraction threshold for the sparse-coverage
             flag. Strict ``>`` semantics. Defaults to
             :data:`DEFAULT_COVERAGE_THRESHOLD` (0.5).
+        processed_tiles: Optional set of tile filenames the detection set
+            actually processed, typically obtained from
+            :func:`read_processed_tiles` on the detection GeoJSON. When
+            supplied, unprocessed tiles are counted directly against the
+            evaluation bounds rather than inferred from detection density
+            (E72). ``None`` (the default) preserves the pre-E72 behaviour
+            exactly.
 
     Returns:
         Bootstrap results with BCa CIs for F1, precision, and recall plus
@@ -1134,7 +1312,11 @@ def bootstrap_ci(
         gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_metres,
     )
 
-    coverage = _compute_coverage(tile_metrics, threshold=coverage_threshold)
+    coverage = _compute_coverage(
+        tile_metrics,
+        threshold=coverage_threshold,
+        processed_tiles=processed_tiles,
+    )
 
     return {
         "f1": {

@@ -60,12 +60,43 @@ import yaml
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from scripts.lib_advanced_metrics import (  # noqa: E402
+    COVERAGE_STATUS_NORMAL,
+    COVERAGE_STATUS_PARTIAL,
+    COVERAGE_STATUS_SPARSE,
     DEFAULT_CRS,
     bootstrap_ci,
     bootstrap_tile_classification_ci,
     calculate_f1_internal,
     calculate_tile_classification,
+    read_processed_tiles,
 )
+
+#: Coverage statuses ordered worst-last, for the "worst case wins" rollups
+#: across buffers and across runs. ``partial_coverage`` (E72 — the detection
+#: set does not cover the bounds it is scored against) outranks
+#: ``sparse_cross_grid`` (the CIs are shaky) because it invalidates the
+#: point estimate itself, not just its interval.
+_COVERAGE_SEVERITY: dict[str, int] = {
+    COVERAGE_STATUS_NORMAL: 0,
+    COVERAGE_STATUS_SPARSE: 1,
+    COVERAGE_STATUS_PARTIAL: 2,
+}
+
+
+def _worst_coverage_status(statuses: list[str]) -> str:
+    """Return the most severe coverage status in ``statuses``.
+
+    Args:
+        statuses: Coverage-status strings. Unrecognised values are treated
+            as ``"normal"`` so an unexpected label can never mask a real
+            flag by sorting above it.
+
+    Returns:
+        The most severe status present, or ``"normal"`` for an empty list.
+    """
+    if not statuses:
+        return COVERAGE_STATUS_NORMAL
+    return max(statuses, key=lambda s: _COVERAGE_SEVERITY.get(s, 0))
 
 logging.basicConfig(
     level=logging.INFO,
@@ -358,6 +389,7 @@ def evaluate_single_run(
     seed: int = DEFAULT_SEED,
     label: str = "",
     compute_mcc: bool = False,
+    processed_tiles: set[str] | None = None,
 ) -> dict:
     """Evaluate a single detection run at multiple buffer distances.
 
@@ -371,6 +403,11 @@ def evaluate_single_run(
         label: Human-readable label for this run.
         compute_mcc: If True, also compute tile-level MCC, sensitivity,
             and specificity with bootstrap CIs.
+        processed_tiles: Optional set of tile filenames the detection set
+            actually processed (E72). When supplied, unprocessed tiles are
+            counted directly against the evaluation bounds and a shortfall
+            flags ``coverage_status = "partial_coverage"``. ``None``
+            preserves the pre-E72 zero-fraction-only behaviour.
 
     Returns:
         Dict with metadata and per-buffer results including F1, P, R
@@ -400,6 +437,7 @@ def evaluate_single_run(
             n_iterations=n_bootstrap,
             random_seed=seed,
             buffer_metres=buffer_m,
+            processed_tiles=processed_tiles,
         )
 
         # Mitigation 3 (sparse-coverage transparency): surface the coverage
@@ -407,9 +445,20 @@ def evaluate_single_run(
         # numerically-misleading CIs while keeping the JSON copy intact for
         # downstream tooling. ``coverage_status`` is the canonical
         # human-readable flag; ``ci`` retains all numeric bounds.
+        #
+        # E72: ``partial_coverage`` also sets ``ci_unreliable``. A detection
+        # set that does not cover its evaluation bounds produces artificial
+        # false negatives on every unprocessed mound-bearing tile, so both
+        # the interval AND the point estimate are untrustworthy — flagging
+        # is strictly more conservative than the pre-E72 behaviour, which
+        # could not detect this case at all.
         coverage = ci.get("coverage", {})
-        coverage_status = coverage.get("coverage_status", "normal")
-        ci_unreliable = coverage_status == "sparse_cross_grid"
+        coverage_status = coverage.get(
+            "coverage_status", COVERAGE_STATUS_NORMAL,
+        )
+        ci_unreliable = coverage_status in (
+            COVERAGE_STATUS_SPARSE, COVERAGE_STATUS_PARTIAL,
+        )
         buffer_results.append({
             "buffer_metres": buffer_m,
             "f1": round(f1, 4),
@@ -440,8 +489,13 @@ def evaluate_single_run(
             ci["precision"]["ci_upper"],
             recall, ci["recall"]["ci_lower"], ci["recall"]["ci_upper"],
             (
-                f" [sparse coverage: {coverage.get('zero_fraction', 0):.1%} zero-tiles]"
-                if ci_unreliable else ""
+                f" [{coverage.get('coverage_detail')}]"
+                if coverage.get("coverage_detail")
+                else (
+                    f" [sparse coverage: "
+                    f"{coverage.get('zero_fraction', 0):.1%} zero-tiles]"
+                    if ci_unreliable else ""
+                )
             ),
         )
 
@@ -454,9 +508,10 @@ def evaluate_single_run(
     cell_ci_unreliable = any(
         buf.get("ci_unreliable", False) for buf in buffer_results
     )
-    cell_coverage_status = (
-        "sparse_cross_grid" if cell_ci_unreliable else "normal"
-    )
+    cell_coverage_status = _worst_coverage_status([
+        buf.get("coverage_status", COVERAGE_STATUS_NORMAL)
+        for buf in buffer_results
+    ])
 
     result = {
         "label": label,
@@ -621,14 +676,13 @@ def evaluate_multi_run_mean(
         # the aggregate, mirroring how single-run cells flag the
         # whole cell when any buffer is unreliable.
         coverage_statuses = [
-            e.get("coverage_status", "normal") for e in entries
+            e.get("coverage_status", COVERAGE_STATUS_NORMAL)
+            for e in entries
         ]
-        any_sparse = any(
-            cs == "sparse_cross_grid" for cs in coverage_statuses
-        )
-        avg["coverage_status"] = (
-            "sparse_cross_grid" if any_sparse else "normal"
-        )
+        # Worst case wins (E72 added a third, more severe status —
+        # ``partial_coverage`` — so the rollup ranks rather than tests a
+        # single literal).
+        avg["coverage_status"] = _worst_coverage_status(coverage_statuses)
         avg["ci_unreliable"] = any(
             bool(e.get("ci_unreliable", False)) for e in entries
         )
@@ -682,9 +736,10 @@ def evaluate_multi_run_mean(
     cell_ci_unreliable = any(
         bool(buf.get("ci_unreliable", False)) for buf in avg_buffers
     )
-    cell_coverage_status = (
-        "sparse_cross_grid" if cell_ci_unreliable else "normal"
-    )
+    cell_coverage_status = _worst_coverage_status([
+        buf.get("coverage_status", COVERAGE_STATUS_NORMAL)
+        for buf in avg_buffers
+    ])
 
     result: dict[str, Any] = {
         "label": label,
@@ -818,6 +873,10 @@ def write_outputs(
         fieldnames.extend([
             "coverage_status", "ci_unreliable",
             "ci_zero_fraction", "ci_n_tiles",
+            # E72: how the status was decided, and the direct count that
+            # decided it. A consumer reading only ``ci_zero_fraction``
+            # cannot distinguish "well covered" from "never checked".
+            "coverage_source", "n_unprocessed_tiles",
         ])
     with open(csv_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
@@ -841,11 +900,16 @@ def write_outputs(
                 cov = buf.get("coverage", {}) or {}
                 row.update({
                     "coverage_status": buf.get(
-                        "coverage_status", "normal",
+                        "coverage_status", COVERAGE_STATUS_NORMAL,
                     ),
                     "ci_unreliable": bool(buf.get("ci_unreliable", False)),
                     "ci_zero_fraction": cov.get("zero_fraction", 0.0),
                     "ci_n_tiles": cov.get("n_tiles", 0),
+                    "coverage_source": cov.get("coverage_source", ""),
+                    "n_unprocessed_tiles": (
+                        "" if cov.get("n_unprocessed_tiles") is None
+                        else cov["n_unprocessed_tiles"]
+                    ),
                 })
             writer.writerow({k: row.get(k, "") for k in fieldnames})
     logger.info("CSV written: %s", csv_path)
@@ -918,8 +982,37 @@ def write_outputs(
             else:
                 f.write(row_body + "|\n")
 
-        # Footnote: only emit when at least one row is suppressed.
-        if any_sparse:
+        # Footnote: only emit when at least one row is suppressed. Partial
+        # coverage (E72) and sparse coverage are different diagnoses and get
+        # different footnotes — writing the sparse text over a partial cell
+        # would misdescribe the defect (and, worse, imply the point estimate
+        # is sound when it is not).
+        partial_buffers = [
+            buf for buf in results["buffers"]
+            if buf.get("coverage_status") == COVERAGE_STATUS_PARTIAL
+        ]
+        # ``coverage_detail`` is present on single-run buffer entries but
+        # not on the averaged entries produced by
+        # ``evaluate_multi_run_mean``, which roll up the status only — so
+        # the status is the trigger and the detail is best-effort.
+        partial_details = sorted({
+            detail for buf in partial_buffers
+            if (detail := (buf.get("coverage") or {}).get("coverage_detail"))
+        }) or ["tile-level detail not retained in this aggregation"]
+        if partial_buffers:
+            f.write(
+                "\n\\* **Partial coverage** — the detection set does not "
+                "cover the evaluation bounds it is scored against "
+                f"({'; '.join(partial_details)}). Ground-truth "
+                "mounds on unprocessed tiles are counted as artificial "
+                "false negatives, so the POINT ESTIMATE is deflated as well "
+                "as the interval; neither is comparable with a full-coverage "
+                "cell. Re-score both arms against bounds the data actually "
+                "covers. See erratum E72 in "
+                "`docs/methodology/preregistration/protocol-errata.md` and "
+                "`results/evaluation-scopes.md` § 12.\n",
+            )
+        elif any_sparse:
             zero_pcts = [
                 f"{buf.get('coverage', {}).get('zero_fraction', 0):.1%}"
                 for buf in results["buffers"]
@@ -1319,6 +1412,22 @@ def _evaluate_condition(
         logger.info("Evaluating: %s", det_path.name)
         gdf_det = load_geojson(det_path)
 
+        # E72 coverage guard: per-pass detection GeoJSONs carry a
+        # top-level ``processed_tiles`` array recording exactly which
+        # tiles the pass completed. Reading it here lets the coverage
+        # check COUNT unprocessed tiles against the evaluation bounds
+        # instead of inferring coverage from detection density — the
+        # inference that E43/E72 slipped under (240/487 tiles covered,
+        # zero_fraction 0.4641 against a 0.5 threshold). Aggregation
+        # artefacts (consensus/WBF/verified) do not preserve the array,
+        # so they get ``None`` and fall back to the heuristic.
+        processed_tiles = read_processed_tiles(det_path)
+        if processed_tiles is None:
+            logger.debug(
+                "No processed_tiles record in %s — coverage falls back to "
+                "the zero-fraction heuristic", det_path.name,
+            )
+
         # Add source_tile column if missing (required by bootstrap)
         if "source_tile" not in gdf_det.columns and not gdf_det.empty:
             joined = gpd.sjoin(
@@ -1340,6 +1449,7 @@ def _evaluate_condition(
             seed=seed,
             label=run_label,
             compute_mcc=compute_mcc,
+            processed_tiles=processed_tiles,
         )
         run_results.append(result)
 

@@ -36,6 +36,7 @@ beyond ``tmp_path`` fixtures.
 
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -51,13 +52,17 @@ sys.path.insert(0, str(PROJECT_ROOT))
 from scripts.lib_advanced_metrics import (  # noqa: E402
     BOOTSTRAP_LIB,
     BOOTSTRAP_METHOD,
+    COVERAGE_SOURCE_HEURISTIC,
+    COVERAGE_SOURCE_PROCESSED_TILES,
     COVERAGE_STATUS_NORMAL,
+    COVERAGE_STATUS_PARTIAL,
     COVERAGE_STATUS_SPARSE,
     DEFAULT_COVERAGE_THRESHOLD,
     _bca_ci_from_indices,
     _compute_bca_ci,
     _compute_coverage,
     bootstrap_ci,
+    read_processed_tiles,
     calculate_f1_internal,
 )
 
@@ -250,6 +255,299 @@ class TestComputeCoverage:
     def test_default_threshold_constant(self) -> None:
         """The module-level default threshold matches the 0.5 contract."""
         assert DEFAULT_COVERAGE_THRESHOLD == pytest.approx(0.5)
+
+
+# =========================================================================
+# E72 PARTIAL-COVERAGE TESTS
+# =========================================================================
+
+
+def _e72_shaped_tile_metrics() -> tuple[pd.DataFrame, set[str]]:
+    """Reproduce the E72 defect's numbers in miniature.
+
+    The real case: a detection set covering 240 tiles was scored against
+    487-tile Era 2 bounds. The 247 unprocessed tiles held 193 ground-truth
+    mounds, which entered the score as artificial false negatives — so
+    they raised the FN count rather than the zero count, and the resulting
+    ``zero_fraction`` of 0.4641 slipped under the 0.5 sparse threshold.
+
+    This fixture reproduces that shape exactly: 487 bounds tiles, 240
+    processed, 226 zero-count tiles (0.4641 zero-fraction, matching the
+    recorded diagnostic), and unprocessed-but-mound-bearing tiles carrying
+    FN counts. The point is that the zero-fraction heuristic ALONE returns
+    ``normal`` on this frame.
+
+    Returns:
+        Tuple of (tile_metrics frame over all 487 bounds tiles, the set of
+        240 processed tile names).
+    """
+    n_bounds = 487
+    n_processed = 240
+    # 0.4641 * 487 = 226.0 (the recorded zero_fraction, to 4 d.p.)
+    n_zero = 226
+
+    processed = {f"tile_{i:04d}.png" for i in range(n_processed)}
+    rows = []
+    for i in range(n_bounds):
+        name = f"tile_{i:04d}.png"
+        if i < n_zero:
+            # Zero-count tiles: no detection, no reference.
+            rows.append({"tile_name": name, "tp": 0, "fp": 0, "fn": 0})
+        elif name in processed:
+            # Processed tiles that found something.
+            rows.append({"tile_name": name, "tp": 1, "fp": 0, "fn": 0})
+        else:
+            # Unprocessed tiles holding ground truth: pure false
+            # negatives. These are exactly what the zero-count heuristic
+            # cannot see.
+            rows.append({"tile_name": name, "tp": 0, "fp": 0, "fn": 1})
+    return pd.DataFrame(rows), processed
+
+
+@pytest.mark.tier1
+class TestPartialCoverageGuard:
+    """E72 hardening: coverage counted from ``processed_tiles``.
+
+    Three behaviours are pinned:
+
+    1. **Full coverage stays normal** — the additive change must not
+       reclassify any existing full-coverage evaluation.
+    2. **Partial coverage is caught** — the E72 240/487 shape must flag,
+       even though its zero-fraction sits under the threshold.
+    3. **Fallback is preserved** — with no ``processed_tiles`` evidence,
+       the zero-fraction heuristic behaves exactly as before.
+    """
+
+    # -- 1. full coverage ------------------------------------------------
+
+    def test_full_coverage_is_normal(self) -> None:
+        """Every bounds tile processed => ``normal``, zero unprocessed."""
+        tile_metrics = _make_tile_metrics(n_tiles=20, n_zero_tiles=4)
+        processed = set(tile_metrics["tile_name"])
+        cov = _compute_coverage(tile_metrics, processed_tiles=processed)
+        assert cov["coverage_status"] == COVERAGE_STATUS_NORMAL
+        assert cov["n_unprocessed_tiles"] == 0
+        assert cov["n_processed_tiles"] == 20
+        assert cov["coverage_detail"] is None
+        assert cov["coverage_source"] == COVERAGE_SOURCE_PROCESSED_TILES
+
+    def test_full_coverage_result_matches_heuristic_result(self) -> None:
+        """Full coverage must not change any pre-E72 field value.
+
+        The hardening is additive: for a fully-covered detection set the
+        status, zero-fraction, tile counts, and threshold must be
+        byte-identical to what the pre-E72 code path produced (which is
+        what the no-evidence path still produces).
+        """
+        tile_metrics = _make_tile_metrics(n_tiles=20, n_zero_tiles=4)
+        processed = set(tile_metrics["tile_name"])
+        with_evidence = _compute_coverage(
+            tile_metrics, processed_tiles=processed,
+        )
+        no_evidence = _compute_coverage(tile_metrics)
+        legacy_keys = (
+            "n_tiles", "n_zero_count_tiles", "zero_fraction",
+            "threshold", "coverage_status",
+        )
+        for key in legacy_keys:
+            assert with_evidence[key] == no_evidence[key], key
+
+    def test_full_coverage_does_not_mask_a_sparse_flag(self) -> None:
+        """A sparse-but-fully-covered set still reports ``sparse_cross_grid``.
+
+        Direct coverage evidence answers "did the data cover the bounds?",
+        not "are the CIs stable?". A genuinely sparse cross-grid case that
+        happens to carry a complete ``processed_tiles`` record must keep
+        its Mitigation 3 flag.
+        """
+        tile_metrics = _make_tile_metrics(n_tiles=100, n_zero_tiles=80)
+        processed = set(tile_metrics["tile_name"])
+        cov = _compute_coverage(tile_metrics, processed_tiles=processed)
+        assert cov["coverage_status"] == COVERAGE_STATUS_SPARSE
+        assert cov["n_unprocessed_tiles"] == 0
+
+    # -- 2. partial coverage (the E72 shape) -----------------------------
+
+    def test_e72_shape_flags_partial_coverage(self) -> None:
+        """A 240/487 detection set MUST flag — this is the E72 regression.
+
+        Without ``processed_tiles`` this frame reports ``normal``: its
+        zero-fraction is 0.4641, under the 0.5 threshold, because the 247
+        missing tiles produce false negatives rather than zero counts.
+        With the record supplied, the guard counts the gap directly.
+        """
+        tile_metrics, processed = _e72_shaped_tile_metrics()
+
+        # The heuristic alone is blind to this case — that is the defect.
+        heuristic_only = _compute_coverage(tile_metrics)
+        assert heuristic_only["zero_fraction"] == pytest.approx(
+            0.4641, abs=1e-4,
+        )
+        assert heuristic_only["coverage_status"] == COVERAGE_STATUS_NORMAL
+
+        # With direct evidence it is caught.
+        cov = _compute_coverage(tile_metrics, processed_tiles=processed)
+        assert cov["coverage_status"] == COVERAGE_STATUS_PARTIAL
+        assert cov["n_unprocessed_tiles"] == 247
+        assert cov["n_processed_tiles"] == 240
+        assert cov["coverage_detail"] == "partial: 247/487 tiles unprocessed"
+        assert cov["coverage_source"] == COVERAGE_SOURCE_PROCESSED_TILES
+        # The zero-fraction is still reported — the new check supplements
+        # the diagnostic block rather than replacing it.
+        assert cov["zero_fraction"] == pytest.approx(0.4641, abs=1e-4)
+
+    def test_single_unprocessed_tile_flags_partial(self) -> None:
+        """The trigger is any shortfall at all, not a fraction threshold."""
+        tile_metrics = _make_tile_metrics(n_tiles=50, n_zero_tiles=2)
+        processed = set(tile_metrics["tile_name"]) - {"t049"}
+        cov = _compute_coverage(tile_metrics, processed_tiles=processed)
+        assert cov["coverage_status"] == COVERAGE_STATUS_PARTIAL
+        assert cov["n_unprocessed_tiles"] == 1
+        assert cov["coverage_detail"] == "partial: 1/50 tiles unprocessed"
+
+    def test_partial_outranks_sparse(self) -> None:
+        """Partial coverage wins over a simultaneous sparse flag.
+
+        A set that is both sparse and under-covering should report the
+        more severe diagnosis, because partial coverage invalidates the
+        point estimate and not merely the interval.
+        """
+        tile_metrics = _make_tile_metrics(n_tiles=100, n_zero_tiles=80)
+        processed = {f"t{i:03d}" for i in range(60)}
+        cov = _compute_coverage(tile_metrics, processed_tiles=processed)
+        assert cov["coverage_status"] == COVERAGE_STATUS_PARTIAL
+        assert cov["n_unprocessed_tiles"] == 40
+
+    def test_extra_processed_tiles_outside_bounds_are_ignored(self) -> None:
+        """Processed tiles outside the evaluation bounds do not count.
+
+        A pass may legitimately have processed tiles that the current
+        bounds exclude (a broader corpus scored against a narrower scope).
+        Coverage asks only "are the BOUNDS tiles covered?".
+        """
+        tile_metrics = _make_tile_metrics(n_tiles=10, n_zero_tiles=1)
+        processed = set(tile_metrics["tile_name"]) | {
+            "not_in_bounds_a.png", "not_in_bounds_b.png",
+        }
+        cov = _compute_coverage(tile_metrics, processed_tiles=processed)
+        assert cov["coverage_status"] == COVERAGE_STATUS_NORMAL
+        assert cov["n_unprocessed_tiles"] == 0
+        assert cov["n_processed_tiles"] == 10
+
+    # -- 3. fallback path ------------------------------------------------
+
+    def test_no_processed_tiles_falls_back_to_heuristic(self) -> None:
+        """``processed_tiles=None`` reproduces the pre-E72 behaviour."""
+        dense = _make_tile_metrics(n_tiles=10, n_zero_tiles=2)
+        sparse = _make_tile_metrics(n_tiles=100, n_zero_tiles=80)
+        cov_dense = _compute_coverage(dense)
+        cov_sparse = _compute_coverage(sparse)
+        assert cov_dense["coverage_status"] == COVERAGE_STATUS_NORMAL
+        assert cov_sparse["coverage_status"] == COVERAGE_STATUS_SPARSE
+        for cov in (cov_dense, cov_sparse):
+            assert cov["coverage_source"] == COVERAGE_SOURCE_HEURISTIC
+            assert cov["n_unprocessed_tiles"] is None
+            assert cov["n_processed_tiles"] is None
+            assert cov["coverage_detail"] is None
+
+    def test_empty_frame_with_evidence_still_normal(self) -> None:
+        """Empty bounds short-circuit before the coverage count."""
+        empty = pd.DataFrame({"tile_name": [], "tp": [], "fp": [], "fn": []})
+        cov = _compute_coverage(empty, processed_tiles={"anything.png"})
+        assert cov["n_tiles"] == 0
+        assert cov["coverage_status"] == COVERAGE_STATUS_NORMAL
+        assert cov["coverage_source"] == COVERAGE_SOURCE_PROCESSED_TILES
+
+    def test_empty_processed_set_is_evidence_not_absence(self) -> None:
+        """An empty set means "nothing processed", not "no record".
+
+        ``None`` and ``set()`` must not be conflated: the former is the
+        fallback signal, the latter is direct evidence of total
+        non-coverage.
+        """
+        tile_metrics = _make_tile_metrics(n_tiles=10, n_zero_tiles=2)
+        cov = _compute_coverage(tile_metrics, processed_tiles=set())
+        assert cov["coverage_status"] == COVERAGE_STATUS_PARTIAL
+        assert cov["n_unprocessed_tiles"] == 10
+
+
+@pytest.mark.tier1
+class TestReadProcessedTiles:
+    """Unit tests for :func:`read_processed_tiles`."""
+
+    def test_reads_processed_tiles_from_geojson(self, tmp_path) -> None:
+        """A per-pass detection GeoJSON's record is returned as a set."""
+        path = tmp_path / "detections_384_run01.geojson"
+        path.write_text(json.dumps({
+            "type": "FeatureCollection",
+            "features": [],
+            "processed_tiles": ["a.png", "b.png", "a.png"],
+        }), encoding="utf-8")
+        assert read_processed_tiles(path) == {"a.png", "b.png"}
+
+    def test_absent_record_returns_none(self, tmp_path) -> None:
+        """A consensus-style artefact with no record returns ``None``.
+
+        ``None`` is the fallback signal — the caller must then use the
+        zero-fraction heuristic rather than assume zero coverage.
+        """
+        path = tmp_path / "consensus_t3.geojson"
+        path.write_text(json.dumps({
+            "type": "FeatureCollection", "features": [],
+        }), encoding="utf-8")
+        assert read_processed_tiles(path) is None
+
+    def test_accepts_a_preparsed_dict(self) -> None:
+        """Callers that already hold the parsed GeoJSON avoid a re-read."""
+        payload = {
+            "type": "FeatureCollection",
+            "features": [],
+            "processed_tiles": ["x.png"],
+        }
+        assert read_processed_tiles(payload) == {"x.png"}
+
+    def test_missing_file_returns_none_without_raising(
+        self, tmp_path,
+    ) -> None:
+        """An unreadable source is "no evidence", not a hard failure."""
+        assert read_processed_tiles(tmp_path / "nope.geojson") is None
+
+    def test_malformed_json_returns_none_without_raising(
+        self, tmp_path,
+    ) -> None:
+        """Truncated or corrupt JSON degrades to the fallback path."""
+        path = tmp_path / "broken.geojson"
+        path.write_text('{"type": "FeatureCollection", "features": [',
+                        encoding="utf-8")
+        assert read_processed_tiles(path) is None
+
+    def test_non_list_record_returns_none(self, tmp_path) -> None:
+        """A ``processed_tiles`` value of the wrong type is not evidence."""
+        path = tmp_path / "odd.geojson"
+        path.write_text(json.dumps({
+            "type": "FeatureCollection",
+            "features": [],
+            "processed_tiles": 240,
+        }), encoding="utf-8")
+        assert read_processed_tiles(path) is None
+
+    def test_real_e72_artefact_reports_240_tiles(self) -> None:
+        """The live E72 study pass really does record 240 processed tiles.
+
+        Anchors the synthetic fixtures above to the artefact that caused
+        the erratum. Skipped if the output tree is not present (the
+        ``outputs/`` directory is gitignored in some checkouts).
+        """
+        path = (
+            PROJECT_ROOT / "outputs" / "h11"
+            / "consensus-384-UNINTENDED-T1.0" / "384" / "run_1"
+            / "detections_384_run01.geojson"
+        )
+        if not path.exists():
+            pytest.skip(f"artefact not present in this checkout: {path}")
+        tiles = read_processed_tiles(path)
+        assert tiles is not None
+        assert len(tiles) == 240
 
 
 # =========================================================================
@@ -526,6 +824,44 @@ class TestBootstrapCiIntegration:
         )
         assert ci["coverage"]["zero_fraction"] > 0.5
         assert ci["coverage"]["coverage_status"] == COVERAGE_STATUS_SPARSE
+
+    def test_processed_tiles_plumbs_through_to_coverage(self) -> None:
+        """``bootstrap_ci`` forwards ``processed_tiles`` to the guard (E72).
+
+        The same dense inputs read ``normal`` without evidence and
+        ``partial_coverage`` when told that half the bounds tiles were
+        never processed. Metric values are untouched either way — the
+        parameter affects diagnostics only.
+        """
+        gdf_det, gdf_ref, gdf_bounds = _make_synthetic_eval_inputs(
+            n_tiles=10, n_active_tiles=8,
+        )
+        all_tiles = set(gdf_bounds["tile_name"])
+        covered = set(sorted(all_tiles)[:5])
+
+        baseline = bootstrap_ci(
+            gdf_det, gdf_ref, gdf_bounds,
+            n_iterations=200, random_seed=42,
+        )
+        flagged = bootstrap_ci(
+            gdf_det, gdf_ref, gdf_bounds,
+            n_iterations=200, random_seed=42,
+            processed_tiles=covered,
+        )
+
+        assert baseline["coverage"]["coverage_status"] == (
+            COVERAGE_STATUS_NORMAL
+        )
+        assert flagged["coverage"]["coverage_status"] == (
+            COVERAGE_STATUS_PARTIAL
+        )
+        assert flagged["coverage"]["n_unprocessed_tiles"] == 5
+        assert flagged["coverage"]["coverage_detail"] == (
+            "partial: 5/10 tiles unprocessed"
+        )
+        # Diagnostics only: the metrics themselves must be identical.
+        assert flagged["f1"]["point"] == baseline["f1"]["point"]
+        assert flagged["f1"]["ci_lower"] == baseline["f1"]["ci_lower"]
 
     def test_legacy_keys_present_for_back_compat(self) -> None:
         """Top-level ``mean`` / ``ci_lower`` / ``ci_upper`` still emitted.
