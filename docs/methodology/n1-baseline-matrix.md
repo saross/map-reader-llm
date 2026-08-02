@@ -1,9 +1,8 @@
 # The N=1 baseline matrix — what it is, how it is scored, and how it enters the manifest
 
-> **Last revised**: 2026-08-01 (Session 124 — C4 wave-2 triage: § 4
-> provenance-table replicate counts corrected 1 → 3 for the four medium-thinking
-> Pro cells, and the § 5 gain-range endpoint +0.35 → +0.34 — both stale since the
-> same-day 2026-06-03 n=3 top-up re-score). **7 tiers**; `tie_set` (Tier 1) =
+> **Last revised**: 2026-08-02 (Session 125 — C4 wave-3 triage: § 6
+> permutation cross-check bound ≤0.0003 → ≤0.0005 — a third victim of the same
+> 2026-06-03 n=3 re-tier the wave-2 corrections fixed). **7 tiers**; `tie_set` (Tier 1) =
 > **two genuine-Pro text cells at T=0.0** — `pro-text-high-t-0-0` (0.804) +
 > `pro-text-medium-t-0-0` (0.792). See [§ Changelog](#changelog) for revision
 > history.
@@ -340,8 +339,11 @@ on sapphire, $0 API):
   erratum E45), extended from integer single-pass counts to **float replicate
   means** (see the script header). Cross-check: the permutation's observed
   micro-F1-of-the-mean matches each cell's mean-of-per-pass board F1 (§ 5) to
-  within **≤0.0003** at every replicate count (1–30 passes), so the test ranks
-  exactly what the leaderboard reports.
+  within **≤0.0005** (max |gap| 0.000466, `pro-image-medium-t-0-0`, n=3) at
+  every replicate count (1–30 passes) — below the 0.0006 smallest adjacent
+  board-F1 separation, and the board and observed-micro rank orders are
+  identical at all 18 ranks — so the test ranks exactly what the leaderboard
+  reports.
 - **Benjamini–Hochberg FDR** at q = 0.05 over the 153 raw p-values, then
   **greedy clique tiering** (identical to
   `build_tiered_leaderboard.apply_fdr_and_tier`): cells are processed in
@@ -463,6 +465,32 @@ architecture-baseline prereg-framing template this analysis sets.
 ---
 
 ## Changelog
+
+### 2026-08-02 — C4 wave-3 triage correction (Session 125)
+
+**Trigger**: the Phase-3 C4 wave-3 recompute escalation of the § 6
+permutation cross-check bound (ruling 13,
+`reports/verification/phase3-rulings-2026-07-31.md` § 13; adjudication in
+`reports/verification/c4-triage/mismatch-triage-2026-08-02.json`, family
+`005-gap-bound-living-doc-fix`), confirmed by a ruling-11 blind
+re-derivation before any edit.
+
+| Claim | Before | After |
+|---|---|---|
+| § 6 cross-check bound, board-F1 vs observed-micro-F1 gap | ≤0.0003 | ≤0.0005 (max \|gap\| 0.000466, `pro-image-medium-t-0-0`, n=3) |
+
+The bound was falsified on its own scope: `tiering_20m.json` `f1_gap`
+spans to 0.000466 after the 2026-06-03 n=3 re-tier (`e857c7b5c` /
+`0f32ec00c`) — the same 12:41→12:52 UTC window whose two other stale
+figures the wave-2 entry below corrected. It was also never strictly
+true: at authoring the max gap was already 0.000322, read off a 4-d.p.
+console line that displays as 0.0003
+(`scripts/n1_baseline_leaderboard_tiering.py:452`). The clause's
+conclusion survives — the board and observed-micro rank orders are
+identical at all 18 ranks, and the max gap sits below the 0.0006
+smallest adjacent board separation — now stated explicitly in the body.
+Tier structure, tie_set, and every other figure are unchanged.
+Corrected in commit noted in git history for this date.
 
 ### 2026-08-01 — C4 wave-2 triage corrections (Session 124)
 

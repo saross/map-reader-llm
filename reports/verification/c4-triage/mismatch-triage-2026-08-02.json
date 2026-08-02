@@ -1,0 +1,205 @@
+{
+  "_meta": {
+    "title": "C4 wave-3 triage — Session 125 (19 census-runner MISMATCH rows + 7 APPROX rows + the 005#2[0] ruling-13 escalation)",
+    "date": "2026-08-02",
+    "triager": "Claude Fable 5 session (Session 125)",
+    "verification": "ruling-11 discipline: the triager wrote draft causal stories to a scratchpad BEFORE launching five blind verification agents (Opus-class, forbidden from reading triage files, recent Obs entries, and the drafts). The blind passes materially REFUTED the triager on four families — 038-h11 (draft: snapshot-divergence, era-faithful; actual: two doc-defects-at-era on a file unchanged since five weeks BEFORE the doc, plus two instrument artefacts), 035-track-census (draft lean: third track added later, doc fix; actual: instrument wrong-spec, the third directory is a sub-study inside Track 1 that predates the doc line), 004-group-approx-binding (draft: a re-score moved 2 tiles; actual: no re-score ever touched the artefacts — the runner bound a group-level approx claim to the single outlier cell), and 006-outdir '4 → 2 decrease' (draft: archival/rename mechanism; actual: no decrease ever happened, tracked count was 2 at era and 2 now — the 'four' was never true). Fourth consecutive session in which the blind pass corrected the triager. Confirmed families: 002-session78-meta-overwrite-approx (era-exact to the cent), 006-outdir dated censuses (era-exact 139/11), 050-flex-pricing (triager's flex-vs-list hypothesis confirmed and generalised), 005-gap-bound (falsified on its own scope, edit confirmed).",
+    "input": "reports/verification/c4-recompute-report.json at 0f1bd549f-era counts (canonical sapphire recompute, 1938/123/1137/395/7): the 19 MISMATCH rows not adjudicated in waves 1-2, all 7 APPROX rows (first APPROX review per the wave-2 instrument finding 'approx-magnitude-blindspot'), and SKIPPED row 005#2[0] escalated by ruling 13.",
+    "predecessor": "reports/verification/c4-triage/mismatch-triage-2026-08-01.json (wave 2); mismatch-triage-2026-07-31.json (cycle 1)",
+    "controller": "planning/audit-charter.md § 7 Phase 3; rulings reports/verification/phase3-rulings-2026-07-31.md §§ 1-13",
+    "obs_382_standing_check": "This wave applies NO extraction-file repairs, so the repair-honesty invariant is not exercised. It DOES fix registry specs and doc bodies: on the next recompute, the rows listed under instrument_findings[registry-spec-fixes] and the three LIVING-DOC-FIX rows are EXPECTED to leave MISMATCH, each individually attributed here (the Obs 379-class exception Obs 382 carves out). Machine-scope rows (006#32[1], 006#34[1], 037#37[0]) keep their specs pending the GATE 3 scope decision and will still MISMATCH on sapphire."
+  },
+  "families": [
+    {
+      "name": "006-outdir-dated-census-growth",
+      "rows": ["006-output-dir-standard#23[0]", "006-output-dir-standard#23[1]", "006-output-dir-standard#24[0]", "006-output-dir-standard#24[1]", "006-output-dir-standard#33[1]", "006-output-dir-standard#33[2]", "006-output-dir-standard#38[1]"],
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "document_class": "living methodology doc (docs/methodology/output-directory-standard.md) carrying explicitly dated census statements — column header 'Count (2026-05-26)', changelog entries, session-record open items",
+      "mechanism": "Era-exact censuses that drifted by pure monotonic growth. At era commit c30ce58aa3 the tracked counts were exactly 139 experiment_intent.md and 11 evaluation.md (both classes 100% tracked, so the git-era recount is equivalent to the author's find; the audit plan line 967 records the pre-commit find). Current 174 = 139 + 35 added, 0 deleted (commits 1cdf94385, 309e08ded, c07c57766, 9ce6173a6, 68c4f0e29, 0d28bfaad). Current 46 = 11 + 35 added, 0 deleted, dominated by the Era-1 Stage-D scoring campaign (7d6c46672 +25, db7003e15 +5, 48b56fdd6 +5). Rows #33[1]/#33[2]/#38[1] are changelog/session-record restatements — permanently true as history; editing them would destroy the revision trail the Document Revision Policy exists to create.",
+      "materiality": "low",
+      "doc_edit": "none for the dated Count cells (deliberate). Carry-forward: the adjacent 'Count (post-audit target)' cells (#23[1]/#24[1] value context) are stale in a stronger sense — the target-column semantics want a deliberate rework at the doc's next revision, flagged in the 2026-08-02 changelog entry.",
+      "verification_lane": {"triager_draft": "dated-census drift, era-faithful expected", "blind_verdict": "CONFIRMED with exact era recounts and the full growth commit lists", "agreement": "confirmed"},
+      "evidence": "blind agent era recounts at c30ce58aa3 (139, 11 exact); planning/documentation-audit-plan.md:967 (pre-commit find recorded); growth commits above; current tracked=live for both classes verified on amd-tower and sapphire 2026-08-02 (174/174, find and git ls-files agree)"
+    },
+    {
+      "name": "006-outdir-doc-defect-at-era",
+      "rows": ["006-output-dir-standard#22[0]"],
+      "disposition": "DOC-DEFECT-AT-ERA + LIVING-DOC-FIX applied",
+      "document_class": "living methodology doc — dated census cell that was wrong on its own date",
+      "mechanism": "The 'four + 1 retrospective' post_run_report.md census was never true: tracked count 2 at era commit c30ce58aa3 and 2 now; only three post_run_report*.md files have EVER existed under outputs/ (added 2026-04-18: 4c147af65 image, f0f7158e7 text-min, badddf92a retrospective), none ever deleted, renamed, or archived. Source of the error: planning/documentation-audit-plan.md § 3.2 line 278 over-generalised ('all four runs dual-located'); the SAME session detected it and recorded errata (plan line 965; spec lines 440-441) without back-propagating to the two consuming spots. The document contained its own refutation 99 lines earlier (§ Dual-location convention, committed 22 minutes before the defective cell). Second defect in the same cell: compliance '4 compliant; 14 missing' vs the audit plan § 5.1 tally of 2 Compliant / 2 Minor / 3 Major / 15 Missing.",
+      "materiality": "medium — a compliance-baseline figure contradicting the audit plan it summarises; directly wrong if cited in a documentation-practice supplement",
+      "doc_edit": "APPLIED (2026-08-02, this commit): line 324 count cell 4 → 2 + 1 retrospective; compliance cell 4 compliant; 14 missing → 2 compliant; 15 missing entirely. Banner + changelog entry attached.",
+      "verification_lane": {"triager_draft": "REFUTED — draft hypothesised a decrease mechanism (files renamed/archived post-era); the blind pass proved no decrease ever occurred and the figure was wrong at authoring", "blind_verdict": "DOC-DEFECT-AT-ERA with exact-history proof (git log over outputs/**/post_run_report*.md across the entire repo history)", "agreement": "refuted-then-adopted"},
+      "evidence": "era recount 2 at c30ce58aa3; whole-history file census (3 files ever); planning/documentation-audit-plan.md:42-43 ('24 of 26 outputs/ subdirectories lack a post_run_report.md'), :278, :450-465 (§ 5.1 tally), :965 (erratum recorded same session)"
+    },
+    {
+      "name": "006-outdir-cross-location-census",
+      "rows": ["006-output-dir-standard#14[0]"],
+      "disposition": "INSTRUMENT (spec structurally blind) + clarifying LIVING-DOC-FIX applied",
+      "document_class": "living methodology doc — live normative sentence",
+      "mechanism": "The claim counts the four 55-map generalisation REPORT DOCUMENTS the schema was lifted from; the spec's glob (outputs/55maps-*-generalisation/post_run_report.md) is outputs/-only and filename-exact, so it structurally cannot see the configs-side-only text-high report (configs/run-configs/55maps_text_high_generalisation_post_run_report.md) or the divergently-named retrospective. Four substantive report documents existed at era and still do; the glob sees 2. The sentence's parenthetical invited exactly the reading that yields 2.",
+      "materiality": "low",
+      "doc_edit": "APPLIED: schema-provenance sentence now enumerates the split (two under outputs/, one config-side only, one retrospective with a divergent filename suffix).",
+      "registry_action": "spec removed → named family 'cross-location-document-census' with reason_not_specced (a faithful count needs a multi-root, suffix-tolerant union — not a glob-count primitive). Row returns to SKIPPED-with-reason on next recompute (attributed here).",
+      "verification_lane": {"triager_draft": "REFUTED — draft grouped this with dated-census drift", "blind_verdict": "INSTRUMENT with the audit-plan § 3.2 residue traced (corrected as erratum 11 minutes later at 1aaece11, never back-propagated)", "agreement": "refuted-then-adopted"},
+      "evidence": "whole-history census (blind agent); planning/documentation-audit-plan.md:278, :965; spec doc lines 225-235 (correct enumeration in-document)"
+    },
+    {
+      "name": "006-outdir-pv-diag-machine-scope",
+      "rows": ["006-output-dir-standard#32[1]", "006-output-dir-standard#34[1]"],
+      "disposition": "MACHINE-SCOPE (Obs 383) + misquotation LIVING-DOC-FIX applied to #34[1]'s cell",
+      "document_class": "living methodology doc — changelog entries describing the 2026-05-26 Status refresh",
+      "mechanism": "Bare file count over a ~97%-gitignored tree: 48,707 on amd-tower vs 127,281 on sapphire (execution host retaining ~78.6k crop PNGs; .gitignore:68-69). The era census is RETROSPECTIVELY VALIDATED on the clone-derived host: 48,707 − 41 net new tracked files (eight commits, minus 3 renamed to archive/superseded-unions/ by 8913cab2c) = 48,666 exactly, and tracked at d9cc2501 = 1,497 exactly. The claim is verifiable only relative to a named machine (Obs 383). ADDITIONAL defect found by the blind pass: the changelog 'After' cell quoted the census figures as if they were Status body text — git -S over the whole history shows 48,666 entered the document ONLY at ee0d7aa1b (the commit that added the changelog); the actual d9cc2501 Status wording was qualitative. A Revision-Policy integrity defect independent of any count drift.",
+      "materiality": "medium — establishes that a bare file count over a partially-gitignored tree is not a reproducible quantity; a methods paper needs a host + tracked/untracked qualifier",
+      "doc_edit": "APPLIED: the 'After' cell and the Status-row description now quote the actual qualitative wording with the census marked as a working measurement. The census FIGURES are deliberately unchanged (era-faithful on the authoring host).",
+      "registry_action": "specs retained UNCHANGED pending the GATE 3 machine-scope decision (option a: rule untracked-anchor claims out of mechanical scope; option b: per-spec machine_scope fields). Rows will still MISMATCH on sapphire — expected and attributed.",
+      "verification_lane": {"triager_draft": "machine-scope per Obs 383 (confirmed); the misquotation defect was NOT in the draft — blind-pass discovery", "blind_verdict": "MACHINE-SCOPE + LIVING-DOC-FIX on the quotation ground", "agreement": "confirmed-plus-discovery"},
+      "evidence": "per-subdirectory sapphire-vs-amd-tower counts (blind agent, re-measured 2026-08-02); the 41-file reconciliation; git -S '48,666' single-commit result ee0d7aa1b; git show d9cc2501 Status wording"
+    },
+    {
+      "name": "037-crop-review-machine-scope",
+      "rows": ["037#37[0]"],
+      "disposition": "MACHINE-SCOPE (Obs 383 — the verdict-flip row)",
+      "document_class": "dated snapshot (reports/gs-tile-pool-mapping-2026-05-28.md)",
+      "mechanism": "Fully established and independently verified in Obs 383: the six crop PNGs under results/gs-125m-fp-side-6-crop-review/crops/ are gitignored (.gitignore:69) and exist only on the machine where the review ran. amd-tower reads 6 (MATCH, re-verified live 2026-08-02 in this session); the canonical sapphire report reads 0 (MISMATCH). The document is era-faithful on the work machine; the machine decides the verdict.",
+      "materiality": "low for the document; high for the instrument (the single MATCH↔MISMATCH flip in the Obs 383 cross-machine join)",
+      "doc_edit": "none",
+      "registry_action": "spec retained pending GATE 3 (as above); named in the machine-scope family.",
+      "verification_lane": {"triager_draft": "cite Obs 383, no fresh pass needed (Obs 383 was itself obs-writer blind-verified)", "blind_verdict": "n/a — prior independent verification stands; local 6-count re-reproduced this session", "agreement": "confirmed"},
+      "evidence": "Obs 383 (working-notes.md); this session's live recount (6 files, amd-tower)"
+    },
+    {
+      "name": "005-board-membership-instrument",
+      "rows": ["005#29[0]", "005#61[0]"],
+      "disposition": "INSTRUMENT (spec wrong) — doc correct in both rows",
+      "document_class": "living methodology doc (docs/methodology/n1-baseline-matrix.md); #61 is additionally a DATED CHANGELOG DELTA entry",
+      "mechanism": "The doc's '18' is the BOARD — machine-readable as the 18 conditions_compared entries of analysis n1-baseline-matrix-384 in results/run-analyses.json. The runner's 22 is the raw manifest count under label ^baseline- across the four runs, which sweeps in the four E57-superseded n1-outstanding-384::baseline-pro-* conditions that the genuine-Pro re-run REPLACED on the board (commit e1f20da4c, 2026-06-03: 'REPLACING ... user decision: replace, 18-cell board') but which stay on disk per archive-never-delete, each carrying a model_of_record_note naming its replacement. #29 was era-true at first authoring (c36490c46: bullet named three runs, file held exactly 18) and the fourth run entered the parenthetical only after the file went to 22 (dcf3364a9). #61 is a changelog delta ('+18 ... 92 → 110') describing commit c36490c46, whose diff adds exactly 18 baseline labels — the runner evaluated a historical per-commit delta against current cumulative state AND applied a four-run filter to a three-run claim. Spec file-choice (conditions-manifest.json vs the doc's run-conditions.json) is immaterial: both give 22 under the filter.",
+      "materiality": "low — the headline number is right in both rows",
+      "doc_edit": "none (the optional locator-gloss tightening for #29's parenthetical was assessed by the blind pass as not worth a revision-policy changelog entry; deliberately skipped)",
+      "registry_action": "#29 spec re-pointed at results/run-analyses.json conditions_compared for analysis_id n1-baseline-matrix-384 (json-subset-count → 18). #61 spec removed → named family 'historical-delta-changelog' with reason_not_specced (a per-commit diff census is not a current-tree primitive). Both transitions attributed here per Obs 382.",
+      "verification_lane": {"triager_draft": "flagged both live possibilities (later additions vs over-broad filter) including the wrong-file question; did not resolve", "blind_verdict": "INSTRUMENT with the board/manifest distinction proven from conditions_compared, commit messages, and model_of_record_note discriminators", "agreement": "resolved-by-blind-pass"},
+      "evidence": "results/run-analyses.json (conditions_compared n=18); results/run-conditions.json model_of_record_note fields; commits c36490c46, e1f20da4c, dcf3364a9; doc lines 435-437 and 525-528"
+    },
+    {
+      "name": "005-gap-bound-living-doc-fix",
+      "rows": ["005#2[0]"],
+      "disposition": "LIVING-DOC-FIX applied (with DOC-DEFECT-AT-ERA footnote) — ruling-13 escalation adjudicated",
+      "document_class": "living methodology doc (docs/methodology/n1-baseline-matrix.md § 6)",
+      "mechanism": "Bound falsified on its own scope: max |f1_gap| over the 18 board cells in results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json = 0.000466 (pv-diag-384::baseline-pro-image-medium-t-0-0, n=3) > 0.0003. Two-stage: (1) display rounding at authoring — at era commit 3483d875a the live artefact (d6daec4eb) already carried max |gap| 0.000322, which the tiering script's console line prints as -0.0003 at 4 d.p. (n1_baseline_leaderboard_tiering.py:452); the bound was read off the console, never strictly true. (2) The 2026-06-03 n=3 top-up re-tier (e857c7b5c / 0f32ec00c, 12:41 UTC) widened it to 0.000466; the doc was revised 11 minutes later (3b5dc1eb1, 12:52 UTC) missing this spot — a THIRD victim of the same window whose two other stale figures wave-2 corrected. Quantisation caveat: board_f1 stored at 4 d.p. gives ±0.00005 on each gap; above 0.0003 either way. The clause's CONCLUSION survives: board and observed-micro rank orders are identical at all 18 ranks (blind-pass verified), and 0.000466 sits below the 0.0006 smallest adjacent board separation (flash-text-minimal-t-0-3 0.4992 vs flash-image-high-t-0-7 0.4986, same tier).",
+      "materiality": "medium — a methods-section reassurance clause resting on a thinner margin than stated",
+      "doc_edit": "APPLIED per ruling 13 (blind verification BEFORE the edit): ≤0.0003 → ≤0.0005 with the auditable parenthetical (max |gap| 0.000466, cell, n) and the margin-vs-resolution clause made explicit. Banner + changelog entry attached.",
+      "registry_action": "row stays method recompute-script without a registered runner (a board-vs-micro gap sweep is tranche-3 statistical machinery); the doc-side bound is now consistent with the artefact.",
+      "verification_lane": {"triager_draft": "two candidate mechanisms (board growth vs regeneration widening); regeneration confirmed, plus the display-rounding origin the draft did not predict", "blind_verdict": "falsified on own scope; exact minimal edit proposed; era status 'already false by 7%'", "agreement": "confirmed-with-refinement"},
+      "evidence": "tiering_20m.json ranking[].f1_gap (per-n maxima: n=1 0.000032, n=3 0.000466, n=5 0.000010, n=10 0.000266, n=30 0.000322); commits d6daec4eb, e857c7b5c, 3483d875a, 3b5dc1eb1; n1_baseline_leaderboard_tiering.py:446-452"
+    },
+    {
+      "name": "004-group-approx-binding",
+      "rows": ["004#92[0]", "004#92[1]", "004#92[3]"],
+      "disposition": "APPROX-ACCEPTABLE (instrument as proximate cause of the flag)",
+      "document_class": "living methodology doc (n1-baseline-matrix.md § 5 prose)",
+      "mechanism": "The sentence generalises over the FOUR Flash-text-MINIMAL cells (fp/tn: 257/1, 257/1, 257/1, 255/3; F1 0.488-0.520). The recompute bound the group-level ≈ claims to the single outlier cell (flash-text-minimal-t-0-7: 255/3/0.4883). The 257+1 = 255+3 = 258 identity is tile arithmetic (tp+fn = 229 in all cells, 487 − 229 = 258), NOT a re-score: all four evaluation.json files have exactly two commits ever (32097c54f re-score, d6d321b09 metadata-only) and the sentence was authored minutes later (c36490c46); no artefact has changed since. ≈257 and ≈1 are exact for 3 of 4 cells; ~0.50 rounds even the outlier correctly.",
+      "materiality": "low — the rhetorical point (the MINIMAL text cells flag almost every tile) is if anything understated",
+      "doc_edit": "none",
+      "verification_lane": {"triager_draft": "REFUTED — draft hypothesised a post-authoring re-score moving 2 tiles FP→TN", "blind_verdict": "no re-score ever; single-cell binding of a group claim; between-cell variation", "agreement": "refuted-then-adopted"},
+      "evidence": "the four results/paper-eval/n1/384px-14buf-mcc/flash-text-minimal-*/evaluation.json confusion blocks; commits 32097c54f, d6d321b09, c36490c46; doc lines 310-314 and § 5 table 278-291"
+    },
+    {
+      "name": "002-session78-meta-overwrite-approx",
+      "rows": ["002#6[3]", "002#12[2]", "002#12[7]"],
+      "disposition": "SNAPSHOT-DIVERGENCE (extends the wave-2 family 002-session78-meta-overwrite to its APPROX rows)",
+      "document_class": "dated snapshot (docs/methodology/data-reproduction-2026-04-25.md)",
+      "mechanism": "Era-exact, verified independently of the wave-2 pass: summing the 14 session-78-matrix verified-*/run.meta.json blobs at the doc's era commit b10aa7e1c reproduces requests 44,220 EXACTLY (the tilde was conservative) and flex cost $63.773733 → '~$63.77' to the cent (list $127.547466 cross-checked against the metas' own cost_estimate sum). Current metas sum to 21,149 requests / $48.2966 flex — reproducing the harness figures to four decimals — because 7 of 14 metas were overwritten in place (six -text cells at 414ee8a4b 2026-05-03; image/checklist at c6b5e6b10 2026-05-06) by gap-fill re-runs: run_pv.py merges probabilities.json (:1091-1092 seeds from existing results) but REPLACES run.meta.json wholesale (:1336-1338 open('w') with only the current invocation's tracker). Shortfall 23,071 requests (52.2%) / $30.95 list (24.3%), entirely attributed to the 7 cells; their current metas are complete well-formed metas of much smaller runs (26/19/1/19/41/27/21 candidates). Obs 380's mechanism, now with the code-level culprit line.",
+      "materiality": "low for scientific claims (provenance bookkeeping); moderate for audit — a recomputing auditor gets 76% of the cost and wrongly suspects the doc",
+      "doc_edit": "none (snapshot; the wave-2 family's ledger treatment extends)",
+      "tranche_2_requirement": "CONFIRMED by direct demonstration: the cost/token runner MUST read era blobs for any cell touched by a cleanup pass. The blind pass reproduced both the doc-side totals (era blobs) and the harness-side totals (current metas) — the era-blob path is executable and exact.",
+      "verification_lane": {"triager_draft": "meta-overwrite mechanism (from Obs 380) with the ~0.48 surviving-fraction consistency check", "blind_verdict": "era-exact to the cent; per-run era-vs-now table; run_pv.py culprit lines identified", "agreement": "confirmed-with-mechanism-source"},
+      "evidence": "per-run era-vs-now table (blind agent); commits b10aa7e1c, 414ee8a4b, c6b5e6b10; scripts/run_pv.py:1091-1092, :1336-1338; pricing gemini-3-flash-preview 0.5/3.0 per 1M × 0.5 flex"
+    },
+    {
+      "name": "050-flex-pricing-instrument",
+      "rows": ["050#62[2]"],
+      "disposition": "INSTRUMENT-PRICING-BASIS — doc correct; comparer arithmetic used the wrong rate",
+      "document_class": "dated session dossier (reports/session-111-discoveries.md) — but see instrument_findings[snapshot-classification-stress]",
+      "mechanism": "The recomputed $2.172187 is the VERBATIM cost_estimate.total_cost_usd of the min6 make-up verifier meta (outputs/h11/pv-diag-384/verified/text-min-t07-true-1of5/run.meta.json, blob unchanged since 8913cab2c) — a LIST-rate figure. The run executed at flex (run_pv.py --service-tier defaults to flex; the plan specified flex; ≈$1.15 planned). estimate_cost() (scripts/lib_llm_metadata.py:1037) takes NO service-tier argument and its PRICING table is standard-tier — so EVERY run.meta.json in the repo records list rates regardless of the tier billed. Flex recompute: $1.086094; the doc's ≈$1.11 is 2.2% high, consistent with the ~$0.0007/call house rate inside the ≈ (the token-load audit's measured band $0.000684-0.000697/call brackets this run's $0.000685). The 2026-06-12 token-load audit CONDEMNED exactly this field; the audit's own revision of this doc corrected § 3 and left line 168 alone because it was already flex-based — the recompute re-broke what the audit fixed by trusting the condemned field.",
+      "materiality": "none for the document; HIGH for the instrument — systematic ~2x overstatement on every flex run's meta repo-wide; binding requirement for the tranche-2 cost/token runner",
+      "doc_edit": "none",
+      "tranche_2_requirement": "the cost runner must derive flex-tier cost from token counts x rates x 0.5 when the run's service tier is flex (or per the token-load audit's audited path), NEVER from cost_estimate.total_cost_usd.",
+      "verification_lane": {"triager_draft": "flex-vs-list hypothesis ($2.172187 x 0.5 = 1.086 ≈ 1.11)", "blind_verdict": "confirmed exactly, generalised repo-wide, and anchored to the estimate_cost() signature", "agreement": "confirmed-and-generalised"},
+      "evidence": "run.meta.json usage_stats (2,842,112 in / 250,377 out) and cost_estimate; scripts/lib_llm_metadata.py:1014,1037; scripts/run_pv.py:1530-1536; planning/min6-makeup-run-plan-2026-06-10.md option B; reports/token-load-audit-2026-06-12.md:21-22,143-150; commit 8913cab2c blob 83801b2d5"
+    },
+    {
+      "name": "035-track-census-instrument",
+      "rows": ["035#34[1]"],
+      "disposition": "INSTRUMENT (wrong-spec) — doc correct at era and live; no edit",
+      "document_class": "living tracking doc (reports/experimental-progression.md)",
+      "mechanism": "'Tracks' means the two modality tracks (Track 1 image / Track 2 text, Decision 16 / E27); line 68's design row '5 × 2 tracks | 10' closes the arithmetic with line 146's 'All 10 conditions (2 tracks)'. The glob track* counted track1-image-exploratory — a 3-condition exploratory sub-study WITHIN Track 1 (manifest phase '2c-exploratory', hypothesis 'H8-exploratory'), whose track1- prefix names its parent. It predates the doc line by ~two weeks (manifests generated 2026-03-15; line authored 03e01c3fc 2026-03-31; git cannot date the dirs — outputs/retest/ was gitignored until 3d22184d6 — but manifest timestamps and mtimes do). Counting it as a track would break the 10-conditions figure (13). Sibling convention corroborates (phase2b/phase2d hold exactly track1-image + track2-text).",
+      "materiality": "none — no doc change warranted",
+      "doc_edit": "none",
+      "registry_action": "spec narrowed: glob track* → reading study_manifest.json study.phase == '2c' membership is the robust form; implemented as glob 'track[0-9]-*' filtered to dirs whose study_manifest.json phase equals 2c. Attributed transition per Obs 382.",
+      "verification_lane": {"triager_draft": "REFUTED — draft leaned 'third track added later → LIVING-DOC-FIX'", "blind_verdict": "instrument wrong-spec; the doc's own arithmetic and the manifests decide it", "agreement": "refuted-then-adopted"},
+      "evidence": "the three study_manifest.json files; doc lines 68 and 146; commits 03e01c3fc, 3d22184d6; .gitignore at 03e01c3fc line 35"
+    },
+    {
+      "name": "038-h11-era-defects-and-instrument",
+      "rows": ["038-h11#5[0]", "038-h11#7[0]", "038-h11#12[0]", "038-h11#15[1]"],
+      "disposition": "#5[0], #7[0]: DOC-DEFECT-AT-ERA (ledger only — snapshot doc, low materiality, no banner per ruling-10 precedent). #12[0]: INSTRUMENT (doc's 8 is correct). #15[1]: INSTRUMENT primary + secondary DOC-DEFECT-AT-ERA (3 vs true 4).",
+      "document_class": "dated-filename report (reports/h11-reorganisation-cost-estimate-2026-05-28.md, single authoring commit 6585345bb) — but the dated-filename heuristic MISLED here; see instrument_findings[snapshot-classification-stress]",
+      "mechanism": "KEY STRUCTURAL FACT: planning/condition-inventory.json is byte-identical between the era commit and HEAD (last modified d46d95c3c, 2026-04-21 — five weeks BEFORE the doc), so snapshot divergence is impossible by construction for #5/#7/#12. #5/#7: the doc's '2' is a grep -c LINE count — lines 3589-3590 are the id and path of ONE entry (h11-e47-propose-brief); 1 entry at era, 1 now; the qualitative claim (e47 tagged H11) is true, only the count is wrong. #12: the doc's '8' is CORRECT as an entry count — seven path-field hits plus the distinct entry pv-n1-image-t0-n3 referencing the directory via pv_sweep_source (line 4973), which the path-scoped spec structurally cannot see; for the doc's operational purpose (entries needing edits on a move) 8 is right. #15[1]: commit 118507e2c (2026-05-29, the executed reorganisation) rewrote outputs/h11/wbf/ → outputs/wbf/ at the SAME four line numbers (67, 76, 85, 98) of fuse_detections_wbf.py; the spec regex pins the deleted prefix, so it counts 0 while all four constants persist. Era count under the spec regex was 4, corroborated by 118507e2c's own message ('4 default_output_dir entries') — the doc's '3' was an off-by-one at era (likely its own de-duplication convention applied inconsistently; its adjacent '5 hardcoded path strings' claim is exactly right).",
+      "materiality": "low throughout — every load-bearing conclusion of the estimate holds (and its recommendations were executed within ~11 hours and vindicated)",
+      "doc_edit": "none (snapshot doc; ruling 1 + ruling-10 materiality precedent → ledger rows only)",
+      "registry_action": "#12 spec broadened to any-field regex over entries (json-subset-count where ANY field matches n1-outstanding-384, hypothesis H11, era 2 → 8). #15 spec regex re-anchored to the current shape ('default_output_dir': pointing at outputs/wbf/ or outputs/h11/wbf/) so it counts the entities, not the prefix era → 4. Both attributed per Obs 382; both will flip MISMATCH → MISMATCH-or-MATCH against the doc's quoted values (#12: 8 vs 8 MATCH; #15: 3 vs 4 stays MISMATCH, now honestly reflecting the era off-by-one).",
+      "verification_lane": {"triager_draft": "REFUTED on classification — draft predicted SNAPSHOT-DIVERGENCE, era-faithful, for all four rows", "blind_verdict": "two doc-defects-at-era + two instrument artefacts; 'whether a doc is a snapshot depends on whether its sources moved, not on its filename'", "agreement": "refuted-then-adopted"},
+      "evidence": "era commit 6585345bb; inventory unchanged since d46d95c3c; inventory lines 3589-3590, 3132-3283 (seven path hits), 4957-4973 (pv_sweep_source entry); scripts/fuse_detections_wbf.py L67/76/85/98 era and current; commits 118507e2c, 43895be15, 941b3b9ae, c5983adb6, e2abe41d7"
+    }
+  ],
+  "instrument_findings": [
+    {
+      "name": "flex-pricing-basis",
+      "class": "TRANCHE-2 BINDING REQUIREMENT + repo-wide meta caveat",
+      "finding": "cost_estimate.total_cost_usd is a LIST-rate figure in every run.meta.json in the repo (estimate_cost() has no service-tier parameter; lib_llm_metadata.py:1037). Any recompute of a flex-priced prose figure from that field manufactures a ~2x MISMATCH. The tranche-2 cost/token runner must price from token counts at the model's rates with the flex multiplier when the run was flex, per the token-load audit's audited path. Same-family rows elsewhere in the corpus are likely one instrument bug, not independent findings."
+    },
+    {
+      "name": "era-blob-reads-mandatory",
+      "class": "TRANCHE-2 BINDING REQUIREMENT (Obs 380, now code-anchored)",
+      "finding": "run_pv.py replaces run.meta.json wholesale on cleanup passes (:1336-1338) while merging probabilities.json (:1091-1092). Cost/token recomputation over any cell touched by a cleanup MUST read the era blob (the wave-3 blind pass demonstrated the era-blob path reproduces doc totals exactly: 44,220 requests, $63.77 flex to the cent). The overwrite is systemic: c6b5e6b10 alone touched six further cells (verified-v1-n10/n5 under four image temperatures, scale-4-optimal-487); any doc citing cost/requests for a tier23-recovery-touched cell will diverge."
+    },
+    {
+      "name": "symlink-census-method",
+      "class": "OBS-383-CORRECTION (drafted for PI review — never editing the landed Obs)",
+      "finding": "outputs/55maps-text-min-n10-uplift/proposer-all/run_{1..10} are SYMLINKS (created 2026-07-15) into other run trees. find (no -L) = 174 outputs/**/experiment_intent.md; find -L = 184 (10 re-counted through the symlinks — their targets are already in the 174). Obs 383's '184 live files, 10 untracked, agreed by luck' sub-example and its 23/6/1 latent-exposure table are contaminated by a symlink-following measurement: the four experiment_intent rows are genuinely 100% tracked and repo-reproducible (verified on BOTH machines 2026-08-02: amd-tower and sapphire each read 174 with find, 0 intent files via the non-followed symlink dir). Obs 383's CORE mechanism stands (pv-diag 48,707-vs-127,281 and the crops 6-vs-0 flip both re-reproduced today). The 6-'partially tracked' spec classifications each need re-checking with a symlink-consistent method before the GATE 3 scope decision. Correction Obs candidate drafted: reports/verification/drafts/obs-candidate-symlink-census-2026-08-02.md."
+    },
+    {
+      "name": "registry-spec-fixes",
+      "class": "OBS-382 ATTRIBUTION REGISTER (expected MISMATCH exits on next recompute)",
+      "finding": "Spec fixes applied this wave, each a named instrument defect: 005#29[0] (re-pointed at conditions_compared → expected MATCH at 18); 035#34[1] (manifest-phase-filtered track census → expected MATCH at 2); 038-h11#12[0] (any-field entry census → expected MATCH at 8); 038-h11#15[1] (prefix-tolerant regex → expected honest MISMATCH 3 vs 4, the era off-by-one). Spec removals to named families: 006-output-dir-standard#14[0] → cross-location-document-census; 005#61[0] → historical-delta-changelog (both → SKIPPED-with-reason). Machine-scope rows deliberately untouched pending GATE 3: 006#32[1], 006#34[1], 037#37[0]. LIVING-DOC-FIX rows expected to MATCH on next recompute: 005#2[0] (bound now ≤0.0005), 006#22[0] (count now 2 + 1). Any OTHER MISMATCH decrease is unexplained and violates the Obs 382 standing check."
+    },
+    {
+      "name": "line-drift-hazard",
+      "class": "HARNESS CAVEAT",
+      "finding": "n1-baseline-matrix.md anchors extracted before 9fa55c684 (the wave-2 changelog insertion, +20 lines below ~466) report stale current-line numbers (e.g. 005#61 '558-560' is now 578-580); this session's wave-3 changelog entries shift both edited docs further. Era resolution is unaffected (blob-based); only human-facing source_lines drift. Applies to every future changelog-bearing correction."
+    },
+    {
+      "name": "historical-campaign-script-defects",
+      "class": "LEDGER NOTE (no fix — historical script)",
+      "finding": "Two defects in scripts/session-78-matrix-rerun.sh (at 710af7f95) discovered by the blind pass: (1) its cumulative-cost ledger read total_cost_usd at the meta's top level instead of under cost_estimate, closing the campaign log with '$0.0000' — the doc's author summed the metas correctly and overrode the broken ledger; (2) all 14 Phase A data-commit messages say '6 candidates scored' — len() over the probabilities.json top-level keys rather than d['results'] — so the campaign's commit log is uninformative about scale. Both are attestation-layer caveats for C6, not current-code bugs."
+    },
+    {
+      "name": "snapshot-classification-stress",
+      "class": "GATE-3 PACKAGE ITEM (ruling 12's provisional rule challenged twice in one wave)",
+      "finding": "(1) reports/h11-reorganisation-cost-estimate-2026-05-28.md: dated filename, but its source file predates it unchanged — 'snapshot vs living' turned on source-change archaeology, not the filename; the dated-filename heuristic actively misled the triager toward SNAPSHOT-DIVERGENCE for rows that were doc-defects-at-era. (2) reports/session-111-discoveries.md: dated session dossier by title, but carries a Last-revised banner and an in-place § 3 correction (2026-06-12) — it behaves as a living document. Proposed refinement for ruling-12 finalisation: classification should record BOTH a document-presentation class (dated filename/title) AND a per-claim era-faithfulness check; era_check (ruling 12) already supplies the second half for read/arithmetic rows and should extend to runner rows."
+    },
+    {
+      "name": "approx-review-executed",
+      "class": "PROTOCOL NOTE",
+      "finding": "First per-wave APPROX review (wave-2 instrument finding 'approx-magnitude-blindspot' resolution): all 7 APPROX rows adjudicated — 3 SNAPSHOT-DIVERGENCE (002 family, 32%/52% magnitude — exactly the class the blindspot finding predicted), 3 APPROX-ACCEPTABLE (004#92 group-binding), 1 INSTRUMENT (050#62[2] pricing basis). No comparer change needed; the review loop closes the gap."
+    }
+  ],
+  "carry_forward_notes": [
+    "data-reproduction-2026-04-25.md drift table (Re-run n column, AUC/ECE cells) is ALSO snapshot-divergent per the blind pass — the cleanup commits filled every pool to full and c6b5e6b10 recomputed the calibration matrix (image-checklist AUC ~0.0003 shift). Batch 002 rows over those cells were adjudicated in wave 2 (family 002-calibration-recovery-rescore); the drift-table note corroborates that family's mechanism from the artefact side.",
+    "2026-06-03 12:41→12:52 window: three victims now corrected across waves 2-3 (§ 4 replicate counts, § 5 gain endpoint, § 6 gap bound). The C4 sweep's full-document coverage of n1-baseline-matrix.md is the systematic check for further members; any residual would sit in currently-SKIPPED/UNRESOLVED rows and surfaces as runners register.",
+    "The 'Count (post-audit target)' column of output-directory-standard.md's scope table wants a deliberate semantic rework (targets that track corpus growth vs dated targets); flagged in the doc's 2026-08-02 changelog entry, deferred to the doc's next revision.",
+    "Obs-candidate drafts for PI review under reports/verification/drafts/: obs-candidate-symlink-census-2026-08-02.md (Obs 383 correction). The misquotation defect class and the fourth-consecutive-refutation streak are candidates for the session's reflections rather than standalone Obs (PI's call).",
+    "005#29 locator-gloss tightening deliberately NOT applied (blind-pass assessment: not worth a changelog entry alone); if the doc is touched again for other reasons, fold it in.",
+    "Wave-3 census re-verification used both machines read-only (ssh sapphire find-counts only; no compute jobs)."
+  ]
+}

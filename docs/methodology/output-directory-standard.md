@@ -1,9 +1,10 @@
 # Output Directory Standard
 
-> **Last revised**: 2026-05-26 (Phase 0 of documentation audit —
-> codified Post-Run Report Schema, dual-location convention,
-> Cross-reference / Lineage Block format, Documents in Revision Policy
-> Scope; refreshed stale Status section). See [§ Changelog](#changelog)
+> **Last revised**: 2026-08-02 (C4 wave-3 triage — post-run-report
+> census corrected 4 → 2 + 1 retrospective and compliance cells to
+> match audit plan § 5.1; schema-provenance sentence clarified; the
+> 2026-05-26 changelog "After" cell corrected to quote the wording the
+> Status section actually carried). See [§ Changelog](#changelog)
 > for revision history.
 
 ## Purpose
@@ -139,8 +140,10 @@ outputs/
 
 Every `outputs/<run-id>/` directory representing a completed experimental
 run must contain a `post_run_report.md` conforming to the schema below.
-The schema is lifted from the four 55-map generalisation reports (Exemplar
-A: `outputs/55maps-image-generalisation/post_run_report.md`), which were
+The schema is lifted from the four 55-map generalisation reports (two
+under `outputs/`, one config-side only, one retrospective with a divergent
+filename suffix — see § Dual-location convention; Exemplar A:
+`outputs/55maps-image-generalisation/post_run_report.md`), which were
 the first to instantiate this template and remain the canonical reference
 for new authors.
 
@@ -321,7 +324,7 @@ CLAUDE.md cross-references back here for the canonical path list.
 |---|---|---:|---:|---|
 | `results/**.md` (anchor docs only — see audit plan § 5.2) | Paper-citation working docs | ~35–50 | ~35–50 | Mostly non-compliant; back-fill on touch |
 | `reports/**.md` | Internal reports authored by Claude Code | varies | varies | Mostly compliant |
-| `outputs/**/post_run_report.md` | Per-run post-run reports | 4 + 1 retrospective | ~22 | 4 compliant; 14 missing entirely; back-fill in audit Phase 3 |
+| `outputs/**/post_run_report.md` | Per-run post-run reports | 2 + 1 retrospective | ~22 | 2 compliant; 15 missing entirely; back-fill in audit Phase 3 |
 | `outputs/**/experiment_intent.md` | Per-pass / per-run intent files | 139 | 139 | Informal; in scope going forward |
 | `outputs/**/evaluation.md` | Per-run evaluation summaries | 11 | 11 | Informal; in scope going forward |
 | `outputs/**/pre_launch_audit.md` | audit-config skill outputs | 1 (`55maps-text-high-t0.3-generalisation`) | varies | In scope going forward |
@@ -401,6 +404,39 @@ the ground truth filtering applied (hairy-only symbols from student data).
 
 ## Changelog
 
+### 2026-08-02 — C4 wave-3 triage corrections (Session 125)
+
+**Trigger**: the Phase-3 C4 wave-3 recompute over this document's dated
+censuses (`reports/verification/c4-triage/mismatch-triage-2026-08-02.json`,
+families `006-outdir-doc-defect-at-era`, `006-outdir-cross-location-census`,
+and `006-outdir-pv-diag-machine-scope`), each adjudication confirmed by a
+ruling-11 blind re-derivation before any edit.
+
+| Claim | Before | After |
+|---|---|---|
+| Revision-Policy-scope table, `outputs/**/post_run_report.md` count (2026-05-26) | 4 + 1 retrospective | 2 + 1 retrospective |
+| Same row, compliance cell | 4 compliant; 14 missing entirely | 2 compliant; 15 missing entirely |
+| 2026-05-26 changelog, Status "After" cell | quoted census figures as if they were doc text | quotes the actual qualitative wording; census marked as working measurement |
+
+The "4" was never true: the tracked count was 2 at the 2026-05-26 era
+commit (`c30ce58aa3`) and only three `post_run_report*.md` files have ever
+existed under `outputs/` in the entire history. The figure traces to
+`planning/documentation-audit-plan.md` § 3.2's over-generalisation ("all
+four runs dual-located"), recorded as an erratum the same session (plan
+line 965) but never back-propagated here — the document's own
+§ Dual-location convention, committed 22 minutes earlier, carries the
+correct enumeration. The compliance tally now matches audit plan § 5.1
+(2 Compliant, 15 Missing). The 2026-05-26 changelog "After" cell had
+attributed the 1,497 / 48,666 census to the Status body text, which was
+always qualitative (`git show d9cc2501`) — the figures were the author's
+working census. The dated experiment_intent.md (139) and evaluation.md
+(11) censuses were verified era-exact and are deliberately unchanged
+(snapshot statements; current tracked counts 174 / 46 reflect monotonic
+post-era growth). The "Count (post-audit target)" cells are flagged as
+stale in a stronger sense and left for a deliberate rework of that
+column's semantics. Corrected in commit noted in git history for this
+date.
+
 ### 2026-05-26 — Phase 0 of documentation audit
 
 **Refresh trigger**: Stage Gate 1 approval of
@@ -414,14 +450,14 @@ previously unwritten conventions and refreshed one stale status note.
 | `## Post-Run Report Schema` (new) | Codified the 12-section post-run-report template lifted from Exemplar A (`outputs/55maps-image-generalisation/post_run_report.md`); added applicability carve-out, worked-exemplar pointer, templated-generator forward reference. Bootstrap CI params verified against Exemplar A lines 19, 26 pre-commit. | `c611c573` |
 | `## Post-Run Report Schema → ### Dual-location convention` (new) | Codified outputs/-canonical, configs/-stub rule for runs with duplicated reports; added dated snapshot of asymmetric reality (2/4 dual-located, 1 configs-only, 1 neither, 1 retrospective with divergent suffixes). | `1aaece11` |
 | `## Cross-reference / Lineage Block` (new) | New canonical `## See also` format for results docs and post-run reports; affirmative `None` required for inapplicable categories; no line-number anchors for working-notes Obs (drift-prone). | `593d60f3` |
-| `## Status` (refreshed) | Replaced stale "outputs/h11/pv-diag-384/ is gitignored and only on sapphire" with verified-against-filesystem replacement (1,497 of 48,666 files tracked; only **/*.log gitignored; present on both machines). Dropped stale "F1=0.89" parenthetical. | `d9cc2501` |
+| `## Status` (refreshed) | Replaced stale "outputs/h11/pv-diag-384/ is gitignored and only on sapphire" with a qualitative verified-against-filesystem replacement (working census at the time, not doc text: 1,497 of 48,666 files tracked). Dropped stale "F1=0.89" parenthetical. | `d9cc2501` |
 | `## Documents in Revision Policy Scope` (new) | Authoritative enumeration of the six in-scope path patterns with 2026-05-26 file counts (139 experiment_intent, 11 evaluation, 1 pre_launch_audit, etc.) + post-audit target counts + compliance notes. CLAUDE.md cross-references back. | `c30ce58a` |
 
 **Before → after table for numerical claims that moved**:
 
 | Claim | Before | After |
 |---|---|---|
-| `outputs/h11/pv-diag-384/` tracking state | "gitignored, only exists on sapphire" | "1,497 of 48,666 files tracked; **/*.log gitignored; present on zbook and sapphire" |
+| `outputs/h11/pv-diag-384/` tracking state | "gitignored, only exists on sapphire" | "structurally important artefacts (geojsons, JSON metadata, manifests) are tracked in git; bulk log files (`**/*.log`) are gitignored. The directory exists on both zbook and sapphire." (supporting working census, never doc text: 1,497 of 48,666 files tracked) |
 | Stale F1 reference | "top-tier F1=0.89 results" | Parenthetical dropped (spec docs shouldn't carry canonical headline numbers) |
 
 **What did NOT change**:
