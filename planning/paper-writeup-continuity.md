@@ -8,7 +8,125 @@ project state.
 
 ---
 
-## 🎯 NEXT SESSION (125) — PHASE 3: FLEET WAVES + WAVE-3 TRIAGE + RUNNER TRANCHES 2–3 [Session 124 CLOSED 2026-08-01; ran in Fable]
+## 🎯 NEXT SESSION (126) — PHASE 3: PI DECISIONS (E43 ESCALATION) + FLEET + TRANCHES 2–3 [Session 125 CLOSED 2026-08-02; ran in Fable]
+
+> **The controller is `planning/audit-charter.md` § 9** — unchanged.
+> **Rulings that bind**: `phase3-rulings-2026-07-31.md` §§ 1–13.
+> Ruling 11's blind pass corrected the triager in BOTH S125 waves
+> (fourth and fifth consecutive corrections) — the pattern is now
+> beyond argument.
+
+**What Session 125 did** (commits `74cfd5092`→`84cffb471`, **US$0.00
+API** — Claude-side agents + sapphire read/recompute only): **the full
+beacon queue (a)–(d) landed, plus an unplanned wave-4 triage cycle
+with a HIGH-materiality research escalation.** (1) **Wave-3 triage
+(27 rows) landed** blind-verified (5 Opus passes, draft stories
+pre-registered; 4 families REFUTED — h11 rows are doc-defects-at-era/
+instrument on a file unchanged since 5 weeks BEFORE the doc, the
+"4→2 decrease" never happened, tracks row is a sub-study not a track,
+004#92 saw no re-score): `c4-triage/mismatch-triage-2026-08-02.json`;
+3 LIVING-DOC-FIXes (n1-baseline § 6 bound ≤0.0003→≤0.0005 per ruling
+13 — a THIRD victim of the 2026-06-03 12:41→12:52 window; output-dir-
+standard census 4→2 + compliance + changelog-After-cell misquotation
+— census figures were never doc text). (2) **Instrument hygiene**:
+census primitives now find-consistent (Python 3.13 Path.glob
+TRAVERSES dir symlinks — caught by a failing test), glob-count rows
+stamped census_total/census_tracked/machine_scope, report host stamp,
+'no'/'none'→0 vocabulary; registry: 4 spec fixes + 2 named-family
+moves (88 specced / GATE 3 accounting balances); **Obs 383
+correction DRAFTED** (`reports/verification/drafts/obs-candidate-
+symlink-census-2026-08-02.md` — the "184 live/10 untracked/agreed by
+luck" sub-example was a follow-symlinks measurement; find = tracked =
+174 on BOTH machines; core mechanism re-verified and stands). Tier-1
+**1,285/0** (+7 tests). (3) **Fleet wave 3 COMPLETE end-to-end** (28
+files, **1,209 claims**; plan pending 158→138): TWO ruling-5 genre
+gates — **protocol-errata FAIL on Sonnet** (13 lines of genuine
+claims missed vs calib-b incl. the preregistered temperature 1.0/0.1;
+b015 re-run + b016–b023 escalated to Opus) and **decisions-log PASS**
+(near-symmetric span-convention tails only); verdicts in
+`c4-triage/spot-audit/`. Genre rule: tracking/decision prose →
+Sonnet; dense errata → Opus. (4) **Canonical recompute on sapphire**
+(`c4aeac922`): **2402/135/2285/1709/8** over 6,539 rows; **Obs 382
+standing check CLEAN** — only the 5 attributed exits + 2 vocabulary
+resolutions moved; host stamp live. (5) **Wave-4 triage (18 rows, 8
+families) landed** blind-verified (3+1 Opus passes; 012#48[3] was
+DROPPED from the partition, caught by post-commit accounting, and
+adjudicated in a dedicated addendum — commit `8545b715c` over-claimed
+it, corrected in `84cffb471`): pre-expansion-holdout STALE banners
+(data_split_strategy, metrics_strategy), **tile-selection-methodology
+LIVING-DOC-FIX (HIGH — the lodged prereg cites it; holdout 20/5→60/15
++ seeds + honest dated 80/80 addendum)**, Decision-20 + Scale-32
+anchor-fallthrough extractions repaired (docs exact), errata
+snapshot-divergences dated to the second (E47's 253 written NINE
+SECONDS before the C(23,2) manifest; E71 superseded by its own
+remediation 2.5 h later).
+
+**⚠️ PI DECISIONS REQUIRED FIRST (S126 item a)** — package in
+`c4-triage/mismatch-triage-2026-08-02-wave4.json` → `escalations_for_pi`:
+1. **E43 coverage artefact (HIGH, LIVE)**: the register's "30 runs ×
+   487 tiles" is wrong at era (study ran 240 — every artefact family
+   agrees; README repeats it) AND its "T=0.7 dramatically outperforms
+   T=1.0, ΔF1 ~+0.15" is a coverage artefact — the matched T=1.0 arm
+   already on disk **REVERSES the sign** (ΔF1 −0.0335 at N=10/20 m;
+   identical detection set scores 0.6639 matched vs 0.4712
+   mis-scoped; recall ceiling 0.556). Depressed rows LIVE in
+   `results/paper-tables/spatial_tolerance_comparison.md:33-35,63-65`;
+   group_4/group_12 permutation tests carry the confound. Decide: new
+   erratum; full matched re-analysis (blind check was ONE operating
+   point); paper-table/README remediation. NOTHING was edited.
+2. E71 dated rider (post-recovery counts 484-486/shortfall 1-4).
+3. Prereg-integrity: broken § 8.6 pointer path; `holdout_manifest.json`
+   named but renamed away; `select_tiles_phase2.py` still WRITES the
+   old name (reproducibility defect on a prereg-cited script).
+4. E39 repo-side fix (regenerate step-0.05 adversarial sweep; correct
+   `pv-phase1-analysis.md:43` incommensurable-grid comparison).
+5. Governance: `docs/methodology/reports/**` in neither Revision-Policy
+   scope nor out-of-scope list.
+Plus: **Obs 383 correction draft** (approve → land via obs-writer);
+**GATE 3 machine-scope decision** (rule untracked-anchor claims out of
+mechanical scope vs machine_scope fields — census stamps now flag,
+not decide); snapshot-classification refinement (ruling 12 provisional
+rule misled THREE times this session: h11 dated-filename ≠ snapshot
+semantics, session-111-discoveries behaves living, errata snapshot
+unit is the ENTRY).
+
+**Session 126's queue**: (a) the PI decisions above; (b) **fleet
+waves** (138 pending; genre rule per the S125 gates; per-wave
+validate → recompute (sapphire) → Obs 382 check → triage); (c)
+**runner tranches 2–3** — binding requirements now pinned: cost/token
+runner MUST read era blobs for cleanup-touched cells (Obs 380;
+`run_pv.py:1336-1338` is the culprit; wave-3 demonstrated the
+era-blob path reproduces doc totals to the cent) and MUST price flex
+from tokens × rates × 0.5, NEVER `cost_estimate.total_cost_usd`
+(list-rate in EVERY meta; `estimate_cost()` has no tier param);
+statistical on sapphire; **BCa caveat**: the 2026-04-30
+percentile→BCa switch (`2026999ad`) means NO pre-May CI reproduces —
+comparers must never book CI mismatches as doc defects; (d)
+**anchor-fallthrough corpus sweep** (two sub-shapes: path-present-
+file-blind bare paths; condition-crossing values without cross-file
+locators) + amendment-3 guard hardening (guard tests path PRESENCE
+only); (e) wave-4 carry-forwards: E47 tier-claim siblings re-check on
+the 26-condition board; tile-selection-observations wrong-year date
+(2024→2025, next touch); Scale-32 len:$.examples trap (config
+deferred, examples emptied, total_examples 41 retained); (f)
+generated-stratum exact comparers + 125 SUSPECT sibling-JSON rows;
+(g) `generate_c4_ledger.py` (verification lane per ruling 11) + GATE
+3 package (carry the Phase-0 scope-growth flag + Obs 383 scope
+decision + snapshot-classification refinement).
+
+**Carry-forward**: unchanged from S125 close — MCC/Sens/Spec in
+evaluation.md tables are bootstrap means (Obs 376); user-obs S118–120
++ S122 pending (silence holds); WN-1 (provenance-by-shape) pending;
+Obs 382's standing check every wave (S125: CLEAN); register
+re-anchoring before any future census; reflection set append-only —
+never --fix there; old stash stack (6 entries, session-83-era tops) —
+don't pop blind; Sol untouched, $150 cap, keys in
+`~/personal-assistant/.env` — never read that file into context; flex
+mode for realtime API calls.
+
+### [CLOSED 2026-08-02] Historical: the Session 125 brief follows
+
+## NEXT SESSION (125) — PHASE 3: FLEET WAVES + WAVE-3 TRIAGE + RUNNER TRANCHES 2–3 [Session 124 CLOSED 2026-08-01; ran in Fable]
 
 > **The controller is `planning/audit-charter.md` § 9** — unchanged.
 > **Rulings that bind**: `reports/verification/phase3-rulings-2026-07-31.md`
