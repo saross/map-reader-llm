@@ -321,7 +321,7 @@ than to add scrutiny of the operator.
 *(Candidate C — census-grounded walkthroughs make rulings cheap —
 dropped at review, 2026-08-01.)*
 
-## Session 124 — 2026-08-02 (pending review)
+## Session 124 — 2026-08-02 (approved 2026-08-02; B generalised at review)
 
 **Candidate A — three decisions, one message, each at its own grain.**
 After asking for a walkthrough of the open questions, you resolved all
@@ -335,16 +335,22 @@ matters / options / recommendation, per item) is what enabled
 one-pass dispatch at three different confidence levels — worth
 keeping as the standing shape for decision batches.
 
-**Candidate B — treating the recommendation as a hypothesis.** On the
-failing tests you didn't accept "option (b) is most principled" as a
-decision; you asked whether it was *correct* and ordered an
-investigation before settling. The investigation changed the outcome:
-one of the three failures turned out to be a live-fixture staleness
-(re-pinned on evidence, no redesign needed), and the ledger growth
-was verified governance-clean before the invariant design was built
-on top of it. The pattern: recommendations about repair *philosophy*
-get tested against the artefact record before they harden into
-implementation.
+**Candidate B — recommendation-as-hypothesis (generalised by Shawn
+at review).** The instance: on the failing tests you didn't accept
+"option (b) is most principled" as a decision; you asked whether it
+was *correct* and ordered an investigation before settling. The
+investigation changed the outcome — one of the three failures turned
+out to be live-fixture staleness (re-pinned on evidence, no redesign
+needed), and the ledger growth was verified governance-clean before
+the invariant design was built on top of it. Shawn's generalisation
+(2026-08-02): "when there's a genuine decision we create a
+hypothesis about the most principled / lowest-technical-debt-
+incurring one, test it, then decide." The standing protocol this
+sets: for genuine (non-obvious) decisions, the recommendation is not
+the decision input — it is the *hypothesis*; a cheap investigation
+against the artefact record tests it; the decision follows the
+evidence. Applies beyond test repair: any choice where "most
+principled" can be probed before it hardens into implementation.
 
 **Candidate C — licensing the register, not the entries.** You
 approved both Obs candidates in five words without asking to see
