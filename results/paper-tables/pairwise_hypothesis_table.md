@@ -1,5 +1,21 @@
 # Pairwise Hypothesis Test Results (30m buffer, FDR-corrected)
 
+> **⚠ Superseded figures (2026-08-02, E72)**: the three Group 4 temperature
+> rows (`T=0.7 vs T=1.0` at N=30, N=10 and N=5) pair a 487-tile arm against
+> `outputs/h11/consensus-384-UNINTENDED-T1.0`, a 240-tile study scored against
+> 487-tile bounds (coverage confound — see protocol-errata E43 correction block
+> and E72); their ΔF1 of +0.193/+0.172/+0.168 understates the T=1.0 arm by
+> ~0.17–0.19 F1 and the "3/3 significant" Group 4 summary does not stand. At
+> matched 487-tile scope the contrast reverses sign and is not significant
+> (−0.021 at N=5, −0.034 at N=10). Dropping them leaves a 23-member
+> confirmatory family; the recomputed BH also flips Group 7's
+> `N=30 vs N=10 (HIGH text)` at 20 m from significant (q = 0.0488) to
+> non-significant (q = 0.0507) — the 30 m family is unchanged. The companion
+> `pairwise_hypothesis_table.csv` carries the same superseded rows.
+> Recomputed families: `results/e43-board-regen/bh-families/`. Matched-scope
+> analysis: `results/e43-matched-temperature/`. Dated snapshot; body unchanged;
+> do not cite the affected rows.
+
 ## Group 1
 
 | Question | Condition A | Condition B | F1 A | F1 B | ΔF1 | p_adj | Sig | 20m |

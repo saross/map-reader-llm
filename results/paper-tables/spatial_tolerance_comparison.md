@@ -1,5 +1,18 @@
 # Spatial Tolerance Comparison
 
+> **⚠ Superseded figures (2026-08-02, E72)**: the three `flash-min-text-t10`
+> rows — present in both the F1-by-buffer table and the precision/recall table
+> — derive from `outputs/h11/consensus-384-UNINTENDED-T1.0`, a 240-tile study
+> scored against the 487-tile bounds this document declares (coverage confound
+> — see protocol-errata E43 correction block + E72), and understate that arm by
+> ~0.17–0.19 F1 at every buffer. Their buffer-to-buffer *deltas* are less
+> affected than their levels, but neither should be cited. (The companion
+> `spatial_tolerance_curve.csv` does not include these conditions and is
+> unaffected.) Regenerated 23-condition board:
+> `results/e43-board-regen/`. Matched-scope analysis:
+> `results/e43-matched-temperature/`. Dated snapshot; body unchanged; do not
+> cite the affected rows.
+
 **Generated**: 2026-03-26T20:39:40.449698+00:00  
 **Buffers**: 20, 30, 40, 50 m  
 **Bounds**: full_evaluation_bounds.geojson (487 tiles, 435 mounds)  

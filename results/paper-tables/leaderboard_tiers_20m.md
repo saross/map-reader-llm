@@ -1,5 +1,19 @@
 # Leaderboard Tier Clustering (20m buffer, FDR-corrected)
 
+> **⚠ Superseded figures (2026-08-02, E72)**: rows #24 (FM text T=1.0 5/5),
+> #25 (22/30) and #26 (9/10) — Tier 8's last member and the whole of Tier 9 —
+> derive from `outputs/h11/consensus-384-UNINTENDED-T1.0`, a 240-tile study
+> scored against 487-tile bounds (coverage confound — see protocol-errata E43
+> correction block + E72), and understate that arm by ~0.17–0.19 F1. The tier
+> structure is affected as well: with those three cells dropped the board has
+> 23 conditions, 253 pairwise tests, 199 significant after BH, and **8 tiers**;
+> Tier 9 disappears and #2 (FH text 4/5 + PV, min vf) joins the leader in
+> Tier 1 because their separation (q = 0.0488) no longer survives the smaller
+> family (q = 0.0503). Regenerated 23-condition board:
+> `results/e43-board-regen/`. Matched-scope analysis:
+> `results/e43-matched-temperature/`. Dated snapshot; body unchanged; do not
+> cite the affected rows.
+
 Conditions within the same tier are statistically indistinguishable
 (all pairwise adjusted p-values >= 0.05). Based on 325 pairwise
 permutation tests (10,000 permutations, seed 42) among all 26

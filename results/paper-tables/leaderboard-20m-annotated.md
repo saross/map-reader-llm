@@ -1,5 +1,25 @@
 # VLM Burial Mound Detection: Comprehensive Leaderboard
 
+> **Last revised**: 2026-08-02 (E72 — superseded-figures banner added and the
+> temperature-interpretation prose corrected). See
+> [§ Changelog](#changelog) for revision history.
+>
+> **⚠ Superseded figures (2026-08-02, E72)**: the three `FM text T=1.0` rows
+> (#24 in Tier 8; #25 and #26 in Tier 9) derive from
+> `outputs/h11/consensus-384-UNINTENDED-T1.0`, a 240-tile study scored against
+> 487-tile bounds (coverage confound — see protocol-errata E43 correction block
+> and E72), and understate that arm by ~0.17–0.19 F1. The tier structure moves
+> with them: on the regenerated board those three cells are dropped, leaving 23
+> conditions, 253 pairwise tests, 199 significant after BH, and **8 tiers** —
+> Tier 9 disappears, and #2 (FH text 4/5 + PV, min vf) joins the leader in
+> Tier 1 because their separation (q = 0.0488) no longer survives the smaller
+> family (q = 0.0503). Regenerated 23-condition board:
+> `results/e43-board-regen/`. Matched-scope temperature analysis:
+> `results/e43-matched-temperature/`. Dated snapshot; the tables are unchanged;
+> the temperature-interpretation prose has been corrected in place and each
+> replacement is marked `[corrected 2026-08-02, E72]`. Do not cite the affected
+> rows.
+
 **Evaluation tolerance**: 20m (preregistered primary)
 **Tier clustering**: 325 pairwise permutation tests (10,000 iterations,
 seed 42), FDR-corrected at q=0.05. Conditions within the same tier are
@@ -59,6 +79,19 @@ This condition **separates from Tier 2 at 20m** (p=0.040 vs #2, p=0.021
 vs #3 after FDR). At 30m tolerance, the top 3 were statistically
 indistinguishable — the tighter tolerance reveals #1's recall advantage
 from the large proposer pool.
+
+**[corrected 2026-08-02, E72]** The solitary Tier 1 does not survive the
+regenerated board. The separation from #2 was marginal — raw p = 0.0398,
+BH-adjusted q = 0.0488 against the 325-member family — and dropping the
+three confounded cells shrinks that family to 253, lifting the same
+raw p-value to q = 0.0503. On the regenerated 23-condition board
+(`results/e43-board-regen/leaderboard-20m/`) #1 and #2 share Tier 1,
+while #1's separation from #3 (raw p = 0.0207, q = 0.0271) still holds
+and its separation from #4 is unaffected. The 20 m and 30 m
+boards therefore now agree that the leader is not distinguishable from
+the runner-up. This is a **consequence of the family size, not of any
+change to #1 or #2** — their F1, precision, recall and observed
+ΔF1 = 0.0261 are identical on both boards.
 
 ---
 
@@ -219,9 +252,18 @@ generate massive false positive volumes. Tile specificity is ~0.20,
 meaning they flag 80% of empty tiles. These represent the **raw proposer
 output** before consensus filtering.
 
-T=1.0 (#24) shows the **opposite failure mode**: precision is acceptable
-but recall crashes to 0.395. The high temperature causes the model to
-miss real mounds rather than hallucinate false ones.
+**[corrected 2026-08-02, E72]** The published text read: "T=1.0 (#24)
+shows the **opposite failure mode**: precision is acceptable but recall
+crashes to 0.395. The high temperature causes the model to miss real
+mounds rather than hallucinate false ones." That reading is an artefact.
+Row #24's recall of 0.395 is what you get when a study covering 240 of
+the 487 evaluation tiles is scored against all 487: every mound in the
+247 unprocessed tiles is counted as a miss. The "opposite failure mode"
+is the scoring geometry, not the temperature. Row #24 is dropped from
+the regenerated board (`results/e43-board-regen/`); for the temperature
+question see `results/e43-matched-temperature/`, where matched-scope
+consensus comparisons show no significant difference between T=0.7 and
+T=1.0 at either pool size or either buffer.
 
 ---
 
@@ -232,12 +274,21 @@ miss real mounds rather than hallucinate false ones.
 | 25 | FM text T=1.0 22/30 | 0.467 | [0.395, 0.532] | 0.499 | 0.439 | 0.208 | [0.122, 0.298] | 0.498 | 0.705 |
 | 26 | FM text T=1.0 9/10 | 0.462 | [0.391, 0.526] | 0.545 | 0.400 | 0.212 | [0.122, 0.303] | 0.467 | 0.736 |
 
-T=1.0 was a preregistered test condition (Phase 2b) that performs
-poorly — it is the API default temperature that most users would not
-change. Production consensus runs at T=1.0 were unintended (E43),
-but the Phase 2b results confirming T=1.0's poor performance are
-legitimate. Consensus voting on high-temperature outputs does not
-recover quality — larger pools just confirm the same noise.
+**[corrected 2026-08-02, E72]** The published text read: "T=1.0 was a
+preregistered test condition (Phase 2b) that performs poorly … Consensus
+voting on high-temperature outputs does not recover quality — larger
+pools just confirm the same noise." Only the first half survives. The
+two rows in this tier come from the 240-tile study and are scored
+against 487-tile bounds, so their F1 values (and the flat response
+across N=5/10/30 that looked like "larger pools just confirm the same
+noise") are dominated by a fixed load of artificial false negatives.
+Both rows are dropped from the regenerated board, which has eight tiers
+and no Tier 9. What remains citable is the preregistered Phase 2b
+evidence that T=1.0 is a poor single-pass default on the text track
+(+0.072 F1 for T=0.7, FDR p=0.004; the image track is +0.014, not
+significant). At matched 487-tile scope the consensus-level contrast
+reverses sign and is not significant (−0.021 at N=5, −0.034 at N=10;
+`results/e43-matched-temperature/`).
 
 ---
 
@@ -303,11 +354,23 @@ HIGH vs MINIMAL: +0.06 to +0.16 F1 (all p<0.001). The effect is larger
 for text (+0.14–0.16) than image (+0.06), suggesting HIGH thinking helps
 the model process textual legend descriptions more effectively.
 
-### Temperature is the single largest effect
+### Temperature: a modest text-track effect, not the largest in the study
 
-T=0.7 vs T=1.0: **+0.17 to +0.19 F1** (all p<0.001). The largest effect
-in the study. T=1.0 was the API default — using it without adjustment
-halves detection quality. A cautionary finding for practitioners.
+**[corrected 2026-08-02, E72]** The published text read: "T=0.7 vs
+T=1.0: **+0.17 to +0.19 F1** (all p<0.001). The largest effect in the
+study. T=1.0 was the API default — using it without adjustment halves
+detection quality." Those three consensus contrasts are void: they pair
+487-tile T=0.7 arms against a 240-tile T=1.0 arm scored at 487 tiles,
+and the gap is the missing coverage rather than the temperature. They
+are dropped from the regenerated board. At matched 487-tile scope the
+consensus contrast is not significant at either pool size or either
+buffer (−0.021 at N=5, −0.034 at N=10;
+`results/e43-matched-temperature/`). The citable temperature evidence is
+the preregistered Phase 2b sweep: **+0.072 F1** for T=0.7 over T=1.0 on
+the text track (FDR-adjusted p=0.004) and **+0.014, not significant**,
+on the image track. "T=1.0 is a poor default" is supported for text;
+"temperature halves detection quality" and "the largest effect in the
+study" are not.
 
 ### Text outperforms image
 
@@ -347,9 +410,15 @@ benefits significantly from doubling the consensus pool beyond N=5.
 
 ### What does not work
 
-1. **T=1.0 (API default temperature)** halves detection quality. A
-   preregistered finding (Phase 2b), not just a bug — T=1.0 is the
-   Gemini default that most users would leave unchanged.
+1. **T=1.0 (API default temperature)** is a poor single-pass default on
+   the text track. *[corrected 2026-08-02, E72]* The published item read
+   "halves detection quality"; that figure came from the confounded
+   consensus contrasts and is withdrawn. The preregistered Phase 2b
+   sweep supports the practitioner advice at a much smaller effect size
+   (text +0.072 F1, FDR p=0.004; image +0.014, ns), and matched-scope
+   consensus comparisons show no significant temperature difference at
+   all (`results/e43-matched-temperature/`). T=1.0 is still the Gemini
+   default that most users would leave unchanged.
 2. **MINIMAL thinking without pipeline** — tile specificity collapses to
    0.20–0.55. The model hallucinates detections on the majority of
    empty tiles.
@@ -357,8 +426,11 @@ benefits significantly from doubling the consensus pool beyond N=5.
    pipeline stage.
 4. **Prompt engineering within a fixed architecture** — effect sizes
    (0.06–0.17) are dwarfed by architectural effects (+0.50).
-5. **Consensus on incoherent outputs** — voting on high-temperature or
-   MINIMAL-thinking runs does not recover quality.
+5. **Consensus on MINIMAL-thinking outputs** — voting does not recover
+   quality. *[corrected 2026-08-02, E72]* The published item also named
+   "high-temperature" runs; that half rested on the confounded T=1.0
+   cells and is withdrawn. The MINIMAL-thinking half stands on its own
+   evidence (Tier 6–7 conditions, unaffected by the confound).
 6. **Larger consensus pools** — N=10 does not improve over N=5 for
    either Flash or Pro. The consensus mechanism saturates early;
    further gains require the verifier stage.
@@ -377,3 +449,41 @@ benefits significantly from doubling the consensus pool beyond N=5.
 - Evaluation area: 487 tiles (384px, ~5 m/px)
 - Pro N=10 evaluation: 5 additional Batch API runs ($~60), consensus
   clustering with DBSCAN (eps=30m), full threshold sweep at 20/30/40/50m
+
+> **[corrected 2026-08-02, E72]** The four counts above describe this
+> dated snapshot. The regenerated board drops the three confounded
+> `FM text T=1.0` cells: 23 conditions, 253 pairwise tests, 199/253
+> significant after BH, 8 tiers (`results/e43-board-regen/`).
+
+## Changelog
+
+### 2026-08-02 — Temperature interpretation corrected under E72
+
+**Trigger**: protocol erratum E72 (coverage confound) and the Principal
+Investigator's remediation ruling. The three `FM text T=1.0` rows score
+a 240-tile study against 487-tile bounds, so their F1, precision and
+recall — and every interpretation built on them — are artefacts of the
+scoring geometry.
+
+| Claim | Before | After |
+|---|---|---|
+| Temperature effect size | "+0.17 to +0.19 F1 (all p<0.001), the largest effect in the study" | Withdrawn. Matched-scope consensus contrasts are not significant (−0.021 at N=5, −0.034 at N=10); the citable evidence is Phase 2b (text +0.072, FDR p=0.004; image +0.014, ns) |
+| "T=1.0 halves detection quality" | Stated as a practitioner finding | Withdrawn; replaced with the Phase 2b text-track effect |
+| Row #24's "opposite failure mode" (recall 0.395) | Attributed to high temperature | Attributed to the 247 unprocessed tiles counted as misses |
+| "Consensus on incoherent outputs" (high-temperature *and* MINIMAL-thinking) | Both halves asserted | High-temperature half withdrawn; MINIMAL-thinking half retained |
+| Tier 1 "separates from Tier 2 at 20m" | #1 solitary (p=0.040 vs #2, q=0.0488) | Correction note added: at the 253-member family the same raw p gives q=0.0503, so #1 and #2 share Tier 1 on the regenerated board. #1 versus #3 (raw p=0.0207, q=0.0271) still holds |
+| Board shape | 26 conditions, 325 tests, 265 significant, 9 tiers | Snapshot figures retained, with the regenerated 23/253/199/8 figures noted |
+
+**What did NOT change**: every table in the document (rows are the
+dated record and are covered by the superseded-figures banner), the
+architecture, thinking, modality, model and pool-size sections, and the
+pipeline-progression narrative — none of those touch the confounded
+cells.
+
+### 2026-03-29 — Original publication
+
+Annotated 26-condition leaderboard at the preregistered 20 m buffer:
+per-tier tables with F1/precision/recall, bootstrap confidence
+intervals and tile-level MCC, a pipeline-progression walk-through,
+per-factor effect summaries, and a "what works / what does not" close.
+Updated 2026-04-24 with the Session 78 scope-unification note.

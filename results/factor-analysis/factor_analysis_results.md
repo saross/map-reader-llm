@@ -1,5 +1,23 @@
 # Factor Analysis — Pairwise Permutation Test Results
 
+> **Last revised**: 2026-08-02 (E72 — the Temperature family's headline
+> recomputed from the retained clean contrasts). See
+> [§ Changelog](#changelog) for revision history.
+>
+> **⚠ Superseded figures (2026-08-02, E72)**: four of the six Temperature
+> contrasts — the three Group 4 rows (`Flash MIN text T=0.7` versus `T=1.0` at
+> N=5/10/30) and the Group 12 row `T=0.7 vs T=1.0 (N=1, 384 px)` — pair a
+> 487-tile arm against `outputs/h11/consensus-384-UNINTENDED-T1.0`, a 240-tile
+> study scored against 487-tile bounds (coverage confound — see
+> protocol-errata E43 correction block and E72), and understate that arm by
+> ~0.17–0.19 F1. Those four rows are void; the § 5 table is retained as the
+> dated record and its headline is corrected in place below. The other four
+> families (Architecture, Thinking, Modality, Prompt Engineering) contain no
+> confounded contrast and are unaffected — BH is applied within family here, so
+> their q-values do not move. Recomputed family:
+> `results/e43-board-regen/bh-families/`. Matched-scope analysis:
+> `results/e43-matched-temperature/`. Do not cite the four affected rows.
+
 **Study**: Cross-phase factor analysis across five factor families (Architecture, Thinking, Temperature, Modality, Prompt Engineering)
 **Date**: 2026-03-31
 **Test**: paired bootstrap-style permutation on tile-level F1 differences
@@ -18,7 +36,7 @@ families produce significant effects and one is a clean null:
 |--------|----------:|:---------------:|------------------|
 | Architecture | 12 | **11 / 12** | Pipeline architecture dominates: N=1 → consensus (ΔF1 up to +0.39); +PV adds +0.05 to +0.09 on top |
 | Thinking | 6 | **5 / 6** | HIGH > MINIMAL at consensus across text + image; non-significant only at Flash N=1 image |
-| Temperature | 6 | **5 / 6** | T=0.7 > T=1.0 on Flash MIN text (ΔF1 +0.17 to +0.19); only 512 px image non-significant |
+| Temperature | 2 usable (6 published) | **1 / 2** | T=0.7 > T=1.0 at single-pass on the Phase 2b text track (ΔF1 +0.074, recomputed q = 0.011); the image track is null (+0.015, ns). The four Flash MIN text contrasts are void under E72 — see § 5 [corrected 2026-08-02, E72] |
 | Modality | 9 | **8 / 9** | Text > image at Pro level and at PV stage; image wins at Flash N=1 (asymmetric optimisation story) |
 | Prompt Engineering | 28 | **0 / 28** | Library composition, example ordering, text treatment all null — consistent with H8 v2 / H10 v2 / H12 v2 nulls |
 
@@ -136,7 +154,20 @@ with the "HIGH thinking adds variance that consensus averages out"
 interpretation: at N=1 the extra thinking-driven variance is a
 handicap; at N ≥ 5 consensus exploits it.
 
-## 5. Temperature (5 of 6 significant)
+## 5. Temperature (1 of 2 usable contrasts significant)
+
+> **[corrected 2026-08-02, E72]** This family was published as "5 of 6
+> significant, ΔF1 +0.17 to +0.19". Four of its six contrasts — the three
+> Group 4 rows and the Group 12 384 px N=1 row — score a 240-tile arm against
+> 487-tile bounds and are void. Recomputing Benjamini–Hochberg over the two
+> retained contrasts (family size 6 → 2) gives: Phase 2b text, ΔF1 +0.074,
+> q = 0.011 (significant, was q = 0.0066); Phase 2b image, ΔF1 +0.015,
+> q = 0.4763 (unchanged, still null). At matched 487-tile scope the Flash MIN
+> text contrast reverses sign and is not significant (−0.021 at N=5, −0.034 at
+> N=10; `results/e43-matched-temperature/`). The table below is retained as the
+> dated record — read the first three rows and the 384 px N=1 row as
+> superseded. Recomputed family:
+> `results/e43-board-regen/bh-families/families_recomputed.md`.
 
 | Question | Condition A | Condition B | F1_A | F1_B | ΔF1 | p (raw) | p (adj) | Sig |
 |---|---|---|---|---|---|---|---|---|
@@ -294,12 +325,18 @@ These 512 px Phase 2a–2e contrasts are consistent with the H8 v2
    null. This is a stronger claim than any individual hypothesis
    alone and is the cleanest single sentence the paper's Discussion
    can point at for "what doesn't matter".
-4. **T=0.7 > T=1.0 is robust across K.** At K = 1 / 5 / 10 / 30 on
-   Flash MIN text, T=0.7 beats T=1.0 at ΔF1 = +0.10 to +0.19. Combined
-   with Phase 2b's full 5-temperature sweep finding that T=0.0 is
-   the single-pass optimum, the paper's practitioner claim ("change
-   Gemini's T=1.0 default") is supported from two independent
-   analyses.
+4. **The temperature claim rests on Phase 2b, not on this family.**
+   *[corrected 2026-08-02, E72]* The published version of this item
+   read "T=0.7 > T=1.0 is robust across K … ΔF1 = +0.10 to +0.19".
+   The four Flash MIN text contrasts that supported it are void
+   (coverage confound; at matched scope the effect reverses sign and
+   is not significant). What survives here is the single-pass Phase 2b
+   text contrast (ΔF1 +0.074, recomputed q = 0.011), with the Phase 2b
+   image track null (+0.015, ns). The paper's practitioner claim
+   ("change Gemini's T=1.0 default") should be sourced to the
+   preregistered Phase 2b sweep (text +0.072, FDR p = 0.004; image
+   +0.014, ns) — that claim stands, but as a text-track finding rather
+   than a universal T=0.7 superiority across K.
 5. **Modality effects are model-dependent.** Text > image at Pro;
    ambiguous or flipped at Flash N=1. The paper's modality claim
    should be stated conditionally on model family rather than as
@@ -350,3 +387,41 @@ executive summary, methods, caveats, and paper implications. The
 two 512 px Temperature rows with incomplete condition metadata are
 explicitly flagged; their statistical outputs (ΔF1, p-values) remain
 valid.
+
+## Changelog
+
+### 2026-08-02 — Temperature family corrected under E72
+
+**Trigger**: protocol erratum E72 (coverage confound) and the Principal
+Investigator's remediation ruling. Four of the six Temperature
+contrasts score `outputs/h11/consensus-384-UNINTENDED-T1.0` — a
+240-tile study — against 487-tile bounds, so their ΔF1 understates the
+T=1.0 arm by ~0.17–0.19.
+
+| Claim | Before | After |
+|---|---|---|
+| Temperature family headline (§ 1 table, § 5 heading) | 6 contrasts, **5 / 6** significant, "ΔF1 +0.17 to +0.19" | 2 usable contrasts (6 published), **1 / 2** significant, ΔF1 +0.074 (text, q = 0.011) and +0.015 (image, ns) |
+| Phase 2b text contrast q-value | 0.0066 (family of 6) | **0.0110** (family of 2) |
+| Phase 2b image contrast q-value | 0.4763 | 0.4763 (unchanged) |
+| § 9 implication 4 | "T=0.7 > T=1.0 is robust across K … +0.10 to +0.19" | Rewritten: the claim is sourced to the preregistered Phase 2b sweep (text +0.072, FDR p = 0.004; image +0.014, ns), not to this family |
+
+**What did NOT change**: the § 5 table itself (retained as the dated
+record under the superseded-figures banner); the Architecture,
+Thinking, Modality and Prompt Engineering families and all their
+q-values (Benjamini–Hochberg is applied within family here, so
+dropping Temperature members cannot move them — verified by
+recomputation); the within-family FDR framing; the data-provenance and
+caveats sections.
+
+**Landed by**: `scripts/regen_e43_board.py`; recomputed family at
+`results/e43-board-regen/bh-families/families_recomputed.md`.
+
+### 2026-03-31 — Original publication
+
+61 pairwise permutation contrasts across five factor families
+(Architecture 12, Modality 9, Thinking 6, Temperature 6, Prompt
+Engineering 28), Benjamini–Hochberg-corrected within each family at
+q = 0.05, wrapped in a narrative frame with executive summary,
+methods, caveats and paper implications. Session 75 (2026-04-24) later
+repaired two 512 px Temperature rows' condition metadata without
+changing their statistics.

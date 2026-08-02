@@ -1,0 +1,585 @@
+{
+  "metadata": {
+    "timestamp": "2026-08-02T12:26:28.545603+00:00",
+    "script": "regen_e43_board.py",
+    "git_commit": "bc45133b4",
+    "erratum": "E72",
+    "q": 0.05,
+    "method": "Benjamini-Hochberg, applied within each declared family",
+    "clean_families": [
+      "factor-analysis:architecture",
+      "factor-analysis:modality",
+      "factor-analysis:prompt_engineering",
+      "factor-analysis:thinking",
+      "pairwise-20m:exploratory",
+      "pairwise-30m:exploratory"
+    ]
+  },
+  "families": [
+    {
+      "family": "confirmatory",
+      "n_published": 26,
+      "n_dropped": 3,
+      "n_retained": 23,
+      "significant_published_all": 20,
+      "significant_published_retained": 17,
+      "significant_recomputed": 16,
+      "dropped_members": [
+        {
+          "group": 4,
+          "question": "T=0.7 vs T=1.0 (N=5)"
+        },
+        {
+          "group": 4,
+          "question": "T=0.7 vs T=1.0 (N=10)"
+        },
+        {
+          "group": 4,
+          "question": "T=0.7 vs T=1.0 (N=30)"
+        }
+      ],
+      "members": [
+        {
+          "group": 1,
+          "question": "PV vs consensus",
+          "label_a": "Flash HIGH text 16-of-30 + PV",
+          "label_b": "Flash HIGH text 26-of-30",
+          "p_raw": 0.0,
+          "q_published": 0.0,
+          "q_recomputed": 0.0,
+          "status_changed": false
+        },
+        {
+          "group": 1,
+          "question": "PV vs consensus",
+          "label_a": "Flash HIGH text 9-of-10 + PV",
+          "label_b": "Flash HIGH text 9-of-10",
+          "p_raw": 0.0,
+          "q_published": 0.0,
+          "q_recomputed": 0.0,
+          "status_changed": false
+        },
+        {
+          "group": 1,
+          "question": "PV vs consensus",
+          "label_a": "Flash HIGH text 4-of-5 + PV",
+          "label_b": "Flash HIGH text 5-of-5",
+          "p_raw": 0.0,
+          "q_published": 0.0,
+          "q_recomputed": 0.0,
+          "status_changed": false
+        },
+        {
+          "group": 1,
+          "question": "PV verifier thinking",
+          "label_a": "Flash HIGH text 4-of-5 + medium vf",
+          "label_b": "Flash HIGH text 5-of-5",
+          "p_raw": 0.0,
+          "q_published": 0.0,
+          "q_recomputed": 0.0,
+          "status_changed": false
+        },
+        {
+          "group": 1,
+          "question": "PV vs consensus (image)",
+          "label_a": "Flash HIGH image 3-of-5 + PV",
+          "label_b": "Flash HIGH image 3-of-5",
+          "p_raw": 0.0004,
+          "q_published": 0.000693,
+          "q_recomputed": 0.000767,
+          "status_changed": false
+        },
+        {
+          "group": 1,
+          "question": "PV vs consensus (Pro)",
+          "label_a": "Pro HIGH text 3-of-5 + PV",
+          "label_b": "Pro HIGH text 3-of-5",
+          "p_raw": 0.258,
+          "q_published": 0.304909,
+          "q_recomputed": 0.312316,
+          "status_changed": false
+        },
+        {
+          "group": 1,
+          "question": "PV on single-pass text",
+          "label_a": "Text baseline + PV",
+          "label_b": "Single-pass text 5-of-5",
+          "p_raw": 0.0,
+          "q_published": 0.0,
+          "q_recomputed": 0.0,
+          "status_changed": false
+        },
+        {
+          "group": 1,
+          "question": "PV on single-pass image",
+          "label_a": "Image baseline + PV",
+          "label_b": "Single-pass text 5-of-5",
+          "p_raw": 0.0,
+          "q_published": 0.0,
+          "q_recomputed": 0.0,
+          "status_changed": false
+        },
+        {
+          "group": 2,
+          "question": "Text vs image",
+          "label_a": "Flash HIGH text 5-of-5",
+          "label_b": "Flash HIGH image 3-of-5",
+          "p_raw": 0.0143,
+          "q_published": 0.019568,
+          "q_recomputed": 0.020556,
+          "status_changed": false
+        },
+        {
+          "group": 2,
+          "question": "Text vs image (N=10)",
+          "label_a": "Flash HIGH text 9-of-10",
+          "label_b": "Flash HIGH image 6-of-10",
+          "p_raw": 0.0054,
+          "q_published": 0.0078,
+          "q_recomputed": 0.00828,
+          "status_changed": false
+        },
+        {
+          "group": 2,
+          "question": "Text vs image (MINIMAL)",
+          "label_a": "Flash MIN text 5-of-5",
+          "label_b": "Flash MIN image 4-of-5",
+          "p_raw": 0.3604,
+          "q_published": 0.390433,
+          "q_recomputed": 0.394724,
+          "status_changed": false
+        },
+        {
+          "group": 2,
+          "question": "Text vs image (PV)",
+          "label_a": "Flash HIGH text 4-of-5 + PV",
+          "label_b": "Flash HIGH image 3-of-5 + PV",
+          "p_raw": 0.0,
+          "q_published": 0.0,
+          "q_recomputed": 0.0,
+          "status_changed": false
+        },
+        {
+          "group": 3,
+          "question": "HIGH vs MINIMAL (text N=5)",
+          "label_a": "Flash HIGH text 5-of-5",
+          "label_b": "Flash MIN text 5-of-5",
+          "p_raw": 0.0,
+          "q_published": 0.0,
+          "q_recomputed": 0.0,
+          "status_changed": false
+        },
+        {
+          "group": 3,
+          "question": "HIGH vs MINIMAL (text N=10)",
+          "label_a": "Flash HIGH text 9-of-10",
+          "label_b": "Flash MIN text 10-of-10",
+          "p_raw": 0.0,
+          "q_published": 0.0,
+          "q_recomputed": 0.0,
+          "status_changed": false
+        },
+        {
+          "group": 3,
+          "question": "HIGH vs MINIMAL (text N=30)",
+          "label_a": "Flash HIGH text 26-of-30",
+          "label_b": "Flash MIN text 29-of-30",
+          "p_raw": 0.0,
+          "q_published": 0.0,
+          "q_recomputed": 0.0,
+          "status_changed": false
+        },
+        {
+          "group": 3,
+          "question": "HIGH vs MINIMAL (image N=5)",
+          "label_a": "Flash HIGH image 3-of-5",
+          "label_b": "Flash MIN image 4-of-5",
+          "p_raw": 0.0003,
+          "q_published": 0.000557,
+          "q_recomputed": 0.000627,
+          "status_changed": false
+        },
+        {
+          "group": 5,
+          "question": "Pro vs Flash (text consensus)",
+          "label_a": "Pro HIGH text 3-of-5",
+          "label_b": "Flash HIGH text 5-of-5",
+          "p_raw": 0.0042,
+          "q_published": 0.006424,
+          "q_recomputed": 0.0069,
+          "status_changed": false
+        },
+        {
+          "group": 5,
+          "question": "Pro vs Flash (image consensus)",
+          "label_a": "Pro HIGH image 3-of-5",
+          "label_b": "Flash HIGH image 3-of-5",
+          "p_raw": 0.2939,
+          "q_published": 0.332235,
+          "q_recomputed": 0.337985,
+          "status_changed": false
+        },
+        {
+          "group": 5,
+          "question": "Pro vs Flash (PV text)",
+          "label_a": "Pro HIGH text 3-of-5 + PV",
+          "label_b": "Flash HIGH text 4-of-5 + PV",
+          "p_raw": 0.4002,
+          "q_published": 0.416208,
+          "q_recomputed": 0.418391,
+          "status_changed": false
+        },
+        {
+          "group": 7,
+          "question": "N=10 vs N=5 (HIGH text)",
+          "label_a": "Flash HIGH text 9-of-10",
+          "label_b": "Flash HIGH text 5-of-5",
+          "p_raw": 0.1404,
+          "q_published": 0.173829,
+          "q_recomputed": 0.1794,
+          "status_changed": false
+        },
+        {
+          "group": 7,
+          "question": "N=30 vs N=10 (HIGH text)",
+          "label_a": "Flash HIGH text 26-of-30",
+          "label_b": "Flash HIGH text 9-of-10",
+          "p_raw": 0.0375,
+          "q_published": 0.04875,
+          "q_recomputed": 0.050735,
+          "status_changed": true
+        },
+        {
+          "group": 7,
+          "question": "N=10 vs N=5 (MIN text)",
+          "label_a": "Flash MIN text 10-of-10",
+          "label_b": "Flash MIN text 5-of-5",
+          "p_raw": 0.6338,
+          "q_published": 0.6338,
+          "q_recomputed": 0.6338,
+          "status_changed": false
+        },
+        {
+          "group": 7,
+          "question": "N=30 vs N=10 (MIN text)",
+          "label_a": "Flash MIN text 29-of-30",
+          "label_b": "Flash MIN text 10-of-10",
+          "p_raw": 0.0005,
+          "q_published": 0.000813,
+          "q_recomputed": 0.000885,
+          "status_changed": false
+        }
+      ],
+      "artefact": "results/pairwise/20m",
+      "n_status_changes": 1
+    },
+    {
+      "family": "confirmatory",
+      "n_published": 26,
+      "n_dropped": 3,
+      "n_retained": 23,
+      "significant_published_all": 18,
+      "significant_published_retained": 15,
+      "significant_recomputed": 15,
+      "dropped_members": [
+        {
+          "group": 4,
+          "question": "T=0.7 vs T=1.0 (N=5)"
+        },
+        {
+          "group": 4,
+          "question": "T=0.7 vs T=1.0 (N=10)"
+        },
+        {
+          "group": 4,
+          "question": "T=0.7 vs T=1.0 (N=30)"
+        }
+      ],
+      "members": [
+        {
+          "group": 1,
+          "question": "PV vs consensus",
+          "label_a": "Flash HIGH text 16-of-30 + PV",
+          "label_b": "Flash HIGH text 26-of-30",
+          "p_raw": 0.0,
+          "q_published": 0.0,
+          "q_recomputed": 0.0,
+          "status_changed": false
+        },
+        {
+          "group": 1,
+          "question": "PV vs consensus",
+          "label_a": "Flash HIGH text 9-of-10 + PV",
+          "label_b": "Flash HIGH text 9-of-10",
+          "p_raw": 0.0,
+          "q_published": 0.0,
+          "q_recomputed": 0.0,
+          "status_changed": false
+        },
+        {
+          "group": 1,
+          "question": "PV vs consensus",
+          "label_a": "Flash HIGH text 4-of-5 + PV",
+          "label_b": "Flash HIGH text 5-of-5",
+          "p_raw": 0.0,
+          "q_published": 0.0,
+          "q_recomputed": 0.0,
+          "status_changed": false
+        },
+        {
+          "group": 1,
+          "question": "PV verifier thinking",
+          "label_a": "Flash HIGH text 4-of-5 + medium vf",
+          "label_b": "Flash HIGH text 5-of-5",
+          "p_raw": 0.0,
+          "q_published": 0.0,
+          "q_recomputed": 0.0,
+          "status_changed": false
+        },
+        {
+          "group": 1,
+          "question": "PV vs consensus (image)",
+          "label_a": "Flash HIGH image 3-of-5 + PV",
+          "label_b": "Flash HIGH image 3-of-5",
+          "p_raw": 0.0002,
+          "q_published": 0.000371,
+          "q_recomputed": 0.000418,
+          "status_changed": false
+        },
+        {
+          "group": 1,
+          "question": "PV vs consensus (Pro)",
+          "label_a": "Pro HIGH text 3-of-5 + PV",
+          "label_b": "Pro HIGH text 3-of-5",
+          "p_raw": 0.2174,
+          "q_published": 0.256927,
+          "q_recomputed": 0.263168,
+          "status_changed": false
+        },
+        {
+          "group": 1,
+          "question": "PV on single-pass text",
+          "label_a": "Text baseline + PV",
+          "label_b": "Single-pass text 5-of-5",
+          "p_raw": 0.0,
+          "q_published": 0.0,
+          "q_recomputed": 0.0,
+          "status_changed": false
+        },
+        {
+          "group": 1,
+          "question": "PV on single-pass image",
+          "label_a": "Image baseline + PV",
+          "label_b": "Single-pass text 5-of-5",
+          "p_raw": 0.0,
+          "q_published": 0.0,
+          "q_recomputed": 0.0,
+          "status_changed": false
+        },
+        {
+          "group": 2,
+          "question": "Text vs image",
+          "label_a": "Flash HIGH text 5-of-5",
+          "label_b": "Flash HIGH image 3-of-5",
+          "p_raw": 0.5589,
+          "q_published": 0.605475,
+          "q_recomputed": 0.612129,
+          "status_changed": false
+        },
+        {
+          "group": 2,
+          "question": "Text vs image (N=10)",
+          "label_a": "Flash HIGH text 9-of-10",
+          "label_b": "Flash HIGH image 6-of-10",
+          "p_raw": 0.9561,
+          "q_published": 0.9561,
+          "q_recomputed": 0.9561,
+          "status_changed": false
+        },
+        {
+          "group": 2,
+          "question": "Text vs image (MINIMAL)",
+          "label_a": "Flash MIN text 5-of-5",
+          "label_b": "Flash MIN image 4-of-5",
+          "p_raw": 0.0013,
+          "q_published": 0.001988,
+          "q_recomputed": 0.002136,
+          "status_changed": false
+        },
+        {
+          "group": 2,
+          "question": "Text vs image (PV)",
+          "label_a": "Flash HIGH text 4-of-5 + PV",
+          "label_b": "Flash HIGH image 3-of-5 + PV",
+          "p_raw": 0.012,
+          "q_published": 0.017333,
+          "q_recomputed": 0.0184,
+          "status_changed": false
+        },
+        {
+          "group": 3,
+          "question": "HIGH vs MINIMAL (text N=5)",
+          "label_a": "Flash HIGH text 5-of-5",
+          "label_b": "Flash MIN text 5-of-5",
+          "p_raw": 0.0,
+          "q_published": 0.0,
+          "q_recomputed": 0.0,
+          "status_changed": false
+        },
+        {
+          "group": 3,
+          "question": "HIGH vs MINIMAL (text N=10)",
+          "label_a": "Flash HIGH text 9-of-10",
+          "label_b": "Flash MIN text 10-of-10",
+          "p_raw": 0.0,
+          "q_published": 0.0,
+          "q_recomputed": 0.0,
+          "status_changed": false
+        },
+        {
+          "group": 3,
+          "question": "HIGH vs MINIMAL (text N=30)",
+          "label_a": "Flash HIGH text 26-of-30",
+          "label_b": "Flash MIN text 29-of-30",
+          "p_raw": 0.0,
+          "q_published": 0.0,
+          "q_recomputed": 0.0,
+          "status_changed": false
+        },
+        {
+          "group": 3,
+          "question": "HIGH vs MINIMAL (image N=5)",
+          "label_a": "Flash HIGH image 3-of-5",
+          "label_b": "Flash MIN image 4-of-5",
+          "p_raw": 0.0,
+          "q_published": 0.0,
+          "q_recomputed": 0.0,
+          "status_changed": false
+        },
+        {
+          "group": 5,
+          "question": "Pro vs Flash (text consensus)",
+          "label_a": "Pro HIGH text 3-of-5",
+          "label_b": "Flash HIGH text 5-of-5",
+          "p_raw": 0.001,
+          "q_published": 0.001625,
+          "q_recomputed": 0.001769,
+          "status_changed": false
+        },
+        {
+          "group": 5,
+          "question": "Pro vs Flash (image consensus)",
+          "label_a": "Pro HIGH image 3-of-5",
+          "label_b": "Flash HIGH image 3-of-5",
+          "p_raw": 0.2507,
+          "q_published": 0.2834,
+          "q_recomputed": 0.288305,
+          "status_changed": false
+        },
+        {
+          "group": 5,
+          "question": "Pro vs Flash (PV text)",
+          "label_a": "Pro HIGH text 3-of-5 + PV",
+          "label_b": "Flash HIGH text 4-of-5 + PV",
+          "p_raw": 0.1131,
+          "q_published": 0.140029,
+          "q_recomputed": 0.144517,
+          "status_changed": false
+        },
+        {
+          "group": 7,
+          "question": "N=10 vs N=5 (HIGH text)",
+          "label_a": "Flash HIGH text 9-of-10",
+          "label_b": "Flash HIGH text 5-of-5",
+          "p_raw": 0.0607,
+          "q_published": 0.083063,
+          "q_recomputed": 0.087256,
+          "status_changed": false
+        },
+        {
+          "group": 7,
+          "question": "N=30 vs N=10 (HIGH text)",
+          "label_a": "Flash HIGH text 26-of-30",
+          "label_b": "Flash HIGH text 9-of-10",
+          "p_raw": 0.0671,
+          "q_published": 0.08723,
+          "q_recomputed": 0.090782,
+          "status_changed": false
+        },
+        {
+          "group": 7,
+          "question": "N=10 vs N=5 (MIN text)",
+          "label_a": "Flash MIN text 10-of-10",
+          "label_b": "Flash MIN text 5-of-5",
+          "p_raw": 0.6704,
+          "q_published": 0.697216,
+          "q_recomputed": 0.700873,
+          "status_changed": false
+        },
+        {
+          "group": 7,
+          "question": "N=30 vs N=10 (MIN text)",
+          "label_a": "Flash MIN text 29-of-30",
+          "label_b": "Flash MIN text 10-of-10",
+          "p_raw": 0.0005,
+          "q_published": 0.000867,
+          "q_recomputed": 0.000958,
+          "status_changed": false
+        }
+      ],
+      "artefact": "results/pairwise/30m",
+      "n_status_changes": 0
+    },
+    {
+      "family": "temperature",
+      "n_published": 6,
+      "n_dropped": 4,
+      "n_retained": 2,
+      "significant_published_all": 5,
+      "significant_published_retained": 1,
+      "significant_recomputed": 1,
+      "dropped_members": [
+        {
+          "group": 12,
+          "question": "T=0.7 vs T=1.0 (N=1, 384px)"
+        },
+        {
+          "group": 4,
+          "question": "T=0.7 vs T=1.0 (N=5)"
+        },
+        {
+          "group": 4,
+          "question": "T=0.7 vs T=1.0 (N=10)"
+        },
+        {
+          "group": 4,
+          "question": "T=0.7 vs T=1.0 (N=30)"
+        }
+      ],
+      "members": [
+        {
+          "group": 12,
+          "question": "T=0.7 vs T=1.0 (N=1, Phase 2b text)",
+          "label_a": "P2b text T=0.7 run_1",
+          "label_b": "P2b text T=1.0 run_1",
+          "p_raw": 0.0055,
+          "q_published": 0.0066,
+          "q_recomputed": 0.011,
+          "status_changed": false
+        },
+        {
+          "group": 12,
+          "question": "T=0.7 vs T=1.0 (N=1, Phase 2b image)",
+          "label_a": "P2b image T=0.7 run_1",
+          "label_b": "P2b image T=1.0 run_1",
+          "p_raw": 0.4763,
+          "q_published": 0.4763,
+          "q_recomputed": 0.4763,
+          "status_changed": false
+        }
+      ],
+      "artefact": "results/factor-analysis/factor_analysis_results.json",
+      "n_status_changes": 0
+    }
+  ]
+}

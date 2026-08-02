@@ -1,5 +1,16 @@
 # Tile-Level MCC Summary
 
+> **⚠ Superseded figures (2026-08-02, E72)**: rows 12, 14 and 15
+> (`Flash MIN text T=1.0` 5-of-5, 9-of-10 and 22-of-30) derive from
+> `outputs/h11/consensus-384-UNINTENDED-T1.0`, a 240-tile study scored against
+> 487-tile bounds (coverage confound — see protocol-errata E43 correction block
+> and E72). Their confusion cells sum to 487 tiles although only 240 were
+> processed, so the tile-level MCC, sensitivity and specificity for these three
+> rows are depressed on the same mechanism that understates their F1 by
+> ~0.17–0.19. Regenerated 23-condition board: `results/e43-board-regen/`.
+> Matched-scope analysis: `results/e43-matched-temperature/`. Dated snapshot;
+> body unchanged; do not cite the affected rows.
+
 **Generated**: 2026-03-28T07:14:50.660200+00:00  
 **Conditions**: 16  
 **Description**: Tile-level MCC for remaining consensus and PV conditions at 384px. Covers flash-min-text-t07/t10, flash-min-image, pro-high-image, single-pass-t0 consensus conditions, and five additional PV conditions with various verifier configurations.

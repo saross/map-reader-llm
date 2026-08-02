@@ -1,7 +1,7 @@
 # Experimental Progression: From Preregistered Design to Production Pipeline
 
-> **Last revised**: 2026-07-31 (C4 sweep: missed "1/10 FDR" instance
-> fixed; 20 m CI updated to the era-current provenance artefact). See
+> **Last revised**: 2026-08-02 (E72: dated correction note on the
+> consensus-level temperature claim). See
 > [§ Changelog](#changelog) for revision history.
 
 **Purpose**: Reference document for the paper's methods section,
@@ -177,6 +177,14 @@ adequate statistical power:
   all p<0.001 at consensus). T=1.0 is the Gemini API default; the
   finding that practitioners should change this default is a practical
   contribution.
+  - **[corrected 2026-08-02, E72]** The consensus-level ΔF1=+0.17 is a
+    coverage artefact: the T=1.0 arm covers 240 of 487 tiles and was
+    scored against 487-tile bounds. At matched scope the effect
+    reverses sign and is not significant
+    (`results/e43-matched-temperature/`). The citable temperature
+    evidence is the preregistered Phase 2b sweep (text +0.072, FDR
+    p=0.004; image +0.014, ns) — "T=1.0 is a poor default" stands as a
+    text-track finding; a universal T=0.7 superiority does not.
 - **Modality**: Text outperforms image confirmed significant at HIGH
   thinking (+0.05 to +0.09 F1). The advantage vanishes at MINIMAL
   thinking.
@@ -347,6 +355,22 @@ evolution.*
 ---
 
 ## Changelog
+
+### 2026-08-02 — Temperature claim corrected under E72
+
+**Refresh trigger**: protocol erratum E72 (coverage confound) and the
+Principal Investigator's remediation ruling; regenerated board at
+`results/e43-board-regen/`, matched-scope evidence at
+`results/e43-matched-temperature/`.
+
+| before | after |
+| :--- | :--- |
+| "Temperature: T=0.7 vs T=1.0 confirmed significant (ΔF1=+0.17, all p<0.001 at consensus)" presented without qualification | Same line retained, with a dated correction sub-bullet: the consensus-level ΔF1 is a coverage artefact (240-tile arm scored at 487 tiles); at matched scope the effect reverses sign and is not significant; the citable evidence is Phase 2b (text +0.072, FDR p=0.004; image +0.014, ns) |
+
+What did NOT change: every other figure in the document, including the
+Phase 2b temperature-sweep references at § "Phase 2b" and the
+comparison table's "T=1.0 confirmed poor (Phase 2b)" row — those rest
+on the preregistered sweep, not on the confounded consensus contrast.
 
 ### 2026-07-31 — C4 quantitative-sweep corrections (Session 123)
 

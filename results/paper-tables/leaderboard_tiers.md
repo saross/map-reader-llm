@@ -1,5 +1,17 @@
 # Leaderboard Tier Clustering (30m buffer, FDR-corrected)
 
+> **⚠ Superseded figures (2026-08-02, E72)**: the rows `FM text T=1.0 5/5`
+> (Tier 8), `FM text T=1.0 22/30` and `FM text T=1.0 9/10` (Tier 9) derive from
+> `outputs/h11/consensus-384-UNINTENDED-T1.0`, a 240-tile study scored against
+> 487-tile bounds (coverage confound — see protocol-errata E43 correction block
+> and E72), and understate that arm by ~0.17–0.19 F1. With those three cells
+> dropped the board has 22 conditions, 231 pairwise tests, 181 significant
+> after BH, and **8 tiers**; Tier 9 disappears and no retained condition
+> changes tier. The companion `leaderboard_tiers.csv` carries the same
+> superseded rows. Regenerated board: `results/e43-board-regen/`.
+> Matched-scope analysis: `results/e43-matched-temperature/`. Dated snapshot;
+> body unchanged; do not cite the affected rows.
+
 Conditions within the same tier are statistically indistinguishable
 (all pairwise adjusted p-values ≥ 0.05).
 
