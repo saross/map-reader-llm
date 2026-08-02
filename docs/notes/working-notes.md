@@ -24084,3 +24084,342 @@ implicated; the amd-tower-stamped `note` fields);
 7-row cross-machine note, and the durable anchor for the uncommitted
 amd-tower counts); commits `0f1bd549f`, `5d91c2a97` (the era commit
 the `044` rows resolve against), `1bdbca86e` (Obs 382).
+
+## Observation 384: The largest configuration effect in the study was a coverage artefact — at matched 487-tile scope the T=0.7 temperature advantage reverses to −0.021 / −0.034 (n.s.), and tile-level MCC favours T=1.0 (Session 125, 2026-08-02)
+
+*Source anchors: `results/e43-matched-temperature/findings.md` (§ 1 headline
+table, § 2 coverage verification, § 3 operating points, § 4 permutation
+results and confusion counts, § 4.1 the superseded group_4 figures, § 5 the
+archived 240-tile leg, § 6 coverage quantification, § 7 configuration parity,
+§ 8 caveats, § 11.1–11.2 the 14-buffer + MCC filing) at commits `6176b985e`
+(R1) and `bc45133b4` (house grain); `results/e43-board-regen/summary.md`
+(§ 1 drop table, § 3 movement, § 4 BH families) and its
+`leaderboard-{20m,30m}/tiers.md` at `2f3ef020a`;
+`reports/e43-coverage-confound-remediation-2026-08-02.md` (§§ 1–4, 7, and its
+changelog) at `7035b19db`/`9680893a9`;
+`docs/methodology/preregistration/protocol-errata.md` (E43 `:1248–1275`
+correction block, E71 `:3170–3178`, E72 `:3254–3304`, E73 `:3308–3336`) at
+`a6f58d1b7`; `studies/h11-384-consensus.yaml` (`:38–44`, `:69`, `:109`,
+`:112`); `scripts/lib_advanced_metrics.py` (`:78`, `:91`);
+`results/evaluation-scopes.md` § 12. Every figure below was re-read from
+these files on 2026-08-02, and the working-notes locators were re-derived by
+grep rather than taken from the erratum's citation.*
+
+### The finding
+
+The project's registered temperature finding — "T=0.7 dramatically
+outperforms T=1.0, ΔF1 ~+0.15, p<0.0001 at all pool sizes" — is a **coverage
+artefact**. At matched scope the effect is not significant, its sign
+reverses, and the one metric that does separate the arms separates them in
+**T=1.0's** favour.
+
+**First, where the claim actually lives.** The erratum register and this
+session's remediation both cite it as "Obs 190". It is not in Obs 190.
+Obs 190 (`:4478–4553`) is *Buffer Distance Sensitivity Reveals
+Modality-Dependent Spatial Precision* and contains no temperature claim at
+all. The sentence is at `:4613–4618`, inside **Obs 191** § "Temperature
+sensitivity", where it is itself attributed to "(Obs 190)". The claim then
+propagated into two further entries:
+
+| location | containing Obs | the claim as recorded |
+| :--- | :--- | :--- |
+| `:4613–4614` | **Obs 191** | "T=0.7 >> T=1.0 at all pool sizes: dF1 ~+0.15, p<0.0001 (Obs 190). Not a subtle effect — T=0.7 wins 94–101 tiles vs 12–19 losses." |
+| `:5804`, `:5827` | **Obs 207** | temperature family "5/6 significant", max \|ΔF1\| 0.194; "significant at every consensus level (+0.168 to +0.194 at N=5 through N=30)" |
+| `:6039`, `:6062`, `:6078` | **Obs 209** | max \|ΔF1\| 0.194, "Large (text only)"; "T=0.7 > T=1.0 at all levels for text"; "ΔF1 = -0.17 vs T=0.7 at consensus" |
+
+**The mechanism.** The T=1.0 arm of those comparisons is
+`outputs/h11/consensus-384-UNINTENDED-T1.0/`, which covers **240 of the 487**
+evaluation tiles **by design** — it is the 384 px geographic re-projection of
+the Era-1 60-tile validation split (`studies/h11-384-consensus.yaml:69`,
+`:109`, `:112`; `results/evaluation-scopes.md` § 12). Execution matched design
+exactly (240/240 tiles, 0 failed, all 30 runs), so this is a *scope*
+difference, not a coverage failure. The 2026-03-26 bounds standardisation
+then re-scored every paper evaluation against the full 487-tile bounds — a
+real fix for seven of the eight studies in that pass, and a trap for this
+one. Scored at 487, the arm's unprocessed 247 tiles contributed their
+ground-truth mounds as automatic false negatives:
+
+| quantity | value |
+| :--- | ---: |
+| mounds inside the 487-tile bounds | 435 |
+| mounds inside the 240-tile bounds | 242 |
+| mounds charged as **automatic** false negatives | **193** (44.37 %) |
+| recall ceiling for the arm as scored | **0.5563** (242/435) |
+
+The automated sparse-coverage guard did not fire: a never-processed tile that
+*contains* mounds raises the false-negative count rather than the
+zero-detection count, so `zero_fraction` read 0.4641 against a 0.5 threshold
+(`scripts/lib_advanced_metrics.py:78`, `:91`). The guard could only see the
+kind of missing tile that was empty anyway.
+
+**The corrected picture.** Δ is F1(T=0.7) − F1(T=1.0) throughout, so positive
+favours the published direction.
+
+| comparison | scope | N=5 | N=10 | N=30 |
+| :--- | :--- | ---: | ---: | ---: |
+| **Published (group_4)**, 20 m | MISMATCHED 487-vs-240 | +0.1685, p=0.0 | +0.1716, p=0.0 | +0.1941, p=0.0 |
+| **Matched 487-tile**, 20 m | both arms 487/487 | **−0.0213**, p=0.3352 | **−0.0335**, p=0.0815 | not possible |
+| **Matched 487-tile**, 30 m | both arms 487/487 | **−0.0203**, p=0.3577 | **−0.0316**, p=0.0963 | not possible |
+| **Matched 240-tile** (archived 2026-03-24) | both arms 240/240 | −0.0072 | +0.0090 | +0.0393 |
+| **Preregistered Phase 2b** (Era 1, 340 tiles, K=3, single-pass) | matched 340 | text **+0.072**, FDR p=0.004; image **+0.014**, ns | — | — |
+
+The T=0.7 side of the matched tests is *identical* to the T=0.7 side of the
+published ones (same study, same operating points, F1 0.6397 / 0.6332). The
+entire ~0.19 shift comes from replacing the 240-tile T=1.0 arm with the
+matched 487-tile one — the 10-run `text-t1.0` arm that landed 2026-04-17 and
+was never wired in. That arm's `system_instruction_hash` and `library_hash`
+are identical across all 40 runs of both arms; temperature is the only
+intended difference (§ 7). The confounded arm scored **0.4712** (5-of-5) at
+487-tile bounds against **0.6443** for the same detections at their own
+240-tile bounds — a ~0.17 deflation that is exactly the "effect".
+
+**MCC separates where F1 does not — and it favours T=1.0.** Filed at the
+house grain (14 buffers, tile-level MCC, BCa bootstrap 10,000, seed 42):
+
+| arm | N | threshold | F1@20 m | MCC | MCC 95 % CI | TP / TN / FP / FN (tiles) |
+| :--- | ---: | :--- | ---: | ---: | :--- | :--- |
+| T=0.7 | 5 | 5-of-5 | 0.6397 | 0.3148 | [0.2962, 0.3310] | 197 / 110 / 148 / 32 |
+| T=1.0 | 5 | 5-of-5 | 0.6610 | **0.4065** | [0.3881, 0.4237] | 184 / 154 / 104 / 45 |
+| T=0.7 | 10 | 10-of-10 | 0.6332 | 0.3655 | [0.3483, 0.3817] | 191 / 133 / 125 / 38 |
+| T=1.0 | 10 | 9-of-10 | 0.6667 | **0.4153** | [0.3962, 0.4316] | 191 / 147 / 111 / 38 |
+
+ΔMCC is **−0.0917** (N=5) and **−0.0498** (N=10), with **disjoint** BCa
+intervals at both pool sizes — four times the F1 gap at N=5. The N=10 pair
+exposes the mechanism exactly: both arms classify the **same** mound-bearing
+tiles (TP 191, FN 38, sensitivity 0.8341 in both), so the whole MCC gap is
+specificity — T=0.7 raises **125** false-positive tiles to T=1.0's **111**.
+F1 is computed over detections and rewards T=0.7's extra recall; MCC is
+computed over tiles and charges it for the tiles that recall costs.
+
+**What the paper can still say.** The citable temperature evidence is the
+preregistered Phase 2b sweep: text +0.072 (FDR p=0.004), image +0.014 (ns).
+That supports **"T=1.0 is a poor default"** — a genuine practitioner-facing
+result, since T=1.0 is the Gemini API default — and does *not* support a
+universal T=0.7 superiority.
+
+**A side-effect of the remediation worth its own line.** Regenerating the
+March round-robin with the three confounded cells dropped (26 → 23
+conditions at 20 m, 325 → 253 pairs) changed no condition's F1, no observed
+ΔF1, and no raw p-value. It changed only the BH family size — and that was
+enough to move one pair's adjusted q from **0.0488 to 0.0503**
+(`flash-high-text-16-of-30--flash-min-vf (t=0.2)`, F1 0.890, versus
+`flash-high-text-4-of-5--flash-min-vf (t=0.15)`, F1 0.864; raw p=0.0398),
+flipping it significant → n.s. The 20 m board's solitary Tier 1 therefore
+dissolved: the two conditions now share Tier 1 and the board runs 9 tiers →
+8, **without a single number changing in either condition**. The 30 m board
+had them tied in Tier 1 already and recorded zero BH status changes.
+
+**Downstream decisions were checked and are clean.** The confounded figures
+appear in no study YAML, no prompt config, and no `docs/paper/**` prose (the
+"cite Phase 2b, not E43" firewall held). The T=0.7 carry-forward cannot have
+been caused by the comparison: the earliest carrier is
+`studies/phase3c-h9-diversity-track{1,2}.yaml` at commit `ec00c2ae0`,
+**2026-03-07** — 21 days before the 2026-03-28 comparison — and
+`studies/h11-384-consensus.yaml:38–44` at `964182b85`, 2026-03-13, 15 days
+before. Both cite **Phase 3a** as the source, not Phase 2b.
+
+### Why this matters
+
+1. **A coverage mismatch does not look like a bug; it looks like a
+   finding.** Every individual step here was defensible: a study correctly
+   scoped to 240 tiles for a tile-size comparison, a bounds standardisation
+   that fixed a real inconsistency, and an opportunistic comparison wired
+   under the unexpected-data policy when the 240-tile study was the only
+   384 px T=1.0 data in existence. The defect is emergent — it lives in the
+   *join*, not in any component — and it produced the single largest
+   configuration effect in the study, complete with p=0.0 and a
+   Discussion-ready phrase ("halves detection quality"). Effect sizes that
+   dwarf their neighbours deserve a coverage check before they deserve an
+   explanation.
+2. **The strongest evidence for the artefact was already on disk.** The
+   matched 487-tile T=1.0 arm arrived on 2026-04-17 and sat unused for
+   three and a half months (`grep -rl "text-t1.0" results/pairwise/` → zero
+   files), while the archived 2026-03-24 matched-240 evaluations had shown
+   ΔF1 ≈ +0.012 with overlapping CIs the whole time. Nothing needed to be
+   *collected* to overturn the claim — the R1 remediation cost zero API
+   calls. The operational lesson: when a new arm lands that would make an
+   existing comparison matched, re-running that comparison is close to free
+   and should be reflexive.
+3. **F1-only reporting hid a real effect of the opposite sign.** The
+   matched contrast reads as a null result on F1 and as a clean separation
+   on tile-level MCC. This is the concrete case the project's
+   report-MCC-alongside-F1 rule exists for: the two metrics disagree
+   because they aggregate over different universes (detections versus
+   tiles), and reporting only the one that was optimised would have
+   recorded "no difference" where the tile-level evidence says "T=1.0, and
+   clearly".
+4. **A "cite X, not Y" firewall protects prose but not numbers.** Obs 209
+   built precisely the right firewall — it separated T=1.0-as-preregistered
+   from T=1.0-as-accident and directed the paper to cite Phase 2b — and the
+   firewall held for `docs/paper/**`. But the sentence that states the
+   preregistered result attaches the magnitude **ΔF1 = −0.17 at consensus**
+   to it, and Phase 2b is a single-pass K=3 experiment whose text-track
+   figure is +0.072. The confounded number crossed the firewall inside the
+   very entry that erected it. Provenance rules need to name the *number*,
+   not just the citation.
+5. **BH family membership is a load-bearing analysis choice.** Removing
+   three cells that were never involved in a pair moved that pair's q
+   across 0.05 and dissolved a tier boundary. Any leaderboard tier or
+   significance verdict resting on a q within ~0.005 of the threshold
+   should be reported as marginal, because it is a statement about the
+   family as much as about the two conditions.
+
+### Caveats / methodological notes
+
+- **"Not significant" is the honest verdict, not "T=1.0 wins on F1".** All
+  four matched F1 tests favour T=1.0 by 0.02–0.03, and the N=10 pair sits
+  just outside significance (p ≈ 0.08–0.10). The claim this Obs supports is
+  a null with a weak hint against the published direction.
+- **The MCC comparison is unpaired.** The intervals are per-condition BCa
+  bootstraps, not a paired permutation test on matched tiles;
+  `scripts/pairwise_permutation_test.py` tests F1. Disjoint intervals are
+  suggestive (and conservative for a paired design) but are not a p-value.
+  A paired MCC test is the obvious next step before the MCC direction is
+  *claimed* rather than noted.
+- **Operating points were selected on F1@20 m, then MCC was read off
+  them.** Selecting on one metric and reporting another flatters the metric
+  you did not select on. The rule was applied identically to both arms, so
+  it is not a per-arm bias, but the MCC values would move under MCC-optimal
+  threshold selection.
+- **Two confusion grains appear above and must not be mixed.** The
+  permutation tests report detection-level counts summing to 435
+  ground-truth mounds (N=5: 348/305/87 versus 312/197/123; N=10:
+  315/245/120 versus 328/221/107); the MCC table reports tile-level counts
+  summing to 487 tiles (229 mound-bearing, 258 empty).
+- **N=30 cannot be matched at 487 tiles.** The 487-tile T=1.0 arm has 10
+  runs. The only matched N=30 evidence is the 240-tile leg (+0.0393 at
+  29-of-30 — the largest matched gap found anywhere, but on half the corpus
+  with wide overlapping CIs). Closing this would need ~20 further T=1.0 runs.
+- **One uncontrolled variable survives.** The arms are 24 days apart
+  (T=0.7 2026-03-24 via the async Batch API; T=1.0 2026-04-17 via the
+  governed real-time path). Configuration hashes are identical and the
+  requested model is the same, but the two scripts record the resolved
+  alias differently (`gemini-3-flash` versus `gemini-3-flash-preview`), and
+  a provider-side update inside that window cannot be excluded from on-disk
+  evidence.
+- **Two figures were corrected mid-remediation, in both directions.** The
+  proposal's automatic-false-negative count was 221/435 and is **193/435**
+  (the original was internally inconsistent with its own 0.556 ceiling,
+  which stands); and the wave-4 escalation cited 0.6639 as the matched
+  figure, which is in fact the **60-tile** evaluation — the genuine matched
+  240-tile value is **0.6443**. The escalating pass and the proposing pass
+  each mis-anchored a number that the executing pass caught. Re-derivation
+  at each hand-off is doing real work.
+- **This Obs corrects a claim; it does not edit its carriers.** Obs 190,
+  191, 207, and 209 are untouched by design (append-only register). Obs 191
+  § "Temperature sensitivity", Obs 207's temperature row and § "Temperature",
+  and Obs 209's Stage-1 table plus its "ΔF1 = -0.17" sentence should be read
+  as superseded by this entry.
+- Paper-relevant sections: Methods (evaluation scope and coverage
+  verification); Results (temperature — cite Phase 2b only); Discussion
+  (the "T=1.0 is a poor default" practitioner claim); Limitations/errata
+  (E43 correction block, E72).
+
+### Findable later
+
+temperature effect was a coverage artefact; T=0.7 versus T=1.0 superseded;
+Obs 190 correction; the claim is actually in Obs 191 not Obs 190;
+working-notes 4613 temperature sensitivity; dF1 ~+0.15 p<0.0001 superseded;
++0.168 +0.1716 +0.1941 group_4; matched 487-tile ΔF1 −0.0213 p=0.3352;
+−0.0335 p=0.0815; −0.0203 p=0.3577; −0.0316 p=0.0963; sign reversed not
+significant; consensus-384-UNINTENDED-T1.0 covers 240 of 487 tiles by design;
+247 unprocessed tiles; 193 of 435 mounds automatic false negatives 44.37 %;
+recall ceiling 0.5563 242/435; 2026-03-26 bounds standardisation; zero_fraction
+0.4641 under 0.5 threshold; sparse-coverage guard blind spot mound-bearing
+missing tiles; lib_advanced_metrics.py:91 DEFAULT_COVERAGE_THRESHOLD; 0.4712
+mis-scoped versus 0.6443 matched; text-t1.0 arm landed 2026-04-17 never wired
+in; identical system_instruction_hash library_hash 40 runs; MCC favours T=1.0;
+ΔMCC −0.0917 N=5 −0.0498 N=10 disjoint BCa intervals; TP 191 FN 38 both arms;
+FP tiles 125 versus 111; specificity not sensitivity; 229 mound-bearing 258
+empty tiles; F1 rewards recall MCC charges false-positive tiles; Phase 2b text
++0.072 FDR p=0.004 image +0.014 ns; T=1.0 is a poor default; E43 correction
+block E72 E73 E71 rider; 23-condition board regeneration; BH q 0.0488 to
+0.0503 family-size dependence; solitary Tier 1 dissolved 9 tiers to 8;
+flash-high-text-16-of-30 versus flash-high-text-4-of-5 raw p 0.0398; 148 test
+artefacts; 35 confounded conditions; carry-forward predates comparison
+ec00c2ae0 2026-03-07 964182b85 2026-03-13 source Phase 3a; commits 6176b985e
+bc45133b4 2f3ef020a a6f58d1b7 7035b19db 672836a00 166bf7704 ec763f9d8;
+Session 125 2026-08-02.
+
+### Related observations and artefacts
+
+- **[[Obs 190]]** (buffer distance sensitivity — modality-dependent spatial
+  precision) — cited throughout the register as the home of the temperature
+  claim, and it is not. Obs 190 is a buffer-tolerance finding and is
+  untouched by this correction; anyone following the erratum's "Obs 190"
+  pointer should be redirected to Obs 191 `:4613–4618`. Recording the
+  mis-citation matters because a superseding note filed against Obs 190
+  would have left the live text unmarked.
+- **[[Obs 191]]** (Sessions 56–57 key findings summary) — the actual
+  carrier. Its § "Temperature sensitivity" is the sentence this Obs
+  supersedes, including the "94–101 tiles won vs 12–19 lost" tile tally,
+  which counted tiles the T=1.0 arm never saw.
+- **[[Obs 207]]** (five-factor lever analysis — architecture dominates,
+  prompt engineering is inert) — the entry with the most at stake. Its
+  temperature family reported 5/6 significant at max \|ΔF1\| 0.194, which
+  placed temperature *above* thinking and modality in the lever hierarchy.
+  At matched scope temperature belongs at the bottom of that table, not
+  near the top. The headline the analysis was built to deliver —
+  architecture dominates, prompt engineering is inert — is unaffected;
+  the ordering of the middle levers is not.
+- **[[Obs 209]]** (paper framing — absolute magnitude then direction, and
+  the T=1.0 distinction) — the near-miss, and the most instructive
+  cross-reference. Obs 209 drew exactly the right distinction between the
+  preregistered T=1.0 condition and the accidental T=1.0 deployment, and
+  its instruction to cite Phase 2b is why `docs/paper/**` is clean today.
+  It nonetheless quoted the confounded magnitude (−0.17 at consensus) as
+  the preregistered result's effect size. Getting the citation right did
+  not get the number right.
+- **[[Obs 382]]** (a semantics-driven repair leaves the MISMATCH count
+  alone) — the same verification programme, one wave later. This correction
+  came out of the C4 sweep's wave-4 blind triage
+  (`reports/verification/c4-triage/mismatch-triage-2026-08-02-wave4.json`),
+  which is the machinery Obs 382 characterises: a repair apparatus with no
+  read access to its own scorecard. The relationship is that Obs 382
+  showed the apparatus cannot flatter itself on *document* claims, and this
+  Obs is what the same apparatus produces when it turns on a *result* — an
+  escalation that cost the project its largest configuration effect. An
+  honesty invariant is only worth having if the escalations it enables are
+  actually actioned.
+- **[[Obs 141]]** (serendipitous error as abductive catalyst — the
+  thinking-level mistake was more valuable than the pilot) — the founding
+  case for the project's unexpected-data-as-discovery policy, and the
+  reason the 2026-03-28 comparison was wired at all. The policy is not at
+  fault here and should not be narrowed: preserving and comparing the
+  T=1.0 data was correct, and the archived matched-240 comparison it
+  produced was *right*. What went wrong was the later re-scoping of one
+  arm without a coverage check. The amendment the policy needs is one
+  line: when an unplanned arm is compared, verify both arms cover the same
+  evaluation universe, and re-verify after any bounds change.
+- **E71** (`protocol-errata.md:3170–3178`) — the same artificial-false-
+  negative mechanism at 15–34 dead tiles, disclosed 2026-07-30 for two live
+  `pv-diag-384` conditions. E71 is this defect at a scale small enough to
+  deflate an F1 without inventing a finding; E43/E72 is the same mechanism
+  at 247 tiles, where it invents one. The pair sets the calibration: dead
+  tiles are an F1 tax that scales with the shortfall, and there is no
+  threshold below which the check is optional.
+- **E72** (`:3254–3304`) — the registered disposition of this defect, with
+  E43's `:1248–1275` correction block and the E73 preregistration-pointer
+  entry landing in the same PI-approved wave. E72 records the
+  four-part remediation; this Obs is its Phase R4.
+
+**Artefacts**: `results/e43-matched-temperature/findings.md` (§ 1, § 4 the
+four permutation tests, § 6 the 193/435 quantification, § 11.1–11.2 MCC) with
+`n{5,10}-{20,30}m/pairwise_permutation_result.json` and
+`paper-eval/t{07,10}-n{5,10}-*/evaluation.json`;
+`results/e43-board-regen/summary.md` with `leaderboard-{20m,30m}/tiers.{md,csv}`
+and `bh-families/families_recomputed.{md,csv,json}`;
+`reports/e43-coverage-confound-remediation-2026-08-02.md`;
+`docs/methodology/preregistration/protocol-errata.md` (E43 correction block,
+E71, E72, E73); `results/evaluation-scopes.md` § 12 (the 240-tile pool, now
+registered); `results/conditions-manifest.json` (the 35 caveated conditions);
+`scripts/lib_advanced_metrics.py` (`:78`, `:91` — the hardened guard);
+`scripts/regen_e43_board.py`, `scripts/author_e43_matched_temperature.py`;
+`studies/h11-384-consensus.yaml` (`:38–44`, `:69`, `:109`, `:112`);
+`archive/results-60-tile-validation/h11-384-consensus-flash-minimal-text-t{07,10}/consensus-analysis-report.json`
+(the matched 240-tile leg); `results/retest/phase2b/analysis_summary.md` (the
+citable temperature evidence);
+`reports/verification/c4-triage/mismatch-triage-2026-08-02-wave4.json` (the
+escalation that started this); commits `7035b19db`, `6176b985e`, `9680893a9`,
+`a6f58d1b7`, `166bf7704`, `672836a00`, `ec763f9d8`, `bc45133b4`, `2f3ef020a`,
+`4e1988462`, and `ec00c2ae0` / `964182b85` (the carry-forward provenance).
