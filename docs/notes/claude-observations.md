@@ -536,3 +536,29 @@ the moment I wrote it.
 **How to apply.** State the denominator on any set-quantified claim
 in a disposition, report, or message to Shawn. If writing the
 denominator is embarrassing, the check is not done.
+
+## claude-obs 23 — 2026-08-02 (Session 124, handoff top-up): I resolved a convention collision unilaterally, then disclosed — right call, wrong order
+
+**Pattern.** During /reflect, a markdownlint --fix sweep rewrote ~130
+whitespace lines inside historical entries of the reflection set. Two
+project conventions collided: fix-lint-on-touch versus
+append-only-attestation documents. I chose (revert the fixer, keep
+pure appends, move the set-wide false positive into lint config) and
+disclosed the reasoning afterwards in the close-out. The choice was
+right — whitespace churn in blob-pinned, append-only documents is the
+costlier error — but Shawn learned about the collision only after it
+was resolved.
+
+**Lesson.** Convention collisions are Shawn's to arbitrate when time
+permits, because each resolution sets precedent for the next
+instance. Deciding-then-disclosing is the correct *emergency* shape
+(reversible, clearly explained), but where the session is interactive
+anyway, surfacing the collision before resolving costs one message
+and buys a durable rule instead of a one-off judgement.
+
+**How to apply.** On hitting two applicable conventions that
+disagree: if Shawn is present, name the collision and propose the
+resolution in the same breath; if absent, resolve toward the
+less-reversible-harm side and flag it prominently (not buried in an
+ops note) at next contact. Either way, propose recording the winner
+as an explicit rule so the collision retires.

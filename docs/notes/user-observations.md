@@ -320,3 +320,37 @@ than to add scrutiny of the operator.
 
 *(Candidate C — census-grounded walkthroughs make rulings cheap —
 dropped at review, 2026-08-01.)*
+
+## Session 124 — 2026-08-02 (pending review)
+
+**Candidate A — three decisions, one message, each at its own grain.**
+After asking for a walkthrough of the open questions, you resolved all
+three in a single reply — and each carried a different decision
+texture: the era-check extension got full approval *plus* a
+provisionality marker placed precisely on the classification rule;
+the gap-bound escalation got a bare confirmation of process; the test
+redesign got "is (b) correct? investigate further, then settle."
+If the reading is right, the walkthrough format (what it is / why it
+matters / options / recommendation, per item) is what enabled
+one-pass dispatch at three different confidence levels — worth
+keeping as the standing shape for decision batches.
+
+**Candidate B — treating the recommendation as a hypothesis.** On the
+failing tests you didn't accept "option (b) is most principled" as a
+decision; you asked whether it was *correct* and ordered an
+investigation before settling. The investigation changed the outcome:
+one of the three failures turned out to be a live-fixture staleness
+(re-pinned on evidence, no redesign needed), and the ledger growth
+was verified governance-clean before the invariant design was built
+on top of it. The pattern: recommendations about repair *philosophy*
+get tested against the artefact record before they harden into
+implementation.
+
+**Candidate C — licensing the register, not the entries.** You
+approved both Obs candidates in five words without asking to see
+drafts — consistent with S123's candidate A reading (what earned the
+delegation was the visible apparatus, here the obs-writer's mandatory
+blind re-derivation). The writers then materially improved both
+entries (a corrected caveat in Obs 380; the anti-correlation
+sharpening in Obs 381), which is the outcome that pattern predicts:
+gate the process once, and the per-entry gate becomes redundant.
