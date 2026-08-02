@@ -1444,7 +1444,7 @@
    ]
   },
   "pv-diag-384": {
-   "_note": "GAP-7 (Session 102): proposer_pools (24 = pool x temp) + verifier_passes (88 metas across the pools' verified-v1-nN / session-78-matrix subdirs) now populated. The 10 N1 single-pass baseline conditions (Session 96) are kept verbatim; they reference their pool by relative path-string (benign pool-unresolved). Era-2 487-tile, 384px. Consensus operating-point conditions + the consensus 3c analysis (the buffer-harmonised sweep at results/rescore-2026-06-05/pv-diag-384/consensus-sweep/) are the next authoring step. Model of record: gemini-3-flash (flash pools) / gemini-3.1-pro (pro pools).",
+   "_note": "GAP-7 (Session 102): proposer_pools (24 = pool x temp) + verifier_passes (88 metas across the pools' verified-v1-nN / session-78-matrix subdirs) now populated. The 10 N1 single-pass baseline conditions (Session 96) are kept verbatim; they reference their pool by relative path-string (benign pool-unresolved). Era-2 487-tile, 384px. Consensus operating-point conditions + the consensus 3c analysis (the buffer-harmonised sweep at results/rescore-2026-06-05/pv-diag-384/consensus-sweep/) are the next authoring step. Model of record: gemini-3-flash (flash pools) / gemini-3.1-pro (pro pools). | E72 remediation (2026-08-02): the four MATCHED-temperature consensus cells (text-t0.7 / text-t1.0 x N=5/N=10, both arms 487/487 tiles) are filed as the 'e43-matched-temperature' analysis over the EXISTING conditions listed above — no parallel 'matched-temp-*' conditions were minted, because that would duplicate them (same GeoJSONs, same 14-buffer + MCC metrics). Their independent house-grain re-score lives at results/e43-matched-temperature/paper-eval/ and is waived into _ignored_evals below.",
    "proposer_pools": {
     "flash-high-image-n5-image-t0.0": {
      "modality": "image",
@@ -2941,6 +2941,10 @@
     }
    ],
    "_ignored_evals": [
+    "results/e43-matched-temperature/paper-eval/t07-n10-10of10/evaluation.json",
+    "results/e43-matched-temperature/paper-eval/t07-n5-5of5/evaluation.json",
+    "results/e43-matched-temperature/paper-eval/t10-n10-9of10/evaluation.json",
+    "results/e43-matched-temperature/paper-eval/t10-n5-5of5/evaluation.json",
     "results/gold-standard-image-extended-buffer-sweep/evaluation.json",
     "results/paper-eval/mcc/384px/flash-image-high-t-0-7/evaluation.json",
     "results/paper-eval/mcc/384px/flash-image-minimal-t-0-0/evaluation.json",

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-07-30T03:31:35Z",
+  "generated_at": "2026-08-02T12:16:51Z",
   "generator_version": "0.6.0",
   "analyses": [
     {
@@ -1023,6 +1023,40 @@
           "results/family-fdr/family_fdr.json"
         ],
         "last_extracted_at": "2026-07-30T03:31:35Z",
+        "extractor_version": "0.6.0"
+      }
+    },
+    {
+      "analysis_id": "e43-matched-temperature",
+      "type": "comparison",
+      "conditions_compared": [
+        "pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-consensus-n5-5of5",
+        "pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-consensus-n5-5of5",
+        "pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-consensus-n10-10of10",
+        "pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-consensus-9of10"
+      ],
+      "hypothesis_refs": [
+        "H7"
+      ],
+      "preregistered": "exploratory",
+      "deviations": [
+        "E43",
+        "E72"
+      ],
+      "predicted_outcome": null,
+      "predicted_outcome_amended": null,
+      "tie_set": [],
+      "outcome": "At matched 487-tile scope the E43 temperature effect does not survive: the four paired permutation tests are all non-significant and all four point estimates favour T=1.0 (\u0394F1 \u22120.021 p=0.335 and \u22120.020 p=0.358 at N=5 for 20 m / 30 m; \u22120.034 p=0.082 and \u22120.032 p=0.096 at N=10), against the +0.168 to +0.194 (p=0.0) reported by the confounded group_4 tests. The tile-level MCC contrast is stronger and points the same way: 0.3148 vs 0.4065 at N=5 and 0.3655 vs 0.4153 at N=10, with non-overlapping BCa 95 % confidence intervals in both pairs (an unpaired comparison \u2014 no paired MCC permutation test was run; the operating points were also selected on F1@20 m, so the MCC values sit on F1-selected thresholds). Honest summary: no reliable matched-scope temperature advantage for T=0.7 at consensus level, and on MCC the advantage runs the other way.",
+      "paper_section": null,
+      "output_path": "results/e43-matched-temperature/findings.md",
+      "working_notes_obs": [],
+      "manually_verified_at": null,
+      "provenance": {
+        "source_files": [
+          "results/run-analyses.json",
+          "results/e43-matched-temperature/findings.md"
+        ],
+        "last_extracted_at": "2026-08-02T12:16:51Z",
         "extractor_version": "0.6.0"
       }
     }

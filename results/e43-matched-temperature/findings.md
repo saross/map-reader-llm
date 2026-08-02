@@ -1,7 +1,10 @@
 # E43 remediation R1 — matched-scope temperature evidence
 
-> **Last revised**: 2026-08-02 (original publication). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-02 (later — E72 remediation item 3: the four
+> matched cells filed at the house grain, 14 buffers + tile-level MCC, and
+> registered as the `e43-matched-temperature` analysis; see
+> [§ 11](#11-house-grain-filing--14-buffers-tile-level-mcc-and-manifest-registration)).
+> See [§ Changelog](#changelog) for revision history.
 
 **Purpose**: Supplies the matched-scope evidence that Phase R1 of
 `reports/e43-coverage-confound-remediation-2026-08-02.md` § 5 calls
@@ -85,6 +88,11 @@ All paths are relative to
 were read from the GeoJSONs themselves and agree with the
 `n_detections` recorded in the corresponding `evaluation.json` and with
 the `voting_summary.json` threshold tallies.
+
+These four cells were subsequently scored at the project's full house
+grain — the 14 uniform buffers plus tile-level MCC — and registered in
+the manifest; see
+[§ 11](#11-house-grain-filing--14-buffers-tile-level-mcc-and-manifest-registration).
 
 **Operating-point convention**: the point was selected at the 20 m
 buffer for each arm independently and then **held fixed** for the 30 m
@@ -381,7 +389,185 @@ Per-test artefacts, each with full per-tile F1 breakdowns:
   the matched effect is **negative and non-significant** at 487 tiles,
   not merely "smaller than reported" (Phase R4).
 
+## 11. House-grain filing — 14 buffers, tile-level MCC, and manifest registration
+
+Sections 1–10 report F1 only. The project's standing rule is that
+tile-level Matthews Correlation Coefficient (MCC) is reported
+**alongside** F1 wherever the inputs support it, and that an F1-only
+table is an omission to fix rather than a defensible choice. This
+section closes that gap for the four matched operating points and
+discharges item 3 of erratum E72 ("the matched cells filed as their own
+first-class analysis, 14-buffer + MCC, manifest-registered").
+
+### 11.1 The four cells at the full house grain
+
+Each cell was re-scored through the standard harness
+(`scripts/rescore_conditions.py` → `scripts/evaluate_detections.py`) at
+the 14 uniform buffers (5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100,
+125, 150 m) with `--mcc`, bias-corrected and accelerated (BCa) bootstrap
+of 10,000 iterations, seed 42, against the same 487-tile bounds and
+curator ground truth used throughout this document. Zero API calls.
+
+| Arm | N | Threshold | Detections | F1@20 m | F1@30 m | MCC | MCC 95 % CI | Sens. | Spec. | TP / TN / FP / FN |
+| :--- | ---: | :--- | ---: | ---: | ---: | ---: | :--- | ---: | ---: | :--- |
+| T=0.7 | 5 | 5-of-5 | 653 | 0.6397 | 0.6471 | **0.3148** | [0.2962, 0.3310] | 0.8603 | 0.4264 | 197 / 110 / 148 / 32 |
+| T=1.0 | 5 | 5-of-5 | 509 | 0.6610 | 0.6674 | **0.4065** | [0.3881, 0.4237] | 0.8035 | 0.5969 | 184 / 154 / 104 / 45 |
+| T=0.7 | 10 | 10-of-10 | 560 | 0.6332 | 0.6412 | **0.3655** | [0.3483, 0.3817] | 0.8341 | 0.5155 | 191 / 133 / 125 / 38 |
+| T=1.0 | 10 | 9-of-10 | 549 | 0.6667 | 0.6728 | **0.4153** | [0.3962, 0.4316] | 0.8341 | 0.5698 | 191 / 147 / 111 / 38 |
+
+Confusion counts are tile-level and sum to 487 in every row (229
+mound-bearing tiles, 258 empty tiles), confirming both arms are scored
+over the same tile universe.
+
+A note on the coverage provenance these files record, since E72 is a
+coverage erratum. The evaluations were produced under the hardened
+coverage guard (commit `672836a00`), which counts unprocessed tiles
+directly from a detection GeoJSON's top-level `processed_tiles` array
+instead of inferring coverage from the zero-detection fraction. Consensus
+artefacts are written by the aggregation path and do not preserve that
+array, so all four cells record
+`coverage_source: "zero_fraction_heuristic"` with
+`n_unprocessed_tiles: null` and `coverage_status: "normal"`. The
+heuristic is not what establishes coverage here: § 2 verifies 487/487
+tiles in all 40 runs directly from the per-run `*.tiles.json` sidecars,
+which is the stronger evidence and does not depend on the guard.
+
+### 11.2 MCC separates the arms more sharply than F1 — flagged
+
+| Pool | ΔF1@20 m | ΔMCC | MCC intervals |
+| :--- | ---: | ---: | :--- |
+| N=5 | −0.0213 (p = 0.335, n.s.) | **−0.0917** | [0.2962, 0.3310] vs [0.3881, 0.4237] — **disjoint** |
+| N=10 | −0.0335 (p = 0.082, n.s.) | **−0.0498** | [0.3483, 0.3817] vs [0.3962, 0.4316] — **disjoint** |
+
+Δ keeps this document's convention: T=0.7 minus T=1.0, so a negative
+value favours T=1.0.
+
+**This is worth flagging.** On F1 the matched contrast is a null result
+(§ 4). On tile-level MCC the same four cells separate cleanly in
+T=1.0's favour, with non-overlapping BCa 95 % intervals at both pool
+sizes and an effect four times the F1 gap at N=5. The metric, not the
+data, is doing the work: F1 is computed over detections and rewards the
+T=0.7 arm's extra recall, whereas MCC is computed over tiles and
+charges it for the false-positive tiles that recall costs. The N=10
+pair makes the mechanism visible — both arms classify **exactly** the
+same mound-bearing tiles (TP 191, FN 38, sensitivity 0.8341 in both),
+so the entire MCC gap comes from specificity: T=0.7 raises 125
+false-positive tiles to T=1.0's 111.
+
+Two caveats bound this, and neither is dismissible:
+
+1. **The MCC comparison is unpaired.** The intervals are per-condition
+   BCa bootstraps, not a paired test on matched tiles. Non-overlapping
+   intervals are suggestive and, for a paired design, conservative — but
+   they are not a p-value. No paired MCC permutation test was run;
+   `scripts/pairwise_permutation_test.py` tests F1. That test is the
+   obvious next step if the MCC direction is to be claimed rather than
+   noted.
+2. **The operating points were selected on F1@20 m** (§ 3, § 8 caveat
+   4). Selecting on one metric and reporting another is a known way to
+   flatter the metric you did not select on. Both arms were selected by
+   the same rule, so this is not a per-arm bias, but the MCC values are
+   read off F1-selected thresholds and would move under MCC-optimal
+   selection.
+
+What survives both caveats: **nothing in this analysis supports E43's
+direction.** F1 says "no reliable difference"; MCC says "T=1.0, and
+clearly". The published +0.168 to +0.194 claim has no support at matched
+scope on either metric.
+
+### 11.3 Buffer saturation
+
+F1 plateaus by 30–35 m in all four cells and is then flat to 150 m (for
+example, T=0.7 5-of-5 holds 0.6471 from 30 m through 150 m). The
+extended tail therefore adds no discrimination on this 4-map corpus —
+unlike the 55-map corpus, where the 50 m headline is load-bearing. The
+20 m headline used throughout §§ 1–10 sits below the plateau and remains
+the discriminating operating point.
+
+### 11.4 Manifest registration — and why no new conditions were minted
+
+The four cells are registered in
+`results/analyses-manifest.json` as the analysis
+**`e43-matched-temperature`** (type `comparison`, `preregistered:
+exploratory`, `hypothesis_refs: ["H7"]`, `deviations: ["E43", "E72"]`,
+`output_path` this document). Its `conditions_compared` are the four
+**already-registered** `pv-diag-384` conditions:
+
+| Cell | Condition id (`results/conditions-manifest.json`) |
+| :--- | :--- |
+| T=0.7, N=5, 5-of-5 | `pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-consensus-n5-5of5` |
+| T=1.0, N=5, 5-of-5 | `pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-consensus-n5-5of5` |
+| T=0.7, N=10, 10-of-10 | `pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-consensus-n10-10of10` |
+| T=1.0, N=10, 9-of-10 | `pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-consensus-9of10` |
+
+**No parallel `matched-temp-*` conditions were minted.** All four
+operating points were already first-class conditions, scored at this
+identical grain on 2026-06-05 under
+`results/rescore-2026-06-05/pv-diag-384/consensus-sweep/`; the re-score
+above reproduces their F1@20 m and MCC to within 1e-9 (an exact
+reproduction under the current scripts, gate 5 of
+`scripts/author_e43_matched_temperature.py`). Minting duplicate labels
+for the same GeoJSONs and the same metrics would double-count them in
+every board built from the conditions manifest. The house precedent is
+explicit: `scripts/author_sweep_promotions.py` declined to promote
+completeness-sweep cell #1 because "promotion would duplicate" the
+registered headline. What was genuinely missing was the **analysis**
+row, and that is what this filing adds.
+
+The four re-scored `evaluation.json` files are waived into
+`pv-diag-384`'s `_ignored_evals` — the designed home for deliberate
+exclusions — so `scripts/verify_run_conditions.py` keeps flagging any
+genuinely unclaimed evaluation.
+
+Manifest counts, before → after: runs 31 → 31, conditions 322 → 322,
+passes 1132 → 1132, **analyses 20 → 21**; `ALL VALID`, registry↔facts
+drift 0.
+
+### 11.5 Reproduction
+
+```bash
+# 1. the four house-grain evaluations (~25 s at 4 workers on sapphire)
+.venv/bin/python scripts/rescore_conditions.py \
+    --worklist planning/rescore-worklists/e43-matched-temperature-2026-08-02.json \
+    --workers 4 --execute
+
+# 2. the registration (dry-run by default; gates refuse to write on failure)
+.venv/bin/python scripts/author_e43_matched_temperature.py --execute
+.venv/bin/python scripts/generate_post_run_report.py --all --write
+.venv/bin/python scripts/verify_run_conditions.py --run pv-diag-384
+```
+
+Per-cell artefacts, each carrying all 14 buffers with BCa intervals plus
+the tile-classification block:
+
+- `paper-eval/t07-n5-5of5/evaluation.json`
+- `paper-eval/t10-n5-5of5/evaluation.json`
+- `paper-eval/t07-n10-10of10/evaluation.json`
+- `paper-eval/t10-n10-9of10/evaluation.json`
+
 ## Changelog
+
+### 2026-08-02 (later) — house-grain filing (E72 remediation item 3)
+
+**Trigger**: erratum E72 (`protocol-errata.md` § E72, PI-approved
+2026-08-02) requires the matched cells to be filed "as their own
+first-class analysis (14-buffer + MCC, manifest-registered)"; the
+original publication reported F1 only, which the project's
+report-MCC-alongside-F1 rule treats as an omission.
+
+| Claim | Before | After |
+|---|---|---|
+| Metric coverage | F1 at 20 m and 30 m only | 14 buffers (5–150 m) + tile-level MCC with BCa 95 % intervals for all four cells (§ 11.1) |
+| Matched-scope verdict | "no reliable difference" (F1, n.s.) | unchanged on F1; **MCC separates the arms in T=1.0's favour** (ΔMCC −0.0917 at N=5, −0.0498 at N=10, disjoint intervals) — flagged with its unpaired-test and F1-selected-threshold caveats (§ 11.2) |
+| Manifest status | unregistered | analysis `e43-matched-temperature` over the four existing `pv-diag-384` condition ids; analyses 20 → 21 (§ 11.4) |
+
+What did NOT change: every figure in §§ 1–10. The four F1@20 m
+operating-point values (0.6397, 0.6610, 0.6332, 0.6667) were the sanity
+gate on the re-score and reproduce exactly; the permutation results, the
+240-tile leg, the coverage quantification (193/435; ceiling 0.5563), the
+configuration-parity checks, and the caveats all stand as published. No
+new conditions were minted — the four cells were already registered
+(§ 11.4). Zero API calls; all computation on sapphire.
 
 ### 2026-08-02 — Original publication
 

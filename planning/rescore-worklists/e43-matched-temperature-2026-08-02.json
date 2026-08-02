@@ -1,0 +1,33 @@
+{
+  "_comment": "E72 remediation (Session 126, $0 API): re-score the four MATCHED-temperature consensus operating points of the E43 remediation R1 analysis at the full house grain — the 14 uniform buffers (5-150 m) + tile-level MCC, BCa 10,000 iterations, seed 42 — against the Era-2 487-tile 384 px bounds and the curator ground truth. Both arms live under outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/ and cover 487/487 tiles, so this is a scope-matched contrast (the confound E72 records is absent here). These four cells are ALREADY registered pv-diag-384 conditions scored at the same grain on 2026-06-05 (results/rescore-2026-06-05/pv-diag-384/consensus-sweep/); this worklist is an INDEPENDENT REPRODUCTION under the current scripts, giving results/e43-matched-temperature/ its own self-contained house-grain artefacts. It therefore mints no new conditions — the reproductions are waived into pv-diag-384's _ignored_evals by scripts/author_e43_matched_temperature.py.",
+  "entries": [
+    {
+      "label": "matched-temp-t07-n5-5of5",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n5/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/e43-matched-temperature/paper-eval/t07-n5-5of5"
+    },
+    {
+      "label": "matched-temp-t10-n5-5of5",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n5/consensus_t5.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/e43-matched-temperature/paper-eval/t10-n5-5of5"
+    },
+    {
+      "label": "matched-temp-t07-n10-10of10",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n10/consensus_t10.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/e43-matched-temperature/paper-eval/t07-n10-10of10"
+    },
+    {
+      "label": "matched-temp-t10-n10-9of10",
+      "detections": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus/consensus_t9.geojson",
+      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "output_dir": "results/e43-matched-temperature/paper-eval/t10-n10-9of10"
+    }
+  ]
+}

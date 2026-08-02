@@ -2,7 +2,7 @@
 
 # Passes manifest
 
-> Generated 2026-07-30T08:29:16Z · 1132 row(s) · schema v1.0.
+> Generated 2026-08-02T12:16:51Z · 1132 row(s) · schema v1.0.
 >
 > **Coverage**: 1132 pass(es) across the decomposed runs (sub-step 3b in progress).
 
@@ -1124,7 +1124,7 @@
 | flash35-pv-2x2::flash35-min-text-1of10::run1 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | 0.5405490000000001 |
 | flash35-pv-2x2::flash35-min-text-1of10::run10 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | 0.540316 |
 | flash35-pv-2x2::flash35-min-text-1of10::run2 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | 0.541704 |
-| flash35-pv-2x2::flash35-min-text-1of10::run3 | gemini-3.5-flash | text | minimal | 0.7 | partial | 486 | 0.540711 |
+| flash35-pv-2x2::flash35-min-text-1of10::run3 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | 0.541284 |
 | flash35-pv-2x2::flash35-min-text-1of10::run4 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | 0.543667 |
 | flash35-pv-2x2::flash35-min-text-1of10::run5 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | 0.540739 |
 | flash35-pv-2x2::flash35-min-text-1of10::run6 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | 0.542455 |
