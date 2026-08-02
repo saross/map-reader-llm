@@ -1,0 +1,2071 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/preregistration/protocol-errata.md",
+    "git_blob": "b4fe2c5c45d80b0de9792cf17ba7e467dbf68ea7",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          795,
+          795
+        ],
+        "section": "E31: Deterministic runs at T=0.0 copied instead of re-executed — Issue"
+      },
+      "claim_text": "The preregistered design specifies K=10 replicate runs per condition.",
+      "values": [
+        {
+          "quantity": "replicate runs per condition (K), as preregistered",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 calibration rule: a claim about what the REGISTRATION specifies anchors to the lodged document, never to the executing config. The Phase 2e study YAML (studies/phase2e-h4-ordering.yaml, execution.runs: 10) records what was run and is used for the executed-K claims in this entry instead."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          795,
+          795
+        ],
+        "section": "E31: Deterministic runs at T=0.0 copied instead of re-executed — Issue"
+      },
+      "claim_text": "At T=0.0 (deterministic decoding), fixed-ordering conditions (canonical-first, canonical-last) produce identical outputs across all K=10 runs — empirically confirmed in Phase 2d where every replicate was byte-identical.",
+      "values": [
+        {
+          "quantity": "temperature carried forward into Phase 2e (T), as run",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.carried_forward.optimal_temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "replicate runs per condition (K), Phase 2e as run",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.execution.runs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2e-h4-ordering.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both values are what the Phase 2e ordering study actually ran; the YAML records the carried-forward temperature and the replicate count. Phase and condition names (canonical-first, canonical-last, Phase 2d) carry no extractable digits."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          795,
+          795
+        ],
+        "section": "E31: Deterministic runs at T=0.0 copied instead of re-executed — Issue"
+      },
+      "claim_text": "Running all 10 replicates for these conditions wastes API calls without generating any statistical information.",
+      "values": [
+        {
+          "quantity": "replicate runs per condition (K), Phase 2e as run",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.execution.runs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2e-h4-ordering.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Third mention of the same K in this line; kept as a distinct claim row per the full-enumeration rule (charter § 5 rule 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          797,
+          797
+        ],
+        "section": "E31: Deterministic runs at T=0.0 copied instead of re-executed — Resolution"
+      },
+      "claim_text": "For 4 remaining deterministic units (canonical-first/run\\_1, canonical-last/run\\_3, canonical-last/run\\_6, canonical-last/run\\_8), detection outputs were copied from an existing completed run in the same condition rather than re-executing against the API.",
+      "values": [
+        {
+          "quantity": "count of deterministic Phase 2e execution units whose outputs were copied rather than re-executed",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Run indices inside the unit paths (canonical-first/run\\_1, canonical-last/run\\_{3,6,8}) are path components, excluded per rule 5. Looked for a copied-versus-executed provenance field in archive/outputs-pre-retest-60-tile/phase2e/checkpoint.json: it holds a flat `completed` list, `failed`, `total_cost_usd` and a `note` about the symlinked config-default reuse, with no per-unit provenance flag; outputs/phase2e/ (the path named in this entry's Files row) is absent from the working tree."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          797,
+          797
+        ],
+        "section": "E31: Deterministic runs at T=0.0 copied instead of re-executed — Resolution"
+      },
+      "claim_text": "The 5 remaining random-ordering units (which use per-run seeds and therefore produce genuinely different outputs) were executed normally.",
+      "values": [
+        {
+          "quantity": "count of random-ordering Phase 2e execution units executed normally",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Same anchor search as the sibling 4-unit claim: archive/outputs-pre-retest-60-tile/phase2e/checkpoint.json records completion only, not execution mode."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          799,
+          799
+        ],
+        "section": "E31: Deterministic runs at T=0.0 copied instead of re-executed — Justification"
+      },
+      "claim_text": "This was empirically confirmed in Phase 2d (Session 32: terse=134, verbose=128 detections in every replicate).",
+      "values": [
+        {
+          "quantity": "detections per replicate, Phase 2d Track 1 terse condition",
+          "value_verbatim": "134",
+          "value_parsed": 134,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2d-track1-image-analysis.json",
+              "path": "$.per_condition_metrics.terse.n_detections_total"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2d-track1-image-analysis.json",
+              "path": "$.per_condition_metrics.terse.n_runs"
+            }
+          ]
+        },
+        {
+          "quantity": "detections per replicate, Phase 2d Track 1 verbose condition",
+          "value_verbatim": "128",
+          "value_parsed": 128,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a / b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2d-track1-image-analysis.json",
+              "path": "$.per_condition_metrics.verbose.n_detections_total"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2d-track1-image-analysis.json",
+              "path": "$.per_condition_metrics.verbose.n_runs"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2d-track1-image-analysis.json",
+        "path": null
+      },
+      "method": "arithmetic",
+      "notes": "Session number excluded per rule 5. The document asserts a per-replicate detection count; the committed Phase 2d Track 1 analysis records only run totals over K runs, so each value carries its own derivation (v1.2 amendment 1: one derivation per value)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          799,
+          799
+        ],
+        "section": "E31: Deterministic runs at T=0.0 copied instead of re-executed — Justification"
+      },
+      "claim_text": "For fixed-ordering conditions where the prompt does not vary across runs, all K=10 runs are guaranteed to be identical.",
+      "values": [
+        {
+          "quantity": "replicate runs per condition (K), Phase 2e as run",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.execution.runs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2e-h4-ordering.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Fourth mention of the executed K in this entry; retained per full enumeration."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          799,
+          799
+        ],
+        "section": "E31: Deterministic runs at T=0.0 copied instead of re-executed — Justification"
+      },
+      "claim_text": "Copying existing outputs is equivalent to re-execution and avoids ~$1 of redundant API calls and several hours of execution time under heavy API rate limiting.",
+      "values": [
+        {
+          "quantity": "estimated API cost avoided by copying deterministic Phase 2e units (approximate)",
+          "value_verbatim": "~$1",
+          "value_parsed": 1.0,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "A counterfactual saving, not a billed or audited figure: no artefact records the cost of runs that were never executed. archive/outputs-pre-retest-60-tile/phase2e/checkpoint.json records total_cost_usd for the phase as executed, which is a different quantity. The approximation marker is retained in value_verbatim per v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          801,
+          801
+        ],
+        "section": "E31: Deterministic runs at T=0.0 copied instead of re-executed — Impact on analysis"
+      },
+      "claim_text": "The random condition (K=10 genuinely different runs) is unaffected.",
+      "values": [
+        {
+          "quantity": "replicate runs, Phase 2e random-ordering condition (K), as run",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.execution.runs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2e-h4-ordering.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Fifth mention of the executed K; retained per full enumeration."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          816,
+          816
+        ],
+        "section": "E32: Phase 3a uses T=0.3/T=0.7 instead of carry-forward T=0.0 — Issue"
+      },
+      "claim_text": "For both tracks, T=0.0 was optimal.",
+      "values": [
+        {
+          "quantity": "temperature found optimal in Phase 2b and carried forward (T)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.carried_forward.optimal_temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2e-h4-ordering.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Anchored to the committed study YAML that records the carried-forward Phase 2b optimum (annotated 'Phase 2b: monotonic degradation with higher T'). The contemporaneous prose statement lives in archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md, which rule 2 forbids as a prose-to-prose anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          816,
+          816
+        ],
+        "section": "E32: Phase 3a uses T=0.3/T=0.7 instead of carry-forward T=0.0 — Issue"
+      },
+      "claim_text": "at T=0.0, the plus-hp library configuration produces near-deterministic output (empirically confirmed in Phases 2d–2e, where every replicate was byte-identical for fixed-ordering conditions).",
+      "values": [
+        {
+          "quantity": "temperature at which the plus-hp configuration is near-deterministic (T)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.carried_forward.optimal_temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2e-h4-ordering.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Scope decision: the following sentence's generic vote-threshold notation 'x=1..N' is not extracted — it is mathematical notation for the sweep range, not a quantity the document asserts about the study."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          818,
+          818
+        ],
+        "section": "E32: Phase 3a uses T=0.3/T=0.7 instead of carry-forward T=0.0 — Resolution"
+      },
+      "claim_text": "Phase 3a tests consensus voting at T=0.3 and T=0.7 instead of the carry-forward T=0.0.",
+      "values": [
+        {
+          "quantity": "temperature level 1 tested in Phase 3a consensus voting (T)",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.factors.temperature.levels[0].value",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature level 2 tested in Phase 3a consensus voting (T)",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.factors.temperature.levels[1].value",
+          "method": "read"
+        },
+        {
+          "quantity": "carry-forward temperature displaced by the Phase 3a deviation (T)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/phase2e-h4-ordering.yaml#$.carried_forward.optimal_temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase3a-h3-voting-track1.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The Track 2 sibling study (studies/phase3a-h3-voting-track2.yaml) carries the same temperature levels. The study YAML also defines a third level (T1.0) that this sentence does not name; not adjudicated here per rule 4."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          820,
+          820
+        ],
+        "section": "E32: Phase 3a uses T=0.3/T=0.7 instead of carry-forward T=0.0 — Justification"
+      },
+      "claim_text": "Phase 2b retroactive consensus analysis (canonical library) showed that consensus voting at T=0.3 with N=10, x=8 achieved F1=0.642, exceeding the T=0.0 single-run F1=0.557.",
+      "values": [
+        {
+          "quantity": "temperature of the best Phase 2b retroactive consensus configuration (T)",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "consensus pool size (N) of the best Phase 2b retroactive consensus configuration",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.optima.per_temperature_optima.T0.3.pool_size",
+          "method": "read"
+        },
+        {
+          "quantity": "vote threshold (x) of the best Phase 2b retroactive consensus configuration",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.optima.per_temperature_optima.T0.3.threshold",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, Phase 2b retroactive consensus at T=0.3, N=10, x=8",
+          "value_verbatim": "0.642",
+          "value_parsed": 0.642,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optima.per_temperature_optima.T0.3.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature of the single-run baseline the consensus result exceeds (T)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, Phase 2b single-run T=0.0 baseline (mean)",
+          "value_verbatim": "0.557",
+          "value_parsed": 0.557,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optima.baseline_f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/results-60-tile-validation/phase2b-consensus/consensus-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The two temperature values are recorded in the artefact only as string keys ('T0.3', 'T0.0') and in metadata.temperatures, so no numeric locator resolves them — marked anchor-unknown rather than pointed at a string (v1.2 amendment 3 rationale)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          822,
+          822
+        ],
+        "section": "E32: Phase 3a uses T=0.3/T=0.7 instead of carry-forward T=0.0 — Baselines"
+      },
+      "claim_text": "**Baselines**: Track 1 (image) F1=0.609, Track 2 (text-only) F1=0.660 — both T=0.0 single-run means from Phase 2.",
+      "values": [
+        {
+          "quantity": "F1, Track 1 image single-run baseline (Phase 2c plus-hp optimal library)",
+          "value_verbatim": "0.609",
+          "value_parsed": 0.609,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_condition_metrics.plus-hp.point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, Track 2 text-only single-run baseline (Phase 2d minimal negative-text)",
+          "value_verbatim": "0.660",
+          "value_parsed": 0.66,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/phase2d-track2-text-analysis.json#$.per_condition_metrics.minimal.point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature of both single-run baselines (T)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/phase2e-h4-ordering.yaml#$.carried_forward.optimal_temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2c-track1-image-analysis.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Track labels are condition names (rule 5). Same two baseline anchors as used for the corresponding claims in the hypothesis-tracking extraction (014.json)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          824,
+          824
+        ],
+        "section": "E32: Phase 3a uses T=0.3/T=0.7 instead of carry-forward T=0.0 — Impact on analysis"
+      },
+      "claim_text": "The consensus voting comparison is against the T=0.0 single-run baseline, not against single-run performance at the same temperature.",
+      "values": [
+        {
+          "quantity": "temperature of the single-run comparison baseline (T)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.carried_forward.optimal_temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2e-h4-ordering.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restatement of the carried-forward optimum; kept as a distinct claim row per full enumeration."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          824,
+          824
+        ],
+        "section": "E32: Phase 3a uses T=0.3/T=0.7 instead of carry-forward T=0.0 — Impact on analysis"
+      },
+      "claim_text": "consensus voting must justify its additional API cost by exceeding the cheapest achievable performance (one run at T=0.0).",
+      "values": [
+        {
+          "quantity": "temperature of the cheapest achievable single-run configuration (T)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.carried_forward.optimal_temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2e-h4-ordering.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Borderline scope decision, flagged: 'one run at T=0.0' also asserts a run count of 1, but that is a descriptive gloss on the single-run baseline rather than an independently checkable parameter, so only the temperature is extracted as a value here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          841,
+          841
+        ],
+        "section": "E33: Verifier crop extraction reads from tiles instead of source rasters — Fix"
+      },
+      "claim_text": "Rasterio pads beyond-raster-edge pixels with fill_value=0 (black), guaranteeing crops are always exactly `padding*2 × padding*2` pixels regardless of detection position.",
+      "values": [
+        {
+          "quantity": "raster pad fill value used for boundless crop reads",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "fill_value=0 in the boundless src.read() call (extract_candidates.py line 198)",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/extract_candidates.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (v1.1: legitimate; the harness routes it to triage). scripts/5_verify_crops.py line 220 carries the same fill_value=0 call. Scope decisions: the `padding*2 × padding*2` multipliers here, and the `max(0, ...)` / `min(src.width, ...)` guards quoted in the Description (line 839), are code expressions rather than asserted study quantities and are not extracted. E34 (lines 857-886) contains no quantitative claim at all — its Description, Fix, Affected-results and Related blocks are wholly qualitative."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          895,
+          895
+        ],
+        "section": "E35: Bootstrap per-tile matching caused recall bias from reference double-counting — header table, Impact row"
+      },
+      "claim_text": "| Impact | Bootstrap CIs for all prior phases had a small recall bias (bootstrap mean ~7 pp below point estimate at 340 tiles) |",
+      "values": [
+        {
+          "quantity": "recall bias of the pre-fix bootstrap mean relative to the point estimate (approximate)",
+          "value_verbatim": "~7",
+          "value_parsed": 7.0,
+          "unit": "pp",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tile count, production evaluation corpus",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The ~7 pp figure describes the behaviour of the superseded per-tile matching implementation; it cannot be read from any committed artefact because the buggy implementation was replaced in scripts/lib_advanced_metrics.py. Approximation marker retained per v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          899,
+          900
+        ],
+        "section": "E35: Bootstrap per-tile matching caused recall bias from reference double-counting — Description"
+      },
+      "claim_text": "With 64-pixel tile overlap, references near tile\nborders intersected multiple tile geometries, causing two biases:",
+      "values": [
+        {
+          "quantity": "tile overlap in pixels used by the tiling pipeline",
+          "value_verbatim": "64",
+          "value_parsed": 64,
+          "unit": "px",
+          "kind": "physical",
+          "path": "OVERLAP (config.py line 67)",
+          "method": "read"
+        },
+        {
+          "quantity": "count of bias mechanisms attributed to per-tile matching",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "config.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "config.py line 67 sets OVERLAP = 64 (STRIDE = TILE_SIZE - OVERLAP); non-JSON anchor per v1.1. The 'two biases' count is self-referential — it counts the two numbered items enumerated immediately below in this same document, so no external artefact decides it; included and flagged per the include-when-in-doubt rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          908,
+          908
+        ],
+        "section": "E35: Bootstrap per-tile matching caused recall bias from reference double-counting — Description"
+      },
+      "claim_text": "At 60 tiles the effect was small (few tile boundaries).",
+      "values": [
+        {
+          "quantity": "tile count, 60-tile validation/holdout set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/validation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "The 60-tile validation set is defined by inputs/vectors/bounds/validation_bounds.geojson."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          908,
+          911
+        ],
+        "section": "E35: Bootstrap per-tile matching caused recall bias from reference double-counting — Description"
+      },
+      "claim_text": "At 340 tiles\n(production run), the divergence between point estimate and bootstrap\nmean became visible: recall point estimate 0.802 vs bootstrap mean\n0.731 (divergence 0.071).",
+      "values": [
+        {
+          "quantity": "tile count, production evaluation corpus",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "recall point estimate at 340 tiles, pre-fix per-tile matching",
+          "value_verbatim": "0.802",
+          "value_parsed": 0.802,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "recall bootstrap mean at 340 tiles, pre-fix per-tile matching",
+          "value_verbatim": "0.731",
+          "value_parsed": 0.731,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "divergence between recall point estimate and bootstrap mean, pre-fix",
+          "value_verbatim": "0.071",
+          "value_parsed": 0.071,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Searched results/ for a committed 340-tile bootstrap artefact pairing a recall point estimate of 0.802 with a bootstrap mean of 0.731; none located, and the pre-fix figures are by construction not reproducible from the corrected scripts/lib_advanced_metrics.py. The 0.071 divergence is 0.802 − 0.731, but both operands are unanchored, so no arithmetic expression is offered (v1.2 amendment 1 — an expression over unanchored operands would manufacture a false mismatch)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          919,
+          921
+        ],
+        "section": "E35: Bootstrap per-tile matching caused recall bias from reference double-counting — Fix (post-fix divergence)"
+      },
+      "claim_text": "After fix, divergence between point estimate and bootstrap mean\ncollapsed to <0.002 across all metrics (F1: 0.6050 vs 0.6034,\nrecall: 0.8015 vs 0.8005).",
+      "values": [
+        {
+          "quantity": "maximum post-fix divergence between point estimate and bootstrap mean, all metrics (upper bound)",
+          "value_verbatim": "<0.002",
+          "value_parsed": 0.002,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "F1 point estimate, post-fix",
+          "value_verbatim": "0.6050",
+          "value_parsed": 0.605,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "F1 bootstrap mean, post-fix",
+          "value_verbatim": "0.6034",
+          "value_parsed": 0.6034,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "recall point estimate, post-fix",
+          "value_verbatim": "0.8015",
+          "value_parsed": 0.8015,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "recall bootstrap mean, post-fix",
+          "value_verbatim": "0.8005",
+          "value_parsed": 0.8005,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Searched results/ and archive/ for these four figures as a set. A bootstrap-mean F1 rounding to 0.6034 exists at $.per_condition_metrics.minimal.bootstrap_ci.f1.mean in results/phase2d-track1-image-analysis.json (and at the plus-hp equivalent in results/phase2c-track1-image-analysis.json), but neither pairs it with a point estimate of 0.6050, and no committed artefact carries the recall pair 0.8015/0.8005 in this context — the post-fix validation run appears not to be committed. The inequality marker is retained in value_verbatim so the harness treats '<0.002' as a bound, not an equality (v1.2 amendment 5 reasoning)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          923,
+          925
+        ],
+        "section": "E35: Bootstrap per-tile matching caused recall bias from reference double-counting — Affected results"
+      },
+      "claim_text": "All bootstrap CIs computed in Phases 2–3 on the\n60-tile validation set have a small recall bias. The effect was modest\nat 60 tiles (fewer overlap boundaries) but systematically present.",
+      "values": [
+        {
+          "quantity": "tile count, 60-tile validation set (first mention)",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, 60-tile validation set (second mention)",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/validation_bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both mentions in the same span are recorded as separate values in order of appearance (rule 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          931,
+          932
+        ],
+        "section": "E35: Bootstrap per-tile matching caused recall bias from reference double-counting — Context"
+      },
+      "claim_text": "The preregistration specifies 95% bootstrapped CIs\n(Section 3.5);",
+      "values": [
+        {
+          "quantity": "bootstrap confidence-interval level, as preregistered",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 calibration rule: registered-value claim anchors to the lodged registration. The section citation (Section 3.5) and the Decision 10 identifier are out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          952,
+          953
+        ],
+        "section": "E36: 340-tile production retest replaces 60-tile holdout evaluation — Correction (2026-07-30)"
+      },
+      "claim_text": "this erratum's Description states that on the 60-tile\nholdout \"only 1 of 10 Phase 2a pairwise comparisons survived FDR correction (Obs 155)\".",
+      "values": [
+        {
+          "quantity": "tile count, 60-tile holdout",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/vectors/bounds/validation_bounds.geojson#len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "count of Phase 2a pairwise comparisons surviving FDR correction, as originally (and erroneously) stated",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of Phase 2a pairwise comparisons tested",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_comparisons",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The quoted '1' is the erroneous value this correction block withdraws — historical per rule 3, not a live claim (the known errata trap). The correct figure, asserted on the next line, is 0. The '10' inside the same quotation is the comparison count, which the artefact records live at $.n_comparisons."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          954,
+          954
+        ],
+        "section": "E36: 340-tile production retest replaces 60-tile holdout evaluation — Correction (2026-07-30)"
+      },
+      "claim_text": "**The correct figure is zero.**",
+      "values": [
+        {
+          "quantity": "count of Phase 2a pairwise comparisons surviving FDR correction (corrected figure)",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_fdr_significant",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": "$.n_fdr_significant"
+      },
+      "method": "read",
+      "notes": "Live corrected value; the artefact field is n_fdr_significant."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          956,
+          958
+        ],
+        "section": "E36: 340-tile production retest replaces 60-tile holdout evaluation — Correction (2026-07-30)"
+      },
+      "claim_text": "records `n_comparisons: 10`, `n_initially_significant: 3`, and **`n_fdr_significant: 0`**,\nwith a `recommendation` field that says so in words: \"No pairwise differences\nsignificant after FDR correction (q=0.05).\"",
+      "values": [
+        {
+          "quantity": "count of Phase 2a pairwise comparisons tested",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_comparisons",
+          "method": "read"
+        },
+        {
+          "quantity": "count of Phase 2a pairwise comparisons significant before FDR correction",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_initially_significant",
+          "method": "read"
+        },
+        {
+          "quantity": "count of Phase 2a pairwise comparisons significant after FDR correction",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_fdr_significant",
+          "method": "read"
+        },
+        {
+          "quantity": "false-discovery-rate level (q) applied to the Phase 2a pairwise comparisons",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.fdr_q",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document quotes the artefact's own field values; each is anchored to its own path. The generation/commit dates and the commit hash on line 955 are out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          958,
+          959
+        ],
+        "section": "E36: 340-tile production retest replaces 60-tile holdout evaluation — Correction (2026-07-30)"
+      },
+      "claim_text": "Every committed version of that artefact\nrecords 0; no version has ever recorded 1.",
+      "values": [
+        {
+          "quantity": "count of Phase 2a pairwise comparisons surviving FDR correction, as recorded in every committed version of the artefact",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_fdr_significant",
+          "method": "read"
+        },
+        {
+          "quantity": "count of Phase 2a pairwise comparisons surviving FDR correction, the erroneous figure denied here",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The '1' is again the withdrawn erroneous value (historical), asserted here as never having been recorded."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          959,
+          960
+        ],
+        "section": "E36: 340-tile production retest replaces 60-tile holdout evaluation — Correction (2026-07-30)"
+      },
+      "claim_text": "The defence pass independently re-ran the\nBenjamini–Hochberg routine and reproduced 0.",
+      "values": [
+        {
+          "quantity": "count of Phase 2a pairwise comparisons surviving Benjamini–Hochberg correction, as independently recomputed",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Requires re-running the Benjamini–Hochberg procedure at q=0.05 over the 10 raw p-values in $.pairwise_comparisons; recorded, not run at extraction (rule 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          964,
+          965
+        ],
+        "section": "E36: 340-tile production retest replaces 60-tile holdout evaluation — Correction, severity context item 1"
+      },
+      "claim_text": "**The error is self-adverse.** Zero surviving comparisons is a *stronger* rationale\n   for the corpus expansion this erratum records than one surviving comparison.",
+      "values": [
+        {
+          "quantity": "count of Phase 2a pairwise comparisons surviving FDR correction (corrected figure, word form)",
+          "value_verbatim": "Zero",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_fdr_significant",
+          "method": "read"
+        },
+        {
+          "quantity": "count of surviving comparisons under the erroneous figure (word form)",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Word-form restatement of the corrected/erroneous pair; the 'one' side stays historical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          970,
+          972
+        ],
+        "section": "E36: 340-tile production retest replaces 60-tile holdout evaluation — Correction, severity context item 2"
+      },
+      "claim_text": "an analysis of 44 verifier candidates under\n   HIGH versus minimal thinking; a full-text scan of the entry returns zero occurrences\n   of \"FDR\", \"bootstrap\", \"holdout\", or \"pairwise\".",
+      "values": [
+        {
+          "quantity": "count of verifier candidates analysed in Observation 155",
+          "value_verbatim": "44",
+          "value_parsed": 44,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "count of occurrences of the terms FDR, bootstrap, holdout or pairwise in the Observation 155 entry",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Both figures concern the content of Observation 155 in docs/notes/working-notes.md, a prose document; rule 2 forbids anchoring prose to prose, so triage must chase the 44-candidate figure to the HIGH-thinking verifier-test artefact and the term-scan count to the working-notes entry itself. The line-number citation, the quoted observation title, and its date are out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          974,
+          974
+        ],
+        "section": "E36: 340-tile production retest replaces 60-tile holdout evaluation — Correction, severity context item 3"
+      },
+      "claim_text": "**It propagated to four documents.**",
+      "values": [
+        {
+          "quantity": "count of documents carrying the erroneous '1 of 10 survived FDR' claim",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The four are enumerated on lines 974-979 (this entry, reports/experimental-progression.md, reports/gs-tile-pool-mapping-2026-05-28.md, docs/notes/working-notes.md); a cross-document propagation count has no single artefact anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          975,
+          976
+        ],
+        "section": "E36: 340-tile production retest replaces 60-tile holdout evaluation — Correction, severity context item 3"
+      },
+      "claim_text": "(\"only 1 of 10 Phase 2a pairwise\n   comparisons survived FDR correction\")",
+      "values": [
+        {
+          "quantity": "count of Phase 2a pairwise comparisons surviving FDR correction, as quoted from reports/experimental-progression.md (erroneous)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of Phase 2a pairwise comparisons tested",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_comparisons",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Quoted propagation of the erroneous claim; the '1' is historical, the '10' is live. Line-number citations excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          977,
+          977
+        ],
+        "section": "E36: 340-tile production retest replaces 60-tile holdout evaluation — Correction, severity context item 3"
+      },
+      "claim_text": "(quoting \"only 1 of 10 / Phase 2a comparisons\" surviving FDR correction)",
+      "values": [
+        {
+          "quantity": "count of Phase 2a pairwise comparisons surviving FDR correction, as quoted from reports/gs-tile-pool-mapping-2026-05-28.md (erroneous)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of Phase 2a pairwise comparisons tested",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_comparisons",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Second quoted propagation; the '/' in the quotation marks a line break in the quoted source."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          979,
+          979
+        ],
+        "section": "E36: 340-tile production retest replaces 60-tile holdout evaluation — Correction, severity context item 3"
+      },
+      "claim_text": "block (\"Only 1 of 10 Phase 2a comparisons / survived\")",
+      "values": [
+        {
+          "quantity": "count of Phase 2a pairwise comparisons surviving FDR correction, as quoted from docs/notes/working-notes.md (erroneous)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of Phase 2a pairwise comparisons tested",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_comparisons",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Third quoted propagation. Session number in the quoted block heading excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          979,
+          980
+        ],
+        "section": "E36: 340-tile production retest replaces 60-tile holdout evaluation — Correction, severity context item 3"
+      },
+      "claim_text": "All four require the same\n   correction to 0; the two reports are corrected in place with changelogs,",
+      "values": [
+        {
+          "quantity": "count of documents requiring the correction",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "corrected count of Phase 2a pairwise comparisons surviving FDR correction",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_fdr_significant",
+          "method": "read"
+        },
+        {
+          "quantity": "count of report documents corrected in place with changelogs",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed span: the corrected figure is live and anchored; the two document counts are cross-document bookkeeping with no artefact anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          985,
+          986
+        ],
+        "section": "E36: 340-tile production retest replaces 60-tile holdout evaluation — What does not change"
+      },
+      "claim_text": "**What does not change**: the corpus expansion decision, the 340-tile scope, the power\nrationale, and every downstream result.",
+      "values": [
+        {
+          "quantity": "tile count, production evaluation corpus",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Section markers, finding identifiers (§ 2 finding 5, F5, § 1d) and dates in the surrounding attribution text are out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          993,
+          993
+        ],
+        "section": "E36: 340-tile production retest replaces 60-tile holdout evaluation — Description"
+      },
+      "claim_text": "The preregistered Phase 3 evaluation used a 60-tile holdout set.",
+      "values": [
+        {
+          "quantity": "tile count, 60-tile holdout set",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/validation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "The holdout set is defined by inputs/vectors/bounds/validation_bounds.geojson."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          993,
+          993
+        ],
+        "section": "E36: 340-tile production retest replaces 60-tile holdout evaluation — Description"
+      },
+      "claim_text": "Bootstrap CIs on this set were wide (~0.20) and only 1 of 10 Phase 2a pairwise comparisons survived FDR correction (Obs 155).",
+      "values": [
+        {
+          "quantity": "bootstrap confidence-interval width on the 60-tile holdout (approximate)",
+          "value_verbatim": "~0.20",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of Phase 2a pairwise comparisons surviving FDR correction, as stated in this Description (erroneous — corrected to zero above)",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of Phase 2a pairwise comparisons tested",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_comparisons",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "This is the uncorrected sentence the Correction block at lines 952-960 withdraws: the '1' is historical (the document leaves the erroneous Description text in place and corrects it in the banner above). The ~0.20 CI width is an approximate characterisation with no located artefact — searched results/ for a 60-tile bootstrap CI-width summary."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          993,
+          993
+        ],
+        "section": "E36: 340-tile production retest replaces 60-tile holdout evaluation — Description"
+      },
+      "claim_text": "The evaluation corpus was expanded to 340 tiles (569 ground truth mounds across 4 map sheets) to achieve adequate statistical power.",
+      "values": [
+        {
+          "quantity": "tile count, expanded production evaluation corpus",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "count of ground-truth reference mounds in the evaluation corpus",
+          "value_verbatim": "569",
+          "value_parsed": 569,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/vectors/references/mounds-reference.geojson#len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "count of map sheets spanned by the evaluation corpus",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/vectors/bounds/gs-4maps-sheet-bounds.geojson#len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mound count anchored to the reference GeoJSON's feature count; map-sheet count to the four-map sheet-bounds GeoJSON (both len: counts per v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          993,
+          993
+        ],
+        "section": "E36: 340-tile production retest replaces 60-tile holdout evaluation — Description"
+      },
+      "claim_text": "K was reduced from 10 to 1–3 for single-pass conditions (340 tiles provide sufficient power) and retained at K=30 for consensus voting.",
+      "values": [
+        {
+          "quantity": "replicate runs per condition (K) before the reduction, as preregistered",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#registered replicate count K=10 (Section 3.8)",
+          "method": "read"
+        },
+        {
+          "quantity": "replicate runs per condition (K), retest single-pass lower bound",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "studies/retest/phase2d-h5-negtext.yaml#$.execution.runs",
+          "method": "read"
+        },
+        {
+          "quantity": "replicate runs per condition (K), retest single-pass upper bound",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "studies/retest/phase2a-h1-modality.yaml#$.execution.runs",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, production evaluation corpus",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/vectors/bounds/full_evaluation_bounds.geojson#len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "replicate runs per condition (K) retained for consensus voting",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": "$.execution.runs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/retest/phase3a-h3-voting-track1.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Executed-K values anchor to the retest study YAMLs that ran them (phase2d-h5-negtext runs: 1 is the single-pass floor; phase2a-h1-modality runs: 3 the ceiling; phase3a-h3-voting-track1 runs: 30 for consensus). The pre-reduction K=10 is the registered replicate count and anchors to the lodged registration per the v1.1 calibration rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          995,
+          995
+        ],
+        "section": "E36: 340-tile production retest replaces 60-tile holdout evaluation — Protocol impact"
+      },
+      "claim_text": "Results from the 340-tile corpus supersede the 60-tile holdout results for all conditions.",
+      "values": [
+        {
+          "quantity": "tile count, production evaluation corpus",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, 60-tile holdout",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/vectors/bounds/validation_bounds.geojson#len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/full_evaluation_bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both corpus sizes anchor to their defining bounds GeoJSONs."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          995,
+          995
+        ],
+        "section": "E36: 340-tile production retest replaces 60-tile holdout evaluation — Protocol impact"
+      },
+      "claim_text": "The 60-tile results remain documented in `results/phase3d-*.md` as historical reference.",
+      "values": [
+        {
+          "quantity": "tile count, 60-tile holdout",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/validation_bounds.geojson",
+        "path": "len:$.features"
+      },
+      "method": "read",
+      "notes": "Third mention of the holdout size in this entry; retained per full enumeration."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1029,
+          1031
+        ],
+        "section": "E37: Proposer-Verifier (PV) pipeline — production implementation of registered H2 Condition B — Corrected description"
+      },
+      "claim_text": "exceeded the registered stopping rule — \"Two-stage architectures will only be\npursued further if either demonstrates F1 at least 0.05 higher than\nsingle-stage\" (`osf:491`)",
+      "values": [
+        {
+          "quantity": "minimum F1 improvement over single-stage required by the registered H2 stopping rule",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 calibration rule: registered-value claim anchors to the lodged registration (the stopping rule quoted verbatim here). Line-number citations (`osf:491`, `osf:461`) are out of scope per rule 5, as are the withdrawal block's citation strings on lines 1013-1017."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1040,
+          1041
+        ],
+        "section": "E37: Proposer-Verifier (PV) pipeline — production implementation of registered H2 Condition B — implementation elaborations, item 1"
+      },
+      "claim_text": "the registered Stage 1 is a single liberal\n   detection pass;",
+      "values": [
+        {
+          "quantity": "count of detection passes in the registered H2 Condition-B Stage 1",
+          "value_verbatim": "single",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Borderline, flagged: a word-form count asserting that the registration specifies one Stage-1 detection pass. Included per the include-when-in-doubt rule; anchored to the lodged registration under the v1.1 calibration rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1052,
+          1053
+        ],
+        "section": "E37: Proposer-Verifier (PV) pipeline — production implementation of registered H2 Condition B — implementation elaborations, item 5"
+      },
+      "claim_text": "**Verifier consensus size** — the registration is silent; N=1 vs N=5 was\n   tested and found insensitive",
+      "values": [
+        {
+          "quantity": "verifier consensus pool size (N), baseline arm of the insensitivity test",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "verifier consensus pool size (N), comparison arm of the insensitivity test",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The two tested pool sizes are encoded only in the Phase-1 condition directory names under results/pv/phase1/ (adversarial-text-150 for the N=1 baseline; adversarial-text-150-n5-t0.7 for N=5); threshold_sweep.json carries no verifier-consensus field to read. Observation identifiers excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1057,
+          1058
+        ],
+        "section": "E37: Proposer-Verifier (PV) pipeline — production implementation of registered H2 Condition B — Corrected description, operationalisation"
+      },
+      "claim_text": "The PV pipeline was first piloted on the 60-tile holdout (F1=0.796,\nObs 150) and then validated and optimised on the 340-tile corpus.",
+      "values": [
+        {
+          "quantity": "tile count, 60-tile holdout used for the PV pilot",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, PV pipeline on the 60-tile holdout pilot",
+          "value_verbatim": "0.796",
+          "value_parsed": 0.796,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tile count, production corpus used for PV validation and optimisation",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/vectors/bounds/full_evaluation_bounds.geojson#len:$.features",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/validation_bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 0.796 pilot figure is documented in results/phase3d-pilot-results.md, a prose document (rule 2 forbids a prose-to-prose anchor). The hypothesis-tracking document records the same pilot result as superseded by the E33-corrected v2 value 0.732, so triage must decide whether this mention is live or historical; not adjudicated here (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1060,
+          1063
+        ],
+        "section": "E37: Proposer-Verifier (PV) pipeline — production implementation of registered H2 Condition B — Corrected description, verifier optimisation"
+      },
+      "claim_text": "Verifier optimisation (Phase 1)\ntested crop size (40–300px), consensus (N=1 vs N=5), and verifier strategy\n(adversarial, checklist, brief) — all parameters were found to be\ninsensitive (Obs 166, 167, 169).",
+      "values": [
+        {
+          "quantity": "verifier crop size swept, lower bound",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "verifier crop size swept, upper bound",
+          "value_verbatim": "300",
+          "value_parsed": 300,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "verifier consensus pool size (N), baseline arm",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "verifier consensus pool size (N), comparison arm",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Crop sizes are encoded in the Phase-1 condition directory names (results/pv/phase1/adversarial-text-40, -75, -150, -300) and inside each threshold_sweep.json only as a path string ($.manifest_file, e.g. outputs/pv/crops-150/...); there is no numeric crop-size field to read, and the same holds for the consensus sizes. Shared unit 'px' set on both crop-size values per v1.2 amendment 6."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1067,
+          1068
+        ],
+        "section": "E37: Proposer-Verifier (PV) pipeline — production implementation of registered H2 Condition B — Protocol impact (corrected)"
+      },
+      "claim_text": "the five elaborations above recorded as implementation-level deviations from\nthe registered Condition-B specification.",
+      "values": [
+        {
+          "quantity": "count of implementation-level elaborations beyond the registered Condition-B specification",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential count of the five numbered elaborations at lines 1040-1053; no external artefact decides it, though reports/verification/c2-census/licence-census.json refers to \"E37's five enumerated PV elaborations\" and may serve as corroboration in triage. Hypothesis identifiers (H1–H9) and erratum cross-references excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1084,
+          1084
+        ],
+        "section": "E38: Dual-mode API architecture (batch and real-time) — Description"
+      },
+      "claim_text": "the mode affects only execution speed, cost (Batch API is 50% cheaper), and quota management.",
+      "values": [
+        {
+          "quantity": "Batch API price discount relative to real-time API",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Vendor pricing claim (Gemini Batch API discount): attestation material only, no repo artefact decides it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1098,
+          1098
+        ],
+        "section": "E39: Verifier strategy equivalence confirmed at production scale — header table, Impact row"
+      },
+      "claim_text": "| Impact | Adversarial verifier selected as default; all three strategies produce equivalent F1 |",
+      "values": [
+        {
+          "quantity": "count of verifier strategies compared at production scale",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The three strategies correspond to the adversarial/checklist/brief conditions under results/pv/phase1/; a factor-level count has no numeric field in threshold_sweep.json to read."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1100,
+          1100
+        ],
+        "section": "E39: Verifier strategy equivalence confirmed at production scale — Description"
+      },
+      "claim_text": "The 60-tile pilot selected the adversarial verifier strategy based on F1=0.796 (vs checklist 0.782, brief 0.768).",
+      "values": [
+        {
+          "quantity": "tile count, 60-tile pilot",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, adversarial verifier strategy, 60-tile pilot",
+          "value_verbatim": "0.796",
+          "value_parsed": 0.796,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, checklist verifier strategy, 60-tile pilot",
+          "value_verbatim": "0.782",
+          "value_parsed": 0.782,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, brief verifier strategy, 60-tile pilot",
+          "value_verbatim": "0.768",
+          "value_parsed": 0.768,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/validation_bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The three pilot F1s are documented in results/phase3d-pilot-results.md (prose — rule 2 forbids a prose anchor). The hypothesis-tracking document labels 0.768 and 0.782 'pre-correction' and records 0.796 as superseded by the E33-corrected 0.732; whether these mentions are live or historical is for triage, not extraction (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1100,
+          1100
+        ],
+        "section": "E39: Verifier strategy equivalence confirmed at production scale — Description"
+      },
+      "claim_text": "At 340-tile scale, all three strategies produce statistically indistinguishable F1 (adversarial 0.770, checklist 0.769, brief 0.752 — all CIs overlap, Obs 169).",
+      "values": [
+        {
+          "quantity": "tile count, production-scale verifier-strategy comparison",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "$.evaluation_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "count of verifier strategies compared at production scale",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, adversarial verifier strategy at 340 tiles (optimal threshold)",
+          "value_verbatim": "0.770",
+          "value_parsed": 0.77,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, checklist verifier strategy at 340 tiles (optimal threshold)",
+          "value_verbatim": "0.769",
+          "value_parsed": 0.769,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/pv/phase1/checklist-text-150/text-n1-t0.0-minimal/threshold_sweep.json#$.optimal.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, brief verifier strategy at 340 tiles (optimal threshold)",
+          "value_verbatim": "0.752",
+          "value_parsed": 0.752,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/pv/phase1/brief-text-150/text-n1-t0.0-minimal/threshold_sweep.json#$.optimal.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pv/phase1/adversarial-text-150/text-n1-t0.0-minimal/threshold_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Anchored to the Phase-1 threshold sweeps this entry's own Files row names (results/pv/phase1/*/threshold_sweep.json); each strategy's F1 takes its own cross-file locator (v1.2 amendment 2). The observation identifier is out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1102,
+          1102
+        ],
+        "section": "E39: Verifier strategy equivalence confirmed at production scale — Protocol impact"
+      },
+      "claim_text": "Any of the three strategies would produce equivalent F1.",
+      "values": [
+        {
+          "quantity": "count of verifier strategies asserted equivalent",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Second mention of the strategy count in this entry; retained per full enumeration."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1119,
+          1120
+        ],
+        "section": "E40: Gemini 3.1 Pro requires MEDIUM thinking — deviation from §8.2/§8.9 — Clarification (2026-07-30)"
+      },
+      "claim_text": "found seven proposer-verifier conditions in\n`pv-diag-384` whose verifier is `gemini-3.1-pro-preview` at MEDIUM thinking",
+      "values": [
+        {
+          "quantity": "count of proposer-verifier conditions in pv-diag-384 whose verifier is the Pro model at MEDIUM thinking",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "reports/verification/c2-census/licence-census.json records the pair verifier_thinking_level=medium with n_sites: 13; the 7/6 split appears only in that pair's prose fields — evidence (\"That covers 7 of the 13 sites (the pv-diag-384 *-pro-vf cells)\") and resolution.detail (\"7 Pro-verifier sites licensed by E40's 2026-07-30 clarification block\") — so no numeric locator resolves 7. Condition names carrying digits (…-3of5, …-4of5, pv-diag-384) and the model version string gemini-3.1-pro-preview are out of scope per rule 5. E40's Description (line 1134) and Protocol impact (line 1136) assert only categorical thinking levels and model names — no quantitative claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1128,
+          1129
+        ],
+        "section": "E40: Gemini 3.1 Pro requires MEDIUM thinking — deviation from §8.2/§8.9 — Clarification (2026-07-30)"
+      },
+      "claim_text": "so those seven sites are\nlicensed by this entry",
+      "values": [
+        {
+          "quantity": "count of Pro-verifier sites licensed by this entry",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Second mention of the same count in this entry; retained per full enumeration. Same anchor search as the line 1119-1120 claim."
+    }
+  ]
+}

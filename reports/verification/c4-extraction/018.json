@@ -1,0 +1,2624 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/preregistration/protocol-errata.md",
+    "git_blob": "b4fe2c5c45d80b0de9792cf17ba7e467dbf68ea7",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1140,
+          1140
+        ],
+        "section": "E41 heading"
+      },
+      "claim_text": "### E41: 384px tile size and full evaluation set used for Pro comparison",
+      "values": [
+        {
+          "quantity": "tile edge length, Pro comparison evaluation (as run)",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.inputs.tile_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h11-384-pro-high-text-n5.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The heading asserts 384 px as the tile size actually used for the Pro comparison, so it is a claim as well as a label (rule 5's 'name AND asserted fact' carve-out); it duplicates the Description claim at line 1150. Anchored to the Pro study definition's inputs.tile_size; the erratum identifier E41 is excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1150,
+          1150
+        ],
+        "section": "E41 Description — preregistered H6 scope"
+      },
+      "claim_text": "The preregistered H6 (Flash→Pro transfer, §3.6) specifies a 20-tile stratified holdout subset at 512px tile size.",
+      "values": [
+        {
+          "quantity": "holdout tile count for H6 (Flash→Pro transfer), as preregistered",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length for H6 holdout, as preregistered",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both values state what the registration specifies, so they anchor to the lodged document with a null path (instrument v1.1 calibration rule) — never to the executed studies, which record the deviation. Section reference §3.6 excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1150,
+          1150
+        ],
+        "section": "E41 Description — Pro comparison scope as run"
+      },
+      "claim_text": "Our Pro comparison uses 487 tiles at 384px — the optimal tile size identified by the H11 diagnostic (Obs 181).",
+      "values": [
+        {
+          "quantity": "evaluation tile count, Pro comparison (as run)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.execution_stats.items_processed",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length, Pro comparison (as run)",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "studies/h11-384-pro-high-text-n5.yaml#$.inputs.tile_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_3/detections_text-t0.7_run03.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Claims about what was RUN anchor to the executed artefacts: the tile count to items_processed of a representative Pro proposer run (pro-high-text-n5, run_3), the tile size to the study definition. Obs identifier 181 excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1150,
+          1150
+        ],
+        "section": "E41 Description — statistical-power comparison"
+      },
+      "claim_text": "This provides substantially more statistical power (487 vs 20 tiles)",
+      "values": [
+        {
+          "quantity": "evaluation tile count, Pro comparison (as run)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.execution_stats.items_processed",
+          "method": "read"
+        },
+        {
+          "quantity": "holdout tile count for H6, as preregistered",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/pro-high-text-n5/text-t0.7/run_3/detections_text-t0.7_run03.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed-source span: the 487 is the as-run tile count (items_processed); the 20 is the registered H6 holdout size, so it carries a cross-file locator to the lodged registration (whole-document scan — a markdown anchor has no JSONPath)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1152,
+          1152
+        ],
+        "section": "E41 Protocol impact — unexecuted H6 Phase 1 scope"
+      },
+      "claim_text": "H6 Phase 1 (20-tile holdout at 512px) remains available for future execution if a strict preregistration-compliant comparison is needed.",
+      "values": [
+        {
+          "quantity": "holdout tile count, H6 Phase 1, as preregistered",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length, H6 Phase 1 holdout, as preregistered",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the registered H6 Phase 1 scope (lines 1150 and 1152 assert the same two registered values); anchored to the lodged document per v1.1."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1177,
+          1178
+        ],
+        "section": "E42 Corrected diagnosis — count of corroborating sources"
+      },
+      "claim_text": "Three independent sources confirm Pro was\nactually used for the \"Pro\" proposer runs:",
+      "values": [
+        {
+          "quantity": "count of independent metadata sources corroborating that Pro was used",
+          "value_verbatim": "Three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential count of the three sources enumerated immediately below in the same document (GeoJSON detection properties, log files, cost_estimate.pricing_used.model). No repo artefact decides it and rule 2 forbids anchoring prose to prose, so it is recorded as anchor-unknown; included because the instrument prefers over-inclusion to a missed claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1186,
+          1186
+        ],
+        "section": "E42 Pro proposer runs confirmed — run-count list"
+      },
+      "claim_text": "- `pro-high-text-n5` (5 runs) — Pro HIGH text",
+      "values": [
+        {
+          "quantity": "run count, pro-high-text-n5 (Pro HIGH text) proposer runs",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "runs",
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
+        "path": "$.runs_per_condition"
+      },
+      "method": "read",
+      "notes": "The 'n5' inside the directory name is a name (rule 5); the parenthetical run count is the claim. Anchored to the executed run-set manifest's runs_per_condition. The same directory also carries an execution_order list and per-condition run_* subdirectories whose lengths need not agree with that field — triage decides which count the erratum asserts; this extraction does not adjudicate (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1187,
+          1187
+        ],
+        "section": "E42 Pro proposer runs confirmed — run-count list"
+      },
+      "claim_text": "- `pro-high-image-n5` (5 runs) — Pro HIGH image",
+      "values": [
+        {
+          "quantity": "run count, pro-high-image-n5 (Pro HIGH image) proposer runs",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "runs",
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/pro-high-image-n5/study_manifest.json",
+        "path": "$.runs_per_condition"
+      },
+      "method": "read",
+      "notes": "The 'n5' inside the directory name is a name (rule 5); the parenthetical run count is the claim. Anchored to the executed run-set manifest's runs_per_condition. The same directory also carries an execution_order list and per-condition run_* subdirectories whose lengths need not agree with that field — triage decides which count the erratum asserts; this extraction does not adjudicate (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1188,
+          1188
+        ],
+        "section": "E42 Pro proposer runs confirmed — run-count list"
+      },
+      "claim_text": "- `pro-medium-text-baseline` (1 run) — Pro MEDIUM text",
+      "values": [
+        {
+          "quantity": "run count, pro-medium-text-baseline (Pro MEDIUM text) proposer runs",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "runs",
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/pro-medium-text-baseline/study_manifest.json",
+        "path": "$.runs_per_condition"
+      },
+      "method": "read",
+      "notes": "The 'n5' inside the directory name is a name (rule 5); the parenthetical run count is the claim. Anchored to the executed run-set manifest's runs_per_condition. The same directory also carries an execution_order list and per-condition run_* subdirectories whose lengths need not agree with that field — triage decides which count the erratum asserts; this extraction does not adjudicate (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1189,
+          1189
+        ],
+        "section": "E42 Pro proposer runs confirmed — run-count list"
+      },
+      "claim_text": "- `pro-medium-image-baseline` (1 run) — Pro MEDIUM image",
+      "values": [
+        {
+          "quantity": "run count, pro-medium-image-baseline (Pro MEDIUM image) proposer runs",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": "runs",
+          "kind": "count",
+          "path": "$.runs_per_condition",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/pro-medium-image-baseline/study_manifest.json",
+        "path": "$.runs_per_condition"
+      },
+      "method": "read",
+      "notes": "The 'n5' inside the directory name is a name (rule 5); the parenthetical run count is the claim. Anchored to the executed run-set manifest's runs_per_condition. The same directory also carries an execution_order list and per-condition run_* subdirectories whose lengths need not agree with that field — triage decides which count the erratum asserts; this extraction does not adjudicate (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1219,
+          1219
+        ],
+        "section": "E43 heading"
+      },
+      "claim_text": "### E43: consensus-384 executed at T=1.0 instead of T=0.7",
+      "values": [
+        {
+          "quantity": "temperature actually executed, H11 consensus-384",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature intended for H11 consensus-384 (study definition)",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/h11-384-consensus.yaml#$.fixed.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'consensus-384' is a study name (rule 5); both temperatures are asserted facts. The executed value anchors to a run meta of the preserved UNINTENDED directory, the intended value to the study YAML. Not a changelog before→after pair, so neither side is historical."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1226,
+          1226
+        ],
+        "section": "E43 header table — Impact row"
+      },
+      "claim_text": "| Impact | 30 runs × 487 tiles executed at wrong temperature; corrected baseline produced separately |",
+      "values": [
+        {
+          "quantity": "run count executed at the unintended temperature, consensus-384",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "runs",
+          "kind": "count",
+          "path": "outputs/h11/consensus-384-UNINTENDED-T1.0/study_manifest.json#$.runs_per_condition",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count per run, consensus-384",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.execution_stats.items_processed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row (rule 6): both cells are counts about the same executed study; the run count carries a cross-file locator to the study manifest (v1.2 amendment 2)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1228,
+          1229
+        ],
+        "section": "E43 Description — intended consensus-384 configuration"
+      },
+      "claim_text": "The H11 consensus-384 study was intended as a Flash MINIMAL\nT=0.7 consensus baseline (30 runs, 384px).",
+      "values": [
+        {
+          "quantity": "temperature intended for consensus-384 (study definition)",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.fixed.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "run count intended for consensus-384 (study definition)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "runs",
+          "kind": "count",
+          "path": "$.execution.runs",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length, consensus-384 (study definition)",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.inputs.tile_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h11-384-consensus.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "All three values describe the study as defined, so they anchor to the study YAML (non-JSON anchor, legitimate per v1.1 — the harness routes YAML to triage)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1229,
+          1232
+        ],
+        "section": "E43 Description — YAML vs prompt-config temperature"
+      },
+      "claim_text": "The study YAML specified\n`fixed.temperature: 0.7` and `carried_forward.optimal_temperature: 0.7`,\nbut the prompt config `detect_brief-text.json` has `\"temperature\": 1.0`\nhardcoded.",
+      "values": [
+        {
+          "quantity": "temperature in the study YAML fixed block, consensus-384",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.fixed.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "carried-forward optimal temperature in the study YAML, consensus-384",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.carried_forward.optimal_temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature hardcoded in the prompt config detect_brief-text.json",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "prompts/configs/detect_brief-text.json#$.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h11-384-consensus.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The span quotes two YAML keys and one prompt-config key; each value carries its own locator, the config value as a cross-file locator (v1.2 amendments 2-3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1232,
+          1234
+        ],
+        "section": "E43 Description — executed run count and temperature"
+      },
+      "claim_text": "The `run_phase2.py` orchestrator used the config's embedded\ntemperature rather than the YAML-specified value, resulting in all 30 runs\nexecuting at T=1.0.",
+      "values": [
+        {
+          "quantity": "run count executed at T=1.0, consensus-384",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "runs",
+          "kind": "count",
+          "path": "outputs/h11/consensus-384-UNINTENDED-T1.0/study_manifest.json#$.runs_per_condition",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature actually executed, consensus-384",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "As-run claims anchor to the executed artefacts (run meta plus the study manifest for the run count)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1240,
+          1242
+        ],
+        "section": "E43 Data disposition — temperature sensitivity result"
+      },
+      "claim_text": "The T=1.0 data is preserved and used in the T=0.7 vs\nT=1.0 temperature sensitivity analysis (Obs 190: dF1 ~+0.15, p<0.0001 at\nall pool sizes — T=0.7 dramatically outperforms T=1.0).",
+      "values": [
+        {
+          "quantity": "ΔF1, T=0.7 versus T=1.0 consensus (approximate, across pool sizes)",
+          "value_verbatim": "~+0.15",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.observed_f1_diff",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value, T=0.7 versus T=1.0 consensus",
+          "value_verbatim": "<0.0001",
+          "value_parsed": 0.0001,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.permutation_test.p_value",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/20m/group_4_temperature/t-0-7-vs-t-1-0-n-30-flash-min-text-t-0-7-29-of-30-vs-flash-min-text-t-1-0-22-of-30.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Approx marker kept in value_verbatim (v1.2 amendment 5) — the quoted ΔF1 is a rounded figure covering all pool sizes, and the p is quoted as an inequality (parsed as its bound). Three committed comparisons exist in results/pairwise/20m/group_4_temperature/ (N=5, N=10, N=30); the N=30 file is anchored as representative and triage may prefer to check all three. The T=0.7/T=1.0 tokens in this span label the two arms already extracted at lines 1219 and 1228-1234 and are not re-extracted (explicit scope decision). Obs identifier 190 excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1245,
+          1246
+        ],
+        "section": "E43 Corrected baseline"
+      },
+      "claim_text": "**Corrected baseline**: `outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/`\n(30 runs, 487 tiles, T=0.7, Flash MINIMAL, produced Session 56).",
+      "values": [
+        {
+          "quantity": "run count, corrected consensus-384 baseline (flash-minimal-text-n30-t07)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "runs",
+          "kind": "count",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/study_manifest.json#$.runs_per_condition",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count per run, corrected consensus-384 baseline",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.execution_stats.items_processed",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature, corrected consensus-384 baseline",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Session number 56 excluded per rule 5; the numerals inside the directory name (n30, t07) are names, the parenthetical figures are the claims."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1250,
+          1250
+        ],
+        "section": "E44 heading"
+      },
+      "claim_text": "### E44: single-pass-384 executed at T=1.0 instead of T=0.0",
+      "values": [
+        {
+          "quantity": "temperature actually executed, H11 single-pass-384",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature intended for H11 single-pass-384 (study definition)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/h11-384-single-pass.yaml#$.fixed.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Executed value anchors to a run meta in the archived UNINTENDED directory (archived, not deleted, per the project's preservation policy); intended value to the study YAML."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1257,
+          1257
+        ],
+        "section": "E44 header table — Impact row"
+      },
+      "claim_text": "| Impact | 10 runs × 240 tiles executed at wrong temperature; corrected rerun in progress |",
+      "values": [
+        {
+          "quantity": "run count executed at the unintended temperature, single-pass-384",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "runs",
+          "kind": "count",
+          "path": "archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/study_manifest.json#$.runs_per_condition",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count per run, single-pass-384 (unintended T=1.0 execution)",
+          "value_verbatim": "240",
+          "value_parsed": 240,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.execution_stats.items_processed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row (rule 6). The 240-tile figure is the original validation-subset scope, distinct from the 487-tile scope of the corrected rerun at lines 1271-1273."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1259,
+          1260
+        ],
+        "section": "E44 Description — intended single-pass-384 configuration"
+      },
+      "claim_text": "The H11 single-pass-384 study was intended as a deterministic\nT=0.0 single-pass baseline (10 runs, 240 tiles, Flash MINIMAL).",
+      "values": [
+        {
+          "quantity": "temperature intended for single-pass-384 (study definition)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.fixed.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "run count intended for single-pass-384 (study definition)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "runs",
+          "kind": "count",
+          "path": "$.execution.runs",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count intended for single-pass-384",
+          "value_verbatim": "240",
+          "value_parsed": 240,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json#$.execution_stats.items_processed",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h11-384-single-pass.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The study YAML sets no tile_limit, so the 240-tile intent is anchored to the executed run meta instead (cross-file locator, v1.2 amendment 2); triage may prefer the 384-tile validation manifest named in the YAML inputs block."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1261,
+          1263
+        ],
+        "section": "E44 Description — YAML vs prompt-config temperature"
+      },
+      "claim_text": "the YAML specified `fixed.temperature: 0.0` and\n`carried_forward.optimal_temperature: 0.0`, but `detect_brief-text.json` has\n`\"temperature\": 1.0` hardcoded and the CLI override was not applied.",
+      "values": [
+        {
+          "quantity": "temperature in the study YAML fixed block, single-pass-384",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.fixed.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "carried-forward optimal temperature in the study YAML, single-pass-384",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.carried_forward.optimal_temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature hardcoded in the prompt config detect_brief-text.json",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "prompts/configs/detect_brief-text.json#$.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h11-384-single-pass.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Same three-locator pattern as the E43 span at lines 1229-1232; erratum identifier E43 excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1271,
+          1273
+        ],
+        "section": "E44 Corrected rerun"
+      },
+      "claim_text": "**Corrected rerun**: `outputs/retest/h11-single-pass-384-t0/` (10 runs,\n487 tiles — expanded to full evaluation area for consistency with consensus\nanalyses, T=0.0, Flash MINIMAL, Batch API).",
+      "values": [
+        {
+          "quantity": "run count, corrected single-pass-384 rerun",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "runs",
+          "kind": "count",
+          "path": "outputs/retest/h11-single-pass-384-t0/study_manifest.json#$.runs_per_condition",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count per run, corrected single-pass-384 rerun",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.execution_stats.items_processed",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature, corrected single-pass-384 rerun",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_1/detections_brief-text-t0_run01.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Retest-era run: tile counts here ARE verifiable (scalar items_processed); no token claims are made in this span. Submission date excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1290,
+          1293
+        ],
+        "section": "E45 Correction (2026-07-28) — registration scan"
+      },
+      "claim_text": "`permutation` appears zero times in the\nlodged registration (normalised whole-file scan; the lodged appendix's three\nhits all concern H4 example-order shuffling), and §3.5 is a five-bullet\nreporting section specifying effect sizes with 95 % bootstrapped CIs.",
+      "values": [
+        {
+          "quantity": "occurrences of the word 'permutation' in the lodged registration",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "occurrences of the word 'permutation' in the lodged registration appendix",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration-appendix-prompts.md",
+          "method": "read"
+        },
+        {
+          "quantity": "bullet count of preregistration §3.5 (reporting section)",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap confidence-interval level specified in §3.5",
+          "value_verbatim": "95 %",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "All four are claims about the lodged registration's own contents, so they anchor to the lodged document (v1.1 calibration rule); the appendix count carries a cross-file locator to the lodged appendix. Markdown anchors take no JSONPath — the checks are whole-file scans. Section numbers and the audit finding identifier are excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1311,
+          1313
+        ],
+        "section": "E45 Description — tile-swap permutation mechanics"
+      },
+      "claim_text": "For each permutation, per-tile TP/FP/FN assignments are independently\nswapped between conditions with probability 0.5, then TP/FP/FN are\naggregated across tiles to compute F1 for each permuted condition.",
+      "values": [
+        {
+          "quantity": "swap probability per tile in the tile-swap permutation",
+          "value_verbatim": "0.5",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/pairwise_permutation_test.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (module logic: the swap draw is implemented as `rng.random(n_tiles) < 0.5` in the F1 and MCC permutation routines) — legitimate and expected per v1.1; the harness routes it to triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1320,
+          1321
+        ],
+        "section": "E45 Rationale 1 — macro vs micro ΔF1 illustration"
+      },
+      "claim_text": "produced a different ΔF1 from the reported ΔF1 for the same comparison\n   (e.g., +0.007 macro vs +0.015 micro for the Pro verifier comparison).",
+      "values": [
+        {
+          "quantity": "ΔF1 under the macro-average test statistic, Pro verifier comparison",
+          "value_verbatim": "+0.007",
+          "value_parsed": 0.007,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "ΔF1 under the micro-average test statistic, Pro verifier comparison",
+          "value_verbatim": "+0.015",
+          "value_parsed": 0.015,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/pairwise_permutation_test.py",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The micro-average ΔF1 requires rerunning the named script on the Pro-verifier pair (record, do not compute at extraction). The macro-average figure came from the superseded scripts/paired_permutation_consensus.py and no committed result file carrying it was located under results/h11-384-pv-diagnostic/pairwise/ or results/pairwise/, hence anchor-unknown for that value. The same two figures are restated at lines 1351-1353."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1328,
+          1329
+        ],
+        "section": "E45 Rationale 3 — information weighting"
+      },
+      "claim_text": "With 487 evaluation tiles, ~347 contain zero\n   reference mounds.",
+      "values": [
+        {
+          "quantity": "evaluation tile count, 384 px H11 diagnostic corpus",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.evaluation_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "count of evaluation tiles containing no reference mound (approximate)",
+          "value_verbatim": "~347",
+          "value_parsed": null,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-4of5/threshold_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The empty-tile count needs a spatial recomputation (mounds reference inputs/vectors/references/mounds-reference.geojson intersected with inputs/vectors/bounds/384/full_evaluation_bounds.geojson); approx marker retained per v1.2 amendment 5. A committed populated/empty split for the same 487-tile scope appears as a header comment in configs/mcc-eval-384px.yaml, which triage may wish to compare — this extraction does not adjudicate. 'zero reference mounds' is the predicate defining the subset, not separately extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1333,
+          1334
+        ],
+        "section": "E45 Rationale 4 — statistical power"
+      },
+      "claim_text": "The macro-average dilutes the signal with ~347\n   uninformative tiles, reducing power.",
+      "values": [
+        {
+          "quantity": "count of uninformative (no-reference-mound) evaluation tiles (approximate)",
+          "value_verbatim": "~347",
+          "value_parsed": null,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Restates the ~347 figure from line 1328; same recomputation (bounds intersected with inputs/vectors/references/mounds-reference.geojson)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1351,
+          1353
+        ],
+        "section": "E45 Validation — micro vs macro test results"
+      },
+      "claim_text": "**Validation**: The Pro verifier comparison (Flash HIGH text 4-of-5)\nproduces ΔF1=+0.015, p=0.019 with the micro-average test, compared to\nΔF1=+0.007, p=0.081 with the macro-average.",
+      "values": [
+        {
+          "quantity": "ΔF1, micro-average tile-swap permutation, Pro verifier comparison",
+          "value_verbatim": "+0.015",
+          "value_parsed": 0.015,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "permutation p-value, micro-average test, Pro verifier comparison",
+          "value_verbatim": "0.019",
+          "value_parsed": 0.019,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "ΔF1, macro-average sign-flip permutation, Pro verifier comparison",
+          "value_verbatim": "+0.007",
+          "value_parsed": 0.007,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "permutation p-value, macro-average test, Pro verifier comparison",
+          "value_verbatim": "0.081",
+          "value_parsed": 0.081,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/pairwise_permutation_test.py",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "'4-of-5' is a vote-threshold/condition label (rule 5) and is not extracted. No committed permutation-result JSON for this specific condition pair was located, so the micro figures are recorded for scripted recomputation and the macro figures (from the superseded scripts/paired_permutation_consensus.py) as anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1354,
+          1355
+        ],
+        "section": "E45 Validation — threshold-sweep consistency check"
+      },
+      "claim_text": "is consistent with the F1 values reported in the threshold sweep results\n(0.879 − 0.864 = 0.015).",
+      "values": [
+        {
+          "quantity": "F1 at optimal threshold, Flash HIGH text 4-of-5 with Pro verifier (20 m)",
+          "value_verbatim": "0.879",
+          "value_parsed": 0.879,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/h11-384-pv-diagnostic/flash-high-text-pro-vf-4of5/threshold_sweep.json#$.optimal.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 at optimal threshold, Flash HIGH text 4-of-5 baseline verifier (20 m)",
+          "value_verbatim": "0.864",
+          "value_parsed": 0.864,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.optimal.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1 between the two threshold-sweep F1 values",
+          "value_verbatim": "0.015",
+          "value_parsed": 0.015,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/h11-384-pv-diagnostic/flash-high-text-pro-vf-4of5/threshold_sweep.json",
+              "path": "$.optimal.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/h11-384-pv-diagnostic/flash-high-text-4of5/threshold_sweep.json",
+              "path": "$.optimal.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/h11-384-pv-diagnostic/flash-high-text-4of5/threshold_sweep.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "One derivation per expression (v1.2 amendment 1): the two operand values are read with their own paths and only the difference is arithmetic, so they are not compared against their own difference. The identification of which two threshold sweeps the erratum means is the extractor's best reading (the 0.864 figure matches the flash-high-text-4-of-5--flash-min-vf row in results/paper-tables/spatial_tolerance_comparison.md); triage should confirm the pairing before adjudicating."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1359,
+          1359
+        ],
+        "section": "E46 heading"
+      },
+      "claim_text": "### E46: Primary spatial matching buffer changed from 20 m to 30 m",
+      "values": [
+        {
+          "quantity": "preregistered primary spatial matching buffer",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "primary spatial matching buffer adopted by E46 (superseded by E47)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "E47 (lines 1432-1483, 'Supersedes E46') reverts the primary tolerance to 20 m, so E46's 30 m primary is a superseded-and-marked value and is recorded as historical — treating it as a live parameter claim is exactly the trap the instrument warns about. The 20 m figure is a registration claim and anchors to the lodged document (v1.1). Shared unit set on both values per v1.2 amendment 6."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1369,
+          1371
+        ],
+        "section": "E46 Description — buffer replacement"
+      },
+      "claim_text": "The preregistered evaluation buffer of 20 m is replaced\nby 30 m as the primary spatial matching tolerance. 20 m results are\nretained as a secondary strict-localisation analysis.",
+      "values": [
+        {
+          "quantity": "preregistered evaluation buffer",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "primary spatial matching tolerance adopted by E46 (superseded by E47)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "preregistered buffer retained as a secondary strict-localisation analysis",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Same treatment as the heading: the registered 20 m is live (twice — replaced primary and retained secondary), E46's 30 m primary is historical because E47 supersedes it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1373,
+          1376
+        ],
+        "section": "E46 Description — matching algorithm and reference accuracy"
+      },
+      "claim_text": "The spatial matching algorithm uses **centroid-to-centroid distance**:\neach detection bounding box is reduced to its centroid, and the distance\nto the hand-placed reference point (verified at ~1-2 px accuracy by the\nfirst author) must fall within the buffer to count as a True Positive.",
+      "values": [
+        {
+          "quantity": "manual placement accuracy of the hand-placed reference points (approximate range)",
+          "value_verbatim": "~1-2",
+          "value_parsed": null,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "An author attestation about reference-point placement accuracy. No committed artefact records it: docs/methodology/spatial-reference.md contains no accuracy or resolution figures, and the reference GeoJSON carries no per-point accuracy attribute. Rule 2 forbids anchoring prose to prose, so this is anchor-unknown. Range kept as a single verbatim value with its approx marker (v1.2 amendment 5); parsed left null because the quote is a range, not a scalar."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1377,
+          1379
+        ],
+        "section": "E46 Description — buffer-to-pixel geometry"
+      },
+      "claim_text": "At 384 px tiles (~5 m/px), 30 m = 6 px — requiring the detection box\ncentre to fall within ~40% of the symbol diameter (~15 px) from the\ntrue centre.",
+      "values": [
+        {
+          "quantity": "tile edge length, 384 px evaluation corpus",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.metadata.tile_size",
+          "method": "read"
+        },
+        {
+          "quantity": "ground sample distance of the map rasters (approximate)",
+          "value_verbatim": "~5",
+          "value_parsed": null,
+          "unit": "m/px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "spatial matching buffer being converted to pixels",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "buffer expressed in pixels at 384 px tile scale",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "buffer as a fraction of symbol diameter (approximate)",
+          "value_verbatim": "~40%",
+          "value_parsed": 40,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "burial mound symbol diameter (approximate)",
+          "value_verbatim": "~15",
+          "value_parsed": 15,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "configs/mcc-eval-384px.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Only the tile size has a committed anchor (the MCC evaluation config's metadata.tile_size). The conversion chain (30 m ÷ ~5 m/px = 6 px; 6 px ÷ ~15 px ≈ 40 %) is NOT expressed as arithmetic because its operands — the m/px scale and the symbol diameter — have no committed artefact: the ~5 m/px figure appears only as a source comment in scripts/review_candidates.py and scripts/gs-fp-classify.py, with the authoritative resolution living in the (uncommitted) raster transform. Marking them arithmetic would manufacture operand mismatches."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1383,
+          1385
+        ],
+        "section": "E46 Rationale 1 — symbol-scale analysis"
+      },
+      "claim_text": "1. **Symbol-scale analysis**: Burial mound symbols are ~15 px in\n   diameter (~75 m on the ground). A 20 m buffer (4 px) requires the\n   detection centroid to fall within ~1/4 of the symbol diameter.",
+      "values": [
+        {
+          "quantity": "burial mound symbol diameter (approximate)",
+          "value_verbatim": "~15",
+          "value_parsed": 15,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "burial mound symbol diameter on the ground (approximate)",
+          "value_verbatim": "~75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "preregistered evaluation buffer",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "preregistered buffer expressed in pixels",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "buffer as a fraction of symbol diameter (approximate)",
+          "value_verbatim": "~1/4",
+          "value_parsed": 0.25,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Only the registered 20 m buffer has an anchor (lodged registration). The symbol-size and pixel-conversion figures share the same missing-operand problem as lines 1377-1379 and are anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1390,
+          1393
+        ],
+        "section": "E46 Rationale 2 — modality-specific localisation plateaus"
+      },
+      "claim_text": "2. **Modality-specific localisation plateaus**: Comprehensive buffer\n   sensitivity analysis (Obs 196-197) showed that text-based detections\n   plateau at 30 m (zero further F1 gain at 40, 50, 75, or 100 m) while\n   image-based detections plateau at 50 m.",
+      "values": [
+        {
+          "quantity": "buffer at which text-track detections plateau",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "buffer with no further F1 gain for text detections (first listed)",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "buffer with no further F1 gain for text detections (second listed)",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "buffer with no further F1 gain for text detections (third listed)",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "buffer with no further F1 gain for text detections (fourth listed)",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "buffer at which image-track detections plateau",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/spatial_tolerance_curve.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Plateau assertions require reading F1 across buffers per modality; the committed tolerance curve covers 20, 30, 40 and 50 m only, so the 75 m and 100 m figures are anchor-unknown here (line 1426 says the extension was run for image conditions; results/gold-standard-extended-buffer-sweep/ is a candidate but is a different corpus — triage to resolve). Shared unit set on every value per v1.2 amendment 6. Obs identifiers excluded."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1393,
+          1397
+        ],
+        "section": "E46 Rationale 2 — per-modality behaviour at 20 m and 30 m"
+      },
+      "claim_text": "At 20 m, the evaluation\n   disproportionately penalises image detections for localisation error\n   rather than detection quality. At 30 m, text detections fully express\n   their detection quality while image detections recover the majority\n   of their spatial error.",
+      "values": [
+        {
+          "quantity": "buffer at which the evaluation is said to penalise image detections for localisation error",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "buffer at which text detections are said to express their full detection quality",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/spatial_tolerance_curve.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Continuation of the plateau rationale at lines 1390-1393: the assertions are about how much F1 each modality gains between 20 m and 30 m, decided by comparing the committed tolerance curve's per-modality rows at the two buffers. Shared unit set on both values (v1.2 amendment 6)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1399,
+          1403
+        ],
+        "section": "E46 Rationale 3 — practical relevance"
+      },
+      "claim_text": "3. **Practical relevance**: The task is to flag map locations containing\n   burial mound symbols for human verification. A 30 m offset (6 px on\n   the map, ~30 m in the field) produces no ambiguity about which\n   feature was detected — mound symbols in these maps are typically\n   >100 m apart in clusters.",
+      "values": [
+        {
+          "quantity": "spatial matching offset under discussion",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "offset expressed in pixels on the map",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "offset on the ground (approximate)",
+          "value_verbatim": "~30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "typical separation of mound symbols within clusters (lower bound)",
+          "value_verbatim": ">100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/references/mounds-reference.geojson",
+        "path": null
+      },
+      "method": "anchor-unknown",
+      "notes": "The typical inter-mound separation is recomputable from the reference geometry (nearest-neighbour distances within clusters) and is quoted as a lower bound, so it is recorded as recompute-script against the reference GeoJSON; the pixel/metre conversions repeat the unanchored chain from lines 1377-1379."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1405,
+          1406
+        ],
+        "section": "E46 Rationale 4 — ranking stability"
+      },
+      "claim_text": "4. **Ranking stability**: Condition rankings are identical at all buffer\n   distances from 20 m to 100 m.",
+      "values": [
+        {
+          "quantity": "lower bound of the buffer range over which condition rankings are asserted identical",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "upper bound of the buffer range over which condition rankings are asserted identical",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/spatial_tolerance_curve.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Rank-stability across buffers must be recomputed from per-condition F1 at each buffer; the committed curve spans 20-50 m only, so the 100 m end of the asserted range is not covered by this anchor (same gap as lines 1390-1393). Shared unit set on both values (v1.2 amendment 6)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1415,
+          1415
+        ],
+        "section": "E46 The change preserves — secondary 20 m results"
+      },
+      "claim_text": "- All 20 m results available as secondary analysis",
+      "values": [
+        {
+          "quantity": "buffer at which secondary results are retained",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/spatial_tolerance_curve.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The committed tolerance curve carries a buffer_metres column with 20 m rows for every condition; CSV anchor takes no JSONPath, so the path is left null (single-value claim, so the v1.2 amendment 3 fallback hazard does not arise)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1419,
+          1420
+        ],
+        "section": "E46 What changes — reporting policy bullets"
+      },
+      "claim_text": "- Primary F1/P/R values reported in the paper use 30 m buffer\n- 20 m results reported as sensitivity analysis",
+      "values": [
+        {
+          "quantity": "buffer used for the paper's primary F1/P/R values under E46 (superseded by E47)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "buffer relegated to sensitivity analysis under E46 (superseded by E47)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Both values state the E46 reporting policy that E47 reverses (E47 makes 20 m the headline and 30 m the secondary analysis). Recorded as historical so triage is not flooded with false mismatches; the live policy is captured in the E47 claims at lines 1443-1446 and 1467."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1421,
+          1422
+        ],
+        "section": "E46 What changes — modality gap bullet"
+      },
+      "claim_text": "- The text-vs-image modality gap is smaller at 30 m (reflects detection\n  quality rather than localisation precision)",
+      "values": [
+        {
+          "quantity": "buffer at which the text-versus-image modality gap is asserted to be smaller",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/spatial_tolerance_curve.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Unlike the two policy bullets above it (lines 1419-1420, historical), this bullet makes an analytical claim that survives E47's reversion: the text-image F1 gap narrows between 20 m and 30 m, decided by comparing per-modality rows of the committed tolerance curve."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1424,
+          1426
+        ],
+        "section": "E46 Evidence — multi-buffer evaluation scope"
+      },
+      "claim_text": "**Evidence**: Full multi-buffer evaluation at 20, 30, 40, 50 m for 16\nconditions (8 consensus, 8 PV) on 487 tiles with 435 reference mounds.\nExtended to 75 m and 100 m for image conditions to confirm plateau.",
+      "values": [
+        {
+          "quantity": "first buffer of the multi-buffer evaluation",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/paper-tables/spatial_tolerance_comparison.md#buffers-header",
+          "method": "read"
+        },
+        {
+          "quantity": "second buffer of the multi-buffer evaluation",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/paper-tables/spatial_tolerance_comparison.md#buffers-header",
+          "method": "read"
+        },
+        {
+          "quantity": "third buffer of the multi-buffer evaluation",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/paper-tables/spatial_tolerance_comparison.md#buffers-header",
+          "method": "read"
+        },
+        {
+          "quantity": "fourth buffer of the multi-buffer evaluation",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/paper-tables/spatial_tolerance_comparison.md#buffers-header",
+          "method": "read"
+        },
+        {
+          "quantity": "condition count in the multi-buffer evaluation",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "consensus condition count in the multi-buffer evaluation",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "proposer-verifier condition count in the multi-buffer evaluation",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "evaluation tile count of the multi-buffer evaluation",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "results/paper-tables/spatial_tolerance_comparison.md#bounds-header",
+          "method": "read"
+        },
+        {
+          "quantity": "reference mound count of the multi-buffer evaluation",
+          "value_verbatim": "435",
+          "value_parsed": 435,
+          "unit": "mounds",
+          "kind": "count",
+          "path": "results/paper-tables/spatial_tolerance_comparison.md#bounds-header",
+          "method": "read"
+        },
+        {
+          "quantity": "extended buffer for image conditions (first)",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "extended buffer for image conditions (second)",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/spatial_tolerance_comparison.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document names this artefact itself at line 1427, so it is the anchor; the buffer list and the tile/mound counts sit in its generated header lines (locators given as document fragments, following the established markdown-anchor convention). The condition counts need a count over the table's condition_type column (recompute-script) and may reflect an earlier scope than the currently committed table — triage adjudicates. The 75 m/100 m extension is not in this artefact (anchor-unknown; results/gold-standard-extended-buffer-sweep/ is a candidate on a different corpus). Observation identifiers excluded."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1432,
+          1432
+        ],
+        "section": "E47 heading"
+      },
+      "claim_text": "### E47: Primary spatial matching buffer reverted to preregistered 20 m",
+      "values": [
+        {
+          "quantity": "preregistered primary spatial matching buffer (restored)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration claim → lodged document (v1.1). This is the live primary tolerance; E46's 30 m is the superseded side."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1443,
+          1446
+        ],
+        "section": "E47 Description — reversion"
+      },
+      "claim_text": "The primary spatial matching tolerance is reverted from\n30 m (E46) to the preregistered 20 m. The 30 m analysis remains\navailable and is recommended for production deployment, but 20 m is\nused as the paper's headline tolerance.",
+      "values": [
+        {
+          "quantity": "buffer being reverted away from (E46's primary; superseded)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "preregistered primary buffer restored as primary",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "buffer retained as an available production-recommended analysis",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/paper-tables/spatial_tolerance_curve.csv",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer used as the paper's headline tolerance",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed span: the first 30 m is the superseded E46 value being reverted (historical); the second 30 m asserts that a 30 m analysis remains available, which the committed tolerance curve's 30 m rows can decide (cross-file locator, CSV takes no JSONPath). Both 20 m values are the registered tolerance."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1450,
+          1451
+        ],
+        "section": "E47 Rationale 1 — preregistration alignment"
+      },
+      "claim_text": "1. **Preregistration alignment**: The preregistered primary tolerance is\n   20 m (Section 3.5).",
+      "values": [
+        {
+          "quantity": "preregistered primary spatial tolerance",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration claim → lodged document (v1.1); section reference excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1455,
+          1458
+        ],
+        "section": "E47 Rationale 2 — statistical discrimination"
+      },
+      "claim_text": "2. **Greater statistical discrimination**: At 20 m, the leaderboard\n   round-robin (253 pairwise comparisons, FDR-corrected) produces a\n   solitary Tier 1 (best condition alone), whereas at 30 m the top 3\n   conditions are statistically indistinguishable.",
+      "values": [
+        {
+          "quantity": "buffer of the leaderboard round-robin under discussion",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "pairwise comparison count in the 20 m leaderboard round-robin",
+          "value_verbatim": "253",
+          "value_parsed": 253,
+          "unit": null,
+          "kind": "count",
+          "path": "$.metadata.n_comparisons",
+          "method": "read"
+        },
+        {
+          "quantity": "buffer of the comparison round-robin at the looser tolerance",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/pairwise/leaderboard-30m/run_manifest.json#$.metadata.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "count of statistically indistinguishable top conditions at 30 m",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/pairwise/leaderboard-20m/run_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The comparison count anchors to the committed 20 m round-robin manifest. E47 is dated 2026-03-29; if the round-robin was later expanded the committed count will differ from the quoted one — that is triage's call, not the extractor's (rule 4). The tier-membership claims ('solitary Tier 1', 'top 3') need the tier clustering recomputed; the committed tier documents are results/paper-tables/leaderboard_tiers_20m.md and results/paper-tables/leaderboard_tiers.md (30 m). 'Tier 1' is a tier label, not a value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1461,
+          1463
+        ],
+        "section": "E47 Rationale 3 — conservative reporting"
+      },
+      "claim_text": "3. **Conservative reporting**: 20 m is the more demanding evaluation.\n   Reporting the harder metric as the headline and showing improvement\n   at 30 m via the tolerance curve is more credible than the reverse.",
+      "values": [
+        {
+          "quantity": "buffer asserted to be the more demanding evaluation tolerance",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "buffer at which the tolerance curve is said to show improvement over the headline figure",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/spatial_tolerance_curve.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The assertions are comparative (metrics at 20 m are lower than at the looser 30 m tolerance) and are decided by comparing per-condition F1 across the committed tolerance curve. Shared unit set on both values (v1.2 amendment 6)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1467,
+          1467
+        ],
+        "section": "E47 The paper will present — primary tolerance"
+      },
+      "claim_text": "- 20 m as the primary (preregistered) evaluation tolerance",
+      "values": [
+        {
+          "quantity": "primary (preregistered) evaluation tolerance for the paper",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration claim → lodged document (v1.1). This is the live counterpart of the historical E46 policy bullet at line 1419."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1468,
+          1468
+        ],
+        "section": "E47 The paper will present — tolerance curve range"
+      },
+      "claim_text": "- A spatial tolerance curve from 20–50 m showing sensitivity",
+      "values": [
+        {
+          "quantity": "lower bound of the reported spatial tolerance curve",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "upper bound of the reported spatial tolerance curve",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/spatial_tolerance_curve.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Decided by the buffer_metres column of the committed curve (minimum and maximum). Only the second value carries the unit in the source ('20–50 m'), so the unit is set on both per v1.2 amendment 6; the CSV anchor takes no JSONPath, so paths are left null and anchor.path is null (no fallback hazard)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1469,
+          1470
+        ],
+        "section": "E47 The paper will present — production tolerance argument"
+      },
+      "claim_text": "- An argument that 30 m (generalised to: minimum typical radius of\n  the target symbol)",
+      "values": [
+        {
+          "quantity": "tolerance recommended for production workflows",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-tables/spatial_tolerance_curve.csv",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 30 m analysis remains committed in the tolerance curve; the 'minimum typical radius of the target symbol' gloss rests on the unanchored ~15 px symbol diameter at line 1383."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1474,
+          1475
+        ],
+        "section": "E47 The E46 rationale remains valid"
+      },
+      "claim_text": "**The E46 rationale remains valid**: 30 m is a physically meaningful\nthreshold (~1 symbol radius) and the text-track plateau begins there.",
+      "values": [
+        {
+          "quantity": "tolerance asserted to be a physically meaningful threshold",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tolerance expressed in symbol radii (approximate)",
+          "value_verbatim": "~1",
+          "value_parsed": 1,
+          "unit": "symbol radius",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The symbol-radius equivalence depends on the ~15 px diameter figure at line 1383, which has no committed artefact (see the note on lines 1377-1379). The text-track plateau assertion is already captured at lines 1390-1393. Scope decision: the 20 m/30 m tokens at lines 1476-1478 restate these two tolerances in prose and are not separately extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1480,
+          1483
+        ],
+        "section": "E47 Changes to defaults"
+      },
+      "claim_text": "**Changes to defaults**: Script defaults and config files updated from\n30 m to 20 m. The condition registry now includes threshold variants\nfor both 20 m and 30 m optimal consensus thresholds (two N=10\nconditions have different optima at the two tolerances).",
+      "values": [
+        {
+          "quantity": "buffer previously set as the script/config default (superseded)",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "buffer now set as the script/config default",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "$.defaults.buffers",
+          "method": "read"
+        },
+        {
+          "quantity": "first tolerance for which the condition registry holds threshold variants",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "configs/condition-registry.yaml",
+          "method": "read"
+        },
+        {
+          "quantity": "second tolerance for which the condition registry holds threshold variants",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": "m",
+          "kind": "physical",
+          "path": "configs/condition-registry.yaml",
+          "method": "read"
+        },
+        {
+          "quantity": "count of N=10 conditions whose optimal consensus threshold differs between the two tolerances",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "configs/mcc-eval-384px.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The new default is anchored to the evaluation config's defaults.buffers list; the old 30 m default is the superseded side (historical). The registry values carry cross-file locators to configs/condition-registry.yaml (YAML, no JSONPath resolution). The 'two conditions' count needs the registry's per-condition optima compared across tolerances (recompute-script). 'N=10' is a pool-size label within a condition name (rule 5) and is not extracted as a value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1487,
+          1487
+        ],
+        "section": "E48 heading"
+      },
+      "claim_text": "### E48: Section 8.4.1 HN target M=3 inconsistent with Scale-8 definition",
+      "values": [
+        {
+          "quantity": "hard-negative selection target M, as specified in preregistration §8.4.1",
+          "value_verbatim": "M=3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The heading asserts the registered §8.4.1 target; a registration claim → lodged document (v1.1). 'Scale-8' is a library name and the section number is excluded per rule 5. Restated at lines 1496-1497, 1499 and 1505."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1496,
+          1497
+        ],
+        "section": "E48 Description — §8.4.1 hard-negative target"
+      },
+      "claim_text": "Section 8.4.1 specifies \"Top M FPs (target M=3)\" for hard\nnegative selection.",
+      "values": [
+        {
+          "quantity": "hard-negative selection target M, as specified in preregistration §8.4.1",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "A claim about what the registration specifies → lodged document, null path (v1.1 calibration rule). Section numbers excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1497,
+          1499
+        ],
+        "section": "E48 Description — Scale-8 composition table"
+      },
+      "claim_text": "However, the Scale-8 library composition table (§8.4.2,\nline 769) defines Scale-8 as `HP=4, HN=4, Total hard=8`, and the category\nratio (line 1514) is explicitly stated as `4:2:4:4:3 = 17 examples`.",
+      "values": [
+        {
+          "quantity": "hard-positive count defining Scale-8, as preregistered",
+          "value_verbatim": "HP=4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "hard-negative count defining Scale-8, as preregistered",
+          "value_verbatim": "HN=4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "total hard-example count defining Scale-8, as preregistered",
+          "value_verbatim": "Total hard=8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "example category ratio (canonical+ : canonical- : HP : HN : null), as preregistered",
+          "value_verbatim": "4:2:4:4:3",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "total example count of the baseline library, as preregistered",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration-side values → lodged document (v1.1). The executed library prompts/configs/library_scale-8.json carries the as-run counterparts ($.composition.hard_positive, $.composition.hard_negative, $.hard_examples, $.total_examples) should triage want them. 'Scale-8' is a library name (rule 5); the line-number citations are excluded."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1499,
+          1502
+        ],
+        "section": "E48 Description — stale M=3 versus HN=4"
+      },
+      "claim_text": "The M=3\ntarget is a stale draft value that was not updated when the library design\nsettled on Scale-8 (4+4). All H8 contrasts, the Scale-8 naming convention,\nand the 1:1 HP:HN ratio specification (line 813) are built around HN=4.",
+      "values": [
+        {
+          "quantity": "stale hard-negative target M in preregistration §8.4.1",
+          "value_verbatim": "M=3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "hard-positive count in the settled Scale-8 design (first term of '4+4')",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "hard-negative count in the settled Scale-8 design (second term of '4+4')",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "HP:HN ratio specified in the preregistration",
+          "value_verbatim": "1:1",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "hard-negative count the design is built around",
+          "value_verbatim": "HN=4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "All five values are assertions about the registration's own contents → lodged document (v1.1). The two terms of '4+4' share the verbatim token '4'; they are recorded as separate values distinguished by quantity. H8 and the line-number citation are excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1504,
+          1505
+        ],
+        "section": "E48 Resolution"
+      },
+      "claim_text": "**Resolution**: Use HN=4 (consistent with Scale-8 and the composition table).\nThe M=3 value in §8.4.1 is treated as a drafting error.",
+      "values": [
+        {
+          "quantity": "hard-negative count adopted by the resolution (as implemented)",
+          "value_verbatim": "HN=4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "stale hard-negative target M in preregistration §8.4.1",
+          "value_verbatim": "M=3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/library_scale-8.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The resolution is a decision about what to implement, so the adopted HN=4 anchors to the executed library config; the M=3 it discards remains a registration-side claim and carries a cross-file locator to the lodged document."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1518,
+          1519
+        ],
+        "section": "E49 Description — preregistered calibration configuration"
+      },
+      "claim_text": "The preregistration specifies calibration runs using an\nimage-only baseline at T=1.0 with K=5 passes.",
+      "values": [
+        {
+          "quantity": "calibration temperature, as preregistered",
+          "value_verbatim": "T=1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "calibration pass count K, as preregistered",
+          "value_verbatim": "K=5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration claims → lodged document with null path (v1.1); anchoring these to the H10 v2 config would manufacture a mismatch, since that config records the deviation rather than the promise."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1524,
+          1524
+        ],
+        "section": "E49 Preregistered vs H10 v2 table — Temperature row"
+      },
+      "claim_text": "| Temperature | T=1.0 | T=0.7 |",
+      "values": [
+        {
+          "quantity": "calibration temperature, as preregistered",
+          "value_verbatim": "T=1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "docs/methodology/preregistration/osf/preregistration.md",
+          "method": "read"
+        },
+        {
+          "quantity": "calibration temperature, H10 v2 cold-start config (as run)",
+          "value_verbatim": "T=0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/h10/detect_coldstart_image.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row (rule 6): the Preregistered cell anchors to the lodged document (v1.1), the H10 v2 cell to the executed cold-start config."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1527,
+          1527
+        ],
+        "section": "E49 Preregistered vs H10 v2 table — Examples row"
+      },
+      "claim_text": "| Examples | Full baseline library (17) | Cold-start: legend + nulls only (9) |",
+      "values": [
+        {
+          "quantity": "example count of the full baseline library, as preregistered",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md",
+          "method": "read"
+        },
+        {
+          "quantity": "example count of the H10 v2 cold-start library (as run)",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/h10/detect_coldstart_image.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Count locator uses the canonical len: prefix (v1.2 amendment 4). The registered library size anchors to the lodged document; the executed cold-start count to the config's examples array."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1528,
+          1528
+        ],
+        "section": "E49 Preregistered vs H10 v2 table — Crop size row"
+      },
+      "claim_text": "| Crop size | 128px (implementation choice, E8 — not registered) | 150px (aligned with verifier standard) |",
+      "values": [
+        {
+          "quantity": "example-pool crop size, prior implementation default",
+          "value_verbatim": "128",
+          "value_parsed": 128,
+          "unit": "px",
+          "kind": "physical",
+          "path": "_DEFAULT_CROP_SIZE",
+          "method": "read"
+        },
+        {
+          "quantity": "crop size used by H10 v2 (verifier crop standard)",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * 2",
+          "operands": [
+            {
+              "name": "a",
+              "file": "scripts/extract_candidates.py",
+              "path": "DEFAULT_PADDING"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "scripts/build_example_pool.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchors (module constants) are legitimate and expected (v1.1); the harness routes them to triage. The 150 px figure is the verifier crop standard, defined in scripts/extract_candidates.py as padding × 2 with DEFAULT_PADDING = 75, so it is recorded as arithmetic over that single operand. The E8 erratum identifier is excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1532,
+          1532
+        ],
+        "section": "E49 Rationale — production-quality settings"
+      },
+      "claim_text": "production-quality settings (T=0.7, HIGH thinking)",
+      "values": [
+        {
+          "quantity": "calibration temperature, H10 v2 cold-start config (as run)",
+          "value_verbatim": "T=0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/h10/detect_coldstart_image.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the table row at line 1524; HIGH thinking is a level name, not a numeric value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1534,
+          1535
+        ],
+        "section": "E49 Rationale — crop standard derivation"
+      },
+      "claim_text": "The 150px crop size\naligns with the verifier crop standard (75px padding × 2).",
+      "values": [
+        {
+          "quantity": "crop size used by H10 v2 (verifier crop standard)",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * 2",
+          "operands": [
+            {
+              "name": "a",
+              "file": "scripts/extract_candidates.py",
+              "path": "DEFAULT_PADDING"
+            }
+          ]
+        },
+        {
+          "quantity": "verifier crop padding either side of the candidate centroid",
+          "value_verbatim": "75",
+          "value_parsed": 75,
+          "unit": "px",
+          "kind": "physical",
+          "path": "DEFAULT_PADDING",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/extract_candidates.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "One derivation per expression (v1.2 amendment 1): the padding operand is read with its own locator and only the crop size is arithmetic, so the operand is not compared against its own product. The literal '2' is the multiplier inside the expression, not a separate claim (explicit scope decision)."
+    }
+  ]
+}

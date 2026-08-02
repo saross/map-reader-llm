@@ -1,0 +1,2556 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/preregistration/protocol-errata.md",
+    "git_blob": "b4fe2c5c45d80b0de9792cf17ba7e467dbf68ea7",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [395, 395],
+        "section": "E17 heading"
+      },
+      "claim_text": "### E17: Execution plan and Phase 2 YAMLs contained erroneous N=5 passes multiplier",
+      "values": [
+        {
+          "quantity": "within-run consensus passes multiplier (N) erroneously present in the execution plan and the five Phase 2 study YAMLs before this correction",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Quoted-old-value side of a correction block: the entry exists to record that the `passes: 5` / `× N=5` multiplier was removed. The live post-fix state is the absence of the field, so no artefact carries the 5. Batch b016 (lines 394-786)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [402, 402],
+        "section": "E17 field table, Impact row"
+      },
+      "claim_text": "| Impact | Would have run 5× more API calls than preregistered, at 5× the cost |",
+      "values": [
+        {
+          "quantity": "counterfactual API-call inflation factor had the erroneous N=5 passes multiplier been executed",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "counterfactual cost inflation factor had the erroneous N=5 passes multiplier been executed",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Counterfactual multipliers about a scenario that was never run (15,000 vs 3,000 API calls implies 5×). No committed artefact records an un-executed alternative, so no anchor exists; not classified historical because the multiplier is the erratum's own assessment rather than a quoted prior value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [404, 404],
+        "section": "E17 Description — erroneous formula as it stood"
+      },
+      "claim_text": "The execution plan cost formula (line 271) and all five Phase 2 YAML files contained `passes: 5` and formulas like `5 × K=10 × 60 tiles × N=5 = 15,000 API calls`.",
+      "values": [
+        {
+          "quantity": "count of Phase 2 study YAML files carrying the erroneous passes field",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "value of the `passes` field as it stood in the Phase 2 YAMLs before removal",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of M/E conditions in the Phase 2a cost formula (registered M/E factor levels)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#factor-table-modality-elaboration-5-levels",
+          "method": "read"
+        },
+        {
+          "quantity": "independent runs per condition (K) in the cost formula, as registered",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#independent-runs-K-10-single-pass",
+          "method": "read"
+        },
+        {
+          "quantity": "evaluation tile count per run in the cost formula (validation/holdout set size)",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles/tile_selection_metadata.json#$.validation.total_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "erroneous within-run consensus passes multiplier (N) in the quoted formula",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "total API calls implied by the erroneous Phase 2a formula, before correction",
+          "value_verbatim": "15,000",
+          "value_parsed": 15000,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "historical",
+      "notes": "Mixed span: the `passes: 5`, `× N=5` and 15,000 figures are the quoted-old-value side (removed by the Fix); the 5 conditions, K=10 and 60 tiles survive into the corrected formula and are registered design values (osf/preregistration.md factor table and the 'Independent runs' paragraph). 'line 271' excluded per rule 5 (line-number citation). The count of five Phase 2 YAMLs is countable as studies/phase2[a-e]-*.yaml but no single artefact asserts it, hence anchor-unknown for that value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [404, 404],
+        "section": "E17 Description — quotation of the registered single-pass protocol"
+      },
+      "claim_text": "which explicitly specifies \"K=10 independent **single-pass** runs\"",
+      "values": [
+        {
+          "quantity": "independent runs per condition (K), as specified by the lodged preregistration",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#independent-runs-K-10-single-pass",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "v1.1 calibration rule — a claim about what the registration specifies anchors to the lodged document, not to any executed config. The preregistration's 'Independent runs' paragraph carries the 'K=10 independent single-pass runs' wording. '§3.8' excluded per rule 5 (section identifier)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [406, 406],
+        "section": "E17 Description — registered post-hoc voting design"
+      },
+      "claim_text": "Under the preregistered protocol, voting analysis (H3) is performed post-hoc by re-pooling the same K=10 single-pass runs (N=5 from runs 1–5, N=10 from all runs) without additional API calls.",
+      "values": [
+        {
+          "quantity": "independent runs per condition (K) re-pooled for post-hoc voting, as registered",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#independent-runs-K-10-single-pass",
+          "method": "read"
+        },
+        {
+          "quantity": "smaller consensus voting pool size (N), registered post-hoc voting design",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#voting-analysis-table-N5-row",
+          "method": "read"
+        },
+        {
+          "quantity": "run index range for the N=5 pool, start",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#voting-analysis-table-N5-row",
+          "method": "read"
+        },
+        {
+          "quantity": "run index range for the N=5 pool, end",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#voting-analysis-table-N5-row",
+          "method": "read"
+        },
+        {
+          "quantity": "larger consensus voting pool size (N), registered post-hoc voting design",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#voting-analysis-table-N10-row",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration claim (v1.1 calibration rule): the lodged preregistration's voting-analysis table specifies the N=5 (runs 1-5 or 6-10) and N=10 (all runs) pools. Markdown anchor carries descriptive locators; the harness routes non-JSON anchors to triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [408, 408],
+        "section": "E17 Fix — corrected single-pass cost formula"
+      },
+      "claim_text": "**Fix**: Removed the `passes` field from all five Phase 2 YAML files. Corrected all cost formulas in the execution plan to use the single-pass formula (e.g., `5 × K=10 × 60 = 3,000` for Phase 2a).",
+      "values": [
+        {
+          "quantity": "count of Phase 2 study YAML files from which the `passes` field was removed",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of M/E conditions in the corrected Phase 2a cost formula",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/execution-plan.md#phase-2a-corrected-cost-formula",
+          "method": "read"
+        },
+        {
+          "quantity": "independent runs per condition (K) in the corrected Phase 2a cost formula",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/execution-plan.md#phase-2a-corrected-cost-formula",
+          "method": "read"
+        },
+        {
+          "quantity": "evaluation tiles per run in the corrected Phase 2a cost formula",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/execution-plan.md#phase-2a-corrected-cost-formula",
+          "method": "read"
+        },
+        {
+          "quantity": "total API calls for Phase 2a under the corrected single-pass formula",
+          "value_verbatim": "3,000",
+          "value_parsed": 3000,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/execution-plan.md#phase-2a-corrected-cost-formula",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/execution-plan.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The assertion is about the content of the execution plan itself, so the plan is the artefact under test (not a case of anchoring prose to third-party prose). The count of five Phase 2 YAMLs has no single-artefact locator, hence anchor-unknown for that value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [425, 425],
+        "section": "E18 Description — config naming convention across M/E levels"
+      },
+      "claim_text": "The convention is consistent across all five M/E levels and is documented in each config's `description` field",
+      "values": [
+        {
+          "quantity": "count of modality/elaboration (M/E) factor levels across which the config naming convention applies",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#factor-table-modality-elaboration-5-levels",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The registered factor table gives M/E 5 levels (Image-only, Brief+image, Verbose+image, Brief-text, Verbose-text). 'H1'/'H5' in the surrounding sentence are hypothesis/factor identifiers, excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [438, 438],
+        "section": "E19 field table, Impact row"
+      },
+      "claim_text": "| Impact | Evaluation reported F1 ~0.1 instead of ~0.4 for sanity check runs |",
+      "values": [
+        {
+          "quantity": "F1 reported by the sanity-check runs under the wrong bounds file (approximate, pre-correction)",
+          "value_verbatim": "~0.1",
+          "value_parsed": 0.1,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1 for the same sanity-check runs after regenerating the bounds file (approximate, corrected)",
+          "value_verbatim": "~0.4",
+          "value_parsed": 0.4,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Approx markers retained in value_verbatim per v1.2 amendment 5. The corrected ~0.4 side corresponds to the per-run figures in the E19 table below (0.435/0.388/0.360); candidate artefact results/phase2a-analysis-report.json $.per_condition_metrics.image-only.per_run_f1 holds 10 entries from the later full run and this document gives no mapping from the three sanity-check runs onto those indices, so no locator can be proposed without adjudicating."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [440, 440],
+        "section": "E19 Description — contents of the superseded bounds file"
+      },
+      "claim_text": "The `validation_bounds.geojson` file contained 20 tile bounds generated from the calibration tile set (via `generate_tile_bounds.py` which reads `holdout_manifest.json`), not the 60-tile validation set.",
+      "values": [
+        {
+          "quantity": "tile-bound feature count in the superseded validation_bounds.geojson (equal to the calibration set size)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "validation (holdout) tile-set size",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "$.validation.total_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 20-feature state of validation_bounds.geojson is the pre-fix condition (the file was regenerated with 60 features by the Fix at line 446), hence historical. The calibration set size itself is live at $.calibration.total_tiles, but equating the two is an adjudication left to triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [440, 440],
+        "section": "E19 Description — overlap between the wrong bounds and the validation tiles"
+      },
+      "claim_text": "Only 7 of those 20 tiles overlapped spatially with the 60 validation tiles, so 53 of 60 tiles had no bounds for scoping ground truth references.",
+      "values": [
+        {
+          "quantity": "count of the superseded bounds file's tiles that overlapped the validation set (pre-fix)",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "tile-bound feature count in the superseded validation_bounds.geojson (pre-fix)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "validation (holdout) tile-set size",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "$.validation.total_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "count of validation tiles left without bounds under the wrong bounds file (pre-fix)",
+          "value_verbatim": "53",
+          "value_parsed": 53,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "validation (holdout) tile-set size, denominator of the unbounded-tile fraction",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "$.validation.total_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "historical",
+      "notes": "The 7/20/53 figures describe the superseded bounds file, which the Fix regenerated; they are the quoted-old-value side. 53 = 60 − 7 within the same span, but the operands are not both committed, so no arithmetic expression is proposed."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [444, 444],
+        "section": "E19 Verification — calibration/validation disjointness"
+      },
+      "claim_text": "**Verification**: Calibration and validation tile sets confirmed to be **completely disjoint** (zero overlap).",
+      "values": [
+        {
+          "quantity": "size of the intersection between the calibration and validation tile sets",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Checkable by intersecting $.calibration.tiles (20 entries) with $.validation.tiles (60 entries) in the anchor file; needs a script rather than a single locator read. Worded zero recorded as value_verbatim 'zero' per the verbatim rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [446, 446],
+        "section": "E19 Fix — regenerated bounds file"
+      },
+      "claim_text": "**Fix**: Regenerated `validation_bounds.geojson` from `validation_manifest.json` using the `create_bounds_geojson()` function, producing 60 tile features matching the validation manifest. Bounds validated against tile metadata (5-tile spot check passed).",
+      "values": [
+        {
+          "quantity": "tile-bound feature count in the regenerated validation_bounds.geojson",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.features",
+          "method": "read"
+        },
+        {
+          "quantity": "count of tiles manually spot-checked against tile metadata during the fix",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/vectors/bounds/validation_bounds.geojson",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Feature count via the canonical len: prefix (v1.2 amendment 4). The 5-tile spot check was a manual verification step with no recorded artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [448, 448],
+        "section": "E19 Corrected metrics — table caption"
+      },
+      "claim_text": "**Corrected metrics** (image-only condition, 3 sanity check runs at 20m tolerance):",
+      "values": [
+        {
+          "quantity": "count of image-only sanity-check runs re-evaluated after the bounds fix",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "spatial matching tolerance used for the corrected metrics, in metres",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#primary-matching-threshold-20-metres",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The registered primary matching threshold is 20 metres. The count of three sanity-check runs predates the full K=10 Phase 2a collection and has no dedicated artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [452, 452],
+        "section": "E19 Corrected metrics table, run 1 row"
+      },
+      "claim_text": "| 1 | 0.111 | 0.435 |",
+      "values": [
+        {
+          "quantity": "F1, image-only sanity-check run 1, under the wrong bounds file (old value)",
+          "value_verbatim": "0.111",
+          "value_parsed": 0.111,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1, image-only sanity-check run 1, after regenerating the bounds file (corrected value)",
+          "value_verbatim": "0.435",
+          "value_parsed": 0.435,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Run index excluded from values per rule 5 (identifier). Candidate artefact for the corrected column: results/phase2a-analysis-report.json $.per_condition_metrics.image-only.per_run_f1, a 10-entry array from the later full collection; this document supplies no mapping from sanity-check run numbers onto those indices, so proposing an indexed locator would require adjudication (rule 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [453, 453],
+        "section": "E19 Corrected metrics table, run 2 row"
+      },
+      "claim_text": "| 2 | 0.083 | 0.388 |",
+      "values": [
+        {
+          "quantity": "F1, image-only sanity-check run 2, under the wrong bounds file (old value)",
+          "value_verbatim": "0.083",
+          "value_parsed": 0.083,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1, image-only sanity-check run 2, after regenerating the bounds file (corrected value)",
+          "value_verbatim": "0.388",
+          "value_parsed": 0.388,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Run index excluded per rule 5. Same anchoring difficulty as the run 1 row: the corrected per-run F1 values are not mappable onto results/phase2a-analysis-report.json per_run_f1 indices from this document alone."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [454, 454],
+        "section": "E19 Corrected metrics table, run 3 row"
+      },
+      "claim_text": "| 3 | 0.083 | 0.360 |",
+      "values": [
+        {
+          "quantity": "F1, image-only sanity-check run 3, under the wrong bounds file (old value)",
+          "value_verbatim": "0.083",
+          "value_parsed": 0.083,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1, image-only sanity-check run 3, after regenerating the bounds file (corrected value)",
+          "value_verbatim": "0.360",
+          "value_parsed": 0.36,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Run index excluded per rule 5. Same anchoring difficulty as the run 1 and 2 rows."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [456, 456],
+        "section": "E19 Protocol impact — unchanged evaluation methodology"
+      },
+      "claim_text": "The evaluation methodology (20m spatial tolerance, Hungarian matching) is unchanged.",
+      "values": [
+        {
+          "quantity": "registered primary spatial matching tolerance, in metres",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#primary-matching-threshold-20-metres",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration claim (v1.1 calibration rule): the lodged document states 'Primary matching threshold: 20 metres'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [469, 470],
+        "section": "E20 Correction (2026-07-30) — quotation of the falsified Rationale sentence"
+      },
+      "claim_text": "this erratum's Rationale closes with \"The 281-tile reserve\nremains unnamed/untouched.\"",
+      "values": [
+        {
+          "quantity": "reserve tile count as originally asserted in E20's Rationale (superseded)",
+          "value_verbatim": "281",
+          "value_parsed": 281,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Quoted-old-value side: the Secondary correction below replaces 281 with 280. Classic errata trap — not a live claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [470, 471],
+        "section": "E20 Correction (2026-07-30) — interval to falsification"
+      },
+      "claim_text": "**That statement was falsified 40 days later and was never\namended.**",
+      "values": [
+        {
+          "quantity": "elapsed days between E20's date and the E36 corpus expansion that falsified its reserve statement",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": "days",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Scope doubt flagged per the include-when-in-doubt rule: this is a difference between two erratum dates (2026-02-05 and 2026-03-17), and dates are out of C4 scope per rule 5, so triage may prune it. Recorded rather than silently dropped."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [472, 473],
+        "section": "E20 Correction (2026-07-30) — corpus arithmetic behind the reserve absorption"
+      },
+      "claim_text": "the evaluation corpus to 340 tiles — which is the full 360-tile physical corpus minus the\n20 calibration tiles, and therefore absorbs the *entire* reserve.",
+      "values": [
+        {
+          "quantity": "tile count of the expanded evaluation corpus (E36)",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "physical tile corpus size (PNG tiles on disk)",
+          "value_verbatim": "360",
+          "value_parsed": 360,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "calibration tile-set size",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles/tile_selection_metadata.json#$.calibration.total_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/full_evaluation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "full_evaluation_manifest.json is a bare JSON array, so the count uses len:$ (v1.2 amendment 4). The 360 physical-corpus figure comes from a filesystem count (`find inputs/tiles -name \"*.png\"`) with no committed scalar, hence anchor-unknown. Calibration count uses a cross-file locator (v1.2 amendment 2). Erratum identifiers E20/E36 and the dates on lines 471 and 473 excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [474, 475],
+        "section": "E20 Correction (2026-07-30) — reserve is enumerated in the full evaluation manifest"
+      },
+      "claim_text": "reserve was neither unnamed (it is enumerated in\n`inputs/tiles/full_evaluation_manifest.json`, 340 entries) nor untouched",
+      "values": [
+        {
+          "quantity": "entry count of inputs/tiles/full_evaluation_manifest.json",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/full_evaluation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The document names its own source path, so the anchor is direct (rule 2). Bare JSON array counted with len:$."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [479, 481],
+        "section": "E20 Secondary correction — reserve size recomputed"
+      },
+      "claim_text": "E20 says \"281-tile\"; the physical corpus is\n**360** tiles (`find inputs/tiles -name \"*.png\"` → 360), of which 20 are calibration and\n60 validation, leaving a reserve of **280**.",
+      "values": [
+        {
+          "quantity": "reserve tile count as originally asserted in E20 (superseded)",
+          "value_verbatim": "281",
+          "value_parsed": 281,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "physical tile corpus size (PNG tiles on disk)",
+          "value_verbatim": "360",
+          "value_parsed": 360,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "physical tile corpus size restated as the result of the filesystem count",
+          "value_verbatim": "360",
+          "value_parsed": 360,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "calibration tile-set size",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "$.calibration.total_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "validation tile-set size",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "$.validation.total_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "corrected reserve tile count (physical corpus minus calibration and validation sets)",
+          "value_verbatim": "280",
+          "value_parsed": 280,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "280 = 360 − 20 − 60, but the 360 operand is a filesystem count with no committed scalar, so no arithmetic expression is proposed (v1.2 amendment 1 warns against making operands inherit a derived method). The 281 figure is explicitly the corrected-away value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [481, 483],
+        "section": "E20 Secondary correction — provenance of the 281 off-by-one"
+      },
+      "claim_text": "The 281 figure inherits the off-by-one in\n§ 2.1's \"**Total**: 361 tiles\" — see E64 sub-item (ii), which adopts § 8.6's \"~360\" as\nthe operative corpus count.",
+      "values": [
+        {
+          "quantity": "reserve tile count as originally asserted in E20 (superseded)",
+          "value_verbatim": "281",
+          "value_parsed": 281,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "total corpus tile count as stated in the lodged preregistration's tile-selection section",
+          "value_verbatim": "361",
+          "value_parsed": 361,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#section-2-1-total-361-tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "approximate total corpus tile count as stated in the lodged preregistration's tiling-parameters section",
+          "value_verbatim": "~360",
+          "value_parsed": 360,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#section-8-6-approx-360-total",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both 361 and ~360 are claims about what the lodged registration says, so they anchor to the lodged document (v1.1 calibration rule). Approx marker retained on ~360 per v1.2 amendment 5 — dropping the tilde would promote an approximate quote to a hard comparison. Section identifiers (§ 2.1, § 8.6) and erratum identifier E64 excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [491, 491],
+        "section": "E20 Description — the 60-tile evaluation set"
+      },
+      "claim_text": "**Description**: The codebase used inconsistent naming for the 60-tile evaluation set:",
+      "values": [
+        {
+          "quantity": "validation (evaluation) tile-set size",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "$.validation.total_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": "$.validation.total_tiles"
+      },
+      "method": "read",
+      "notes": "Single-value claim; the anchor file is the very metadata file whose key naming this erratum standardises."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [508, 508],
+        "section": "E20 Rationale — reserve naming (the sentence corrected at the head of this entry)"
+      },
+      "claim_text": "\"Holdout\" in ML typically refers to a completely withheld test set (our 281-tile reserve). The preregistration's use of \"holdout\" for the 60-tile set was a terminological choice; the implementation uses \"validation\" for clarity. The 281-tile reserve remains unnamed/untouched.",
+      "values": [
+        {
+          "quantity": "reserve tile count as asserted in E20's Rationale (superseded by the 2026-07-30 Correction)",
+          "value_verbatim": "281",
+          "value_parsed": 281,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "validation (holdout) tile-set size",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "$.validation.total_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "reserve tile count restated in the closing sentence of E20's Rationale (superseded)",
+          "value_verbatim": "281",
+          "value_parsed": 281,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "historical",
+      "notes": "This is the original Rationale text that the 2026-07-30 Correction at the head of E20 explicitly falsifies (281 corrected to 280; 'unnamed/untouched' superseded by E36). Both 281 instances are the quoted-old-value side; only the 60-tile validation set remains live."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [523, 523],
+        "section": "E21 Description — stale passes parameter"
+      },
+      "claim_text": "retained a `passes: int = 5` parameter from an earlier design that predated E17",
+      "values": [
+        {
+          "quantity": "default value of the stale `passes` parameter in load_condition_results() before removal",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Quoted-old-value side: the Fix removed the parameter, so no live artefact carries it. Erratum identifier E17 excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [542, 542],
+        "section": "E22 Description — merged-run evaluation architecture"
+      },
+      "claim_text": "**Description**: The analysis script's `analyse_phase_results()` function merged all K=10 runs' detections into a single GeoDataFrame before computing F1.",
+      "values": [
+        {
+          "quantity": "independent runs per condition (K) merged by the pre-fix analysis function",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#independent-runs-K-10-single-pass",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "K=10 is the registered run count and remains live; only the merging behaviour was corrected."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [542, 542],
+        "section": "E22 Description — consequence of merging runs"
+      },
+      "claim_text": "With K=10 runs, this yields 10× the detection count per tile, making precision nonsensical — every run's detections are evaluated against the same ground truth, so 10 correct detections of the same reference mound count as 1 TP + 9 FPs.",
+      "values": [
+        {
+          "quantity": "independent runs per condition (K)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#independent-runs-K-10-single-pass",
+          "method": "read"
+        },
+        {
+          "quantity": "detection-count inflation factor per tile under the pre-fix merged evaluation",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "illustrative count of correct detections of one reference mound across K runs",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "illustrative true positives scored from those detections under merged evaluation",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "illustrative false positives scored from those detections under merged evaluation",
+          "value_verbatim": "9",
+          "value_parsed": 9,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Only the registered K=10 is anchorable; the 10× / 1 TP + 9 FP figures are a worked illustration of the pre-fix behaviour, not measurements of any artefact, so they are recorded as anchor-unknown rather than forced into an arithmetic expression."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [549, 549],
+        "section": "E22 Fix — new bootstrap functions"
+      },
+      "claim_text": "4. Two new bootstrap functions added to `lib_advanced_metrics.py`:",
+      "values": [
+        {
+          "quantity": "count of bootstrap functions added to lib_advanced_metrics.py by this fix",
+          "value_verbatim": "Two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "scripts/lib_advanced_metrics.py#bootstrap_multi_run_ci-and-bootstrap_multi_run_effect_size_ci",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_advanced_metrics.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The list ordinal '4.' is markdown list numbering, not a claim (rule 5). Non-JSON anchor (Python module) — legitimate per v1.1; the harness routes it to triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [550, 550],
+        "section": "E22 Fix — bootstrap_multi_run_ci resampling parameters"
+      },
+      "claim_text": "   - `bootstrap_multi_run_ci()`: Resamples tiles (n=60 with replacement), computes F1 per run on the same tile sample, averages across runs. CI = 2.5th/97.5th percentiles.",
+      "values": [
+        {
+          "quantity": "tile resampling size (n) per bootstrap iteration, equal to the validation tile-set size",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles/tile_selection_metadata.json#$.validation.total_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "lower confidence-interval percentile used by bootstrap_multi_run_ci()",
+          "value_verbatim": "2.5",
+          "value_parsed": 2.5,
+          "unit": "percentile",
+          "kind": "parameter",
+          "path": "scripts/lib_advanced_metrics.py#bootstrap_multi_run_ci-ci_lower-percentile",
+          "method": "read"
+        },
+        {
+          "quantity": "upper confidence-interval percentile used by bootstrap_multi_run_ci()",
+          "value_verbatim": "97.5",
+          "value_parsed": 97.5,
+          "unit": "percentile",
+          "kind": "parameter",
+          "path": "scripts/lib_advanced_metrics.py#bootstrap_multi_run_ci-ci_upper-percentile",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_advanced_metrics.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed anchoring: the tile count is a corpus fact (cross-file locator, v1.2 amendment 2); the percentiles are constants in the named function."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [553, 553],
+        "section": "E22 — registered statistical method and repeated-measures structure"
+      },
+      "claim_text": "the registered §3.5 specifies only \"95% bootstrapped CIs\" — attribution corrected 2026-07-28, D17 audit U1) while correctly handling the K=10 repeated-measures structure.",
+      "values": [
+        {
+          "quantity": "confidence level of the registered bootstrapped confidence intervals, as specified in the lodged preregistration",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "parameter",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#95-percent-bootstrapped-CIs",
+          "method": "read"
+        },
+        {
+          "quantity": "independent runs per condition (K) giving the repeated-measures structure",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#independent-runs-K-10-single-pass",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both are registration claims (v1.1 calibration rule). 'Decision 10', the decisions-log.md line-number citation, the 2026-07-28 date and the 'D17 audit U1' identifier are all excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [555, 555],
+        "section": "E22 Validation — per-run F1 values"
+      },
+      "claim_text": "**Validation**: Run against 3 existing image-only runs. Per-run F1 values: 0.435, 0.388, 0.360 — matching the expected ~0.36–0.44 range observed during sanity checks.",
+      "values": [
+        {
+          "quantity": "count of image-only runs used to validate the per-run evaluation rewrite",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, image-only validation run 1, per-run evaluation",
+          "value_verbatim": "0.435",
+          "value_parsed": 0.435,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, image-only validation run 2, per-run evaluation",
+          "value_verbatim": "0.388",
+          "value_parsed": 0.388,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, image-only validation run 3, per-run evaluation",
+          "value_verbatim": "0.360",
+          "value_parsed": 0.36,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "lower bound of the expected sanity-check F1 range (approximate)",
+          "value_verbatim": "~0.36",
+          "value_parsed": 0.36,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper bound of the expected sanity-check F1 range",
+          "value_verbatim": "0.44",
+          "value_parsed": 0.44,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Same three per-run F1 values as the E19 corrected-metrics table. Candidate artefact results/phase2a-analysis-report.json $.per_condition_metrics.image-only.per_run_f1 holds 10 entries from the later full collection and this document gives no index mapping; per_run_metrics.csv (named in the Fix) was searched for under results/ and not located. Approx marker retained on ~0.36 per v1.2 amendment 5; 0.44 is the unmarked upper bound of the same range."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [568, 568],
+        "section": "E23 field table, Impact row"
+      },
+      "claim_text": "| Impact | Three Gemini API fields were silently discarded; now captured |",
+      "values": [
+        {
+          "quantity": "count of Gemini API metadata fields newly captured by lib_llm_metadata.py",
+          "value_verbatim": "Three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_llm_metadata.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: the LLMResponseMetadata dataclass in scripts/lib_llm_metadata.py carries the added citation_metadata, prompt_block_reason and prompt_safety_ratings fields. Single-value claim, so the anchor-path fallback is not in play."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [570, 570],
+        "section": "E23 Description — discarded metadata fields"
+      },
+      "claim_text": "**Description**: The Gemini API provides three metadata fields that the metadata extraction function silently discarded:",
+      "values": [
+        {
+          "quantity": "count of Gemini API metadata fields previously discarded by the extraction function",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_llm_metadata.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the Impact-row count; kept as a separate claim row per full enumeration (charter § 5 rule 3, no sampling). The `candidates[0]` index in the table below is an API expression, not an asserted quantity — excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [578, 578],
+        "section": "E23 — graceful defaults for the new fields"
+      },
+      "claim_text": "All three fields default gracefully (None/empty list) when not present in the API response.",
+      "values": [
+        {
+          "quantity": "count of newly captured Gemini API metadata fields with graceful defaults",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_llm_metadata.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Third mention of the same field count in this erratum; enumerated separately as a distinct verbatim span."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [580, 580],
+        "section": "E23 Note — pre-fix runs lacking the new fields"
+      },
+      "claim_text": "**Note**: The 3 existing image-only runs (completed before this fix) lack these fields.",
+      "values": [
+        {
+          "quantity": "count of image-only runs completed before the metadata-capture fix",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The three pre-fix sanity-check runs predate the full Phase 2a collection; no manifest distinguishes them from the later ten image-only runs, so no locator can be proposed without adjudicating."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [597, 597],
+        "section": "E24 Discovery — checkpoint corruption"
+      },
+      "claim_text": "a `--dry-run` command corrupted the checkpoint from 3 completed units to 50 completed units. The checkpoint had to be manually restored.",
+      "values": [
+        {
+          "quantity": "completed execution units recorded in the Phase 2a checkpoint before the dry-run corruption",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "completed execution units recorded in the Phase 2a checkpoint after the dry-run corruption",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Transient checkpoint states from a single incident; the checkpoint was manually restored, so neither value persists in any committed artefact. Not classified historical because there is no corrected-value counterpart. 'Step 1' excluded per rule 5 (identifier)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [601, 601],
+        "section": "E24 Protocol impact — unaffected runs"
+      },
+      "claim_text": "The 3 existing runs were unaffected (their results were on disk and the checkpoint was restored before data collection resumed).",
+      "values": [
+        {
+          "quantity": "count of already-completed runs unaffected by the checkpoint corruption",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Same three pre-Phase-2a sanity-check runs as E23's Note; no manifest isolates them."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [612, 612],
+        "section": "E25 field table, Impact row"
+      },
+      "claim_text": "| Impact | 20 runs (brief-text × 10, verbose-text × 10) tested wrong modality; must be re-run |",
+      "values": [
+        {
+          "quantity": "total runs executed with the wrong modality (text-only conditions that received images)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "invalid runs for the brief-text condition",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/phase2a-invalid-text-only-runs/brief-text#run-directory-count",
+          "method": "read"
+        },
+        {
+          "quantity": "invalid runs for the verbose-text condition",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/phase2a-invalid-text-only-runs/verbose-text#run-directory-count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/phase2a-invalid-text-only-runs",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The invalidated runs are preserved under archive/phase2a-invalid-text-only-runs/{brief-text,verbose-text}/ as run_* directories; the per-condition counts are directory counts (non-JSON anchor, routed to triage). The 20 total has no single locator."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [614, 614],
+        "section": "E25 Description — registered M/E factor levels"
+      },
+      "claim_text": "**Description**: The preregistration (Section 4.1.1, lines 412–418) specifies that the H1 modality/elaboration factor has 5 levels:",
+      "values": [
+        {
+          "quantity": "count of modality/elaboration (M/E) factor levels, as registered",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#factor-table-modality-elaboration-5-levels",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration claim (v1.1 calibration rule). 'Section 4.1.1' and 'lines 412–418' excluded per rule 5 (section identifier, line-number citation)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [624, 624],
+        "section": "E25 Description — example images sent regardless of condition"
+      },
+      "claim_text": "The batch detection script (`4_detect_mounds_batch.py`) unconditionally loaded and sent all 17 example images from the config's `examples` array to the API, regardless of condition.",
+      "values": [
+        {
+          "quantity": "count of example images in the detection config's examples array (Scale-8 library)",
+          "value_verbatim": "17",
+          "value_parsed": 17,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.examples",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/detect_image-only.json",
+        "path": "len:$.examples"
+      },
+      "method": "read",
+      "notes": "The Phase 2a configs share the Scale-8 library; detect_image-only.json is taken as the representative config named in the same erratum family. Single-value claim, so the anchor path is unambiguous."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [624, 624],
+        "section": "E25 Description — all conditions received identical image content"
+      },
+      "claim_text": "All 5 conditions received identical image content.",
+      "values": [
+        {
+          "quantity": "count of Phase 2a M/E conditions that received identical image content before the fix",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#factor-table-modality-elaboration-5-levels",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The condition count equals the registered M/E factor level count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [626, 626],
+        "section": "E25 Discovery — clustered F1 outcomes"
+      },
+      "claim_text": "the user noted that F1 outcomes were \"surprisingly clustered\" across conditions (range: 0.42–0.46)",
+      "values": [
+        {
+          "quantity": "lower bound of the observed F1 range across Phase 2a conditions before the modality fix",
+          "value_verbatim": "0.42",
+          "value_parsed": 0.42,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper bound of the observed F1 range across Phase 2a conditions before the modality fix",
+          "value_verbatim": "0.46",
+          "value_parsed": 0.46,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Describes the pre-fix Phase 2a results, which were superseded by re-running the two text-only conditions. The raw invalidated runs survive at archive/phase2a-invalid-text-only-runs/ but no analysis report over the pre-fix five-condition set was located under results/ or archive/, so the range cannot be anchored. Not marked historical because the erratum does not pair it with a corrected counterpart."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [628, 628],
+        "section": "E25 Cost — wasted API calls"
+      },
+      "claim_text": "**Cost**: 20 runs × 60 tiles = 1,200 API calls (~$2.60) executed with incorrect modality.",
+      "values": [
+        {
+          "quantity": "runs executed with the wrong modality",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "evaluation tiles per run",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "$.validation.total_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "API calls wasted on the wrong-modality runs",
+          "value_verbatim": "1,200",
+          "value_parsed": 1200,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated cost in US dollars of the wrong-modality runs",
+          "value_verbatim": "~$2.60",
+          "value_parsed": 2.6,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Cost is an estimate rather than an audited or billed figure, so it is attestation material only (external). 1,200 = 20 × 60 but the 20 operand has no committed locator, so no arithmetic expression is proposed (v1.2 amendment 1). Approx marker retained per v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [636, 636],
+        "section": "E25 Re-run scope"
+      },
+      "claim_text": "**Re-run scope**: Only brief-text and verbose-text conditions (20 runs) require re-execution. The other 3 conditions (image-only, brief-text-image, verbose-text-image) correctly received images and are valid.",
+      "values": [
+        {
+          "quantity": "runs requiring re-execution after the modality fix",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of Phase 2a conditions whose data remained valid",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "3 = the 5 registered M/E levels minus the 2 text-only conditions, but the derivation crosses artefacts and neither operand sits in a committed file, so no arithmetic expression is proposed (v1.2 amendment 1). The three condition names that follow are labels, not numeric values."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [653, 653],
+        "section": "E26 Description — deflated bootstrap CI example"
+      },
+      "claim_text": "For example, image-only had point estimate F1=0.4252 but bootstrap CI=[0.254, 0.373] — a ~34% precision deflation.",
+      "values": [
+        {
+          "quantity": "F1 point estimate, image-only condition, Phase 2a",
+          "value_verbatim": "0.4252",
+          "value_parsed": 0.4252,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_condition_metrics.image-only.point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "lower bound of the pre-fix (biased) bootstrap F1 CI, image-only condition",
+          "value_verbatim": "0.254",
+          "value_parsed": 0.254,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "upper bound of the pre-fix (biased) bootstrap F1 CI, image-only condition",
+          "value_verbatim": "0.373",
+          "value_parsed": 0.373,
+          "unit": null,
+          "kind": "statistic",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "approximate precision deflation caused by the reference de-duplication bug",
+          "value_verbatim": "~34",
+          "value_parsed": 34,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The erratum states that point estimates were unaffected, so 0.4252 is live and anchored; the [0.254, 0.373] interval is the pre-fix biased output, superseded when analysis_report.json was regenerated after the fix, hence historical. The ~34% deflation figure is the erratum's own characterisation with no committed operands. Approx marker retained per v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [659, 659],
+        "section": "E26 Fix — refactored bootstrap functions"
+      },
+      "claim_text": "**Fix**: Refactored all 7 bootstrap functions to use a per-tile pre-computation strategy:",
+      "values": [
+        {
+          "quantity": "count of bootstrap functions in lib_advanced_metrics.py refactored by this fix",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "scripts/lib_advanced_metrics.py#count-of-bootstrap-functions",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/lib_advanced_metrics.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: countable as the module's bootstrap_* function definitions. The list ordinals in the numbered items below are markdown numbering, not claims (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [666, 666],
+        "section": "E26 Approximation — per-tile vs per-map matching"
+      },
+      "claim_text": "Cross-tile matches within the 20 m buffer are negligible given tile sizes (hundreds of metres). For the synthetic test data with 100 m tiles spaced 100 m apart, per-tile and per-map matching produce identical results.",
+      "values": [
+        {
+          "quantity": "spatial matching buffer, in metres",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#primary-matching-threshold-20-metres",
+          "method": "read"
+        },
+        {
+          "quantity": "synthetic test tile edge length, in metres",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "tests/test_analyse_phase2.py#synthetic-tile-edge-length-metres",
+          "method": "read"
+        },
+        {
+          "quantity": "synthetic test tile spacing, in metres",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "m",
+          "kind": "physical",
+          "path": "tests/test_analyse_phase2.py#synthetic-tile-spacing-metres",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "tests/test_analyse_phase2.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed anchoring: the 20 m buffer is a registration value (cross-file locator into the lodged preregistration); the 100 m synthetic geometry is a fixture constant in the test module (non-JSON anchor). 'hundreds of metres' is an unquantified aside, not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [672, 672],
+        "section": "E26 Regression tests added — bootstrap mean tolerance"
+      },
+      "claim_text": "- `test_bootstrap_mean_approximates_point_estimate`: Verifies bootstrap mean F1 is within 0.02 of the point estimate",
+      "values": [
+        {
+          "quantity": "tolerance between bootstrap mean F1 and the point estimate asserted by the named regression test",
+          "value_verbatim": "0.02",
+          "value_parsed": 0.02,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Searched tests/test_analyse_phase2.py (the file named in this erratum's Files row) and the whole tests/ tree for a test named test_bootstrap_mean_approximates_point_estimate; no definition of that name was found, so the tolerance has no locator. The same search found test_aggregate_with_duplicate_tiles and test_bootstrap_ci_contains_point_estimate present, and test_per_tile_metrics_sum_matches_global absent."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [674, 674],
+        "section": "E26 Regression tests added — duplicate tile contribution"
+      },
+      "claim_text": "- `test_aggregate_with_duplicate_tiles`: Verifies a tile sampled 3× contributes 3× its TP/FP/FN",
+      "values": [
+        {
+          "quantity": "tile duplication factor exercised by test_aggregate_with_duplicate_tiles",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "×",
+          "kind": "count",
+          "path": "tests/test_analyse_phase2.py#test_aggregate_with_duplicate_tiles-duplication-factor",
+          "method": "read"
+        },
+        {
+          "quantity": "expected TP/FP/FN multiplication factor for the duplicated tile",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": "×",
+          "kind": "count",
+          "path": "tests/test_analyse_phase2.py#test_aggregate_with_duplicate_tiles-expected-multiplier",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "tests/test_analyse_phase2.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The named test is present in tests/test_analyse_phase2.py. Non-JSON anchor with descriptive locators, routed to triage per v1.1."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [675, 675],
+        "section": "E26 Regression tests added — CI contains point estimate"
+      },
+      "claim_text": "- `test_bootstrap_ci_contains_point_estimate`: Verifies the 95% CI contains the point estimate",
+      "values": [
+        {
+          "quantity": "confidence level of the interval asserted by test_bootstrap_ci_contains_point_estimate",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "tests/test_analyse_phase2.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The named test is present in tests/test_analyse_phase2.py; the 95% level also matches the registered bootstrap CI specification."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [686, 686],
+        "section": "E27 field table, Impact row"
+      },
+      "claim_text": "| Impact | Phases 2b–2e carry two M/E levels instead of one; text-only track skips 2c, defers 2d/2e |",
+      "values": [
+        {
+          "quantity": "count of M/E levels carried forward into Phases 2b-2e under the dual-track deviation",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of M/E levels the preregistered OFAT design carries forward",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#OFAT-single-optimal-ME-carry-forward",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The registered single-winner carry-forward is a registration claim (v1.1 calibration rule). The deviation's 'two' is evidenced by the paired Track 1 / Track 2 study YAMLs (e.g. studies/phase2b-h7-temperature.yaml and studies/phase2b-h7-temperature-text-only.yaml) but no single artefact asserts the count. Phase names (2b-2e, 2c, 2d, 2e) excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [688, 688],
+        "section": "E27 Description — Phase 2a counter-intuitive result"
+      },
+      "claim_text": "text-only `brief-text` achieved the highest mean F1 (0.5425), exceeding the best image-using condition `brief-text-image` (F1=0.4617) by +0.08.",
+      "values": [
+        {
+          "quantity": "F1 point estimate, brief-text condition, Phase 2a",
+          "value_verbatim": "0.5425",
+          "value_parsed": 0.5425,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_condition_metrics.brief-text.point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 point estimate, brief-text-image condition, Phase 2a",
+          "value_verbatim": "0.4617",
+          "value_parsed": 0.4617,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_condition_metrics.brief-text-image.point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 margin of brief-text over brief-text-image, Phase 2a",
+          "value_verbatim": "+0.08",
+          "value_parsed": 0.08,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/phase2a-analysis-report.json",
+              "path": "$.per_condition_metrics.brief-text.point_estimate.f1"
+            },
+            {
+              "name": "b",
+              "file": "results/phase2a-analysis-report.json",
+              "path": "$.per_condition_metrics.brief-text-image.point_estimate.f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Per v1.2 amendment 1 the derived margin carries its own value-level expression and operands, while the two operand values keep method 'read' with their own paths so they are not compared against their own difference."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [688, 688],
+        "section": "E27 Description — FDR correction outcome"
+      },
+      "claim_text": "However, no pairwise comparisons survived FDR correction (q=0.05).",
+      "values": [
+        {
+          "quantity": "count of Phase 2a pairwise comparisons significant after FDR correction",
+          "value_verbatim": "no",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_fdr_significant",
+          "method": "read"
+        },
+        {
+          "quantity": "false discovery rate threshold (q) applied to the Phase 2a pairwise comparisons",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.fdr_q",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/phase2a-analysis-report.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The worded zero ('no pairwise comparisons') is recorded verbatim with value_parsed 0; flagged for triage in case a worded count is treated as non-numeric."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [692, 692],
+        "section": "E27 Deviation — two M/E levels carried forward"
+      },
+      "claim_text": "**Deviation**: Two M/E levels are carried forward:",
+      "values": [
+        {
+          "quantity": "count of M/E levels carried forward under the dual-track deviation",
+          "value_verbatim": "Two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Restates the Impact-row count; enumerated separately as a distinct verbatim span. The paired Track 1 / Track 2 study YAMLs evidence it but no artefact asserts the count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [699, 699],
+        "section": "E27 Justification — additional cost of dual-track"
+      },
+      "claim_text": "The dual-track approach preserves both optimisation paths at modest additional cost (~$55 for 5 extra temperature cells).",
+      "values": [
+        {
+          "quantity": "estimated additional cost in US dollars of the dual-track deviation",
+          "value_verbatim": "~$55",
+          "value_parsed": 55,
+          "unit": "USD",
+          "kind": "cost",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of extra temperature cells added by the Track 2 arm of Phase 2b",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "studies/phase2b-h7-temperature-text-only.yaml#temperature-factor-levels-count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2b-h7-temperature-text-only.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Cost is a forward-looking estimate, neither audited nor billed, and no repo artefact records it — marked anchor-unknown rather than external because it is an internal projection, not a vendor figure. The 5 extra cells correspond to the temperature factor levels in the Track 2 study YAML (non-JSON anchor)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [701, 701],
+        "section": "E27 Protocol impact — added Phase 2b cells"
+      },
+      "claim_text": "**Protocol impact**: Adds ~5 cells to Phase 2b.",
+      "values": [
+        {
+          "quantity": "approximate count of cells added to Phase 2b by the dual-track deviation",
+          "value_verbatim": "~5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2b-h7-temperature-text-only.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Approx marker retained in value_verbatim per v1.2 amendment 5, so the harness treats it as an approximate quote rather than a hard comparison."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [715, 715],
+        "section": "E28 Description — count of Phase 2d design changes"
+      },
+      "claim_text": "**Description**: Three changes to the Phase 2d (H5 negative text treatment) design:",
+      "values": [
+        {
+          "quantity": "count of design changes to Phase 2d described by this erratum",
+          "value_verbatim": "Three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Self-referential count of this entry's own numbered items; verifiable only against the document itself, which rule 2 forbids anchoring to. Included per the include-when-in-doubt rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [717, 717],
+        "section": "E28 — instruction text adaptation"
+      },
+      "claim_text": "Guideline 3 in terse and verbose instruction files was trimmed from two sentences to one",
+      "values": [
+        {
+          "quantity": "sentence count of the affected guideline before trimming",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "sentence count of the affected guideline after trimming",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "prompts/system-instructions/detect_brief-text-image_terse.md#guideline-3-sentence-count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/system-instructions/detect_brief-text-image_terse.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Was-two/now-one correction pair: the pre-trim count is the quoted-old-value side. 'Guideline 3' is a numbered-guideline identifier, excluded per rule 5. The verbose counterpart (detect_brief-text-image_verbose.md) carries the same change; the terse file is taken as the representative anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [719, 719],
+        "section": "E28 — cost of re-running the minimal instruction baseline"
+      },
+      "claim_text": "the cost of re-running 1,200 API calls to fix a conditional sentence the model mostly ignores outweighs the minor confound",
+      "values": [
+        {
+          "quantity": "API calls that a re-run of the minimal-instruction baseline would have cost",
+          "value_verbatim": "1,200",
+          "value_parsed": 1200,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Counterfactual call count for a re-run that was deliberately not performed (2 conditions x 10 runs x 60 tiles); no artefact records it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [721, 721],
+        "section": "E28 — preregistered H5 factorial"
+      },
+      "claim_text": "The preregistered 3×3 factorial (3 M/E levels × 3 H5 levels) is replaced by single-factor OFAT testing H5 at the carried-forward optimal M/E level per track.",
+      "values": [
+        {
+          "quantity": "row count (image-using M/E levels) of the preregistered H5 factorial",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#config-count-3-ME-x-3-H5",
+          "method": "read"
+        },
+        {
+          "quantity": "column count (H5 levels) of the preregistered H5 factorial",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#config-count-3-ME-x-3-H5",
+          "method": "read"
+        },
+        {
+          "quantity": "count of image-using M/E levels in the preregistered factorial (elaboration)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#config-count-3-ME-x-3-H5",
+          "method": "read"
+        },
+        {
+          "quantity": "count of H5 negative-text-treatment levels in the preregistered factorial (elaboration)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#factor-table-H5-3-levels",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration claim (v1.1 calibration rule): the lodged document's config-count section states '3 M/E levels × 3 H5 levels = 9 H5 configs', and its factor table gives H5 3 levels."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [721, 721],
+        "section": "E28 — collapsed OFAT cell count"
+      },
+      "claim_text": "the factorial collapses to 3 H5 levels × 1 M/E = 3 cells (1 reused, 2 new) per track.",
+      "values": [
+        {
+          "quantity": "count of H5 levels tested per track in the executed Phase 2d design",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "studies/phase2d-h5-negtext.yaml#h5-factor-levels-count",
+          "method": "read"
+        },
+        {
+          "quantity": "count of M/E levels per track in the executed Phase 2d design",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "studies/phase2d-h5-negtext.yaml#optimal-me-single-level",
+          "method": "read"
+        },
+        {
+          "quantity": "count of Phase 2d cells per track in the executed design",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "studies/phase2d-h5-negtext.yaml#h5-factor-levels-count",
+          "method": "read"
+        },
+        {
+          "quantity": "count of Phase 2d cells per track reused from an earlier phase",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of newly executed Phase 2d cells per track",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2d-h5-negtext.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Executed-design claim, so it anchors to the study YAML rather than the registration. The reused/new split is a bookkeeping distinction not represented in the YAML's factor definition, hence anchor-unknown for those two values."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [723, 723],
+        "section": "E28 — precision bottleneck for the text-only track"
+      },
+      "claim_text": "Precision is the bottleneck for both tracks (~52–56% for text-only at T=0.0)",
+      "values": [
+        {
+          "quantity": "lower bound of the text-only track's precision at T=0.0 (approximate)",
+          "value_verbatim": "~52",
+          "value_parsed": 52,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper bound of the text-only track's precision at T=0.0",
+          "value_verbatim": "56",
+          "value_parsed": 56,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "temperature at which the quoted text-only precision was observed",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/phase2b-h7-temperature-text-only.yaml#temperature-level-T0.0",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2b-h7-temperature-text-only.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Shared unit bridged per v1.2 amendment 6 (the '%' sits only on the range's upper bound in the source, so both bounds carry unit '%'). The precision range comes from Phase 2b Track 2 results whose only located write-up is results/phase2b-carry-forward-parameters.md, a markdown document — rule 2 forbids anchoring prose to prose, so both bounds are anchor-unknown for triage to chase to an artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [744, 744],
+        "section": "E29 Fix — split into two ordering conditions"
+      },
+      "claim_text": "**Fix**: Split the single `canonical-first` ordering into two distinct conditions:",
+      "values": [
+        {
+          "quantity": "count of distinct ordering conditions the no-op canonical-first ordering was split into",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/4_detect_mounds_batch.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: reorder_examples() in the batch script now implements config-default and canonical-first separately. 'the single ... ordering' is an adjectival quantifier describing the prior state rather than an asserted count, so it is not extracted as a value — flagged here as a scope decision."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [749, 749],
+        "section": "E29 Fix — exhaustive category filtering"
+      },
+      "claim_text": "orderings were implemented with exhaustive category filtering using three filter conditions",
+      "values": [
+        {
+          "quantity": "count of category filter conditions used by the reordering implementation",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/4_detect_mounds_batch.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor: the three filters quoted in the source span are startswith('canonical'), startswith('hard') and == 'null' in the batch script's example-reordering code."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [757, 757],
+        "section": "E30 heading"
+      },
+      "claim_text": "### E30: Phase 2e tests 4 ordering conditions instead of preregistered 3",
+      "values": [
+        {
+          "quantity": "count of ordering conditions actually tested in Phase 2e",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "studies/phase2e-h4-ordering.yaml#ordering-factor-levels-count",
+          "method": "read"
+        },
+        {
+          "quantity": "count of ordering conditions specified by the lodged preregistration's O factor",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#factor-table-ordering-O-3-levels",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2e-h4-ordering.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Split anchoring: the executed count anchors to the study YAML, the registered count to the lodged preregistration's factor table (v1.1 calibration rule), which lists Ordering O with 3 levels (Canonical-first, Canonical-last, Random). Cross-file locator per v1.2 amendment 2."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [765, 765],
+        "section": "E30 field table, Impact row"
+      },
+      "claim_text": "| Impact | Adds 1 condition (10 runs, 600 API calls) to Phase 2e |",
+      "values": [
+        {
+          "quantity": "count of ordering conditions added to Phase 2e by this deviation",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "independent runs per condition in Phase 2e",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "studies/phase2e-h4-ordering.yaml#execution-runs",
+          "method": "read"
+        },
+        {
+          "quantity": "API calls attributed to the added condition",
+          "value_verbatim": "600",
+          "value_parsed": 600,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2e-h4-ordering.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "600 = 10 runs x 60 tiles, but the erratum also states the added config-default condition is reused via symlinks at no additional API cost — the two statements are in tension and that is a triage matter, not an extraction one (rule 4). The added-condition count of 1 has no artefact locator."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [767, 767],
+        "section": "E30 Description — execution plan vs executed condition count"
+      },
+      "claim_text": "**Description**: The execution plan (§Phase 2e) specifies 3 ordering conditions: canonical-first, canonical-last, and random. Phase 2e now tests 4 conditions by adding `config-default` as an explicit baseline distinct from `canonical-first`.",
+      "values": [
+        {
+          "quantity": "count of ordering conditions specified by the execution plan before this deviation was applied to it",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "count of ordering conditions actually tested in Phase 2e",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "studies/phase2e-h4-ordering.yaml#ordering-factor-levels-count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2e-h4-ordering.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The '3 ordering conditions' figure describes the execution plan's pre-deviation state; the deviation was subsequently applied to the plan itself, so this is the quoted-old-value side and must not be compared against the plan's current text (the classic errata trap). The registered 3-level O factor is separately anchored at the E30 heading claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [769, 769],
+        "section": "E30 Description — conditions table caption"
+      },
+      "claim_text": "The 4 conditions are:",
+      "values": [
+        {
+          "quantity": "count of ordering conditions tested in Phase 2e",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "studies/phase2e-h4-ordering.yaml#ordering-factor-levels-count",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2e-h4-ordering.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the executed condition count; enumerated separately as a distinct verbatim span. The conditions table at lines 771-776 carries no numeric cells."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [778, 778],
+        "section": "E30 Rationale — reused baseline runs"
+      },
+      "claim_text": "The `config-default` baseline is reused from Phase 2c plus-hp outputs via symlinks, adding no additional API cost for those 10 runs.",
+      "values": [
+        {
+          "quantity": "count of config-default runs reused via symlinks rather than re-executed",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2e-h4-ordering.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Equals the study YAML's runs-per-condition setting. Phase names (2c) and the plus-hp condition name excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [780, 780],
+        "section": "E30 Cost impact"
+      },
+      "claim_text": "**Cost impact**: Net new API calls increase from 1,800 (3 × 10 × 60) to 1,800 (only 3 new conditions run; config-default reused). Total Phase 2e units increase from 30 to 40, but the 10 config-default units are pre-checkpointed.",
+      "values": [
+        {
+          "quantity": "net new API calls for Phase 2e before the deviation",
+          "value_verbatim": "1,800",
+          "value_parsed": 1800,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "ordering conditions in the pre-deviation Phase 2e cost formula",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "independent runs per condition in the Phase 2e cost formula",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "studies/phase2e-h4-ordering.yaml#execution-runs",
+          "method": "read"
+        },
+        {
+          "quantity": "evaluation tiles per run in the Phase 2e cost formula",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles/tile_selection_metadata.json#$.validation.total_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "net new API calls for Phase 2e after the deviation",
+          "value_verbatim": "1,800",
+          "value_parsed": 1800,
+          "unit": null,
+          "kind": "count",
+          "path": "studies/phase2e-h4-ordering.yaml#net-new-api-calls",
+          "method": "read"
+        },
+        {
+          "quantity": "count of newly executed Phase 2e conditions (excluding the reused config-default baseline)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "total Phase 2e execution units before the deviation",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "total Phase 2e execution units after the deviation",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of pre-checkpointed config-default execution units",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "studies/phase2e-h4-ordering.yaml#execution-runs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2e-h4-ordering.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Dense mixed span. The 'increase from 1,800 ... to 1,800' construction gives the same figure on both sides: the first instance is the pre-deviation value (historical), the second the post-deviation value, which the study YAML records as a net-new annotation beside its total API-call budget. Units 30 -> 40 is a was/now pair; 40 (= 4 conditions x 10 runs) has no explicit scalar in the YAML, so it is left anchor-unknown rather than given a locator that would resolve to something else."
+    }
+  ]
+}

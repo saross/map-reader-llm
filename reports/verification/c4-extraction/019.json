@@ -1,0 +1,3410 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/preregistration/protocol-errata.md",
+    "git_blob": "b4fe2c5c45d80b0de9792cf17ba7e467dbf68ea7",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1539,
+          1539
+        ],
+        "section": "E50 heading — H10 holdout expansion"
+      },
+      "claim_text": "### E50: H10 holdout expanded from 60 to 327 tiles",
+      "values": [
+        {
+          "quantity": "tile count, H10 evaluation holdout as preregistered",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, H10 evaluation holdout as executed (384 px era)",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/calibration/h10-384/test_manifest.json#len:$",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 60-tile holdout is a claim about what the REGISTRATION specifies, so it anchors to the lodged preregistration (instrument v1.1 calibration rule), path null because JSONPath does not apply to markdown. The executed 327-tile holdout anchors to the materialised H10 test manifest (inputs/calibration/h10-384/test_manifest.json, a JSON array). Erratum identifiers (E-numbers), Observation/Session numbers, dates and line-number citations excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1548,
+          1550
+        ],
+        "section": "E50 Description — preregistered versus executed holdout"
+      },
+      "claim_text": "**Description**: The preregistration specifies a 60-tile holdout for H10\nevaluation. The actual holdout is 327 tiles — the remainder after removing\n160 calibration tiles from 487 total.",
+      "values": [
+        {
+          "quantity": "tile count, H10 evaluation holdout as preregistered",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, H10 evaluation holdout as executed",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/calibration/h10-384/test_manifest.json#len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, H10 calibration pool (largest rung)",
+          "value_verbatim": "160",
+          "value_parsed": 160,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/calibration/h10-384/calibration_manifest_160.json#len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, total 384 px evaluation corpus (Era 2)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles_384/full_evaluation_manifest.json#len:$",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Deliberately NOT modelled as arithmetic: the span states 327 = 487 - 160, but giving the operands an arithmetic method would compare 487 and 160 against their own difference (instrument v1.2 amendment 1, the 487-160=327 trap). Each count therefore carries its own read locator; triage may add the derivation if it wants the identity checked. The 60-tile figure is a registration claim (v1.1 calibration rule)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1550,
+          1552
+        ],
+        "section": "E50 Description — tile-count change from 512 px to 384 px"
+      },
+      "claim_text": "This expansion results from the move\nto 384px tiles (E36/H11), which increased the total tile count from 361\n(at 512px) to 487 (at 384px).",
+      "values": [
+        {
+          "quantity": "tile edge length, Era 2 tiles",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles_384/tile_selection_metadata.json#$.parameters.tile_size",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, total 512 px corpus (asserted pre-move total)",
+          "value_verbatim": "361",
+          "value_parsed": 361,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "tile edge length, Era 1 tiles",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles/K-35-052-4_32635/K-35-052-4_32635_x0_y0.png#width",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, total 384 px corpus (Era 2)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles_384/full_evaluation_manifest.json#len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length, Era 2 tiles (restated)",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles_384/tile_selection_metadata.json#$.parameters.tile_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles_384/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 361 total-tile figure could not be anchored: inputs/tiles/tile_selection_metadata.json records the Era 1 tiling parameters and the calibration/validation subsets but no total-corpus scalar, and no manifest of length 361 was located — left anchor-unknown for triage. Tile edge lengths anchor to the 384 px selection metadata and to an Era 1 tile PNG respectively (crop/tile-size PNG anchors are legitimate per instrument v1.1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1552,
+          1553
+        ],
+        "section": "E50 Description — preregistered calibration pool sizes"
+      },
+      "claim_text": "The calibration pool sizes (20, 40, 80, 160)\nremain as preregistered; only the holdout expanded.",
+      "values": [
+        {
+          "quantity": "calibration pool size, rung 1 (as preregistered)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "calibration pool size, rung 2 (as preregistered)",
+          "value_verbatim": "40",
+          "value_parsed": 40,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "calibration pool size, rung 3 (as preregistered)",
+          "value_verbatim": "80",
+          "value_parsed": 80,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "calibration pool size, rung 4 (as preregistered)",
+          "value_verbatim": "160",
+          "value_parsed": 160,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Claim about what the registration specifies, so it anchors to the lodged preregistration (v1.1 calibration rule), not to the materialised pools. The executed counterparts are inputs/calibration/h10-384/calibration_manifest_{020,040,080,160}.json if triage wants the as-run side. Per-value paths omitted where the anchor is markdown, YAML prose or a shell script: JSONPath does not apply, so the harness routes these to triage (instrument v1.1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1555,
+          1556
+        ],
+        "section": "E50 Rationale — original 60-tile holdout"
+      },
+      "claim_text": "The original 60-tile holdout was found to have insufficient\nstatistical power for detecting pool-size effects.",
+      "values": [
+        {
+          "quantity": "tile count, original H10 holdout as preregistered",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restatement of the registered 60-tile holdout; kept as a separate claim row per full enumeration (charter § 5 rule 3). Registration claim, so it anchors to the lodged document (v1.1 calibration rule)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1556,
+          1558
+        ],
+        "section": "E50 Rationale — expanded 327-tile holdout"
+      },
+      "claim_text": "The 327-tile holdout\nprovides substantially more power while maintaining the preregistered\ncalibration/holdout disjointness constraint.",
+      "values": [
+        {
+          "quantity": "tile count, expanded H10 holdout",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/calibration/h10-384/test_manifest.json",
+        "path": "len:$"
+      },
+      "method": "read",
+      "notes": "Restatement of the executed holdout size; the H10 384 px test manifest is a JSON array of tile records, counted with the canonical len: prefix (v1.2 amendment 4). The accompanying 'substantially more power' claim is qualitative and carries no checkable value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1562,
+          1562
+        ],
+        "section": "E51 heading — H8 re-run pipeline tile size"
+      },
+      "claim_text": "### E51: H8 library composition re-run under production carry-forward (384 px / v2 pipeline)",
+      "values": [
+        {
+          "quantity": "tile edge length, H8 v2 production carry-forward pipeline",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": "$.carried_forward.tile_size"
+      },
+      "method": "read",
+      "notes": "'384 px / v2 pipeline' is used as an asserted fact about the re-run's tile size, not merely as a condition name, so it is retained per rule 5's name-used-as-fact carve-out."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1571,
+          1573
+        ],
+        "section": "E51 Description — original H8 (Phase 2c) parameters"
+      },
+      "claim_text": "The original H8 (Phase 2c, completed 2026-02-09) ran at 512 px\ntiles with prereg carry-forward parameters (T=0.0 from H7, minimal thinking per\nDecision 2, canonical-first ordering)",
+      "values": [
+        {
+          "quantity": "tile edge length, original H8 (Phase 2c) run",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles/K-35-052-4_32635/K-35-052-4_32635_x0_y0.png#width",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature, original H8 (Phase 2c) run (H7 carry-forward optimum)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.carried_forward.optimal_temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/phase2c-h8-library.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both figures describe a run that genuinely happened (Phase 2c, 2026-02-09), so they are live claims anchored to the Phase 2c study definition and an Era 1 tile PNG — not 'historical' values in the changelog sense (the historical method is reserved for the quoted-old-value side of corrections)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1573,
+          1575
+        ],
+        "section": "E51 Description — v1 hard-positive pool exhaustion"
+      },
+      "claim_text": "deferred Scale-16 and Scale-32 due to\nHP pool exhaustion (E11 — only 4 hard positives available under the v1 mining\ndefinition)",
+      "values": [
+        {
+          "quantity": "count of hard positives available under the v1 mining definition",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/examples/hard-positive",
+        "path": "len:*.png"
+      },
+      "method": "read",
+      "notes": "The v1 hard-positive library directory holds exactly the crops mined under the v1 definition (example_05..example_08); anchored as a directory count because no v1-era JSON register of this pool was located (the archived v1 register at archive/h10-v1-hard-cases/hard-cases/pool_160/hard_cases_register.json belongs to the later 160-tile calibration-pool mining and reports different candidate counts). Scale-16/Scale-32 are condition names, excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1579,
+          1579
+        ],
+        "section": "E51 parameter table — tile size row"
+      },
+      "claim_text": "| Tile size | 512 px | 384 px |",
+      "values": [
+        {
+          "quantity": "tile edge length, original H8 (Phase 2c)",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles/K-35-052-4_32635/K-35-052-4_32635_x0_y0.png#width",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length, H8 v2",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.carried_forward.tile_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "One claim row per table row (rule 6); left column = original Phase 2c run, right column = H8 v2 re-run."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1580,
+          1580
+        ],
+        "section": "E51 parameter table — stride row"
+      },
+      "claim_text": "| Stride | 448 px | 336 px |",
+      "values": [
+        {
+          "quantity": "tiling stride, original H8 (Phase 2c)",
+          "value_verbatim": "448",
+          "value_parsed": 448,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles/tile_selection_metadata.json#$.parameters.tile_size",
+          "method": "read"
+        },
+        {
+          "quantity": "tiling stride, H8 v2",
+          "value_verbatim": "336",
+          "value_parsed": 336,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.carried_forward.stride",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Flagged for triage: the Era 1 stride is proposed at inputs/tiles/tile_selection_metadata.json $.parameters.tile_size, which holds 448 but is NAMED tile_size — the Era 1 tiles are 512 px with a 448 px step, so the field name and the quantity disagree. If triage rejects that locator the value becomes anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1581,
+          1581
+        ],
+        "section": "E51 parameter table — temperature row"
+      },
+      "claim_text": "| Temperature | T=0.0 (H7 optimum) | T=0.7 (production carry-forward) |",
+      "values": [
+        {
+          "quantity": "temperature, original H8 (Phase 2c, H7 optimum)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/phase2c-h8-library.yaml#$.carried_forward.optimal_temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature, H8 v2 (production carry-forward)",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.carried_forward.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both sides are as-run parameters, so both anchor to study definitions rather than to the lodged registration."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1584,
+          1584
+        ],
+        "section": "E51 parameter table — K (passes) row"
+      },
+      "claim_text": "| K (passes) | 10 | 5 (production n=5 consensus) |",
+      "values": [
+        {
+          "quantity": "K (independent detection passes), original H8 (Phase 2c)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/phase2c-h8-library.yaml#$.execution.runs",
+          "method": "read"
+        },
+        {
+          "quantity": "K (independent detection passes), H8 v2",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.execution.runs",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus pool size n, production configuration",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.execution.runs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Three values: the Phase 2c K, the H8 v2 K, and the 'production n=5 consensus' gloss on the same pass count. Each read value carries its own path (v1.2 amendment 3) so none inherits a neighbouring quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1585,
+          1585
+        ],
+        "section": "E51 parameter table — service tier row"
+      },
+      "claim_text": "| Service tier | standard | **flex** (50 % off-peak discount) |",
+      "values": [
+        {
+          "quantity": "flex service-tier discount relative to standard tier (vendor pricing claim)",
+          "value_verbatim": "50",
+          "value_parsed": 50.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Vendor pricing: no repo artefact decides the flex-tier discount; attestation material only (instrument rule 3, 'external')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1586,
+          1586
+        ],
+        "section": "E51 parameter table — context caching row"
+      },
+      "claim_text": "| Context caching | none | **enabled** (reduces input cost 50–90 %) |",
+      "values": [
+        {
+          "quantity": "input-cost reduction from context caching, lower bound (vendor pricing claim)",
+          "value_verbatim": "50",
+          "value_parsed": 50.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "input-cost reduction from context caching, upper bound (vendor pricing claim)",
+          "value_verbatim": "90",
+          "value_parsed": 90.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Range with a shared unit — the '%' sign appears once in the source, so both values carry unit '%' explicitly (v1.2 amendment 6). Vendor pricing, hence external."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1587,
+          1587
+        ],
+        "section": "E51 parameter table — hard-example crop size row"
+      },
+      "claim_text": "| Hard-example crop size | 128 px (v1) | 150 px (v2, verifier-aligned) |",
+      "values": [
+        {
+          "quantity": "hard-example crop edge length, v1",
+          "value_verbatim": "128",
+          "value_parsed": 128,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/examples/hard-positive/example_05_rakovski.png#width",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-example crop edge length, v2 (verifier-aligned)",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.carried_forward.crop_size_px",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The v1 crop size is anchored to a v1 hard-positive crop PNG (crop-size PNG anchors are legitimate per instrument v1.1); the v2 crop size to the H8 v2 study carry-forward block."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1588,
+          1588
+        ],
+        "section": "E51 parameter table — hard-case register row"
+      },
+      "claim_text": "| Hard-case register | v1 (pool_160, 63 HP / 151 HN) | v2 (pool_160, 108 HP / 57 HN) |",
+      "values": [
+        {
+          "quantity": "hard-positive candidate count, v1 register (pool_160)",
+          "value_verbatim": "63",
+          "value_parsed": 63,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/h10-v1-hard-cases/hard-cases/pool_160/hard_cases_register.json#$.summary.hp_candidates",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-negative candidate count, v1 register (pool_160)",
+          "value_verbatim": "151",
+          "value_parsed": 151,
+          "unit": null,
+          "kind": "count",
+          "path": "archive/h10-v1-hard-cases/hard-cases/pool_160/hard_cases_register.json#$.summary.hn_candidates",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-positive candidate count, v2 register (pool_160)",
+          "value_verbatim": "108",
+          "value_parsed": 108,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.hp_candidates",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-negative candidate count, v2 register (pool_160)",
+          "value_verbatim": "57",
+          "value_parsed": 57,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.hn_candidates",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h10/hard-cases-v2/pool_160/hard_cases_register.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The v1 column is a live claim about an archived artefact (the v1 register still exists at archive/h10-v1-hard-cases/hard-cases/pool_160/hard_cases_register.json), not a corrected old value, so it is anchored rather than marked historical. 'pool_160' is a name, excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1591,
+          1591
+        ],
+        "section": "E51 parameter table — evaluation manifest row"
+      },
+      "claim_text": "| Evaluation manifest | `inputs/tiles/validation_manifest.json` (60 tiles @ 512 px) | `inputs/calibration/h10-384/test_manifest.json` (327 tiles @ 384 px) |",
+      "values": [
+        {
+          "quantity": "tile count, original H8 evaluation manifest",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles/validation_manifest.json#len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length, original H8 evaluation manifest",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles/K-35-052-4_32635/K-35-052-4_32635_x0_y0.png#width",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, H8 v2 evaluation manifest",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length, H8 v2 evaluation manifest",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles_384/tile_selection_metadata.json#$.parameters.tile_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/calibration/h10-384/test_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both manifests named in the row are JSON arrays of tile records, counted with the len: prefix (v1.2 amendment 4). The numerals inside the quoted file paths themselves (h10-384) are names, excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1593,
+          1596
+        ],
+        "section": "E51 — prefix-nestedness verification of the first crops"
+      },
+      "claim_text": "Prefix nestedness of greedy example selection was verified\non 2026-04-15 by byte-hash of the first 4 HP/HN crops across hp4hn4, hp8hn8,\nand hp16hn16 pools — all identical.",
+      "values": [
+        {
+          "quantity": "count of leading HP/HN crops byte-hashed across the three v2 pools",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/examples/h10-v2/pool_160_hp4hn4",
+        "path": "len:hp_*.png"
+      },
+      "method": "read",
+      "notes": "The frozen pool_160_hp4hn4 crop directory holds the first four HP crops (hp_01..hp_04) and the matching HN crops; anchored as a directory count. Pool names (hp4hn4, hp8hn8, hp16hn16) are names, excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1596,
+          1600
+        ],
+        "section": "E51 — reuse of the existing H10 v2 pass directories"
+      },
+      "claim_text": "Model, temperature, thinking, instruction,\nK, manifest, and tile size are identical between H10 v2 `pool_160_hp4hn4` and\nH8 v2 `scale-8`, so the existing `outputs/h10/evaluation-v2/pool_160_hp4hn4/`\nrun_1..run_5 directories are referenced directly in H8-v2 analysis rather than\nre-launched.",
+      "values": [
+        {
+          "quantity": "count of existing H10 v2 pool_160_hp4hn4 pass directories referenced by H8 v2",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h10/evaluation-v2/pool_160_hp4hn4",
+        "path": "len:run_*"
+      },
+      "method": "read",
+      "notes": "Borderline inclusion, flagged: 'run_1..run_5' is written as a directory range, and numerals inside paths are normally out of scope (rule 5), but the sentence asserts that five pass directories exist and are reused, so it is included per the include-when-in-doubt rule. Consistent with K=5 at studies/h8-v2-library.yaml $.execution.runs."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1604,
+          1606
+        ],
+        "section": "E51 Rationale 1 — pipeline tile sizes"
+      },
+      "claim_text": "H11 closed the 384 px pathway (E41) and the\n   production proposer is now 384-tile. The original 512 px H8 numbers are\n   off-pipeline and cannot be directly compared with downstream work.",
+      "values": [
+        {
+          "quantity": "tile edge length, 384 px pathway closed by H11",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles_384/tile_selection_metadata.json#$.parameters.tile_size",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length, production proposer",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.carried_forward.tile_size",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length, original H8 numbers",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles/K-35-052-4_32635/K-35-052-4_32635_x0_y0.png#width",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Three separate tile-size assertions in one contiguous span; each carries its own locator so no value inherits a neighbour's quantity (v1.2 amendment 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1606,
+          1608
+        ],
+        "section": "E51 Rationale 1 — 55-maps generalisation reference point"
+      },
+      "claim_text": "Re-running\n   at 384 px restores comparability with H10 v2 and the 55-maps generalisation\n   study (F1=0.891 on gold standard, 2026-04-08).",
+      "values": [
+        {
+          "quantity": "tile edge length, H8 v2 re-run",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "studies/h8-v2-library.yaml#$.carried_forward.tile_size",
+          "method": "read"
+        },
+        {
+          "quantity": "count of maps in the generalisation corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, production configuration evaluated on the gold-standard corpus (55-maps generalisation baseline)",
+          "value_verbatim": "0.891",
+          "value_parsed": 0.891,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::verified-adv-text-4of5')].metrics.per_buffer['30'].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 0.891 gold-standard figure is proposed against the production proposer-verifier condition pv-diag-384::verified-adv-text-4of5 in the conditions manifest, whose per-buffer F1 is constant across the 30-50 m buffers; the source sentence does not state a buffer, so triage should confirm the buffer choice. No manifest enumerating the 55-map corpus was located from this document, so the map count is anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1609,
+          1612
+        ],
+        "section": "E51 Rationale 2 — v2 register yields and Scale-32 demand"
+      },
+      "claim_text": "The v2 hard-case register (mined under\n   production image-track settings from the 160-tile calibration pool)\n   yields 108 HP / 57 HN, both sufficient for Scale-32 (16 HP + 16 HN) with\n   comfortable diversity-selection headroom.",
+      "values": [
+        {
+          "quantity": "tile count, calibration pool used for v2 hard-case mining",
+          "value_verbatim": "160",
+          "value_parsed": 160,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/calibration/h10-384/calibration_manifest_160.json#len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-positive candidate count, v2 register (pool_160)",
+          "value_verbatim": "108",
+          "value_parsed": 108,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.hp_candidates",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-negative candidate count, v2 register (pool_160)",
+          "value_verbatim": "57",
+          "value_parsed": 57,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.hn_candidates",
+          "method": "read"
+        },
+        {
+          "quantity": "hard positives required by the Scale-32 condition",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": "studies/h8-v2-library.yaml#$.factors.library_composition.levels[?(@.name=='scale-32')].composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard negatives required by the Scale-32 condition",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": "studies/h8-v2-library.yaml#$.factors.library_composition.levels[?(@.name=='scale-32')].composition.hard_negative",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h10/hard-cases-v2/pool_160/hard_cases_register.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Single-match equality filters into the H8 v2 study factor levels are used for the Scale-32 requirement (v1.2 amendment 7)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1614,
+          1616
+        ],
+        "section": "E51 Rationale 3 — H10 v2 settings versus prereg optimum"
+      },
+      "claim_text": "H10 v2 used the production carry-\n   forward settings (T=0.7, thinking=high) rather than the prereg H7 optimum\n   (T=0.0, thinking=minimal).",
+      "values": [
+        {
+          "quantity": "temperature, H10 v2 / production carry-forward",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.carried_forward.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature, prereg H7 optimum",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/phase2c-h8-library.yaml#$.carried_forward.optimal_temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h8-v2-library.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The H7 optimum is an experimental result carried forward into Phase 2c, so it anchors to the Phase 2c study definition rather than to the lodged registration."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1622,
+          1623
+        ],
+        "section": "E51 — K=5 reduction from the preregistered K=10"
+      },
+      "claim_text": "The K=5 reduction from the preregistered K=10 matches production n=5 consensus\nvoting (validated in the 55-maps study)",
+      "values": [
+        {
+          "quantity": "K (independent detection passes), H8 v2",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/h8-v2-library.yaml#$.execution.runs",
+          "method": "read"
+        },
+        {
+          "quantity": "K (independent detection passes) as preregistered",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "consensus pool size n, production configuration",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/h8-v2-library.yaml#$.execution.runs",
+          "method": "read"
+        },
+        {
+          "quantity": "count of maps in the generalisation corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The claim-level anchor is the lodged registration because the span's central assertion is about what was REGISTERED (K=10) — v1.1 calibration rule; the as-run K=5 values carry cross-file locators into the H8 v2 study definition (v1.2 amendment 2). 'halves the API spend' carries no numeral."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1630,
+          1630
+        ],
+        "section": "E51 Reference artefacts — per-condition config count"
+      },
+      "claim_text": "- Per-condition configs: `prompts/configs/h8/v2/detect_h8_*_v2.json` (7 files)",
+      "values": [
+        {
+          "quantity": "count of H8 v2 per-condition detection configs",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/configs/h8/v2",
+        "path": "len:detect_h8_*_v2.json"
+      },
+      "method": "read",
+      "notes": "Directory-count anchor: the harness cannot resolve a glob mechanically, so this routes to triage (instrument v1.1 on non-JSON anchors)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1635,
+          1638
+        ],
+        "section": "E51 Runtime parallelism note — workers, quota, target"
+      },
+      "claim_text": "The H8 v2 launch uses\n`--workers 250` on Tier 3 API quota (20 M TPM / 20 K RPM), targeting ~72 %\nTPM utilisation via the existing token-bucket governor\n(`scripts/lib_token_bucket.py`).",
+      "values": [
+        {
+          "quantity": "worker count used for the H8 v2 launch",
+          "value_verbatim": "250",
+          "value_parsed": 250,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Tier 3 tokens-per-minute quota (vendor limit)",
+          "value_verbatim": "20",
+          "value_parsed": 20.0,
+          "unit": "M TPM",
+          "kind": "other",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "Tier 3 requests-per-minute quota (vendor limit)",
+          "value_verbatim": "20",
+          "value_parsed": 20.0,
+          "unit": "K RPM",
+          "kind": "other",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "target tokens-per-minute utilisation for the H8 v2 launch",
+          "value_verbatim": "~72",
+          "value_parsed": 72.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Worker count left anchor-unknown deliberately: studies/h8-v2-library.yaml $.execution.workers records 12 with the comment 'set via --workers at runtime', and no H8 v2 launch log or run meta recording the actual worker count was located; anchoring to the YAML default would manufacture a mismatch against an operational CLI override. The approx marker is retained verbatim in value_verbatim (v1.2 amendment 5). Quota figures are vendor limits (external)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1638,
+          1641
+        ],
+        "section": "E51 Runtime note — Tier 2 ceiling and observed peak"
+      },
+      "claim_text": "The detect script's hard-coded thread-pool\nceiling of 60 was the binding constraint at Tier 2 (observed peak 4.12 M TPM\n= 20.6 % utilisation), bottlenecking on worker availability rather than on\nrate limits.",
+      "values": [
+        {
+          "quantity": "superseded hard-coded thread-pool ceiling in the detect script",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "observed peak tokens-per-minute throughput at Tier 2",
+          "value_verbatim": "4.12",
+          "value_parsed": 4.12,
+          "unit": "M TPM",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "observed tokens-per-minute quota utilisation at Tier 2",
+          "value_verbatim": "20.6",
+          "value_parsed": 20.6,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "historical",
+      "notes": "Genuine historical value: the sentence states the ceiling WAS hard-coded at 60 and the next sentence records the replacement, so this is the quoted-old-value side of a correction (instrument rule 3, 'historical'). The observed Tier 2 throughput figures come from a launch observation with no located artefact — anchor-unknown for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1641,
+          1643
+        ],
+        "section": "E51 Runtime note — replacement worker-pool ceiling"
+      },
+      "claim_text": "The ceiling has been changed to `max(60, workers)` when the\ngovernor is active, preserving backward compatibility while allowing\nruntime scaling via `--workers N`.",
+      "values": [
+        {
+          "quantity": "floor of the governor-active thread-pool ceiling in the detect script",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/4_detect_mounds_batch.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Non-JSON anchor (a Python constant), legitimate and expected per instrument v1.1: the detect script assigns the thread-pool size as max(60, workers) when the token-bucket governor is active."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1648,
+          1650
+        ],
+        "section": "E51 Edge-of-raster fix — clipped crop dimensions"
+      },
+      "claim_text": "three crops in the initial `pool_160_hp16hn16` mining were\nfound to be clipped by the raster boundary (`hp_11.png` 95 × 150, `hn_11.png`\n150 × 100, `hn_16.png` 150 × 149).",
+      "values": [
+        {
+          "quantity": "count of edge-clipped crops in the initial pool_160_hp16hn16 mining",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "width of the clipped hard-positive crop hp_11",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops/hp_11.png#width",
+          "method": "read"
+        },
+        {
+          "quantity": "height of the clipped hard-positive crop hp_11",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops/hp_11.png#height",
+          "method": "read"
+        },
+        {
+          "quantity": "width of the clipped hard-negative crop hn_11",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops/hn_11.png#width",
+          "method": "read"
+        },
+        {
+          "quantity": "height of the clipped hard-negative crop hn_11",
+          "value_verbatim": "100",
+          "value_parsed": 100,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops/hn_11.png#height",
+          "method": "read"
+        },
+        {
+          "quantity": "width of the clipped hard-negative crop hn_16",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops/hn_16.png#width",
+          "method": "read"
+        },
+        {
+          "quantity": "height of the clipped hard-negative crop hn_16",
+          "value_verbatim": "149",
+          "value_parsed": 149,
+          "unit": "px",
+          "kind": "physical",
+          "path": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter/crops/hn_16.png#height",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The pre-filter pools were archived to archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter, whose crops/ subdirectory holds the three named PNGs; crop-size PNG anchors are legitimate per instrument v1.1. Crop file names (hp_11, hn_16) are names, excluded as values per rule 5 — only the asserted pixel dimensions are claims."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1656,
+          1658
+        ],
+        "section": "E51 Edge-of-raster fix — filter was a no-op at hp8hn8"
+      },
+      "claim_text": "`pool_160_hp8hn8` picks are byte-identical to the pre-filter\nmining (none of the top 8 HP or HN candidates were edge cases, so the filter\nwas a no-op at this rung)",
+      "values": [
+        {
+          "quantity": "count of leading HP (and HN) candidates checked for edge cases at the Scale-16 rung",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/examples/h10-v2/pool_160_hp8hn8",
+        "path": "len:hp_*.png"
+      },
+      "method": "read",
+      "notes": "Anchored to the frozen pool_160_hp8hn8 crop directory (hp_01..hp_08). Whether the picks are byte-identical to the pre-filter mining is a comparison for triage, not a value in this span."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1658,
+          1659
+        ],
+        "section": "E51 Edge-of-raster fix — preserved and shifted picks"
+      },
+      "claim_text": "`pool_160_hp16hn16` preserves picks 1–10 and\nshifts picks 11–16. Prefix nestedness (pool_160_hp4hn4 ⊂ pool_160_hp8hn8 ⊂",
+      "values": [
+        {
+          "quantity": "first preserved pick index, pool_160_hp16hn16 re-mining",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "last preserved pick index, pool_160_hp16hn16 re-mining",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "first shifted pick index, pool_160_hp16hn16 re-mining",
+          "value_verbatim": "11",
+          "value_parsed": 11,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "last shifted pick index, pool_160_hp16hn16 re-mining",
+          "value_verbatim": "16",
+          "value_parsed": 16,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "archive/h10-v2-prefilter-pools/pool_160_hp16hn16_prefilter",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Deciding which picks were preserved and which shifted requires a byte-level comparison of the archived pre-filter pool against the re-mined outputs/h10/example-pools-v2/pool_160_hp16hn16 crops — recorded, not run, per instrument rule 3 ('recompute-script')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1664,
+          1664
+        ],
+        "section": "E52 heading — H12 re-run pipeline tile size"
+      },
+      "claim_text": "### E52: H12 HP:HN ratio re-run under production carry-forward (384 px / v2 pipeline)",
+      "values": [
+        {
+          "quantity": "tile edge length, H12 v2 production carry-forward pipeline",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h12-v2-ratio.yaml",
+        "path": "$.carried_forward.tile_size"
+      },
+      "method": "read",
+      "notes": "As with E51's heading, the tile size is asserted as a fact about the re-run, not merely a condition name (rule 5 carve-out)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1673,
+          1676
+        ],
+        "section": "E52 Description — v1 HP pool exhausted at 4 examples"
+      },
+      "claim_text": "The preregistered H12 (hard-positive to hard-negative ratio)\nwas formally deferred on 2026-02-02 in decisions-log entry 11 because the v1\nhard-positive pool was structurally exhausted at 4 examples under the 50 m\nrecognition/localisation threshold.",
+      "values": [
+        {
+          "quantity": "count of hard positives in the exhausted v1 pool",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/examples/hard-positive#len:*.png",
+          "method": "read"
+        },
+        {
+          "quantity": "recognition/localisation buffer threshold under which the v1 pool was mined",
+          "value_verbatim": "50",
+          "value_parsed": 50,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 50 m recognition/localisation threshold is a registered evaluation parameter, so it anchors to the lodged preregistration (v1.1 calibration rule, path null for markdown); the v1 HP count carries a cross-file directory locator. decisions-log.md § 11 is the document's own cited source but is itself a hand-written mine document — rule 2 forbids anchoring prose to prose."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1676,
+          1678
+        ],
+        "section": "E52 Description — testable ratios under Decision 11"
+      },
+      "claim_text": "Under Decision 11, the only testable\nratios were HP-constant with varying HN (e.g., 4:4, 4:8), which confounds\nratio with total hard count.",
+      "values": [
+        {
+          "quantity": "hard positives held constant in the only testable v1 ratios",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "hard negatives in the first testable v1 ratio",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "hard positives held constant in the second testable v1 ratio",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "hard negatives in the second testable v1 ratio",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Illustrative ratios attributed to decisions-log.md § 11, which is a hand-written mine document: rule 2 forbids anchoring prose to prose, and no config implementing 4:4 or 4:8 under the v1 pool was located. Flagged as low-value but included per the include-when-in-doubt rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1681,
+          1685
+        ],
+        "section": "E52 Deferral resolved — register yields and 3:1 extreme"
+      },
+      "claim_text": "The v2 hard-case register mined on 2026-04-15 from\nH10's pool_160 (`outputs/h10/hard-cases-v2/pool_160/hard_cases_register.json`)\nyields **108 hard positives and 57 hard negatives** after the edge-of-raster\nexclusion filter, well above the HP ≥ 6 required for the symmetric 3:1\nHP-heavy extreme.",
+      "values": [
+        {
+          "quantity": "hard-positive candidate count, v2 register (pool_160), after edge-exclusion",
+          "value_verbatim": "108",
+          "value_parsed": 108,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.hp_candidates",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-negative candidate count, v2 register (pool_160), after edge-exclusion",
+          "value_verbatim": "57",
+          "value_parsed": 57,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.hn_candidates",
+          "method": "read"
+        },
+        {
+          "quantity": "hard positives required by the symmetric HP-heavy extreme",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "studies/h12-v2-ratio.yaml#$.factors.hp_hn_ratio.levels[?(@.name=='r3-hp-heavy')].composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "HP side of the HP-heavy ratio",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "HN side of the HP-heavy ratio",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h10/hard-cases-v2/pool_160/hard_cases_register.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 3:1 ratio notation is recorded in the study YAML only as the string ratio_label ('3:1 (HP-heavy)') at studies/h12-v2-ratio.yaml, which the harness cannot compare numerically — both sides are therefore anchor-unknown, with the underlying HP/HN counts anchored separately in the condition-matrix rows below."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1690,
+          1690
+        ],
+        "section": "E52 condition matrix — R1 row"
+      },
+      "claim_text": "| R1 | 2 | 6 | 8 | 1:3 (HN-heavy) |",
+      "values": [
+        {
+          "quantity": "hard positives, condition R1",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.hp_hn_ratio.levels[?(@.name=='r1-hn-heavy')].composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard negatives, condition R1",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.hp_hn_ratio.levels[?(@.name=='r1-hn-heavy')].composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "total hard examples, condition R1",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "studies/h12-v2-ratio.yaml",
+              "path": "$.factors.hp_hn_ratio.levels[?(@.name=='r1-hn-heavy')].composition.hard_positive"
+            },
+            {
+              "name": "b",
+              "file": "studies/h12-v2-ratio.yaml",
+              "path": "$.factors.hp_hn_ratio.levels[?(@.name=='r1-hn-heavy')].composition.hard_negative"
+            }
+          ]
+        },
+        {
+          "quantity": "HP side of the R1 ratio notation",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "HN side of the R1 ratio notation",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h12-v2-ratio.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "One claim row per table row (rule 6). The total-hard cell is the only derived value in the span and carries its own expression and operands (v1.2 amendment 1); the HP and HN cells stay 'read' so they are never compared against their own sum. The ratio notation is only a string label (ratio_label) in the study YAML, hence anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1691,
+          1691
+        ],
+        "section": "E52 condition matrix — R2 row"
+      },
+      "claim_text": "| R2 | 4 | 4 | 8 | 1:1 (balanced) |",
+      "values": [
+        {
+          "quantity": "hard positives, condition R2",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.hp_hn_ratio.levels[?(@.name=='r2-balanced')].composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard negatives, condition R2",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.hp_hn_ratio.levels[?(@.name=='r2-balanced')].composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "total hard examples, condition R2",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "studies/h12-v2-ratio.yaml",
+              "path": "$.factors.hp_hn_ratio.levels[?(@.name=='r2-balanced')].composition.hard_positive"
+            },
+            {
+              "name": "b",
+              "file": "studies/h12-v2-ratio.yaml",
+              "path": "$.factors.hp_hn_ratio.levels[?(@.name=='r2-balanced')].composition.hard_negative"
+            }
+          ]
+        },
+        {
+          "quantity": "HP side of the R2 ratio notation",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "HN side of the R2 ratio notation",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h12-v2-ratio.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "One claim row per table row (rule 6). The total-hard cell is the only derived value in the span and carries its own expression and operands (v1.2 amendment 1); the HP and HN cells stay 'read' so they are never compared against their own sum. The ratio notation is only a string label (ratio_label) in the study YAML, hence anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1692,
+          1692
+        ],
+        "section": "E52 condition matrix — R3 row"
+      },
+      "claim_text": "| R3 | 6 | 2 | 8 | 3:1 (HP-heavy) |",
+      "values": [
+        {
+          "quantity": "hard positives, condition R3",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.hp_hn_ratio.levels[?(@.name=='r3-hp-heavy')].composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard negatives, condition R3",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.hp_hn_ratio.levels[?(@.name=='r3-hp-heavy')].composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "total hard examples, condition R3",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "studies/h12-v2-ratio.yaml",
+              "path": "$.factors.hp_hn_ratio.levels[?(@.name=='r3-hp-heavy')].composition.hard_positive"
+            },
+            {
+              "name": "b",
+              "file": "studies/h12-v2-ratio.yaml",
+              "path": "$.factors.hp_hn_ratio.levels[?(@.name=='r3-hp-heavy')].composition.hard_negative"
+            }
+          ]
+        },
+        {
+          "quantity": "HP side of the R3 ratio notation",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "HN side of the R3 ratio notation",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h12-v2-ratio.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "One claim row per table row (rule 6). The total-hard cell is the only derived value in the span and carries its own expression and operands (v1.2 amendment 1); the HP and HN cells stay 'read' so they are never compared against their own sum. The ratio notation is only a string label (ratio_label) in the study YAML, hence anchor-unknown."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1695,
+          1699
+        ],
+        "section": "E52 Trigger deviation — H8 v2 null result"
+      },
+      "claim_text": "H8 v2 (completed 2026-04-15,\nObservation 238) returned a null result: all seven library-composition\ncontrasts (C1, C2, C3, B1, S1, S2, S3) null after Benjamini–Hochberg FDR\ncorrection at q = 0.05, with an F1 spread of only 0.040 across all seven\nconditions at greedy consensus threshold t = 4.",
+      "values": [
+        {
+          "quantity": "count of preregistered H8 library-composition contrasts",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_contrasts",
+          "method": "read"
+        },
+        {
+          "quantity": "false-discovery-rate level for the H8 v2 BH correction",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.q",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 spread across the seven H8 v2 conditions at greedy t=4",
+          "value_verbatim": "0.040",
+          "value_parsed": 0.04,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/h8-v2/permutation-t4/fdr_summary.json",
+              "path": "$.contrasts[?(@.b=='scale-4')].f1_b"
+            },
+            {
+              "name": "b",
+              "file": "results/h8-v2/permutation-t4/fdr_summary.json",
+              "path": "$.contrasts[?(@.b=='scale-16')].f1_b"
+            }
+          ]
+        },
+        {
+          "quantity": "count of H8 v2 library-composition conditions",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "studies/h8-v2-library.yaml#len:$.factors.library_composition.levels",
+          "method": "read"
+        },
+        {
+          "quantity": "greedy consensus vote threshold at which the H8 v2 spread is reported",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/h8-v2/permutation-t4/fdr_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The spread is the only derived value and carries its own expression (v1.2 amendment 1); its operands use single-match equality filters (amendment 7) that pick the maximum (scale-4) and minimum (scale-16) condition F1 recorded in the contrast list. The vote threshold t=4 appears in the file only inside the $.operating_point string and as the results/h8-v2/greedy/*/t4 directory names, so it is anchor-unknown rather than compared against a string. 'Observation 238' and the contrast codes are identifiers, excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1712,
+          1713
+        ],
+        "section": "E52 Justification 2 — two preregistered library axes"
+      },
+      "claim_text": "together they close the library-design story for the write-up\n   with two independently-preregistered axes.",
+      "values": [
+        {
+          "quantity": "count of independently preregistered library-design axes closed by H8 v2 and H12 v2",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Borderline inclusion, flagged: the count asserts that both the library-composition axis (H8) and the ratio axis (H12) are independently registered, which the lodged preregistration can decide. The neighbouring 'two reasons' on line 1702 is a rhetorical count of the document's own argument structure and is excluded as an explicit scope decision, not silently."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1720,
+          1720
+        ],
+        "section": "E52 parameter table — tile size row"
+      },
+      "claim_text": "| Tile size | 512 px | 384 px (E41/E51) |",
+      "values": [
+        {
+          "quantity": "tile edge length, original H12 prereg carry-forward",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles/K-35-052-4_32635/K-35-052-4_32635_x0_y0.png#width",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length, H12 v2",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.carried_forward.tile_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h12-v2-ratio.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "One claim row per table row (rule 6)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1721,
+          1721
+        ],
+        "section": "E52 parameter table — stride row"
+      },
+      "claim_text": "| Stride | 448 px | 336 px (E51) |",
+      "values": [
+        {
+          "quantity": "tiling stride, original H12 prereg carry-forward",
+          "value_verbatim": "448",
+          "value_parsed": 448,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles/tile_selection_metadata.json#$.parameters.tile_size",
+          "method": "read"
+        },
+        {
+          "quantity": "tiling stride, H12 v2",
+          "value_verbatim": "336",
+          "value_parsed": 336,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.carried_forward.stride",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h12-v2-ratio.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Same caveat as E51's stride row: the proposed Era 1 locator is a field named tile_size in inputs/tiles/tile_selection_metadata.json that holds 448 — triage should confirm it is the stride."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1722,
+          1722
+        ],
+        "section": "E52 parameter table — temperature row"
+      },
+      "claim_text": "| Temperature | T = 0.0 (H7 optimum) | T = 0.7 (production carry-forward, E49/E51) |",
+      "values": [
+        {
+          "quantity": "temperature, original H12 prereg carry-forward (H7 optimum)",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/phase2c-h8-library.yaml#$.carried_forward.optimal_temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature, H12 v2 (production carry-forward)",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.carried_forward.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h12-v2-ratio.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "One claim row per table row (rule 6)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1725,
+          1725
+        ],
+        "section": "E52 parameter table — K (passes) row"
+      },
+      "claim_text": "| K (passes) | 10 | **5** (production n = 5 consensus; E49/E51) |",
+      "values": [
+        {
+          "quantity": "K (independent detection passes) as preregistered",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "K (independent detection passes), H12 v2",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/h12-v2-ratio.yaml#$.execution.runs",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus pool size n, production configuration",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/h12-v2-ratio.yaml#$.execution.runs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Claim-level anchor is the lodged registration because the left column is the registered K (v1.1 calibration rule); the as-run values carry cross-file locators into the H12 v2 study definition."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1726,
+          1726
+        ],
+        "section": "E52 parameter table — service tier row"
+      },
+      "claim_text": "| Service tier | standard | **flex** (50 % off-peak discount) |",
+      "values": [
+        {
+          "quantity": "flex service-tier discount relative to standard tier (vendor pricing claim)",
+          "value_verbatim": "50",
+          "value_parsed": 50.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Vendor pricing; attestation material only. Duplicate of the equivalent E51 row, retained per full enumeration (charter § 5 rule 3)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1727,
+          1727
+        ],
+        "section": "E52 parameter table — context caching row"
+      },
+      "claim_text": "| Context caching | none | **enabled** (reduces input cost 50–90 %) |",
+      "values": [
+        {
+          "quantity": "input-cost reduction from context caching, lower bound (vendor pricing claim)",
+          "value_verbatim": "50",
+          "value_parsed": 50.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "input-cost reduction from context caching, upper bound (vendor pricing claim)",
+          "value_verbatim": "90",
+          "value_parsed": 90.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": null,
+      "method": "external",
+      "notes": "Shared-unit range; both values carry unit '%' explicitly (v1.2 amendment 6). Duplicate of the equivalent E51 row, retained per full enumeration."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1728,
+          1728
+        ],
+        "section": "E52 parameter table — hard-example crop size row"
+      },
+      "claim_text": "| Hard-example crop size | 128 px (v1) | **150 px** (v2, verifier-aligned) |",
+      "values": [
+        {
+          "quantity": "hard-example crop edge length, v1",
+          "value_verbatim": "128",
+          "value_parsed": 128,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/examples/hard-positive/example_05_rakovski.png#width",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-example crop edge length, v2 (verifier-aligned)",
+          "value_verbatim": "150",
+          "value_parsed": 150,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.carried_forward.crop_size_px",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h12-v2-ratio.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "One claim row per table row (rule 6)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1729,
+          1729
+        ],
+        "section": "E52 parameter table — evaluation manifest row"
+      },
+      "claim_text": "| Evaluation manifest | 60-tile validation holdout | **327-tile h10-384 test manifest** (E50) |",
+      "values": [
+        {
+          "quantity": "tile count, original H12 evaluation holdout",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles/validation_manifest.json#len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, H12 v2 evaluation manifest",
+          "value_verbatim": "327",
+          "value_parsed": 327,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/calibration/h10-384/test_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both manifests are JSON arrays counted with the len: prefix (v1.2 amendment 4); 'h10-384' inside the manifest name is a name, excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1731,
+          1732
+        ],
+        "section": "E52 R2 reuse — composition of the balanced condition"
+      },
+      "claim_text": "R2 (4 HP + 4 HN) is byte-identical to H8 v2 Scale-8, which is\nitself the existing H10 v2 `pool_160_hp4hn4` run.",
+      "values": [
+        {
+          "quantity": "hard positives, condition R2",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.hp_hn_ratio.levels[?(@.name=='r2-balanced')].composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard negatives, condition R2",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.hp_hn_ratio.levels[?(@.name=='r2-balanced')].composition.hard_negative",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h12-v2-ratio.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restatement of the R2 composition already recorded in the condition matrix row; kept as a separate claim per full enumeration."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1738,
+          1740
+        ],
+        "section": "E52 R2 reuse — referenced pass directories"
+      },
+      "claim_text": "so R2 is NOT re-launched. Analysis references the\nexisting `outputs/h10/evaluation-v2/pool_160_hp4hn4/run_{1..5}/` directories\ndirectly.",
+      "values": [
+        {
+          "quantity": "count of existing H10 v2 pool_160_hp4hn4 pass directories referenced by H12 v2",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/h10/evaluation-v2/pool_160_hp4hn4",
+        "path": "len:run_*"
+      },
+      "method": "read",
+      "notes": "Borderline inclusion, flagged: 'run_{1..5}' is a directory-range glob and numerals inside paths are normally out of scope (rule 5), but the sentence asserts five reused pass directories. Mirrors the equivalent E51 claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1742,
+          1744
+        ],
+        "section": "E52 — R1 and R3 compositions reuse hp8hn8 crops"
+      },
+      "claim_text": "**No new example pools are built.** R1 (HP=2, HN=6) and R3 (HP=6, HN=2) both\nreference the existing `inputs/examples/h10-v2/pool_160_hp8hn8/` crops",
+      "values": [
+        {
+          "quantity": "hard positives, condition R1",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.hp_hn_ratio.levels[?(@.name=='r1-hn-heavy')].composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard negatives, condition R1",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.hp_hn_ratio.levels[?(@.name=='r1-hn-heavy')].composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "hard positives, condition R3",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.hp_hn_ratio.levels[?(@.name=='r3-hp-heavy')].composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard negatives, condition R3",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.hp_hn_ratio.levels[?(@.name=='r3-hp-heavy')].composition.hard_negative",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h12-v2-ratio.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restatement of the R1/R3 compositions; kept per full enumeration. Crop file names in the following clause are names, excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1744,
+          1747
+        ],
+        "section": "E52 — deterministic seed and equivalent CLI invocations"
+      },
+      "claim_text": "Because prefix-nested greedy\nselection with `seed=42` is deterministic, these bytes are identical to what\n`build_example_pool.py --hp-count 2 --hn-count 6` or `--hp-count 6 --hn-count 2`\nwould produce as dedicated `pool_160_hp2hn6` / `pool_160_hp6hn2` directories.",
+      "values": [
+        {
+          "quantity": "random seed for prefix-nested greedy example selection",
+          "value_verbatim": "42",
+          "value_parsed": 42,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.carried_forward.pool_mining_seed",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-positive count in the equivalent R1 CLI invocation",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.hp_hn_ratio.levels[?(@.name=='r1-hn-heavy')].composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-negative count in the equivalent R1 CLI invocation",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.hp_hn_ratio.levels[?(@.name=='r1-hn-heavy')].composition.hard_negative",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-positive count in the equivalent R3 CLI invocation",
+          "value_verbatim": "6",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.hp_hn_ratio.levels[?(@.name=='r3-hp-heavy')].composition.hard_positive",
+          "method": "read"
+        },
+        {
+          "quantity": "hard-negative count in the equivalent R3 CLI invocation",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "$.factors.hp_hn_ratio.levels[?(@.name=='r3-hp-heavy')].composition.hard_negative",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h12-v2-ratio.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The seed is also recorded per pool at outputs/h10/example-pools-v2/pool_160_hp16hn16/pool_metadata.json $.seed and as the scripts/build_example_pool.py --seed default. The four CLI counts are hypothetical invocations that assert the same HP/HN counts as R1 and R3, so they are anchored to the same composition fields; flagged as borderline (they describe a command that was not run)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1751,
+          1752
+        ],
+        "section": "E52 Analysis aggregation — greedy primary threshold"
+      },
+      "claim_text": "Greedy consensus at t = 4 is the primary / headline\naggregation method for H12 (user preference, 2026-04-15)",
+      "values": [
+        {
+          "quantity": "greedy consensus vote threshold, H12 primary aggregation",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/h12-v2/permutation-t4/fdr_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The H12 permutation summary records the operating point as the string 'greedy t=4, 20 m buffer, 327-tile H10 test set' and lives under results/h12-v2/permutation-t4/, so the threshold is anchored to the artefact as a whole rather than to a numeric field."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1755,
+          1757
+        ],
+        "section": "E52 Analysis aggregation — BH-FDR level for H12 contrasts"
+      },
+      "claim_text": "BH-FDR-corrected\npairwise contrasts (R1 vs R2, R2 vs R3, R1 vs R3) at q = 0.05 are computed on\nthe greedy primary metric.",
+      "values": [
+        {
+          "quantity": "false-discovery-rate level for the H12 v2 BH correction",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/h12-v2/permutation-t4/fdr_summary.json",
+        "path": "$.q"
+      },
+      "method": "read",
+      "notes": "The three named pairwise contrasts (R1 vs R2, R2 vs R3, R1 vs R3) are not stated as a count in this span; the file records n_contrasts = 3 if triage wants that cross-check."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1769,
+          1772
+        ],
+        "section": "E52 Runtime parallelism note — workers and utilisation"
+      },
+      "claim_text": "H12 v2 uses `--workers 250` on\nTier 3 quota, matching H8 v2 (Session 68 observed ~72 % TPM utilisation with\nzero 429 errors at that worker count).",
+      "values": [
+        {
+          "quantity": "worker count used for the H12 v2 launch",
+          "value_verbatim": "250",
+          "value_parsed": 250,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.execution.workers",
+          "method": "read"
+        },
+        {
+          "quantity": "observed tokens-per-minute utilisation at 250 workers",
+          "value_verbatim": "~72",
+          "value_parsed": 72.0,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of HTTP rate-limit errors observed at 250 workers",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "studies/h12-v2-ratio.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Unlike the H8 v2 note, the H12 study definition itself records workers: 250 ($.execution.workers), so the worker count is anchored. The utilisation and error-count observations come from a launch session with no located artefact. '429' is an HTTP status code (an identifier), excluded per rule 5; the approx marker is retained verbatim per v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1777,
+          1777
+        ],
+        "section": "E53 heading — Phase 3a-HIGH image track era move"
+      },
+      "claim_text": "### E53: Phase 3a-HIGH image track moved from 512 px (Era 1) to 384 px (Era 2)",
+      "values": [
+        {
+          "quantity": "tile edge length, original Phase 3a-HIGH image track (Era 1)",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles/K-35-052-4_32635/K-35-052-4_32635_x0_y0.png#width",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length, replacement Phase 3a-HIGH image track (Era 2)",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.parameters.tile_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles_384/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Era labels ('Era 1', 'Era 2') are names, excluded as values per rule 5; the tile edge lengths are asserted facts about the two pipelines."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1784,
+          1784
+        ],
+        "section": "E53 field table — impact row (era scopes)"
+      },
+      "claim_text": "| Impact | H3 image-track consensus analysis reported on Era 2 scope (487 tiles, 384 px) rather than Era 1 (340 tiles, 512 px) |",
+      "values": [
+        {
+          "quantity": "tile count, Era 2 evaluation scope",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length, Era 2",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles_384/tile_selection_metadata.json#$.parameters.tile_size",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, Era 1 evaluation scope",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles/full_evaluation_manifest.json#len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length, Era 1",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles/K-35-052-4_32635/K-35-052-4_32635_x0_y0.png#width",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles_384/full_evaluation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both evaluation manifests are JSON arrays counted with the len: prefix (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1790,
+          1793
+        ],
+        "section": "E53 Description — the unlaunched 512 px study definition"
+      },
+      "claim_text": "defined K = 30\nconsensus voting experiments for the image track at 512 px (Era 1, 340\ntiles) with HIGH thinking at T = 0.3, T = 0.7, and T = 1.0.",
+      "values": [
+        {
+          "quantity": "K (consensus voting passes) defined by the Phase 3a-HIGH image study",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.execution.runs",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length, Phase 3a-HIGH image study (Era 1)",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles/K-35-052-4_32635/K-35-052-4_32635_x0_y0.png#width",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, Phase 3a-HIGH image study manifest (Era 1)",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles/full_evaluation_manifest.json#len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "first temperature level, Phase 3a-HIGH image study",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.factors.temperature.levels[?(@.name=='T0.3')].value",
+          "method": "read"
+        },
+        {
+          "quantity": "second temperature level, Phase 3a-HIGH image study",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.factors.temperature.levels[?(@.name=='T0.7')].value",
+          "method": "read"
+        },
+        {
+          "quantity": "third temperature level, Phase 3a-HIGH image study",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.factors.temperature.levels[?(@.name=='T1.0')].value",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/retest/phase3a-h3-voting-track1-high.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Claims about what the study YAML DEFINED (the runs were never launched), so they anchor to the study definition; the document itself notes that a study YAML is not the preregistration. The 'osf/preregistration.md:512' citation on line 1788 is a line-number reference, excluded per rule 5 — note it is textually identical to the 512 px tile size and must not be confused with it. Single-match equality filters per v1.2 amendment 7."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1793,
+          1795
+        ],
+        "section": "E53 Description — text-track counterpart completion"
+      },
+      "claim_text": "The text-track counterpart completed\n(90/90 runs).",
+      "values": [
+        {
+          "quantity": "count of completed text-track runs",
+          "value_verbatim": "90",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": "len:T*/run_*",
+          "method": "read"
+        },
+        {
+          "quantity": "count of planned text-track runs",
+          "value_verbatim": "90",
+          "value_parsed": 90,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a * b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "studies/retest/phase3a-h3-voting-track2-high.yaml",
+              "path": "$.execution.runs"
+            },
+            {
+              "name": "b",
+              "file": "studies/retest/phase3a-h3-voting-track2-high.yaml",
+              "path": "len:$.factors.temperature.levels"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "outputs/retest/phase3a-high/track2-text",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Completed runs anchored as a directory count under the HIGH text-track output root (three temperature directories, each holding run_N subdirectories); the planned total is derived from the counterpart study definition (30 runs x 3 temperature levels) and carries its own expression and operands so neither operand is compared against the product (v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1801,
+          1804
+        ],
+        "section": "E53 Investigation 1 — existing 384 px HIGH condition"
+      },
+      "claim_text": "The H11 PV-diag\n   condition `flash-high-image-n5` (Flash, HIGH thinking, image track,\n   plus-hp library, T = 0.7, K = 10) was run on the full 487-tile 384-px\n   evaluation manifest.",
+      "values": [
+        {
+          "quantity": "temperature, H11 PV-diag condition flash-high-image-n5",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_1/detections_image-t0.7_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "K (passes), H11 PV-diag condition flash-high-image-n5 at T=0.7",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::flash-high-image-n5-image-t0.7-consensus-7of10')].n_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, evaluation manifest for the H11 PV-diag image conditions",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles_384/full_evaluation_manifest.json#len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length, evaluation manifest for the H11 PV-diag image conditions",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles_384/tile_selection_metadata.json#$.parameters.tile_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Condition names (flash-high-image-n5, plus-hp) are names, excluded per rule 5; the temperature, pass count and manifest scope are asserted facts about what was run. The pass count is read from the conditions manifest entry for the K=10 consensus cell of the same proposer pool; items_processed = 487 in the run meta is an alternative locator for the tile count."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1804,
+          1805
+        ],
+        "section": "E53 Investigation 1 — matched MINIMAL condition"
+      },
+      "claim_text": "A matched MINIMAL-thinking condition (`image-n5`)\n   also exists at T = 0.7 with K = 10.",
+      "values": [
+        {
+          "quantity": "temperature, H11 PV-diag condition image-n5",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_1/detections_image-t0.7_run01.meta.json#$.configuration.temperature",
+          "method": "read"
+        },
+        {
+          "quantity": "K (passes), H11 PV-diag condition image-n5 at T=0.7",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.conditions[?(@.condition_id=='pv-diag-384::image-n5-image-t0.7-consensus-8of10')].n_passes",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/conditions-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The MINIMAL-thinking counterpart of the preceding claim; 'image-n5' is a condition name, excluded as a value per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1807,
+          1807
+        ],
+        "section": "E53 Investigation 2 — mislabelled archived data"
+      },
+      "claim_text": "2. **The archived 60-tile preliminary data was mislabelled.** The",
+      "values": [
+        {
+          "quantity": "tile count, archived pre-retest preliminary corpus",
+          "value_verbatim": "60",
+          "value_parsed": 60,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/validation_manifest.json",
+        "path": "len:$"
+      },
+      "method": "read",
+      "notes": "The archived pre-retest data was evaluated on the 60-tile validation holdout (inputs/tiles/validation_manifest.json, a 60-element JSON array); the mislabelling itself is a qualitative claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1813,
+          1816
+        ],
+        "section": "E53 Investigation 3 — library-design axis null"
+      },
+      "claim_text": "3. **The library-design axis is null** (Obs 240). All 10 library-design\n   conditions span F1 = 0.688–0.733 with zero significant pairwise\n   differences after BH-FDR.",
+      "values": [
+        {
+          "quantity": "count of library-design conditions compared across hypotheses",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": "$.n_conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "minimum F1 across the ten library-design conditions (greedy t=4, 20 m)",
+          "value_verbatim": "0.688",
+          "value_parsed": 0.688,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.contrasts[?(@.b=='r3-hp-heavy')].f1_b",
+          "method": "read"
+        },
+        {
+          "quantity": "maximum F1 across the ten library-design conditions (greedy t=4, 20 m)",
+          "value_verbatim": "0.733",
+          "value_parsed": 0.733,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.contrasts[?(@.b=='scale-4')].f1_b",
+          "method": "read"
+        },
+        {
+          "quantity": "count of significant pairwise differences after BH-FDR correction",
+          "value_verbatim": "zero",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/cross-hypothesis-library/permutation-t4/fdr_summary.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The two range endpoints use constant-collapse equality filters (v1.2 amendment 7): each condition's F1 is repeated identically across every contrast in which it appears. The significant-difference count needs recomputation because the file records a boolean any_significant plus per-contrast bh_adj_p rather than a count scalar — comparing 0 against false would be a spurious mismatch. 'Obs 240' is an identifier, excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1818,
+          1820
+        ],
+        "section": "E53 Resolution — replacement 2 × 4 matrix"
+      },
+      "claim_text": "The 512-px experiment is omitted. Instead, a complete\n2 × 4 thinking × temperature matrix is run at 384 px (487 tiles) using\nthe existing H11 infrastructure:",
+      "values": [
+        {
+          "quantity": "tile edge length, omitted original experiment",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles/K-35-052-4_32635/K-35-052-4_32635_x0_y0.png#width",
+          "method": "read"
+        },
+        {
+          "quantity": "count of thinking levels in the replacement matrix",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "count of temperature levels in the replacement matrix",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length, replacement matrix",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles_384/tile_selection_metadata.json#$.parameters.tile_size",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, replacement matrix evaluation scope",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles_384/full_evaluation_manifest.json#len:$",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/run_phase3a_image_matrix.sh",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The launcher script enumerates the matrix cells (HIGH and MINIMAL thinking across T=0.0/0.3/0.7/1.0 at 384 px on the 487-tile manifest), so the factor counts are anchored there; being a shell script, it has no path grammar and routes to triage (instrument v1.1). Per-value paths omitted where the anchor is markdown, YAML prose or a shell script: JSONPath does not apply, so the harness routes these to triage (instrument v1.1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1822,
+          1822
+        ],
+        "section": "E53 matrix table — header row (temperatures and K per cell)"
+      },
+      "claim_text": "| | T = 0.0 (K = 3) | T = 0.3 (K = 10) | T = 0.7 (K = 10) | T = 1.0 (K = 10) |",
+      "values": [
+        {
+          "quantity": "first temperature column of the replacement matrix",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "K (passes) at T = 0.0",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "second temperature column of the replacement matrix",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "K (passes) at T = 0.3",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "third temperature column of the replacement matrix",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "K (passes) at T = 0.7",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "fourth temperature column of the replacement matrix",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "K (passes) at T = 1.0",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/run_phase3a_image_matrix.sh",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The launcher script's header block lists each cell with its K (HIGH/MINIMAL T=0.7 K=10 existing; HIGH T=0.0 K=3; the remaining new cells K=10). Shell-script anchor, no path grammar. Per-value paths omitted where the anchor is markdown, YAML prose or a shell script: JSONPath does not apply, so the harness routes these to triage (instrument v1.1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1827,
+          1829
+        ],
+        "section": "E53 design provisions — comparisons, baselines, sweeps"
+      },
+      "claim_text": "This design provides: (a) clean paired HIGH vs MINIMAL comparison at three\nconsensus-relevant temperatures; (b) T = 0.0 baselines for both thinking\nlevels; (c) N = 5 and N = 10 consensus threshold sweeps at each cell.",
+      "values": [
+        {
+          "quantity": "count of consensus-relevant temperatures compared across thinking levels",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "baseline temperature for both thinking levels",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "first consensus pool size swept at each cell",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "second consensus pool size swept at each cell",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/run_phase3a_image_matrix.sh",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Shell-script anchor (no path grammar); the three consensus-relevant temperatures are T=0.3/0.7/1.0 and the T=0.0 cells are the baselines. The N=5 and N=10 sweeps correspond to the n_passes = 5 and 10 consensus entries for these proposer pools in results/conditions-manifest.json. Per-value paths omitted where the anchor is markdown, YAML prose or a shell script: JSONPath does not apply, so the harness routes these to triage (instrument v1.1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1833,
+          1835
+        ],
+        "section": "E53 Justification 1 — scope of the original design"
+      },
+      "claim_text": "The 512-px study tested\n   only HIGH thinking at three temperatures. The 384-px matrix adds the\n   MINIMAL comparison,",
+      "values": [
+        {
+          "quantity": "tile edge length, original study",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles/K-35-052-4_32635/K-35-052-4_32635_x0_y0.png#width",
+          "method": "read"
+        },
+        {
+          "quantity": "count of temperatures tested by the original study",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.factors.temperature.levels",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length, replacement matrix",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles_384/tile_selection_metadata.json#$.parameters.tile_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "studies/retest/phase3a-h3-voting-track1-high.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The original study's temperature-level count is read from its own study definition with the canonical len: prefix (v1.2 amendment 4)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1838,
+          1840
+        ],
+        "section": "E53 Justification 2 — tile-size bridge"
+      },
+      "claim_text": "The 384-px data integrates cleanly with\n   the Era 2+3 leaderboard (H8 v2, H10 v2, H11, H12 v2). H11 provides the\n   tile-size bridge (384 px vs 512 px) for cross-era comparison.",
+      "values": [
+        {
+          "quantity": "tile edge length, replacement data",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.parameters.tile_size",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length, H11 bridge upper arm",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.parameters.tile_size",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length, H11 bridge lower arm",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles/K-35-052-4_32635/K-35-052-4_32635_x0_y0.png#width",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles_384/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'Era 2+3' is an era label, excluded as values per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1849,
+          1849
+        ],
+        "section": "E53 parameter summary — table header row"
+      },
+      "claim_text": "| Parameter | Original Phase 3a-HIGH (512 px) | E53 replacement (384 px) |",
+      "values": [
+        {
+          "quantity": "tile edge length, original Phase 3a-HIGH design",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles/K-35-052-4_32635/K-35-052-4_32635_x0_y0.png#width",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length, E53 replacement design",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.parameters.tile_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles_384/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The header row of this table itself carries the two tile sizes as column labels; extracted per full enumeration even though the tile-size row immediately below repeats them."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1851,
+          1851
+        ],
+        "section": "E53 parameter summary — tile size row"
+      },
+      "claim_text": "| Tile size | 512 px | 384 px |",
+      "values": [
+        {
+          "quantity": "tile edge length, original Phase 3a-HIGH (512 px)",
+          "value_verbatim": "512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "inputs/tiles/K-35-052-4_32635/K-35-052-4_32635_x0_y0.png#width",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length, E53 replacement (384 px)",
+          "value_verbatim": "384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.parameters.tile_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles_384/tile_selection_metadata.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "One claim row per table row (rule 6)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1852,
+          1852
+        ],
+        "section": "E53 parameter summary — tiles row"
+      },
+      "claim_text": "| Tiles | 340 (Era 1) | 487 (Era 2 full evaluation) |",
+      "values": [
+        {
+          "quantity": "tile count, original Phase 3a-HIGH scope (Era 1)",
+          "value_verbatim": "340",
+          "value_parsed": 340,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles/full_evaluation_manifest.json#len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, E53 replacement scope (Era 2 full evaluation)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles_384/full_evaluation_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both manifests are JSON arrays counted with the len: prefix."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1853,
+          1853
+        ],
+        "section": "E53 parameter summary — K row"
+      },
+      "claim_text": "| K | 30 | 10 (K = 30 if needed after initial analysis) |",
+      "values": [
+        {
+          "quantity": "K (passes) defined by the original Phase 3a-HIGH study",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.execution.runs",
+          "method": "read"
+        },
+        {
+          "quantity": "K (passes) in the E53 replacement matrix",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/conditions-manifest.json#$.conditions[?(@.condition_id=='pv-diag-384::flash-high-image-n5-image-t0.7-consensus-7of10')].n_passes",
+          "method": "read"
+        },
+        {
+          "quantity": "contingent K (passes) if extension proves necessary",
+          "value_verbatim": "30",
+          "value_parsed": 30,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "studies/retest/phase3a-h3-voting-track1-high.yaml",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The third value is contingent ('K = 30 if needed after initial analysis') and describes a run that may never have happened — left anchor-unknown rather than anchored to the superseded 512 px study."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1854,
+          1854
+        ],
+        "section": "E53 parameter summary — temperatures row"
+      },
+      "claim_text": "| Temperatures | T = 0.3, 0.7, 1.0 | T = 0.0, 0.3, 0.7, 1.0 |",
+      "values": [
+        {
+          "quantity": "original temperature level 1",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/retest/phase3a-h3-voting-track1-high.yaml#$.factors.temperature.levels[?(@.name=='T0.3')].value",
+          "method": "read"
+        },
+        {
+          "quantity": "original temperature level 2",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/retest/phase3a-h3-voting-track1-high.yaml#$.factors.temperature.levels[?(@.name=='T0.7')].value",
+          "method": "read"
+        },
+        {
+          "quantity": "original temperature level 3",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "studies/retest/phase3a-h3-voting-track1-high.yaml#$.factors.temperature.levels[?(@.name=='T1.0')].value",
+          "method": "read"
+        },
+        {
+          "quantity": "replacement temperature level 1",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "replacement temperature level 2",
+          "value_verbatim": "0.3",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "replacement temperature level 3",
+          "value_verbatim": "0.7",
+          "value_parsed": 0.7,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "replacement temperature level 4",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/run_phase3a_image_matrix.sh",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Seven values in appearance order: the original study's three temperatures (cross-file locators into its study definition) and the replacement matrix's four (the launcher script, which has no path grammar). Per-value paths omitted where the anchor is markdown, YAML prose or a shell script: JSONPath does not apply, so the harness routes these to triage (instrument v1.1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1858,
+          1858
+        ],
+        "section": "E53 parameter summary — workers row"
+      },
+      "claim_text": "| Workers | Not specified | 250 (Tier 3 standard) |",
+      "values": [
+        {
+          "quantity": "worker count used by the E53 replacement launcher",
+          "value_verbatim": "250",
+          "value_parsed": 250,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/run_phase3a_image_matrix.sh",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The launcher script sets --workers 250 in its common flag string; 'Tier 3' is a quota-tier name, excluded per rule 5."
+    }
+  ]
+}

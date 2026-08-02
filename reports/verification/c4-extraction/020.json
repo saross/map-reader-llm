@@ -1,0 +1,2778 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/preregistration/protocol-errata.md",
+    "git_blob": "b4fe2c5c45d80b0de9792cf17ba7e467dbf68ea7",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1872,
+          1872
+        ],
+        "section": "E54 heading"
+      },
+      "claim_text": "### E54: Bootstrap iteration count — preregistered 1 000 for primary F1, post-hoc 10 000 for narrow-effect analyses",
+      "values": [
+        {
+          "quantity": "bootstrap iteration count, confidence intervals on primary F1 (the pre-specified/executed default)",
+          "value_verbatim": "1 000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "DEFAULT_BOOTSTRAP",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iteration count, post-hoc narrow-effect analyses",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "scripts/compute_corrected_f1_human_reviewed.py#argparse '--n-bootstrap' default",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/evaluate_detections.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The heading calls the 1 000 count 'preregistered', but the body of this same erratum (line 1881) corrects that attribution: the count was fixed pre-lodgement in Decision 10 and does not appear in the lodged registration. Anchoring to the lodged preregistration would therefore manufacture a false mismatch (instrument v1.1 calibration rule applies only to values the registration genuinely specifies), so both values anchor to the executed defaults in the scripts named by this erratum's own Reference artefacts block (line 1904 and the post-hoc list). Erratum identifier E54 excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1881,
+          1881
+        ],
+        "section": "E54 Description, attribution sentence"
+      },
+      "claim_text": "the registered text specifies 95% bootstrapped CIs (Section 3.5); the **1 000-iteration** count, percentile method (2.5th / 97.5th), and tile-level resampling unit were fixed pre-lodgement in **Decision 10** (`decisions-log.md:337`) and do not appear in the lodged registration.",
+      "values": [
+        {
+          "quantity": "confidence-interval level as registered (Section 3.5)",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "parameter",
+          "path": "Section 3.5 (95% bootstrapped CIs)",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iteration count fixed pre-lodgement in Decision 10",
+          "value_verbatim": "1 000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "scripts/evaluate_detections.py#DEFAULT_BOOTSTRAP",
+          "method": "read"
+        },
+        {
+          "quantity": "lower percentile bound of the bootstrap CI method",
+          "value_verbatim": "2.5th",
+          "value_parsed": 2.5,
+          "unit": "percentile",
+          "kind": "parameter",
+          "path": "scripts/lib_advanced_metrics.py#bootstrap_ci percentile bounds (np.percentile 2.5)",
+          "method": "read"
+        },
+        {
+          "quantity": "upper percentile bound of the bootstrap CI method",
+          "value_verbatim": "97.5th",
+          "value_parsed": 97.5,
+          "unit": "percentile",
+          "kind": "parameter",
+          "path": "scripts/lib_advanced_metrics.py#bootstrap_ci percentile bounds (np.percentile 97.5)",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed anchoring by design: the 95 % CI level IS registered (§3.5 of the lodged preregistration, so the v1.1 calibration rule applies), whereas the iteration count and percentile bounds are pre-specified rather than registered and are anchored to the executing code. The document attributes the latter to Decision 10 in docs/methodology/preregistration/decisions-log.md; that is prose-to-prose (rule 2), so the checkable side is the script default. Line-number citations and the section identifier are excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1881,
+          1881
+        ],
+        "section": "E54 Description, primary-evaluation scripts sentence"
+      },
+      "claim_text": "All scripts that evaluate preregistered conditions — `evaluate_detections.py`, `compute-pairwise-effect-sizes.py`, `evaluate_pv_results.py`, `compare_wbf_vs_greedy.py`, `analyse_secondary_effects_text.py`, and the shared `lib_advanced_metrics.bootstrap_ci` default — use 1 000 iterations, matching the preregistration.",
+      "values": [
+        {
+          "quantity": "bootstrap iteration count used by every script that evaluates preregistered conditions",
+          "value_verbatim": "1 000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/evaluate_detections.py",
+        "path": "DEFAULT_BOOTSTRAP"
+      },
+      "method": "read",
+      "notes": "The span names six code artefacts; anchored to the first (scripts/evaluate_detections.py), with scripts/lib_advanced_metrics.py bootstrap_ci n_iterations default = 1000 as the shared-default cross-check (extracted separately from line 1904). Non-JSON anchors are expected here (instrument v1.1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1883,
+          1883
+        ],
+        "section": "E54 Description, post-hoc iteration count"
+      },
+      "claim_text": "Several **post-hoc** analyses (not specified in the preregistration) use **10 000 iterations** instead.",
+      "values": [
+        {
+          "quantity": "bootstrap iteration count, post-hoc analyses",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/compute_corrected_f1_human_reviewed.py",
+        "path": "argparse '--n-bootstrap' default"
+      },
+      "method": "read",
+      "notes": "The following sentence on the same line ('CI precision at 2-3 decimal places is material for narrative clarity') is rhetorical framing about reporting precision rather than an asserted quantity, so 2-3 is not extracted; flagged here as a deliberate scope decision."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1885,
+          1885
+        ],
+        "section": "E54 post-hoc list, human-reviewed corrected F1"
+      },
+      "claim_text": "- `compute_corrected_f1_human_reviewed.py` — human-reviewed corrected F1 lower bound (effect size ~0.06 above measured F1; CI half-width would be ~±0.01-0.02 at 1 000 iter, ~±0.003-0.006 at 10 000)",
+      "values": [
+        {
+          "quantity": "effect size of the human-reviewed corrected F1 above measured F1",
+          "value_verbatim": "~0.06",
+          "value_parsed": 0.06,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "bootstrap CI half-width at 1 000 iterations, lower end of stated range (counterfactual projection)",
+          "value_verbatim": "~±0.01",
+          "value_parsed": 0.01,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap CI half-width at 1 000 iterations, upper end of stated range (counterfactual projection)",
+          "value_verbatim": "0.02",
+          "value_parsed": 0.02,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap iteration count, primary default referenced in the comparison",
+          "value_verbatim": "1 000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "scripts/evaluate_detections.py#DEFAULT_BOOTSTRAP",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap CI half-width at 10 000 iterations, lower end of stated range (counterfactual projection)",
+          "value_verbatim": "~±0.003",
+          "value_parsed": 0.003,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap CI half-width at 10 000 iterations, upper end of stated range (counterfactual projection)",
+          "value_verbatim": "0.006",
+          "value_parsed": 0.006,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "bootstrap iteration count, this post-hoc script",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "argparse '--n-bootstrap' default",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/compute_corrected_f1_human_reviewed.py",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Mixed span. The two iteration counts are read from code defaults; the four CI half-widths are counterfactual projections ('would be'), so they need a scripted re-derivation rather than a lookup. The ~0.06 effect size is not tied to a named run in this document: candidate artefacts are results/<run>/corrected-f1-multi-buffer/corrected-f1.csv and the corrected-f1-human-reviewed.json written by this script (out_dir is a required CLI argument, so the output path is not fixed in the repo) — marked anchor-unknown for triage. Per instrument v1.2 amendment 6 the '~±' sign marker is carried on the first value of each range only, as the source writes it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1887,
+          1887
+        ],
+        "section": "E54 post-hoc list, subtype classification"
+      },
+      "claim_text": "- `analyse_subtype_classification.py` — per-class subtype F1 with CIs (several per-class F1s sit in a 0.02-0.05 window; tighter CIs improve separability)",
+      "values": [
+        {
+          "quantity": "lower edge of the window in which several per-class subtype F1 values sit",
+          "value_verbatim": "0.02",
+          "value_parsed": 0.02,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "upper edge of the window in which several per-class subtype F1 values sit",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/gold-standard-subtype-classification/per_class_f1_buf50.csv",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Ambiguous phrasing flagged for triage: '0.02-0.05 window' may mean the per-class F1s span an interval of that width, or that they lie between F1 0.02 and 0.05. Either reading needs the per-class F1 table recomputed/inspected, hence recompute-script. Anchor directory is the script's default --output-dir (scripts/analyse_subtype_classification.py line 1430)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1888,
+          1888
+        ],
+        "section": "E54 post-hoc list, review-UI disagreement rate"
+      },
+      "claim_text": "- `crosstab_uncalibrated_vs_calibrated.py` — review-UI disagreement-rate CI (disagreement ~21 %; narrow effect size)",
+      "values": [
+        {
+          "quantity": "review-UI disagreement rate between uncalibrated and calibrated human review",
+          "value_verbatim": "~21",
+          "value_parsed": 21,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/55maps-image-generalisation/uncalibrated-vs-calibrated-crosstab/crosstab.json",
+        "path": "$.rates.disagreement_rate"
+      },
+      "method": "read",
+      "notes": "Anchor holds the rate as a fraction ($.rates.disagreement_rate); the document quotes it as a percentage with an approximation marker, kept verbatim per v1.2 amendment 5. The only crosstab of this kind in the tree is the 55-map image-generalisation one."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1889,
+          1889
+        ],
+        "section": "E54 post-hoc list, buffer-band permutation test"
+      },
+      "claim_text": "- `analyse_buffer_band_lift.py` — within-tile permutation test, M = 1 000 matches the preregistered convention for permutation-derived null envelopes (noted here for completeness — this one follows the 1 000 default)",
+      "values": [
+        {
+          "quantity": "permutation count M, within-tile buffer-band permutation test",
+          "value_verbatim": "1 000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "M_PERMUTATIONS",
+          "method": "read"
+        },
+        {
+          "quantity": "preregistered-convention default permutation/bootstrap count this script follows",
+          "value_verbatim": "1 000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "M_PERMUTATIONS",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/analyse_buffer_band_lift.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both values name the same constant (M_PERMUTATIONS = 1000 at scripts/analyse_buffer_band_lift.py:83); the second is the document restating that this script follows the 1 000 default."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1893,
+          1893
+        ],
+        "section": "E54 Rationale for the split, item 1"
+      },
+      "claim_text": "1. **Decision 10 fixed 1 000 for primary evaluation pre-lodgement** — the setting remains untouched for preregistered conditions; because the count is pre-specified rather than registered, changing it for post-hoc analyses is a clarification, not a deviation.",
+      "values": [
+        {
+          "quantity": "bootstrap iteration count fixed pre-lodgement for primary evaluation",
+          "value_verbatim": "1 000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/evaluate_detections.py",
+        "path": "DEFAULT_BOOTSTRAP"
+      },
+      "method": "read",
+      "notes": "Anchored to the executed default rather than to Decision 10 in docs/methodology/preregistration/decisions-log.md (prose-to-prose is barred by rule 2); triage can chase the decisions-log side if the attribution itself is in question."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1894,
+          1894
+        ],
+        "section": "E54 Rationale for the split, item 2"
+      },
+      "claim_text": "2. **10 000 is selectively applied to post-hoc analyses where CI precision determines narrative clarity** — the preregistration does not constrain methodology for analyses it did not specify.",
+      "values": [
+        {
+          "quantity": "bootstrap iteration count applied to post-hoc analyses",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/compute_corrected_f1_human_reviewed.py",
+        "path": "argparse '--n-bootstrap' default"
+      },
+      "method": "read",
+      "notes": "One of four post-hoc scripts carrying this default; anchored to the first named in the list at line 1885."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1895,
+          1895
+        ],
+        "section": "E54 Rationale for the split, item 3"
+      },
+      "claim_text": "The 10× cost is absorbable for a one-off authoring run.",
+      "values": [
+        {
+          "quantity": "ratio of post-hoc to primary bootstrap iteration count (runtime cost multiple)",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": "x",
+          "kind": "ratio",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/compute_corrected_f1_human_reviewed.py",
+        "path": null,
+        "expression": "a / b",
+        "operands": [
+          {
+            "name": "a",
+            "file": "scripts/compute_corrected_f1_human_reviewed.py",
+            "path": "argparse '--n-bootstrap' default"
+          },
+          {
+            "name": "b",
+            "file": "scripts/evaluate_detections.py",
+            "path": "DEFAULT_BOOTSTRAP"
+          }
+        ]
+      },
+      "method": "arithmetic",
+      "notes": "10 000 / 1 000 = 10. Both operands are read directly from code defaults so neither inherits the derivation (v1.2 amendment 1). 'hundreds-of-conditions leaderboard matrix' in the same span is a vague magnitude, not a checkable value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1899,
+          1899
+        ],
+        "section": "E54 Paper methods wording, sentence 1"
+      },
+      "claim_text": "Confidence intervals on primary F1, precision, and recall are derived from 1 000-iteration tile-level bootstrap resampling (95% bootstrapped CIs per registered §3.5; 1 000 iterations, percentile method 2.5th / 97.5th, and tile-level unit pre-specified in Decision 10 before lodgement).",
+      "values": [
+        {
+          "quantity": "bootstrap iteration count, CIs on primary F1/precision/recall",
+          "value_verbatim": "1 000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "DEFAULT_BOOTSTRAP",
+          "method": "read"
+        },
+        {
+          "quantity": "confidence-interval level as registered",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "parameter",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#Section 3.5 (95% bootstrapped CIs)",
+          "method": "read"
+        },
+        {
+          "quantity": "lower percentile bound of the bootstrap CI method",
+          "value_verbatim": "2.5th",
+          "value_parsed": 2.5,
+          "unit": "percentile",
+          "kind": "parameter",
+          "path": "scripts/lib_advanced_metrics.py#bootstrap_ci percentile bounds (np.percentile 2.5)",
+          "method": "read"
+        },
+        {
+          "quantity": "upper percentile bound of the bootstrap CI method",
+          "value_verbatim": "97.5th",
+          "value_parsed": 97.5,
+          "unit": "percentile",
+          "kind": "parameter",
+          "path": "scripts/lib_advanced_metrics.py#bootstrap_ci percentile bounds (np.percentile 97.5)",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/evaluate_detections.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Suggested paper wording, but it asserts the study's own parameters and is extracted as a claim. The span writes '1 000' twice (once in '1 000-iteration tile-level bootstrap resampling', once inside the parenthesis); a single value row covers the assertion because both instances are the same quantity. §3.5 and 'Decision 10' are identifiers, excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1899,
+          1899
+        ],
+        "section": "E54 Paper methods wording, sentence 2"
+      },
+      "claim_text": "Post-hoc analyses — human-reviewed corrected F1 (single- and multi-buffer), subtype classification, and review-UI calibration cross-tabs — use 10 000 iterations to tighten CIs on narrow effect sizes; the resampling unit and percentile method are unchanged.",
+      "values": [
+        {
+          "quantity": "bootstrap iteration count, post-hoc analyses",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/compute_corrected_f1_human_reviewed.py",
+        "path": "argparse '--n-bootstrap' default"
+      },
+      "method": "read",
+      "notes": "Second sentence of the suggested paper wording; same post-hoc default as line 1883."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1903,
+          1903
+        ],
+        "section": "E54 Reference artefacts, registered CI level"
+      },
+      "claim_text": "Registered §3.5 (95% bootstrapped CIs): `osf/preregistration.md:293`",
+      "values": [
+        {
+          "quantity": "confidence-interval level as registered (Section 3.5)",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": "Section 3.5 (95% bootstrapped CIs)"
+      },
+      "method": "read",
+      "notes": "Line-number citation (:293) excluded per rule 5; the claim is that the lodged registration specifies 95 % bootstrapped CIs, so it anchors to the lodged document per the v1.1 calibration rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1904,
+          1904
+        ],
+        "section": "E54 Reference artefacts, primary bootstrap defaults"
+      },
+      "claim_text": "- Primary bootstrap defaults: `scripts/evaluate_detections.py` (`DEFAULT_BOOTSTRAP = 1000`); `scripts/lib_advanced_metrics.py::bootstrap_ci` default `n_iterations = 1000`",
+      "values": [
+        {
+          "quantity": "bootstrap iteration default, scripts/evaluate_detections.py",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "DEFAULT_BOOTSTRAP",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap iteration default, scripts/lib_advanced_metrics.py::bootstrap_ci",
+          "value_verbatim": "1000",
+          "value_parsed": 1000,
+          "unit": null,
+          "kind": "parameter",
+          "path": "scripts/lib_advanced_metrics.py#bootstrap_ci n_iterations default",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "scripts/evaluate_detections.py",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both values are code constants named in the span itself; the document quotes them at the source spelling '1000' (elsewhere in this erratum the same quantity is written '1 000')."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1905,
+          1905
+        ],
+        "section": "E54 Reference artefacts, post-hoc scripts"
+      },
+      "claim_text": "- Post-hoc 10 000-iteration scripts: enumerated above",
+      "values": [
+        {
+          "quantity": "bootstrap iteration count, post-hoc scripts",
+          "value_verbatim": "10 000",
+          "value_parsed": 10000,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "scripts/compute_corrected_f1_human_reviewed.py",
+        "path": "argparse '--n-bootstrap' default"
+      },
+      "method": "read",
+      "notes": "Reference-artefact restatement of the post-hoc default; anchored to the first of the four scripts listed at lines 1885-1888."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1932,
+          1932
+        ],
+        "section": "E55 Correction (2026-07-30), remediation of the provenance promise"
+      },
+      "claim_text": "list `run.log` in `provenance.source_files` for the two affected verifier passes.",
+      "values": [
+        {
+          "quantity": "count of verifier passes affected by the unrecorded temperature override",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/verifier-t-pilot",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The two affected passes are the T0.5 and T1.0 arms — the only run.log files carrying 'Temperature override:'. Verifiable by a grep over the pilot directory, hence recompute-script rather than a manifest lookup (results/runs-manifest.json rows do not expose a per-pass override flag). Directory anchor."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1935,
+          1935
+        ],
+        "section": "E55 Description, override applied but not serialised"
+      },
+      "claim_text": "For the two new executions (`T0.5`, `T1.0`), the override was applied to the API call and logged in `run.log` (`Temperature override: 0.50` / `1.00`), but it was **not written back into the serialised `run.meta.json`**, whose `configuration.temperature` (and `configuration.full_config_snapshot.temperature`) retained the base-config default of `0.0`.",
+      "values": [
+        {
+          "quantity": "count of newly executed verifier-temperature arms in the pilot",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "verifier temperature actually dispatched, T0.5 arm (logged CLI override)",
+          "value_verbatim": "0.50",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/verifier-t-pilot/T0.5/run.log#Temperature override",
+          "method": "read"
+        },
+        {
+          "quantity": "verifier temperature actually dispatched, T1.0 arm (logged CLI override)",
+          "value_verbatim": "1.00",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/verifier-t-pilot/T1.0/run.log#Temperature override",
+          "method": "read"
+        },
+        {
+          "quantity": "base-config temperature retained in the serialised meta",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/verifier-t-pilot/T0.5/run.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The T0.5 / T1.0 slugs are directory names (rule 5); the checkable values are the logged override temperatures and the meta's retained default. The 0.0 also sits at $.configuration.full_config_snapshot.temperature and in the sibling T1.0 meta. 'two new executions' counts the pilot arms newly run (T0.0 reuses an existing baseline), which needs a directory check rather than a field lookup."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1937,
+          1937
+        ],
+        "section": "E55 Verification, probability divergence between arms"
+      },
+      "claim_text": "the override genuinely took effect — across the 607 shared candidates, 348 (57 %) of mound probabilities differ between `T0.5` and `T1.0` (`probabilities.json` → `results`).",
+      "values": [
+        {
+          "quantity": "shared verifier candidates between the T0.5 and T1.0 arms",
+          "value_verbatim": "607",
+          "value_parsed": 607,
+          "unit": null,
+          "kind": "count",
+          "path": "$.total_results",
+          "method": "read"
+        },
+        {
+          "quantity": "candidates whose mound probability differs between the T0.5 and T1.0 arms",
+          "value_verbatim": "348",
+          "value_parsed": 348,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "share of shared candidates whose mound probability differs between arms",
+          "value_verbatim": "57",
+          "value_parsed": 57,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/verifier-t-pilot/T0.5/probabilities.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "607 is a scalar in the anchor ($.total_results; equivalently len:$.results). The 348 differing probabilities and the 57 % share need a diff of $.results across the two arms' probabilities.json files, so they are recompute-script; the percentage is NOT expressed as arithmetic because its operands are themselves recomputed (v1.2 amendment 1)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1937,
+          1937
+        ],
+        "section": "E55 Verification, T0.0 arm provenance"
+      },
+      "claim_text": "The `T0.0` arm has no `run.meta.json` (it reuses the existing T=0.0 baseline verifier).",
+      "values": [
+        {
+          "quantity": "verifier temperature of the reused baseline arm",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The span itself states the T0.0 arm has no run.meta.json, and outputs/verifier-t-pilot/T0.0/ holds only materialised GeoJSONs (no probabilities.json either), so the temperature of the reused baseline verifier pass is not locatable from the pilot directory. Triage would need to identify the baseline verifier run this arm reuses."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1939,
+          1939
+        ],
+        "section": "E55 Blast radius"
+      },
+      "claim_text": "a scan of every `run.log` under `outputs/` for `Temperature override:` returns **only these two files**.",
+      "values": [
+        {
+          "quantity": "count of run.log files under outputs/ containing a 'Temperature override:' line",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "A repo-wide grep over outputs/**/run.log; directory anchor. Note that outputs/ is partly gitignored, so the scan is over the working tree."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1945,
+          1945
+        ],
+        "section": "E55 Resolution item 1"
+      },
+      "claim_text": "The original `configuration.temperature: 0.0` is **left untouched** (a faithful record of what the runner serialised).",
+      "values": [
+        {
+          "quantity": "original serialised temperature left untouched in the affected metas",
+          "value_verbatim": "0.0",
+          "value_parsed": 0.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "outputs/verifier-t-pilot/T0.5/run.meta.json",
+        "path": "$.configuration.temperature"
+      },
+      "method": "read",
+      "notes": "Holds for both affected metas (T0.5 and T1.0); anchored to the first."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1946,
+          1946
+        ],
+        "section": "E55 Resolution item 2"
+      },
+      "claim_text": "An additive `configuration.temperature_effective` (0.5 / 1.0) and a `configuration._correction` block (true value, `run.log` source, this erratum, date) were added to each meta, so a direct reader of the raw file sees the execution truth.",
+      "values": [
+        {
+          "quantity": "corrective effective temperature added to the T0.5 meta",
+          "value_verbatim": "0.5",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.configuration.temperature_effective",
+          "method": "read"
+        },
+        {
+          "quantity": "corrective effective temperature added to the T1.0 meta",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": "outputs/verifier-t-pilot/T1.0/run.meta.json#$.configuration.temperature_effective",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "outputs/verifier-t-pilot/T0.5/run.meta.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Both metas also carry the companion $.configuration._correction block asserted by the same span (non-numeric, not extracted)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1970,
+          1970
+        ],
+        "section": "E56 Description, headline binary verdict"
+      },
+      "claim_text": "The headline proposer-verifier pipeline (gold-standard-v2) applies the verifier as a **binary accept/reject verdict** — its `verified` condition records `prob_threshold = null`, so no probability cutoff is tuned.",
+      "values": [
+        {
+          "quantity": "probability threshold recorded for the gold-standard-v2 verified condition (null = binary verdict, no cutoff tuned)",
+          "value_verbatim": "null",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/run-conditions.json",
+        "path": "$.decomposition['gold-standard-v2'].conditions[?(@.label=='verified-v1')].prob_threshold"
+      },
+      "method": "read",
+      "notes": "Included although the asserted value is null rather than a number: it is a parameter assertion the anchor can decide (the condition label 'verified-v1' exists in the gold-standard-v2 decomposition). Flagged in case the harness cannot compare a null."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1970,
+          1970
+        ],
+        "section": "E56 Description, vote-threshold calibration"
+      },
+      "claim_text": "The consensus vote threshold was calibrated on the 20 held-out Phase 1 calibration tiles (≥3/5).",
+      "values": [
+        {
+          "quantity": "held-out Phase 1 calibration tiles the consensus vote threshold was calibrated on",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus vote threshold numerator (votes required)",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "consensus vote threshold denominator (passes)",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/calibration_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 20-tile calibration set is the array in inputs/tiles/calibration_manifest.json (len:$); results/runs-manifest.json $.runs[?(@.run_id=='pv-diag-384')].scope.n_calibration_tiles is a scalar cross-check. The 3/5 vote threshold as an execution-time calibration outcome has no single artefact field located here (the gold-standard-v2 decomposition carries consensus-3of5 / 4of5 / 5of5 conditions as labels, not as a selected threshold), so those two values are anchor-unknown; the registered ≥3/5 is a separate claim (same line)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1970,
+          1970
+        ],
+        "section": "E56 Description, D17 attribution correction"
+      },
+      "claim_text": "the registered ≥3/5 threshold, `osf/preregistration.md:1450-1451`, governs hard-example mining in §8.4.1 Step 2",
+      "values": [
+        {
+          "quantity": "registered vote-threshold numerator governing hard-example mining",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "Section 8.4.1 Step 2 (registered >=3/5 threshold)",
+          "method": "read"
+        },
+        {
+          "quantity": "registered vote-threshold denominator governing hard-example mining",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": "Section 8.4.1 Step 2 (registered >=3/5 threshold)",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "A claim about what the REGISTRATION specifies, so it anchors to the lodged preregistration per the v1.1 calibration rule, never to an executed config. Line-number citation (:1450-1451) and the section identifier are excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1972,
+          1972
+        ],
+        "section": "E56 Description, in-sample selection of the operating point"
+      },
+      "claim_text": "There the per-cell operating point `(vote_t, prob_t)` is selected by sweeping the grid and taking the F1-optimum at the 20 m buffer — and that selection is performed **on the 487-tile evaluation scope, which is the test set** (`scripts/score_leaderboard_cells.py`; `results/verifier-calibration-matrix/README.md` Phase B).",
+      "values": [
+        {
+          "quantity": "evaluation buffer at which the F1-optimum operating point is selected",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json#$.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count of the evaluation scope on which the operating point is selected (the test set)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs[?(@.run_id=='pv-diag-384')].scope.n_test_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/runs-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 384 in 'pv-diag-384' is a run name (rule 5) and is not extracted; the 487 is asserted as the scope's tile count and is a claim. The 20 m headline buffer is read from the tiering artefact's buffer_metres field."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1972,
+          1972
+        ],
+        "section": "E56 Description, no held-out verifier data"
+      },
+      "claim_text": "There is **no calibration-tile verifier data** to select on: the verifier never ran on the 20 calibration tiles (excluded from the 487-tile scope; pv-diag ∩ calibration = 0).",
+      "values": [
+        {
+          "quantity": "calibration tiles the verifier never ran on",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "inputs/tiles/calibration_manifest.json#len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count of the evaluation scope excluding the calibration tiles",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs[?(@.run_id=='pv-diag-384')].scope.n_test_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "tiles in the intersection of the pv-diag scope and the calibration set",
+          "value_verbatim": "0",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/runs-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The empty intersection needs the two tile lists compared (inputs/tiles/calibration_manifest.json against inputs/vectors/bounds/384/full_evaluation_bounds.geojson), hence recompute-script for that value."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1974,
+          1974
+        ],
+        "section": "E56 Verification, gs-v2 prob_threshold"
+      },
+      "claim_text": "gs-v2 `verified-v1` carries `prob_threshold: null` (`results/run-conditions.json`)",
+      "values": [
+        {
+          "quantity": "probability threshold recorded for the gold-standard-v2 verified condition",
+          "value_verbatim": "null",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/run-conditions.json",
+        "path": "$.decomposition['gold-standard-v2'].conditions[?(@.label=='verified-v1')].prob_threshold"
+      },
+      "method": "read",
+      "notes": "Restates the line-1970 assertion with the anchor named in the document itself."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1974,
+          1974
+        ],
+        "section": "E56 Verification, scope vs calibration overlap"
+      },
+      "claim_text": "the 487-tile `full_evaluation_bounds` has zero overlap with the 20-tile `inputs/tiles/calibration_manifest.json`",
+      "values": [
+        {
+          "quantity": "tile count of the full evaluation bounds (test scope)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='pv-diag-384')].scope.n_test_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count of the calibration manifest",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/calibration_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "'zero overlap' is asserted in words rather than as a numeral here; the numeric form of the same assertion (= 0) is extracted from line 1972."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1974,
+          1974
+        ],
+        "section": "E56 Verification, pv-diag text pool coverage"
+      },
+      "claim_text": "the pv-diag text pool (471 covered tiles) contains none of the 20.",
+      "values": [
+        {
+          "quantity": "tiles covered by the pv-diag text pool",
+          "value_verbatim": "471",
+          "value_parsed": 471,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "calibration tiles, none of which the pool covers",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/calibration_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "No scalar for the 471 covered tiles was located: pv-diag evaluations record n_tiles = 487 for the scope, not the per-pool covered subset, so the covered-tile count would have to be derived from the pool's detections/probabilities. Marked anchor-unknown for triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1974,
+          1974
+        ],
+        "section": "E56 Verification, threshold-sweep flatness"
+      },
+      "claim_text": "The 2026-06-02 sweep (`results/rescore-2026-05-31/pv-diag-384/sweep/`) shows the F1@20 curve is **flat in the operating range** — single-run-PV ≈0.74 across prob_t 0.25–0.40, consensus-PV ≈0.86 across 0.15–0.20 — so a fixed reference threshold (0.20: 0.718 / 0.861) and the in-sample optimum (0.25: 0.740 / 0.15: 0.864) differ by ≤0.022 F1.",
+      "values": [
+        {
+          "quantity": "evaluation buffer of the quoted F1 curve",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json#$.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "single-run-PV F1@20 m across the flat operating range (approximate)",
+          "value_verbatim": "≈0.74",
+          "value_parsed": 0.74,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/rescore-2026-05-31/pv-diag-384/sweep/single-run-PV-1of5-pt0.25/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "lower prob_t of the single-run-PV flat range",
+          "value_verbatim": "0.25",
+          "value_parsed": 0.25,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper prob_t of the single-run-PV flat range",
+          "value_verbatim": "0.40",
+          "value_parsed": 0.4,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "consensus-PV F1@20 m across the flat operating range (approximate)",
+          "value_verbatim": "≈0.86",
+          "value_parsed": 0.86,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/rescore-2026-05-31/pv-diag-384/sweep/consensus-PV-4of5-pt0.15/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "lower prob_t of the consensus-PV flat range",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper prob_t of the consensus-PV flat range",
+          "value_verbatim": "0.20",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "fixed reference prob_t",
+          "value_verbatim": "0.20",
+          "value_parsed": 0.2,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "single-run-PV F1@20 m at the fixed reference prob_t 0.20",
+          "value_verbatim": "0.718",
+          "value_parsed": 0.718,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/rescore-2026-05-31/pv-diag-384/sweep/single-run-PV-1of5-pt0.20/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus-PV F1@20 m at the fixed reference prob_t 0.20",
+          "value_verbatim": "0.861",
+          "value_parsed": 0.861,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/rescore-2026-05-31/pv-diag-384/sweep/consensus-PV-4of5-pt0.20/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "single-run-PV in-sample optimum prob_t",
+          "value_verbatim": "0.25",
+          "value_parsed": 0.25,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "single-run-PV F1@20 m at its in-sample optimum prob_t 0.25",
+          "value_verbatim": "0.740",
+          "value_parsed": 0.74,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/rescore-2026-05-31/pv-diag-384/sweep/single-run-PV-1of5-pt0.25/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "consensus-PV in-sample optimum prob_t",
+          "value_verbatim": "0.15",
+          "value_parsed": 0.15,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "consensus-PV F1@20 m at its in-sample optimum prob_t 0.15",
+          "value_verbatim": "0.864",
+          "value_parsed": 0.864,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/rescore-2026-05-31/pv-diag-384/sweep/consensus-PV-4of5-pt0.15/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "maximum F1 difference between the fixed reference threshold and the in-sample optimum",
+          "value_verbatim": "≤0.022",
+          "value_parsed": 0.022,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/rescore-2026-05-31/pv-diag-384/sweep/single-run-PV-1of5-pt0.25/evaluation.json",
+              "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
+            },
+            {
+              "name": "b",
+              "file": "results/rescore-2026-05-31/pv-diag-384/sweep/single-run-PV-1of5-pt0.20/evaluation.json",
+              "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/rescore-2026-05-31/pv-diag-384/sweep/single-run-PV-1of5-pt0.20/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Dense span kept whole per rule 1 (one claim row per contiguous span). The prob_t values (0.15/0.20/0.25/0.40) double as sweep-cell directory names under the sweep root; they are marked anchor-unknown rather than silently dropped, because the document asserts them as the operating range as well as naming cells (rule 5 borderline, flagged). The two approximate values keep their ≈ marker per v1.2 amendment 5 and are anchored to one representative cell each (the claim is a plateau, not a single cell). The ≤0.022 is derived from the larger of the two reference-vs-optimum gaps (single-run: 0.740 − 0.718); the consensus gap (0.864 − 0.861) is the smaller one, so the expression uses the binding pair, and its operands are separately read values."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1976,
+          1976
+        ],
+        "section": "E56 Blast radius"
+      },
+      "claim_text": "**Blast radius**: every `prob_t`-thresholded operating point in the verifier-probability diagnostics — the 14 `*-opt-20m.geojson` Session 78 cells, the h10 / h8-v2 / verifier-t-pilot `detections_vt*_pt*` materialisations, and the pv-diag-384 PV quadrants.",
+      "values": [
+        {
+          "quantity": "count of Session 78 verifier-calibration cells with an F1-optimal materialisation at 20 m",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/verifier-calibration-matrix",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "A glob count of *-opt-20m.geojson under the verifier-calibration-matrix directory (directory anchor). The 20m inside the filename glob and the 384 in pv-diag-384 are names, excluded per rule 5; the session number is excluded too."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1981,
+          1981
+        ],
+        "section": "E56 Reporting rule, item 2"
+      },
+      "claim_text": "Where one operating point is quoted, state explicitly that it is the **20 m test-set F1-optimum (in-sample)** and give the fixed-reference value beside it; the curve's flatness (≤0.022 F1 across the plateau) makes the two interchangeable for the well-calibrated text track.",
+      "values": [
+        {
+          "quantity": "evaluation buffer of the quoted in-sample optimum",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json#$.buffer_metres",
+          "method": "read"
+        },
+        {
+          "quantity": "F1 spread across the threshold plateau",
+          "value_verbatim": "≤0.022",
+          "value_parsed": 0.022,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a - b",
+          "operands": [
+            {
+              "name": "a",
+              "file": "results/rescore-2026-05-31/pv-diag-384/sweep/single-run-PV-1of5-pt0.25/evaluation.json",
+              "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
+            },
+            {
+              "name": "b",
+              "file": "results/rescore-2026-05-31/pv-diag-384/sweep/single-run-PV-1of5-pt0.20/evaluation.json",
+              "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
+            }
+          ]
+        }
+      ],
+      "anchor": {
+        "file": "results/rescore-2026-05-31/pv-diag-384/sweep/single-run-PV-1of5-pt0.20/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Restates the plateau spread asserted at line 1974 with the same derivation."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1982,
+          1982
+        ],
+        "section": "E56 Reporting rule, item 3"
+      },
+      "claim_text": "3. State plainly, in the paper and all supporting materials, **when and how each threshold was set**: vote threshold → preregistered, calibrated on the 20 held-out tiles; verifier binary verdict → no tuning; verifier `prob_t` operating points → in-sample on the 487-tile test set (diagnostic only).",
+      "values": [
+        {
+          "quantity": "held-out calibration tiles the vote threshold was calibrated on",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count of the test set on which prob_t operating points were selected",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='pv-diag-384')].scope.n_test_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/calibration_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Third restatement of the 20/487 split in this erratum; extracted in full per the no-sampling rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1983,
+          1983
+        ],
+        "section": "E56 Reporting rule, item 4 (calibration quality)"
+      },
+      "claim_text": "4. The text-track verifier is well-calibrated (AUC 0.956, ECE 0.071); the image track is not (AUC 0.86, ECE 0.18; Obs 269, 277) — so a fixed threshold transfers on text but not image.",
+      "values": [
+        {
+          "quantity": "area under the ROC curve, text-track verifier",
+          "value_verbatim": "0.956",
+          "value_parsed": 0.956,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "expected calibration error, text-track verifier",
+          "value_verbatim": "0.071",
+          "value_parsed": 0.071,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "area under the ROC curve, image-track verifier",
+          "value_verbatim": "0.86",
+          "value_parsed": 0.86,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "expected calibration error, image-track verifier",
+          "value_verbatim": "0.18",
+          "value_parsed": 0.18,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The document cites only working-notes Obs 269 and Obs 277 for these track-level figures — prose, which rule 2 bars as an anchor. The candidate artefact family is results/verifier-calibration-matrix/<cell>/calibration.json ($.auc.point, $.ece.point), but the document does not say which cell(s) the track-level numbers summarise (14 cells exist), so triage must resolve the chain. Obs identifiers excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1989,
+          1989
+        ],
+        "section": "E56 Update (2026-06-06), provenance 1"
+      },
+      "claim_text": "1. **Phase-1 baseline consensus** — vote threshold ≥3/5, calibration-selected on the 20 held-out calibration tiles, used to build the hard-case example library. Calibrated.",
+      "values": [
+        {
+          "quantity": "consensus vote threshold numerator, Phase-1 baseline",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "consensus vote threshold denominator, Phase-1 baseline",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "held-out calibration tiles the Phase-1 threshold was selected on",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "inputs/tiles/calibration_manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Same 3/5 anchoring problem as line 1970: the threshold appears as condition labels (consensus-3of5 etc.) rather than as a recorded selection, so those values go to triage."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1991,
+          1991
+        ],
+        "section": "E56 Update (2026-06-06), provenance 3"
+      },
+      "claim_text": "3. **Verifier `prob_t` diagnostics** (this erratum) — selected on the 487-tile test set with no held-out verifier data.",
+      "values": [
+        {
+          "quantity": "tile count of the test set the prob_t operating points were selected on",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/runs-manifest.json",
+        "path": "$.runs[?(@.run_id=='pv-diag-384')].scope.n_test_tiles"
+      },
+      "method": "read",
+      "notes": "Single-value claim, so the anchor path carries the locator directly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          1993,
+          1993
+        ],
+        "section": "E56 Update (2026-06-06), scope of the calibrate-test-produce logic"
+      },
+      "claim_text": "The calibrate → test → produce logic (and any \"in-sample vs deployable\" framing) belongs to the **55-map generalisation** deployment, where the carried-forward configuration is reported against corrected student ground truth alongside the oracle-best on the 55-map set (the carry-forward − best delta)",
+      "values": [
+        {
+          "quantity": "map count of the generalisation deployment corpus",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "map count of the generalisation set the oracle-best is reported on",
+          "value_verbatim": "55",
+          "value_parsed": 55,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "'55-map' is both a corpus name and an asserted count, so it is extracted per rule 5's carve-out; but no artefact in the tree records the map count as a number — results/runs-manifest.json carries corpus: '55-map' as a string and scope.n_test_tiles = 8541 for the tile count, and inputs/ has no 55-map manifest. Triage to decide whether the string field counts as a resolution."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2004,
+          2004
+        ],
+        "section": "E57 metadata table, Impact row"
+      },
+      "claim_text": "the 2026-06-03 billing reconciliation found four of the \"Pro\" pools were dispatched as **Flash**, which CHANGED the N=1 leaderboard finding (tie_set and the H6 narrative)",
+      "values": [
+        {
+          "quantity": "count of nominally-Pro pools found to have been dispatched as Flash",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Count of distinct n1-outstanding-384 pro-* proposer pools whose passes carry model_version = gemini-3-flash-preview; the prefix filter is not expressible as a single JSONPath, hence recompute-script. 'N=1' is the leaderboard's name (rule 5) and H6 is a hypothesis identifier."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2006,
+          2006
+        ],
+        "section": "E57 Description, pool provenance of the N=1 baseline matrix"
+      },
+      "claim_text": "the N=1 baseline matrix, `results/paper-eval/n1/384px-all-buffers/`, sourced from pv-diag-384 ×10, n1-outstanding-384 ×7, retest-h11-single-pass-384-t0 ×1)",
+      "values": [
+        {
+          "quantity": "baseline-matrix pools sourced from pv-diag-384",
+          "value_verbatim": "10",
+          "value_parsed": 10,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "baseline-matrix pools sourced from n1-outstanding-384",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "baseline-matrix pools sourced from retest-h11-single-pass-384-t0",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-all-buffers/batch_summary.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The three counts partition the 18 evaluated cells by source run; deciding them means grouping the batch summary's rows (or each cell's _metadata.input_files.detections) by run, which no single field records. 'Two metadata artefacts' opening the same line counts the document's own list items, not a study quantity, so it is not extracted. The 384px and N=1 tokens are names (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2008,
+          2008
+        ],
+        "section": "E57 Description, item 1 (config.model template default)"
+      },
+      "claim_text": "the per-detection `.meta.json` `configuration.model` reads `gemini-3-flash` / `gemini-3-flash-preview` even for the four **Pro** pools (e.g. `pro-text-medium-t-0-0`, `pro-image-medium-t-0-0`), whose `study_manifest.json` describes a Gemini 3 Pro single-pass proposer.",
+      "values": [
+        {
+          "quantity": "count of Pro pools whose per-detection meta records a Flash model template default",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Model strings (gemini-3-flash, gemini-3-flash-preview) are version identifiers, excluded per rule 5; the count of affected pools is the claim. Requires the same pro-* prefix grouping as line 2004."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2011,
+          2011
+        ],
+        "section": "E57 Verification"
+      },
+      "claim_text": "traced by a background investigation (2026-06-02) over all 18 pool dirs via each eval's `_metadata.input_files.detections` + `configs/n1-eval-384px-all-buffers.yaml` + the per-study `studies/h11-384-*.yaml`",
+      "values": [
+        {
+          "quantity": "pool directories in the N=1 384 px baseline matrix",
+          "value_verbatim": "18",
+          "value_parsed": 18,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-all-buffers/batch_summary.json",
+        "path": "$.n_conditions"
+      },
+      "method": "read",
+      "notes": "n_conditions is the scalar cell count of the evaluated matrix (len:$.rows would count buffer rows, not cells). The date is excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2013,
+          2013
+        ],
+        "section": "E57 Blast radius"
+      },
+      "claim_text": "**Blast radius**: the four Pro pools (model field) and the two `pro-*-baseline` study YAMLs (output_dir).",
+      "values": [
+        {
+          "quantity": "Pro pools affected by the model-of-record error",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "study YAMLs whose declared output_dir was overridden at runtime",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The two study YAMLs are studies/h11-384-pro-medium-text-baseline.yaml and studies/h11-384-pro-medium-image-baseline.yaml (both present in the tree); the count needs a glob over studies/ rather than a manifest field."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2027,
+          2027
+        ],
+        "section": "E57 Update (2026-06-03) heading"
+      },
+      "claim_text": "billing reconciliation — four \"Pro\" cells were Flash; genuine-Pro re-run; finding changed",
+      "values": [
+        {
+          "quantity": "nominally-Pro cells found to have been dispatched as Flash",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Heading restatement of the line-2004 count; same pro-* prefix grouping over the n1-outstanding-384 passes decides it."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2033,
+          2033
+        ],
+        "section": "E57 Update (2026-06-03), the split (Flash-dispatched cells)"
+      },
+      "claim_text": "- The four **`n1-outstanding-384`** anti-diagonal \"Pro\" cells — `pro-text-high-t0`, `pro-image-high-t0`, `pro-text-medium-t07`, `pro-image-medium-t07` — were **dispatched and billed as `gemini-3-flash-preview`**, NOT Pro.",
+      "values": [
+        {
+          "quantity": "n1-outstanding-384 anti-diagonal cells dispatched and billed as Flash",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Same pro-* prefix grouping as line 2004; the four cell slugs are named in the span and are condition names (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2033,
+          2033
+        ],
+        "section": "E57 Update (2026-06-03), response count behind the confirmation"
+      },
+      "claim_text": "Confirmed by `per_item_metadata.model_version = gemini-3-flash-preview` on every one of their ~3,896 responses",
+      "values": [
+        {
+          "quantity": "responses across the four Flash-dispatched pools carrying model_version = gemini-3-flash-preview (approximate)",
+          "value_verbatim": "~3,896",
+          "value_parsed": 3896,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Decidable by summing n_tiles_processed over the n1-outstanding-384 pro-* passes in the passes manifest (or by re-reading per_item_metadata at source). The approximation marker is kept verbatim per v1.2 amendment 5. The line-number citation into scripts/lib_llm_metadata.py is excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2034,
+          2034
+        ],
+        "section": "E57 Update (2026-06-03), the split (genuinely-Pro cells)"
+      },
+      "claim_text": "- The four **`pv-diag-384`** \"Pro\" cells (`pro-medium-text-baseline`, `pro-medium-image-baseline`, `pro-high-text-n5`, `pro-high-image-n5`) ARE genuinely Pro: `pricing_used.model = gemini-3.1-pro-preview` at $2/$12 rates — the `--model` override took there.",
+      "values": [
+        {
+          "quantity": "pv-diag-384 cells confirmed as genuine Pro",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "Gemini 3.1 Pro input-token price used in the pricing record",
+          "value_verbatim": "$2",
+          "value_parsed": 2,
+          "unit": "USD per million tokens",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        },
+        {
+          "quantity": "Gemini 3.1 Pro output-token price used in the pricing record",
+          "value_verbatim": "$12",
+          "value_parsed": 12,
+          "unit": "USD per million tokens",
+          "kind": "cost",
+          "path": null,
+          "method": "external"
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The $2/$12 rates are vendor pricing (attestation only, per rule 3); the repo does record pricing_used per pass, but the rate card itself is external. Model version strings are excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2038,
+          2038
+        ],
+        "section": "E57 Update (2026-06-03), genuine-Pro re-run scope"
+      },
+      "claim_text": "To complete the genuine Pro 2×2 × modality, the four mis-dispatched corners were re-dispatched as genuine Pro (run `n1-pro-rerun-384`, realtime+flex, byte-audited configs; `outputs/h11/n1-pro-rerun-384/`, committed `1cdf9438`).",
+      "values": [
+        {
+          "quantity": "thinking levels in the genuine-Pro factorial (first factor of the 2x2)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "temperatures in the genuine-Pro factorial (second factor of the 2x2)",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "mis-dispatched corners re-dispatched as genuine Pro",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.decomposition['n1-pro-rerun-384'].conditions",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-conditions.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 2x2 factor levels are design descriptors with no single field recording them (they are readable only as distinct values across the four conditions), so they go to triage; the corner count is a direct len: over the re-run's conditions. Commit hash excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2038,
+          2038
+        ],
+        "section": "E57 Update (2026-06-03), pass count of the re-run"
+      },
+      "claim_text": "All 8 passes verify `model_version = gemini-3.1-pro-preview`.",
+      "values": [
+        {
+          "quantity": "passes in the genuine-Pro re-run verified as Gemini 3.1 Pro",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": "len:$.passes[?(@.run_id=='n1-pro-rerun-384')]"
+      },
+      "method": "read",
+      "notes": "Flagged for triage: the manifest reflects the post-top-up state of the run (the completeness addendum at line 2064 brought medium-thinking cells to n=3), so the current pass count may exceed the 8 asserted at the time of the re-run. Do not read a difference as a document error without checking that timing."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2038,
+          2038
+        ],
+        "section": "E57 Update (2026-06-03), scoring standard"
+      },
+      "claim_text": "Scored at the 14-buffer + MCC standard (`results/paper-eval/n1/384px-14buf-mcc/pro-rerun/`).",
+      "values": [
+        {
+          "quantity": "evaluation buffers in the scoring standard applied to the re-run",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-high-t-0-0/evaluation.json",
+        "path": "len:$.summary.buffers"
+      },
+      "method": "read",
+      "notes": "MCC is a metric name, not a value. The 384px in the path is a directory name (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2044,
+          2044
+        ],
+        "section": "E57 Model-of-record corrections table, n1-outstanding row"
+      },
+      "claim_text": "| `n1-outstanding-384` pro-{text,image}-{high-t0, medium-t07} ×4 | `gemini-3.1-pro` | **`gemini-3-flash-preview`** |",
+      "values": [
+        {
+          "quantity": "n1-outstanding-384 pools whose model-of-record was corrected to Flash",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Both model strings in the row (was gemini-3.1-pro, now gemini-3-flash-preview) are version identifiers, excluded per rule 5; only the pool count is numeric. Same pro-* prefix grouping problem as line 2004."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2045,
+          2045
+        ],
+        "section": "E57 Model-of-record corrections table, n1-pro-rerun row"
+      },
+      "claim_text": "| `n1-pro-rerun-384` pro-{text,image}-{high-t0, medium-t07} ×4 | — (new run) | **`gemini-3.1-pro-preview`** |",
+      "values": [
+        {
+          "quantity": "n1-pro-rerun-384 pools recorded as genuine Pro",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/run-conditions.json",
+        "path": "len:$.decomposition['n1-pro-rerun-384'].conditions"
+      },
+      "method": "read",
+      "notes": "Model version strings excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2047,
+          2047
+        ],
+        "section": "E57 Finding change, pre-E57 board state"
+      },
+      "claim_text": "The pre-E57 N=1 leaderboard ranked the four mis-dispatched Flash cells as \"weak Pro\" (F1 0.42–0.53) and reported a two-member Tier-1 tie (`pro-text-medium-t-0-0` 0.763 + `pro-text-high-t-0-7` 0.745).",
+      "values": [
+        {
+          "quantity": "mis-dispatched Flash cells the pre-E57 board ranked as weak Pro",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "lower bound of the F1 range the pre-E57 board reported for the mis-dispatched cells",
+          "value_verbatim": "0.42",
+          "value_parsed": 0.42,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "upper bound of the F1 range the pre-E57 board reported for the mis-dispatched cells",
+          "value_verbatim": "0.53",
+          "value_parsed": 0.53,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "members of the superseded Tier-1 tie",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "F1@20 m of pro-text-medium-t-0-0 as reported on the superseded board",
+          "value_verbatim": "0.763",
+          "value_parsed": 0.763,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "F1@20 m of pro-text-high-t-0-7 as reported on the superseded board",
+          "value_verbatim": "0.745",
+          "value_parsed": 0.745,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "historical",
+      "notes": "Classified historical: the span describes the board state BEFORE this erratum ('pre-E57 ... ranked ... and reported'), and the following sentence replaces it. 0.763 in particular is explicitly superseded by 0.792 at line 2064 (incomplete run_1). Only the count of mis-dispatched cells is a live fact, so it carries a recompute-script override. Note for triage: 0.745 also survives as a live Tier-2 value in results/run-analyses.json, but here it is quoted as half of the superseded tie, so it is not treated as a live claim."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2047,
+          2047
+        ],
+        "section": "E57 Finding change, genuine-Pro replacement range"
+      },
+      "claim_text": "Replacing them with the genuine-Pro re-run cells (which score 0.59–0.80 at the same corners):",
+      "values": [
+        {
+          "quantity": "lower bound of the F1@20 m range across the four genuine-Pro corner cells",
+          "value_verbatim": "0.59",
+          "value_parsed": 0.59,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "upper bound of the F1@20 m range across the four genuine-Pro corner cells",
+          "value_verbatim": "0.80",
+          "value_parsed": 0.8,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "A range over the four pro-rerun cells' F1@20 m values, so it needs the min/max computed across sibling evaluations (directory anchor). Flagged: the document appears to truncate rather than round its endpoints (the per-corner table immediately below quotes 0.595 and 0.804), so an exact comparison at quoted precision may read as a mismatch when the claim is really a truncated range."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2051,
+          2051
+        ],
+        "section": "E57 Finding change, per-corner F1 table row (Pro text HIGH T=0.0)"
+      },
+      "claim_text": "| Pro text HIGH T=0.0 | 0.494 | **0.804** |",
+      "values": [
+        {
+          "quantity": "F1@20 m of the Flash mis-dispatched cell at the Pro text HIGH T=0.0 corner",
+          "value_verbatim": "0.494",
+          "value_parsed": 0.494,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/pro-text-high-t-0-0/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m of the genuine-Pro cell at the Pro text HIGH T=0.0 corner",
+          "value_verbatim": "0.804",
+          "value_parsed": 0.804,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-high-t-0-0/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-high-t-0-0/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Column mapping confirmed from each evaluation's _metadata.input_files.detections: the results/paper-eval/n1/384px-14buf-mcc/pro-text-high-t-0-0/ cell reads outputs/h11/n1-outstanding-384/... (the Flash mis-dispatch) while the pro-rerun sibling reads outputs/h11/n1-pro-rerun-384/... (genuine Pro). Temperature and thinking tokens in the row label are condition names (rule 5). Per the note at line 2056 the genuine-Pro column is the final n=3 scoring."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2052,
+          2052
+        ],
+        "section": "E57 Finding change, per-corner F1 table row (Pro text MEDIUM T=0.7)"
+      },
+      "claim_text": "| Pro text MEDIUM T=0.7 | 0.416 | 0.755 |",
+      "values": [
+        {
+          "quantity": "F1@20 m of the Flash mis-dispatched cell at the Pro text MEDIUM T=0.7 corner",
+          "value_verbatim": "0.416",
+          "value_parsed": 0.416,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-7/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m of the genuine-Pro cell at the Pro text MEDIUM T=0.7 corner",
+          "value_verbatim": "0.755",
+          "value_parsed": 0.755,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-medium-t-0-7/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-medium-t-0-7/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Column mapping confirmed from each evaluation's _metadata.input_files.detections: the results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-7/ cell reads outputs/h11/n1-outstanding-384/... (the Flash mis-dispatch) while the pro-rerun sibling reads outputs/h11/n1-pro-rerun-384/... (genuine Pro). Temperature and thinking tokens in the row label are condition names (rule 5). Per the note at line 2056 the genuine-Pro column is the final n=3 scoring."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2053,
+          2053
+        ],
+        "section": "E57 Finding change, per-corner F1 table row (Pro image HIGH T=0.0)"
+      },
+      "claim_text": "| Pro image HIGH T=0.0 | 0.528 | 0.666 |",
+      "values": [
+        {
+          "quantity": "F1@20 m of the Flash mis-dispatched cell at the Pro image HIGH T=0.0 corner",
+          "value_verbatim": "0.528",
+          "value_parsed": 0.528,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/pro-image-high-t-0-0/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m of the genuine-Pro cell at the Pro image HIGH T=0.0 corner",
+          "value_verbatim": "0.666",
+          "value_parsed": 0.666,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-high-t-0-0/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-high-t-0-0/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Column mapping confirmed from each evaluation's _metadata.input_files.detections: the results/paper-eval/n1/384px-14buf-mcc/pro-image-high-t-0-0/ cell reads outputs/h11/n1-outstanding-384/... (the Flash mis-dispatch) while the pro-rerun sibling reads outputs/h11/n1-pro-rerun-384/... (genuine Pro). Temperature and thinking tokens in the row label are condition names (rule 5). Per the note at line 2056 the genuine-Pro column is the final n=3 scoring."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2054,
+          2054
+        ],
+        "section": "E57 Finding change, per-corner F1 table row (Pro image MEDIUM T=0.7)"
+      },
+      "claim_text": "| Pro image MEDIUM T=0.7 | 0.452 | 0.595 |",
+      "values": [
+        {
+          "quantity": "F1@20 m of the Flash mis-dispatched cell at the Pro image MEDIUM T=0.7 corner",
+          "value_verbatim": "0.452",
+          "value_parsed": 0.452,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/pro-image-medium-t-0-7/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m of the genuine-Pro cell at the Pro image MEDIUM T=0.7 corner",
+          "value_verbatim": "0.595",
+          "value_parsed": 0.595,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-medium-t-0-7/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-medium-t-0-7/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Column mapping confirmed from each evaluation's _metadata.input_files.detections: the results/paper-eval/n1/384px-14buf-mcc/pro-image-medium-t-0-7/ cell reads outputs/h11/n1-outstanding-384/... (the Flash mis-dispatch) while the pro-rerun sibling reads outputs/h11/n1-pro-rerun-384/... (genuine Pro). Temperature and thinking tokens in the row label are condition names (rule 5). Per the note at line 2056 the genuine-Pro column is the final n=3 scoring."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2056,
+          2057
+        ],
+        "section": "E57 Finding change, n=1 to n=3 movement note"
+      },
+      "claim_text": "(genuine-Pro column shown at the final n=3; the medium-thinking corners moved\n0.764→0.755 / 0.593→0.595 between the n=1 re-run and the n=3 top-up.)",
+      "values": [
+        {
+          "quantity": "passes per cell in the final genuine-Pro scoring",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.summary.n_runs",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m of the genuine-Pro text MEDIUM T=0.7 corner at the n=1 re-run (superseded)",
+          "value_verbatim": "0.764",
+          "value_parsed": 0.764,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20 m of the genuine-Pro text MEDIUM T=0.7 corner at n=3",
+          "value_verbatim": "0.755",
+          "value_parsed": 0.755,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m of the genuine-Pro image MEDIUM T=0.7 corner at the n=1 re-run (superseded)",
+          "value_verbatim": "0.593",
+          "value_parsed": 0.593,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "historical"
+        },
+        {
+          "quantity": "F1@20 m of the genuine-Pro image MEDIUM T=0.7 corner at n=3",
+          "value_verbatim": "0.595",
+          "value_parsed": 0.595,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-image-medium-t-0-7/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "passes per cell in the superseded n=1 re-run scoring",
+          "value_verbatim": "1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "historical"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-medium-t-0-7/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "A before/after pair: the 0.764 and 0.593 (and the n=1 pass count) are the superseded n=1 re-run side and are historical; 0.755, 0.595 and n=3 are the live side. Both n-values are written 'n=3'/'n=1' in the source; the bare numerals are the verbatim slices."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2059,
+          2059
+        ],
+        "section": "E57 Finding change, Flash-over-Pro artefact bullet"
+      },
+      "claim_text": "genuine Pro beats the best Flash cell (0.600) at every text corner and dominates MCC at every image corner.",
+      "values": [
+        {
+          "quantity": "F1@20 m of the best Flash cell on the board",
+          "value_verbatim": "0.600",
+          "value_parsed": 0.6,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/flash-image-minimal-t-0-0/evaluation.json",
+        "path": "$.summary.buffers[?(@.buffer_metres==20)].f1"
+      },
+      "method": "read",
+      "notes": "The best Flash cell is identified as flash-image-minimal-t-0-0 by results/run-analyses.json (n1-baseline-matrix-384 predicted_outcome); the anchor is that cell's evaluation at the 20 m headline buffer. A sibling cell flash-image-minimal-t-0-0-487-tiles also exists — flagged in case triage must disambiguate."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2059,
+          2059
+        ],
+        "section": "E57 Finding change, H6 holds bullet"
+      },
+      "claim_text": "H6 (Pro ≥ Flash) now holds uniformly at the top (top six cells all genuine Pro).",
+      "values": [
+        {
+          "quantity": "top-ranked leaderboard cells that are all genuine Pro",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Needs the ranking in $.ranking read down to the sixth entry and each cell's model-of-record checked, so it is not a single-field lookup. H6 is a hypothesis identifier (rule 5)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2060,
+          2060
+        ],
+        "section": "E57 Finding change, Tier-1 tie set"
+      },
+      "claim_text": "- The Tier-1 `tie_set` is **two genuine-Pro text cells at T=0.0** — `pro-text-high-t-0-0` (0.804) + `pro-text-medium-t-0-0` (0.792) — clear of the two Pro-text T=0.7 cells (Tier 2), a clean T=0.0 > T=0.7 ordering (H7).",
+      "values": [
+        {
+          "quantity": "members of the Tier-1 tie set",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.tie_set",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m of pro-text-high-t-0-0 (genuine Pro re-run)",
+          "value_verbatim": "0.804",
+          "value_parsed": 0.804,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/pro-rerun/pro-text-high-t-0-0/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m of pro-text-medium-t-0-0 (pv-diag, recovered to n=3)",
+          "value_verbatim": "0.792",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "Pro-text T=0.7 cells forming Tier 2",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Tier labels and the T=0.0 / T=0.7 condition tokens are names (rule 5); H7 is a hypothesis identifier. The Tier-2 membership count needs $.tiers inspected (tier index is positional), hence the recompute-script override on the second 'two'."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2060,
+          2060
+        ],
+        "section": "E57 Finding change, tiering statistics"
+      },
+      "claim_text": "129/153 pairs significant → 7 tiers.",
+      "values": [
+        {
+          "quantity": "significant pairwise comparisons after Benjamini-Hochberg correction",
+          "value_verbatim": "129",
+          "value_parsed": 129,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.pairwise[?(@.significant==true)]",
+          "method": "read"
+        },
+        {
+          "quantity": "pairwise comparisons on the board",
+          "value_verbatim": "153",
+          "value_parsed": 153,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.pairwise",
+          "method": "read"
+        },
+        {
+          "quantity": "tiers produced by greedy-clique tiering",
+          "value_verbatim": "7",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.tiers",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/tiering/tiering_20m.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The significant-pair count uses a filtered length over the pairwise array (each entry carries a boolean 'significant'); if the harness cannot evaluate a filtered len:, this value falls to triage as a one-line recount."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2062,
+          2062
+        ],
+        "section": "E57 Finding change, preservation of the Flash cells"
+      },
+      "claim_text": "The four Flash cells are preserved (documented, not deleted) under `n1-outstanding-384` with the corrected model-of-record; they remain available as genuine Flash data at otherwise-untested thinking/temperature corners.",
+      "values": [
+        {
+          "quantity": "Flash cells preserved under n1-outstanding-384 with a corrected model-of-record",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/run-conditions.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Same pro-* prefix grouping as line 2004: the n1-outstanding-384 decomposition also holds flash-* conditions, so a plain len: over its conditions would count the wrong set."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2064,
+          2064
+        ],
+        "section": "E57 Completeness addendum, n=3 top-up"
+      },
+      "claim_text": "Finalising the board, all four medium-thinking Pro cells were brought to n=3.",
+      "values": [
+        {
+          "quantity": "medium-thinking Pro cells brought to n=3",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "passes per cell after the top-up",
+          "value_verbatim": "3",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "$.summary.n_runs",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The four medium-thinking Pro cells span two runs (pv-diag-384 medium-t-0-0 pair and n1-pro-rerun-384 medium-t-0-7 pair), so the count needs a cross-run grouping; the pass count is a field in each cell's evaluation summary."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2064,
+          2064
+        ],
+        "section": "E57 Completeness addendum, run_1 tile failures"
+      },
+      "claim_text": "This surfaced a *separate* data-quality issue isolated to the two **pv-diag medium-t-0-0** cells: their `run_1` batch passes had ~5 % unretried tile failures (25/23 of 487), which had depressed their scores (`pro-text-medium-t-0-0` 0.763, `pro-image-medium-t-0-0` 0.606).",
+      "values": [
+        {
+          "quantity": "pv-diag medium-t-0-0 cells affected by unretried tile failures",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "unretried tile-failure rate in the affected run_1 batch passes (pre-recovery)",
+          "value_verbatim": "~5",
+          "value_parsed": 5,
+          "unit": "%",
+          "kind": "percentage",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "failed tiles in the pro-text-medium-t-0-0 run_1 pass (pre-recovery)",
+          "value_verbatim": "25",
+          "value_parsed": 25,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "failed tiles in the pro-image-medium-t-0-0 run_1 pass (pre-recovery)",
+          "value_verbatim": "23",
+          "value_parsed": 23,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "tile scope of the pv-diag-384 evaluation",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "$.runs[?(@.run_id=='pv-diag-384')].scope.n_test_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "depressed F1@20 m of pro-text-medium-t-0-0 before recovery",
+          "value_verbatim": "0.763",
+          "value_parsed": 0.763,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        },
+        {
+          "quantity": "depressed F1@20 m of pro-image-medium-t-0-0 before recovery",
+          "value_verbatim": "0.606",
+          "value_parsed": 0.606,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/runs-manifest.json",
+        "path": null
+      },
+      "method": "historical",
+      "notes": "Pre-recovery state: the failure counts/rate and the two depressed scores are the 'was' side of the correction completed in the next sentence (recovered to 487/487, scoring 0.792 / 0.655), so they are historical. The 487 scope denominator is live and reads from the runs manifest; the count of affected cells is live but needs a cross-check of the two pv-diag medium-t-0-0 pools."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2064,
+          2064
+        ],
+        "section": "E57 Completeness addendum, recovered coverage and scores"
+      },
+      "claim_text": "Recovered to 487/487 via the standard resume-merge path (genuine Pro, single round each), they score 0.792 / 0.655.",
+      "values": [
+        {
+          "quantity": "tiles scored in the recovered pro-text-medium-t-0-0 cell",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.buffers[?(@.buffer_metres==20)].ci_n_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "tile scope of the pv-diag-384 evaluation (denominator)",
+          "value_verbatim": "487",
+          "value_parsed": 487,
+          "unit": null,
+          "kind": "count",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='pv-diag-384')].scope.n_test_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m of pro-text-medium-t-0-0 after recovery",
+          "value_verbatim": "0.792",
+          "value_parsed": 0.792,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20 m of pro-image-medium-t-0-0 after recovery",
+          "value_verbatim": "0.655",
+          "value_parsed": 0.655,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/paper-eval/n1/384px-14buf-mcc/pro-image-medium-t-0-0/evaluation.json#$.summary.buffers[?(@.buffer_metres==20)].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/paper-eval/n1/384px-14buf-mcc/pro-text-medium-t-0-0/evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The live side of the correction begun in the previous sentence. '487/487' is split into the scored-tile count (from the recovered cell's own evaluation) and the scope denominator (from the runs manifest). Commit hashes in the following sentence are excluded per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2066,
+          2066
+        ],
+        "section": "E57 Verification (model-of-record in the passes manifest)"
+      },
+      "claim_text": "`results/passes-manifest.json` shows the 8 `n1-outstanding-384` pro-* passes as `gemini-3-flash-preview` and the `n1-pro-rerun-384` passes as `gemini-3.1-pro-preview`.",
+      "values": [
+        {
+          "quantity": "n1-outstanding-384 pro-* passes recorded as Flash in the passes manifest",
+          "value_verbatim": "8",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": null
+        }
+      ],
+      "anchor": {
+        "file": "results/passes-manifest.json",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "The pro-* prefix restriction cannot be expressed as an equality filter (the run also holds flash-* pools), so the count needs a filtered pass over $.passes rather than a len: locator. Model version strings excluded per rule 5."
+    }
+  ]
+}

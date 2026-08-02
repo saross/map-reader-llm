@@ -1,0 +1,2446 @@
+{
+  "schema_version": "1.1",
+  "extracted_at": "2026-08-02T00:00:00Z",
+  "source_document": {
+    "file": "docs/methodology/preregistration/protocol-errata.md",
+    "git_blob": "b4fe2c5c45d80b0de9792cf17ba7e467dbf68ea7",
+    "stratum": "hand-written"
+  },
+  "extractor": {
+    "model": "claude-opus-5",
+    "instrument_version": "1.2"
+  },
+  "claims": [
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2078,
+          2078
+        ],
+        "section": "E58 — metadata table, Impact row"
+      },
+      "claim_text": "| Impact | Medium — every PV experiment used a non-registered proposer prompt; measured comparison shows the substitution was conservative under N=1 but superior under production consensus |",
+      "values": [
+        {
+          "quantity": "pass count (N) of the 2026-04-08 comparison between the registered proposer prompt and the substituted detect_brief-text prompt",
+          "value_verbatim": "N=1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The only source the erratum offers for this comparison is the working-notes analysis at docs/notes/working-notes.md:6556-6790 (a markdown document), so per instrument rule 2 no anchor is proposed; triage should chase the chain to the evaluation artefact behind that analysis. Marginal inclusion: 'N=1' could be read as a design descriptor rather than an asserted run parameter."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2082,
+          2083
+        ],
+        "section": "E58 — Register-integrity note"
+      },
+      "claim_text": "a number that collides with the canonical register's E47 (20 m\nbuffer reversion)",
+      "values": [
+        {
+          "quantity": "evaluation buffer radius attributed to the canonical register's erratum E47 (buffer reversion)",
+          "value_verbatim": "20",
+          "value_parsed": 20,
+          "unit": "m",
+          "kind": "physical",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Marginal inclusion (instrument: when in doubt, include and flag). '20 m buffer reversion' is a parenthetical descriptor of a different erratum (E47) rather than a result of this one, but it asserts the study's evaluation buffer radius. The E47 entry lives in this same hand-written document (prose), so no anchor is proposed; the buffer radius itself is recorded in evaluation artefacts as buffer_metres (e.g. results/e47-propose-brief/text-baseline/threshold_sweep.json $.buffer_metres)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2098,
+          2099
+        ],
+        "section": "E58 — Description, prompt-difference sentence"
+      },
+      "claim_text": "The two prompts differ by two lines (title, and the candidate/verifier\nframing sentence).",
+      "values": [
+        {
+          "quantity": "count of prompts compared (registered propose_brief vs substituted detect_brief-text)",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        },
+        {
+          "quantity": "number of lines by which the two prompt files differ",
+          "value_verbatim": "two lines",
+          "value_parsed": 2,
+          "unit": "lines",
+          "kind": "count",
+          "path": null,
+          "method": "recompute-script"
+        }
+      ],
+      "anchor": {
+        "file": "prompts/system-instructions/propose_brief.md",
+        "path": null
+      },
+      "method": "recompute-script",
+      "notes": "Checkable by diffing the two prompt files: prompts/system-instructions/propose_brief.md against prompts/system-instructions/detect_brief-text.md (both present in the working tree). Recorded, not run, per instrument rule 4. The first value ('the two prompts') is a marginal inclusion — a count of the compared artefacts rather than a measured quantity. Scope decision: 'Stage 1 of a two-stage pipeline' (line 2091, quoted from the registered appendix prompt) is architecture naming, not a checkable quantity, and is not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2099,
+          2102
+        ],
+        "section": "E58 — Description, N=1 comparison result"
+      },
+      "claim_text": "A 2026-04-08 N=1 comparison found the registered proposer\nsubstantially better in the single-pass pipeline (F1 0.716 vs 0.573,\nrecall +35 pp — consistent with the framing effect; comparison partly\nconfounded with v2 exclusions).",
+      "values": [
+        {
+          "quantity": "pass count (N) of the 2026-04-08 single-pass comparison",
+          "value_verbatim": "N=1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, registered proposer prompt (propose_brief) in the single-pass pipeline, 2026-04-08 comparison",
+          "value_verbatim": "0.716",
+          "value_parsed": 0.716,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, substituted proposer prompt (detect_brief-text) in the single-pass pipeline, 2026-04-08 comparison",
+          "value_verbatim": "0.573",
+          "value_parsed": 0.573,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "recall difference in favour of the registered proposer prompt, 2026-04-08 comparison",
+          "value_verbatim": "+35",
+          "value_parsed": 35,
+          "unit": "pp",
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Source named by the erratum is docs/notes/working-notes.md:6556-6790 (the comparison table sits near :6611), a markdown document — instrument rule 2 forbids anchoring prose to prose. A later, differently scoped re-evaluation of the same prompt pair exists at results/e47-propose-brief/*/threshold_sweep.json (487-tile, consensus sweep); it is named here for triage, not proposed as the anchor for these N=1 figures."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2102,
+          2104
+        ],
+        "section": "E58 — Description, production-consensus reversal"
+      },
+      "claim_text": "Under production **consensus**, however, the\nrelationship reverses: `detect_brief-text` with 4-of-5 consensus proved\nsuperior",
+      "values": [
+        {
+          "quantity": "consensus vote threshold at which detect_brief-text proved superior in production",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "votes",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "consensus pool size (passes) at which detect_brief-text proved superior in production",
+          "value_verbatim": "5",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Flagged doubt: '4-of-5' may be a condition name (instrument rule 5 excludes numbers inside condition names such as `4of5`), but it is used here as an asserted operating point, so it is extracted. Source is the working-notes assessment at docs/notes/working-notes.md:6786 (markdown), so no anchor is proposed per rule 2."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2123,
+          2123
+        ],
+        "section": "E59 — metadata table, Impact row"
+      },
+      "claim_text": "| Impact | Medium-high — one of three registered H2 conditions has no result and no decision trail |",
+      "values": [
+        {
+          "quantity": "count of registered H2 conditions with no result and no decision trail",
+          "value_verbatim": "one",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of H2 conditions specified in the registration",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The registered H2 condition table (A baseline / B coarse-to-fine / C fine-to-coarse) is at docs/methodology/preregistration/osf/preregistration.md :466-469; per the v1.1 calibration rule a claim about what the registration specifies anchors to the lodged document with a null path. The 'one' is a claim about execution state, not about the registration, and has no located artefact."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2125,
+          2127
+        ],
+        "section": "E59 — Description, registered Condition C specification"
+      },
+      "claim_text": "the registration specifies H2 Condition C — standard\ndetection on 512 px tiles with 5-pass voting; candidates at 2/5–3/5\nagreement re-queried at ~1024 px with a verification prompt",
+      "values": [
+        {
+          "quantity": "tile edge length registered for H2 Condition C Stage 1",
+          "value_verbatim": "512 px",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "number of voting passes registered for H2 Condition C Stage 1",
+          "value_verbatim": "5-pass",
+          "value_parsed": 5,
+          "unit": "passes",
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "lower agreement level at which Condition C candidates are re-queried (votes of pool)",
+          "value_verbatim": "2/5",
+          "value_parsed": 0.4,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "upper agreement level at which Condition C candidates are re-queried (votes of pool)",
+          "value_verbatim": "3/5",
+          "value_parsed": 0.6,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "registered Stage 2 re-query crop size for H2 Condition C (approximate in the source)",
+          "value_verbatim": "~1024 px",
+          "value_parsed": 1024,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registered specification, anchored to the lodged document per the v1.1 calibration rule (path null). The erratum cites osf/preregistration.md:478-482, where the Condition C implementation bullets sit. The approximation marker on '~1024' is preserved verbatim per v1.2 amendment 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2132,
+          2134
+        ],
+        "section": "E59 — Description, forensic reconstruction finding (2)"
+      },
+      "claim_text": "(2) the PI was asked\ntwice on 2026-03-07 to confirm C stays dropped and answered other topics\n(verified against the full raw session archive, 4,201 records, 2026-07-28);",
+      "values": [
+        {
+          "quantity": "number of times the PI was asked to confirm Condition C stays dropped",
+          "value_verbatim": "twice",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "number of records in the raw session archive searched to verify the non-answer",
+          "value_verbatim": "4,201",
+          "value_parsed": 4201,
+          "unit": "records",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The erratum's named source is the forensic reconstruction at reports/d17-inventory/step0-fine-to-coarse-archaeology.md (a markdown document), so no anchor is proposed per instrument rule 2; the underlying raw session archive is outside the artefact hierarchy the harness resolves. Dates in this span are out of C4 scope per rule 5, as is the date interval 'a week *before*' at line 2131."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2142,
+          2142
+        ],
+        "section": "E59 — Protocol impact, execution fraction"
+      },
+      "claim_text": "H2's registered test is two-thirds executed.",
+      "values": [
+        {
+          "quantity": "fraction of H2's three registered conditions that were executed",
+          "value_verbatim": "two-thirds",
+          "value_parsed": 0.667,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "A derived characterisation (Conditions A and B executed, C not) rather than a value sitting in an artefact; no arithmetic expression is proposed because neither operand is a committed scalar. Registration side: docs/methodology/preregistration/osf/preregistration.md:466-469."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2145,
+          2148
+        ],
+        "section": "E59 — Protocol impact, feasibility of running Condition C now"
+      },
+      "claim_text": "Running it now is feasible (~1–1.5 days; Stage 1 exists in\n`outputs/retest/phase3a/`; `extract_candidates.py --padding 512` produces\nthe crops; two open PI decisions — corpus and crop size, the spec giving\nboth 1024 px at `osf:482` and 896 px at appendix `:1144`).",
+      "values": [
+        {
+          "quantity": "estimated elapsed time to run H2 Condition C now, lower bound (approximate in the source)",
+          "value_verbatim": "~1",
+          "value_parsed": 1,
+          "unit": "days",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "estimated elapsed time to run H2 Condition C now, upper bound",
+          "value_verbatim": "1.5",
+          "value_parsed": 1.5,
+          "unit": "days",
+          "kind": "other",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "crop padding argument that would be passed to extract_candidates.py",
+          "value_verbatim": "--padding 512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of open PI decisions blocking a Condition C run",
+          "value_verbatim": "two open PI decisions",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "Stage 2 crop size given by the registration body for Condition C",
+          "value_verbatim": "1024 px",
+          "value_parsed": 1024,
+          "unit": "px",
+          "kind": "parameter",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#:482",
+          "method": "read"
+        },
+        {
+          "quantity": "Stage 2 crop size given by the registered appendix verification prompt",
+          "value_verbatim": "896 px",
+          "value_parsed": 896,
+          "unit": "px",
+          "kind": "parameter",
+          "path": "docs/methodology/preregistration/osf/preregistration-appendix-prompts.md#:1144",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed span. The two crop sizes are registration claims and carry cross-file locators (v1.2 amendment 2) to the lodged documents at the lines the erratum itself cites: osf/preregistration.md:482 ('~1024×1024') and preregistration-appendix-prompts.md:1144 ('~896×896 pixels'). The time estimate is forward-looking and unanchorable; '--padding 512' is a proposed command argument (scripts/extract_candidates.py exists in the working tree) rather than a value already recorded, and the count of open PI decisions is prose in planning/audit-and-completion-plan.md § 8."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2162,
+          2162
+        ],
+        "section": "E60 — metadata table, Impact row"
+      },
+      "claim_text": "| Impact | Low-medium — two registered exploratory cells (T=1.6, T=2.0) not run; the scientific question they target is already answered |",
+      "values": [
+        {
+          "quantity": "count of registered exploratory temperature cells not run",
+          "value_verbatim": "two registered exploratory cells",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "registered exploratory temperature level, lower of the two not run",
+          "value_verbatim": "T=1.6",
+          "value_parsed": 1.6,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "registered exploratory temperature level, upper of the two not run",
+          "value_verbatim": "T=2.0",
+          "value_parsed": 2.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration claim (what the escalation conditional commits to test), anchored to the lodged document per the v1.1 calibration rule; the erratum cites osf/preregistration.md:731."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2165,
+          2168
+        ],
+        "section": "E60 — Description, verbatim registered escalation trigger"
+      },
+      "claim_text": "\"If T=1.3 yields higher F1 than T=1.0 (point estimate, same M/E and H5\ncondition), exploratory testing at T=1.6 and T=2.0 will be conducted at the\noptimal configuration to characterise the upper bound of the\ntemperature-performance curve.\"",
+      "values": [
+        {
+          "quantity": "temperature level whose higher F1 fires the registered escalation trigger",
+          "value_verbatim": "T=1.3",
+          "value_parsed": 1.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "comparator temperature level in the registered escalation trigger",
+          "value_verbatim": "T=1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "registered escalation temperature level, lower",
+          "value_verbatim": "T=1.6",
+          "value_parsed": 1.6,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "registered escalation temperature level, upper",
+          "value_verbatim": "T=2.0",
+          "value_parsed": 2.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Verbatim quotation of the registered conditional at osf/preregistration.md:731; anchored to the lodged document with a null path per the v1.1 calibration rule. 'H5' in the span is a hypothesis identifier and is out of C4 scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2170,
+          2173
+        ],
+        "section": "E60 — Description, registered-corpus evaluation of the trigger"
+      },
+      "claim_text": "**On the corpus the registration specified** (60-tile K=10 holdout), the\ntrigger **never fired**: T=1.0 exceeds T=1.3 on both tracks (image 0.4578 >\n0.4387; text 0.5687 > 0.5258;\n`archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md`).",
+      "values": [
+        {
+          "quantity": "tile count of the holdout corpus the registration specified",
+          "value_verbatim": "60-tile",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#:44",
+          "method": "read"
+        },
+        {
+          "quantity": "number of independent runs (K) registered for each condition",
+          "value_verbatim": "K=10",
+          "value_parsed": 10,
+          "unit": "runs",
+          "kind": "parameter",
+          "path": "docs/methodology/preregistration/osf/preregistration.md#:315",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, image track, T=1.0, 60-tile K=10 holdout",
+          "value_verbatim": "0.4578",
+          "value_parsed": 0.4578,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_condition_metrics['T1.0'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, image track, T=1.3, 60-tile K=10 holdout",
+          "value_verbatim": "0.4387",
+          "value_parsed": 0.4387,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.per_condition_metrics['T1.3'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, text track, T=1.0, 60-tile K=10 holdout",
+          "value_verbatim": "0.5687",
+          "value_parsed": 0.5687,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2b/phase2b-track2-text-analysis.json#$.per_condition_metrics['T1.0'].point_estimate.f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, text track, T=1.3, 60-tile K=10 holdout",
+          "value_verbatim": "0.5258",
+          "value_parsed": 0.5258,
+          "unit": null,
+          "kind": "metric",
+          "path": "archive/outputs-pre-retest-60-tile/phase2b/phase2b-track2-text-analysis.json#$.per_condition_metrics['T1.3'].point_estimate.f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "archive/outputs-pre-retest-60-tile/phase2b/phase2b-track1-image-analysis.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The erratum cites the sibling markdown archive/outputs-pre-retest-60-tile/phase2b/carry-forward-parameters.md, but the four F1 point estimates live in the two analysis JSONs in that same directory, which are the least-writable artefacts (instrument rule 2); text-track values carry cross-file locators (v1.2 amendment 2). The 60-tile K=10 holdout is a registration claim and points at the lodged document (osf/preregistration.md:44 'expanded holdout set (60 tiles)'; :315 'K=10 independent single-pass runs'). Scope decision: the 'T=1.0'/'T=1.3' labels in the comparison clause are condition names per rule 5 and are not extracted as separate values here."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2174,
+          2175
+        ],
+        "section": "E60 — Description, trigger firing on the expanded retest corpus"
+      },
+      "claim_text": "The trigger fired only on the E36-expanded 340-tile retest, and only on the\ntext track (T=1.3 0.544 > T=1.0 0.533, point estimate).",
+      "values": [
+        {
+          "quantity": "tile count of the E36-expanded retest corpus",
+          "value_verbatim": "340-tile",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='retest-phase2b')].scope.n_test_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, text track, T=1.3, 340-tile retest",
+          "value_verbatim": "0.544",
+          "value_parsed": 0.544,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['phase2b-track2-text'].conditions['T1.3'].f1",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, text track, T=1.0, 340-tile retest",
+          "value_verbatim": "0.533",
+          "value_parsed": 0.533,
+          "unit": null,
+          "kind": "metric",
+          "path": "$['phase2b-track2-text'].conditions['T1.0'].f1",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/phase2b-track2-evaluation.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Retest-era text-track F1s sit in the phase2b track-2 evaluation JSON; the corpus size is carried by the runs manifest scope for the retest-phase2b run (test_set_id era-1-340), reached by cross-file locator. Values are quoted at three decimals against four-decimal artefact values — the harness owns rounding tolerance."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2175,
+          2176
+        ],
+        "section": "E60 — Description, why the corpus changed"
+      },
+      "claim_text": "E36 records why the\ncorpus changed: the 60-tile set lacked the power to separate conditions",
+      "values": [
+        {
+          "quantity": "tile count of the registered holdout set that lacked power",
+          "value_verbatim": "60-tile",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Repeat assertion of the registered holdout size (see also the claim at lines 2170-2173); the number functions both as a name ('the 60-tile set') and as an asserted count, which rule 5 keeps in scope. Registration locus: osf/preregistration.md:44 and :234."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2180,
+          2185
+        ],
+        "section": "E60 — Why escalation was judged uninformative"
+      },
+      "claim_text": "**Why escalation was judged uninformative**: the triggering difference is\nstatistically indistinguishable from noise (ΔF1 −0.0357, 95 % CI\n[−0.0908, +0.0137], p = 0.204); the direction **reverses** on the image\ntrack (+0.0210, p = 0.290); the two levels compared are the worst two of\nfive on the text track; and the full five-level curve is monotone declining,\nwith T=0.3 significantly better than both T=1.0 and T=1.3.",
+      "values": [
+        {
+          "quantity": "ΔF1, text track, T=1.0 vs T=1.3, 340-tile retest bootstrap",
+          "value_verbatim": "−0.0357",
+          "value_parsed": -0.0357,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[29].f1_delta",
+          "method": "read"
+        },
+        {
+          "quantity": "confidence level of the reported bootstrap interval",
+          "value_verbatim": "95",
+          "value_parsed": 95,
+          "unit": "%",
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "ΔF1 bootstrap CI lower bound, text track, T=1.0 vs T=1.3",
+          "value_verbatim": "−0.0908",
+          "value_parsed": -0.0908,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[29].f1_ci_lower",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1 bootstrap CI upper bound, text track, T=1.0 vs T=1.3",
+          "value_verbatim": "+0.0137",
+          "value_parsed": 0.0137,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[29].f1_ci_upper",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap p-value, text track, T=1.0 vs T=1.3",
+          "value_verbatim": "0.204",
+          "value_parsed": 0.204,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[29].f1_p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1, image track, T=1.0 vs T=1.3 (direction reverses)",
+          "value_verbatim": "+0.0210",
+          "value_parsed": 0.021,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[19].f1_delta",
+          "method": "read"
+        },
+        {
+          "quantity": "bootstrap p-value, image track, T=1.0 vs T=1.3",
+          "value_verbatim": "0.290",
+          "value_parsed": 0.29,
+          "unit": null,
+          "kind": "statistic",
+          "path": "$.comparisons[19].f1_p_value",
+          "method": "read"
+        },
+        {
+          "quantity": "count of temperature levels involved in the triggering comparison",
+          "value_verbatim": "two levels",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of temperature levels on the text track",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "results/retest/phase2b-track2-evaluation.json#len:$['phase2b-track2-text'].conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "count of levels in the temperature curve described as monotone declining",
+          "value_verbatim": "five-level",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": "results/retest/phase2b-track2-evaluation.json#len:$['phase2b-track2-text'].conditions",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/retest/pairwise-bootstrap-comparisons.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Bootstrap comparisons are addressed by array index in results/retest/pairwise-bootstrap-comparisons.json: index 29 is 'Phase 2b T2: H7 Temperature (Text)' T1.0 vs T1.3, index 19 is the image-track counterpart ('Phase 2b T1: H7 Temperature (Image)' T1.0 vs T1.3). The 95 % level is not recorded as a field in that file (metadata carries bootstrap_iterations 1000 and random_seed 42 only), so it is left unanchored. The final clause's significance assertion (T=0.3 better than T=1.0 and T=1.3) would be checked at indices 25 and 26; it carries no numeric value of its own, and the T-labels are condition names per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2191,
+          2191
+        ],
+        "section": "E60 — Resolution"
+      },
+      "claim_text": "T=1.6 / T=2.0 escalation is **not run**",
+      "values": [
+        {
+          "quantity": "registered escalation temperature level, lower (recorded as not run)",
+          "value_verbatim": "T=1.6",
+          "value_parsed": 1.6,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "registered escalation temperature level, upper (recorded as not run)",
+          "value_verbatim": "T=2.0",
+          "value_parsed": 2.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Repeat of the registered escalation levels (see lines 2162 and 2165-2168); registration locus osf/preregistration.md:731. The disposition itself is recorded in planning/audit-and-completion-plan.md § 6.1 (prose)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2196,
+          2197
+        ],
+        "section": "E60 — Blast radius"
+      },
+      "claim_text": "**Blast radius**: none on reported results (no existing number changes);\nthe deviations table in the paper gains one disclosure row.",
+      "values": [
+        {
+          "quantity": "count of disclosure rows the paper's deviations table gains",
+          "value_verbatim": "one disclosure row",
+          "value_parsed": 1,
+          "unit": "rows",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Forward-looking claim about a paper artefact that does not yet exist in the repository in a countable form; flagged rather than anchored."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2215,
+          2216
+        ],
+        "section": "E61 — The ambiguity, registered H4b trigger"
+      },
+      "claim_text": "the registered H4b trigger reads \"H4 main effect is\nsignificant (FDR-corrected p < 0.05)",
+      "values": [
+        {
+          "quantity": "FDR-corrected significance threshold in the registered H4b trigger",
+          "value_verbatim": "0.05",
+          "value_parsed": 0.05,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration claim quoted verbatim; the erratum cites osf/preregistration.md:1100, where the H4b Trigger line reads 'H4 main effect is significant (FDR-corrected p < 0.05)'. Anchored to the lodged document with a null path per the v1.1 calibration rule."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2219,
+          2221
+        ],
+        "section": "E61 — The ambiguity, v4.7 statistical reconciliation"
+      },
+      "claim_text": "replaced per-hypothesis ANOVA with pairwise bootstrap\ncomparisons and two named planned contrasts (canonical-first vs\ncanonical-last; optimal vs random)",
+      "values": [
+        {
+          "quantity": "count of named planned contrasts in the registered H4 analysis",
+          "value_verbatim": "two",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration claim about the registered analysis plan; the erratum cites osf/preregistration.md:570-574 for the planned contrasts. Version strings ('v4.7') are out of C4 scope per rule 5. Scope decision: the earlier 'Two readings were defensible' (line 2222) enumerates interpretations of the trigger, not a study quantity, and is not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2234,
+          2236
+        ],
+        "section": "E61 — Consequence under the adopted reading"
+      },
+      "claim_text": "**Consequence under the adopted reading**: Phase 2e's directional contrast\nis null (canonical-last 0.609 vs canonical-first 0.579; 0/6 comparisons\nFDR-significant)",
+      "values": [
+        {
+          "quantity": "F1, Phase 2e canonical-last condition",
+          "value_verbatim": "0.609",
+          "value_parsed": 0.609,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "F1, Phase 2e canonical-first condition",
+          "value_verbatim": "0.579",
+          "value_parsed": 0.579,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of FDR-significant comparisons in the Phase 2e ordering family",
+          "value_verbatim": "0/6",
+          "value_parsed": 0,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of comparisons in the Phase 2e ordering family",
+          "value_verbatim": "6 comparisons",
+          "value_parsed": 6,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "The erratum's Files row names results/phase2e-carry-forward-parameters.md, whose Track 1 table (lines 35-42) carries canonical-last 0.609, canonical-first 0.579 and 'FDR-significant comparisons: 0/6' — a markdown document, so no anchor is proposed per instrument rule 2. Note for triage: the retest-era JSON results/retest/phase2e-evaluation.json holds different values on a different corpus (era-1-340) and is NOT the source of these Era-1 figures."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2239,
+          2240
+        ],
+        "section": "E61 — Consequence, family-level correction"
+      },
+      "claim_text": "is not conditioned on seeing which contrast\nsurvives the seven-member family correction.",
+      "values": [
+        {
+          "quantity": "size of the registered confirmatory-hypothesis family for the BH-FDR correction",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": null,
+          "kind": "count",
+          "path": "$.family_size",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/family-fdr/family_fdr.json",
+        "path": "$.family_size"
+      },
+      "method": "read",
+      "notes": "results/family-fdr/family_fdr.json records family_size for the registered family-level Benjamini-Hochberg correction over the executable confirmatory hypotheses."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2242,
+          2244
+        ],
+        "section": "E61 — Disposition, H4b cells to be run"
+      },
+      "claim_text": "H4b's two cells (HP-first vs\nHN-first within the hard block) will nevertheless be run as **unregistered\nexploratory**",
+      "values": [
+        {
+          "quantity": "count of H4b cells to be run as unregistered exploratory",
+          "value_verbatim": "two cells",
+          "value_parsed": 2,
+          "unit": "cells",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "A planned (not yet executed) run; the disposition is recorded in prose at planning/audit-and-completion-plan.md § 6.3, so no artefact anchor exists yet."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2245,
+          2247
+        ],
+        "section": "E61 — Disposition, corpus choice"
+      },
+      "claim_text": "over the **full gold-standard corpus rather than the registered\n60-tile holdout**, because the 60-tile set lacks the power to separate\nconditions",
+      "values": [
+        {
+          "quantity": "tile count of the registered holdout the H4b run will not use",
+          "value_verbatim": "60-tile holdout",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "tile count of the registered holdout that lacks power to separate conditions",
+          "value_verbatim": "60-tile set",
+          "value_parsed": 60,
+          "unit": "tiles",
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Two assertions of the registered 60-tile holdout size in one span; anchored to the lodged document per the v1.1 calibration rule (osf/preregistration.md:44, :234)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2247,
+          2248
+        ],
+        "section": "E61 — Disposition, instrument choice"
+      },
+      "claim_text": "Instrument choice (Era-1 512 px/340-tile vs\nEra-2 384 px/487-tile) and cost are settled at run-authoring time",
+      "values": [
+        {
+          "quantity": "tile edge length, Era-1 instrument",
+          "value_verbatim": "512 px",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='retest-phase2e')].tile_size_px",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, Era-1 corpus",
+          "value_verbatim": "340-tile",
+          "value_parsed": 340,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='retest-phase2e')].scope.n_test_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length, Era-2 instrument",
+          "value_verbatim": "384 px",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='pv-diag-384')].tile_size_px",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count, Era-2 corpus",
+          "value_verbatim": "487-tile",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='pv-diag-384')].scope.n_test_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/runs-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Era descriptors used as both names and asserted facts, which rule 5 keeps in scope. Anchored to the runs manifest via representative runs on each scope (retest-phase2e carries test_set_id era-1-340 at 512 px, the Phase 2e context of this erratum; pv-diag-384 carries era-2-487 at 384 px)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2258,
+          2258
+        ],
+        "section": "E62 — heading"
+      },
+      "claim_text": "### E62: Three unregistered proposer-verifier extension studies (`flash35-pv-2x2`, `pv-diag-256`, `verifier-robustness`) and four unregistered verifier-parameter levels — additional exploratory extensions of the registered PV contingency",
+      "values": [
+        {
+          "quantity": "count of unregistered proposer-verifier extension studies disclosed",
+          "value_verbatim": "Three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of unregistered verifier-parameter levels disclosed in this entry",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Both counts are partitions of the census's 13 UNLICENSED factor=level pairs in reports/verification/c2-census/licence-census.json (which enumerates pairs prefixed family=, verifier_ and proposer_pool=), but neither is a scalar the harness can resolve at a single path, so no anchor is proposed. The fifth verifier-parameter level is split to erratum E69 per the same file's resolution objects. '256' in `pv-diag-256` is a run name and out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2266,
+          2266
+        ],
+        "section": "E62 — metadata table, Impact row"
+      },
+      "claim_text": "| Impact | Low. No registered hypothesis test is conditioned on these runs; no reported registered result changes. Together with E69 and E40's 2026-07-30 clarification, the disclosure closes the last thirteen unlicensed factor=level pairs in the execution→errata inverse census |",
+      "values": [
+        {
+          "quantity": "count of unlicensed factor=level pairs closed by this disclosure",
+          "value_verbatim": "thirteen",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.UNLICENSED",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": "$.summary.UNLICENSED"
+      },
+      "method": "read",
+      "notes": "The census summary records UNLICENSED = 13 (and UNLICENSED_resolved_2026-07-30 = 13)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2273,
+          2274
+        ],
+        "section": "E62 — Framing"
+      },
+      "claim_text": "The three families recorded here are **additional,\nunregistered, serendipitous extensions of that same programme**",
+      "values": [
+        {
+          "quantity": "count of unregistered extension study families recorded in this erratum",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Repeat of the heading count. The three families each have a decomposition entry in results/run-conditions.json (flash35-pv-2x2, pv-diag-256, verifier-robustness) and a family= pair in reports/verification/c2-census/licence-census.json, but the count itself is not a resolvable scalar."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2280,
+          2282
+        ],
+        "section": "E62 — How they surfaced, census inputs"
+      },
+      "claim_text": "the Phase 1 verification campaign's execution→errata inverse\ncensus triaged all 213 observed factor=level pairs against the 702-obligation\ncommitment ledger and all 61 existing errata.",
+      "values": [
+        {
+          "quantity": "count of observed factor=level pairs triaged by the census",
+          "value_verbatim": "213",
+          "value_parsed": 213,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.pairs",
+          "method": "read"
+        },
+        {
+          "quantity": "count of obligations in the commitment ledger",
+          "value_verbatim": "702",
+          "value_parsed": 702,
+          "unit": null,
+          "kind": "count",
+          "path": "results/commitments.json#len:$.commitments",
+          "method": "read"
+        },
+        {
+          "quantity": "count of existing errata triaged against",
+          "value_verbatim": "61",
+          "value_parsed": 61,
+          "unit": null,
+          "kind": "count",
+          "path": "reports/verification/c2-census/errata-licence-register.json#len:$.entries",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The pair count is the census summary scalar; the ledger and errata counts are array lengths in the census's own declared inputs (see $.inputs), reached by cross-file locator per v1.2 amendment 2 with the len: spelling of amendment 4."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2282,
+          2283
+        ],
+        "section": "E62 — How they surfaced, licence verdicts"
+      },
+      "claim_text": "200 pairs were licensed (43 by the\nregistration, 14 by an erratum, 143 by both); 13 were UNLICENSED",
+      "values": [
+        {
+          "quantity": "count of licensed factor=level pairs",
+          "value_verbatim": "200",
+          "value_parsed": 200,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "arithmetic",
+          "expression": "a + b + c",
+          "operands": [
+            {
+              "name": "a",
+              "file": "reports/verification/c2-census/licence-census.json",
+              "path": "$.summary.registration"
+            },
+            {
+              "name": "b",
+              "file": "reports/verification/c2-census/licence-census.json",
+              "path": "$.summary.erratum"
+            },
+            {
+              "name": "c",
+              "file": "reports/verification/c2-census/licence-census.json",
+              "path": "$.summary['registration+erratum']"
+            }
+          ]
+        },
+        {
+          "quantity": "count of pairs licensed by the registration alone",
+          "value_verbatim": "43",
+          "value_parsed": 43,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.registration",
+          "method": "read"
+        },
+        {
+          "quantity": "count of pairs licensed by an erratum alone",
+          "value_verbatim": "14",
+          "value_parsed": 14,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.erratum",
+          "method": "read"
+        },
+        {
+          "quantity": "count of pairs licensed by both registration and erratum",
+          "value_verbatim": "143",
+          "value_parsed": 143,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary['registration+erratum']",
+          "method": "read"
+        },
+        {
+          "quantity": "count of unlicensed pairs",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.UNLICENSED",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The census summary has no 'licensed' total, so 200 is derived from its three licensed categories; per v1.2 amendment 1 the derivation is carried on the derived value only, and each operand value is an independent read with its own path so the components are never compared against their own sum."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2284,
+          2286
+        ],
+        "section": "E62 — How they surfaced, what the 13 reduce to"
+      },
+      "claim_text": "Those 13 reduce to\nthree study families, five verifier-parameter levels, and five derivative\n`proposer_pool` slugs that are licensed at run level and carry no independent content.",
+      "values": [
+        {
+          "quantity": "count of unlicensed pairs being reduced",
+          "value_verbatim": "13",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.UNLICENSED",
+          "method": "read"
+        },
+        {
+          "quantity": "count of study families among the unlicensed pairs",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of verifier-parameter levels among the unlicensed pairs",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of derivative proposer_pool slugs among the unlicensed pairs",
+          "value_verbatim": "five derivative",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The three sub-counts partition the 13 UNLICENSED entries in $.pairs by prefix (family=, verifier_, proposer_pool=); no single locator resolves them, so they are flagged for triage rather than anchored. Deliberately NOT expressed as arithmetic over the 13, to avoid comparing components against their own total."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2287,
+          2293
+        ],
+        "section": "E62 — How they surfaced, disposition of the five levels"
+      },
+      "claim_text": "Disposition of the five levels (PI ruling 2026-07-30,\n`reports/verification/phase2-rulings-2026-07-30.md` § 1a): four are disclosed in this\nentry; the fifth (`verifier_thinking_level=medium`, 13 sites) splits — its seven\nPro-verifier sites are licensed by E40's endpoint-constraint rationale (dated\nclarification block at E40), and its six Flash-verifier sites, plus the one\n`pv-diag-384` Flash HIGH-verifier site, are the deliberate exploration disclosed in\n**E69**.",
+      "values": [
+        {
+          "quantity": "count of unlicensed verifier-parameter levels being dispositioned",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of those levels disclosed in this erratum",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "observed sites for verifier_thinking_level=medium",
+          "value_verbatim": "13 sites",
+          "value_parsed": 13,
+          "unit": "sites",
+          "kind": "count",
+          "path": "$.pairs[?(@.pair=='verifier_thinking_level=medium')].n_sites",
+          "method": "read"
+        },
+        {
+          "quantity": "Pro-verifier sites among the medium-thinking sites, licensed by E40",
+          "value_verbatim": "seven",
+          "value_parsed": 7,
+          "unit": "sites",
+          "kind": "count",
+          "path": "$.pairs[?(@.pair=='verifier_thinking_level=medium')].resolution.detail",
+          "method": "read"
+        },
+        {
+          "quantity": "Flash-verifier sites among the medium-thinking sites, disclosed in E69",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": "sites",
+          "kind": "count",
+          "path": "$.pairs[?(@.pair=='verifier_thinking_level=medium')].resolution.detail",
+          "method": "read"
+        },
+        {
+          "quantity": "pv-diag-384 Flash HIGH-verifier sites disclosed in E69",
+          "value_verbatim": "the one",
+          "value_parsed": 1,
+          "unit": "sites",
+          "kind": "count",
+          "path": "$.pairs[?(@.pair=='verifier_thinking_level=high')].resolution.detail",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The 13 medium-thinking sites are a census scalar (n_sites). The 7/6 split and the 1 pv-diag-384 HIGH site are stated inside the prose 'resolution.detail' strings of the corresponding pair records, so those locators resolve to strings and need a containment check rather than a numeric comparison. Per v1.2 amendment 1 the split components are independent reads, not arithmetic over 13."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2299,
+          2299
+        ],
+        "section": "E62 — The three families table, flash35-pv-2x2 row"
+      },
+      "claim_text": "| `flash35-pv-2x2` | `runs-manifest.json`: \"Model-role 2x2x2: is Flash 3.5 a better bare proposer, PV proposer, or verifier than Flash 3 at the minimal operating point? (The S110 parking note: bare proposer was the only angle a stronger model might win.)\" | 1 × `consensus`, 3 × `proposer-verifier` (4 citable conditions) | era-2-487 (487 tiles, 384 px, 4-map gold standard, curator ground truth) |",
+      "values": [
+        {
+          "quantity": "factorial design descriptor quoted from the run manifest purpose",
+          "value_verbatim": "2x2x2",
+          "value_parsed": null,
+          "unit": null,
+          "kind": "other",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='flash35-pv-2x2')].purpose",
+          "method": "read"
+        },
+        {
+          "quantity": "count of consensus conditions executed in flash35-pv-2x2",
+          "value_verbatim": "1 × `consensus`",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.decomposition['flash35-pv-2x2'].conditions[?(@.architecture=='consensus')]",
+          "method": "read"
+        },
+        {
+          "quantity": "count of proposer-verifier conditions executed in flash35-pv-2x2",
+          "value_verbatim": "3 × `proposer-verifier`",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.decomposition['flash35-pv-2x2'].conditions[?(@.architecture=='proposer-verifier')]",
+          "method": "read"
+        },
+        {
+          "quantity": "count of citable conditions in flash35-pv-2x2",
+          "value_verbatim": "4 citable",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.decomposition['flash35-pv-2x2'].conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count of the era-2-487 evaluation scope",
+          "value_verbatim": "487 tiles",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='flash35-pv-2x2')].scope.n_test_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length of the flash35-pv-2x2 run",
+          "value_verbatim": "384 px",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='flash35-pv-2x2')].tile_size_px",
+          "method": "read"
+        },
+        {
+          "quantity": "count of maps in the gold-standard corpus used",
+          "value_verbatim": "4-map",
+          "value_parsed": 4,
+          "unit": "maps",
+          "kind": "count",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='flash35-pv-2x2')].corpus",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-conditions.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row (instrument rule 6). Architecture counts are filter-length reads over the decomposition the erratum itself names; scope figures come from the runs manifest by cross-file locator. The '2x2x2' design descriptor is left unparsed (value_parsed null) because it is a shape, not a single quantity, and the corpus value resolves to the string '4-map-gs', so it needs a containment check. Model names ('Flash 3.5', 'Flash 3') and the session number S110 are out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2300,
+          2300
+        ],
+        "section": "E62 — The three families table, pv-diag-256 row"
+      },
+      "claim_text": "| `pv-diag-256` | `runs-manifest.json` `purpose` was **`null`** at census time; populated in this landing wave per the PI ruling of 2026-07-30 (§ 1b). `run-conditions.json` `_note`: \"256px H11 tile-size diagnostic (px256-1032 scope, 1032 tiles, curator GT) … 256px is the small-tile anchor for the tile-size comparison: F1@20m orders 256 < 512 < 384 (0.46 / 0.69 / 0.79).\" | 1 × `single-pass`, 1 × `consensus`, 1 × `proposer-verifier` (3 citable conditions) | px256-1032 (1 032 tiles, 256 px, 4-map gold standard, curator ground truth) |",
+      "values": [
+        {
+          "quantity": "tile count of the px256-1032 scope, quoted from the run-conditions note",
+          "value_verbatim": "1032 tiles",
+          "value_parsed": 1032,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.decomposition['pv-diag-256']._note",
+          "method": "read"
+        },
+        {
+          "quantity": "small-tile level of the tile-size comparison",
+          "value_verbatim": "256 <",
+          "value_parsed": 256,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.decomposition['pv-diag-256']._note",
+          "method": "read"
+        },
+        {
+          "quantity": "middle level of the tile-size comparison",
+          "value_verbatim": "512 <",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.decomposition['pv-diag-256']._note",
+          "method": "read"
+        },
+        {
+          "quantity": "large level of the tile-size comparison",
+          "value_verbatim": "384 (",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.decomposition['pv-diag-256']._note",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20m at 256 px",
+          "value_verbatim": "0.46",
+          "value_parsed": 0.46,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.decomposition['pv-diag-256']._note",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20m at 512 px",
+          "value_verbatim": "0.69",
+          "value_parsed": 0.69,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.decomposition['pv-diag-256']._note",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20m at 384 px",
+          "value_verbatim": "0.79",
+          "value_parsed": 0.79,
+          "unit": null,
+          "kind": "metric",
+          "path": "$.decomposition['pv-diag-256']._note",
+          "method": "read"
+        },
+        {
+          "quantity": "count of single-pass conditions executed in pv-diag-256",
+          "value_verbatim": "1 × `single-pass`",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.decomposition['pv-diag-256'].conditions[?(@.architecture=='single-pass')]",
+          "method": "read"
+        },
+        {
+          "quantity": "count of consensus conditions executed in pv-diag-256",
+          "value_verbatim": "1 × `consensus`",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.decomposition['pv-diag-256'].conditions[?(@.architecture=='consensus')]",
+          "method": "read"
+        },
+        {
+          "quantity": "count of proposer-verifier conditions executed in pv-diag-256",
+          "value_verbatim": "1 × `proposer-verifier`",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.decomposition['pv-diag-256'].conditions[?(@.architecture=='proposer-verifier')]",
+          "method": "read"
+        },
+        {
+          "quantity": "count of citable conditions in pv-diag-256",
+          "value_verbatim": "3 citable conditions",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.decomposition['pv-diag-256'].conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count of the px256-1032 evaluation scope",
+          "value_verbatim": "1 032",
+          "value_parsed": 1032,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='pv-diag-256')].scope.n_test_tiles",
+          "method": "read"
+        },
+        {
+          "quantity": "tile edge length of the pv-diag-256 run",
+          "value_verbatim": "256 px",
+          "value_parsed": 256,
+          "unit": "px",
+          "kind": "physical",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='pv-diag-256')].tile_size_px",
+          "method": "read"
+        },
+        {
+          "quantity": "count of maps in the gold-standard corpus used",
+          "value_verbatim": "4-map",
+          "value_parsed": 4,
+          "unit": "maps",
+          "kind": "count",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='pv-diag-256')].corpus",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-conditions.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row (instrument rule 6). The Purpose cell quotes the run-conditions `_note` string, so the quoted tile count, the tile-size ordering and the three F1@20m figures all resolve inside that one string field and need containment checks; the Scope cell's figures resolve as scalars in the runs manifest. The tile sizes in '256 < 512 < 384' are the compared levels of the tile-size curve, extracted as physical values rather than treated as names. Verbatim markers were widened where a bare numeral would be ambiguous within the row. The run-manifest `purpose` field was null at census time per the row's own text."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2301,
+          2301
+        ],
+        "section": "E62 — The three families table, verifier-robustness row"
+      },
+      "claim_text": "| `verifier-robustness` | `runs-manifest.json`: \"Verifier-robustness programme: determinism (n=1 vindicated), proposer-input band, temperature/thinking matrix, model roles, compute allocation, operational maximum, pass-budget Pareto. Meta-rule: on a within-noise tie, take the cheaper config.\" | 8 × `proposer-verifier` (8 citable conditions) | era-2-487, with one condition scope-overridden to px256-1032 |",
+      "values": [
+        {
+          "quantity": "pass count at which verifier determinism was vindicated, quoted from the run manifest purpose",
+          "value_verbatim": "n=1",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "parameter",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='verifier-robustness')].purpose",
+          "method": "read"
+        },
+        {
+          "quantity": "count of proposer-verifier conditions executed in verifier-robustness",
+          "value_verbatim": "8 × `proposer-verifier`",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.decomposition['verifier-robustness'].conditions[?(@.architecture=='proposer-verifier')]",
+          "method": "read"
+        },
+        {
+          "quantity": "count of citable conditions in verifier-robustness",
+          "value_verbatim": "8 citable conditions",
+          "value_parsed": 8,
+          "unit": null,
+          "kind": "count",
+          "path": "len:$.decomposition['verifier-robustness'].conditions",
+          "method": "read"
+        },
+        {
+          "quantity": "count of verifier-robustness conditions whose evaluation scope is overridden to px256-1032",
+          "value_verbatim": "one condition",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-conditions.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row (instrument rule 6). The scope-override count has no single-scalar locator; the field that carries it is `scope_override` on each condition in results/conditions-manifest.json (and `source_run` in the run-conditions decomposition), which triage can count directly."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2304,
+          2305
+        ],
+        "section": "E62 — Architectures paragraph"
+      },
+      "claim_text": "Every condition in all three families is either a PV\ncondition or a proposer-side baseline built to be compared against one",
+      "values": [
+        {
+          "quantity": "count of unregistered extension study families",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Third repeat of the family count (see the heading and the Framing paragraph); retained for full enumeration. 'compared against one' is a pronoun, not a count, and is not extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2312,
+          2313
+        ],
+        "section": "E62 — Why each is an extension, item 1 (registered model set)"
+      },
+      "claim_text": "lodged model set is closed at four values — \"| Model | gemini-3-flash, gemini-3-pro,\n   claude-4.5-sonnet, gpt-5.2-thinking | H6, H14 | Overrides config file value |\"",
+      "values": [
+        {
+          "quantity": "count of model values in the registered model set",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration-appendix-prompts.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration claim, anchored to the lodged appendix per the v1.1 calibration rule; the quoted runtime-parameter row is CMT-0591 at preregistration-appendix-prompts.md:1667 (results/commitments.json records that source). Model names and generation labels ('3.5-generation') are out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2321,
+          2323
+        ],
+        "section": "E62 — Why each is an extension, item 1 (headline_rationale quote)"
+      },
+      "claim_text": "(bare-proposer numerical tie 0.6196 vs 0.6204; PV proposer -0.0355, p=0.035 targeted\n   tile-swap — the one resolved role gap; verifier -0.012..-0.015, within-noise ties, at\n   3x the price)",
+      "values": [
+        {
+          "quantity": "F1, bare proposer, Flash 3.5 (numerical tie)",
+          "value_verbatim": "0.6196",
+          "value_parsed": 0.6196,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='flash35-pv-2x2')].headline_rationale",
+          "method": "read"
+        },
+        {
+          "quantity": "F1, bare proposer, Flash 3 (numerical tie)",
+          "value_verbatim": "0.6204",
+          "value_parsed": 0.6204,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='flash35-pv-2x2')].headline_rationale",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1, Flash 3.5 as PV proposer",
+          "value_verbatim": "-0.0355",
+          "value_parsed": -0.0355,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='flash35-pv-2x2')].headline_rationale",
+          "method": "read"
+        },
+        {
+          "quantity": "permutation p-value, Flash 3.5 as PV proposer (targeted tile-swap)",
+          "value_verbatim": "p=0.035",
+          "value_parsed": 0.035,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='flash35-pv-2x2')].headline_rationale",
+          "method": "read"
+        },
+        {
+          "quantity": "count of resolved role gaps in the model-role comparison",
+          "value_verbatim": "one resolved",
+          "value_parsed": 1,
+          "unit": null,
+          "kind": "count",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='flash35-pv-2x2')].headline_rationale",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1, Flash 3.5 as verifier, lower magnitude of stated range",
+          "value_verbatim": "-0.012",
+          "value_parsed": -0.012,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='flash35-pv-2x2')].headline_rationale",
+          "method": "read"
+        },
+        {
+          "quantity": "ΔF1, Flash 3.5 as verifier, upper magnitude of stated range",
+          "value_verbatim": "-0.015",
+          "value_parsed": -0.015,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='flash35-pv-2x2')].headline_rationale",
+          "method": "read"
+        },
+        {
+          "quantity": "price multiple of the Flash 3.5 verifier relative to Flash 3",
+          "value_verbatim": "3x",
+          "value_parsed": 3,
+          "unit": "×",
+          "kind": "ratio",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='flash35-pv-2x2')].headline_rationale",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/runs-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The erratum quotes results/runs-manifest.json `headline_rationale` verbatim, so every value in the span resolves inside that one string field and needs a containment check rather than a numeric comparison. The manifest string itself names results/flash35-2x2/flash35_permutations.json as the underlying permutation artefact, which triage can use to reach the statistics mechanically."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2325,
+          2326
+        ],
+        "section": "E62 — Why each is an extension, item 2 (registered H11 conditions)"
+      },
+      "claim_text": "Registered H11 has exactly two conditions — \"| A | 512×512 | 1× (baseline) | 1× |\n   Lower |\" (CMT-0310) and \"| B | 384×384 | 0.56× | ~1.8× | Higher |\" (CMT-0311).",
+      "values": [
+        {
+          "quantity": "count of registered H11 tile-size conditions",
+          "value_verbatim": "two conditions",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "tile size, registered H11 condition A (baseline)",
+          "value_verbatim": "512×512",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "relative cost of registered H11 condition A (baseline)",
+          "value_verbatim": "1× (baseline)",
+          "value_parsed": 1,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "relative API-call count of registered H11 condition A",
+          "value_verbatim": "1× |",
+          "value_parsed": 1,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "tile size, registered H11 condition B",
+          "value_verbatim": "384×384",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "relative cost of registered H11 condition B",
+          "value_verbatim": "0.56×",
+          "value_parsed": 0.56,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "relative API-call count of registered H11 condition B (approximate in the source)",
+          "value_verbatim": "~1.8×",
+          "value_parsed": 1.8,
+          "unit": "×",
+          "kind": "ratio",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration claim: the two quoted rows are CMT-0310 and CMT-0311 at preregistration.md:958-959 (per results/commitments.json source records), anchored to the lodged document with a null path per the v1.1 calibration rule. The '×' multipliers are relative-cost and relative-API-call columns of the registered H11 condition table; approximation marker preserved on '~1.8×' per v1.2 amendment 5. Scope decision: 'at a third level' (line 2324) is an ordinal label, not a checkable quantity."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2328,
+          2329
+        ],
+        "section": "E62 — Why each is an extension, item 2 (registered 256 px pilot)"
+      },
+      "claim_text": "\"Pilot testing at 256px confirmed high recall (0.90) but very low precision (0.10) at\n   2/5 consensus voting threshold, suggesting smaller tiles may over-detect\"",
+      "values": [
+        {
+          "quantity": "tile edge length of the pilot discussed as prior context in the registration",
+          "value_verbatim": "256px",
+          "value_parsed": 256,
+          "unit": "px",
+          "kind": "physical",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "recall reported for the 256 px pilot in the registration",
+          "value_verbatim": "0.90",
+          "value_parsed": 0.9,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "precision reported for the 256 px pilot in the registration",
+          "value_verbatim": "0.10",
+          "value_parsed": 0.1,
+          "unit": null,
+          "kind": "metric",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "consensus voting threshold of the 256 px pilot (votes of pool)",
+          "value_verbatim": "2/5",
+          "value_parsed": 0.4,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Verbatim quotation of registered pilot context at osf/preregistration.md:963; anchored to the lodged document per the v1.1 calibration rule. The surrounding mentions of '256 px' at lines 2327 and 2330 restate this same tile size (and, at 2330, name the diagnostic), so they are covered here rather than extracted again."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2333,
+          2334
+        ],
+        "section": "E62 — Why each is an extension, item 2 (materialisation)"
+      },
+      "claim_text": "the six consensus GeoJSONs were first\n   committed 2026-04-15",
+      "values": [
+        {
+          "quantity": "count of consensus GeoJSONs surviving for pv-diag-256",
+          "value_verbatim": "six",
+          "value_parsed": 6,
+          "unit": "files",
+          "kind": "count",
+          "path": "$.decomposition['pv-diag-256']._note",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/run-conditions.json",
+        "path": "$.decomposition['pv-diag-256']._note"
+      },
+      "method": "read",
+      "notes": "The run-conditions note for pv-diag-256 states the re-scoring was done 'from the 6 on-disk consensus geojsons', so the count sits inside that prose string and needs a containment check; the physical locus for a direct count is outputs/h11/pv-diag-256/consensus/. Commit hash and date are out of C4 scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2341,
+          2343
+        ],
+        "section": "E62 — Why each is an extension, item 3 (lodged verifier config)"
+      },
+      "claim_text": "lodged verifier config fixes thinking at minimal: \"| `thinking_level` | `minimal` |\n   Calibrated via pilot; minimal achieves equivalent F1 to high at 1/3 latency (see\n   §8.9) |\" (CMT-0605).",
+      "values": [
+        {
+          "quantity": "latency of minimal thinking relative to high, as calibrated in the registration",
+          "value_verbatim": "1/3",
+          "value_parsed": 0.333,
+          "unit": null,
+          "kind": "ratio",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration-coverage.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Registration claim: the quoted row is CMT-0605 at preregistration-coverage.md:33 (per results/commitments.json source records), anchored to the lodged document per the v1.1 calibration rule. Scope decision: 'fixes verifier parameters the registration fixes at a single value' and 'templates pinned to one downstream optimum' earlier in the same paragraph are rhetorical, not checkable quantities, and are not extracted. Section number §8.9 is out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2345,
+          2347
+        ],
+        "section": "E62 — Why each is an extension, item 3 (headline_rationale quote)"
+      },
+      "claim_text": "carry-forward headline pv-diag-384::verified-adv-text-consensus-16of30 (0.890) stands:\n   the operational maximum here (verified-384-16of30-t0-3-n5-opmax, 0.8951) is NOT\n   significant over it (paired tile-swap permutation p=0.363",
+      "values": [
+        {
+          "quantity": "F1@20m of the carry-forward headline condition",
+          "value_verbatim": "0.890",
+          "value_parsed": 0.89,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='verifier-robustness')].headline_rationale",
+          "method": "read"
+        },
+        {
+          "quantity": "F1@20m of the verifier-robustness operational maximum",
+          "value_verbatim": "0.8951",
+          "value_parsed": 0.8951,
+          "unit": null,
+          "kind": "metric",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='verifier-robustness')].headline_rationale",
+          "method": "read"
+        },
+        {
+          "quantity": "paired tile-swap permutation p-value, operational maximum vs carry-forward headline",
+          "value_verbatim": "p=0.363",
+          "value_parsed": 0.363,
+          "unit": null,
+          "kind": "statistic",
+          "path": "results/runs-manifest.json#$.runs[?(@.run_id=='verifier-robustness')].headline_rationale",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/runs-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Verbatim quotation of results/runs-manifest.json `headline_rationale` for verifier-robustness; all three values resolve inside that string field (containment check). The manifest string names results/verifier-robustness/opmax_vs_headline_permutation.json as the permutation artefact. Condition slugs (16of30, t0-3, n5, 384) are names and out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2350,
+          2350
+        ],
+        "section": "E62 — The four verifier-parameter levels, table heading"
+      },
+      "claim_text": "**The four verifier-parameter levels disclosed here**:",
+      "values": [
+        {
+          "quantity": "count of verifier-parameter levels disclosed in this erratum",
+          "value_verbatim": "four",
+          "value_parsed": 4,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Repeat of the heading count; the fifth unlicensed verifier level (verifier_thinking_level=medium) is split between E40 and E69 per the resolution objects in reports/verification/c2-census/licence-census.json."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2354,
+          2354
+        ],
+        "section": "E62 — verifier-parameter levels table, verifier_model row"
+      },
+      "claim_text": "| `verifier_model=gemini-3.5-flash` | 2 | `flash35-pv-2x2` | E3 resolves a registered model *name* to its API endpoint; it does not admit a new model generation |",
+      "values": [
+        {
+          "quantity": "observed sites for verifier_model=gemini-3.5-flash",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "sites",
+          "kind": "count",
+          "path": "$.pairs[?(@.pair=='verifier_model=gemini-3.5-flash')].n_sites",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": "$.pairs[?(@.pair=='verifier_model=gemini-3.5-flash')].n_sites"
+      },
+      "method": "read",
+      "notes": "Table row (instrument rule 6). The model name (including its version numerals) is a factor=level identifier and out of scope per rule 5; only the site count is extracted."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2355,
+          2355
+        ],
+        "section": "E62 — verifier-parameter levels table, verifier_temperature=0.3 row"
+      },
+      "claim_text": "| `verifier_temperature=0.3` | 4 | `verifier-robustness` | CMT-0590 registers 0.3 as a runtime temperature level, but hooked to **H7 detection** temperature; no commitment extends the H7 sweep to the verifier stage |",
+      "values": [
+        {
+          "quantity": "observed sites for verifier_temperature=0.3",
+          "value_verbatim": "4",
+          "value_parsed": 4,
+          "unit": "sites",
+          "kind": "count",
+          "path": "$.pairs[?(@.pair=='verifier_temperature=0.3')].n_sites",
+          "method": "read"
+        },
+        {
+          "quantity": "temperature level registered as a runtime detection temperature by CMT-0590",
+          "value_verbatim": "0.3 as a runtime temperature level",
+          "value_parsed": 0.3,
+          "unit": null,
+          "kind": "parameter",
+          "path": "docs/methodology/preregistration/osf/preregistration-appendix-prompts.md#:1666",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row (instrument rule 6). The first '0.3' is part of the factor=level identifier (out of scope per rule 5); the extracted parameter value is the second use, asserting that the registration registers 0.3 as a runtime temperature level — CMT-0590 at preregistration-appendix-prompts.md:1666 lists the five registered levels (0.0, 0.3, 0.7, 1.0, 1.3), reached by cross-file locator per v1.2 amendment 2."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2356,
+          2356
+        ],
+        "section": "E62 — verifier-parameter levels table, verifier_temperature=0.7 row"
+      },
+      "claim_text": "| `verifier_temperature=0.7` | 2 | `verifier-robustness` | as above; E55 licenses a verifier-temperature sweep only at 0.5/1.0, in `verifier-t-pilot` |",
+      "values": [
+        {
+          "quantity": "observed sites for verifier_temperature=0.7",
+          "value_verbatim": "2",
+          "value_parsed": 2,
+          "unit": "sites",
+          "kind": "count",
+          "path": "$.pairs[?(@.pair=='verifier_temperature=0.7')].n_sites",
+          "method": "read"
+        },
+        {
+          "quantity": "lower verifier temperature licensed by erratum E55",
+          "value_verbatim": "0.5",
+          "value_parsed": 0.5,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "upper verifier temperature licensed by erratum E55",
+          "value_verbatim": "1.0",
+          "value_parsed": 1.0,
+          "unit": null,
+          "kind": "parameter",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row (instrument rule 6). The E55 licence is stated in this same hand-written errata document (prose), so the two licensed temperatures are not anchored per instrument rule 2; the census does carry sibling pair records (verifier_temperature=0.5, =1.0) that triage can use."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2357,
+          2357
+        ],
+        "section": "E62 — verifier-parameter levels table, verifier_thinking_level row"
+      },
+      "claim_text": "| `verifier_thinking_level=high` | 3 (2 disclosed here, in `verifier-robustness`; the 1 `pv-diag-384` site is disclosed in E69) | `verifier-robustness` | E40 licenses HIGH only for `gemini-3.1-pro-preview` consensus runs; these sites run `gemini-3-flash-preview` |",
+      "values": [
+        {
+          "quantity": "observed sites for verifier_thinking_level=high",
+          "value_verbatim": "3 (",
+          "value_parsed": 3,
+          "unit": "sites",
+          "kind": "count",
+          "path": "$.pairs[?(@.pair=='verifier_thinking_level=high')].n_sites",
+          "method": "read"
+        },
+        {
+          "quantity": "high-thinking verifier sites disclosed in this erratum (verifier-robustness)",
+          "value_verbatim": "2 disclosed here",
+          "value_parsed": 2,
+          "unit": "sites",
+          "kind": "count",
+          "path": "$.pairs[?(@.pair=='verifier_thinking_level=high')].resolution.detail",
+          "method": "read"
+        },
+        {
+          "quantity": "high-thinking verifier sites disclosed in E69 (pv-diag-384)",
+          "value_verbatim": "the 1 `pv-diag-384` site",
+          "value_parsed": 1,
+          "unit": "sites",
+          "kind": "count",
+          "path": "$.pairs[?(@.pair=='verifier_thinking_level=high')].resolution.detail",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Table row (instrument rule 6). The 2/1 split is stated inside the pair record's prose 'resolution.detail' string ('The 2 verifier-robustness sites disclosed in E62; the 1 pv-diag-384 Flash site disclosed in E69'), so those two locators need containment checks. Per v1.2 amendment 1 the split components are independent reads, never arithmetic over the 3."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2359,
+          2362
+        ],
+        "section": "E62 — derivative proposer_pool slugs"
+      },
+      "claim_text": "The five derivative `proposer_pool` slugs (`f3-min-text-1of10`,\n`flash35-min-text-1of10`, `text`, `text-1of5`, `text-consensus-5of5`) are per-study\npool identifiers with no independent experimental content; they are licensed at run\nlevel and are disclosed here only so the census's thirteen are fully accounted for.",
+      "values": [
+        {
+          "quantity": "count of derivative proposer_pool slugs among the unlicensed pairs",
+          "value_verbatim": "five",
+          "value_parsed": 5,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of unlicensed factor=level pairs the census found",
+          "value_verbatim": "thirteen",
+          "value_parsed": 13,
+          "unit": null,
+          "kind": "count",
+          "path": "$.summary.UNLICENSED",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "reports/verification/c2-census/licence-census.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "The slug count partitions the 13 UNLICENSED pairs by prefix and has no single locator; the census total does. Numerals inside the slug names (1of10, 1of5, 5of5) are names and out of scope per rule 5."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2369,
+          2373
+        ],
+        "section": "E62 — Protocol impact"
+      },
+      "claim_text": "All three families are exploratory\nextensions of the registered H2 Condition-B architecture; none is cited as evidence for\na registered hypothesis; two of the three report deliberately null headlines, and the\nthird (`pv-diag-256`) contributes only the low anchor of a tile-size curve whose two\nregistered levels (512 px, 384 px) are unaffected.",
+      "values": [
+        {
+          "quantity": "count of unregistered extension study families",
+          "value_verbatim": "three",
+          "value_parsed": 3,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of the three families reporting deliberately null headlines",
+          "value_verbatim": "two of the three",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        },
+        {
+          "quantity": "count of registered H11 tile-size levels",
+          "value_verbatim": "two\nregistered levels",
+          "value_parsed": 2,
+          "unit": null,
+          "kind": "count",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "tile size, registered H11 condition A",
+          "value_verbatim": "512 px",
+          "value_parsed": 512,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        },
+        {
+          "quantity": "tile size, registered H11 condition B",
+          "value_verbatim": "384 px",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "parameter",
+          "path": null,
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "docs/methodology/preregistration/osf/preregistration.md",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Mixed span. The registered H11 levels anchor to the lodged document (preregistration.md:958-959, CMT-0310/CMT-0311) per the v1.1 calibration rule. The family counts have no resolvable locator; the 'two of the three' null headlines could be checked against the `headline_rationale` strings of flash35-pv-2x2 and verifier-robustness in results/runs-manifest.json (both open 'Deliberately none'), which triage can confirm."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2373,
+          2374
+        ],
+        "section": "E62 — Protocol impact, reporting requirement"
+      },
+      "claim_text": "Reporting requirement: the paper's\ndeviations table gains one row",
+      "values": [
+        {
+          "quantity": "count of rows the paper's deviations table gains",
+          "value_verbatim": "one row",
+          "value_parsed": 1,
+          "unit": "rows",
+          "kind": "count",
+          "path": null,
+          "method": "anchor-unknown"
+        }
+      ],
+      "anchor": null,
+      "method": "anchor-unknown",
+      "notes": "Forward-looking claim about a paper artefact not present in the repository in a countable form; flagged rather than anchored (parallel to E60's blast-radius row)."
+    },
+    {
+      "claim_id": null,
+      "source": {
+        "lines": [
+          2377,
+          2378
+        ],
+        "section": "E62 — Cross-references"
+      },
+      "claim_text": "E41 (384 px / 487-tile evaluation\nscope)",
+      "values": [
+        {
+          "quantity": "tile edge length of the evaluation scope attributed to erratum E41",
+          "value_verbatim": "384 px",
+          "value_parsed": 384,
+          "unit": "px",
+          "kind": "physical",
+          "path": "$.runs[?(@.run_id=='pv-diag-384')].tile_size_px",
+          "method": "read"
+        },
+        {
+          "quantity": "tile count of the evaluation scope attributed to erratum E41",
+          "value_verbatim": "487-tile",
+          "value_parsed": 487,
+          "unit": "tiles",
+          "kind": "count",
+          "path": "$.runs[?(@.run_id=='pv-diag-384')].scope.n_test_tiles",
+          "method": "read"
+        }
+      ],
+      "anchor": {
+        "file": "results/runs-manifest.json",
+        "path": null
+      },
+      "method": "read",
+      "notes": "Marginal inclusion, treated consistently with the '20 m buffer reversion' descriptor at lines 2082-2083: this is a parenthetical description of another erratum's subject rather than a result of E62, but it asserts the study's 384 px / 487-tile evaluation scope, which rule 5 keeps in scope where a number is both a name and an asserted fact. Anchored to the era-2-487 scope recorded for the pv-diag-384 run. All other cross-reference tokens in this paragraph (E37, E39, E40, E41, E55, E56, E58, E69) are identifiers and out of scope."
+    }
+  ]
+}
