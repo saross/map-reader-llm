@@ -9444,3 +9444,77 @@ the dispositions are themselves C6-style attestation material now —
 the record of what the triager believed and when — and the Obs
 376/377 pattern (correct by appending, never by erasing) was applied
 to my own layer deliberately.
+
+## Session 124 — 2026-08-01/02 — the queue that emptied itself, and the third catch
+
+### Prompt: What was different about this session compared to recent ones?
+
+The division of labour inverted. In Sessions 122–123 the interactive
+instance did the object-level verification work and dispatched agents
+for bounded side-tasks; this session the agents did nearly all the
+object-level work — four repair agents dispositioned 126 extraction
+values, a registry agent classified 488 rows and authored 90 specs,
+two obs-writers produced the observations, and a blind verifier did
+the era archaeology — while the interactive instance wrote harness
+code, adjudicated, and orchestrated. The role that remained
+irreducibly mine was also the one that got audited: I drafted the
+wave-2 dispositions, and the blind pass refuted one of my four
+families before it landed.
+
+That is the second difference, and the more important one: the
+blindness apparatus ran *prospectively* for the first time. In S122
+and S123 the independent re-derivations were retrospective — an
+obs-writer or a round-4 check correcting a story that had already
+been told. This session the blind pass was scheduled into the
+workflow before my dispositions were committed, on the standing
+strength of ruling 11 rather than any specific doubt. It caught the
+family-A error anyway. The practical shape of the work has become:
+design the workflow assuming the orchestrator will be wrong
+somewhere, and buy the check before knowing where. Three sessions of
+3-for-3 catches suggest the assumption is not modesty but base rate.
+
+The third difference is small but pleasing: the session closed its
+own generation of instrument holes. Obs 379 (found in S123) was fixed
+structurally; the fixes surfaced new classes (silent single-value
+fallbacks, space-thousands, the APPROX magnitude blindspot, non-JSON
+reason conflation); and each of those was either fixed or converted
+into a named, counted family before close. The mismatch headline
+ended the session at 123 — higher than the 104 it started with — and
+every added mismatch is a *genuine* document-vs-artefact question
+rather than instrument noise. Verification progress that increases
+the error count is the honest direction.
+
+### Prompt: What question emerged that wasn't pursued?
+
+Why the overwrites hit exactly the cells they hit. Obs 381 recorded
+the pattern — all six `-text`-suffixed Session-78 cells plus the
+image pool's `verified-checklist`, nothing else — and drew the
+sampling lesson (my convenience sample was anti-correlated with
+detection because untouched artefacts raise no flags). But nobody
+asked *why* the May cleanup passes re-ran precisely those seven
+cells. The answer presumably lives in the p3a-recovery session
+records, and it matters beyond curiosity: last-writer-wins damage is
+predictable if the cleanup-selection rule is known, and the
+cost/token runner tranche could pre-compute which metas need era
+reads instead of discovering them one blind pass at a time.
+
+The deeper unpursued question is what "current truth" means for
+machine-dependent censuses. Sapphire says pv-diag-384 holds 127,281
+files; this machine says 48,707; both counts are honest, and one
+verdict (037#37) flips MATCH↔MISMATCH depending on where the harness
+runs. The queued hygiene item — a machine-scope guard — treats this
+as a spec-authoring bug. But underneath is a real epistemics
+question the charter never had to answer before: claims about
+uncommitted artefacts have no canonical referent tree, and the
+programme needs to decide whether such claims are verifiable at all,
+or only verifiable-relative-to-a-named-machine. The 044 wbf anchors
+(resolve locally, nowhere else) are the same question wearing a
+different hat.
+
+And smallest, but worth a line: ruling 12 deliberately kept
+`era_check` supplementary to the current-artefact verdict, pending
+experience. The unpursued question is what evidence would justify
+promotion — for dated snapshots the era question arguably *is* the
+verification question, and if wave-3 shows the supplementary field
+doing all the interpretive work, the primary/supplementary split
+should be revisited rather than ossifying.

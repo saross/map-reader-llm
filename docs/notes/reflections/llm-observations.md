@@ -6769,3 +6769,64 @@ undecomposed; a twenty-line keyword census dissolved the dilemma in
 one direction (half the pile is filesystem counting, not statistics).
 Cheap censuses before contested decisions may be the highest-leverage
 habit this programme has produced.
+
+## Session 124 — 2026-08-01/02 (convenience samples are anti-correlated with detection; prospective blindness beats retrospective; hard rules survive delegation at scale; honest repairs leave the mismatch count alone)
+
+**Wrong-control sampling: the convenient evidence base is
+systematically the least informative one.** The session's ruling-11
+catch (the third in three sessions) has a sharper shape than
+"insufficient sampling". I verified a set-quantified claim ("all 14
+metas era-stable") by checking one member's git history — and the
+member I picked was a control, because the overwrite damage followed
+a name pattern (all six `-text` cells plus one) and the first cell in
+glob order sat outside it in both pools (Obs 381). Untouched
+artefacts raise no flags, so any low-effort selection gravitates
+toward them: the failure is not that N=1 was too small but that the
+sampling process was *anti-correlated* with the defect. For LLM
+verification work the implication is structural — a set-level
+mechanism claim ("never rewritten", "all X are Y") must be checked
+over every member or a genuinely random sample, and "I checked one
+and it was fine" should be read as close to zero evidence.
+
+**Prospective blindness is cheap and catches what retrospective
+blindness catches — earlier.** S122 and S123's corrections arrived
+retrospectively (a writer re-deriving an already-told story). This
+session the blind pass was scheduled before the dispositions were
+committed, on standing policy rather than specific doubt, and it
+refuted family A before ledger contact. Cost: one agent-run in
+parallel with other work. The general design rule: when an
+adjudication layer is known to confabulate at some base rate, buy the
+independent check as a *pipeline stage*, not as a remedy — by the
+time you doubt a specific story, it has usually already shaped
+downstream artefacts. Corollary observed the same day: two agents
+*converging* on a reading (agent B independently flagged the stale
+provenance table) is weaker evidence than one blind re-derivation,
+because concurrent agents share the artefact context that drives
+correlated errors.
+
+**Externalised hard rules survive delegation at 4-agent scale — and
+produce judgement, not just compliance.** The repair brief's
+load-bearing rule ("never copy the anchor path because the number
+matches; the path must locate the NAMED quantity; prefer honest
+deferral over a clever locator") was followed by all four Opus
+agents across 126 rows, and generated genuinely discriminating
+behaviour: one agent refused a tile-size path because the metadata
+field it found was the 448 px *stride*, not the 512 px tile; another
+refused key-tautology paths (reading "50" back out of a dict keyed by
+50); a third defused an Obs 379-shaped trap in a single-value claim
+the rule didn't technically cover. This extends S122's
+externalised-acceptance-criteria lesson: at this task shape the rules
+did not merely constrain the agents — they taught the distinction the
+agents then applied to cases outside the rules' letter.
+
+**A semantics-driven repair leaves the mismatch count unchanged; a
+match-tuned one would not.** The cleanest quantitative signature of
+the session: 255 pathless values were repaired, +68 rows moved to
+MATCH, and the MISMATCH count stayed exactly flat (104 before, 104
+after; it rose to 123 only when the census *runners* started
+executing new comparisons). Repairs chosen by quantity semantics have
+no mechanism for converting mismatches to matches, so a flat mismatch
+count through a large repair is evidence the repair was honest —
+worth adopting as a standing check on any future extraction-repair
+wave (and the converse: a repair pass that "fixes" mismatches should
+be treated as suspect by default).

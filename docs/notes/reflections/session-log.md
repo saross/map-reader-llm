@@ -7746,3 +7746,102 @@ unaffected; next rerun refreshes). Batch-plan pending count (158) is
 the plan's own status field, not the beacon's stale 163. Wave-2
 agents ran non-isolated in the shared tree writing disjoint output
 files only.
+
+## Session 124 — 2026-08-01/02 — repair pass + wave-2 triage + runner registry + era resolution; the S124 queue (a)–(d) closed
+
+**Scope**: Phase 3 continuation per the S123 beacon; all four queue
+items landed; fleet waves deliberately deferred to S125. **US$0.00
+API** — Claude-side agents (4 repair + 1 blind verifier +
+1 registry + 2 obs-writers) and sapphire for canonical recomputes. Commits
+`117b43e14`→`ac0461a23` (~17), all pushed; local + sapphire level at
+`ac0461a23`.
+
+**Obs 379 structural fix**: `recompute_c4_claims.py` refuses the
+anchor-path fallback for pathless values in multi-value claims
+(survives only for single-value claims); `validate_c4_extraction.py`
+enforces instrument v1.2 amendment 3; non-JSON anchors get a distinct
+triage-scope reason.
+
+**Ruling-8 repair pass**: 129 values via the quantity→anchor mapping
+(`scripts/repair_c4_pathless_values.py`; rule families: 044
+operand-a 89, canonical tile counts 20, local tile counts 15,
+self-GeoJSON feature counts 5; every locator resolution-verified at
+apply time, never match-gated) + 126-row LLM tail (4 Opus agents,
+file-partitioned: 30 path-set, 54 → recompute-script, 42 verified
+left-as-is). Obs 379's silent-MATCH census closed: 0 wrong numbers
+among the 89 fallback MATCHes. Validator green 26/26 files, 1,337
+claims. Log: `c4-triage/pathless-repair-2026-08-01.json`.
+
+**Wave-2 triage (22 rows)**: `c4-triage/mismatch-triage-2026-08-01.json`.
+Ruling-11 blind pass REFUTED the draft family-A adjudication
+(SNAPSHOT-DEFECT → SNAPSHOT-DIVERGENCE; 7/14 session-78 metas
+overwritten in place by `414ee8a4b`/`c6b5e6b10`; doc reproduces
+exactly at `b10aa7e1c`; triager had sampled an untouched control).
+Families: 002 meta-overwrite (4) + 002 calibration re-score (13) both
+SNAPSHOT-DIVERGENCE immaterial; 004 five rows LIVING-DOC-FIX applied
+(`n1-baseline-matrix.md` § 4 table 1→3 ×4, range endpoint
++0.35→+0.34, banner + changelog). Instrument findings recorded:
+APPROX magnitude blindspot (protocol: APPROX review per wave from
+wave 3), space-thousands parsing (fixed same session).
+
+**Runner registry (ruling 7, tranche 1)**: `scripts/lib_c4_runners.py`
+(glob-count, regex-count, json-subset-count, json-aggregate; 6
+tier-1 tests) + harness wiring +
+`apparatus/recompute-script-registry.json`: 488 recompute-script rows
+→ 90 census specs (all execute), 64 cost-token + 38 statistical + 296
+other-hard across 17 named families with reasons. Census execution
+surfaced 18 genuine mismatches (e47 inventory doc-2-vs-1;
+n1-outstanding doc-8-vs-7; output-directory-standard census drift;
+etc.) + escalation 005#2[0] (gap bound ≤0.0003 vs f1_gap 0.000466).
+
+**Git-era resolution (ruling 9)**: missing anchors resolve at the
+source doc's era commit (newest commit holding the recorded blob;
+path-filtered log ⇒ authoring commit) with unique-suffix
+disambiguation; second-stage `suffix-current` unique-match fallback
+for later-materialised regen copies. All 36 batch-047 rows → MATCH
+(11 git-era + 25 suffix-current); rows carry `resolution` labels.
+
+**Canonical recompute** (sapphire, committed): MATCH 1938 / MISMATCH
+123 / SKIPPED 1137 / UNRESOLVED 395 / APPROX 7 (S123 close:
+1742/104/1173/575/6). MISMATCH stayed flat at 104 through the
+255-value repair; the rise to 123 is census-runner-surfaced genuine
+questions. Cross-machine check: 7 rows machine-dependent (3
+glob-count specs over gitignored trees — sapphire 127,281 vs local
+48,707 pv-diag files, 037#37 verdict flips; 4 rows in 044 anchored to
+never-committed `outputs/wbf/**` manifests) → S125 hygiene items.
+
+**Interactive rulings (Shawn, session tail)**: Obs candidates both
+approved → **Obs 380** (meta overwrites; `b46c59fc0`) + **Obs 381**
+(third ruling-11 catch, wrong-control sampling; `8b7adfbec`), both
+obs-writer-verified with additions. **Ruling 12** era_check approved
+(supplementary field on snapshot-doc MISMATCHes; provisional
+dated-filename/title classification) — IMPLEMENTED same session
+(read + arithmetic; git-backed test). **Ruling 13** 005#2[0] wave-3
+adjudication confirmed. **Test redesign option (b)** approved after
+investigation — implemented: C2 ledger prefix sha256-pinned at GATE 1
+(915 rows byte-identical, verified) + append-only vocabulary checks;
+per-commitment monotonicity vs frozen GATE 1 fixture
+(`tests/fixtures/gate1-commitment-statuses.json`, 702 entries;
+CMT-0047/0106 discharged + CMT-0109 waived by the 2026-07-30
+close-out pass legitimately). 486 re-pin (E71 recovery merged 14/15
+failed tiles) + schema-count 7→8. **Full tier-1: 1,278 passed / 0
+failed** (session start: 4 failed).
+
+**Ops notes**: git stash near-miss — a bare `git stash pop` on a
+clean tree applied a Session-83-era stash (6 old entries stacked);
+conflicted loudly, restored from HEAD, stash stack preserved; beacon
+now warns. Obs-writers run sequentially (shared file). Scratchpad
+principle recorded: set-level claims need set-level checks. A
+markdownlint `--fix` sweep over the reflection set was REVERTED after
+it rewrote ~130 whitespace lines inside historical entries
+(append-only convention; blob-pinning risk); entries re-applied as
+pure EOF appends, and the set-wide MD025 false positive was resolved
+in `.markdownlint.json` (front_matter_title) instead.
+
+**Contextual assumptions**: fleet waves (158 pending) deferred by
+explicit choice at session close, not oversight — the instrument
+strengthened first (amendment-3 enforcement, era resolution,
+registry, thousands parsing) was judged the better sequencing;
+rulings 12–13 were collected interactively because Shawn returned for
+the session tail; the wave-2 blind pass ran BEFORE disposition
+landing (first prospective use of ruling 11).

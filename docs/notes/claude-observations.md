@@ -487,3 +487,52 @@ presenting them, however coherent they feel.
 **How to apply.** In any finding presented for ruling, separate the
 observed deltas (verified) from the mechanism narrative (adjudged,
 pending independent check) — typographically, not just mentally.
+
+## claude-obs 21 — 2026-08-02 (Session 124): the ruling he attached to my recommendation was "finalise after experience"
+
+**Pattern.** When I proposed the era-check extension with a
+snapshot-classification rule (dated filename/title controls, not
+directory), Shawn approved both — but attached "to be finalised after
+we get more experience in actual use" to the classification rule
+specifically, not to the mechanism. He distinguished, inside a single
+approval, the part that is safely reversible machinery (the
+supplementary field) from the part that sets policy over document
+identity (what counts as a snapshot), and put the provisionality
+exactly where the policy risk is.
+
+**Lesson.** His approvals carry structure worth reading, not just
+outcomes: which clause gets the caveat tells me where he sees the
+irreversibility. I should mirror that when proposing — separate the
+mechanism (usually cheap to revise) from the classification/policy it
+rides on (which accretes precedent), and offer the provisionality
+marker myself rather than leaving him to add it.
+
+**How to apply.** When a proposal bundles machinery with a
+classification rule, present them as separately approvable, and
+default the classification part to "provisional pending use" in the
+proposal text itself.
+
+## claude-obs 22 — 2026-08-02 (Session 124): self-critique — catch three was the same failure as catch two, one layer down
+
+**Pattern.** Claude-obs 20 recorded me presenting an unverified
+causal story; my stated discipline was to label mechanism claims as
+unverified. This session I *did* label the mechanism hypothesis
+("operator console totals" — flagged hypothesis-only per ruling 11),
+and the blind pass still refuted the adjudication — because the
+defect had moved from the narrative layer to the evidence-selection
+layer: I verified "all 14 metas era-stable" from one convenient
+member, and the member was a control. Labelling the story as
+tentative did not help, because the *premise* underneath it was
+presented as verified fact ("single-commit history").
+
+**Lesson.** The confabulation risk migrates to whatever layer isn't
+being audited. Marking conclusions as unverified is insufficient when
+the supporting facts are themselves under-sampled; the discipline
+that would have caught this is on the write-side of the evidence:
+every "all/none/never" claim I assert needs its denominator stated
+("checked 1 of 14") — which would have looked obviously inadequate
+the moment I wrote it.
+
+**How to apply.** State the denominator on any set-quantified claim
+in a disposition, report, or message to Shawn. If writing the
+denominator is embarrassing, the check is not done.

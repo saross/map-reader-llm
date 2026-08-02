@@ -6132,3 +6132,76 @@ gate packages. Writer-vs-author disagreement is treated as signal.
 The concrete cost this session was one obs-writer agent; the concrete
 benefit was four false ledger rows and one wrong banner narrative
 intercepted before GATE 3.
+
+## Session 124 — 2026-08-01/02 — the fourteen metas that were seven, and the control the triager sampled
+
+**Session:** 23ea8f66-32d2-43e9-891d-3b9baf831077
+**Instance:** primary
+
+### Surprising fact
+
+The ruling-11 blind pass, dispatched as routine workflow (no specific
+doubt), refuted my wave-2 family-A adjudication outright. I had
+dispositioned four cost/token MISMATCH rows in
+`data-reproduction-2026-04-25.md` as SNAPSHOT-DEFECT — "the doc's
+totals ($127.55 list, 220.9M input, 5.7M output) cannot be reproduced
+from any committed artefact" — resting on an era-stability check: one
+of the fourteen `run.meta.json` operands had a single-commit history
+dated 2026-04-25, so I generalised "metas never rewritten, era
+divergence excluded" and drafted a mechanism narrative
+(operator-console session totals including retry traffic) to explain
+the residue. The blind pass summed all fourteen metas at the doc's
+authoring commit `b10aa7e1c` and every figure reproduced *exactly*
+(127.547466 → "$127.55"; 220,869,378 → "220.9"; 5,704,259 → "5.7";
+44,220 requests). The document was innocent.
+
+### Probe
+
+The verifier blob-compared all fourteen metas era-vs-current: seven
+overwritten in place by p3a-recovery cleanup passes (`414ee8a4b`
+2026-05-03, six `-text` cells; `c6b5e6b10` 2026-05-06, image-pool
+`verified-checklist` — which now records 1 request where the era blob
+records 2,022), seven byte-identical. `run.meta.json` is
+last-writer-wins, so the harness's "actual" ($96.59) sums seven full
+runs plus seven cleanup fragments — a chimera, not a corrected total.
+My sampled meta (`verified-adversarial`, first in glob order) sat in
+the untouched half of *both* pools. The Obs 381 writer's follow-up
+sharpened the sampling failure: the overwrite damage follows a name
+pattern (all six `-text` cells), so a convenience sample was not
+merely underpowered but *anti-correlated* with detection — untouched
+artefacts are precisely the ones that raise no flags.
+
+### Belief revision
+
+Three revisions, in increasing order of generality. (1) The rows are
+SNAPSHOT-DIVERGENCE, not SNAPSHOT-DEFECT: the document quoted its era
+faithfully and the anchors moved. (2) My evidence base, not my
+inference, was the defect: "single-commit history" was true of the
+member I checked and false of half the set — a set-quantified
+mechanism claim ("all metas era-stable") verified on one convenient
+member is close to zero evidence. (3) The mechanism narrative I
+supplied ("operator console totals") was pure confabulation dressed
+as hypothesis — the same wrong-operand → confident-number →
+plausible-story signature as Obs 377 and Obs 379, now instantiated at
+the evidence-selection layer. Ruling 12 (era_check) mechanises the
+probe so this class of archaeology no longer depends on anyone
+thinking to do it.
+
+### What would change this belief
+
+Finding any quoted figure in the doc that fails to reproduce from the
+era blobs (all five were checked — twice, independently, by the blind
+pass and the Obs 380 writer); or the seven "overwritten" metas'
+era blobs hashing equal to their current content (they do not); or
+evidence the doc was authored against a different commit than
+`b10aa7e1c` (its recorded git_blob pins it).
+
+### Implications for practice
+
+Set-quantified claims get set-level checks or genuine random samples
+— recorded as a scratchpad principle and in Obs 381. The cost/token
+runner tranche (S125+) must read era blobs for the overwritten metas;
+summing live metas silently undercounts. And the blind pass has now
+moved from remedy to pipeline stage: it was scheduled before the
+dispositions landed, which is why the wrong story never touched a
+ledger.

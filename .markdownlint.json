@@ -3,8 +3,10 @@
   "comment2": "MD022/MD031/MD032/MD040 enforced per CLAUDE.md (fix as files are touched)",
   "comment3": "100-char line length enforced as a writing guideline, not via lint rule",
 
+  "comment4": "MD025: frontmatter title is metadata, not a heading — the reflections set deliberately pairs YAML title: with a visible H1",
   "MD013": false,
   "MD024": { "siblings_only": true },
+  "MD025": { "front_matter_title": "" },
 
   "MD022": true,
   "MD031": true,
