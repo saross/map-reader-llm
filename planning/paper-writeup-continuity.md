@@ -97,9 +97,42 @@ attributes ΔF1 −0.17 to the preregistered Phase 2b — actually the
 confounded consensus magnitude; Phase 2b is +0.072 text / +0.014
 image. THE PAPER MUST NOT INHERIT −0.17-as-Phase-2b.
 
-**Remaining PI decisions (S126)** — the wave-4 package items NOT
-covered by the E43 arc, in
-`c4-triage/mismatch-triage-2026-08-02-wave4.json` → `escalations_for_pi`:
+**✅ ALL S125 PI DECISIONS RESOLVED (2026-08-03, D1–D6 interactive
+sequence + rulings 14–15)**: D1 Obs 383 correction LANDED as **Obs 385**
+(`b82905374` — whose blind pass ALSO corrected the S125 hygiene
+commit's own rationale: single-star glob components traverse symlinks
+on 3.13, `**` does not, the harness never produced 184; and caught the
+zero-match census false negative — both fixed `fabd07a9d`). D2 E39 fix
+LANDED (`01c84b841`, see item 4 below). D3 governance ruled
+**split-by-citation** (recorded in `output-directory-standard.md`
+scope section + changelog). D4 ruled **tracked-proxies** (ruling 15;
+phases 1–2 — tracking-gap audit + regen-manifest pilots — executed
+S125; phases 3–5 queued: bundle-index pilot/storage decision, charter
+§ 4/§ 5 amendment + register re-anchoring, Zenodo at publication). D5
+ruled **two-axis snapshot rule** (ruling 14, supersedes ruling 12's
+provisional sentence; era_check-to-runner-rows is registered
+instrument work). D6 investigate-first paid off: the stale pass row
+exposed an UNSORTED META GLOB making the generator machine-dependent —
+fixed 0.7.1 (`75aa47125`): sorted glob + completed-union across
+sibling metas; the D6 row → ok/487 and **72 fully-recovered passes
+un-mislabelled partial→ok** (attempt-history vs coverage), the 22
+genuine shortfalls (E71 rider numbers) staying partial; next
+recompute's Obs 382 join attributes to this named fix. ALSO S125
+tail: **Obs 209 rider** (`7356f21fa`) — the −0.17-as-Phase-2b
+firewall breach corrected append-only, paper corpus verified clean;
+**paired MCC ladder** (`9ebc9e523`): T=1.0's MCC edge survives
+pairing only at N=5 / end-to-end T=0.3-vs-T=1.0 (BH-significant,
+path-confound-free), and it's a REPLICATION of Obs 274's
+monotone-MCC-with-T (specificity mechanism), not an exception — the
+lower-temp-better pattern is object-level F1 (55-map), never an MCC
+pattern; **cost-equivalent configs** (`7cf0a0237`): T=1.0/N=5 vs
+T=0.7/N=30 F1 dead heat at 5.5× spend, non-inferiority framing filed
+findings § 13; **Seed 5** (`b21ce4a1c`, tile-MCC semi-automated
+extraction + Pareto cost equivalences); **paired-MCC-as-standard**
+captured in the memory system (2026-08-03-0698ed16d89c).
+
+**Historical — the wave-4 escalation items as presented (all
+resolved above)**:
 
 1. **E43 coverage artefact (HIGH, LIVE)**: the register's "30 runs ×
    487 tiles" is wrong at era (study ran 240 — every artefact family
@@ -126,15 +159,13 @@ covered by the E43 arc, in
    checklist (0.7701 vs 0.7694), 150 px now edges 75 px.)
 5. Governance: `docs/methodology/reports/**` in neither Revision-Policy
    scope nor out-of-scope list.
-Plus: **Obs 383 correction draft** (approve → land via obs-writer);
-**GATE 3 machine-scope decision** (rule untracked-anchor claims out of
-mechanical scope vs machine_scope fields — census stamps now flag,
-not decide); snapshot-classification refinement (ruling 12 provisional
-rule misled THREE times this session: h11 dated-filename ≠ snapshot
-semantics, session-111-discoveries behaves living, errata snapshot
-unit is the ENTRY).
+(The Obs 383 draft, machine-scope, and snapshot-classification items
+formerly listed here are resolved — see the ✅ block above.)
 
-**Session 126's queue**: (a) the PI decisions above; (b) **fleet
+**Session 126's queue**: (a) D4 phases 3–5 when convenient (bundle-index
+pilot + storage decision; charter amendment + register re-anchoring;
+Zenodo at publication) and the optional within-config
+batch-vs-realtime check (Seed 5 context); (b) **fleet
 waves** (138 pending; genre rule per the S125 gates; per-wave
 validate → recompute (sapphire) → Obs 382 check → triage); (c)
 **runner tranches 2–3** — binding requirements now pinned: cost/token
