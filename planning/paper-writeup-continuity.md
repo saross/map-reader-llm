@@ -210,19 +210,16 @@ decision + snapshot-classification refinement).
 
 **S125 CLOSED 2026-08-03** (reflection + handoff run; ~30 commits
 `74cfd5092`→session close, $0 API, tier-1 **1,352/0**). **Held-over
-review queue (silence holds, never discards)**: user-obs **S125
-candidates A–D** now pending in `user-observations.md` (the
-recommended-label scepticism; surplus-context redirection; the
-verbatim MCC-explanation reaction; the implied-comparison catch) —
-plus the standing S118–120 + S122 set; **two working-notes candidates
-WN-C/WN-D drafted at close, not yet landed**: WN-C = the temperature
-three-layer record (object-F1 lower-T-better on 55-map; consensus-F1
-null at matched scope; tile-MCC monotone higher-T-better — Obs 274
-replicated at a second era/tile-size/model; the E72 arc as
-provenance) and WN-D = family-size dependence of marginal tier
-separations (the March 20 m solitary Tier 1 rested on q=0.0488 and
-dissolved when three unrelated cells left the family) — approve →
-obs-writer lands them as the next free Obs numbers.
+review queue CLEARED at S125 close (2026-08-03)**: user-obs S125
+reviewed — **A and C accepted** (recommended-label scepticism; the
+verbatim MCC-explanation reaction), B and D dropped; WN-C/WN-D
+approved and landed obs-writer-verified as **Obs 386** (the
+three-layer temperature record — writer corrected the brief's
+ruling-14 cite to E72 item 3, reported both layer-1 scorings, scoped
+the confounded T=0.0 rungs) and **Obs 387** (family-size-dependent
+marginal tiers — plus a third near-threshold case found, q=0.0510,
+cross-linked), commit `5bd0ba50f`. Still pending: user-obs S118–120 +
+S122 (silence holds); WN-1 (provenance-by-shape).
 
 **Carry-forward**: MCC/Sens/Spec in
 evaluation.md tables are bootstrap means (Obs 376); user-obs
