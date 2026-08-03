@@ -6830,3 +6830,48 @@ count through a large repair is evidence the repair was honest —
 worth adopting as a standing check on any future extraction-repair
 wave (and the converse: a repair pass that "fixes" mismatches should
 be treated as suspect by default).
+
+## Session 125 — 2026-08-02/03 (genre boundaries beat directory boundaries for model routing; a verification programme can promote a triage row into a research finding; the guard that flags is also the guard that misses)
+
+**Genre, not directory, is the unit of model-capability routing.** The
+ruling-5 gate architecture assumed document *classes* could be assigned
+Sonnet or Opus by kind, and the same directory
+(`docs/methodology/preregistration/`) produced both a clean Sonnet PASS
+(hypothesis-tracking, b014 precedent confirmed by the b007
+decisions-log gate: near-symmetric span-convention tails only) and a
+decisive Sonnet FAIL (protocol-errata: 13 lines of genuine claims
+missed one-directionally, including the registered temperature pair).
+The discriminating variable was prose genre — tracking tables and
+dated decision entries versus dense correction-block errata — not
+location, topic, or even span density. Corollary for anyone building
+model-routing rules: the cheap model's failure was *silent and
+recall-shaped* (nothing in its validator-green output signalled the
+missing claims); only a duplicate-extraction comparison could see it.
+
+**A verification sweep can escalate bookkeeping into science.** The E43
+row entered wave-4 as one of eighteen mechanical mismatches ("487" vs
+240) and left as a sign-reversing coverage confound with live
+paper-table exposure — because the blind pass followed the number into
+the artefact tree instead of stopping at "doc wrong". The general
+pattern: a mismatch on a *scope* claim (tile counts, corpus sizes,
+coverage figures) deserves escalated attention over a mismatch on a
+*result* claim, because scope errors propagate multiplicatively into
+every downstream comparison that assumed the scope. The project's
+triage vocabulary now effectively encodes this: the scope-claim
+mismatch generated a remediation programme; result-claim mismatches
+generate ledger rows.
+
+**Guards fail exactly where their proxy diverges from their target.**
+Three instances in one session of the same structural lesson. The
+sparse-coverage guard counted zero-detection tiles as its proxy for
+missing coverage — and mound-bearing missing tiles generate false
+negatives, not zeros, so the worst coverage gaps suppress the alarm
+that should flag them. The census machine-scope stamp used
+tracked==total as its proxy for reproducibility — vacuously true at
+zero matches, stamping the flagship machine-dependent row
+"repo-reproducible". And the pass-status field used attempt-history
+(items_failed) as its proxy for coverage shortfall — mislabelling 72
+fully-recovered passes. In each case the guard was well-intentioned,
+tested, and wrong in the tail where it mattered; in each case the fix
+was to measure the target directly (processed-tile counts, explicit
+zero-match handling, completed-union) rather than improve the proxy.

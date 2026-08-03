@@ -6205,3 +6205,93 @@ summing live metas silently undercounts. And the blind pass has now
 moved from remedy to pipeline stage: it was scheduled before the
 dispositions landed, which is why the wrong story never touched a
 ledger.
+
+## Session 125 — 2026-08-02/03 — the temperature effect that was a coverage deficit, and the stale row that was a filesystem lottery
+
+**Session:** 458dd0c2-9f47-4962-84f8-52f233786f84
+**Instance:** primary
+
+Two qualifying chains, both instances of a number surviving every
+local check while its *referent* was wrong.
+
+### Chain 1 — E43
+
+### Surprising fact
+
+A wave-4 census row flagged erratum E43's "30 runs × 487 tiles"
+against a recomputed 240 — initially read (by me, in the draft
+stories) as a probable wrong-binding instrument artefact, since 240
+was not a corpus size the scope taxonomy recognised.
+
+### Probe
+
+The blind pass inverted the suspicion: every artefact family (per-run
+metas, tiles sidecars, the union of processed_tiles across 30
+GeoJSONs, the passes manifest) agreed on 240 — the prose was wrong,
+the instrumentation right. Two follow-on investigation passes then
+asked the questions the row itself couldn't: was 240 a designed
+calibration-subset scope (the PI's explicit caution — a legitimate
+pattern in this project), and what had consumed the mis-scoped
+figure? Design intent: 240 was deliberate (the H11 tile-size study,
+planned before the 487 bounds existed) but the *comparison* was not —
+a bounds standardisation later scored the 240-tile detections against
+487-tile bounds, and an opportunistic temperature comparison built
+`family: confirmatory` tests on top.
+
+### Belief revision
+
+From "typo in an erratum" through "possible legitimate small-vs-large
+design" to "sign-reversing coverage confound": the registered
+"T=0.7 dramatically outperforms T=1.0, ΔF1 ~+0.15" became, at matched
+scope, ΔF1 −0.02…−0.03 (ns), with tile-MCC actively favouring T=1.0 —
+and the follow-up ladder showed even *that* was not an anomaly but a
+replication of Obs 274's monotone-MCC-with-temperature, making the
+"exception" a metric-level distinction (object-F1 vs tile-MCC) that
+had been sitting in the record since April.
+
+### What would change this belief
+
+A matched N=30 T=1.0 arm at 487 tiles (does not exist; 10 runs is the
+ceiling) materially favouring T=0.7 on F1, or a paired MCC test at
+MCC-selected operating points reversing the tile-level direction —
+the F1-selected caveat is genuine, and one contrast's sign is known
+to flip under MCC-selection.
+
+### Chain 2 — D6
+
+### Surprising fact
+
+A one-row manifest staleness (partial/486 vs on-disk ok/487),
+routine enough that two prior agents had handled it in opposite
+directions — until regeneration on this machine reproduced the STALE
+value while sapphire's regenerations had produced the fresh one, with
+identical inputs and identical code.
+
+### Probe
+
+Eliminated input divergence (directory listings byte-matched across
+hosts), then code divergence (same commit), then instrumented the
+derivation in-process: the pass's two meta files (primary + next-day
+recovery fragment) were consumed via `meta_files[0]` of an UNSORTED
+glob — filesystem enumeration order chose which meta became the pass.
+
+### Belief revision
+
+"A stale row awaiting regeneration" became "the generator itself is
+machine-dependent for every multi-meta pass, and its status field
+proxies attempt-history rather than coverage" — the sorted-glob +
+completed-union fix moved not one row but 72 (all fully-recovered
+passes mislabelled partial), with the 22 genuine shortfalls surviving
+as exactly the E71 rider's numbers. The PI's investigate-first
+instinct (over accept-the-catch-up) is what converted a cosmetic fix
+into a defect-class removal; accepting sapphire's 487 would have been
+right for the wrong reason and left the lottery in place.
+
+### Implications for practice
+
+Both chains sharpen the session's standing lesson about proxies (see
+llm-observations): when a number is checked, ask what selected its
+*referent* — the file the anchor bound, the meta the glob returned,
+the bounds the evaluator was handed. All three of this session's
+biggest findings were referent-selection failures, not arithmetic
+failures.

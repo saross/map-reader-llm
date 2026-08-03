@@ -7845,3 +7845,66 @@ registry, thousands parsing) was judged the better sequencing;
 rulings 12–13 were collected interactively because Shawn returned for
 the session tail; the wave-2 blind pass ran BEFORE disposition
 landing (first prospective use of ruling 11).
+
+## Session 125 — 2026-08-02/03 — wave-3/4 triage; fleet wave 3; E43/E72 remediation; D1–D6 rulings
+
+**Commits**: `74cfd5092` (S124 close) → `d5ae50818` (gitignore
+narrowing), ~30 commits, US$0.00 API throughout (Claude-side agents +
+sapphire compute only). Tier-1: 1,278 → **1,352 passed / 0 failed**.
+
+**Verification programme**: wave-3 triage landed (27 rows, 5 blind
+Opus passes, 4 draft refutations; 3 living-doc fixes incl. the
+ruling-13 gap bound ≤0.0003→≤0.0005); instrument hygiene
+(find-consistent censuses, machine-scope + host stamps, 'no'/'none'
+vocabulary, 4 registry spec fixes, 2 named-family moves); fleet wave
+3 complete end-to-end — 28 files / 1,209 claims, TWO ruling-5 genre
+gates (protocol-errata Sonnet FAIL → Opus escalation; decisions-log
+PASS), canonical recompute on sapphire 2402/135/2285/1709/8 with a
+CLEAN Obs 382 join; wave-4 triage (18 rows, 8 families, one
+partition-dropped row caught by post-commit accounting and landed as
+an addendum).
+
+**E43/E72 remediation** (PI-commissioned mid-session): two blind
+investigation passes established the coverage confound (240-tile arm
+scored on 487-tile bounds; NOT a calibration-subset design; matched
+scope reverses the sign, nothing significant); R1 matched permutation
+tests; register remediation (E43 correction block, E72, E73, E71
+rider); matched cells filed as analysis `e43-matched-temperature`
+(zero duplicate conditions — already first-class); 23-condition board
+regeneration with BH recomputed (the 20 m solitary Tier 1 dissolved
+at q 0.0488→0.0503 — family-size dependence); instrument hardening
+(240 scope registered, coverage guard counts unprocessed tiles, 35
+conditions caveated, verifier n_tiles nulled-with-reason); Obs 384
+(supersedes the Obs 191 claim, mis-cited as Obs 190); Obs 209 rider
+(the −0.17-as-Phase-2b firewall breach; paper corpus verified clean).
+Follow-ups same session: paired-MCC ladder (T=1.0's MCC edge is a
+REPLICATION of Obs 274, not an exception; significant only at N=5 and
+end-to-end T=0.3-vs-T=1.0, the latter path-confound-free);
+cost-equivalent configurations (T=1.0/N=5 vs T=0.7/N=30 F1 dead heat
+at 5.5× spend — non-inferiority framing); Seed 5 (tile-MCC
+semi-automated extraction + Pareto cost equivalences);
+paired-MCC-as-standard captured to the memory system.
+
+**D1–D6 decision sequence (2026-08-03)**: D1 Obs 385 landed (symlink
+census correction; its blind pass also corrected the S125 hygiene
+rationale and the zero-match census false negative — both fixed); D2
+E39 fine-grid sweep regenerated + analysis tables corrected; D3
+governance split-by-citation for docs/methodology/reports/**; D4
+tracked-proxies rule (ruling 15) with phases 1–2 executed (both-host
+tracking audit → the two 044 anchors committed, four UNRESOLVED rows
+now resolve; regeneration-manifest pilots; three spec re-anchors —
+037#37[0] host-independent MATCH); D5 two-axis snapshot rule (ruling
+14); D6 investigate-first → the unsorted-meta-glob generator defect,
+0.7.1 fix, 72 mislabelled passes corrected. Post-sequence rulings:
+crops leave-unless-needed; gitignore crops rules narrowed to
+PNG-only; tracked-count specs deferred to GATE 3.
+
+**Contextual assumptions**: the E43 remediation ran inside the C4
+verification session because the PI explicitly redirected the
+remaining context to it ("since we have the context left"); the
+fleet/tranche queue items were deliberately parked, not stalled. All
+Sonnet-vs-Opus routing decisions after the b015 gate assume the
+FAIL generalises to correction-block-dense registration prose — the
+b016–b023 Opus escalation was never A/B-confirmed per batch. Sapphire
+was the canonical recompute host throughout; the amd-tower
+counterparts exist only where noted (Obs 383/385 lineage).

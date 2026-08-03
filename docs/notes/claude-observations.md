@@ -562,3 +562,62 @@ resolution in the same breath; if absent, resolve toward the
 less-reversible-harm side and flag it prominently (not buried in an
 ops note) at next contact. Either way, propose recording the winner
 as an explicit rule so the collision retires.
+
+## claude-obs 24 — 2026-08-03 (Session 125): he re-opened my binary as a design question, and the third option was the ruling
+
+**Pattern.** Twice in one decision sequence, Shawn declined the
+either/or I presented and reframed the axis. On machine scope I
+offered "tracked-only vs machine_scope fields"; he asked what the
+untracked artefacts *are for* — sharing, regeneration, eventual
+Zenodo publication — and the answer (tracked proxies: recipes and
+bundle indexes) was strictly better than both my options because it
+came from the artefacts' lifecycle rather than the verifier's
+convenience. On the reports-directory governance he asked for the
+cost-benefit before choosing, and the grounded numbers (one cited
+file, five frozen ones) made a third option — split by citation —
+the obvious ruling my first framing had buried as an afterthought.
+**Lesson.** When I present a binary, the option space has usually
+been truncated by the tool that surfaced the problem. The PI's
+recurring move is to ask what the thing is *for* before deciding
+what to do about it — and that question routinely dissolves the
+binary. **How to apply.** Before presenting decision options, run
+the purpose question myself: for each artefact/rule at issue, state
+its lifecycle (who consumes it, when, on what machine) and let
+options fall out of that; flag explicitly when my options all share
+an assumption.
+
+## claude-obs 25 — 2026-08-03 (Session 125): self-critique — I told a gate's subject its work would be discarded
+
+**Pattern.** I designed the b015 Sonnet gate to reuse the calib-b
+overlap, and told the agent lines 1–248 "will be superseded at
+assembly — extract faithfully anyway". The gate FAILED, and the
+verdict had to carry a caveat that my own instruction may have
+depressed the effort the gate was measuring. The evidence still
+justified escalation (the misses were real, one-directional, and
+registration-critical), but a cleaner design — silent overlap, or a
+dedicated duplicate like b007's — would have made the verdict
+unqualified. **Lesson.** A measurement subject must not know which
+part of its work is the measurement; economy of reuse (the overlap
+was "free") is a bad trade against a caveat on the result. **How to
+apply.** In any duplicate/gate design: never mark the comparison
+range as discardable in the subject's brief; if honesty to the agent
+requires disclosure, restructure so the disclosed part is not the
+measured part.
+
+## claude-obs 26 — 2026-08-03 (Session 125): "investigate first" beat both agents' handling of the same row
+
+**Pattern.** Two competent agents met the stale flash35 row and made
+opposite reasonable calls (sweep it in; revert it out). Offered
+"accept the catch-up (recommended)", Shawn chose "investigate first"
+— and the investigation found the generator itself was
+machine-dependent (unsorted glob), converting a one-row cosmetic fix
+into a 72-row defect-class removal. My "recommended" label was on
+the wrong option: I had priced the investigation as overhead rather
+than as the only path that could distinguish "stale row" from
+"broken generator". **Lesson.** When two independent handlers of the
+same anomaly disagree, that disagreement IS the evidence that the
+anomaly's class is unknown — and class-unknown anomalies warrant
+investigation regardless of how small the visible instance is.
+**How to apply.** Treat handler-disagreement as an escalation
+trigger in its own right; reserve "accept the mechanical fix" for
+anomalies whose mechanism is already named.

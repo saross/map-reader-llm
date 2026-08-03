@@ -9518,3 +9518,67 @@ promotion — for dated snapshots the era question arguably *is* the
 verification question, and if wave-3 shows the supplementary field
 doing all the interpretive work, the primary/supplementary split
 should be revisited rather than ossifying.
+
+## Session 125 — 2026-08-02/03 — the wave that became a remediation, and six decisions in a row
+
+**Instance**: primary (this instance ran the whole arc; the harness
+summarised earlier context in place, but the episodes below are
+directly experienced, not reconstructed).
+
+### Prompt: What would you do differently if you replayed this session?
+
+Four things, each caught late by machinery that existed precisely to
+catch them. I would not mark a model-comparison gate's overlap range
+as "superseded at assembly" — telling the Sonnet b015 agent its work
+on lines 1–248 would be discarded may have depressed exactly the
+effort the gate was measuring, and the gate verdict had to carry an
+honesty caveat it didn't need. I would partition triage rows against
+the row list, not against my memory of it — 012#48[3] fell out of the
+wave-4 agent split and into a commit message that over-claimed it,
+and only a post-commit accounting pass caught the gap. I would read a
+generator's CLI contract before trusting a no-op — two `--all` runs
+"confirmed" a manifest state that `--write` had never been asked to
+produce, and the D6 investigation nearly closed on a false negative.
+And I would state the blast radius of a "one-row" regeneration before
+running it: the D6 fix legitimately moved 72 rows, which was better
+than the one row promised, but I learned that from the diff rather
+than predicting it. The common shape: the session's verification
+discipline (blind passes, accounting joins, investigate-first) caught
+all four — but each was preventable one step earlier, at authoring
+time, by the instance that knew better.
+
+### Prompt: What felt uncertain or unresolved at the end?
+
+The cost-equivalence result is the honest discomfort: a
+non-inferiority-shaped claim reported with superiority-shaped tests.
+"T=1.0/N=5 shows no detectable penalty against six times the spend"
+is true and useful, but the ±0.038 null intervals mean a real effect
+of the observed size would not have been resolvable — and there is no
+confound-free version of that comparison in the data (T=0.7 is the
+only deep-pool arm, and it alone rides the batch-vs-realtime path
+difference). The paired-MCC ladder resolved the *direction* question
+cleanly (replication of Obs 274, not an exception), but the
+operating-point caveat is live: everything was F1-selected, and an
+MCC-selected N=30 point flips one contrast's sign. If the
+semi-automated-extraction idea (Seed 5) becomes a paper section,
+someone will have to decide whether MCC-optimal selection is the
+right frame — and nothing in this session settles that.
+
+### Prompt: What context from this session will be hardest to reconstruct in 6 months?
+
+Why the temperature story has three simultaneously-true layers, and
+which artefact carries which. Object-level F1 on the deployment
+corpus: lower temperature better (T0.3 > T0.7, the 55-map oracle —
+untouched today). Consensus-level F1 at matched scope: no reliable
+difference (the E72 matched analysis). Tile-level MCC: monotonically
+better at HIGHER temperature via specificity (Obs 274, replicated
+today). The confounded "+0.15 at all pool sizes" claim sat across all
+three layers for four months because it was the only number loud
+enough to remember. A future reader who finds the E43 correction
+block without the remediation report will see the confound; the part
+that will be genuinely hard to reconstruct is that the paper's
+citation-rule firewall (Obs 209) held for prose while its own entry
+misattributed the magnitude — the fix is a rider, the register is
+append-only, and the three-layer story lives in
+`results/e43-matched-temperature/findings.md` §§ 12–13, which is the
+one file to re-read before writing the temperature paragraph.
