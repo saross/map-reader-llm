@@ -161,7 +161,7 @@ Approach B (extended-GT-at-R Hungarian matching); 10,000-iter bootstrap; seed 42
 | R (m) | Image F1 (corrected) | text-HIGH F1 (corrected) | ΔF1 (image − text-HIGH) | CI overlap? |
 |---:|---:|---:|---:|:---:|
 | 50 | 0.833 [0.824, 0.842] | 0.827 [0.817, 0.837] | +0.006 | yes (substantial) |
-| 100 | 0.853 [0.845, 0.862] | 0.832 [0.822, 0.842] | +0.021 | yes (partial) |
+| 100 | 0.853 [0.845, 0.862] | 0.832 [0.822, 0.842] | +0.021 | no |
 
 **Convergence finding**: after per-candidate human review, both tracks reach **F1 ≈ 0.83 at 50 m** — the image track's single-buffer headline (0.833, post-recovery) and text-HIGH's multi-buffer 50 m value (0.827) differ by only +0.006 F1, well inside overlapping bootstrap 95 % CIs. This cross-track convergence under human review is a substantive finding: it indicates that the uncorrected-F1 gap between modalities (text-HIGH > image at ≤ 50 m; see §3) largely reflects student-GT incompleteness and attractor-pull differences, **not** a modality-intrinsic detection-quality gap. At wider buffers (100 m) the image track pulls ahead by +0.021 F1, consistent with its larger buffer-sensitivity (see §3.5). The corrected-GT v2 paired-permutation test confirms the no-significant-difference reading at R=50 m (T=0.7 vs image ΔF1 = −0.0060 ns; image marginally edges by 0.006).
 
@@ -532,6 +532,16 @@ the new values — image [0.845, 0.862] and text-HIGH [0.822, 0.842] are disjoin
 a conclusion, which this pass is not authorised to do.
 
 **Commit**: `723d56a29`.
+
+### 2026-08-03 — §4.2 CI-overlap cell corrected (PI-approved)
+
+The residue flagged above was approved for correction the same day
+(escalation W6-E7): the R = 100 m "CI overlap?" cell now reads **no**
+— image [0.845, 0.862] and text-HIGH [0.822, 0.842] are disjoint
+(0.845 > 0.842), and were disjoint at the pre-refresh values too. The
+surrounding prose already stated the image lead at 100 m; no other
+text moved. The 50 m cell ("yes (substantial)") was checked and is
+correct (0.824 < 0.837).
 
 ### 2026-05-03 — Original publication
 
