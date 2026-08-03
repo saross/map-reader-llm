@@ -6288,6 +6288,18 @@ For the paper, recommend describing 30m as "the approximate minimum
 symbol radius" and noting it as a preregistration deviation (erratum
 E46) with geometric justification. Report both 20m and 30m results.
 
+**Rider (2026-08-03, per Obs 384 / E72 — original text above
+unchanged)**: point 1's "ΔF1 = -0.17 vs T=0.7 at consensus" is NOT a
+Phase 2b figure — it is the E72-confounded consensus magnitude (a
+240-tile arm scored against 487-tile bounds). The preregistered
+Phase 2b deltas are **+0.072 (text, FDR p=0.004) and +0.014 (image,
+ns)**, single-pass K=3; at matched consensus scope there is no
+significant temperature difference and tile-level MCC favours T=1.0
+(`results/e43-matched-temperature/`). The citation DIRECTION this
+observation establishes (cite Phase 2b, not E43) remains correct —
+this rider corrects only the magnitude that crossed the firewall
+inside it. The paper must not attribute −0.17 to Phase 2b.
+
 ---
 
 ## Observation 210: VLM Spatial Accuracy Exceeds Human Volunteers (2026-04-08)
