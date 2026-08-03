@@ -1,6 +1,6 @@
 # 55-map cross-track comparison: image × text-HIGH × text-MIN
 
-> **Last revised**: 2026-08-03 (Session-126 C4 wave-6 repair — audited-cost refresh, recovery-value refresh, method-text corrections). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-08-03 (Session-126 W6-E8 — image corrected-F1 figures re-anchored to the regenerated cand-2397 artefact; the 475-vs-474 gap closed). See [§ Changelog](#changelog) for revision history.
 
 **Created**: 2026-04-24 (Session 76).
 **Scope**: 55 topographic map sheets at 384 px (Era 2 bounds; 8,541 evaluation tiles).
@@ -26,7 +26,7 @@ A fourth corrected run — text-HIGH at decoding temperature T=0.3 — has been 
 **Key findings**:
 
 - **Text beats image at raw F1 at every buffer ≤ 50 m**: text-HIGH at 50 m is 0.792 vs image at 0.774 (ΔF1 = +0.018 raw, post-recovery; at 20 m the gap is +0.118). The image-track's raw F1 handicap at tight buffers is substantial.
-- **Image and text-HIGH converge after human-review correction at 50 m**: corrected F1 for the image track is **0.833** [0.824, 0.842] (post-recovery; +0.001 from pre-recovery 0.832 reflecting the +1 phantom-promoted cand 2397) and for text-HIGH is **0.827** [0.817, 0.837] at 50 m — overlapping CIs, ΔF1 = +0.006 (image − text-HIGH). The text-HIGH corrected-F1 artefact (Session 78, 2026-04-24; refreshed post-recovery 2026-05-03) closes the earlier image-only-reviewed gap. The image-track's per-candidate review rescued **474 phantom-TPs** that the student GT missed at the 50 m buffer (single-buffer calibrated-UI review of 1,028 candidates plus the cross-track-v2 cand 2397 promotion; multi-buffer re-review: 474 at 50 m). text-MIN now also has a corrected F1 (added in cross-track-v2, 585-row multi-buffer review): **0.797** [0.786, 0.808] at 50 m. See §4 for the side-by-side comparison.
+- **Image and text-HIGH converge after human-review correction at 50 m**: corrected F1 for the image track is **0.833** [0.824, 0.842] (2026-08-03 cand-2397 re-run; +0.001 on the 3 d.p. form from pre-recovery 0.832, of which the image recovery supplies +0.0015 at 4 d.p. and the cand-2397 promotion a further +0.0001) and for text-HIGH is **0.827** [0.817, 0.837] at 50 m — overlapping CIs, ΔF1 = +0.006 (image − text-HIGH). The text-HIGH corrected-F1 artefact (Session 78, 2026-04-24; refreshed post-recovery 2026-05-03) closes the earlier image-only-reviewed gap. The image-track's per-candidate review rescued **475 phantom-TPs** that the student GT missed at the 50 m buffer (single-buffer calibrated-UI review of 1,028 candidates plus the cross-track-v2 cand 2397 promotion; multi-buffer re-review: 475 at 50 m). text-MIN now also has a corrected F1 (added in cross-track-v2, 585-row multi-buffer review): **0.797** [0.786, 0.808] at 50 m. See §4 for the side-by-side comparison.
 - **Cost per track**: image $200.83, text-HIGH $207.34, text-MIN $30.44 (per `outputs/<track>/cost_manifest.json`, all three from the 2026-06-12 audited-flex regeneration at commit `8e142df9c`). Image and text-HIGH sit at **approximately equal API cost** — ratio 0.97 ×, a 3.1 % difference, inside the ~5 % approximate-equality band — while text-MIN is materially cheaper at ≈ 6.6 × / 6.8 × less than image / text-HIGH respectively. The image track's 92.87 % prompt-caching hit rate (621.1 M cached tokens of 770.3 M total) is what holds its bill down to text-HIGH parity despite carrying ≈ 4 × the token load.
 - **Twelve paired permutation tests** now exist (4 buffers × 3 contrasts) following the Session 77 image-vs-text runs (2026-04-24). Headline findings (v1, uncorrected GT): **text-HIGH is significantly better than image at every buffer** (ΔF1 = −0.118 / −0.068 / −0.035 / −0.018 at 20 / 30 / 40 / 50 m; all p < 0.001). **text-MIN beats image at tight buffers (20, 30 m)** but **converges with image at 40, 50 m** (not significant; ΔF1 = −0.006 at 40 m, +0.011 at 50 m). For the post-recovery, corrected-GT v2 paired-permutation results (10 buffers × 6 contrasts across all four corrected runs), see `results/55maps-pairwise-permutation-v2/summary.md`; v2 results preserve the sign and significance of every pair at R=50 m: T=0.3 vs T=0.7 ΔF1 = +0.0162 \*\*\*, T=0.3 vs image +0.0102 \*, T=0.7 vs image −0.0060 ns, T=0.3 vs T=MIN +0.0467 \*\*\*, T=0.7 vs T=MIN +0.0305 \*\*\*, image vs T=MIN +0.0365 \*\*\*. The cross-modality significance claim the paper can make at R = 50 m is "text-HIGH significantly exceeds image" (uncorrected v1) but "text-HIGH and image are statistically indistinguishable" (corrected-GT v2 — the v2 finding is the apples-to-apples comparison and supersedes v1 for paper headlines). Image vs text-MIN and text-HIGH vs text-MIN remain significant across both v1 and v2.
 - **Track-specific precision-recall trade-offs**: at 50 m raw, text-HIGH is the most precise (0.847), text-MIN is a close second (0.849), image is the least precise (0.780). Recall is flipped: text-HIGH 0.744, text-MIN 0.691, image 0.769. Image trades precision for recall; text-MIN is the most parsimonious (highest precision, lowest recall).
@@ -140,7 +140,7 @@ Tile-level classification metrics complement mound-level F1: they answer "does e
 
 | Track | Corrected F1 @ 50 m | Multi-buffer corrected F1 | n human-reviewed | Source |
 |-------|--------------------:|:-------------------------:|-----------------:|--------|
-| image | **0.833** [0.824, 0.842] | 0.833 → 0.856 @ 50 → 150 m | 1,028 candidates (calibrated UI, 50 m single-buffer) + 557 re-reviewed multi-buffer + 74 sentinel additions + 1 cand 2397 promoted in cross-track-v2 | `corrected-f1-human-reviewed.md` + `corrected-f1-multi-buffer/report.md` |
+| image | **0.833** [0.824, 0.842] | 0.833 → 0.857 @ 50 → 150 m | 1,028 candidates (calibrated UI, 50 m single-buffer) + 557 re-reviewed multi-buffer + 74 sentinel additions + 1 cand 2397 promoted in cross-track-v2 | `corrected-f1-human-reviewed.md` + `corrected-f1-multi-buffer/report.md` |
 | text-HIGH | **0.827** [0.817, 0.837] | 0.827 → 0.835 @ 50 → 150 m | 630 candidates (multi-buffer review; 32 `>150 m` sentinels excluded; refreshed post-recovery 2026-05-03) | `results/55maps-text-high-generalisation/corrected-f1-multi-buffer/` |
 | text-MIN | **0.797** [0.786, 0.808] | 0.797 → 0.802 @ 50 → 150 m | 585 candidates (multi-buffer review added in cross-track-v2; 250 reviewer-promoted at R=50 m) | `results/55maps-text-min-generalisation/corrected-f1-multi-buffer/` |
 
@@ -161,7 +161,7 @@ Approach B (extended-GT-at-R Hungarian matching); 10,000-iter bootstrap; seed 42
 | R (m) | Image F1 (corrected) | text-HIGH F1 (corrected) | ΔF1 (image − text-HIGH) | CI overlap? |
 |---:|---:|---:|---:|:---:|
 | 50 | 0.833 [0.824, 0.842] | 0.827 [0.817, 0.837] | +0.006 | yes (substantial) |
-| 100 | 0.853 [0.845, 0.862] | 0.832 [0.822, 0.842] | +0.021 | no |
+| 100 | 0.854 [0.845, 0.862] | 0.832 [0.822, 0.842] | +0.021 | no |
 
 **Convergence finding**: after per-candidate human review, both tracks reach **F1 ≈ 0.83 at 50 m** — the image track's single-buffer headline (0.833, post-recovery) and text-HIGH's multi-buffer 50 m value (0.827) differ by only +0.006 F1, well inside overlapping bootstrap 95 % CIs. This cross-track convergence under human review is a substantive finding: it indicates that the uncorrected-F1 gap between modalities (text-HIGH > image at ≤ 50 m; see §3) largely reflects student-GT incompleteness and attractor-pull differences, **not** a modality-intrinsic detection-quality gap. At wider buffers (100 m) the image track pulls ahead by +0.021 F1, consistent with its larger buffer-sensitivity (see §3.5). The corrected-GT v2 paired-permutation test confirms the no-significant-difference reading at R=50 m (T=0.7 vs image ΔF1 = −0.0060 ns; image marginally edges by 0.006).
 
@@ -268,7 +268,7 @@ Key cost notes:
 
 **Derivation of the "Human-reviewed at 50 m" column** (no tracked artefact holds these as scalars): the image figure is the **union** of `results/55maps-image-generalisation/human-review.csv` (1,028 rows, all at `buffer_metres == 50`) and `results/55maps-image-generalisation/human-review-multi-buffer.csv` restricted to `buffer_metres == 50` (286 rows), which adds candidates 2397 and 5641 and carries candidate 5777's `not_mound → mound` label flip from the multi-buffer file — 1,030 reviewed, 475 mound, 555 not-mound. The text-HIGH figure is `verifier-calibration-crosstab/calibration.json` `n_total` = 630. The text-MIN figure is the 585 **data rows** of `results/55maps-text-min-generalisation/human-review-multi-buffer.csv` (a header-inclusive `wc -l` gives 586, which was the source of the superseded figure); `calibration.json` `n_total` = 585 agrees.
 
-The human-review process produced a 475 / 555 mound / not-mound split on the image track (underpinning its corrected-F1 analysis post cand 2397 promotion), a 352 / 278 split on text-HIGH (prevalence 55.9 %), and a 324 / 261 split on text-MIN (prevalence 55.4 %; cross-track-v2 review). Note that the image track's **475** reviewed-mound labels are a different quantity from the **474** `n_reviewer_promoted_at_R` recorded in `corrected-f1-multi-buffer/corrected-f1.csv` at R = 50 m (the figure cited in §1): the latter counts promotions into the extended GT as computed by the corrected-F1 pipeline. The one-candidate difference between the two has not been traced.
+The human-review process produced a 475 / 555 mound / not-mound split on the image track (underpinning its corrected-F1 analysis post cand 2397 promotion), a 352 / 278 split on text-HIGH (prevalence 55.9 %), and a 324 / 261 split on text-MIN (prevalence 55.4 %; cross-track-v2 review). The image track's **475** reviewed-mound labels now agree exactly with the **475** `n_reviewer_promoted_at_R` recorded in `corrected-f1-multi-buffer/corrected-f1.csv` at R = 50 m (the figure cited in §1). The one-candidate gap that stood here until 2026-08-03 — 475 reviewed vs 474 promoted — has been traced and closed: it was **artefact staleness, not a methodological difference**. `corrected-f1-multi-buffer/summary.json` had been written at commit `8699f456b` (2026-05-03T02:45Z), 88 minutes before the cand-2397 review entry landed at `c816d4bd4` (04:13Z), so the pipeline had never seen the 275th mound row. The W6-E8 re-run (2026-08-03, Session 126) recomputed the artefact against the current review CSVs and the count moved 474 → 475. See that report's changelog entry "2026-08-03 (later) — W6-E8" for the full field-by-field diff.
 
 ## 8. Caveats / risk register
 
@@ -414,6 +414,40 @@ Compute: ~4 minutes on sapphire for all 8 image-vs-text paired tests; ~1 minute 
 **Toolchain**: Python ≥ 3.11, GeoPandas ≥ 0.14, NumPy, pandas. Pinned versions in `requirements.txt`.
 
 ## Changelog
+
+### 2026-08-03 (later) — W6-E8: re-anchored to the regenerated image corrected-F1 artefact
+
+**Trigger**: Session-126 wave-6 escalation W6-E8 (PI-approved) re-ran
+`scripts/compute_corrected_f1_multi_buffer.py` for the image track against the current review
+CSVs, because `results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json` had been
+written at commit `8699f456b` (2026-05-03T02:45Z), 88 minutes *before* the cand-2397 review entry
+landed at `c816d4bd4` (04:13Z). Only the figures in this document that anchor to that regenerated
+artefact were touched; the cost, recovery-value, and method-text repairs recorded in the entry below
+are untouched. Full field-by-field diff lives in the source artefact's own changelog
+(`results/55maps-image-generalisation/corrected-f1-multi-buffer/report.md`, entry
+"2026-08-03 (later) — W6-E8").
+
+| Location | Quantity | Before | After | Source |
+|:---|:---|---:|---:|:---|
+| § 1 | Image phantom-TPs rescued at 50 m (2 spans) | 474 | **475** | `corrected-f1-multi-buffer/summary.json` `$.results[0].n_reviewer_promoted_at_R` |
+| § 4 table | Image multi-buffer corrected F1 at 150 m, 3 d.p. | 0.856 | **0.857** | `$.results[4].F1` = 0.8566052684 |
+| § 4.2 table | Image corrected F1 at 100 m, 3 d.p. | 0.853 | **0.854** | `$.results[2].F1` = 0.8535955503 |
+| § 7 | 475-vs-474 reconciliation | "has not been traced" | **traced and closed** — artefact staleness, not methodology | as above |
+
+**What did NOT change**:
+
+- **Image corrected F1 at 50 m stays 0.833 [0.824, 0.842]** at the quoted 3 d.p. precision
+  (0.8332 → 0.8333 at 4 d.p.), so § 1, § 4, § 4.2 and § 9's 50 m headline all stand.
+- **ΔF1 (image − text-HIGH) is unmoved at both anchors**: +0.006 at 50 m (0.8333333 − 0.8273232 =
+  0.006010) and +0.021 at 100 m (0.8535956 − 0.8323750 = 0.021221). The § 4.2 CI-overlap verdicts
+  ("yes (substantial)" at 50 m, "no" at 100 m) and the convergence finding are unaffected.
+- **The § 7 derivation note stays** — the 1,030 / 475 / 555 union and candidate 5777's
+  `not_mound → mound` flip were re-verified against the two CSVs at HEAD and are correct as written.
+- **§ 3.5's known residue is still residue**: its "corrected F1 0.832 → 0.854 from 50 m → 125 m"
+  clause carries pre-recovery endpoints, and the re-run does not move the post-recovery reading
+  (0.833 → 0.855) recorded for it in the entry below, so it was left for the later sweep it was
+  booked to.
+- No text-HIGH or text-MIN figure moved; this re-run touched the image track only.
 
 ### 2026-08-03 — Session-126 C4 wave-6 repair
 

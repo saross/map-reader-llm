@@ -1,19 +1,19 @@
 # Corrected F1 / P / R on the 55-map image set — buffer-stratified
 
-**Timestamp**: 2026-08-03T12:34:34.397796+00:00
+**Timestamp**: 2026-05-03T02:44:01.856114+00:00
 **Methodology**: Approach B — extended-GT-at-R Hungarian matching
 **Bootstrap**: 10,000 iterations, seed 42, tile-level resampling
-**Git commit**: `a6a18b3c42066fd958368182d49744e444d96d33`
+**Git commit**: `da84a3d23f1e0d9803363593709802f0615057fe`
 
 ## F1 curve
 
 | R (m) | TP | FP | FN | n_ref_student | n_promoted@R | n_ref_extended | P [95 % CI] | R [95 % CI] | F1 [95 % CI] |
 |------:|---:|---:|---:|--------------:|-------------:|---------------:|:-----------:|:-----------:|:------------:|
-| 50 | 4125 | 555 | 1095 | 4745 | 475 | 5220 | 0.8814 [0.8715, 0.8907] | 0.7902 [0.7776, 0.8025] | **0.8333** [0.8241, 0.8422] |
-| 75 | 4255 | 425 | 1086 | 4745 | 596 | 5341 | 0.9092 [0.9002, 0.9175] | 0.7967 [0.7844, 0.8086] | **0.8492** [0.8405, 0.8575] |
-| 100 | 4297 | 383 | 1091 | 4745 | 643 | 5388 | 0.9182 [0.9096, 0.9261] | 0.7975 [0.7854, 0.8093] | **0.8536** [0.8450, 0.8617] |
-| 125 | 4314 | 366 | 1093 | 4745 | 662 | 5407 | 0.9218 [0.9133, 0.9297] | 0.7979 [0.7857, 0.8097] | **0.8554** [0.8468, 0.8635] |
-| 150 | 4325 | 355 | 1093 | 4745 | 673 | 5418 | 0.9241 [0.9158, 0.9319] | 0.7983 [0.7861, 0.8101] | **0.8566** [0.8481, 0.8646] |
+| 50 | 4124 | 556 | 1095 | 4745 | 474 | 5219 | 0.8812 [0.8713, 0.8905] | 0.7902 [0.7776, 0.8025] | **0.8332** [0.8240, 0.8421] |
+| 75 | 4254 | 426 | 1086 | 4745 | 595 | 5340 | 0.9090 [0.9000, 0.9173] | 0.7966 [0.7844, 0.8086] | **0.8491** [0.8403, 0.8574] |
+| 100 | 4296 | 384 | 1091 | 4745 | 642 | 5387 | 0.9179 [0.9094, 0.9260] | 0.7975 [0.7854, 0.8093] | **0.8535** [0.8449, 0.8616] |
+| 125 | 4313 | 367 | 1093 | 4745 | 661 | 5406 | 0.9216 [0.9131, 0.9295] | 0.7978 [0.7856, 0.8096] | **0.8552** [0.8468, 0.8634] |
+| 150 | 4324 | 356 | 1093 | 4745 | 672 | 5417 | 0.9239 [0.9156, 0.9317] | 0.7982 [0.7861, 0.8101] | **0.8565** [0.8480, 0.8645] |
 
 ## How to read this table
 
@@ -35,7 +35,7 @@ Yesterday's single-buffer correction (``compute_corrected_f1_human_reviewed.py``
 produced **F1 = 0.8295** at R = 50 m via an analytic adjustment to measured
 counts (moved 472 FPs into TP and added them to the GT denominator, without
 re-running Hungarian). This script's R = 50 m row
-(**F1 = 0.8333**) re-runs Hungarian over extended GT including
+(**F1 = 0.8332**) re-runs Hungarian over extended GT including
 the 2 today-corrections at 50 m. Expected ΔF1 ≈ +0.003 versus yesterday's
 number. The two numbers are methodologically close but not identical —
 Approach B allows detections to rematch optimally against the extended GT,
@@ -72,7 +72,7 @@ is completely indistinguishable.
 ## Practitioner-useful cap: F1 at R = 125 m
 
 Recommended single-number summary for downstream quotation:
-**F1 = 0.8554** at R = 125 m (95 % CI [0.8468, 0.8635]) —
+**F1 = 0.8552** at R = 125 m (95 % CI [0.8468, 0.8634]) —
 the largest R where the attractor-pull contribution to recall is
 statistically distinguishable from within-tile random placement.
 
@@ -87,10 +87,10 @@ the task brief and Obs 272.
 
 - **Inputs**:
   - Detections: `outputs/55maps-image-generalisation/verified/verified_detections.geojson`
-  - Student GT: `/tmp/s126-w6e8/materialised-from-git/student-mounds-55maps-reviewed--blob-60adff7258b328eb93cee2340715a0a5b4e0e923.geojson`
+  - Student GT: `inputs/vectors/references/student-mounds-55maps-reviewed.geojson`
   - Bounds: `inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson`
   - Review (yesterday): `results/55maps-image-generalisation/human-review.csv`
   - Review (today): `results/55maps-image-generalisation/human-review-multi-buffer.csv`
 - **Bootstrap**: 10,000 iterations, seed 42, tile-level resampling
-- **Git commit**: `a6a18b3c42066fd958368182d49744e444d96d33`
+- **Git commit**: `da84a3d23f1e0d9803363593709802f0615057fe`
 - **Script**: `scripts/compute_corrected_f1_multi_buffer.py`
