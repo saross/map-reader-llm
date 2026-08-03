@@ -1,0 +1,39 @@
+{
+  "_README": "Job file for scripts/paired_mcc_permutation.py — the E72 cost-equivalence follow-up commissioned 2026-08-03. Two CROSS-CELL paired tile-level MCC permutation tests answering the principal investigator's practitioner question: can a cheap high-temperature configuration (T=1.0 with a 5-run pool) match or beat an expensive lower-temperature one (T=0.7 with 10-run and 30-run pools)? Unlike the ladder job file (e72-temperature-ladder-2026-08-03.json), these pairs deliberately vary temperature AND pool depth together — that is the point of the comparison, not a confound to apologise for, because a practitioner choosing a configuration chooses both at once. Every operating point is its own arm's best F1@20 m cell in the pre-existing threshold sweep under results/phase3a-text-matrix/ (T=1.0 N=5 -> 5-of-5; T=0.7 N=10 -> 10-of-10; T=0.7 N=30 -> 29-of-30, verified by sweeping all 30 thresholds). Sign convention follows results/e43-matched-temperature/findings.md: A is always the T=0.7 (higher-cost) arm and B the T=1.0/N=5 (cheap) arm, so a NEGATIVE observed_mcc_diff favours the cheap configuration.",
+  "_convention": "Delta = MCC(arm_a) - MCC(arm_b); arm_a is the higher-cost T=0.7 arm, arm_b the cheap T=1.0/N=5 arm.",
+  "_buffer_note": "Tile-level MCC is buffer-invariant in this codebase (tile labels use no spatial tolerance), so each pair yields ONE delta that holds identically at the 20 m and 30 m buffers. F1 at both buffers is tested separately with scripts/pairwise_permutation_test.py --mode geojson.",
+  "_cost_note": "Proposer pass counts are 5 (arm B) against 10 and 30 (arm A) — pass-proportional application programming interface (API) cost. Per-pass gold-standard-corpus figures are anchored in reports/token-load-audit-2026-06-12.md § 4.",
+  "jobs": [
+    {
+      "pair_id": "t07-n10-vs-t10-n5",
+      "note": "Cost-equivalence test 1 — the half-cost question as the PI posed it. T=0.7 with a 10-run pool (10 proposer passes per tile) against T=1.0 with a 5-run pool (5 passes), each at its own best-F1@20 m threshold. Cross-cell: temperature and pool depth both differ.",
+      "label_a": "T=0.7 minimal text, N=10, 10-of-10 (10 passes)",
+      "geojson_a": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n10/consensus_t10.geojson",
+      "expect_a": [
+        "results/e43-matched-temperature/paper-eval/t07-n10-10of10/evaluation.json",
+        "results/phase3a-text-matrix/minimal-t0.7/n10/minimal-t0-7-10of10/evaluation.json"
+      ],
+      "label_b": "T=1.0 minimal text, N=5, 5-of-5 (5 passes)",
+      "geojson_b": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n5/consensus_t5.geojson",
+      "expect_b": [
+        "results/e43-matched-temperature/paper-eval/t10-n5-5of5/evaluation.json",
+        "results/phase3a-text-matrix/minimal-t1.0/n5/minimal-t1-0-5of5/evaluation.json"
+      ]
+    },
+    {
+      "pair_id": "t07-n30-vs-t10-n5",
+      "note": "Cost-equivalence test 2 — the fuller cost rung. T=0.7 at its deepest available pool (30 passes per tile) and its best-F1@20 m operating point 29-of-30 (F1@20 m 0.6611, F1@30 m 0.6694, 530 detections, MCC 0.3814 — identified by sweeping all 30 thresholds under results/phase3a-text-matrix/minimal-t0.7/n30/, confirming the ~29-of-30 expectation recorded in findings.md § 12.7 caveat 1) against T=1.0 with 5 passes. Six times the proposer cost.",
+      "label_a": "T=0.7 minimal text, N=30, 29-of-30 (30 passes)",
+      "geojson_a": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus/consensus_t29.geojson",
+      "expect_a": [
+        "results/phase3a-text-matrix/minimal-t0.7/n30/minimal-t0-7-29of30/evaluation.json"
+      ],
+      "label_b": "T=1.0 minimal text, N=5, 5-of-5 (5 passes)",
+      "geojson_b": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n5/consensus_t5.geojson",
+      "expect_b": [
+        "results/e43-matched-temperature/paper-eval/t10-n5-5of5/evaluation.json",
+        "results/phase3a-text-matrix/minimal-t1.0/n5/minimal-t1-0-5of5/evaluation.json"
+      ]
+    }
+  ]
+}

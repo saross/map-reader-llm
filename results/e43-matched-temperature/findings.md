@@ -1,8 +1,12 @@
 # E43 remediation R1 — matched-scope temperature evidence
 
-> **Last revised**: 2026-08-03 (E72 follow-up: the unpaired-MCC caveat of
-> § 11.2 discharged with nine paired ΔMCC permutation tests, and the
-> result situated against the four-rung temperature ladder; see
+> **Last revised**: 2026-08-03 (E72 follow-up, second pass: cost-equivalent
+> configuration tests — T=1.0/N=5 against T=0.7/N=10 and N=30, six paired
+> tests, all non-significant; see
+> [§ 13](#13-cost-equivalent-configurations--e72-follow-up-2026-08-03).
+> Earlier the same day: the unpaired-MCC caveat of § 11.2 discharged with
+> nine paired ΔMCC permutation tests and situated against the four-rung
+> temperature ladder, see
 > [§ 12](#12-paired-mcc-and-the-temperature-ladder--e72-follow-up-2026-08-03)).
 > See [§ Changelog](#changelog) for revision history.
 
@@ -927,7 +931,266 @@ Artefacts:
 - `ladder-f1/t03-vs-t{07,10}-n10-{20,30}m/pairwise_permutation_result.json`
   — the four new F1 tests.
 
+## 13. Cost-equivalent configurations — E72 follow-up (2026-08-03)
+
+§ 12.4's ladder is descriptive on one point a practitioner cares about
+more than any p-value: the best cell in the whole table on both metrics
+is a **five-pass** configuration. The principal investigator (PI)
+commissioned this section to formalise that observation. The question is
+not "which temperature is better at matched pool depth?" — that is § 12 —
+but "**can a practitioner buy similar-or-better output for half (or a
+sixth) of the proposer calls?**"
+
+**Produced**: 2026-08-03, on sapphire, from repository commit
+`9ebc9e523`. Zero API calls; every figure derives from on-disk
+detections and from evaluations already filed in this repository.
+
+**Why these contrasts are deliberately cross-cell.** Every test in § 4
+and § 12.3 holds pool depth fixed and varies temperature. These two vary
+**both at once** — which would be a confound if the question were about
+temperature, and is the entire point when the question is about
+configurations. A practitioner does not choose a temperature and a pool
+depth independently; they choose a configuration and pay for it. So the
+comparison is read as "configuration X versus configuration Y", not as
+"temperature X versus temperature Y", and no mechanism is attributed to
+either factor alone.
+
+### 13.1 The three configurations
+
+Each arm sits at its own best-F1@20 m operating point in the pre-existing
+threshold sweep under `results/phase3a-text-matrix/` — the § 3
+convention, applied symmetrically. All three are sub-pools of the same
+parent study, `outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/`, all
+487/487 tiles, all verified strict first-N pools (§ 3.1, § 12.4).
+
+| Configuration | Passes/tile | Threshold | Consensus GeoJSON | Detections | F1@20 m | F1@30 m | MCC | Sens. | Spec. |
+| :--- | ---: | :--- | :--- | ---: | ---: | ---: | ---: | ---: | ---: |
+| T=1.0, N=5 | **5** | 5-of-5 | `text-t1.0/consensus-n5/consensus_t5.geojson` | 509 | 0.6610 | 0.6674 | **0.4065** | 0.8035 | 0.5969 |
+| T=0.7, N=10 | 10 | 10-of-10 | `text-t0.7/consensus-n10/consensus_t10.geojson` | 560 | 0.6332 | 0.6412 | 0.3655 | 0.8341 | 0.5155 |
+| T=0.7, N=30 | 30 | 29-of-30 | `text-t0.7/consensus/consensus_t29.geojson` | 530 | 0.6611 | 0.6694 | 0.3814 | 0.8166 | 0.5543 |
+
+The N=30 operating point was **verified, not assumed**: all 30 thresholds
+in `results/phase3a-text-matrix/minimal-t0.7/n30/` were swept, and
+F1@20 m peaks at 29-of-30 (0.6611; the neighbours are 28-of-30 at 0.6499
+and 30-of-30 at 0.6584). This confirms the "~29-of-30" expectation
+recorded in § 12.7 caveat 1. Feature counts read from the GeoJSONs
+(509 / 560 / 530) agree with the `n_detections` recorded in each cell's
+`evaluation.json`.
+
+### 13.2 Paired tests — F1 at both buffers, and MCC
+
+Same harness and settings as §§ 4 and 12.3: 487 tiles, 10,000
+permutations, seed 42, bounds
+`inputs/vectors/bounds/384/full_evaluation_bounds.geojson`, ground truth
+`inputs/vectors/references/mounds-reference.geojson`. **Condition A is
+the higher-cost T=0.7 arm, condition B the five-pass T=1.0 arm**, so
+Δ = A − B and **a negative Δ favours the cheap configuration** — the same
+orientation as the rest of this document, where negative favours T=1.0.
+
+Tile-level MCC is buffer-invariant (§ 12.2), so each contrast yields one
+ΔMCC that holds identically at 20 m and 30 m; F1 is tested at both.
+
+| Contrast | Passes (A vs B) | ΔF1@20 m | p | ΔF1@30 m | p | ΔMCC | Paired p | Discordant tiles (A-only / B-only) | McNemar exact p |
+| :--- | :--- | ---: | ---: | ---: | ---: | ---: | ---: | :--- | ---: |
+| T=0.7 N=10 vs T=1.0 N=5 | 10 vs 5 | −0.0279 | 0.1744 | −0.0262 | 0.2053 | −0.0410 | 0.2921 | 98 (42 / 56) | 0.1888 |
+| T=0.7 N=30 vs T=1.0 N=5 | 30 vs 5 | +0.0001 | 0.9793 | +0.0021 | 0.9353 | −0.0252 | 0.5306 | 100 (46 / 54) | 0.4841 |
+
+Supporting detail, for reference:
+
+| Contrast | Buffer | F1 (A) | F1 (B) | Wins/losses/ties | Null 95 % CI |
+| :--- | ---: | ---: | ---: | :--- | :--- |
+| T=0.7 N=10 vs T=1.0 N=5 | 20 m | 0.6332 | 0.6610 | 24/33/430 | [−0.0394, +0.0390] |
+| T=0.7 N=10 vs T=1.0 N=5 | 30 m | 0.6412 | 0.6674 | 25/32/430 | [−0.0396, +0.0390] |
+| T=0.7 N=30 vs T=1.0 N=5 | 20 m | 0.6611 | 0.6610 | 25/27/435 | [−0.0377, +0.0377] |
+| T=0.7 N=30 vs T=1.0 N=5 | 30 m | 0.6694 | 0.6674 | 26/26/435 | [−0.0384, +0.0384] |
+
+Both arms of both MCC contrasts passed the confusion-reproduction gate of
+§ 12.1 — the T=1.0 N=5 and T=0.7 N=10 arms against two independent
+recorded references apiece, the T=0.7 N=30 arm against its
+`phase3a-text-matrix` sweep evaluation. The rightmost column is the same
+independent exact-McNemar cross-check used in § 12.3, computed with
+`scipy.stats.binomtest` on the discordant tiles; it agrees with the
+permutation test on the α = 0.05 verdict in both rows. Raw p-values, per
+§ 8 caveat 7; no BH correction is reported because nothing here is
+significant to begin with, so no correction could change a verdict.
+
+### 13.3 Cost framing
+
+Per-pass costs for **this exact study family** are audited in
+`reports/token-load-audit-2026-06-12.md` § 4, at the gold-standard
+487-tile corpus scale and at Gemini's flex service tier (the tier every
+run in this family executed at):
+
+- **T=1.0 minimal text, measured at 487 tiles**: **$0.289/pass**, from
+  the ten `outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_*/`
+  metadata files — the very runs pooled here.
+- **T=0.7 minimal text: $0.266/pass, scaled not measured.** The 30
+  gold-standard T=0.7 metas are Batch API records with zero usage
+  (`usage_stats` all 0), so the audit scales the ten measured 55-map
+  minimal passes by 487/8,541. This is the `MIN_PASS_USD` constant
+  adopted in `scripts/build_pareto_v2.py` (audit § 5).
+
+| Configuration | Passes/tile | Proposer cost, 487 tiles | Per tile | Relative |
+| :--- | ---: | ---: | ---: | ---: |
+| T=1.0, N=5 | 5 | $1.45 | $0.0030 | **1.00×** |
+| T=0.7, N=10 | 10 | $2.66 | $0.0055 | 1.84× |
+| T=0.7, N=30 | 30 | $7.98 | $0.0164 | 5.52× |
+
+Two framings, and the pass ratio is the more portable of them:
+
+1. **Pass ratio (model- and price-independent)**: 1 : 2 : 6. Proposer API
+   calls are strictly proportional to pool depth — one call per tile per
+   pass — so this ratio survives any repricing, any provider, and any
+   corpus size.
+2. **Dollar ratio (this study family, flex tier, 2026-06-12 prices)**:
+   1.00 : 1.84 : 5.52. It is slightly flatter than the pass ratio because
+   T=1.0 costs marginally *more* per pass than T=0.7 ($0.289 against
+   $0.266 — higher temperature buys slightly longer outputs). Doubling
+   both figures gives standard-tier prices; the audit records standard as
+   exactly 2× flex.
+
+Neither figure includes a verifier stage: these are proposer-consensus
+cells with no verification pass, so the comparison is proposer-side only
+and complete on its own terms.
+
+### 13.4 What the tests support
+
+**The honest answer to the PI's question: yes, descriptively, and the
+paired tests decline to contradict it — but they cannot confirm it
+either.**
+
+- **Against N=10 (half the calls)**, the five-pass T=1.0 configuration is
+  ahead on every metric measured: +0.0279 F1@20 m, +0.0262 F1@30 m,
+  +0.0410 MCC. Not one of those differences is significant
+  (p = 0.17, 0.21, 0.29). The direction is consistent, the evidence is
+  weak, and the correct summary is "**no penalty detected for halving the
+  proposer budget, with a consistent non-significant hint of a gain**".
+- **Against N=30 (a sixth of the calls)**, F1 is a dead heat — 0.6611
+  against 0.6610 at 20 m, a gap of 0.0001, p = 0.9793 — while MCC still
+  favours the cheap arm by 0.0252 (p = 0.5306). Six times the proposer
+  spend buys, on this corpus, **nothing measurable on F1 and a
+  non-significant deficit on tile-level MCC**.
+- **What "not significant" costs here.** The 20 m null 95 % intervals are
+  ±0.038–0.039 F1, so these tests cannot resolve a true difference
+  smaller than about 0.04 F1 in either direction. The N=10 contrast
+  (−0.028) sits inside that band; a real advantage of that size would not
+  be detectable at this corpus size. **This is a non-inferiority-shaped
+  result reported with a superiority-shaped test**, and it should be
+  read as "no detectable penalty", never as "proven equivalent".
+- **Where the mechanism points.** The § 12.6 signature carries over: the
+  cheap arm emits the fewest detections of the three (509 against 560 and
+  530), has the lowest tile-level sensitivity (0.8035) and the highest
+  specificity (0.5969). It buys its MCC edge by rejecting empty tiles, not
+  by finding more mounds. A practitioner whose loss function is
+  recall-dominated — screening for candidates to be checked by eye — may
+  rationally prefer the deeper T=0.7 pools despite the cost, and should
+  make that choice on their own loss function rather than on these
+  aggregate numbers.
+
+### 13.5 Caveats
+
+These are additional to, not instead of, § 8 and § 12.7.
+
+1. **The operating points are F1-selected** (§ 12.7 caveat 1). Each arm
+   sits at its own best F1@20 m cell and MCC is read off it. The N=30 arm
+   is the sharpest illustration: at 30-of-30 it scores MCC 0.4234 —
+   *above* the cheap arm's 0.4065 — on a lower F1 (0.6584). **An
+   MCC-selected N=30 operating point would reverse the sign of the MCC
+   contrast in row 2.** The F1 result is unaffected by this (F1 is the
+   selection criterion, and 29-of-30 is its optimum), but the MCC column
+   of row 2 is selection-dependent and must not be quoted alone.
+2. **The T=0.7 arms carry the batch-path and date difference** (§ 8
+   caveats 2 and 3, § 12.7 caveat 4). Both T=0.7 arms here ran
+   2026-03-24 via the asynchronous Batch API; the T=1.0 arm ran
+   2026-04-17 via the governed real-time path. Every contrast in § 13.2
+   inherits that uncontrolled variable. Unlike § 12.5's clean
+   T=0.3-versus-T=1.0 contrast, there is no confound-free version of the
+   cost comparison available in these data, because T=0.7 is the only arm
+   with pools deeper than 10.
+3. **Cross-cell by construction.** Temperature and pool depth vary
+   together (§ 13, opening). These rows license configuration-level
+   claims only; no factor-level mechanism may be attributed from them.
+4. **The T=0.7 per-pass cost is scaled, not measured** (§ 13.3). The
+   audit brackets the analogous HIGH-thinking scaling within its measured
+   gold-standard range, but the minimal-text T=0.7 figure has no
+   gold-standard measurement to check it against. The **pass ratio**
+   (1 : 2 : 6) carries no such uncertainty and is the figure to quote if
+   only one is quoted.
+5. **Exploratory, single corpus, no registered family.** Four-map
+   gold-standard corpus at 384 px, one model, one prompt, one thinking
+   level. Six new tests, all non-significant, raw p-values, not members
+   of any registered BH family. This section changes no registered claim
+   and mints no condition; it is decision support for a practitioner
+   question, not preregistered hypothesis evidence.
+6. **Absence of evidence, not equivalence.** Restating § 13.4 because it
+   is the failure mode this section most invites: a non-significant ΔF1
+   of 0.0001 is a dead heat *in these data*, not a demonstration that the
+   two configurations are interchangeable.
+
+### 13.6 Reproduction
+
+Run from the repository root on sapphire with the project virtual
+environment. Zero API calls; about 15 seconds.
+
+```bash
+# 1. the two paired MCC tests (dry-run first — gates run, permutations
+#    do not, nothing is written)
+.venv/bin/python scripts/paired_mcc_permutation.py \
+    --jobs planning/paired-mcc-jobs/e72-cost-equivalent-2026-08-03.json \
+    --output-dir results/e43-matched-temperature/cost-equivalent/paired-mcc
+.venv/bin/python scripts/paired_mcc_permutation.py \
+    --jobs planning/paired-mcc-jobs/e72-cost-equivalent-2026-08-03.json \
+    --output-dir results/e43-matched-temperature/cost-equivalent/paired-mcc \
+    --seed 42 --n-permutations 10000 --execute
+
+# 2. the four paired F1 tests (two contrasts x 20 m and 30 m), e.g.
+S=outputs/h11/pv-diag-384/flash-minimal-text-n30-t07
+.venv/bin/python scripts/pairwise_permutation_test.py --mode geojson \
+    --geojson-a $S/text-t0.7/consensus/consensus_t29.geojson \
+    --geojson-b $S/text-t1.0/consensus-n5/consensus_t5.geojson \
+    --label-a "Flash MIN text T=0.7 29-of-30 (487-tile, first-30, 30 passes)" \
+    --label-b "Flash MIN text T=1.0 5-of-5 (487-tile, first-5, 5 passes)" \
+    --bounds inputs/vectors/bounds/384/full_evaluation_bounds.geojson \
+    --ground-truth inputs/vectors/references/mounds-reference.geojson \
+    --buffer-metres 20 --n-permutations 10000 --seed 42 \
+    --output-dir results/e43-matched-temperature/cost-equivalent/f1/t07n30-vs-t10n5-20m
+```
+
+Artefacts:
+
+- `cost-equivalent/paired-mcc/paired_mcc_summary.json` and
+  `cost-equivalent/paired-mcc/<pair_id>.json` — the two MCC tests, null
+  distributions, gate records, and the full 487-row per-tile
+  classification for each arm.
+- `cost-equivalent/f1/t07n{10,30}-vs-t10n5-{20,30}m/pairwise_permutation_result.json`
+  — the four F1 tests.
+
 ## Changelog
+
+### 2026-08-03 (later) — cost-equivalent configurations (E72 follow-up)
+
+**Trigger**: PI commission of 2026-08-03, arising from § 12.4's ladder —
+the best cell on both F1 and MCC is a five-pass configuration, which
+raises a practitioner question the ladder was not built to answer: can
+T=1.0 with N=5 match or beat T=0.7 with N=10 (half the proposer calls) or
+N=30 (a sixth)? The ladder answered descriptively; this section
+formalises it with paired tests and states the cost basis.
+
+| Claim | Before | After |
+|---|---|---|
+| Cost-equivalence evidence | descriptive only — § 12.4 ladder rows read side by side | six paired permutation tests (two contrasts × F1@20 m, F1@30 m, MCC), 487 tiles, 10,000 permutations, seed 42, each MCC test cross-checked against an exact McNemar test (§ 13.2) |
+| T=1.0/N=5 vs T=0.7/N=10 | F1 0.6610 vs 0.6332, MCC 0.4065 vs 0.3655, untested | ΔF1@20 m −0.0279 (p = 0.1744), ΔF1@30 m −0.0262 (p = 0.2053), ΔMCC −0.0410 (p = 0.2921) — cheap arm ahead on all three, **none significant** |
+| T=1.0/N=5 vs T=0.7/N=30 | not compared at 487 tiles | ΔF1@20 m **+0.0001** (p = 0.9793), ΔF1@30 m +0.0021 (p = 0.9353), ΔMCC −0.0252 (p = 0.5306) — a dead heat on F1 at six times the proposer spend |
+| T=0.7 N=30 operating point | "~29-of-30" inferred in § 12.7 caveat 1 | **verified** by sweeping all 30 thresholds: F1@20 m peaks at 29-of-30 (0.6611; neighbours 0.6499 and 0.6584), 530 detections, MCC 0.3814 (§ 13.1) |
+| Cost basis | not stated in this document | pass ratio 1 : 2 : 6, and audited flex-tier per-pass figures for this exact study family — T=1.0 $0.289/pass measured at 487 tiles, T=0.7 $0.266/pass scaled (`reports/token-load-audit-2026-06-12.md` § 4) → $1.45 / $2.66 / $7.98 per 487-tile run, 1.00× / 1.84× / 5.52× (§ 13.3) |
+| Selection sensitivity of the N=30 MCC row | not assessed | flagged as **sign-reversing**: at an MCC-selected 30-of-30 the N=30 arm scores MCC 0.4234, above the cheap arm's 0.4065 (§ 13.5 caveat 1) |
+
+What did NOT change: every figure in §§ 1–12 and their changelog
+entries. The four § 3 operating points, the § 12.3 nine-test ΔMCC table,
+the § 12.4 ladder, and the § 12.5–12.6 interpretation all stand
+untouched; § 13 only adds cross-cell contrasts alongside them. No
+conditions were minted, no evaluation was re-scored, no registered claim
+was changed. Zero API calls; all computation on sapphire.
 
 ### 2026-08-03 — paired MCC tests and the temperature ladder (E72 follow-up)
 
