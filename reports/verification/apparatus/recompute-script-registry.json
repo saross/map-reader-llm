@@ -1682,6 +1682,44 @@
     ]
    },
    "note": "Significant pairs involving high-T0.0. The predicate language has no disjunction, so this counts ALL significant pairs; the claim's own framing ('all 5 significant pairs are it-vs-others') makes the two identical, and the sibling spec (value_index 1) independently verifies that no significant pair sits inside the N=5 set. Executed 5 (document quotes '5')."
+  },
+  {
+   "batch": "032",
+   "claim_index": 44,
+   "value_index": 0,
+   "runner": "glob-count",
+   "params": {
+    "root": "archive/outputs-pre-retest-60-tile/phase2d",
+    "glob": "*/*",
+    "kind": "dir"
+   },
+   "note": "Session-126 wave-5 triage (blind pass BC): phase2d condition census — 2 tracks x {minimal, terse, verbose} = 6 condition directories, all real. Executed 6 (document quotes '6')."
+  },
+  {
+   "batch": "032",
+   "claim_index": 44,
+   "value_index": 1,
+   "runner": "glob-count",
+   "params": {
+    "root": "archive/outputs-pre-retest-60-tile/phase2d",
+    "glob": "*/*/run_*",
+    "kind": "dir",
+    "count_symlink_entries": true
+   },
+   "note": "Session-126 wave-5 triage (blind pass BC): phase2d run census — 60 run directories of which 20 are git-tracked carried-forward symlinks into phase2b/2c (count_symlink_entries mirrors find's entry-listing semantics). Executed 60 (document quotes '60')."
+  },
+  {
+   "batch": "032",
+   "claim_index": 44,
+   "value_index": 4,
+   "runner": "glob-count",
+   "params": {
+    "root": "archive/outputs-pre-retest-60-tile/phase2d",
+    "glob": "*/*/run_*",
+    "kind": "dir",
+    "count_symlink_entries": true
+   },
+   "note": "Session-126 wave-5 triage: same census as 032#44[1] (the JSONL denominator restates the run count). Executed 60 (document quotes '60')."
   }
  ]
 }

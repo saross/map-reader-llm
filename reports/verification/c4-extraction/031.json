@@ -1,1063 +1,1063 @@
 {
-  "schema_version": "1.1",
-  "extracted_at": "2026-08-03T00:00:00Z",
-  "source_document": {
-    "file": "reports/configuration-audit-2026-03-25-v2.md",
-    "git_blob": "04fa02c6f553",
-    "stratum": "hand-written"
-  },
-  "extractor": {
-    "model": "claude-opus-5",
-    "instrument_version": "1.2"
-  },
-  "claims": [
+ "schema_version": "1.1",
+ "extracted_at": "2026-08-03T00:00:00Z",
+ "source_document": {
+  "file": "reports/configuration-audit-2026-03-25-v2.md",
+  "git_blob": "04fa02c6f553",
+  "stratum": "hand-written"
+ },
+ "extractor": {
+  "model": "claude-opus-5",
+  "instrument_version": "1.2"
+ },
+ "claims": [
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     218,
+     218
+    ],
+    "section": "Section 3: Confound Matrix (Corrected) -- Summary of Confound Status"
+   },
+   "claim_text": "- Temperature T0.7 vs T1.0 (temperature only, though T1.0 unintentional)",
+   "values": [
     {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          218,
-          218
-        ],
-        "section": "Section 3: Confound Matrix (Corrected) -- Summary of Confound Status"
-      },
-      "claim_text": "- Temperature T0.7 vs T1.0 (temperature only, though T1.0 unintentional)",
-      "values": [
-        {
-          "quantity": "temperature parameter as run, flash-minimal-text-n30-t07 (the T0.7 arm of the temperature comparison)",
-          "value_verbatim": "T0.7",
-          "value_parsed": 0.7,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.configuration.temperature",
-          "method": "read"
-        },
-        {
-          "quantity": "temperature parameter as run, consensus-384 (the T1.0 arm of the temperature comparison)",
-          "value_verbatim": "T1.0",
-          "value_parsed": 1.0,
-          "unit": null,
-          "kind": "parameter",
-          "path": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json#$.configuration.temperature",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.meta.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "[BATCH NOTE b031] Assignment: lines 211-413 (EOF) of a v2 correction document; lines 1-210 belong to batch b030 and no span here begins before line 211. Scope decisions logged explicitly: (a) NO `historical` values arose in this range -- the v1->v2 correction blocks that quote superseded values (Correction Summary table, Section 2 Expected/Actual columns) all sit at lines 1-210, and the corrections inside lines 211-413 change model-name strings, not numbers; (b) consensus labels of the form '3-of-5' / '5-of-5' / '26-of-30' are treated as condition names (rule 5), EXCEPT where the document attaches the word 'threshold' ('threshold 3 vs 5', line 230; '(3-of-5 threshold)', lines 313 and 317), where they are extracted as parameter claims; (c) out of C4 scope per rule 5: 'Phase 3a', 'v1'/'v2', E40/E42/WARNING-1/CRITICAL-1 identifiers, 'Session 57', script version 1.5.0, git 765cb232, source-line citations (line 676, line 727), digits inside model names (gemini-3-flash, gemini-3.1-pro-preview), and digits inside condition/directory names (consensus-384, single-pass-384, 'Flash MINIMAL-T0.7', flash-minimal-text-n30-t07, pro-high-text-n5); (d) the pairwise permutation files the document names by basename resolve to archive/results-60-tile-validation/h11-384-pairwise-n5/ -- no live copy exists elsewhere in the tree. Claim-specific: the bullet's third numeric token ('though T1.0 unintentional') re-asserts the same temperature and is not listed as a separate value. Arm identification (T0.7 = flash-minimal-text-n30-t07, T1.0 = consensus-384) follows the confound-matrix rows at lines 207-209, which are outside this batch's range; the T1.0 corpus is the directory now named outputs/h11/consensus-384-UNINTENDED-T1.0."
+     "quantity": "temperature parameter as run, flash-minimal-text-n30-t07 (the T0.7 arm of the temperature comparison)",
+     "value_verbatim": "T0.7",
+     "value_parsed": 0.7,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.configuration.temperature",
+     "method": "read"
     },
     {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          226,
-          226
-        ],
-        "section": "Section 3: Confound Matrix (Corrected) -- Summary of Confound Status"
-      },
-      "claim_text": "- Flash HIGH text vs consensus-384 (T=1.0 bug)",
-      "values": [
-        {
-          "quantity": "temperature parameter as run, consensus-384",
-          "value_verbatim": "1.0",
-          "value_parsed": 1.0,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.configuration.temperature",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json",
-        "path": "$.configuration.temperature"
-      },
-      "method": "read",
-      "notes": "Doubt flagged per instrument preamble: 'T=1.0 bug' doubles as the standing label for the known issue as well as an assertion of the temperature actually run; included because the number is asserted as fact elsewhere in the same document. Anchored to run_1 of the consensus-384 corpus."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          230,
-          230
-        ],
-        "section": "Section 3: Confound Matrix (Corrected) -- Summary of Confound Status"
-      },
-      "claim_text": "- Pro HIGH text vs Flash HIGH text (model + threshold 3 vs 5)",
-      "values": [
-        {
-          "quantity": "consensus vote threshold, Pro HIGH text arm of the Pro-vs-Flash text pairwise comparison",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.condition_a.config.threshold",
-          "method": "read"
-        },
-        {
-          "quantity": "consensus vote threshold, Flash HIGH text arm of the Pro-vs-Flash text pairwise comparison",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.condition_b.config.threshold",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "archive/results-60-tile-validation/h11-384-pairwise-n5/permutation-pro-high-text-3-of-5-vs-flash-high-text-5-of-5-20m.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Bare parameter assertion ('threshold 3 vs 5'), so extracted despite the batch's general treatment of '3-of-5'-style labels as condition names. Anchored to the pairwise permutation record the document cites at lines 306-311 for this comparison."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          240,
-          242
-        ],
-        "section": "Section 4: Cross-Run Consistency Exceptions"
-      },
-      "claim_text": "Additionally confirmed: all 5 runs within pro-high-text-n5 are mutually\nconsistent (same model, temperature, thinking level), and all 5 runs within\npro-high-image-n5 are mutually consistent.",
-      "values": [
-        {
-          "quantity": "run count, pv-diag-384/pro-high-text-n5",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": null,
-          "kind": "count",
-          "path": "$.runs_per_condition",
-          "method": "read"
-        },
-        {
-          "quantity": "run count, pv-diag-384/pro-high-image-n5",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": null,
-          "kind": "count",
-          "path": "outputs/h11/pv-diag-384/pro-high-image-n5/study_manifest.json#$.runs_per_condition",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
-        "path": "$.runs_per_condition"
-      },
-      "method": "read",
-      "notes": "Anchor-identification caveat for triage: outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json now describes an N=10 extension ($.study.name 'H11: 384px Pro HIGH — Text N=10', $.study.created 2026-03-29), post-dating this 2026-03-25 audit; the pro-high-image-n5 manifest is dated 2026-03-24. Not adjudicated here."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          248,
-          248
-        ],
-        "section": "Section 5: Recommendations (Corrected) -- CRITICAL-1: meta.json configuration.model Bug"
-      },
-      "claim_text": "### CRITICAL-1: meta.json `configuration.model` Bug (12 runs)",
-      "values": [
-        {
-          "quantity": "run count, H11 Pro proposer runs affected by the meta.json configuration.model bug",
-          "value_verbatim": "12",
-          "value_parsed": 12,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a + b + c + d",
-          "operands": [
-            {
-              "name": "a",
-              "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "b",
-              "file": "outputs/h11/pv-diag-384/pro-high-image-n5/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "c",
-              "file": "outputs/h11/pv-diag-384/pro-medium-text-baseline/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "d",
-              "file": "outputs/h11/pv-diag-384/pro-medium-image-baseline/study_manifest.json",
-              "path": "$.runs_per_condition"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
-        "path": null
-      },
-      "method": "arithmetic",
-      "notes": "Anchored arithmetically to the four Pro condition study manifests ($.runs_per_condition each). Anchor-identification caveat for triage: outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json now describes an N=10 extension ($.study.name 'H11: 384px Pro HIGH — Text N=10', $.study.created 2026-03-29), i.e. it post-dates this 2026-03-25 audit; no committed artefact records the H11 Pro run inventory as it stood at audit time. Not adjudicated here."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          250,
-          252
-        ],
-        "section": "Section 5: Recommendations (Corrected) -- CRITICAL-1: meta.json configuration.model Bug"
-      },
-      "claim_text": "**Status:** Bug confirmed. The `configuration.model` field in meta.json for\nall 12 Pro runs reads `gemini-3-flash` (the config JSON default) instead of\n`gemini-3.1-pro-preview` (the actual model used).",
-      "values": [
-        {
-          "quantity": "run count, Pro runs whose meta.json configuration.model records the config-JSON default",
-          "value_verbatim": "12",
-          "value_parsed": 12,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a + b + c + d",
-          "operands": [
-            {
-              "name": "a",
-              "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "b",
-              "file": "outputs/h11/pv-diag-384/pro-high-image-n5/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "c",
-              "file": "outputs/h11/pv-diag-384/pro-medium-text-baseline/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "d",
-              "file": "outputs/h11/pv-diag-384/pro-medium-image-baseline/study_manifest.json",
-              "path": "$.runs_per_condition"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
-        "path": null
-      },
-      "method": "arithmetic",
-      "notes": "Anchored arithmetically to the four Pro condition study manifests ($.runs_per_condition each). Anchor-identification caveat for triage: outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json now describes an N=10 extension ($.study.name 'H11: 384px Pro HIGH — Text N=10', $.study.created 2026-03-29), i.e. it post-dates this 2026-03-25 audit; no committed artefact records the H11 Pro run inventory as it stood at audit time. Not adjudicated here. The model-name strings in this span are not numeric claims (rule 5)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          266,
-          267
-        ],
-        "section": "Section 5: Recommendations (Corrected) -- CRITICAL-1: meta.json configuration.model Bug"
-      },
-      "claim_text": "1. Patch the 12 meta.json files to correct `configuration.model` to\n   `gemini-3.1-pro-preview`, or",
-      "values": [
-        {
-          "quantity": "file count, Pro-run meta.json files proposed for patching (one per Pro run)",
-          "value_verbatim": "12",
-          "value_parsed": 12,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a + b + c + d",
-          "operands": [
-            {
-              "name": "a",
-              "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "b",
-              "file": "outputs/h11/pv-diag-384/pro-high-image-n5/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "c",
-              "file": "outputs/h11/pv-diag-384/pro-medium-text-baseline/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "d",
-              "file": "outputs/h11/pv-diag-384/pro-medium-image-baseline/study_manifest.json",
-              "path": "$.runs_per_condition"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
-        "path": null
-      },
-      "method": "arithmetic",
-      "notes": "Anchored arithmetically to the four Pro condition study manifests ($.runs_per_condition each). Anchor-identification caveat for triage: outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json now describes an N=10 extension ($.study.name 'H11: 384px Pro HIGH — Text N=10', $.study.created 2026-03-29), i.e. it post-dates this 2026-03-25 audit; no committed artefact records the H11 Pro run inventory as it stood at audit time. Not adjudicated here. The count is a recommendation-side restatement of the 12-run figure; no artefact independently enumerates the meta.json files."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          283,
-          283
-        ],
-        "section": "Section 5: Recommendations (Corrected) -- HIGH-1: consensus-384 T=1.0 Bug"
-      },
-      "claim_text": "### HIGH-1: consensus-384 T=1.0 Bug (30 runs)",
-      "values": [
-        {
-          "quantity": "temperature parameter as run, consensus-384",
-          "value_verbatim": "1.0",
-          "value_parsed": 1.0,
-          "unit": null,
-          "kind": "parameter",
-          "path": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json#$.configuration.temperature",
-          "method": "read"
-        },
-        {
-          "quantity": "run count, consensus-384",
-          "value_verbatim": "30",
-          "value_parsed": 30,
-          "unit": null,
-          "kind": "count",
-          "path": "$.runs_per_condition",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/study_manifest.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "consensus-384 is the directory now named outputs/h11/consensus-384-UNINTENDED-T1.0; the temperature value is read from run_1's meta.json via a cross-file locator (v1.2 amendment 2)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          288,
-          288
-        ],
-        "section": "Section 5: Recommendations (Corrected) -- HIGH-2: single-pass-384 T=1.0 Bug"
-      },
-      "claim_text": "### HIGH-2: single-pass-384 T=1.0 Bug (10 runs)",
-      "values": [
-        {
-          "quantity": "temperature parameter as run, single-pass-384",
-          "value_verbatim": "1.0",
-          "value_parsed": 1.0,
-          "unit": null,
-          "kind": "parameter",
-          "path": "archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json#$.configuration.temperature",
-          "method": "read"
-        },
-        {
-          "quantity": "run count, single-pass-384",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": null,
-          "kind": "count",
-          "path": "$.runs_per_condition",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/study_manifest.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "single-pass-384 (T=1.0 era) was archived to archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0; the later T=0 rerun lives at outputs/retest/h11-single-pass-384-t0 and is NOT the corpus this claim describes."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          292,
-          292
-        ],
-        "section": "Section 5: Recommendations (Corrected) -- WARNING-1: Phase 3a directory mislabelling"
-      },
-      "claim_text": "### WARNING-1: Phase 3a \"-high\" Directory Mislabelling (180 runs)",
-      "values": [
-        {
-          "quantity": "run count, Phase 3a '-high' directories affected by the thinking-level mislabelling (track1-image-high plus track2-text-high)",
-          "value_verbatim": "180",
-          "value_parsed": 180,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a * b + c * d",
-          "operands": [
-            {
-              "name": "a",
-              "file": "archive/outputs-pre-retest-60-tile/phase3a/track1-image-high/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "b",
-              "file": "archive/outputs-pre-retest-60-tile/phase3a/track1-image-high/study_manifest.json",
-              "path": "len:$.conditions"
-            },
-            {
-              "name": "c",
-              "file": "archive/outputs-pre-retest-60-tile/phase3a/track2-text-high/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "d",
-              "file": "archive/outputs-pre-retest-60-tile/phase3a/track2-text-high/study_manifest.json",
-              "path": "len:$.conditions"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "archive/outputs-pre-retest-60-tile/phase3a/track1-image-high/study_manifest.json",
-        "path": null
-      },
-      "method": "arithmetic",
-      "notes": "Derived as runs-per-condition x conditions for each of the two mislabelled tracks; the pre-retest Phase 3a corpora sit under archive/outputs-pre-retest-60-tile/phase3a/. The document's per-track figures (90 each) are stated at lines 159-160, outside this batch's range."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          304,
-          304
-        ],
-        "section": "Section 5: Recommendations (Corrected) -- NEW: Scientific Implications of Corrected Model Identification"
-      },
-      "claim_text": "The discovery that 12 runs genuinely used Pro has significant implications:",
-      "values": [
-        {
-          "quantity": "run count, runs confirmed to have used gemini-3.1-pro-preview",
-          "value_verbatim": "12",
-          "value_parsed": 12,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a + b + c + d",
-          "operands": [
-            {
-              "name": "a",
-              "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "b",
-              "file": "outputs/h11/pv-diag-384/pro-high-image-n5/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "c",
-              "file": "outputs/h11/pv-diag-384/pro-medium-text-baseline/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "d",
-              "file": "outputs/h11/pv-diag-384/pro-medium-image-baseline/study_manifest.json",
-              "path": "$.runs_per_condition"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
-        "path": null
-      },
-      "method": "arithmetic",
-      "notes": "Anchored arithmetically to the four Pro condition study manifests ($.runs_per_condition each). Anchor-identification caveat for triage: outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json now describes an N=10 extension ($.study.name 'H11: 384px Pro HIGH — Text N=10', $.study.created 2026-03-29), i.e. it post-dates this 2026-03-25 audit; no committed artefact records the H11 Pro run inventory as it stood at audit time. Not adjudicated here."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          306,
-          311
-        ],
-        "section": "Section 5: Recommendations (Corrected) -- NEW: Scientific Implications of Corrected Model Identification"
-      },
-      "claim_text": "1. **Pro vs Flash comparisons are real.** The pairwise tests\n   `permutation-pro-high-text-3-of-5-vs-flash-high-text-5-of-5-20m.json`\n   (p=0.874, no significant difference) and\n   `permutation-pro-high-image-3-of-5-vs-flash-high-image-3-of-5-20m.json`\n   (p=0.018, Flash significantly better) are genuine cross-model comparisons,\n   not batch-identity tests.",
-      "values": [
-        {
-          "quantity": "permutation p-value, Pro HIGH text 3-of-5 vs Flash HIGH text 5-of-5 at 20 m",
-          "value_verbatim": "0.874",
-          "value_parsed": 0.874,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.p_value",
-          "method": "read"
-        },
-        {
-          "quantity": "permutation p-value, Pro HIGH image 3-of-5 vs Flash HIGH image 3-of-5 at 20 m",
-          "value_verbatim": "0.018",
-          "value_parsed": 0.018,
-          "unit": null,
-          "kind": "statistic",
-          "path": "archive/results-60-tile-validation/h11-384-pairwise-n5/permutation-pro-high-image-3-of-5-vs-flash-high-image-3-of-5-20m.json#$.permutation_test.p_value",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "archive/results-60-tile-validation/h11-384-pairwise-n5/permutation-pro-high-text-3-of-5-vs-flash-high-text-5-of-5-20m.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The document names both files by basename only; both resolve under archive/results-60-tile-validation/h11-384-pairwise-n5/ (no live copy elsewhere in the tree). Numbers inside the filenames ('3-of-5', '5-of-5', '20m') are names, not claims (rule 5)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          313,
-          315
-        ],
-        "section": "Section 5: Recommendations (Corrected) -- NEW: Scientific Implications of Corrected Model Identification"
-      },
-      "claim_text": "2. **Pro HIGH text consensus F1=0.849** (3-of-5 threshold) is a real Pro\n   result, not a mislabelled Flash result. This is close to but not clearly\n   better than Flash HIGH text (F1=0.840 at 3-of-5 from the same comparison).",
-      "values": [
-        {
-          "quantity": "F1 at 20 m, Pro HIGH text consensus (3-of-5)",
-          "value_verbatim": "0.849",
-          "value_parsed": 0.849,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.condition_a.global_f1",
-          "method": "read"
-        },
-        {
-          "quantity": "consensus vote threshold, Pro HIGH text consensus",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.condition_a.config.threshold",
-          "method": "read"
-        },
-        {
-          "quantity": "consensus pool size, Pro HIGH text consensus",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.condition_a.config.pool_size",
-          "method": "read"
-        },
-        {
-          "quantity": "F1 at 20 m, Flash HIGH text consensus (as reported by the document at 3-of-5, from the same pairwise comparison)",
-          "value_verbatim": "0.840",
-          "value_parsed": 0.84,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.condition_b.global_f1",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "archive/results-60-tile-validation/h11-384-pairwise-n5/permutation-pro-high-text-3-of-5-vs-flash-high-text-5-of-5-20m.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Anchored to the comparison the document points at ('from the same comparison', i.e. the pairwise record cited at lines 306-311). Anchor-identification caveat, not an adjudication: that file labels condition_b 'Flash HIGH text 5-of-5' whereas the document says 'at 3-of-5', so a Flash HIGH text 3-of-5 F1 may instead live in the sibling results/paper-eval/flash-high-text-20m/consensus-analysis-report.json ($.results[] rows keyed by pool_size/threshold). Triage should choose between the two. The bare label 'at 3-of-5' is not extracted separately (rule 5); the parenthesised '(3-of-5 threshold)' is."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          317,
-          318
-        ],
-        "section": "Section 5: Recommendations (Corrected) -- NEW: Scientific Implications of Corrected Model Identification"
-      },
-      "claim_text": "3. **Pro HIGH image consensus F1=0.703** (3-of-5 threshold) is genuinely\n   worse than Flash HIGH image (F1=0.727 at 3-of-5, p=0.018).",
-      "values": [
-        {
-          "quantity": "F1 at 20 m, Pro HIGH image consensus (3-of-5)",
-          "value_verbatim": "0.703",
-          "value_parsed": 0.703,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.condition_a.global_f1",
-          "method": "read"
-        },
-        {
-          "quantity": "consensus vote threshold, Pro HIGH image consensus",
-          "value_verbatim": "3",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.condition_a.config.threshold",
-          "method": "read"
-        },
-        {
-          "quantity": "consensus pool size, Pro HIGH image consensus",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.condition_a.config.pool_size",
-          "method": "read"
-        },
-        {
-          "quantity": "F1 at 20 m, Flash HIGH image consensus (3-of-5)",
-          "value_verbatim": "0.727",
-          "value_parsed": 0.727,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.condition_b.global_f1",
-          "method": "read"
-        },
-        {
-          "quantity": "permutation p-value, Pro HIGH image 3-of-5 vs Flash HIGH image 3-of-5 at 20 m",
-          "value_verbatim": "0.018",
-          "value_parsed": 0.018,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.permutation_test.p_value",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "archive/results-60-tile-validation/h11-384-pairwise-n5/permutation-pro-high-image-3-of-5-vs-flash-high-image-3-of-5-20m.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "All five values resolve inside the one pairwise permutation record; the p-value restates the figure already extracted from lines 306-311 (separate span, so separately enumerated)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          339,
-          341
-        ],
-        "section": "Known Issue Verification (Corrected) -- E42: Pro Label But Flash Model"
-      },
-      "claim_text": "- 4 directories with \"pro\" in the name (`pro-high-text-n5`,\n  `pro-high-image-n5`, `pro-medium-text-baseline`, `pro-medium-image-baseline`)\n  genuinely used `gemini-3.1-pro-preview`.",
-      "values": [
-        {
-          "quantity": "directory count, H11 384 px condition directories whose names begin 'pro-'",
-          "value_verbatim": "4",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Looked for a committed artefact enumerating the H11 proposer condition directories: results/conditions-manifest.json carries no pro-high-* or pro-medium-* entries, and there is no per-phase directory inventory. Each of the four named directories exists under outputs/h11/pv-diag-384/ with a study_manifest.json, but no artefact asserts the count itself. The document's own Grand Totals row ('H11 Pro proposer | 4 | 12', line 123) is prose in the same document and outside this batch's range."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          348,
-          348
-        ],
-        "section": "Known Issue Verification (Corrected) -- T=1.0 Temperature Bug"
-      },
-      "claim_text": "### T=1.0 Temperature Bug",
-      "values": [
-        {
-          "quantity": "temperature parameter as run, the T=1.0 bug corpora (consensus-384 and single-pass-384)",
-          "value_verbatim": "1.0",
-          "value_parsed": 1.0,
-          "unit": null,
-          "kind": "parameter",
-          "path": "$.configuration.temperature",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json",
-        "path": "$.configuration.temperature"
-      },
-      "method": "read",
-      "notes": "Doubt flagged: this is a section heading and functions largely as a label for the known issue; included under the instrument's 'when in doubt, include' rule. Anchored to consensus-384 run_1; the sibling single-pass-384 value sits at archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json#$.configuration.temperature."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          350,
-          351
-        ],
-        "section": "Known Issue Verification (Corrected) -- T=1.0 Temperature Bug"
-      },
-      "claim_text": "**Status:** Unchanged from v1. Confirmed in consensus-384 (30 runs) and\nsingle-pass-384 (10 runs).",
-      "values": [
-        {
-          "quantity": "run count, consensus-384",
-          "value_verbatim": "30",
-          "value_parsed": 30,
-          "unit": null,
-          "kind": "count",
-          "path": "$.runs_per_condition",
-          "method": "read"
-        },
-        {
-          "quantity": "run count, single-pass-384",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": null,
-          "kind": "count",
-          "path": "archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/study_manifest.json#$.runs_per_condition",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/study_manifest.json",
-        "path": "$.runs_per_condition"
-      },
-      "method": "read",
-      "notes": "Cross-file locator used for the single-pass figure (v1.2 amendment 2); the single-pass-384 T=1.0 corpus is archived under archive/h11-unintended-t1.0/."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          355,
-          356
-        ],
-        "section": "Known Issue Verification (Corrected) -- E40: Pro + MINIMAL Thinking Rejection"
-      },
-      "claim_text": "The 12 Pro runs used MEDIUM\n(2 baseline runs) and HIGH (10 n5 runs) thinking levels.",
-      "values": [
-        {
-          "quantity": "run count, Pro runs in total",
-          "value_verbatim": "12",
-          "value_parsed": 12,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a + b + c + d",
-          "operands": [
-            {
-              "name": "a",
-              "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "b",
-              "file": "outputs/h11/pv-diag-384/pro-high-image-n5/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "c",
-              "file": "outputs/h11/pv-diag-384/pro-medium-text-baseline/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "d",
-              "file": "outputs/h11/pv-diag-384/pro-medium-image-baseline/study_manifest.json",
-              "path": "$.runs_per_condition"
-            }
-          ]
-        },
-        {
-          "quantity": "run count, Pro MEDIUM baseline runs (text plus image baselines)",
-          "value_verbatim": "2",
-          "value_parsed": 2,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a + b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "outputs/h11/pv-diag-384/pro-medium-text-baseline/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "b",
-              "file": "outputs/h11/pv-diag-384/pro-medium-image-baseline/study_manifest.json",
-              "path": "$.runs_per_condition"
-            }
-          ]
-        },
-        {
-          "quantity": "run count, Pro HIGH n5 runs (text plus image n5 conditions)",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a + b",
-          "operands": [
-            {
-              "name": "a",
-              "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "b",
-              "file": "outputs/h11/pv-diag-384/pro-high-image-n5/study_manifest.json",
-              "path": "$.runs_per_condition"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
-        "path": null
-      },
-      "method": "arithmetic",
-      "notes": "Three derived values, each with its own expression and operands (v1.2 amendment 1). Anchored arithmetically to the four Pro condition study manifests ($.runs_per_condition each). Anchor-identification caveat for triage: outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json now describes an N=10 extension ($.study.name 'H11: 384px Pro HIGH — Text N=10', $.study.created 2026-03-29), i.e. it post-dates this 2026-03-25 audit; no committed artefact records the H11 Pro run inventory as it stood at audit time. Not adjudicated here."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          388,
-          390
-        ],
-        "section": "Metadata Bug Technical Detail"
-      },
-      "claim_text": "Regardless of the exact mechanism, the outcome is clear: `configuration.model`\nis unreliable for any run where `--model` was used, and the three alternative\nsources (GeoJSON, cost_estimate, logs) are all consistent and correct.",
-      "values": [
-        {
-          "quantity": "count, alternative model-identification sources the audit treats as reliable",
-          "value_verbatim": "three",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Doubt flagged: a spelled-out count of the sources this same document enumerates in its Correction Summary (lines 21-30, outside this batch's range). Prose-to-prose only, so anchor-unknown per rule 2; triage may prefer to prune it as rhetorical rather than a study fact."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          396,
-          396
-        ],
-        "section": "Final Completeness Check"
-      },
-      "claim_text": "1. **Total runs inventoried:** 1,740 across ~239 conditions. Same as v1.",
-      "values": [
-        {
-          "quantity": "run count, total production runs inventoried by the audit (outputs/h11, outputs/phase*, outputs/retest)",
-          "value_verbatim": "1,740",
-          "value_parsed": 1740,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "condition count, total conditions inventoried by the audit (approximate as quoted)",
-          "value_verbatim": "~239",
-          "value_parsed": 239,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Looked for a committed run inventory spanning all three output trees: results/conditions-manifest.json enumerates scored analysis conditions (a different population from the audited run inventory), results/passes-manifest.json enumerates passes, and results/run-conditions.json is a decomposition record; none asserts a whole-corpus run or condition count. Approx marker retained verbatim on the condition count (v1.2 amendment 5)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          398,
-          400
-        ],
-        "section": "Final Completeness Check"
-      },
-      "claim_text": "2. **Model verification scope:** All 12 Pro-labelled runs individually\n   verified via GeoJSON features and cost_estimate. All 1,532 non-H11 runs\n   verified via cost_estimate (none are Pro).",
-      "values": [
-        {
-          "quantity": "run count, Pro-labelled runs individually verified via GeoJSON and cost_estimate",
-          "value_verbatim": "12",
-          "value_parsed": 12,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a + b + c + d",
-          "operands": [
-            {
-              "name": "a",
-              "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "b",
-              "file": "outputs/h11/pv-diag-384/pro-high-image-n5/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "c",
-              "file": "outputs/h11/pv-diag-384/pro-medium-text-baseline/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "d",
-              "file": "outputs/h11/pv-diag-384/pro-medium-image-baseline/study_manifest.json",
-              "path": "$.runs_per_condition"
-            }
-          ]
-        },
-        {
-          "quantity": "run count, non-H11 runs verified via cost_estimate",
-          "value_verbatim": "1,532",
-          "value_parsed": 1532,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
-        "path": null
-      },
-      "method": "arithmetic",
-      "notes": "Mixed span: the 12-run figure is derivable from the Pro study manifests; the 1,532 non-H11 figure has no committed inventory artefact (same search as the lines-396 claim). Anchored arithmetically to the four Pro condition study manifests ($.runs_per_condition each). Anchor-identification caveat for triage: outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json now describes an N=10 extension ($.study.name 'H11: 384px Pro HIGH — Text N=10', $.study.created 2026-03-29), i.e. it post-dates this 2026-03-25 audit; no committed artefact records the H11 Pro run inventory as it stood at audit time. Not adjudicated here."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          406,
-          407
-        ],
-        "section": "Final Completeness Check"
-      },
-      "claim_text": "4. **Corrections from v1:** Model identification for 12 runs changed from\n   \"gemini-3-flash\" to \"gemini-3.1-pro-preview\".",
-      "values": [
-        {
-          "quantity": "run count, runs whose model identification was corrected between v1 and v2",
-          "value_verbatim": "12",
-          "value_parsed": 12,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a + b + c + d",
-          "operands": [
-            {
-              "name": "a",
-              "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "b",
-              "file": "outputs/h11/pv-diag-384/pro-high-image-n5/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "c",
-              "file": "outputs/h11/pv-diag-384/pro-medium-text-baseline/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "d",
-              "file": "outputs/h11/pv-diag-384/pro-medium-image-baseline/study_manifest.json",
-              "path": "$.runs_per_condition"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
-        "path": null
-      },
-      "method": "arithmetic",
-      "notes": "Correction block, but the corrected-from/to values are model-name strings, not numbers, so no `historical` numeric side arises; the run count is a live claim. Anchored arithmetically to the four Pro condition study manifests ($.runs_per_condition each). Anchor-identification caveat for triage: outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json now describes an N=10 extension ($.study.name 'H11: 384px Pro HIGH — Text N=10', $.study.created 2026-03-29), i.e. it post-dates this 2026-03-25 audit; no committed artefact records the H11 Pro run inventory as it stood at audit time. Not adjudicated here."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          411,
-          413
-        ],
-        "section": "Final Completeness Check"
-      },
-      "claim_text": "**Audit completion: 1,740/1,740 runs audited. Model field corrected for 12\nruns via GeoJSON/cost_estimate verification. Temperature and thinking level\nfindings unchanged from v1.**",
-      "values": [
-        {
-          "quantity": "run count, runs audited",
-          "value_verbatim": "1,740",
-          "value_parsed": 1740,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "run count, total runs in audit scope (denominator)",
-          "value_verbatim": "1,740",
-          "value_parsed": 1740,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "run count, runs whose model field was corrected",
-          "value_verbatim": "12",
-          "value_parsed": 12,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a + b + c + d",
-          "operands": [
-            {
-              "name": "a",
-              "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "b",
-              "file": "outputs/h11/pv-diag-384/pro-high-image-n5/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "c",
-              "file": "outputs/h11/pv-diag-384/pro-medium-text-baseline/study_manifest.json",
-              "path": "$.runs_per_condition"
-            },
-            {
-              "name": "d",
-              "file": "outputs/h11/pv-diag-384/pro-medium-image-baseline/study_manifest.json",
-              "path": "$.runs_per_condition"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
-        "path": null
-      },
-      "method": "anchor-unknown",
-      "notes": "Mixed span: the 1,740/1,740 completion figures have no committed inventory artefact (same search as the lines-396 claim), so they stay anchor-unknown; the 12-run figure carries its own arithmetic derivation over the four Pro study manifests, which is why the claim-level anchor is non-null despite the claim-level method. Anchored arithmetically to the four Pro condition study manifests ($.runs_per_condition each). Anchor-identification caveat for triage: outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json now describes an N=10 extension ($.study.name 'H11: 384px Pro HIGH — Text N=10', $.study.created 2026-03-29), i.e. it post-dates this 2026-03-25 audit; no committed artefact records the H11 Pro run inventory as it stood at audit time. Not adjudicated here."
+     "quantity": "temperature parameter as run, consensus-384 (the T1.0 arm of the temperature comparison)",
+     "value_verbatim": "T1.0",
+     "value_parsed": 1.0,
+     "unit": null,
+     "kind": "parameter",
+     "path": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json#$.configuration.temperature",
+     "method": "read"
     }
-  ]
+   ],
+   "anchor": {
+    "file": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.meta.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "[BATCH NOTE b031] Assignment: lines 211-413 (EOF) of a v2 correction document; lines 1-210 belong to batch b030 and no span here begins before line 211. Scope decisions logged explicitly: (a) NO `historical` values arose in this range -- the v1->v2 correction blocks that quote superseded values (Correction Summary table, Section 2 Expected/Actual columns) all sit at lines 1-210, and the corrections inside lines 211-413 change model-name strings, not numbers; (b) consensus labels of the form '3-of-5' / '5-of-5' / '26-of-30' are treated as condition names (rule 5), EXCEPT where the document attaches the word 'threshold' ('threshold 3 vs 5', line 230; '(3-of-5 threshold)', lines 313 and 317), where they are extracted as parameter claims; (c) out of C4 scope per rule 5: 'Phase 3a', 'v1'/'v2', E40/E42/WARNING-1/CRITICAL-1 identifiers, 'Session 57', script version 1.5.0, git 765cb232, source-line citations (line 676, line 727), digits inside model names (gemini-3-flash, gemini-3.1-pro-preview), and digits inside condition/directory names (consensus-384, single-pass-384, 'Flash MINIMAL-T0.7', flash-minimal-text-n30-t07, pro-high-text-n5); (d) the pairwise permutation files the document names by basename resolve to archive/results-60-tile-validation/h11-384-pairwise-n5/ -- no live copy exists elsewhere in the tree. Claim-specific: the bullet's third numeric token ('though T1.0 unintentional') re-asserts the same temperature and is not listed as a separate value. Arm identification (T0.7 = flash-minimal-text-n30-t07, T1.0 = consensus-384) follows the confound-matrix rows at lines 207-209, which are outside this batch's range; the T1.0 corpus is the directory now named outputs/h11/consensus-384-UNINTENDED-T1.0."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     226,
+     226
+    ],
+    "section": "Section 3: Confound Matrix (Corrected) -- Summary of Confound Status"
+   },
+   "claim_text": "- Flash HIGH text vs consensus-384 (T=1.0 bug)",
+   "values": [
+    {
+     "quantity": "temperature parameter as run, consensus-384",
+     "value_verbatim": "1.0",
+     "value_parsed": 1.0,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.configuration.temperature",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json",
+    "path": "$.configuration.temperature"
+   },
+   "method": "read",
+   "notes": "Doubt flagged per instrument preamble: 'T=1.0 bug' doubles as the standing label for the known issue as well as an assertion of the temperature actually run; included because the number is asserted as fact elsewhere in the same document. Anchored to run_1 of the consensus-384 corpus."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     230,
+     230
+    ],
+    "section": "Section 3: Confound Matrix (Corrected) -- Summary of Confound Status"
+   },
+   "claim_text": "- Pro HIGH text vs Flash HIGH text (model + threshold 3 vs 5)",
+   "values": [
+    {
+     "quantity": "consensus vote threshold, Pro HIGH text arm of the Pro-vs-Flash text pairwise comparison",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.condition_a.config.threshold",
+     "method": "read"
+    },
+    {
+     "quantity": "consensus vote threshold, Flash HIGH text arm of the Pro-vs-Flash text pairwise comparison",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.condition_b.config.threshold",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "archive/results-60-tile-validation/h11-384-pairwise-n5/permutation-pro-high-text-3-of-5-vs-flash-high-text-5-of-5-20m.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Bare parameter assertion ('threshold 3 vs 5'), so extracted despite the batch's general treatment of '3-of-5'-style labels as condition names. Anchored to the pairwise permutation record the document cites at lines 306-311 for this comparison."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     240,
+     242
+    ],
+    "section": "Section 4: Cross-Run Consistency Exceptions"
+   },
+   "claim_text": "Additionally confirmed: all 5 runs within pro-high-text-n5 are mutually\nconsistent (same model, temperature, thinking level), and all 5 runs within\npro-high-image-n5 are mutually consistent.",
+   "values": [
+    {
+     "quantity": "run count, pv-diag-384/pro-high-text-n5",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": null,
+     "kind": "count",
+     "path": "$.runs_per_condition",
+     "method": "read"
+    },
+    {
+     "quantity": "run count, pv-diag-384/pro-high-image-n5",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": null,
+     "kind": "count",
+     "path": "outputs/h11/pv-diag-384/pro-high-image-n5/study_manifest.json#$.runs_per_condition",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
+    "path": "$.runs_per_condition"
+   },
+   "method": "read",
+   "notes": "Anchor-identification caveat for triage: outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json now describes an N=10 extension ($.study.name 'H11: 384px Pro HIGH — Text N=10', $.study.created 2026-03-29), post-dating this 2026-03-25 audit; the pro-high-image-n5 manifest is dated 2026-03-24. Not adjudicated here."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     248,
+     248
+    ],
+    "section": "Section 5: Recommendations (Corrected) -- CRITICAL-1: meta.json configuration.model Bug"
+   },
+   "claim_text": "### CRITICAL-1: meta.json `configuration.model` Bug (12 runs)",
+   "values": [
+    {
+     "quantity": "run count, H11 Pro proposer runs affected by the meta.json configuration.model bug",
+     "value_verbatim": "12",
+     "value_parsed": 12,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a + b + c + d",
+     "operands": [
+      {
+       "name": "a",
+       "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "b",
+       "file": "outputs/h11/pv-diag-384/pro-high-image-n5/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "c",
+       "file": "outputs/h11/pv-diag-384/pro-medium-text-baseline/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "d",
+       "file": "outputs/h11/pv-diag-384/pro-medium-image-baseline/study_manifest.json",
+       "path": "$.runs_per_condition"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
+    "path": null
+   },
+   "method": "arithmetic",
+   "notes": "Anchored arithmetically to the four Pro condition study manifests ($.runs_per_condition each). Anchor-identification caveat for triage: outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json now describes an N=10 extension ($.study.name 'H11: 384px Pro HIGH — Text N=10', $.study.created 2026-03-29), i.e. it post-dates this 2026-03-25 audit; no committed artefact records the H11 Pro run inventory as it stood at audit time. Not adjudicated here."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     250,
+     252
+    ],
+    "section": "Section 5: Recommendations (Corrected) -- CRITICAL-1: meta.json configuration.model Bug"
+   },
+   "claim_text": "**Status:** Bug confirmed. The `configuration.model` field in meta.json for\nall 12 Pro runs reads `gemini-3-flash` (the config JSON default) instead of\n`gemini-3.1-pro-preview` (the actual model used).",
+   "values": [
+    {
+     "quantity": "run count, Pro runs whose meta.json configuration.model records the config-JSON default",
+     "value_verbatim": "12",
+     "value_parsed": 12,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a + b + c + d",
+     "operands": [
+      {
+       "name": "a",
+       "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "b",
+       "file": "outputs/h11/pv-diag-384/pro-high-image-n5/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "c",
+       "file": "outputs/h11/pv-diag-384/pro-medium-text-baseline/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "d",
+       "file": "outputs/h11/pv-diag-384/pro-medium-image-baseline/study_manifest.json",
+       "path": "$.runs_per_condition"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
+    "path": null
+   },
+   "method": "arithmetic",
+   "notes": "Anchored arithmetically to the four Pro condition study manifests ($.runs_per_condition each). Anchor-identification caveat for triage: outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json now describes an N=10 extension ($.study.name 'H11: 384px Pro HIGH — Text N=10', $.study.created 2026-03-29), i.e. it post-dates this 2026-03-25 audit; no committed artefact records the H11 Pro run inventory as it stood at audit time. Not adjudicated here. The model-name strings in this span are not numeric claims (rule 5)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     266,
+     267
+    ],
+    "section": "Section 5: Recommendations (Corrected) -- CRITICAL-1: meta.json configuration.model Bug"
+   },
+   "claim_text": "1. Patch the 12 meta.json files to correct `configuration.model` to\n   `gemini-3.1-pro-preview`, or",
+   "values": [
+    {
+     "quantity": "file count, Pro-run meta.json files proposed for patching (one per Pro run)",
+     "value_verbatim": "12",
+     "value_parsed": 12,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a + b + c + d",
+     "operands": [
+      {
+       "name": "a",
+       "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "b",
+       "file": "outputs/h11/pv-diag-384/pro-high-image-n5/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "c",
+       "file": "outputs/h11/pv-diag-384/pro-medium-text-baseline/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "d",
+       "file": "outputs/h11/pv-diag-384/pro-medium-image-baseline/study_manifest.json",
+       "path": "$.runs_per_condition"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
+    "path": null
+   },
+   "method": "arithmetic",
+   "notes": "Anchored arithmetically to the four Pro condition study manifests ($.runs_per_condition each). Anchor-identification caveat for triage: outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json now describes an N=10 extension ($.study.name 'H11: 384px Pro HIGH — Text N=10', $.study.created 2026-03-29), i.e. it post-dates this 2026-03-25 audit; no committed artefact records the H11 Pro run inventory as it stood at audit time. Not adjudicated here. The count is a recommendation-side restatement of the 12-run figure; no artefact independently enumerates the meta.json files."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     283,
+     283
+    ],
+    "section": "Section 5: Recommendations (Corrected) -- HIGH-1: consensus-384 T=1.0 Bug"
+   },
+   "claim_text": "### HIGH-1: consensus-384 T=1.0 Bug (30 runs)",
+   "values": [
+    {
+     "quantity": "temperature parameter as run, consensus-384",
+     "value_verbatim": "1.0",
+     "value_parsed": 1.0,
+     "unit": null,
+     "kind": "parameter",
+     "path": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json#$.configuration.temperature",
+     "method": "read"
+    },
+    {
+     "quantity": "run count, consensus-384",
+     "value_verbatim": "30",
+     "value_parsed": 30,
+     "unit": null,
+     "kind": "count",
+     "path": "$.runs_per_condition",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/study_manifest.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "consensus-384 is the directory now named outputs/h11/consensus-384-UNINTENDED-T1.0; the temperature value is read from run_1's meta.json via a cross-file locator (v1.2 amendment 2)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     288,
+     288
+    ],
+    "section": "Section 5: Recommendations (Corrected) -- HIGH-2: single-pass-384 T=1.0 Bug"
+   },
+   "claim_text": "### HIGH-2: single-pass-384 T=1.0 Bug (10 runs)",
+   "values": [
+    {
+     "quantity": "temperature parameter as run, single-pass-384",
+     "value_verbatim": "1.0",
+     "value_parsed": 1.0,
+     "unit": null,
+     "kind": "parameter",
+     "path": "archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json#$.configuration.temperature",
+     "method": "read"
+    },
+    {
+     "quantity": "run count, single-pass-384",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": null,
+     "kind": "count",
+     "path": "$.runs_per_condition",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/study_manifest.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "single-pass-384 (T=1.0 era) was archived to archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0; the later T=0 rerun lives at outputs/retest/h11-single-pass-384-t0 and is NOT the corpus this claim describes."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     292,
+     292
+    ],
+    "section": "Section 5: Recommendations (Corrected) -- WARNING-1: Phase 3a directory mislabelling"
+   },
+   "claim_text": "### WARNING-1: Phase 3a \"-high\" Directory Mislabelling (180 runs)",
+   "values": [
+    {
+     "quantity": "run count, Phase 3a '-high' directories affected by the thinking-level mislabelling (track1-image-high plus track2-text-high)",
+     "value_verbatim": "180",
+     "value_parsed": 180,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a * b + c * d",
+     "operands": [
+      {
+       "name": "a",
+       "file": "archive/outputs-pre-retest-60-tile/phase3a/track1-image-high/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "b",
+       "file": "archive/outputs-pre-retest-60-tile/phase3a/track1-image-high/study_manifest.json",
+       "path": "len:$.conditions"
+      },
+      {
+       "name": "c",
+       "file": "archive/outputs-pre-retest-60-tile/phase3a/track2-text-high/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "d",
+       "file": "archive/outputs-pre-retest-60-tile/phase3a/track2-text-high/study_manifest.json",
+       "path": "len:$.conditions"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "archive/outputs-pre-retest-60-tile/phase3a/track1-image-high/study_manifest.json",
+    "path": null
+   },
+   "method": "arithmetic",
+   "notes": "Derived as runs-per-condition x conditions for each of the two mislabelled tracks; the pre-retest Phase 3a corpora sit under archive/outputs-pre-retest-60-tile/phase3a/. The document's per-track figures (90 each) are stated at lines 159-160, outside this batch's range."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     304,
+     304
+    ],
+    "section": "Section 5: Recommendations (Corrected) -- NEW: Scientific Implications of Corrected Model Identification"
+   },
+   "claim_text": "The discovery that 12 runs genuinely used Pro has significant implications:",
+   "values": [
+    {
+     "quantity": "run count, runs confirmed to have used gemini-3.1-pro-preview",
+     "value_verbatim": "12",
+     "value_parsed": 12,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a + b + c + d",
+     "operands": [
+      {
+       "name": "a",
+       "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "b",
+       "file": "outputs/h11/pv-diag-384/pro-high-image-n5/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "c",
+       "file": "outputs/h11/pv-diag-384/pro-medium-text-baseline/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "d",
+       "file": "outputs/h11/pv-diag-384/pro-medium-image-baseline/study_manifest.json",
+       "path": "$.runs_per_condition"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
+    "path": null
+   },
+   "method": "arithmetic",
+   "notes": "Anchored arithmetically to the four Pro condition study manifests ($.runs_per_condition each). Anchor-identification caveat for triage: outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json now describes an N=10 extension ($.study.name 'H11: 384px Pro HIGH — Text N=10', $.study.created 2026-03-29), i.e. it post-dates this 2026-03-25 audit; no committed artefact records the H11 Pro run inventory as it stood at audit time. Not adjudicated here."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     306,
+     311
+    ],
+    "section": "Section 5: Recommendations (Corrected) -- NEW: Scientific Implications of Corrected Model Identification"
+   },
+   "claim_text": "1. **Pro vs Flash comparisons are real.** The pairwise tests\n   `permutation-pro-high-text-3-of-5-vs-flash-high-text-5-of-5-20m.json`\n   (p=0.874, no significant difference) and\n   `permutation-pro-high-image-3-of-5-vs-flash-high-image-3-of-5-20m.json`\n   (p=0.018, Flash significantly better) are genuine cross-model comparisons,\n   not batch-identity tests.",
+   "values": [
+    {
+     "quantity": "permutation p-value, Pro HIGH text 3-of-5 vs Flash HIGH text 5-of-5 at 20 m",
+     "value_verbatim": "0.874",
+     "value_parsed": 0.874,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.p_value",
+     "method": "read"
+    },
+    {
+     "quantity": "permutation p-value, Pro HIGH image 3-of-5 vs Flash HIGH image 3-of-5 at 20 m",
+     "value_verbatim": "0.018",
+     "value_parsed": 0.018,
+     "unit": null,
+     "kind": "statistic",
+     "path": "archive/results-60-tile-validation/h11-384-pairwise-n5/permutation-pro-high-image-3-of-5-vs-flash-high-image-3-of-5-20m.json#$.permutation_test.p_value",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "archive/results-60-tile-validation/h11-384-pairwise-n5/permutation-pro-high-text-3-of-5-vs-flash-high-text-5-of-5-20m.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The document names both files by basename only; both resolve under archive/results-60-tile-validation/h11-384-pairwise-n5/ (no live copy elsewhere in the tree). Numbers inside the filenames ('3-of-5', '5-of-5', '20m') are names, not claims (rule 5)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     313,
+     315
+    ],
+    "section": "Section 5: Recommendations (Corrected) -- NEW: Scientific Implications of Corrected Model Identification"
+   },
+   "claim_text": "2. **Pro HIGH text consensus F1=0.849** (3-of-5 threshold) is a real Pro\n   result, not a mislabelled Flash result. This is close to but not clearly\n   better than Flash HIGH text (F1=0.840 at 3-of-5 from the same comparison).",
+   "values": [
+    {
+     "quantity": "F1 at 20 m, Pro HIGH text consensus (3-of-5)",
+     "value_verbatim": "0.849",
+     "value_parsed": 0.849,
+     "unit": null,
+     "kind": "metric",
+     "path": "archive/results-60-tile-validation/h11-384-consensus-pro-high-text-n5/consensus-analysis-report.json#$.results[?(@.threshold==3)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "consensus vote threshold, Pro HIGH text consensus",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.condition_a.config.threshold",
+     "method": "read"
+    },
+    {
+     "quantity": "consensus pool size, Pro HIGH text consensus",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.condition_a.config.pool_size",
+     "method": "read"
+    },
+    {
+     "quantity": "F1 at 20 m, Flash HIGH text consensus (as reported by the document at 3-of-5, from the same pairwise comparison)",
+     "value_verbatim": "0.840",
+     "value_parsed": 0.84,
+     "unit": null,
+     "kind": "metric",
+     "path": "archive/results-60-tile-validation/h11-384-consensus-flash-high-text-n5/consensus-analysis-report.json#$.results[?(@.threshold==3)].f1",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "archive/results-60-tile-validation/h11-384-pairwise-n5/permutation-pro-high-text-3-of-5-vs-flash-high-text-5-of-5-20m.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Anchored to the comparison the document points at ('from the same comparison', i.e. the pairwise record cited at lines 306-311). Anchor-identification caveat, not an adjudication: that file labels condition_b 'Flash HIGH text 5-of-5' whereas the document says 'at 3-of-5', so a Flash HIGH text 3-of-5 F1 may instead live in the sibling results/paper-eval/flash-high-text-20m/consensus-analysis-report.json ($.results[] rows keyed by pool_size/threshold). Triage should choose between the two. The bare label 'at 3-of-5' is not extracted separately (rule 5); the parenthesised '(3-of-5 threshold)' is. [v0] [TRIAGE REPAIR 2026-08-03 wave-5] Blind pass BC: the document quotes the consensus sweep (0.8489 at pool 5 / threshold 3, buffer 20 m), not the pairwise permutation record the claim anchor names. Artefact byte-identical at era and today (directory moved to archive/ in 276e4ca80). [v3] [TRIAGE REPAIR 2026-08-03 wave-5] Blind pass BC (DOC-DEFECT-AT-ERA, adjudicated): the document attributes 0.840 to 'Flash HIGH text at 3-of-5'; the correct referent artefact holds 0.6034 — 0.840 is the Pro arm's own pairwise figure misattributed to Flash. Re-anchored to the honest referent so the row mismatches for the documented reason."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     317,
+     318
+    ],
+    "section": "Section 5: Recommendations (Corrected) -- NEW: Scientific Implications of Corrected Model Identification"
+   },
+   "claim_text": "3. **Pro HIGH image consensus F1=0.703** (3-of-5 threshold) is genuinely\n   worse than Flash HIGH image (F1=0.727 at 3-of-5, p=0.018).",
+   "values": [
+    {
+     "quantity": "F1 at 20 m, Pro HIGH image consensus (3-of-5)",
+     "value_verbatim": "0.703",
+     "value_parsed": 0.703,
+     "unit": null,
+     "kind": "metric",
+     "path": "archive/results-60-tile-validation/h11-384-consensus-pro-high-image-n5/consensus-analysis-report.json#$.results[?(@.threshold==3)].f1",
+     "method": "read"
+    },
+    {
+     "quantity": "consensus vote threshold, Pro HIGH image consensus",
+     "value_verbatim": "3",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.condition_a.config.threshold",
+     "method": "read"
+    },
+    {
+     "quantity": "consensus pool size, Pro HIGH image consensus",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.condition_a.config.pool_size",
+     "method": "read"
+    },
+    {
+     "quantity": "F1 at 20 m, Flash HIGH image consensus (3-of-5)",
+     "value_verbatim": "0.727",
+     "value_parsed": 0.727,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.condition_b.global_f1",
+     "method": "read"
+    },
+    {
+     "quantity": "permutation p-value, Pro HIGH image 3-of-5 vs Flash HIGH image 3-of-5 at 20 m",
+     "value_verbatim": "0.018",
+     "value_parsed": 0.018,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.permutation_test.p_value",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "archive/results-60-tile-validation/h11-384-pairwise-n5/permutation-pro-high-image-3-of-5-vs-flash-high-image-3-of-5-20m.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "All five values resolve inside the one pairwise permutation record; the p-value restates the figure already extracted from lines 306-311 (separate span, so separately enumerated). [v0] [TRIAGE REPAIR 2026-08-03 wave-5] Blind pass BC: consensus sweep referent (0.7031 at pool 5 / threshold 3), as for 031#12[0]."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     339,
+     341
+    ],
+    "section": "Known Issue Verification (Corrected) -- E42: Pro Label But Flash Model"
+   },
+   "claim_text": "- 4 directories with \"pro\" in the name (`pro-high-text-n5`,\n  `pro-high-image-n5`, `pro-medium-text-baseline`, `pro-medium-image-baseline`)\n  genuinely used `gemini-3.1-pro-preview`.",
+   "values": [
+    {
+     "quantity": "directory count, H11 384 px condition directories whose names begin 'pro-'",
+     "value_verbatim": "4",
+     "value_parsed": 4,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Looked for a committed artefact enumerating the H11 proposer condition directories: results/conditions-manifest.json carries no pro-high-* or pro-medium-* entries, and there is no per-phase directory inventory. Each of the four named directories exists under outputs/h11/pv-diag-384/ with a study_manifest.json, but no artefact asserts the count itself. The document's own Grand Totals row ('H11 Pro proposer | 4 | 12', line 123) is prose in the same document and outside this batch's range."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     348,
+     348
+    ],
+    "section": "Known Issue Verification (Corrected) -- T=1.0 Temperature Bug"
+   },
+   "claim_text": "### T=1.0 Temperature Bug",
+   "values": [
+    {
+     "quantity": "temperature parameter as run, the T=1.0 bug corpora (consensus-384 and single-pass-384)",
+     "value_verbatim": "1.0",
+     "value_parsed": 1.0,
+     "unit": null,
+     "kind": "parameter",
+     "path": "$.configuration.temperature",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json",
+    "path": "$.configuration.temperature"
+   },
+   "method": "read",
+   "notes": "Doubt flagged: this is a section heading and functions largely as a label for the known issue; included under the instrument's 'when in doubt, include' rule. Anchored to consensus-384 run_1; the sibling single-pass-384 value sits at archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/384/run_1/detections_384_run01.meta.json#$.configuration.temperature."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     350,
+     351
+    ],
+    "section": "Known Issue Verification (Corrected) -- T=1.0 Temperature Bug"
+   },
+   "claim_text": "**Status:** Unchanged from v1. Confirmed in consensus-384 (30 runs) and\nsingle-pass-384 (10 runs).",
+   "values": [
+    {
+     "quantity": "run count, consensus-384",
+     "value_verbatim": "30",
+     "value_parsed": 30,
+     "unit": null,
+     "kind": "count",
+     "path": "$.runs_per_condition",
+     "method": "read"
+    },
+    {
+     "quantity": "run count, single-pass-384",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": null,
+     "kind": "count",
+     "path": "archive/h11-unintended-t1.0/single-pass-384-UNINTENDED-T1.0/study_manifest.json#$.runs_per_condition",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/h11/consensus-384-UNINTENDED-T1.0/study_manifest.json",
+    "path": "$.runs_per_condition"
+   },
+   "method": "read",
+   "notes": "Cross-file locator used for the single-pass figure (v1.2 amendment 2); the single-pass-384 T=1.0 corpus is archived under archive/h11-unintended-t1.0/."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     355,
+     356
+    ],
+    "section": "Known Issue Verification (Corrected) -- E40: Pro + MINIMAL Thinking Rejection"
+   },
+   "claim_text": "The 12 Pro runs used MEDIUM\n(2 baseline runs) and HIGH (10 n5 runs) thinking levels.",
+   "values": [
+    {
+     "quantity": "run count, Pro runs in total",
+     "value_verbatim": "12",
+     "value_parsed": 12,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a + b + c + d",
+     "operands": [
+      {
+       "name": "a",
+       "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "b",
+       "file": "outputs/h11/pv-diag-384/pro-high-image-n5/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "c",
+       "file": "outputs/h11/pv-diag-384/pro-medium-text-baseline/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "d",
+       "file": "outputs/h11/pv-diag-384/pro-medium-image-baseline/study_manifest.json",
+       "path": "$.runs_per_condition"
+      }
+     ]
+    },
+    {
+     "quantity": "run count, Pro MEDIUM baseline runs (text plus image baselines)",
+     "value_verbatim": "2",
+     "value_parsed": 2,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a + b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "outputs/h11/pv-diag-384/pro-medium-text-baseline/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "b",
+       "file": "outputs/h11/pv-diag-384/pro-medium-image-baseline/study_manifest.json",
+       "path": "$.runs_per_condition"
+      }
+     ]
+    },
+    {
+     "quantity": "run count, Pro HIGH n5 runs (text plus image n5 conditions)",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a + b",
+     "operands": [
+      {
+       "name": "a",
+       "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "b",
+       "file": "outputs/h11/pv-diag-384/pro-high-image-n5/study_manifest.json",
+       "path": "$.runs_per_condition"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
+    "path": null
+   },
+   "method": "arithmetic",
+   "notes": "Three derived values, each with its own expression and operands (v1.2 amendment 1). Anchored arithmetically to the four Pro condition study manifests ($.runs_per_condition each). Anchor-identification caveat for triage: outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json now describes an N=10 extension ($.study.name 'H11: 384px Pro HIGH — Text N=10', $.study.created 2026-03-29), i.e. it post-dates this 2026-03-25 audit; no committed artefact records the H11 Pro run inventory as it stood at audit time. Not adjudicated here."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     388,
+     390
+    ],
+    "section": "Metadata Bug Technical Detail"
+   },
+   "claim_text": "Regardless of the exact mechanism, the outcome is clear: `configuration.model`\nis unreliable for any run where `--model` was used, and the three alternative\nsources (GeoJSON, cost_estimate, logs) are all consistent and correct.",
+   "values": [
+    {
+     "quantity": "count, alternative model-identification sources the audit treats as reliable",
+     "value_verbatim": "three",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Doubt flagged: a spelled-out count of the sources this same document enumerates in its Correction Summary (lines 21-30, outside this batch's range). Prose-to-prose only, so anchor-unknown per rule 2; triage may prefer to prune it as rhetorical rather than a study fact."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     396,
+     396
+    ],
+    "section": "Final Completeness Check"
+   },
+   "claim_text": "1. **Total runs inventoried:** 1,740 across ~239 conditions. Same as v1.",
+   "values": [
+    {
+     "quantity": "run count, total production runs inventoried by the audit (outputs/h11, outputs/phase*, outputs/retest)",
+     "value_verbatim": "1,740",
+     "value_parsed": 1740,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "condition count, total conditions inventoried by the audit (approximate as quoted)",
+     "value_verbatim": "~239",
+     "value_parsed": 239,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Looked for a committed run inventory spanning all three output trees: results/conditions-manifest.json enumerates scored analysis conditions (a different population from the audited run inventory), results/passes-manifest.json enumerates passes, and results/run-conditions.json is a decomposition record; none asserts a whole-corpus run or condition count. Approx marker retained verbatim on the condition count (v1.2 amendment 5)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     398,
+     400
+    ],
+    "section": "Final Completeness Check"
+   },
+   "claim_text": "2. **Model verification scope:** All 12 Pro-labelled runs individually\n   verified via GeoJSON features and cost_estimate. All 1,532 non-H11 runs\n   verified via cost_estimate (none are Pro).",
+   "values": [
+    {
+     "quantity": "run count, Pro-labelled runs individually verified via GeoJSON and cost_estimate",
+     "value_verbatim": "12",
+     "value_parsed": 12,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a + b + c + d",
+     "operands": [
+      {
+       "name": "a",
+       "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "b",
+       "file": "outputs/h11/pv-diag-384/pro-high-image-n5/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "c",
+       "file": "outputs/h11/pv-diag-384/pro-medium-text-baseline/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "d",
+       "file": "outputs/h11/pv-diag-384/pro-medium-image-baseline/study_manifest.json",
+       "path": "$.runs_per_condition"
+      }
+     ]
+    },
+    {
+     "quantity": "run count, non-H11 runs verified via cost_estimate",
+     "value_verbatim": "1,532",
+     "value_parsed": 1532,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
+    "path": null
+   },
+   "method": "arithmetic",
+   "notes": "Mixed span: the 12-run figure is derivable from the Pro study manifests; the 1,532 non-H11 figure has no committed inventory artefact (same search as the lines-396 claim). Anchored arithmetically to the four Pro condition study manifests ($.runs_per_condition each). Anchor-identification caveat for triage: outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json now describes an N=10 extension ($.study.name 'H11: 384px Pro HIGH — Text N=10', $.study.created 2026-03-29), i.e. it post-dates this 2026-03-25 audit; no committed artefact records the H11 Pro run inventory as it stood at audit time. Not adjudicated here."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     406,
+     407
+    ],
+    "section": "Final Completeness Check"
+   },
+   "claim_text": "4. **Corrections from v1:** Model identification for 12 runs changed from\n   \"gemini-3-flash\" to \"gemini-3.1-pro-preview\".",
+   "values": [
+    {
+     "quantity": "run count, runs whose model identification was corrected between v1 and v2",
+     "value_verbatim": "12",
+     "value_parsed": 12,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a + b + c + d",
+     "operands": [
+      {
+       "name": "a",
+       "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "b",
+       "file": "outputs/h11/pv-diag-384/pro-high-image-n5/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "c",
+       "file": "outputs/h11/pv-diag-384/pro-medium-text-baseline/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "d",
+       "file": "outputs/h11/pv-diag-384/pro-medium-image-baseline/study_manifest.json",
+       "path": "$.runs_per_condition"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
+    "path": null
+   },
+   "method": "arithmetic",
+   "notes": "Correction block, but the corrected-from/to values are model-name strings, not numbers, so no `historical` numeric side arises; the run count is a live claim. Anchored arithmetically to the four Pro condition study manifests ($.runs_per_condition each). Anchor-identification caveat for triage: outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json now describes an N=10 extension ($.study.name 'H11: 384px Pro HIGH — Text N=10', $.study.created 2026-03-29), i.e. it post-dates this 2026-03-25 audit; no committed artefact records the H11 Pro run inventory as it stood at audit time. Not adjudicated here."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     411,
+     413
+    ],
+    "section": "Final Completeness Check"
+   },
+   "claim_text": "**Audit completion: 1,740/1,740 runs audited. Model field corrected for 12\nruns via GeoJSON/cost_estimate verification. Temperature and thinking level\nfindings unchanged from v1.**",
+   "values": [
+    {
+     "quantity": "run count, runs audited",
+     "value_verbatim": "1,740",
+     "value_parsed": 1740,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "run count, total runs in audit scope (denominator)",
+     "value_verbatim": "1,740",
+     "value_parsed": 1740,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "run count, runs whose model field was corrected",
+     "value_verbatim": "12",
+     "value_parsed": 12,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a + b + c + d",
+     "operands": [
+      {
+       "name": "a",
+       "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "b",
+       "file": "outputs/h11/pv-diag-384/pro-high-image-n5/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "c",
+       "file": "outputs/h11/pv-diag-384/pro-medium-text-baseline/study_manifest.json",
+       "path": "$.runs_per_condition"
+      },
+      {
+       "name": "d",
+       "file": "outputs/h11/pv-diag-384/pro-medium-image-baseline/study_manifest.json",
+       "path": "$.runs_per_condition"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json",
+    "path": null
+   },
+   "method": "anchor-unknown",
+   "notes": "Mixed span: the 1,740/1,740 completion figures have no committed inventory artefact (same search as the lines-396 claim), so they stay anchor-unknown; the 12-run figure carries its own arithmetic derivation over the four Pro study manifests, which is why the claim-level anchor is non-null despite the claim-level method. Anchored arithmetically to the four Pro condition study manifests ($.runs_per_condition each). Anchor-identification caveat for triage: outputs/h11/pv-diag-384/pro-high-text-n5/study_manifest.json now describes an N=10 extension ($.study.name 'H11: 384px Pro HIGH — Text N=10', $.study.created 2026-03-29), i.e. it post-dates this 2026-03-25 audit; no committed artefact records the H11 Pro run inventory as it stood at audit time. Not adjudicated here."
+  }
+ ]
 }

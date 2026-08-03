@@ -1,1192 +1,1192 @@
 {
-  "schema_version": "1.1",
-  "extracted_at": "2026-08-03T00:00:00Z",
-  "source_document": {
-    "file": "reports/session-113-signoff-package.md",
-    "git_blob": "b8da7a4a74e3",
-    "stratum": "hand-written"
-  },
-  "extractor": {
-    "model": "claude-opus-5",
-    "instrument_version": "1.2"
-  },
-  "claims": [
+ "schema_version": "1.1",
+ "extracted_at": "2026-08-03T00:00:00Z",
+ "source_document": {
+  "file": "reports/session-113-signoff-package.md",
+  "git_blob": "b8da7a4a74e3",
+  "stratum": "hand-written"
+ },
+ "extractor": {
+  "model": "claude-opus-5",
+  "instrument_version": "1.2"
+ },
+ "claims": [
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     10,
+     10
+    ],
+    "section": "§ 1 Analyses awaiting manually_verified_at"
+   },
+   "claim_text": "## 1. Analyses awaiting `manually_verified_at` (7)",
+   "values": [
     {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          10,
-          10
-        ],
-        "section": "§ 1 Analyses awaiting manually_verified_at"
-      },
-      "claim_text": "## 1. Analyses awaiting `manually_verified_at` (7)",
-      "values": [
-        {
-          "quantity": "count of registered analyses with a null manually_verified_at, results/run-analyses.json",
-          "value_verbatim": "7",
-          "value_parsed": 7,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/run-analyses.json",
-        "path": "len:$.analyses[?(@.manually_verified_at==null)]"
-      },
-      "method": "read",
-      "notes": "[BATCH NOTE b051] Scope decisions for this document, applied throughout: dates, session numbers (S111/S113/S106), Obs identifiers (357-364), commit hashes, findings/dossier section numbers (§ 11, § 14, § 15, § 16(c), § 5.4), model version strings (Flash 3.5, gemini-3.5-flash, gemini-3-flash-preview) and numbers inside condition/rung/pool names (min6, min11, high31, high35, T03-k3, TH7-k3, TM-k3, IM-k3, 4of5, 3of10, t0.3, pv-diag-384, Track-2, 55map-canonical-leaderboard-50m) are excluded per instrument rule 5. The corpus descriptor '55-map' recurs ~10 times; extracted once at line 7 as a map-count claim (instrument rule 5, '487-tile Era 2 corpus' precedent) and not re-extracted at each later mention. Several cost figures in § 5.4 are sourced by the document to reports/token-load-audit-2026-06-12.md, a hand-written markdown document; per rule 2 those are anchor-unknown rather than prose-anchored. This first claim also carries the batch note. The count is a filter count over the analyses array (instrument v1.2 amendment 7); the document names results/run-analyses.json as its source in the following line."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          17,
-          17
-        ],
-        "section": "§ 1 table — verifier-robustness-matrix"
-      },
-      "claim_text": "| `verifier-robustness-matrix` | S111 | thinking × temperature one tier at N=5; high hurts n=1 (`results/verifier-robustness/matrix_tiering.json`) |",
-      "values": [
-        {
-          "quantity": "tier count, thinking × temperature verifier-robustness matrix",
-          "value_verbatim": "one",
-          "value_parsed": 1,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.tiers",
-          "method": "read"
-        },
-        {
-          "quantity": "verifier replicate count for the matrix (N)",
-          "value_verbatim": "N=5",
-          "value_parsed": 5,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "pass count at which high thinking hurts (n)",
-          "value_verbatim": "n=1",
-          "value_parsed": 1,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/matrix_tiering.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Anchor named by the row itself. 'one tier' anchored to the tiers array in matrix_tiering.json. N=5 and n=1 are run parameters restated in prose; no scalar locator found in matrix_tiering.json (keys: tiers, ranked, pairwise) — flagged anchor-unknown; run-analyses.json's verifier-robustness-matrix _note also restates them in prose."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          18,
-          18
-        ],
-        "section": "§ 1 table — pass-budget-pareto"
-      },
-      "claim_text": "| `pass-budget-pareto` | S111 | v1 passes-axis ladder, one tier; opmax ns (p=0.363). Superseded by v2 for citation but remains the registered record |",
-      "values": [
-        {
-          "quantity": "tier count, pass-budget Pareto v1 passes-axis ladder",
-          "value_verbatim": "one",
-          "value_parsed": 1,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.tiers",
-          "method": "read"
-        },
-        {
-          "quantity": "permutation p-value, opmax vs the 0.890 headline",
-          "value_verbatim": "0.363",
-          "value_parsed": 0.363,
-          "unit": null,
-          "kind": "statistic",
-          "path": "results/verifier-robustness/opmax_vs_headline_permutation.json#$.test.p_value",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/pareto/pareto_leaderboard.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "v1 artefact is results/verifier-robustness/pareto/pareto_leaderboard.json (the document says v1 'remains the registered record'). The opmax p-value is a cross-file locator (instrument v1.2 amendment 2)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          19,
-          19
-        ],
-        "section": "§ 1 table — min-vs-high-thinking-pv"
-      },
-      "claim_text": "| `min-vs-high-thinking-pv` | S113 | GS min ≈ high under PV (five targeted pairs, all ns); recall-ceiling mechanism; scope-qualified by Obs 362 |",
-      "values": [
-        {
-          "quantity": "number of targeted min-vs-high permutation pairs, GS proposer-verifier",
-          "value_verbatim": "five",
-          "value_parsed": 5,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/min_vs_high_permutations.json",
-        "path": "len:$"
-      },
-      "method": "read",
-      "notes": "min_vs_high_permutations.json is a top-level array of pair records; the 'all ns' qualifier is a per-pair significance judgement, not extracted as a separate value."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          20,
-          20
-        ],
-        "section": "§ 1 table — pass-budget-pareto-v2"
-      },
-      "claim_text": "| `pass-budget-pareto-v2` | S113 | cost-weighted frontier; efficient set {min6, min11, high31, high35}; 0/21 pairs sig |",
-      "values": [
-        {
-          "quantity": "number of significant pairwise comparisons, Pareto v2 round-robin",
-          "value_verbatim": "0",
-          "value_parsed": 0,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.pairwise[?(@.significant==true)]",
-          "method": "read"
-        },
-        {
-          "quantity": "total pairwise comparisons, Pareto v2 round-robin (C(7,2))",
-          "value_verbatim": "21",
-          "value_parsed": 21,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.pairwise",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/pareto/pareto_v2.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Efficient set {min6, min11, high31, high35} is named, not counted, in the span; the rung names carry numerals excluded per rule 5. The significant-pair count is a filter count (v1.2 amendment 7)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          21,
-          21
-        ],
-        "section": "§ 1 table — flash35-model-roles"
-      },
-      "claim_text": "| `flash35-model-roles` | S113 | Flash 3.5 wins in no role; proposer loss resolved (p=0.035), verifier losses are cost-rule ties |",
-      "values": [
-        {
-          "quantity": "permutation p-value, Flash 3.5 proposer-role loss",
-          "value_verbatim": "0.035",
-          "value_parsed": 0.035,
-          "unit": null,
-          "kind": "statistic",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/flash35-2x2/flash35_permutations.json",
-        "path": "$.pairs[0].p_value"
-      },
-      "method": "read",
-      "notes": "pairs[0] is the proposer-role question (F3.5 pool vs F3 pool under the same F3 verifier)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          22,
-          22
-        ],
-        "section": "§ 1 table — unswept-pools-completeness"
-      },
-      "claim_text": "| `unswept-pools-completeness` | S113 | 18-pool sweep; headline survives the global-optimum check; Pro-verifier discovery (post-hoc p=0.019) |",
-      "values": [
-        {
-          "quantity": "number of never-swept pools scored in the completeness sweep",
-          "value_verbatim": "18",
-          "value_parsed": 18,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.cells",
-          "method": "read"
-        },
-        {
-          "quantity": "post-hoc permutation p-value, Pro-verifier discovery",
-          "value_verbatim": "0.019",
-          "value_parsed": 0.019,
-          "unit": null,
-          "kind": "statistic",
-          "path": "results/verifier-robustness/pro_vf_permutations.json#$.high6.p_value",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/unswept_pools_sweep.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The p=0.019 Pro-verifier discovery is quoted at three decimal places; pro_vf_permutations.json records the high6 comparison. Cross-file locator per v1.2 amendment 2."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          23,
-          23
-        ],
-        "section": "§ 1 table — 55map-canonical-leaderboard-50m"
-      },
-      "claim_text": "| `55map-canonical-leaderboard-50m` | S113 | the 8-cell deployment board: 24/28 sig, 5 tiers; T1 = {T03-k3, TH7-k3} |",
-      "values": [
-        {
-          "quantity": "cell count, 55-map canonical deployment board at 50 m",
-          "value_verbatim": "8",
-          "value_parsed": 8,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.cells",
-          "method": "read"
-        },
-        {
-          "quantity": "significant pairwise comparisons, 55-map board at 50 m",
-          "value_verbatim": "24",
-          "value_parsed": 24,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.pairwise[?(@.significant==true)]",
-          "method": "read"
-        },
-        {
-          "quantity": "total pairwise comparisons, 55-map board at 50 m (C(8,2))",
-          "value_verbatim": "28",
-          "value_parsed": 28,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.pairwise",
-          "method": "read"
-        },
-        {
-          "quantity": "tier count, 55-map board at 50 m",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.tiers",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "T1 = {T03-k3, TH7-k3} names the Tier-1 membership without asserting a count, so no value extracted for it; tier membership lives at $.tiers[0]."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          7,
-          7
-        ],
-        "section": "Preamble"
-      },
-      "claim_text": "the 55-map board refresh",
-      "values": [
-        {
-          "quantity": "number of maps in the deployment (generalisation) corpus",
-          "value_verbatim": "55",
-          "value_parsed": 55,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Corpus-size descriptor used as an asserted fact (instrument rule 5, '487-tile Era 2 corpus' precedent). Looked for a committed map-list manifest: inputs/vectors/references/student-mounds-55maps.geojson and results/55maps-cleanup-report.json exist but neither exposes a scalar map count; results/verifier-robustness/pareto/pareto_v2.json records the derived tile count (8541), not the map count. Extracted once for the whole document — see the batch note on the first claim."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          40,
-          40
-        ],
-        "section": "§ 4 Decision needed — 18-sweep citability"
-      },
-      "claim_text": "## 4. Decision needed — 18-sweep citability",
-      "values": [
-        {
-          "quantity": "number of pools in the completeness sweep",
-          "value_verbatim": "18",
-          "value_parsed": 18,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/unswept_pools_sweep.json",
-        "path": "len:$.cells"
-      },
-      "method": "read",
-      "notes": "'18-sweep' is a compound name that also asserts the pool count (instrument rule 5); duplicates the count claimed at lines 42-43 and in the § 1 table row."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          42,
-          43
-        ],
-        "section": "§ 4 Decision needed — 18-sweep citability"
-      },
-      "claim_text": "The completeness sweep scored 18 never-swept pools\n(`results/verifier-robustness/unswept_pools_sweep.json`).",
-      "values": [
-        {
-          "quantity": "number of never-swept pools scored in the completeness sweep",
-          "value_verbatim": "18",
-          "value_parsed": 18,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/unswept_pools_sweep.json",
-        "path": "len:$.cells"
-      },
-      "method": "read",
-      "notes": "The document names its own source artefact inside the span."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          43,
-          45
-        ],
-        "section": "§ 4 Decision needed — 18-sweep citability"
-      },
-      "claim_text": "**Two** are now\nfirst-class conditions (`verified-adv-text-pro-vf-4of5`,\n`verified-adv-image-3of5`); the remaining **16 are analysis-internal**,",
-      "values": [
-        {
-          "quantity": "number of swept pools promoted to first-class registered conditions",
-          "value_verbatim": "Two",
-          "value_parsed": 2,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "number of swept pools left analysis-internal",
-          "value_verbatim": "16",
-          "value_parsed": 16,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "arithmetic",
-          "expression": "a - 2",
-          "operands": [
-            {
-              "name": "a",
-              "file": "results/verifier-robustness/unswept_pools_sweep.json",
-              "path": "len:$.cells"
-            }
-          ]
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/unswept_pools_sweep.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The two named condition labels (verified-adv-text-pro-vf-4of5, verified-adv-image-3of5) both appear in results/conditions-manifest.json, but no single scalar records 'how many of the 18 were promoted', so the count of two is flagged anchor-unknown; the 16 is the mechanical complement of the sweep's cell count. Value-level derivation per v1.2 amendment 1 (the operand keeps its own read locator)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          47,
-          47
-        ],
-        "section": "§ 4 Decision needed — 18-sweep citability"
-      },
-      "claim_text": "Recommendation: leave the 16 analysis-internal",
-      "values": [
-        {
-          "quantity": "number of swept pools recommended to stay analysis-internal",
-          "value_verbatim": "16",
-          "value_parsed": 16,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/unswept_pools_sweep.json",
-        "expression": "a - 2",
-        "operands": [
-          {
-            "name": "a",
-            "file": "results/verifier-robustness/unswept_pools_sweep.json",
-            "path": "len:$.cells"
-          }
-        ]
-      },
-      "method": "arithmetic",
-      "notes": "Restatement of the 16 claimed at lines 43-45; kept as its own span because it is a separate assertion (over-inclusion is cheap to prune)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          53,
-          55
-        ],
-        "section": "§ 5.1 Flash 3.5 role permutations"
-      },
-      "claim_text": "the proposer-role\n   loss is statistically resolved (−0.0355, p = 0.035 raw; marginal under\n   BH across the three role tests)",
-      "values": [
-        {
-          "quantity": "observed F1@20m difference, Flash 3.5 proposer pool vs Flash 3 proposer pool",
-          "value_verbatim": "−0.0355",
-          "value_parsed": -0.0355,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.pairs[0].observed_diff",
-          "method": "read"
-        },
-        {
-          "quantity": "raw permutation p-value, proposer-role comparison",
-          "value_verbatim": "0.035",
-          "value_parsed": 0.035,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.pairs[0].p_value",
-          "method": "read"
-        },
-        {
-          "quantity": "number of role tests entering the Benjamini-Hochberg family",
-          "value_verbatim": "three",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.pairs",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/flash35-2x2/flash35_permutations.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The document names results/flash35-2x2/flash35_permutations.json in the same list item. '−0.0355' uses U+2212 in the source; the artefact records the difference at six decimal places. 'marginal under BH' is a judgement, not a value."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          55,
-          56
-        ],
-        "section": "§ 5.1 Flash 3.5 role permutations"
-      },
-      "claim_text": "both verifier-role losses are\n   within-noise ties (p = 0.17 / p = 0.10)",
-      "values": [
-        {
-          "quantity": "permutation p-value, verifier-role comparison on the Flash 3.5 pool",
-          "value_verbatim": "0.17",
-          "value_parsed": 0.17,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.pairs[1].p_value",
-          "method": "read"
-        },
-        {
-          "quantity": "permutation p-value, verifier-role comparison on the Flash 3 pool",
-          "value_verbatim": "0.10",
-          "value_parsed": 0.1,
-          "unit": null,
-          "kind": "statistic",
-          "path": "$.pairs[2].p_value",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/flash35-2x2/flash35_permutations.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Quoted at two decimal places; pairs[1] is the verifier-role test on the F3.5 pool and pairs[2] the verifier-role test on the F3 pool, following the document's ordering."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          59,
-          60
-        ],
-        "section": "§ 5.2 Board prediction miss"
-      },
-      "claim_text": "the continuity predicted six\n   tiers; the refreshed board kept **five**",
-      "values": [
-        {
-          "quantity": "predicted tier count for the refreshed 55-map board",
-          "value_verbatim": "six",
-          "value_parsed": 6,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "tier count on the refreshed 55-map board at 50 m",
-          "value_verbatim": "five",
-          "value_parsed": 5,
-          "unit": null,
-          "kind": "count",
-          "path": "len:$.tiers",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The predicted six is attributed to the session continuity document (prose); rule 2 forbids anchoring prose to prose. results/run-analyses.json carries a predicted_outcome field on the 55map-canonical-leaderboard-50m entry, but its content is free text, so the prediction is flagged anchor-unknown for triage."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          60,
-          61
-        ],
-        "section": "§ 5.2 Board prediction miss"
-      },
-      "claim_text": "the uplift (0.8290) is ns\n   vs T03-k4 (0.8359) and shares Tier 2",
-      "values": [
-        {
-          "quantity": "F1@50m, TM-n10-k5 uplift cell on the 55-map board",
-          "value_verbatim": "0.8290",
-          "value_parsed": 0.829,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.cells[?(@.name=='TM-n10-k5 (uplift)')].f1_50",
-          "method": "read"
-        },
-        {
-          "quantity": "F1@50m, T03-k4 cell on the 55-map board",
-          "value_verbatim": "0.8359",
-          "value_parsed": 0.8359,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.cells[?(@.name=='T03-k4')].f1_50",
-          "method": "read"
-        },
-        {
-          "quantity": "tier assignment of the uplift cell on the 55-map board",
-          "value_verbatim": "2",
-          "value_parsed": 2,
-          "unit": null,
-          "kind": "other",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": {
-        "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Tier membership is stored as an ordered list of name arrays at $.tiers (tier 2 would be $.tiers[1]), not as a per-cell scalar, so the tier assignment is flagged rather than given a read locator. The 'ns' and 'significantly above/below' judgements are covered by the board's pairwise records, not extracted as separate values here."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          64,
-          65
-        ],
-        "section": "§ 5.3 Uplift Track-2 eval"
-      },
-      "claim_text": "the canonical-GT engine reproduced the\n   committed sweep value to six decimal places (0.829028)",
-      "values": [
-        {
-          "quantity": "number of decimal places to which the two engines agree",
-          "value_verbatim": "six",
-          "value_parsed": 6,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "F1@50m, uplift cell as recorded in the committed sweep value",
-          "value_verbatim": "0.829028",
-          "value_parsed": 0.829028,
-          "unit": null,
-          "kind": "metric",
-          "path": "$.permutations.TM-k3.f1_a",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/55map-leaderboard/min11_uplift_cell.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The 'committed sweep value' at full precision appears in results/55map-leaderboard/min11_uplift_cell.json as the f1_a of both recorded permutations; the Track-2 evaluation artefact the document compares against is not named. 'six decimal places' is a precision-of-agreement descriptor with no stored counterpart."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          71,
-          72
-        ],
-        "section": "§ 5.4 Token-load audit"
-      },
-      "claim_text": "double-counted token totals (text-min and text-high 2×, image 3×;\n   t0.3 clean)",
-      "values": [
-        {
-          "quantity": "token double-count factor, text-min and text-high 55-map cost manifests (superseded)",
-          "value_verbatim": "2×",
-          "value_parsed": 2.0,
-          "unit": null,
-          "kind": "ratio",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "token double-count factor, image 55-map cost manifest (superseded)",
-          "value_verbatim": "3×",
-          "value_parsed": 3.0,
-          "unit": null,
-          "kind": "ratio",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "The multipliers describe the pre-2026-06-12 manifests, now in archive/superseded-cost-manifests-2026-06-12/ (four files). No artefact records the factor itself; it would have to be derived by diffing the archived token totals against the regenerated outputs/<run>/cost_manifest.json files. Document-named source is reports/token-load-audit-2026-06-12.md."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          72,
-          73
-        ],
-        "section": "§ 5.4 Token-load audit"
-      },
-      "claim_text": "all four priced standard instead of flex, and none\n   billed thinking tokens.",
-      "values": [
-        {
-          "quantity": "number of 55-map cost manifests affected by the standard-pricing error",
-          "value_verbatim": "four",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Four superseded manifests are archived at archive/superseded-cost-manifests-2026-06-12/ (text-min, text-high, text-high-t0.3, image); the count of affected manifests is not itself recorded in any artefact. Document-named source is reports/token-load-audit-2026-06-12.md."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          74,
-          76
-        ],
-        "section": "§ 5.4 Token-load audit"
-      },
-      "claim_text": "rebuilt from per-item metadata (min pass $4.66, HIGH T0.7 $40.19,\n   image HIGH $39.07 per 8,541-tile pass at flex; verifier\n   $0.000693/call)",
-      "values": [
-        {
-          "quantity": "cost USD of one minimal-thinking proposer pass over the 55-map corpus at flex pricing",
-          "value_verbatim": "$4.66",
-          "value_parsed": 4.66,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "cost USD of one HIGH-thinking T0.7 proposer pass over the 55-map corpus at flex pricing",
-          "value_verbatim": "$40.19",
-          "value_parsed": 40.19,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "cost USD of one HIGH-thinking image proposer pass over the 55-map corpus at flex pricing",
-          "value_verbatim": "$39.07",
-          "value_parsed": 39.07,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "tile count of the 55-map generalisation corpus",
-          "value_verbatim": "8,541",
-          "value_parsed": 8541,
-          "unit": null,
-          "kind": "count",
-          "path": "$.cost_model.production_scale.tiles_55map",
-          "method": "read"
-        },
-        {
-          "quantity": "cost USD per Flash 3 verifier call",
-          "value_verbatim": "$0.000693",
-          "value_parsed": 0.000693,
-          "unit": "USD",
-          "kind": "cost",
-          "path": "$.cost_model.vf_call_usd",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/pareto/pareto_v2.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The three per-pass 55-map dollar figures are sourced by the document to reports/token-load-audit-2026-06-12.md (prose; rule 2). $4.66 and $40.19 are restated in the scripts/build_pareto_v2.py COST MODEL header comment and in the pass-budget-pareto-v2 _note of results/run-analyses.json, both prose; the mechanically resolvable relatives are the GS-scale constants $.cost_model.min_pass_usd (0.266) and $.cost_model.high_pass_usd (2.29) with $.cost_model.production_scale.factor. $39.07 (image HIGH) was not found anywhere outside the audit report."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          77,
-          77
-        ],
-        "section": "§ 5.4 Token-load audit"
-      },
-      "claim_text": "min rungs 36–41% down, HIGH rungs 31–42% up",
-      "values": [
-        {
-          "quantity": "lower bound of the cost reduction across minimal-thinking Pareto rungs",
-          "value_verbatim": "36",
-          "value_parsed": 36.0,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "upper bound of the cost reduction across minimal-thinking Pareto rungs",
-          "value_verbatim": "41",
-          "value_parsed": 41.0,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "lower bound of the cost increase across HIGH-thinking Pareto rungs",
-          "value_verbatim": "31",
-          "value_parsed": 31.0,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "upper bound of the cost increase across HIGH-thinking Pareto rungs",
-          "value_verbatim": "42",
-          "value_parsed": 42.0,
-          "unit": "%",
-          "kind": "percentage",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Percentage moves are relative to the superseded 2026-06-11 manifest-derived cost model, whose constants are not committed as an artefact (only described in reports/token-load-audit-2026-06-12.md and in the build_pareto_v2.py header). The current rung costs are at results/verifier-robustness/pareto/pareto_v2.json $.rungs[*].est_cost_usd / est_cost_55map_usd; the pre-rebuild side would have to come from git history. Ranges share the '%' sign per v1.2 amendment 6."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          77,
-          78
-        ],
-        "section": "§ 5.4 Token-load audit"
-      },
-      "claim_text": "high31\n   production ~$856 → ~$1,214",
-      "values": [
-        {
-          "quantity": "cost USD of high31 55-map production under the superseded cost model",
-          "value_verbatim": "~$856",
-          "value_parsed": 856.0,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "historical"
-        },
-        {
-          "quantity": "cost USD of high31 55-map production under the rebuilt cost model",
-          "value_verbatim": "~$1,214",
-          "value_parsed": 1214.0,
-          "unit": "USD",
-          "kind": "cost",
-          "path": "$.rungs[?(@.rung=='high31')].est_cost_55map_usd",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/pareto/pareto_v2.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Before→after pair: the ~$856 side is the superseded figure (historical per instrument rule 3); the ~$1,214 side is live. Approximation markers kept in value_verbatim per v1.2 amendment 5."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          78,
-          78
-        ],
-        "section": "§ 5.4 Token-load audit"
-      },
-      "claim_text": "the § 16(c) trade is now ~$58 vs ~$207",
-      "values": [
-        {
-          "quantity": "cost USD, cheaper side of the findings § 16(c) trade under the rebuilt cost model",
-          "value_verbatim": "~$58",
-          "value_parsed": 58.0,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "cost USD, dearer side of the findings § 16(c) trade under the rebuilt cost model",
-          "value_verbatim": "~$207",
-          "value_parsed": 207.0,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "The § 16(c) reference points into the findings document (another hand-written markdown mine document; not chased beyond naming it per rule 7). Neither figure matches a rung cost in results/verifier-robustness/pareto/pareto_v2.json ($.rungs[*].est_cost_usd = 2.43/4.00/14.04/14.41/26.97/69.21/71.23; est_cost_55map_usd = 42.60/70.22/246.22/252.77/472.91/1213.72/1249.16), so the pairing is left for triage. Approximation markers kept verbatim."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          79,
-          81
-        ],
-        "section": "§ 5.4 Token-load audit"
-      },
-      "claim_text": "True total\n   spend across the five 55-map campaigns ≈ $722 flex (lower bound;\n   retry attempts unrecorded)",
-      "values": [
-        {
-          "quantity": "number of 55-map campaigns contributing to the total spend",
-          "value_verbatim": "five",
-          "value_parsed": 5,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "total spend USD across the 55-map campaigns at flex pricing (lower bound)",
-          "value_verbatim": "≈ $722",
-          "value_parsed": 722.0,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Only four committed cost manifests exist (outputs/55maps-text-min-, text-high-, text-high-t0.3-, image-generalisation/cost_manifest.json); outputs/55maps-text-min-n10-uplift/ has no cost_manifest.json, so the fifth campaign's contribution is not mechanically available and the sum is not stated as a plain four-way total. Left anchor-unknown rather than given a partial arithmetic derivation that would manufacture a mismatch. Approximation marker kept verbatim per v1.2 amendment 5."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          82,
-          83
-        ],
-        "section": "§ 5.4 Token-load audit"
-      },
-      "claim_text": "~~Recommendation: regenerate the\n   three corrupted manifests (and re-price t0.3) in a dedicated pass~~",
-      "values": [
-        {
-          "quantity": "number of corrupted 55-map cost manifests named for regeneration",
-          "value_verbatim": "three",
-          "value_parsed": 3,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "historical",
-      "notes": "The whole recommendation is struck through and superseded by the DONE block immediately below (which reports four manifests regenerated), so classified historical per instrument rule 3. Doubt flagged: the count itself (three double-counted manifests plus a separately re-priced t0.3) is consistent with the live text, so triage may prefer to treat it as a live count claim."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          85,
-          86
-        ],
-        "section": "§ 5.4 Token-load audit"
-      },
-      "claim_text": "and all four\n   manifests regenerated at flex with stub verifier legs reconstructed",
-      "values": [
-        {
-          "quantity": "number of 55-map cost manifests regenerated at flex pricing",
-          "value_verbatim": "four",
-          "value_parsed": 4,
-          "unit": null,
-          "kind": "count",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "Four regenerated manifests exist (outputs/55maps-text-min-generalisation/cost_manifest.json, outputs/55maps-text-high-generalisation/cost_manifest.json, outputs/55maps-text-high-t0.3-generalisation/cost_manifest.json, outputs/55maps-image-generalisation/cost_manifest.json) with four originals in archive/superseded-cost-manifests-2026-06-12/, but the count is a file-count claim with no JSON locator."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          88,
-          89
-        ],
-        "section": "§ 5.4 Token-load audit"
-      },
-      "claim_text": "Corrected campaign\n   totals: $30.44 / $207.34 / $261.02 / $200.83.",
-      "values": [
-        {
-          "quantity": "total cost USD, 55maps-text-min-generalisation campaign at flex",
-          "value_verbatim": "$30.44",
-          "value_parsed": 30.44,
-          "unit": "USD",
-          "kind": "cost",
-          "path": "outputs/55maps-text-min-generalisation/cost_manifest.json#$.totals.cost_usd",
-          "method": "read"
-        },
-        {
-          "quantity": "total cost USD, 55maps-text-high-generalisation campaign at flex",
-          "value_verbatim": "$207.34",
-          "value_parsed": 207.34,
-          "unit": "USD",
-          "kind": "cost",
-          "path": "outputs/55maps-text-high-generalisation/cost_manifest.json#$.totals.cost_usd",
-          "method": "read"
-        },
-        {
-          "quantity": "total cost USD, 55maps-text-high-t0.3-generalisation campaign at flex",
-          "value_verbatim": "$261.02",
-          "value_parsed": 261.02,
-          "unit": "USD",
-          "kind": "cost",
-          "path": "outputs/55maps-text-high-t0.3-generalisation/cost_manifest.json#$.totals.cost_usd",
-          "method": "read"
-        },
-        {
-          "quantity": "total cost USD, 55maps-image-generalisation campaign at flex",
-          "value_verbatim": "$200.83",
-          "value_parsed": 200.83,
-          "unit": "USD",
-          "kind": "cost",
-          "path": "outputs/55maps-image-generalisation/cost_manifest.json#$.totals.cost_usd",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "The document lists four unlabelled figures. Extractor assigned them to campaigns in the order text-min / text-high / text-high-t0.3 / image (the order used earlier in § 5.4); triage should confirm the mapping before adjudicating any individual figure. Cross-file locators per v1.2 amendment 2."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          96,
-          97
-        ],
-        "section": "§ 6 Registration conventions adopted"
-      },
-      "claim_text": "The uplift pool's mixed provenance (passes 1–5 from\n  `55maps-text-min-generalisation`, 6–10 new)",
-      "values": [
-        {
-          "quantity": "first carried-over proposer pass index in the uplift pool",
-          "value_verbatim": "1",
-          "value_parsed": 1,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "last carried-over proposer pass index in the uplift pool",
-          "value_verbatim": "5",
-          "value_parsed": 5,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "first newly run proposer pass index in the uplift pool",
-          "value_verbatim": "6",
-          "value_parsed": 6,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        },
-        {
-          "quantity": "last newly run proposer pass index in the uplift pool",
-          "value_verbatim": "10",
-          "value_parsed": 10,
-          "unit": null,
-          "kind": "parameter",
-          "path": null,
-          "method": null
-        }
-      ],
-      "anchor": null,
-      "method": "anchor-unknown",
-      "notes": "outputs/55maps-text-min-n10-uplift/proposer/ contains run_6 … run_10 (five directories), consistent with the split, but neither that directory nor outputs/55maps-text-min-n10-uplift/verified-3of10/run.meta.json records a pass-provenance field; the document itself points to a prose 'decomposition note'. Flagged for triage rather than anchored to a directory listing."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          111,
-          111
-        ],
-        "section": "Changelog — 2026-06-12"
-      },
-      "claim_text": "minimal pass ~$9.40 → $4.66",
-      "values": [
-        {
-          "quantity": "cost USD of a minimal proposer pass under the superseded manifest-derived model",
-          "value_verbatim": "~$9.40",
-          "value_parsed": 9.4,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "historical"
-        },
-        {
-          "quantity": "cost USD of a minimal proposer pass over the 55-map corpus at flex under the rebuilt model",
-          "value_verbatim": "$4.66",
-          "value_parsed": 4.66,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "anchor-unknown"
-        }
-      ],
-      "anchor": null,
-      "method": "historical",
-      "notes": "Changelog before→after pair (instrument rule 3 and the known-traps note): ~$9.40 is the superseded side. The live $4.66 repeats the § 5.4 figure and inherits the same anchor difficulty — sourced to reports/token-load-audit-2026-06-12.md and restated only in prose (scripts/build_pareto_v2.py header comment)."
-    },
-    {
-      "claim_id": null,
-      "source": {
-        "lines": [
-          111,
-          112
-        ],
-        "section": "Changelog — 2026-06-12"
-      },
-      "claim_text": "HIGH pass\n\"3× minimal\" → $40.19 measured (8,541 tiles, flex, thinking billed).",
-      "values": [
-        {
-          "quantity": "HIGH-to-minimal proposer pass cost ratio under the superseded extrapolation",
-          "value_verbatim": "3×",
-          "value_parsed": 3.0,
-          "unit": null,
-          "kind": "ratio",
-          "path": null,
-          "method": "historical"
-        },
-        {
-          "quantity": "cost USD of a HIGH-thinking proposer pass over the 55-map corpus at flex under the rebuilt model",
-          "value_verbatim": "$40.19",
-          "value_parsed": 40.19,
-          "unit": "USD",
-          "kind": "cost",
-          "path": null,
-          "method": "anchor-unknown"
-        },
-        {
-          "quantity": "tile count of the 55-map generalisation corpus",
-          "value_verbatim": "8,541",
-          "value_parsed": 8541,
-          "unit": null,
-          "kind": "count",
-          "path": "$.cost_model.production_scale.tiles_55map",
-          "method": "read"
-        }
-      ],
-      "anchor": {
-        "file": "results/verifier-robustness/pareto/pareto_v2.json",
-        "path": null
-      },
-      "method": "read",
-      "notes": "Changelog before→after pair: the '3× minimal' extrapolation is the superseded side (historical); $40.19 is live but prose-sourced to reports/token-load-audit-2026-06-12.md; the 8,541-tile scale is committed in pareto_v2.json's cost model. Duplicates the § 5.4 figures at lines 74-76."
+     "quantity": "count of registered analyses with a null manually_verified_at, results/run-analyses.json",
+     "value_verbatim": "7",
+     "value_parsed": 7,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
     }
-  ]
+   ],
+   "anchor": {
+    "file": "results/run-analyses.json",
+    "path": "len:$.analyses[?(@.manually_verified_at==null)]"
+   },
+   "method": "read",
+   "notes": "[BATCH NOTE b051] Scope decisions for this document, applied throughout: dates, session numbers (S111/S113/S106), Obs identifiers (357-364), commit hashes, findings/dossier section numbers (§ 11, § 14, § 15, § 16(c), § 5.4), model version strings (Flash 3.5, gemini-3.5-flash, gemini-3-flash-preview) and numbers inside condition/rung/pool names (min6, min11, high31, high35, T03-k3, TH7-k3, TM-k3, IM-k3, 4of5, 3of10, t0.3, pv-diag-384, Track-2, 55map-canonical-leaderboard-50m) are excluded per instrument rule 5. The corpus descriptor '55-map' recurs ~10 times; extracted once at line 7 as a map-count claim (instrument rule 5, '487-tile Era 2 corpus' precedent) and not re-extracted at each later mention. Several cost figures in § 5.4 are sourced by the document to reports/token-load-audit-2026-06-12.md, a hand-written markdown document; per rule 2 those are anchor-unknown rather than prose-anchored. This first claim also carries the batch note. The count is a filter count over the analyses array (instrument v1.2 amendment 7); the document names results/run-analyses.json as its source in the following line."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     17,
+     17
+    ],
+    "section": "§ 1 table — verifier-robustness-matrix"
+   },
+   "claim_text": "| `verifier-robustness-matrix` | S111 | thinking × temperature one tier at N=5; high hurts n=1 (`results/verifier-robustness/matrix_tiering.json`) |",
+   "values": [
+    {
+     "quantity": "tier count, thinking × temperature verifier-robustness matrix",
+     "value_verbatim": "one",
+     "value_parsed": 1,
+     "unit": null,
+     "kind": "count",
+     "path": "$.ranked[?(@.ref!='high-T0.0')].tier (distinct count)",
+     "method": "read"
+    },
+    {
+     "quantity": "verifier replicate count for the matrix (N)",
+     "value_verbatim": "N=5",
+     "value_parsed": 5,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "pass count at which high thinking hurts (n)",
+     "value_verbatim": "n=1",
+     "value_parsed": 1,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/matrix_tiering.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Anchor named by the row itself. 'one tier' anchored to the tiers array in matrix_tiering.json. N=5 and n=1 are run parameters restated in prose; no scalar locator found in matrix_tiering.json (keys: tiers, ranked, pairwise) — flagged anchor-unknown; run-analyses.json's verifier-robustness-matrix _note also restates them in prose. [v0] [TRIAGE REPAIR 2026-08-03 wave-5] Blind pass FG: len:$.tiers counts the n=1 HIGH-T0.0 prior the same sentence excludes; distinct tier count over the five N=5 refs = 1, matching the prose 'at N=5'."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     18,
+     18
+    ],
+    "section": "§ 1 table — pass-budget-pareto"
+   },
+   "claim_text": "| `pass-budget-pareto` | S111 | v1 passes-axis ladder, one tier; opmax ns (p=0.363). Superseded by v2 for citation but remains the registered record |",
+   "values": [
+    {
+     "quantity": "tier count, pass-budget Pareto v1 passes-axis ladder",
+     "value_verbatim": "one",
+     "value_parsed": 1,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.tiers",
+     "method": "read"
+    },
+    {
+     "quantity": "permutation p-value, opmax vs the 0.890 headline",
+     "value_verbatim": "0.363",
+     "value_parsed": 0.363,
+     "unit": null,
+     "kind": "statistic",
+     "path": "results/verifier-robustness/opmax_vs_headline_permutation.json#$.test.p_value",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/pareto/pareto_leaderboard.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "v1 artefact is results/verifier-robustness/pareto/pareto_leaderboard.json (the document says v1 'remains the registered record'). The opmax p-value is a cross-file locator (instrument v1.2 amendment 2)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     19,
+     19
+    ],
+    "section": "§ 1 table — min-vs-high-thinking-pv"
+   },
+   "claim_text": "| `min-vs-high-thinking-pv` | S113 | GS min ≈ high under PV (five targeted pairs, all ns); recall-ceiling mechanism; scope-qualified by Obs 362 |",
+   "values": [
+    {
+     "quantity": "number of targeted min-vs-high permutation pairs, GS proposer-verifier",
+     "value_verbatim": "five",
+     "value_parsed": 5,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/min_vs_high_permutations.json",
+    "path": "len:$"
+   },
+   "method": "read",
+   "notes": "min_vs_high_permutations.json is a top-level array of pair records; the 'all ns' qualifier is a per-pair significance judgement, not extracted as a separate value."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     20,
+     20
+    ],
+    "section": "§ 1 table — pass-budget-pareto-v2"
+   },
+   "claim_text": "| `pass-budget-pareto-v2` | S113 | cost-weighted frontier; efficient set {min6, min11, high31, high35}; 0/21 pairs sig |",
+   "values": [
+    {
+     "quantity": "number of significant pairwise comparisons, Pareto v2 round-robin",
+     "value_verbatim": "0",
+     "value_parsed": 0,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.pairwise[?(@.significant==true)]",
+     "method": "read"
+    },
+    {
+     "quantity": "total pairwise comparisons, Pareto v2 round-robin (C(7,2))",
+     "value_verbatim": "21",
+     "value_parsed": 21,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.pairwise",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/pareto/pareto_v2.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Efficient set {min6, min11, high31, high35} is named, not counted, in the span; the rung names carry numerals excluded per rule 5. The significant-pair count is a filter count (v1.2 amendment 7)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     21,
+     21
+    ],
+    "section": "§ 1 table — flash35-model-roles"
+   },
+   "claim_text": "| `flash35-model-roles` | S113 | Flash 3.5 wins in no role; proposer loss resolved (p=0.035), verifier losses are cost-rule ties |",
+   "values": [
+    {
+     "quantity": "permutation p-value, Flash 3.5 proposer-role loss",
+     "value_verbatim": "0.035",
+     "value_parsed": 0.035,
+     "unit": null,
+     "kind": "statistic",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/flash35-2x2/flash35_permutations.json",
+    "path": "$.pairs[0].p_value"
+   },
+   "method": "read",
+   "notes": "pairs[0] is the proposer-role question (F3.5 pool vs F3 pool under the same F3 verifier)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     22,
+     22
+    ],
+    "section": "§ 1 table — unswept-pools-completeness"
+   },
+   "claim_text": "| `unswept-pools-completeness` | S113 | 18-pool sweep; headline survives the global-optimum check; Pro-verifier discovery (post-hoc p=0.019) |",
+   "values": [
+    {
+     "quantity": "number of never-swept pools scored in the completeness sweep",
+     "value_verbatim": "18",
+     "value_parsed": 18,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.cells",
+     "method": "read"
+    },
+    {
+     "quantity": "post-hoc permutation p-value, Pro-verifier discovery",
+     "value_verbatim": "0.019",
+     "value_parsed": 0.019,
+     "unit": null,
+     "kind": "statistic",
+     "path": "results/verifier-robustness/pro_vf_permutations.json#$.high6.p_value",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/unswept_pools_sweep.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The p=0.019 Pro-verifier discovery is quoted at three decimal places; pro_vf_permutations.json records the high6 comparison. Cross-file locator per v1.2 amendment 2."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     23,
+     23
+    ],
+    "section": "§ 1 table — 55map-canonical-leaderboard-50m"
+   },
+   "claim_text": "| `55map-canonical-leaderboard-50m` | S113 | the 8-cell deployment board: 24/28 sig, 5 tiers; T1 = {T03-k3, TH7-k3} |",
+   "values": [
+    {
+     "quantity": "cell count, 55-map canonical deployment board at 50 m",
+     "value_verbatim": "8",
+     "value_parsed": 8,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.cells",
+     "method": "read"
+    },
+    {
+     "quantity": "significant pairwise comparisons, 55-map board at 50 m",
+     "value_verbatim": "24",
+     "value_parsed": 24,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.pairwise[?(@.significant==true)]",
+     "method": "read"
+    },
+    {
+     "quantity": "total pairwise comparisons, 55-map board at 50 m (C(8,2))",
+     "value_verbatim": "28",
+     "value_parsed": 28,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.pairwise",
+     "method": "read"
+    },
+    {
+     "quantity": "tier count, 55-map board at 50 m",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.tiers",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "T1 = {T03-k3, TH7-k3} names the Tier-1 membership without asserting a count, so no value extracted for it; tier membership lives at $.tiers[0]."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     7,
+     7
+    ],
+    "section": "Preamble"
+   },
+   "claim_text": "the 55-map board refresh",
+   "values": [
+    {
+     "quantity": "number of maps in the deployment (generalisation) corpus",
+     "value_verbatim": "55",
+     "value_parsed": 55,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Corpus-size descriptor used as an asserted fact (instrument rule 5, '487-tile Era 2 corpus' precedent). Looked for a committed map-list manifest: inputs/vectors/references/student-mounds-55maps.geojson and results/55maps-cleanup-report.json exist but neither exposes a scalar map count; results/verifier-robustness/pareto/pareto_v2.json records the derived tile count (8541), not the map count. Extracted once for the whole document — see the batch note on the first claim."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     40,
+     40
+    ],
+    "section": "§ 4 Decision needed — 18-sweep citability"
+   },
+   "claim_text": "## 4. Decision needed — 18-sweep citability",
+   "values": [
+    {
+     "quantity": "number of pools in the completeness sweep",
+     "value_verbatim": "18",
+     "value_parsed": 18,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/unswept_pools_sweep.json",
+    "path": "len:$.cells"
+   },
+   "method": "read",
+   "notes": "'18-sweep' is a compound name that also asserts the pool count (instrument rule 5); duplicates the count claimed at lines 42-43 and in the § 1 table row."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     42,
+     43
+    ],
+    "section": "§ 4 Decision needed — 18-sweep citability"
+   },
+   "claim_text": "The completeness sweep scored 18 never-swept pools\n(`results/verifier-robustness/unswept_pools_sweep.json`).",
+   "values": [
+    {
+     "quantity": "number of never-swept pools scored in the completeness sweep",
+     "value_verbatim": "18",
+     "value_parsed": 18,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/unswept_pools_sweep.json",
+    "path": "len:$.cells"
+   },
+   "method": "read",
+   "notes": "The document names its own source artefact inside the span."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     43,
+     45
+    ],
+    "section": "§ 4 Decision needed — 18-sweep citability"
+   },
+   "claim_text": "**Two** are now\nfirst-class conditions (`verified-adv-text-pro-vf-4of5`,\n`verified-adv-image-3of5`); the remaining **16 are analysis-internal**,",
+   "values": [
+    {
+     "quantity": "number of swept pools promoted to first-class registered conditions",
+     "value_verbatim": "Two",
+     "value_parsed": 2,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "number of swept pools left analysis-internal",
+     "value_verbatim": "16",
+     "value_parsed": 16,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "arithmetic",
+     "expression": "a - 2",
+     "operands": [
+      {
+       "name": "a",
+       "file": "results/verifier-robustness/unswept_pools_sweep.json",
+       "path": "len:$.cells"
+      }
+     ]
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/unswept_pools_sweep.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The two named condition labels (verified-adv-text-pro-vf-4of5, verified-adv-image-3of5) both appear in results/conditions-manifest.json, but no single scalar records 'how many of the 18 were promoted', so the count of two is flagged anchor-unknown; the 16 is the mechanical complement of the sweep's cell count. Value-level derivation per v1.2 amendment 1 (the operand keeps its own read locator)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     47,
+     47
+    ],
+    "section": "§ 4 Decision needed — 18-sweep citability"
+   },
+   "claim_text": "Recommendation: leave the 16 analysis-internal",
+   "values": [
+    {
+     "quantity": "number of swept pools recommended to stay analysis-internal",
+     "value_verbatim": "16",
+     "value_parsed": 16,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/unswept_pools_sweep.json",
+    "expression": "a - 2",
+    "operands": [
+     {
+      "name": "a",
+      "file": "results/verifier-robustness/unswept_pools_sweep.json",
+      "path": "len:$.cells"
+     }
+    ]
+   },
+   "method": "arithmetic",
+   "notes": "Restatement of the 16 claimed at lines 43-45; kept as its own span because it is a separate assertion (over-inclusion is cheap to prune)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     53,
+     55
+    ],
+    "section": "§ 5.1 Flash 3.5 role permutations"
+   },
+   "claim_text": "the proposer-role\n   loss is statistically resolved (−0.0355, p = 0.035 raw; marginal under\n   BH across the three role tests)",
+   "values": [
+    {
+     "quantity": "observed F1@20m difference, Flash 3.5 proposer pool vs Flash 3 proposer pool",
+     "value_verbatim": "−0.0355",
+     "value_parsed": -0.0355,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.pairs[0].observed_diff",
+     "method": "read"
+    },
+    {
+     "quantity": "raw permutation p-value, proposer-role comparison",
+     "value_verbatim": "0.035",
+     "value_parsed": 0.035,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.pairs[0].p_value",
+     "method": "read"
+    },
+    {
+     "quantity": "number of role tests entering the Benjamini-Hochberg family",
+     "value_verbatim": "three",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.pairs",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/flash35-2x2/flash35_permutations.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The document names results/flash35-2x2/flash35_permutations.json in the same list item. '−0.0355' uses U+2212 in the source; the artefact records the difference at six decimal places. 'marginal under BH' is a judgement, not a value."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     55,
+     56
+    ],
+    "section": "§ 5.1 Flash 3.5 role permutations"
+   },
+   "claim_text": "both verifier-role losses are\n   within-noise ties (p = 0.17 / p = 0.10)",
+   "values": [
+    {
+     "quantity": "permutation p-value, verifier-role comparison on the Flash 3.5 pool",
+     "value_verbatim": "0.17",
+     "value_parsed": 0.17,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.pairs[1].p_value",
+     "method": "read"
+    },
+    {
+     "quantity": "permutation p-value, verifier-role comparison on the Flash 3 pool",
+     "value_verbatim": "0.10",
+     "value_parsed": 0.1,
+     "unit": null,
+     "kind": "statistic",
+     "path": "$.pairs[2].p_value",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/flash35-2x2/flash35_permutations.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Quoted at two decimal places; pairs[1] is the verifier-role test on the F3.5 pool and pairs[2] the verifier-role test on the F3 pool, following the document's ordering."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     59,
+     60
+    ],
+    "section": "§ 5.2 Board prediction miss"
+   },
+   "claim_text": "the continuity predicted six\n   tiers; the refreshed board kept **five**",
+   "values": [
+    {
+     "quantity": "predicted tier count for the refreshed 55-map board",
+     "value_verbatim": "six",
+     "value_parsed": 6,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "tier count on the refreshed 55-map board at 50 m",
+     "value_verbatim": "five",
+     "value_parsed": 5,
+     "unit": null,
+     "kind": "count",
+     "path": "len:$.tiers",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The predicted six is attributed to the session continuity document (prose); rule 2 forbids anchoring prose to prose. results/run-analyses.json carries a predicted_outcome field on the 55map-canonical-leaderboard-50m entry, but its content is free text, so the prediction is flagged anchor-unknown for triage."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     60,
+     61
+    ],
+    "section": "§ 5.2 Board prediction miss"
+   },
+   "claim_text": "the uplift (0.8290) is ns\n   vs T03-k4 (0.8359) and shares Tier 2",
+   "values": [
+    {
+     "quantity": "F1@50m, TM-n10-k5 uplift cell on the 55-map board",
+     "value_verbatim": "0.8290",
+     "value_parsed": 0.829,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.cells[?(@.name=='TM-n10-k5 (uplift)')].f1_50",
+     "method": "read"
+    },
+    {
+     "quantity": "F1@50m, T03-k4 cell on the 55-map board",
+     "value_verbatim": "0.8359",
+     "value_parsed": 0.8359,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.cells[?(@.name=='T03-k4')].f1_50",
+     "method": "read"
+    },
+    {
+     "quantity": "tier assignment of the uplift cell on the 55-map board",
+     "value_verbatim": "2",
+     "value_parsed": 2,
+     "unit": null,
+     "kind": "other",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": {
+    "file": "results/55map-leaderboard/55map_leaderboard_50m.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Tier membership is stored as an ordered list of name arrays at $.tiers (tier 2 would be $.tiers[1]), not as a per-cell scalar, so the tier assignment is flagged rather than given a read locator. The 'ns' and 'significantly above/below' judgements are covered by the board's pairwise records, not extracted as separate values here."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     64,
+     65
+    ],
+    "section": "§ 5.3 Uplift Track-2 eval"
+   },
+   "claim_text": "the canonical-GT engine reproduced the\n   committed sweep value to six decimal places (0.829028)",
+   "values": [
+    {
+     "quantity": "number of decimal places to which the two engines agree",
+     "value_verbatim": "six",
+     "value_parsed": 6,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "F1@50m, uplift cell as recorded in the committed sweep value",
+     "value_verbatim": "0.829028",
+     "value_parsed": 0.829028,
+     "unit": null,
+     "kind": "metric",
+     "path": "$.permutations.TM-k3.f1_a",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/55map-leaderboard/min11_uplift_cell.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The 'committed sweep value' at full precision appears in results/55map-leaderboard/min11_uplift_cell.json as the f1_a of both recorded permutations; the Track-2 evaluation artefact the document compares against is not named. 'six decimal places' is a precision-of-agreement descriptor with no stored counterpart."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     71,
+     72
+    ],
+    "section": "§ 5.4 Token-load audit"
+   },
+   "claim_text": "double-counted token totals (text-min and text-high 2×, image 3×;\n   t0.3 clean)",
+   "values": [
+    {
+     "quantity": "token double-count factor, text-min and text-high 55-map cost manifests (superseded)",
+     "value_verbatim": "2×",
+     "value_parsed": 2.0,
+     "unit": null,
+     "kind": "ratio",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "token double-count factor, image 55-map cost manifest (superseded)",
+     "value_verbatim": "3×",
+     "value_parsed": 3.0,
+     "unit": null,
+     "kind": "ratio",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "The multipliers describe the pre-2026-06-12 manifests, now in archive/superseded-cost-manifests-2026-06-12/ (four files). No artefact records the factor itself; it would have to be derived by diffing the archived token totals against the regenerated outputs/<run>/cost_manifest.json files. Document-named source is reports/token-load-audit-2026-06-12.md."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     72,
+     73
+    ],
+    "section": "§ 5.4 Token-load audit"
+   },
+   "claim_text": "all four priced standard instead of flex, and none\n   billed thinking tokens.",
+   "values": [
+    {
+     "quantity": "number of 55-map cost manifests affected by the standard-pricing error",
+     "value_verbatim": "four",
+     "value_parsed": 4,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Four superseded manifests are archived at archive/superseded-cost-manifests-2026-06-12/ (text-min, text-high, text-high-t0.3, image); the count of affected manifests is not itself recorded in any artefact. Document-named source is reports/token-load-audit-2026-06-12.md."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     74,
+     76
+    ],
+    "section": "§ 5.4 Token-load audit"
+   },
+   "claim_text": "rebuilt from per-item metadata (min pass $4.66, HIGH T0.7 $40.19,\n   image HIGH $39.07 per 8,541-tile pass at flex; verifier\n   $0.000693/call)",
+   "values": [
+    {
+     "quantity": "cost USD of one minimal-thinking proposer pass over the 55-map corpus at flex pricing",
+     "value_verbatim": "$4.66",
+     "value_parsed": 4.66,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "cost USD of one HIGH-thinking T0.7 proposer pass over the 55-map corpus at flex pricing",
+     "value_verbatim": "$40.19",
+     "value_parsed": 40.19,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "cost USD of one HIGH-thinking image proposer pass over the 55-map corpus at flex pricing",
+     "value_verbatim": "$39.07",
+     "value_parsed": 39.07,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "tile count of the 55-map generalisation corpus",
+     "value_verbatim": "8,541",
+     "value_parsed": 8541,
+     "unit": null,
+     "kind": "count",
+     "path": "$.cost_model.production_scale.tiles_55map",
+     "method": "read"
+    },
+    {
+     "quantity": "cost USD per Flash 3 verifier call",
+     "value_verbatim": "$0.000693",
+     "value_parsed": 0.000693,
+     "unit": "USD",
+     "kind": "cost",
+     "path": "$.cost_model.vf_call_usd",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/pareto/pareto_v2.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The three per-pass 55-map dollar figures are sourced by the document to reports/token-load-audit-2026-06-12.md (prose; rule 2). $4.66 and $40.19 are restated in the scripts/build_pareto_v2.py COST MODEL header comment and in the pass-budget-pareto-v2 _note of results/run-analyses.json, both prose; the mechanically resolvable relatives are the GS-scale constants $.cost_model.min_pass_usd (0.266) and $.cost_model.high_pass_usd (2.29) with $.cost_model.production_scale.factor. $39.07 (image HIGH) was not found anywhere outside the audit report."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     77,
+     77
+    ],
+    "section": "§ 5.4 Token-load audit"
+   },
+   "claim_text": "min rungs 36–41% down, HIGH rungs 31–42% up",
+   "values": [
+    {
+     "quantity": "lower bound of the cost reduction across minimal-thinking Pareto rungs",
+     "value_verbatim": "36",
+     "value_parsed": 36.0,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "upper bound of the cost reduction across minimal-thinking Pareto rungs",
+     "value_verbatim": "41",
+     "value_parsed": 41.0,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "lower bound of the cost increase across HIGH-thinking Pareto rungs",
+     "value_verbatim": "31",
+     "value_parsed": 31.0,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "upper bound of the cost increase across HIGH-thinking Pareto rungs",
+     "value_verbatim": "42",
+     "value_parsed": 42.0,
+     "unit": "%",
+     "kind": "percentage",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Percentage moves are relative to the superseded 2026-06-11 manifest-derived cost model, whose constants are not committed as an artefact (only described in reports/token-load-audit-2026-06-12.md and in the build_pareto_v2.py header). The current rung costs are at results/verifier-robustness/pareto/pareto_v2.json $.rungs[*].est_cost_usd / est_cost_55map_usd; the pre-rebuild side would have to come from git history. Ranges share the '%' sign per v1.2 amendment 6."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     77,
+     78
+    ],
+    "section": "§ 5.4 Token-load audit"
+   },
+   "claim_text": "high31\n   production ~$856 → ~$1,214",
+   "values": [
+    {
+     "quantity": "cost USD of high31 55-map production under the superseded cost model",
+     "value_verbatim": "~$856",
+     "value_parsed": 856.0,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "historical"
+    },
+    {
+     "quantity": "cost USD of high31 55-map production under the rebuilt cost model",
+     "value_verbatim": "~$1,214",
+     "value_parsed": 1214.0,
+     "unit": "USD",
+     "kind": "cost",
+     "path": "$.rungs[?(@.rung=='high31')].est_cost_55map_usd",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/pareto/pareto_v2.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Before→after pair: the ~$856 side is the superseded figure (historical per instrument rule 3); the ~$1,214 side is live. Approximation markers kept in value_verbatim per v1.2 amendment 5."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     78,
+     78
+    ],
+    "section": "§ 5.4 Token-load audit"
+   },
+   "claim_text": "the § 16(c) trade is now ~$58 vs ~$207",
+   "values": [
+    {
+     "quantity": "cost USD, cheaper side of the findings § 16(c) trade under the rebuilt cost model",
+     "value_verbatim": "~$58",
+     "value_parsed": 58.0,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "cost USD, dearer side of the findings § 16(c) trade under the rebuilt cost model",
+     "value_verbatim": "~$207",
+     "value_parsed": 207.0,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "The § 16(c) reference points into the findings document (another hand-written markdown mine document; not chased beyond naming it per rule 7). Neither figure matches a rung cost in results/verifier-robustness/pareto/pareto_v2.json ($.rungs[*].est_cost_usd = 2.43/4.00/14.04/14.41/26.97/69.21/71.23; est_cost_55map_usd = 42.60/70.22/246.22/252.77/472.91/1213.72/1249.16), so the pairing is left for triage. Approximation markers kept verbatim."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     79,
+     81
+    ],
+    "section": "§ 5.4 Token-load audit"
+   },
+   "claim_text": "True total\n   spend across the five 55-map campaigns ≈ $722 flex (lower bound;\n   retry attempts unrecorded)",
+   "values": [
+    {
+     "quantity": "number of 55-map campaigns contributing to the total spend",
+     "value_verbatim": "five",
+     "value_parsed": 5,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "total spend USD across the 55-map campaigns at flex pricing (lower bound)",
+     "value_verbatim": "≈ $722",
+     "value_parsed": 722.0,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Only four committed cost manifests exist (outputs/55maps-text-min-, text-high-, text-high-t0.3-, image-generalisation/cost_manifest.json); outputs/55maps-text-min-n10-uplift/ has no cost_manifest.json, so the fifth campaign's contribution is not mechanically available and the sum is not stated as a plain four-way total. Left anchor-unknown rather than given a partial arithmetic derivation that would manufacture a mismatch. Approximation marker kept verbatim per v1.2 amendment 5."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     82,
+     83
+    ],
+    "section": "§ 5.4 Token-load audit"
+   },
+   "claim_text": "~~Recommendation: regenerate the\n   three corrupted manifests (and re-price t0.3) in a dedicated pass~~",
+   "values": [
+    {
+     "quantity": "number of corrupted 55-map cost manifests named for regeneration",
+     "value_verbatim": "three",
+     "value_parsed": 3,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "historical",
+   "notes": "The whole recommendation is struck through and superseded by the DONE block immediately below (which reports four manifests regenerated), so classified historical per instrument rule 3. Doubt flagged: the count itself (three double-counted manifests plus a separately re-priced t0.3) is consistent with the live text, so triage may prefer to treat it as a live count claim."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     85,
+     86
+    ],
+    "section": "§ 5.4 Token-load audit"
+   },
+   "claim_text": "and all four\n   manifests regenerated at flex with stub verifier legs reconstructed",
+   "values": [
+    {
+     "quantity": "number of 55-map cost manifests regenerated at flex pricing",
+     "value_verbatim": "four",
+     "value_parsed": 4,
+     "unit": null,
+     "kind": "count",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "Four regenerated manifests exist (outputs/55maps-text-min-generalisation/cost_manifest.json, outputs/55maps-text-high-generalisation/cost_manifest.json, outputs/55maps-text-high-t0.3-generalisation/cost_manifest.json, outputs/55maps-image-generalisation/cost_manifest.json) with four originals in archive/superseded-cost-manifests-2026-06-12/, but the count is a file-count claim with no JSON locator."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     88,
+     89
+    ],
+    "section": "§ 5.4 Token-load audit"
+   },
+   "claim_text": "Corrected campaign\n   totals: $30.44 / $207.34 / $261.02 / $200.83.",
+   "values": [
+    {
+     "quantity": "total cost USD, 55maps-text-min-generalisation campaign at flex",
+     "value_verbatim": "$30.44",
+     "value_parsed": 30.44,
+     "unit": "USD",
+     "kind": "cost",
+     "path": "outputs/55maps-text-min-generalisation/cost_manifest.json#$.totals.cost_usd",
+     "method": "read"
+    },
+    {
+     "quantity": "total cost USD, 55maps-text-high-generalisation campaign at flex",
+     "value_verbatim": "$207.34",
+     "value_parsed": 207.34,
+     "unit": "USD",
+     "kind": "cost",
+     "path": "outputs/55maps-text-high-generalisation/cost_manifest.json#$.totals.cost_usd",
+     "method": "read"
+    },
+    {
+     "quantity": "total cost USD, 55maps-text-high-t0.3-generalisation campaign at flex",
+     "value_verbatim": "$261.02",
+     "value_parsed": 261.02,
+     "unit": "USD",
+     "kind": "cost",
+     "path": "outputs/55maps-text-high-t0.3-generalisation/cost_manifest.json#$.totals.cost_usd",
+     "method": "read"
+    },
+    {
+     "quantity": "total cost USD, 55maps-image-generalisation campaign at flex",
+     "value_verbatim": "$200.83",
+     "value_parsed": 200.83,
+     "unit": "USD",
+     "kind": "cost",
+     "path": "outputs/55maps-image-generalisation/cost_manifest.json#$.totals.cost_usd",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "outputs/55maps-text-min-generalisation/cost_manifest.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "The document lists four unlabelled figures. Extractor assigned them to campaigns in the order text-min / text-high / text-high-t0.3 / image (the order used earlier in § 5.4); triage should confirm the mapping before adjudicating any individual figure. Cross-file locators per v1.2 amendment 2."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     96,
+     97
+    ],
+    "section": "§ 6 Registration conventions adopted"
+   },
+   "claim_text": "The uplift pool's mixed provenance (passes 1–5 from\n  `55maps-text-min-generalisation`, 6–10 new)",
+   "values": [
+    {
+     "quantity": "first carried-over proposer pass index in the uplift pool",
+     "value_verbatim": "1",
+     "value_parsed": 1,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "last carried-over proposer pass index in the uplift pool",
+     "value_verbatim": "5",
+     "value_parsed": 5,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "first newly run proposer pass index in the uplift pool",
+     "value_verbatim": "6",
+     "value_parsed": 6,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    },
+    {
+     "quantity": "last newly run proposer pass index in the uplift pool",
+     "value_verbatim": "10",
+     "value_parsed": 10,
+     "unit": null,
+     "kind": "parameter",
+     "path": null,
+     "method": null
+    }
+   ],
+   "anchor": null,
+   "method": "anchor-unknown",
+   "notes": "outputs/55maps-text-min-n10-uplift/proposer/ contains run_6 … run_10 (five directories), consistent with the split, but neither that directory nor outputs/55maps-text-min-n10-uplift/verified-3of10/run.meta.json records a pass-provenance field; the document itself points to a prose 'decomposition note'. Flagged for triage rather than anchored to a directory listing."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     111,
+     111
+    ],
+    "section": "Changelog — 2026-06-12"
+   },
+   "claim_text": "minimal pass ~$9.40 → $4.66",
+   "values": [
+    {
+     "quantity": "cost USD of a minimal proposer pass under the superseded manifest-derived model",
+     "value_verbatim": "~$9.40",
+     "value_parsed": 9.4,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "historical"
+    },
+    {
+     "quantity": "cost USD of a minimal proposer pass over the 55-map corpus at flex under the rebuilt model",
+     "value_verbatim": "$4.66",
+     "value_parsed": 4.66,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "anchor-unknown"
+    }
+   ],
+   "anchor": null,
+   "method": "historical",
+   "notes": "Changelog before→after pair (instrument rule 3 and the known-traps note): ~$9.40 is the superseded side. The live $4.66 repeats the § 5.4 figure and inherits the same anchor difficulty — sourced to reports/token-load-audit-2026-06-12.md and restated only in prose (scripts/build_pareto_v2.py header comment)."
+  },
+  {
+   "claim_id": null,
+   "source": {
+    "lines": [
+     111,
+     112
+    ],
+    "section": "Changelog — 2026-06-12"
+   },
+   "claim_text": "HIGH pass\n\"3× minimal\" → $40.19 measured (8,541 tiles, flex, thinking billed).",
+   "values": [
+    {
+     "quantity": "HIGH-to-minimal proposer pass cost ratio under the superseded extrapolation",
+     "value_verbatim": "3×",
+     "value_parsed": 3.0,
+     "unit": null,
+     "kind": "ratio",
+     "path": null,
+     "method": "historical"
+    },
+    {
+     "quantity": "cost USD of a HIGH-thinking proposer pass over the 55-map corpus at flex under the rebuilt model",
+     "value_verbatim": "$40.19",
+     "value_parsed": 40.19,
+     "unit": "USD",
+     "kind": "cost",
+     "path": null,
+     "method": "anchor-unknown"
+    },
+    {
+     "quantity": "tile count of the 55-map generalisation corpus",
+     "value_verbatim": "8,541",
+     "value_parsed": 8541,
+     "unit": null,
+     "kind": "count",
+     "path": "$.cost_model.production_scale.tiles_55map",
+     "method": "read"
+    }
+   ],
+   "anchor": {
+    "file": "results/verifier-robustness/pareto/pareto_v2.json",
+    "path": null
+   },
+   "method": "read",
+   "notes": "Changelog before→after pair: the '3× minimal' extrapolation is the superseded side (historical); $40.19 is live but prose-sourced to reports/token-load-audit-2026-06-12.md; the 8,541-tile scale is committed in pareto_v2.json's cost model. Duplicates the § 5.4 figures at lines 74-76."
+  }
+ ]
 }
