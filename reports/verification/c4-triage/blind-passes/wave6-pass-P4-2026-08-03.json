@@ -1,0 +1,252 @@
+{
+  "pass": "P4",
+  "partition": "C4 wave-6 P4 — investigation counters + regenerated-stat rows (46 rows)",
+  "adjudicated_at": "2026-08-03",
+  "method_note": "Blind pass. Every verdict rests on primary evidence only: the recompute row, the extraction claim, the source-document lines, and git blob/blame resolution of the anchor at the claim's own era. No triage story, draft-story, blind-pass or spot-audit artefact was opened. Binding rules read first: reports/verification/phase3-rulings-2026-07-31.md rulings 1, 9, 12, 14. Bootstrap-CI caveat (percentile->BCa, 2026-04-30, 2026999ad) checked and found NOT to bite on any P4 row: the only bootstrap-flavoured rows in this partition are iteration COUNTS (070#1[0], 070#8[0], 072#61[0]), and no P4 row quotes a CI bound.",
+  "era_discriminator_used": {
+    "rule": "A claim's era is the commit that last wrote the source line carrying it (git blame -L). Era-faithful at that commit + anchor moved later => SNAPSHOT-DIVERGENCE. Wrong at that commit => DOC-DEFECT-AT-ERA. Presentation class (dated filename/title) treated as advisory only, per ruling 14.",
+    "why_stated_explicitly": "Ruling 14 makes 'per-claim era-faithfulness' the deciding axis but does not define which commit supplies the era for a living document with many revisions. Two P4 families turn on that choice, so the rule used is stated up front and the alternative reading is recorded in escalation E2 rather than resolved silently."
+  },
+  "families": [
+    {
+      "name": "F1 — 066 verifier-silent-drop failure counters erased by the 2026-05-06 recovery re-run",
+      "rows": [
+        "066-verifier-silent-drop#10[1]",
+        "066-verifier-silent-drop#10[2]",
+        "066-verifier-silent-drop#30[1]",
+        "066-verifier-silent-drop#30[2]",
+        "066-verifier-silent-drop#30[3]",
+        "066-verifier-silent-drop#37[0]",
+        "066-verifier-silent-drop#38[0]",
+        "066-verifier-silent-drop#38[1]"
+      ],
+      "row_count": 8,
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "All eight rows quote the same two counters (parse_failures and empty_responses, both 1,147) plus one arithmetic derivative (their sum, 2,294) from a single anchor: outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/run.meta.json, path $.execution_stats.parse_failures / .empty_responses. The anchor is git-tracked. It was overwritten in place three days after the document by the Phase-3a recovery campaign, which re-ran the verifier for exactly this cell and produced a clean run; the failure counters therefore now read 0 and the document's evidence base cannot be re-resolved from the current blob. Mechanical identity: 066#10[1], 066#30[1], 066#37[0] and 066#38[0] are the SAME field read four times (parse_failures = 1147); 066#10[2] and 066#30[2] are the same field read twice (empty_responses = 1147); 066#30[3] is a hypothesis-quantity bound to the parse_failures locator; 066#38[1] = 1147 + 1147. One artefact event explains all eight.",
+      "era_evidence": {
+        "source_document": "reports/verifier-silent-drop-root-cause-2026-05-03.md (lines 60-64, 269-272, 326-327, 334-336)",
+        "document_era_commit": "0808cb916 (2026-05-03 17:32:43 +1000) — the commit that ADDED the document; it has no later revision",
+        "anchor_at_era": "git show 0808cb916:outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/run.meta.json => execution_stats.parse_failures = 1147, empty_responses = 1147, finish_reason_counts = {success: 4301, error: 1147}, failed_items = [] (len 0), completed_items = [] (len 0). Every one of the document's five asserted values reproduces exactly at its own era.",
+        "anchor_now": "parse_failures = 0, empty_responses = 0, safety_blocks = 0, finish_reason_counts = {success: 57}, failed_items len 0, completed_items len 57",
+        "artefact_move_commit": "6683952ac (2026-05-06 16:38:37 +0800) 'data(p3a-recovery): close 3 skipped cells — Cell 1+2+3 cleanup + e47 5-of-5 derivatives'. Commit body: 'Cell 1 — e47-flash-high-text-1of5 (Tier 1, gap=57) Recovered: 57/57 candidates. ~$0.08. ~22 s.' The prior commit on this file is 52b0215a6 (2026-04-09), i.e. the file was untouched between the document and the recovery.",
+        "corroboration": "The document's un-anchored companion figure (gap = 57) is confirmed by the recovery itself: completed_items now holds exactly 57 entries and finish_reason_counts.success = 57. The recovery closed precisely the gap the document was analysing.",
+        "harness_agreement": "The recompute harness's own era_check field agrees on all eight rows: {faithful: true, status: MATCH, actual_era: 1147.0 (2294.0 on 066#38[1]), commit: 0808cb9165d5}. This pass re-derived that result independently from the blob rather than trusting the field."
+      }
+    },
+    {
+      "name": "F2 — 067 attractor-pull v2 permutation-null columns regenerated in place twice after the tables were written",
+      "rows": [
+        "067#19[1]", "067#20[4]", "067#22[4]", "067#22[5]", "067#24[5]", "067#25[5]",
+        "067#44[3]", "067#44[4]", "067#44[5]",
+        "067#45[3]", "067#45[4]", "067#45[5]",
+        "067#46[3]", "067#46[4]", "067#46[5]", "067#46[6]",
+        "067#47[3]", "067#47[4]", "067#47[5]", "067#47[6]",
+        "067#48[3]", "067#48[4]", "067#48[5]", "067#48[6]",
+        "067#49[3]", "067#49[5]", "067#49[6]"
+      ],
+      "row_count": 27,
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "Every one of the 27 rows is a BIAS-CORRECTED (permutation-null-derived) quantity: null_mean_bias_corrected, lift_ratio_bias_corrected, signal_fraction_bias_corrected, p_value_bias_corrected, or the run-level bias_correction. The sibling artefact results/55maps-attractor-pull-v2/attractor-pull-v2.json — which the report's own generator writes — was regenerated in place TWICE after the two shell tables were pasted into the hand-levelled report.md, and each regeneration moved only the null-derived columns. Selectivity is the proof of mechanism: across every version the observed columns are byte-identical (t0.3 obs_rate 0.4451/0.0347/0.0202/0.0101/0.0145/0.0462; text-min 0.4274/0.0342/0.012/0.0085/0.012/0.0598), n_candidates is fixed (t0.3 692, text-min 585), permutations = 1000, seed = 42 and alpha = 0.05 are fixed, and text-min's bias_correction is fixed at 0.9361 — yet every bias-corrected cell moved. The first regeneration coincides with n_student_gt moving 4744 -> 4745 (the curator-GT update), which re-draws the within-tile permutation null of student-GT distances even under a fixed seed. All 27 rows are era-faithful to the digit and none reproduce against the current blob; a scripted check over all 27 returned 27/27 era-MATCH and 27/27 current-MISMATCH with zero non-conforming rows.",
+      "era_evidence": {
+        "source_document": "results/55maps-attractor-pull-v2/report.md",
+        "per_claim_eras": "git blame: the T=0.3 text-HIGH block (lines 35, 39, 41, 43, 44 — claims 19/20/22/24/25) was written at 74dbe6809 (2026-04-27 21:33:47 +1000); the text-MIN block (lines 78-83 — claims 44-49) at 1c8c34bd1 (2026-04-28 00:59:13 +0000). Neither block has been edited since.",
+        "anchor_at_era": "74dbe6809 blob: t0.3 bias_correction 0.9231; shell (0,50] lift 145.88; (75,100] lift 4.03, signal_fraction 0.7521; (125,150] signal_fraction 0.5203; (150,286] signal_fraction -0.1931 — exact matches. 1c8c34bd1 blob: text-min (0,50] 0.0028/151.76/0.9934; (50,75] 0.0034/10.08/0.9008; (75,100] 0.0045/2.68/0.6262/p=0.015; (100,125] 0.0056/1.54/0.3486/p=0.199; (125,150] 0.0068/1.76/0.433/p=0.082; (150,286] 0.0527/0.1193/p=0.254 — exact matches on all 21 text-MIN rows.",
+        "artefact_move_commits": [
+          "33435aab2 (2026-05-03 00:57:29 +0000) 'analysis(t0.7-recovery): attractor-pull v2 + FP-classify + TP-localisation + per-map shell + student-GT-FN' — n_student_gt 4744 -> 4745; t0.3 bias_correction 0.9231 -> 0.9232, (0,50] lift 145.88 -> 145.74, (75,100] 4.03 -> 4.04 / 0.7521 -> 0.7522, (125,150] 0.5203 -> 0.5199, (150,286] -0.1931 -> -0.193; text-min moved to 0.0026/166.8/0.994 etc.",
+          "29fcc3679 (2026-05-03 04:29:48 +0000) 'analysis(cross-track-v2): attractor-pull v2 4-run consensus refresh' — t0.3 unchanged from 33435aab2; text-min moved again to its current 0.0027/159.2/0.9937, 0.0032/10.63/0.9059, 0.0046/2.6/0.6147/p=0.012, 0.0057/1.51/0.3387/p=0.202, 0.0067/1.79/0.4421/p=0.067, 0.0524/0.124/p=0.223. This is the current working-tree state."
+        ],
+        "in_tree_corroboration": "The generator also writes the sibling twin results/55maps-attractor-pull-v2/report_autogen.md and three timestamped safety backups. attractor-pull-v2.json.pre-rerun-20260503T042809.backup preserves the 33435aab2 state exactly; the .pre-recovery-20260503T001211 and .pre-gtupdate-20260503T005219 backups both preserve the pre-regeneration (era) values. report_autogen.md at fc536a19c already carried the post-regeneration numbers (t0.3 header bias_correction=0.9232, text-MIN (0,50] lift 159.2).",
+        "materiality": "Presentation-level, not qualitative. No significance flag flips between era and current (text-MIN: 0.015->0.012 True, 0.199->0.202 False, 0.082->0.067 False, 0.254->0.223 False), so per-run cutoffs and the 100 m / 125 m consensus operating points are unaffected. Largest single move is text-MIN (0,50] lift_ratio 151.76 -> 159.2 (+4.9 %); largest signal_fraction move is (75,100] 0.6262 -> 0.6147 (-0.0115)."
+      },
+      "compound_finding": {
+        "summary": "The 27 rows are era-faithful, but the document has since made a FALSE prose re-affirmation of exactly these two runs, and that is what turns a benign snapshot divergence into a live repair item.",
+        "evidence": "report.md lines 10-12, added at fc536a19c (2026-05-03 14:53:04 +1000 = 04:53:04 UTC), read: 'T=0.3 and text-MIN re-confirmed against the same cohorts (no row-level shifts).' That commit lands 23 minutes AFTER the final artefact regeneration at 29fcc3679 (04:29:48 UTC), and at that moment the in-tree sibling report_autogen.md already showed t0.3 bias_correction 0.9232 (report.md still says 0.9231) and text-MIN (0,50] lift 159.2 (report.md still says 151.76). The assertion is contradicted by the generated twin sitting in the same working tree.",
+        "why_not_booked_as_the_family_disposition": "The clause carries no numeral, so it is not an extracted claim (correctly, under the instrument's numeral rule) and it is not one of the 27 rows. Under the stated line-blame era rule the 27 table lines themselves remain era-faithful. Recorded here and in escalation E2 rather than folded into the disposition.",
+        "further_corroboration_outside_this_partition": "report.md line 30 still reads 'Student-GT reference set: 4744 mounds' while the current artefact records n_student_gt = 4745. That value is extracted as 067#16[0] — another partition's row — and is the same propagation miss."
+      }
+    },
+    {
+      "name": "F3 — 070/072 bootstrap iteration count: the evaluations were re-run at N=10,000, the document was not",
+      "rows": ["070#1[0]", "070#8[0]", "072#61[0]"],
+      "row_count": 3,
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "ARTEFACT RE-RUN, not under-report. All three rows quote 1,000 bootstrap iterations against evaluation.json anchors that now record 10,000. At each claim's own era the anchors recorded 1000 in BOTH the descriptive field ($._metadata.bootstrap.n_iterations) and the provenance field ($._metadata.cli_args.bootstrap). The evaluations were re-executed at N=10,000 with BCa during the 2026-05-02/03 recovery campaign and the outputs were overwritten in place. The era blobs also lack the 'method' and 'library' keys the current blobs carry ({method: BCa, library: scipy.stats.bootstrap}), which independently dates them to before the BCa switch.",
+      "era_evidence": {
+        "source_document": "results/55maps-cross-track-comparison/report.md",
+        "per_claim_eras": "git blame: line 107 ('evaluate_detections.py run on sapphire (1,000 iterations, seed 42).') and line 403 ('--bootstrap 1000 --seed 42 \\\\') both at eaf6c8baf9 (2026-04-24 08:04:41 +1000); line 121 ('1,000-iter bootstrap CIs, seed 42.') at 27c5605751 (2026-04-24 21:33:30 +1000). None re-edited since.",
+        "anchor_at_era": "git show 1220f3391:outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json => _metadata.bootstrap = {n_iterations: 1000, seed: 42, resampling_unit: tile_level} and _metadata.cli_args.bootstrap = 1000. 1220f3391 is dated 2026-04-24 08:02:08 +1000 — two and a half minutes before line 107 was written. git show 743e59a8b:outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json (2026-04-24 12:44:00 +1000, the blob live when line 121 was written) => identical, n_iterations 1000 / cli_args.bootstrap 1000. The text-MIN sibling named in the 070#1 extraction note (1220f3391 blob) also reads 1000.",
+        "anchor_now": "Both anchors: _metadata.bootstrap = {n_iterations: 10000, seed: 42, resampling_unit: tile_level, method: BCa, library: scipy.stats.bootstrap}; _metadata.cli_args.bootstrap = 10000.",
+        "artefact_move_commits": [
+          "e20f3e182 (2026-05-02 23:55:05 +0000) 'analysis(t0.7-recovery): N=10K BCa evaluation re-run (baseline + full-buffer + extended-buffer)' — commit body states 'using BCa bootstrap N=10000, seed=42, with MCC'",
+          "f533fda5f (2026-05-03 00:42:38 +0000) text-high re-evaluation against updated GT (4745 features)",
+          "da84a3d23 (2026-05-03 02:30:42 +0000) and 8699f456b (2026-05-03 02:45:24 +0000) for the image full-buffer eval",
+          "236327d80 (2026-05-03 02:10:43 +0000) for the text-MIN extended-buffer eval"
+        ],
+        "ci_caveat_check": "The binding percentile->BCa caveat does not apply: these are iteration counts, not CI values. No CI bound is booked against this family."
+      },
+      "compound_finding": {
+        "summary": "The live document is now internally inconsistent and its reproducibility recipe is broken.",
+        "evidence": "The CI table immediately below line 107 (lines 111-113) WAS refreshed to the N=10,000 BCa numbers at 01b5441fb (2026-05-03 11:26:42 +1000): report line 111 reads '75 m | 0.794 [0.784, 0.804] | 0.850 | 0.746', matching the current artefact's 0.7943 [0.7843, 0.8038] / 0.8497 / 0.7456 exactly. Line 125 (the tile-MCC row under line 121) was likewise refreshed at 61b2e78fd (2026-05-03 14:53:28 +1000). The method sentences at lines 107 and 121 and the copy-pasteable command at line 403 were left at 1,000. A reader running the section-11 recipe verbatim today gets 1,000-iteration CIs that will not reproduce the BCa intervals quoted four lines above the recipe."
+      }
+    },
+    {
+      "name": "F4 — 074 section 5.1 difference column computed from displayed operands (arithmetic-convention gap in the comparer)",
+      "rows": ["074#18[2]", "074#20[2]", "074#21[2]"],
+      "row_count": 3,
+      "disposition": "INSTRUMENT-DEFECT",
+      "disposition_confidence": "provisional — depends on escalation E1",
+      "mechanism": "Each flagged cell is the exact difference of the two operands AS DISPLAYED in the same table row, at the same 4-decimal precision as those operands. Empirical rate: 0.5538 - 0.5589 = -0.0051 (doc) vs exact 0.5538461538 - 0.5588697017 = -0.0050235 (harness). ECE: 0.2591 - 0.2675 = -0.0084 (doc) vs exact 0.2591088442 - 0.2674539743 = -0.0083451. Brier: 0.3142 - 0.3181 = -0.0039 (doc) vs exact 0.3142379848 - 0.3180659866 = -0.0038280. All three errors are below 1e-4 and confined to the last displayed digit. The convention is UNIFORM across the whole table, not a slip: the section-5.1 Difference column has six rows, all six equal the difference of the displayed operands (VLM-only/matched -0.0020, VLM-only posterior +0.0033, Empirical rate -0.0051, Calibration gap -0.008, ECE -0.0084, Brier -0.0039); three of the six happen to coincide with full-precision arithmetic and are not flagged, and exactly the three where the conventions diverge are flagged. That 3-of-6 flagging pattern is the signature of a comparer that assumes full-precision operands, not of a defective document.",
+      "era_evidence": {
+        "source_document": "results/55maps-ds-summary-v2/report.md lines 306, 308, 309 (section 5.1)",
+        "per_claim_era": "All three lines written at ae50d94de (2026-05-03 11:21:11 +1000 = 01:21:11 UTC).",
+        "anchor_state_at_era_and_now": "results/55maps-text-min-generalisation/ds-human-crosstab/summary.json last changed at e344db93a (2026-04-28 10:57:32 +1000) — prevalence 0.5538461538, ece 0.2591088442, brier 0.3142379848. results/55maps-text-high-generalisation/ds-human-crosstab/summary.json last changed at e07dae373 (2026-05-03 01:08:30 UTC, thirteen minutes BEFORE the document lines were written) — prevalence 0.5588697017, ece 0.2674539743, brier 0.3180659866. Neither artefact has moved since. There is therefore NO artefact drift here at all: the era state and the current state are identical, and every displayed operand in the table (0.5538 / 0.5589 / 0.2591 / 0.2675 / 0.3142 / 0.3181) is the correct 4-d.p. rounding of the live artefact. Only the derived Difference cells disagree, and only by the choice of arithmetic convention.",
+        "why_not_doc_defect": "Booking these as document defects asserts that a derived table column must be computed from full-precision operands even when the operands are displayed at fixed precision beside it. That is a policy choice the sweep has not made explicitly, and the opposite choice (column internally consistent with the numbers a reader can see) is defensible and is what this document uniformly does. Escalation E1 asks the PI to settle it; if the ruling goes the other way these three rows convert to cosmetic DOC-DEFECT-AT-ERA with no change to any conclusion."
+      }
+    }
+  ],
+  "row_level_exceptions": [
+    {
+      "row": "073#50[6]",
+      "quantity": "calibration gap (empirical minus D-S posterior), Image run — doc '+0.539', harness 0.5384757",
+      "disposition": "DOC-DEFECT-AT-ERA",
+      "mechanism": "Stale cell carried over verbatim inside a row that was otherwise refreshed cell by cell. The section-3 Image row (report.md line 171) was rewritten at fc536a19c (2026-05-03 14:53:04 +1000) as part of the image-recovery propagation. The diff shows joined/unjoined 1,028/1 -> 1,029/0, empirical rate 0.7247 (745/1,028) -> 0.7250 (746/1,029), D-S posterior 0.1862 -> 0.1865, Brier 0.4895 -> 0.4893 — and the Gap cell left byte-identical at '+0.539'. At the pre-recovery era the cell was correct under both arithmetic conventions (0.7247081712 - 0.1862 = 0.5385082 -> 0.539; displayed 0.7247 - 0.1862 = 0.5385). Post-recovery the true gap is 0.7249757046 - 0.1865 = 0.5384757 -> 0.538, i.e. the recovery moved it 3e-5 across the 0.5385 rounding boundary and the author did not re-derive it. Distinguished from family F4: the same column's T=0.7 cell (+0.267) follows full-precision arithmetic, not displayed-operand arithmetic (which would give 0.2675 -> 0.268), so this column has no uniform displayed-operand convention to appeal to.",
+      "era_evidence": "Claim era fc536a19c; anchors results/55maps-image-generalisation/ds-human-crosstab/summary.json (prevalence 0.7249757046, regenerated at 8699f456b 2026-05-03 02:45:24 UTC from dee0ecf0d 2026-04-21 value 0.7247081712) and results/55maps-image-generalisation/dawid-skene/dawid-skene-results.json (vlm_only_posterior 0.1865, regenerated at 8699f456b from a5f28fe9a 2026-04-18 value 0.1862).",
+      "materiality": "Cosmetic. Third decimal; the gap ordering (image >> T=0.3 > T=0.7 > text-MIN) and the paper-facing 3.89x ratio framing are untouched."
+    },
+    {
+      "row": "073#57[1]",
+      "quantity": "maximum empirical human-review mound rate across the four runs (2 d.p.) — doc '0.73', harness 0.7249757",
+      "disposition": "DOC-DEFECT-AT-ERA",
+      "mechanism": "Double-rounding regression introduced BY the propagation edit, not inherited. The fc536a19c diff shows the sentence changed from 'image (0.7247). The four runs span 0.55-0.72 on this metric.' to 'image (0.7250). The four runs span 0.55-0.73 on this metric.' The author re-rounded the band edge from the refreshed DISPLAY value 0.7250 rather than from the artefact: the live prevalence is 0.7249757046, which is 0.72 at 2 d.p. The previous text (0.72) was correct; the edit made it incorrect. The stated band edge now exceeds the actual maximum.",
+      "era_evidence": "Claim era fc536a19c (report.md line 192). Anchor prevalence 0.7249757046 at that commit and now; pre-recovery value 0.7247081712 (dee0ecf0d) also rounds to 0.72. The claimed 0.73 is unsupported in EITHER era.",
+      "materiality": "Cosmetic band edge. Directly analogous to the ruling-10 ratification of the S111 dossier's '2.4-2.7 %' edge against an artefact of 2.64 %, which was allowed to stand as in-era presentation with a ledger row only. Flagged as a defect because unlike that case the wrong value was actively introduced over a correct one; the PI may nonetheless prefer ledger-row-only under the same precedent."
+    },
+    {
+      "row": "073#61[3]",
+      "quantity": "expected calibration error, image run (worst) — doc '0.539', harness 0.5384655",
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "Rounding-boundary crossing caused by the image recovery, on a line that was never revisited. Section 4.1's ECE row is report.md line 203, last written at ae50d94de (2026-05-03 11:21:11 +1000 = 01:21:11 UTC). At that moment the image crosstab was still the dee0ecf0d blob with ece = 0.5385006866, which rounds to 0.539 at 3 d.p. — the document was exactly right at its era. The image regeneration at 8699f456b (02:45:24 UTC, 84 minutes later) moved ece to 0.5384655048, which rounds to 0.538. The move is 3.5e-5 and it crosses the 0.5385 boundary.",
+      "era_evidence": "git show dee0ecf0d:results/55maps-image-generalisation/ds-human-crosstab/summary.json => ece 0.5385006866. Current blob => 0.5384655048. Line 203 is confirmed unedited by the later fc536a19c commit, whose diff on section 4.1 touches only the Brier row (line 204: Image 0.490 -> 0.489).",
+      "note": "Separated from 073#62[2] deliberately: same section, same visual defect, opposite mechanism. This one was true when written; that one never was.",
+      "materiality": "Cosmetic. Image remains the worst-calibrated run by a wide margin in both eras; the section-4.1 ranking is unchanged."
+    },
+    {
+      "row": "073#62[2]",
+      "quantity": "Brier score, T=0.3 run (3rd) — doc '0.366', harness 0.3654520",
+      "disposition": "DOC-DEFECT-AT-ERA",
+      "mechanism": "Double-rounding slip, wrong in every era. The section-4.1 Brier row (report.md line 204) restates the section-3 table at 3 d.p. The T=0.3 anchor results/55maps-text-high-t0.3-generalisation/ds-human-crosstab/summary.json has held brier = 0.3654520487 continuously since 0b14e4fcd (2026-04-27 21:35:52 +1000) and has never been regenerated — there is no era in which 0.366 was correct. The section-3 table correctly displays 0.3655 at 4 d.p.; section 4.1 rounded that displayed value to 3 d.p. (0.3655 -> 0.366) instead of rounding the artefact (0.36545205 -> 0.365). Line 204 was itself edited at fc536a19c (the diff changes the Image cell 0.490 -> 0.489 while leaving the T=0.3 cell at 0.366), so the cell was wrong at its own most recent era as well as at its original one.",
+      "era_evidence": "Anchor unchanged across the whole document history (single commit 0b14e4fcd). Cross-check on the same two section-4.1 rows shows the slip is per-cell rather than a convention: T=0.7's ECE cell (0.267) follows full-precision rounding of 0.2674540 and NOT the double-round of the displayed 0.2675 (which would give 0.268), while image's ECE and T=0.3's Brier follow the double-round.",
+      "materiality": "Cosmetic. Ranking text-MIN < T=0.7 < T=0.3 < Image preserved under either value."
+    },
+    {
+      "row": "074#23[1]",
+      "quantity": "posterior:empirical ratio (D-S calibration gap), T=0.7 run — doc '1.90', harness 1.9178782",
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "The T=0.7 D-S re-aggregation moved both operands under a section-5.2 prose sentence that was never revisited. At the claim's era the value reproduces to the digit: prevalence 0.5587301587 (0b14e4fcd, 2026-04-27 21:35:52 +1000) / vlm_only_posterior 0.2935 (4e5c5e5a3, 2026-04-19 03:58:29 +1000) = 1.90368 -> 1.90. The 2026-05-03 recovery re-ran D-S on text-high (366f9c66f, 01:08:13 UTC: posterior 0.2935 -> 0.2914) and the crosstab (e07dae373, 01:08:30 UTC: prevalence -> 0.5588697017), giving 1.91788 -> 1.92.",
+      "era_evidence": "report.md lines 326-328 last written at 750d2c51b (2026-04-28 11:08:48 +1000). The document's own section-3 table (line 169) and section-4.2 table (line 235) WERE refreshed and both now read '1.92x'.",
+      "compound_finding": "The live document contradicts itself: 1.92x in sections 3 and 4.2, 1.90x in section 5.2, for the same run and the same statistic. This is a higher-priority repair than its cosmetic magnitude suggests, because the section-5.2 sentence is the one that carries the paper-facing argument ('the image run's D-S calibration gap (3.89x) is roughly double T=0.7's').",
+      "extraction_note_observation": "The 074 claim-23 extraction note describes this as the T=0.7 figure being 'quoted here at a different precision than in the section-4.2 table row (line 235)'. It is not a precision difference — 1.90 and 1.92 are different values at the same precision. The extracted value and locator are correct, so this is not booked as an EXTRACTION-DEFECT, but the note would mislead a triager who trusted it instead of re-reading line 235."
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "R1",
+      "target": "reports/verifier-silent-drop-root-cause-2026-05-03.md",
+      "rows": "F1 (8 rows)",
+      "type": "SNAPSHOT-BANNER (append-only; body untouched per ruling 1)",
+      "suggestion": "Add a dated forward-pointing banner immediately below the H1: the gap=57 cell's run.meta.json was re-run by the Phase-3a recovery at commit 6683952ac (2026-05-06) and now records parse_failures 0, empty_responses 0 and completed_items 57; the 1,147 / 1,147 counters and the empty failed_items[] / completed_items[] arrays quoted in the Failure-mode taxonomy and Open Questions 1 and 6 are recoverable only from the era blob (git show 0808cb916:outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/run.meta.json).",
+      "rationale": "The document is a dated snapshot and a C6 attestation source, so ruling 1 forbids body edits. But the divergence is material to the document's entire evidentiary base: a reader resolving the path the document itself names gets a clean 57/57 run and would conclude the analysis was fabricated. The banner should also note that Open Question 6 ('why are parse_failures and empty_responses identical?') can no longer be answered from this cell's live artefact.",
+      "priority": "medium"
+    },
+    {
+      "id": "R2",
+      "target": "results/55maps-attractor-pull-v2/report.md",
+      "rows": "F2 (27 rows), plus the un-extracted banner clause and 067#16[0]",
+      "type": "LIVING-DOC-FIX (in-place, Document Revision Policy)",
+      "suggestion": "Refresh the section-2 T=0.3 text-HIGH and text-MIN shell tables and the T=0.3 header bias_correction from the current attractor-pull-v2.json — the corrected content is already sitting in the generated twin report_autogen.md, so this is a copy, not a recomputation. Correct the section-1 line 'Student-GT reference set: 4744 mounds' to 4745. Correct the 2026-05-03 banner clause 'T=0.3 and text-MIN re-confirmed against the same cohorts (no row-level shifts)' — the row-level shifts are real (t0.3 bias_correction 0.9231->0.9232; text-MIN (0,50] lift 151.76->159.2); what was actually preserved is the qualitative finding, which the very next sentence already states correctly. Attach the revision-trail pattern: this document has neither a 'Last revised' banner nor a '## Changelog' section, so the first entry needs the '### 2026-04-27 — Original publication' stub.",
+      "rationale": "results/**.md is in Document Revision Policy scope. The stale tables are the reason the paper-facing numbers in this report cannot be reproduced from the committed artefact, and the false 'no row-level shifts' clause actively discourages a reader from checking.",
+      "priority": "high",
+      "no_conclusions_move": "Per-run cutoffs (T=0.3 100 m, T=0.7 125 m, image 125 m, text-MIN 100 m), the 100 m most-permissive cap and the 125 m majority breakpoint all survive the refresh unchanged."
+    },
+    {
+      "id": "R3",
+      "target": "results/55maps-cross-track-comparison/report.md",
+      "rows": "F3 (3 rows)",
+      "type": "LIVING-DOC-FIX (in-place, Document Revision Policy)",
+      "suggestion": "Line 107 '(1,000 iterations, seed 42)' -> '(10,000 iterations, BCa, seed 42)'; line 121 '1,000-iter bootstrap CIs, seed 42.' -> '10,000-iter BCa bootstrap CIs, seed 42.'; line 403 '--bootstrap 1000 --seed 42' -> '--bootstrap 10000 --seed 42'. Attach banner + changelog (document currently has neither; original-publication stub 2026-04-24).",
+      "rationale": "Reproducibility-critical rather than cosmetic. The CI tables at lines 111-113 and 125 were refreshed to the N=10,000 BCa numbers on 2026-05-03 while the method sentences and the section-11 copy-pasteable command were not, so the document now instructs a replicator to run a configuration that cannot produce the intervals printed beside it.",
+      "priority": "high"
+    },
+    {
+      "id": "R4",
+      "target": "results/55maps-ds-summary-v2/report.md",
+      "rows": "073#50[6], 073#57[1], 073#61[3], 073#62[2], 074#23[1]",
+      "type": "LIVING-DOC-FIX (in-place, Document Revision Policy)",
+      "suggestion": "Section 3 line 171: Gap cell '+0.539' -> '+0.538'. Section 3 line 192: 'span 0.55-0.73' -> 'span 0.55-0.72' (or drop to 'span 0.55-0.72' and cite the 4-d.p. values, since the band edge is where the double-rounding bites). Section 4.1 line 203: Image ECE '0.539' -> '0.538'. Section 4.1 line 204: T=0.3 Brier '0.366' -> '0.365'. Section 5.2 line 327: 'T=0.7's (1.90x)' -> '(1.92x)'. Attach banner + changelog; the 2026-07-28 wave-5 commit 1844e5887 already edited this document's preregistration attribution without leaving a revision trail, so the changelog stub should cover that entry too.",
+      "rationale": "Five third-decimal corrections, none of which move a conclusion, but two of which (the section-5.2 1.90x/1.92x contradiction and the band edge that exceeds its own maximum) are visible to a careful reader and cheap to fix. Recommend deriving all section-4.1 and section-5.2 restatements from the artefact rather than from the section-3 display values, which is the shared root of three of the five.",
+      "priority": "medium"
+    },
+    {
+      "id": "R5",
+      "target": "scripts/recompute_c4_claims.py (arithmetic comparer)",
+      "rows": "F4 (3 rows), and by extension every derived table column in the sweep",
+      "type": "INSTRUMENT",
+      "suggestion": "Give the arithmetic comparer a dual-convention acceptance band: a derived cell PASSES if it equals either round(f(exact operands)) or f(round(operands to their displayed precision)) at the cell's own displayed precision. Record which convention matched, so the ledger can report convention drift within a single column (which is exactly what distinguishes family F4 from row 073#50[6] here).",
+      "rationale": "Without this the sweep books cosmetic last-digit noise as document defects wherever a table displays operands and their difference at the same precision — a very common layout. With it, genuine cases still surface, because a genuine stale cell (073#50[6]) fails BOTH conventions once its operands move.",
+      "priority": "high",
+      "gated_on": "E1"
+    },
+    {
+      "id": "R6",
+      "target": "era_check machinery",
+      "rows": "F2, F3, and rows 073#61[3] / 074#23[1] all required manual git-blame era resolution",
+      "type": "INSTRUMENT",
+      "suggestion": "Extend era_check to read/runner rows on multi-commit living documents, resolving the era from the blame commit of the claim's source line rather than from a single document-level commit, and emit both the blame commit and the document's most recent revision commit. Ruling 12 currently describes era_check only for mechanical rows on dated snapshots, and the harness populated era_check on none of the 38 non-066 rows in this partition.",
+      "rationale": "Every non-066 verdict in P4 was reachable only by hand-resolving blame plus era blobs — roughly forty git operations for one partition. The information is fully mechanisable and the two-commit output is exactly what escalation E2 needs to be decidable.",
+      "priority": "medium"
+    },
+    {
+      "id": "R7",
+      "target": "reports/verification/c4-extraction/066-verifier-silent-drop.json and 074.json (notes fields only)",
+      "rows": "066#30[3], 074#23[1]",
+      "type": "EXTRACTION-NOTE (advisory; no value or locator is wrong, so neither is booked as EXTRACTION-DEFECT)",
+      "suggestion": "066 claim 30 value[3] carries quantity 'hypothesised distinct API attempts underlying both counters' bound to $.execution_stats.parse_failures with method 'read'. The number coincides with the field, so the row verifies correctly, but the quantity is a hypothesis the document floats rather than a value the artefact records. 074 claim 23's note calls the 1.90 / 1.92 discrepancy a difference of 'precision'; it is a difference of value.",
+      "priority": "low"
+    }
+  ],
+  "escalations": [
+    {
+      "id": "E1",
+      "title": "Arithmetic convention for derived table columns — full-precision operands or displayed operands?",
+      "affects": "F4 (074#18[2], 074#20[2], 074#21[2]) directly; the class is sweep-wide (any document table that displays operands and a derived column at the same precision).",
+      "question": "When a document displays operands at a stated precision and a derived cell beside them, must the derived cell equal round(f(exact operands)), or may it equal f(round(operands))? The section-5.1 table in results/55maps-ds-summary-v2/report.md uses the second convention uniformly across all six of its rows; three coincide with the first convention and pass, three diverge in the fourth decimal and were flagged MISMATCH.",
+      "why_pi": "The answer changes the defect count across many batches and is a presentation-standard decision, not a factual one. It cannot be settled from primary evidence, which is why F4 is booked provisionally as INSTRUMENT-DEFECT.",
+      "if_ruled_full_precision": "F4's three rows convert to cosmetic DOC-DEFECT-AT-ERA (all |error| < 1e-4); R5 narrows to reporting the convention rather than accepting it; no conclusion in any document moves.",
+      "if_ruled_dual_convention": "F4 stands as INSTRUMENT-DEFECT and R5 lands as specified; row 073#50[6] is unaffected either way, because once its operands moved it fails both conventions."
+    },
+    {
+      "id": "E2",
+      "title": "Which commit supplies 'the document's era' for a living document with many revisions?",
+      "affects": "F2 (27 rows) is the sharp case; the same question shapes F3 and the 073 rows, and it will recur on every living results document in the sweep.",
+      "question": "Ruling 14 makes 'per-claim era-faithfulness' the deciding axis but inherits ruling 12's phrase 'the source document's era commit', which presumes one commit per document. For results/55maps-attractor-pull-v2/report.md the two readings diverge: (a) blame era — the 27 shell-table lines were written 2026-04-27/28 and were exact against the artefact then, giving SNAPSHOT-DIVERGENCE, which is what this pass booked; (b) last-revision era — the document was revised at fc536a19c on 2026-05-03, 23 minutes after the final artefact regeneration, and that revision's banner explicitly re-affirms these very two runs as showing 'no row-level shifts' while the in-tree generated twin report_autogen.md already showed the shifted values, giving DOC-DEFECT-AT-ERA.",
+      "why_pi": "This is not resolvable from evidence — both facts are established and neither is in doubt. It is a definition. It also has a general form worth ruling on directly: does a prose re-affirmation of a value ('re-confirmed, no shifts') reset that value's era even though the line carrying the value was not edited?",
+      "impact_if_reversed": "27 rows move from SNAPSHOT-DIVERGENCE to DOC-DEFECT-AT-ERA. The repair (R2) is identical under either reading, because results/**.md is a living document corrected in place under ruling 1 regardless of classification; only the ledger's defect accounting changes.",
+      "pass_position": "Booked under reading (a) because it is mechanical, reproducible and closest to ruling 14's wording, with the reading-(b) evidence recorded in full under F2's compound_finding so the PI can flip it without re-deriving anything."
+    }
+  ],
+  "summary_counts": {
+    "rows_adjudicated": 46,
+    "SNAPSHOT-DIVERGENCE": 40,
+    "DOC-DEFECT-AT-ERA": 3,
+    "INSTRUMENT-DEFECT": 3,
+    "EXTRACTION-DEFECT": 0,
+    "ESCALATE-PI": 0,
+    "escalations_raised": 2,
+    "note": "Escalations E1 and E2 are policy questions attached to already-classified rows (F4 and F2 respectively); no row was left unclassified, so the ESCALATE-PI count is zero by design."
+  },
+  "verification_of_own_work": {
+    "coverage": "All 46 assigned rows appear exactly once across families and row_level_exceptions: F1 8 + F2 27 + F3 3 + F4 3 + exceptions 5 = 46.",
+    "scripted_checks": "F2's 27 rows were verified by script against both the era blob and the working-tree blob via the extraction JSONPath; 27/27 era-MATCH, 27/27 current-MISMATCH, zero non-conforming. F1's 8 rows were verified against the era blob by hand and independently agree with the harness's own era_check field. F3's 3 rows were verified against the era blobs of both named anchors plus the text-MIN sibling.",
+    "blindness": "No file under reports/verification/c4-triage/ was opened. The wave-5 repair commit 1844e5887 was read as a git commit (primary evidence about the source document); its diff on results/55maps-ds-summary-v2/report.md touches only preregistration attribution in the header and no numeric cell in this partition."
+  }
+}

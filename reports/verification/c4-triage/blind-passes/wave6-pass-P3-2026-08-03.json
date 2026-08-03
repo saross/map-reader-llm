@@ -1,0 +1,374 @@
+{
+  "pass": "P3",
+  "partition": "C4 wave-6 partition P3 — verification-programme self-count rows (39 rows)",
+  "adjudicated_at": "2026-08-03",
+  "method_note": "Blind pass. No repo file edited (git status clean at start and end). Every era value re-derived by reading the tracked blob at the relevant commit via `git show <commit>:<path>`, never from prior context. Claim era taken per-claim (git blame of the source line) rather than per-file (last-modifying commit), per ruling 14's 'deciding axis is per-claim era-faithfulness'; where the two diverge it is called out explicitly.",
+  "context_fact_verification": {
+    "as_given": "manifest generator 0.7.1 = 75aa74125",
+    "verified": "75aa47125ddd806c1cbdb2ab543511ec24af85e8",
+    "note": "The hash supplied in the tasking transposed two digits (75aa74125 does not resolve; 75aa47125 does). Verified with `git log -1 75aa47125`: 'fix(manifest): deterministic multi-meta passes — D6 root cause, 72 mislabelled rows corrected', 2026-08-03 12:37:20 +1000. The substance of the context fact is confirmed and is load-bearing for family F and row exception RE-1.",
+    "action": "Use 75aa47125 in the GATE-3 package; correct any downstream document that copied 75aa74125."
+  },
+
+  "families": [
+    {
+      "name": "A. phase0-scope § 1.2 manifest census — era-exact, schema and rows grew afterwards",
+      "rows": [
+        "061#8[1]", "061#8[2]", "061#11[0]", "061#11[2]",
+        "061#29[0]", "061#29[1]", "061#29[2]",
+        "062#3[0]", "062#3[1]"
+      ],
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "The § 1.2 table asserts, in its own preamble, 'row × field counts recomputed from source this session'. Every cell reproduces EXACTLY at the document's era. Two later corpus events moved them: (i) passes-manifest rows gained a field at 8c875447a (2026-07-30 13:13:35, E71/E55 generator wave v0.6.0 — added `n_tiles_dispatched`, 20→21) and two more at 4e1988462 (2026-08-02 22:28:15, E72 — added `n_tiles_null_reason`, `n_candidates_verified`, 21→23); (ii) analyses-manifest gained rows at 1dfff8130 (2026-07-30, family-FDR registration, 18→20) and bc45133b4 (2026-08-02, E72 matched-temperature remediation, 20→21). Row counts of passes (1,132) and every other manifest's shape are unchanged. No claim is wrong at its own era; every one is arithmetic over artefacts that grew under a stationary document.",
+      "era_evidence": {
+        "claim_era_commit": "e45478dc2 / d019455ec (2026-07-29 16:29:15 → 22:38:16; manifest state identical across all four phase0-scope commits, since no manifest changed between f607adf20 2026-07-28 and 8c875447a 2026-07-30 13:13)",
+        "at_era": {
+          "passes-manifest.json": "1,132 rows × 20 fields = 22,640",
+          "conditions-manifest.json": "322 × 16 = 5,152",
+          "runs-manifest.json": "31 × 16 = 496",
+          "analyses-manifest.json": "18 × 15 = 270",
+          "run-registry.json": "31 × 4 = 124",
+          "charter_settled_total": "22,640 + 5,152 = 27,792 — document says 27,792",
+          "extension_total": "496 + 270 + 124 = 890 — document says 890",
+          "grand_total": "27,792 + 890 = 28,682 — document says 28,682"
+        },
+        "at_head": {
+          "passes-manifest.json": "1,132 × 23 = 26,036",
+          "analyses-manifest.json": "21 × 15 = 315",
+          "others": "unchanged",
+          "charter_settled_total": "31,188",
+          "extension_total": "935",
+          "grand_total_live_field_encoding": "32,123",
+          "grand_total_literal_field_encoding": "28,727"
+        },
+        "verdict": "9/9 era-faithful. All nine are SNAPSHOT-DIVERGENCE."
+      }
+    },
+    {
+      "name": "B. phase0-scope § 1.3 strata — a self-declared heuristic bound to a census artefact created two days later",
+      "rows": ["061#17[0]", "061#18[0]", "061#30[3]", "061#39[0]", "062#2[0]"],
+      "disposition": "EXTRACTION-DEFECT (anchor did not exist at claim era) + METHOD-RECLASSIFICATION recommended",
+      "mechanism": "The § 1.3 table cells (2,136 generated / 148 hand-written) were authored at e45478dc2, 2026-07-29 16:29:15. Their bound anchor, reports/verification/generated-file-registry.json, was created at 6b1adb83a on 2026-07-31 — two days AFTER the claim. The document itself, four lines below the table, says: 'Classification was heuristic; Phase 3's first step hardens it into a committed generated-file registry.' The extraction bound a stated forecast to the artefact the same sentence commissions as its future replacement. There is no era at which the registry could have been the claim's referent, so neither SNAPSHOT-DIVERGENCE nor DOC-DEFECT-AT-ERA applies: the locator is categorically wrong, and the underlying comparison is heuristic-vs-census, which rule 3 keeps out of mechanical scope. Note the two cells behave differently under census: `generated` 2,136 (heuristic) vs 2,158 (first census) vs 2,192 (current) — part heuristic error, part real growth; `hand_written` 148 (heuristic) vs 142 (census, IDENTICAL in both registry versions) — pure heuristic-vs-census, with zero corpus growth. The document's 148 is internally self-consistent (its own breakdown at lines 66-71: results/ 105 + reports/ 18 + docs/methodology/ 24 + methods-outline 1 = 148), so it is a coherent census over a different, Phase-0-scoped file set — not an arithmetic slip.",
+      "era_evidence": {
+        "claim_era_commit": "e45478dc2 (2026-07-29 16:29:15) — confirmed by `git blame -L 63,64 d019455ec`",
+        "anchor_creation": "6b1adb83a (2026-07-31) — generated-file registry v1.0, _meta.counts = {total 2300, generated 2158, generated_unattributed 0, hand_written 142}",
+        "anchor_current": "1459ab146 (2026-07-31, 'registry refresh after threshold-sweep completion') — _meta.counts = {total 2334, generated 2192, generated_unattributed 0, hand_written 142}; unchanged at HEAD (re-read from working tree)",
+        "verdict": "0/5 comparable as mechanical reads. Anchor postdates every claim in the family."
+      }
+    },
+    {
+      "name": "C. The C1 commitment forecast band (~150–250) versus the realised 702",
+      "rows": ["061#27[0]", "061#27[1]", "061#42[1]", "061#42[2]"],
+      "disposition": "METHOD-RECLASSIFICATION — remove from mechanical comparison (rule 3)",
+      "mechanism": "Both spans were authored at e45478dc2 (2026-07-29 16:29:15). results/commitments.json was created at 2f5a9ae2d on the SAME DAY at 18:20:53 — one hour fifty-two minutes AFTER the forecast. The claim is a forward projection of an artefact that did not yet exist, sitting under a heading that names itself: '## 2. Estimated claim counts per class', in a column headed 'Estimated volume', with the basis column giving the projection's own workings ('201 commitment-candidate sentences across the 3 lodged docs'). § 4.2's restatement is a session-budget forecast ('Phase 1 decomposition (31.7 k words → 150–250 commitments): 1 session'). Comparing a scoping forecast to its realised outcome is a programme-estimation finding, not a claim defect: it says the C1 decomposition ran 2.8× the forecast ceiling, which is worth a GATE-3 line in its own right but must not be scored as four failed claims. The extraction record concedes this — its own note says 'triage owns the forecast-vs-realised comparison'.",
+      "era_evidence": {
+        "claim_era_commit": "e45478dc2 (2026-07-29 16:29:15) for both lines 101 and 147-148 — confirmed by `git blame -L 101,101 -L 147,148 d019455ec`",
+        "anchor_creation": "2f5a9ae2d (2026-07-29 18:20:53) — 'commitment ledger v1 — 696 commitments, all open'",
+        "realised_trajectory": "696 at 2f5a9ae2d → 702 at c1427f1d0 (2026-07-29 18:33:53, ledger v1.1 adjudicated pass); 702 unchanged through HEAD",
+        "instrument_asymmetry": "061#27[0] '~150' scored APPROX; 061#27[1] '250', 061#42[1] '150', 061#42[2] '250' scored MISMATCH. The tilde binds only to the lower bound of a single band, so one estimate is split across two statuses. See escalation ESC-2.",
+        "verdict": "4/4 out of mechanical scope."
+      }
+    },
+    {
+      "name": "D. phase1-gate-package § 1 item 1 — a v1-ledger kind breakdown welded to a v1.2 total",
+      "rows": ["063#3[4]", "063#3[5]", "063#3[6]", "063#3[7]", "063#3[8]"],
+      "disposition": "DOC-DEFECT-AT-ERA",
+      "mechanism": "The sentence asserts '702 atomic obligations (515 preregistration.md, 81 appendix-prompts, 100 coverage; 184 factor, 162 analysis, 154 condition, 111 disclosure, 55 trigger, 30 hypothesis)'. The kind breakdown reproduces, digit for digit, the commitment ledger v1 (2f5a9ae2d, 2026-07-29 18:20:53) — which had 696 commitments. It SUMS TO 696, contradicting the 702 in the same sentence. The v1.1 adjudicated pass (c1427f1d0, 18:33:53) rebalanced the kinds to 182 factor / 164 analysis / 158 condition / 109 disclosure / 59 trigger / 30 hypothesis (sum 702), and v1.2 (7b94384e8, 18:53:41) added statuses without touching kinds. The document's initial commit is 4729f99dc at 18:56:03 — THREE MINUTES after v1.2 landed. So at the document's own era, and at every subsequent revision of it, the correct breakdown was 182/164/158/109/59/30. The document reports a superseded snapshot's breakdown under a current total. Wrong at its own era in the strictest sense available: it is internally inconsistent on its own face, without reference to any external artefact.",
+      "era_evidence": {
+        "claim_era_commit": "4729f99dc (2026-07-29 18:56:03), last revised 34cfca2fe (22:44:31) — ledger unchanged across that window",
+        "ledger_v1_2f5a9ae2d": "n=696; factor 184, analysis 162, condition 154, disclosure 111, trigger 55, hypothesis 30 (sum 696)",
+        "ledger_v1_1_c1427f1d0": "n=702; factor 182, analysis 164, condition 158, disclosure 109, trigger 59, hypothesis 30 (sum 702)",
+        "ledger_at_era_7b94384e8": "n=702; identical kinds to v1.1",
+        "internal_check": "184+162+154+111+55+30 = 696 ≠ 702. The document's own arithmetic fails.",
+        "sibling_evidence_masked": "The source-file breakdown in the SAME sentence is also v1 (515/81/100, sum 696); era-correct is 520/81/101 (sum 702). Those three values (063#3[1..3]) are UNRESOLVED in the recompute — the resolver cannot parse the `[?(@.source.file=='…')]` filter — so half the evidence for this defect never reached triage. See escalation ESC-1.",
+        "verdict": "5/5 wrong at era. The 30-hypothesis value (063#3[9]) MATCHed only because it is unchanged between v1 and v1.2; it belongs to the same defective sentence."
+      }
+    },
+    {
+      "name": "E. phase1-gate-package discharge mapping (402/89/211) — era-exact, ledger worked on the following day",
+      "rows": ["063#6[0]", "063#6[1]", "063#6[2]", "063#47[0]", "063#53[0]", "063#62[1]", "063#62[2]", "063#62[3]"],
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "402 discharged / 89 waived / 211 open is exactly the ledger state established at 7b94384e8 (2026-07-29 18:53:41, 'ledger v1.2 statuses') and unchanged through the document's last commit at 34cfca2fe (22:44:31). Two commits the NEXT day moved it: 09d4c034f (2026-07-30, 'resolve 13 UNLICENSED census pairs; waive CMT-0109 by E68') → 402/90/210, then a56f434ae (2026-07-30, 'family-FDR deliverables — outcomes, report, ledger, discharges') → 404/90/208. Both are the gate package's own downstream work discharging the open set the package tabled; the divergence is the programme executing the document, not the document being wrong. Note this family is era-faithful while family D, one sentence away in the same document, is not — the presentation class of the file decides nothing (ruling 14), and a per-claim era check is what separates them.",
+      "era_evidence": {
+        "claim_era_commit": "4729f99dc → 34cfca2fe (2026-07-29 18:56:03 → 22:44:31)",
+        "at_era": "commitments.json @ 7b94384e8: discharged 402, waived 89, open 211",
+        "at_head": "commitments.json @ a56f434ae (= HEAD): discharged 404, waived 90, open 208",
+        "row_context": {
+          "063#53[0]": "Sits inside a verbatim PI quotation reproduced as § 7 attestation material ('discharge as many of the 211 open set items'). Ruling 1 forbids editing this — in-place correction would falsify the record of what the PI said.",
+          "063#62[1..3]": "Sit in the § Changelog '2026-07-29 Original publication' stub — a historical record of the document's initial state by construction."
+        },
+        "verdict": "8/8 era-faithful."
+      }
+    },
+    {
+      "name": "F. phase2-gate-package § 3 correction queue — cells healed by the very remedies they prescribe",
+      "rows": ["064-phase2-gate-package#23[2]", "064-phase2-gate-package#24[0]"],
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "Both cells were authored at cfb710752 (2026-07-30 13:39:58), twenty-six minutes after the v0.6.0 generator wave (8c875447a, 13:13:35) that produced exactly the values they quote: h12-v2::r3-hp-heavy::run3 n_tiles_processed = 326, flash35-pv-2x2::flash35-min-text-1of10::run3 = 486. Each cell then names the remedy that undid its own figure. (i) 23[2] '327→326; **rerun** (1 tile each)' — the recovery rerun landed at c27ed3222 (2026-07-30 15:31:12) and restored 327 (status partial→ok). (ii) 24[0] '**Residual**: manifest reads 486 … vs true GeoJSON coverage 487 — meta merge-repair queued' — the repair reached 487 transiently at bc45133b4 (2026-08-02 12:20 UTC), regressed to 486 at 4e1988462 (2026-08-02 22:28, E72 verifier-crop fix), and settled at 487 at 75aa47125 (2026-08-03 12:37, v0.7.1 completed-union fix). The document did not merely stay faithful to its era; it predicted the exact divergence, and the divergence is the queue being worked.",
+      "era_evidence": {
+        "claim_era_commit": "cfb710752 (2026-07-30 13:39:58) — confirmed by `git blame -L 82,92 0bddee998`; both lines 89 and 90 attributed to cfb710752",
+        "file_era_commit": "0bddee998 (2026-07-30 22:29:15) — the document's LAST commit",
+        "era_divergence_warning": "At the FILE era (0bddee998) the manifest already read 327, so a file-era era_check would return faithful:false for 23[2] and mislabel it DOC-DEFECT-AT-ERA. At the CLAIM era (cfb710752) it reads 326 and is faithful. Ruling 14 makes per-claim era-faithfulness the deciding axis; this row is a live demonstration that the file-era shortcut inverts the verdict. See escalation ESC-3.",
+        "trajectory_23_2": "327 (f607adf20, 2026-07-28) → 326 (8c875447a, v0.6.0) → 327/ok (c27ed3222) → 327 at HEAD",
+        "trajectory_24_0": "487 (f607adf20) → 486 (8c875447a, v0.6.0) → 486 (c27ed3222, bff914c02) → 487 (bc45133b4) → 486 (4e1988462) → 487/ok (75aa47125) → 487 at HEAD",
+        "verdict": "2/2 era-faithful at claim era."
+      }
+    },
+    {
+      "name": "G. n1-pro-rerun-384 pass count — era-exact within thirteen minutes, run topped up to n=3 the same evening",
+      "rows": ["020#49[0]", "004#40[1]", "004#42[1]"],
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "All three spans were authored by a single commit, dcf3364a9 (2026-06-03 18:36:22, 'docs(errata,methodology): E57 billing reconciliation + genuine-Pro …'), which touched both protocol-errata.md and n1-baseline-matrix.md. The passes-manifest had acquired exactly 8 n1-pro-rerun-384 rows thirteen minutes earlier at e1f20da4c (18:23:05, 'add n1-pro-rerun-384 + correct E57 model-of-record'). The count went to 12 at 3b5dc1eb1 (2026-06-03 22:52:17, 'finalise n1 leaderboard at n=3') — the n=3 top-up the errata's own 'Completeness addendum (n=3 top-up)' documents further down the same E57 entry. The substantive assertion is untouched: all 12 rows carry model_version = gemini-3.1-pro-preview (re-read at HEAD), so 'every pass verifies as genuine Pro' remains true; only the cardinal moved. The extraction record for 020#49 predicted this precisely ('Do not read a difference as a document error without checking that timing') and is vindicated.",
+      "era_evidence": {
+        "claim_era_commit": "dcf3364a9 (2026-06-03 18:36:22) for all three spans — `git blame -L 209,220 docs/methodology/n1-baseline-matrix.md` gives dcf3364a98 for lines 211 and 217; the errata E57 'Genuine-Pro re-run' paragraph is from the same commit",
+          "manifest_trajectory": "0 rows before e1f20da4c → 8 at e1f20da4c (2026-06-03 18:23:05) → 12 at 3b5dc1eb1 (2026-06-03 22:52:17) → 12 at HEAD",
+        "model_version_check": "All 12 n1-pro-rerun-384 rows: model_version = gemini-3.1-pro-preview (single distinct value at every commit from e1f20da4c onward)",
+        "register_self_repair": "protocol-errata.md's own post-addendum 'Verification' line already drops the cardinal for this run — it reads 'the 8 `n1-outstanding-384` pro-* passes as `gemini-3-flash-preview` and the `n1-pro-rerun-384` passes as `gemini-3.1-pro-preview`' (no number on the second group). The register reconciled itself in-document; only the earlier entry-scoped '8' remains. Under ruling 14 the snapshot unit for protocol-errata.md is the ENTRY, and the E57 'Update (2026-06-03)' entry is faithful to its own date.",
+        "living_doc_contrast": "n1-baseline-matrix.md § 3.4 line 217 states 'passes-manifest **now shows** … the 8 `n1-pro-rerun-384` passes' — a present-tense assertion in a living methodology document that was never reconciled. See recommendation REC-6.",
+        "verdict": "3/3 era-faithful."
+      }
+    }
+  ],
+
+  "row_level_exceptions": [
+    {
+      "id": "RE-1",
+      "row": "064-phase2-gate-package#18[1]",
+      "claim": "'generator v0.6.0 now reports 0 completed for the segment' (value_verbatim '0'; recompute actual 1)",
+      "disposition": "EXTRACTION-DEFECT",
+      "bound_locator": "results/passes-manifest.json#$.passes[?(@.pass_id=='55maps-generalisation::detect_brief-text::run3')].n_tiles_processed",
+      "correct_locator": "outputs/55maps-generalisation/proposer/detect_brief-text/run_3/detections-detect_brief-text-3-flash-2026-04-10.meta.json#len:$.execution_stats.completed_items  (equivalently $.execution_stats.items_processed)",
+      "evidence": "The bound locator returns 1 at HEAD and returned 1 at v0.6.0 (8c875447a) too — it was never capable of returning 0, so the MISMATCH carries no information about the document. The meta file the manifest itself cites as this pass's sole source_file records execution_stats.completed_items = [] (length 0), items_processed = 0, items_failed = 1, with the single tile K-35-062-4_Asenovgrad_4326_x3696_y2352.png listed under failed_items ('Retries Exhausted / Invalid Finish Reason'). The claim is exactly right about the segment; the anchor is the wrong grain. The extraction's own note flagged this: 'The manifest grain is the pass, not the segment … the anchor may not be the right grain for the 0.'",
+      "rider": "The claim is explicitly version-scoped ('generator v0.6.0'), so it remains true as written. For completeness: under v0.7.1 (75aa47125) this pass flipped status partial→ok — it is one of the 72 fully-recovered passes the completed-union fix un-mislabelled, which is the same mechanism the document's disposition ('tile covered at run_4') anticipated."
+    },
+    {
+      "id": "RE-2",
+      "row": "064-phase2-rulings#7[1]",
+      "claim": "'phase3c track-1 H9-A run-1 pool, 4,954 detections: 4,102/501/316/35' (value_verbatim '4,954'; recompute actual 1,032; recorded era_check faithful:false, actual_era 1,032 @ b623bffa358c)",
+      "disposition": "EXTRACTION-DEFECT",
+      "bound_locator": "outputs/retest/phase3c/track1-image/h9-A-p1/run_1/detections_h9-A-p1_run01.geojson#len:$.features",
+      "correct_locator": "sum of len:$.features over outputs/retest/phase3c/track1-image/h9-A-p{1,2,3,4,5}/run_1/detections_h9-A-p{n}_run01.geojson",
+      "evidence": "The five pools' run_1 GeoJSONs hold 1,032 + 1,002 + 918 + 1,035 + 967 = 4,954 features — the document's figure to the unit. Confirmed three independent ways: (a) the union sum equals 4,954 exactly; (b) the subtype tallies quoted in the same sentence sum to the same total, 4,102 + 501 + 316 + 35 = 4,954; (c) the materiality proxy reproduces, (4,954 − 4,102)/4,954 = 17.20 %, matching the sentence's 17.2 %. The extraction conceded the binding was provisional: 'phase3c track-1 H9-A is stored as five pools (h9-A-p1 … h9-A-p5) and the document says H9-A run-1 pool; the anchor names h9-A-p1/run_1. Triage must confirm the pool before comparing.'",
+      "rider": "The recorded era_check (faithful:false, actual_era 1,032) is an artefact of the same wrong locator, not evidence of a document defect. It must be VOIDED, not carried into the ledger — otherwise a correct document acquires a false era-defect finding. This is the sharpest instance in P3 of an era_check inheriting an extraction error; see escalation ESC-4."
+    },
+    {
+      "id": "RE-3",
+      "row": "051#0[0]",
+      "claim": "'## 1. Analyses awaiting `manually_verified_at` (7)' (value_verbatim '7'; recompute actual 4; recorded era_check faithful:false, actual_era 8 @ 96c9bd39c933)",
+      "disposition": "EXTRACTION-DEFECT",
+      "bound_locator": "results/run-analyses.json#len:$.analyses[?(@.manually_verified_at==null)]",
+      "correct_locator": "results/run-analyses.json#len:$.analyses[?(@.manually_verified_at==null && @.analysis_id!='pv-diag-384-consensus-calibration')] — i.e. null-valued MINUS the by-design permanent exclusion",
+      "evidence": "The quantity is 'awaiting sign-off', which the document defines for itself two lines below the table: '`pv-diag-384-consensus-calibration` stays unsigned **by design** (calibration material; its signed sibling is `diversity-dividend-384`)'. The § 1 table lists exactly seven rows. At the claim's era — f02d703a8, 2026-06-11 22:27:29, one minute fifty-one seconds after a17d6bba3 (22:25:38) took the null count to 8 — the arithmetic is 8 null − 1 by-design = 7. Independent confirmation from the artefact record: the very next signing commit is e90eb96c5, titled 'docs(manifest): Shawn signs off 7 analyses (2026-06-12T06:59:01Z)', and it takes null from 8 to 1. Shawn signed exactly the seven the document listed. The document was right; the locator over-counts by precisely the item the document excludes in its own next sentence.",
+      "rider": "The recorded era_check (actual_era 8) is the same over-count and must be VOIDED. Under the corrected locator the current value is 3, not 4: HEAD nulls are pv-diag-384-consensus-calibration (by design), h1-cmt0106-pooled-modality, family-bh-fdr-confirmatory, e43-matched-temperature. So even after correction the row is a SNAPSHOT-DIVERGENCE (7 at era → 3 now), never a defect — the resolver extension that newly exposed this row exposed a false positive."
+    }
+  ],
+
+  "corpus_growth_summary": {
+    "framing": "Every document in this partition audits the verification corpus, and the corpus is the thing that moved. Quantified below per registry, before → after, each with its causing commit. This is the GATE-3 scope-growth line: the P3 mismatch mass is overwhelmingly the corpus growing under stationary documents, not documents being wrong.",
+    "registries": [
+      {
+        "artefact": "results/passes-manifest.json",
+        "rows": "1,132 → 1,132 (unchanged since dbd93c424, 2026-06-11)",
+        "fields_per_row": "20 → 23",
+        "field_checks": "22,640 → 26,036 (+3,396)",
+        "causes": [
+          "8c875447a (2026-07-30 13:13:35) E71/E55 generator wave v0.6.0 — added n_tiles_dispatched (20→21)",
+          "4e1988462 (2026-08-02 22:28:15) E72 — added n_tiles_null_reason, n_candidates_verified (21→23)"
+        ]
+      },
+      {
+        "artefact": "results/conditions-manifest.json",
+        "rows": "322 → 322",
+        "fields_per_row": "16 → 16",
+        "field_checks": "5,152 → 5,152 (no change)",
+        "causes": []
+      },
+      {
+        "artefact": "results/runs-manifest.json",
+        "rows": "31 → 31",
+        "fields_per_row": "16 → 16",
+        "field_checks": "496 → 496 (no change)",
+        "causes": []
+      },
+      {
+        "artefact": "results/analyses-manifest.json",
+        "rows": "18 → 21 (+3)",
+        "fields_per_row": "15 → 15",
+        "field_checks": "270 → 315 (+45)",
+        "causes": [
+          "1dfff8130 (2026-07-30) family-FDR correction registered before compute (18→20)",
+          "bc45133b4 (2026-08-02) E72 remediation, matched temperature cells filed first-class (20→21)"
+        ]
+      },
+      {
+        "artefact": "results/run-registry.json",
+        "rows": "31 → 31",
+        "fields_per_row": "4 → 4",
+        "field_checks": "124 → 124 (no change)",
+        "causes": []
+      },
+      {
+        "artefact": "C3 field-check totals (derived)",
+        "charter_settled_passes_plus_conditions": "27,792 → 31,188 (+3,396)",
+        "proposed_extension_runs_analyses_registry": "890 → 935 (+45)",
+        "grand_total": "28,682 → 32,123 (+3,441) under live fields-per-row operands; 28,682 → 28,727 (+45) under literal fields-per-row multipliers",
+        "note": "The same document figure (28,682) recomputes to two different actuals depending on which extraction encoded it — 061#29[0] carries fields/row as live operands, 062#3[1] hard-codes them as literals (20/16/16/15/4). Both are era-faithful; the divergence is an instrument artefact. See escalation ESC-5."
+      },
+      {
+        "artefact": "results/commitments.json",
+        "rows": "702 → 702 (unchanged since c1427f1d0, 2026-07-29 18:33:53)",
+        "kind_counts": "182/164/158/109/59/30 → unchanged (factor/analysis/condition/disclosure/trigger/hypothesis)",
+        "source_file_counts": "520/81/101 → unchanged (preregistration.md / appendix-prompts / coverage)",
+        "status_counts": "discharged 402 → 404 (+2), waived 89 → 90 (+1), open 211 → 208 (−3)",
+        "causes": [
+          "09d4c034f (2026-07-30) resolve 13 UNLICENSED census pairs; waive CMT-0109 by E68 → 402/90/210",
+          "a56f434ae (2026-07-30) family-FDR deliverables — outcomes, report, ledger, discharges → 404/90/208"
+        ],
+        "note": "The v1 ledger state (696 rows; kinds 184/162/154/111/55/30; sources 515/81/100) existed only between 18:20:53 and 18:33:53 on 2026-07-29 — a thirteen-minute window. Family D quotes it."
+      },
+      {
+        "artefact": "reports/verification/generated-file-registry.json",
+        "existence": "did not exist at the phase0-scope claim era (2026-07-29); created 2026-07-31",
+        "generated": "2,158 (6b1adb83a, v1.0) → 2,192 (1459ab146, refresh after threshold-sweep completion) (+34)",
+        "hand_written": "142 → 142 (no change in any registry version)",
+        "total": "2,300 → 2,334 (+34)",
+        "note": "The document's heuristic figures (2,136 / 148) were never registry values. Gap to first census: generated −22, hand_written +6."
+      },
+      {
+        "artefact": "results/run-analyses.json",
+        "total_analyses": "17 (at 2026-06-11 22:25:38, a17d6bba3) → 21 (HEAD)",
+        "null_manually_verified_at": "8 → 4",
+        "awaiting_sign_off_corrected_locator": "7 → 3",
+        "causes": [
+          "e90eb96c5 (2026-06-12) Shawn signs off 7 analyses → null 8→1",
+          "23f765e1b (2026-06-13) register 55-map tile-MCC tiering → null 1→2",
+          "45d0148cd (2026-07-27) sign off 55map-canonical-leaderboard-mcc-50m → null 2→1",
+          "1dfff8130 (2026-07-30) family-FDR registration → null 1→3",
+          "bc45133b4 (2026-08-02) E72 matched-temperature remediation → null 3→4"
+        ]
+      },
+      {
+        "artefact": "results/passes-manifest.json — n1-pro-rerun-384 subset",
+        "rows": "8 → 12 (+4)",
+        "causes": ["3b5dc1eb1 (2026-06-03 22:52:17) finalise n1 leaderboard at n=3 — the medium-thinking n=3 top-up"],
+        "note": "model_version = gemini-3.1-pro-preview on all 12; the documents' substantive assertion survives the growth intact."
+      }
+    ],
+    "gate3_line": "Of 39 P3 rows: 22 are SNAPSHOT-DIVERGENCE driven by post-hoc corpus growth in five registries (56 %); 5 are DOC-DEFECT-AT-ERA in a single sentence (13 %); 8 are wrongly-anchored or category-inappropriate and should never have entered mechanical comparison (21 %); 4 are forecasts (10 %). The genuine defect rate for this partition is 5/39 = 12.8 %, concentrated in one sentence of one document. Scoring the other 34 as claim failures would overstate the verification programme's own error rate by roughly eightfold."
+  },
+
+  "recommendations": [
+    {
+      "id": "REC-1",
+      "target": "reports/verification/phase1-gate-package.md § 1 item 1 (line 15-18)",
+      "rows": ["063#3[4..8]", "and the masked 063#3[1], 063#3[3]"],
+      "type": "APPEND-ONLY ERRATUM NOTE (not a body rewrite)",
+      "text": "Append a dated correction note recording that the parenthetical breakdown reproduces commitment-ledger v1 (696 obligations, 2f5a9ae2d) rather than the v1.2 ledger current at publication (7b94384e8): era-correct values are 520 preregistration.md / 81 appendix-prompts / 101 coverage; 182 factor / 164 analysis / 158 condition / 109 disclosure / 59 trigger / 30 hypothesis. Note that the published breakdown sums to 696, not the 702 asserted in the same sentence. Do NOT rewrite the body: this document is a GATE 1 attestation source, and in-place correction would falsify the record of what the gate was shown (ruling 1, ruling 11). Cross-reference the note from the § Changelog."
+    },
+    {
+      "id": "REC-2",
+      "target": "reports/verification/phase0-scope.md",
+      "rows": ["family A (9 rows)", "family B (5 rows)", "family C (4 rows)"],
+      "type": "LEDGER ROWS + ONE FORWARD-POINTING BANNER",
+      "text": "Ledger rows only for family A — every § 1.2 cell was exact when written and the table's own preamble scopes it ('recomputed from source this session'). Add one dated banner below the H1 pointing forward to the current manifest shapes (passes 1,132 × 23; analyses 21 × 15; C3 totals 31,188 / 935 / 32,123) so a reader arriving today is not misled. No body edits: the numbers are correct as a dated census and the document is the GATE 0 attestation source. For family B, add a one-line pointer that the heuristic strata (2,136 / 148) were superseded by the registry the same section commissions (generated 2,192 / hand_written 142 at 1459ab146). For family C, nothing — a forecast is not corrected by its outcome."
+    },
+    {
+      "id": "REC-3",
+      "target": "Recompute instrument — extraction records for family B and family C",
+      "type": "METHOD RECLASSIFICATION",
+      "text": "Reclassify the nine rows of families B and C out of mechanical comparison. Two distinct grounds, and the instrument should carry both as explicit kinds. (a) ANCHOR-POSTDATES-CLAIM: an anchor created after the claim's era commit cannot be the claim's referent; the resolver already knows both timestamps and should refuse the binding automatically rather than emit a MISMATCH. (b) PROSE-ESTIMATE: values that sit under an 'Estimated' heading, in an 'Estimated volume' column, or carry a range/tilde are forecasts; the instrument should record them as forecast-vs-realised observations with the delta reported as a programme-estimation finding, never as claim status. Applying (a) alone clears family B; (b) alone clears family C; each is independently sufficient for its family."
+    },
+    {
+      "id": "REC-4",
+      "target": "reports/verification/phase2-gate-package.md § 3 (lines 89-90)",
+      "rows": ["064-phase2-gate-package#23[2]", "064-phase2-gate-package#24[0]"],
+      "type": "LEDGER ROWS ONLY — NO DOCUMENT ACTION",
+      "text": "Both cells are era-exact and both name the remedy that superseded them. Record in the ledger that the prescribed remedies executed: the 1-tile rerun restored 327 at c27ed3222, and the queued meta merge-repair reached a stable 487 at 75aa47125 (generator v0.7.1 completed-union fix). If any banner is added at all, it should note that the § 3 queue is now discharged, not that its figures were wrong."
+    },
+    {
+      "id": "REC-5",
+      "target": "Extraction records 064-phase2-gate-package#18, 064-phase2-rulings#7, 051#0",
+      "rows": ["064-phase2-gate-package#18[1]", "064-phase2-rulings#7[1]", "051#0[0]"],
+      "type": "RE-ANCHOR AND RE-RUN; VOID THE INHERITED era_check FIELDS",
+      "text": "Re-bind the three locators as given in row_level_exceptions RE-1/RE-2/RE-3 and re-run the recompute. Expected outcomes: 18[1] → MATCH (0 = 0); 7[1] → MATCH (4,954 = 4,954); 0[0] → SNAPSHOT-DIVERGENCE (7 at era, 3 now). Critically, VOID the recorded era_check fields on 064-phase2-rulings#7[1] (faithful:false, actual_era 1,032) and 051#0[0] (faithful:false, actual_era 8) before ledger emission — both are the wrong locator re-run at an earlier commit, so they manufacture era-defect findings against two documents that are correct. An era_check computed on an unvalidated locator is not evidence."
+    },
+    {
+      "id": "REC-6",
+      "target": "docs/methodology/n1-baseline-matrix.md § 3.4 (lines 211, 217)",
+      "rows": ["004#40[1]", "004#42[1]"],
+      "type": "LIVING-DOC-FIX with changelog (ruling 1)",
+      "text": "n1-baseline-matrix.md is a living methodology document and line 217 makes a present-tense claim about current state ('passes-manifest **now shows** … the 8 `n1-pro-rerun-384` passes'). Update 8 → 12 in both spans, or adopt the fix protocol-errata.md already applied to itself and drop the cardinal for this run ('the `n1-pro-rerun-384` passes as `gemini-3.1-pro-preview`'). The second option is preferable: it is the form the register converged on, and it makes the sentence robust to further top-ups. Attach a Changelog entry per the Document Revision Policy noting the n=3 top-up at 3b5dc1eb1 as the trigger and recording that the substantive claim (all passes genuine Pro) is unchanged."
+    },
+    {
+      "id": "REC-7",
+      "target": "docs/methodology/preregistration/protocol-errata.md E57 (line ~2038)",
+      "rows": ["020#49[0]"],
+      "type": "NO ACTION — RIDER ONLY IF ANY",
+      "text": "Under ruling 14 the snapshot unit for an entry-dated register is the ENTRY, and the E57 'Update (2026-06-03)' entry was exact on its date. The register has moreover already reconciled itself: its post-addendum 'Verification' line drops the cardinal for n1-pro-rerun-384 while retaining it for n1-outstanding-384, and the 'Completeness addendum (n=3 top-up)' documents the growth in full. No edit. At most, a parenthetical '(8 at the time of the re-run; 12 after the n=3 top-up documented below)' — but the addendum already carries this, so a rider risks redundancy."
+    }
+  ],
+
+  "escalations": [
+    {
+      "id": "ESC-1",
+      "severity": "HIGH",
+      "title": "A resolver gap masked half the evidence for the only genuine defect in this partition",
+      "detail": "063#3[1], 063#3[2], 063#3[3] are UNRESOLVED with reason 'unparseable path segment at [?(@.source.file=='docs/methodology/preregistration/osf/preregistration.md')]'. The resolver cannot handle an equality filter whose right-hand side is a quoted path containing '/' and '.'. Those three values (515/81/100) are the source-file half of the same defective sentence family D adjudicates: era-correct is 520/81/101, so two of the three would have been MISMATCHes. The consequence is not merely a coverage gap — it is that the strongest single signal in P3 (a breakdown reproducing a superseded ledger version across BOTH its dimensions) reached triage at half strength.",
+      "ask": "Fix the filter parser for quoted string values containing path separators and dots, then re-run the affected batches. Sweep the whole recompute report for the same UNRESOLVED reason string before GATE 3 — this partition alone surfaced three instances in one claim, so the class is unlikely to be confined to 063.",
+      "affects_partitions": "063#3[1..3] fall outside P3's assignment; whichever partition holds them must be told, or the family will be adjudicated twice on disjoint evidence."
+    },
+    {
+      "id": "ESC-2",
+      "severity": "MEDIUM",
+      "title": "A single estimate band is split across two statuses by tilde placement",
+      "detail": "The prose reads '~150–250 commitments'. The instrument scored '~150' as APPROX (061#27[0]) and the bare '250' as MISMATCH (061#27[1]), and the § 4.2 restatement '150–250' as two MISMATCHes (061#42[1], 061#42[2]). One estimate, one band, four rows, two statuses — determined entirely by whether a tilde happened to precede a given numeral. Any aggregate statistic over statuses inherits this artefact.",
+      "ask": "Make range detection a first-class extraction feature: a span matching '<a>–<b>' under an estimate framing should emit ONE forecast row carrying both bounds, not two independent count rows. Until then, propagate the approx marker across both ends of any band whose lower bound carries one."
+    },
+    {
+      "id": "ESC-3",
+      "severity": "HIGH",
+      "title": "File-era era_check inverts the verdict on at least one P3 row; per-claim blame era is required",
+      "detail": "064-phase2-gate-package#23[2] is era-faithful at its CLAIM era (cfb710752, 2026-07-30 13:39:58, manifest = 326) and era-unfaithful at its FILE era (0bddee998, 22:29:15, manifest = 327, the recovery rerun having landed at 15:31:12 in between). A file-era era_check returns faithful:false and triage would land DOC-DEFECT-AT-ERA on a cell that was exact when written and whose divergence was caused by the remedy the same cell prescribes. Ruling 14 already names per-claim era-faithfulness as the deciding axis; this row is the mechanical demonstration of why. The risk is systematic: any document revised after its factual cells were authored — every gate package here — can carry rows in this trap.",
+      "ask": "Register as instrument work: era_check should resolve the era commit by `git blame` on the claim's source line range, not by the file's last-modifying commit, and should record which of the two it used so triage can see when they differ. Re-run era_check on all wave-4/5/6 rows whose source document has more than one commit; report the count of rows whose verdict flips."
+    },
+    {
+      "id": "ESC-4",
+      "severity": "HIGH",
+      "title": "era_check inherits extraction errors and manufactures era-defects against correct documents",
+      "detail": "Two P3 rows carry recorded era_check verdicts of faithful:false that are pure artefacts of a wrong locator. 064-phase2-rulings#7[1]: era_check re-ran a single-pool locator (h9-A-p1, 1,032 features) when the claim's referent is the five-pool union (4,954, confirmed three independent ways including the sentence's own subtype tallies and its 17.2 % proxy). 051#0[0]: era_check re-ran a raw null count (8) when the claim's referent is null-minus-the-by-design-exclusion (7), a definition the document supplies two lines below the claim. In both cases the document is exactly right and the era_check asserts it was wrong at its own era. If these fields reach the ledger unchallenged, the verification programme records two false defects against itself.",
+      "ask": "Gate era_check behind locator validation: never emit an era_check for a row whose locator triage has not confirmed, and treat any era_check on a row later reclassified EXTRACTION-DEFECT as automatically void. Sweep prior waves for era_check fields attached to rows whose disposition became EXTRACTION-DEFECT."
+    },
+    {
+      "id": "ESC-5",
+      "severity": "MEDIUM",
+      "title": "One document figure, two extraction encodings, two different 'actual' values",
+      "detail": "The 28,682 C3 field-check total is extracted twice from the same document — as 061#29[0] (fields/row carried as live operands from the manifests) and as 062#3[1] (fields/row hard-coded as literals 20/16/16/15/4). At HEAD the first recomputes to 32,123 and the second to 28,727, a 3,396 spread on an identical claim. Both are era-faithful and neither encoding is wrong, but a consumer reading the two rows side by side sees an unexplained contradiction, and any aggregate over abs_error double-counts the claim with incompatible weights.",
+      "ask": "Add a duplicate-claim detector keyed on (source_file, value_verbatim, quantity-similarity) that flags multiply-extracted figures, and adopt a house rule for row×field products: operands always live, never literal, so re-extractions of the same figure converge. Note the deeper point for GATE 3 — the literal encoding silently freezes a schema assumption from extraction time, which is precisely the failure mode family A documents in the source material."
+    },
+    {
+      "id": "ESC-6",
+      "severity": "MEDIUM",
+      "title": "The verification corpus is not a stationary target and the instrument assumes it is",
+      "detail": "Across the five registries this partition touches, the corpus moved on 2026-07-30, 2026-08-02, and 2026-08-03 — including during the C4 sweep itself. The passes-manifest gained three fields in four days; the analyses-manifest gained three rows; commitments statuses moved twice in one day; flash35 min-text-1of10 run3 oscillated 487→486→486→487→486→487 across six commits. A recompute report is a photograph of a moving subject, and re-running it will keep producing fresh MISMATCHes on documents that were never wrong. 22 of 39 P3 rows (56 %) are this and nothing more.",
+      "ask": "Record in the GATE 3 package the recompute report's own corpus commit (the HEAD it was computed against) as a first-class field, so every row is interpretable as 'document era X vs corpus state Y' rather than 'vs now'. Consider freezing a corpus commit for the duration of a sweep, or accepting that per-wave re-execution (ruling 7) must be paired with per-wave era resolution or it will generate divergence faster than triage can clear it."
+    },
+    {
+      "id": "ESC-7",
+      "severity": "LOW",
+      "title": "Tasking-supplied commit hash was wrong by digit transposition",
+      "detail": "The context fact supplied 75aa74125 for the manifest generator 0.7.1 fix. That hash does not resolve. The correct hash is 75aa47125ddd806c1cbdb2ab543511ec24af85e8 (2026-08-03 12:37:20 +1000). The substance was accurate and is load-bearing for family F and RE-1; only the identifier was corrupted.",
+      "ask": "Correct the hash wherever the wave-6 tasking material recorded it, and check whether the same transposition propagated into the wave-6 draft stories or any triage JSON (not read by this pass, per blindness constraints)."
+    }
+  ],
+
+  "disposition_counts": {
+    "SNAPSHOT-DIVERGENCE": 22,
+    "DOC-DEFECT-AT-ERA": 5,
+    "EXTRACTION-DEFECT": 8,
+    "METHOD-RECLASSIFICATION (forecast, out of mechanical scope)": 4,
+    "total": 39,
+    "breakdown_note": "EXTRACTION-DEFECT = family B (5) + RE-1 + RE-2 + RE-3 (3). SNAPSHOT-DIVERGENCE = family A (9) + family E (8) + family F (2) + family G (3). DOC-DEFECT-AT-ERA = family D (5). METHOD-RECLASSIFICATION = family C (4). RE-3 additionally resolves to SNAPSHOT-DIVERGENCE once re-anchored, but is counted under EXTRACTION-DEFECT as its primary disposition."
+  },
+
+  "blindness_attestation": "No file under reports/verification/c4-triage/ was read at any point — not the wave-5 or wave-6 draft stories, not any mismatch-triage JSON, not blind-passes/, not spot-audit/. Sources used: reports/verification/c4-recompute-report.json, reports/verification/phase3-rulings-2026-07-31.md, the named c4-extraction JSONs, the source documents themselves, and git history of the anchor artefacts. No repo file was created, edited, or deleted; `git status --porcelain` was empty before and after."
+}

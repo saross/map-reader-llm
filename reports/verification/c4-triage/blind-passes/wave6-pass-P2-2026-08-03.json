@@ -1,0 +1,311 @@
+{
+  "pass": "P2",
+  "scope": {
+    "rows_adjudicated": 81,
+    "source_documents": 6,
+    "document_blob_check": "all six source documents hash-match the git_blob recorded in their extraction files (verified with git hash-object): results/55maps-attractor-pull-v2/report.md 62fb719484f8; results/55maps-cross-track-comparison/report.md 8bb2dc62f997; results/55maps-ds-summary-v2/report.md 7624872be096; results/55maps-image-generalisation/buffer-100m-diagnostics/report.md bbadec3ed547; results/55maps-image-generalisation/buffer-band-lift/report.md 886f2dc9f710; results/55maps-image-generalisation/corrected-f1-multi-buffer/report.md 4e9b7f56d715. No document moved between extraction and this pass.",
+    "method_note": "Per-claim era established by git blame plus a `git log -S` confirmation on every clause whose disposition turned on the date. Line-level blame proved unreliable on multi-clause lines (see INSTRUMENT note in recommendations); -S traces are the authoritative dating used below."
+  },
+  "era_spine": {
+    "note": "Established once and reused across all families. All times normalised to UTC (repo commits mix +1000 and +0000 author zones; naive date-only ordering is wrong for 2026-05-03).",
+    "reference_layer_sequence": {
+      "artefact": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+      "counts": [
+        {"commit": "dea1155fa", "utc": "2026-04-19", "features": 4744},
+        {"commit": "baf1497a7", "utc": "2026-05-03T00:32:53Z", "features": 4745, "subject": "data(gt): add missing curator GT mound — second of two touching mounds at K-35-064-3 cand 4264"},
+        {"commit": "2e075eb99", "utc": "2026-05-03T05:28:57Z", "features": 4746, "subject": "data(gt): add missing curator GT mound at image cand 2397 (K-35-062-4)"}
+      ],
+      "key_fact": "2e075eb99 (GT -> 4746) is the LAST commit of the 2026-05-03 recovery arc, after every document refresh in this partition. No document in P2 could have known 4746, and no downstream analysis artefact was ever re-scored against it (corrected-f1.csv still records n_ref_student_only = 4745)."
+    },
+    "recovery_arc_2026_05_03_utc_order": [
+      "00:03:03 d9bc3edc2 analysis(t0.7-recovery): Stage 9 partial",
+      "00:32:53 baf1497a7 GT -> 4745",
+      "00:42:38 f533fda5f text-HIGH extended-buffer re-eval",
+      "00:44:10 f6eaeca95 text-HIGH corrected-F1 multi-buffer refresh",
+      "00:57:29 33435aab2 attractor-pull-v2 refresh (n_student_gt 4744 -> 4745)",
+      "01:21:11 ae50d94de docs: ds-summary + sub-corpora + extended-buffer",
+      "01:26:42 01b5441fb docs: headline-results docs (cross-track lines 111-113)",
+      "02:10:43 236327d80 text-MIN extended-buffer re-eval vs GT 4745",
+      "02:28:26 8965d2365 verified_detections.geojson rebuild (4665 -> 4679)",
+      "02:45:24 8699f456b image corrected-F1 + verified_detections (-> 4680) post-recovery",
+      "04:13:41 c816d4bd4 human-review-multi-buffer.csv: cand 2397 added",
+      "04:29:48 29fcc3679 attractor-pull-v2 4-run consensus (image n_candidates 1029 -> 1030)",
+      "04:53:04 fc536a19c docs: per-run + post-run reports",
+      "04:53:28 61b2e78fd docs(cross-track-v2): tile-MCC + corrected-F1",
+      "04:53:52 8c74e403d docs(cross-track-v2): corrected-F1 convergence",
+      "05:01:37 6e813e18e docs: cross-track v2 4-run numbers (section 7 tables)",
+      "05:24:44 95111a3f1 docs: refresh stale text-MIN buffer-plateau prose",
+      "05:28:57 2e075eb99 GT -> 4746"
+    ],
+    "image_corrected_f1_two_states": {
+      "artefact": "results/55maps-image-generalisation/corrected-f1-multi-buffer/summary.json",
+      "pre_recovery_dee0ecf0d_2026_04_21": {
+        "F1_by_R": {"50": 0.8317312556915916, "75": 0.8476609356257496, "100": 0.8520545219381157, "125": 0.8538232373386296, "150": 0.8550739013986708},
+        "F1_3dp": "0.832 / 0.848 / 0.852 / 0.854 / 0.855",
+        "TP_50": 4110, "FP_50": 555, "FP_150": 355,
+        "precision_50": 0.8810289389067524, "recall_50": 0.7876581065542353, "recall_150": 0.7957902511078286,
+        "F1_CI_50": [0.8224640995227561, 0.840662145138475]
+      },
+      "post_recovery_8699f456b_2026_05_03T02_45Z": {
+        "F1_by_R": {"50": 0.8332154763107384, "75": 0.8491017964071856, "100": 0.8534816727922916, "125": 0.8552448939123537, "150": 0.8564920273348519},
+        "F1_3dp": "0.833 / 0.849 / 0.853 / 0.855 / 0.856",
+        "TP_50": 4124, "FP_50": 556, "FP_150": 356,
+        "precision_50": 0.8811965811965812, "recall_50": 0.7901896915117839, "recall_150": 0.7982278013660697,
+        "F1_CI_50": [0.8240067881969902, 0.8420837651258001]
+      },
+      "consequence": "The entire 0.832 / 0.848 / 0.852 / 0.854 / 0.855 band quoted across four documents is the exact pre-recovery artefact at 3 d.p. Any clause authored before 2026-05-03T02:45Z that quotes it is era-faithful; any clause authored after is not."
+    }
+  },
+  "families": [
+    {
+      "name": "F1 — reference-layer drift 4744/4745 -> 4746 (never re-scored downstream)",
+      "rows": ["069#32[0]", "073#2[0]", "074#39[0]", "077#19[0]", "079-corrected-f1-multi-buffer#22[0]"],
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "Each quote is the student-GT feature count current when its clause was authored. 069#32[0] line 52 authored 6bcbf6e03 2026-04-23T12:45Z (GT 4744); 077#19[0] line 144 authored cb940cfbb 2026-04-23T12:06Z (4744); 079#22[0] line 138 authored e60aadb40 2026-04-23T12:35Z (4744); 074#39[0] lines 427-428 authored ae50d94de/fc536a19c 2026-05-03T01:21Z/04:53Z (4745); 073#2[0] lines 6-8 authored fc536a19c 2026-05-03T04:53Z (4745). The layer reached 4746 only at 2e075eb99 2026-05-03T05:28Z, after every one of them.",
+      "era_evidence": "git show <rev>:inputs/vectors/references/student-mounds-55maps-reviewed.geojson | len(features) => dea1155fa 4744, baf1497a7 4745, 2e075eb99 4746 (HEAD 4746). 074#39[0] names its own era commit in the prose ('the +1 added at K-35-064-3 in `baf1497a`') — decisive. The wave-5 commit 1844e5887 (2026-07-28) that last touched results/55maps-ds-summary-v2/report.md changed only lines ~18-24 (aggregator provenance / D-S preregistration framing); `git show 1844e5887 -- <file>` confirms it did not touch lines 6-8 or 427-428, so the ds-summary claims retain their 2026-05-03 era despite the late file mtime."
+    },
+    {
+      "name": "F2 — attractor-pull-v2.json mirror-field drift (4-run consensus refresh)",
+      "rows": ["067#16[0]", "067#61[0]"],
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "Both clauses authored 74dbe6809 2026-04-27T11:33Z. At that commit results/55maps-attractor-pull-v2/attractor-pull-v2.json held $.n_student_gt = 4744 and runs[image].n_candidates = 1029 — exact matches for the quoted 4744 and 1029. n_student_gt moved to 4745 at 33435aab2 (2026-05-03T00:57Z); image n_candidates moved to 1030 at 29fcc3679 (2026-05-03T04:29Z, the cand-2397 consensus refresh).",
+      "era_evidence": "Per-commit reads of $.n_student_gt and runs[*].n_candidates: 74dbe6809 => 4744 / t0.3 692, t0.7 630, image 1029; 1c8c34bd1 => 4744 / image 1029; 33435aab2 => 4745 / image 1029; 29fcc3679 => 4745 / image 1030; HEAD => 4745 / image 1030. Note this is the ONLY family in P2 where the reference count is 4745 rather than 4746 — the mirror field in the analysis JSON was frozen at the mid-arc value and never picked up 2e075eb99.",
+      "residue_flag": "results/55maps-attractor-pull-v2/report.md was itself refreshed at fc536a19c (2026-05-03T04:53Z) but lines 30 and 107 were not touched — partial-refresh residue (see recommendation R4)."
+    },
+    {
+      "name": "F3 — image corrected-F1 curve: pre-recovery band 0.832/0.848/0.852/0.854/0.855",
+      "rows": ["070#6[0]", "070#6[1]", "072#30[4]", "072#30[5]", "072#30[6]", "075#2[1]", "075#2[2]", "075#4[0]", "075#4[1]", "075#38[0]", "075#39[0]", "075#40[0]", "075#41[0]", "075#42[0]", "075#54[1]", "075#59[0]", "075#59[1]", "077#12[1]", "077#12[2]", "077#13[1]", "079-corrected-f1-multi-buffer#5[1]"],
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "Every quoted value is the pre-recovery summary.json rounded to 3 d.p. — 0.8317313->0.832, 0.8476609->0.848, 0.8520545->0.852, 0.8538232->0.854, 0.8550739->0.855; CI@50 [0.8224641, 0.8406621]->[0.822, 0.841]. The artefact was replaced wholesale at 8699f456b 2026-05-03T02:45Z. Every clause in this family was authored before that commit.",
+      "era_evidence": "Clause dating: buffer-100m-diagnostics lines 6/14/112-116/177 authored 334c6cb4d 2026-04-23T05:47Z; line 160 authored 783f37c2a 2026-04-23T07:32Z; buffer-band-lift line 121 authored cb940cfbb 2026-04-23T12:06Z; corrected-f1-multi-buffer line 97 authored e60aadb40 2026-04-23T12:35Z; cross-track line 303 authored 1b7143c51 2026-04-24T08:14Z; cross-track line 115 image clause introduced eaf6c8baf 2026-04-23T22:04Z (git log -S 'corrected F1 0.832 -> 0.854 from 50 m -> 125 m' returns eaf6c8baf ONLY — the clause is byte-identical across 95111a3f1, which changed only the text-MIN half of that sentence). Cross-check on 070#6: pre-recovery Delta(125m - 50m) = 0.8538232 - 0.8317313 = 0.0220919 -> the doc's '+0.022' reproduces exactly at era.",
+      "caveat_applied": "072#30[5] and 072#30[6] are bootstrap CI bounds resolved from a 2026-04-21 blob, i.e. percentile-era (pre-2026999ad, 2026-04-30T03:06Z). The binding caveat independently bars booking them as document defects."
+    },
+    {
+      "name": "F4 — image corrected-F1 TP@50 and the 2-pair reconciliation gap",
+      "rows": ["075#50[1]", "075#51[0]", "075#54[0]", "079-corrected-f1-multi-buffer#2[2]", "079-corrected-f1-multi-buffer#2[3]", "079-corrected-f1-multi-buffer#5[0]"],
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "TP@50 was 4110 in the pre-recovery summary.json and 4124 post-recovery. The counterpart operand, buffer-100m-diagnostics/summary.json $.diagnostic_2_pair_drift.total_matched_at_50m = 4108, has NEVER changed (single commit da2681709, 2026-04-21). So at the 2026-04-23 era both the quoted TP = 4,110 and the derived gap 4110 - 4108 = 2 are exact; today the same subtraction gives 4124 - 4108 = 16.",
+      "era_evidence": "Pre-recovery blob dee0ecf0d results[0].TP = 4110; post-recovery 8699f456b results[0].TP = 4124. Diagnostic operand read at HEAD and at da2681709: 4108 both. Clause dating: buffer-100m lines 140-144/160 authored 783f37c2a 2026-04-23T07:32Z; corrected-f1-multi-buffer section 8 lines 92/97 authored e60aadb40 2026-04-23T12:35Z. The exact delta 14 is shared with F16 below (same recovery increment)."
+    },
+    {
+      "name": "F5 — verified-detections layer: pre-recovery 4,665",
+      "rows": ["075#5[0]", "075#65[0]"],
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "outputs/55maps-image-generalisation/verified/verified_detections.geojson held 4665 features from 4c147af65 (2026-04-18) until the recovery rebuilt it: 8965d2365 (2026-05-03T02:28Z) -> 4679, then 8699f456b (02:45Z) -> 4680. Both quoting clauses were authored 334c6cb4d 2026-04-23T05:47Z, when the file held exactly 4665.",
+      "era_evidence": "Per-commit feature counts: 4c147af65 4665; 8965d2365 4679; 8699f456b 4680; HEAD 4680. Corroborated in-artefact: buffer-100m-diagnostics/summary.json $.inputs.n_detections = 4665 (frozen with the diagnostic)."
+    },
+    {
+      "name": "F6 — text-MIN extended-buffer CIs: superseded 44 minutes after authorship (percentile-era)",
+      "rows": ["070#2[7]", "070#2[8]", "070#3[7]", "070#3[8]", "070#4[7]", "070#4[8]"],
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "Lines 111-113 were authored 01b5441fb 2026-05-03T01:26:42Z. At that instant outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json was still 1220f3391 (2026-04-24): f1_ci 75 m [0.7525, 0.7765], 100 m [0.7532, 0.7771], 125 m [0.754, 0.7781] — rounding to exactly the quoted [0.752, 0.777] / [0.753, 0.777] / [0.754, 0.778]. It was re-scored 44 minutes later at 236327d80 (02:10:43Z, 'analysis(text-min-recovery): re-evaluate vs reviewed GT 4745') to [0.7537, 0.7757] / [0.7543, 0.7764] / [0.7554, 0.7774].",
+      "era_evidence": "Decisive corroboration from the SAME table rows: the text-HIGH columns (0.794 [0.784, 0.804] / 0.796 [0.786, 0.805] / 0.797 [0.787, 0.806]) match f533fda5f (2026-05-03T00:42:38Z, f1 0.7943/0.7956/0.7967, ci_lower 0.7843/0.7857/0.7869) exactly — the author refreshed text-HIGH from an already-recovered artefact and wrote text-MIN from the not-yet-recovered one. The document is faithful to the repo state at the minute it was written. (0.7525 -> '0.752' is boundary rounding; either 0.752 or 0.753 is defensible at 3 d.p.)",
+      "caveat_applied": "The era artefact (1220f3391, 2026-04-24) predates the percentile->BCa switch at 2026999ad (2026-04-30T03:06Z). Under the binding caveat these CI-derived mismatches are not bookable as document defects on the divergence ground alone."
+    },
+    {
+      "name": "F7 — text-HIGH corrected-F1 @50 m: pre-recovery 0.826 [0.816, 0.836]",
+      "rows": ["072#30[1]", "072#30[2]"],
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "Line 303 was authored 1b7143c51 2026-04-24T08:14:20Z. results/55maps-text-high-generalisation/corrected-f1-multi-buffer/summary.json was at 4cc95e805, committed 2026-04-24T08:11:35Z — three minutes earlier — holding F1@50 = 0.82599672 (-> 0.826) and F1_CI[0] = 0.81594852 (-> 0.816). The artefact was re-run twice in the recovery (d9bc3edc2 00:03Z, f6eaeca95 00:44Z on 2026-05-03) to the current 0.8273232 / 0.8172821.",
+      "era_evidence": "Per-commit reads of results[R_m==50]: 4cc95e805 F1 0.82599672 CI [0.81594852, 0.83568007]; d9bc3edc2 0.82715780; f6eaeca95 / HEAD 0.82732324 CI [0.81728210, 0.83699130]. Also percentile-era (2026-04-24 < 2026-04-30), so the CI row 072#30[2] is doubly protected by the binding caveat."
+    },
+    {
+      "name": "F8 — image raw F1 @50 m: pre-recovery 0.771",
+      "rows": ["072#19[1]"],
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "outputs/55maps-image-generalisation/evaluation/evaluation.json summary.buffers[50].f1 = 0.771 at 4c147af65 (2026-04-18, whose commit subject is literally 'final image-track generalisation run — F1=0.771 @ 50 m'); re-scored to 0.7744 at da84a3d23 (2026-05-03T02:30Z) and 0.7745 at 8699f456b (02:45Z). Line 292 authored 6bcbf6e03 2026-04-23T12:45Z.",
+      "era_evidence": "Per-commit reads: 4c147af65 (30 m 0.6855, 50 m 0.771); da84a3d23 (0.6887, 0.7744); 8699f456b (0.6886, 0.7745). Independently corroborated by the Approach-A artefact of the same era, results/.../human-reviewed-corrected/corrected-f1-human-reviewed.json $.measured.f1 = 0.771 at 08d5aef64."
+    },
+    {
+      "name": "F9 — 4 d.p. -> 3 d.p. double-rounding (post-recovery authorship)",
+      "rows": ["070#17[4]", "070#27[1]", "070#27[5]", "078#18[2]"],
+      "disposition": "DOC-DEFECT-AT-ERA",
+      "mechanism": "One generative fault: a value whose 4 d.p. representation ends in 5 was rounded a second time to 3 d.p., biasing every instance by about +0.0005. 0.8564920 -> 0.8565 -> '0.857' (true 3 d.p. 0.856) at 070#17[4] and 078#18[2]; 0.8534817 -> 0.8535 -> '0.854' (true 0.853) at 070#27[1]; 0.8224685 -> 0.8225 -> '0.823' (true 0.822) at 070#27[5]. The 4 d.p. intermediates are exactly the figures the sibling corrected-f1-multi-buffer report prints in its own headline strings, which is the transcription route.",
+      "era_evidence": "All four clauses are post-recovery originals, not carried text: git log -S returns a single introducing commit each — 070#17[4] '0.833 -> 0.857 @ 50 -> 150 m' = 61b2e78fd 2026-05-03T04:53:28Z; 070#27[1]/[5] the line-162 table row = 8c74e403d 04:53:52Z; 078#18[2] '0.833 at 50 m to 0.857 at 150 m' = fc536a19c 04:53:04Z. The image artefact (8699f456b) landed 02:45Z and the text-HIGH artefact (f6eaeca95) 00:44Z, so the era-correct renderings were 0.856, 0.853 and 0.822 respectively. Corroborating self-consistency check: the same line-141 and line-162 spans get their CI bounds right against the post-recovery blobs ([0.824, 0.842] and [0.845, 0.862]), so the artefact binding is correct and only the rounding is wrong.",
+      "materiality": "Low individually (|delta| 0.0005). Non-trivial as a set: 070#17[4] and 078#18[2] set the upper endpoint of the headline corrected-F1 range quoted in paper-facing prose ('0.833 to 0.857'); the era-correct endpoint is 0.856."
+    },
+    {
+      "name": "F9b — Delta F1 inherited from the F9 mis-round",
+      "rows": ["070#27[7]", "070#29[0]"],
+      "disposition": "DOC-DEFECT-AT-ERA",
+      "mechanism": "'+0.022' is the subtraction of the document's own displayed values (0.854 - 0.832) rather than of the operands. Full-precision at era: image@100 0.8534817 - text-HIGH@100 0.8323750 = 0.0211067 -> +0.021. Mechanically identical to F9: correct the 0.854 to 0.853 and the delta follows to +0.021.",
+      "era_evidence": "Both spans introduced 8c74e403d 2026-05-03T04:53:52Z. No repo state produces +0.022: pre-recovery pairing (0.8520545 - 0.8308128 at 4cc95e805) = 0.0212418 -> +0.021; mid-arc pairing (0.8520545 - 0.8323925 at d9bc3edc2) = 0.019662 -> +0.020; post-recovery = 0.0211067 -> +0.021. Every era rounds to +0.021.",
+      "coupling": "Repairs to F9 (070#27[1]) and F9b must land together — 070#29[0] restates the same delta in prose at line 164, and the section-4.2 'yes (partial)' verdict column reads off it."
+    },
+    {
+      "name": "F10 — paired-permutation Delta F1 quotation errors against a frozen artefact",
+      "rows": ["069#17[1]", "069#44[0]", "069#58[0]", "071#29[11]"],
+      "disposition": "DOC-DEFECT-AT-ERA",
+      "mechanism": "The eight paired-permutation artefacts were written once, at dfbf88a5b 2026-04-23T22:01:45Z, and have never been revised — so no snapshot mechanism is available at any era. paired-image-vs-text-min-50m observed_f1_diff = 0.011459 (3 d.p. +0.011); the document renders '+0.012' three times (lines 29, 101, 234). paired-image-vs-text-min-30m = -0.042361 (-> -0.042); line 81 renders '-0.041'. The +0.012 instances are the same 4 d.p. double-rounding as F9 (0.011459 -> 0.0115 -> 0.012); the -0.041 is a plain transcription slip.",
+      "era_evidence": "Artefact single-commit history confirmed (git log on each paired-*/pairwise_permutation_result.json returns only dfbf88a5b). Clause dating: line 234 introduced eaf6c8baf 2026-04-23T22:04:41Z — three minutes AFTER the artefacts landed; lines 29/101 introduced/last rewritten fc536a19c 2026-05-03T04:53Z. Calibration check on the same spans: every other permutation figure in these sentences is correct (text-HIGH -0.117771->-0.118, -0.068271->-0.068, -0.035059->-0.035, -0.017716->-0.018; text-MIN 40 m -0.005939->-0.006; text-MIN 20 m -0.112911->-0.113), so the extraction and anchoring are sound and only these four values are wrong.",
+      "internal_contradiction": "Line 81 gives the 30 m image-vs-text-MIN Delta as -0.041 while line 234 of the same document gives -0.042 for the same quantity. The artefact says -0.042361; line 234 is right, line 81 is wrong."
+    },
+    {
+      "name": "F11 — cross-track section 7 review-pool counts: off-by-one at era plus one wrong-artefact anchor",
+      "rows": ["071#43[2]", "071#45[2]", "071#46[0]", "071#46[1]"],
+      "disposition": "MIXED — see per-row dispositions",
+      "row_dispositions": {
+        "071#43[2] ('1,029')": "DOC-DEFECT-AT-ERA",
+        "071#45[2] ('586')": "DOC-DEFECT-AT-ERA",
+        "071#46[0] ('474')": "DOC-DEFECT-AT-ERA",
+        "071#46[1] ('555')": "EXTRACTION-DEFECT"
+      },
+      "mechanism": "The section-7 column is 'Human-reviewed at 50 m'. Its true referent is the union of results/55maps-image-generalisation/human-review.csv and human-review-multi-buffer.csv restricted to buffer_metres == 50, not the verifier-calibration crosstab the extraction anchored to. Recomputed from the CSVs at HEAD: 1028 rows in human-review.csv (all at 50 m, 472 mound / 556 not_mound) plus two candidates present only in the multi-buffer file (2397, 5641, both 50 m, both 'mound') plus one label flip (5777: not_mound in human-review.csv, mound in multi-buffer) => union at 50 m = 1030 reviewed, 475 mound, 555 not_mound. cand 2397 was added at c816d4bd4 2026-05-03T04:13:41Z; the section-7 rows were authored 6e813e18e 2026-05-03T05:01:37Z — 48 minutes later. So the era-correct triple is 1030 / 475 / 555 and the document states 1,029 / 474 / 555, i.e. the pre-cand-2397 pair, despite the same cells' own glosses ('+15 incl. cand 2397', 'post cand 2397 promotion'). The not_mound side is invariant across the promotion (1029-474 = 1030-475 = 555), which is why 071#46[1] is correct at era and only its anchor is wrong.",
+      "era_evidence": "Anchor diagnosis: results/55maps-image-generalisation/verifier-calibration-crosstab/calibration.json (single commit 401ec2271, 2026-04-20, n_total 1028 / n_mound 472 / n_not_mound 556) is the human-review.csv-only crosstab and structurally cannot include the multi-buffer re-review; it is the wrong referent for a quantity the document explicitly describes as post-promotion. The alternative locator the extractor itself named — corrected-f1-multi-buffer/summary.json $.results[0].n_reviewer_promoted_at_R = 474 — was computed at 8699f456b 02:45Z, before cand 2397 landed, so it does not rescue 071#46[0] either. text-MIN: every artefact agrees on 585 (calibration.json n_total 585 [created 57fc10588 2026-06-02, after the doc]; human-review-multi-buffer.csv 585 data rows at 300889746 2026-04-28 and at HEAD — 586 LINES including the header; attractor-pull-v2.json runs[text-min].n_candidates = 585 since 1c8c34bd1). '586' is a header-inclusive `wc -l`, and the same document's line 267 contradicts it with a 324/261 split summing to 585. Referent confirmation: the text-HIGH cell in the same table (630) matches its calibration.json n_total exactly, so the column's intended unit is unambiguous.",
+      "scope_note": "Ruling 15 applies: none of 1030 / 475 / 555 exists as a scalar in any tracked JSON. This is a NAMED family requiring a derived-count referent, not a silently-mechanical row."
+    },
+    {
+      "name": "F12 — Approach-A vs Approach-B corrected-F1: wrong-artefact anchor (plus one dropped bound marker)",
+      "rows": ["072#9[0]", "072#19[2]", "072#21[0]"],
+      "disposition": "EXTRACTION-DEFECT",
+      "mechanism": "At the era of cross-track lines 277 and 292 (6bcbf6e03, 2026-04-23T12:45Z) the 'corrected F1 = 0.830 at 50 m' headline is the Approach-A SINGLE-buffer figure, not the Approach-B multi-buffer curve the extraction anchored to. Correct locator (ruling 9 git-era mode, the directory having since been removed from HEAD): results/55maps-image-generalisation/human-reviewed-corrected/corrected-f1-human-reviewed.json#$.corrected.f1 at 08d5aef64 = 0.8295129277046317 -> 3 d.p. 0.830, an exact MATCH.",
+      "era_evidence": "Three independent confirmations. (1) The underlying data commit a8b606ecc (2026-04-20) carries the subject 'corrected F1=0.830 at 50 m'. (2) The doc's own arithmetic in the same sentence: '+0.059 from 0.771 to 0.830' — the Approach-A pair gives 0.8295 - 0.771 = 0.0585 -> +0.059 exactly, whereas Approach B at that era gives 0.8317 - 0.771 = 0.0607 -> +0.061. (3) The Approach-B report itself (corrected-f1-multi-buffer/report.md line 27) distinguishes the two: 'the analytic-adjustment variant using yesterday-only review (472 phantoms; F1 = 0.8295 at 50 m) ... Both round to the paper-citable >= 0.830 headline.' The 08d5aef64 commit body states the Approach-A headline numbers as '0.8295 [0.8257, 0.8333]'.",
+      "additional_defect_072_9_0": "Instrument v1.2 amendment 5 requires the bound marker to be preserved in value_verbatim. Batch 077 did so on the identical phrase (077#13[0], value_verbatim '>= 0.830'); batch 072 stripped it (value_verbatim '0.830'), converting a lower-bound claim into an equality comparison. With the marker restored the claim is satisfied at every era (0.8295, 0.8317 and 0.8332 are all >= 0.830). Cross-batch inconsistency on the same sentence is the evidence."
+    },
+    {
+      "name": "F13 — extended-GT count bound to the student-only layer",
+      "rows": ["075#6[0]", "075#66[0]"],
+      "disposition": "EXTRACTION-DEFECT",
+      "mechanism": "'5,216' is the extended ground truth (student GT plus reviewer-promoted phantoms), not the student-GT layer. Correct locator: results/55maps-image-generalisation/buffer-100m-diagnostics/summary.json#$.inputs.n_extended_gt = 5216 — an exact MATCH at the document's era and at HEAD (the diagnostic summary has a single commit, da2681709 2026-04-21, so it cannot drift). The extraction anchored to inputs/vectors/references/student-mounds-55maps-reviewed.geojson (4744 at era, 4746 now) because the document's table row names that path as the source.",
+      "era_evidence": "Exact arithmetic identity in the same summary block: $.inputs.n_student_gt 4744 + $.inputs.n_reviewer_phantoms 472 = 5216 = $.inputs.n_extended_gt. The extraction's own note already identified the correct field ('sibling summary.json records the same count at $.inputs.n_extended_gt') but applied instrument rule 2 (row names its own source path) instead.",
+      "document_rider": "The document's table row is loosely worded — it labels the row 'Extended ground truth' while naming the student-GT file as its source path. The extended GT has no standalone file; it is built at analysis time. Worth a clarifying edit, but the NUMBER is exactly right and reproduces at every era. Not a document defect."
+    },
+    {
+      "name": "F14 — corrected-f1-multi-buffer/report.md: systematic '0.8333' hand-transcription slip",
+      "rows": ["078#3[1]", "078#7[6]", "078#9[1]", "078#11[0]", "078#13[0]", "078#29[0]", "078#37[1]", "079-corrected-f1-multi-buffer#8[0]", "079-corrected-f1-multi-buffer#11[0]", "079-corrected-f1-multi-buffer#14[0]", "079-corrected-f1-multi-buffer#17[1]"],
+      "disposition": "DOC-DEFECT-AT-ERA",
+      "mechanism": "The post-recovery artefact value is 0.8332154763107384, which is 0.8332 at 4 d.p. The hand-levelled report.md renders '0.8333' in all eleven places; the machine-generated companion report_autogen.md in the same directory and same commit renders 0.8332. Single generative cause: a 4th-decimal transcription slip when the hand doc was levelled from the autogen output. |delta| = 8.45e-05 on every row.",
+      "era_evidence": "results/55maps-image-generalisation/corrected-f1-multi-buffer/report_autogen.md line 12 (post-recovery table) and line 38 both render **0.8332**; the pre-recovery backup report_autogen.md.pre-recovery-20260503T023134.backup renders **0.8317**. corrected-f1.csv row R_m=50 holds F1 = 0.8332154763107384. All eleven report.md spans were authored fc536a19c 2026-05-03T04:53Z, after the artefact landed at 02:45Z, so no era excuses them. Self-indicting: section 9 caveat 6 of the same document states 'All numbers in section 2 were lifted verbatim from report_autogen.md' — which is precisely what did not happen here.",
+      "materiality": "Immaterial downstream: every consuming document quotes the 3 d.p. 0.833, which is correct either way. Book as a ledger row plus an in-place fix under the Document Revision Policy (this is a living paper-citation source, not a dated snapshot).",
+      "unverified_hypothesis": "The Approach-A artefact's F1 CI upper bound is 0.8332816 -> 0.8333, which could be the confusion source. Offered as a hypothesis only; I did not establish it."
+    },
+    {
+      "name": "F15 — corrected-f1-multi-buffer section 10.2: pre-recovery precision/recall/FP block left behind by the refresh",
+      "rows": ["079-corrected-f1-multi-buffer#15[0]", "079-corrected-f1-multi-buffer#15[5]", "079-corrected-f1-multi-buffer#15[6]", "079-corrected-f1-multi-buffer#16[0]", "079-corrected-f1-multi-buffer#16[1]"],
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "Line 120 was authored e60aadb40 2026-04-23T12:35Z and quotes the pre-recovery block exactly: precision@50 0.8810289 -> '0.8810', FP@50 555, FP@150 355, recall@50 0.7876581 -> '0.7877', recall@150 0.7957903 -> '0.7958'. Post-recovery the same five fields read 0.8811966 / 556 / 356 / 0.7901897 / 0.7982278. Era-faithful at authorship; the artefact moved beneath it.",
+      "era_evidence": "Pre- and post-recovery blob reads of results[0] and results[4] in corrected-f1-multi-buffer/summary.json (dee0ecf0d vs 8699f456b) reproduce all five quoted values on the pre-recovery side and none on the post-recovery side.",
+      "residue_flag": "MATERIAL as an internal contradiction rather than as a divergence. The very next subsection, 10.3 (line 124, authored fc536a19c 2026-05-03), already carries the post-recovery figures: 'Precision rises monotonically from 0.8812 at 50 m to 0.9239 at 150 m ... recall is nearly flat (0.7902 -> 0.7982)'. Sections 10.2 and 10.3 of one 'Paper implications' section therefore state different numbers for the same quantities. Section 8 (F4 rows) and section 11 (F1 row 079#22[0]) are the same partial-refresh residue in the same document."
+    },
+    {
+      "name": "F16 — the '~14 pair gap' arithmetic slip",
+      "rows": ["078#17[3]"],
+      "disposition": "DOC-DEFECT-AT-ERA",
+      "mechanism": "Line 40 states both operands itself: 'this pipeline gives TP = 4,124 at 50 m post-recovery (was 4,110 pre-recovery); the diagnostic was last refreshed at the pre-recovery state. The 2-pair gap ... widens slightly post-recovery to ~14 pairs'. The diagnostic operand is 4,108 (never moved). 4124 - 4108 = 16, not 14. The '~14' is 4124 - 4110 — the TP INCREMENT, not the gap. The correct statement is that the gap widens from 2 to 2 + 14 = 16.",
+      "era_evidence": "Clause authored fc536a19c 2026-05-03T04:53Z, after 8699f456b (02:45Z) set TP@50 = 4124. buffer-100m-diagnostics/summary.json $.diagnostic_2_pair_drift.total_matched_at_50m = 4108 at its only commit (da2681709, 2026-04-21) and at HEAD.",
+      "approx_marker_assessment": "The '~' hedge does not absolve this: the error is 12.5 % of the correct value, and both operands appear as exact integers in the same sentence. The APPROX status the harness assigned is the right tolerance behaviour; the underlying claim is still wrong at its era."
+    }
+  ],
+  "row_level_exceptions": [
+    {
+      "row": "070#6[0], 070#6[1]",
+      "note": "Line-level git blame attributes line 115 to 95111a3f1 (2026-05-03T05:24Z, post-recovery), which would make these DOC-DEFECT-AT-ERA. `git log -S 'corrected F1 0.832 -> 0.854 from 50 m -> 125 m'` returns eaf6c8baf (2026-04-23T22:04Z) ONLY: the image clause is byte-identical across 95111a3f1, which rewrote only the text-MIN half of the same sentence. Disposition is SNAPSHOT-DIVERGENCE on the sub-line evidence. This is the single most consequential dating call in P2 and the reason recommendation R1 exists."
+    },
+    {
+      "row": "071#46[1] ('555')",
+      "note": "The only row in F11 whose VALUE is correct at era. Split out from its own family sentence deliberately: 555 is invariant across the cand-2397 promotion (1029-474 = 1030-475 = 555), so the MISMATCH is entirely an artefact of anchoring to calibration.json $.n_not_mound (556). Repairing the 1,029 and 474 figures must NOT touch 555."
+    },
+    {
+      "row": "072#9[0]",
+      "note": "Carries two independent defects: the Approach-A/Approach-B anchor error shared with 072#19[2] and 072#21[0], and the loss of the '>=' bound marker required by instrument v1.2 amendment 5. Fixing only the anchor still leaves a bound compared as an equality. See escalation E2."
+    },
+    {
+      "row": "077#13[1]",
+      "note": "Only value_index 1 (the 0.854 point estimate at R = 125 m) is in this partition and is a clean F3 snapshot row. Its sibling 077#13[0] ('>= 0.830') is UNRESOLVED in the recompute report with reason \"unparseable quote '>= 0.830'\" — i.e. the marker-preserving extraction cannot be adjudicated at all by the current harness. Noted because it is the evidential twin for the 072#9[0] finding, not because it is mine to adjudicate."
+    },
+    {
+      "row": "073#2[0], 074#39[0]",
+      "note": "results/55maps-ds-summary-v2/report.md was last committed 2026-07-28 (1844e5887, wave-5 attribution fixes), which naively dates the whole file to July. The diff touches only the aggregator provenance block (~lines 18-24). Per-claim era for both rows is 2026-05-03. Presentation class is advisory only (ruling 14); the era_check is what decides, and it decides SNAPSHOT-DIVERGENCE."
+    },
+    {
+      "row": "067#16[0]",
+      "note": "The only reference-layer row in P2 whose current artefact value is 4745 rather than 4746, because it resolves against the attractor-pull mirror field ($.n_student_gt) rather than the GeoJSON. Do not fold it into F1's repair text — the two artefacts sit at different points in the sequence."
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "R1",
+      "target": "instrument — era_check / triage tooling",
+      "text": "Extend era resolution below line granularity. Three P2 rows (070#6[0], 070#6[1], and by the same trap the whole line-115 sentence) would have been mis-booked as DOC-DEFECT-AT-ERA on `git blame` alone; `git log -S <clause>` reversed the verdict by 30 hours. Prose lines in these reports routinely carry several independently-aged clauses. Recommend the era_check emit BOTH the blame commit and an -S trace for the specific quoted numeral, and flag disagreement rather than silently taking blame."
+    },
+    {
+      "id": "R2",
+      "target": "instrument — recompute harness",
+      "text": "Register a bound comparer. 077#13[0] ('>= 0.830') is UNRESOLVED as 'unparseable quote'; its marker-stripped twin 072#9[0] is a MISMATCH. Neither outcome is correct — the claim is satisfied. Until a bound comparer exists, correct extraction (preserving the marker per amendment 5) is punished with UNRESOLVED and incorrect extraction produces a false MISMATCH."
+    },
+    {
+      "id": "R3",
+      "target": "repair — results/55maps-image-generalisation/corrected-f1-multi-buffer/report.md (living doc, Document Revision Policy)",
+      "text": "Three separate edits, one changelog entry: (a) the eleven '0.8333' instances -> '0.8332' (F14), noting that the 3 d.p. 0.833 headline is unaffected; (b) section 10.2 line 120 refreshed to the post-recovery block (0.8812 / 556 / 356 / 0.7902 / 0.7982) so it stops contradicting section 10.3 four lines below (F15); (c) line 40's '~14 pairs' -> '16 pairs' (F16). Sections 8 and 11 additionally need either a refresh or an explicit 'pre-recovery, retained for the Session-76 reconciliation' marker — section 8 currently asserts 'This pipeline's 4,110 IS the paper-citable count' in the present tense while section 1 says the count is 4,124."
+    },
+    {
+      "id": "R4",
+      "target": "class — partial-refresh residue in living documents",
+      "text": "Six clusters in P2 are the same pattern: a document refreshed during the 2026-05-03 recovery where some clauses were updated and adjacent ones were not (attractor-pull report lines 30/107; cross-track line 115 image clause, line 303 section 9.4 vs the refreshed 9.1/9.3; corrected-f1-multi-buffer sections 8, 10.2 and 11). Each row is individually SNAPSHOT-DIVERGENCE and ledger-only under ruling 14 — but the aggregate effect is that four paper-citation sources now contradict themselves internally. Recommend the ledger carry a `partial_refresh_residue` flag so the class is countable at GATE 3 and can be repaired as a class rather than row-by-row."
+    },
+    {
+      "id": "R5",
+      "target": "repair — results/55maps-cross-track-comparison/report.md section 7 (living doc)",
+      "text": "Repair 1,029 -> 1,030 and 474 -> 475 as a coupled pair (F11); leave 555 alone. Repair 586 -> 585 (text-MIN). Add the derivation to the table caption, because none of these numbers exists as a scalar in any tracked artefact: they are the union of human-review.csv and human-review-multi-buffer.csv at buffer_metres == 50, with candidate 5777's not_mound -> mound flip taken from the multi-buffer file."
+    },
+    {
+      "id": "R6",
+      "target": "repair — results/55maps-cross-track-comparison/report.md sections 3.2/3.4/5.4 and 4.2 (living doc)",
+      "text": "F10: '+0.012' -> '+0.011' at lines 29, 101 and 234; '-0.041' -> '-0.042' at line 81 (line 234 already has it right). F9/F9b: '0.854' -> '0.853' and '+0.022' -> '+0.021' at lines 162 and 164; '0.823' -> '0.822' at line 162; '0.857' -> '0.856' at line 141. Verify the section-4.2 'yes (partial)' significance verdict still reads correctly at +0.021 before landing the delta change."
+    },
+    {
+      "id": "R7",
+      "target": "extraction re-anchor (no document edit)",
+      "text": "Five rows want new locators, all of which resolve to exact MATCH: 075#6[0] and 075#66[0] -> buffer-100m-diagnostics/summary.json#$.inputs.n_extended_gt (5216); 072#19[2] and 072#21[0] -> human-reviewed-corrected/corrected-f1-human-reviewed.json#$.corrected.f1 at git-era 08d5aef64 (0.8295129, ruling-9 git-era mode, path deleted from HEAD); 071#46[1] -> the section-7 CSV union rather than verifier-calibration-crosstab/calibration.json#$.n_not_mound."
+    },
+    {
+      "id": "R8",
+      "target": "scope — ruling 15 named family",
+      "text": "The 'human-reviewed at 50 m' quantity (F11) has no tracked scalar referent anywhere and is only derivable by a union over two CSVs plus a label-flip rule. Register it as a NAMED family. The cheapest durable fix is to commit a refreshed verifier-calibration crosstab that incorporates the multi-buffer re-review, which would give all three of 1030 / 475 / 555 a single tracked home."
+    },
+    {
+      "id": "R9",
+      "target": "ledger presentation",
+      "text": "Where a repair changes a rounding, record the pre-recovery/post-recovery pair rather than the single new value — several of these documents are cited by other documents that quote the 3 d.p. form, and the 3 d.p. form is unchanged for F14 (0.833 either way) but DOES change for F9 (0.857 -> 0.856). The distinction determines which downstream citations need chasing."
+    }
+  ],
+  "escalations": [
+    {
+      "id": "E1",
+      "severity": "medium",
+      "question": "Does the partial-refresh residue class (R4) get its own disposition, or stay folded into SNAPSHOT-DIVERGENCE?",
+      "detail": "Ruling 14's per-claim era test classifies these rows as era-faithful, which is correct on the evidence but produces a ledger-only outcome for what is, in four living paper-citation documents, a live internal contradiction (most sharply: corrected-f1-multi-buffer sections 10.2 vs 10.3, four lines apart, giving different precision and recall figures for the same buffer). Ruling 1 says living documents are corrected in place, which points at repair; ruling 14's disposition test points at ledger-only. I have applied ruling 14 and raised repairs separately, but the two rulings pull in different directions on this class and it is large enough (at least 6 clusters, 15+ rows in P2 alone) to want a settled answer before GATE 3."
+    },
+    {
+      "id": "E2",
+      "severity": "low-medium",
+      "question": "Bound-marker handling: is amendment-5 compliance currently penalised?",
+      "detail": "072#9[0] (marker stripped) -> MISMATCH; 077#13[0] (marker preserved, same phrase, same underlying claim) -> UNRESOLVED 'unparseable quote'. Both outcomes are wrong. Beyond registering a comparer (R2), a decision is needed on whether a '>= X' headline should be adjudicated against the point estimate or the bootstrap CI floor — the b077 extractor explicitly flagged this choice and proposed the point estimate without ruling on it. This is the same shape as ruling 13's 005#2[0] gap-bound case and should probably inherit its treatment."
+    },
+    {
+      "id": "E3",
+      "severity": "low",
+      "question": "Should the deleted Approach-A artefact tree be restored or manifest-registered?",
+      "detail": "results/55maps-image-generalisation/human-reviewed-corrected/ (corrected-f1-human-reviewed.json/.md/_autogen.md, last present at 08d5aef64) is the correct anchor for three P2 rows and is named in the prose of at least two surviving documents (corrected-f1-multi-buffer/report.md line 27 and cross-track report). It is resolvable under ruling 9 git-era mode, but the project's 'archive, never delete' policy suggests it should be browsable in the working tree rather than only in git history. Flagging because it also bears on how many other C4 rows across the fleet are anchored to it."
+    }
+  ],
+  "counts": {
+    "total_rows": 81,
+    "SNAPSHOT-DIVERGENCE": 50,
+    "DOC-DEFECT-AT-ERA": 25,
+    "EXTRACTION-DEFECT": 6,
+    "INSTRUMENT-DEFECT": 0,
+    "ESCALATE-PI": 0,
+    "by_family": {
+      "F1": 5, "F2": 2, "F3": 21, "F4": 6, "F5": 2, "F6": 6, "F7": 2, "F8": 1,
+      "F9": 4, "F9b": 2, "F10": 4, "F11": 4, "F12": 3, "F13": 2, "F14": 11, "F15": 5, "F16": 1
+    },
+    "integrity_check": "disposition_index and the union of family row lists each contain all 81 assigned keys exactly once, with no extras.",
+    "note": "No row required ESCALATE-PI: every row resolved on primary evidence. The instrument gaps found (bound comparer, sub-line era resolution) are recorded as recommendations R1/R2 and escalations E1/E2 rather than as row dispositions, because in each case the row itself has a determinate verdict."
+  },
+  "disposition_index": {
+    "SNAPSHOT-DIVERGENCE": ["067#16[0]", "067#61[0]", "069#32[0]", "070#2[7]", "070#2[8]", "070#3[7]", "070#3[8]", "070#4[7]", "070#4[8]", "070#6[0]", "070#6[1]", "072#19[1]", "072#30[1]", "072#30[2]", "072#30[4]", "072#30[5]", "072#30[6]", "073#2[0]", "074#39[0]", "075#2[1]", "075#2[2]", "075#4[0]", "075#4[1]", "075#5[0]", "075#38[0]", "075#39[0]", "075#40[0]", "075#41[0]", "075#42[0]", "075#50[1]", "075#51[0]", "075#54[0]", "075#54[1]", "075#59[0]", "075#59[1]", "075#65[0]", "077#12[1]", "077#12[2]", "077#13[1]", "077#19[0]", "079-corrected-f1-multi-buffer#2[2]", "079-corrected-f1-multi-buffer#2[3]", "079-corrected-f1-multi-buffer#5[0]", "079-corrected-f1-multi-buffer#5[1]", "079-corrected-f1-multi-buffer#15[0]", "079-corrected-f1-multi-buffer#15[5]", "079-corrected-f1-multi-buffer#15[6]", "079-corrected-f1-multi-buffer#16[0]", "079-corrected-f1-multi-buffer#16[1]", "079-corrected-f1-multi-buffer#22[0]"],
+    "DOC-DEFECT-AT-ERA": ["069#17[1]", "069#44[0]", "069#58[0]", "070#17[4]", "070#27[1]", "070#27[5]", "070#27[7]", "070#29[0]", "071#29[11]", "071#43[2]", "071#45[2]", "071#46[0]", "078#3[1]", "078#7[6]", "078#9[1]", "078#11[0]", "078#13[0]", "078#17[3]", "078#18[2]", "078#29[0]", "078#37[1]", "079-corrected-f1-multi-buffer#8[0]", "079-corrected-f1-multi-buffer#11[0]", "079-corrected-f1-multi-buffer#14[0]", "079-corrected-f1-multi-buffer#17[1]"],
+    "EXTRACTION-DEFECT": ["071#46[1]", "072#9[0]", "072#19[2]", "072#21[0]", "075#6[0]", "075#66[0]"]
+  }
+}

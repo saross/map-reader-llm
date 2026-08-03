@@ -1,0 +1,173 @@
+{
+  "pass": "P1",
+  "scope": {
+    "partition": "C4 wave-6 partition P1 — cost/token rows",
+    "row_count": 50,
+    "batches": ["069", "071", "072"],
+    "single_source_document": "results/55maps-cross-track-comparison/report.md",
+    "doc_blob_at_extraction": "8bb2dc62f9976370b14696050b7238ddc6fcbd3f (== HEAD blob == blob at 95111a3f1; document body unchanged since 2026-05-03T15:24+1000)",
+    "method_note": "Every row was resolved three ways: (a) at the commit that INTRODUCED the numeral (git blame --line-porcelain plus git log -S per numeral, to defeat line-granularity blame drift), (b) at the document's last-touch commit 95111a3f1, and (c) at HEAD. All manifest values were read with git show <commit>:<path> and re-derived arithmetically; nothing here is quoted from the recompute report's own actual field except where explicitly labelled."
+  },
+  "era_timeline": {
+    "note": "All three cost manifests are git-tracked. Commit times below are the authoritative ordering (git log -1 --format=%ci); the 2026-05-03 window matters because three manifests moved within 4 hours of the document edits.",
+    "events": [
+      {"commit": "4c147af65", "date": "2026-04-18", "what": "outputs/55maps-image-generalisation/cost_manifest.json created — totals.cost_usd=364.6971, cache_hit_rate=0.91, cached_tokens=621315045, total_tokens=785739414, thinking_tokens=95172942, by_stage.proposer.cost_usd=353.6201, by_stage.verifier.cost_usd=11.077, by_stage.proposer.tokens.input_tokens=668717595"},
+      {"commit": "f0f7158e7", "date": "2026-04-18", "what": "outputs/55maps-text-min-generalisation/cost_manifest.json created — cost_usd=60.7866, proposer=46.7233, verifier=14.0633, total_tokens=88843576"},
+      {"commit": "4e5c5e5a3", "date": "2026-04-19", "what": "outputs/55maps-text-high-generalisation/cost_manifest.json created — cost_usd=69.6017, proposer=56.8631, verifier=12.7386, total_tokens=205301872"},
+      {"commit": "6bcbf6e03", "date": "2026-04-23 22:45:14 +1000", "what": "DOCUMENT created (new synthesis doc). Introduces lines 245, 247, 255, 350, 351, 352 and the '6.0x' ratio."},
+      {"commit": "d7f85978d", "date": "2026-05-02", "what": "text-high manifest -> 114.0665 (T=0.7 recovery, first move)"},
+      {"commit": "7f05f5298", "date": "2026-05-03 10:49:42 +1000", "what": "text-high manifest -> 126.8051, proposer 113.9648, verifier 12.8403, total_tokens 393617001"},
+      {"commit": "01b5441fb", "date": "2026-05-03 11:26:42 +1000", "what": "DOCUMENT edit — propagates post-recovery text-HIGH. Introduces lines 28, 246, 249, 253, 254, 286 and the numerals '$126.81', '$113.96', '$12.84', '393.6 M', '$66.02', '52 %', '4.4x', '2.9x'. At this instant image=364.6971 and text-min=60.7866 were STILL CURRENT."},
+      {"commit": "b4a928d25", "date": "2026-05-03 12:02:39 +1000", "what": "text-min manifest -> 93.4995 (recovery aggregation). Document never refreshed."},
+      {"commit": "a78cd7c55", "date": "2026-05-03 12:28:08 +1000", "what": "image manifest -> 1061.1024 (recovery aggregation)"},
+      {"commit": "8699f456b", "date": "2026-05-03 12:45:24 +1000", "what": "image manifest -> 1061.0781, cache_hit_rate 0.929. Document never refreshed."},
+      {"commit": "6e813e18e", "date": "2026-05-03 15:01:37 +1000", "what": "DOCUMENT edit — rewrites lines 257, 287, 288, 296 for corrected-F1 prose, CARRYING FORWARD every cost numeral verbatim (verified by diff: no cost numeral changed in this commit). Blame attributes those numerals here; git log -S proves they entered at 01b5441fb / 6bcbf6e03."},
+      {"commit": "95111a3f1", "date": "2026-05-03 15:24:44 +1000", "what": "DOCUMENT last touch (text-MIN buffer-plateau prose). Body frozen from here."},
+      {"commit": "8e142df9c", "date": "2026-06-12", "what": "TOKEN-LOAD AUDIT regeneration — all four 55-map manifests replaced at audited flex pricing. Originals archived to archive/superseded-cost-manifests-2026-06-12/ (which holds the 2026-05-03 generation ONLY: image 1061.0781, text-min 93.4995, text-high 126.8051, t0.3 67.8205). Current: image 200.833, text-high 207.3382, text-min 30.44."}
+    ]
+  },
+  "families": [
+    {
+      "name": "P1-F1 — text-HIGH cost/stage block: era-faithful, moved only at the 2026-06-12 audit",
+      "rows": ["069#12[1]", "071#35[0]", "071#35[1]", "071#35[2]", "071#37[4]", "071#39[0]", "071#41[4]", "072#13[0]", "072#18[1]", "072#25[2]"],
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "The document quotes outputs/55maps-text-high-generalisation/cost_manifest.json exactly as it stood from 2026-05-03T10:49 (commit 7f05f5298) onwards: totals.cost_usd 126.8051 -> '$126.81'; by_stage.proposer.cost_usd 113.9648 -> '$113.96'; by_stage.verifier.cost_usd 12.8403 -> '$12.84'. These rows are faithful at the numeral's authoring commit (01b5441fb), at the document's last-touch commit (95111a3f1), and at every instant in between — the single divergence is the 2026-06-12 audited-flex regeneration, which moved totals.cost_usd to 207.3382. Per binding fact (b), the audit found the era manifest omitted thinking-token billing; per binding fact (a), the regenerated manifest already carries the flex (half-list) rates 0.25/1.5/0.05 in _metadata.pricing.rates_usd_per_1m, so the current figure is the billed-truth referent and the doc figure is not.",
+      "era_evidence": "git show 7f05f5298:outputs/55maps-text-high-generalisation/cost_manifest.json -> totals.cost_usd=126.8051, by_stage.proposer.cost_usd=113.9648, by_stage.verifier.cost_usd=12.8403. Identical blob at 01b5441fb, 6e813e18e and 95111a3f1. Current HEAD: 207.3382 / 200.9315 / 6.4067. Independent re-derivation of the current proposer figure from the manifest's own declared flex rates: 64,142,910 x 0.25/1e6 + (8,238,720 + 115,025,126) x 1.5/1e6 = 16.03573 + 184.89577 = 200.93150, matching by_stage.proposer.cost_usd=200.9315 exactly — i.e. thinking tokens are now billed as output. Corroborated by reports/token-load-audit-2026-06-12.md:187 ('text-high | $126.81 | ~$207.4 | 0.61x under (thinking omitted)')."
+    },
+    {
+      "name": "P1-F2 — image + text-MIN + derived cost figures: era-faithful, superseded TWICE (same-day 2026-05-03 recovery, then the 2026-06-12 audit)",
+      "rows": ["069#12[0]", "069#12[6]", "069#13[0]", "069#13[1]", "069#14[0]", "071#34[0]", "071#34[1]", "071#34[2]", "071#34[4]", "071#36[0]", "071#36[1]", "071#36[2]", "071#38[0]", "071#38[1]", "071#39[1]", "071#41[0]", "071#41[8]", "071#41[9]", "071#41[12]", "072#15[1]", "072#15[2]", "072#15[3]", "072#18[0]", "072#18[2]", "072#25[0]", "072#25[1]", "072#25[3]", "072#25[4]", "072#25[5]", "072#53[0]", "072#55[0]"],
+      "disposition": "SNAPSHOT-DIVERGENCE",
+      "mechanism": "Every numeral in this family resolved correctly against its named anchor at the commit that INTRODUCED it (6bcbf6e03 for the 2026-04-23 numerals; 01b5441fb 11:26 for the 2026-05-03 numerals). Between 12:02 and 12:45 on 2026-05-03 — after the last cost numeral was written, before the document's final edits — the image and text-MIN manifests were re-aggregated post-recovery (image 364.6971 -> 1061.0781; text-min 60.7866 -> 93.4995), and the document was never refreshed for cost. On 2026-06-12 the audit moved them again (image -> 200.833; text-min -> 30.44). Two supersessions, zero doc edits. The document is transparent about its own vintage at line 249 ('Image and text-MIN verified 2026-04-24; text-HIGH refreshed post-recovery 2026-05-03') and that assertion is itself TRUE of the 2026-04-24 tree — which is why this reads as divergence rather than defect. The derived rows (2.9x, 6.0x, 52 %, 4.4x, +$66.02) are arithmetically exact on the era operands and inherit the same mechanism.",
+      "era_evidence": "Per-numeral verification (quoted -> value at authoring commit): $364.70 -> 364.6971; $353.62 -> 353.6201; $11.08 -> 11.0770; 91 % -> cache_hit_rate 0.91 x 100 = 91.0000; $60.79 -> 60.7866; $46.72 -> 46.7233; $14.06 -> 14.0633; 2.9x -> 364.6971/126.8051 = 2.8760; 6.0x -> 364.6971/60.7866 = 5.9996; +$66.02 -> 126.8051-60.7866 = 66.0185; 52 % -> 100x(126.8051-60.7866)/126.8051 = 52.0630; 4.4x -> 393,617,001/88,843,576 = 4.4304. All 31 match at quoted precision. Authoring commits established by `git log -S` per numeral: '66.02', '4.4x', '52 %' and '2.9x' all first appear in 01b5441fb; '6.0x' in 6bcbf6e03 — NOT in 6e813e18e, whose diff shows the cost numerals carried forward unchanged while only F1 prose was rewritten. At 6e813e18e/95111a3f1 the same quotes resolve to 1061.0781 / 93.4995 / 8.3678 / 11.3485 / 33.3056 / 26.2652 / 2.8496 / 92.9; at HEAD to 200.833 / 30.44 / 0.9686 / 6.5977 / 176.8982 / 85.3187 / 2.7141 / 92.87.",
+      "caveat_on_disposition": "Under the harness's own era definition (find_era_commit resolves the era from the document BLOB, i.e. last-touch 95111a3f1) all 31 rows would read 'wrong at doc era' and flip to DOC-DEFECT-AT-ERA. This pass applied the per-numeral authoring era instead, on three grounds: ruling 14 makes per-claim era-faithfulness the deciding axis and explicitly de-couples the snapshot unit from the file; the 6e813e18e diff proves the numerals were carried, not re-asserted; and the document self-dates its cost figures per track at line 249, which is the entry-dating pattern ruling 14 recognises. The granularity question is escalated (see escalations E2) because it flips 31 of 50 rows."
+    },
+    {
+      "name": "P1-F3 — millions-scale token quotes: comparer has no magnitude bridge",
+      "rows": ["071#34[3]", "071#34[5]", "071#35[3]", "071#36[3]", "071#38[3]", "071#38[4]", "071#38[5]", "071#40[0]"],
+      "disposition": "INSTRUMENT-DEFECT",
+      "mechanism": "Every one of these values carries unit 'M tokens' in the extraction, with an explicit extractor note invoking instrument v1.2 amendment 6 ('the unit field carries the scale'). The comparer never consumes it. scripts/recompute_c4_claims.py:314-344 implements a percentage bridge only (lines 333-338: `percentish = quoted.is_percentage or (unit or '').strip() == '%'`); there is no short-scale/SI magnitude branch. Result: 785.7 is compared against 770,307,688 and reported as abs_error 770,306,902.3 — a number that says nothing about the document. Decisive control: 071#38[2] ('~47 M') MATCHed because its extraction expression carries the conversion inline (`(a - b) / 1000000`), i.e. the harness handles the scale only when the extractor smuggles it into an arithmetic expression, never when it is declared as a unit on a `read` row. Second failure mode of the same gap: 069#14[1] and 069#14[2] (same figures, verbatim retained as '621.3 M' / '785.7 M') are UNRESOLVED with reason 'unparseable quote' — the parser also lacks magnitude handling. These eight statuses must be treated as uninformative and re-run after the bridge lands; they carry no doc verdict either way.",
+      "era_evidence": "Bridged comparisons (quoted M vs value/1e6). At authoring era, all eight are faithful: 785.7 -> 785.7394; 621.3 -> 621.3150 (x2); 393.6 -> 393.6170; 88.8 -> 88.8436 (x2); ~95 -> 95.1729; 668.7 -> 668.7176 via the CORRECTED locator (see row exception R-EX-1). At HEAD, six of the eight also diverge on value (785.7 -> 770.3077; 621.3 -> 621.0587; 393.6 -> 187.5512; 88.8 -> 69.1027) so they carry a latent P1-F1/F2-type divergence underneath the instrument fault; two (668.7 and ~95) remain satisfied at HEAD."
+    },
+    {
+      "name": "P1-F4 — section 10 files-manifest line contradicts sections 6/9 within the same document",
+      "rows": ["072#54[0]"],
+      "disposition": "DOC-DEFECT-AT-ERA",
+      "mechanism": "Line 351 asserts `outputs/55maps-text-high-generalisation/cost_manifest.json` — $69.60. Commit 01b5441fb (2026-05-03 11:26) updated that same anchor's value to $126.81 in five other places in the same file (lines 28, 246, 249, 286, and the line that became 257) and left line 351 untouched. From that commit onward the document simultaneously asserts two different values for one named anchor. No era test rescues this: at 6bcbf6e03 both readings were $69.60 and consistent; from 01b5441fb the file is self-contradictory, and it was still self-contradictory at its last touch. This is the only row in P1 a reader could falsify without any artefact access. Distinct from F1/F2 in kind: those need the artefact history to detect, this one does not.",
+      "era_evidence": "git show 6bcbf6e03:outputs/55maps-text-high-generalisation/cost_manifest.json -> totals.cost_usd = 69.6017 (numeral faithful when written). git show 01b5441fb:<same> -> 126.8051, while line 351 in the same tree still reads $69.60. Diff of 01b5441fb on the report confirms the five sibling updates and the omission. The extraction itself flagged the inconsistency without adjudicating it (072.json claim 55... claim index 54 notes field: 'Flagging without adjudicating: sections 9.1 (line 286/288) and 9.3 (line 296) give the text-HIGH cost as $126.81; this manifest line gives $69.60')."
+    }
+  ],
+  "row_level_exceptions": [
+    {
+      "id": "R-EX-1",
+      "row": "071#38[3]",
+      "primary_family": "P1-F3",
+      "additional_disposition": "EXTRACTION-DEFECT",
+      "finding": "The extraction bound '668.7 M input' to outputs/55maps-image-generalisation/cost_manifest.json#$.totals.input_tokens. At the numeral's authoring era (01b5441fb) that path holds 682,800,923 (682.8 M) — the document's figure does not come from there. The document's 668.7 M is the PROPOSER-stage input: $.by_stage.proposer.tokens.input_tokens = 668,717,595 at era, which also makes the document's own arithmetic on that line exact (668.7 - 621.3 = 47.4 -> '~47 M').",
+      "correct_locator": "outputs/55maps-image-generalisation/cost_manifest.json#$.by_stage.proposer.tokens.input_tokens",
+      "correct_unit": "M tokens (divide the raw scalar by 1e6 before comparison)",
+      "trap": "A naive re-run after the magnitude bridge lands will MATCH on the WRONG locator: the audited regeneration dropped the double-counted verifier input, so HEAD's $.totals.input_tokens = 668,719,361 now coincidentally reads 668.7 M as well. The locator must be fixed independently of the bridge, or the ledger records a right answer from a wrong binding."
+    },
+    {
+      "id": "R-EX-2",
+      "row": "071#38[5]",
+      "primary_family": "P1-F3",
+      "additional_disposition": "none — the APPROX flag is an instrument artefact, the claim is sound",
+      "finding": "Adjudicating the assigned APPROX question directly: YES, '~95' is a millions-scale quote the comparer failed to bridge. The document text (line 253) reads '~95 M thinking tokens'; the extraction records value_verbatim '~95' with unit 'M tokens' and path $.totals.thinking_tokens. Bridged, the approx marker is satisfied at BOTH eras — authoring era 95,172,942 -> 95.17 M, HEAD 95,168,363 -> 95.17 M. The row should not appear in triage at all once the bridge lands.",
+      "substantive_note": "The image track's thinking-token COUNT barely moved across the 2026-06-12 audit (95,172,942 -> 95,168,363; delta 4,579, 0.005 %). What the audit changed for this track is that those tokens are now BILLED as output (_metadata.pricing.thinking_billed_as_output = true), worth 95,168,363 x 1.5/1e6 = $142.75 of the current $195.35 proposer bill. The token claim survives the audit; the cost claim on the same line does not."
+    },
+    {
+      "id": "R-EX-3",
+      "rows": ["069#14[0]", "071#34[4]", "071#38[1]", "072#25[5]"],
+      "primary_family": "P1-F2",
+      "finding": "These four '91 %' rows are NOT instrument defects, and should not be swept into P1-F3 by association. The percentage bridge at recompute_c4_claims.py:333-338 fires correctly (unit '%', actual 0.9287 <= 1.0 < 91) and rescales to 92.87; the residual mismatch is a genuine value move. cache_hit_rate went 0.91 (era 4c147af65) -> 0.929 (recovery, 8699f456b) -> 0.9287 (audit, 8e142df9c). The distinction matters for the ledger: the % bridge is proven working, so its absence for magnitudes (P1-F3) is a specific, isolated gap rather than a general unit-handling failure."
+    },
+    {
+      "id": "R-EX-4",
+      "rows": ["072#15[1]", "072#15[2]", "072#15[3]", "071#41[8]"],
+      "primary_family": "P1-F2",
+      "finding": "These derived rows had the narrowest window of validity in the whole partition: '$66.02', '52 %' and '4.4x' are all text-HIGH-over-text-MIN quantities that were correct ONLY between 2026-05-03T10:49 (7f05f5298 lifted text-HIGH to 126.8051) and 2026-05-03T12:02 (b4a928d25 lifted text-MIN to 93.4995) — a 73-minute window. `git log -S` places their introduction at 01b5441fb (11:26), inside that window, so they are era-faithful; but the margin is thin enough that a triager relying on date-only (not time-of-day) resolution would mis-call them. Recording the exact commit times is what makes this partition adjudicable at all."
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "R1",
+      "target": "results/55maps-cross-track-comparison/report.md",
+      "kind": "LIVING-DOC-FIX",
+      "detail": "The document is results/**.md, presents itself as current (no dated filename, no dated title; ruling 1 puts it in the living class and ruling 14 makes that presentation reading advisory but here it agrees with the evidence), and carries NEITHER the required 'Last revised' banner NOR a '## Changelog' section (grep for 'Last revised|## Changelog|superseded' returns nothing). Refresh the cost figures in place at lines 28, 245-247, 249, 253-255, 257, 286-288, 296, 350-352 to the 2026-06-12 audited manifests, and attach the Document Revision Policy apparatus with a before->after table. Before -> after for the load-bearing figures: image $364.70 -> $200.83; text-HIGH $126.81 -> $207.34; text-MIN $60.79 -> $30.44; image/text-HIGH 2.9x -> 0.97x; image/text-MIN 6.0x -> 6.60x; text-HIGH-over-text-MIN increment $66.02 -> $176.90 and 52 % -> 85.3 %; text-HIGH/text-MIN token ratio 4.4x -> 2.71x; image cache-hit 91 % -> 92.87 %; image total tokens 785.7 M -> 770.3 M, cached 621.3 M -> 621.1 M; text-HIGH total tokens 393.6 M -> 187.6 M; text-MIN total tokens 88.8 M -> 69.1 M. What does NOT change: every F1, CI, permutation and tier figure in the document (the audit's own section 8 records 'F1 values, permutation results, tiers: untouched — only the dollar axis moved')."
+    },
+    {
+      "id": "R2",
+      "target": "results/55maps-cross-track-comparison/report.md line 249",
+      "kind": "rider",
+      "detail": "The per-track vintage note ('Image and text-MIN verified 2026-04-24; text-HIGH refreshed post-recovery 2026-05-03') is the reason this partition adjudicates as divergence rather than defect, and it should not simply be deleted in the refresh. Replace the body text with a single-vintage statement ('all three from the 2026-06-12 audited-flex manifests, commit 8e142df9c') and move the mixed-vintage history into the changelog, so the honesty of the original is preserved in the revision trail rather than lost."
+    },
+    {
+      "id": "R3",
+      "target": "results/55maps-cross-track-comparison/report.md lines 28 and 249",
+      "kind": "rider (OUT OF PARTITION — flagged, not adjudicated)",
+      "detail": "The text-HIGH decomposition does not sum: $69.60 + $57.10 + $0.10 + $0.58 = $127.38, against the stated total of $126.81 — a $0.577 overshoot almost exactly equal to the $0.58 FP-classify term, suggesting either a double-count of that term or that $57.10 should read $56.52. The four addends are recompute-SKIPPED (069#12[2-5] and 071#37[0-3], method anchor-unknown/historical) so no mechanical row will ever catch this. It is an internal-arithmetic defect independent of era. The R1 refresh supersedes the whole decomposition, so resolve or drop it there rather than repairing it in place."
+    },
+    {
+      "id": "R4",
+      "target": "scripts/recompute_c4_claims.py",
+      "kind": "INSTRUMENT",
+      "detail": "Add a magnitude bridge mirroring the percentage bridge. Two edits: (a) in compare() (lines 314-344), after the percentish branch at 333-338, consult the unit field for a short-scale prefix ('M tokens', 'k', 'B') and retry the match against actual / 1e6 (etc.); (b) in parse_value, accept a trailing magnitude suffix so '621.3 M' stops returning 'unparseable quote' (the failure mode of 069#14[1] and 069#14[2], which is the same gap presenting as UNRESOLVED rather than MISMATCH). Then re-run the eight P1-F3 rows plus 069#14[1-2]. Note that 071#38[2] currently MATCHes only because its extractor wrote the /1000000 into the expression — once the bridge exists, that workaround should be retired from the instrument spec so extraction and comparison do not both own the scale."
+    },
+    {
+      "id": "R5",
+      "target": "scripts/recompute_c4_claims.py:350 (SNAPSHOT_STEM_RE) and :515 (_era_check gate)",
+      "kind": "INSTRUMENT",
+      "detail": "_era_check fires only when era['snapshot'] is true, which is set by a dated-filename regex on the stem. Ruling 14 demoted the presentation class to advisory and made per-claim era-faithfulness the deciding axis; this document — 50 mismatches that era resolution explains completely — received no era_check at all because 'report.md' has no date in its stem. Un-gate era_check from the presentation class (run it on every mechanical MISMATCH). Additionally consider adding the per-numeral resolution this pass used: find_era_commit resolves the DOCUMENT blob (last-touch), which for a doc edited across ten days attributes numerals to commits that merely rewrote surrounding prose. `git log -S<numeral> -- <doc>` gives the introducing commit cheaply and is what separated P1-F2 from a 31-row false doc-defect finding here."
+    },
+    {
+      "id": "R6",
+      "target": "archive/superseded-cost-manifests-2026-06-12/",
+      "kind": "rider (archive completeness)",
+      "detail": "The archive holds exactly one generation — the 2026-05-03 post-recovery manifests (image 1061.0781, text-min 93.4995, text-high 126.8051, t0.3 67.8205). The figures THIS document quotes for image ($364.70) and text-MIN ($60.79) are the earlier 2026-04-18 generation, which survives only in git (commits 4c147af65 and f0f7158e7 respectively; text-HIGH's superseded $69.60 is at 4e5c5e5a3). Under the project's archive-never-delete policy the folder name implies a completeness it does not have. Adding a README naming those three commits would make every era figure quoted across the corpus browsable without git archaeology — and this partition shows the era figures are what documents actually quote."
+    },
+    {
+      "id": "R7",
+      "target": "propagation sweep",
+      "kind": "rider (OUT OF PARTITION)",
+      "detail": "The 2026-06-12 audit's own propagation section (reports/token-load-audit-2026-06-12.md section 7 'Published figures changed') covers Pareto v2 and findings sections 15/16 only; 'cross-track' appears nowhere in the audit report. This document was therefore never in the audit's propagation set — the divergence is an unregistered gap, not a deferred one. A grep for the three stale totals across tracked Markdown returns further live (non-archive) carriers worth checking in their own partitions: configs/run-configs/55maps_{image,text_high,text_min,text_generalisation_retrospective}_generalisation_post_run_report.md, outputs/55maps-{image,text-min}-generalisation/post_run_report.md, outputs/55maps-generalisation/post_run_report_retrospective.md, results/documentation-audit/*, results/temperature-failure-recovery-analysis/report.md, and planning/paper-writeup-continuity.md. The post_run_report.md and documentation-audit files are themselves inside the Document Revision Policy scope."
+    }
+  ],
+  "escalations": [
+    {
+      "id": "E1",
+      "severity": "HIGH — research finding, not bookkeeping",
+      "title": "The document's cost conclusion reverses under the audited manifests, and its section 9.3 'Suggested paper text' is the vehicle",
+      "detail": "Section 9.1 states 'text-HIGH offers the same corrected-F1 ceiling at 2.9x lower API cost ($126.81 vs $364.70), making it the cost-efficient Pareto choice for post-review deployments', and section 9.3 packages the same numbers as verbatim-liftable paper prose. Under the 2026-06-12 audited manifests the ordering INVERTS: image $200.833 is CHEAPER than text-HIGH $207.3382 (by $6.51, 3.1 %), so the ratio is 0.97x, not 2.9x, and the 'text-HIGH is the cost-efficient choice' recommendation is falsified. text-MIN remains the Pareto floor but by a wider margin ($30.44; 6.60x below image, not 6.0x). Verified mechanism, re-derived from the manifests' own declared flex rates: text-HIGH's proposer bill is 200.9315 = 64,142,910 x 0.25/1e6 + (8,238,720 + 115,025,126) x 1.5/1e6, of which the 115.0 M thinking tokens alone are $172.54 (86 %); image's proposer bill is 195.3499 = 47,658,863 uncached x 0.25/1e6 + 621,058,706 cached x 0.05/1e6 + (6,419,778 + 95,168,363) x 1.5/1e6, where the cache saves $124.21 against uncached pricing. The era manifests did not bill thinking at all (binding fact b), which is precisely what hid the reversal. Per the project's Research Finding Calibration rule this needs human judgement before any repair text is drafted: the correct new sentence is a genuinely different claim about modality cost, not a number swap.",
+      "asks": "Confirm the direction with the Google billing console if possible — the audit report flags its corrected figures as LOWER BOUNDS (retry spend unmeasured; section 8), and image/text-HIGH are now within 3 % of each other, which is inside that uncertainty. If the console cannot separate them, the honest refreshed claim is 'image and text-HIGH cost approximately the same' rather than a new ordering."
+    },
+    {
+      "id": "E2",
+      "severity": "MEDIUM — procedural, flips 31 of 50 rows in this partition",
+      "title": "Era granularity: document-blob era (harness) vs per-numeral authoring era (this pass)",
+      "detail": "Ruling 12 specifies re-resolution 'at the source document's era commit', and the harness implements that as the commit whose blob matches the extraction's git_blob — i.e. the document's LAST-TOUCH commit. Ruling 14 then made 'per-claim era-faithfulness' the deciding axis and, for entry-dated registers, moved the snapshot unit from the file to the entry. For a synthesis document edited across ten days these two give opposite answers: at the last-touch commit (95111a3f1) 31 of my 50 rows are wrong, so the whole cost block would be DOC-DEFECT-AT-ERA; at each numeral's introducing commit all 50 are faithful, so it is SNAPSHOT-DIVERGENCE. This pass chose per-numeral, on the evidence that commit 6e813e18e rewrote the surrounding F1 prose without altering a single cost numeral (diff-verified) and that the document self-dates its cost figures per track at line 249. But the choice is not derivable from the rulings as written, and it will recur on every long-lived synthesis document in the corpus.",
+      "asks": "Pin the granularity in a ruling: is the era unit (a) the document blob, (b) the line's blame commit, or (c) the numeral's introducing commit via git log -S? Note that (b) is the WORST of the three here — it would have mis-dated 14 of my rows to 6e813e18e purely because an adjacent F1 number changed on the same line. If (c) is adopted, R5's instrument change follows."
+    },
+    {
+      "id": "E3",
+      "severity": "LOW — one currently-clean MATCH rests on a wrong binding",
+      "title": "071#38[2] (outside P1, status MATCH) shares the mis-binding of 071#38[3]",
+      "detail": "071#38[2] ('~47 M uncached input tokens') is computed as $.totals.input_tokens - $.totals.cached_tokens. Per R-EX-1 the document's operands are the PROPOSER-stage figures. The row MATCHes at HEAD (47.660655 -> '~47') and would also match on the corrected era operands (668,717,595 - 621,315,045 = 47,402,550 -> '~47'), so the outcome is right; but the binding is not, and it is right only because the audited regeneration happened to bring $.totals.input_tokens into line with the era proposer figure. Raising it so the ledger does not bank a clean MATCH on a locator that a future manifest change would silently break.",
+      "asks": "Route to whichever partition owns 071#38[2] for a locator correction, or record the exception on the ledger row."
+    }
+  ],
+  "counts": {
+    "total_rows": 50,
+    "SNAPSHOT-DIVERGENCE": 41,
+    "INSTRUMENT-DEFECT": 8,
+    "DOC-DEFECT-AT-ERA": 1,
+    "EXTRACTION-DEFECT": "1 (071#38[3], recorded as a row-level exception on top of its P1-F3 primary; not double-counted above)",
+    "ESCALATE-PI": 0,
+    "note": "No row required ESCALATE-PI as its disposition — every row resolved on primary evidence. The three escalations are cross-cutting (a finding reversal, a rulings-granularity question, and an out-of-partition locator) rather than unadjudicable rows."
+  },
+  "self_check": {
+    "blindness": "Confirmed: no file under reports/verification/c4-triage/ was opened — not the wave5/wave6 draft stories, not any mismatch-triage-*.json, not blind-passes/ or spot-audit/. The wave6 draft-stories filename appears once in a grep -l result set in my working notes; the file was not read.",
+    "writes": "No repository file was created, edited, or deleted. Two scratchpad working files were written outside the repo (rows.json, blame.json) plus this output.",
+    "verification": "Every manifest figure quoted here was read this turn via `git show <commit>:<path>` or from the working-tree JSON; every ratio, difference and percentage was recomputed in Python rather than copied from the recompute report; commit hashes and times came from `git log -1 --format=%h/%ci`; line numbers came from `git blame --line-porcelain`. The recompute report's `actual` values were used only as the comparison target and were independently reproduced from HEAD."
+  }
+}
