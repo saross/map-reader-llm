@@ -162,10 +162,29 @@ resolved above)**:
 (The Obs 383 draft, machine-scope, and snapshot-classification items
 formerly listed here are resolved — see the ✅ block above.)
 
+**Ruling-15 phases 1–2 LANDED** (`3beea8eaa`, `e7bf230c1`): both-host
+tracking-gap audit (union 6,981 untracked rows → exactly 2
+should-track strays, the 044 manifests, committed; the FOUR 044
+verification rows now RESOLVE to their quoted figures on both hosts —
+verified, not predicted); regeneration manifests for the two
+census-implicated crop trees (pv-diag divergence proven ENTIRELY PNG
+bulk — the non-bulk set is element-wise identical to tracked; crops
+determinism TESTED three-way for the review tree); the three
+machine-scope specs re-anchored to tracked manifests — 037#37[0]
+becomes host-independent MATCH, the 006 pair honest MISMATCH
+abs_error 41 on any host (clean ruling-14 snapshot-divergence, the
++41 drift being all tracked files). THREE new PI-call items from the
+audit: (i) a 4,540-crop shortfall in two pv-diag cells
+(generated-then-removed, identical both hosts, no claim depends —
+regenerate?); (ii) narrow `.gitignore:131`/`:43` so directory rules
+stop over-capturing metadata siblings (repo-wide effect); (iii)
+whether to spec #32[0]/#34[0] against the manifest's tracked-count
+1,538 (changes the GATE 3 census accounting — decide at GATE 3).
+
 **Session 126's queue**: (a) D4 phases 3–5 when convenient (bundle-index
 pilot + storage decision; charter amendment + register re-anchoring;
-Zenodo at publication) and the optional within-config
-batch-vs-realtime check (Seed 5 context); (b) **fleet
+Zenodo at publication), the three audit PI-calls above, and the
+optional within-config batch-vs-realtime check (Seed 5 context); (b) **fleet
 waves** (138 pending; genre rule per the S125 gates; per-wave
 validate → recompute (sapphire) → Obs 382 check → triage); (c)
 **runner tranches 2–3** — binding requirements now pinned: cost/token
