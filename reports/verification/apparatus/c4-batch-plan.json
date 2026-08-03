@@ -4,7 +4,25 @@
   "built": "2026-07-31 Session 122, from generated-file-registry.json v1.0 hand-written stratum (142 files)",
   "instrument": "reports/verification/apparatus/c4-extraction-instructions.md v1.2 (fleet from 2026-07-31 S123 onward; batches 028-052 + calib-a/b ran v1.0-1.1 and were repaired to v1.2 conformance in S123 triage)",
   "status_key": "pending | extracted | validated",
-  "calibration": "calib-a (verifier-robustness-findings 1-260) + calib-b (protocol-errata 1-248) precede the fleet; their files supersede the overlapping planned batches"
+  "calibration": "calib-a (verifier-robustness-findings 1-260) + calib-b (protocol-errata 1-248) precede the fleet; their files supersede the overlapping planned batches",
+  "amendments": [
+   {
+    "date": "2026-08-04",
+    "session": 127,
+    "change": "Re-planned line ranges for 8 pending-batch files that grew after the 2026-07-31 plan build. Growth is interleaved (banners, mid-body corrections, changelogs) from the programme's own repair commits 166bf7704 / 2f3ef020a / a6f58d1b7 / 01c84b841, so recorded ranges pointed at shifted content and left tails unsurveyed (+546 lines). Batch ids, batch count and wave boundaries unchanged; ranges snapped to heading boundaries; rewritten units carry density-scaled span ESTIMATES (spans_basis), not survey counts.",
+    "files": [
+     "results/evaluation-scopes.md",
+     "results/factor-analysis/factor_analysis_results.md",
+     "results/h11/analysis_summary.md",
+     "results/paper-tables/leaderboard-20m-annotated.md",
+     "results/paper-tables/leaderboard_tiers.md",
+     "results/paper-tables/leaderboard_tiers_20m.md",
+     "results/paper-tables/pairwise_hypothesis_table.md",
+     "results/pv/phase1/pv-phase1-analysis.md"
+    ],
+    "not_addressed": "Already-extracted files that grew after extraction (+1,129 lines across 18 files) and 4 files short at their own extraction era (+95 lines) are ESCALATED to the PI queue, not fixed here."
+   }
+  ]
  },
  "batches": [
   {
@@ -1589,13 +1607,14 @@
   },
   {
    "batch_id": "b098",
-   "spans": 336,
+   "spans": 445,
    "units": [
     {
      "file": "results/evaluation-scopes.md",
      "start": 1,
-     "end": 135,
-     "spans": 336
+     "end": 183,
+     "spans": 445,
+     "spans_basis": "estimated-S127 (density-scaled; not a survey count)"
     }
    ],
    "output": "reports/verification/c4-extraction/098.json",
@@ -1603,13 +1622,14 @@
   },
   {
    "batch_id": "b099",
-   "spans": 141,
+   "spans": 453,
    "units": [
     {
      "file": "results/evaluation-scopes.md",
-     "start": 136,
-     "end": 196,
-     "spans": 141
+     "start": 184,
+     "end": 369,
+     "spans": 453,
+     "spans_basis": "estimated-S127 (density-scaled; not a survey count)"
     }
    ],
    "output": "reports/verification/c4-extraction/099.json",
@@ -1617,13 +1637,14 @@
   },
   {
    "batch_id": "b100",
-   "spans": 383,
+   "spans": 458,
    "units": [
     {
      "file": "results/factor-analysis/factor_analysis_results.md",
      "start": 1,
-     "end": 161,
-     "spans": 383
+     "end": 216,
+     "spans": 458,
+     "spans_basis": "estimated-S127 (density-scaled; not a survey count)"
     }
    ],
    "output": "reports/verification/c4-extraction/100.json",
@@ -1631,19 +1652,14 @@
   },
   {
    "batch_id": "b101",
-   "spans": 363,
+   "spans": 447,
    "units": [
     {
      "file": "results/factor-analysis/factor_analysis_results.md",
-     "start": 162,
-     "end": 273,
-     "spans": 301
-    },
-    {
-     "file": "results/factor-analysis/factor_analysis_results.md",
-     "start": 274,
-     "end": 352,
-     "spans": 62
+     "start": 217,
+     "end": 427,
+     "spans": 447,
+     "spans_basis": "estimated-S127 (density-scaled; not a survey count)"
     }
    ],
    "output": "reports/verification/c4-extraction/101.json",
@@ -1857,19 +1873,14 @@
   },
   {
    "batch_id": "b115",
-   "spans": 388,
+   "spans": 434,
    "units": [
     {
      "file": "results/h11/analysis_summary.md",
      "start": 1,
-     "end": 210,
-     "spans": 309
-    },
-    {
-     "file": "results/h11/analysis_summary.md",
-     "start": 211,
-     "end": 306,
-     "spans": 79
+     "end": 342,
+     "spans": 434,
+     "spans_basis": "estimated-S127 (density-scaled; not a survey count)"
     }
    ],
    "output": "reports/verification/c4-extraction/115.json",
@@ -2165,13 +2176,14 @@
   },
   {
    "batch_id": "b131",
-   "spans": 330,
+   "spans": 416,
    "units": [
     {
      "file": "results/paper-tables/leaderboard-20m-annotated.md",
      "start": 1,
-     "end": 175,
-     "spans": 330
+     "end": 240,
+     "spans": 416,
+     "spans_basis": "estimated-S127 (density-scaled; not a survey count)"
     }
    ],
    "output": "reports/verification/c4-extraction/131.json",
@@ -2179,19 +2191,14 @@
   },
   {
    "batch_id": "b132",
-   "spans": 327,
+   "spans": 432,
    "units": [
     {
      "file": "results/paper-tables/leaderboard-20m-annotated.md",
-     "start": 176,
-     "end": 366,
-     "spans": 307
-    },
-    {
-     "file": "results/paper-tables/leaderboard-20m-annotated.md",
-     "start": 367,
-     "end": 379,
-     "spans": 20
+     "start": 241,
+     "end": 489,
+     "spans": 432,
+     "spans_basis": "estimated-S127 (density-scaled; not a survey count)"
     }
    ],
    "output": "reports/verification/c4-extraction/132.json",
@@ -2199,13 +2206,14 @@
   },
   {
    "batch_id": "b133",
-   "spans": 96,
+   "spans": 109,
    "units": [
     {
      "file": "results/paper-tables/leaderboard_tiers.md",
      "start": 1,
-     "end": 87,
-     "spans": 96
+     "end": 99,
+     "spans": 109,
+     "spans_basis": "estimated-S127 (density-scaled; not a survey count)"
     }
    ],
    "output": "reports/verification/c4-extraction/133.json",
@@ -2213,19 +2221,14 @@
   },
   {
    "batch_id": "b134",
-   "spans": 323,
+   "spans": 367,
    "units": [
     {
      "file": "results/paper-tables/leaderboard_tiers_20m.md",
      "start": 1,
-     "end": 95,
-     "spans": 318
-    },
-    {
-     "file": "results/paper-tables/leaderboard_tiers_20m.md",
-     "start": 96,
-     "end": 103,
-     "spans": 5
+     "end": 117,
+     "spans": 367,
+     "spans_basis": "estimated-S127 (density-scaled; not a survey count)"
     }
    ],
    "output": "reports/verification/c4-extraction/134.json",
@@ -2233,19 +2236,20 @@
   },
   {
    "batch_id": "b135",
-   "spans": 289,
+   "spans": 338,
    "units": [
-    {
-     "file": "results/paper-tables/pairwise_hypothesis_table.md",
-     "start": 1,
-     "end": 83,
-     "spans": 255
-    },
     {
      "file": "results/paper-tables/pro_2x2_matrix.md",
      "start": 1,
      "end": 22,
      "spans": 34
+    },
+    {
+     "file": "results/paper-tables/pairwise_hypothesis_table.md",
+     "start": 1,
+     "end": 99,
+     "spans": 304,
+     "spans_basis": "estimated-S127 (density-scaled; not a survey count)"
     }
    ],
    "output": "reports/verification/c4-extraction/135.json",
@@ -2527,7 +2531,7 @@
   },
   {
    "batch_id": "b153",
-   "spans": 218,
+   "spans": 459,
    "units": [
     {
      "file": "results/phase3d-verifier-experiments-abc.md",
@@ -2538,8 +2542,9 @@
     {
      "file": "results/pv/phase1/pv-phase1-analysis.md",
      "start": 1,
-     "end": 77,
-     "spans": 169
+     "end": 187,
+     "spans": 410,
+     "spans_basis": "estimated-S127 (density-scaled; not a survey count)"
     }
    ],
    "output": "reports/verification/c4-extraction/153.json",
