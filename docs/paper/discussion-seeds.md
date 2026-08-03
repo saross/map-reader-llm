@@ -124,7 +124,45 @@ carry-forward sits in MCC Tier 3 with the uplift.
 
 ---
 
+## Seed 5 (S125 addendum). Tile-MCC as the basis for semi-automated extraction — and temperature/pool-size cost equivalences
+
+Flagged for consideration (PI-raised, 2026-08-03; grew out of the
+E72-remediation matched-temperature analysis,
+`results/e43-matched-temperature/findings.md`). Two connected points:
+
+1. **Tile-level MCC is the natural metric for a semi-supervised
+   workflow** — "show me the tiles with mounds and I'll pinpoint the
+   mounds manually." Object-level F1 rewards precise localisation; the
+   tile-MCC counter-board (Seed 4) rewards reliable tile
+   discrimination, which is exactly what a human-in-the-loop
+   pinpointing pass consumes. The paired-MCC ladder shows temperature
+   trades sensitivity for specificity at tile level (higher T → fewer
+   false-positive tiles at flat sensitivity, replicating Obs 274 on a
+   second era/tile size/model), so configuration choice differs by
+   intended workflow: fully-automated extraction optimises object-F1;
+   semi-automated triage optimises tile-MCC. A follow-on paper could
+   compare direct feature detection against tile-triage-plus-human
+   pinpointing — the planned pinpoint-correction app for the student
+   map set's flawed positions could be repurposed as the instrument.
+2. **Cost-equivalent configurations belong in the Pareto story**: the
+   matched ladder suggests T=1.0 at N=5 meets or beats T=0.7 at N=10
+   on both F1 and tile-MCC at half the proposer passes (paired
+   cross-cell tests commissioned 2026-08-03 — cite
+   `results/e43-matched-temperature/` § Cost-equivalent
+   configurations once landed). If it holds, practitioners choosing
+   configurations under budget constraints need the
+   temperature-vs-pool-size trade made explicit, not just the
+   per-configuration Pareto frontier.
+
 ## Changelog
+
+### 2026-08-03 — Seed 5 added (S125 E72-remediation addendum)
+
+Seed 5 drafted from the PI's 2026-08-03 direction during the E72
+matched-temperature follow-ups: tile-MCC as the semi-automated
+extraction metric (with the app-repurposing idea) and the
+cost-equivalence framing for the Pareto discussion. Cross-cell paired
+tests in flight at drafting; the seed cites where they land.
 
 ### 2026-06-13 (later) — Seed 4 statistical upgrade
 
